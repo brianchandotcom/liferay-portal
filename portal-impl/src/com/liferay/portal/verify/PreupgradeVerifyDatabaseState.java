@@ -5,18 +5,27 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -125,6 +134,8 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 				"Stale tables from a previous upgrade detected: " +
 					new TreeSet<>(previousUpgradeStaleTableNames));
 		}
+
+		_verifyTableColumns(dbInspector);
 	}
 
 	private Set<String> _removeViewNames(
@@ -149,5 +160,121 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		return viewNames;
 	}
+
+	private void _verifyTableColumns(DBInspector dbInspector) throws Exception {
+		Map<String, List<String>> tableColumnDefinitions =
+			DBResourceUtil.getServiceComponentPortalTableColumnDefinitions(
+				connection);
+
+		if (tableColumnDefinitions.isEmpty()) {
+			return;
+		}
+
+		tableColumnDefinitions.putAll(
+			DBResourceUtil.getServiceComponentModuleTableColumnDefinitions(
+				connection));
+
+		Map<String, List<String>> mismatchedTableColumnDefinitions =
+			new HashMap<>();
+		Map<String, List<String>> missingTableColumnNames = new HashMap<>();
+
+		for (Map.Entry<String, List<String>> tableColumnDefinitionsEntry :
+				tableColumnDefinitions.entrySet()) {
+
+			for (String columnDefinition :
+					tableColumnDefinitionsEntry.getValue()) {
+
+				int indexOf = columnDefinition.indexOf(StringPool.SPACE);
+
+				String columnName = columnDefinition.substring(0, indexOf);
+				String columnType = columnDefinition.substring(indexOf + 1);
+
+				if (!dbInspector.hasColumn(
+						tableColumnDefinitionsEntry.getKey(), columnName)) {
+
+					missingTableColumnNames.computeIfAbsent(
+						tableColumnDefinitionsEntry.getKey(),
+						tableName -> new ArrayList<>()
+					).add(
+						columnName
+					);
+				}
+				else if (!dbInspector.hasColumnType(
+							tableColumnDefinitionsEntry.getKey(), columnName,
+							columnType)) {
+
+					mismatchedTableColumnDefinitions.computeIfAbsent(
+						tableColumnDefinitionsEntry.getKey(),
+						tableName -> new ArrayList<>()
+					).add(
+						columnDefinition
+					);
+				}
+			}
+		}
+
+		String partitionSuffix = StringPool.BLANK;
+
+		if (PropsValues.DATABASE_PARTITION_ENABLED) {
+			String partitionName = DBPartitionUtil.getPartitionName(
+				CompanyThreadLocal.getNonsystemCompanyId());
+
+			partitionSuffix = " in " + partitionName;
+		}
+
+		if (_log.isWarnEnabled()) {
+			for (Map.Entry<String, List<String>>
+					mismatchedTableColumnDefinitionsEntry :
+						mismatchedTableColumnDefinitions.entrySet()) {
+
+				if (dbInspector.hasView(
+						mismatchedTableColumnDefinitionsEntry.getKey())) {
+
+					continue;
+				}
+
+				for (String columnDefinition :
+						mismatchedTableColumnDefinitionsEntry.getValue()) {
+
+					int indexOf = columnDefinition.indexOf(StringPool.SPACE);
+
+					String columnName = columnDefinition.substring(0, indexOf);
+					String columnType = columnDefinition.substring(indexOf + 1);
+
+					_log.warn(
+						StringBundler.concat(
+							"Column ", dbInspector.normalizeName(columnName),
+							" is not defined as ", columnType, " for ",
+							dbInspector.normalizeName(
+								mismatchedTableColumnDefinitionsEntry.getKey()),
+							partitionSuffix));
+				}
+			}
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<String, List<String>> missingTableColumnNamesEntry :
+				missingTableColumnNames.entrySet()) {
+
+			for (String columnName : missingTableColumnNamesEntry.getValue()) {
+				sb.append(
+					StringBundler.concat(
+						"Column ", dbInspector.normalizeName(columnName),
+						" is missing for ",
+						dbInspector.normalizeName(
+							missingTableColumnNamesEntry.getKey()),
+						partitionSuffix));
+				sb.append(StringPool.NEW_LINE);
+			}
+		}
+
+		if (sb.length() != 0) {
+			throw new VerifyException(sb.toString());
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PreupgradeVerifyDatabaseState.class);
 
 }

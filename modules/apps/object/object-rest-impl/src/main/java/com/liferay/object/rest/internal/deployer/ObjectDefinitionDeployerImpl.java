@@ -266,6 +266,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_entityModelProvider, _extensionProviderRegistry,
 					objectDefinition, _objectDefinitionLocalService,
 					_objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getCompanyId(),
 						objectDefinition.getStorageType()),
 					_objectFieldLocalService, objectFields,
 					_objectRelationshipLocalService, objectRelationships,

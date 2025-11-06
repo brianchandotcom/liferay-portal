@@ -111,6 +111,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			DefaultObjectEntryManager defaultObjectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
 					_objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getCompanyId(),
 						objectDefinition.getStorageType()));
 
 			ObjectEntry objectEntry =
@@ -161,6 +162,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					objectDefinition.getCompanyId(),
 					objectDefinition.getStorageType());
 
 			DDMFormValues ddmFormValues =

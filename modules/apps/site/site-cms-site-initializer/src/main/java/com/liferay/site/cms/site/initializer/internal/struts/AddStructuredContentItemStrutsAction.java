@@ -68,6 +68,7 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
+				objectDefinition.getCompanyId(),
 				objectDefinition.getStorageType());
 
 		ObjectEntry objectEntry = new ObjectEntry();

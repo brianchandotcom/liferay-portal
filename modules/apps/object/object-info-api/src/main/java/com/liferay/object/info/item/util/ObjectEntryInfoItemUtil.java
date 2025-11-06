@@ -58,6 +58,7 @@ public class ObjectEntryInfoItemUtil {
 
 		ObjectEntryManager objectEntryManager =
 			objectEntryManagerRegistry.getObjectEntryManager(
+				objectDefinition.getCompanyId(),
 				objectDefinition.getStorageType());
 
 		DTOConverterContext dtoConverterContext =

@@ -78,6 +78,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
+				_objectDefinition.getCompanyId(),
 				_objectDefinition.getStorageType());
 
 		ServiceContext serviceContext =
@@ -224,6 +225,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					objectDefinition.getStorageType());
 
 			String externalReferenceCode = split[1];

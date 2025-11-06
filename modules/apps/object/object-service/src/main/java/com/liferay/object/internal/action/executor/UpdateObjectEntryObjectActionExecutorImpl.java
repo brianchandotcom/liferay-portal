@@ -106,6 +106,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 			DefaultObjectEntryManager defaultObjectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
 					_objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getCompanyId(),
 						objectDefinition.getStorageType()));
 
 			defaultObjectEntryManager.partialUpdateObjectEntry(

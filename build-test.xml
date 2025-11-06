@@ -3158,30 +3158,7 @@ server.detector.server.id=wildfly</echo>
 			<get-database-property property.name="database.url" />
 			<get-database-property property.name="database.username" />
 
-			<if>
-				<or>
-					<equals arg1="${database.type}" arg2="mariadb" />
-					<equals arg1="${database.type}" arg2="mysql" />
-				</or>
-				<then>
-					<property name="database.url.upgrade" value="${database.url}" />
-				</then>
-				<elseif>
-					<equals arg1="${database.type}" arg2="postgresql" />
-					<then>
-						<property name="database.url.upgrade" value="${database.url}?reWriteBatchedInserts=true" />
-					</then>
-				</elseif>
-				<elseif>
-					<equals arg1="${database.type}" arg2="sqlserver" />
-					<then>
-						<property name="database.url.upgrade" value="${database.url};useBulkCopyForBatchInsert=true" />
-					</then>
-				</elseif>
-				<else>
-					<property name="database.url.upgrade" value="${database.url}" />
-				</else>
-			</if>
+			<property name="database.url.upgrade" value="${database.url}" />
 
 			<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties">jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url.upgrade}
@@ -13131,37 +13108,6 @@ portal.proxy.path=/${portal.proxy.path}</echo>
 					token="web.server.http.port=8080"
 					value="web.server.http.port=88"
 				/>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="rewrite.batch.statements" />
-
-		<if>
-			<equals arg1="${rewrite.batch.statements}" arg2="true" />
-			<then>
-				<if>
-					<equals arg1="${database.type}" arg2="postgresql" />
-					<then>
-						<replace
-							file="portal-impl/src/portal-ext.properties"
-							token="${database.url}"
-							value="${database.url}?reWriteBatchedInserts=true"
-						/>
-					</then>
-					<elseif>
-						<equals arg1="${database.type}" arg2="sqlserver" />
-						<then>
-							<replace
-								file="portal-impl/src/portal-ext.properties"
-								token="${database.url}"
-								value="${database.url};useBulkCopyForBatchInsert=true"
-							/>
-						</then>
-					</elseif>
-					<else>
-						<property name="database.url" value="${database.url}" />
-					</else>
-				</if>
 			</then>
 		</if>
 

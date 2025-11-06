@@ -63,14 +63,13 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 
 			if (methodName.equals("register")) {
 				_checkUniqueUpgradeProcess(
-					fileName, absolutePath, "registry.register", javaMethod,
-					javaClass.getImportNames(), javaClass.getPackageName(), 2);
+					fileName, absolutePath, javaClass, javaMethod,
+					"registry.register", 2);
 			}
 			else if (methodName.equals("registerUpgradeProcesses")) {
 				_checkUniqueUpgradeProcess(
-					fileName, absolutePath, "upgradeVersionTreeMap.put",
-					javaMethod, javaClass.getImportNames(),
-					javaClass.getPackageName(), 1);
+					fileName, absolutePath, javaClass, javaMethod,
+					"upgradeVersionTreeMap.put", 1);
 			}
 		}
 
@@ -83,8 +82,8 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 	}
 
 	private void _checkUniqueUpgradeProcess(
-		String fileName, String absolutePath, String methodName,
-		JavaMethod javaMethod, List<String> imports, String packageName,
+		String fileName, String absolutePath, JavaClass javaClass,
+		JavaMethod javaMethod, String methodName,
 		int upgradeStepsParameterIndex) {
 
 		String content = javaMethod.getContent();
@@ -109,7 +108,8 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 			}
 
 			int upgradeProcessCount = _getUpgradeProcessCount(
-				absolutePath, imports, packageName, upgradeSteps);
+				absolutePath, javaClass.getImportNames(),
+				javaClass.getPackageName(), upgradeSteps);
 
 			if (upgradeProcessCount == 0) {
 				continue;

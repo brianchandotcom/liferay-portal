@@ -1,0 +1,39 @@
+@import 'atlas-variables';
+
+.fds-carousel-view {
+	&__preview {
+		height: 570px;
+
+		&-wrapper > * {
+			margin: 0;
+			width: 100%;
+		}
+	}
+
+	.preview-file .preview-file-container.preview-file-max-height {
+		height: 570px;
+		max-height: 100%;
+	}
+
+	.fds-carousel-view__thumbnail {
+		max-width: 20%;
+
+		&.selected {
+			.card {
+				background-color: $input-focus-bg;
+				border-color: $input-focus-border-color;
+				box-shadow: $input-focus-box-shadow;
+			}
+		}
+	}
+
+	.card-type-asset {
+		.card-row {
+			align-items: center;
+		}
+
+		.card-subtitle {
+			display: none;
+		}
+	}
+}

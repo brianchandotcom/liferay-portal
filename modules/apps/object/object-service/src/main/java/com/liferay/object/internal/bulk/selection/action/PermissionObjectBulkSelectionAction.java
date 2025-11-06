@@ -43,10 +43,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "bulk.selection.action.key=permissions.object",
+	property = "bulk.selection.action.key=permission.object",
 	service = BulkSelectionAction.class
 )
-public class PermissionsObjectBulkSelectionAction
+public class PermissionObjectBulkSelectionAction
 	implements BulkSelectionAction<Object> {
 
 	@Override
@@ -55,13 +55,14 @@ public class PermissionsObjectBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		ObjectEntry bulkActionTask = _objectEntryLocalService.getObjectEntry(
-			GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
+		ObjectEntry bulkActionTaskObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
 
-		long companyId = GetterUtil.getLong(inputMap.get("companyId"));
+		long companyId = bulkActionTaskObjectEntry.getCompanyId();
 
 		Map<String, Serializable> bulkActionTaskValues =
-			bulkActionTask.getValues();
+			bulkActionTaskObjectEntry.getValues();
 
 		bulkActionTaskValues.put("numberOfItems", bulkSelection.getSize());
 
@@ -74,10 +75,10 @@ public class PermissionsObjectBulkSelectionAction
 		try {
 			bulkActionTaskValues.put("executionStatus", "started");
 
-			bulkActionTask = _partialUpdateObjectEntry(
-				bulkActionTask, bulkActionTaskValues);
+			bulkActionTaskObjectEntry = _partialUpdateObjectEntry(
+				bulkActionTaskObjectEntry, bulkActionTaskValues);
 
-			bulkActionTaskValues = bulkActionTask.getValues();
+			bulkActionTaskValues = bulkActionTaskObjectEntry.getValues();
 
 			bulkSelection.forEach(
 				object -> {
@@ -196,23 +197,15 @@ public class PermissionsObjectBulkSelectionAction
 			bulkActionTaskValues.put(
 				"numberOfSuccessfulItems", numberOfSuccessfulItems.get());
 
-			_partialUpdateObjectEntry(bulkActionTask, bulkActionTaskValues);
+			_partialUpdateObjectEntry(
+				bulkActionTaskObjectEntry, bulkActionTaskValues);
 		}
 	}
 
 	private Permission[] _getPermissions(
 		Map<String, Serializable> map, String key) {
 
-		try {
-			return (Permission[])map.getOrDefault(key, new Permission[0]);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return new Permission[0];
+		return (Permission[])map.getOrDefault(key, new Permission[0]);
 	}
 
 	private ObjectEntry _partialUpdateObjectEntry(
@@ -225,7 +218,7 @@ public class PermissionsObjectBulkSelectionAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PermissionsObjectBulkSelectionAction.class);
+		PermissionObjectBulkSelectionAction.class);
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

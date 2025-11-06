@@ -10,6 +10,7 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -28,16 +29,15 @@ import java.util.Map;
 public class ObjectBulkSelection implements BulkSelection<Object> {
 
 	public ObjectBulkSelection(
-		String[] rowIds, Map<String, String[]> parameterMap,
 		DepotEntryLocalService depotEntryLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
-		ObjectEntryFolderLocalService objectEntryFolderLocalService) {
+		ObjectEntryFolderLocalService objectEntryFolderLocalService,
+		Map<String, String[]> parameterMap) {
 
-		_rowIds = rowIds;
-		_parameterMap = parameterMap;
 		_depotEntryLocalService = depotEntryLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
+		_parameterMap = parameterMap;
 	}
 
 	@Override
@@ -45,25 +45,22 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 			UnsafeConsumer<Object, E> unsafeConsumer)
 		throws PortalException {
 
-		for (String rowId : _rowIds) {
+		for (String rowId : _parameterMap.get("rowIds")) {
 			String[] split = rowId.split(StringPool.SPACE);
 
-			if (split[0].equals("com.liferay.depot.model.DepotEntry")) {
+			if (split[0].equals(DepotEntry.class.getName())) {
 				DepotEntry depotEntry =
 					_depotEntryLocalService.fetchGroupDepotEntry(
 						GetterUtil.getLong(split[1]));
 
-				if (depotEntry != null) {
-					unsafeConsumer.accept(depotEntry);
+				if (depotEntry == null) {
+					depotEntry = _depotEntryLocalService.getDepotEntry(
+						GetterUtil.getLong(split[1]));
 				}
 
-				unsafeConsumer.accept(
-					_depotEntryLocalService.getDepotEntry(
-						GetterUtil.getLong(split[1])));
+				unsafeConsumer.accept(depotEntry);
 			}
-			else if (split[0].equals(
-						"com.liferay.object.model.ObjectEntryFolder")) {
-
+			else if (split[0].equals(ObjectEntryFolder.class.getName())) {
 				unsafeConsumer.accept(
 					_objectEntryFolderLocalService.getObjectEntryFolder(
 						GetterUtil.getLong(split[1])));
@@ -90,12 +87,14 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 
 	@Override
 	public long getSize() {
-		return _rowIds.length;
+		String[] rowIds = _parameterMap.get("rowIds");
+
+		return rowIds.length;
 	}
 
 	@Override
 	public Serializable serialize() {
-		return StringUtil.merge(_rowIds, StringPool.COMMA);
+		return StringUtil.merge(_parameterMap.get("rowIds"), StringPool.COMMA);
 	}
 
 	@Override
@@ -107,6 +106,5 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final Map<String, String[]> _parameterMap;
-	private final String[] _rowIds;
 
 }

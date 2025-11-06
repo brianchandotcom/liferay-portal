@@ -33,17 +33,9 @@ public class ObjectBulkSelectionFactory
 			return new EmptyBulkSelection<>();
 		}
 
-		String[] rowIds = parameterMap.get("rowIds");
-
-		return _getObjectBulkSelection(rowIds, parameterMap);
-	}
-
-	private BulkSelection<Object> _getObjectBulkSelection(
-		String[] values, Map<String, String[]> parameterMap) {
-
 		return new ObjectBulkSelection(
-			values, parameterMap, _depotEntryLocalService,
-			_objectEntryLocalService, _objectEntryFolderLocalService);
+			_depotEntryLocalService, _objectEntryLocalService,
+			_objectEntryFolderLocalService, parameterMap);
 	}
 
 	@Reference

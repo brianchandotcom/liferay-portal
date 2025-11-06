@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "bulk.selection.action.key=default.permissions.object",
+	property = "bulk.selection.action.key=default.permission.object",
 	service = BulkSelectionAction.class
 )
-public class DefaultPermissionsObjectBulkSelectionAction
+public class DefaultPermissionObjectBulkSelectionAction
 	implements BulkSelectionAction<Object> {
 
 	@Override
@@ -42,11 +42,12 @@ public class DefaultPermissionsObjectBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		ObjectEntry bulkActionTask = _objectEntryLocalService.getObjectEntry(
-			GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
+		ObjectEntry bulkActionTaskObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
 
 		Map<String, Serializable> bulkActionTaskValues =
-			bulkActionTask.getValues();
+			bulkActionTaskObjectEntry.getValues();
 
 		bulkActionTaskValues.put("numberOfItems", bulkSelection.getSize());
 
@@ -59,10 +60,10 @@ public class DefaultPermissionsObjectBulkSelectionAction
 		try {
 			bulkActionTaskValues.put("executionStatus", "started");
 
-			bulkActionTask = _partialUpdateObjectEntry(
-				bulkActionTask, bulkActionTaskValues);
+			bulkActionTaskObjectEntry = _partialUpdateObjectEntry(
+				bulkActionTaskObjectEntry, bulkActionTaskValues);
 
-			bulkActionTaskValues = bulkActionTask.getValues();
+			bulkActionTaskValues = bulkActionTaskObjectEntry.getValues();
 
 			bulkSelection.forEach(
 				object -> {
@@ -104,7 +105,8 @@ public class DefaultPermissionsObjectBulkSelectionAction
 			bulkActionTaskValues.put(
 				"numberOfSuccessfulItems", numberOfSuccessfulItems.get());
 
-			_partialUpdateObjectEntry(bulkActionTask, bulkActionTaskValues);
+			_partialUpdateObjectEntry(
+				bulkActionTaskObjectEntry, bulkActionTaskValues);
 		}
 	}
 
@@ -118,7 +120,7 @@ public class DefaultPermissionsObjectBulkSelectionAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultPermissionsObjectBulkSelectionAction.class);
+		DefaultPermissionObjectBulkSelectionAction.class);
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

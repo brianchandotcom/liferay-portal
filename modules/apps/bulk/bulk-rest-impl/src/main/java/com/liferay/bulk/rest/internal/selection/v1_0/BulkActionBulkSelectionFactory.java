@@ -25,7 +25,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -34,14 +33,13 @@ import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -60,7 +58,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -93,10 +90,6 @@ public class BulkActionBulkSelectionFactory {
 
 					if (GetterUtil.getBoolean(selectionScope.getSelectAll())) {
 						return _searchRowIds();
-					}
-
-					if (ArrayUtil.isEmpty(_bulkAction.getBulkActionItems())) {
-						return new String[0];
 					}
 
 					return _getSelectedItemsRowIds();
@@ -184,8 +177,8 @@ public class BulkActionBulkSelectionFactory {
 			return this;
 		}
 
-		public Builder indexerRegistry(IndexerRegistry indexerRegistry) {
-			_indexerRegistry = indexerRegistry;
+		public Builder groupLocalService(GroupLocalService groupLocalService) {
+			_groupLocalService = groupLocalService;
 
 			return this;
 		}
@@ -208,12 +201,6 @@ public class BulkActionBulkSelectionFactory {
 			ObjectEntryLocalService objectEntryLocalService) {
 
 			_objectEntryLocalService = objectEntryLocalService;
-
-			return this;
-		}
-
-		public Builder pagination(Pagination pagination) {
-			_pagination = pagination;
 
 			return this;
 		}
@@ -261,11 +248,10 @@ public class BulkActionBulkSelectionFactory {
 		private String _entryClassNames;
 		private Filter _filter;
 		private FilterFactory _filterFactory;
-		private IndexerRegistry _indexerRegistry;
+		private GroupLocalService _groupLocalService;
 		private Localization _localization;
 		private ObjectDefinitionLocalService _objectDefinitionLocalService;
 		private ObjectEntryLocalService _objectEntryLocalService;
-		private Pagination _pagination;
 		private String _scope;
 		private String _search;
 		private Searcher _searcher;
@@ -276,7 +262,6 @@ public class BulkActionBulkSelectionFactory {
 
 	private BulkActionBulkSelectionFactory(Builder builder) {
 		_bulkSelectionFactoryRegistry = builder._bulkSelectionFactoryRegistry;
-		_indexerRegistry = builder._indexerRegistry;
 		_localization = builder._localization;
 		_searcher = builder._searcher;
 		_searchRequestBuilderFactory = builder._searchRequestBuilderFactory;
@@ -290,9 +275,9 @@ public class BulkActionBulkSelectionFactory {
 		_search = builder._search;
 		_filter = builder._filter;
 		_filterFactory = builder._filterFactory;
+		_groupLocalService = builder._groupLocalService;
 		_objectDefinitionLocalService = builder._objectDefinitionLocalService;
 		_objectEntryLocalService = builder._objectEntryLocalService;
-		_pagination = builder._pagination;
 		_sorts = builder._sorts;
 		_bulkAction = builder._bulkAction;
 		_contextHttpServletRequest = builder._contextHttpServletRequest;
@@ -332,11 +317,11 @@ public class BulkActionBulkSelectionFactory {
 		Map<String, com.liferay.portal.search.document.Field> fields =
 			document.getFields();
 
-		com.liferay.portal.search.document.Field entryClassNameField =
-			fields.get(Field.ENTRY_CLASS_NAME);
+		com.liferay.portal.search.document.Field field = fields.get(
+			Field.ENTRY_CLASS_NAME);
 
-		if (entryClassNameField != null) {
-			return GetterUtil.getString(entryClassNameField.getValue());
+		if (field != null) {
+			return GetterUtil.getString(field.getValue());
 		}
 
 		return document.getString(Field.ENTRY_CLASS_NAME);
@@ -346,11 +331,11 @@ public class BulkActionBulkSelectionFactory {
 		Map<String, com.liferay.portal.search.document.Field> fields =
 			document.getFields();
 
-		com.liferay.portal.search.document.Field entryClassNamePK = fields.get(
+		com.liferay.portal.search.document.Field field = fields.get(
 			Field.ENTRY_CLASS_PK);
 
-		if (entryClassNamePK != null) {
-			return GetterUtil.getLong(entryClassNamePK.getValue());
+		if (field != null) {
+			return GetterUtil.getLong(field.getValue());
 		}
 
 		return document.getLong(Field.ENTRY_CLASS_PK);
@@ -358,6 +343,10 @@ public class BulkActionBulkSelectionFactory {
 
 	private String[] _getSelectedItemsRowIds() throws PortalException {
 		BulkActionItem[] bulkActionItems = _bulkAction.getBulkActionItems();
+
+		if (ArrayUtil.isEmpty(bulkActionItems)) {
+			return new String[0];
+		}
 
 		List<String> rowIds = new ArrayList<>(bulkActionItems.length);
 
@@ -521,12 +510,6 @@ public class BulkActionBulkSelectionFactory {
 			return rowIds.toArray(new String[0]);
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_contextCompany.getCompanyId(), "LPS-179669")) {
-
-			return new String[0];
-		}
-
 		SearchRequestBody searchRequestBody = new SearchRequestBody();
 
 		searchRequestBody.setAttributes(
@@ -616,9 +599,8 @@ public class BulkActionBulkSelectionFactory {
 		String[] parts = _toArray(scope);
 
 		for (String part : parts) {
-			Group group =
-				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-					part, companyId);
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				part, companyId);
 
 			if (group != null) {
 				groupIds.add(group.getGroupId());
@@ -684,11 +666,10 @@ public class BulkActionBulkSelectionFactory {
 	private final String _entryClassNames;
 	private final Filter _filter;
 	private final FilterFactory<Predicate> _filterFactory;
-	private final IndexerRegistry _indexerRegistry;
+	private final GroupLocalService _groupLocalService;
 	private final Localization _localization;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
-	private final Pagination _pagination;
 	private final String _scope;
 	private final String _search;
 	private final Searcher _searcher;

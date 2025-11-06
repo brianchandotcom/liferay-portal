@@ -63,7 +63,7 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	@Test
-	public void testAnyAssetTypeClassNameIdMultipleClassNameIds()
+	public void testAnyAssetTypeClassNameIdWithMultipleClassNameIds()
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _addObjectDefinition();
@@ -96,7 +96,9 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	@Test
-	public void testAnyAssetTypeFalseMultipleClassNameIds() throws Exception {
+	public void testAnyAssetTypeFalseWithMultipleClassNameIds()
+		throws Exception {
+
 		ObjectDefinition objectDefinition = _addObjectDefinition();
 
 		long blogsEntryClassNameId = _portal.getClassNameId(
@@ -133,7 +135,7 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	@Test
-	public void testAnyAssetTypeFalseNoClassNameIds() throws Exception {
+	public void testAnyAssetTypeFalseWithNoClassNameIds() throws Exception {
 		ObjectDefinition objectDefinition1 = _addObjectDefinition();
 		ObjectDefinition objectDefinition2 = _addObjectDefinition();
 
@@ -166,7 +168,7 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	@Test
-	public void testAnyAssetTypeFalseSingleClassNameId() throws Exception {
+	public void testAnyAssetTypeFalseWithSingleClassNameId() throws Exception {
 		long journalArticleClassNameId = _portal.getClassNameId(
 			JournalArticle.class.getName());
 
@@ -198,7 +200,9 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	@Test
-	public void testAnyAssetTypeTrueMultipleClassNameIds() throws Exception {
+	public void testAnyAssetTypeTrueWithMultipleClassNameIds()
+		throws Exception {
+
 		ObjectDefinition objectDefinition = _addObjectDefinition();
 
 		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(

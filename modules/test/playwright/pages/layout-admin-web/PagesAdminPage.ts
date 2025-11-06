@@ -237,12 +237,6 @@ export class PagesAdminPage {
 		await this.saveConfiguration();
 	}
 
-	async clickOnDefineCustomThemeRadio() {
-		await this.page
-			.getByRole('radio', {name: 'Define a custom theme for'})
-			.click();
-	}
-
 	async changeTheme(themeName: string) {
 		await this.clickOnDefineCustomThemeRadio();
 
@@ -263,6 +257,12 @@ export class PagesAdminPage {
 		await this.configurationSaveButton.waitFor({state: 'visible'});
 
 		await this.saveConfiguration();
+	}
+
+	async clickOnDefineCustomThemeRadio() {
+		await this.page
+			.getByRole('radio', {name: 'Define a custom theme for'})
+			.click();
 	}
 
 	async clickOnJavaScriptClientExtensionsTab() {

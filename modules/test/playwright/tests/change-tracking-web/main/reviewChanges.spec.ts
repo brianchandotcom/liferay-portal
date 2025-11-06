@@ -12,7 +12,6 @@ import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTe
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
@@ -35,10 +34,7 @@ export const test = mergeTests(
 	journalPagesTest,
 	pagesAdminPagesTest,
 	pageEditorPagesTest,
-	workflowPagesTest,
-	featureFlagsTest({
-		'LPD-20131': {enabled: true},
-	})
+	workflowPagesTest
 );
 
 test('LPD-61649 Assert structure content fields are shown in the data tab', async ({

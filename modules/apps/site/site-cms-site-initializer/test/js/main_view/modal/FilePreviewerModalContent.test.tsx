@@ -73,7 +73,7 @@ describe('FilePreviewerModalContent', () => {
 		const imagePreview = getByRole('img');
 
 		expect(imagePreview).toBeInTheDocument();
-		expect(imagePreview).toHaveAttribute('src', baseImageFile.link.href);
+		expect(imagePreview).toHaveAttribute('src', baseImageFile.previewURL);
 		expect(imagePreview).toHaveAttribute('alt', baseImageFile.name);
 	});
 

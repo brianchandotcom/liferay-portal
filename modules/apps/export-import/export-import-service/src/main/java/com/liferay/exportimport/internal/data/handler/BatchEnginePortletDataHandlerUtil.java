@@ -14,6 +14,7 @@ import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngin
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -21,12 +22,15 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.io.Serializable;
 
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,9 +45,10 @@ public class BatchEnginePortletDataHandlerUtil {
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
 		PortletDataContext portletDataContext,
-		String siteExternalReferenceCode) {
+		Group group) {
 
-		return HashMapBuilder.<String, Serializable>put(
+		HashMap<String, Serializable> exportParameters =
+			HashMapBuilder.<String, Serializable>put(
 			"batchNestedFields",
 			() -> {
 				List<String> batchNestedFields = new ArrayList<>();
@@ -102,42 +107,38 @@ public class BatchEnginePortletDataHandlerUtil {
 			"modelClassName", exportImportDescriptor.getModelClassName()
 		).put(
 			"modelName", exportImportDescriptor.getModelName()
-		).put(
-			"siteExternalReferenceCode",
-			() -> {
-				if (Validator.isNotNull(siteExternalReferenceCode)) {
-					return siteExternalReferenceCode;
-				}
-
-				return null;
-			}
-		).put(
-			"siteId",
-			() -> {
-				Map<String, String[]> map =
-					portletDataContext.getParameterMap();
-
-				String[] siteIds = GetterUtil.getStringValues(
-					map.get("siteId"));
-
-				if (ArrayUtil.isNotEmpty(siteIds)) {
-					return siteIds[0];
-				}
-
-				return portletDataContext.getScopeGroupId();
-			}
 		).putAll(
 			exportImportDescriptor.getParameters(portletDataContext)
 		).build();
+
+		if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
+			exportParameters.put("siteExternalReferenceCode",
+				group.getExternalReferenceCode());
+
+			Map<String, String[]> map =
+				portletDataContext.getParameterMap();
+
+			String[] siteIds = GetterUtil.getStringValues(
+				map.get("siteId"));
+
+			if (ArrayUtil.isNotEmpty(siteIds)) {
+				exportParameters.put("siteId", siteIds[0]);
+			} else {
+				exportParameters.put("siteId", group.getGroupId());
+			}
+		}
+
+		return  exportParameters;
 	}
 
 	public static Map<String, Serializable> buildImportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
 		PortletDataContext portletDataContext,
-		String siteExternalReferenceCode) {
+		Group group) {
 
-		return HashMapBuilder.<String, Serializable>put(
+		HashMap<String, Serializable> importParameters =
+			HashMapBuilder.<String, Serializable>put(
 			"batchRestrictFields",
 			() -> {
 				if (!MapUtil.getBoolean(
@@ -169,24 +170,24 @@ public class BatchEnginePortletDataHandlerUtil {
 			"modelClassName", exportImportDescriptor.getModelClassName()
 		).put(
 			"modelName", exportImportDescriptor.getModelName()
-		).put(
-			"siteExternalReferenceCode",
-			() -> {
-				if (Validator.isNotNull(siteExternalReferenceCode)) {
-					return siteExternalReferenceCode;
-				}
-
-				return null;
-			}
-		).put(
-			"siteId", portletDataContext.getScopeGroupId()
 		).putAll(
 			exportImportDescriptor.getParameters(portletDataContext)
 		).build();
+
+		if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
+			importParameters.put("siteExternalReferenceCode",
+				group.getExternalReferenceCode());
+			importParameters.put("siteId", group.getGroupId());
+		}
+
+		return importParameters;
 	}
 
 	private static final Format _format =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+	private static StagingGroupHelper _stagingGroupHelper =
+		StagingGroupHelperUtil.getStagingGroupHelper();
 
 }

@@ -33,7 +33,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -380,7 +379,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					BatchEnginePortletDataHandlerUtil.buildImportParameters(
 						registration.getExportImportDescriptor(),
 						portletDataContext,
-						_getSiteExternalReferenceCode(portletDataContext)),
+						_groupLocalService.fetchGroup(
+							portletDataContext.getScopeGroupId())),
 					registration.getTaskItemDelegateName());
 
 			try (SafeCloseable safeCloseable =
@@ -482,7 +482,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				BatchEnginePortletDataHandlerUtil.buildExportParameters(
 					registration.getExportImportDescriptor(),
 					portletDataContext,
-					_getSiteExternalReferenceCode(portletDataContext)),
+					_groupLocalService.fetchGroup(
+						portletDataContext.getScopeGroupId())),
 				registration.getTaskItemDelegateName()),
 			new BatchEngineExportTaskExecutor.Settings() {
 
@@ -547,19 +548,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			getPortletId(), exportImportDescriptor.getResourceClassName(),
 			exportImportDescriptor.getLabelLanguageKey(), true, false, null,
 			exportImportDescriptor.getResourceClassName(), null);
-	}
-
-	private String _getSiteExternalReferenceCode(
-		PortletDataContext portletDataContext) {
-
-		Group group = _groupLocalService.fetchGroup(
-			portletDataContext.getScopeGroupId());
-
-		if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
-			return group.getExternalReferenceCode();
-		}
-
-		return null;
 	}
 
 	private long _getUserId() {

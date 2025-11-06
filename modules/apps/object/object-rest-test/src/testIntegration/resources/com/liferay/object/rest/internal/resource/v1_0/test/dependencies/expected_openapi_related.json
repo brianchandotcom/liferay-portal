@@ -574,6 +574,9 @@
 					"field2": {
 						"type": "string"
 					},
+					"folderId": {
+						"type": "integer"
+					},
 					"id": {
 						"type": "id"
 					},
@@ -598,6 +601,9 @@
 					},
 					"relationship1/field1": {
 						"type": "string"
+					},
+					"relationship1/folderId": {
+						"type": "integer"
 					},
 					"relationship1/id": {
 						"type": "id"
@@ -647,6 +653,9 @@
 					"relationship2/field1": {
 						"type": "string"
 					},
+					"relationship2/folderId": {
+						"type": "integer"
+					},
 					"relationship2/id": {
 						"type": "id"
 					},
@@ -685,6 +694,9 @@
 					"relationship2/relationship1/field2": {
 						"type": "string"
 					},
+					"relationship2/relationship1/folderId": {
+						"type": "integer"
+					},
 					"relationship2/relationship1/id": {
 						"type": "id"
 					},
@@ -720,6 +732,9 @@
 					"relationship2/relationship2/field2": {
 						"type": "string"
 					},
+					"relationship2/relationship2/folderId": {
+						"type": "integer"
+					},
 					"relationship2/relationship2/id": {
 						"type": "id"
 					},
@@ -754,6 +769,9 @@
 					},
 					"relationship2/relationship3/field1": {
 						"type": "string"
+					},
+					"relationship2/relationship3/folderId": {
+						"type": "integer"
 					},
 					"relationship2/relationship3/id": {
 						"type": "id"
@@ -792,6 +810,9 @@
 					},
 					"relationship2/relationship3/relationship3/field1": {
 						"type": "string"
+					},
+					"relationship2/relationship3/relationship3/folderId": {
+						"type": "integer"
 					},
 					"relationship2/relationship3/relationship3/id": {
 						"type": "id"
@@ -841,6 +862,9 @@
 					"relationship2/relationship3/relationship4/field1": {
 						"type": "string"
 					},
+					"relationship2/relationship3/relationship4/folderId": {
+						"type": "integer"
+					},
 					"relationship2/relationship3/relationship4/id": {
 						"type": "id"
 					},
@@ -889,6 +913,9 @@
 					"relationship2/relationship3/relationship5/field1": {
 						"type": "string"
 					},
+					"relationship2/relationship3/relationship5/folderId": {
+						"type": "integer"
+					},
 					"relationship2/relationship3/relationship5/id": {
 						"type": "id"
 					},
@@ -913,6 +940,9 @@
 					},
 					"relationship2/relationship3/relationship5/relationship5/field1": {
 						"type": "string"
+					},
+					"relationship2/relationship3/relationship5/relationship5/folderId": {
+						"type": "integer"
 					},
 					"relationship2/relationship3/relationship5/relationship5/id": {
 						"type": "id"
@@ -961,6 +991,9 @@
 					},
 					"relationship2/relationship3/relationship5/relationship6/field1": {
 						"type": "string"
+					},
+					"relationship2/relationship3/relationship5/relationship6/folderId": {
+						"type": "integer"
 					},
 					"relationship2/relationship3/relationship5/relationship6/id": {
 						"type": "id"
@@ -1016,6 +1049,9 @@
 					},
 					"relationship2/relationship4/field1": {
 						"type": "string"
+					},
+					"relationship2/relationship4/folderId": {
+						"type": "integer"
 					},
 					"relationship2/relationship4/id": {
 						"type": "id"
@@ -1303,6 +1339,9 @@
 					"field1": {
 						"type": "string"
 					},
+					"folderId": {
+						"type": "integer"
+					},
 					"id": {
 						"type": "id"
 					},
@@ -1341,6 +1380,9 @@
 					"relationship1/field2": {
 						"type": "string"
 					},
+					"relationship1/folderId": {
+						"type": "integer"
+					},
 					"relationship1/id": {
 						"type": "id"
 					},
@@ -1376,6 +1418,9 @@
 					"relationship2/field2": {
 						"type": "string"
 					},
+					"relationship2/folderId": {
+						"type": "integer"
+					},
 					"relationship2/id": {
 						"type": "id"
 					},
@@ -1400,6 +1445,9 @@
 					},
 					"relationship2/relationship1/field1": {
 						"type": "string"
+					},
+					"relationship2/relationship1/folderId": {
+						"type": "integer"
 					},
 					"relationship2/relationship1/id": {
 						"type": "id"
@@ -1448,6 +1496,9 @@
 					},
 					"relationship2/relationship2/field1": {
 						"type": "string"
+					},
+					"relationship2/relationship2/folderId": {
+						"type": "integer"
 					},
 					"relationship2/relationship2/id": {
 						"type": "id"
@@ -1507,6 +1558,9 @@
 					"relationship3/field1": {
 						"type": "string"
 					},
+					"relationship3/folderId": {
+						"type": "integer"
+					},
 					"relationship3/id": {
 						"type": "id"
 					},
@@ -1544,6 +1598,9 @@
 					},
 					"relationship3/relationship3/field1": {
 						"type": "string"
+					},
+					"relationship3/relationship3/folderId": {
+						"type": "integer"
 					},
 					"relationship3/relationship3/id": {
 						"type": "id"
@@ -1593,6 +1650,9 @@
 					"relationship3/relationship4/field1": {
 						"type": "string"
 					},
+					"relationship3/relationship4/folderId": {
+						"type": "integer"
+					},
 					"relationship3/relationship4/id": {
 						"type": "id"
 					},
@@ -1641,6 +1701,9 @@
 					"relationship3/relationship5/field1": {
 						"type": "string"
 					},
+					"relationship3/relationship5/folderId": {
+						"type": "integer"
+					},
 					"relationship3/relationship5/id": {
 						"type": "id"
 					},
@@ -1665,6 +1728,9 @@
 					},
 					"relationship3/relationship5/relationship5/field1": {
 						"type": "string"
+					},
+					"relationship3/relationship5/relationship5/folderId": {
+						"type": "integer"
 					},
 					"relationship3/relationship5/relationship5/id": {
 						"type": "id"
@@ -1714,6 +1780,9 @@
 					"relationship3/relationship5/relationship6/field1": {
 						"type": "string"
 					},
+					"relationship3/relationship5/relationship6/folderId": {
+						"type": "integer"
+					},
 					"relationship3/relationship5/relationship6/id": {
 						"type": "id"
 					},
@@ -1738,6 +1807,9 @@
 					},
 					"relationship3/relationship5/relationship6/relationship6/field1": {
 						"type": "string"
+					},
+					"relationship3/relationship5/relationship6/relationship6/folderId": {
+						"type": "integer"
 					},
 					"relationship3/relationship5/relationship6/relationship6/id": {
 						"type": "id"
@@ -1773,6 +1845,9 @@
 					},
 					"relationship3/relationship5/relationship6/relationship7/field1": {
 						"type": "string"
+					},
+					"relationship3/relationship5/relationship6/relationship7/folderId": {
+						"type": "integer"
 					},
 					"relationship3/relationship5/relationship6/relationship7/id": {
 						"type": "id"
@@ -1838,6 +1913,9 @@
 					},
 					"relationship4/field1": {
 						"type": "string"
+					},
+					"relationship4/folderId": {
+						"type": "integer"
 					},
 					"relationship4/id": {
 						"type": "id"
@@ -2109,6 +2187,9 @@
 					"field1": {
 						"type": "string"
 					},
+					"folderId": {
+						"type": "integer"
+					},
 					"id": {
 						"type": "id"
 					},
@@ -2146,6 +2227,9 @@
 					},
 					"relationship3/field1": {
 						"type": "string"
+					},
+					"relationship3/folderId": {
+						"type": "integer"
 					},
 					"relationship3/id": {
 						"type": "id"
@@ -2185,6 +2269,9 @@
 					"relationship3/relationship1/field2": {
 						"type": "string"
 					},
+					"relationship3/relationship1/folderId": {
+						"type": "integer"
+					},
 					"relationship3/relationship1/id": {
 						"type": "id"
 					},
@@ -2220,6 +2307,9 @@
 					"relationship3/relationship2/field2": {
 						"type": "string"
 					},
+					"relationship3/relationship2/folderId": {
+						"type": "integer"
+					},
 					"relationship3/relationship2/id": {
 						"type": "id"
 					},
@@ -2244,6 +2334,9 @@
 					},
 					"relationship3/relationship2/relationship1/field1": {
 						"type": "string"
+					},
+					"relationship3/relationship2/relationship1/folderId": {
+						"type": "integer"
 					},
 					"relationship3/relationship2/relationship1/id": {
 						"type": "id"
@@ -2292,6 +2385,9 @@
 					},
 					"relationship3/relationship2/relationship2/field1": {
 						"type": "string"
+					},
+					"relationship3/relationship2/relationship2/folderId": {
+						"type": "integer"
 					},
 					"relationship3/relationship2/relationship2/id": {
 						"type": "id"
@@ -2351,6 +2447,9 @@
 					"relationship3/relationship3/field1": {
 						"type": "string"
 					},
+					"relationship3/relationship3/folderId": {
+						"type": "integer"
+					},
 					"relationship3/relationship3/id": {
 						"type": "id"
 					},
@@ -2398,6 +2497,9 @@
 					},
 					"relationship3/relationship4/field1": {
 						"type": "string"
+					},
+					"relationship3/relationship4/folderId": {
+						"type": "integer"
 					},
 					"relationship3/relationship4/id": {
 						"type": "id"
@@ -2457,6 +2559,9 @@
 					"relationship4/field1": {
 						"type": "string"
 					},
+					"relationship4/folderId": {
+						"type": "integer"
+					},
 					"relationship4/id": {
 						"type": "id"
 					},
@@ -2505,6 +2610,9 @@
 					"relationship5/field1": {
 						"type": "string"
 					},
+					"relationship5/folderId": {
+						"type": "integer"
+					},
 					"relationship5/id": {
 						"type": "id"
 					},
@@ -2529,6 +2637,9 @@
 					},
 					"relationship5/relationship5/field1": {
 						"type": "string"
+					},
+					"relationship5/relationship5/folderId": {
+						"type": "integer"
 					},
 					"relationship5/relationship5/id": {
 						"type": "id"
@@ -2578,6 +2689,9 @@
 					"relationship5/relationship6/field1": {
 						"type": "string"
 					},
+					"relationship5/relationship6/folderId": {
+						"type": "integer"
+					},
 					"relationship5/relationship6/id": {
 						"type": "id"
 					},
@@ -2602,6 +2716,9 @@
 					},
 					"relationship5/relationship6/relationship6/field1": {
 						"type": "string"
+					},
+					"relationship5/relationship6/relationship6/folderId": {
+						"type": "integer"
 					},
 					"relationship5/relationship6/relationship6/id": {
 						"type": "id"
@@ -2638,6 +2755,9 @@
 					"relationship5/relationship6/relationship7/field1": {
 						"type": "string"
 					},
+					"relationship5/relationship6/relationship7/folderId": {
+						"type": "integer"
+					},
 					"relationship5/relationship6/relationship7/id": {
 						"type": "id"
 					},
@@ -2662,6 +2782,9 @@
 					},
 					"relationship5/relationship6/relationship7/relationship7/field1": {
 						"type": "string"
+					},
+					"relationship5/relationship6/relationship7/relationship7/folderId": {
+						"type": "integer"
 					},
 					"relationship5/relationship6/relationship7/relationship7/id": {
 						"type": "id"
@@ -2697,6 +2820,9 @@
 					},
 					"relationship5/relationship6/relationship7/relationship8/field1": {
 						"type": "string"
+					},
+					"relationship5/relationship6/relationship7/relationship8/folderId": {
+						"type": "integer"
 					},
 					"relationship5/relationship6/relationship7/relationship8/id": {
 						"type": "id"

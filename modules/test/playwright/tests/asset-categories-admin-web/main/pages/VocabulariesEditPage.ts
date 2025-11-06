@@ -107,6 +107,10 @@ export class VocabulariesEditPage {
 		await this.deleteButton.click();
 	}
 
+	async fillExternalReferenceCode(externalReferenceCode: string) {
+		await this.externalReferenceCodeInput.fill(externalReferenceCode);
+	}
+
 	async fillName(name: string) {
 		await this.nameInput.fill(name);
 	}

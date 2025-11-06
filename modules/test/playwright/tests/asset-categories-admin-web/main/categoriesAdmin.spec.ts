@@ -11,6 +11,9 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {createCategories} from '../../../helpers/CreateCategories';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest';
+import {
+	clickAndExpectToBeVisible
+} from "../../../utils/clickAndExpectToBeVisible";
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -73,6 +76,26 @@ test('Add, edit and delete a vocabulary', async ({
 		await expect(
 			page.getByRole('heading', {name: newVocabularyName})
 		).toBeVisible();
+	});
+
+	await test.step('Add a vocabulary with existing external reference code', async () => {
+		await assetCategoriesAdminPage.newVocabularyButton.click();
+
+		await vocabulariesEditPage.fillName('Vocabulary 2');
+		await vocabulariesEditPage.fillExternalReferenceCode(vocabularyExternalReferenceCode);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: vocabulariesEditPage.saveButton,
+			trigger: page.getByText(
+				'Please enter a unique external reference code.',
+				{
+					exact: true,
+				}
+			),
+		});
+
+		await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 	});
 
 	await test.step('Delete the vocabulary', async () => {

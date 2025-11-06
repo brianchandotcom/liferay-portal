@@ -27,6 +27,52 @@
 				"es_ES": ""
 			},
 			"type": "text"
+		},
+		{
+			"dataType": "document-library",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "DocumentFieldNameLabel",
+				"es_ES": "NombreEtiquetaDelCampoDeDocumentos"
+			},
+			"localizable": true,
+			"name": "MyDocument",
+			"predefinedValue": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"type": "document_library"
+		},
+		{
+			"dataType": "image",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "ImageFieldNameLabel",
+				"es_ES": "NombreEtiquetaDelCampoDeImagen"
+			},
+			"localizable": true,
+			"name": "MyImage",
+			"predefinedValue": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"type": "ddm-image"
 		}
 	]
 }

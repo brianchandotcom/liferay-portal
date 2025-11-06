@@ -24,6 +24,46 @@
 				"en_US": ""
 			},
 			"type": "text"
+		},
+		{
+			"dataType": "document",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "DocumentFieldNameLabel"
+			},
+			"localizable": true,
+			"name": "MyDocument",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-documentlibrary"
+		},
+		{
+			"dataType": "image",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "ImageFieldNameLabel"
+			},
+			"localizable": true,
+			"name": "MyImage",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-image"
 		}
 	]
 }

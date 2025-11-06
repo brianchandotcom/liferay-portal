@@ -12,7 +12,8 @@ import java.util.List;
  */
 public interface ObjectEntryManagerRegistry {
 
-	public ObjectEntryManager getObjectEntryManager(String storageType);
+	public ObjectEntryManager getObjectEntryManager(
+		long companyId, String storageType);
 
 	public List<ObjectEntryManager> getObjectEntryManagers(long companyId);
 

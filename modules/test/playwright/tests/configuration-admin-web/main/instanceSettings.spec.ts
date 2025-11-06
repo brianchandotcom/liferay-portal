@@ -81,14 +81,10 @@ test('Asserts that a user can manage factory configurations', async ({
 		expect(fileContent).toContain(providersNames[0]);
 	});
 
-	await test.step('Assert that multiple factory configuration was exported', async () => {
+	await test.step('Assert that multiple factory configuration entries can be exported', async () => {
 		const downloadPromise = page.waitForEvent('download');
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'Export Entries'}),
-			trigger: page.getByRole('button', {name: 'Actions'}).first(),
-		});
+		await instanceSettingsPage.exportFactoryEntries();
 
 		const download = await downloadPromise;
 

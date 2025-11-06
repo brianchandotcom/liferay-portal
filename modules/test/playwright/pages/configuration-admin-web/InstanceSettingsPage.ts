@@ -95,6 +95,14 @@ export class InstanceSettingsPage {
 			.click();
 	}
 
+	async exportFactoryEntries() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Export Entries'}),
+			trigger: this.page.getByRole('button', {name: 'Actions'}).first(),
+		});
+	}
+
 	async exportFactoryEntry(entryName: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,

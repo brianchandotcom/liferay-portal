@@ -75,15 +75,16 @@ public interface CommerceInventoryWarehouseItemLocalService
 
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long userId,
-			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
-			String unitOfMeasureKey)
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			BigDecimal reservedQuantity, String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId, long userId,
 				long commerceInventoryWarehouseId, BigDecimal quantity,
-				String sku, String unitOfMeasureKey)
+				BigDecimal reservedQuantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException;
 
 	public int countItemsByCompanyId(
@@ -423,12 +424,8 @@ public interface CommerceInventoryWarehouseItemLocalService
 
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
 			long userId, long commerceInventoryWarehouseItemId,
-			BigDecimal quantity, BigDecimal reservedQuantity, long mvccVersion)
-		throws PortalException;
-
-	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseItemId,
-			long mvccVersion, BigDecimal quantity, String unitOfMeasureKey)
+			BigDecimal quantity, BigDecimal reservedQuantity,
+			String unitOfMeasureKey, long mvccVersion)
 		throws PortalException;
 
 }

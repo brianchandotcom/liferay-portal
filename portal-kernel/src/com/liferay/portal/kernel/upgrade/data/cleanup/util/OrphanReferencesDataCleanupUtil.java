@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup.util;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -15,15 +16,19 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Luis Ortiz
@@ -53,6 +58,59 @@ public class OrphanReferencesDataCleanupUtil {
 			(dbType == DBType.MARIADB)) {
 
 			aliasNeeded = true;
+		}
+
+		Set<String> firstIndexColumns = new HashSet<>();
+
+		try (ResultSet resultSet = db.getIndexResultSet(
+				connection, targetTableName, false)) {
+
+			while (resultSet.next()) {
+				String indexName = resultSet.getString("INDEX_NAME");
+
+				if (indexName == null) {
+					continue;
+				}
+
+				if (resultSet.getShort("ORDINAL_POSITION") == 1) {
+					String columnName = resultSet.getString("COLUMN_NAME");
+
+					if (columnName != null) {
+						firstIndexColumns.add(columnName);
+					}
+				}
+			}
+		}
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DBInspector dbInspector = new DBInspector(connection);
+
+		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
+				dbInspector.getCatalog(), dbInspector.getSchema(),
+				dbInspector.normalizeName(targetTableName, databaseMetaData))) {
+
+			while (resultSet.next()) {
+				if (resultSet.getShort("KEY_SEQ") != 1) {
+					continue;
+				}
+
+				firstIndexColumns.add(resultSet.getString("COLUMN_NAME"));
+
+				break;
+			}
+		}
+
+		List<SafeCloseable> safeCloseables = new ArrayList<>();
+
+		for (String targetColumnName : targetColumnNames) {
+			if (!ArrayUtil.contains(
+					firstIndexColumns.toArray(new String[0]), targetColumnName,
+					true)) {
+
+				safeCloseables.add(
+					db.addTemporaryIndex(
+						connection, targetTableName, false, targetColumnName));
+			}
 		}
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
@@ -93,6 +151,11 @@ public class OrphanReferencesDataCleanupUtil {
 						(targetColumnNames.length > 1) ? "s " : " ",
 						String.join(", ", targetColumnNames), " from table ",
 						targetTableName));
+			}
+		}
+		finally {
+			for (SafeCloseable safeCloseable : safeCloseables) {
+				safeCloseable.close();
 			}
 		}
 	}

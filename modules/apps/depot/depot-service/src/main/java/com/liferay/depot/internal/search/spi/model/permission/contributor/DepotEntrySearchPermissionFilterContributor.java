@@ -5,26 +5,26 @@
 
 package com.liferay.depot.internal.search.spi.model.permission.contributor;
 
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,57 +42,67 @@ public class DepotEntrySearchPermissionFilterContributor
 		BooleanFilter booleanFilter, long companyId, long[] groupIds,
 		long userId, PermissionChecker permissionChecker, String className) {
 
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564") ||
-			(userId == 0) ||
-			!Objects.equals(className, DepotEntry.class.getName())) {
+		try {
+			if (userId == 0) {
+				return;
+			}
 
-			return;
-		}
+			Role role = _roleLocalService.fetchRole(
+				companyId, DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 
-		String[] depotGroupIds = _getDepotGroupIds(userId);
+			if (role == null) {
+				return;
+			}
 
-		if (depotGroupIds.length == 0) {
-			return;
-		}
+			for (long groupId :
+					_getDepotGroupIds(
+						permissionChecker.getCompanyId(), userId)) {
 
-		Role role = _roleLocalService.fetchRole(
-			companyId, DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+				TermsFilter termsFilter = new TermsFilter("groupRoleId");
 
-		if (role == null) {
-			return;
-		}
+				termsFilter.addValues(
+					groupId + StringPool.DASH + role.getRoleId());
 
-		for (String depotGroupId : depotGroupIds) {
-			TermsFilter termsFilter = new TermsFilter("groupRoleId");
-
-			termsFilter.addValues(
-				depotGroupId + StringPool.DASH + role.getRoleId());
-
-			booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
-		}
-	}
-
-	private String[] _getDepotGroupIds(long userId) {
-		Set<Long> groupIds = new HashSet<>();
-
-		for (long groupId :
-				_depotEntryLocalService.getDepotEntryGroupIds(
-					CompanyThreadLocal.getCompanyId(),
-					DepotConstants.TYPE_SPACE)) {
-
-			for (UserGroup userGroup :
-					_userGroupLocalService.getGroupUserGroups(groupId)) {
-
-				if (_userGroupLocalService.hasUserUserGroup(
-						userId, userGroup.getUserGroupId())) {
-
-					groupIds.add(groupId);
-				}
+				booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
 			}
 		}
-
-		return ArrayUtil.toStringArray(groupIds);
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 	}
+
+	private Set<Long> _getDepotGroupIds(long companyId, long userId)
+		throws PortalException {
+
+		Set<Long> groupIds = new HashSet<>();
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_depotEntryLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", companyId)));
+		actionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<DepotEntry>)
+				depotEntry -> {
+					for (UserGroup userGroup :
+							_userGroupLocalService.getGroupUserGroups(
+								depotEntry.getGroupId())) {
+
+						if (_userGroupLocalService.hasUserUserGroup(
+								userId, userGroup.getUserGroupId())) {
+
+							groupIds.add(depotEntry.getGroupId());
+						}
+					}
+				});
+		actionableDynamicQuery.performActions();
+
+		return groupIds;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DepotEntrySearchPermissionFilterContributor.class);
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

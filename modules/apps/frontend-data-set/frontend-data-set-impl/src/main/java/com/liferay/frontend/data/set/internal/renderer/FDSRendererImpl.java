@@ -180,11 +180,11 @@ public class FDSRendererImpl implements FDSRenderer {
 						return filtersJSONArray;
 					}
 				).put(
-					"id", fdsName
-				).put(
 					"hideManagementBarInEmptyState",
 					() -> fdsSerializer.serializeHideManagementBarInEmptyState(
 						fdsName, httpServletRequest)
+				).put(
+					"id", fdsName
 				).put(
 					"itemsActions",
 					() -> {

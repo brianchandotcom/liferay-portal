@@ -176,7 +176,7 @@ public class SystemFDSSerializer
 			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
 
 		if (systemFDSEntry == null) {
-			return null;
+			return false;
 		}
 
 		return systemFDSEntry.getHideManagementBarInEmptyState();

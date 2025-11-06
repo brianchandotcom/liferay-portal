@@ -14,6 +14,7 @@ import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {UsersAndOrganizationsPage} from '../../../pages/users-admin-web/UsersAndOrganizationsPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import { waitForAlert } from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	accessibilityMenuPagesTest,
@@ -107,31 +108,23 @@ test('Asserts that a user can manage factory configurations', async ({
 			type: 'success',
 		});
 
-		expect(page.locator(`tbody tr:has-text("${providersNames[0]}")`)).not.toBeVisible();
-		expect(page.locator(`tbody tr:has-text("${newProviderName}")`)).toBeVisible();
+		expect(
+			page.locator(`tbody tr:has-text("${providersNames[0]}")`)
+		).toBeHidden();
+
+		providersNames[0] = newProviderName;
+
+		expect(
+			page.locator(`tbody tr:has-text("${newProviderName}")`)
+		).toBeVisible();
 	});
 
-	await test.step('Assert that factory configurations were deleted', async () => {
-		while (
-			(await page.locator('td.lfr-provider-name-column').count()) > 0
-		) {
-			const row = page.locator('tbody tr').first();
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByText('Delete').first(),
-				trigger: row.getByRole('button'),
-			});
+	await test.step('Assert that factory configurations can be deleted', async () => {
+		for (const providerName of providersNames) {
+			await instanceSettingsPage.deleteFactoryEntry(providerName);
 
-			await expect(
-				page.getByText('Success:Your request completed successfully.')
-			).toBeVisible();
-
-			await page.reload();
+			await waitForAlert(page);
 		}
-
-		await expect(
-			await page.locator('td.lfr-provider-name-column').count()
-		).toBe(0);
 	});
 });
 

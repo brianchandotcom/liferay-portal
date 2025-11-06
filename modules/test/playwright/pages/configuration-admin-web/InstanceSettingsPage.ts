@@ -123,6 +123,16 @@ export class InstanceSettingsPage {
 		});
 	}
 
+	async deleteFactoryEntry(entryName: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('link', {name: 'Delete'}),
+			trigger: this.page
+				.locator(`tbody tr:has-text("${entryName}")`)
+				.getByRole('button', {name: 'Actions'}),
+		});
+	}
+
 	async goToSSO() {
 		await this.goto();
 		await this.page.getByRole('link', {name: 'SSO'}).click();

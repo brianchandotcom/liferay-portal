@@ -9,8 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
@@ -23,9 +26,11 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
@@ -41,6 +46,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -88,12 +94,13 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 			_group.getGroupId());
 
 		_fileEntry = _addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test
 	public void testCreateViewUsageDropdownItemWithoutUsage() throws Exception {
-		DropdownItem dropdownItem = _getViewUsageDropdownItem();
+		DropdownItem dropdownItem = _getViewUsageDropdownItem(_fileEntry);
 
 		Assert.assertEquals("list-ul", dropdownItem.get("icon"));
 		Assert.assertEquals("View Usages", dropdownItem.get("label"));
@@ -104,20 +111,59 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 	public void testCreateViewUsageDropdownItemWithUsage() throws Exception {
 		_addLayoutClassedModelUsage(_fileEntry);
 
-		DropdownItem dropdownItem = _getViewUsageDropdownItem();
+		DropdownItem dropdownItem = _getViewUsageDropdownItem(_fileEntry);
 
 		Assert.assertEquals("list-ul", dropdownItem.get("icon"));
 		Assert.assertEquals("View Usages", dropdownItem.get("label"));
 		Assert.assertFalse((Boolean)dropdownItem.get("disabled"));
 	}
 
-	private FileEntry _addDLFileEntry(String fileName, String content)
+	@Test
+	public void testGetActionDropdownItems() throws Exception {
+		DropdownItem dropdownItem = _getCheckoutDropdownItem(_fileEntry);
+
+		Assert.assertEquals("lock", dropdownItem.get("icon"));
+		Assert.assertEquals("Checkout", dropdownItem.get("label"));
+		Assert.assertFalse((Boolean)dropdownItem.get("disabled"));
+	}
+
+	@Test
+	public void testGetActionDropdownItemsWithWorkflowEnabled()
 		throws Exception {
 
-		return _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+		Folder folder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_serviceContext);
+
+		_dlFolderService.updateFolder(
+			folder.getFolderId(), folder.getName(), folder.getDescription(), 0,
+			ListUtil.fromArray(0L), DLFolderConstants.RESTRICTION_TYPE_WORKFLOW,
+			_serviceContext);
+
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			_group.getGroupId(), DLFolder.class.getName(), folder.getFolderId(),
+			-1, "Single Approver", 1);
+
+		FileEntry fileEntry = _addDLFileEntry(
+			folder.getFolderId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		DropdownItem dropdownItem = _getCheckoutDropdownItem(fileEntry);
+
+		Assert.assertEquals("lock", dropdownItem.get("icon"));
+		Assert.assertEquals("Checkout", dropdownItem.get("label"));
+		Assert.assertTrue((Boolean)dropdownItem.get("disabled"));
+	}
+
+	private FileEntry _addDLFileEntry(
+			long folderId, String fileName, String content)
+		throws Exception {
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			fileName, ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			content.getBytes(), null, null, null, _serviceContext);
 	}
@@ -135,6 +181,15 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 			RandomTestUtil.randomLong(), layout.getPlid(), _serviceContext);
 	}
 
+	private DropdownItem _getCheckoutDropdownItem(FileEntry fileEntry)
+		throws Exception {
+
+		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+			_getDropdownItems(fileEntry), 1);
+
+		return dropdownGroupItems.get(0);
+	}
+
 	private List<DropdownItem> _getDropdownGroupItems(
 		List<DropdownItem> dropdownItems, int groupIndex) {
 
@@ -144,7 +199,9 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 		return (List<DropdownItem>)dropdownGroupItem.get("items");
 	}
 
-	private List<DropdownItem> _getDropdownItems() throws Exception {
+	private List<DropdownItem> _getDropdownItems(FileEntry fileEntry)
+		throws Exception {
+
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(
@@ -194,14 +251,16 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 		DLViewFileVersionDisplayContext dLViewFileVersionDisplayContext =
 			_dLDisplayContextProvider.getDLViewFileVersionDisplayContext(
 				httpServletRequest, new MockHttpServletResponse(),
-				_fileEntry.getFileVersion());
+				fileEntry.getFileVersion());
 
 		return dLViewFileVersionDisplayContext.getActionDropdownItems();
 	}
 
-	private DropdownItem _getViewUsageDropdownItem() throws Exception {
+	private DropdownItem _getViewUsageDropdownItem(FileEntry fileEntry)
+		throws Exception {
+
 		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
-			_getDropdownItems(), 1);
+			_getDropdownItems(fileEntry), 1);
 
 		return dropdownGroupItems.get(3);
 	}
@@ -220,6 +279,9 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 	)
 	private DLDisplayContextProvider _dLDisplayContextProvider;
 
+	@Inject
+	private DLFolderService _dlFolderService;
+
 	private FileEntry _fileEntry;
 
 	@DeleteAfterTestRun
@@ -233,5 +295,9 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 		_layoutClassedModelUsageLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

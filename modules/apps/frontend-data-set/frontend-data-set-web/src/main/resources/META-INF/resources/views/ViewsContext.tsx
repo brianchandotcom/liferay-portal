@@ -5,40 +5,42 @@
 
 import {createContext} from 'react';
 
+import {IFilter} from '../management_bar/controls/filters/Filter';
+
 export interface IViewsContext {
 	activeCustomViewId: null | string;
 	activeView: any;
 	customViews: any;
 	customViewsEnabled: boolean;
-	filters: Array<any>;
+	filters: IFilter[];
 	modifiedFields: any;
 	paginationDelta: any;
-	sorts: Array<any>;
-	views: Array<any>;
+	sorts: any[];
+	views: any[];
 	visibleFieldNames: any;
 }
 
-export type TViewsContextDispatch = ({
-	type,
-	value,
-}: {
-	type: string;
-	value: any;
-}) => void;
+export type TViewsContextDispatch = (
+	params:
+		| {type: string; value: any}
+		| ((dispatch: TViewsContextDispatch) => void)
+) => void;
 
-const ViewsContext = createContext<[IViewsContext, any]>([
-	{
-		activeCustomViewId: null,
-		activeView: null,
-		customViews: {},
-		customViewsEnabled: false,
-		filters: [],
-		modifiedFields: {},
-		paginationDelta: null,
-		sorts: [],
-		views: [],
-		visibleFieldNames: {},
-	},
+const initialState: IViewsContext = {
+	activeCustomViewId: null,
+	activeView: null,
+	customViews: {},
+	customViewsEnabled: false,
+	filters: [],
+	modifiedFields: {},
+	paginationDelta: null,
+	sorts: [],
+	views: [],
+	visibleFieldNames: {},
+};
+
+const ViewsContext = createContext<[IViewsContext, TViewsContextDispatch]>([
+	initialState,
 	() => {},
 ]);
 

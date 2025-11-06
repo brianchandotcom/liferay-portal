@@ -42,11 +42,18 @@ interface FilterConfiguration {
 	id: string;
 }
 
-interface FilterComponentArgs {
+export interface FilterComponentArgs {
 	id: string;
 	moduleURL: string;
 	onClose: () => void;
 	type: 'clientExtension' | 'dateRange' | 'selection';
+}
+
+export interface IFilter extends FilterComponentArgs {
+	clientExtensionResolutionError: any;
+	id: string;
+	label: string;
+	selectedItemsLabel: string;
 }
 
 const FILTER_IMPLEMENTATIONS = {
@@ -100,10 +107,11 @@ const Filter = ({
 			...otherProps,
 		};
 
-		newFilter.odataFilterString =
-			filterImplementation.getOdataString(newFilter);
+		newFilter.odataFilterString = filterImplementation.getOdataString(
+			newFilter as any
+		);
 		newFilter.selectedItemsLabel =
-			filterImplementation.getSelectedItemsLabel(newFilter);
+			filterImplementation.getSelectedItemsLabel(newFilter as any);
 
 		setSearching(true);
 

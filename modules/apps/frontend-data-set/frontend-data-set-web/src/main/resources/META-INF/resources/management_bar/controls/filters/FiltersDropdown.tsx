@@ -8,18 +8,22 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect, useState} from 'react';
 
-import ViewsContext from '../../../views/ViewsContext';
-import Filter from './Filter';
+import ViewsContext, {
+	IViewsContext,
+	TViewsContextDispatch,
+} from '../../../views/ViewsContext';
+import Filter, {FilterComponentArgs, IFilter} from './Filter';
 
 const FiltersDropdown = () => {
-	const [{filters: initialFilters}] = useContext(ViewsContext);
+	const [{filters: initialFilters}]: [IViewsContext, TViewsContextDispatch] =
+		useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
-	const [activeFilter, setActiveFilter] = useState(null);
-	const [filters, setFilters] = useState(initialFilters);
+	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
+	const [filters, setFilters] = useState<IFilter[]>(initialFilters);
 	const [query, setQuery] = useState('');
 
-	const onSearch = (query) => {
+	const onSearch = (query: string) => {
 		setQuery(query);
 
 		setFilters(
@@ -34,7 +38,7 @@ const FiltersDropdown = () => {
 	useEffect(() => {
 		setFilters(initialFilters);
 
-		setActiveFilter((currentActiveFilter) => {
+		setActiveFilter((currentActiveFilter: FilterComponentArgs | null) => {
 			if (!currentActiveFilter) {
 				return null;
 			}
@@ -108,7 +112,7 @@ const FiltersDropdown = () => {
 						value={query}
 					/>
 
-					<ClayDropDown.Divider className="m-0" />
+					<ClayDropDown.Divider />
 
 					{filters.length ? (
 						<ClayDropDown.ItemList>

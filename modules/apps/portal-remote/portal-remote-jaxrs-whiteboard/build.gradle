@@ -26,7 +26,7 @@ dependencies {
 	compileOnly group: "org.apache.johnzon", name: "johnzon-core", version: "2.0.1"
 	compileOnly group: "org.apache.johnzon", name: "johnzon-jsonb", version: "2.0.1"
 	compileOnly group: "org.apache.johnzon", name: "johnzon-mapper", version: "2.0.1"
-	compileOnly group: "org.apache.velocity", name: "velocity-engine-core", version: "2.3"
+	compileOnly group: "org.apache.velocity", name: "velocity-engine-core", version: "2.4"
 	compileOnly group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.3.1"
 	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

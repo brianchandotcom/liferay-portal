@@ -19,6 +19,7 @@ import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItem
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -134,8 +135,10 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 	public WarehouseItem getWarehouseItem(Long id) throws Exception {
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				GetterUtil.getLong(id),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, GetterUtil.getLong(id),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	@Override
@@ -207,13 +210,17 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				id, commerceInventoryWarehouseItem.getMvccVersion(),
+				id,
 				BigDecimalUtil.get(
 					warehouseItem.getQuantity(),
 					commerceInventoryWarehouseItem.getQuantity()),
+				BigDecimalUtil.get(
+					warehouseItem.getReservedQuantity(),
+					commerceInventoryWarehouseItem.getReservedQuantity()),
 				GetterUtil.get(
 					warehouseItem.getUnitOfMeasureKey(),
-					commerceInventoryWarehouseItem.getUnitOfMeasureKey()));
+					commerceInventoryWarehouseItem.getUnitOfMeasureKey()),
+				commerceInventoryWarehouseItem.getMvccVersion());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -240,13 +247,16 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				commerceInventoryWarehouseItem.getMvccVersion(),
 				BigDecimalUtil.get(
 					warehouseItem.getQuantity(),
 					commerceInventoryWarehouseItem.getQuantity()),
+				BigDecimalUtil.get(
+					warehouseItem.getReservedQuantity(),
+					commerceInventoryWarehouseItem.getReservedQuantity()),
 				GetterUtil.get(
 					warehouseItem.getUnitOfMeasureKey(),
-					commerceInventoryWarehouseItem.getUnitOfMeasureKey()));
+					commerceInventoryWarehouseItem.getUnitOfMeasureKey()),
+				commerceInventoryWarehouseItem.getMvccVersion());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -277,14 +287,19 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 						getCommerceInventoryWarehouseId(),
 					BigDecimalUtil.get(
 						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					BigDecimalUtil.get(
+						warehouseItem.getReservedQuantity(), BigDecimal.ZERO),
 					warehouseItem.getSku(),
 					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry,
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	@Override
@@ -304,14 +319,19 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 						getCommerceInventoryWarehouseId(),
 					BigDecimalUtil.get(
 						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					BigDecimalUtil.get(
+						warehouseItem.getReservedQuantity(), BigDecimal.ZERO),
 					warehouseItem.getSku(),
 					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry,
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	@Override
@@ -359,14 +379,19 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 						getCommerceInventoryWarehouseId(),
 					BigDecimalUtil.get(
 						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					BigDecimalUtil.get(
+						warehouseItem.getReservedQuantity(), BigDecimal.ZERO),
 					warehouseItem.getSku(),
 					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry,
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	@Override
@@ -395,14 +420,19 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 						getCommerceInventoryWarehouseId(),
 					BigDecimalUtil.get(
 						warehouseItem.getQuantity(), BigDecimal.ONE),
+					BigDecimalUtil.get(
+						warehouseItem.getReservedQuantity(), BigDecimal.ZERO),
 					GetterUtil.getString(warehouseItem.getSku()),
 					GetterUtil.getString(warehouseItem.getUnitOfMeasureKey()));
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry,
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	private Date _addDaysToDate(Date date, int increment) {
@@ -421,9 +451,12 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry,
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	private List<WarehouseItem> _toWarehouseItems(
@@ -435,9 +468,12 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 			commerceInventoryWarehouseItems,
 			commerceInventoryWarehouseItem -> _warehouseItemDTOConverter.toDTO(
 				new DefaultDTOConverterContext(
+					contextAcceptLanguage.isAcceptAllLanguages(), null,
+					_dtoConverterRegistry,
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
-					contextAcceptLanguage.getPreferredLocale())));
+					contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+					contextUser)));
 	}
 
 	private static final int _DEFAULT_INCREMENT_DAYS = 30;
@@ -449,6 +485,9 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.converter.WarehouseItemDTOConverter)"

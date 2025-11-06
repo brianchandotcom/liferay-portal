@@ -123,7 +123,8 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			addCommerceInventoryWarehouseItem(
 				RandomTestUtil.randomString(), _user.getUserId(),
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				BigDecimal.TEN, _cpInstance.getSku(), StringPool.BLANK);
+				BigDecimal.TEN, BigDecimal.ZERO, _cpInstance.getSku(),
+				StringPool.BLANK);
 
 		String key = RandomTestUtil.randomString();
 
@@ -190,7 +191,8 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			addCommerceInventoryWarehouseItem(
 				RandomTestUtil.randomString(), _user.getUserId(),
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				BigDecimal.TEN, _cpInstance.getSku(), StringPool.BLANK);
+				BigDecimal.TEN, BigDecimal.ZERO, _cpInstance.getSku(),
+				StringPool.BLANK);
 
 		_cpInstanceUnitOfMeasure =
 			_cpInstanceUnitOfMeasureLocalService.addCPInstanceUnitOfMeasure(
@@ -265,7 +267,8 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			addCommerceInventoryWarehouseItem(
 				RandomTestUtil.randomString(), _user.getUserId(),
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				BigDecimal.TEN, _cpInstance.getSku(), StringPool.BLANK);
+				BigDecimal.TEN, BigDecimal.ZERO, _cpInstance.getSku(),
+				StringPool.BLANK);
 
 		String key = RandomTestUtil.randomString();
 
@@ -334,7 +337,8 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			addCommerceInventoryWarehouseItem(
 				RandomTestUtil.randomString(), _user.getUserId(),
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				BigDecimal.TEN, _cpInstance.getSku(), StringPool.BLANK);
+				BigDecimal.TEN, BigDecimal.ZERO, _cpInstance.getSku(),
+				StringPool.BLANK);
 
 		String key = RandomTestUtil.randomString();
 
@@ -397,7 +401,8 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			addCommerceInventoryWarehouseItem(
 				RandomTestUtil.randomString(), _user.getUserId(),
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				BigDecimal.TEN, _cpInstance.getSku(), StringPool.BLANK);
+				BigDecimal.TEN, BigDecimal.ZERO, _cpInstance.getSku(),
+				StringPool.BLANK);
 
 		String key = RandomTestUtil.randomString();
 

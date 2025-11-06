@@ -101,6 +101,7 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 					actionRequest,
 					CommerceInventoryWarehouseItem.class.getName(),
 					"reservedQuantity"),
+				ParamUtil.getString(actionRequest, "unitOfMeasureKey"),
 				ParamUtil.getLong(actionRequest, "mvccVersion"));
 	}
 

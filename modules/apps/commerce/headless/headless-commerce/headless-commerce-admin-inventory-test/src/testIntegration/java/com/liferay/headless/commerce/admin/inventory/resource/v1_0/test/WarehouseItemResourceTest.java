@@ -80,7 +80,13 @@ public class WarehouseItemResourceTest
 	public void testPatchWarehouseItem() throws Exception {
 		WarehouseItem warehouseItem = _addWarehouseItem(randomWarehouseItem());
 
-		warehouseItem.setQuantity(BigDecimal.TEN);
+		BigDecimal expectedQuantity = BigDecimal.valueOf(15);
+
+		warehouseItem.setQuantity(expectedQuantity);
+
+		BigDecimal expectedReservedQuantity = BigDecimal.valueOf(9);
+
+		warehouseItem.setReservedQuantity(expectedReservedQuantity);
 
 		String newUnitOfMeasureKey = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
@@ -93,7 +99,9 @@ public class WarehouseItemResourceTest
 		WarehouseItem getWarehouseItem = warehouseItemResource.getWarehouseItem(
 			warehouseItem.getId());
 
-		Assert.assertEquals(BigDecimal.TEN, getWarehouseItem.getQuantity());
+		Assert.assertEquals(expectedQuantity, getWarehouseItem.getQuantity());
+		Assert.assertEquals(
+			expectedReservedQuantity, getWarehouseItem.getReservedQuantity());
 		Assert.assertEquals(
 			newUnitOfMeasureKey, getWarehouseItem.getUnitOfMeasureKey());
 	}
@@ -105,7 +113,13 @@ public class WarehouseItemResourceTest
 
 		WarehouseItem warehouseItem = _addWarehouseItem(randomWarehouseItem());
 
-		warehouseItem.setQuantity(BigDecimal.TEN);
+		BigDecimal expectedQuantity = BigDecimal.valueOf(15);
+
+		warehouseItem.setQuantity(expectedQuantity);
+
+		BigDecimal expectedReservedQuantity = BigDecimal.valueOf(9);
+
+		warehouseItem.setReservedQuantity(expectedReservedQuantity);
 
 		String newUnitOfMeasureKey = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
@@ -119,14 +133,18 @@ public class WarehouseItemResourceTest
 			warehouseItemResource.getWarehouseItemByExternalReferenceCode(
 				warehouseItem.getExternalReferenceCode());
 
-		Assert.assertEquals(BigDecimal.TEN, getWarehouseItem.getQuantity());
+		Assert.assertEquals(expectedQuantity, getWarehouseItem.getQuantity());
+		Assert.assertEquals(
+			expectedReservedQuantity, getWarehouseItem.getReservedQuantity());
 		Assert.assertEquals(
 			newUnitOfMeasureKey, getWarehouseItem.getUnitOfMeasureKey());
 	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"quantity", "unitOfMeasureKey"};
+		return new String[] {
+			"quantity", "reservedQuantity", "unitOfMeasureKey"
+		};
 	}
 
 	@Override
@@ -135,8 +153,8 @@ public class WarehouseItemResourceTest
 			{
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				modifiedDate = RandomTestUtil.nextDate();
 				quantity = BigDecimal.ONE;
+				reservedQuantity = BigDecimal.ONE;
 				sku = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				unitOfMeasureKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

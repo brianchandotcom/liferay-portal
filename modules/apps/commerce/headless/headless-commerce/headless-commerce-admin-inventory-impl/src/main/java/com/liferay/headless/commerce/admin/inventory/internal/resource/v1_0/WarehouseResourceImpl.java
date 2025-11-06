@@ -332,6 +332,9 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 							getCommerceInventoryWarehouseId(),
 						BigDecimalUtil.get(
 							warehouseItem.getQuantity(), BigDecimal.ZERO),
+						BigDecimalUtil.get(
+							warehouseItem.getReservedQuantity(),
+							BigDecimal.ZERO),
 						warehouseItem.getSku(),
 						warehouseItem.getUnitOfMeasureKey());
 			}

@@ -96,9 +96,13 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					updateCommerceInventoryWarehouseItem(
-						commerceInventoryWarehouseItemId,
-						ParamUtil.getLong(actionRequest, "mvccVersion"),
-						quantity, unitOfMeasureKey);
+						commerceInventoryWarehouseItemId, quantity,
+						_commerceOrderItemQuantityFormatter.parse(
+							actionRequest,
+							CommerceInventoryWarehouseItem.class.getName(),
+							"reservedQuantity"),
+						unitOfMeasureKey,
+						ParamUtil.getLong(actionRequest, "mvccVersion"));
 		}
 		else {
 			commerceInventoryWarehouseItem =
@@ -107,7 +111,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 						StringPool.BLANK,
 						ParamUtil.getLong(
 							actionRequest, "commerceInventoryWarehouseId"),
-						quantity, ParamUtil.getString(actionRequest, "sku"),
+						quantity, BigDecimal.ZERO,
+						ParamUtil.getString(actionRequest, "sku"),
 						unitOfMeasureKey);
 		}
 

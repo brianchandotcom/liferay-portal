@@ -116,23 +116,24 @@ public class CommerceInventoryMVCCTest {
 					StringPool.BLANK, _user.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					BigDecimal.ONE, cpInstance.getSku(), StringPool.BLANK);
+					BigDecimal.ONE, BigDecimal.ZERO, cpInstance.getSku(),
+					StringPool.BLANK);
 
 		_commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.getUserId(),
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				commerceInventoryWarehouse.getMvccVersion(), BigDecimal.ONE,
-				StringPool.BLANK);
+				BigDecimal.ONE, BigDecimal.ONE, StringPool.BLANK,
+				commerceInventoryWarehouse.getMvccVersion());
 
 		_commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.getUserId(),
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				commerceInventoryWarehouse.getMvccVersion(), BigDecimal.ONE,
-				StringPool.BLANK);
+				BigDecimal.ONE, BigDecimal.ONE, StringPool.BLANK,
+				commerceInventoryWarehouseItem.getMvccVersion());
 	}
 
 	@Test(expected = MVCCException.class)

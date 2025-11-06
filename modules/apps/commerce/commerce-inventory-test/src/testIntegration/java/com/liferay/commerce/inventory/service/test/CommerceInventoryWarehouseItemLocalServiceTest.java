@@ -123,7 +123,8 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 					StringPool.BLANK, _user.getUserId(),
 					commerceInventoryWarehouseActive.
 						getCommerceInventoryWarehouseId(),
-					BigDecimal.ONE, _cpInstance.getSku(), StringPool.BLANK);
+					BigDecimal.ONE, BigDecimal.ZERO, _cpInstance.getSku(),
+					StringPool.BLANK);
 
 		Assert.assertNotNull(commerceInventoryWarehouseItem);
 		Assert.assertEquals(
@@ -177,7 +178,8 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 				StringPool.BLANK, _user.getUserId(),
 				commerceInventoryWarehouseActive.
 					getCommerceInventoryWarehouseId(),
-				BigDecimal.ONE, cpInstance.getSku(), StringPool.BLANK);
+				BigDecimal.ONE, BigDecimal.ZERO, cpInstance.getSku(),
+				StringPool.BLANK);
 	}
 
 	@Test
@@ -203,7 +205,8 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 					StringPool.BLANK, _user.getUserId(),
 					commerceInventoryWarehouseActive.
 						getCommerceInventoryWarehouseId(),
-					BigDecimal.ONE, RandomTestUtil.randomString(),
+					BigDecimal.ONE, BigDecimal.ZERO,
+					RandomTestUtil.randomString(),
 					_cpInstanceUnitOfMeasure.getKey()));
 	}
 
@@ -229,7 +232,7 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 					StringPool.BLANK, _user.getUserId(),
 					commerceInventoryWarehouseActive.
 						getCommerceInventoryWarehouseId(),
-					BigDecimal.ONE, _cpInstance.getSku(),
+					BigDecimal.ONE, BigDecimal.ZERO, _cpInstance.getSku(),
 					_cpInstanceUnitOfMeasure.getKey()));
 	}
 
@@ -258,7 +261,7 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 					StringPool.BLANK, _user.getUserId(),
 					commerceInventoryWarehouseActive.
 						getCommerceInventoryWarehouseId(),
-					BigDecimal.ONE, _cpInstance.getSku(),
+					BigDecimal.ONE, BigDecimal.ZERO, _cpInstance.getSku(),
 					RandomTestUtil.randomString()));
 	}
 
@@ -308,7 +311,7 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 				StringPool.BLANK, _user.getUserId(),
 				commerceInventoryWarehouseActive.
 					getCommerceInventoryWarehouseId(),
-				BigDecimal.ONE, cpInstance.getSku(),
+				BigDecimal.ONE, BigDecimal.ZERO, cpInstance.getSku(),
 				RandomTestUtil.randomString());
 	}
 

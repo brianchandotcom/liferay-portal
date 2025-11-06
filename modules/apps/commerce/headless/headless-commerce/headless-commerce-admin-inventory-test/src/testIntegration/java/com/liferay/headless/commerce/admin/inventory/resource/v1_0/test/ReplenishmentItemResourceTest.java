@@ -388,7 +388,8 @@ public class ReplenishmentItemResourceTest
 					RandomTestUtil.randomString(), _user.getUserId(),
 					_getCommerceInventoryWarehouseId(),
 					BigDecimal.valueOf(RandomTestUtil.nextInt()),
-					testGetReplenishmentItemsPage_getSku(), StringPool.BLANK);
+					BigDecimal.ZERO, testGetReplenishmentItemsPage_getSku(),
+					StringPool.BLANK);
 
 		return _commerceInventoryWarehouseItem;
 	}

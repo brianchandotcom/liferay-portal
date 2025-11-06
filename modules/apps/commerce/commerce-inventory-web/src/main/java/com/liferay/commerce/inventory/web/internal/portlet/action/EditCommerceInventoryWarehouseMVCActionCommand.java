@@ -100,7 +100,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				_commerceOrderItemQuantityFormatter.parse(
 					actionRequest,
 					CommerceInventoryWarehouseItem.class.getName(), "quantity"),
-				ParamUtil.getString(actionRequest, "sku"),
+				BigDecimal.ZERO, ParamUtil.getString(actionRequest, "sku"),
 				ParamUtil.getString(actionRequest, "unitOfMeasure"));
 	}
 
@@ -145,7 +145,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
 					StringPool.BLANK, commerceInventoryWarehouseId, quantity,
-					sku, unitOfMeasureKey);
+					BigDecimal.ZERO, sku, unitOfMeasureKey);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.

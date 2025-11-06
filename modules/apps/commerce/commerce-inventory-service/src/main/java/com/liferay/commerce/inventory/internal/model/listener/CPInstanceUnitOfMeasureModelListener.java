@@ -71,7 +71,8 @@ public class CPInstanceUnitOfMeasureModelListener
 							null, cpInstanceUnitOfMeasure.getUserId(),
 							commerceInventoryWarehouse.
 								getCommerceInventoryWarehouseId(),
-							BigDecimal.ZERO, cpInstanceUnitOfMeasure.getSku(),
+							BigDecimal.ZERO, BigDecimal.ZERO,
+							cpInstanceUnitOfMeasure.getSku(),
 							cpInstanceUnitOfMeasure.getKey());
 				}
 				catch (PortalException portalException) {

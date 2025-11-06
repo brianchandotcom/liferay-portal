@@ -17,6 +17,7 @@ export class PagesAdminPage {
 
 	readonly addButton: Locator;
 	readonly newButton: Locator;
+	readonly newTemplatePageButton: Locator;
 
 	private readonly configurationSaveButton: Locator;
 	private readonly javaScriptClientExtensionsTab: Locator;
@@ -42,12 +43,19 @@ export class PagesAdminPage {
 		this.newButton = page
 			.locator('.management-bar')
 			.getByText('New', {exact: true});
+		this.newTemplatePageButton = page.getByRole('link', {
+			name: 'Add Site Template Page',
+		});
 		this.pageEditorPage = new PageEditorPage(this.page);
 		this.pageTitleBox = addPageIFrame.locator(
 			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
 		);
 		this.searchButton = this.page.getByLabel('Search for', {exact: true});
 		this.searchInput = this.page.getByPlaceholder('Search for');
+	}
+
+	getPageMenuItem(pageName: string): Locator {
+		return this.page.getByRole('menuitem').filter({hasText: pageName});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

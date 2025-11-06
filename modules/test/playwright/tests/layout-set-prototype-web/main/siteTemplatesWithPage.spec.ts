@@ -187,7 +187,7 @@ test(
 
 		const templatePageName = 'Test Page-' + getRandomString();
 		await productMenuPage.goToPages();
-		await page.getByRole('link', {name: 'Add Site Template Page'}).click();
+		await pagesAdminPage.newTemplatePageButton.click();
 		await pagesAdminPage.addPage({name: templatePageName});
 		await uiElementsPage.publishButton.click();
 		await expect(
@@ -230,9 +230,8 @@ test(
 
 		await productMenuPage.goToPages();
 
-		const pageCreatedOnTemplate = page
-			.getByRole('menuitem')
-			.filter({hasText: templatePageName});
+		const pageCreatedOnTemplate =
+			pagesAdminPage.getPageMenuItem(templatePageName);
 
 		await expect(pageCreatedOnTemplate).toBeVisible();
 		await expect(
@@ -255,7 +254,7 @@ test(
 		await pagesAdminPage.showChildPages(pageName);
 
 		await expect(
-			page.getByRole('menuitem').filter({hasText: childPageName})
+			pagesAdminPage.getPageMenuItem(childPageName)
 		).toBeVisible();
 	}
 );

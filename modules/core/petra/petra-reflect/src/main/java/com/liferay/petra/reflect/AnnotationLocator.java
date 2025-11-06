@@ -37,10 +37,10 @@ public class AnnotationLocator {
 
 		while ((clazz = queue.poll()) != null) {
 			_mergeAnnotations(
-				clazz.getAnnotations(), indexMap, Collections.emptySet(),
-				false);
+				Collections.emptySet(), indexMap, false,
+				clazz.getAnnotations());
 
-			_queueSuperTypes(queue, clazz);
+			_queueSuperTypes(clazz, queue);
 		}
 
 		return indexMap;
@@ -72,8 +72,8 @@ public class AnnotationLocator {
 
 			if (specificMethod != null) {
 				_mergeAnnotations(
-					specificMethod.getAnnotations(), indexMap,
-					concludedAnnotationClasses, true);
+					concludedAnnotationClasses, indexMap, true,
+					specificMethod.getAnnotations());
 			}
 
 			Method publicMethod = ReflectionUtil.fetchMethod(
@@ -84,11 +84,11 @@ public class AnnotationLocator {
 				// Ensure the class has a publicly inherited method
 
 				_mergeAnnotations(
-					clazz.getAnnotations(), indexMap,
-					concludedAnnotationClasses, false);
+					concludedAnnotationClasses, indexMap, false,
+					clazz.getAnnotations());
 			}
 
-			_queueSuperTypes(queue, clazz);
+			_queueSuperTypes(clazz, queue);
 		}
 
 		return indexMap;
@@ -114,7 +114,7 @@ public class AnnotationLocator {
 			T annotation = clazz.getAnnotation(annotationClass);
 
 			if (annotation == null) {
-				_queueSuperTypes(queue, clazz);
+				_queueSuperTypes(clazz, queue);
 			}
 			else {
 				return annotation;
@@ -173,7 +173,7 @@ public class AnnotationLocator {
 			}
 
 			if (annotation == null) {
-				_queueSuperTypes(queue, clazz);
+				_queueSuperTypes(clazz, queue);
 			}
 			else {
 				return annotation;
@@ -184,10 +184,9 @@ public class AnnotationLocator {
 	}
 
 	private static void _mergeAnnotations(
-		Annotation[] sourceAnnotations,
-		Map<Class<? extends Annotation>, Annotation> indexMap,
 		Set<Class<? extends Annotation>> concludedAnnotationClasses,
-		boolean fromMethod) {
+		Map<Class<? extends Annotation>, Annotation> indexMap,
+		boolean fromMethod, Annotation[] sourceAnnotations) {
 
 		for (Annotation sourceAnnotation : sourceAnnotations) {
 			Class<? extends Annotation> annotationType =
@@ -209,7 +208,7 @@ public class AnnotationLocator {
 	}
 
 	private static void _queueSuperTypes(
-		Queue<Class<?>> queue, Class<?> clazz) {
+		Class<?> clazz, Queue<Class<?>> queue) {
 
 		Class<?> superClass = clazz.getSuperclass();
 

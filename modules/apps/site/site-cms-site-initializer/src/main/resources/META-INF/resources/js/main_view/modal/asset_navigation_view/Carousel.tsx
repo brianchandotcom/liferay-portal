@@ -8,9 +8,9 @@ import {replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
+import ContentPreview from '../../../common/components/ContentPreview';
 import FilePreview from '../../../common/components/FilePreview';
 import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
-import ContentPreview from '../../../common/components/ContentPreview';
 
 const Arrow = ({
 	ariaLabel,

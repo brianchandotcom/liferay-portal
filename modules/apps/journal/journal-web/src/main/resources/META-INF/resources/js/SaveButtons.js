@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import initializeLock from './initializeLock';
@@ -235,7 +236,12 @@ export default function SaveButtons({
 				disabled={saveButtonDisabled}
 				displayType="primary"
 				onClick={() => onClick(ACTION_PUBLISH, true)}
-				title={publishButtonLabel}
+				title={sub(
+					workflowEnabled
+						? Liferay.Language.get('submit-x-for-workflow')
+						: Liferay.Language.get('publish-x'),
+					Liferay.Language.get('article')
+				)}
 				type="submit"
 			>
 				{publishButtonLabel}

@@ -148,7 +148,7 @@
 					<@clay["icon"] symbol="document" />
 				</span>
 
-				<a class="d-flex w-100 justify-content-between help-and-support-modal" href="javascript:void(0)" onClick="openInstallationDocsModal()">
+				<a class="d-flex w-100 justify-content-between help-and-support-modal" href="javascript:void(0)" onClick="openInstallationDocsModal();">
 					<span class="copy-text ml-1 help-and-support-modal">
 						${languageUtil.get(locale, "installation-documentation", "Installation Documentation")}
 					</span>
@@ -167,7 +167,7 @@
 				<@clay["icon"] symbol="envelope-closed" />
 			</span>
 
-			<a class="d-flex w-100 justify-content-between help-and-support-modal" href="javascript:void(0)" onClick="openPublisherSupportModal()">
+			<a class="d-flex w-100 justify-content-between help-and-support-modal" href="javascript:void(0)" onClick="openPublisherSupportModal();">
 				<span class="copy-text ml-1 help-and-support-modal">
 					${languageUtil.get(locale, "publisher-support", "Publisher Support")}
 				</span>
@@ -189,7 +189,8 @@
 				<a
 					class="d-flex font-weight-semi-bold help-and-support-link justify-content-between w-100"
 					href="${sourceCode}"
-					target="_blank">
+					target="_blank"
+				>
 					<span class="copy-text ml-1 help-and-support-link">
 						${languageUtil.get(locale, "source-code", "Source Code")}
 					</span>

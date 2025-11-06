@@ -40,7 +40,7 @@ public class NotificationQueueEntryModelDocumentContributor
 			String.valueOf(notificationRecipientSettingsMap.get("fromName")));
 		document.addText(
 			"fromName",
-			String.valueOf(notificationRecipientSettingsMap.get("from")));
+			String.valueOf(notificationRecipientSettingsMap.get("fromName")));
 
 		document.addKeyword("subject", notificationQueueEntry.getSubject());
 		document.addText("subject", notificationQueueEntry.getSubject());

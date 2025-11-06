@@ -24,6 +24,14 @@
 		padding-top: 3px;
 	}
 
+	.ai-assistant-chat__input {
+		height: auto;
+		overflow-x: hidden;
+		overflow-y: auto;
+		resize: none;
+		max-height: calc(1.25em * 4);
+	}
+
 	.ai-assistant-chat__quick-actions-button:hover {
 		background: #27283314;
 	}
@@ -35,5 +43,25 @@
 
 	.ai-assistant-chat__ai-assistant-message-balloon {
 		background: #f7f8f9;
+	}
+
+	.ai-assistant-chat__user-image {
+		align-items: center;
+		border-radius: 50%;
+		height: 30px;
+		width: 30px;
+	}
+
+	.ai-assistant-chat__user-initials {
+		align-items: center;
+		background-color: $primary;
+		border-radius: 50%;
+		color: #fff;
+		display: flex;
+		font-size: 12px;
+		font-weight: 800;
+		height: 30px;
+		justify-content: center;
+		width: 30px;
 	}
 }

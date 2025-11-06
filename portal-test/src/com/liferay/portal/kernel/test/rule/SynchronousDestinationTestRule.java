@@ -120,6 +120,11 @@ public class SynchronousDestinationTestRule
 		public void enableSync() {
 			_serviceTracker.open();
 
+			MessageListenerRegistry messageListenerRegistry =
+				_serviceTracker.getService();
+
+			messageListenerRegistry.getMessageListeners("");
+
 			Filter audioProcessorFilter = _registerDestinationFilter(
 				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
 			Filter asyncFilter = _registerDestinationFilter(

@@ -75,17 +75,16 @@ public class AddressImpl extends AddressBaseImpl {
 
 	@Override
 	public Region getRegion() {
-		Region region = null;
+		long regionId = getRegionId();
 
-		try {
-			region = RegionServiceUtil.getRegion(getRegionId());
+		if (regionId == 0) {
+			return new RegionImpl();
 		}
-		catch (Exception exception) {
-			region = new RegionImpl();
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
+		Region region = RegionServiceUtil.fetchRegion(regionId);
+
+		if (region == null) {
+			region = new RegionImpl();
 		}
 
 		return region;

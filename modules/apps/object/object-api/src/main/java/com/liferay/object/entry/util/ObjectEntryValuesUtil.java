@@ -11,8 +11,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
@@ -101,20 +99,20 @@ public class ObjectEntryValuesUtil {
 		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			try {
-				DLFileEntry dlFileEntry =
-					DLFileEntryLocalServiceUtil.getDLFileEntry(
-						GetterUtil.getLong(value));
+			long dlFileEntryId = GetterUtil.getLong(value);
 
-				return dlFileEntry.getFileName();
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
+			if (dlFileEntryId == 0) {
 				return StringPool.BLANK;
 			}
+
+			DLFileEntry dlFileEntry =
+				DLFileEntryLocalServiceUtil.fetchDLFileEntry(dlFileEntryId);
+
+			if (dlFileEntry != null) {
+				return dlFileEntry.getFileName();
+			}
+
+			return StringPool.BLANK;
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
@@ -131,8 +129,5 @@ public class ObjectEntryValuesUtil {
 		return String.valueOf(
 			getValue(null, objectField, new HashMap<>(values)));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryValuesUtil.class);
 
 }

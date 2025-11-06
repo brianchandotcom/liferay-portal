@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
@@ -44,139 +43,138 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildExportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		PortletDataContext portletDataContext,
-		Group group) {
+		PortletDataContext portletDataContext, Group group) {
 
 		HashMap<String, Serializable> exportParameters =
 			HashMapBuilder.<String, Serializable>put(
-			"batchNestedFields",
-			() -> {
-				List<String> batchNestedFields = new ArrayList<>();
+				"batchNestedFields",
+				() -> {
+					List<String> batchNestedFields = new ArrayList<>();
 
-				batchNestedFields.add("customFields.attributeType");
+					batchNestedFields.add("customFields.attributeType");
 
-				if (MapUtil.getBoolean(
-						portletDataContext.getParameterMap(),
-						PortletDataHandlerKeys.PERMISSIONS)) {
+					if (MapUtil.getBoolean(
+							portletDataContext.getParameterMap(),
+							PortletDataHandlerKeys.PERMISSIONS)) {
 
-					batchNestedFields.add("permissions");
-				}
-
-				if (ListUtil.isNotEmpty(
-						exportImportDescriptor.getNestedFields())) {
-
-					batchNestedFields.addAll(
-						exportImportDescriptor.getNestedFields());
-				}
-
-				if (batchNestedFields.isEmpty()) {
-					return null;
-				}
-
-				return StringUtil.merge(batchNestedFields, StringPool.COMMA);
-			}
-		).put(
-			"filter",
-			() -> {
-				if ((portletDataContext.getEndDate() == null) &&
-					(portletDataContext.getStartDate() == null)) {
-
-					return null;
-				}
-
-				StringBundler sb = new StringBundler(5);
-
-				if (portletDataContext.getEndDate() != null) {
-					sb.append("dateModified le ");
-					sb.append(_format.format(portletDataContext.getEndDate()));
-				}
-
-				if (portletDataContext.getStartDate() != null) {
-					if (sb.length() > 0) {
-						sb.append(" and ");
+						batchNestedFields.add("permissions");
 					}
 
-					sb.append("dateModified ge ");
-					sb.append(
-						_format.format(portletDataContext.getStartDate()));
-				}
+					if (ListUtil.isNotEmpty(
+							exportImportDescriptor.getNestedFields())) {
 
-				return sb.toString();
-			}
-		).put(
-			"modelClassName", exportImportDescriptor.getModelClassName()
-		).put(
-			"modelName", exportImportDescriptor.getModelName()
-		).putAll(
-			exportImportDescriptor.getParameters(portletDataContext)
-		).build();
+						batchNestedFields.addAll(
+							exportImportDescriptor.getNestedFields());
+					}
+
+					if (batchNestedFields.isEmpty()) {
+						return null;
+					}
+
+					return StringUtil.merge(
+						batchNestedFields, StringPool.COMMA);
+				}
+			).put(
+				"filter",
+				() -> {
+					if ((portletDataContext.getEndDate() == null) &&
+						(portletDataContext.getStartDate() == null)) {
+
+						return null;
+					}
+
+					StringBundler sb = new StringBundler(5);
+
+					if (portletDataContext.getEndDate() != null) {
+						sb.append("dateModified le ");
+						sb.append(
+							_format.format(portletDataContext.getEndDate()));
+					}
+
+					if (portletDataContext.getStartDate() != null) {
+						if (sb.length() > 0) {
+							sb.append(" and ");
+						}
+
+						sb.append("dateModified ge ");
+						sb.append(
+							_format.format(portletDataContext.getStartDate()));
+					}
+
+					return sb.toString();
+				}
+			).put(
+				"modelClassName", exportImportDescriptor.getModelClassName()
+			).put(
+				"modelName", exportImportDescriptor.getModelName()
+			).putAll(
+				exportImportDescriptor.getParameters(portletDataContext)
+			).build();
 
 		if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
-			exportParameters.put("siteExternalReferenceCode",
-				group.getExternalReferenceCode());
+			exportParameters.put(
+				"siteExternalReferenceCode", group.getExternalReferenceCode());
 
-			Map<String, String[]> map =
-				portletDataContext.getParameterMap();
+			Map<String, String[]> map = portletDataContext.getParameterMap();
 
-			String[] siteIds = GetterUtil.getStringValues(
-				map.get("siteId"));
+			String[] siteIds = GetterUtil.getStringValues(map.get("siteId"));
 
 			if (ArrayUtil.isNotEmpty(siteIds)) {
 				exportParameters.put("siteId", siteIds[0]);
-			} else {
+			}
+			else {
 				exportParameters.put("siteId", group.getGroupId());
 			}
 		}
 
-		return  exportParameters;
+		return exportParameters;
 	}
 
 	public static Map<String, Serializable> buildImportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		PortletDataContext portletDataContext,
-		Group group) {
+		PortletDataContext portletDataContext, Group group) {
 
 		HashMap<String, Serializable> importParameters =
 			HashMapBuilder.<String, Serializable>put(
-			"batchRestrictFields",
-			() -> {
-				if (!MapUtil.getBoolean(
-						portletDataContext.getParameterMap(),
-						PortletDataHandlerKeys.PERMISSIONS)) {
-
-					return "permissions";
-				}
-
-				return null;
-			}
-		).put(
-			"createStrategy", CreateStrategy.UPSERT.getDBOperation()
-		).put(
-			"importCreatorStrategy",
-			() -> {
-				if (!UserIdStrategy.CURRENT_USER_ID.equals(
-						MapUtil.getString(
+				"batchRestrictFields",
+				() -> {
+					if (!MapUtil.getBoolean(
 							portletDataContext.getParameterMap(),
-							PortletDataHandlerKeys.USER_ID_STRATEGY))) {
+							PortletDataHandlerKeys.PERMISSIONS)) {
+
+						return "permissions";
+					}
 
 					return null;
 				}
+			).put(
+				"createStrategy", CreateStrategy.UPSERT.getDBOperation()
+			).put(
+				"importCreatorStrategy",
+				() -> {
+					if (!UserIdStrategy.CURRENT_USER_ID.equals(
+							MapUtil.getString(
+								portletDataContext.getParameterMap(),
+								PortletDataHandlerKeys.USER_ID_STRATEGY))) {
 
-				return BatchEngineImportTaskConstants.
-					IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
-			}
-		).put(
-			"modelClassName", exportImportDescriptor.getModelClassName()
-		).put(
-			"modelName", exportImportDescriptor.getModelName()
-		).putAll(
-			exportImportDescriptor.getParameters(portletDataContext)
-		).build();
+						return null;
+					}
+
+					return BatchEngineImportTaskConstants.
+						IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
+				}
+			).put(
+				"modelClassName", exportImportDescriptor.getModelClassName()
+			).put(
+				"modelName", exportImportDescriptor.getModelName()
+			).putAll(
+				exportImportDescriptor.getParameters(portletDataContext)
+			).build();
 
 		if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
-			importParameters.put("siteExternalReferenceCode",
-				group.getExternalReferenceCode());
+			importParameters.put(
+				"siteExternalReferenceCode", group.getExternalReferenceCode());
 			importParameters.put("siteId", group.getGroupId());
 		}
 
@@ -186,8 +184,7 @@ public class BatchEnginePortletDataHandlerUtil {
 	private static final Format _format =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-	private static StagingGroupHelper _stagingGroupHelper =
+	private static final StagingGroupHelper _stagingGroupHelper =
 		StagingGroupHelperUtil.getStagingGroupHelper();
 
 }

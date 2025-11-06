@@ -33,12 +33,16 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.PathSegment;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
 import jakarta.ws.rs.ext.Provider;
+import jakarta.ws.rs.sse.Sse;
+import jakarta.ws.rs.sse.SseBroadcaster;
+import jakarta.ws.rs.sse.SseEventSink;
 
 import java.io.IOException;
 
@@ -109,8 +113,27 @@ public class ContextContainerRequestFilter
 			ContainerResponseContext containerResponseContext)
 		throws IOException {
 
-		ContextProviderUtil.releaseResourceInstance(
-			JAXRSUtils.getContextMessage(JAXRSUtils.getCurrentMessage()));
+		Message message = JAXRSUtils.getContextMessage(
+			JAXRSUtils.getCurrentMessage());
+
+		SseEventSink sseEventSink = message.get(SseEventSink.class);
+
+		if (sseEventSink != null) {
+			SseBroadcaster sseBroadcaster = _sse.newBroadcaster();
+
+			sseBroadcaster.register(sseEventSink);
+
+			sseBroadcaster.onClose(
+				__ -> {
+					ContextProviderUtil.releaseResourceInstance(message);
+
+					sseBroadcaster.close();
+				});
+
+			return;
+		}
+
+		ContextProviderUtil.releaseResourceInstance(message);
 	}
 
 	public void handleMessage(
@@ -333,6 +356,10 @@ public class ContextContainerRequestFilter
 	private final RoleLocalService _roleLocalService;
 	private final Object _scopeChecker;
 	private final SortParserProvider _sortParserProvider;
+
+	@Context
+	private Sse _sse;
+
 	private final VulcanBatchEngineExportTaskResourceFactory
 		_vulcanBatchEngineExportTaskResourceFactory;
 	private final VulcanBatchEngineImportTaskResourceFactory

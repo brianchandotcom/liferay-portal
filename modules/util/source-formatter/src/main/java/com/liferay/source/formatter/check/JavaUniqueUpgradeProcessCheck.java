@@ -170,6 +170,12 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 				matcher.group(1), CharPool.NEW_LINE, CharPool.SPACE,
 				CharPool.TAB);
 
+			if (className.equals("UpgradeProcess")) {
+				upgradeProcessCount++;
+
+				continue;
+			}
+
 			if (!className.contains(StringPool.PERIOD)) {
 				for (String importName : imports) {
 					if (importName.endsWith(StringPool.PERIOD + className)) {

@@ -23,6 +23,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {performLogout} from '../../../utils/performLogin';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
+import { pagesAdminPagesTest } from '../../../fixtures/pagesAdminPagesTest';
 
 const test = mergeTests(
 	blogsPagesTest,
@@ -34,6 +35,7 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pagesAdminPagesTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
 );
@@ -110,7 +112,7 @@ test.describe('Configuration', () => {
 		{
 			tag: ['@LPS-86191', '@LPS-96438'],
 		},
-		async ({apiHelpers, displayPageTemplatesPage, page, site}) => {
+		async ({apiHelpers, displayPageTemplatesPage, page, pagesAdminPage, site}) => {
 
 			// Create a display page template for Basic Web Content and mark as default
 
@@ -153,11 +155,7 @@ test.describe('Configuration', () => {
 				})
 				.click();
 
-			await page
-				.getByLabel('Define a custom theme for this page.', {
-					exact: true,
-				})
-				.check();
+			await pagesAdminPage.clickOnDefineCustomThemeRadio();
 
 			await page.getByRole('checkbox', {name: 'Show Footer'}).uncheck();
 

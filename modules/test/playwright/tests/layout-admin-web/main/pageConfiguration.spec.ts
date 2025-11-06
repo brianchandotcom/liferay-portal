@@ -943,7 +943,7 @@ test.describe('Design configuration', () => {
 			await pageConfigurationPage.goToSection(pageName, 'Design');
 
 			await expect(async () => {
-				await pagesAdminPage.clickOnDefineCustomThemeRadio();
+				await pagesAdminPage.defineCustomThemeRadio.click();
 
 				await expect(
 					page.getByRole('checkbox', {name: 'Show Footer'})

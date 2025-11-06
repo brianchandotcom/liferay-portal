@@ -14,6 +14,7 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
+import AIAssistantChat from './AIAssistantChat/AIAssistantChat';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
 
@@ -81,6 +82,24 @@ export default function ContentEditorToolbar({
 			className="content-editor__toolbar position-fixed"
 			title={headerTitle}
 		>
+			{Liferay.FeatureFlags['LPD-62272'] && (
+				<>
+					<Toolbar.Item>
+						<AIAssistantChat />
+					</Toolbar.Item>
+
+					<div
+						className="align-self-center"
+						style={{
+							borderColor: '#A7A9BC',
+							borderStyle: 'solid',
+							borderWidth: 1,
+							height: 16,
+						}}
+					/>
+				</>
+			)}
+
 			<Toolbar.Item>
 				<ClayLink
 					aria-label={Liferay.Language.get('cancel')}

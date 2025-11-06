@@ -79,6 +79,16 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 						<c:if test="<%= dlEditFolderDisplayContext.isShowDescription() %>">
 							<aui:input disabled="<%= !dlEditFolderDisplayContext.hasUpdateDLFolderPermission() %>" name="description" />
 						</c:if>
+
+						<aui:field-wrapper cssClass="form-group" label="external-reference-code" name="externalReferenceCode">
+							<div class="small text-secondary"><liferay-ui:message key="unique-key-for-referencing-the-folder-definition" /></div>
+
+							<div class="input-group">
+								<div class="input-group-item">
+									<aui:input label="" name="externalReferenceCode" type="text" />
+								</div>
+							</div>
+						</aui:field-wrapper>
 					</c:if>
 				</aui:fieldset>
 

@@ -1444,6 +1444,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			Date reviewDate = _getReviewDate(
 				uploadPortletRequest, addDynamic, user.getTimeZone());
 
+			String externalReferenceCode = ParamUtil.getString(
+				actionRequest, "externalReferenceCode");
+
 			FileEntry fileEntry = null;
 
 			if (cmd.equals(Constants.ADD)) {
@@ -1456,9 +1459,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 						uploadPortletRequest.getFileName("file")));
 
 				fileEntry = _dlAppService.addFileEntry(
-					null, repositoryId, folderId, sourceFileName, contentType,
-					title, urlTitle, description, changeLog, inputStream, size,
-					displayDate, expirationDate, reviewDate, serviceContext);
+					externalReferenceCode, repositoryId, folderId,
+					sourceFileName, contentType, title, urlTitle, description,
+					changeLog, inputStream, size, displayDate, expirationDate,
+					reviewDate, serviceContext);
 			}
 			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
 
@@ -1473,10 +1477,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					FileUtil.stripExtension(sourceFileName));
 
 				fileEntry = _dlAppService.addFileEntry(
-					null, repositoryId, folderId, uniqueFileName, contentType,
-					uniqueFileTitle, StringPool.BLANK, description, changeLog,
-					inputStream, size, displayDate, expirationDate, reviewDate,
-					serviceContext);
+					externalReferenceCode, repositoryId, folderId,
+					uniqueFileName, contentType, uniqueFileTitle,
+					StringPool.BLANK, description, changeLog, inputStream, size,
+					displayDate, expirationDate, reviewDate, serviceContext);
 
 				JSONObject jsonObject = JSONUtil.put(
 					"fileEntryId", fileEntry.getFileEntryId());

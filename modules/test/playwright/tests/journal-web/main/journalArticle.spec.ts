@@ -139,7 +139,10 @@ baseTest(
 			)
 			.uncheck();
 
-		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
+		await page
+			.getByLabel('Publish With Permissions')
+			.getByRole('button', {name: 'Publish'})
+			.click();
 
 		await journalPage.assertJournalArticlePermissions(title, [
 			{enabled: false, locator: '#guest_ACTION_ADD_DISCUSSION'},
@@ -2224,11 +2227,11 @@ baseTest(
 
 		await page.waitForTimeout(50000);
 
-		await page.getByRole('button', {name: 'Publish'}).click();
+		await journalEditArticlePage.publishButton.click();
 
 		await page.waitForTimeout(50000);
 
-		await page.getByRole('menuitem', {name: 'Publish'}).click();
+		await journalEditArticlePage.publishButton.click();
 
 		await journalPage.changeView('table');
 

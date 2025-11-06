@@ -1154,6 +1154,10 @@ components:
                         The shared asset title.
                     readOnly: true
                     type: string
+                visible:
+                    description:
+                        If the shared asset is visible or not.
+                    type: boolean
             type: object
         Site:
             # @review

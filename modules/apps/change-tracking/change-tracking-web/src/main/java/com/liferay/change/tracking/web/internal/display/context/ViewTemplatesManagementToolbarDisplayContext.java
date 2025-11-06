@@ -5,6 +5,8 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -14,6 +16,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletURL;
 
@@ -50,6 +54,17 @@ public class ViewTemplatesManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!CTPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				CTActionKeys.ADD_TEMPLATE)) {
+
+			return null;
+		}
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(

@@ -5,15 +5,17 @@
 
 package com.liferay.change.tracking.web.internal.portlet.configuration.icon;
 
-import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
+import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
@@ -51,9 +53,15 @@ public class CTCollectionTemplatesPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return CTPermission.contains(
-			PermissionThreadLocal.getPermissionChecker(),
-			CTActionKeys.ADD_TEMPLATE);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		return permissionChecker.hasPermission(
+			null, CTCollectionTemplate.class.getName(),
+			themeDisplay.getCompanyId(), ActionKeys.VIEW);
 	}
 
 	@Reference

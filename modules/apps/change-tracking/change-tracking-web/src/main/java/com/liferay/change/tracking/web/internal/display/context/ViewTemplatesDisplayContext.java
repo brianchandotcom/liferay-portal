@@ -175,7 +175,7 @@ public class ViewTemplatesDisplayContext
 
 		if (!CTCollectionTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), ctCollectionTemplateId,
-				ActionKeys.UPDATE)) {
+				ActionKeys.DELETE)) {
 
 			return null;
 		}

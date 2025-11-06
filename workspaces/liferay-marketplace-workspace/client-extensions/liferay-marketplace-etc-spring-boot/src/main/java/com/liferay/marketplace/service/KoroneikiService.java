@@ -45,6 +45,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class KoroneikiService {
 
+	public com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+			getAccount(String accountId)
+		throws Exception {
+
+		AccountResource accountResource = getAccountResource();
+
+		return accountResource.getAccount(accountId);
+	}
+
 	public AccountResource getAccountResource() throws Exception {
 		return AccountResource.builder(
 		).header(
@@ -80,6 +89,8 @@ public class KoroneikiService {
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
 			new URL(_koroneikiAuthURL)
+		).parameters(
+			"nestedFields", "productConsumptions"
 		).build();
 	}
 

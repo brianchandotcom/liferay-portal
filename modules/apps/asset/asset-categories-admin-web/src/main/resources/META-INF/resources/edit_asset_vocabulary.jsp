@@ -41,6 +41,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateVocabularyException.class %>" message="please-enter-a-unique-name" />
+		<liferay-ui:error exception="<%= DuplicateVocabularyExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 		<liferay-ui:error exception="<%= VocabularyNameException.class %>" message="please-enter-a-valid-name" />
 
 		<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />

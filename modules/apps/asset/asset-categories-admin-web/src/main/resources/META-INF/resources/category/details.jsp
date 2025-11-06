@@ -53,6 +53,7 @@ renderResponse.setTitle(title);
 		<liferay-ui:error exception="<%= AssetCategoryLimitException.class %>" message="the-maximum-number-of-categories-for-the-vocabulary-has-been-exceeded" />
 		<liferay-ui:error exception="<%= AssetCategoryNameException.class %>" message="please-enter-a-valid-name" />
 		<liferay-ui:error exception="<%= DuplicateCategoryException.class %>" message="please-enter-a-unique-name" />
+		<liferay-ui:error exception="<%= DuplicateCategoryExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 
 		<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 

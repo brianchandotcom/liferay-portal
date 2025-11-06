@@ -647,7 +647,7 @@ public class MarketplaceRestController extends BaseRestController {
 		try {
 			for (OrderItem orderItem : orderItemPage.getItems()) {
 				_koroneikiService.postAccountAccountKeyProductPurchase(
-					account, jwt,
+					account.getExternalReferenceCode(), jwt,
 					_marketplaceService.getSkuOptionValue(
 						"dxp-license-usage-type", orderItem.getOptions()),
 					orderItem, productSpecificationsMap);

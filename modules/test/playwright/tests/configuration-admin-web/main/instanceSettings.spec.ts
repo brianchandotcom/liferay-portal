@@ -12,9 +12,8 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {UsersAndOrganizationsPage} from '../../../pages/users-admin-web/UsersAndOrganizationsPage';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import { waitForAlert } from '../../../utils/waitForAlert';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	accessibilityMenuPagesTest,

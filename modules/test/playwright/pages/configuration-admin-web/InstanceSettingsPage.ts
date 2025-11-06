@@ -5,9 +5,9 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-import { clickAndExpectToBeVisible } from '../../utils/clickAndExpectToBeVisible';
 
 export class InstanceSettingsPage {
 	readonly page: Page;

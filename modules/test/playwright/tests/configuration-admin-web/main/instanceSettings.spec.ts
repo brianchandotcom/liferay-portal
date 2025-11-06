@@ -61,17 +61,10 @@ test('Asserts that a user can manage factory configurations', async ({
 		}
 	});
 
-	await test.step('Assert that single factory configuration was exported', async () => {
+	await test.step('Assert that a single factory configuration can be exported', async () => {
 		const downloadPromise = page.waitForEvent('download');
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'Export'}),
-			trigger: page
-				.locator('tbody tr')
-				.first()
-				.getByRole('button', {name: 'Actions'}),
-		});
+		await instanceSettingsPage.exportFactoryEntry(providersNames[0]);
 
 		const download = await downloadPromise;
 

@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import { clickAndExpectToBeVisible } from '../../utils/clickAndExpectToBeVisible';
 
 export class InstanceSettingsPage {
 	readonly page: Page;
@@ -92,6 +93,16 @@ export class InstanceSettingsPage {
 				name: configurationName,
 			})
 			.click();
+	}
+
+	async exportFactoryEntry(entryName: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Export'}),
+			trigger: this.page
+				.locator(`tbody tr:has-text("${entryName}")`)
+				.getByRole('button', {name: 'Actions'}),
+		});
 	}
 
 	async goToSSO() {

@@ -188,20 +188,20 @@ public class AnnotationLocator {
 		boolean fromMethod, Annotation[] sourceAnnotations) {
 
 		for (Annotation sourceAnnotation : sourceAnnotations) {
-			Class<? extends Annotation> annotationType =
+			Class<? extends Annotation> annotationClass =
 				sourceAnnotation.annotationType();
 
-			if (concludedAnnotationClasses.contains(annotationType)) {
+			if (concludedAnnotationClasses.contains(annotationClass)) {
 				continue;
 			}
 
 			if (fromMethod) {
-				indexMap.put(annotationType, sourceAnnotation);
+				indexMap.put(annotationClass, sourceAnnotation);
 
-				concludedAnnotationClasses.add(annotationType);
+				concludedAnnotationClasses.add(annotationClass);
 			}
 			else {
-				indexMap.putIfAbsent(annotationType, sourceAnnotation);
+				indexMap.putIfAbsent(annotationClass, sourceAnnotation);
 			}
 		}
 	}

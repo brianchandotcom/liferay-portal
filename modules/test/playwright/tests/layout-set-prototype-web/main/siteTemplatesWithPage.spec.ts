@@ -210,20 +210,15 @@ test(
 
 		// Add new page on created site
 
-		await productMenuPage.goToPages();
-
-		if (
-			await page.getByRole('heading', {name: 'No Pages yet.'}).isVisible()
-		) {
+		await expect(async () => {
 			await productMenuPage.goToPages();
-		}
 
-		await expect(
-			page.getByLabel(templatePageName, {exact: true})
-		).toBeVisible();
+			await expect(
+				page.getByLabel(templatePageName, {exact: true})
+			).toBeVisible();
+		}).toPass();
 
 		const pageName = 'Test Page-' + getRandomString();
-		await productMenuPage.goToPages();
 		await pagesAdminPage.newButton.click();
 		await pagesAdminPage.addPage({
 			name: pageName,
@@ -254,8 +249,6 @@ test(
 			name: childPageName,
 			parent: pageName,
 		});
-
-		await uiElementsPage.anySuccessAlert.waitFor({state: 'hidden'});
 
 		await productMenuPage.goToPages();
 

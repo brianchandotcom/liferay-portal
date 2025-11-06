@@ -7,7 +7,7 @@ import {MemoryRouter} from 'react-router';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {View} from '../View';
-import {waitForLoading, waitForLoadingToBeRemoved} from 'test/helpers';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -96,10 +96,6 @@ describe('View', () => {
 				)}
 			/>
 		);
-
-		await waitForLoading(container);
-
-		jest.runAllTimers();
 
 		expect(container).toMatchSnapshot();
 	});

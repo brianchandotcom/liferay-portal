@@ -306,6 +306,7 @@ export interface IFrontendDataSetProps {
 	formId?: string;
 	formName?: string;
 	header?: IHeader;
+	hideManagementBarInEmptyState?: boolean;
 	id: string;
 	infoPanelComponent?: React.ComponentType<IInfoPanelComponent>;
 	inlineAddingSettings?: {
@@ -335,7 +336,6 @@ export interface IFrontendDataSetProps {
 	showBulkActionsManagementBar?: boolean;
 	showBulkActionsManagementBarActions?: boolean;
 	showManagementBar?: boolean;
-	showManagementBarInEmptyState?: boolean;
 	showNavBarWhenSelected?: boolean;
 	showPagination?: boolean;
 	showSearch?: boolean;

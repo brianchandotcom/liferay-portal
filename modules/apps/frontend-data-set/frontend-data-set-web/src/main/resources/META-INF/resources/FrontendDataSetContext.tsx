@@ -43,6 +43,7 @@ export interface IFrontendDataSetContext {
 	}) => Promise<void>;
 	formId?: string;
 	formName?: string;
+	hideManagementBarInEmptyState?: boolean;
 	highlightItems: Function;
 	highlightedItemsValue?: Array<string>;
 	id: string;
@@ -79,7 +80,6 @@ export interface IFrontendDataSetContext {
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;
 	showInfoPanel: boolean;
-	showManagementBarInEmptyState?: boolean;
 	sidePanelId?: string;
 	sorts?: Array<TRenderer>;
 	style?: string;
@@ -104,6 +104,7 @@ const FrontendDataSetContext = React.createContext({
 	applyItemInlineUpdates: () => {},
 	createInlineItem: () => {},
 	executeAsyncItemAction: () => {},
+	hideManagementBarInEmptyState: false,
 	highlightItems: () => {},
 	id: '',
 	loadData: () => {},
@@ -118,7 +119,6 @@ const FrontendDataSetContext = React.createContext({
 	selectedItems: [],
 	selectedItemsValue: [],
 	setSearching: () => {},
-	showManagementBarInEmptyState: true,
 	toggleItemInlineEdit: () => {},
 	updateDataSetItems: () => {},
 	updateItem: () => {},

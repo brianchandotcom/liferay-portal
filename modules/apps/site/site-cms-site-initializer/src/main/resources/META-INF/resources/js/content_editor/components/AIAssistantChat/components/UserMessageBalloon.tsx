@@ -3,19 +3,36 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+
+import {getUserAccount} from '../services/getUserAccount';
+import Avatar from './Avatar';
 
 const UserChatItem: React.FC<{message: string}> = ({message}) => {
-	return (
-		<div className="d-flex justify-content-end">
-			<span>{message}</span>
+	const [userAccount, setUserAccount] = useState<any>(null);
 
-			<img
-				alt={Liferay.Language.get('user-profile-image')}
-				className="ml-2"
-				src=""
-				style={{borderRadius: 12, height: 24, width: 24}}
-			/>
+	useEffect(() => {
+		async function getCurrentUserAccount() {
+			try {
+				setUserAccount(
+					await getUserAccount(
+						Liferay.ThemeDisplay.getUserId().toString()
+					)
+				);
+			}
+			catch (error) {
+				console.error('Error fetching user info:', error);
+			}
+		}
+
+		getCurrentUserAccount();
+	}, []);
+
+	return (
+		<div className="align-items-center d-flex justify-content-end mb-2">
+			<span className="ml-2">{message}</span>
+
+			<Avatar image={userAccount?.image} name={userAccount?.name} />
 		</div>
 	);
 };

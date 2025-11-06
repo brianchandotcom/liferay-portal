@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -27,15 +27,16 @@ const AIAssistantChat: React.FC = () => {
 	const [active, setActive] = useState<boolean>(false);
 	const [isGenerating, setIsGenerating] = useState<boolean>(false);
 	const [messages, setMessages] = useState<message[]>([]);
-	const [message, setMessage] = useState<message>();
+	const [message, setMessage] = useState<string>('');
 	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
 	const messagesEndRef = useRef<HTMLDivElement | null>(null);
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
+	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
 	function onSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		if (!message?.text.trim()) {
+		if (!message.trim()) {
 			return;
 		}
 		setMessages((previousMessages) => {
@@ -43,10 +44,10 @@ const AIAssistantChat: React.FC = () => {
 				messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
 			}, 0);
 
-			return [...previousMessages, message];
+			return [...previousMessages, { sender: 'user', text: message }];
 		});
 
-		setMessage({sender: '', text: ''});
+		setMessage('');
 
 		setIsGenerating(true);
 
@@ -59,10 +60,27 @@ const AIAssistantChat: React.FC = () => {
 			postChatByExternalReferenceCodeMessage(
 				content?.value,
 				eventSourceReference.current,
-				message.text,
+				message,
 				title.value
 			);
 		}
+	}
+
+	function adjustTextareaHeight(element: HTMLTextAreaElement) {
+		const textarea = element ?? textareaRef.current;
+
+		if (!textarea) {
+			return;
+		}
+		
+		const style = window.getComputedStyle(textarea);
+		const lineHeight = parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.2;
+		const maxHeight = lineHeight * 4;
+
+		textarea.style.height = 'auto';
+		const newHeight = Math.min(textarea.scrollHeight, maxHeight);
+		textarea.style.height = `${newHeight}px`;
+		textarea.style.overflowY = textarea.scrollHeight > maxHeight ? 'auto' : 'hidden';
 	}
 
 	function getContextElements() {
@@ -111,7 +129,7 @@ const AIAssistantChat: React.FC = () => {
 					];
 				});
 
-				setMessage({sender: '', text: ''});
+				setMessage('');
 
 				setIsGenerating(false);
 			}
@@ -273,17 +291,22 @@ const AIAssistantChat: React.FC = () => {
 						</>
 					)}
 
-					<div className="border-top d-flex flex-row mb-4 pt-4">
-						<ClayInput
-							className="mr-2"
-							onChange={(event) =>
-								setMessage({
-									sender: 'user',
-									text: event.target.value,
-								})
-							}
+					<div className="align-items-end border-top d-flex flex-row mb-4 pt-4">
+						<textarea
+							className="ai-assistant-chat__input form-control mr-2"
+							id='assistant-user-input'
+							onChange={(event) => {
+								setMessage(event.target.value);
+								adjustTextareaHeight(event.target);
+							}}
+							onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+								if (event.key === ' ' || event.code === 'Space' || event.key === 'Spacebar') {
+									event.stopPropagation();
+								}
+							}}
 							placeholder="Ask me anything..."
-							value={message?.text}
+							rows={1}
+							value={message}
 						/>
 
 						<ClayButton displayType="primary" type="submit">

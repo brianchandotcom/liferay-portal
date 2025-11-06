@@ -11,6 +11,13 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.InputStream;
 
@@ -18,6 +25,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,9 +46,19 @@ public class ExportImportAttachmentManagerImpl
 		if ((portletDataContext == null) ||
 			(portletDataContext.getZipWriter() == null)) {
 
-			return _dlurlHelper.getThumbnailSrc(
-				_dlAppLocalService.getFileEntry(dlFileEntry.getFileEntryId()),
-				null);
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				dlFileEntry.getFileEntryId());
+
+			Company company = _companyLocalService.getCompany(
+				fileEntry.getCompanyId());
+
+			boolean secure = _isHttpsEnabled();
+
+			String baseURL = _portal.getPortalURL(
+				company.getVirtualHostname(),
+				_portal.getPortalServerPort(secure), secure);
+
+			return baseURL + _dlurlHelper.getImagePreviewURL(fileEntry, null);
 		}
 
 		try (InputStream inputStream = dlFileEntry.getContentStream()) {
@@ -86,12 +105,31 @@ public class ExportImportAttachmentManagerImpl
 		return "batch-binaries/" + key;
 	}
 
+	private boolean _isHttpsEnabled() {
+		if (Objects.equals(
+				Http.HTTPS,
+				PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||
+			Objects.equals(
+				Http.HTTPS, PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final String _PROTOCOL = "lar";
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -587,6 +587,9 @@
 					"field2": {
 						"type": "string"
 					},
+					"folderId": {
+						"type": "integer"
+					},
 					"id": {
 						"type": "id"
 					},

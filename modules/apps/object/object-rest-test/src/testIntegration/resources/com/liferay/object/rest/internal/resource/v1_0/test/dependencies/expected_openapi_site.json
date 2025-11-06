@@ -416,6 +416,9 @@
 					"field": {
 						"type": "string"
 					},
+					"folderId": {
+						"type": "integer"
+					},
 					"id": {
 						"type": "id"
 					},

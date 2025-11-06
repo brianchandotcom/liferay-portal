@@ -10,6 +10,7 @@ import AssetsFDSPropsTransformer, {
 } from './AssetsFDSPropsTransformer';
 import fileDropAction from './actions/fileDropAction';
 import {MultipleFileUploaderData} from './actions/multipleFilesUploadAction';
+import CarouselView from './views/CarouselView';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -27,12 +28,36 @@ export default function AssetsFilesDropFDSPropsTransformer({
 	otherProps: any;
 	views: IView[];
 }) {
+	const carouselViewRenderer: IView = {
+		component: CarouselView,
+		default: true,
+		label: Liferay.Language.get('gallery'),
+		name: 'gallery',
+		schema: {
+			description: 'description',
+			image: 'imageURL',
+			link: '',
+			sticker: '',
+			symbol: '',
+			title: 'title',
+		},
+		thumbnail: 'gallery',
+	};
+
+	const mergedViews = [
+		...views,
+		{
+			...carouselViewRenderer,
+			additionalProps,
+		},
+	];
+
 	const assetsData = AssetsFDSPropsTransformer({
 		additionalProps,
 		creationMenu,
 		itemsActions,
 		...otherProps,
-		views,
+		views: mergedViews,
 	});
 
 	return {

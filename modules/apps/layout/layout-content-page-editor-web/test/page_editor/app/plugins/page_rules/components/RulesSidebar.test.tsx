@@ -351,6 +351,37 @@ describe('RulesSidebar', () => {
 		});
 	});
 
+	it('shows a warning alert when there are 20 or more rules', async () => {
+		const rules = [];
+
+		for (let i = 0; i < 20; i++) {
+			rules.push({
+				actions: [],
+				conditionType: 'any',
+				conditions: [],
+				id: `rule-${i}`,
+				name: `Rule ${i}`,
+			});
+		}
+
+		renderComponent({rules: rules as Rule[]});
+
+		expect(
+			screen.getByText('excessive-rules-may-affect-page-performance')
+		).toBeInTheDocument();
+
+		const search = await screen.findByPlaceholderText(/search/i);
+		await userEvent.type(search, 'rule 1');
+
+		await waitFor(() => {
+			expect(
+				screen.queryByText(
+					'excessive-rules-may-affect-page-performance'
+				)
+			).not.toBeInTheDocument();
+		});
+	});
+
 	describe('Rules Modal', () => {
 		afterAll(() => {
 			jest.useRealTimers();

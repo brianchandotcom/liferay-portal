@@ -36,7 +36,7 @@ public class ExportImportReportEntryKeywordQueryContributor
 			booleanQuery, searchContext, "errorMessage", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "errorStacktrace", false);
-		queryHelper.addSearchTerm(
+		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, "modelName", false);
 	}
 

@@ -85,6 +85,49 @@ public class CTCollectionTemplateServiceHttp {
 		}
 	}
 
+	public static com.liferay.change.tracking.model.CTCollectionTemplate
+			deleteCTCollectionTemplate(
+				HttpPrincipal httpPrincipal, long ctCollectionTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CTCollectionTemplateServiceUtil.class,
+				"deleteCTCollectionTemplate",
+				_deleteCTCollectionTemplateParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, ctCollectionTemplateId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.change.tracking.model.CTCollectionTemplate)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.change.tracking.model.CTCollectionTemplate>
 			getCTCollectionTemplates(
@@ -98,7 +141,7 @@ public class CTCollectionTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CTCollectionTemplateServiceUtil.class,
 				"getCTCollectionTemplates",
-				_getCTCollectionTemplatesParameterTypes1);
+				_getCTCollectionTemplatesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, keywords, start, end, orderByComparator);
@@ -133,7 +176,7 @@ public class CTCollectionTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CTCollectionTemplateServiceUtil.class,
 				"getCTCollectionTemplatesCount",
-				_getCTCollectionTemplatesCountParameterTypes2);
+				_getCTCollectionTemplatesCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, keywords);
@@ -169,7 +212,7 @@ public class CTCollectionTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CTCollectionTemplateServiceUtil.class,
 				"updateCTCollectionTemplate",
-				_updateCTCollectionTemplateParameterTypes3);
+				_updateCTCollectionTemplateParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ctCollectionTemplateId, name, description, json);
@@ -208,16 +251,18 @@ public class CTCollectionTemplateServiceHttp {
 
 	private static final Class<?>[] _addCTCollectionTemplateParameterTypes0 =
 		new Class[] {String.class, String.class, String.class};
-	private static final Class<?>[] _getCTCollectionTemplatesParameterTypes1 =
+	private static final Class<?>[] _deleteCTCollectionTemplateParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCTCollectionTemplatesParameterTypes2 =
 		new Class[] {
 			String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCTCollectionTemplatesCountParameterTypes2 = new Class[] {
+		_getCTCollectionTemplatesCountParameterTypes3 = new Class[] {
 			String.class
 		};
-	private static final Class<?>[] _updateCTCollectionTemplateParameterTypes3 =
+	private static final Class<?>[] _updateCTCollectionTemplateParameterTypes4 =
 		new Class[] {long.class, String.class, String.class, String.class};
 
 }

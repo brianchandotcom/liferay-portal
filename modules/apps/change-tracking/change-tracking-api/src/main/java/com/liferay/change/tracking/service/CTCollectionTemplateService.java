@@ -47,6 +47,10 @@ public interface CTCollectionTemplateService extends BaseService {
 			String name, String description, String json)
 		throws PortalException;
 
+	public CTCollectionTemplate deleteCTCollectionTemplate(
+			long ctCollectionTemplateId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTCollectionTemplate> getCTCollectionTemplates(
 		String keywords, int start, int end,

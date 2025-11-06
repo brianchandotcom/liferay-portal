@@ -38,6 +38,13 @@ public class CTCollectionTemplateServiceUtil {
 		return getService().addCTCollectionTemplate(name, description, json);
 	}
 
+	public static CTCollectionTemplate deleteCTCollectionTemplate(
+			long ctCollectionTemplateId)
+		throws PortalException {
+
+		return getService().deleteCTCollectionTemplate(ctCollectionTemplateId);
+	}
+
 	public static List<CTCollectionTemplate> getCTCollectionTemplates(
 		String keywords, int start, int end,
 		OrderByComparator<CTCollectionTemplate> orderByComparator) {

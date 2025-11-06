@@ -56,8 +56,9 @@ test('Asserts that a user can manage factory configurations', async ({
 	});
 
 	await test.step('Assert that the factory configurations were created successfully', async () => {
-		await expect(page.getByText(providersNames[0])).toBeVisible();
-		await expect(page.getByText(providersNames[1])).toBeVisible();
+		for (const providerName of providersNames) {
+			await expect(page.getByText(providerName)).toBeVisible();
+		}
 	});
 
 	await test.step('Assert that single factory configuration was exported', async () => {

@@ -752,7 +752,8 @@ public class ObjectEntryResourceImpl
 
 		return CommentUtil.toComment(
 			_commentManager.addEntityComment(
-				comment.getExternalReferenceCode(), objectEntry.getScopeId(),
+				comment.getExternalReferenceCode(),
+				_getNonzeroGroupId(objectEntry.getId()),
 				ObjectEntry.class.getName(), objectEntry.getId(),
 				comment.getText()),
 			_commentManager, PortalUtil.getPortal());
@@ -1435,6 +1436,13 @@ public class ObjectEntryResourceImpl
 
 		return StringBundler.concat(
 			"(", filterString, ") and ", assigneeFilterString);
+	}
+
+	private long _getNonzeroGroupId(long objectEntryId) throws Exception {
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntryId);
+
+		return objectEntry.getNonzeroGroupId();
 	}
 
 	private String _getScopeKey(Map<String, Serializable> parameters) {

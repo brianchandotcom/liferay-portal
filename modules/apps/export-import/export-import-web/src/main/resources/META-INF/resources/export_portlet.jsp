@@ -507,26 +507,32 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 							</c:if>
 						</div>
 					</div>
+
+					<c:choose>
+						<c:when test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-57655") %>'>
+							<aui:button-row cssClass="sheet-footer">
+								<aui:button type="submit" value="export" />
+
+								<clay:link
+									cssClass="btn btn-secondary"
+									href="<%= redirect %>"
+									label='<%= LanguageUtil.get(request, "cancel") %>'
+									role="button"
+								/>
+							</aui:button-row>
+						</c:when>
+					</c:choose>
 				</clay:container-fluid>
 			</div>
 
-			<aui:button-row>
-				<aui:button type="submit" value="export" />
-
-				<c:choose>
-					<c:when test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-57655") %>'>
-						<clay:link
-							cssClass="btn btn-secondary"
-							href="<%= redirect %>"
-							label='<%= LanguageUtil.get(request, "cancel") %>'
-							role="button"
-						/>
-					</c:when>
-					<c:otherwise>
+			<c:choose>
+				<c:when test='<%= !FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-57655") %>'>
+					<aui:button-row>
+						<aui:button type="submit" value="export" />
 						<aui:button type="cancel" />
-					</c:otherwise>
-				</c:choose>
-			</aui:button-row>
+					</aui:button-row>
+				</c:when>
+			</c:choose>
 		</aui:form>
 
 		<aui:script use="aui-base">

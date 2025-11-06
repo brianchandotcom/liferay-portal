@@ -137,6 +137,10 @@ public class ObjectEntryEntityModelTest {
 				new StringEntityField(
 					"externalReferenceCode", locale -> "externalReferenceCode")
 			).put(
+				"folderId",
+				new IntegerEntityField(
+					"folderId", locale -> "objectEntryFolderId")
+			).put(
 				"id", new IdEntityField("id", locale -> "id", String::valueOf)
 			).put(
 				"keywords",

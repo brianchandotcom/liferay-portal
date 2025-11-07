@@ -6,6 +6,7 @@
 package com.liferay.depot.internal.security.permission.contributor;
 
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -43,39 +44,41 @@ public class DepotRoleContributor implements RoleContributor {
 				return;
 			}
 
+			DepotEntry depotEntry =
+				_depotEntryLocalService.fetchGroupDepotEntry(
+					roleCollection.getGroupId());
+
+			if (depotEntry == null) {
+				return;
+			}
+
 			Group group = _groupLocalService.getGroup(
 				roleCollection.getGroupId());
 
-			if (group.isDepot()) {
-				UserBag userBag = roleCollection.getUserBag();
+			UserBag userBag = roleCollection.getUserBag();
 
-				if (userBag.hasUserGroup(group) ||
-					_hasInheritedMemberships(group.getGroupId(), userBag)) {
+			if (userBag.hasUserGroup(group) ||
+				_hasInheritedMemberships(group.getGroupId(), userBag)) {
+
+				_addRoleId(
+					roleCollection, DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+			}
+
+			List<DepotEntryGroupRel> depotEntryGroupRels =
+				_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+					depotEntry);
+
+			for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
+				if (userBag.hasUserGroup(
+						_groupLocalService.getGroup(
+							depotEntryGroupRel.getToGroupId()))) {
 
 					_addRoleId(
 						roleCollection,
-						DepotRolesConstants.ASSET_LIBRARY_MEMBER);
-				}
+						DepotRolesConstants.
+							ASSET_LIBRARY_CONNECTED_SITE_MEMBER);
 
-				List<DepotEntryGroupRel> depotEntryGroupRels =
-					_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
-						_depotEntryLocalService.getGroupDepotEntry(
-							group.getGroupId()));
-
-				for (DepotEntryGroupRel depotEntryGroupRel :
-						depotEntryGroupRels) {
-
-					if (userBag.hasUserGroup(
-							_groupLocalService.getGroup(
-								depotEntryGroupRel.getToGroupId()))) {
-
-						_addRoleId(
-							roleCollection,
-							DepotRolesConstants.
-								ASSET_LIBRARY_CONNECTED_SITE_MEMBER);
-
-						break;
-					}
+					break;
 				}
 			}
 		}

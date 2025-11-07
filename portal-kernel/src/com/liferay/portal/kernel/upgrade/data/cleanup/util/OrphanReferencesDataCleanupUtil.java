@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.upgrade.data.cleanup.util;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -16,8 +15,8 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -76,7 +75,7 @@ public class OrphanReferencesDataCleanupUtil {
 					String columnName = resultSet.getString("COLUMN_NAME");
 
 					if (columnName != null) {
-						firstIndexColumns.add(columnName);
+						firstIndexColumns.add(StringUtil.lowerCase(columnName));
 					}
 				}
 			}
@@ -94,7 +93,9 @@ public class OrphanReferencesDataCleanupUtil {
 					continue;
 				}
 
-				firstIndexColumns.add(resultSet.getString("COLUMN_NAME"));
+				String columnName = resultSet.getString("COLUMN_NAME");
+
+				firstIndexColumns.add(StringUtil.toLowerCase(columnName));
 
 				break;
 			}
@@ -103,9 +104,8 @@ public class OrphanReferencesDataCleanupUtil {
 		List<SafeCloseable> safeCloseables = new ArrayList<>();
 
 		for (String targetColumnName : targetColumnNames) {
-			if (!ArrayUtil.contains(
-					firstIndexColumns.toArray(new String[0]), targetColumnName,
-					true)) {
+			if (!firstIndexColumns.contains(
+					StringUtil.toLowerCase(targetColumnName))) {
 
 				safeCloseables.add(
 					db.addTemporaryIndex(

@@ -72,7 +72,7 @@ public class ClassNameDataCleanupVerifyProcessTest {
 	}
 
 	@Test
-	public void testLiferayFoundClassNameWithDashIsNotDeleted()
+	public void testFoundLiferayClassNameWithDashIsNotDeleted()
 		throws Exception {
 
 		AtomicReference<ClassName> classNameAtomicReference =
@@ -103,7 +103,7 @@ public class ClassNameDataCleanupVerifyProcessTest {
 	}
 
 	@Test
-	public void testLiferayFoundClassNameWithPoundIsNotDeleted()
+	public void testFoundLiferayClassNameWithPoundIsNotDeleted()
 		throws Exception {
 
 		AtomicReference<ClassName> classNameAtomicReference =
@@ -134,7 +134,35 @@ public class ClassNameDataCleanupVerifyProcessTest {
 	}
 
 	@Test
-	public void testLiferayNotFoundUnusedClassNameIsDeleted() throws Exception {
+	public void testNonliferayClassNameIsNotDeleted() throws Exception {
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue =
+			"com.test.not.liferay." + RandomTestUtil.randomString();
+
+		_test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(messages.toString(), messages.isEmpty());
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(classNameValue, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+			},
+			() -> classNameAtomicReference.set(
+				_classNameLocalService.addClassName(classNameValue)));
+	}
+
+	@Test
+	public void testNotFoundLiferayClassNameUnusedIsDeleted() throws Exception {
 		AtomicReference<ClassName> classNameAtomicReference =
 			new AtomicReference<>();
 		String classNameValue =
@@ -166,69 +194,7 @@ public class ClassNameDataCleanupVerifyProcessTest {
 	}
 
 	@Test
-	public void testLiferayNotFoundUsedClassNameIsNotDeleted()
-		throws Exception {
-
-		AtomicReference<ClassName> classNameAtomicReference =
-			new AtomicReference<>();
-		String classNameValue =
-			"com.liferay.test." + RandomTestUtil.randomString();
-		long addressId = RandomTestUtil.nextLong();
-
-		_test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(
-					messages.toString(),
-					messages.contains(
-						StringBundler.concat(
-							"ClassName ", classNameValue,
-							" has not been found but is referenced in the ",
-							"next tables: ",
-							_dbInspector.normalizeName("Address"))));
-
-				ClassName className = _classNameLocalService.fetchClassName(
-					classNameValue);
-
-				Assert.assertEquals(classNameValue, className.getValue());
-			},
-			() -> {
-				if (classNameAtomicReference.get() != null) {
-					_classNameLocalService.deleteClassName(
-						classNameAtomicReference.get());
-				}
-
-				try (PreparedStatement preparedStatement =
-						_connection.prepareStatement(
-							"delete from Address where addressId = ?")) {
-
-					preparedStatement.setLong(1, addressId);
-					preparedStatement.executeUpdate();
-				}
-			},
-			() -> {
-				ClassName className = _classNameLocalService.addClassName(
-					classNameValue);
-
-				classNameAtomicReference.set(className);
-
-				try (PreparedStatement preparedStatement =
-						_connection.prepareStatement(
-							"insert into Address (mvccVersion, " +
-								"ctCollectionId, addressId, classNameId) " +
-									"values (0, 0, ?, ?)")) {
-
-					preparedStatement.setLong(1, addressId);
-					preparedStatement.setLong(2, className.getClassNameId());
-
-					preparedStatement.executeUpdate();
-				}
-			});
-	}
-
-	@Test
-	public void testLiferayNotFoundUsedInResourcePermissionClassNameIsNotDeleted()
+	public void testNotFoundLiferayClassNameUsedInResourcePermissionIsNotDeleted()
 		throws Exception {
 
 		AtomicReference<ClassName> classNameAtomicReference =
@@ -291,7 +257,69 @@ public class ClassNameDataCleanupVerifyProcessTest {
 	}
 
 	@Test
-	public void testModulesNotStartedVerifyNotRun() throws Exception {
+	public void testNotFoundLiferayClassNameUsedIsNotDeleted()
+		throws Exception {
+
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue =
+			"com.liferay.test." + RandomTestUtil.randomString();
+		long addressId = RandomTestUtil.nextLong();
+
+		_test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"ClassName ", classNameValue,
+							" has not been found but is referenced in the ",
+							"next tables: ",
+							_dbInspector.normalizeName("Address"))));
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(classNameValue, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+
+				try (PreparedStatement preparedStatement =
+						_connection.prepareStatement(
+							"delete from Address where addressId = ?")) {
+
+					preparedStatement.setLong(1, addressId);
+					preparedStatement.executeUpdate();
+				}
+			},
+			() -> {
+				ClassName className = _classNameLocalService.addClassName(
+					classNameValue);
+
+				classNameAtomicReference.set(className);
+
+				try (PreparedStatement preparedStatement =
+						_connection.prepareStatement(
+							"insert into Address (mvccVersion, " +
+								"ctCollectionId, addressId, classNameId) " +
+									"values (0, 0, ?, ?)")) {
+
+					preparedStatement.setLong(1, addressId);
+					preparedStatement.setLong(2, className.getClassNameId());
+
+					preparedStatement.executeUpdate();
+				}
+			});
+	}
+
+	@Test
+	public void testVerifyDoesNotRunIfModulesNotStarted() throws Exception {
 		AtomicReference<Bundle> bundleAtomicReference = new AtomicReference<>();
 
 		_test(
@@ -312,35 +340,7 @@ public class ClassNameDataCleanupVerifyProcessTest {
 					_installBundle(bundle);
 				}
 			},
-			() -> bundleAtomicReference.set(_stopBundle()));
-	}
-
-	@Test
-	public void testNonliferayClassNameIsNotDeleted() throws Exception {
-		AtomicReference<ClassName> classNameAtomicReference =
-			new AtomicReference<>();
-		String classNameValue =
-			"com.test.not.liferay." + RandomTestUtil.randomString();
-
-		_test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(messages.toString(), messages.isEmpty());
-
-				ClassName className = _classNameLocalService.fetchClassName(
-					classNameValue);
-
-				Assert.assertEquals(classNameValue, className.getValue());
-			},
-			() -> {
-				if (classNameAtomicReference.get() != null) {
-					_classNameLocalService.deleteClassName(
-						classNameAtomicReference.get());
-				}
-			},
-			() -> classNameAtomicReference.set(
-				_classNameLocalService.addClassName(classNameValue)));
+			() -> bundleAtomicReference.set(_uninstallBundle()));
 	}
 
 	private VerifyProcess _getVerifyProcess() throws Exception {
@@ -372,34 +372,6 @@ public class ClassNameDataCleanupVerifyProcessTest {
 			bundleContext, bundlesToRefresh);
 	}
 
-	private Bundle _stopBundle() throws Exception {
-		Bundle currentBundle = FrameworkUtil.getBundle(
-			ClassNameDataCleanupVerifyProcessTest.class);
-
-		BundleContext bundleContext = currentBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.dynamic.data.mapping.service") &&
-				(bundle.getState() == Bundle.ACTIVE)) {
-
-				bundle.uninstall();
-
-				List<Bundle> bundlesToRefresh = new ArrayList<>();
-
-				bundlesToRefresh.add(bundle);
-
-				com.liferay.osgi.util.BundleUtil.refreshBundles(
-					bundleContext, bundlesToRefresh);
-
-				return bundle;
-			}
-		}
-
-		return null;
-	}
-
 	private void _test(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
@@ -425,6 +397,34 @@ public class ClassNameDataCleanupVerifyProcessTest {
 			Assert.assertEquals(
 				classNameCount, _classNameLocalService.getClassNamesCount());
 		}
+	}
+
+	private Bundle _uninstallBundle() throws Exception {
+		Bundle currentBundle = FrameworkUtil.getBundle(
+			ClassNameDataCleanupVerifyProcessTest.class);
+
+		BundleContext bundleContext = currentBundle.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					"com.liferay.dynamic.data.mapping.service") &&
+				(bundle.getState() == Bundle.ACTIVE)) {
+
+				bundle.uninstall();
+
+				List<Bundle> bundlesToRefresh = new ArrayList<>();
+
+				bundlesToRefresh.add(bundle);
+
+				com.liferay.osgi.util.BundleUtil.refreshBundles(
+					bundleContext, bundlesToRefresh);
+
+				return bundle;
+			}
+		}
+
+		return null;
 	}
 
 	private static final String _VERIFY_CLASS_NAME =

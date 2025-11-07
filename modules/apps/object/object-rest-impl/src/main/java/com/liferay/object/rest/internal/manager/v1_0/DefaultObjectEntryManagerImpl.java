@@ -2513,7 +2513,7 @@ public class DefaultObjectEntryManagerImpl
 
 			actions = HashMapBuilder.create(
 				actions
-			).put(
+			).<String, Map<String, String>>put(
 				"copy",
 				() -> {
 					if (!FeatureFlagManagerUtil.isEnabled(

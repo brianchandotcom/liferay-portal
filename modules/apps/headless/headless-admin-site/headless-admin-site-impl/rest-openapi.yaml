@@ -2315,6 +2315,11 @@ components:
                         Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
+                auto:
+                    description:
+                        A Boolean value that specifies whether or not the Navigation Menu displays as an option when
+                        creating a new page
+                    type: boolean
                 creator:
                     $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review

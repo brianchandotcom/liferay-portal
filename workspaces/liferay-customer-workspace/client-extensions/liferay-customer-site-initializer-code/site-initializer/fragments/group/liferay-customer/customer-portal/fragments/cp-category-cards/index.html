@@ -8,6 +8,21 @@
 	[#return "" /]
 [/#function]
 
+[#function sortNavItems items]
+	[#assign dateArticles = [] /]
+	[#assign otherItems = [] /]
+
+	[#list items?sort_by("name") as item]
+		[#if item.type == "article" && item.name?matches("^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}.*")]
+			[#assign dateArticles = dateArticles + [item] /]
+		[#else]
+			[#assign otherItems = otherItems + [item] /]
+		[/#if]
+	[/#list]
+
+	[#return dateArticles?reverse + otherItems /]
+[/#function]
+
 [#assign displayObject = (request.getAttribute("LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER").getDisplayObject())!{} /]
 
 [#if displayObject?has_content]
@@ -25,7 +40,7 @@
 		/]
 
 		[#if categoryDisplayLayout == "list"]
-			[#assign childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories").items![] /]
+			[#assign childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories?page=1&pageSize=200").items![] /]
 
 			<div class="cp-category-card-container d-flex flex-wrap mb-4">
 				[#list childrenCategories as childCategory]
@@ -38,21 +53,21 @@
 					[#assign listItems = [] /]
 
 					[#if configuration.showArticles]
-						[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${childCategory.id}&flatten=true").items![] /]
+						[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${childCategory.id}&flatten=true&page=1&pageSize=200").items![] /]
 
 						[#if articles?has_content]
 							[#list articles as article]
-								[#assign listItems = listItems + [{"isVisible": "true", "name": article.title, "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
+								[#assign listItems = listItems + [{"isVisible": "true", "name": article.title, "type": "article", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
 							[/#list]
 						[/#if]
 					[/#if]
 
 					[#if configuration.showCategories]
-						[#assign grandChildrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + childCategory.id + "/taxonomy-categories").items![] /]
+						[#assign grandChildrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + childCategory.id + "/taxonomy-categories?page=1&pageSize=200").items![] /]
 
 						[#if grandChildrenCategories?has_content]
 							[#list grandChildrenCategories as grandChildCategory]
-								[#assign listItems = listItems + [{"isVisible": getProperty(grandChildCategory.taxonomyCategoryProperties, "visible"), "name": grandChildCategory.name, "url": grandChildCategory.id}] /]
+								[#assign listItems = listItems + [{"isVisible": getProperty(grandChildCategory.taxonomyCategoryProperties, "visible"), "name": grandChildCategory.name, "type": "category", "url": grandChildCategory.id}] /]
 							[/#list]
 						[/#if]
 					[/#if]
@@ -82,7 +97,7 @@
 
 							<div class="grand-children-categories">
 								<ul class="list-unstyled m-0 p-2">
-									[#list listItems?sort_by("name") as listItem]
+									[#list sortNavItems(listItems) as listItem]
 										[#if listItem.isVisible == "false"]
 											[#continue /]
 										[/#if]
@@ -106,17 +121,17 @@
 			/]
 
 			[#if configuration.showArticles]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${categoryId}&flatten=true").items![] /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${categoryId}&flatten=true&page=1&pageSize=200").items![] /]
 
 				[#if articles?has_content]
 					[#list articles as article]
-						[#assign listItems = listItems + [{"icon": "", "name": article.title, "style": defaultStyle, "subtitle": "", "thumbnail": "", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
+						[#assign listItems = listItems + [{"icon": "", "name": article.title, "style": defaultStyle, "subtitle": "", "thumbnail": "", "type": "article", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
 					[/#list]
 				[/#if]
 			[/#if]
 
 			[#if configuration.showCategories]
-				[#assign childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories").items![] /]
+				[#assign childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories?page=1&pageSize=200").items![] /]
 
 				[#list childrenCategories as childCategory]
 					[#assign isChildCategoryVisible = getProperty(childCategory.taxonomyCategoryProperties, "visibleInNav") /]
@@ -134,12 +149,12 @@
 
 					[#assign childCategoryStyle = childCategoryBackgroundImage?has_content?then("background-image: url(${childCategoryBackgroundImage});", defaultStyle) /]
 
-					[#assign listItems = listItems + [{"icon": childCategoryIconName, "name": childCategory.name, "style": childCategoryStyle, "subtitle": childCategorySubtitle, "thumbnail": childCategoryThumbnail, "url": childCategory.id}] /]
+					[#assign listItems = listItems + [{"icon": childCategoryIconName, "name": childCategory.name, "style": childCategoryStyle, "subtitle": childCategorySubtitle, "thumbnail": childCategoryThumbnail, "type": "category", "url": childCategory.id}] /]
 				[/#list]
 			[/#if]
 
 			<div class="cp-category-card-container d-flex flex-wrap justify-content-center mb-4">
-				[#list listItems?sort_by("name") as listItem]
+				[#list sortNavItems(listItems) as listItem]
 					<a class="cp-category-tile" href="${htmlUtil.escape(listItem.url)}">
 						<div class="align-items-center card card-flat d-flex flex-column justify-content-center p-4" style="${htmlUtil.escape(listItem.style)}">
 							[#if listItem.thumbnail?has_content]

@@ -8,6 +8,21 @@
 	[#return "" /]
 [/#function]
 
+[#function sortNavItems items]
+	[#assign dateArticles = [] /]
+	[#assign otherItems = [] /]
+
+	[#list items?sort_by("name") as item]
+		[#if item.type == "article" && item.name?matches("^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}.*")]
+			[#assign dateArticles = dateArticles + [item] /]
+		[#else]
+			[#assign otherItems = otherItems + [item] /]
+		[/#if]
+	[/#list]
+
+	[#return dateArticles?reverse + otherItems /]
+[/#function]
+
 [#macro renderNavNode item]
 	[#if item.type == "category"]
 		[#assign category = item.data /]
@@ -22,7 +37,7 @@
 
 		[#if configuration.showCategories]
 			[#attempt]
-				[#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + category.id + "/taxonomy-categories") /]
+				[#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + category.id + "/taxonomy-categories?page=1&pageSize=200") /]
 
 				[#if childCategories.items?has_content]
 					[#list childCategories.items as childCategory]
@@ -35,7 +50,7 @@
 
 		[#if configuration.showArticles]
 			[#attempt]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${category.id}&flatten=true") /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${category.id}&flatten=true&page=1&pageSize=200") /]
 
 				[#if articles?has_content && articles.items?has_content]
 					[#list articles.items as article]
@@ -66,7 +81,7 @@
 				title='${htmlUtil.escape(category.name)}'
 			]
 				<ul class="cp-article-side-panel-list list-unstyled m-0">
-					[#list childNavItems?sort_by("name") as childItem]
+					[#list sortNavItems(childNavItems) as childItem]
 						<li>
 							[@renderNavNode item=childItem /]
 						</li>
@@ -124,7 +139,7 @@
 
 	[#if configuration.showCategories && parentCategoryId?has_content]
 		[#attempt]
-			[#assign siblingCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentCategoryId + "/taxonomy-categories") /]
+			[#assign siblingCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentCategoryId + "/taxonomy-categories?page=1&pageSize=200") /]
 
 			[#if siblingCategories.items?has_content]
 				[#list siblingCategories.items as siblingCategory]
@@ -146,7 +161,7 @@
 
 		[#if articleFetchCategoryId?has_content]
 			[#attempt]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?flatten=true&search=${articleFetchCategoryId}&page=1&pageSize=100") /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?flatten=true&search=${articleFetchCategoryId}&page=1&pageSize=200") /]
 
 				[#if articles.items?has_content]
 					[#list articles.items as article]
@@ -175,7 +190,7 @@
 			[@liferay_ui["panel-container"]]
 				[#if navItems?has_content]
 					<ul class="cp-article-side-panel-list list-unstyled m-0">
-						[#list navItems?sort_by("name") as item]
+						[#list sortNavItems(navItems) as item]
 							<li>
 								[@renderNavNode item=item /]
 							</li>

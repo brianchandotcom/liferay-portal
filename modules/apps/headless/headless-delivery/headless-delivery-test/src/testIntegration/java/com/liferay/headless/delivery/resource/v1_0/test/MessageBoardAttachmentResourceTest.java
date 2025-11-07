@@ -111,6 +111,20 @@ public class MessageBoardAttachmentResourceTest
 		super.testGraphQLGetMessageBoardThreadMessageBoardAttachmentsPage();
 	}
 
+	@Test
+	public void testPostMessageBoardMessageMessageBoardAttachment()
+		throws Exception {
+
+		super.testPostMessageBoardMessageMessageBoardAttachment();
+
+		MessageBoardAttachment postMessageBoardAttachment =
+			testPostMessageBoardThreadMessageBoardAttachment_addMessageBoardAttachment(
+				randomMessageBoardAttachment(), getMultipartFiles());
+
+		Assert.assertEquals(
+			"text/plain", postMessageBoardAttachment.getEncodingFormat());
+	}
+
 	@Override
 	protected void assertValid(
 			MessageBoardAttachment messageBoardAttachment,

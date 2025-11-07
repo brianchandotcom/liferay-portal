@@ -109,13 +109,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DROPDOWN_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${key_text}')]</td>
+	<td>PUBLISH_OPTIONS_BUTTON</td>
+	<td>//button[@aria-label='Publish Options']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISH_OPTIONS_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-item') and contains(@aria-label, 'Publish Options')]</td>
+	<td>DROPDOWN_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

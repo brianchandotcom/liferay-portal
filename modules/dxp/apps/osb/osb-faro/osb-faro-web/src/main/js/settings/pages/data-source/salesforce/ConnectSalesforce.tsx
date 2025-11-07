@@ -1,7 +1,9 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import React, {useState} from 'react';
+import URLConstants from 'shared/util/url-constants';
 import WizardPage from 'settings/components/base-page/WizardPage';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
@@ -109,9 +111,7 @@ const ConnectSalesforce = ({addAlert}) => {
 					</Text>
 				</div>
 
-				{/* TODO: Add link to the documentation */}
-
-				<a href='/#' target='_blank'>
+				<ClayLink href={URLConstants.HelpConnectDxp} target='_blank'>
 					<Text size={4} weight='semi-bold'>
 						{Liferay.Language.get('learn-more-about-data-sources')}
 					</Text>
@@ -124,7 +124,7 @@ const ConnectSalesforce = ({addAlert}) => {
 						fontSize={12}
 						symbol='shortcut'
 					/>
-				</a>
+				</ClayLink>
 
 				<div className='mt-5'>
 					<currentStep.content

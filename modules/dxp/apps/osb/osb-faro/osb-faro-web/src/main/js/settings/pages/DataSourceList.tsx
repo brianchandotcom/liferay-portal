@@ -254,8 +254,6 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 					label: Liferay.Language.get('salesforce'),
 
 					onClick: () => {
-						// TODO: create salesforce connection page to be loaded in the route below
-
 						history.push(
 							toRoute(Routes.SETTINGS_SALESFORCE_ADD, {
 								groupId

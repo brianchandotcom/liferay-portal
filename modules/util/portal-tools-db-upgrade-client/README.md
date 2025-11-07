@@ -35,9 +35,8 @@ methods (e.g., `liferay-upgrade-db --noShell`).
 
 The first time you run the tool, it will automatically configure properties for
 your installation of Liferay. You can also do this manually by configuring
-`app-server.properties`, `portal-upgrade-database.properties`, and
-`portal-upgrade-ext.properties`. Make sure to place these `.properties` files in
-the same directory from which you execute the tool.
+`app-server.properties` and `portal-upgrade-ext.properties`. Make sure to place
+ these `.properties` files in the same directory from which you execute the tool.
 
 The DB Upgrade Client also connects to the Gogo shell automatically after the
 upgrade if there were any issues. This lets you check the status of any module
@@ -99,7 +98,9 @@ configuration below.
 
 - `portal.dir` - the portal directory. **(Required)**
 
-#### portal-upgrade-database.properties
+#### portal-upgrade-ext.properties
+
+- `liferay.home` - the Liferay home directory. **(Required)**
 
 - `jdbc.default.driverClassName` **(Required)**
 
@@ -108,10 +109,6 @@ configuration below.
 - `jdbc.default.username` **(Required)**
 
 - `jdbc.default.password` **(Required)**
-
-#### portal-upgrade-ext.properties
-
-- `liferay.home` - the Liferay home directory. **(Required)**
 
 - `hibernate.jdbc.batch_size` - the JDBC batch size used to improve
    performance; set to *250* by default. **(Optional)**

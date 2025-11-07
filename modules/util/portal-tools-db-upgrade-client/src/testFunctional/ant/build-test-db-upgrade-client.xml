@@ -462,7 +462,7 @@
 				/>
 			</delete>
 
-			<for list="app-server.properties,com.liferay.portal.tools.db.upgrade.client.jar,db_upgrade_client.bat,db_upgrade_client.sh,portal-upgrade-database.properties,portal-upgrade-ext.properties" param="upgrade.file">
+			<for list="app-server.properties,com.liferay.portal.tools.db.upgrade.client.jar,db_upgrade_client.bat,db_upgrade_client.sh,portal-upgrade-ext.properties" param="upgrade.file">
 				<sequential>
 					<if>
 						<available file="${db.upgrade.client.home}/@{upgrade.file}" />
@@ -518,7 +518,7 @@
 
 		<prepare-database-upgrade-properties />
 
-		<delete file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
+		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
@@ -565,8 +565,6 @@
 		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/app-server.properties" />
-
-		<delete file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
 
 		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
 

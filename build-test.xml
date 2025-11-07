@@ -3160,7 +3160,7 @@ server.detector.server.id=wildfly</echo>
 
 			<property name="database.url.upgrade" value="${database.url}" />
 
-			<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties">jdbc.default.driverClassName=${database.driver}
+			<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url.upgrade}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}</echo>
@@ -5553,12 +5553,12 @@ include-and-override=portal-liferay-online.properties</echo>
 						<equals arg1="${database.type}" arg2="mysql" />
 						<then>
 							<replace
-								file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties"
+								file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties"
 								token="${database.mysql.driver}"
 								value="${database.mariadb.driver}"
 							/>
 							<replace
-								file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties"
+								file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties"
 								token="jdbc:mysql:"
 								value="jdbc:mariadb:"
 							/>

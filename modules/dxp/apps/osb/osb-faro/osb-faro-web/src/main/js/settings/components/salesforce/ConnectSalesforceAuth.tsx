@@ -332,7 +332,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 					<Form.Input
 						className='mb-3'
 						id='salesForceDataSource'
-						label={Liferay.Language.get('salesforce-data-source')}
+						label={Liferay.Language.get('salesforce-url')}
 						name='salesForceDataSource'
 						required
 						type='text'
@@ -344,11 +344,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 										Liferay.Language.get(
 											'the-x-field-is-required'
 										),
-										[
-											Liferay.Language.get(
-												'salesforce-data-source'
-											)
-										]
+										[Liferay.Language.get('salesforce-url')]
 									) as string
 								),
 							validateSalesforceDomain

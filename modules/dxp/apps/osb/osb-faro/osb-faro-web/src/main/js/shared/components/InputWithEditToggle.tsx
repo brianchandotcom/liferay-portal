@@ -73,6 +73,7 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 						aria-label={Liferay.Language.get('edit')}
 						borderless
 						className='button-root'
+						data-testid='edit'
 						disabled={!editable}
 						displayType='secondary'
 						onClick={() => setEditing(true)}

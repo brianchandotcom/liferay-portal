@@ -18,7 +18,7 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
 import {ConnectSalesforceAuth} from './ConnectSalesforceAuth';
 import {DataSource} from 'shared/util/records';
-import {DataSourceStates, DataSourceStatuses} from 'shared/util/constants';
+import {DataSourceStatuses} from 'shared/util/constants';
 import {
 	fetchDataSource,
 	updateSalesforceDataSource
@@ -89,33 +89,30 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 	const [alert, setAlert] = useState(initialAlert);
 	const [individuals, setIndividuals] = useState<boolean>(false);
 
-	const credentialsValid =
-		dataSource.state === DataSourceStates.CredentialsValid;
+	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
 	useEffect(() => {
-		let displayType = 'success' as DisplayType;
+		const alert: Alert = {
+			displayType: 'success',
+			message: Liferay.Language.get(
+				'you-have-successfully-authenticated-your-token-with-liferay-analytics-cloud.-you-can-now-select-the-data-to-sync'
+			)
+		};
 
-		let messageKey = Liferay.Language.get(
-			'you-have-successfully-authenticated-your-token-with-liferay-analytics-cloud.-you-can-now-select-the-data-to-sync'
-		);
+		if (!dataSourceActive) {
+			alert.displayType = 'warning';
 
-		if (!credentialsValid) {
-			displayType = 'warning';
-
-			messageKey = Liferay.Language.get(
+			alert.message = Liferay.Language.get(
 				'the-data-source-is-disconnected.-data-is-no-longer-being-synced-from-dxp,-but-you-can-reconnect-to-resume-syncing'
 			);
 		} else if (accounts || individuals) {
-			messageKey = Liferay.Language.get(
+			alert.message = Liferay.Language.get(
 				'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
 			);
 		}
 
-		setAlert({
-			displayType,
-			message: messageKey
-		});
-	}, [credentialsValid, accounts, individuals]);
+		setAlert(alert);
+	}, [dataSourceActive, accounts, individuals]);
 
 	const cachedNameValues = useRef(new Map());
 
@@ -259,7 +256,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 								</ClayAlert>
 							)}
 
-							{!credentialsValid && (
+							{!dataSourceActive && (
 								<ClayLayout.SheetSection>
 									<div className='mb-3'>
 										<Text color='secondary' size={4}>
@@ -342,7 +339,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 								</ClayInput.Group>
 							</ClayLayout.SheetSection>
 
-							{credentialsValid && (
+							{dataSourceActive && (
 								<ClayButton
 									aria-label={Liferay.Language.get(
 										'disconnect-data-source'
@@ -377,7 +374,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 						</div>
 
 						<ClayLayout.SheetSection>
-							{credentialsValid && !accounts && !individuals && (
+							{dataSourceActive && !accounts && !individuals && (
 								<ClayAlert
 									className='mt-3'
 									displayType='warning'
@@ -398,7 +395,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 							<SalesforceAccountsAndIndividuals
 								accounts={accounts}
 								accountsSyncedCount={0}
-								disabled={!credentialsValid}
+								disabled={!dataSourceActive}
 								individuals={individuals}
 								individualsSyncedCount={0}
 								onChange={({accounts, individuals}) => {

@@ -1,10 +1,13 @@
 <#list dataFactory.getSequence(dataFactory.maxObjectEntryPageCount) as objectEntryPageCount>
 	<#include "custom_object_definitions.ftl">
 
-	<#assign
-		friendlyURLs = []
+	<#assign friendlyURLs = []
 
 		name = objectDefinitionModel.getName()
+
+		plid = ""
+
+		segmentsExperienceId = ""
 	/>
 
 	<#list dataFactory.getObjectLayoutDataItemTypes() as layoutDataItemType>
@@ -32,12 +35,23 @@
 
 			${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
-			${dataFactory.toInsertSQL(dataFactory.newObjectDefinitionLayoutPageTemplateStructureRelModel(fragmentEntryLinkModels, layoutDataItemType, contentLayoutModel, layoutPageTemplateStructureModel, objectDefinitionModel))}
+			<#assign layoutPageTemplateStructureRelModel = dataFactory.newObjectDefinitionLayoutPageTemplateStructureRelModel(fragmentEntryLinkModels, layoutDataItemType, contentLayoutModel, layoutPageTemplateStructureModel, objectDefinitionModel) />
+
+			${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
 
 			<#if contentLayoutModel.friendlyURL?contains(name?c_lower_case)>
 				<#assign friendlyURLs = friendlyURLs + [contentLayoutModel.getFriendlyURL()] />
+				<#if layoutDataItemType == 'form'>
+					 <#assign plid = contentLayoutModel.getPlid()?string
+					 	segmentsExperienceId = layoutPageTemplateStructureRelModel.getSegmentsExperienceId()?string
+					 />
+				</#if>
 			</#if>
 		</#list>
 	</#list>
-	${csvFileWriter.write("objectDefinition", virtualHostModel.hostname + "," + groupModel.friendlyURL + ",+ (friendlyURLs?join(",")) + "\n")}
+	${csvFileWriter.write("objectDefinition",virtualHostModel.hostname + "," +
+	  groupModel.friendlyURL + "," + friendlyURLs?join(",") + "," +
+	  dataFactory.getClassNameId(objectDefinitionModel.getClassName()) + "," +
+	  dataFactory.getDefaultListTypeEntryKey() + "," + groupId + "," +
+	  plid + "," + segmentsExperienceId + "\n")}
 </#list>

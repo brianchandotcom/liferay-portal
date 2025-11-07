@@ -22,12 +22,12 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import java.sql.Connection;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Jorge Avalos
@@ -175,43 +175,45 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 				connection));
 
 		Map<String, List<String>> mismatchedTableColumnDefinitions =
-			new HashMap<>();
-		Map<String, List<String>> missingTableColumnNames = new HashMap<>();
+			new ConcurrentHashMap<>();
+		Map<String, List<String>> missingTableColumnNames =
+			new ConcurrentHashMap<>();
 
-		for (Map.Entry<String, List<String>> tableColumnDefinitionsEntry :
-				tableColumnDefinitions.entrySet()) {
+		processConcurrently(
+			tableColumnDefinitions,
+			tableColumnDefinitionsEntry -> {
+				for (String columnDefinition :
+						tableColumnDefinitionsEntry.getValue()) {
 
-			for (String columnDefinition :
-					tableColumnDefinitionsEntry.getValue()) {
+					int indexOf = columnDefinition.indexOf(StringPool.SPACE);
 
-				int indexOf = columnDefinition.indexOf(StringPool.SPACE);
+					String columnName = columnDefinition.substring(0, indexOf);
+					String columnType = columnDefinition.substring(indexOf + 1);
 
-				String columnName = columnDefinition.substring(0, indexOf);
-				String columnType = columnDefinition.substring(indexOf + 1);
+					if (!dbInspector.hasColumn(
+							tableColumnDefinitionsEntry.getKey(), columnName)) {
 
-				if (!dbInspector.hasColumn(
-						tableColumnDefinitionsEntry.getKey(), columnName)) {
+						missingTableColumnNames.computeIfAbsent(
+							tableColumnDefinitionsEntry.getKey(),
+							tableName -> new ArrayList<>()
+						).add(
+							columnName
+						);
+					}
+					else if (!dbInspector.hasColumnType(
+								tableColumnDefinitionsEntry.getKey(),
+								columnName, columnType)) {
 
-					missingTableColumnNames.computeIfAbsent(
-						tableColumnDefinitionsEntry.getKey(),
-						tableName -> new ArrayList<>()
-					).add(
-						columnName
-					);
+						mismatchedTableColumnDefinitions.computeIfAbsent(
+							tableColumnDefinitionsEntry.getKey(),
+							tableName -> new ArrayList<>()
+						).add(
+							columnDefinition
+						);
+					}
 				}
-				else if (!dbInspector.hasColumnType(
-							tableColumnDefinitionsEntry.getKey(), columnName,
-							columnType)) {
-
-					mismatchedTableColumnDefinitions.computeIfAbsent(
-						tableColumnDefinitionsEntry.getKey(),
-						tableName -> new ArrayList<>()
-					).add(
-						columnDefinition
-					);
-				}
-			}
-		}
+			},
+			null);
 
 		String partitionSuffix = StringPool.BLANK;
 

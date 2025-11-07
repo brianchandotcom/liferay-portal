@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useRef, useState} from 'react';
 
-import AssistantMessageBalloon from './components/AssistantMessageBalloon';
+import AIAssistantMessageBalloon from './components/AIAssistantMessageBalloon';
 import UserMessageBalloon from './components/UserMessageBalloon';
 
 import './chat.scss';
@@ -135,7 +135,7 @@ const AIAssistantChat: React.FC = () => {
 				</div>
 
 				<div className="ai-assistant-chat__messages-container flex-grow-1 overflow-auto px-3">
-					<AssistantMessageBalloon
+					<AIAssistantMessageBalloon
 						message="Hi! I can help you generate content, titles, tags, or
 						translate your work. What would you like to do?"
 					/>
@@ -147,7 +147,7 @@ const AIAssistantChat: React.FC = () => {
 								message={item.text}
 							/>
 						) : (
-							<AssistantMessageBalloon
+							<AIAssistantMessageBalloon
 								key={index}
 								message={item.text}
 							/>

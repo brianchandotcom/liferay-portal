@@ -35,6 +35,7 @@ dependencies {
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
+	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-upgrade-api")
 	compileOnly project(":apps:portal-search:portal-search-api")

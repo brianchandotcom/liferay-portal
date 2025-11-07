@@ -6,13 +6,15 @@
 package com.liferay.document.library.internal.search.spi.model.index.contributor;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.RelatedEntryIndexer;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,13 +37,27 @@ public class DLFileEntryRelatedEntryModelDocumentContributor
 		}
 
 		try {
-			relatedEntryIndexer.addRelatedEntryFields(
-				document, new LiferayFileEntry(dlFileEntry));
+			DLFolder dlFolder = dlFileEntry.getFolder();
+
+			long messageId = GetterUtil.getLong(dlFolder.getName());
+
+			if (messageId != 0) {
+				MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(
+					messageId);
+
+				if (mbMessage != null) {
+					document.addKeyword(
+						Field.CATEGORY_ID, mbMessage.getCategoryId());
+
+					document.addKeyword("discussion", false);
+					document.addKeyword("threadId", mbMessage.getThreadId());
+				}
+			}
 
 			DocumentHelper documentHelper = new DocumentHelper(document);
 
 			documentHelper.setAttachmentOwnerKey(
-				portal.getClassNameId(dlFileEntry.getClassName()),
+				_portal.getClassNameId(dlFileEntry.getClassName()),
 				dlFileEntry.getClassPK());
 
 			document.addKeyword(Field.RELATED_ENTRY, true);
@@ -52,11 +68,9 @@ public class DLFileEntryRelatedEntryModelDocumentContributor
 	}
 
 	@Reference
-	protected Portal portal;
+	private MBMessageLocalService _mbMessageLocalService;
 
-	@Reference(
-		target = "(related.entry.indexer.class.name=com.liferay.message.boards.model.MBMessage)"
-	)
-	protected RelatedEntryIndexer relatedEntryIndexer;
+	@Reference
+	private Portal _portal;
 
 }

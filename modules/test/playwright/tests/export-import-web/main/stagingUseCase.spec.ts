@@ -71,7 +71,7 @@ const test = mergeTests(
 );
 
 test(
-	'can publish web content with URL references to live via remote staging',
+	'Can publish web content with URL references to live via remote staging',
 	{tag: '@LPS-159626'},
 	async ({
 		apiHelpers,
@@ -182,17 +182,12 @@ test(
 
 		await journalStructuresPage.goto(site.friendlyUrlPath);
 		const templateName = 'template1';
-		const templateScript =
-			'<p><a href="${URL1.getData()}">${Openpage1.getData()}</a></p>\n' +
-			'<p><a href="${URL2.getData()}">${Openpage2.getData()}</a></p>\n' +
-			'<p><a href="${URL3.getData()}">${Openpage3.getData()}</a></p>\n' +
-			'<p><a href="${URL11.getData()}">${Openpage11.getData()}</a></p>\n' +
-			'<p><a href="${URL12.getData()}">${Openpage12.getData()}</a></p>\n' +
-			'<p><a href="${URL111.getData()}">${Openpage111.getData()}</a></p>\n' +
-			'<p><a href="${URL21.getData()}">${Openpage21.getData()}</a></p>\n' +
-			'<p><a href="${URL22.getData()}">${Openpage22.getData()}</a></p>\n' +
-			'<p><a href="${URL31.getData()}">${Openpage31.getData()}</a></p>\n' +
-			'<p><a href="${URL32.getData()}">${Openpage32.getData()}</a></p>';
+
+		const templateScript = pageNumbers
+			.map((number) => {
+				return `<p><a href="\${URL${number}.getData()}">\${Openpage${number}.getData()}</a></p>`;
+			})
+			.join('\n');
 
 		await journalEditTemplatePage.goto(site.friendlyUrlPath);
 		await journalEditTemplatePage.selectStructure(structureName);
@@ -213,15 +208,14 @@ test(
 			groupId: site.id,
 			titleMap: {en_US: webContentTitle},
 		});
-		const fields2: Array<any> = [];
 
-		fields2.push({name: 'Content1', repeatable: false});
-		fields2.push({name: 'Content2', repeatable: false});
 		const structureName2 = getRandomString();
 		const dataDefinition2 = getDataStructureDefinition({
 			defaultLanguageId: 'en_US',
-
-			fields: fields2,
+			fields: [
+				{name: 'Content1', repeatable: false},
+				{name: 'Content2', repeatable: false},
+			],
 			name: structureName2,
 		});
 
@@ -248,16 +242,14 @@ test(
 		await webContentDisplayPage.gotoWebContentAdmin(site.name);
 
 		for (const num of pageNumbers) {
-			const contentFields3: Array<any> = [];
-
-			contentFields3.push({name: `Content1`, value: `Title-${num}`});
-			contentFields3.push({
-				name: `Content2`,
-				value: `Text Content-${num}`,
-			});
-
 			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				contentFields: contentFields3,
+				contentFields: [
+					{name: `Content1`, value: `Title-${num}`},
+					{
+						name: `Content2`,
+						value: `Text Content-${num}`,
+					},
+				],
 				ddmStructureId: structure2.id,
 				ddmTemplateKey: templateKey2,
 				groupId: site.id,
@@ -842,7 +834,7 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontentStructureId}`,
 );
 
 test(
-	'non modified referred content cannot publish to live when enable include if modified option',
+	'Non modified referred content cannot publish to live when enable include if modified option',
 	{tag: '@LPS-167777'},
 	async ({apiHelpers, stagingConfigurationPage, stagingPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({

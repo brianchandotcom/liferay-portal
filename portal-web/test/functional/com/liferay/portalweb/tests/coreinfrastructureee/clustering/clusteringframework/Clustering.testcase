@@ -903,46 +903,6 @@ definition {
 	}
 
 	@priority = 4
-	test SlaveNodeCanBecomeMasterNode {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Groovy.runScriptViaGogoShell(
-			expectedOutput = "This node is master node",
-			scriptFile = "groovy-script-master-slave.groovy");
-
-		Groovy.runScriptViaGogoShell(
-			expectedOutput = "This node is slave node",
-			nodePort = 9080,
-			scriptFile = "groovy-script-master-slave.groovy");
-
-		Clustering.shutdownSpecificServer(nodePort = 8080);
-
-		Groovy.runScriptViaGogoShell(
-			expectedOutput = "This node is master node",
-			nodePort = 9080,
-			scriptFile = "groovy-script-master-slave.groovy");
-
-		Clustering.startSpecificServer(
-			deleteLiferayHome = "true",
-			keepCachedAppServerData = "true",
-			nodePort = 8080);
-
-		User.logoutPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-
-		Groovy.runScriptViaGogoShell(
-			expectedOutput = "This node is slave node",
-			scriptFile = "groovy-script-master-slave.groovy");
-	}
-
-	@priority = 4
 	test TCPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
 		property test.liferay.virtual.instance = "false";

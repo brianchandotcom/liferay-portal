@@ -12,12 +12,10 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstancePageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
-import com.liferay.layout.importer.PortletPermissionsImporter;
-import com.liferay.layout.importer.PortletPreferencesPortletConfigurationImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.PortletUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -34,19 +32,13 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
 
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
@@ -87,10 +79,10 @@ public class WidgetInstanceLayoutStructureItemImporter
 			widgetInstance.getWidgetName(),
 			widgetInstance.getWidgetInstanceId());
 
-		_importPortletPreferences(
+		PortletUtil.importPortletPreferences(
 			layout, portletId, widgetInstance.getWidgetConfig());
 
-		_importPortletPermissions(
+		PortletUtil.importPortletPermissions(
 			layout, portletId, widgetInstance.getWidgetName(),
 			widgetInstance.getWidgetPermissions());
 
@@ -246,72 +238,6 @@ public class WidgetInstanceLayoutStructureItemImporter
 		return namespace;
 	}
 
-	private List<Map<String, Object>> _getWidgetPermissionsMaps(
-		WidgetPermission[] widgetPermissions) {
-
-		if (ArrayUtil.isEmpty(widgetPermissions)) {
-			return new ArrayList<>();
-		}
-
-		List<Map<String, Object>> widgetPermissionsMaps = new ArrayList<>();
-
-		for (WidgetPermission widgetPermission : widgetPermissions) {
-			widgetPermissionsMaps.add(
-				HashMapBuilder.<String, Object>put(
-					"actionKeys", Arrays.asList(widgetPermission.getActionIds())
-				).put(
-					"roleKey", widgetPermission.getRoleName()
-				).build());
-		}
-
-		return widgetPermissionsMaps;
-	}
-
-	private void _importPortletPermissions(
-			Layout layout, String portletId, String portletName,
-			WidgetPermission[] widgetPermissions)
-		throws Exception {
-
-		PortletPermissionsImporter portletPermissionsImporter =
-			_portletPermissionsImporterServiceTracker.getService();
-
-		if (portletPermissionsImporter == null) {
-			return;
-		}
-
-		if ((widgetPermissions != null) && (widgetPermissions.length == 0)) {
-			ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
-				layout.getCompanyId(), portletName,
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				PortletPermissionUtil.getPrimaryKey(
-					layout.getPlid(), portletId));
-
-			return;
-		}
-
-		portletPermissionsImporter.importPortletPermissions(
-			layout.getPlid(), portletId, Collections.emptySet(),
-			_getWidgetPermissionsMaps(widgetPermissions));
-	}
-
-	private void _importPortletPreferences(
-			Layout layout, String portletId, Map<String, Object> widgetConfig)
-		throws Exception {
-
-		PortletPreferencesPortletConfigurationImporter
-			portletPreferencesPortletConfigurationImporter =
-				_portletPreferencesPortletConfigurationImporterServiceTracker.
-					getService();
-
-		if (portletPreferencesPortletConfigurationImporter == null) {
-			return;
-		}
-
-		portletPreferencesPortletConfigurationImporter.
-			importPortletConfiguration(
-				layout.getPlid(), portletId, widgetConfig);
-	}
-
 	private FragmentEntryLink _updateFragmentEntryLink(
 			String draftWidgetInstanceExternalReferenceCode,
 			FragmentEntryLink fragmentEntryLink,
@@ -368,20 +294,5 @@ public class WidgetInstanceLayoutStructureItemImporter
 					FrameworkUtil.getBundle(
 						WidgetInstanceLayoutStructureItemImporter.class),
 					FragmentEntryProcessorRegistry.class);
-	private static final ServiceTracker
-		<PortletPermissionsImporter, PortletPermissionsImporter>
-			_portletPermissionsImporterServiceTracker =
-				ServiceTrackerFactory.open(
-					FrameworkUtil.getBundle(
-						WidgetInstanceLayoutStructureItemImporter.class),
-					PortletPermissionsImporter.class);
-	private static final ServiceTracker
-		<PortletPreferencesPortletConfigurationImporter,
-		 PortletPreferencesPortletConfigurationImporter>
-			_portletPreferencesPortletConfigurationImporterServiceTracker =
-				ServiceTrackerFactory.open(
-					FrameworkUtil.getBundle(
-						WidgetInstanceLayoutStructureItemImporter.class),
-					PortletPreferencesPortletConfigurationImporter.class);
 
 }

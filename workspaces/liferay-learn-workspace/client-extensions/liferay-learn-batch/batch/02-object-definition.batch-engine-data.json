@@ -76,7 +76,6 @@
 				"label": "approved",
 				"label_i18n": "Approved"
 			},
-			"storageType": "default",
 			"system": true,
 			"titleObjectFieldName": "id"
 		},

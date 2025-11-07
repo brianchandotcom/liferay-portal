@@ -154,17 +154,17 @@ const Workspaces: any = () => {
 						variant='inline'
 					>
 						{Liferay.Language.get(
-							'we-are-experiencing-changes-that-may-affect-your-workflow'
+							'maintenance-is-scheduled-for-november-13-and-may-impact-your-workflow'
 						)}
 
 						<ClayLink
 							className='ml-1'
 							decoration='underline'
-							href={URLConstants.HelpCenterAnnouncements}
+							href={URLConstants.StatusPageAnnouncements}
 							target='_blank'
 						>
 							{Liferay.Language.get(
-								'visit-our-help-center-announcements-page-for-more-details'
+								'visit-our-status-page-for-more-details'
 							)}
 						</ClayLink>
 					</ClayAlert>

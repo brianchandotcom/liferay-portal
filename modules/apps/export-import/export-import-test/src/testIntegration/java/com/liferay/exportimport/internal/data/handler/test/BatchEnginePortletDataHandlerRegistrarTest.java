@@ -82,7 +82,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 
 	@FeatureFlag("LPD-35914")
 	@Test
-	@TestInfo({"LPD-56301", "LPD-65119"})
+	@TestInfo({"LPD-56301", "LPD-65119", "LPD-68124"})
 	public void test() throws Exception {
 		String portletId = RandomTestUtil.randomString();
 
@@ -154,6 +154,19 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				Assert.assertEquals(
 					1, _getRegisteredPortletDataHandlersCount(portletId));
 
+				Company company = CompanyTestUtil.addCompany();
+
+				_assertPortletDataHandler(
+					company.getCompanyId(), portletId,
+					portletDataHandler ->
+						StringUtil.contains(
+							ClassUtil.getClassName(portletDataHandler),
+							"BatchEnginePortletDataHandler",
+							StringPool.PERIOD) &&
+						Arrays.equals(
+							new String[] {className1, className2},
+							portletDataHandler.getClassNames()));
+
 				_assertPortletDataHandler(
 					RandomTestUtil.randomLong(), portletId,
 					portletDataHandler -> StringUtil.contains(
@@ -183,60 +196,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					portletDataHandler -> StringUtil.contains(
 						ClassUtil.getClassName(portletDataHandler),
 						"DefaultPortletDataHandler", StringPool.PERIOD));
-			}
-			finally {
-				FeatureFlagTestUtil.invokeFeatureFlagListeners(
-					TestPropsValues.getCompanyId(), false, "LPD-35914");
-			}
-		}
-	}
-
-	@FeatureFlag("LPD-35914")
-	@Test
-	@TestInfo("LPD-68124")
-	public void testMultiCompany() throws Exception {
-		String portletId = RandomTestUtil.randomString();
-
-		Assert.assertNull(
-			_portletDataHandlerProvider.provide(
-				TestPropsValues.getCompanyId(), portletId));
-
-		String className = RandomTestUtil.randomString();
-
-		try (SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
-				Portlet.class,
-				new GenericPortlet() {
-				},
-				MapUtil.singletonDictionary("jakarta.portlet.name", portletId));
-			SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
-				VulcanBatchEngineTaskItemDelegate.class,
-				new TestExportImportVulcanBatchEngineTaskItemDelegate(
-					className, portletId),
-				HashMapDictionaryBuilder.put(
-					"batch.engine.task.item.delegate", "true"
-				).put(
-					"batch.engine.task.item.delegate.class.name", className
-				).put(
-					"export.import.vulcan.batch.engine.task.item.delegate",
-					"true"
-				).build())) {
-
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				TestPropsValues.getCompanyId(), true, "LPD-35914");
-
-			try {
-				Company company = CompanyTestUtil.addCompany();
-
-				_assertPortletDataHandler(
-					company.getCompanyId(), portletId,
-					portletDataHandler ->
-						StringUtil.contains(
-							ClassUtil.getClassName(portletDataHandler),
-							"BatchEnginePortletDataHandler",
-							StringPool.PERIOD) &&
-						Arrays.equals(
-							new String[] {className},
-							portletDataHandler.getClassNames()));
 			}
 			finally {
 				FeatureFlagTestUtil.invokeFeatureFlagListeners(

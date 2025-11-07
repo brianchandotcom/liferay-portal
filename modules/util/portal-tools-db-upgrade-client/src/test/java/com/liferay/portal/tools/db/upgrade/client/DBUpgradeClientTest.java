@@ -182,9 +182,9 @@ public class DBUpgradeClientTest {
 		Assert.assertNotNull(appServer);
 		Assert.assertEquals(
 			new File(_liferayHomeDir, "tomcat"), appServer.getDir());
-		Assert.assertEquals("/bin", appServer.getExtraLibDirNames());
-		Assert.assertEquals("/lib", appServer.getGlobalLibDirName());
-		Assert.assertEquals("/webapps/ROOT", appServer.getPortalDirName());
+		Assert.assertEquals("./bin", appServer.getExtraLibDirNames());
+		Assert.assertEquals("./lib", appServer.getGlobalLibDirName());
+		Assert.assertEquals("./webapps/ROOT", appServer.getPortalDirName());
 		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
 	}
 

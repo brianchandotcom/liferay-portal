@@ -23,28 +23,30 @@ public class AppServer {
 		if (appServerName.equals("jboss")) {
 			return new AppServer(
 				_getAppServerDirName(liferayHomeDir, "jboss-eap"),
-				_getJBossExtraLibDirNames(), "/modules/com/liferay/portal/main",
-				"/standalone/deployments/ROOT.war", appServerName);
+				_getJBossExtraLibDirNames(),
+				"./modules/com/liferay/portal/main",
+				"./standalone/deployments/ROOT.war", appServerName);
 		}
 
 		if (appServerName.equals("tomcat")) {
 			return new AppServer(
-				_getAppServerDirName(liferayHomeDir, "tomcat"), "/bin", "/lib",
-				"/webapps/ROOT", appServerName);
+				_getAppServerDirName(liferayHomeDir, "tomcat"), "./bin",
+				"./lib", "./webapps/ROOT", appServerName);
 		}
 
 		if (appServerName.equals("weblogic")) {
 			return new AppServer(
 				_getAppServerDirName(liferayHomeDir, "weblogic"),
-				"/wlserver/modules", "/domains/liferay/lib",
-				"/domains/liferay/autodeploy/ROOT", appServerName);
+				"./wlserver/modules", "./domains/liferay/lib",
+				"./domains/liferay/autodeploy/ROOT", appServerName);
 		}
 
 		if (appServerName.equals("wildfly")) {
 			return new AppServer(
 				_getAppServerDirName(liferayHomeDir, "wildfly"),
-				_getJBossExtraLibDirNames(), "/modules/com/liferay/portal/main",
-				"/standalone/deployments/ROOT.war", appServerName);
+				_getJBossExtraLibDirNames(),
+				"./modules/com/liferay/portal/main",
+				"./standalone/deployments/ROOT.war", appServerName);
 		}
 
 		return null;
@@ -91,7 +93,7 @@ public class AppServer {
 	}
 
 	public File getPortalClassesDir() {
-		return new File(getPortalDir(), "/WEB-INF/classes");
+		return new File(getPortalDir(), "./WEB-INF/classes");
 	}
 
 	public File getPortalDir() {
@@ -103,11 +105,11 @@ public class AppServer {
 	}
 
 	public File getPortalLibDir() {
-		return new File(getPortalDir(), "/WEB-INF/lib");
+		return new File(getPortalDir(), "./WEB-INF/lib");
 	}
 
 	public File getPortalShieldedContainerLibDir() {
-		return new File(getPortalDir(), "/WEB-INF/shielded-container-lib");
+		return new File(getPortalDir(), "./WEB-INF/shielded-container-lib");
 	}
 
 	public String getServerDetectorServerId() {
@@ -165,7 +167,7 @@ public class AppServer {
 	private static String _getJBossExtraLibDirNames() {
 		StringBuilder sb = new StringBuilder();
 
-		String extraLibDirPrefix = "/modules/system/layers/base/";
+		String extraLibDirPrefix = "./modules/system/layers/base/";
 
 		sb.append(extraLibDirPrefix);
 

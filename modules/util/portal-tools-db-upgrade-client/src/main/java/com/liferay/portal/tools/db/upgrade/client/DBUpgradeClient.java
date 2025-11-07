@@ -509,13 +509,13 @@ public class DBUpgradeClient {
 		return true;
 	}
 
-	private boolean _isValidDir(File dir) {
+	private boolean _isValidDir(File dir) throws IOException {
 		if (dir.exists() && dir.isDirectory()) {
 			return true;
 		}
 
 		System.err.println(
-			dir.getAbsolutePath() + " does not exist or is not a directory.");
+			dir.getCanonicalPath() + " does not exist or is not a directory.");
 
 		return false;
 	}

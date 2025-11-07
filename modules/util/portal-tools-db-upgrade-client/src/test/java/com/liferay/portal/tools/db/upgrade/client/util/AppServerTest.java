@@ -35,8 +35,8 @@ public class AppServerTest {
 			new File(rootDir.getCanonicalPath()), "tomcat");
 
 		_assertAppServer(
-			appServer, tomcatDir, "bin", "lib",
-			"webapps" + File.separator + "ROOT", "tomcat");
+			appServer, tomcatDir, "./bin", "./lib",
+			"./webapps" + File.separator + "ROOT", "tomcat");
 
 		tomcatDir.delete();
 
@@ -48,8 +48,8 @@ public class AppServerTest {
 			new File(rootDir.getCanonicalPath()), "tomcat");
 
 		_assertAppServer(
-			appServer, tomcatDir, "bin", "lib",
-			"webapps" + File.separator + "ROOT", "tomcat");
+			appServer, tomcatDir, "./bin", "./lib",
+			"./webapps" + File.separator + "ROOT", "tomcat");
 	}
 
 	@Test
@@ -116,17 +116,17 @@ public class AppServerTest {
 		Assert.assertEquals(portalDir, appServer.getPortalDir());
 
 		File portalClassesDir = new File(
-			portalDir, "WEB-INF" + File.separator + "classes");
+			portalDir, "./WEB-INF" + File.separator + "classes");
 
 		Assert.assertEquals(portalClassesDir, appServer.getPortalClassesDir());
 
 		File portalLibDir = new File(
-			portalDir, "WEB-INF" + File.separator + "lib");
+			portalDir, "./WEB-INF" + File.separator + "lib");
 
 		Assert.assertEquals(portalLibDir, appServer.getPortalLibDir());
 
 		File portalShieldContainerLibDir = new File(
-			portalDir, "WEB-INF" + File.separator + "shielded-container-lib");
+			portalDir, "./WEB-INF" + File.separator + "shielded-container-lib");
 
 		Assert.assertEquals(
 			portalShieldContainerLibDir,

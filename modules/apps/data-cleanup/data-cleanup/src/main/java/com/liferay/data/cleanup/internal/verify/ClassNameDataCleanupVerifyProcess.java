@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -162,7 +163,8 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 					StringBundler.concat(
 						"ClassName ", value,
 						" has not been found but is referenced in the next ",
-						"tables: ", String.join(", ", usedTableNames)));
+						"tables: ",
+						String.join(", ", new TreeSet<>(usedTableNames))));
 			}
 		}
 	}

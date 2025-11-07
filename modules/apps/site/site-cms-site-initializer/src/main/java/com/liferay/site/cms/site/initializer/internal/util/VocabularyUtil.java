@@ -5,6 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.util;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -49,16 +51,22 @@ public class VocabularyUtil {
 					getObjectFolderObjectDefinitions(
 						objectFolder.getObjectFolderId())) {
 
+			String className = objectDefinition.getClassName();
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
 			selectOptions.add(
 				HashMapBuilder.put(
-					"label", objectDefinition.getLabelCurrentValue()
+					"icon", assetRendererFactory.getIconCssClass()
 				).put(
 					"restricted", Boolean.FALSE.toString()
 				).put(
-					"value",
-					String.valueOf(
-						PortalUtil.getClassNameId(
-							objectDefinition.getClassName()))
+					"type", objectDefinition.getLabelCurrentValue()
+				).put(
+					"typeId",
+					String.valueOf(PortalUtil.getClassNameId(className))
 				).build());
 		}
 	}

@@ -113,7 +113,8 @@ const AnalyticsProvisioning = () => {
 			_refIncidentReportContacts: [],
 			acceptTerms: false,
 			allowedEmailDomains: [],
-			dataCenterLocation: acRegions[0]?.externalReferenceCode,
+			dataCenterLocation:
+				acRegions[0]?.externalReferenceCode?.toLowerCase(),
 			incidentReportContacts: [],
 			subscriptionType: 'Basic Plan',
 			workspaceOwnerEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
@@ -220,7 +221,7 @@ const AnalyticsProvisioning = () => {
 				helpText={`Select a server to store your data. This could have implications to your organization's policy on user data storage.`}
 				label="Data Center Location"
 				options={acRegions.map(({externalReferenceCode, name}) => ({
-					key: externalReferenceCode,
+					key: externalReferenceCode.toLowerCase(),
 					name,
 				}))}
 				required

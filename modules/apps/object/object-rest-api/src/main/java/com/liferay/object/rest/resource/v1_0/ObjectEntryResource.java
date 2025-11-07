@@ -270,6 +270,13 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, String objectActionName)
 		throws Exception;
 
+	public com.liferay.headless.delivery.dto.v1_0.Comment
+			putByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+				String objectEntryExternalReferenceCode,
+				String externalReferenceCode,
+				com.liferay.headless.delivery.dto.v1_0.Comment comment)
+		throws Exception;
+
 	public ObjectEntry putByExternalReferenceCodeRestore(
 			String externalReferenceCode)
 		throws Exception;
@@ -308,6 +315,13 @@ public interface ObjectEntryResource {
 			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
 				String scopeKey, String externalReferenceCode,
 				String objectActionName)
+		throws Exception;
+
+	public com.liferay.headless.delivery.dto.v1_0.Comment
+			putScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+				String scopeKey, String objectEntryExternalReferenceCode,
+				String externalReferenceCode,
+				com.liferay.headless.delivery.dto.v1_0.Comment comment)
 		throws Exception;
 
 	public ObjectEntry putScopeScopeKeyByExternalReferenceCodeRestore(

@@ -13,9 +13,15 @@ import com.liferay.petra.string.StringPool;
 public class ConfigurationPIDUtil {
 
 	public static String getRawPid(String pid) {
-		pid = pid.replaceFirst("\\.scoped.*", StringPool.BLANK);
+		pid = pid.replaceFirst("~.*", StringPool.BLANK);
 
-		return pid.replaceFirst("~.*", StringPool.BLANK);
+		if (pid.endsWith(_DOT_SCOPED)) {
+			pid = pid.substring(0, pid.length() - _DOT_SCOPED.length());
+		}
+
+		return pid;
 	}
+
+	private static final String _DOT_SCOPED = ".scoped";
 
 }

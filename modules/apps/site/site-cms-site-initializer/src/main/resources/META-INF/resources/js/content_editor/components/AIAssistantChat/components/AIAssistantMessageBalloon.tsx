@@ -8,20 +8,29 @@ import React from 'react';
 
 import '../chat.scss';
 
-const AssistantMessageBalloon: React.FC<{message: string}> = ({message}) => {
+const AssistantMessageBalloon: React.FC<{error: boolean; message: string}> = ({
+	error,
+	message,
+}) => {
 	return (
-		<div className="ai-assistant-chat__ai-assistant-message-balloon d-flex flex-row font-weight-semi-bold mb-2 rounded">
-			<div className="align-items-center d-flex ml-2">
+		<div
+			className={`d-flex flex-row font-weight-semi-bold mb-2 rounded ${error ? 'ai-assistant-chat__ai-assistant-error-message-balloon' : 'ai-assistant-chat__ai-assistant-message-balloon'}`}
+		>
+			<div className="align-items-start d-inline-block ml-2 mt-2">
 				<ClayIcon
-					color="#0B5FFF"
+					color={error ? '#FF0000' : '#0B5FFF'}
 					height={12}
 					spritemap={Liferay.Icons.spritemap}
-					symbol="stars"
+					symbol={error ? 'exclamation-full' : 'stars'}
 					width={12}
 				/>
 			</div>
 
-			<span className="m-2">{message}</span>
+			<span className="m-2">
+				{error
+					? Liferay.Language.get('generating-content-failed')
+					: message}
+			</span>
 		</div>
 	);
 };

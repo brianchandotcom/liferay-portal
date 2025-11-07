@@ -87,21 +87,19 @@ describe('Workspaces', () => {
 
 		expect(
 			getByText(
-				'We are experiencing changes that may affect your workflow.'
+				'Maintenance is scheduled for November 13 and may impact your workflow.'
 			)
 		).toBeInTheDocument();
 
 		expect(
-			getByText(
-				'Visit our Help Center announcements page for more details.'
-			)
+			getByText('Visit our Status Page for more details.')
 		).toBeInTheDocument();
 
-		const helpCenterPageLink = container.querySelector(
-			'a[href="https://help.liferay.com/hc/en-us/sections/15837825517581-Analytics-Cloud-Announcements"]'
+		const statusPageAnnouncementsLink = container.querySelector(
+			'a[href="https://status.liferay.cloud/incidents/hxw439lxhs26"]'
 		);
 
-		expect(helpCenterPageLink).toBeInTheDocument();
+		expect(statusPageAnnouncementsLink).toBeInTheDocument();
 
 		useIncidentAlert.mockImplementation(() => ({
 			data: {incidentAlertEnabled: false},

@@ -65,7 +65,7 @@ public class BaseConfigurationFactoryTest {
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
 				getName(),
-			properties,
+			companyId, properties,
 			_userLocalService.getUserByScreenName(
 				companyId, UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT));
 
@@ -77,11 +77,11 @@ public class BaseConfigurationFactoryTest {
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
 				getName(),
-			properties, users.get(0));
+			companyId, properties, users.get(0));
 
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationUserAgentConfiguration.class.getName(),
-			properties, _userLocalService.getGuestUser(companyId));
+			companyId, properties, _userLocalService.getGuestUser(companyId));
 
 		_user = UserTestUtil.addUser();
 
@@ -90,11 +90,24 @@ public class BaseConfigurationFactoryTest {
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
 				getName(),
-			properties, _user);
+			companyId, properties, _user);
 	}
 
-	private OAuth2Application _fetchOAuthApplication(
-			String externalReferenceCode)
+	private Configuration _createFactoryConfiguration(
+			String className, Dictionary<String, Object> properties)
+		throws Exception {
+
+		Configuration configuration =
+			_configurationAdmin.getFactoryConfiguration(
+				className, _CONFIGURATION_EXTERNAL_REFERENCE_CODE,
+				StringPool.QUESTION);
+
+		ConfigurationTestUtil.saveConfiguration(configuration, properties);
+
+		return configuration;
+	}
+
+	private OAuth2Application _fetchOAuthApplication(long companyId)
 		throws Exception {
 
 		CountDownLatch countDownLatch = new CountDownLatch(50);
@@ -106,8 +119,7 @@ public class BaseConfigurationFactoryTest {
 				oAuth2Application =
 					_oAuth2ApplicationLocalService.
 						getOAuth2ApplicationByExternalReferenceCode(
-							externalReferenceCode,
-							TestPropsValues.getCompanyId());
+							_CONFIGURATION_EXTERNAL_REFERENCE_CODE, companyId);
 			}
 			catch (Exception exception) {
 
@@ -124,27 +136,24 @@ public class BaseConfigurationFactoryTest {
 	}
 
 	private void _testGetFactoryConfiguration(
-			String className, Dictionary<String, Object> properties, User user)
+			String className, long companyId,
+			Dictionary<String, Object> properties, User user)
 		throws Exception {
 
-		String externalReferenceCode = "foo";
-
-		Configuration configuration =
-			_configurationAdmin.getFactoryConfiguration(
-				className, externalReferenceCode, StringPool.QUESTION);
+		Configuration configuration = _createFactoryConfiguration(
+			className, properties);
 
 		try {
-			ConfigurationTestUtil.saveConfiguration(configuration, properties);
-
 			OAuth2Application oAuth2Application = _fetchOAuthApplication(
-				externalReferenceCode);
+				companyId);
 
 			Assert.assertNotNull(oAuth2Application);
 			Assert.assertEquals(
 				user.getUserId(),
 				oAuth2Application.getClientCredentialUserId());
 			Assert.assertEquals(
-				externalReferenceCode, oAuth2Application.getName());
+				_CONFIGURATION_EXTERNAL_REFERENCE_CODE,
+				oAuth2Application.getName());
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(configuration);
@@ -152,11 +161,12 @@ public class BaseConfigurationFactoryTest {
 
 		Thread.sleep(200);
 
-		OAuth2Application oAuth2Application = _fetchOAuthApplication(
-			externalReferenceCode);
+		OAuth2Application oAuth2Application = _fetchOAuthApplication(companyId);
 
 		Assert.assertNull(oAuth2Application);
 	}
+
+	private static final String _CONFIGURATION_EXTERNAL_REFERENCE_CODE = "foo";
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

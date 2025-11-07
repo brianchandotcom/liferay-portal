@@ -78,6 +78,30 @@ public class SiteSerDes {
 			sb.append(_toJSON(site.getDescription_i18n()));
 		}
 
+		if (site.getDescriptiveName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(site.getDescriptiveName()));
+
+			sb.append("\"");
+		}
+
+		if (site.getDescriptiveName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName_i18n\": ");
+
+			sb.append(_toJSON(site.getDescriptiveName_i18n()));
+		}
+
 		if (site.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -290,6 +314,23 @@ public class SiteSerDes {
 				"description_i18n", String.valueOf(site.getDescription_i18n()));
 		}
 
+		if (site.getDescriptiveName() == null) {
+			map.put("descriptiveName", null);
+		}
+		else {
+			map.put(
+				"descriptiveName", String.valueOf(site.getDescriptiveName()));
+		}
+
+		if (site.getDescriptiveName_i18n() == null) {
+			map.put("descriptiveName_i18n", null);
+		}
+		else {
+			map.put(
+				"descriptiveName_i18n",
+				String.valueOf(site.getDescriptiveName_i18n()));
+		}
+
 		if (site.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -422,6 +463,14 @@ public class SiteSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "descriptiveName")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "descriptiveName_i18n")) {
+
+				return true;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
@@ -493,6 +542,19 @@ public class SiteSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
 				if (jsonParserFieldValue != null) {
 					site.setDescription_i18n(
+						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "descriptiveName")) {
+				if (jsonParserFieldValue != null) {
+					site.setDescriptiveName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "descriptiveName_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					site.setDescriptiveName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
 				}
 			}

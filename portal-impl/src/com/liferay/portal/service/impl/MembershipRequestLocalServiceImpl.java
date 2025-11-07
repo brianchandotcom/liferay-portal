@@ -12,11 +12,13 @@ import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.MembershipRequestCommentsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.service.base.MembershipRequestLocalServiceBaseImpl;
 import com.liferay.portal.util.ResourcePermissionUtil;
@@ -71,31 +74,52 @@ public class MembershipRequestLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validateSiteMembershipPolicy(userId, groupId);
+		String key = userId + StringPool.UNDERLINE + groupId;
 
-		User user = _userPersistence.findByPrimaryKey(userId);
+		boolean locked = LockManagerUtil.isLocked(
+			MembershipRequest.class.getName(), key);
 
-		validate(comments);
+		if (locked) {
+			throw new PortalException(
+				StringBundler.concat(
+					"Pending membership request already exists for group ",
+					groupId, " and user ", userId));
+		}
 
-		long membershipRequestId = counterLocalService.increment();
+		try {
+			LockManagerUtil.lock(
+				MembershipRequest.class.getName(), key,
+				PortalUUIDUtil.generate());
 
-		MembershipRequest membershipRequest =
-			membershipRequestPersistence.create(membershipRequestId);
+			validateSiteMembershipPolicy(userId, groupId);
 
-		membershipRequest.setGroupId(groupId);
-		membershipRequest.setCompanyId(user.getCompanyId());
-		membershipRequest.setUserId(userId);
-		membershipRequest.setCreateDate(new Date());
-		membershipRequest.setComments(comments);
-		membershipRequest.setStatusId(
-			MembershipRequestConstants.STATUS_PENDING);
+			User user = _userPersistence.findByPrimaryKey(userId);
 
-		membershipRequest = membershipRequestPersistence.update(
-			membershipRequest);
+			validate(comments);
 
-		notifyGroupAdministrators(membershipRequest, serviceContext);
+			long membershipRequestId = counterLocalService.increment();
 
-		return membershipRequest;
+			MembershipRequest membershipRequest =
+				membershipRequestPersistence.create(membershipRequestId);
+
+			membershipRequest.setGroupId(groupId);
+			membershipRequest.setCompanyId(user.getCompanyId());
+			membershipRequest.setUserId(userId);
+			membershipRequest.setCreateDate(new Date());
+			membershipRequest.setComments(comments);
+			membershipRequest.setStatusId(
+				MembershipRequestConstants.STATUS_PENDING);
+
+			membershipRequest = membershipRequestPersistence.update(
+				membershipRequest);
+
+			notifyGroupAdministrators(membershipRequest, serviceContext);
+
+			return membershipRequest;
+		}
+		finally {
+			LockManagerUtil.unlock(MembershipRequest.class.getName(), key);
+		}
 	}
 
 	@Override

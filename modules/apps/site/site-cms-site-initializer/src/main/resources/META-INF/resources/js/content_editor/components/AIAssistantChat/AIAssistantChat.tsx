@@ -88,6 +88,12 @@ const AIAssistantChat: React.FC = () => {
 		textarea.style.overflowY = textarea.scrollHeight > maxHeight ? 'auto' : 'hidden';
 	}
 
+	function handleSelectAction(action: string) {
+        setMessage(`${action}, `);
+        adjustTextareaHeight(textareaRef.current as HTMLTextAreaElement);
+        textareaRef.current?.focus();
+    }
+
 	function getContextElements() {
 		let form = document.querySelector('.lfr-main-form-container');
 
@@ -260,7 +266,7 @@ const AIAssistantChat: React.FC = () => {
 							{Liferay.Language.get('quick-actions')}
 							<ClayLayout.ContentRow className="align-items-center mb-3 mt-2">	
 								{quickActions.map((action, index) => (
-									<QuickAction action={action} key={index} />
+									<QuickAction action={action} key={index} setSelectedAction={handleSelectAction} />
 								))}
 							</ClayLayout.ContentRow>
 						</>
@@ -269,6 +275,7 @@ const AIAssistantChat: React.FC = () => {
 					<div className="align-items-end border-top d-flex flex-row mb-4 pt-4">
 						<textarea
 							className="ai-assistant-chat__input form-control mr-2"
+							disabled={isGenerating}
 							id='assistant-user-input'
 							onChange={(event) => {
 								setMessage(event.target.value);
@@ -278,6 +285,7 @@ const AIAssistantChat: React.FC = () => {
 								event.stopPropagation();
 							}}
 							placeholder="Ask me anything..."
+							ref={textareaRef}
 							rows={1}
 							value={message}
 						/>

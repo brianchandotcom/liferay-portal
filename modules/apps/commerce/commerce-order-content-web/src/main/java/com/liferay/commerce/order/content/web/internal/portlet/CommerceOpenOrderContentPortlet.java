@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.Portlet;
@@ -147,18 +146,12 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 	}
 
 	private CommerceOrder _getCommerceOrder(PortletRequest portletRequest) {
-		String commerceOrderUuid = ParamUtil.getString(
-			portletRequest, "commerceOrderUuid");
+		long commerceOrderId = ParamUtil.getLong(
+			portletRequest, "commerceOrderId");
 
 		try {
-			if (Validator.isNotNull(commerceOrderUuid)) {
-				long groupId =
-					_commerceChannelLocalService.
-						getCommerceChannelGroupIdBySiteGroupId(
-							_portal.getScopeGroupId(portletRequest));
-
-				return _commerceOrderService.getCommerceOrderByUuidAndGroupId(
-					commerceOrderUuid, groupId);
+			if (commerceOrderId != 0) {
+				return _commerceOrderService.getCommerceOrder(commerceOrderId);
 			}
 
 			HttpServletRequest httpServletRequest =

@@ -336,15 +336,15 @@
 								"useNewTab": true
 							},
 							{
-								"externalReferenceCode": "howToArticlesMenuItem",
+								"externalReferenceCode": "knowledgeBaseMenuItem",
 								"name_i18n": {
-									"en_US": "How To Articles",
-									"es_ES": "Artículos prácticos",
-									"ja_JP": "ハウツー記事",
-									"pt_BR": "Artigos de instruções"
+									"en_US": "Knowledge Base",
+									"es_ES": "Base de conocimiento",
+									"ja_JP": "ナレッジベース",
+									"pt_BR": "Base de Conhecimento"
 								},
 								"type": "url",
-								"url": "https://learn.liferay.com/learn-search?q=&resource-type=33317328",
+								"url": "https://learn.liferay.com/learn-search?q=&resource-type=33315839&resource-type=33317328",
 								"useNewTab": true
 							}
 						],

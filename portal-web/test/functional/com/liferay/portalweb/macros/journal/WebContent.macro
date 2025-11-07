@@ -1738,10 +1738,6 @@ definition {
 
 	@summary = "Default summary"
 	macro publishWithPermissions(viewableBy = null) {
-		if (!(isSet(viewableBy))) {
-			Button.clickPublish();
-		}
-
 		if (isSet(viewableBy)) {
 			Click(locator1 = "WCEditWebContent#PUBLISH_OPTIONS_BUTTON");
 
@@ -1752,6 +1748,9 @@ definition {
 				value1 = ${viewableBy});
 
 			Click(locator1 = "WCEditWebContent#PUBLISH_IN_MODAL");
+		}
+		else {
+			Button.clickPublish();
 		}
 
 		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
@@ -2040,10 +2039,6 @@ definition {
 
 	@summary = "Default summary"
 	macro submitForWorkflowWithPermission(viewableBy = null) {
-		if (!(isSet(viewableBy))){
-			Button.clickSubmitForWorkflow();
-		}
-
 		if (isSet(viewableBy)) {
 			Click(locator1 = "WCEditWebContent#PUBLISH_OPTIONS_BUTTON");
 
@@ -2054,6 +2049,9 @@ definition {
 				value1 = ${viewableBy});
 
 			Click(locator1 = "WCEditWebContent#SUBMIT_FOR_WORKFLOW_IN_MODAL");
+		}
+		else {
+			Button.clickSubmitForWorkflow();
 		}
 
 		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");

@@ -127,7 +127,7 @@ public class DBUpgradeClientTest {
 
 	@Test
 	public void testVerifyAppServerProperties() throws Exception {
-		_createPortalUpgradeExtPropertiesFile();
+		_createPortalUpgradeExtPropertiesFile(true);
 
 		String[] answers = {
 			"invalidAppServer", StringPool.BLANK, "invalidAppServerDirName",
@@ -164,7 +164,7 @@ public class DBUpgradeClientTest {
 	public void testVerifyAppServerPropertiesWithEmptyAnswers()
 		throws Exception {
 
-		_createPortalUpgradeExtPropertiesFile();
+		_createPortalUpgradeExtPropertiesFile(true);
 
 		String[] answers = {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
@@ -192,7 +192,7 @@ public class DBUpgradeClientTest {
 	public void testVerifyAppServerPropertiesWithInvalidAppServerName()
 		throws Exception {
 
-		_createPortalUpgradeExtPropertiesFile();
+		_createPortalUpgradeExtPropertiesFile(true);
 
 		File appServerPropertiesFile = new File(
 			_rootDir, "app-server.properties");
@@ -229,7 +229,7 @@ public class DBUpgradeClientTest {
 	public void testVerifyAppServerPropertiesWithInvalidPropertiesFile()
 		throws Exception {
 
-		_createPortalUpgradeExtPropertiesFile();
+		_createPortalUpgradeExtPropertiesFile(true);
 
 		File appServerPropertiesFile = new File(
 			_rootDir, "app-server.properties");
@@ -270,7 +270,7 @@ public class DBUpgradeClientTest {
 		throws Exception {
 
 		_createAppServerPropertiesFile();
-		_createPortalUpgradeExtPropertiesFile();
+		_createPortalUpgradeExtPropertiesFile(true);
 
 		_dbUpgradeClient = _createDBUpgradeClient(new String[0]);
 
@@ -288,8 +288,10 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeDatabaseProperties() throws Exception {
-		_createPortalUpgradeExtPropertiesFile();
+	public void testVerifyPortalUpgradeExtPropertiesDatabase()
+		throws Exception {
+
+		_createPortalUpgradeExtPropertiesFile(false);
 
 		String[] answers = {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, "invalidHost",
@@ -303,7 +305,7 @@ public class DBUpgradeClientTest {
 			_dbUpgradeClient, "_appServer", _appServer);
 
 		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
+			_dbUpgradeClient, "_verifyPortalUpgradeExtPropertiesDatabase",
 			new Class<?>[0]);
 
 		String consoleString = _consoleByteArrayOutputStream.toString();
@@ -318,7 +320,7 @@ public class DBUpgradeClientTest {
 			errorOutput.contains("Port must be between 0 and 65535"));
 
 		Properties properties = ReflectionTestUtil.getFieldValue(
-			_dbUpgradeClient, "_portalUpgradeDatabaseProperties");
+			_dbUpgradeClient, "_portalUpgradeExtProperties");
 
 		Assert.assertNotNull(properties);
 		Assert.assertEquals(
@@ -339,10 +341,10 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeDatabasePropertiesWithEmptyAnswers()
+	public void testVerifyPortalUpgradeExtPropertiesDatabaseWithEmptyAnswers()
 		throws Exception {
 
-		_createPortalUpgradeExtPropertiesFile();
+		_createPortalUpgradeExtPropertiesFile(false);
 
 		String[] answers = {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
@@ -356,7 +358,7 @@ public class DBUpgradeClientTest {
 			_dbUpgradeClient, "_appServer", _appServer);
 
 		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
+			_dbUpgradeClient, "_verifyPortalUpgradeExtPropertiesDatabase",
 			new Class<?>[0]);
 
 		String consoleString = _consoleByteArrayOutputStream.toString();
@@ -364,7 +366,7 @@ public class DBUpgradeClientTest {
 		Assert.assertTrue(consoleString.contains("mariadb mysql postgresql"));
 
 		Properties properties = ReflectionTestUtil.getFieldValue(
-			_dbUpgradeClient, "_portalUpgradeDatabaseProperties");
+			_dbUpgradeClient, "_portalUpgradeExtProperties");
 
 		Assert.assertNotNull(properties);
 		Assert.assertEquals(
@@ -385,10 +387,10 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeDatabasePropertiesWithEmptyAnswersOnDXP()
+	public void testVerifyPortalUpgradeExtPropertiesDatabaseWithEmptyAnswersOnDXP()
 		throws Exception {
 
-		_createPortalUpgradeExtPropertiesFile();
+		_createPortalUpgradeExtPropertiesFile(false);
 
 		String[] answers = {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
@@ -411,7 +413,7 @@ public class DBUpgradeClientTest {
 			Files.createFile(path);
 
 			ReflectionTestUtil.invoke(
-				_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
+				_dbUpgradeClient, "_verifyPortalUpgradeExtPropertiesDatabase",
 				new Class<?>[0]);
 
 			String consoleString = _consoleByteArrayOutputStream.toString();
@@ -421,7 +423,7 @@ public class DBUpgradeClientTest {
 					"db2 mariadb mysql oracle postgresql sqlserver"));
 
 			Properties properties = ReflectionTestUtil.getFieldValue(
-				_dbUpgradeClient, "_portalUpgradeDatabaseProperties");
+				_dbUpgradeClient, "_portalUpgradeExtProperties");
 
 			Assert.assertNotNull(properties);
 			Assert.assertEquals(
@@ -448,7 +450,9 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeExtProperties() throws Exception {
+	public void testVerifyPortalUpgradeExtPropertiesLiferayHome()
+		throws Exception {
+
 		File liferayHomeDir = new File(_rootDir, "custom-liferay-home");
 
 		liferayHomeDir.mkdirs();
@@ -460,7 +464,7 @@ public class DBUpgradeClientTest {
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
 		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyPortalUpgradeExtProperties",
+			_dbUpgradeClient, "_verifyPortalUpgradeExtPropertiesLiferayHome",
 			new Class<?>[0]);
 
 		String errorOutput = _errorByteArrayOutputStream.toString();
@@ -483,7 +487,7 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeExtPropertiesWithEmptyAnswers()
+	public void testVerifyPortalUpgradeExtPropertiesLiferayHomeWithEmptyAnswers()
 		throws Exception {
 
 		String[] answers = {StringPool.BLANK};
@@ -491,7 +495,7 @@ public class DBUpgradeClientTest {
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
 		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyPortalUpgradeExtProperties",
+			_dbUpgradeClient, "_verifyPortalUpgradeExtPropertiesLiferayHome",
 			new Class<?>[0]);
 
 		Properties properties = ReflectionTestUtil.getFieldValue(
@@ -511,7 +515,7 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeExtPropertiesWithInvalidPropertiesFile()
+	public void testVerifyPortalUpgradeExtPropertiesLiferayHomeWithInvalidPropertiesFile()
 		throws Exception {
 
 		File portalUpgradeExtPropertiesFile = new File(
@@ -527,7 +531,8 @@ public class DBUpgradeClientTest {
 
 		try {
 			ReflectionTestUtil.invoke(
-				_dbUpgradeClient, "_verifyPortalUpgradeExtProperties",
+				_dbUpgradeClient,
+				"_verifyPortalUpgradeExtPropertiesLiferayHome",
 				new Class<?>[0]);
 
 			Assert.fail();
@@ -545,15 +550,15 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeExtPropertiesWithValidPropertiesFile()
+	public void testVerifyPortalUpgradeExtPropertiesLiferayHomeWithValidPropertiesFile()
 		throws Exception {
 
-		_createPortalUpgradeExtPropertiesFile();
+		_createPortalUpgradeExtPropertiesFile(true);
 
 		_dbUpgradeClient = _createDBUpgradeClient(new String[0]);
 
 		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyPortalUpgradeExtProperties",
+			_dbUpgradeClient, "_verifyPortalUpgradeExtPropertiesLiferayHome",
 			new Class<?>[0]);
 
 		Properties properties = ReflectionTestUtil.getFieldValue(
@@ -610,7 +615,10 @@ public class DBUpgradeClientTest {
 		return dbUpgradeClient;
 	}
 
-	private void _createPortalUpgradeExtPropertiesFile() throws Exception {
+	private void _createPortalUpgradeExtPropertiesFile(
+			boolean includeDatabaseProperties)
+		throws Exception {
+
 		File portalUpgradeExtPropertiesFile = new File(
 			_rootDir, "portal-upgrade-ext.properties");
 
@@ -618,6 +626,23 @@ public class DBUpgradeClientTest {
 
 		portalUpgradeExtProperties.setProperty(
 			"liferay.home", _liferayHomeDir.getCanonicalPath());
+
+		if (includeDatabaseProperties) {
+			portalUpgradeExtProperties.setProperty(
+				"jdbc.default.driverClassName", "com.mysql.cj.jdbc.Driver");
+			portalUpgradeExtProperties.setProperty(
+				"jdbc.default.url",
+				StringBundler.concat(
+					"jdbc:mysql://localhost/lportal?characterEncoding=UTF-8",
+					"&dontTrackOpenResources=true",
+					"&holdResultsOpenOverStatementClose=true",
+					"&serverTimezone=GMT&useFastDateParsing=false",
+					"&useUnicode=true"));
+			portalUpgradeExtProperties.setProperty(
+				"jdbc.default.username", StringPool.BLANK);
+			portalUpgradeExtProperties.setProperty(
+				"jdbc.default.password", StringPool.BLANK);
+		}
 
 		portalUpgradeExtProperties.store(portalUpgradeExtPropertiesFile);
 	}

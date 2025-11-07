@@ -8,18 +8,24 @@ import {expect, mergeTests} from '@playwright/test';
 import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../../utils/getRandomString';
+import {templatesPageTest} from '../../../template-web/main/fixtures/templatesPageTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
 	isolatedSiteTest,
 	loginTest(),
-	pageViewModePagesTest
+	pageEditorPagesTest,
+	pageViewModePagesTest,
+	templatesPageTest
 );
 
 test('LPD-30188 Product publisher tag filters can be added and removed', async ({
@@ -84,3 +90,79 @@ test('LPD-30188 Product publisher tag filters can be added and removed', async (
 		await productPublisherPage.productLink(product2.name.en_US)
 	).toBeVisible();
 });
+
+test(
+	'Preview data source for product relations in page templates',
+	{tag: ['@LPD-70139']},
+	async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		productPublisherPage,
+		site,
+		templatesPage,
+	}) => {
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			siteGroupId: site.id,
+		});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: getRandomString()},
+			});
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: getRandomString()},
+			});
+
+		apiHelpers.headlessCommerceAdminCatalog.postProductRelatedProduct(
+			product1.productId,
+			{productId: product2.productId}
+		);
+
+		await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
+
+		const productPublisherWidgetTemplateName = getRandomString();
+
+		await templatesPage.createWidgetTemplate(
+			productPublisherWidgetTemplateName,
+			'Product Publisher Template'
+		);
+		await templatesPage.editTemplate(productPublisherWidgetTemplateName);
+		await templatesPage.importInformationTemplate(
+			__dirname,
+			'product_publisher_data_source_product_relations_template.ftl'
+		);
+
+		await templatesPage.saveTemplate(productPublisherWidgetTemplateName);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Product',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addWidget('Commerce', 'Product Publisher');
+
+		await pageEditorPage.getFragmentId('Product Publisher');
+
+		await productPublisherPage.addProductPublisherProductSelectionDataSource(
+			'Product Relations cross-sell',
+			productPublisherWidgetTemplateName
+		);
+
+		await displayPageTemplatesPage.changePreviewItem(product1.name.en_US);
+
+		await expect(page.getByText(product2.name.en_US)).toBeVisible();
+	}
+);

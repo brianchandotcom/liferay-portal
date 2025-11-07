@@ -23,7 +23,7 @@ const STATE = {
 	activationOrigin: 'layout',
 	activeItemIds: [],
 	activeItemType: null,
-	hoveredItemId: null,
+	hoveredItemIds: [],
 	hoveredItemType: null,
 	rangeLimitIds: {},
 };
@@ -138,7 +138,7 @@ describe('Reducer', () => {
 			expect(reducer(state, action)).toEqual({
 				...state,
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'item-1',
+				hoveredItemIds: ['item-1'],
 				hoveredItemType: 'layoutItem',
 			});
 		});
@@ -154,7 +154,7 @@ describe('Reducer', () => {
 				...STATE,
 				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'editable-1',
+				hoveredItemIds: ['editable-1'],
 				hoveredItemType: 'editable',
 			};
 
@@ -162,7 +162,7 @@ describe('Reducer', () => {
 				...state,
 				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'editable-1',
+				hoveredItemIds: ['editable-1'],
 				hoveredItemType: 'editable',
 			});
 		});
@@ -177,14 +177,14 @@ describe('Reducer', () => {
 			const state = {
 				...STATE,
 				activationOrigin: null,
-				hoveredItemId: 'mapped-content-1',
+				hoveredItemIds: ['mapped-content-1'],
 				hoveredItemType: 'mappedContent',
 			};
 
 			expect(reducer(state, action)).toEqual({
 				...state,
 				activationOrigin: null,
-				hoveredItemId: 'mapped-content-1',
+				hoveredItemIds: ['mapped-content-1'],
 				hoveredItemType: 'mappedContent',
 			});
 		});
@@ -199,13 +199,13 @@ describe('Reducer', () => {
 			};
 			const state = {
 				...STATE,
-				hoveredItemId: 'item-1',
+				hoveredItemIds: ['item-1'],
 				hoveredItemType: 'layoutItem',
 			};
 
 			expect(reducer(state, action)).toEqual({
 				...state,
-				hoveredItemId: null,
+				hoveredItemIds: [],
 				hoveredItemType: 'layoutItem',
 			});
 		});
@@ -220,7 +220,7 @@ describe('Reducer', () => {
 				...STATE,
 				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'editable-1',
+				hoveredItemIds: ['editable-1'],
 				hoveredItemType: 'editable',
 			};
 
@@ -228,7 +228,7 @@ describe('Reducer', () => {
 				...state,
 				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
-				hoveredItemId: null,
+				hoveredItemIds: [],
 				hoveredItemType: 'layoutItem',
 			});
 		});
@@ -245,7 +245,7 @@ describe('Reducer', () => {
 			const state = {
 				...STATE,
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'item-1',
+				hoveredItemIds: ['item-1'],
 				hoveredItemType: 'layoutItem',
 			};
 
@@ -253,7 +253,7 @@ describe('Reducer', () => {
 				...state,
 				activeItemIds: ['item-1'],
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'item-1',
+				hoveredItemIds: ['item-1'],
 				hoveredItemType: 'layoutItem',
 			});
 		});
@@ -269,7 +269,7 @@ describe('Reducer', () => {
 				...STATE,
 				activeItemIds: ['item-1'],
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'item-1',
+				hoveredItemIds: ['item-1'],
 				hoveredItemType: 'layoutItem',
 			};
 
@@ -277,7 +277,7 @@ describe('Reducer', () => {
 				...state,
 				activeItemIds: ['item-1'],
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'item-1',
+				hoveredItemIds: ['item-1'],
 				hoveredItemType: 'layoutItem',
 			});
 		});
@@ -292,7 +292,7 @@ describe('Reducer', () => {
 			const state = {
 				...STATE,
 				activeItemIds: ['item-1'],
-				hoveredItemId: 'editable-1',
+				hoveredItemIds: ['editable-1'],
 				hoveredItemType: 'editable',
 			};
 
@@ -300,7 +300,7 @@ describe('Reducer', () => {
 				...state,
 				activeItemIds: ['editable-1'],
 				activeItemType: 'editable',
-				hoveredItemId: 'editable-1',
+				hoveredItemIds: ['editable-1'],
 				hoveredItemType: 'editable',
 			});
 		});
@@ -315,7 +315,7 @@ describe('Reducer', () => {
 			};
 			const state = {
 				...STATE,
-				hoveredItemId: 'item-1',
+				hoveredItemIds: ['item-1'],
 			};
 
 			expect(reducer(state, action)).toEqual({
@@ -323,7 +323,7 @@ describe('Reducer', () => {
 				activationOrigin: 'structureTreeNode',
 				activeItemIds: ['item-1'],
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'item-1',
+				hoveredItemIds: ['item-1'],
 			});
 		});
 
@@ -525,7 +525,7 @@ describe('Reducer', () => {
 				...STATE,
 				activeItemIds: ['item-1'],
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'item-2',
+				hoveredItemIds: ['item-2'],
 				hoveredItemType: 'layoutDataItem',
 			};
 
@@ -533,7 +533,7 @@ describe('Reducer', () => {
 				...state,
 				activeItemIds: ['item-2'],
 				activeItemType: 'layoutItem',
-				hoveredItemId: 'item-2',
+				hoveredItemIds: ['item-2'],
 				hoveredItemType: 'layoutDataItem',
 			});
 		});

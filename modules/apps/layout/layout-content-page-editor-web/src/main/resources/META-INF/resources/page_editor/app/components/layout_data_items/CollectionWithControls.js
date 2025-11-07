@@ -10,7 +10,7 @@ import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {
-	useHoveredItemId,
+	useHoveredItemIds,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
@@ -70,7 +70,7 @@ export default CollectionWithControls;
 
 const HoverHandler = ({hovered, item, setHovered}) => {
 	const hoveredItemType = useHoveredItemType();
-	const hoveredItemId = useHoveredItemId();
+	const [hoveredItemId] = useHoveredItemIds();
 
 	useEffect(() => {
 		const isMapped =

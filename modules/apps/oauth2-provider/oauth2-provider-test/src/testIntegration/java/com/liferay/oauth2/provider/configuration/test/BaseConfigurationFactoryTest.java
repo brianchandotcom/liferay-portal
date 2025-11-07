@@ -10,24 +10,35 @@ import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadle
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import jakarta.ws.rs.core.Application;
+
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import jodd.util.StringUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -35,8 +46,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.log.LogLevel;
+import org.osgi.service.log.LogListener;
+import org.osgi.service.log.LogReaderService;
 
 /**
  * @author Raymond Augé
@@ -48,6 +64,68 @@ public class BaseConfigurationFactoryTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testExcessiveActivations() throws Exception {
+		Configuration configuration = _createFactoryConfiguration(
+			OAuth2ProviderApplicationUserAgentConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"_portalK8sConfigMapModifier.cardinality.minimum", 0
+			).put(
+				"baseURL", "http://foo.me"
+			).put(
+				"companyId",
+				() -> {
+					Company company = null;
+
+					try {
+						company = CompanyTestUtil.addCompany();
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
+
+					return company.getCompanyId();
+				}
+			).build());
+
+		List<String> errorLogEntries = new ArrayList<>();
+
+		LogListener logListener = logEntry -> {
+			if (Objects.equals(logEntry.getLogLevel(), LogLevel.ERROR)) {
+				errorLogEntries.add(logEntry.getMessage());
+			}
+		};
+
+		_logReaderService.addLogListener(logListener);
+
+		ServiceRegistration<?> serviceRegistration = null;
+
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+				TestPropsValues.getCompanyId())) {
+
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			serviceRegistration = bundleContext.registerService(
+				Application.class,
+				new Application() {
+				},
+				null);
+
+			Assert.assertTrue(
+				StringUtil.join(errorLogEntries, "\n"),
+				errorLogEntries.isEmpty());
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(configuration);
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
+
+			_logReaderService.removeLogListener(logListener);
+		}
+	}
 
 	@Test
 	public void testGetFactoryConfiguration() throws Exception {
@@ -170,6 +248,9 @@ public class BaseConfigurationFactoryTest {
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private LogReaderService _logReaderService;
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

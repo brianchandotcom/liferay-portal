@@ -971,6 +971,10 @@
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `DataAccess.getConnection` is used (instead of using the available global variable `connection`)." />
 		</check>
+		<check name="JavaUpgradeCreateTableCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that we do not use `create table` statement in upgrade classes." />
+		</check>
 		<check name="JavaUpgradeDropTableCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `DROP_TABLE_IF_EXISTS` should be used (instead of `drop table if exists`)." />

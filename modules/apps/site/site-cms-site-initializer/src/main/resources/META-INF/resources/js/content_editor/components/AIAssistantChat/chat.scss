@@ -26,10 +26,10 @@
 
 	.ai-assistant-chat__input {
 		height: auto;
+		max-height: calc(1.25em * 4);
 		overflow-x: hidden;
 		overflow-y: auto;
 		resize: none;
-		max-height: calc(1.25em * 4);
 	}
 
 	.ai-assistant-chat__quick-actions-button:hover {

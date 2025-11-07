@@ -17,6 +17,8 @@ import AIAssistantMessageBalloon from './components/AIAssistantMessageBalloon';
 import UserMessageBalloon from './components/UserMessageBalloon';
 
 import './chat.scss';
+import QuickAction from './components/QuickAction';
+import RegenerateButton from './components/RegenerateButton';
 
 interface message {
 	sender: string;
@@ -25,6 +27,7 @@ interface message {
 
 const AIAssistantChat: React.FC = () => {
 	const [active, setActive] = useState<boolean>(false);
+	const [error, setError] = useState<boolean>(false);
 	const [isGenerating, setIsGenerating] = useState<boolean>(false);
 	const [messages, setMessages] = useState<message[]>([]);
 	const [message, setMessage] = useState<string>('');
@@ -226,7 +229,11 @@ const AIAssistantChat: React.FC = () => {
 				</div>
 
 				<div className="ai-assistant-chat__messages-container flex-grow-1 overflow-auto px-3">
-					<AIAssistantMessageBalloon message="Hi! I can help you generate content, titles, tags, or translate your work. What would you like to do?" />
+					<AIAssistantMessageBalloon
+						error={false}
+						message="Hi! I can help you generate content, titles, tags, or
+						translate your work. What would you like to do?"
+					/>
 
 					{messages.map((item, index) =>
 						item.sender === 'user' ? (
@@ -236,6 +243,7 @@ const AIAssistantChat: React.FC = () => {
 							/>
 						) : (
 							<AIAssistantMessageBalloon
+								error={error}
 								key={index}
 								message={item.text}
 							/>
@@ -249,10 +257,16 @@ const AIAssistantChat: React.FC = () => {
 							</div>
 
 							<span className="ai-assistant-chat__generating-loading-text font-weight-semi-bold m-2 tex">
-								Generating...
+								{Liferay.Language.get('generating')}...
 							</span>
 						</div>
 					)}
+
+					{
+						error && (
+							<RegenerateButton onClick={() => {}} />
+						)
+					}
 
 					<div ref={messagesEndRef} />
 				</div>
@@ -272,7 +286,7 @@ const AIAssistantChat: React.FC = () => {
 						</>
 					)}
 
-					<div className="align-items-end border-top d-flex flex-row mb-4 pt-4">
+					<div className="align-items-end border-top d-flex flex-row pt-4">
 						<textarea
 							className="ai-assistant-chat__input form-control mr-2"
 							disabled={isGenerating}

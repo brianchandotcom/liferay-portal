@@ -185,6 +185,29 @@ public class UpdateLanguageActionTest {
 			mockHttpServletRequest, new ThemeDisplay(), _targetLocale);
 	}
 
+	@Test
+	public void testGetRedirectWithNoRedirectParameter() throws Exception {
+		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				_group.getFriendlyURL(), StringPool.SLASH),
+			updateLanguageAction.getRedirect(
+				mockHttpServletRequest, themeDisplay, _targetLocale));
+	}
+
 	@Test(expected = NoSuchLayoutException.class)
 	public void testGetRedirectWithNoSuchLayoutRedirectParameter()
 		throws Exception {

@@ -59,57 +59,21 @@ public class OrphanReferencesDataCleanupUtil {
 			aliasNeeded = true;
 		}
 
-		Set<String> firstIndexColumns = new HashSet<>();
-
-		try (ResultSet resultSet = db.getIndexResultSet(
-				connection, targetTableName, false)) {
-
-			while (resultSet.next()) {
-				String indexName = resultSet.getString("INDEX_NAME");
-
-				if (indexName == null) {
-					continue;
-				}
-
-				if (resultSet.getShort("ORDINAL_POSITION") == 1) {
-					String columnName = resultSet.getString("COLUMN_NAME");
-
-					if (columnName != null) {
-						firstIndexColumns.add(StringUtil.lowerCase(columnName));
-					}
-				}
-			}
-		}
-
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-		DBInspector dbInspector = new DBInspector(connection);
-
-		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
-				dbInspector.getCatalog(), dbInspector.getSchema(),
-				dbInspector.normalizeName(targetTableName, databaseMetaData))) {
-
-			while (resultSet.next()) {
-				if (resultSet.getShort("KEY_SEQ") != 1) {
-					continue;
-				}
-
-				String columnName = resultSet.getString("COLUMN_NAME");
-
-				firstIndexColumns.add(StringUtil.toLowerCase(columnName));
-
-				break;
-			}
-		}
+		Set<String> firstIndexColumns = _getFirstIndexColumns(
+			connection, db, targetTableName);
 
 		List<SafeCloseable> safeCloseables = new ArrayList<>();
 
-		for (String targetColumnName : targetColumnNames) {
-			if (!firstIndexColumns.contains(
-					StringUtil.toLowerCase(targetColumnName))) {
+		if (firstIndexColumns != null) {
+			for (String targetColumnName : targetColumnNames) {
+				if (!firstIndexColumns.contains(
+						StringUtil.toLowerCase(targetColumnName))) {
 
-				safeCloseables.add(
-					db.addTemporaryIndex(
-						connection, targetTableName, false, targetColumnName));
+					safeCloseables.add(
+						db.addTemporaryIndex(
+							connection, targetTableName, false,
+							targetColumnName));
+				}
 			}
 		}
 
@@ -225,6 +189,60 @@ public class OrphanReferencesDataCleanupUtil {
 			" is not null", additionalNullCheck,
 			(sourceAdditionalWhereClause != null) ?
 				" and " + sourceAdditionalWhereClause : "");
+	}
+
+	private static Set<String> _getFirstIndexColumns(
+			Connection connection, DB db, String tableName)
+		throws Exception {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		if (!dbInspector.hasTable(tableName)) {
+			return null;
+		}
+
+		Set<String> firstIndexColumns = new HashSet<>();
+
+		try (ResultSet resultSet = db.getIndexResultSet(
+				connection, tableName, false)) {
+
+			while (resultSet.next()) {
+				String indexName = resultSet.getString("INDEX_NAME");
+
+				if (indexName == null) {
+					continue;
+				}
+
+				if (resultSet.getShort("ORDINAL_POSITION") == 1) {
+					String columnName = resultSet.getString("COLUMN_NAME");
+
+					if (columnName != null) {
+						firstIndexColumns.add(StringUtil.lowerCase(columnName));
+					}
+				}
+			}
+		}
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
+				dbInspector.getCatalog(), dbInspector.getSchema(),
+				dbInspector.normalizeName(tableName, databaseMetaData))) {
+
+			while (resultSet.next()) {
+				if (resultSet.getShort("KEY_SEQ") != 1) {
+					continue;
+				}
+
+				String columnName = resultSet.getString("COLUMN_NAME");
+
+				firstIndexColumns.add(StringUtil.toLowerCase(columnName));
+
+				break;
+			}
+		}
+
+		return firstIndexColumns;
 	}
 
 	private static String _getMySQLWhereClause(

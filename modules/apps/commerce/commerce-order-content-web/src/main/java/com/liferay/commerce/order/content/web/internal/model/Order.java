@@ -12,8 +12,8 @@ public class Order {
 
 	public Order(
 		String externalReferenceCode, long orderId, String accountName,
-		String amount, String author, String createDate, String name,
-		String orderDate, String orderStatus, String orderType,
+		String amount, String author, String createDateString, String name,
+		String orderDateString, String orderStatus, String orderType,
 		String purchaseOrderNumber, String status) {
 
 		_externalReferenceCode = externalReferenceCode;
@@ -21,13 +21,14 @@ public class Order {
 		_accountName = accountName;
 		_amount = amount;
 		_author = author;
-		_createDate = createDate;
 		_name = name;
-		_orderDate = orderDate;
 		_orderStatus = orderStatus;
 		_orderType = orderType;
 		_purchaseOrderNumber = purchaseOrderNumber;
 		_status = status;
+
+		_createDate = createDateString;
+		_orderDate = orderDateString;
 
 		_title = String.valueOf(orderId);
 	}

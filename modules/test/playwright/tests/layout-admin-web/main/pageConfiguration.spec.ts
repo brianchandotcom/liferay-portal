@@ -972,9 +972,7 @@ test.describe('Design configuration', () => {
 
 			await pageConfigurationPage.goToSection(pageName, 'Design');
 
-			await page
-				.getByText('Define a custom theme for this page')
-				.waitFor();
+			await pagesAdminPage.defineCustomThemeRadio.waitFor();
 
 			await expect(
 				page.getByText(

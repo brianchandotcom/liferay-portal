@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -660,12 +661,19 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		String[] assetTagNames = null;
 		String viewableBy = null;
 		CustomField[] customFields = null;
+		ModelPermissions modelPermissions = null;
 
 		if (document != null) {
 			assetCategoryIds = document.getTaxonomyCategoryIds();
 			assetTagNames = document.getKeywords();
 			viewableBy = document.getViewableByAsString();
 			customFields = document.getCustomFields();
+			modelPermissions = ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(), document.getPermissions(),
+				getPermissionCheckerResourceId(document.getId()),
+				getPermissionCheckerResourceName(document.getId()),
+				resourceActionLocalService, resourcePermissionLocalService,
+				roleLocalService);
 		}
 
 		if (assetCategoryIds == null) {
@@ -691,12 +699,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				DLFileEntry.class.getName(), contextCompany.getCompanyId(),
 				customFields, contextAcceptLanguage.getPreferredLocale())
 		).permissions(
-			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), document.getPermissions(),
-				getPermissionCheckerResourceId(document.getId()),
-				getPermissionCheckerResourceName(document.getId()),
-				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService)
+			modelPermissions
 		).build();
 
 		serviceContext.setCommand(command);

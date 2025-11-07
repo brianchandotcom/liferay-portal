@@ -11,6 +11,7 @@ import {waitForAlert} from '../../utils/waitForAlert';
 export class BundleBlacklistPage {
 	readonly blacklistBundleSymbolicInput: Locator;
 	readonly page: Page;
+	readonly saveButton: Locator;
 	readonly updateButton: Locator;
 
 	constructor(page: Page) {
@@ -18,6 +19,7 @@ export class BundleBlacklistPage {
 			name: 'Blacklist Bundle Symbolic',
 		});
 		this.page = page;
+		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
@@ -30,7 +32,11 @@ export class BundleBlacklistPage {
 
 		await this.blacklistBundleSymbolicInput.fill(content);
 
-		await this.updateButton.click();
+		await this.save();
+	}
+
+	async save() {
+		await this.saveButton.or(this.updateButton).click();
 
 		await waitForAlert(this.page);
 	}

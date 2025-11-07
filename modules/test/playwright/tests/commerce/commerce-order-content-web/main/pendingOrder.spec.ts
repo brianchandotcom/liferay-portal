@@ -24,6 +24,7 @@ import performLogin, {
 	performLogout,
 	userData,
 } from '../../../../utils/performLogin';
+import getFragmentDefinition from '../../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {miniumSetUp} from '../../utils/commerce';
@@ -1321,5 +1322,138 @@ test(
 				new Date(date2).getTime()
 			);
 		}).toPass();
+	}
+);
+
+test(
+	'Creating new orders with specific order rules and order types will trigger correct warnings',
+	{tag: '@LPD-71058'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		page,
+		site,
+	}) => {
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'COMMERCE_ACCOUNT_FRAGMENTS-account-selector',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
+
+		const orderRule1 =
+			await apiHelpers.headlessCommerceAdminOrder.postOrderRule({
+				type: 'minimum-order-amount',
+				typeSettings:
+					'minimum-order-amount-field-amount=' +
+					'50.00' +
+					'\nminimum-order-amount-field-apply-to=' +
+					'minimum-order-amount-field-apply-to-order-total' +
+					'\nminimum-order-amount-field-currency-code=' +
+					'USD\n',
+			});
+
+		const orderType1 =
+			await apiHelpers.headlessCommerceAdminOrder.postOrderType({
+				active: true,
+			});
+
+		await apiHelpers.headlessCommerceAdminOrder.postOrderRuleIdOrderRuleOrderType(
+			orderRule1.id,
+			{
+				orderRuleId: orderRule1.id,
+				orderTypeId: orderType1.id,
+			}
+		);
+
+		const orderRule2 =
+			await apiHelpers.headlessCommerceAdminOrder.postOrderRule({
+				type: 'minimum-order-amount',
+				typeSettings:
+					'minimum-order-amount-field-amount=' +
+					'100.00' +
+					'\nminimum-order-amount-field-apply-to=' +
+					'minimum-order-amount-field-apply-to-order-total' +
+					'\nminimum-order-amount-field-currency-code=' +
+					'USD\n',
+			});
+
+		const orderType2 =
+			await apiHelpers.headlessCommerceAdminOrder.postOrderType({
+				active: true,
+			});
+
+		await apiHelpers.headlessCommerceAdminOrder.postOrderRuleIdOrderRuleOrderType(
+			orderRule2.id,
+			{
+				orderRuleId: orderRule2.id,
+				orderTypeId: orderType2.id,
+			}
+		);
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['test@liferay.com']
+		);
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await page.waitForLoadState('networkidle');
+
+		await commerceLayoutsPage.addOrderButton.click();
+		await commerceLayoutsPage.orderTypeModalInput.selectOption({
+			label: orderType1.name['en_US'],
+		});
+		await commerceLayoutsPage.orderTypeModalButton.click();
+
+		await expect(
+			await page.getByText('The minimum order amount is $ 50.00.')
+		).toBeVisible();
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await page.waitForLoadState('networkidle');
+
+		await commerceLayoutsPage.addOrderButton.click();
+		await commerceLayoutsPage.orderTypeModalInput.selectOption({
+			label: orderType2.name['en_US'],
+		});
+		await commerceLayoutsPage.orderTypeModalButton.click();
+
+		await expect(
+			await page.getByText('The minimum order amount is $ 100.00.')
+		).toBeVisible();
 	}
 );

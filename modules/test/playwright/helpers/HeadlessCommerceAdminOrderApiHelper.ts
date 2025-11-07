@@ -58,6 +58,12 @@ type TOrderRule = {
 	typeSettings?: string;
 };
 
+type TOrderRuleOrderType = {
+	orderRuleId: number;
+	orderRuleOrderTypeId?: number;
+	orderTypeId: number;
+};
+
 type TOrderType = {
 	active?: boolean;
 	id?: number;
@@ -253,6 +259,27 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		}
 
 		return orderType;
+	}
+
+	async postOrderRuleIdOrderRuleOrderType(
+		orderRuleId: number,
+		orderRuleOrderType: TOrderRuleOrderType
+	) {
+		orderRuleOrderType = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/order-rules/${orderRuleId}/order-rule-order-types`,
+			{
+				data: orderRuleOrderType,
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: orderRuleOrderType.orderRuleOrderTypeId,
+				type: 'orderType',
+			});
+		}
+
+		return orderRuleOrderType;
 	}
 
 	async postTerm(terms: TTerm) {

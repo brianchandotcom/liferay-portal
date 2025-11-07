@@ -105,11 +105,14 @@ public class UpdateLanguageAction implements Action {
 			Locale locale)
 		throws PortalException {
 
-		String redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(httpServletRequest, "redirect"));
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
-		if (Validator.isNull(redirect)) {
-			throw new IllegalArgumentException();
+		if (Validator.isNotNull(redirect)) {
+			redirect = PortalUtil.escapeRedirect(redirect);
+
+			if (Validator.isNull(redirect)) {
+				throw new IllegalArgumentException();
+			}
 		}
 
 		String contextPath = httpServletRequest.getContextPath();

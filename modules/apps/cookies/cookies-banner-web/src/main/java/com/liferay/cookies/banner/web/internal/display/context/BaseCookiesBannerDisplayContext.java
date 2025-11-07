@@ -36,14 +36,8 @@ public class BaseCookiesBannerDisplayContext {
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		_cookiesConfigurationProvider = cookiesConfigurationProvider;
 
-		_consentRenewalPeriodEnabled = FeatureFlagManagerUtil.isEnabled(
-			themeDisplay.getCompanyId(), "LPD-65277");
 		this.httpServletRequest = httpServletRequest;
 		this.layoutUtilityPageEntryLayoutProvider =
 			layoutUtilityPageEntryLayoutProvider;
@@ -98,7 +92,12 @@ public class BaseCookiesBannerDisplayContext {
 	}
 
 	public boolean isConsentRenewalPeriodEnabled() {
-		return _consentRenewalPeriodEnabled;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return FeatureFlagManagerUtil.isEnabled(
+			themeDisplay.getCompanyId(), "LPD-65277");
 	}
 
 	public boolean isIncludeDeclineAllButton() {
@@ -119,24 +118,11 @@ public class BaseCookiesBannerDisplayContext {
 	}
 
 	protected int getConsentRenewalPeriod() {
-		if (_consentRenewalPeriod > 0) {
-			return _consentRenewalPeriod;
-		}
-
-		_consentRenewalPeriod =
-			cookiesPreferenceHandlingConfiguration.consentRenewalPeriod();
-
-		return _consentRenewalPeriod;
+		return cookiesPreferenceHandlingConfiguration.consentRenewalPeriod();
 	}
 
 	protected long getModifiedDate() {
-		if (_modifiedDate > 0) {
-			return _modifiedDate;
-		}
-
-		_modifiedDate = cookiesPreferenceHandlingConfiguration.modifiedDate();
-
-		return _modifiedDate;
+		return cookiesPreferenceHandlingConfiguration.modifiedDate();
 	}
 
 	protected CookiesBannerConfiguration cookiesBannerConfiguration;
@@ -208,10 +194,7 @@ public class BaseCookiesBannerDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCookiesBannerDisplayContext.class);
 
-	private int _consentRenewalPeriod;
-	private final boolean _consentRenewalPeriodEnabled;
 	private final CookiesConfigurationProvider _cookiesConfigurationProvider;
-	private long _modifiedDate;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 

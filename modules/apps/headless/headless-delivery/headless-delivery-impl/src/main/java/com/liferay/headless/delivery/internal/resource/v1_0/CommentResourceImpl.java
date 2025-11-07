@@ -13,6 +13,7 @@ import com.liferay.headless.common.spi.odata.entity.CommentEntityModel;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.util.CommentUtil;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
+import com.liferay.headless.delivery.resource.v1_0.util.CommentResourceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
@@ -585,14 +586,15 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	private com.liferay.portal.kernel.comment.Comment _fetchComment(
-			String externalReferenceCode, long siteId, String className,
-			long classPK)
-		throws Exception {
+		String externalReferenceCode, long siteId, String className,
+		long classPK) {
 
 		com.liferay.portal.kernel.comment.Comment comment =
 			_commentManager.fetchComment(siteId, externalReferenceCode);
 
-		if ((comment != null) && _isAssociated(className, classPK, comment)) {
+		if ((comment != null) &&
+			CommentResourceUtil.isAssociated(className, classPK, comment)) {
+
 			return comment;
 		}
 
@@ -607,7 +609,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		com.liferay.portal.kernel.comment.Comment comment =
 			_commentManager.getComment(siteId, externalReferenceCode);
 
-		if (!_isAssociated(className, classPK, comment)) {
+		if (!CommentResourceUtil.isAssociated(className, classPK, comment)) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("A comment with external reference code ");
@@ -705,19 +707,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			PermissionThreadLocal.getPermissionChecker();
 
 		return permissionChecker.getUserId();
-	}
-
-	private boolean _isAssociated(
-		String className, long classPK,
-		com.liferay.portal.kernel.comment.Comment comment) {
-
-		if (className.equals(comment.getClassName()) &&
-			(classPK == comment.getClassPK())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private Comment _postComment(

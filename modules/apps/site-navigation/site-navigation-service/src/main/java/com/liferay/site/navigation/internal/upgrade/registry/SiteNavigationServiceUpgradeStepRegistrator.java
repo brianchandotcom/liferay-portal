@@ -8,6 +8,7 @@ package com.liferay.site.navigation.internal.upgrade.registry;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
@@ -93,10 +94,20 @@ public class SiteNavigationServiceUpgradeStepRegistrator
 			"3.0.0", "4.0.0",
 			new com.liferay.site.navigation.internal.upgrade.v4_0_0.
 				SiteNavigationMenuItemUpgradeProcess(_portal));
+
+		registry.register(
+			"4.0.0", "5.0.0",
+			new com.liferay.site.navigation.internal.upgrade.v5_0_0.
+				SiteNavigationMenuItemUpgradeProcess(
+					_groupLocalService, _journalArticleLocalService,
+					_kbArticleLocalService));
 	}
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

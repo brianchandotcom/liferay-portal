@@ -71,10 +71,12 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			ParamUtil.getInteger(httpServletRequest, "consentRenewalPeriod")
 		).put(
 			"modifiedDate",
-			ParamUtil.getLong(
-				httpServletRequest, "modifiedDate",
-				new Date(
-				).getTime())
+			() -> {
+				Date now = new Date();
+
+				return ParamUtil.getLong(
+					httpServletRequest, "modifiedDate", now.getTime());
+			}
 		).build();
 	}
 

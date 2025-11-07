@@ -251,7 +251,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuService.addSiteNavigationMenu(
 				externalReferenceCode, groupId, navigationMenu.getName(), type,
-				true,
+				_isAuto(navigationMenu.getAuto()),
 				ServiceContextBuilder.create(
 					groupId, contextHttpServletRequest, null
 				).build());
@@ -463,6 +463,14 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		).build();
 	}
 
+	private boolean _isAuto(Boolean auto) {
+		if (auto == null) {
+			return true;
+		}
+
+		return auto;
+	}
+
 	private boolean _isNameProperty(Map.Entry<String, String> entry) {
 		String key = entry.getKey();
 
@@ -486,6 +494,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 							ActionKeys.UPDATE, siteNavigationMenu,
 							"putSiteNavigationMenu")
 					).build());
+				setAuto(siteNavigationMenu::getAuto);
 				setCreator(
 					() -> {
 						User user = _userLocalService.fetchUser(
@@ -683,14 +692,18 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			siteNavigationMenu.getGroupId(), contextHttpServletRequest, null
 		).build();
 
+		int type = siteNavigationMenu.getType();
+
 		NavigationMenu.NavigationType navigationType =
 			navigationMenu.getNavigationType();
 
 		if (navigationType != null) {
-			_siteNavigationMenuService.updateSiteNavigationMenu(
-				siteNavigationMenu.getSiteNavigationMenuId(),
-				navigationType.ordinal() + 1, true, serviceContext);
+			type = navigationType.ordinal() + 1;
 		}
+
+		_siteNavigationMenuService.updateSiteNavigationMenu(
+			siteNavigationMenu.getSiteNavigationMenuId(), type,
+			_isAuto(navigationMenu.getAuto()), serviceContext);
 
 		return _toNavigationMenu(
 			_siteNavigationMenuService.updateSiteNavigationMenu(

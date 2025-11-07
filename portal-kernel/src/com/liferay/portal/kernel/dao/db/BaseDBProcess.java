@@ -409,6 +409,28 @@ public abstract class BaseDBProcess implements DBProcess {
 		db.process(unsafeConsumer);
 	}
 
+	protected <K, V> void processConcurrently(
+			Map<K, V> map,
+			UnsafeConsumer<Map.Entry<K, V>, Exception> unsafeConsumer,
+			String exceptionMessage)
+		throws Exception {
+
+		Set<Map.Entry<K, V>> entrySet = map.entrySet();
+
+		Iterator<Map.Entry<K, V>> iterator = entrySet.iterator();
+
+		_processConcurrently(
+			null,
+			() -> {
+				if (!iterator.hasNext()) {
+					return null;
+				}
+
+				return iterator.next();
+			},
+			unsafeConsumer, null, exceptionMessage);
+	}
+
 	protected void processConcurrently(
 			String sql, String updateSQL,
 			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,

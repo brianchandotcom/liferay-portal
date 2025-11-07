@@ -156,12 +156,6 @@ public class DBUpgradeClient {
 
 		_fileOutputStream = new FileOutputStream(_logFile);
 
-		_portalUpgradeDatabasePropertiesFile = new File(
-			_jarDir, "portal-upgrade-database.properties");
-
-		_portalUpgradeDatabaseProperties = _readProperties(
-			_portalUpgradeDatabasePropertiesFile);
-
 		_portalUpgradeExtPropertiesFile = new File(
 			_jarDir, "portal-upgrade-ext.properties");
 
@@ -306,11 +300,11 @@ public class DBUpgradeClient {
 		}
 
 		try {
-			_verifyPortalUpgradeExtProperties();
+			_verifyPortalUpgradeExtPropertiesLiferayHome();
 
 			_verifyAppServerProperties();
 
-			_verifyPortalUpgradeDatabaseProperties();
+			_verifyPortalUpgradeExtPropertiesDatabase();
 
 			_saveProperties();
 		}
@@ -712,8 +706,6 @@ public class DBUpgradeClient {
 
 	private void _saveProperties() throws IOException {
 		_appServerProperties.store(_appServerPropertiesFile);
-		_portalUpgradeDatabaseProperties.store(
-			_portalUpgradeDatabasePropertiesFile);
 		_portalUpgradeExtProperties.store(_portalUpgradeExtPropertiesFile);
 	}
 
@@ -942,8 +934,21 @@ public class DBUpgradeClient {
 		return !hasErrors;
 	}
 
-	private void _verifyPortalUpgradeDatabaseProperties() throws IOException {
-		String value = _portalUpgradeDatabaseProperties.getProperty(
+	private void _verifyPortalUpgradeExtPropertiesDatabase()
+		throws IOException {
+
+		File portalUpgradeDatabasePropertiesFile = new File(
+			_jarDir, "portal-upgrade-database.properties");
+
+		if (portalUpgradeDatabasePropertiesFile.exists()) {
+			System.err.println(
+				"The portal-upgrade-database.properties file is deprecated " +
+					"and will be ignored. Please move all database " +
+						"configuration properties to " +
+							"portal-upgrade-ext.properties.");
+		}
+
+		String value = _portalUpgradeExtProperties.getProperty(
 			"jdbc.default.driverClassName");
 
 		if ((value != null) && !value.isEmpty()) {
@@ -1030,17 +1035,19 @@ public class DBUpgradeClient {
 
 		String password = _consoleReader.readLine('*');
 
-		_portalUpgradeDatabaseProperties.setProperty(
+		_portalUpgradeExtProperties.setProperty(
 			"jdbc.default.driverClassName", dataSource.getClassName());
-		_portalUpgradeDatabaseProperties.setProperty(
+		_portalUpgradeExtProperties.setProperty(
 			"jdbc.default.password", password);
-		_portalUpgradeDatabaseProperties.setProperty(
+		_portalUpgradeExtProperties.setProperty(
 			"jdbc.default.url", dataSource.getURL());
-		_portalUpgradeDatabaseProperties.setProperty(
+		_portalUpgradeExtProperties.setProperty(
 			"jdbc.default.username", userName);
 	}
 
-	private void _verifyPortalUpgradeExtProperties() throws IOException {
+	private void _verifyPortalUpgradeExtPropertiesLiferayHome()
+		throws IOException {
+
 		String value = _portalUpgradeExtProperties.getProperty("liferay.home");
 
 		File baseDir = new File(".");
@@ -1140,8 +1147,6 @@ public class DBUpgradeClient {
 	private final FileOutputStream _fileOutputStream;
 	private List<String> _jvmOpts = new ArrayList<>();
 	private final File _logFile;
-	private final Properties _portalUpgradeDatabaseProperties;
-	private final File _portalUpgradeDatabasePropertiesFile;
 	private final Properties _portalUpgradeExtProperties;
 	private final File _portalUpgradeExtPropertiesFile;
 	private final boolean _shell;

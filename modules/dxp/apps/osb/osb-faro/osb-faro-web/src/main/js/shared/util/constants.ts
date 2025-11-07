@@ -95,7 +95,10 @@ export enum DataSourceStates {
 }
 export enum DataSourceStatuses {
 	Active = 'ACTIVE',
-	Inactive = 'INACTIVE'
+	Authenticated = 'AUTHENTICATED',
+	Configuring = 'CONFIGURING',
+	Inactive = 'INACTIVE',
+	OauthExpired = 'OAUTH_EXPIRED'
 }
 
 export enum DataSourceTypes {

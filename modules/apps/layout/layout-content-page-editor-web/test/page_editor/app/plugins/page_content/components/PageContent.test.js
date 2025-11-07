@@ -21,11 +21,11 @@ jest.mock(
 	() => {
 		const selectItem = jest.fn();
 		const hoverItem = jest.fn();
-		const hoveredItemId = null;
+		const hoveredItemIds = [];
 
 		return {
 			useHoverItem: () => hoverItem,
-			useHoveredItemId: () => hoveredItemId,
+			useHoveredItemIds: () => hoveredItemIds,
 			useSelectItem: () => selectItem,
 		};
 	}

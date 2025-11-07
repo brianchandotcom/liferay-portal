@@ -17,7 +17,7 @@ import {
 	useActivationOrigin,
 	useActiveItemType,
 	useHoverItem,
-	useHoveredItemId,
+	useHoveredItemIds,
 	useHoveredItemType,
 	useHoveringOrigin,
 	useIsActive,
@@ -59,7 +59,7 @@ function FragmentContentInteractionsFilter({
 	const activeItemType = useActiveItemType();
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const hoveredItemId = useHoveredItemId();
+	const [hoveredItemId] = useHoveredItemIds();
 	const hoveredItemType = useHoveredItemType();
 	const hoveringOrigin = useHoveringOrigin();
 	const hoverItem = useHoverItem();

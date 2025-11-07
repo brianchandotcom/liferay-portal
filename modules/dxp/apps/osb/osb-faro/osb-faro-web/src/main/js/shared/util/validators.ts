@@ -177,5 +177,5 @@ export const validateProtocol = validatePattern(
 
 export const validateSalesforceDomain = validatePattern(
 	/^https:\/\/([A-Za-z0-9-]+\.)*(salesforce\.com|force\.com|salesforce-sites\.com)(:\d+)?(\/.*)?$/,
-	Liferay.Language.get('please-enter-a-valid-salesforce-data-source-url')
+	Liferay.Language.get('please-enter-a-valid-salesforce-url')
 );

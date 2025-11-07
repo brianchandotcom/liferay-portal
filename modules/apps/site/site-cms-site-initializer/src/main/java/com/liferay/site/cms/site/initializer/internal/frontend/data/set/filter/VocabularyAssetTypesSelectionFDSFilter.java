@@ -60,8 +60,8 @@ public class VocabularyAssetTypesSelectionFDSFilter
 		for (Map<String, String> assetType : _assetTypes) {
 			selectionFDSFilterItems.add(
 				new SelectionFDSFilterItem(
-					assetType.get("label"),
-					String.valueOf(assetType.get("value"))));
+					assetType.get("type"),
+					String.valueOf(assetType.get("typeId"))));
 		}
 
 		return selectionFDSFilterItems;

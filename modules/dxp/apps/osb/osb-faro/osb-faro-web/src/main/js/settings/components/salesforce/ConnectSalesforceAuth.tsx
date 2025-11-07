@@ -7,7 +7,8 @@ import Form from 'shared/components/form';
 import getCN from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 import {Alert} from 'shared/types';
-import {createSalesforce} from 'shared/api/data-source';
+import {createSalesforce, updateSalesforce} from 'shared/api/data-source';
+import {DataSource} from 'shared/util/records';
 import {DataSourceStatuses} from 'shared/util/constants';
 import {
 	ERROR_TYPES,
@@ -93,16 +94,18 @@ function salesforceAuthErrorMessage(errMessage: string) {
 
 interface IConnectSalesforceAuthProps {
 	addAlert: Alert.AddAlert;
+	dataSource?: DataSource;
 	onCancel?: () => void;
 	onSubmit: () => void;
 	buttonProps?: {
-		block: boolean;
+		[key: string]: any;
 	};
 }
 
 const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 	addAlert,
 	buttonProps,
+	dataSource,
 	onCancel,
 	onSubmit
 }) => {
@@ -138,9 +141,9 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 	return (
 		<Form
 			initialValues={{
-				clientId: '',
-				clientSecret: '',
-				salesForceDataSource: ''
+				clientId: dataSource?.credentials.get('oAuthClientId'),
+				clientSecret: dataSource?.credentials.get('oAuthClientSecret'),
+				salesForceDataSource: dataSource?.url
 			}}
 			onSubmit={values => {
 				const {setSubmitting} = _formRef.current;
@@ -161,39 +164,69 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 				} as any)
 					.then(async tempCredentials => {
 						if (tempCredentials) {
-							createSalesforce({
-								accountsConfiguration: {
-									enableAllAccounts: false
-								},
-								contactsConfiguration: {
-									enableAllContacts: true,
-									enableAllLeads: true
-								},
-								credentials: tempCredentials,
-								groupId,
-								name: Liferay.Language.get('salesforce'),
-								status: DataSourceStatuses.Active,
-								url: values.salesForceDataSource
-							} as any)
-								.then(() => {
-									addAlert({
-										alertType: Alert.Types.Success,
-										message: Liferay.Language.get(
-											'connection-established-successfully'
-										)
-									});
+							if (dataSource) {
+								updateSalesforce({
+									credentials: tempCredentials,
+									groupId,
+									id: dataSource.id,
+									name: dataSource.name,
+									status: DataSourceStatuses.Active,
+									url: values.salesForceDataSource
+								} as any)
+									.then(() => {
+										addAlert({
+											alertType: Alert.Types.Success,
+											message: Liferay.Language.get(
+												'connection-established-successfully'
+											)
+										});
 
-									onSubmit();
-								})
-								.catch(err => {
-									addAlert({
-										alertType: Alert.Types.Error,
-										message: err.message
+										onSubmit();
+									})
+									.catch(err => {
+										addAlert({
+											alertType: Alert.Types.Error,
+											message: err.message
+										});
+									})
+									.finally(() => {
+										setSubmitting(false);
 									});
-								})
-								.finally(() => {
-									setSubmitting(false);
-								});
+							} else {
+								createSalesforce({
+									accountsConfiguration: {
+										enableAllAccounts: false
+									},
+									contactsConfiguration: {
+										enableAllContacts: false,
+										enableAllLeads: false
+									},
+									credentials: tempCredentials,
+									groupId,
+									name: Liferay.Language.get('salesforce'),
+									status: DataSourceStatuses.Active,
+									url: values.salesForceDataSource
+								} as any)
+									.then(() => {
+										addAlert({
+											alertType: Alert.Types.Success,
+											message: Liferay.Language.get(
+												'connection-established-successfully'
+											)
+										});
+
+										onSubmit();
+									})
+									.catch(err => {
+										addAlert({
+											alertType: Alert.Types.Error,
+											message: err.message
+										});
+									})
+									.finally(() => {
+										setSubmitting(false);
+									});
+							}
 						}
 					})
 					.catch(err => {
@@ -409,7 +442,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 					/>
 
 					<ClayButton
-						block={buttonProps?.block}
+						{...buttonProps}
 						disabled={isSubmitting}
 						loading={isSubmitting}
 						type='submit'

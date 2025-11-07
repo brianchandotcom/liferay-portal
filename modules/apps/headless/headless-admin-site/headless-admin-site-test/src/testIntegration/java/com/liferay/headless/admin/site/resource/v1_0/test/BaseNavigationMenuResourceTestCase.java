@@ -1097,6 +1097,14 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("auto", additionalAssertFieldName)) {
+				if (navigationMenu.getAuto() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (navigationMenu.getCreator() == null) {
 					valid = false;
@@ -1284,6 +1292,16 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				if (!equals(
 						(Map)navigationMenu1.getActions(),
 						(Map)navigationMenu2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("auto", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						navigationMenu1.getAuto(), navigationMenu2.getAuto())) {
 
 					return false;
 				}
@@ -1501,6 +1519,11 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("auto")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1730,6 +1753,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	protected NavigationMenu randomNavigationMenu() throws Exception {
 		return new NavigationMenu() {
 			{
+				auto = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(

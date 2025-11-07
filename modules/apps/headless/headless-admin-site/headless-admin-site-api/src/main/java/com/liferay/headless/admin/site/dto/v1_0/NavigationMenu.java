@@ -106,6 +106,49 @@ public class NavigationMenu implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A Boolean value that specifies whether or not the Navigation Menu displays as an option when creating a new page"
+	)
+	public Boolean getAuto() {
+		if (_autoSupplier != null) {
+			auto = _autoSupplier.get();
+
+			_autoSupplier = null;
+		}
+
+		return auto;
+	}
+
+	public void setAuto(Boolean auto) {
+		this.auto = auto;
+
+		_autoSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAuto(UnsafeSupplier<Boolean, Exception> autoUnsafeSupplier) {
+		_autoSupplier = () -> {
+			try {
+				return autoUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A Boolean value that specifies whether or not the Navigation Menu displays as an option when creating a new page"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean auto;
+
+	@JsonIgnore
+	private Supplier<Boolean> _autoSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The navigation menu's creator. It is not returned by default. It can be embedded via nestedFields."
 	)
 	@Valid
@@ -604,6 +647,18 @@ public class NavigationMenu implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		Boolean auto = getAuto();
+
+		if (auto != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"auto\": ");
+
+			sb.append(auto);
 		}
 
 		Creator creator = getCreator();

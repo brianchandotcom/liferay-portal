@@ -63,6 +63,16 @@ public class NavigationMenuSerDes {
 			sb.append(_toJSON(navigationMenu.getActions()));
 		}
 
+		if (navigationMenu.getAuto() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"auto\": ");
+
+			sb.append(navigationMenu.getAuto());
+		}
+
 		if (navigationMenu.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -237,6 +247,13 @@ public class NavigationMenuSerDes {
 			map.put("actions", String.valueOf(navigationMenu.getActions()));
 		}
 
+		if (navigationMenu.getAuto() == null) {
+			map.put("auto", null);
+		}
+		else {
+			map.put("auto", String.valueOf(navigationMenu.getAuto()));
+		}
+
 		if (navigationMenu.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -341,6 +358,9 @@ public class NavigationMenuSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "auto")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
@@ -388,6 +408,11 @@ public class NavigationMenuSerDes {
 				if (jsonParserFieldValue != null) {
 					navigationMenu.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "auto")) {
+				if (jsonParserFieldValue != null) {
+					navigationMenu.setAuto((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {

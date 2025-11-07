@@ -49,6 +49,25 @@ public class NavigationMenu implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Boolean getAuto() {
+		return auto;
+	}
+
+	public void setAuto(Boolean auto) {
+		this.auto = auto;
+	}
+
+	public void setAuto(UnsafeSupplier<Boolean, Exception> autoUnsafeSupplier) {
+		try {
+			auto = autoUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean auto;
+
 	public Creator getCreator() {
 		return creator;
 	}

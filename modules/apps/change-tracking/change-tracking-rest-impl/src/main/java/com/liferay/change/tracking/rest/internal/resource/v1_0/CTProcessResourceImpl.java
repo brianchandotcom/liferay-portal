@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,6 +73,12 @@ public class CTProcessResourceImpl extends BaseCTProcessResourceImpl {
 			String search, Integer[] statuses, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		if (ArrayUtil.isEmpty(sorts)) {
+			sorts = new Sort[] {
+				new Sort(Field.getSortableFieldName(Field.CREATE_DATE), true)
+			};
+		}
 
 		return SearchUtil.search(
 			Collections.emptyMap(),

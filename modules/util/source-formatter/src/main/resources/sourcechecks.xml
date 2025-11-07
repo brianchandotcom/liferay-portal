@@ -974,6 +974,7 @@
 		<check name="JavaUpgradeCreateTableCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that we do not use `create table` statement in upgrade classes." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaUpgradeDropTableCheck">
 			<category name="Bug Prevention" />

@@ -205,7 +205,7 @@
 
 			<a
 				class="d-flex font-weight-semi-bold help-and-support-link justify-content-between w-100"
-				href="${(appUsageTerms?has_content)?then(appUsageTerms, 'https://www.liferay.com/en/legal/marketplace-terms-of-service')}"
+				href="${(appUsageTerms?has_content)?then(appUsageTerms, 'https://marketplace.liferay.com/license-agreement')}"
 				target="_blank">
 
 				<span class="copy-text ml-1 help-and-support-link">

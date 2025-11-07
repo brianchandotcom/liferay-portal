@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -123,6 +124,12 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			String search, Integer[] statuses, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
+
+		if (ArrayUtil.isEmpty(sorts)) {
+			sorts = new Sort[] {
+				new Sort(Field.getSortableFieldName(Field.MODIFIED_DATE), true)
+			};
+		}
 
 		return SearchUtil.search(
 			Collections.emptyMap(),

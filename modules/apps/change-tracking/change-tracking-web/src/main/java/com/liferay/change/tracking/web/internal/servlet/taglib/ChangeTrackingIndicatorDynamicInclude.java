@@ -144,6 +144,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		htmlTopTag.setPosition("auto");
 
 		try {
+			writer.write("<div class=\"d-flex flex-column\">");
+			writer.write(
+				"<nav aria-label=\"Publication Menu\" class=\"cadmin\">");
+
 			htmlTopTag.doBodyTag(
 				httpServletRequest, httpServletResponse,
 				pageContext -> {
@@ -219,7 +223,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						ctConfiguration.unsupportedApplication(), portletId)),
 				httpServletRequest, writer);
 
-			writer.write("</div>");
+			writer.write("</div></nav></div>");
 		}
 		catch (JspException | PortalException exception) {
 			ReflectionUtil.throwException(exception);
@@ -229,7 +233,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.product.navigation.taglib#/page.jsp#pre");
+			"/html/common/themes/body_top.jsp#post");
 	}
 
 	@Activate

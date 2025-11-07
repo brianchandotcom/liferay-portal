@@ -101,7 +101,7 @@ public class DataRemovalExecutor {
 			"com.liferay.layout.service",
 			() -> new LayoutClassedModelUsageOrphanDataUpgradeProcess(
 				_classNameLocalService, _contentManager,
-				_fragmentEntryLinkLocalService,
+				_ctCollectionLocalService, _fragmentEntryLinkLocalService,
 				_layoutClassedModelUsageLocalService,
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService));

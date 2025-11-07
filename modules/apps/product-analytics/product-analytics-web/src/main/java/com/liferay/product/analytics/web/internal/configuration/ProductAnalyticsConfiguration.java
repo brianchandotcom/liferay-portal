@@ -25,6 +25,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ProductAnalyticsConfiguration {
 
 	@Meta.AD(
+		deflt = "12",
+		description = "product-analytics-cookie-consent-renewal-period-help",
+		max = "12", min = "1", name = "cookie-consent-renewal-period",
+		required = false
+	)
+	public int consentRenewalPeriod();
+
+	@Meta.AD(
 		deflt = "true",
 		description = "product-analytics-enable-user-preference-handling-help",
 		name = "enabled", required = false

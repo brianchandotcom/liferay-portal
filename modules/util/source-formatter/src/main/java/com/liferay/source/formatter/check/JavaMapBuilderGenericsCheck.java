@@ -53,7 +53,7 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 		while (matcher.find()) {
 			String[] genericTypesArray = null;
 
-			String genericTypes = matcher.group(7);
+			String genericTypes = matcher.group(8);
 
 			if (genericTypes != null) {
 				genericTypesArray = _getGenericTypesArray(genericTypes);
@@ -91,12 +91,12 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 
 			if (!requiresGenerics && (genericTypes != null)) {
 				return StringUtil.replaceFirst(
-					content, matcher.group(6), StringPool.BLANK,
+					content, matcher.group(7), StringPool.BLANK,
 					matcher.start());
 			}
 
 			if (requiresGenerics && (genericTypes == null)) {
-				String methodName = matcher.group(8);
+				String methodName = matcher.group(9);
 
 				return StringUtil.replaceFirst(
 					content, methodName + "(",
@@ -285,7 +285,7 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 	private static final Pattern _mapBuilderPattern = Pattern.compile(
 		StringBundler.concat(
 			"((return|(\\w+) =)\\s*)?\\s(ConcurrentHash|Hash|LinkedHash|Tree)",
-			"Map(Dictionary)?Builder\\.\\s*(<([<>\\[\\],\\s\\.\\w\\?]+)>)?\\s*",
-			"(put(All)?)\\("));
+			"Map(Dictionary)?Builder\\.(create\\(\\s*\\w+\\s*\\)\\.)?\\s*(<([",
+			"<>\\[\\],\\s\\.\\w\\?]+)>)?\\s*(put(All)?)\\("));
 
 }

@@ -1,11 +1,25 @@
 import ClayLayout from '@clayui/layout';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Toolbar from './Toolbar';
 import {Routes, toRoute} from 'shared/util/router';
 import {useParams} from 'react-router-dom';
 
 const WizardPage = ({children}) => {
 	const {groupId} = useParams();
+
+	// TODO: Trick to add background white on wizad mode, remove it on revamping.
+
+	useEffect(() => {
+		const bodyElement = document.querySelector('body');
+		if (bodyElement instanceof HTMLElement) {
+			bodyElement.style.backgroundColor = 'white';
+		}
+
+		return () => {
+			if (bodyElement instanceof HTMLElement)
+				bodyElement.style.backgroundColor = '';
+		};
+	}, []);
 
 	return (
 		<div className='wizard-page'>

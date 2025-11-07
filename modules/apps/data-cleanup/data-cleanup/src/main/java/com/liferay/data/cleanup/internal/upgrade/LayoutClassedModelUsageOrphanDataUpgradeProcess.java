@@ -5,6 +5,8 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.manager.ContentManager;
@@ -40,6 +42,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 	public LayoutClassedModelUsageOrphanDataUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
 		ContentManager contentManager,
+		CTCollectionLocalService ctCollectionLocalService,
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		LayoutClassedModelUsageLocalService layoutClassedModelUsageLocalService,
 		LayoutPageTemplateStructureLocalService
@@ -49,6 +52,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 
 		_classNameLocalService = classNameLocalService;
 		_contentManager = contentManager;
+		_ctCollectionLocalService = ctCollectionLocalService;
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_layoutClassedModelUsageLocalService =
 			layoutClassedModelUsageLocalService;
@@ -74,6 +78,55 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 				LayoutPageTemplateStructure.class.getName()),
 			"layoutPageTemplateStructureId", "LayoutPageTemplateStructure",
 			this::_updateLayoutPageTemplateStructureClassedModelUsage);
+	}
+
+	private void _deleteOrphanLayoutClassedModelUsage(
+		CTCollection ctCollection, long layoutClassedModelUsageId) {
+
+		long ctCollectionId =
+			(ctCollection != null) ? ctCollection.getCtCollectionId() :
+				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
+
+		try {
+			if ((ctCollection != null) && ctCollection.isReadOnly()) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"delete from LayoutClassedModelUsage where " +
+								"layoutClassedModelUsageId = ?")) {
+
+					preparedStatement.setLong(1, layoutClassedModelUsageId);
+					preparedStatement.executeUpdate();
+				}
+			}
+			else {
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								ctCollectionId)) {
+
+					_layoutClassedModelUsageLocalService.
+						deleteLayoutClassedModelUsage(
+							layoutClassedModelUsageId);
+				}
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Deleted orphaned layout classed model usage ID ",
+						layoutClassedModelUsageId,
+						" from published CT collection ID ", ctCollectionId));
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to delete orphaned layout classed model usage ",
+						"ID ", layoutClassedModelUsageId),
+					exception);
+			}
+		}
 	}
 
 	private void _processLayoutClassedModelUsage(
@@ -105,10 +158,18 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 					long ctCollectionId = resultSet.getLong("ctCollectionId");
 					long layoutClassedModelUsageId = resultSet.getLong(
 						"layoutClassedModelUsageId");
-					long groupId = resultSet.getLong("groupId");
-					long plid = resultSet.getLong("plid");
 
-					try {
+					CTCollection ctCollection =
+						_ctCollectionLocalService.fetchCTCollection(
+							ctCollectionId);
+
+					_deleteOrphanLayoutClassedModelUsage(
+						ctCollection, layoutClassedModelUsageId);
+
+					if ((ctCollection == null) || !ctCollection.isReadOnly()) {
+						long groupId = resultSet.getLong("groupId");
+						long plid = resultSet.getLong("plid");
+
 						Map<Long, Set<Long>> ctCollectionIdMap =
 							groupIdMap.computeIfAbsent(
 								groupId, key -> new HashMap<>());
@@ -117,20 +178,6 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 							ctCollectionId, key -> new HashSet<>());
 
 						plids.add(plid);
-
-						_layoutClassedModelUsageLocalService.
-							deleteLayoutClassedModelUsage(
-								layoutClassedModelUsageId);
-					}
-					catch (Exception exception) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Unable to delete orphaned layout classed ",
-									"model usage with ID ",
-									layoutClassedModelUsageId),
-								exception);
-						}
 					}
 				}
 			}
@@ -162,10 +209,25 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 									ctCollectionId)) {
 
 						unsafeBiConsumer.accept(groupId, plid);
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								StringBundler.concat(
+									"Updated layout classed model usage for ",
+									"layout with plid ", plid,
+									" and published CT collection ID ",
+									ctCollectionId));
+						}
 					}
 					catch (Exception exception) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(exception);
+							_log.warn(
+								StringBundler.concat(
+									"Unable to update layout classed model ",
+									"usage for layout with plid ", plid,
+									" and published CT collection ID ",
+									ctCollectionId),
+								exception);
 						}
 					}
 				}
@@ -248,6 +310,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final ContentManager _contentManager;
+	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;

@@ -68,11 +68,8 @@ public class CookiesBannerDisplayContext
 	}
 
 	public Map<String, Object> getContext(Locale locale) {
-		LocalizedValuesMap titleLocalizedValuesMap =
-			cookiesConsentConfiguration.title();
-
-		if (!isConsentRenewalPeriodEnabled()) {
-			return HashMapBuilder.<String, Object>put(
+		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
+			HashMapBuilder.<String, Object>put(
 				"configurationNamespace",
 				CookiesBannerPortletKeys.COOKIES_BANNER_CONFIGURATION
 			).put(
@@ -88,29 +85,23 @@ public class CookiesBannerDisplayContext
 				getConsentCookieTypeNamesJSONArray(
 					getRequiredConsentCookieTypes())
 			).put(
-				"title", titleLocalizedValuesMap.get(locale)
-			).build();
+				"title",
+				() -> {
+					LocalizedValuesMap titleLocalizedValuesMap =
+						cookiesConsentConfiguration.title();
+
+					return titleLocalizedValuesMap.get(locale);
+				}
+			);
+
+		if (!isConsentRenewalPeriodEnabled()) {
+			return hashMapWrapper.build();
 		}
 
-		return HashMapBuilder.<String, Object>put(
-			"configurationNamespace",
-			CookiesBannerPortletKeys.COOKIES_BANNER_CONFIGURATION
-		).put(
-			"configurationURL", getConfigurationURL()
-		).put(
+		return hashMapWrapper.put(
 			"consentRenewalPeriod", getConsentRenewalPeriod()
 		).put(
-			"includeDeclineAllButton", isIncludeDeclineAllButton()
-		).put(
 			"modifiedDate", getModifiedDate()
-		).put(
-			"optionalConsentCookieTypeNames",
-			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())
-		).put(
-			"requiredConsentCookieTypeNames",
-			getConsentCookieTypeNamesJSONArray(getRequiredConsentCookieTypes())
-		).put(
-			"title", titleLocalizedValuesMap.get(locale)
 		).build();
 	}
 

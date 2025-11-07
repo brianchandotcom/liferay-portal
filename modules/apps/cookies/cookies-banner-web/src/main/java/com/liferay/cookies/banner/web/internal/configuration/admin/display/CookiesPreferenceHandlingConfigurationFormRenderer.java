@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -51,29 +52,23 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-65277")) {
-
-			return HashMapBuilder.<String, Object>put(
+		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
+			HashMapBuilder.<String, Object>put(
 				"enabled", ParamUtil.getBoolean(httpServletRequest, "enabled")
 			).put(
 				"explicitConsentMode",
 				ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
-			).build();
+			);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(httpServletRequest), "LPD-65277")) {
+
+			return hashMapWrapper.build();
 		}
 
-		return HashMapBuilder.<String, Object>put(
+		return hashMapWrapper.put(
 			"consentRenewalPeriod",
 			ParamUtil.getInteger(httpServletRequest, "consentRenewalPeriod")
-		).put(
-			"enabled", ParamUtil.getBoolean(httpServletRequest, "enabled")
-		).put(
-			"explicitConsentMode",
-			ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
 		).put(
 			"modifiedDate",
 			ParamUtil.getLong(
@@ -151,6 +146,9 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 
 	@Reference
 	private CookiesConfigurationProvider _cookiesConfigurationProvider;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.cookies.banner.web)"

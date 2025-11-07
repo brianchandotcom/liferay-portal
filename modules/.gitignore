@@ -1,5 +1,5 @@
-*.iml
 **/docroot/WEB-INF/tld/
+*.iml
 .classpath
 .gh.json
 .gradle/
@@ -11,7 +11,6 @@
 bin/
 build/
 classes/
-integrations/vercel/**/.next
 ivy.xml.MD5
 lib/
 liferay-hook.xml.processed

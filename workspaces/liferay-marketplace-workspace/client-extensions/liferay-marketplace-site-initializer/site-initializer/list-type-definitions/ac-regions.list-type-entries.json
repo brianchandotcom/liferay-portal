@@ -1,6 +1,6 @@
 [
 	{
-		"externalReferenceCode": "asia-south1-ac5-c1",
+		"externalReferenceCode": "ASIA-SOUTH1-AC5-C1",
 		"key": "asiasouth1",
 		"name": "Asia South 1",
 		"name_i18n": {
@@ -9,7 +9,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "europe-west2-ac2-c1",
+		"externalReferenceCode": "EUROPE-WEST2-AC2-C1",
 		"key": "europewest2",
 		"name": "Europe West 2",
 		"name_i18n": {
@@ -18,7 +18,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "europe-west3-ac3-c1",
+		"externalReferenceCode": "EUROPE-WEST3-AC3-C1",
 		"key": "europewest3",
 		"name": "Europe West 3",
 		"name_i18n": {
@@ -27,7 +27,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "us-west1-ac-uat-c1",
+		"externalReferenceCode": "US-WEST1-AC-UAT-C1",
 		"key": "internal",
 		"name": "Internal",
 		"name_i18n": {
@@ -36,7 +36,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "southamerica-east1-ac1-c1",
+		"externalReferenceCode": "SOUTHAMERICA-EAST1-AC1-C1",
 		"key": "southamericaeast1",
 		"name": "South America East 1",
 		"name_i18n": {
@@ -45,7 +45,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "us-west1-ac4-c1",
+		"externalReferenceCode": "US-WEST1-AC4-C1",
 		"key": "uswest1",
 		"name": "US West 1",
 		"name_i18n": {

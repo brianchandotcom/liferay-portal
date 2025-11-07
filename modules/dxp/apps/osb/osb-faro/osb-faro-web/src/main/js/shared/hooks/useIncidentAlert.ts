@@ -10,7 +10,7 @@ export const useIncidentAlert = () => {
 			try {
 				const response = await fetchPreferences();
 
-				setData(response || {incidentAlertEnabled: false});
+				setData(response.preferences || {incidentAlertEnabled: false});
 			} catch (error) {
 				throw new Error(
 					`Failed to fetch incident alert status: ${error}`

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -256,8 +257,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext());
 
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+		Role role = RoleTestUtil.addRole(
+			RoleConstants.CMS_ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
 
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 

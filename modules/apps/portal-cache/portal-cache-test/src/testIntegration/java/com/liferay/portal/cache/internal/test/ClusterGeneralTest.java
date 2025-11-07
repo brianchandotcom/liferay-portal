@@ -1,0 +1,183 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.cache.internal.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
+import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
+import com.liferay.portal.test.cluster.tomcat.TomcatNode;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+/**
+ * @author Jiefeng Wu
+ */
+@RunWith(Arquillian.class)
+public class ClusterGeneralTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final TomcatClusterTestRule tomcatClusterTestRule =
+		new TomcatClusterTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		TomcatCluster.Builder builder1 =
+			tomcatClusterTestRule.buildTomcatNode();
+
+		_tomcatNode1 = builder1.build();
+
+		_tomcatNode1.start(true);
+
+		TomcatCluster.Builder builder2 =
+			tomcatClusterTestRule.buildTomcatNode();
+
+		_tomcatNode2 = builder2.build();
+
+		_tomcatNode2.start(true);
+	}
+
+	@Test
+	public void testSlaveNodeCanBecomeMasterNode() throws Exception {
+
+		// Assert node 1 is master node
+
+		Assert.assertTrue(
+			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
+
+		// Assert node 2 is slave node
+
+		Assert.assertFalse(
+			_tomcatNode2.syncExecute(ClusterMasterExecutorUtil::isMaster));
+
+		// register a listener for node 1
+
+		_tomcatNode1.syncExecute(
+			() -> {
+				BundleContext bundleContext =
+					SystemBundleUtil.getBundleContext();
+
+				bundleContext.registerService(
+					ClusterMasterTokenTransitionListener.class,
+					new TestClusterMasterTokenTransitionListener(), null);
+
+				return null;
+			});
+
+		// register a listener for node 2
+
+		_tomcatNode2.syncExecute(
+			() -> {
+				BundleContext bundleContext =
+					SystemBundleUtil.getBundleContext();
+
+				bundleContext.registerService(
+					ClusterMasterTokenTransitionListener.class,
+					new TestClusterMasterTokenTransitionListener(), null);
+
+				return null;
+			});
+
+		// stop node 1
+
+		_tomcatNode1.stop();
+
+		// As node 1 stop, expect node 2 will become new master
+		// wait till node 2 finish swapping from slave to master,
+		// confirm it is master now
+
+		Assert.assertTrue(
+			_tomcatNode2.syncExecute(
+				() -> {
+					BundleContext bundleContext =
+						SystemBundleUtil.getBundleContext();
+
+					List<ServiceReference<ClusterMasterTokenTransitionListener>>
+						serviceReferences = new ArrayList<>(
+							bundleContext.getServiceReferences(
+								ClusterMasterTokenTransitionListener.class,
+								null));
+
+					ServiceReference<ClusterMasterTokenTransitionListener>
+						editServerMVCActionCommandServiceReference =
+							serviceReferences.get(serviceReferences.size() - 1);
+
+					TestClusterMasterTokenTransitionListener
+						testClusterMasterTokenTransitionListener =
+							(TestClusterMasterTokenTransitionListener)
+								bundleContext.getService(
+									editServerMVCActionCommandServiceReference);
+
+					testClusterMasterTokenTransitionListener.getCountDownLatch(
+					).await();
+
+					return ClusterMasterExecutorUtil.isMaster();
+				}));
+
+		// Restart node 1
+
+		_tomcatNode1.start(true);
+
+		// Assert node 2 is still master node
+
+		Assert.assertTrue(
+			_tomcatNode2.syncExecute(ClusterMasterExecutorUtil::isMaster));
+
+		// Assert node 1 is still slave node
+
+		Assert.assertFalse(
+			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
+	}
+
+	private static TomcatNode _tomcatNode1;
+	private static TomcatNode _tomcatNode2;
+
+	private static class TestClusterMasterTokenTransitionListener
+		implements ClusterMasterTokenTransitionListener {
+
+		public TestClusterMasterTokenTransitionListener() {
+			_stoppedLatch = new CountDownLatch(1);
+		}
+
+		public CountDownLatch getCountDownLatch() {
+			return _stoppedLatch;
+		}
+
+		@Override
+		public void masterTokenAcquired() {
+			_stoppedLatch.countDown();
+		}
+
+		@Override
+		public void masterTokenReleased() {
+			_stoppedLatch.countDown();
+		}
+
+		private final CountDownLatch _stoppedLatch;
+
+	}
+
+}

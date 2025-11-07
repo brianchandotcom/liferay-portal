@@ -168,6 +168,34 @@ export default function propsTransformer({
 								icon: 'hidden',
 								label: 'Group Permission Test',
 							},
+							{
+								data: {
+									id: 'contextualGroupItem',
+								},
+								icon: 'nodes',
+								items: [
+									{
+										data: {
+											id: 'contextualGroupSubItem1',
+										},
+										icon: 'exclamation-circle',
+										label: 'Contextual Sub Item 1',
+										onClick: () => {
+											alert(
+												'You clicked on an item in a contextual group'
+											);
+										},
+									},
+									{
+										data: {
+											id: 'contextualGroupSubItem2',
+										},
+										label: 'Contextual Sub Item 2',
+									},
+								],
+								label: 'Contextual Item',
+								type: 'contextual',
+							},
 						],
 						separator: true,
 						type: 'group',

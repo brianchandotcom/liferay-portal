@@ -499,6 +499,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		try {
 			CloudBucketUtil.syncGCPFiles(
+				_ARCHIVE_BASE_DIR_PATH + "/data",
+				_getBuildProperty("archive.ci.build.data.cloud.bucket.path"));
+
+			CloudBucketUtil.syncGCPFiles(
 				_ARCHIVE_BASE_DIR_PATH + "/reports",
 				_getGCPBucketBasePath() + "/reports");
 		}

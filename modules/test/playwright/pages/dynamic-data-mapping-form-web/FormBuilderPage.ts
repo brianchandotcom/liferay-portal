@@ -112,11 +112,12 @@ export class FormBuilderPage {
 		await this.formsPage.clickManagementToolbarNewButton();
 	}
 
-	async openFieldSettings(fieldLabel: string) {
+	async openFieldSettings(fieldLabel: string, position?: number) {
 		await this.page
 			.locator('.ddm-field .form-group label.ddm-label', {
 				hasText: fieldLabel,
 			})
+			.nth(position ?? 0)
 			.click({force: true});
 	}
 

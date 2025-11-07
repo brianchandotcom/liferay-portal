@@ -16,7 +16,6 @@ import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.customer.exception.FileServerUnavailableException;
-import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -117,9 +116,12 @@ public class GoogleCloudStorageService extends BaseService {
 			ResponseEntity<String> responseEntity = WebClient.create(
 			).post(
 			).uri(
-				StringBundler.concat(
-					getBaseURL(), "/upload/storage/v1/b/", bucketName,
-					"/o?uploadType=resumable&name=", objectName)
+				UriComponentsBuilder.fromUriString(
+					getBaseURL() + "/upload/storage/v1/b/{bucketName}" +
+						"/o?uploadType=resumable&name={objectName}"
+				).build(
+					bucketName, objectName
+				)
 			).accept(
 				MediaType.APPLICATION_JSON
 			).header(

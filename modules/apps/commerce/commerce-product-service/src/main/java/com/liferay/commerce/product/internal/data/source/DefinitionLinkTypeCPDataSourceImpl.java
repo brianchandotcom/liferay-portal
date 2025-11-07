@@ -15,7 +15,13 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.helper.CPDefinitionHelper;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.util.CPDefinitionLinkSearchUtil;
+import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -59,9 +65,7 @@ public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 			HttpServletRequest httpServletRequest, int start, int end)
 		throws Exception {
 
-		CPCatalogEntry cpCatalogEntry =
-			(CPCatalogEntry)httpServletRequest.getAttribute(
-				CPWebKeys.CP_CATALOG_ENTRY);
+		CPCatalogEntry cpCatalogEntry = _getCPCatalogEntry(httpServletRequest);
 
 		if (cpCatalogEntry == null) {
 			return new CPDataSourceResult(new ArrayList<>(), 0);
@@ -91,6 +95,63 @@ public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 				CPDefinitionLinkTypeConfiguration.class, properties);
 	}
 
+	private CPCatalogEntry _getCPCatalogEntry(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		CPCatalogEntry cpCatalogEntry =
+			(CPCatalogEntry)httpServletRequest.getAttribute(
+				CPWebKeys.CP_CATALOG_ENTRY);
+
+		if (cpCatalogEntry != null) {
+			return cpCatalogEntry;
+		}
+
+		CPDefinition cpDefinition = _getCPDefinition(httpServletRequest);
+
+		if (cpDefinition != null) {
+			return _cpDefinitionHelper.getCPCatalogEntry(
+				CommerceUtil.getCommerceAccountId(
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT)),
+				_portal.getScopeGroupId(httpServletRequest),
+				cpDefinition.getCPDefinitionId(),
+				_portal.getLocale(httpServletRequest), false);
+		}
+
+		return null;
+	}
+
+	private CPDefinition _getCPDefinition(
+		HttpServletRequest httpServletRequest) {
+
+		CPDefinition cpDefinition = null;
+
+		InfoItemReference infoItemReference =
+			(InfoItemReference)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
+
+		if (infoItemReference != null) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
+			cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
+				classPKInfoItemIdentifier.getClassPK());
+		}
+
+		if (cpDefinition == null) {
+			Object infoItem = httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
+
+			if (infoItem instanceof CPDefinition) {
+				cpDefinition = (CPDefinition)infoItem;
+			}
+		}
+
+		return cpDefinition;
+	}
+
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
 
@@ -99,6 +160,9 @@ public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 
 	private volatile CPDefinitionLinkTypeConfiguration
 		_cpDefinitionLinkTypeConfiguration;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private Language _language;

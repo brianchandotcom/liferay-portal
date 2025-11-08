@@ -29,14 +29,14 @@ public abstract class BaseStoreTestCase {
 
 	@Before
 	public void setUp() {
-		_companyId = RandomTestUtil.nextLong();
-		_repositoryId = RandomTestUtil.nextLong();
+		companyId = RandomTestUtil.nextLong();
+		repositoryId = RandomTestUtil.nextLong();
 		_store = getStore();
 	}
 
 	@After
 	public void tearDown() {
-		_store.deleteDirectory(_companyId, _repositoryId, StringPool.SLASH);
+		_store.deleteDirectory(companyId, repositoryId, StringPool.SLASH);
 	}
 
 	@Test
@@ -44,12 +44,12 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		Assert.assertTrue(
 			_store.hasFile(
-				_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT));
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 	}
 
 	@Test
@@ -59,23 +59,23 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String fileName2 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
-		_store.deleteDirectory(_companyId, _repositoryId, dirName);
+		_store.deleteDirectory(companyId, repositoryId, dirName);
 
 		Assert.assertFalse(
 			_store.hasFile(
-				_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT));
+				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
 		Assert.assertFalse(
 			_store.hasFile(
-				_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT));
+				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
 	}
 
 	@Test
@@ -87,23 +87,23 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
-		_store.deleteDirectory(_companyId, _repositoryId, dirName);
+		_store.deleteDirectory(companyId, repositoryId, dirName);
 
 		Assert.assertFalse(
 			_store.hasFile(
-				_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT));
+				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
 		Assert.assertFalse(
 			_store.hasFile(
-				_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT));
+				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
 	}
 
 	@Test
@@ -111,19 +111,19 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		addVersions(fileName, 1);
 
 		_store.deleteFile(
-			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT);
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
 
 		Assert.assertFalse(
 			_store.hasFile(
-				_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT));
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 		Assert.assertTrue(
-			_store.hasFile(_companyId, _repositoryId, fileName, "1.1"));
+			_store.hasFile(companyId, repositoryId, fileName, "1.1"));
 	}
 
 	@Test
@@ -131,17 +131,17 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		addVersions(fileName, 5);
 
 		try (InputStream inputStream = _store.getFileAsStream(
-				_companyId, _repositoryId, fileName, "1.5")) {
+				companyId, repositoryId, fileName, "1.5")) {
 
 			for (int i = 0; i < _DATA_SIZE; i++) {
 				Assert.assertEquals(
-					_DATA_VERSION_1[i], (byte)inputStream.read());
+					DATA_VERSION_1[i], (byte)inputStream.read());
 			}
 
 			Assert.assertEquals(-1, inputStream.read());
@@ -153,17 +153,17 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String fileName2 = RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String[] fileNames = _store.getFileNames(
-			_companyId, _repositoryId, StringPool.BLANK);
+			companyId, repositoryId, StringPool.BLANK);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
@@ -182,17 +182,17 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String fileName2 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String[] fileNames = _store.getFileNames(
-			_companyId, _repositoryId, dirName);
+			companyId, repositoryId, dirName);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
@@ -213,24 +213,24 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String fileName3 =
 			RandomTestUtil.randomString() + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName3, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName3, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String[] fileNames = _store.getFileNames(
-			_companyId, _repositoryId, dirName);
+			companyId, repositoryId, dirName);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
@@ -241,7 +241,7 @@ public abstract class BaseStoreTestCase {
 		Assert.assertTrue(
 			fileNamesSet.toString(), fileNamesSet.contains(fileName2));
 
-		fileNames = _store.getFileNames(_companyId, _repositoryId, subdirName);
+		fileNames = _store.getFileNames(companyId, repositoryId, subdirName);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 1, fileNames.length);
 		Assert.assertEquals(fileName2, fileNames[0]);
@@ -252,7 +252,7 @@ public abstract class BaseStoreTestCase {
 		String dirName = RandomTestUtil.randomString();
 
 		String[] fileNames = _store.getFileNames(
-			_companyId, _repositoryId, dirName);
+			companyId, repositoryId, dirName);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 0, fileNames.length);
 	}
@@ -260,7 +260,7 @@ public abstract class BaseStoreTestCase {
 	@Test
 	public void testGetFileNamesWithInvalidRepository() {
 		String[] fileNames = _store.getFileNames(
-			_companyId, _repositoryId, StringPool.BLANK);
+			companyId, repositoryId, StringPool.BLANK);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 0, fileNames.length);
 	}
@@ -274,17 +274,17 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		String[] fileNames = _store.getFileNames(
-			_companyId, _repositoryId, StringPool.BLANK);
+			companyId, repositoryId, StringPool.BLANK);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
@@ -301,11 +301,11 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		long size = _store.getFileSize(
-			_companyId, _repositoryId, fileName, StringPool.BLANK);
+			companyId, repositoryId, fileName, StringPool.BLANK);
 
 		Assert.assertEquals(_DATA_SIZE, size);
 	}
@@ -313,7 +313,7 @@ public abstract class BaseStoreTestCase {
 	@Test(expected = NoSuchFileException.class)
 	public void testGetFileSizeNoSuchFileException() throws Exception {
 		_store.getFileSize(
-			_companyId, _repositoryId, RandomTestUtil.randomString(),
+			companyId, repositoryId, RandomTestUtil.randomString(),
 			StringPool.BLANK);
 	}
 
@@ -322,13 +322,13 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		addVersions(fileName, 5);
 
 		String[] fileVersions = _store.getFileVersions(
-			_companyId, _repositoryId, fileName);
+			companyId, repositoryId, fileName);
 
 		for (int i = 0; i < 5; i++) {
 			Assert.assertEquals("1." + i, fileVersions[i]);
@@ -340,8 +340,8 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
-			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION_1));
 
 		addVersions(fileName, 5);
 
@@ -350,7 +350,7 @@ public abstract class BaseStoreTestCase {
 		for (int i = 0; i < 5; i++) {
 			Assert.assertTrue(
 				_store.hasFile(
-					_companyId, _repositoryId, fileName, versionLabel + i));
+					companyId, repositoryId, fileName, versionLabel + i));
 		}
 	}
 
@@ -361,25 +361,27 @@ public abstract class BaseStoreTestCase {
 
 		for (int i = 1; i <= newVersionCount; i++) {
 			_store.addFile(
-				_companyId, _repositoryId, fileName, versionLabel + i,
-				new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+				companyId, repositoryId, fileName, versionLabel + i,
+				new UnsyncByteArrayInputStream(DATA_VERSION_1));
 		}
 	}
 
 	protected abstract Store getStore();
 
-	private static final int _DATA_SIZE = 1024 * 65;
+	protected static final byte[] DATA_VERSION_1 =
+		new byte[BaseStoreTestCase._DATA_SIZE];
 
-	private static final byte[] _DATA_VERSION_1 = new byte[_DATA_SIZE];
+	protected long companyId;
+	protected long repositoryId;
+
+	private static final int _DATA_SIZE = 1024 * 65;
 
 	static {
 		for (int i = 0; i < _DATA_SIZE; i++) {
-			_DATA_VERSION_1[i] = (byte)i;
+			DATA_VERSION_1[i] = (byte)i;
 		}
 	}
 
-	private long _companyId;
-	private long _repositoryId;
 	private Store _store;
 
 }

@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.document.library.internal.bulk.selection.action;
+package com.liferay.document.library.internal.bulk.selection;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -17,13 +19,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,13 +31,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(
-	property = "bulk.selection.action.key=edit.categories",
+	property = "bulk.selection.action.key=edit.tags",
 	service = BulkSelectionAction.class
 )
-public class EditCategoriesBulkSelectionAction
+public class EditTagsBulkSelectionAction
 	implements BulkSelectionAction<AssetEntry> {
 
 	@Override
@@ -46,9 +46,9 @@ public class EditCategoriesBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		Set<Long> toAddCategoryIds = _toLongSet(inputMap, "toAddCategoryIds");
-		Set<Long> toRemoveCategoryIds = _toLongSet(
-			inputMap, "toRemoveCategoryIds");
+		Set<String> toAddTagNames = _toStringSet(inputMap, "toAddTagNames");
+		Set<String> toRemoveTagNames = _toStringSet(
+			inputMap, "toRemoveTagNames");
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -56,37 +56,34 @@ public class EditCategoriesBulkSelectionAction
 		bulkSelection.forEach(
 			assetEntry -> {
 				try {
-					if (!ModelResourcePermissionUtil.contains(
-							permissionChecker, assetEntry.getGroupId(),
-							assetEntry.getClassName(), assetEntry.getClassPK(),
-							ActionKeys.UPDATE)) {
-
+					if (!_hasEditPermission(assetEntry, permissionChecker)) {
 						return;
 					}
 
-					long[] newCategoryIds = new long[0];
+					String[] newTagNames = new String[0];
 
-					if (SetUtil.isNotEmpty(toAddCategoryIds)) {
-						newCategoryIds = ArrayUtil.toLongArray(
-							toAddCategoryIds);
+					if (SetUtil.isNotEmpty(toAddTagNames)) {
+						newTagNames = (String[])inputMap.get("toAddTagNames");
 					}
 
 					if (MapUtil.getBoolean(inputMap, "append")) {
-						Set<Long> currentCategoryIds = SetUtil.fromArray(
-							assetEntry.getCategoryIds());
+						Set<String> currentTagNames = SetUtil.fromArray(
+							assetEntry.getTagNames());
 
-						currentCategoryIds.removeAll(toRemoveCategoryIds);
+						currentTagNames.removeAll(toRemoveTagNames);
 
-						currentCategoryIds.addAll(toAddCategoryIds);
+						currentTagNames.addAll(toAddTagNames);
 
-						newCategoryIds = ArrayUtil.toLongArray(
-							currentCategoryIds);
+						currentTagNames.removeIf(
+							tagName -> !_assetHelper.isValidWord(tagName));
+
+						newTagNames = currentTagNames.toArray(new String[0]);
 					}
 
 					_assetEntryLocalService.updateEntry(
 						assetEntry.getUserId(), assetEntry.getGroupId(),
 						assetEntry.getClassName(), assetEntry.getClassPK(),
-						newCategoryIds, assetEntry.getTagNames());
+						assetEntry.getCategoryIds(), newTagNames);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -96,21 +93,28 @@ public class EditCategoriesBulkSelectionAction
 			});
 	}
 
-	private Set<Long> _toLongSet(Map<String, Serializable> map, String key) {
+	private boolean _hasEditPermission(
+			AssetEntry assetEntry, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
+		if (assetRenderer != null) {
+			return assetRenderer.hasEditPermission(permissionChecker);
+		}
+
+		return ModelResourcePermissionUtil.contains(
+			permissionChecker, assetEntry.getGroupId(),
+			assetEntry.getClassName(), assetEntry.getClassPK(),
+			ActionKeys.UPDATE);
+	}
+
+	private Set<String> _toStringSet(
+		Map<String, Serializable> map, String key) {
+
 		try {
-			Serializable values = map.get(key);
-
-			if (values instanceof Long[]) {
-				return SetUtil.fromArray((Long[])values);
-			}
-
-			Set<Long> set = new HashSet<>();
-
-			for (Integer value : (Integer[])values) {
-				set.add(value.longValue());
-			}
-
-			return set;
+			return SetUtil.fromArray(
+				(String[])map.getOrDefault(key, new String[0]));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -118,13 +122,16 @@ public class EditCategoriesBulkSelectionAction
 			}
 		}
 
-		return SetUtil.fromArray(new Long[0]);
+		return SetUtil.fromArray(new String[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditCategoriesBulkSelectionAction.class);
+		EditTagsBulkSelectionAction.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 }

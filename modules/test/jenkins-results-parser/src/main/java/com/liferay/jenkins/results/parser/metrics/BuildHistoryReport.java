@@ -265,6 +265,8 @@ public class BuildHistoryReport {
 				utilizationTestTypeBuildHistories, "Test Batch Type", 7, "All",
 				"testTypeTableData",
 				Arrays.asList(
+					BuildHistory.TableMetric.AVERAGE_DOWNSTREAM_BUILD_DURATION.
+						toString(),
 					BuildHistory.TableMetric.INVOKED_BUILDS.toString(),
 					BuildHistory.TableMetric.TOTAL_SERVER_DURATION.
 						toString())));

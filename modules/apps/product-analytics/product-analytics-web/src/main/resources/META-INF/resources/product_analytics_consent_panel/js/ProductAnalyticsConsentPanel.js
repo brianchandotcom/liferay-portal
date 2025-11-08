@@ -15,6 +15,7 @@ import {
 } from '../../js/CookiesUtil';
 
 export default function ({
+	consentRenewalPeriod,
 	namespace,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
@@ -62,11 +63,12 @@ export default function ({
 
 		acceptAllButton.addEventListener('click', () => {
 			acceptAllCookies(
+				consentRenewalPeriod,
 				optionalConsentCookieTypeNames,
 				requiredConsentCookieTypeNames
 			);
 
-			setProductAnalyticsConfigCookie();
+			setProductAnalyticsConfigCookie(consentRenewalPeriod);
 
 			window.location.reload();
 		});
@@ -74,6 +76,7 @@ export default function ({
 		acceptSelectedButton.addEventListener('click', () => {
 			toggleSwitches.forEach((toggleSwitch) => {
 				setCookie(
+					consentRenewalPeriod,
 					toggleSwitch.dataset.cookieKey,
 					toggleSwitch.checked ? 'true' : 'false'
 				);
@@ -81,22 +84,27 @@ export default function ({
 
 			requiredConsentCookieTypeNames.forEach(
 				(requiredConsentCookieTypeName) => {
-					setCookie(requiredConsentCookieTypeName, 'true');
+					setCookie(
+						consentRenewalPeriod,
+						requiredConsentCookieTypeName,
+						'true'
+					);
 				}
 			);
 
-			setProductAnalyticsConfigCookie();
+			setProductAnalyticsConfigCookie(consentRenewalPeriod);
 
 			window.location.reload();
 		});
 
 		useNecessaryCookiesOnlyButton.addEventListener('click', () => {
 			declineAllCookies(
+				consentRenewalPeriod,
 				optionalConsentCookieTypeNames,
 				requiredConsentCookieTypeNames
 			);
 
-			setProductAnalyticsConfigCookie();
+			setProductAnalyticsConfigCookie(consentRenewalPeriod);
 
 			window.location.reload();
 		});

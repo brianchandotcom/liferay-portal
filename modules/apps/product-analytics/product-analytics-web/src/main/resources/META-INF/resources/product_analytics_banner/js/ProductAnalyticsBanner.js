@@ -25,6 +25,7 @@ let openProductAnalyticsConsentModal = () => {
 export default function ({
 	configurationNamespace,
 	configurationURL,
+	consentRenewalPeriod = 12,
 	namespace,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
@@ -64,11 +65,12 @@ export default function ({
 			productAnalyticsBanner.style.display = 'none';
 
 			acceptAllCookies(
+				consentRenewalPeriod,
 				optionalConsentCookieTypeNames,
 				requiredConsentCookieTypeNames
 			);
 
-			setProductAnalyticsConfigCookie();
+			setProductAnalyticsConfigCookie(consentRenewalPeriod);
 			setBannerVisibility(productAnalyticsBanner);
 		});
 
@@ -97,11 +99,14 @@ export default function ({
 						),
 						onClick() {
 							declineAllCookies(
+								consentRenewalPeriod,
 								optionalConsentCookieTypeNames,
 								requiredConsentCookieTypeNames
 							);
 
-							setProductAnalyticsConfigCookie();
+							setProductAnalyticsConfigCookie(
+								consentRenewalPeriod
+							);
 
 							setBannerVisibility(productAnalyticsBanner);
 
@@ -114,20 +119,23 @@ export default function ({
 						onClick() {
 							Object.entries(cookiePreferences).forEach(
 								([key, value]) => {
-									setCookie(key, value);
+									setCookie(consentRenewalPeriod, key, value);
 								}
 							);
 
 							requiredConsentCookieTypeNames.forEach(
 								(requiredConsentCookieTypeName) => {
 									setCookie(
+										consentRenewalPeriod,
 										requiredConsentCookieTypeName,
 										'true'
 									);
 								}
 							);
 
-							setProductAnalyticsConfigCookie();
+							setProductAnalyticsConfigCookie(
+								consentRenewalPeriod
+							);
 
 							setBannerVisibility(productAnalyticsBanner);
 
@@ -139,11 +147,14 @@ export default function ({
 						label: Liferay.Language.get('accept-all'),
 						onClick() {
 							acceptAllCookies(
+								consentRenewalPeriod,
 								optionalConsentCookieTypeNames,
 								requiredConsentCookieTypeNames
 							);
 
-							setProductAnalyticsConfigCookie();
+							setProductAnalyticsConfigCookie(
+								consentRenewalPeriod
+							);
 
 							setBannerVisibility(productAnalyticsBanner);
 
@@ -171,11 +182,12 @@ export default function ({
 				productAnalyticsBanner.style.display = 'none';
 
 				declineAllCookies(
+					consentRenewalPeriod,
 					optionalConsentCookieTypeNames,
 					requiredConsentCookieTypeNames
 				);
 
-				setProductAnalyticsConfigCookie();
+				setProductAnalyticsConfigCookie(consentRenewalPeriod);
 				setBannerVisibility(productAnalyticsBanner);
 			});
 		}

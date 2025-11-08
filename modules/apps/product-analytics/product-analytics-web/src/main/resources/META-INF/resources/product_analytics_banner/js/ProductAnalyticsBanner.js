@@ -11,6 +11,8 @@ import {
 	declineAllCookies,
 	getCookie,
 	productAnalyticsConfiguredCookieName,
+	productAnalyticsConfiguredDateCookieName,
+	removeAllCookies,
 	setCookie,
 	setProductAnalyticsConfigCookie,
 	userConfigCookieName,
@@ -26,6 +28,7 @@ export default function ({
 	configurationNamespace,
 	configurationURL,
 	consentRenewalPeriod = 12,
+	modifiedDate = 0,
 	namespace,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
@@ -46,7 +49,14 @@ export default function ({
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 	if (!editMode) {
-		setBannerVisibility(productAnalyticsBanner);
+		if (isProductAnalyticsConfigurationModified(modifiedDate)) {
+			removeAllCookies(
+				optionalConsentCookieTypeNames,
+				requiredConsentCookieTypeNames
+			);
+		}
+
+		setBannerVisibility(modifiedDate, productAnalyticsBanner);
 
 		const cookiePreferences = {};
 
@@ -71,7 +81,7 @@ export default function ({
 			);
 
 			setProductAnalyticsConfigCookie(consentRenewalPeriod);
-			setBannerVisibility(productAnalyticsBanner);
+			setBannerVisibility(modifiedDate, productAnalyticsBanner);
 		});
 
 		openProductAnalyticsConsentModal = ({
@@ -108,7 +118,10 @@ export default function ({
 								consentRenewalPeriod
 							);
 
-							setBannerVisibility(productAnalyticsBanner);
+							setBannerVisibility(
+								modifiedDate,
+								productAnalyticsBanner
+							);
 
 							getOpener().Liferay.fire('closeModal');
 						},
@@ -137,7 +150,10 @@ export default function ({
 								consentRenewalPeriod
 							);
 
-							setBannerVisibility(productAnalyticsBanner);
+							setBannerVisibility(
+								modifiedDate,
+								productAnalyticsBanner
+							);
 
 							getOpener().Liferay.fire('closeModal');
 						},
@@ -156,7 +172,10 @@ export default function ({
 								consentRenewalPeriod
 							);
 
-							setBannerVisibility(productAnalyticsBanner);
+							setBannerVisibility(
+								modifiedDate,
+								productAnalyticsBanner
+							);
 
 							getOpener().Liferay.fire('closeModal');
 						},
@@ -188,7 +207,7 @@ export default function ({
 				);
 
 				setProductAnalyticsConfigCookie(consentRenewalPeriod);
-				setBannerVisibility(productAnalyticsBanner);
+				setBannerVisibility(modifiedDate, productAnalyticsBanner);
 			});
 		}
 	}
@@ -211,6 +230,25 @@ function checkProductAnalyticsConsentForTypes(cookieTypes, modalOptions) {
 	});
 }
 
+function isProductAnalyticsConfigurationModified(modifiedDate) {
+	if (modifiedDate === 0) {
+		return false;
+	}
+
+	const productAnalyticsConfiguredDateCookie = getCookie(
+		productAnalyticsConfiguredDateCookieName
+	);
+
+	if (
+		productAnalyticsConfiguredDateCookie === undefined ||
+		productAnalyticsConfiguredDateCookie < modifiedDate
+	) {
+		return true;
+	}
+
+	return false;
+}
+
 function isCookieTypesAccepted(cookieTypes) {
 	if (!Array.isArray(cookieTypes)) {
 		cookieTypes = [cookieTypes];
@@ -219,13 +257,17 @@ function isCookieTypesAccepted(cookieTypes) {
 	return cookieTypes.every((cookieType) => checkConsent(cookieType));
 }
 
-function setBannerVisibility(productAnalyticsBanner) {
+function setBannerVisibility(modifiedDate, productAnalyticsBanner) {
 	const cookieBanner = document.querySelector('.cookies-banner');
 	const productAnalytics = document.getElementById(
 		'_com_liferay_my_account_web_portlet_MyAccountPortlet_productAnalyticsConsentPanelForm'
 	);
 
-	if (getCookie(productAnalyticsConfiguredCookieName) || productAnalytics) {
+	if (
+		(!isProductAnalyticsConfigurationModified(modifiedDate) &&
+			getCookie(productAnalyticsConfiguredCookieName)) ||
+		productAnalytics
+	) {
 		productAnalyticsBanner.style.display = 'none';
 
 		if (cookieBanner) {

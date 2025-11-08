@@ -144,6 +144,21 @@ public abstract class BaseDisplayContext {
 		return _httpServletRequest;
 	}
 
+	protected long getModifiedDate() {
+		if (_modifiedDate > 0) {
+			return _modifiedDate;
+		}
+
+		if (productAnalyticsConfiguration != null) {
+			_modifiedDate = productAnalyticsConfiguration.modifiedDate();
+		}
+		else {
+			_modifiedDate = 0;
+		}
+
+		return _modifiedDate;
+	}
+
 	protected ProductAnalyticsConfiguration productAnalyticsConfiguration;
 
 	private ConsentCookieType _getConsentCookieType(
@@ -192,6 +207,7 @@ public abstract class BaseDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutUtilityPageEntryLayoutProvider
 		_layoutUtilityPageEntryLayoutProvider;
+	private long _modifiedDate;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 

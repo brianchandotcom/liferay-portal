@@ -7,6 +7,7 @@ package com.liferay.product.analytics.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -38,5 +39,11 @@ public interface ProductAnalyticsConfiguration {
 		name = "enabled", required = false
 	)
 	public boolean enabled();
+
+	@ExtendedAttributeDefinition(
+		visibilityControllerKey = "com.liferay.product.analytics.web.internal.configuration.admin.display.ProductAnalyticsConfigurationVisibilityController"
+	)
+	@Meta.AD(deflt = "0", name = "modified-date", required = false)
+	public long modifiedDate();
 
 }

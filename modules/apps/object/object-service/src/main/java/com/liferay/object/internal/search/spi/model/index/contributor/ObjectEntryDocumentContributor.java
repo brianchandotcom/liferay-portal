@@ -8,7 +8,6 @@ package com.liferay.object.internal.search.spi.model.index.contributor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
@@ -32,8 +31,7 @@ public class ObjectEntryDocumentContributor
 			return;
 		}
 
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			(long)baseModel.getPrimaryKeyObj());
+		ObjectEntry objectEntry = (ObjectEntry)baseModel;
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -48,8 +46,5 @@ public class ObjectEntryDocumentContributor
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

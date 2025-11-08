@@ -488,11 +488,18 @@ for (const tab of TABS) {
 				'Behavior of items actions groups',
 				{tag: '@LPD-65429'},
 				async ({fdsSamplePage, page}) => {
-					await test.step('Assert that "Group Permission Test" does not appear in the actions dropdown menu', async () => {
-						const tableItemActionButton =
-							fdsSamplePage.table.itemActionButtons.first();
+					let dialogMessage = '';
 
-						await tableItemActionButton.click();
+					page.on('dialog', async (dialog) => {
+						dialogMessage = dialog.message();
+
+						await dialog.accept();
+					});
+
+					await test.step('Assert that "Group Permission Test" does not appear in the actions dropdown menu', async () => {
+						await fdsSamplePage.table.itemActionButtons
+							.first()
+							.click();
 
 						const dropdownMenu = page.locator(
 							'.dropdown-menu.show'
@@ -508,15 +515,7 @@ for (const tab of TABS) {
 						await page.keyboard.press('Escape');
 					});
 
-					await test.step('Assert that “Group Item” is visible and clicking on it shows an alert "You clicked on an item in a group"', async () => {
-						let dialogMessage = '';
-
-						page.on('dialog', async (dialog) => {
-							dialogMessage = dialog.message();
-
-							await dialog.accept();
-						});
-
+					await test.step('Assert that "Group Item" is visible and clicking on it shows an alert "You clicked on an item in a group"', async () => {
 						await fdsSamplePage.clickItemAction('Group Item');
 
 						expect(dialogMessage).toBe(
@@ -560,6 +559,57 @@ for (const tab of TABS) {
 								'li[role="presentation"]:has(> ul[role="group"] > li[role="separator"]:only-child) + li[role="presentation"]:has(> ul[role="group"] > li[role="separator"]:first-child)'
 							)
 						).toHaveCount(0);
+
+						await page.keyboard.press('Escape');
+					});
+
+					await test.step('Assert that "Contextual Item" and its nested items are visible', async () => {
+						await fdsSamplePage.table.itemActionButtons
+							.first()
+							.click();
+
+						const dropdownMenu = page.locator(
+							'.dropdown-menu.show'
+						);
+						await dropdownMenu.waitFor();
+
+						const contextualMenuItem = dropdownMenu.getByRole(
+							'menuitem',
+							{
+								name: 'Contextual Item',
+							}
+						);
+
+						await expect(contextualMenuItem).toBeVisible();
+
+						await contextualMenuItem.click();
+
+						const dropdownNestedMenu = page
+							.locator('.dropdown-menu.show')
+							.nth(1);
+
+						await expect(
+							dropdownNestedMenu.getByRole('menuitem', {
+								name: 'Contextual Sub Item 1',
+							})
+						).toBeVisible();
+						await expect(
+							dropdownNestedMenu.getByRole('menuitem', {
+								name: 'Contextual Sub Item 2',
+							})
+						).toBeVisible();
+
+						await test.step('Assert that nested menu action works', async () => {
+							await dropdownNestedMenu
+								.getByRole('menuitem', {
+									name: 'Contextual Sub Item 1',
+								})
+								.click();
+
+							expect(dialogMessage).toBe(
+								'You clicked on an item in a contextual group'
+							);
+						});
 
 						await page.keyboard.press('Escape');
 					});

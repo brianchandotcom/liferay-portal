@@ -8,17 +8,24 @@ package com.liferay.product.analytics.web.internal.display.context;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.cookies.ConsentCookieType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.analytics.web.internal.configuration.ProductAnalyticsConfiguration;
 import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsCookiesConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,6 +45,8 @@ public abstract class BaseDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_layoutUtilityPageEntryLayoutProvider =
 			layoutUtilityPageEntryLayoutProvider;
+		productAnalyticsConfiguration = _getProductAnalyticsConfiguration(
+			httpServletRequest);
 	}
 
 	public String getCookieTitle(
@@ -123,9 +132,19 @@ public abstract class BaseDisplayContext {
 		return consentCookieTypeNamesJSONArray;
 	}
 
+	protected int getConsentRenewalPeriod() {
+		if (productAnalyticsConfiguration != null) {
+			return productAnalyticsConfiguration.consentRenewalPeriod();
+		}
+
+		return 12;
+	}
+
 	protected HttpServletRequest getHttpServletRequest() {
 		return _httpServletRequest;
 	}
+
+	protected ProductAnalyticsConfiguration productAnalyticsConfiguration;
 
 	private ConsentCookieType _getConsentCookieType(
 		boolean hideFromEndUser, String name, boolean prechecked) {
@@ -137,6 +156,38 @@ public abstract class BaseDisplayContext {
 					"cookies-description[" + name + "]")),
 			hideFromEndUser, name, prechecked);
 	}
+
+	private ProductAnalyticsConfiguration _getProductAnalyticsConfiguration(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+			themeDisplay.getServerName());
+
+		try {
+			if (layoutSet != null) {
+				Group group = layoutSet.getGroup();
+
+				return ConfigurationProviderUtil.getGroupConfiguration(
+					ProductAnalyticsConfiguration.class, group.getGroupId());
+			}
+
+			return ConfigurationProviderUtil.getCompanyConfiguration(
+				ProductAnalyticsConfiguration.class,
+				themeDisplay.getCompanyId());
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutUtilityPageEntryLayoutProvider

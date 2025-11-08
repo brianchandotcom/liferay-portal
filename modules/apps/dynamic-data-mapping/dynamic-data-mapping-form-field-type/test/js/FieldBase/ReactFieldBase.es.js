@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {act, fireEvent, render} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import {FormProvider, PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
@@ -94,6 +94,46 @@ describe('ReactFieldBase', () => {
 			expect(getByText('hidden').parentNode).toHaveAttribute(
 				'class',
 				'label ml-1 label-secondary'
+			);
+		});
+	});
+
+	describe('non-localizable fields tooltip', () => {
+		it('does not render when field supports localization', () => {
+			render(
+				<FieldBaseWithProvider
+					editOnlyInDefaultLanguage={true}
+					fieldName="field_name"
+					instanceId="instance_id"
+					label="Text"
+					localizedValue={{ca_ES: 'test_ca_ES', en_US: 'test_en_US'}}
+					name="test_name"
+					readOnly={true}
+				/>
+			);
+
+			const localizationTooltip = screen.queryByTestId('tooltip');
+
+			expect(localizationTooltip).toBeNull();
+		});
+
+		it('renders when field does not support localization', () => {
+			render(
+				<FieldBaseWithProvider
+					editOnlyInDefaultLanguage={true}
+					fieldName="field_name"
+					instanceId="instance_id"
+					label="Text"
+					name="test_name"
+					readOnly={true}
+				/>
+			);
+
+			const localizationTooltip = screen.getByTestId('tooltip');
+
+			expect(localizationTooltip).toHaveAttribute(
+				'title',
+				'this-field-cannot-be-localized'
 			);
 		});
 	});

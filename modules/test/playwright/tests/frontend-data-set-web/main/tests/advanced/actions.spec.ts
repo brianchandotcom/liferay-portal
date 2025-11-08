@@ -34,7 +34,7 @@ const TABS = [
 		name: TAB_NAME.ADVANCED,
 	},
 	{
-		actionsCount: 15,
+		actionsCount: 16,
 		name: TAB_NAME.ITEMS_ACTIONS_GROUPS,
 	},
 ];

@@ -240,7 +240,9 @@ export class FDSSamplePage {
 		const menuItems = dropdownMenu.getByRole('menuitem');
 
 		for (const menuItem of await menuItems.all()) {
-			await expect.soft(menuItem.locator('.lexicon-icon')).toBeVisible();
+			await expect
+				.soft(menuItem.locator('.lexicon-icon').first())
+				.toBeVisible();
 		}
 
 		await this.page.keyboard.press('Escape');

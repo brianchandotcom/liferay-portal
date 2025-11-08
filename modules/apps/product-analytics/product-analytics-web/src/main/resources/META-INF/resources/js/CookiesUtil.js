@@ -7,11 +7,14 @@ import {
 	COOKIE_TYPES,
 	getCookie as getCookieUtil,
 	getOpener,
+	removeCookie as removeCookieUtil,
 	setCookie as setCookieUtil,
 } from 'frontend-js-web';
 
 export const productAnalyticsConfiguredCookieName =
 	'PRODUCT_ANALYTICS_CONFIGURED';
+export const productAnalyticsConfiguredDateCookieName =
+	'PRODUCT_ANALYTICS_CONFIGURED_DATE';
 export const userConfigCookieName = 'USER_CONSENT_CONFIGURED';
 
 export function acceptAllCookies(
@@ -53,11 +56,32 @@ export function setCookie(consentRenewalPeriod, name, value) {
 	});
 }
 
+export function removeAllCookies(
+	optionalConsentCookieTypeNames,
+	requiredConsentCookieTypeNames
+) {
+	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
+		removeCookieUtil(optionalConsentCookieTypeName);
+	});
+
+	requiredConsentCookieTypeNames.forEach((requiredConsentCookieTypeName) => {
+		removeCookieUtil(requiredConsentCookieTypeName);
+	});
+
+	removeCookieUtil(productAnalyticsConfiguredCookieName);
+	removeCookieUtil(productAnalyticsConfiguredDateCookieName);
+}
+
 export function setProductAnalyticsConfigCookie(consentRenewalPeriod) {
 	setCookie(
 		consentRenewalPeriod,
 		productAnalyticsConfiguredCookieName,
 		'true'
+	);
+	setCookie(
+		consentRenewalPeriod,
+		productAnalyticsConfiguredDateCookieName,
+		new Date().getTime()
 	);
 
 	getOpener()?.Liferay.fire('productAnalyticsBannerSetCookie');

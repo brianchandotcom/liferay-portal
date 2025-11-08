@@ -273,6 +273,10 @@ export default function FieldBase({
 
 	const showDisabledFieldIcon =
 		editOnlyInDefaultLanguage && showLabel && readOnly;
+
+	const showNonLocalizableFieldTooltip =
+		showDisabledFieldIcon && !hiddenTranslations.length;
+
 	const showGroup =
 		type === 'checkbox_multiple' ||
 		type === 'grid' ||
@@ -619,7 +623,7 @@ export default function FieldBase({
 								/>
 							)}
 
-							{showDisabledFieldIcon && (
+							{showNonLocalizableFieldTooltip && (
 								<FieldInformation
 									tooltip={nonLocalizableFieldMessage}
 								/>
@@ -661,7 +665,7 @@ export default function FieldBase({
 								/>
 							)}
 
-							{showDisabledFieldIcon && (
+							{showNonLocalizableFieldTooltip && (
 								<FieldInformation
 									tooltip={nonLocalizableFieldMessage}
 								/>

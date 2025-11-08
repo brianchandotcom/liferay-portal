@@ -564,6 +564,10 @@ public class BuildHistoryProcessor {
 				return TestBatchType.MAINTENANCE.toString();
 			}
 
+			if (jobName.equals("app-server-bundle-builder")) {
+				return TestBatchType.PORTAL_BUNDLE_BUILD.toString();
+			}
+
 			if (buildJSONObject.isTopLevelBuild()) {
 				return TestBatchType.TOP_LEVEL_BUILD.toString();
 			}
@@ -613,7 +617,8 @@ public class BuildHistoryProcessor {
 
 			INTEGRATION("Integration"), MAINTENANCE("Maintenance"),
 			MINIMAL("Minimal"), OTHER("Other"), PLAYWRIGHT("Playwright"),
-			POSHI("Poshi"), TOP_LEVEL_BUILD("Top Level Build"), UNIT("Unit");
+			PORTAL_BUNDLE_BUILD("Portal Bundle Build"), POSHI("Poshi"),
+			TOP_LEVEL_BUILD("Top Level Build"), UNIT("Unit");
 
 			@Override
 			public String toString() {

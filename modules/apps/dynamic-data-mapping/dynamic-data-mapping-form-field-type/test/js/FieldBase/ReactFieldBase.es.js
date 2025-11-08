@@ -55,7 +55,7 @@ describe('ReactFieldBase', () => {
 		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
-	describe('Hide Field', () => {
+	describe('hide field', () => {
 		it('renders the FieldBase with hideField markup', () => {
 			const {getAllByText, getByText} = render(
 				<FieldBaseWithProvider
@@ -95,6 +95,70 @@ describe('ReactFieldBase', () => {
 				'class',
 				'label ml-1 label-secondary'
 			);
+		});
+	});
+
+	describe('normalizeInputValue function', () => {
+		it('checks if the value is being formatted according to their fieldType', () => {
+
+			// no value and any fieldType
+
+			expect(normalizeInputValue('text', null)).toBe('');
+
+			// text fieldType
+
+			const textValue = 'this is a text';
+
+			expect(normalizeInputValue('text', textValue)).toBe(textValue);
+
+			// date and date_time fieldType
+
+			const dateValue = '2024-12-25';
+			const dateTimeValue = '2024-12-25 21:00';
+
+			expect(normalizeInputValue('date', dateValue)).toBe(dateValue);
+
+			expect(normalizeInputValue('date_time', dateTimeValue)).toBe(
+				dateTimeValue
+			);
+
+			// image fieldType
+
+			const imageValue = {
+				alt: 'this is an alt text',
+				classNameId: 22222,
+				description: 'this is a description',
+				fileEntryId: '33333',
+				groupId: '10000',
+				height: 900,
+				title: 'my_image',
+				type: 'document',
+				url: '/documents/images/my_image',
+				width: 900,
+			};
+
+			expect(normalizeInputValue('image', imageValue)).toBe(
+				JSON.stringify(imageValue)
+			);
+		});
+	});
+
+	describe('updateFieldNameLocale function', () => {
+		it('checks if the name only changes the language id at the end even when using a custom language', () => {
+
+			// en_US -> language out-of-the-box
+			// co -> language customized
+
+			const customLanguageFieldName = 'com_liferay_fieldname$$co';
+			const defaultLanguageFieldName = 'com_liferay_fieldname$$en_US';
+
+			expect(
+				updateFieldNameLocale('co', 'en_US', customLanguageFieldName)
+			).toBe(defaultLanguageFieldName);
+
+			expect(
+				updateFieldNameLocale('en_US', 'co', defaultLanguageFieldName)
+			).toBe(customLanguageFieldName);
 		});
 	});
 
@@ -318,69 +382,5 @@ describe('ReactFieldBase', () => {
 
 		expect(getByText('input-mask-format')).toBeInTheDocument();
 		expect(getByText('Tooltip Description')).toBeInTheDocument();
-	});
-
-	describe('normalizeInputValue function', () => {
-		it('checks if the value is being formatted according to their fieldType', () => {
-
-			// no value and any fieldType
-
-			expect(normalizeInputValue('text', null)).toBe('');
-
-			// text fieldType
-
-			const textValue = 'this is a text';
-
-			expect(normalizeInputValue('text', textValue)).toBe(textValue);
-
-			// date and date_time fieldType
-
-			const dateValue = '2024-12-25';
-			const dateTimeValue = '2024-12-25 21:00';
-
-			expect(normalizeInputValue('date', dateValue)).toBe(dateValue);
-
-			expect(normalizeInputValue('date_time', dateTimeValue)).toBe(
-				dateTimeValue
-			);
-
-			// image fieldType
-
-			const imageValue = {
-				alt: 'this is an alt text',
-				classNameId: 22222,
-				description: 'this is a description',
-				fileEntryId: '33333',
-				groupId: '10000',
-				height: 900,
-				title: 'my_image',
-				type: 'document',
-				url: '/documents/images/my_image',
-				width: 900,
-			};
-
-			expect(normalizeInputValue('image', imageValue)).toBe(
-				JSON.stringify(imageValue)
-			);
-		});
-	});
-
-	describe('updateFieldNameLocale function', () => {
-		it('checks if the name only changes the language id at the end even when using a custom language', () => {
-
-			// en_US -> language out-of-the-box
-			// co -> language customized
-
-			const customLanguageFieldName = 'com_liferay_fieldname$$co';
-			const defaultLanguageFieldName = 'com_liferay_fieldname$$en_US';
-
-			expect(
-				updateFieldNameLocale('co', 'en_US', customLanguageFieldName)
-			).toBe(defaultLanguageFieldName);
-
-			expect(
-				updateFieldNameLocale('en_US', 'co', defaultLanguageFieldName)
-			).toBe(customLanguageFieldName);
-		});
 	});
 });

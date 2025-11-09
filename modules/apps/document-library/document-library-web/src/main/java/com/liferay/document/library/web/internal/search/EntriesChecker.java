@@ -59,7 +59,7 @@ public class EntriesChecker extends RowChecker {
 
 		return HashMapBuilder.create(
 			data
-		).put(
+		).<String, Object>put(
 			"modelClassName", _getName(object)
 		).build();
 	}

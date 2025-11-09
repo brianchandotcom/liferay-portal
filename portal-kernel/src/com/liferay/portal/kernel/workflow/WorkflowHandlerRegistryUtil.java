@@ -122,7 +122,7 @@ public class WorkflowHandlerRegistryUtil {
 
 		workflowContext = HashMapBuilder.create(
 			workflowContext
-		).put(
+		).<String, Serializable>put(
 			WorkflowConstants.CONTEXT_COMPANY_ID, String.valueOf(companyId)
 		).put(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME, className

@@ -126,8 +126,8 @@ public class Node implements Cloneable, Serializable {
 	public static enum Type {
 
 		CONDITION("CONDITION"), FORK("FORK"), INITIAL_STATE("INITIAL_STATE"),
-		JOIN("JOIN"), JOIN_XOR("JOIN_XOR"), STATE("STATE"), TASK("TASK"),
-		TERMINAL_STATE("TERMINAL_STATE");
+		JOIN("JOIN"), JOIN_XOR("JOIN_XOR"), LLM("LLM"), STATE("STATE"),
+		TASK("TASK"), TERMINAL_STATE("TERMINAL_STATE");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

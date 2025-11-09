@@ -11,7 +11,7 @@
 ViewFilesSectionDisplayContext viewFilesSectionDisplayContext = (ViewFilesSectionDisplayContext)request.getAttribute(ViewFilesSectionDisplayContext.class.getName());
 %>
 
-<div class="cms-section custom-empty-state">
+<div>
 	<div>
 		<react:component
 			module="{Breadcrumb} from site-cms-site-initializer"
@@ -19,7 +19,7 @@ ViewFilesSectionDisplayContext viewFilesSectionDisplayContext = (ViewFilesSectio
 		/>
 	</div>
 
-	<div>
+	<div class="cms-section custom-empty-state">
 		<frontend-data-set:headless-display
 			additionalProps="<%= viewFilesSectionDisplayContext.getAdditionalProps() %>"
 			apiURL="<%= viewFilesSectionDisplayContext.getAPIURL() %>"

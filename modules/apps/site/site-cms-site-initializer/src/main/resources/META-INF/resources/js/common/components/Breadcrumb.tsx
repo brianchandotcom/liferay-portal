@@ -157,8 +157,7 @@ export default function Breadcrumb({
 	return (
 		<div
 			aria-label={Liferay.Language.get('breadcrumb')}
-			className="autofit-row autofit-row-center px-4"
-			style={{height: '72px'}}
+			className="autofit-row autofit-row-center cms-breadcrumb px-4"
 		>
 			{!hideSpace && (
 				<div className="autofit-col mr-3">
@@ -171,7 +170,7 @@ export default function Breadcrumb({
 				</div>
 			)}
 
-			<div className="autofit-col cms-breadcrumb">
+			<div className="autofit-col">
 				{isTitle ? (
 					<h2 className="font-weight-semi-bold mb-0 text-7 text-dark">
 						{breadcrumbItems[0]?.label}

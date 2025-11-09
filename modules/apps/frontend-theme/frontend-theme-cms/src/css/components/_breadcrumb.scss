@@ -1,11 +1,17 @@
-.cms-breadcrumb .breadcrumb-item {
-	margin-right: 6px;
+$cms-breadcrum-min-height: 72px !default;
 
-	+ .breadcrumb-item {
-		padding-left: 21px;
-	}
+.cms-breadcrumb {
+	min-height: $cms-breadcrum-min-height;
 
-	.breadcrumb-link:not([href]) {
-		text-decoration: none;
+	.breadcrumb-item {
+		margin-right: 6px;
+
+		+ .breadcrumb-item {
+			padding-left: 21px;
+		}
+
+		.breadcrumb-link:not([href]) {
+			text-decoration: none;
+		}
 	}
 }

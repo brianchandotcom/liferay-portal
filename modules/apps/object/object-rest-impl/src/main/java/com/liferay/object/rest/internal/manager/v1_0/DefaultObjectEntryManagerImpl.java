@@ -3338,12 +3338,6 @@ public class DefaultObjectEntryManagerImpl
 			actions = HashMapBuilder.create(
 				actions
 			).<String, Map<String, String>>put(
-				"delete",
-				() -> _addAction(
-					ActionKeys.DELETE, dtoConverterContext, "delete",
-					objectDefinition, serviceBuilderObjectEntry,
-					serviceBuilderParentObjectEntry)
-			).put(
 				"copy",
 				() -> {
 					if (!FeatureFlagManagerUtil.isEnabled(
@@ -3375,6 +3369,12 @@ public class DefaultObjectEntryManagerImpl
 						serviceBuilderObjectEntry,
 						dtoConverterContext.getUriInfo());
 				}
+			).put(
+				"delete",
+				() -> _addAction(
+					ActionKeys.DELETE, dtoConverterContext, "delete",
+					objectDefinition, serviceBuilderObjectEntry,
+					serviceBuilderParentObjectEntry)
 			).put(
 				"expire",
 				() -> {

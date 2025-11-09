@@ -34,7 +34,7 @@ public class PortalSessionAuthVerifierPipelineConfigurator
 		if (!properties.containsKey("check.csrf.token")) {
 			properties = HashMapBuilder.create(
 				properties
-			).put(
+			).<String, Object>put(
 				"check.csrf.token", false
 			).build();
 		}

@@ -888,10 +888,10 @@ public class ObjectEntryFolderResourceTest
 	private void _testGetScopeScopeKeyObjectEntryFoldersPageWithFilterStringEqualsFolderIdAndTitle()
 		throws Exception {
 
+		ObjectEntryFolder objectEntryFolder1 = randomObjectEntryFolder();
+
 		String scopeKey =
 			testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey();
-
-		ObjectEntryFolder objectEntryFolder1 = randomObjectEntryFolder();
 
 		objectEntryFolder1 =
 			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(

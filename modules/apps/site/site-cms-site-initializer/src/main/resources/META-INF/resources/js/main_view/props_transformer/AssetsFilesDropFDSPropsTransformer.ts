@@ -5,15 +5,13 @@
 
 import {IView} from '@liferay/frontend-data-set-web';
 
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
 import AssetsFDSPropsTransformer, {
 	AdditionalProps,
 } from './AssetsFDSPropsTransformer';
 import fileDropAction from './actions/fileDropAction';
 import {MultipleFileUploaderData} from './actions/multipleFilesUploadAction';
 import CarouselView from './views/CarouselView';
-
-const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
 
 export default function AssetsFilesDropFDSPropsTransformer({
 	additionalProps,

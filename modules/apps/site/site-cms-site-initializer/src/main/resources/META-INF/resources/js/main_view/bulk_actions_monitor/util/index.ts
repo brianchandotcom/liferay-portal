@@ -9,14 +9,12 @@ import {
 	IBulkActionTaskType,
 	TBulkActionTaskDTO,
 } from '../../../common/types/BulkActionTask';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
 import {
 	URL_BULK_ACTION_TASK,
 	URL_DOWNLOAD_BULK_ACTION_TASK,
 	URL_TASKS_REPORT_DETAIL,
 } from './constants';
-
-const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
 
 export function composeCreateTaskURL(
 	apiURL: string,

@@ -13,10 +13,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
 import SpaceService from '../../common/services/SpaceService';
-import {
-	OBJECT_ENTRY_FOLDER_CLASS_NAME,
-	getScopeExternalReferenceCode,
-} from '../../common/utils/getScopeExternalReferenceCode';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
+import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import {
 	DEFAULT_PERMISSIONS,

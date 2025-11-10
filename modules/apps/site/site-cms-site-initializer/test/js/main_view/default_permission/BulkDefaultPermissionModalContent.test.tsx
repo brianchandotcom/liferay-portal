@@ -9,6 +9,7 @@ import React from 'react';
 
 import CMSDefaultPermissionService from '../../../../src/main/resources/META-INF/resources/js/common/services/CMSDefaultPermissionService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import BulkDefaultPermissionModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/BulkDefaultPermissionModalContent';
 import {BulkDefaultPermissionModalContentProps} from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/DefaultPermissionTypes';
 import * as BulkActionTrigger from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/triggerAssetBulkAction';
@@ -30,12 +31,10 @@ describe('BulkDefaultPermissionModalContent', () => {
 		getObjectEntrySpy = jest
 			.spyOn(CMSDefaultPermissionService, 'getObjectEntry')
 			.mockImplementation(({className}) => {
-				if (
-					className === 'com.liferay.object.model.ObjectEntryFolder'
-				) {
+				if (className === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
 					return Promise.resolve({
 						classExternalReferenceCode: 'ERC1',
-						className: 'com.liferay.object.model.ObjectEntryFolder',
+						className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						defaultPermissions: JSON.stringify({
 							L_CONTENTS: {
 								admin: ['VIEW1'],
@@ -117,7 +116,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
@@ -135,8 +134,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode:
 							'fa9f1559-8256-4313-8868-6668c8b421c0',
 					},
@@ -182,7 +180,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
@@ -198,8 +196,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode:
 							'fa9f1559-8256-4313-8868-6668c8b421c0',
 					},
@@ -233,7 +230,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
@@ -249,8 +246,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode:
 							'fa9f1559-8256-4313-8868-6668c8b421c0',
 					},
@@ -284,7 +280,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
@@ -302,8 +298,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '123',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode:
 							'fa9f1559-8256-4313-8868-6668c8b421c0',
 					},
@@ -371,7 +366,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
@@ -389,8 +384,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '123',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode: 'ITEM1_ERC',
 					},
 					{
@@ -403,8 +397,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '123',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode: 'ITEM2_ERC',
 					},
 				],
@@ -418,7 +411,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 			expect(getObjectEntrySpy).toHaveBeenCalledTimes(1);
 			expect(getObjectEntrySpy).toHaveBeenCalledWith({
 				classExternalReferenceCode: 'PARENT_ERC',
-				className: 'com.liferay.object.model.ObjectEntryFolder',
+				className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			});
 			expect(getSpaceSpy).not.toHaveBeenCalled();
 		});
@@ -449,7 +442,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
@@ -467,8 +460,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '123',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode: 'ITEM1_ERC',
 					},
 					{
@@ -481,8 +473,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '123',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode: 'ITEM2_ERC',
 					},
 				],
@@ -528,7 +519,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW', label: 'View'},
 				],
 			},
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{
@@ -550,8 +541,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '123',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode: 'ITEM1_ERC',
 					},
 					{
@@ -564,8 +554,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 200,
 							scopeKey: '456',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode: 'ITEM2_ERC',
 					},
 				],
@@ -612,7 +601,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: closeModalFn,
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
@@ -630,8 +619,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode:
 							'fa9f1559-8256-4313-8868-6668c8b421c0',
 					},
@@ -672,7 +660,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 				],
 			},
 			apiURL: '',
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			closeModal: closeModalFn,
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
@@ -690,8 +678,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode:
 							'fa9f1559-8256-4313-8868-6668c8b421c0',
 					},
@@ -705,8 +692,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 							scopeId: 100,
 							scopeKey: '',
 						},
-						entryClassName:
-							'com.liferay.object.model.ObjectEntryFolder',
+						entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 						externalReferenceCode:
 							'def321f1-8868-8256-3313-421c06668c8b',
 					},

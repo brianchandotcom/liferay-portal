@@ -5,6 +5,8 @@
 
 import React from 'react';
 
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
+
 const AssetTypeRenderer = ({
 	itemData,
 	value,
@@ -14,8 +16,7 @@ const AssetTypeRenderer = ({
 }) => {
 	return (
 		<>
-			{itemData.entryClassName ===
-				'com.liferay.object.model.ObjectEntryFolder' &&
+			{itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME &&
 				Liferay.Language.get('folder')}{' '}
 			{value}
 		</>

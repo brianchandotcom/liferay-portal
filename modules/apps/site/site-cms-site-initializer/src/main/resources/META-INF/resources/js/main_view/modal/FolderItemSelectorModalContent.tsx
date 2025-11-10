@@ -14,6 +14,7 @@ import React, {useEffect, useState} from 'react';
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import FolderService from '../../common/services/FolderService';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
 import {displayErrorToast} from '../../common/utils/toastUtil';
 import DuplicatedAssetFolderNamesModalContent, {
 	Option,
@@ -217,10 +218,7 @@ function FolderItemSelectorModalContent({
 	};
 
 	const handleOnItemsChange = (folder: Folder) => {
-		if (
-			itemData.entryClassName ===
-			'com.liferay.object.model.ObjectEntryFolder'
-		) {
+		if (itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
 			FolderService.searchFolder(
 				itemData.embedded.scopeId,
 				itemData.title,

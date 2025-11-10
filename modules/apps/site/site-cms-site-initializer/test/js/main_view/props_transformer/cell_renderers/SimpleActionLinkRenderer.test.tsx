@@ -10,6 +10,7 @@ import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import SimpleActionLinkRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/SimpleActionLinkRenderer';
 
 const testActionBase = {
@@ -64,7 +65,7 @@ const testFolderProps = {
 	actions: [testActionBase, testActionFolder],
 	additionalProps: testAdditionalProps,
 	itemData: {
-		entryClassName: 'com.liferay.object.model.ObjectEntryFolder',
+		entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 	},
 	options: {
 		actionId: 'view',

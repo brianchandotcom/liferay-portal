@@ -10,10 +10,8 @@ import {replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
 import {getFileMimeTypeObjectDefinitionStickerValue} from '../utils/transformViewsItemProps';
-
-const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
 
 export interface ActionItem {
 	data: {id: string};

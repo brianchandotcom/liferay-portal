@@ -43,31 +43,37 @@ public class DepotEntrySearchPermissionFilterContributor
 		long userId, PermissionChecker permissionChecker, String className) {
 
 		try {
-			if (userId == 0) {
-				return;
-			}
-
-			Role role = _roleLocalService.fetchRole(
-				companyId, DepotRolesConstants.ASSET_LIBRARY_MEMBER);
-
-			if (role == null) {
-				return;
-			}
-
-			for (long groupId :
-					_getDepotGroupIds(
-						permissionChecker.getCompanyId(), userId)) {
-
-				TermsFilter termsFilter = new TermsFilter("groupRoleId");
-
-				termsFilter.addValues(
-					groupId + StringPool.DASH + role.getRoleId());
-
-				booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
-			}
+			_contribute(booleanFilter, companyId, userId, permissionChecker);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
+		}
+	}
+
+	private void _contribute(
+			BooleanFilter booleanFilter, long companyId, long userId,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (userId == 0) {
+			return;
+		}
+
+		Role role = _roleLocalService.fetchRole(
+			companyId, DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+
+		if (role == null) {
+			return;
+		}
+
+		for (long groupId :
+				_getDepotGroupIds(permissionChecker.getCompanyId(), userId)) {
+
+			TermsFilter termsFilter = new TermsFilter("groupRoleId");
+
+			termsFilter.addValues(groupId + StringPool.DASH + role.getRoleId());
+
+			booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
 		}
 	}
 

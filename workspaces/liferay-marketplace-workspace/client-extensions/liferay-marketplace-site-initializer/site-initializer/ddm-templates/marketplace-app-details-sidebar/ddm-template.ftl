@@ -144,72 +144,74 @@
 	<div class="d-flex flex-column mt-4">
 		<#if (appDocumentationURL?has_content || appInstallationGuideURL?has_content)>
 			<div class="d-flex mb-4">
-				<span class="help-and-support-modal-icon" id="installation-documentation">
+				<span class="support-modal-icon" id="installation-documentation">
 					<@clay["icon"] symbol="document" />
 				</span>
 
-				<a class="d-flex w-100 justify-content-between help-and-support-modal" href="javascript:void(0)" onClick="openInstallationDocsModal();">
-					<span class="copy-text ml-1 help-and-support-modal">
+				<a class="d-flex support-modal justify-content-between w-100" href="javascript:void(0)" onClick="openInstallationDocsModal();">
+					<span class="ml-1 ">
 						${languageUtil.get(locale, "installation-documentation", "Installation Documentation")}
 					</span>
-
-					<@clay["icon"]
-						className="help-and-support-modal-arrow link-arrow ml-auto"
-						height="12"
-						symbol="angle-right-small"
-					/>
 				</a>
 			</div>
 		</#if>
 
 		<div class="d-flex mb-4">
-			<span class="help-and-support-modal-icon" id="publisher-support">
+			<span class="support-modal-icon" id="publisher-support">
 				<@clay["icon"] symbol="envelope-closed" />
 			</span>
 
-			<a class="d-flex w-100 justify-content-between help-and-support-modal" href="javascript:void(0)" onClick="openPublisherSupportModal();">
-				<span class="copy-text ml-1 help-and-support-modal">
+			<a class="d-flex justify-content-between support-modal w-100" href="javascript:void(0)" onClick="openPublisherSupportModal();">
+				<span class="ml-1 ">
 					${languageUtil.get(locale, "publisher-support", "Publisher Support")}
 				</span>
-
-				<@clay["icon"]
-					className="help-and-support-modal-arrow link-arrow ml-auto"
-					height="12"
-					symbol="angle-right-small"
-				/>
 			</a>
 		</div>
 
 		<#if sourceCode?has_content>
 			<div class="d-flex mb-4">
-				<span class="help-and-support-link-icon">
+				<span class="support-link-icon">
 					<@clay["icon"] symbol="code" />
 				</span>
 
 				<a
-					class="d-flex font-weight-semi-bold help-and-support-link justify-content-between w-100"
+					class="d-flex justify-content-between support-link w-100"
 					href="${sourceCode}"
 					target="_blank"
 				>
-					<span class="copy-text ml-1 help-and-support-link">
+					<span class="ml-1">
 						${languageUtil.get(locale, "source-code", "Source Code")}
+
+						<span class="d-none ml-1 support-link-icon-arrow-container">
+							<@clay["icon"]
+								className="support-link-icon-arrow"
+								symbol="tap-ahead"
+							/>
+						</span>
 					</span>
 				</a>
 			</div>
 		</#if>
 
 		<div class="d-flex">
-			<span class="help-and-support-link-icon">
+			<span class="support-link-icon">
 				<@clay["icon"] symbol="check-square" />
 			</span>
 
 			<a
-				class="d-flex font-weight-semi-bold help-and-support-link justify-content-between w-100"
+				class="d-flex justify-content-between support-link w-100"
 				href="${(appUsageTerms?has_content)?then(appUsageTerms, 'https://marketplace.liferay.com/license-agreement')}"
 				target="_blank">
 
-				<span class="copy-text ml-1 help-and-support-link">
+				<span class="ml-1">
 					${languageUtil.get(locale, "eula", "EULA")}
+
+					<span class="d-none support-link-icon-arrow-container ml-1">
+						<@clay["icon"]
+							className="support-link-icon-arrow"
+							symbol="tap-ahead"
+						/>
+					</span>
 				</span>
 			</a>
 		</div>
@@ -220,8 +222,8 @@
 	showLine = false
 	title = languageUtil.get(locale, "share-link")
 >
-	<a class="align-items-center copy-text d-flex font-weight-bold ml-1 text-primary" href="#copy-share-link" onclick="copyToClipboard(Liferay.ThemeDisplay.getCanonicalURL())">
-		<span class="help-and-support-link-icon mr-1">
+	<a class="align-items-center d-flex font-weight-bold ml-1 support-link text-primary" href="#copy-share-link" onclick="copyToClipboard(Liferay.ThemeDisplay.getCanonicalURL())">
+		<span class="link-icon mr-1">
 			<@clay["icon"] symbol="link" />
 		</span>
 		Copy & Share
@@ -402,44 +404,40 @@
 </script>
 
 <style ${nonceAttribute}>
-	.copy-text {
-		color: #282934;
+	.support-link,
+	.support-modal {
 		font-size: 16px;
 	}
 
-	.help-and-support-modal {
-		color: inherit;
-		text-decoration: none;
+	.support-link-icon {
+		color: #0B5FFF;#54555F
 	}
 
-	.help-and-support-modal-arrow {
-		margin-top: 3px;
-		fill: rgb(133, 140, 148);
+	.support-link-icon-arrow {
+		height: 12px !important;
+		width: 12px !important;
 	}
 
-	.help-and-support-modal:hover {
-		color: inherit;
-		text-decoration: none;
+	.support-link:hover,
+	.support-modal:hover {
+		transform: translateY(-0.75px);
 	}
 
-	.help-and-support-modal-icon {
-		color: rgb(133, 140, 148);
+	.support-link:hover .support-link-icon-arrow-container {
+		display: inline-block !important;
+		transform: rotate(90deg);
 	}
 
-	.help-and-support-link {
-		color: #0053F0 !important;
+	.support-modal-icon,
+	.support-modal {
+		color: #54555F;
 	}
 
-	.help-and-support-link:hover {
-		color: #0041BE !important;
-		text-decoration: underline !important;
+	.support-modal:hover {
+		color: #272833;
 	}
 
-	.help-and-support-link-icon {
-		color: #0053F0 !important;
-	}
-
-	.help-and-support-svg mask,
+	.support-svg mask,
 	.link-arrow mask {
 		mask-type: alpha;
 	}

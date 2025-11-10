@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Card, ICardSchema, replaceTokens} from '@liferay/frontend-data-set-web';
+import ClayEmptyState from '@clayui/empty-state';
+import {Card, ICardSchema} from '@liferay/frontend-data-set-web';
 import React, {Context, useContext, useMemo, useState} from 'react';
 
 import '../../../../css/props_transformer/CarouselView.scss';
@@ -137,7 +138,17 @@ const CarouselView = ({
 			<div className="fds-carousel-view__preview">
 				<div className="align-items-center d-flex fds-carousel-view__preview-wrapper h-100 justify-content-center w-100">
 					{selectedItems && selectedItems.length >= 2 ? (
-						<p>Placeholder</p>
+						<div className="bg-light d-flex h-100 justify-content-center w-100">
+							<ClayEmptyState
+								description={Liferay.Language.get(
+									'select-a-single-file-to-preview-its-content'
+								)}
+								imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state_preview.svg`}
+								title={Liferay.Language.get(
+									'no-preview-available'
+								)}
+							/>
+						</div>
 					) : (
 						<AssetPreview
 							item={currentItem}

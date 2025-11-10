@@ -68,10 +68,10 @@ export class JournalEditArticlePage {
 			name: /properties|propriétés/i,
 		});
 		this.publishDropdown = page.getByRole('button', {
-			name: /Publish Options/i,
+			name: /publish options|options de publication/i,
 		});
 		this.publishButton = page.getByTitle(
-			/Publish Article|Submit Article for Workflow/i
+			/publish article|submit article for workflow|publier article|envoyer article pour le flux de travail/i
 		);
 		this.redoButton = page.getByTitle('Redo', {exact: true});
 		this.selectButton = page.getByRole('button', {

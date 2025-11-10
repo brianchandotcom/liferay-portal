@@ -515,14 +515,15 @@ autoSaveTest(
 			target: page.getByRole('menuitem', {
 				name: 'Publish With Permissions',
 			}),
-			trigger: page.getByRole('button', {
-				name: 'Select and Confirm Publish Settings',
-			}),
+			trigger: journalEditArticlePage.publishDropdown,
 		});
 
 		await page.getByLabel('Viewable by').selectOption('Site Members');
 
-		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
+		await page
+			.getByLabel('Publish With Permissions')
+			.getByRole('button', {name: 'Publish'})
+			.click();
 
 		await journalPage.changeView('list');
 
@@ -780,16 +781,7 @@ autosaveWithoutPermissionsTest(
 
 		const articleTitle = 'Web Content Title';
 
-		await journalEditArticlePage.page
-			.getByRole('button', {
-				name: 'select and confirm publish settings',
-			})
-			.click();
-		await journalEditArticlePage.page
-			.getByRole('menuitem', {
-				name: 'publish with permissions',
-			})
-			.click();
+		await journalEditArticlePage.publishButton.click();
 
 		await expect(
 			page.getByText('The Title field is required.')

@@ -760,55 +760,47 @@ public class ObjectEntryFolderResourceTest
 	private Map<String, Map<String, String>> _getExpectedActions(
 		long objectEntryFolderId, boolean sharingEnabled) {
 
-		String baseHref = "http://localhost:8080/o/headless-object/v1.0";
+		String href1 = "http://localhost:8080/o/headless-object/v1.0";
 
-		String objectEntryFoldersHref =
-			baseHref + "/object-entry-folders/" + objectEntryFolderId;
+		String href2 = href1 + "/object-entry-folders/" + objectEntryFolderId;
 
-		String byParentObjectEntryFolderIdHref =
-			objectEntryFoldersHref +
+		String href3 =
+			href2 +
 				"/by-parent-object-entry-folder-id/{parentObjectEntryFolderId}";
 
 		return HashMapBuilder.<String, Map<String, String>>put(
-			"copy",
-			_getActionValue(byParentObjectEntryFolderIdHref + "/copy", "POST")
+			"copy", _getActionValue(href3 + "/copy", "POST")
 		).put(
-			"copy-replace",
-			_getActionValue(
-				byParentObjectEntryFolderIdHref + "/copy-replace", "POST")
+			"copy-replace", _getActionValue(href3 + "/copy-replace", "POST")
 		).put(
-			"delete", _getActionValue(objectEntryFoldersHref, "DELETE")
+			"delete", _getActionValue(href2, "DELETE")
 		).put(
-			"get", _getActionValue(objectEntryFoldersHref, "GET")
+			"get", _getActionValue(href2, "GET")
 		).put(
 			"get-by-scope",
 			_getActionValue(
 				StringBundler.concat(
-					baseHref, "/scopes/",
+					href1, "/scopes/",
 					testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey(),
 					"/object-entry-folders"),
 				"GET")
 		).put(
-			"move",
-			_getActionValue(byParentObjectEntryFolderIdHref + "/move", "POST")
+			"move", _getActionValue(href3 + "/move", "POST")
 		).put(
-			"move-replace",
-			_getActionValue(
-				byParentObjectEntryFolderIdHref + "/move-replace", "POST")
+			"move-replace", _getActionValue(href3 + "/move-replace", "POST")
 		).put(
-			"permissions",
-			_getActionValue(objectEntryFoldersHref + "/permissions", "GET")
+			"permissions", _getActionValue(href2 + "/permissions", "GET")
 		).put(
 			"share",
 			() -> {
 				if (sharingEnabled) {
-					return _getActionValue(objectEntryFoldersHref, "GET");
+					return _getActionValue(href2, "GET");
 				}
 
 				return null;
 			}
 		).put(
-			"update", _getActionValue(objectEntryFoldersHref, "PATCH")
+			"update", _getActionValue(href2, "PATCH")
 		).build();
 	}
 

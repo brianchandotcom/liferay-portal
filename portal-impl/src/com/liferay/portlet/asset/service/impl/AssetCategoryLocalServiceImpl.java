@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -622,7 +623,10 @@ public class AssetCategoryLocalServiceImpl
 		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		if (Validator.isNotNull(externalReferenceCode)) {
+		if (Validator.isNotNull(externalReferenceCode) &&
+			FeatureFlagManagerUtil.isEnabled(
+				category.getCompanyId(), "LPD-31228")) {
+
 			category.setExternalReferenceCode(externalReferenceCode);
 		}
 

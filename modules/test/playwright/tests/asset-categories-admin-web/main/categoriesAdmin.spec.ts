@@ -6,18 +6,20 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {createCategories} from '../../../helpers/CreateCategories';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest';
-import {
-	clickAndExpectToBeVisible
-} from "../../../utils/clickAndExpectToBeVisible";
 
 const test = mergeTests(
 	apiHelpersTest,
 	assetCategoriesPagesTest,
+	featureFlagsTest({
+		'LPD-31228': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest()
 );
@@ -82,7 +84,9 @@ test('Add, edit and delete a vocabulary', async ({
 		await assetCategoriesAdminPage.newVocabularyButton.click();
 
 		await vocabulariesEditPage.fillName('Vocabulary 2');
-		await vocabulariesEditPage.fillExternalReferenceCode(vocabularyExternalReferenceCode);
+		await vocabulariesEditPage.fillExternalReferenceCode(
+			vocabularyExternalReferenceCode
+		);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

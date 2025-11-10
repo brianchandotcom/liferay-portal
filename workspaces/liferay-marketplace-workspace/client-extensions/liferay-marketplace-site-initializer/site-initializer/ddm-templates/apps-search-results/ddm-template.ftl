@@ -6,12 +6,16 @@
 <#function getSpecificationValue specificationGroupKey specificationKey productId default="">
 	<#local specificationGroup = cpSpecificationGroups?filter(specificationGroup -> specificationGroup.getKey() == specificationGroupKey) />				
 	
-	<#local specifications = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(productId, specificationGroup?first.getCPOptionCategoryId()) />
-	
-	<#local spec = specifications?filter(productSpecification ->
-		stringUtil.equals(productSpecification.getCPSpecificationOption().getKey(), specificationKey)) />
+	<#if specificationGroup?has_content>
+		<#local specifications = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(productId, specificationGroup?first.getCPOptionCategoryId()) />
+		
+		<#local spec = specifications?filter(productSpecification ->
+			stringUtil.equals(productSpecification.getCPSpecificationOption().getKey(), specificationKey)) />
 
-	<#return (spec?first.value)!default />
+		<#return (spec?first.value)!default />
+	</#if>
+
+	<#return default />
 </#function>
 
 <div class="apps-search-results">

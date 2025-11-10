@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-item') and contains(text(), 'Publish')]</td>
+	<td>//button[contains(text(), 'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,7 +180,7 @@
 </tr>
 <tr>
 	<td>SUBMIT_FOR_WORKFLOW</td>
-	<td>//button[contains(@class, 'dropdown-item') and contains(text(), 'Submit for Workflow')]</td>
+	<td>//button[contains(text(), 'Submit for Workflow')]</td>
 	<td></td>
 </tr>
 <tr>

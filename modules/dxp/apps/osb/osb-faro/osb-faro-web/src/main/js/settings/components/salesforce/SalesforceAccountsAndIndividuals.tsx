@@ -1,5 +1,6 @@
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
+import ClaySticker from '@clayui/sticker';
 import React from 'react';
 import {ClayToggle} from '@clayui/form';
 import {sub} from 'shared/util/lang';
@@ -25,11 +26,12 @@ const SalesforceAccountsAndIndividuals: React.FC<ISalesforceAccountsAndIndividua
 		<ClayList className='mb-0'>
 			<ClayList.Item flex>
 				<ClayList.ItemField>
-					<ClayIcon
-						aria-label={Liferay.Language.get('accounts')}
-						className='mr-2 mt-1 text-secondary'
-						symbol='briefcase'
-					/>
+					<ClaySticker displayType='unstyled'>
+						<ClayIcon
+							className='text-secondary'
+							symbol='briefcase'
+						/>
+					</ClaySticker>
 				</ClayList.ItemField>
 
 				<ClayList.ItemField expand>
@@ -52,7 +54,13 @@ const SalesforceAccountsAndIndividuals: React.FC<ISalesforceAccountsAndIndividua
 					)}
 				</ClayList.ItemField>
 
-				<ClayList.ItemField style={{width: '120px'}}>
+				<ClayList.ItemField
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						width: '120px'
+					}}
+				>
 					<ClayToggle
 						disabled={disabled}
 						id='accounts'
@@ -74,14 +82,15 @@ const SalesforceAccountsAndIndividuals: React.FC<ISalesforceAccountsAndIndividua
 
 			<ClayList.Item flex>
 				<ClayList.ItemField>
-					<ClayIcon
-						aria-label={Liferay.Language.get('individuals')}
-						className='mr-2 mt-1 text-secondary'
-						symbol='users'
-					/>
+					<ClaySticker displayType='unstyled'>
+						<ClayIcon className='text-secondary' symbol='users' />
+					</ClaySticker>
 				</ClayList.ItemField>
 
-				<ClayList.ItemField expand>
+				<ClayList.ItemField
+					className='d-flex justify-content-center'
+					expand
+				>
 					<ClayList.ItemTitle>
 						{Liferay.Language.get('individuals')}
 					</ClayList.ItemTitle>
@@ -101,7 +110,13 @@ const SalesforceAccountsAndIndividuals: React.FC<ISalesforceAccountsAndIndividua
 					)}
 				</ClayList.ItemField>
 
-				<ClayList.ItemField style={{width: '120px'}}>
+				<ClayList.ItemField
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						width: '120px'
+					}}
+				>
 					<ClayToggle
 						disabled={disabled}
 						id='individuals'

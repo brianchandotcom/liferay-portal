@@ -1732,8 +1732,6 @@ definition {
 	@summary = "Default summary"
 	macro publishExistingWCArticleWithPermissions() {
 		Button.clickPublish();
-
-		Click(locator1 = "WCEditWebContent#PUBLISH_BUTTON");
 	}
 
 	@summary = "Default summary"
@@ -1757,22 +1755,27 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro publishWithPermissionsLocalized(publish = null, publishWithPermissions = null, viewableBy = null) {
-		Button.click(button = ${publish});
-
-		Click(
-			key_text = ${publishWithPermissions},
-			locator1 = "WCEditWebContent#DROPDOWN_BUTTON");
-
+	macro publishWithPermissionsLocalized(publish = null, publishOptions = null, publishWithPermissions = null, viewableBy = null) {
 		if (isSet(viewableBy)) {
+			Click(
+				ariaLabel = ${publishOptions},
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			Click(
+				key_text = ${publishWithPermissions},
+				locator1 = "WCEditWebContent#DROPDOWN_BUTTON");
+
 			Select(
 				locator1 = "Select#PERMISSIONS",
 				value1 = ${viewableBy});
-		}
 
-		Click(
-			key_text = ${publish},
-			locator1 = "WCEditWebContent#BUTTON_IN_MODAL");
+			Click(
+				key_text = ${publish},
+				locator1 = "WCEditWebContent#BUTTON_IN_MODAL");
+		}
+		else {
+			Button.click(button = ${publish});
+		}
 
 		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
 
@@ -1812,7 +1815,7 @@ definition {
 
 	@summary = "Default summary"
 	macro scheduleWCArticleWithPermissions(displayDate = null) {
-		Button.clickPublish();
+		Click(locator1 = "WCEditWebContent#PUBLISH_OPTIONS_BUTTON");
 
 		Click(locator1 = "WCEditWebContent#SCHEDULE_PUBLICATION_BUTTON");
 
@@ -2031,8 +2034,6 @@ definition {
 	@summary = "Default summary"
 	macro submitForWorkflow() {
 		Button.clickSubmitForWorkflow();
-
-		Click(locator1 = "WCEditWebContent#SUBMIT_FOR_WORKFLOW");
 
 		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
 	}

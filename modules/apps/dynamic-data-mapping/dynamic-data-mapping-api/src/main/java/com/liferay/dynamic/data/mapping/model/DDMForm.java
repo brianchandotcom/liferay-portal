@@ -102,6 +102,27 @@ public class DDMForm implements Serializable {
 		return _availableLocales;
 	}
 
+	public DDMFormField getDDMFormField(
+		String name, boolean includeNestedDDMFormFields) {
+
+		for (DDMFormField ddmFormField : _ddmFormFields) {
+			if (Objects.equals(name, ddmFormField.getName())) {
+				return ddmFormField;
+			}
+
+			if (includeNestedDDMFormFields) {
+				DDMFormField nestedDDMFormField =
+					ddmFormField.getNestedDDMFormFieldsMap(name);
+
+				if (nestedDDMFormField != null) {
+					return nestedDDMFormField;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public List<DDMFormField> getDDMFormFields() {
 		return _ddmFormFields;
 	}

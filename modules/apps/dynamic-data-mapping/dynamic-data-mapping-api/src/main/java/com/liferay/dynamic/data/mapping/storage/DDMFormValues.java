@@ -75,6 +75,25 @@ public class DDMFormValues implements Serializable {
 		return _ddmFormFieldValues;
 	}
 
+	public List<DDMFormFieldValue> getDDMFormFieldValues(
+		String name, boolean includeNestedDDMFormFieldValues) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
+			if (Objects.equals(name, ddmFormFieldValue.getName())) {
+				ddmFormFieldValues.add(ddmFormFieldValue);
+			}
+
+			if (includeNestedDDMFormFieldValues) {
+				ddmFormFieldValue.populateNestedDDMFormFieldValues(
+					name, ddmFormFieldValues);
+			}
+		}
+
+		return ddmFormFieldValues;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getDDMFormFieldValuesMap(boolean)}

@@ -66,10 +66,7 @@ public class DDMFormFieldValue implements Serializable {
 	public DDMFormField getDDMFormField() {
 		DDMForm ddmForm = _ddmFormValues.getDDMForm();
 
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		return ddmFormFieldsMap.get(_name);
+		return ddmForm.getDDMFormField(_name, true);
 	}
 
 	public DDMFormValues getDDMFormValues() {
@@ -147,6 +144,21 @@ public class DDMFormFieldValue implements Serializable {
 		hash = HashUtil.hash(hash, _nestedDDMFormFieldValues);
 
 		return HashUtil.hash(hash, _value);
+	}
+
+	public void populateNestedDDMFormFieldValues(
+		String name, List<DDMFormFieldValue> nestedDDMFormFieldValues) {
+
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				_nestedDDMFormFieldValues) {
+
+			if (Objects.equals(name, nestedDDMFormFieldValue.getName())) {
+				nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
+			}
+
+			nestedDDMFormFieldValue.populateNestedDDMFormFieldValues(
+				name, nestedDDMFormFieldValues);
+		}
 	}
 
 	public void populateNestedDDMFormFieldValuesMap(

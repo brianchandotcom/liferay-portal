@@ -34,7 +34,11 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	public File archive(String fileName) {
 		File archiveFile = super.archive(fileName);
 
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (!JenkinsResultsParserUtil.isCloudCINode() ||
+			upstreamBranchName.startsWith("ee-")) {
+
 			return archiveFile;
 		}
 

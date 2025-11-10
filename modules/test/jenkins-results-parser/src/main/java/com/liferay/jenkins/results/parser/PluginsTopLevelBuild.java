@@ -32,7 +32,13 @@ public class PluginsTopLevelBuild
 
 	@Override
 	public String getBranchName() {
-		return getParameterValue("TEST_PLUGINS_BRANCH_NAME");
+		String branchName = getParameterValue("GITHUB_UPSTREAM_BRANCH_NAME");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+			branchName = getParameterValue("TEST_PLUGINS_BRANCH_NAME");
+		}
+
+		return branchName;
 	}
 
 	public String getPluginName() {
@@ -163,6 +169,12 @@ public class PluginsTopLevelBuild
 	}
 
 	private String _getPluginsGitHubURL() {
+		String pluginsGitHubURL = getParameterValue("PLUGINS_GITHUB_URL");
+
+		if (JenkinsResultsParserUtil.isURL(pluginsGitHubURL)) {
+			return pluginsGitHubURL;
+		}
+
 		String pluginsBranchName = getParameterValue(
 			"TEST_PLUGINS_RELEASE_TAG");
 		String pluginsBranchUsername = getParameterValue(

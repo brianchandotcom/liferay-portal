@@ -5,10 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForAlert} from '../../utils/waitForAlert';
 import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ProductMenuPage} from '../product-navigation-control-menu-web/ProductMenuPage';
 
 export class TeamsPage {
+	readonly deleteButton: Locator;
 	readonly descriptionInput: Locator;
 	readonly editButton: Locator;
 	readonly editLink: Locator;
@@ -18,8 +20,12 @@ export class TeamsPage {
 	readonly productMenuPage: ProductMenuPage;
 	readonly saveButton: Locator;
 	readonly teamsTable: DataTablePage;
+	readonly userGroupTab: Locator;
 
 	constructor(page: Page) {
+		this.deleteButton = page
+			.getByRole('button', {name: 'Delete'})
+			.or(page.getByRole('link', {name: 'Delete'}));
 		this.descriptionInput = page.getByPlaceholder('Description');
 		this.editButton = page.getByRole('link', {name: 'Edit'});
 		this.editLink = page.getByRole('link', {name: 'Edit'});
@@ -34,9 +40,24 @@ export class TeamsPage {
 				'#_com_liferay_site_teams_web_portlet_SiteTeamsPortlet_teamsSearchContainer'
 			)
 		);
+		this.userGroupTab = page.getByRole('link', {name: 'User Groups'});
 	}
 
 	async goTo(siteUrl?: string) {
 		await this.productMenuPage.goToTeams(siteUrl);
+	}
+
+	async newTeam({
+		teamDescription = '',
+		teamName,
+	}: {
+		teamDescription?: string;
+		teamName: string;
+	}) {
+		await this.nameInput.fill(teamName);
+		await this.descriptionInput.fill(teamDescription);
+		await this.saveButton.click();
+
+		await waitForAlert(this.page);
 	}
 }

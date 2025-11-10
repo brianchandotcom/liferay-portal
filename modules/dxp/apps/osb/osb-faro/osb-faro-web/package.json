@@ -31,6 +31,7 @@
 		"@clayui/pagination-bar": "^3.149.0",
 		"@clayui/panel": "^3.151.0",
 		"@clayui/popover": "^3.148.0",
+		"@clayui/sticker": "^3.147.0",
 		"@clayui/table": "^3.144.1",
 		"@clayui/toolbar": "^3.148.0",
 		"@clayui/tooltip": "^3.148.0",

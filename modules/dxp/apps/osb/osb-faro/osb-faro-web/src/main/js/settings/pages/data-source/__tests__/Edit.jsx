@@ -8,7 +8,6 @@ import {render} from '@testing-library/react';
 import {Routes, toRoute} from 'shared/util/router';
 import {StaticRouter} from 'react-router';
 import {UserRoleNames} from 'shared/util/constants';
-import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -49,13 +48,11 @@ describe('Edit', () => {
 			</Provider>
 		);
 
-		jest.runAllTimers();
-
 		expect(getByText('Configure CSV')).toBeInTheDocument();
 	});
 
 	it('should render a Salesforce data-source page', async () => {
-		const {container, getByText} = render(
+		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<StaticRouter
 					location={toRoute(
@@ -67,8 +64,6 @@ describe('Edit', () => {
 				</StaticRouter>
 			</Provider>
 		);
-
-		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			getByText(

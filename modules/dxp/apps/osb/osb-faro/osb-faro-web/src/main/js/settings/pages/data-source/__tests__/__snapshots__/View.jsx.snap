@@ -2014,7 +2014,7 @@ exports[`View should render a Salesforce data-source page 1`] = `
                             <p
                               class="list-group-text"
                             >
-                              0 items synced
+                              0 Items Synced
                             </p>
                           </div>
                           <div
@@ -2083,7 +2083,7 @@ exports[`View should render a Salesforce data-source page 1`] = `
                             <p
                               class="list-group-text"
                             >
-                              0 items synced
+                              0 Items Synced
                             </p>
                           </div>
                           <div

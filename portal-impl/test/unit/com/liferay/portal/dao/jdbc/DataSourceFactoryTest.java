@@ -181,11 +181,11 @@ public class DataSourceFactoryTest {
 			"jdbc:mysql://localhost/lportal1?customParam=customValue");
 
 		Assert.assertTrue(
-			rewrittenMySQLJDBCURL.contains("customParam=customValue"));
-		Assert.assertTrue(
 			rewrittenMySQLJDBCURL.contains("cachePrepStmts=true"));
 		Assert.assertTrue(
 			rewrittenMySQLJDBCURL.contains("characterEncoding=UTF-8"));
+		Assert.assertTrue(
+			rewrittenMySQLJDBCURL.contains("customParam=customValue"));
 
 		String rewrittenPostgreSQLJDBCURL = _rewriteJDBCURL(
 			"jdbc:postgresql://localhost/lportal2?customParam=customValue");
@@ -239,9 +239,9 @@ public class DataSourceFactoryTest {
 		String rewrittenMySQLJDBCURL = _rewriteJDBCURL(
 			"jdbc:mysql://localhost/lportal1?malformedParam");
 
-		Assert.assertTrue(rewrittenMySQLJDBCURL.contains("malformedParam"));
 		Assert.assertTrue(
 			rewrittenMySQLJDBCURL.contains("cachePrepStmts=true"));
+		Assert.assertTrue(rewrittenMySQLJDBCURL.contains("malformedParam"));
 
 		String rewrittenPostgreSQLJDBCURL = _rewriteJDBCURL(
 			"jdbc:postgresql://localhost/lportal2?malformedParam");

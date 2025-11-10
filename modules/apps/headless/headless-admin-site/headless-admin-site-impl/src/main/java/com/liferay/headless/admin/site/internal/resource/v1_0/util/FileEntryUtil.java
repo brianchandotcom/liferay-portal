@@ -10,9 +10,11 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.URLReference;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -76,17 +78,23 @@ public class FileEntryUtil {
 			).next();
 		}
 
-		long repositoryId = groupId;
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		String fileName =
 			urlReference.getExternalReferenceCode() + "_preview" + extension;
 
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setIndexingEnabled(false);
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			groupId, LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
+
 		return DLAppLocalServiceUtil.addFileEntry(
 			urlReference.getExternalReferenceCode(), user.getUserId(),
-			repositoryId, folderId, resourceName + "_" + fileName, mimeType,
-			fileName, null, null, null, fileBytes, null, null, null,
-			serviceContext);
+			repository.getRepositoryId(), folderId,
+			resourceName + "_" + fileName, mimeType, fileName, null, null, null,
+			fileBytes, null, null, null, serviceContext);
 	}
 
 	public static long getPreviewFileEntryId(

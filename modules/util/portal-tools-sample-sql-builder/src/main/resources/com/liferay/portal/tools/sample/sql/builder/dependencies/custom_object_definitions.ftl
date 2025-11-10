@@ -46,6 +46,8 @@ ${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(objectDefinition
 	</#list>
 
 	<#assign relatedTicketObjectEntryId = objectEntryModel.getObjectEntryId() />
+
+	${csvFileWriter.write("objectEntry",virtualHostModel.hostname + "," + objectEntryModel.getObjectEntryId() + "\n")}
 </#list>
 
 <#list objectFieldModels as objectFieldModel>

@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
@@ -47,6 +49,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -63,6 +66,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			_siteInitializerRegistry.getSiteInitializer("ai-hub-initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
+
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			StringUtil.randomId(), _WORKFLOW_DEFINITION_NAME,
+			_getContentBytes());
 	}
 
 	@After
@@ -73,8 +81,56 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Override
 	@Test
 	public void testGetTaskSubscribe() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(2);
+		_testGetTaskSubscribe(null, new ArrayList<>());
+	}
+
+	@Override
+	@Test
+	public void testPostTask() throws Exception {
+		_testPostTask();
+		_testPostTaskWithScope();
+	}
+
+	@Ignore
+	@Test
+	public void testPostTaskWithTypeFixSpellingAndGrammar() throws Exception {
+		CountDownLatch countDownLatch = new CountDownLatch(5);
 		List<String> lines = new ArrayList<>();
+
+		_testGetTaskSubscribe(countDownLatch, lines);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"context", JSONUtil.put("text", "Thi text ix wrongy")
+			).put(
+				"type",
+				WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR
+			).toString(),
+			"ai-hub/v1.0/tasks", Http.Method.POST);
+
+		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 5, lines.size());
+		Assert.assertEquals("event: Fix Spelling and Grammar", lines.get(2));
+		Assert.assertEquals(
+			"id: " + jsonObject.getLong("externalReferenceCode"), lines.get(3));
+		Assert.assertEquals("data: This text is wrong.", lines.get(4));
+	}
+
+	private static byte[] _getContentBytes() throws Exception {
+		InputStream inputStream = TaskResourceTest.class.getResourceAsStream(
+			"dependencies/workflow-definition.json");
+
+		String content = StringUtil.read(inputStream);
+
+		return content.getBytes();
+	}
+
+	private void _testGetTaskSubscribe(
+			CountDownLatch countDownLatch2, List<String> lines)
+		throws Exception {
+
+		CountDownLatch countDownLatch1 = new CountDownLatch(2);
 
 		HttpClient httpClient = HttpClient.newBuilder(
 		).connectTimeout(
@@ -112,7 +168,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 							continue;
 						}
 
-						countDownLatch.countDown();
+						countDownLatch1.countDown();
+
+						if (countDownLatch2 != null) {
+							countDownLatch2.countDown();
+						}
+
 						lines.add(line);
 					}
 				}
@@ -121,24 +182,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				}
 			});
 
-		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
+		Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
 
 		Assert.assertEquals(lines.toString(), 2, lines.size());
-
-		String line1 = lines.get(0);
-
-		Assert.assertEquals("event: Subscribe", line1);
-
-		String line2 = lines.get(1);
-
-		Assert.assertEquals("data: Successfully Subscribed", line2);
-	}
-
-	@Override
-	@Test
-	public void testPostTask() throws Exception {
-		_testPostTask();
-		_testPostTaskWithScope();
+		Assert.assertEquals("event: Subscribe", lines.get(0));
+		Assert.assertEquals("data: Successfully Subscribed", lines.get(1));
 	}
 
 	private void _testPostTask() throws Exception {
@@ -146,7 +194,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			JSONUtil.put(
 				"context", JSONUtil.put("text", RandomTestUtil.randomString())
 			).put(
-				"type", WorkflowDefinitionConstants.NAME_IMPROVE_WRITING
+				"type", _WORKFLOW_DEFINITION_NAME
 			).toString(),
 			"ai-hub/v1.0/tasks", Http.Method.POST);
 
@@ -156,7 +204,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				jsonObject.getLong("externalReferenceCode"));
 
 		Assert.assertEquals(
-			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
+			_WORKFLOW_DEFINITION_NAME,
 			workflowInstance.getWorkflowDefinitionName());
 	}
 
@@ -171,7 +219,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				JSONUtil.put(
 					"externalReferenceCode", group.getExternalReferenceCode())
 			).put(
-				"type", WorkflowDefinitionConstants.NAME_IMPROVE_WRITING
+				"type", _WORKFLOW_DEFINITION_NAME
 			).toString(),
 			"ai-hub/v1.0/tasks", Http.Method.POST);
 
@@ -181,13 +229,22 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				jsonObject.getLong("externalReferenceCode"));
 
 		Assert.assertEquals(group.getGroupId(), workflowInstance.getGroupId());
+		Assert.assertEquals(
+			_WORKFLOW_DEFINITION_NAME,
+			workflowInstance.getWorkflowDefinitionName());
 	}
+
+	private static final String _WORKFLOW_DEFINITION_NAME =
+		"Workflow Definition";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TaskResourceTest.class);
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Inject
+	private static WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Inject
 	private WorkflowInstanceManager _workflowInstanceManager;

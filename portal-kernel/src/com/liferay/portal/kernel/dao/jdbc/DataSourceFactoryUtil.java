@@ -458,11 +458,11 @@ public class DataSourceFactoryUtil {
 		if (index != -1) {
 			baseURL = url.substring(0, index);
 
-			String paramString = url.substring(index + 1);
+			String parameterString = url.substring(index + 1);
 
-			if (!paramString.isEmpty()) {
+			if (!parameterString.isEmpty()) {
 				existingParameterValues = _getExistingParameterValues(
-					parameterDelimiter, paramString);
+					parameterDelimiter, parameterString);
 			}
 		}
 

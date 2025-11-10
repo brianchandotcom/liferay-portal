@@ -541,6 +541,10 @@
 			<category name="Miscellaneous" />
 			<description name="Finds cases where Diamond Operator is not used." />
 		</check>
+		<check name="JavaDocumentAddCallsOrderCheck">
+			<category name="Styling" />
+			<description name="Sorts `add*` calls for type `Document`." />
+		</check>
 		<check name="JavaDuplicateVariableCheck">
 			<category name="Miscellaneous" />
 			<description name="Finds variables where a variable with the same name already exists in an extended class." />

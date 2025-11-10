@@ -7,6 +7,9 @@ package com.liferay.osb.faro.engine.client.model.provider;
 
 import com.liferay.osb.faro.engine.client.model.Provider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Matthew Kong
  */
@@ -16,6 +19,10 @@ public class SalesforceProvider implements Provider {
 
 	public AccountsConfiguration getAccountsConfiguration() {
 		return _accountsConfiguration;
+	}
+
+	public ChannelsConfiguration getChannelsConfiguration() {
+		return _channelsConfiguration;
 	}
 
 	public ContactsConfiguration getContactsConfiguration() {
@@ -31,6 +38,12 @@ public class SalesforceProvider implements Provider {
 		AccountsConfiguration accountsConfiguration) {
 
 		_accountsConfiguration = accountsConfiguration;
+	}
+
+	public void setChannelsConfiguration(
+		ChannelsConfiguration channelsConfiguration) {
+
+		_channelsConfiguration = channelsConfiguration;
 	}
 
 	public void setContactsConfiguration(
@@ -50,6 +63,29 @@ public class SalesforceProvider implements Provider {
 		}
 
 		private boolean _enableAllAccounts;
+
+	}
+
+	public static class ChannelsConfiguration {
+
+		public List<Long> getChannelIds() {
+			return _channelIds;
+		}
+
+		public boolean isEnableAllChannels() {
+			return _enableAllChannels;
+		}
+
+		public void setChannelIds(List<Long> channelIds) {
+			_channelIds = channelIds;
+		}
+
+		public void setEnableAllChannels(boolean enableAllChannels) {
+			_enableAllChannels = enableAllChannels;
+		}
+
+		private List<Long> _channelIds = new ArrayList<>();
+		private boolean _enableAllChannels;
 
 	}
 
@@ -77,6 +113,7 @@ public class SalesforceProvider implements Provider {
 	}
 
 	private AccountsConfiguration _accountsConfiguration;
+	private ChannelsConfiguration _channelsConfiguration;
 	private ContactsConfiguration _contactsConfiguration;
 
 }

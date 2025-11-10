@@ -81,6 +81,10 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -1107,6 +1111,20 @@ public class DisplayPageTemplateResourceTest
 					false, postDisplayPageTemplate.getExternalReferenceCode(),
 					displayPageTemplate.getThumbnail(
 					).getExternalReferenceCode());
+
+				URL url = new URL(
+					displayPageTemplate.getThumbnail(
+					).getUrl());
+
+				URLConnection urlConnection = url.openConnection();
+
+				if (urlConnection instanceof
+						HttpURLConnection httpURLConnection) {
+
+					Assert.assertTrue(
+						httpURLConnection.getResponseCode() !=
+							HttpURLConnection.HTTP_OK);
+				}
 			}
 			else {
 				Assert.assertNull(displayPageTemplate.getThumbnail());

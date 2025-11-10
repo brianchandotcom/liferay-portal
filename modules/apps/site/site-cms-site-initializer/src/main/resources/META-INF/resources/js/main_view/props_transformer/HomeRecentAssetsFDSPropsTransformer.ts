@@ -7,6 +7,7 @@ import {IInternalRenderer, replaceTokens} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import openResetAssetPermissionModal from '../default_permission/ResetPermissionModalContent';
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
@@ -15,9 +16,6 @@ import deleteItemAction from './actions/deleteItemAction';
 import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
 import AssetRenderer from './cell_renderers/AssetRenderer';
-
-const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
 
 export default function HomeRecentAssetsFDSPropsTransformer({
 	additionalProps,

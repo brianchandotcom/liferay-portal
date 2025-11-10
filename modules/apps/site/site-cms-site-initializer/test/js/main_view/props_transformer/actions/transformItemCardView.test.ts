@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom';
 
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import {transformItemCardView} from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/utils/transformViewsItemProps';
 
 jest.mock('@clayui/icon', () => (props: any) => ({
@@ -51,8 +52,7 @@ describe('transformItemCardView', () => {
 			'folder',
 			transformItemCardView(
 				{
-					entryClassName:
-						'com.liferay.object.model.ObjectEntryFolder',
+					entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 				},
 				mockFileMimeTypeCssClasses,
 				mockFileMimeTypeIcons,
@@ -217,7 +217,7 @@ describe('transformItemCardView', () => {
 	it('Shows Untitled Asset if title is not present', () => {
 		const cardView = transformItemCardView(
 			{
-				entryClassName: 'com.liferay.object.model.ObjectEntryFolder',
+				entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			},
 			mockFileMimeTypeCssClasses,
 			mockFileMimeTypeIcons,

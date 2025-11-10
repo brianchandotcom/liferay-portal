@@ -7,6 +7,7 @@ import '@testing-library/jest-dom';
 import {waitFor} from '@testing-library/react';
 
 import CMSAssetPermissionService from '../../../../src/main/resources/META-INF/resources/js/common/services/CMSAssetPermissionService';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import openResetAssetPermissionModal from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/ResetPermissionModalContent';
 
 describe('ResetPermissionModalContent', () => {
@@ -42,7 +43,7 @@ describe('ResetPermissionModalContent', () => {
 		const loadDataFn = jest.fn();
 
 		const props = {
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			classPK: 12345,
 			loadData: loadDataFn,
 		};
@@ -116,7 +117,7 @@ describe('ResetPermissionModalContent', () => {
 		const loadDataFn = jest.fn();
 
 		const props = {
-			className: 'com.liferay.object.model.ObjectEntryFolder',
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 			classPK: 12345,
 			loadData: loadDataFn,
 		};

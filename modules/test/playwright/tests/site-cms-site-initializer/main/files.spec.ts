@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 import fs from 'fs/promises';
 
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../../apps/site/site-cms-site-initializer/src/main/resources/META-INF/resources/js/common/utils/constants';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -216,7 +217,7 @@ test(
 		await test.step('Navigate into the folder', async () => {
 			const className =
 				await apiHelpers.jsonWebServicesClassName.fetchClassName(
-					'com.liferay.object.model.ObjectEntryFolder'
+					OBJECT_ENTRY_FOLDER_CLASS_NAME
 				);
 
 			await page.goto(

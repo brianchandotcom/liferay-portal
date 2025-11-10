@@ -15,10 +15,8 @@ import StatusLabel from '../../common/components/StatusLabel';
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
 import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
-import {
-	OBJECT_ENTRY_FOLDER_CLASS_NAME,
-	getScopeExternalReferenceCode,
-} from '../../common/utils/getScopeExternalReferenceCode';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
+import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
 import CategoriesAndTagsModalContent from '../categorization/modal/CategoriesAndTagsModalContent';
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';

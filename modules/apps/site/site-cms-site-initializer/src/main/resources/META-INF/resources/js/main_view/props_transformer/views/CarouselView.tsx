@@ -40,7 +40,7 @@ const CarouselView = ({
 	const handlePrevClick = () => {
 		const itemsLength = items.length;
 
-		if (itemsLength <= VISIBLE_ITEMS_COUNT) return;
+		if (itemsLength <= VISIBLE_ITEMS_COUNT) {return;}
 
 		let newSelectedIndex;
 		let newVisibleIndex;
@@ -66,7 +66,7 @@ const CarouselView = ({
 		const itemsLength = items.length;
 		const maxVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
 
-		if (itemsLength <= VISIBLE_ITEMS_COUNT) return;
+		if (itemsLength <= VISIBLE_ITEMS_COUNT) {return;}
 
 		let newSelectedIndex;
 		let newVisibleIndex;
@@ -133,7 +133,7 @@ const CarouselView = ({
 	return (
 		<div className="fds-carousel-view">
 			<div className="fds-carousel-view__preview">
-				<div className="fds-carousel-view__preview-wrapper h-100 w-100 d-flex align-items-center justify-content-center">
+				<div className="align-items-center d-flex fds-carousel-view__preview-wrapper h-100 justify-content-center w-100">
 					{selectedItems && selectedItems.length >= 2 ? (
 						<p>Placeholder</p>
 					) : currentItem?.embedded?.file ? (
@@ -160,7 +160,7 @@ const CarouselView = ({
 					symbol="angle-left"
 				/>
 
-				<div className="align-items-center c-gap-3 flex-grow-1 d-flex fds-carousel-view__thumbnails justify-content-center">
+				<div className="align-items-center c-gap-3 d-flex fds-carousel-view__thumbnails flex-grow-1 justify-content-center">
 					{visibleItems.map((item, index) => {
 						const actualIndex = visibleStartIndex + index;
 						const classes = classNames(
@@ -178,10 +178,10 @@ const CarouselView = ({
 								onKeyDown={(event) =>
 									handleKeyDown(event, actualIndex)
 								}
-								tabIndex={0}
 								style={{
 									width: `${cardWidth}%`,
 								}}
+								tabIndex={0}
 							>
 								<Card
 									item={item}

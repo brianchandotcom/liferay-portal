@@ -6,10 +6,8 @@
 import {fetch, sub} from 'frontend-js-web';
 
 import SpaceService from '../../../common/services/SpaceService';
-import {
-	OBJECT_ENTRY_FOLDER_CLASS_NAME,
-	getScopeExternalReferenceCode,
-} from '../../../common/utils/getScopeExternalReferenceCode';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
+import {getScopeExternalReferenceCode} from '../../../common/utils/getScopeExternalReferenceCode';
 import {
 	displayDeleteSuccessToast,
 	displayErrorToast,

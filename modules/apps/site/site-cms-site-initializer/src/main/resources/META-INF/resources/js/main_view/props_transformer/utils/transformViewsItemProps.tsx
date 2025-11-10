@@ -10,13 +10,11 @@ import React from 'react';
 import dateFormat from '../../../common/utils/dateFormat';
 
 import '../../../../css/props_transformer/TransformViewsItemProps.scss';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
 
 type Card = React.ComponentProps<typeof Card> & {
 	actions: {data: {id: string}; href?: string}[];
 };
-
-const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
 
 const MULTIMEDIA_TYPES = ['audio/', 'image/', 'video/'];
 

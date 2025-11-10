@@ -13,6 +13,12 @@ import com.liferay.petra.string.StringPool;
 public class ConfigurationPIDUtil {
 
 	public static String getRawPid(String pid) {
+
+		// Factory entry: com.liferay.MyConfiguration~1234
+		// Factory scoped entry: com.liferay.MyConfiguration.scoped~1234
+		// Raw: com.liferay.MyConfiguration
+		// Scoped: com.liferay.MyConfiguration.scoped
+
 		pid = pid.replaceFirst("~.*", StringPool.BLANK);
 
 		if (pid.endsWith(_DOT_SCOPED)) {

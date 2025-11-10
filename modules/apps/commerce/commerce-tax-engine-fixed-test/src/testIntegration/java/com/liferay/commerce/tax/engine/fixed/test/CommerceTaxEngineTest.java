@@ -182,7 +182,7 @@ public class CommerceTaxEngineTest {
 		_updateCommerceTaxByAddressTypeConfiguration(false);
 
 		CommerceTaxMethod commerceTaxMethod =
-			CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+			CommerceTaxTestUtil.addByAddressCommerceTaxMethod(
 				_user.getUserId(), _commerceChannel.getGroupId(), false);
 
 		Country country1 = CommerceInventoryTestUtil.addCountry(
@@ -229,7 +229,7 @@ public class CommerceTaxEngineTest {
 		_updateCommerceTaxByAddressTypeConfiguration(true);
 
 		CommerceTaxMethod commerceTaxMethod =
-			CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+			CommerceTaxTestUtil.addByAddressCommerceTaxMethod(
 				_user.getUserId(), _commerceChannel.getGroupId(), false);
 
 		Country country1 = CommerceInventoryTestUtil.addCountry(
@@ -273,7 +273,7 @@ public class CommerceTaxEngineTest {
 		_updateCommerceTaxByAddressTypeConfiguration(true);
 
 		CommerceTaxMethod commerceTaxMethod =
-			CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+			CommerceTaxTestUtil.addByAddressCommerceTaxMethod(
 				_user.getUserId(), _commerceChannel.getGroupId(), false);
 
 		Country country1 = CommerceInventoryTestUtil.addCountry(
@@ -316,7 +316,7 @@ public class CommerceTaxEngineTest {
 	@Test
 	public void testFixedTaxAppliedCorrectly() throws Exception {
 		CommerceTaxMethod commerceTaxMethod =
-			CommerceTaxTestUtil.addCommerceFixedTaxTaxMethod(
+			CommerceTaxTestUtil.addFixedTaxCommerceTaxMethod(
 				_user.getUserId(), _commerceChannel.getGroupId(), false);
 
 		BigDecimal rate = BigDecimal.TEN;

@@ -99,7 +99,7 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		_commerceChannel = _commerceChannelLocalService.updateCommerceChannel(
 			_commerceChannel);
 
-		_commerceTaxMethod = CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+		_commerceTaxMethod = CommerceTaxTestUtil.addByAddressCommerceTaxMethod(
 			_user.getUserId(), _commerceChannel.getGroupId(), true);
 	}
 

@@ -101,7 +101,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 
-		_commerceTaxMethod = CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+		_commerceTaxMethod = CommerceTaxTestUtil.addByAddressCommerceTaxMethod(
 			_user.getUserId(), _commerceChannel.getGroupId(), true);
 	}
 
@@ -193,7 +193,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 			_user.getGroupId());
 
 		CommerceTaxMethod commerceTaxMethod =
-			CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+			CommerceTaxTestUtil.addByAddressCommerceTaxMethod(
 				_user.getUserId(), commerceTaxIncludedChannel.getGroupId(),
 				true);
 

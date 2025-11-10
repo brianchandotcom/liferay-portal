@@ -143,7 +143,7 @@ public class CommerceGrossPricingTest {
 			CommerceTaxTestUtil.getDefaultCompanyTaxCategory(
 				_user.getGroupId());
 
-		_commerceTaxMethod = CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+		_commerceTaxMethod = CommerceTaxTestUtil.addByAddressCommerceTaxMethod(
 			_user.getUserId(), _commerceChannel.getGroupId(), true);
 
 		CommerceTaxTestUtil.setCommerceMethodTaxRate(

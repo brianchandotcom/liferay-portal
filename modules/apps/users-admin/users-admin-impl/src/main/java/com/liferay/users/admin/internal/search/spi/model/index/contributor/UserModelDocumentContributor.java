@@ -106,9 +106,9 @@ public class UserModelDocumentContributor
 
 			document.addText("lastName", user.getLastName());
 			document.addText("middleName", user.getMiddleName());
-			document.addKeyword("organizationIds", organizationIds);
 			document.addKeyword(
 				"organizationCount", String.valueOf(organizationIds.length));
+			document.addKeyword("organizationIds", organizationIds);
 
 			long[] roleIds = user.getRoleIds();
 

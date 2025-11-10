@@ -31,8 +31,8 @@ public class SXPElementModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, SXPElement sxpElement) {
-		document.addDate(Field.MODIFIED_DATE, sxpElement.getModifiedDate());
 		document.addKeyword(Field.HIDDEN, sxpElement.isHidden());
+		document.addDate(Field.MODIFIED_DATE, sxpElement.getModifiedDate());
 		document.addKeyword(Field.TYPE, sxpElement.getType());
 		document.addKeyword("readOnly", sxpElement.isReadOnly());
 

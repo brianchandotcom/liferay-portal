@@ -155,11 +155,11 @@ public class PatcherFixIndexer extends BaseIndexer<PatcherFix> {
 			_patcherProjectVersionLocalService.getPatcherProjectVersion(
 				patcherFix.getPatcherProjectVersionId());
 
-		document.addText(
-			"patcherProjectVersionName", patcherProjectVersion.getName());
 		document.addKeyword(
 			"patcherProductVersionId",
 			patcherProjectVersion.getPatcherProductVersionId());
+		document.addText(
+			"patcherProjectVersionName", patcherProjectVersion.getName());
 
 		document.addText("requestKey", patcherFix.getRequestKey());
 		document.addKeyword("status", patcherFix.getStatus());

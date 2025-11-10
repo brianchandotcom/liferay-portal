@@ -38,16 +38,6 @@ public class ConfigurationFilterStringUtilTest {
 				null, null);
 
 		_test(
-			true, filterString,
-			HashMapBuilder.put(
-				"companyId", "any"
-			).build());
-		_test(
-			true, filterString,
-			HashMapBuilder.put(
-				"dxp.lxc.liferay.com.virtualInstanceId", "any"
-			).build());
-		_test(
 			false, filterString,
 			HashMapBuilder.put(
 				"companyId", "any"
@@ -59,14 +49,25 @@ public class ConfigurationFilterStringUtilTest {
 			HashMapBuilder.put(
 				"companyId", "any"
 			).put(
-				"siteExternalReferenceCode", "any"
+				"portletInstanceId", "any"
 			).build());
 		_test(
 			false, filterString,
 			HashMapBuilder.put(
 				"companyId", "any"
 			).put(
-				"portletInstanceId", "any"
+				"siteExternalReferenceCode", "any"
+			).build());
+
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				"companyId", "any"
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				"dxp.lxc.liferay.com.virtualInstanceId", "any"
 			).build());
 
 		String companyId = String.valueOf(RandomTestUtil.randomLong());
@@ -77,23 +78,6 @@ public class ConfigurationFilterStringUtilTest {
 				companyId, virtualInstanceId);
 
 		_test(
-			true, filterString,
-			HashMapBuilder.put(
-				"companyId", companyId
-			).build());
-		_test(
-			true, filterString,
-			HashMapBuilder.put(
-				"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId
-			).build());
-		_test(
-			true, filterString,
-			HashMapBuilder.put(
-				"companyId", companyId
-			).put(
-				"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId
-			).build());
-		_test(
 			false, filterString,
 			HashMapBuilder.put(
 				"companyId", "any"
@@ -110,14 +94,32 @@ public class ConfigurationFilterStringUtilTest {
 			HashMapBuilder.put(
 				"companyId", companyId
 			).put(
-				"siteExternalReferenceCode", "any"
+				"portletInstanceId", "any"
 			).build());
 		_test(
 			false, filterString,
 			HashMapBuilder.put(
 				"companyId", companyId
 			).put(
-				"portletInstanceId", "any"
+				"siteExternalReferenceCode", "any"
+			).build());
+
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				"companyId", companyId
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				"companyId", companyId
+			).put(
+				"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId
 			).build());
 	}
 
@@ -128,6 +130,14 @@ public class ConfigurationFilterStringUtilTest {
 				null, null);
 
 		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				"groupId", "any"
+			).put(
+				"portletInstanceId", "any"
+			).build());
+
+		_test(
 			true, filterString,
 			HashMapBuilder.put(
 				"groupId", "any"
@@ -137,19 +147,25 @@ public class ConfigurationFilterStringUtilTest {
 			HashMapBuilder.put(
 				"siteExternalReferenceCode", "any"
 			).build());
-		_test(
-			false, filterString,
-			HashMapBuilder.put(
-				"groupId", "any"
-			).put(
-				"portletInstanceId", "any"
-			).build());
 
 		String groupId = String.valueOf(RandomTestUtil.randomLong());
 		String siteExternalReferenceCode = RandomTestUtil.randomString();
 
 		filterString = ConfigurationFilterStringUtil.getGroupScopedFilterString(
 			groupId, siteExternalReferenceCode);
+
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				"groupId", "any"
+			).build());
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				"groupId", groupId
+			).put(
+				"portletInstanceId", "any"
+			).build());
 
 		_test(
 			true, filterString,
@@ -161,18 +177,6 @@ public class ConfigurationFilterStringUtilTest {
 			HashMapBuilder.put(
 				"siteExternalReferenceCode", siteExternalReferenceCode
 			).build());
-		_test(
-			false, filterString,
-			HashMapBuilder.put(
-				"groupId", "any"
-			).build());
-		_test(
-			false, filterString,
-			HashMapBuilder.put(
-				"groupId", groupId
-			).put(
-				"portletInstanceId", "any"
-			).build());
 	}
 
 	@Test
@@ -182,27 +186,28 @@ public class ConfigurationFilterStringUtilTest {
 				null, null, null);
 
 		_test(
-			true, filterString,
+			false, filterString,
 			HashMapBuilder.put(
 				"groupId", "any"
-			).put(
-				"portletInstanceId", "any"
 			).build());
 		_test(
-			true, filterString,
+			false, filterString,
 			HashMapBuilder.put(
-				"portletInstanceId", "any"
-			).put(
 				"siteExternalReferenceCode", "any"
 			).build());
+
 		_test(
-			false, filterString,
+			true, filterString,
 			HashMapBuilder.put(
 				"groupId", "any"
+			).put(
+				"portletInstanceId", "any"
 			).build());
 		_test(
-			false, filterString,
+			true, filterString,
 			HashMapBuilder.put(
+				"portletInstanceId", "any"
+			).put(
 				"siteExternalReferenceCode", "any"
 			).build());
 
@@ -215,6 +220,26 @@ public class ConfigurationFilterStringUtilTest {
 				groupId, portletInstanceId, siteExternalReferenceCode);
 
 		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				"groupId", "any"
+			).put(
+				"portletInstanceId", portletInstanceId
+			).build());
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				"groupId", groupId
+			).put(
+				"portletInstanceId", "any"
+			).build());
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				"portletInstanceId", portletInstanceId
+			).build());
+
+		_test(
 			true, filterString,
 			HashMapBuilder.put(
 				"groupId", groupId
@@ -228,25 +253,6 @@ public class ConfigurationFilterStringUtilTest {
 			).put(
 				"siteExternalReferenceCode", siteExternalReferenceCode
 			).build());
-		_test(
-			false, filterString,
-			HashMapBuilder.put(
-				"groupId", "any"
-			).put(
-				"portletInstanceId", portletInstanceId
-			).build());
-		_test(
-			false, filterString,
-			HashMapBuilder.put(
-				"portletInstanceId", portletInstanceId
-			).build());
-		_test(
-			false, filterString,
-			HashMapBuilder.put(
-				"groupId", groupId
-			).put(
-				"portletInstanceId", "any"
-			).build());
 	}
 
 	@Test
@@ -254,12 +260,6 @@ public class ConfigurationFilterStringUtilTest {
 		String filterString =
 			ConfigurationFilterStringUtil.getSystemScopedFilterString();
 
-		_test(true, filterString, Collections.emptyMap());
-		_test(
-			true, filterString,
-			HashMapBuilder.put(
-				"companyId", "0"
-			).build());
 		_test(
 			false, filterString,
 			HashMapBuilder.put(
@@ -284,6 +284,13 @@ public class ConfigurationFilterStringUtilTest {
 			false, filterString,
 			HashMapBuilder.put(
 				"siteExternalReferenceCode", "any"
+			).build());
+
+		_test(true, filterString, Collections.emptyMap());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				"companyId", "0"
 			).build());
 	}
 

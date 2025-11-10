@@ -22,6 +22,8 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -73,30 +75,45 @@ public class DefaultCommerceOrderValidatorImpl
 					locale, "this-order-has-already-been-checked-out", null));
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByGroupId(
-				commerceOrder.getGroupId());
+		long cpConfigurationListId = 0;
 
-		CPConfigurationList cpConfigurationList =
-			_cpConfigurationListDiscovery.getCPConfigurationList(
-				cpInstance.getCompanyId(), cpInstance.getGroupId(),
-				commerceOrder.getCommerceAccountId(),
-				commerceChannel.getCommerceChannelId(),
-				commerceOrder.getCommerceOrderTypeId());
-
-		long cpConfigurationListId =
-			cpConfigurationList.getCPConfigurationListId();
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			_cpConfigurationEntryLocalService.fetchCPConfigurationEntry(
-				_classNameLocalService.getClassNameId(CPDefinition.class),
-				cpInstance.getCPDefinitionId(), cpConfigurationListId);
+			cpDefinition.fetchMasterCPConfigurationEntry();
 
-		if (cpConfigurationEntry == null) {
-			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+		if (cpConfigurationEntry != null) {
+			cpConfigurationListId =
+				cpConfigurationEntry.getCPConfigurationListId();
+		}
+
+		try {
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.getCommerceChannelByGroupId(
+					commerceOrder.getGroupId());
+
+			CPConfigurationList cpConfigurationList =
+				_cpConfigurationListDiscovery.getCPConfigurationList(
+					cpInstance.getCompanyId(), cpInstance.getGroupId(),
+					commerceOrder.getCommerceAccountId(),
+					commerceChannel.getCommerceChannelId(),
+					commerceOrder.getCommerceOrderTypeId());
+
+			cpConfigurationListId =
+				cpConfigurationList.getCPConfigurationListId();
 
 			cpConfigurationEntry =
-				cpDefinition.fetchMasterCPConfigurationEntry();
+				_cpConfigurationEntryLocalService.getCPConfigurationEntry(
+					_classNameLocalService.getClassNameId(CPDefinition.class),
+					cpInstance.getCPDefinitionId(), cpConfigurationListId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find CPConfigurationList for " +
+						cpInstance.getSku(),
+					portalException);
+			}
 		}
 
 		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
@@ -288,6 +305,9 @@ public class DefaultCommerceOrderValidatorImpl
 
 		return _language.format(resourceBundle, key, arguments);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultCommerceOrderValidatorImpl.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

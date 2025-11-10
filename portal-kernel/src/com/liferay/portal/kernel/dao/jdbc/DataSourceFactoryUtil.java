@@ -365,22 +365,22 @@ public class DataSourceFactoryUtil {
 	}
 
 	private static Map<String, String> _getExistingParameterValues(
-		char delimiter, String paramString) {
+		char delimiter, String queryString) {
 
 		Map<String, String> existingParameterValues = new TreeMap<>();
 
-		for (String parameterString :
-				StringUtil.split(paramString, delimiter)) {
+		for (String queryStringEntry :
+				StringUtil.split(queryString, delimiter)) {
 
-			String[] parameter = StringUtil.split(
-				parameterString, CharPool.EQUAL);
+			String[] keyValuePair = StringUtil.split(
+				queryStringEntry, CharPool.EQUAL);
 
-			if (parameter.length == 2) {
-				existingParameterValues.put(parameter[0], parameter[1]);
+			if (keyValuePair.length == 2) {
+				existingParameterValues.put(keyValuePair[0], keyValuePair[1]);
 			}
 			else {
 				existingParameterValues.put(
-					parameterString, _MALFORMED_PARAMETER_PLACE_HOLDER);
+					queryStringEntry, _MALFORMED_PARAMETER_PLACE_HOLDER);
 			}
 		}
 
@@ -458,11 +458,11 @@ public class DataSourceFactoryUtil {
 		if (index != -1) {
 			baseURL = url.substring(0, index);
 
-			String paramString = url.substring(index + 1);
+			String queryString = url.substring(index + 1);
 
-			if (!paramString.isEmpty()) {
+			if (!queryString.isEmpty()) {
 				existingParameterValues = _getExistingParameterValues(
-					parameterDelimiter, paramString);
+					parameterDelimiter, queryString);
 			}
 		}
 

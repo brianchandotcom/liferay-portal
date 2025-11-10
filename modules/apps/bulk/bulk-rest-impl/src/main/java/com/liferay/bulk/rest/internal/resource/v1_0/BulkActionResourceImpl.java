@@ -6,9 +6,11 @@
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.BulkAction;
+import com.liferay.bulk.rest.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
+import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
 import com.liferay.bulk.rest.internal.selection.v1_0.BulkActionBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.BulkActionResource;
 import com.liferay.bulk.selection.BulkSelection;
@@ -16,43 +18,73 @@ import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.bulk.selection.BulkSelectionFactoryRegistry;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectEntryVersion;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
+import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.trash.TrashHelper;
+
+import jakarta.validation.ValidationException;
+
+import jakarta.ws.rs.BadRequestException;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -101,6 +133,79 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			_getInputMap(bulkAction, bulkActionTask, type));
 
 		return bulkActionTask;
+	}
+
+	@Override
+	public Page<BulkActionItem> postBulkActionItemPreviewPage(
+			Boolean fetchChildren, String search, Filter filter,
+			Pagination pagination, Sort[] sorts, BulkAction bulkAction)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564") ||
+			!Objects.equals(
+				bulkAction.getType(), BulkAction.Type.DELETE_BULK_ACTION)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if (ArrayUtil.isNotEmpty(sorts)) {
+			Sort sort = sorts[0];
+
+			String fieldName = sort.getFieldName();
+
+			if ((!StringUtil.equalsIgnoreCase(fieldName, "name") &&
+				 !StringUtil.equalsIgnoreCase(fieldName, "usages")) ||
+				(sorts.length > 1)) {
+
+				throw new BadRequestException(
+					"Only the fields \"name\" and \"usages\" are sortable");
+			}
+		}
+		else {
+			sorts = new Sort[] {new Sort("usages", true)};
+		}
+
+		BulkActionItem[] bulkActionItems = bulkAction.getBulkActionItems();
+
+		if (GetterUtil.getBoolean(fetchChildren)) {
+			if (ArrayUtil.isEmpty(bulkActionItems)) {
+				return Page.of(Collections.emptyList());
+			}
+
+			BulkActionItem bulkActionItem = bulkActionItems[0];
+
+			if ((bulkActionItems.length > 1) ||
+				!Objects.equals(
+					bulkActionItem.getClassName(),
+					ObjectEntryFolder.class.getName())) {
+
+				throw new BadRequestException(
+					"\"fetchChildren\" is only supported with a single folder");
+			}
+
+			return _getBulkActionItemPreviewPage(
+				_getObjectEntryFolderBulkActionItems(
+					bulkActionItem.getClassPK()),
+				pagination, search, sorts[0]);
+		}
+
+		SelectionScope selectionScope = bulkAction.getSelectionScope();
+
+		if (ArrayUtil.isEmpty(bulkActionItems) &&
+			!GetterUtil.getBoolean(selectionScope.getSelectAll())) {
+
+			return Page.of(Collections.emptyList());
+		}
+
+		if (!GetterUtil.getBoolean(selectionScope.getSelectAll())) {
+			return _getBulkActionItemPreviewPage(
+				ListUtil.fromArray(bulkActionItems), pagination, search,
+				sorts[0]);
+		}
+
+		return _getBulkActionItemPreviewPage(
+			filter, pagination, search, sorts[0]);
 	}
 
 	private BulkActionTask _addBulkActionTask(BulkAction.Type type)
@@ -187,6 +292,87 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		).build();
 	}
 
+	private Page<BulkActionItem> _getBulkActionItemPreviewPage(
+			Filter filter, Pagination pagination, String search, Sort sort)
+		throws Exception {
+
+		if (filter == null) {
+			throw new ValidationException("Filter is null");
+		}
+
+		List<BulkActionItem> bulkActionItems = new ArrayList<>();
+
+		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
+			contextHttpServletRequest);
+
+		dynamicServletRequest.setParameter("nestedFields", "embedded");
+
+		SearchResultResource searchResultResource =
+			_searchResultResourceFactory.create(
+			).httpServletRequest(
+				dynamicServletRequest
+			).httpServletResponse(
+				contextHttpServletResponse
+			).preferredLocale(
+				contextUser.getLocale()
+			).uriInfo(
+				contextUriInfo
+			).user(
+				contextUser
+			).build();
+
+		if (StringUtil.equalsIgnoreCase(sort.getFieldName(), "name")) {
+			sort.setFieldName(
+				Field.getSortableFieldName(
+					"localized_title_".concat(contextUser.getLanguageId())));
+		}
+
+		Page<SearchResult> searchPage = searchResultResource.getSearchPage(
+			null, true, null, null, search, filter, pagination,
+			new Sort[] {sort});
+
+		for (SearchResult searchResult : searchPage.getItems()) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				String.valueOf(searchResult.getEmbedded()));
+
+			bulkActionItems.add(_toBulkActionItem(jsonObject.getLong("id")));
+		}
+
+		if (StringUtil.equalsIgnoreCase(sort.getFieldName(), "usages")) {
+			bulkActionItems = _sortBulkActionItems(bulkActionItems, sort);
+		}
+
+		return Page.of(bulkActionItems, pagination, searchPage.getTotalCount());
+	}
+
+	private Page<BulkActionItem> _getBulkActionItemPreviewPage(
+		List<BulkActionItem> bulkActionItems1, Pagination pagination,
+		String search, Sort sort) {
+
+		List<BulkActionItem> bulkActionItems2 = new ArrayList<>();
+
+		long totalCount = bulkActionItems1.size();
+
+		for (BulkActionItem bulkActionItem : bulkActionItems1) {
+			bulkActionItems2.add(
+				_toBulkActionItem(
+					GetterUtil.getLong(bulkActionItem.getClassPK())));
+		}
+
+		if (Validator.isNotNull(search)) {
+			bulkActionItems2 = ListUtil.filter(
+				bulkActionItems2,
+				bulkActionItem -> StringUtil.containsIgnoreCase(
+					bulkActionItem.getName(), search, StringPool.BLANK));
+
+			totalCount = bulkActionItems2.size();
+		}
+
+		return Page.of(
+			_sortBulkActionItems(bulkActionItems2, sort), pagination,
+			totalCount);
+	}
+
 	private BulkSelectionAction<Object> _getBulkSelectionAction(
 		BulkAction.Type type) {
 
@@ -201,6 +387,14 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 
 		throw new UnsupportedOperationException();
+	}
+
+	private String _getDeletionType(long groupId) throws PortalException {
+		if (_trashHelper.isTrashEnabled(groupId)) {
+			return "RECYCLE_BIN";
+		}
+
+		return "PERMANENT_DELETION";
 	}
 
 	private Map<String, Serializable> _getInputMap(
@@ -242,6 +436,68 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 
 		throw new UnsupportedOperationException();
+	}
+
+	private String _getMimeType(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		if (Objects.equals(
+				objectDefinition.getExternalReferenceCode(),
+				"L_CMS_BASIC_WEB_CONTENT")) {
+
+			return "basic-web-content";
+		}
+		else if (Objects.equals(
+					objectDefinition.getExternalReferenceCode(),
+					"L_CMS_BLOG")) {
+
+			return "blog";
+		}
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getObjectEntryId(), objectEntry.getVersion());
+
+		JSONObject contentJSONObject = _jsonFactory.createJSONObject(
+			objectEntryVersion.getContent());
+
+		JSONObject propertiesJSONObject = contentJSONObject.getJSONObject(
+			"properties");
+
+		JSONObject fileJSONObject = propertiesJSONObject.getJSONObject("file");
+
+		if (fileJSONObject != null) {
+			return _dlMimeTypeDisplayContext.getIconFileMimeType(
+				fileJSONObject.getString("mimeType"));
+		}
+
+		return "custom-structure";
+	}
+
+	private List<BulkActionItem> _getObjectEntryFolderBulkActionItems(
+			long objectObjectEntryFolderId)
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				objectObjectEntryFolderId);
+
+		List<BulkActionItem> bulkActionItems = transform(
+			_objectEntryLocalService.getObjectEntryFolderObjectEntries(
+				objectEntryFolder.getGroupId(), objectObjectEntryFolderId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			this::_toBulkActionItem);
+
+		bulkActionItems.addAll(
+			transform(
+				_objectEntryFolderLocalService.getObjectEntryFolders(
+					objectEntryFolder.getGroupId(),
+					objectEntryFolder.getCompanyId(), objectObjectEntryFolderId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				this::_toBulkActionItem));
+
+		return bulkActionItems;
 	}
 
 	private Serializable _getPermissions(
@@ -329,6 +585,169 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return permissionsList.toArray(new Permission[0]);
 	}
 
+	private long _getUsagesCount(
+			String className, long objectDefinitionId, long objectEntryId)
+		throws Exception {
+
+		int usagesCount =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesCount(
+					_portal.getClassNameId(className), objectEntryId);
+
+		boolean skipObjectEntryResourcePermission =
+			ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission();
+
+		try {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
+			List<ObjectRelationship> objectRelationships =
+				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinitionId);
+
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							className, contextCompany.getCompanyId(),
+							objectRelationship.getType());
+
+				usagesCount +=
+					objectRelatedModelsProvider.getRelatedModelsCount(
+						0, objectRelationship.getObjectRelationshipId(), null,
+						objectEntryId, null);
+			}
+		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+				skipObjectEntryResourcePermission);
+		}
+
+		return usagesCount;
+	}
+
+	private List<BulkActionItem> _sortBulkActionItems(
+		List<BulkActionItem> bulkActionItems, Sort sort) {
+
+		return ListUtil.sort(
+			bulkActionItems,
+			(bulkActionItem1, bulkActionItem2) -> {
+				if (StringUtil.equalsIgnoreCase(sort.getFieldName(), "name")) {
+					String name = bulkActionItem1.getName();
+
+					int value = name.compareTo(bulkActionItem2.getName());
+
+					if (!sort.isReverse()) {
+						return value;
+					}
+
+					return -value;
+				}
+
+				Map<String, Object> attributes1 =
+					bulkActionItem1.getAttributes();
+
+				Long usages = GetterUtil.getLong(attributes1.get("usages"));
+
+				Map<String, Object> attributes2 =
+					bulkActionItem2.getAttributes();
+
+				int value = usages.compareTo(
+					GetterUtil.getLong(attributes2.get("usages")));
+
+				if (!sort.isReverse()) {
+					return value;
+				}
+
+				return -value;
+			});
+	}
+
+	private BulkActionItem _toBulkActionItem(long classPK) {
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			classPK);
+
+		if (objectEntry != null) {
+			return _toBulkActionItem(objectEntry);
+		}
+
+		return _toBulkActionItem(
+			_objectEntryFolderLocalService.fetchObjectEntryFolder(classPK));
+	}
+
+	private BulkActionItem _toBulkActionItem(ObjectEntry objectEntry) {
+		BulkActionItem bulkActionItem = new BulkActionItem();
+
+		bulkActionItem.setClassPK(objectEntry::getObjectEntryId);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		bulkActionItem.setAttributes(
+			() -> HashMapBuilder.<String, Object>put(
+				"deletionType", () -> _getDeletionType(objectEntry.getGroupId())
+			).put(
+				"mimeType", _getMimeType(objectDefinition, objectEntry)
+			).put(
+				"type", "ASSET"
+			).put(
+				"usages",
+				_getUsagesCount(
+					objectDefinition.getClassName(),
+					objectDefinition.getObjectDefinitionId(),
+					objectEntry.getObjectEntryId())
+			).build());
+
+		bulkActionItem.setClassExternalReferenceCode(
+			objectEntry::getExternalReferenceCode);
+		bulkActionItem.setClassName(objectDefinition::getClassName);
+		bulkActionItem.setName(
+			() -> objectEntry.getTitleValue(
+				LocaleUtil.toLanguageId(contextUser.getLocale()), true));
+
+		return bulkActionItem;
+	}
+
+	private BulkActionItem _toBulkActionItem(
+		ObjectEntryFolder objectEntryFolder) {
+
+		BulkActionItem bulkActionItem = new BulkActionItem();
+
+		bulkActionItem.setClassPK(objectEntryFolder::getObjectEntryFolderId);
+
+		bulkActionItem.setAttributes(
+			() -> HashMapBuilder.<String, Object>put(
+				"deletionType",
+				() -> _getDeletionType(objectEntryFolder.getGroupId())
+			).put(
+				"itemsCount",
+				() -> {
+					long itemsCount =
+						_objectEntryFolderLocalService.
+							getObjectEntryFoldersCount(
+								objectEntryFolder.getGroupId(),
+								objectEntryFolder.getCompanyId(),
+								objectEntryFolder.getObjectEntryFolderId());
+
+					itemsCount +=
+						_objectEntryLocalService.
+							getObjectEntryFolderObjectEntriesCount(
+								objectEntryFolder.getGroupId(),
+								objectEntryFolder.getObjectEntryFolderId());
+
+					return itemsCount;
+				}
+			).put(
+				"type", "FOLDER"
+			).build());
+		bulkActionItem.setClassExternalReferenceCode(
+			objectEntryFolder::getExternalReferenceCode);
+		bulkActionItem.setClassName(objectEntryFolder::getModelClassName);
+		bulkActionItem.setName(objectEntryFolder::getName);
+
+		return bulkActionItem;
+	}
+
 	@Reference
 	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;
 
@@ -342,6 +761,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference(target = "(bulk.selection.action.key=delete.object)")
 	private BulkSelectionAction<Object> _deleteObjectBulkSelectionAction;
 
+	@Reference
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
@@ -354,16 +776,36 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	@Reference
 	private Localization _localization;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
+
+	@Reference
+	private ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference(target = "(bulk.selection.action.key=permission.object)")
 	private BulkSelectionAction<Object> _permissionObjectBulkSelectionAction;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RoleLocalService _roleLocalService;
@@ -373,5 +815,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private SearchResultResource.Factory _searchResultResourceFactory;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

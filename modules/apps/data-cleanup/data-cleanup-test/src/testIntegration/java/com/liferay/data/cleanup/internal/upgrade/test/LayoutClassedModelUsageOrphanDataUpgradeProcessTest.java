@@ -6,6 +6,9 @@
 package com.liferay.data.cleanup.internal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -24,8 +27,11 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -49,7 +55,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -68,108 +73,74 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_layout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_groupLocalService.fetchGroup(TestPropsValues.getGroupId()),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED);
-
-		_draftLayout = _layout.fetchDraftLayout();
-	}
-
 	@Test
 	@TestInfo({"LPD-60259", "LPD-62154"})
 	public void testLayoutClassedModelUsageOrphanDataUpgradeProcess()
 		throws Exception {
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			TestPropsValues.getGroupId(), 0);
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid());
-
-		ContentLayoutTestUtil.addItemToLayout(
-			JSONUtil.put(
-				"styles",
-				JSONUtil.put(
-					"backgroundImage",
-					JSONUtil.put(
-						"className", JournalArticle.class.getName()
-					).put(
-						"classNameId",
-						_portal.getClassNameId(JournalArticle.class)
-					).put(
-						"classPK", journalArticle.getResourcePrimKey()
-					).put(
-						"fieldId", "JournalArticle_authorProfileImage"
-					))
-			).toString(),
-			LayoutDataItemTypeConstants.TYPE_CONTAINER, _draftLayout,
-			_layoutStructureProvider, segmentsExperienceId);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				"fragment-entry-key", RandomTestUtil.randomString(),
-				StringPool.BLANK,
-				"<h1 data-lfr-editable-id=\"element-text\" " +
-					"data-lfr-editable-type=\"text\">Heading Example</h1>",
-				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
-				false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"element-text",
-					JSONUtil.put(
-						"className", JournalArticle.class.getName()
-					).put(
-						"classNameId",
-						_portal.getClassNameId(JournalArticle.class)
-					).put(
-						"classPK", journalArticle.getResourcePrimKey()
-					).put(
-						"fieldId", "JournalArticle_title"
-					))
-			).toString(),
-			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), _draftLayout,
-			fragmentEntry.getFragmentEntryKey(), segmentsExperienceId,
-			fragmentEntry.getType());
-
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+		_setUp();
 
 		_assertLayoutClassedModelUsages(
-			journalArticle.getResourcePrimKey(), _draftLayout.getPlid(),
+			0, _journalArticle.getResourcePrimKey(), _draftLayout.getPlid(),
 			_layout.getPlid());
 
 		_updateLayoutClassedModelUsages(
-			_draftLayout.getPlid(), _layout.getPlid());
+			0, _draftLayout.getPlid(), _layout.getPlid());
 
-		_upgrade(journalArticle);
+		_runUpgrade(0);
 
-		_updateLayoutClassedModelUsages();
+		_updateLayoutClassedModelUsages(0);
 
-		_upgrade(journalArticle);
+		_runUpgrade(0);
 	}
 
-	private void _assertLayoutClassedModelUsages(long classPK, long... plids)
+	@Test
+	@TestInfo("LPD-70786")
+	public void testLayoutClassedModelUsageOrphanDataUpgradeProcessWithCTCollection()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CTSettingsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			CTCollection ctCollection = _ctCollectionService.addCTCollection(
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection.getCtCollectionId())) {
+
+				_setUp();
+
+				_assertLayoutClassedModelUsages(
+					ctCollection.getCtCollectionId(),
+					_journalArticle.getResourcePrimKey(),
+					_draftLayout.getPlid(), _layout.getPlid());
+
+				_updateLayoutClassedModelUsages(
+					ctCollection.getCtCollectionId());
+
+				_runUpgrade(ctCollection.getCtCollectionId());
+			}
+
+			_ctCollectionService.publishCTCollection(
+				TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
+
+			_updateLayoutClassedModelUsages(ctCollection.getCtCollectionId());
+
+			_runUpgrade(0);
+		}
+	}
+
+	private void _assertLayoutClassedModelUsages(
+			long ctCollectionId, long classPK, long... plids)
 		throws Exception {
 
 		for (long plid : plids) {
@@ -181,12 +152,15 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 				layoutClassedModelUsages.toString(), 2,
 				layoutClassedModelUsages.size());
 
-			for (int i = 0; i < 2; i++) {
-				LayoutClassedModelUsage layoutClassedModelUsage =
-					layoutClassedModelUsages.get(i);
+			for (LayoutClassedModelUsage layoutClassedModelUsage :
+					layoutClassedModelUsages) {
 
 				Assert.assertEquals(
 					classPK, layoutClassedModelUsage.getClassPK());
+
+				Assert.assertEquals(
+					ctCollectionId,
+					layoutClassedModelUsage.getCtCollectionId());
 
 				if (_portal.getClassNameId(FragmentEntryLink.class) ==
 						layoutClassedModelUsage.getContainerType()) {
@@ -217,7 +191,103 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 		}
 	}
 
-	private void _updateLayoutClassedModelUsages() {
+	private void _runUpgrade(long ctCollectionId) throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.data.cleanup.internal.configuration." +
+						"DataRemovalConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"removeLayoutClassedModelUsageOrphanData", true
+					).build())) {
+
+			_assertLayoutClassedModelUsages(
+				ctCollectionId, _journalArticle.getResourcePrimKey(),
+				_draftLayout.getPlid(), _layout.getPlid());
+		}
+	}
+
+	private void _setUp() throws Exception {
+		_layout = LayoutTestUtil.addTypeContentPublishedLayout(
+			_groupLocalService.fetchGroup(TestPropsValues.getGroupId()),
+			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED);
+
+		_draftLayout = _layout.fetchDraftLayout();
+
+		_journalArticle = JournalTestUtil.addArticle(
+			TestPropsValues.getGroupId(), 0);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_draftLayout.getPlid());
+
+		ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"backgroundImage",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						_portal.getClassNameId(JournalArticle.class)
+					).put(
+						"classPK", _journalArticle.getResourcePrimKey()
+					).put(
+						"fieldId", "JournalArticle_authorProfileImage"
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER, _draftLayout,
+			_layoutStructureProvider, segmentsExperienceId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK,
+				"<h1 data-lfr-editable-id=\"element-text\" " +
+					"data-lfr-editable-type=\"text\">Heading Example</h1>",
+				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
+				false, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						_portal.getClassNameId(JournalArticle.class)
+					).put(
+						"classPK", _journalArticle.getResourcePrimKey()
+					).put(
+						"fieldId", "JournalArticle_title"
+					))
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), _draftLayout,
+			fragmentEntry.getFragmentEntryKey(), segmentsExperienceId,
+			fragmentEntry.getType());
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+	}
+
+	private void _updateLayoutClassedModelUsages(long ctCollectionId) {
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.
 				getLayoutClassedModelUsagesByPlid(_layout.getPlid());
@@ -247,8 +317,12 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 			String layoutContainerKey =
 				layoutClassedModelUsage.getContainerKey();
 
+			layoutClassedModelUsage.setCtCollectionId(ctCollectionId);
+
 			layoutClassedModelUsage.setContainerKey(
 				draftLayoutClassedModelUsage.getContainerKey());
+
+			draftLayoutClassedModelUsage.setCtCollectionId(ctCollectionId);
 
 			draftLayoutClassedModelUsage.setContainerKey(layoutContainerKey);
 
@@ -260,7 +334,9 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 		}
 	}
 
-	private void _updateLayoutClassedModelUsages(long... plids) {
+	private void _updateLayoutClassedModelUsages(
+		long ctCollectionId, long... plids) {
+
 		for (long plid : plids) {
 			List<LayoutClassedModelUsage> layoutClassedModelUsages =
 				_layoutClassedModelUsageLocalService.
@@ -268,6 +344,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 
 			for (LayoutClassedModelUsage layoutClassedModelUsage :
 					layoutClassedModelUsages) {
+
+				layoutClassedModelUsage.setCtCollectionId(ctCollectionId);
 
 				layoutClassedModelUsage.setContainerKey(
 					String.valueOf(RandomTestUtil.randomLong()));
@@ -278,20 +356,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 		}
 	}
 
-	private void _upgrade(JournalArticle journalArticle) throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.data.cleanup.internal.configuration." +
-						"DataRemovalConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"removeLayoutClassedModelUsageOrphanData", true
-					).build())) {
-
-			_assertLayoutClassedModelUsages(
-				journalArticle.getResourcePrimKey(), _draftLayout.getPlid(),
-				_layout.getPlid());
-		}
-	}
+	@Inject
+	private CTCollectionService _ctCollectionService;
 
 	private Layout _draftLayout;
 
@@ -307,6 +373,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
+	private JournalArticle _journalArticle;
 	private Layout _layout;
 
 	@Inject

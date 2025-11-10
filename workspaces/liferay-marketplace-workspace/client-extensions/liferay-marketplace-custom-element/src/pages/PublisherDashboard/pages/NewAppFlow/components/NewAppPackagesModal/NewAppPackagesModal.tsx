@@ -18,6 +18,7 @@ import useListTypeDefinition from '../../../../../../hooks/useListTypeDefinition
 import i18n from '../../../../../../i18n';
 import {getRandomID} from '../../../../../../utils/string';
 import {LIFERAY_VERSION_PICKLIST} from '../../constants';
+
 import './NewAppPackagesModal.scss';
 
 type NewAppPackageVersionModal = {

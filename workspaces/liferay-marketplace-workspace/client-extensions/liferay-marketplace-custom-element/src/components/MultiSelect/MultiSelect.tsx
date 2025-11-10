@@ -18,6 +18,7 @@ type MultiSelectProps<T> = {
 	multiselectKey: string;
 	onChange?: (values: T) => void;
 	onItemsChange: (values: T) => void;
+	placeholder?: string;
 	required?: boolean;
 	selectedItems: T[];
 	sourceItems: T[];

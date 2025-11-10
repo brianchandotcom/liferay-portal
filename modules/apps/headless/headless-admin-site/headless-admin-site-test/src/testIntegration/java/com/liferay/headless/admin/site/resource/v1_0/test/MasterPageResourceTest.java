@@ -56,6 +56,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.sites.kernel.util.Sites;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -191,6 +195,20 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					false, postMasterPage.getExternalReferenceCode(),
 					masterPage.getThumbnail(
 					).getExternalReferenceCode());
+
+				URL url = new URL(
+					masterPage.getThumbnail(
+					).getUrl());
+
+				URLConnection urlConnection = url.openConnection();
+
+				if (urlConnection instanceof
+						HttpURLConnection httpURLConnection) {
+
+					Assert.assertTrue(
+						httpURLConnection.getResponseCode() !=
+							HttpURLConnection.HTTP_OK);
+				}
 			}
 			else {
 				Assert.assertNull(masterPage.getThumbnail());

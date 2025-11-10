@@ -630,9 +630,20 @@ public abstract class BaseWorkspaceGitRepository
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git clone --depth 1 --no-checkout file://");
+		sb.append("git clone --depth ");
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		LocalGitBranch localGitBranch = getLocalGitBranch();
+
+		int depth =
+			gitWorkingDirectory.getCommitCountBetweenBranches(
+				localGitBranch.getUpstreamBranchName(),
+				localGitBranch.getName()) + 1;
+
+		sb.append(depth);
+
+		sb.append(" --no-checkout file://");
 
 		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
 

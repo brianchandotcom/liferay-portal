@@ -59,21 +59,21 @@ public class DDMStructureModelDocumentContributor
 			}
 		}
 
-		document.addKeyword(
-			"resourcePermissionName",
-			_ddmPermissionSupport.getStructureModelResourceName(
-				ddmStructure.getClassNameId()));
-		document.addKeyword(
-			"resourceClassNameId", ddmStructure.getClassNameId());
-		document.addKeyword("structureKey", ddmStructure.getStructureKey());
-		document.addKeyword("storageType", ddmStructure.getStorageType());
-		document.addKeyword("type", ddmStructure.getType());
 		document.addLocalizedKeyword(
 			"localized_name",
 			_localization.populateLocalizationMap(
 				ddmStructure.getNameMap(), ddmStructure.getDefaultLanguageId(),
 				ddmStructure.getGroupId()),
 			true, true);
+		document.addKeyword(
+			"resourceClassNameId", ddmStructure.getClassNameId());
+		document.addKeyword(
+			"resourcePermissionName",
+			_ddmPermissionSupport.getStructureModelResourceName(
+				ddmStructure.getClassNameId()));
+		document.addKeyword("storageType", ddmStructure.getStorageType());
+		document.addKeyword("structureKey", ddmStructure.getStructureKey());
+		document.addKeyword("type", ddmStructure.getType());
 	}
 
 	protected String[] getLanguageIds(

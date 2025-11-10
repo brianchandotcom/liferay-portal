@@ -34,15 +34,15 @@ public class KaleoInstanceModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, KaleoInstance kaleoInstance) {
+		document.addKeyword(
+			Field.CLASS_NAME_ID,
+			_portal.getClassNameId(kaleoInstance.getClassName()));
 		document.addDateSortable(
 			Field.CREATE_DATE, kaleoInstance.getCreateDate());
 		document.addDateSortable(
 			Field.MODIFIED_DATE, kaleoInstance.getModifiedDate());
 		document.addKeyword("active", kaleoInstance.isActive());
 		document.addKeyword("className", kaleoInstance.getClassName());
-		document.addKeyword(
-			Field.CLASS_NAME_ID,
-			_portal.getClassNameId(kaleoInstance.getClassName()));
 		document.addKeyword("classPK", kaleoInstance.getClassPK());
 		document.addKeywordSortable("completed", kaleoInstance.isCompleted());
 		document.addDateSortable(
@@ -69,11 +69,11 @@ public class KaleoInstanceModelDocumentContributor
 		document.addKeyword(
 			"kaleoDefinitionName", kaleoInstance.getKaleoDefinitionName());
 		document.addKeyword(
-			"kaleoDefinitionVersionId",
-			kaleoInstance.getKaleoDefinitionVersionId());
-		document.addKeyword(
 			"kaleoDefinitionVersion",
 			kaleoInstance.getKaleoDefinitionVersion());
+		document.addKeyword(
+			"kaleoDefinitionVersionId",
+			kaleoInstance.getKaleoDefinitionVersionId());
 		document.addNumberSortable(
 			"kaleoInstanceId", kaleoInstance.getKaleoInstanceId());
 		document.addKeyword(

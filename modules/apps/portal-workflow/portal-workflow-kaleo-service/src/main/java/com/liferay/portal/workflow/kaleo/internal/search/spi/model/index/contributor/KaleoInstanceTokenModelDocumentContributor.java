@@ -38,20 +38,22 @@ public class KaleoInstanceTokenModelDocumentContributor
 		Document document, KaleoInstanceToken kaleoInstanceToken) {
 
 		document.addKeyword(
-			KaleoInstanceTokenField.CLASS_NAME,
-			kaleoInstanceToken.getClassName());
-		document.addKeyword(
 			Field.CLASS_NAME_ID,
 			portal.getClassNameId(kaleoInstanceToken.getClassName()));
 		document.addKeyword(Field.CLASS_PK, kaleoInstanceToken.getClassPK());
+		document.addDateSortable(
+			Field.CREATE_DATE, kaleoInstanceToken.getCreateDate());
+		document.addDateSortable(
+			Field.MODIFIED_DATE, kaleoInstanceToken.getModifiedDate());
+		document.addKeyword(
+			KaleoInstanceTokenField.CLASS_NAME,
+			kaleoInstanceToken.getClassName());
 		document.addKeywordSortable(
 			KaleoInstanceTokenField.COMPLETED,
 			kaleoInstanceToken.isCompleted());
 		document.addDateSortable(
 			KaleoInstanceTokenField.COMPLETION_DATE,
 			kaleoInstanceToken.getCompletionDate());
-		document.addDateSortable(
-			Field.CREATE_DATE, kaleoInstanceToken.getCreateDate());
 		document.addKeywordSortable(
 			KaleoInstanceTokenField.CURRENT_KALEO_NODE_NAME,
 			kaleoInstanceToken.getCurrentKaleoNodeName());
@@ -61,8 +63,6 @@ public class KaleoInstanceTokenModelDocumentContributor
 		document.addKeyword(
 			KaleoInstanceTokenField.KALEO_INSTANCE_TOKEN_ID,
 			kaleoInstanceToken.getKaleoInstanceTokenId());
-		document.addDateSortable(
-			Field.MODIFIED_DATE, kaleoInstanceToken.getModifiedDate());
 		document.addKeyword(
 			KaleoInstanceTokenField.PARENT_KALEO_INSTANCE_TOKEN_ID,
 			kaleoInstanceToken.getParentKaleoInstanceTokenId());

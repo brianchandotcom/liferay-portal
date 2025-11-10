@@ -65,7 +65,6 @@ public class DDMTemplateModelDocumentContributor
 			}
 		}
 
-		document.addKeyword("type", ddmTemplate.getType());
 		document.addLocalizedText(
 			Field.DESCRIPTION,
 			_localization.populateLocalizationMap(
@@ -76,6 +75,7 @@ public class DDMTemplateModelDocumentContributor
 			_localization.populateLocalizationMap(
 				ddmTemplate.getNameMap(), ddmTemplate.getDefaultLanguageId(),
 				ddmTemplate.getGroupId()));
+		document.addKeyword("type", ddmTemplate.getType());
 	}
 
 	protected String[] getLanguageIds(

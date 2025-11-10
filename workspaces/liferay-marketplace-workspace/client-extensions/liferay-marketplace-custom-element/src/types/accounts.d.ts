@@ -74,11 +74,12 @@ type UserAccount = {
 	image: string;
 	isCustomerAccount: boolean;
 	isPublisherAccount: boolean;
+	lastLoginDate: string;
 	logoURL: string;
 	name: string;
 	newsSubscription: boolean;
 	password: string;
-	roleBriefs: RoleBrife[];
+	roleBriefs: RoleBrief[];
 	type: string;
 	userAccountContactInformation: {
 		telephones: {

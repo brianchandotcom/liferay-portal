@@ -301,6 +301,14 @@ const zodSchema = {
 		}),
 		termsAndConditions: z.boolean().refine((data) => data === true),
 	},
+	ssaInviteUsers: z.object({
+		emailAddress: z
+			.string()
+			.email({message: i18n.translate('please-fill-in-a-valid-email')}),
+		roles: z
+			.array(z.object({value: z.string()}))
+			.nonempty(i18n.translate('at-least-one-role-must-be-provided')),
+	}),
 	ssaTrialForm: z.object({
 		duration: z.coerce
 			.number()

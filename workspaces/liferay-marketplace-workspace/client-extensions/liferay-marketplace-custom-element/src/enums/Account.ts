@@ -22,3 +22,7 @@ export enum AccountTypes {
 	PERSON = 'person',
 	SUPPLIER = 'supplier',
 }
+
+export enum UserRoleTypes {
+	SSA_USER = 'SSA User',
+}

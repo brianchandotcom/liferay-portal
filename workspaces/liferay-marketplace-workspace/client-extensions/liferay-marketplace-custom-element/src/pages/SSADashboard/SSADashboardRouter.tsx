@@ -7,6 +7,7 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import withProviders from '../../hoc/withProviders';
 import SSADashboardOutlet from './SSADashboardOutlet';
+import ManageUsers from './pages/ManageUsers';
 import MySaaSTrials from './pages/MySaaSTrials';
 import SaaSTrials from './pages/SaaSTrial';
 import TrialDetails from './pages/TrialDetails';
@@ -22,6 +23,8 @@ const SSADashboardRouter = () => (
 				<Route element={<SaaSTrials />} path="saas-trials" />
 
 				<Route element={<TrialDetails />} path="details/:orderId" />
+
+				<Route element={<ManageUsers />} path="manage-users" />
 			</Route>
 		</Routes>
 	</HashRouter>

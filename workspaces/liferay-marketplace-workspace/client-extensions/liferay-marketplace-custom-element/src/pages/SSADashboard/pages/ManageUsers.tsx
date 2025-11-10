@@ -1,0 +1,116 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useModal} from '@clayui/modal';
+import Button from '@clayui/button';
+
+import {formatDate} from '../../../utils/date';
+import {ssaRoles} from '../constants';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import i18n from '../../../i18n';
+import InviteUserModal from '../modals/InviteUserModal';
+import ListView from '../../../components/ListView';
+import Page from '../../../components/Page';
+import useManageUserActions from '../hooks/useManageUserActions';
+import {useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
+
+export default function ManageUsers() {
+	const {marketplaceUserAccount} = useMarketplaceContext();
+	const {properties} = useMarketplaceContext();
+	const actions = useManageUserActions();
+	const modal = useModal();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!marketplaceUserAccount.isSSAAdmin) {
+
+			navigate('/');
+		}
+	}, [marketplaceUserAccount.isSSAAdmin, navigate]);
+
+	return (
+		<Page
+			description={i18n.translate(
+				'manage-members-and-access-for-ssa-accounts'
+			)}
+			pageRendererProps={{className: 'border py-2 rounded'}}
+			rightButton={
+				<Button
+					onClick={() => {
+						modal.onOpenChange(true);
+					}}
+				>
+					{i18n.translate('invite-new-user')}
+				</Button>
+			}
+			title={i18n.translate('manage-users')}
+		>
+			<ListView<UserAccount>
+				id="manage-ssa-users"
+				managementToolbarProps={{
+					visible: true,
+					searchVisible: true,
+				}}
+				resource={`o/headless-admin-user/v1.0/accounts/by-external-reference-code/${properties.accountExternalReferenceCode}/user-accounts?sort=name:asc`}
+				tableProps={{
+					actions,
+					columns: [
+						{
+							id: 'name',
+							name: i18n.translate('name'),
+							sortable: true,
+						},
+						{
+							id: 'emailAddress',
+							name: i18n.translate('email-address'),
+						},
+						{
+							id: 'accountBriefs',
+							name: i18n.translate('roles'),
+							render: (accountBriefs) => {
+								const ssaAccount = accountBriefs.find(
+									(accountBrief) =>
+										accountBrief.externalReferenceCode ===
+										properties.accountExternalReferenceCode
+								);
+
+								const filteredRoles =
+									ssaAccount?.roleBriefs.filter((item2) =>
+										ssaRoles.some(
+											(item1) =>
+												item1.value === item2.name
+										)
+									);
+
+								return (
+									<div className="d-flex flex-column">
+										{filteredRoles?.map((role, index) => {
+											return (
+												<p className="m-0" key={index}>
+													{role.name}
+												</p>
+											);
+										})}
+									</div>
+								);
+							},
+						},
+						{
+							id: 'lastLoginDate',
+							name: i18n.translate('last-login'),
+							render: (lastLoginDate) =>
+								formatDate(lastLoginDate),
+						},
+					],
+				}}
+			>
+				{(_, {mutate}) => (
+					<InviteUserModal modal={modal} mutate={mutate} />
+				)}
+			</ListView>
+		</Page>
+	);
+}

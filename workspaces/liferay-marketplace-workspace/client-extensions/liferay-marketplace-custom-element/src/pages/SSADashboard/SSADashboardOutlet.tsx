@@ -14,6 +14,7 @@ import {OrderTypes, OrderWorkflowStatusCode} from '../../enums/Order';
 import {usePlacedOrders} from '../../hooks/data/usePlacedOrder';
 import HeadlessAdminUser from '../../services/rest/HeadlessAdminUser';
 import {useSSATrialsExtend} from './hooks/useSSATrialsExtend';
+import i18n from '../../i18n';
 
 const SSADashboardOutlet = () => {
 	const {marketplaceUserAccount, myUserAccount, properties} =
@@ -70,15 +71,21 @@ const SSADashboardOutlet = () => {
 					currentAccount={ssaAccount}
 					dashboardNavigationItems={[
 						{
-							itemTitle: 'My SaaS Demos',
+							itemTitle: i18n.translate('my-saas-demos'),
 							path: '/',
 							symbol: 'nodes',
 							visible: true,
 						},
 						{
-							itemTitle: 'Manage SaaS',
+							itemTitle: i18n.translate('saas-environments'),
 							path: '/saas-trials',
 							symbol: 'cog',
+							visible: marketplaceUserAccount.isSSAAdmin,
+						},
+						{
+							itemTitle: i18n.translate('manage-users'),
+							path: '/manage-users',
+							symbol: 'users',
 							visible: marketplaceUserAccount.isSSAAdmin,
 						},
 					].filter(({visible}) => visible)}

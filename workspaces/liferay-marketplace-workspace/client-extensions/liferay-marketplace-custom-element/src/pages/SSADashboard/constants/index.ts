@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {AccountRoleType} from '../../../enums/Account';
+
 export const defaultSiteInitializer = 'com.liferay.site.initializer.welcome';
 
 export const EXTEND_TYPES = {
@@ -35,6 +37,37 @@ export const EXTEND_TRIAL_STATUS_LABEL = {
 	'extension-expired': 'Extension Expired',
 	'not-requested': 'Not Requested',
 };
+
+export const siteInitializers = [
+	{
+		key: 'blank-site-initializer',
+		name: 'Blank Site',
+	},
+	{
+		key: 'com.liferay.site.initializer.masterclass',
+		name: 'Masterclass',
+	},
+	{
+		key: 'com.liferay.site.initializer.welcome',
+		name: 'Welcome',
+	},
+	{
+		key: 'minium-initializer',
+		name: 'Minium',
+	},
+	{
+		key: 'speedwell-initializer',
+		name: 'Speedwell',
+	},
+];
+
+export const ssaRoles = [AccountRoleType.SSA, AccountRoleType.SSA_ADMIN].map(
+	(role) => ({
+		key: role,
+		label: role,
+		value: role,
+	})
+);
 
 export const TRIAL_STATUS_LABEL = {
 	'approved': 'Expired',
@@ -71,28 +104,5 @@ export const trialObjectives = [
 		days: 90,
 		key: 'extended-evaluation',
 		name: 'Extended Evaluation',
-	},
-];
-
-export const siteInitializers = [
-	{
-		key: 'blank-site-initializer',
-		name: 'Blank Site',
-	},
-	{
-		key: 'com.liferay.site.initializer.masterclass',
-		name: 'Masterclass',
-	},
-	{
-		key: 'com.liferay.site.initializer.welcome',
-		name: 'Welcome',
-	},
-	{
-		key: 'minium-initializer',
-		name: 'Minium',
-	},
-	{
-		key: 'speedwell-initializer',
-		name: 'Speedwell',
 	},
 ];

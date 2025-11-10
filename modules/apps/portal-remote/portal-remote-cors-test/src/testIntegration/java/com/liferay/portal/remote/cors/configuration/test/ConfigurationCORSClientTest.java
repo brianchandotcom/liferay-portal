@@ -133,7 +133,7 @@ public class ConfigurationCORSClientTest extends BaseCORSClientTestCase {
 	}
 
 	private void _createFactoryConfiguration(
-			String allowedOrigin, long companyId, Boolean scoped,
+			String allowOrigin, long companyId, Boolean scoped,
 			String urlPattern)
 		throws Exception {
 
@@ -156,7 +156,7 @@ public class ConfigurationCORSClientTest extends BaseCORSClientTestCase {
 					"Access-Control-Allow-Credentials: true",
 					"Access-Control-Allow-Headers: *",
 					"Access-Control-Allow-Methods: *",
-					"Access-Control-Allow-Origin: " + allowedOrigin
+					"Access-Control-Allow-Origin: " + allowOrigin
 				}
 			).build());
 	}

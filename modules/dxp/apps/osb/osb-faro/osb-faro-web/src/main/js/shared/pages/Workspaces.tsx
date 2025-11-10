@@ -12,6 +12,7 @@ import {isString} from 'lodash';
 import {PLANS} from 'shared/util/subscriptions';
 import {Redirect} from 'react-router';
 import {Routes, toRoute} from 'shared/util/router';
+import {sub} from 'shared/util/lang';
 import {
 	useFetchJoinableProjects,
 	useFetchProjects
@@ -153,10 +154,12 @@ const Workspaces: any = () => {
 						title={Liferay.Language.get('warning')}
 						variant='inline'
 					>
-						{Liferay.Language.get(
-							'maintenance-is-scheduled-for-november-13-and-may-impact-your-workflow'
+						{sub(
+							Liferay.Language.get(
+								'maintenance-is-scheduled-for-x-and-may-impact-your-workflow'
+							),
+							['November 13']
 						)}
-
 						<ClayLink
 							className='ml-1'
 							decoration='underline'

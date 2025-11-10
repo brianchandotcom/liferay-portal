@@ -1,0 +1,27 @@
+{
+	"dependencies": {
+		"next": "15.5.5",
+		"react": "19.2.0",
+		"react-dom": "19.2.0"
+	},
+	"devDependencies": {
+		"@eslint/eslintrc": "3.3.1",
+		"@tailwindcss/postcss": "4.1.14",
+		"@types/node": "^20",
+		"@types/react": "19.2.2",
+		"@types/react-dom": "19.2.2",
+		"eslint": "9.37.0",
+		"eslint-config-next": "15.5.5",
+		"tailwindcss": "4.1.14",
+		"typescript": "5.9.2"
+	},
+	"name": "liferay-headless-blog",
+	"private": true,
+	"scripts": {
+		"build": "next build",
+		"dev": "next dev --turbopack",
+		"lint": "next lint",
+		"start": "next start"
+	},
+	"version": "1.0.0"
+}

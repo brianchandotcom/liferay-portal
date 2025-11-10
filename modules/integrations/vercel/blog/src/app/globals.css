@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+:root {
+	--background: var(--color-blue-50);
+	--foreground: var(--color-blue-900);
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
+}
+
+body {
+	@apply flex flex-col gap-4 md:gap-8 min-h-screen;
+	@apply text-foreground;
+
+	&::before {
+		content: '';
+		display: block;
+		height: 500px;
+		position: absolute;
+		width: 100%;
+		z-index: -1;
+
+		@apply bg-gradient-to-b from-blue-300 from-0% to-white to-100%;
+	}
+}
+
+@layer components {
+	.button {
+		@apply bg-blue-600 font-bold inline-block py-2 px-4 rounded-md text-center text-white;
+	}
+
+	.button:not(.button--active) {
+		@apply hover:bg-blue-700;
+	}
+
+	.button--active {
+		@apply bg-blue-900;
+	}
+
+	.card {
+		@apply bg-white h-full shadow-md rounded-md overflow-hidden;
+	}
+
+	.layout-footer {
+		@apply border-t border-t-blue-100 bg-white py-4 px-4;
+	}
+
+	.layout-footer__container {
+		@apply container flex flex-col gap-4 mx-auto justify-between sm:flex-row sm:max-w-4xl;
+	}
+
+	.layout-header {
+		@apply bg-white px-4 py-4 shadow;
+	}
+
+	.layout-header__container {
+		@apply container flex flex-row items-center gap-4 justify-between mx-auto sm:max-w-4xl;
+	}
+
+	.layout-main {
+		@apply grow-1 px-4;
+	}
+}

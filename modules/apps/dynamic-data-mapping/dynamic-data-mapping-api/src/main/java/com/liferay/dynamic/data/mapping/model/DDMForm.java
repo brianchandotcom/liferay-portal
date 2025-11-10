@@ -115,8 +115,13 @@ public class DDMForm implements Serializable {
 			ddmFormFieldsMap.put(ddmFormField.getName(), ddmFormField);
 
 			if (includeNestedDDMFormFields) {
-				ddmFormFieldsMap.putAll(
-					ddmFormField.getNestedDDMFormFieldsMap());
+				List<DDMFormField> nestedDDMFormFields =
+					ddmFormField.getNestedDDMFormFields();
+
+				if (!nestedDDMFormFields.isEmpty()) {
+					ddmFormFieldsMap.putAll(
+						ddmFormField.getNestedDDMFormFieldsMap());
+				}
 			}
 		}
 

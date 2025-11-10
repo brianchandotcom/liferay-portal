@@ -93,10 +93,15 @@ function salesforceAuthErrorMessage(errMessage: string) {
 }
 
 interface IConnectSalesforceAuthProps {
-	addAlert: Alert.AddAlert;
+	/**
+	 * When disabled, the form renders with all inputs
+	 * read-only and without any buttons.
+	 */
+	disabled?: boolean;
+	addAlert: any;
 	dataSource?: DataSource;
 	onCancel?: () => void;
-	onSubmit: () => void;
+	onSubmit: (dataSource: DataSource) => void;
 	buttonProps?: {
 		[key: string]: any;
 	};
@@ -106,6 +111,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 	addAlert,
 	buttonProps,
 	dataSource,
+	disabled,
 	onCancel,
 	onSubmit
 }) => {
@@ -165,14 +171,16 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 					.then(async tempCredentials => {
 						if (tempCredentials) {
 							if (dataSource) {
-								updateSalesforce({
+								const updatedDataSource = {
 									credentials: tempCredentials,
 									groupId,
 									id: dataSource.id,
 									name: dataSource.name,
 									status: DataSourceStatuses.Active,
 									url: values.salesForceDataSource
-								} as any)
+								} as any;
+
+								updateSalesforce(updatedDataSource)
 									.then(() => {
 										addAlert({
 											alertType: Alert.Types.Success,
@@ -181,7 +189,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 											)
 										});
 
-										onSubmit();
+										onSubmit(updatedDataSource);
 									})
 									.catch(err => {
 										addAlert({
@@ -193,7 +201,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 										setSubmitting(false);
 									});
 							} else {
-								createSalesforce({
+								const dataSource = {
 									accountsConfiguration: {
 										enableAllAccounts: false
 									},
@@ -206,8 +214,10 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 									name: Liferay.Language.get('salesforce'),
 									status: DataSourceStatuses.Active,
 									url: values.salesForceDataSource
-								} as any)
-									.then(() => {
+								} as any;
+
+								createSalesforce(dataSource)
+									.then(response => {
 										addAlert({
 											alertType: Alert.Types.Success,
 											message: Liferay.Language.get(
@@ -215,7 +225,8 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 											)
 										});
 
-										onSubmit();
+										// TODO: Add dataSource with id to the submit fn
+										onSubmit(response);
 									})
 									.catch(err => {
 										addAlert({
@@ -286,6 +297,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 							<Text weight='semi-bold'>
 								{Liferay.Language.get('target-url')}
 							</Text>
+
 							<div>
 								<Text
 									color='secondary'
@@ -310,6 +322,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 									value={OAUTH_CALLBACK_URL}
 								/>
 							</ClayInput.GroupItem>
+
 							<ClayInput.GroupItem append shrink>
 								<ClayButton
 									aria-label={copyTitle}
@@ -334,6 +347,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 						id='salesForceDataSource'
 						label={Liferay.Language.get('salesforce-url')}
 						name='salesForceDataSource'
+						readOnly={disabled}
 						required
 						type='text'
 						validate={sequence([
@@ -372,6 +386,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 						id='clientId'
 						label={Liferay.Language.get('consumer-key-client-id')}
 						name='clientId'
+						readOnly={disabled}
 						required
 						type={showClientId ? 'text' : 'password'}
 						validate={value =>
@@ -418,6 +433,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 							'consumer-secret-client-secret'
 						)}
 						name='clientSecret'
+						readOnly={disabled}
 						required
 						type={showClientSecret ? 'text' : 'password'}
 						validate={value =>
@@ -437,24 +453,28 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 						}
 					/>
 
-					<ClayButton
-						{...buttonProps}
-						disabled={isSubmitting}
-						loading={isSubmitting}
-						type='submit'
-					>
-						{Liferay.Language.get('connect')}
-					</ClayButton>
+					{!disabled && (
+						<>
+							<ClayButton
+								{...buttonProps}
+								disabled={isSubmitting}
+								loading={isSubmitting}
+								type='submit'
+							>
+								{Liferay.Language.get('connect')}
+							</ClayButton>
 
-					{onCancel && (
-						<ClayButton
-							block
-							borderless
-							displayType='secondary'
-							onClick={onCancel}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
+							{onCancel && (
+								<ClayButton
+									block
+									borderless
+									displayType='secondary'
+									onClick={onCancel}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+							)}
+						</>
 					)}
 				</Form.Form>
 			)}

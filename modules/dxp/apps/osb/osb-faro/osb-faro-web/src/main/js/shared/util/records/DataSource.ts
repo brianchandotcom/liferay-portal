@@ -1,4 +1,4 @@
-import {Map, Record} from 'immutable';
+import {fromJS, Map, Record} from 'immutable';
 
 interface IDataSource {
 	createDate?: number;
@@ -55,6 +55,6 @@ export default class DataSource
 	url?: string;
 
 	constructor(props: IDataSource) {
-		super(props);
+		super(fromJS(props));
 	}
 }

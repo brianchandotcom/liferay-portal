@@ -15,7 +15,7 @@
 		background-color: $lightBackground;
 		border: 1px solid $mainLighten74;
 		border-radius: 8px;
-		height: calc(100vh - 101px);
+		min-height: calc(100vh - 100px);
 		padding: 0;
 	}
 

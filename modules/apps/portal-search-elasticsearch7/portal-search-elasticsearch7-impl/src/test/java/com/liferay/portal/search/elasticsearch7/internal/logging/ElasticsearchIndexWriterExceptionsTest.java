@@ -225,8 +225,8 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, "1");
 		document.addKeyword(Field.EXPIRATION_DATE, "text");
+		document.addKeyword(Field.UID, "1");
 
 		IndexWriter indexWriter = getIndexWriter();
 
@@ -249,8 +249,8 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, "1");
 		document.addKeyword(Field.EXPIRATION_DATE, "text");
+		document.addKeyword(Field.UID, "1");
 
 		documents.add(document);
 

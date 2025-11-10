@@ -41,8 +41,8 @@ public class ObjectEntryFolderModelSummaryContributorTest {
 
 		Document document = new DocumentImpl();
 
-		document.addText("localized_label_es_ES", "etiqueta");
 		document.addText("localized_label_en_US", "label");
+		document.addText("localized_label_es_ES", "etiqueta");
 
 		Summary summary = modelSummaryContributor.getSummary(
 			document, LocaleUtil.SPAIN, "");

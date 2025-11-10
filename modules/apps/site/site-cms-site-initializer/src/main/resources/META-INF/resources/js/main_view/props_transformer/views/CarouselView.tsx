@@ -6,14 +6,12 @@
 import {Card, ICardSchema, replaceTokens} from '@liferay/frontend-data-set-web';
 import React, {Context, useContext, useMemo, useState} from 'react';
 
-import FilePreview from '../../../common/components/FilePreview';
-
 import '../../../../css/props_transformer/CarouselView.scss';
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 
-import ContentPreview from '../../../common/components/ContentPreview';
+import AssetPreview from '../../../common/components/AssetPreview';
 
 const VISIBLE_ITEMS_COUNT = 5;
 const MAX_VISIBLE_INDEX = (itemsLength: number) =>
@@ -40,7 +38,9 @@ const CarouselView = ({
 	const handlePrevClick = () => {
 		const itemsLength = items.length;
 
-		if (itemsLength <= VISIBLE_ITEMS_COUNT) {return;}
+		if (itemsLength <= VISIBLE_ITEMS_COUNT) {
+			return;
+		}
 
 		let newSelectedIndex;
 		let newVisibleIndex;
@@ -66,7 +66,9 @@ const CarouselView = ({
 		const itemsLength = items.length;
 		const maxVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
 
-		if (itemsLength <= VISIBLE_ITEMS_COUNT) {return;}
+		if (itemsLength <= VISIBLE_ITEMS_COUNT) {
+			return;
+		}
 
 		let newSelectedIndex;
 		let newVisibleIndex;
@@ -136,14 +138,10 @@ const CarouselView = ({
 				<div className="align-items-center d-flex fds-carousel-view__preview-wrapper h-100 justify-content-center w-100">
 					{selectedItems && selectedItems.length >= 2 ? (
 						<p>Placeholder</p>
-					) : currentItem?.embedded?.file ? (
-						<FilePreview file={currentItem.embedded.file} />
 					) : (
-						<ContentPreview
-							url={replaceTokens(
-								additionalProps.contentViewURL,
-								currentItem
-							)}
+						<AssetPreview
+							item={currentItem}
+							url={additionalProps.contentViewURL}
 						/>
 					)}
 				</div>

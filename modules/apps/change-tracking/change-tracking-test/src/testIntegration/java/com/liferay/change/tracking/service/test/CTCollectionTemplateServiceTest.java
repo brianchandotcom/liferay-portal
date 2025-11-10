@@ -11,9 +11,9 @@ import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -22,7 +22,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -61,12 +60,6 @@ public class CTCollectionTemplateServiceTest {
 				).put(
 					"userIds", new long[] {RandomTestUtil.randomLong()}
 				).toString());
-	}
-
-	@After
-	public void tearDown() throws PortalException {
-		_ctCollectionTemplateLocalService.deleteCTCollectionTemplate(
-			_ctCollectionTemplate);
 	}
 
 	@Test
@@ -109,7 +102,9 @@ public class CTCollectionTemplateServiceTest {
 	@Inject
 	private static CTCollectionTemplateService _ctCollectionTemplateService;
 
+	@DeleteAfterTestRun
 	private CTCollectionTemplate _ctCollectionTemplate;
+
 	private String _name;
 
 }

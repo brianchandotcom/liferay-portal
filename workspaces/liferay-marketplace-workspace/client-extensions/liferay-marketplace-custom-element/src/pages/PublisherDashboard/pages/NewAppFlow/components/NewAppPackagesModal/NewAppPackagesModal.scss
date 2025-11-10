@@ -1,0 +1,61 @@
+.package-version-modal-container .modal {
+	&-header {
+		border-width: 0;
+		height: auto;
+		padding-bottom: 4px;
+		padding-top: 1.5rem;
+
+		h1 {
+			color: #282934;
+			font-size: 1.8rem;
+			font-weight: 700;
+			line-height: 2.5rem;
+		}
+	}
+
+	&-body {
+		align-items: center;
+		border-top: 0;
+		justify-content: center;
+		padding-top: 0.25rem;
+
+		.custom-control-label-text {
+			font-size: 0.8125rem;
+			font-weight: 600;
+		}
+
+		.management-bar > div {
+			background: #f7f7f8;
+			border-radius: 0.625rem;
+		}
+
+		.navbar-form {
+			background: #f7f7f8;
+		}
+
+		input[type='text'],
+		.input-group .input-group-inset-item,
+		.input-group-inset.focus ~ .input-group-inset-item,
+		.input-group-inset:focus-visible ~ .input-group-inset-item,
+		.c-prefers-focus .input-group-inset:focus ~ .input-group-inset-item {
+			background-color: #fff;
+			border-color: #e7efff;
+		}
+
+		p {
+			color: #282934;
+			font-size: 15.7px;
+			line-height: 24px;
+		}
+	}
+
+	&-form {
+		height: 300px;
+		overflow: scroll;
+		padding: 1rem 0.5rem;
+	}
+
+	&-footer {
+		border-top: 0;
+	}
+}

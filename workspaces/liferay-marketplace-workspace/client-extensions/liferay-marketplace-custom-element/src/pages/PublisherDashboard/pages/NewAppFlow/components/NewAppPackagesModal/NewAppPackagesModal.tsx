@@ -9,15 +9,16 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useMemo, useState} from 'react';
 
-import ButtonWithIcon from '../../../../../components/ButtonWithIcon';
+import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 import {
 	NewAppTypes,
 	useNewAppContext,
-} from '../../../../../context/NewAppContext';
-import useListTypeDefinition from '../../../../../hooks/useListTypeDefinition';
-import i18n from '../../../../../i18n';
-import {getRandomID} from '../../../../../utils/string';
-import {LIFERAY_VERSION_PICKLIST} from '../constants';
+} from '../../../../../../context/NewAppContext';
+import useListTypeDefinition from '../../../../../../hooks/useListTypeDefinition';
+import i18n from '../../../../../../i18n';
+import {getRandomID} from '../../../../../../utils/string';
+import {LIFERAY_VERSION_PICKLIST} from '../../constants';
+import './NewAppPackagesModal.scss';
 
 type NewAppPackageVersionModal = {
 	currentVersions: string[];

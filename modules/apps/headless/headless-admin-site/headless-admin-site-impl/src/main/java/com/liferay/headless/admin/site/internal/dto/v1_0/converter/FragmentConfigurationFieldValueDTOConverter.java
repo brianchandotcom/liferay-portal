@@ -74,14 +74,14 @@ public class FragmentConfigurationFieldValueDTOConverter
 				fragmentFragmentConfigurationFieldValue);
 		}
 
-		if (Objects.equals(type, FragmentConfigurationFieldValue.Type.TEXT)) {
-			return _getTextFragmentConfigurationFieldValue(
+		if (Objects.equals(type, FragmentConfigurationFieldValue.Type.SELECT)) {
+			return _getSelectFragmentConfigurationFieldValue(
 				fragmentConfigurationField,
 				fragmentFragmentConfigurationFieldValue);
 		}
 
-		if (Objects.equals(type, FragmentConfigurationFieldValue.Type.SELECT)) {
-			return _getSelectFragmentConfigurationFieldValue(
+		if (Objects.equals(type, FragmentConfigurationFieldValue.Type.TEXT)) {
+			return _getTextFragmentConfigurationFieldValue(
 				fragmentConfigurationField,
 				fragmentFragmentConfigurationFieldValue);
 		}

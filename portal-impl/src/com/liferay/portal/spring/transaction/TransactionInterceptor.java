@@ -30,8 +30,16 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations) {
 
-		Transactional transactional = (Transactional)annotations.get(
+		Transactional transactional = targetClass.getAnnotation(
 			Transactional.class);
+
+		if ((transactional != null) && !transactional.enabled()) {
+			annotations.put(Transactional.class, transactional);
+
+			return null;
+		}
+
+		transactional = (Transactional)annotations.get(Transactional.class);
 
 		TransactionAttribute transactionAttribute =
 			TransactionAttributeBuilder.build(transactional);

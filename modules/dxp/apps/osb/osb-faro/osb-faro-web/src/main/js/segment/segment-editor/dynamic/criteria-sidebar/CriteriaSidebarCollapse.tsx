@@ -14,7 +14,6 @@ import {
 } from '../utils/constants';
 import {createCustomValueMap} from '../utils/custom-inputs';
 import {FieldOwnerTypes} from 'shared/util/constants';
-
 import {jsDatetoYYYYMMDD} from '../utils/utils';
 import {List} from 'immutable';
 import {Property, PropertyGroup, PropertySubgroup} from 'shared/util/records';
@@ -246,7 +245,7 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 						'review-your-search-and-try-again'
 					)}
 					title={Liferay.Language.get('no-results-found')}
-				></EmptyState>
+				/>
 			</div>
 		);
 	}

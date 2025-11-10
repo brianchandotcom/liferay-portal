@@ -51,6 +51,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -745,6 +749,20 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					false, postUtilityPage.getExternalReferenceCode(),
 					utilityPage.getThumbnail(
 					).getExternalReferenceCode());
+
+				URL url = new URL(
+					utilityPage.getThumbnail(
+					).getUrl());
+
+				URLConnection urlConnection = url.openConnection();
+
+				if (urlConnection instanceof
+						HttpURLConnection httpURLConnection) {
+
+					Assert.assertTrue(
+						httpURLConnection.getResponseCode() !=
+							HttpURLConnection.HTTP_OK);
+				}
 			}
 			else {
 				Assert.assertNull(utilityPage.getThumbnail());

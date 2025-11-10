@@ -8,8 +8,11 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {
+	clearConsentCookies,
+	resetAllCookieManagerConfigurations,
+} from './utils/cookieManagerAfterEach';
 
 const hideableCookieTypes = [
 	'Functional Cookies',
@@ -26,47 +29,12 @@ export const test = mergeTests(
 );
 
 test.afterEach(async ({systemSettingsPage}) => {
-	await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
-
-	const menuItems = await systemSettingsPage.page.getByRole('menuitem').all();
-
-	await test.step('In reverse order, reset each configuration if previously set. We use reverse order since the latter entries will be hidden if the first "Preference Handling" entry is reset.', async () => {
-		for (const menuItem of menuItems.reverse()) {
-			if (await menuItem.getByText('Product Analytics').isVisible()) {
-				continue;
-			}
-
-			await menuItem.click();
-
-			await systemSettingsPage.page.waitForTimeout(1000);
-
-			await systemSettingsPage.page.waitForLoadState();
-
-			if (
-				await systemSettingsPage.page
-					.getByRole('button', {name: 'Actions'})
-					.isVisible()
-			) {
-				await clickAndExpectToBeVisible({
-					autoClick: true,
-					target: systemSettingsPage.page.getByRole('menuitem', {
-						name: 'Reset Default Values',
-					}),
-					trigger: systemSettingsPage.page.getByRole('button', {
-						name: 'Actions',
-					}),
-				});
-			}
-		}
+	await test.step('Reset All Cookie Manager Configurations', async () => {
+		await resetAllCookieManagerConfigurations(systemSettingsPage);
 	});
 
 	await test.step('Clear Consent Cookies if present', async () => {
-		await systemSettingsPage.page
-			.context()
-			.clearCookies({name: /^CONSENT_TYPE_/});
-		await systemSettingsPage.page
-			.context()
-			.clearCookies({name: 'USER_CONSENT_CONFIGURED'});
+		await clearConsentCookies(systemSettingsPage);
 	});
 });
 

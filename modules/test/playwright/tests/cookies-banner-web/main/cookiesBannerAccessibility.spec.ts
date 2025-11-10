@@ -9,39 +9,19 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
-	clickAndExpectToBeVisible
-} from "../../../utils/clickAndExpectToBeVisible";
+	clearConsentCookies,
+	resetCookieManagerConfiguration,
+} from './utils/cookieManagerAfterEach';
 
 export const test = mergeTests(loginTest(), systemSettingsPageTest);
 
 test.afterEach(async ({systemSettingsPage}) => {
-	await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
-
-	await systemSettingsPage.page.waitForLoadState();
-
-	if (
-		await systemSettingsPage.page
-			.getByRole('button', {name: 'Actions'})
-			.isVisible()
-	) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: systemSettingsPage.page.getByRole('menuitem', {
-				name: 'Reset Default Values',
-			}),
-			trigger: systemSettingsPage.page.getByRole('button', {
-				name: 'Actions',
-			}),
-		});
-	}
+	await test.step('Reset Cookie Manager Configuration', async () => {
+		await resetCookieManagerConfiguration(systemSettingsPage);
+	});
 
 	await test.step('Clear Consent Cookies if present', async () => {
-		await systemSettingsPage.page
-			.context()
-			.clearCookies({name: /^CONSENT_TYPE_/});
-		await systemSettingsPage.page
-			.context()
-			.clearCookies({name: /^USER_CONSENT_CONFIGURED/});
+		await clearConsentCookies(systemSettingsPage);
 	});
 });
 

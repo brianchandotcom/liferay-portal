@@ -10,7 +10,12 @@ export default defineConfig({
 	build: {
 		outDir: 'build/vite',
 		rollupOptions: {
-			external: ['/@clayui/*/', 'react', 'react-dom', 'clarity-distributors-api'],
+			external: [
+				'/@clayui/*/',
+				'react',
+				'react-dom',
+				'clarity-distributors-api',
+			],
 			output: {
 				assetFileNames: '[name]-[hash][extname]',
 				chunkFileNames: '[name]-[hash].js',

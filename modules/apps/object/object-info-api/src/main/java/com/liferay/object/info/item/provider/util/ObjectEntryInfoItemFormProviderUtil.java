@@ -312,6 +312,12 @@ public class ObjectEntryInfoItemFormProviderUtil {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			unsafeConsumer -> {
+				if (objectDefinition.isRootDescendantNode() &&
+					(parentObjectDefinition != null)) {
+
+					return;
+				}
+
 				for (ObjectField objectField :
 						objectFieldLocalService.getObjectFields(
 							objectDefinition.getObjectDefinitionId())) {
@@ -328,11 +334,12 @@ public class ObjectEntryInfoItemFormProviderUtil {
 								fetchObjectRelationshipByObjectFieldId2(
 									objectField.getObjectFieldId());
 
-						if ((parentObjectDefinition != null) &&
-							Objects.equals(
-								objectRelationship.getObjectDefinitionId1(),
-								parentObjectDefinition.
-									getObjectDefinitionId())) {
+						if (objectRelationship.isEdge() ||
+							((parentObjectDefinition != null) &&
+							 Objects.equals(
+								 objectRelationship.getObjectDefinitionId1(),
+								 parentObjectDefinition.
+									 getObjectDefinitionId()))) {
 
 							continue;
 						}

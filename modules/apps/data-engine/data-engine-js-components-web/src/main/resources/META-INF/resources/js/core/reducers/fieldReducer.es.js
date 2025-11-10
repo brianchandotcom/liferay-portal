@@ -56,13 +56,14 @@ export function updateNestedFieldNames(parentFieldName, nestedFields) {
 
 		return {
 			...nestedField,
-			...(nestedField.editorConfig && {
-				editorConfig: updateEditorConfigFilebrowsersURL(
-					nestedField.editorConfig,
-					newNestedFieldName,
-					nestedField.fieldName
-				),
-			}),
+			...(nestedField.editorConfig &&
+				!Liferay.FeatureFlags['LPD-11235'] && {
+					editorConfig: updateEditorConfigFilebrowsersURL(
+						nestedField.editorConfig,
+						newNestedFieldName,
+						nestedField.fieldName
+					),
+				}),
 			name: newNestedFieldName,
 			nestedFields: updateNestedFieldNames(
 				newNestedFieldName,
@@ -273,14 +274,17 @@ export default function fieldReducer(state, action) {
 
 									return {
 										...currentField,
-										...(currentField.editorConfig && {
-											editorConfig:
-												updateEditorConfigFilebrowsersURL(
-													currentField.editorConfig,
-													name,
-													currentField.fieldName
-												),
-										}),
+										...(currentField.editorConfig &&
+											!Liferay.FeatureFlags[
+												'LPD-11235'
+											] && {
+												editorConfig:
+													updateEditorConfigFilebrowsersURL(
+														currentField.editorConfig,
+														name,
+														currentField.fieldName
+													),
+											}),
 										name,
 										nestedFields: updateNestedFieldNames(
 											name,

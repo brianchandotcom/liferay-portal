@@ -1130,6 +1130,25 @@ public class GitWorkingDirectory {
 		return branchNamesList;
 	}
 
+	public int getCommitCountBetweenBranches(
+		String baseBranchName, String branchName) {
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 10,
+			JenkinsResultsParserUtil.combine(
+				"git rev-list --count ", baseBranchName, "..", branchName));
+
+		int exitValue = executionResult.getExitValue();
+
+		if (exitValue == 0) {
+			return Integer.parseInt(executionResult.getStandardOut());
+		}
+
+		System.out.println(executionResult.getStandardError());
+
+		return 0;
+	}
+
 	public String getCurrentBranchName() {
 		return getCurrentBranchName(false);
 	}

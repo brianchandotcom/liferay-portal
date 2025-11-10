@@ -78,6 +78,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -1198,6 +1202,20 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					false, postPageTemplate.getExternalReferenceCode(),
 					pageTemplate.getThumbnail(
 					).getExternalReferenceCode());
+
+				URL url = new URL(
+					pageTemplate.getThumbnail(
+					).getUrl());
+
+				URLConnection urlConnection = url.openConnection();
+
+				if (urlConnection instanceof
+						HttpURLConnection httpURLConnection) {
+
+					Assert.assertTrue(
+						httpURLConnection.getResponseCode() !=
+							HttpURLConnection.HTTP_OK);
+				}
 			}
 			else {
 				Assert.assertNull(pageTemplate.getThumbnail());

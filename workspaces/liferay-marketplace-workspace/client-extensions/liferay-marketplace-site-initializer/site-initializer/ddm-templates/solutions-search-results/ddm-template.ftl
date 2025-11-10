@@ -1,29 +1,30 @@
 <#assign
-	commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
 	cpDataSourceResult = cpSearchResultsDisplayContext.getCPDataSourceResult()
-	cpSpecificationGroups = cpContentHelper.getCPOptionCategories(themeDisplay.getCompanyId())
+	commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
+	specificationGroups = cpContentHelper.getCPOptionCategories(themeDisplay.getCompanyId())
 />
 
 <div class="color-neutral-3 d-md-block d-none pb-4">
-		<strong class="color-black">
-			${cpDataSourceResult.length}
-		</strong>
-		Solutions Available
+	<strong class="color-black">
+		${cpDataSourceResult.length}
+	</strong>
+
+	Solutions Available
 </div>
 
-<#function getSpecificationValue specificationGroupKey specificationKey productId default="">
-	<#local specificationGroup = cpSpecificationGroups?filter(specificationGroup -> specificationGroup.getKey() == specificationGroupKey) />
-	
+<#function getSpecificationValue specificationGroupKey specificationKey productId defaultValue="">
+	<#local specificationGroup = specificationGroups?filter(specificationGroup -> specificationGroup.getKey() == specificationGroupKey) />
+
 	<#if specificationGroup?has_content>
 		<#local specifications = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(productId, specificationGroup?first.getCPOptionCategoryId()) />
-		
-		<#local spec = specifications?filter(productSpecification ->
+
+		<#local specification = specifications?filter(productSpecification ->
 			stringUtil.equals(productSpecification.getCPSpecificationOption().getKey(), specificationKey)) />
 
-		<#return (spec?first.value)!default />
+		<#return (specification?first.value)!defaultValue />
 	</#if>
 
-	<#return default />
+	<#return defaultValue />
 </#function>
 
 <div class="adt-solutions-search-results">
@@ -37,12 +38,14 @@
 						productId = entry.getCPDefinitionId()
 						productImage = cpContentHelper.getDefaultImageFileURL(commerceContext.getAccountEntry().getAccountEntryId(), entry.getCPDefinitionId())
 					/>
-					
+
 					<a class="solution-search-results-card bg-white d-flex flex-column mb-0 text-dark text-decoration-none" href=${cpContentHelper.getFriendlyURL(entry, themeDisplay)}>
 						<div class="align-items-center d-flex image-container mb-3">
 							<img
 								alt="${entry.getName()}"
 								class="solution-search-image"
+								draggable="false"
+								loading="lazy"
 								src=${productImage}
 							/>
 						</div>

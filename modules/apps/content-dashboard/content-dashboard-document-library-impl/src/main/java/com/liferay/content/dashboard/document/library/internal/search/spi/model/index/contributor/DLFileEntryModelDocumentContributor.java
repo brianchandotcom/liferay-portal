@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,18 +82,17 @@ public class DLFileEntryModelDocumentContributor
 					continue;
 				}
 
-				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-					ddmFormValues.getDDMFormFieldValuesMap(false);
-
 				long tiffImageLength = _getDDMFormFieldsValueValue(
-					ddmFormFieldValuesMap.get("TIFF_IMAGE_LENGTH"));
+					ddmFormValues.getDDMFormFieldValues(
+						"TIFF_IMAGE_LENGTH", false));
 
 				if (tiffImageLength <= 0) {
 					continue;
 				}
 
 				long tiffImageWidth = _getDDMFormFieldsValueValue(
-					ddmFormFieldValuesMap.get("TIFF_IMAGE_WIDTH"));
+					ddmFormValues.getDDMFormFieldValues(
+						"TIFF_IMAGE_WIDTH", false));
 
 				if (tiffImageWidth <= 0) {
 					continue;

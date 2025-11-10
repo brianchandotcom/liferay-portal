@@ -30,7 +30,15 @@ public class ConfigurationPIDUtilTest {
 		Assert.assertEquals(
 			expectedRawPid,
 			ConfigurationPIDUtil.getRawPid(
+				"com.liferay.scoped.configuration.SampleConfiguration"));
+		Assert.assertEquals(
+			expectedRawPid,
+			ConfigurationPIDUtil.getRawPid(
 				"com.liferay.scoped.configuration.SampleConfiguration~123"));
+		Assert.assertEquals(
+			expectedRawPid,
+			ConfigurationPIDUtil.getRawPid(
+				"com.liferay.scoped.configuration.SampleConfiguration.scoped"));
 		Assert.assertEquals(
 			expectedRawPid,
 			ConfigurationPIDUtil.getRawPid(

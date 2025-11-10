@@ -31,21 +31,21 @@ const steps: Step[] = [
 	{
 		content: props => <ConnectSalesForceStep {...props} />,
 		description: Liferay.Language.get(
-			'to-connect-your-salesforce-environment-with-liferay-analytics-cloud,-generate-a-token-and-paste-the-code-on-the-input-below.'
+			'to-connect-your-salesforce-environment-with-liferay-analytics-cloud,-generate-a-token-and-paste-the-code-on-the-input-below'
 		),
 		title: Liferay.Language.get('connect-salesforce')
 	},
 	{
 		content: props => <SyncSalesforceDataStep {...props} />,
 		description: Liferay.Language.get(
-			'select-which-salesforce-data-you-would-like-to-sync-to-analytics-cloud.'
+			'select-which-salesforce-data-you-would-like-to-sync-to-analytics-cloud'
 		),
 		title: Liferay.Language.get('sync-Salesforce-data')
 	},
 	{
 		content: props => <AssignIndividualsDatatoPropertiesStep {...props} />,
 		description: Liferay.Language.get(
-			'properties-allow-you-to-aggregate-data-on-your-users,-sites-and-dxp-commerce-channels.-individuals-data-will-be-available-in-any-property-they-are-assigned-to.'
+			'properties-allow-you-to-aggregate-data-on-your-users,-sites-and-dxp-commerce-channels.-individuals-data-will-be-available-in-any-property-they-are-assigned-to'
 		),
 		title: Liferay.Language.get('assign-individuals-data-to-properties')
 	}

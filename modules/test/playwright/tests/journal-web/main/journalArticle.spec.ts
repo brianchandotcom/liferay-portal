@@ -163,7 +163,7 @@ baseTest(
 			getRandomString()
 		);
 
-		await page.getByRole('button', {name: 'Publish'}).click();
+		await journalEditArticlePage.publishDropdown.click();
 
 		await page
 			.getByRole('menuitem', {name: 'Schedule Publication'})
@@ -203,7 +203,7 @@ baseTest(
 		await waitForAlert(
 			page,
 			"Avertissement:Les URL simplifiées suivantes ont été modifiées pour garantir l'unicité",
-			{closeText: 'Fin', type: 'warning'}
+			{closeText: 'Fermer', type: 'warning'}
 		);
 
 		// change back to english language
@@ -2225,11 +2225,7 @@ baseTest(
 			getRandomString()
 		);
 
-		await page.waitForTimeout(50000);
-
-		await journalEditArticlePage.publishButton.click();
-
-		await page.waitForTimeout(50000);
+		await page.waitForTimeout(60000);
 
 		await journalEditArticlePage.publishButton.click();
 

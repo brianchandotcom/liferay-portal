@@ -11,8 +11,7 @@ import {replaceTokens} from '@liferay/frontend-data-set-web';
 import {sub} from 'frontend-js-web';
 import React, {useMemo} from 'react';
 
-const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
 
 interface ActionItem {
 	data: {id: string};

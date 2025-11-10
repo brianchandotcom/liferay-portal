@@ -1,0 +1,24 @@
+{
+	"dependencies": {
+		"@clayui/button": "^3.143.0",
+		"@clayui/table": "^3.143.0",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"clarity-distributors-api": "*"
+	},
+	"devDependencies": {
+		"@types/react": "^18.2.0",
+		"@types/react-dom": "^18.2.0",
+		"@vitejs/plugin-react": "^4.2.1",
+		"vite": "^5.2.0"
+	},
+	"name": "@liferay/clarity-solution-custom-element-distributors-table",
+	"private": true,
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite",
+		"preview": "vite preview"
+	},
+	"type": "module",
+	"version": "0.0.0"
+}

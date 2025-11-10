@@ -163,11 +163,9 @@ public class DataSourceFactoryTest {
 				"&useLocalSessionState=true&useLocalTransactionState=true",
 				"&useUnicode=true"),
 			_rewriteJDBCURL("jdbc:mysql://localhost/lportal1"));
-
 		Assert.assertEquals(
 			"jdbc:postgresql://localhost/lportal2?reWriteBatchedInserts=true",
 			_rewriteJDBCURL("jdbc:postgresql://localhost/lportal2"));
-
 		Assert.assertEquals(
 			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
 				"useBulkCopyForBatchInsert=true",
@@ -225,7 +223,6 @@ public class DataSourceFactoryTest {
 			_rewriteJDBCURL(
 				"jdbc:postgresql://localhost/lportal2?reWriteBatchedInserts=" +
 					"false"));
-
 		Assert.assertEquals(
 			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
 				"useBulkCopyForBatchInsert=false",

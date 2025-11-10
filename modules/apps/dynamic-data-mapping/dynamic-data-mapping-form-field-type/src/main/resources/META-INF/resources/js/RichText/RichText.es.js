@@ -309,11 +309,15 @@ const RichText = ({
 
 	useEffect(() => {
 		const handleRestoreState = () => {
+			console.log(value, 'value');
 			if (Liferay.FeatureFlags['LPD-11235']) {
-				setCKEditor5Config({
-					...ckEditor5Config,
-					initialData: value,
-				});
+				// setCKEditor5Config({
+				// 	...ckEditor5Config,
+				// 	initialData: value,
+				// });
+
+				setCurrentInternalValue(value ?? '');
+				
 			}
 			else {
 				editorRef.current.editor.setData(value);
@@ -325,7 +329,7 @@ const RichText = ({
 		return () => {
 			Liferay.detach('ddm:restoreState', handleRestoreState);
 		};
-	}, [ckEditor5Config, currentValue, value]);
+	}, [currentValue, value]);
 
 	useEffect(() => {
 		Liferay.after('inputLocalized:resetTranslations', resetTranslation);
@@ -360,6 +364,7 @@ const RichText = ({
 							data={currentInternalValue}
 							disabled={readOnly}
 							key={JSON.stringify(ckEditor5Config)}
+							onBlur={onBlur}
 							onChange={(event, editor) =>
 								handleContentChange(editor.getData())
 							}

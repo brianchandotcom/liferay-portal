@@ -54,6 +54,7 @@ public class SessionClickAction implements Action {
 
 				if (!StringUtil.equals(name, "cmd") &&
 					!StringUtil.equals(name, "doAsUserId") &&
+					!StringUtil.equals(name, "key") &&
 					!StringUtil.equals(name, "p_auth")) {
 
 					String value = ParamUtil.getString(

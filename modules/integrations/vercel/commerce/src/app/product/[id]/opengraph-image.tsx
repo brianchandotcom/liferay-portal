@@ -28,7 +28,14 @@ export default async function OGImage({params}: {params: {id: string}}) {
 	if (error || !product) {
 		console.error(error);
 
-		return;
+		return new ImageResponse(
+			(
+				<div tw="bg-gray-50 flex h-full items-center justify-center text-gray-900 w-full">
+					Error generating image
+				</div>
+			),
+			size
+		);
 	}
 
 	const {availability, price} = getSkuDetails(product);

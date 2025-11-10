@@ -37,7 +37,7 @@ export async function getProductsPage({
 	}
 
 	const searchParams = new URLSearchParams({
-		...(specificationValues && {filter: searchBuider.build()}),
+		...(!!specificationValues.length && {filter: searchBuider.build()}),
 		nestedFields: 'skus',
 		page,
 		pageSize,

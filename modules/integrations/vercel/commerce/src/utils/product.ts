@@ -6,10 +6,14 @@
 import {Product, Sku} from '../types/product';
 
 function calculateDiscountPercent(finalPrice: number, originalPrice: number) {
+	if (originalPrice === 0) {
+		return 0;
+	}
+
 	const discount = originalPrice - finalPrice;
 	const discountPercent = (discount / originalPrice) * 100;
 
-	return discountPercent.toFixed(2);
+	return discountPercent;
 }
 
 type SkuDetails = {

@@ -41,7 +41,7 @@ export default function RootLayout({
 					<div className="layout-header__container">
 						<Link href="/" title="go to home page">
 							<Image
-								alt="Liferay lofo"
+								alt="Liferay logo"
 								height={39}
 								priority
 								src="/images/liferay.svg"

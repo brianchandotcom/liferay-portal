@@ -119,23 +119,20 @@ export function ProductCatalog({keywords, pageProduct, viewMode}: Props) {
 
 			<PaginationBar
 				currentPage={pageProduct.page}
-				onPageChange={(page) =>
-					router.push(
-						`/?${new URLSearchParams({
-							keywords: keywords ?? '',
-							page: String(page),
-							pageSize: String(pageProduct.pageSize),
-						})}`
-					)
-				}
+				onPageChange={(page) => {
+					const newParams = new URLSearchParams(searchParams);
+
+					newParams.set('page', String(page));
+
+					router.push(`/?${newParams.toString()}`);
+				}}
 				onPageSizeChange={(pageSize) => {
-					router.push(
-						`/?${new URLSearchParams({
-							keywords: keywords ?? '',
-							page: String(pageProduct.page),
-							pageSize: String(pageSize),
-						})}`
-					);
+					const newParams = new URLSearchParams(searchParams);
+
+					newParams.set('page', '1');
+					newParams.set('pageSize', String(pageSize));
+
+					router.push(`/?${newParams.toString()}`);
 				}}
 				pageSize={pageProduct.pageSize}
 				totalCount={pageProduct.totalCount}

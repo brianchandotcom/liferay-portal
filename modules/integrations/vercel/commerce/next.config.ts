@@ -5,9 +5,9 @@
 
 import type {NextConfig} from 'next';
 
-const imageDomain = (process.env.LIFERAY_HOST ?? '')
-	.replace('https://', '')
-	.replace('http://', '');
+const imageDomain = process.env.LIFERAY_HOST
+	? new URL(process.env.LIFERAY_HOST).hostname
+	: '';
 
 const nextConfig: NextConfig = {
 	images: {

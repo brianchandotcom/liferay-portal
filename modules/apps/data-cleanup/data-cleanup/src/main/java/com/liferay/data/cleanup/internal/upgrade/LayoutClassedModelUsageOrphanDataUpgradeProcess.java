@@ -10,6 +10,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.manager.ContentManager;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -87,8 +88,14 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			(ctCollection != null) ? ctCollection.getCtCollectionId() :
 				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
 
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
+				layoutClassedModelUsageId);
+
 		try {
-			if ((ctCollection != null) && ctCollection.isReadOnly()) {
+			if ((layoutClassedModelUsage == null) ||
+				((ctCollection != null) && ctCollection.isReadOnly())) {
+
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"delete from LayoutClassedModelUsage where " +
@@ -105,8 +112,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 								ctCollectionId)) {
 
 					_layoutClassedModelUsageLocalService.
-						deleteLayoutClassedModelUsage(
-							layoutClassedModelUsageId);
+						deleteLayoutClassedModelUsage(layoutClassedModelUsage);
 				}
 			}
 

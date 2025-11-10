@@ -3,39 +3,39 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useForm} from 'react-hook-form';
-import {Size} from '@clayui/modal/lib/types';
+import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {Size} from '@clayui/modal/lib/types';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
 
 import {Input} from '../../../components/Input/Input';
-import zodSchema, {z, zodResolver} from '../../../schema/zod';
-import MultiSelect from '../../../components/MultiSelect/MultiSelect';
-import {useState} from 'react';
-import i18n from '../../../i18n';
-import {getFilteredItems} from '../utils';
 import {Label} from '../../../components/MarketplaceForm/Label';
-import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import {Liferay} from '../../../liferay/liferay';
-import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
 import Modal from '../../../components/Modal';
-import Button from '@clayui/button';
+import MultiSelect from '../../../components/MultiSelect/MultiSelect';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {UserRoleTypes} from '../../../enums/Account';
+import i18n from '../../../i18n';
+import {Liferay} from '../../../liferay/liferay';
+import zodSchema, {zodResolver} from '../../../schema/zod';
+import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
+import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
 import {ssaRoles} from '../constants';
+import {getFilteredItems} from '../utils';
 
 export type Item = {
 	key: string;
-	value: string;
 	label: string;
+	value: string;
 };
 
 type InviteUserModalPops = {
-	mutate: any;
 	modal: {
 		observer: any;
 		onClose: () => void;
 		open: boolean;
 	};
+	mutate: any;
 };
 
 type ModalForm = {
@@ -47,9 +47,9 @@ const InviteUserModal = ({modal, mutate}: InviteUserModalPops) => {
 	const {properties} = useMarketplaceContext();
 	const {
 		formState: {errors, isSubmitting},
-		setValue,
-		register,
 		handleSubmit,
+		register,
+		setValue,
 	} = useForm<ModalForm>({
 		resolver: zodResolver(zodSchema.ssaInviteUsers),
 	});
@@ -132,9 +132,9 @@ const InviteUserModal = ({modal, mutate}: InviteUserModalPops) => {
 
 				<Input
 					{...register('emailAddress')}
-					required
-					placeholder={i18n.translate('email')}
 					errorMessage={errors.emailAddress?.message}
+					placeholder={i18n.translate('email')}
+					required
 				/>
 
 				<Label>{i18n.translate('roles')}</Label>

@@ -1,13 +1,19 @@
-import MultiSelect from '../../../components/MultiSelect/MultiSelect';
-import {useForm} from 'react-hook-form';
-import {z} from '../../../schema/zod';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {zodResolver} from '@hookform/resolvers/zod';
+import {useForm} from 'react-hook-form';
+import {KeyedMutator} from 'swr';
+
+import MultiSelect from '../../../components/MultiSelect/MultiSelect';
+import i18n from '../../../i18n';
+import {Liferay} from '../../../liferay/liferay';
+import {z} from '../../../schema/zod';
+import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
 import {ssaRoles} from '../constants';
 import {getFilteredItems} from '../utils';
-import {Liferay} from '../../../liferay/liferay';
-import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
-import i18n from '../../../i18n';
-import {KeyedMutator} from 'swr';
 
 const formSchema = z.object({
 	roles: z
@@ -41,11 +47,11 @@ const ManageUserModal = ({
 			)
 			.map((role) => ({
 				key: role.name,
-				value: role.name,
 				label: role.name,
+				value: role.name,
 			})) || [];
 
-	const {formState, setValue, handleSubmit, watch} = useForm<FormValues>({
+	const {formState, handleSubmit, setValue, watch} = useForm<FormValues>({
 		defaultValues: {roles: currentRoles},
 		resolver: zodResolver(formSchema),
 	});

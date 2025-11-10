@@ -12,9 +12,9 @@ import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import SearchBuilder from '../../core/SearchBuilder';
 import {OrderTypes, OrderWorkflowStatusCode} from '../../enums/Order';
 import {usePlacedOrders} from '../../hooks/data/usePlacedOrder';
+import i18n from '../../i18n';
 import HeadlessAdminUser from '../../services/rest/HeadlessAdminUser';
 import {useSSATrialsExtend} from './hooks/useSSATrialsExtend';
-import i18n from '../../i18n';
 
 const SSADashboardOutlet = () => {
 	const {marketplaceUserAccount, myUserAccount, properties} =

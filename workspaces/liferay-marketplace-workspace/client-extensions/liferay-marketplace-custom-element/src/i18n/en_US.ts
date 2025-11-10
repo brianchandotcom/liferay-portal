@@ -392,7 +392,8 @@ export default {
 		'Manage and publish apps on the Marketplace',
 	'manage-app': 'Manage App',
 	'manage-license-keys': 'Manage License Key(s)',
-	'manage-members-and-access-for-ssa-accounts': 'Manage members and access for SSA accounts.',
+	'manage-members-and-access-for-ssa-accounts':
+		'Manage members and access for SSA accounts.',
 	'manage-roles': 'Manage Roles',
 	'manage-the-roles-associated-with-this-user-roles-determine-what-features-permissions-and-areas-of-the-platform-the-user-can-access-so-updating-them-allows-you-to-control-their-level-of-access-and-responsibilities':
 		'Manage the roles associated with this user. Roles determine what features, permissions, and areas of the platform the user can access, so updating them allows you to control their level of access and responsibilities.',

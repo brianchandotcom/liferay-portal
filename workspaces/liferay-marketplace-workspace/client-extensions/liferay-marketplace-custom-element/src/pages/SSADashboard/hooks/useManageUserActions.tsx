@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Button from '@clayui/button';
 import {useMemo} from 'react';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import {UserRoleTypes} from '../../../enums/Account';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
-import {Action} from '../../../utils/constants';
-import ManageUserModal from '../modals/ManageUserRolesModal';
-import Button from '@clayui/button';
-import HeaderWithTooltip from '../components/HeaderWithTooltip';
-import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
 import {Liferay} from '../../../liferay/liferay';
 import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
-import {UserRoleTypes} from '../../../enums/Account';
+import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
+import {Action} from '../../../utils/constants';
+import HeaderWithTooltip from '../components/HeaderWithTooltip';
+import ManageUserModal from '../modals/ManageUserRolesModal';
 
 const useManageUserActions = () => {
 	const {properties} = useMarketplaceContext();
@@ -38,6 +38,23 @@ const useManageUserActions = () => {
 									user={user}
 								/>
 							),
+							footer: [
+								<Button
+									displayType="secondary"
+									key="button-1"
+									onClick={modalContext.onClose}
+								>
+									{i18n.translate('cancel')}
+								</Button>,
+								null,
+								<Button
+									form="manage-roles"
+									key="button-2"
+									type="submit"
+								>
+									{i18n.translate('apply')}
+								</Button>,
+							],
 							header: (
 								<HeaderWithTooltip
 									title={i18n.translate('manage-user-roles')}
@@ -46,18 +63,6 @@ const useManageUserActions = () => {
 									)}
 								/>
 							),
-							footer: [
-								<Button
-									displayType="secondary"
-									onClick={modalContext.onClose}
-								>
-									{i18n.translate('cancel')}
-								</Button>,
-								null,
-								<Button type="submit" form="manage-roles">
-									{i18n.translate('apply')}
-								</Button>,
-							],
 						});
 					},
 				},
@@ -72,18 +77,18 @@ const useManageUserActions = () => {
 									)}
 								</div>
 							),
-							header: i18n.translate('remove-user'),
-							status: 'warning',
 							footer: [
 								<Button
-									onClick={modalContext.onClose}
 									displayType="secondary"
+									key="button-3"
+									onClick={modalContext.onClose}
 								>
 									{i18n.translate('cancel')}
 								</Button>,
 								null,
 								<Button
 									displayType="warning"
+									key="button-3"
 									onClick={async () => {
 										const userRoles =
 											await HeadlessAdminUser.getRolesPage(
@@ -134,11 +139,13 @@ const useManageUserActions = () => {
 									{i18n.translate('confirm')}
 								</Button>,
 							],
+							header: i18n.translate('remove-user'),
+							status: 'warning',
 						});
 					},
 				},
 			] as Action[],
-		[modalContext]
+		[modalContext, properties.accountExternalReferenceCode]
 	);
 };
 

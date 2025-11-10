@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useModal} from '@clayui/modal';
 import Button from '@clayui/button';
+import {useModal} from '@clayui/modal';
+import {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-import {formatDate} from '../../../utils/date';
-import {ssaRoles} from '../constants';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import i18n from '../../../i18n';
-import InviteUserModal from '../modals/InviteUserModal';
 import ListView from '../../../components/ListView';
 import Page from '../../../components/Page';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import i18n from '../../../i18n';
+import {formatDate} from '../../../utils/date';
+import {ssaRoles} from '../constants';
 import useManageUserActions from '../hooks/useManageUserActions';
-import {useNavigate} from 'react-router-dom';
-import {useEffect} from 'react';
+import InviteUserModal from '../modals/InviteUserModal';
 
 export default function ManageUsers() {
 	const {marketplaceUserAccount} = useMarketplaceContext();
@@ -26,7 +26,6 @@ export default function ManageUsers() {
 
 	useEffect(() => {
 		if (!marketplaceUserAccount.isSSAAdmin) {
-
 			navigate('/');
 		}
 	}, [marketplaceUserAccount.isSSAAdmin, navigate]);
@@ -51,8 +50,8 @@ export default function ManageUsers() {
 			<ListView<UserAccount>
 				id="manage-ssa-users"
 				managementToolbarProps={{
-					visible: true,
 					searchVisible: true,
+					visible: true,
 				}}
 				resource={`o/headless-admin-user/v1.0/accounts/by-external-reference-code/${properties.accountExternalReferenceCode}/user-accounts?sort=name:asc`}
 				tableProps={{

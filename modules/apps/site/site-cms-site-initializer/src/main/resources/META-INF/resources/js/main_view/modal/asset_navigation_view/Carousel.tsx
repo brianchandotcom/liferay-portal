@@ -4,12 +4,10 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
-import ContentPreview from '../../../common/components/ContentPreview';
-import FilePreview from '../../../common/components/FilePreview';
+import AssetPreview from '../../../common/components/AssetPreview';
 import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
 
 const Arrow = ({
@@ -72,13 +70,7 @@ export default function Carousel({
 			)}
 
 			<div className="h-100 justify-content-center mx-6 preview-container py-4 w-100">
-				{currentItem.embedded?.file ? (
-					<FilePreview file={currentItem.embedded.file} />
-				) : (
-					<ContentPreview
-						url={replaceTokens(contentViewURL, currentItem)}
-					/>
-				)}
+				<AssetPreview item={currentItem} url={contentViewURL} />
 			</div>
 		</div>
 	);

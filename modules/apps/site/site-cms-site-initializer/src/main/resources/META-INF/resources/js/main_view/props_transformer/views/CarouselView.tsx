@@ -15,7 +15,9 @@ import classNames from 'classnames';
 
 import ContentPreview from '../../../common/components/ContentPreview';
 
-const VISIBLE_ITEMS_COUNT = 6;
+const VISIBLE_ITEMS_COUNT = 5;
+const MAX_VISIBLE_INDEX = (itemsLength: number) =>
+	itemsLength - VISIBLE_ITEMS_COUNT;
 
 const CarouselView = ({
 	additionalProps,
@@ -33,34 +35,90 @@ const CarouselView = ({
 }) => {
 	const {selectedItems} = useContext(frontendDataSetContext);
 	const [selectedIndex, setSelectedIndex] = useState(0);
-
-	const startIndex = Math.max(
-		0,
-		Math.min(
-			selectedIndex - Math.floor(VISIBLE_ITEMS_COUNT / 2),
-			items.length - VISIBLE_ITEMS_COUNT
-		)
-	);
-
-	const handleitemClick = (index: number) => {
-		setSelectedIndex(index);
-	};
+	const [visibleStartIndex, setVisibleStartIndex] = useState(0);
 
 	const handlePrevClick = () => {
-		const newIndex =
-			selectedIndex === 0 ? items.length - 1 : selectedIndex - 1;
-		setSelectedIndex(newIndex);
+		const itemsLength = items.length;
+
+		if (itemsLength <= VISIBLE_ITEMS_COUNT) return;
+
+		let newSelectedIndex;
+		let newVisibleIndex;
+
+		if (selectedIndex === 0) {
+			newSelectedIndex = itemsLength - 1;
+			newVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
+		}
+		else {
+			newSelectedIndex = selectedIndex - 1;
+			newVisibleIndex = visibleStartIndex;
+
+			if (newSelectedIndex < visibleStartIndex) {
+				newVisibleIndex = visibleStartIndex - 1;
+			}
+		}
+
+		setSelectedIndex(newSelectedIndex);
+		setVisibleStartIndex(newVisibleIndex);
 	};
 
 	const handleNextClick = () => {
-		const newIndex =
-			selectedIndex === items.length - 1 ? 0 : selectedIndex + 1;
-		setSelectedIndex(newIndex);
+		const itemsLength = items.length;
+		const maxVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
+
+		if (itemsLength <= VISIBLE_ITEMS_COUNT) return;
+
+		let newSelectedIndex;
+		let newVisibleIndex;
+
+		if (selectedIndex === itemsLength - 1) {
+			newSelectedIndex = 0;
+			newVisibleIndex = 0;
+		}
+		else {
+			newSelectedIndex = selectedIndex + 1;
+			newVisibleIndex = visibleStartIndex;
+
+			if (newSelectedIndex >= visibleStartIndex + VISIBLE_ITEMS_COUNT) {
+				newVisibleIndex = Math.min(
+					maxVisibleIndex,
+					visibleStartIndex + 1
+				);
+			}
+		}
+
+		setSelectedIndex(newSelectedIndex);
+		setVisibleStartIndex(newVisibleIndex);
+	};
+
+	const handleItemClick = (index: number) => {
+		setSelectedIndex(index);
+
+		const itemsLength = items.length;
+		const maxVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
+
+		if (itemsLength > VISIBLE_ITEMS_COUNT) {
+			if (index < visibleStartIndex) {
+				setVisibleStartIndex(index);
+			}
+			else if (index >= visibleStartIndex + VISIBLE_ITEMS_COUNT) {
+				setVisibleStartIndex(
+					Math.min(maxVisibleIndex, index - VISIBLE_ITEMS_COUNT + 1)
+				);
+			}
+		}
+	};
+
+	const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			handleItemClick(index);
+		}
 	};
 
 	const visibleItems = items.slice(
-		startIndex,
-		startIndex + VISIBLE_ITEMS_COUNT
+		visibleStartIndex,
+		visibleStartIndex + VISIBLE_ITEMS_COUNT
 	);
 
 	const currentItem = useMemo(
@@ -70,23 +128,23 @@ const CarouselView = ({
 
 	const cardWidth = 100 / VISIBLE_ITEMS_COUNT;
 
+	const isNavigationDisabled = items.length <= VISIBLE_ITEMS_COUNT;
+
 	return (
 		<div className="fds-carousel-view">
 			<div className="fds-carousel-view__preview">
-				<div className="align-items-center d-flex fds-carousel-view__preview-wrapper h-100 justify-content-center w-100">
-					{selectedItems && selectedItems?.length < 2 ? (
-						currentItem.embedded?.file ? (
-							<FilePreview file={currentItem.embedded.file} />
-						) : (
-							<ContentPreview
-								url={replaceTokens(
-									additionalProps.contentViewURL,
-									currentItem
-								)}
-							/>
-						)
-					) : (
+				<div className="fds-carousel-view__preview-wrapper h-100 w-100 d-flex align-items-center justify-content-center">
+					{selectedItems && selectedItems.length >= 2 ? (
 						<p>Placeholder</p>
+					) : currentItem?.embedded?.file ? (
+						<FilePreview file={currentItem.embedded.file} />
+					) : (
+						<ContentPreview
+							url={replaceTokens(
+								additionalProps.contentViewURL,
+								currentItem
+							)}
+						/>
 					)}
 				</div>
 			</div>
@@ -95,15 +153,16 @@ const CarouselView = ({
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('previous')}
 					className="flex-shrink-0"
+					disabled={isNavigationDisabled}
 					displayType="secondary"
 					onClick={handlePrevClick}
 					rounded
 					symbol="angle-left"
 				/>
 
-				<div className="align-items-center c-gap-3 d-flex fds-carousel-view__thumbnails justify-content-center w-100">
+				<div className="align-items-center c-gap-3 flex-grow-1 d-flex fds-carousel-view__thumbnails justify-content-center">
 					{visibleItems.map((item, index) => {
-						const actualIndex = startIndex + index;
+						const actualIndex = visibleStartIndex + index;
 						const classes = classNames(
 							'fds-carousel-view__thumbnail',
 							{
@@ -115,7 +174,11 @@ const CarouselView = ({
 							<div
 								className={classes}
 								key={actualIndex}
-								onClick={() => handleitemClick(actualIndex)}
+								onClick={() => handleItemClick(actualIndex)}
+								onKeyDown={(event) =>
+									handleKeyDown(event, actualIndex)
+								}
+								tabIndex={0}
 								style={{
 									width: `${cardWidth}%`,
 								}}
@@ -133,6 +196,7 @@ const CarouselView = ({
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('next')}
 					className="flex-shrink-0"
+					disabled={isNavigationDisabled}
 					displayType="secondary"
 					onClick={handleNextClick}
 					rounded

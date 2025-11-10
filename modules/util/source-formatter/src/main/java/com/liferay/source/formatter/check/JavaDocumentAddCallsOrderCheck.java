@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.comparator.ParameterNameComparator;
@@ -33,29 +34,41 @@ public class JavaDocumentAddCallsOrderCheck extends BaseJavaTermCheck {
 		while (matcher.find()) {
 			String variableName = matcher.group(1);
 
-			int x = content.indexOf(
-				"\t" + variableName + ".add", matcher.end());
+			int x = matcher.end();
 
-			if (x == -1) {
-				continue;
+			while (true) {
+				x = content.indexOf("\t" + variableName + ".add", x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				String codeBlock = StringPool.BLANK;
+				int y = content.indexOf("\n\n", x + 1);
+
+				if (y == -1) {
+					codeBlock = content.substring(x);
+				}
+				else {
+					codeBlock = content.substring(x, y);
+				}
+
+				String sortedCodeBlock = _sortedCodeBlock(
+					codeBlock, variableName);
+
+				if (codeBlock.equals(sortedCodeBlock)) {
+					if (y == -1) {
+						break;
+					}
+
+					x = y;
+
+					continue;
+				}
+
+				return StringUtil.replaceFirst(
+					content, codeBlock, sortedCodeBlock, matcher.start());
 			}
-
-			int y = content.indexOf("\n\n", x + 1);
-
-			if (y == -1) {
-				continue;
-			}
-
-			String codeBlock = content.substring(x, y);
-
-			String sortedCodeBlock = _sortedCodeBlock(codeBlock, variableName);
-
-			if (codeBlock.equals(sortedCodeBlock)) {
-				continue;
-			}
-
-			return StringUtil.replaceFirst(
-				content, codeBlock, sortedCodeBlock, matcher.start());
 		}
 
 		return content;
@@ -142,6 +155,6 @@ public class JavaDocumentAddCallsOrderCheck extends BaseJavaTermCheck {
 	}
 
 	private static final Pattern _documentVariableDefinitionPattern =
-		Pattern.compile("\tDocument (\\w+)[; ]");
+		Pattern.compile("\\bDocument (\\w+)\\b");
 
 }

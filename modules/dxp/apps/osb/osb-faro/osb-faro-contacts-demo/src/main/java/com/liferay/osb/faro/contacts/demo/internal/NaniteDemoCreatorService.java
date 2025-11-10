@@ -543,6 +543,13 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 
 		salesforceProvider.setAccountsConfiguration(accountsConfiguration);
 
+		SalesforceProvider.ChannelsConfiguration channelsConfiguration =
+			new SalesforceProvider.ChannelsConfiguration();
+
+		channelsConfiguration.setEnableAllChannels(false);
+
+		salesforceProvider.setChannelsConfiguration(channelsConfiguration);
+
 		SalesforceProvider.ContactsConfiguration contactsConfiguration =
 			new SalesforceProvider.ContactsConfiguration();
 

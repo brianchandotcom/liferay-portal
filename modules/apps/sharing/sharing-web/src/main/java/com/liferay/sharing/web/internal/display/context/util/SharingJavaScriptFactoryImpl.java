@@ -14,11 +14,14 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.web.internal.util.SharingJavaScriptThreadLocal;
 
 import jakarta.portlet.PortletRequest;
@@ -42,6 +45,10 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createCopyLinkClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
+		if (!_canShareEntry(className, classPK, httpServletRequest)) {
+			return null;
+		}
+
 		requestSharingJavaScript();
 
 		String link = _getAssetURLShare(className, classPK, httpServletRequest);
@@ -52,6 +59,10 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	@Override
 	public String createManageCollaboratorsOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
+
+		if (!_canShareEntry(className, classPK, httpServletRequest)) {
+			return null;
+		}
 
 		requestSharingJavaScript();
 
@@ -64,6 +75,10 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	@Override
 	public String createSharingOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
+
+		if (!_canShareEntry(className, classPK, httpServletRequest)) {
+			return null;
+		}
 
 		requestSharingJavaScript();
 
@@ -79,6 +94,26 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	@Override
 	public void requestSharingJavaScript() {
 		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
+	}
+
+	private boolean _canShareEntry(
+		String className, long classPK, HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			return _sharingPermission.containsSharePermission(
+				themeDisplay.getPermissionChecker(),
+				_classNameLocalService.getClassNameId(className), classPK,
+				themeDisplay.getScopeGroupId());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return false;
+		}
 	}
 
 	private AssetRenderer<?> _getAssetRenderer(String className, long classPK)
@@ -183,5 +218,8 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SharingPermission _sharingPermission;
 
 }

@@ -6,17 +6,14 @@
 import {replaceTokens} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
+import {ISearchAssetObjectEntry} from '../types/AssetType';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../utils/constants';
 import ContentPreview from './ContentPreview';
 import FilePreview from './FilePreview';
+import FolderPreview from './FolderPreview';
 
 interface AssetPreviewProps {
-	item: {
-		embedded: {
-			file?: any;
-		};
-		entryClassName: string;
-	};
+	item: ISearchAssetObjectEntry;
 	url: string;
 }
 
@@ -28,7 +25,13 @@ export default function AssetPreview(props: AssetPreviewProps) {
 	}
 
 	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
-		return <p>Folder preview</p>;
+		return (
+			<FolderPreview
+				filesLength={3}
+				name={item.embedded.title ?? ''}
+				subfoldersLength={1}
+			/>
+		);
 	}
 
 	return <ContentPreview url={replaceTokens(url, item)} />;

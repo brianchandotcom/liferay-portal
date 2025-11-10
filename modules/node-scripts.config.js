@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'db038aa6fb1f27fe156e2c38791a9613e4be0f214d134125b627f9a31d805fb7',
+	hash: '3376d42d13d8630667f9513e698ede6a03d258f50f3cfb83ca1e537b8103db57',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -332,6 +332,7 @@ module.exports = {
 			'@ckeditor/ckeditor5-widget/dist/index.js',
 			'@ckeditor/ckeditor5-word-count/dist/index.js',
 			'ckeditor5/ckeditor5.css',
+			'eventsource',
 		],
 		'frontend-js-aui-web': [],
 		'frontend-js-clay-sample-web': [],

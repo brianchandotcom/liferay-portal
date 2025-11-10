@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
-public class DLAppServiceWhenMovingAFileEntryDLWithFileEntryTypeTest
+public class DLAppServiceWhenMovingWithDLFileEntryTypeTest
 	extends BaseDLAppTestCase {
 
 	@ClassRule
@@ -43,7 +43,9 @@ public class DLAppServiceWhenMovingAFileEntryDLWithFileEntryTypeTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testShouldHaveSameFileEntryType() throws Exception {
+	public void testMoveDLFileEntryShouldHaveSameFileEntryType()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -65,12 +67,12 @@ public class DLAppServiceWhenMovingAFileEntryDLWithFileEntryTypeTest
 			BaseDLAppTestCase.CONTENT.getBytes(), null, null, null,
 			serviceContext);
 
-		FileEntry copiedFileEntry = dlAppService.moveFileEntry(
+		FileEntry movedFileEntry = dlAppService.moveFileEntry(
 			fileEntry.getFileEntryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceContextTestUtil.getServiceContext(targetGroup.getGroupId()));
 
-		DLFileEntry dlFileEntry = (DLFileEntry)copiedFileEntry.getModel();
+		DLFileEntry dlFileEntry = (DLFileEntry)movedFileEntry.getModel();
 
 		Assert.assertEquals(
 			dlFileEntryType.getFileEntryTypeId(),

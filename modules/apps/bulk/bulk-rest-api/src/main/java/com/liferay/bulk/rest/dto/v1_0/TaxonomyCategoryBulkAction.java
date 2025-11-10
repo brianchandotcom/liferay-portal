@@ -50,6 +50,47 @@ public class TaxonomyCategoryBulkAction
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getAppend() {
+		if (_appendSupplier != null) {
+			append = _appendSupplier.get();
+
+			_appendSupplier = null;
+		}
+
+		return append;
+	}
+
+	public void setAppend(Boolean append) {
+		this.append = append;
+
+		_appendSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAppend(
+		UnsafeSupplier<Boolean, Exception> appendUnsafeSupplier) {
+
+		_appendSupplier = () -> {
+			try {
+				return appendUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean append;
+
+	@JsonIgnore
+	private Supplier<Boolean> _appendSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getTaxonomyCategoryIdsToAdd() {
 		if (_taxonomyCategoryIdsToAddSupplier != null) {
 			taxonomyCategoryIdsToAdd = _taxonomyCategoryIdsToAddSupplier.get();
@@ -164,6 +205,18 @@ public class TaxonomyCategoryBulkAction
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Boolean append = getAppend();
+
+		if (append != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"append\": ");
+
+			sb.append(append);
+		}
 
 		Long[] taxonomyCategoryIdsToAdd = getTaxonomyCategoryIdsToAdd();
 

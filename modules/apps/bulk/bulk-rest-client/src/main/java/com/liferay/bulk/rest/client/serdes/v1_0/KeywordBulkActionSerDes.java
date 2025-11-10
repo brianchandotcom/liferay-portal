@@ -47,6 +47,16 @@ public class KeywordBulkActionSerDes {
 
 		sb.append("{");
 
+		if (keywordBulkAction.getAppend() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"append\": ");
+
+			sb.append(keywordBulkAction.getAppend());
+		}
+
 		if (keywordBulkAction.getKeywordsToAdd() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -157,6 +167,13 @@ public class KeywordBulkActionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (keywordBulkAction.getAppend() == null) {
+			map.put("append", null);
+		}
+		else {
+			map.put("append", String.valueOf(keywordBulkAction.getAppend()));
+		}
+
 		if (keywordBulkAction.getKeywordsToAdd() == null) {
 			map.put("keywordsToAdd", null);
 		}
@@ -218,7 +235,10 @@ public class KeywordBulkActionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "keywordsToAdd")) {
+			if (Objects.equals(jsonParserFieldName, "append")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "keywordsToAdd")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "keywordsToRemove")) {
@@ -242,7 +262,12 @@ public class KeywordBulkActionSerDes {
 			KeywordBulkAction keywordBulkAction, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "keywordsToAdd")) {
+			if (Objects.equals(jsonParserFieldName, "append")) {
+				if (jsonParserFieldValue != null) {
+					keywordBulkAction.setAppend((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "keywordsToAdd")) {
 				if (jsonParserFieldValue != null) {
 					keywordBulkAction.setKeywordsToAdd(
 						toStrings((Object[])jsonParserFieldValue));

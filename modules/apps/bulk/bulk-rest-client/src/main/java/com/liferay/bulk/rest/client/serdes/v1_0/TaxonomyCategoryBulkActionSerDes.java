@@ -51,6 +51,16 @@ public class TaxonomyCategoryBulkActionSerDes {
 
 		sb.append("{");
 
+		if (taxonomyCategoryBulkAction.getAppend() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"append\": ");
+
+			sb.append(taxonomyCategoryBulkAction.getAppend());
+		}
+
 		if (taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToAdd() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -182,6 +192,15 @@ public class TaxonomyCategoryBulkActionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (taxonomyCategoryBulkAction.getAppend() == null) {
+			map.put("append", null);
+		}
+		else {
+			map.put(
+				"append",
+				String.valueOf(taxonomyCategoryBulkAction.getAppend()));
+		}
+
 		if (taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToAdd() == null) {
 			map.put("taxonomyCategoryIdsToAdd", null);
 		}
@@ -250,8 +269,11 @@ public class TaxonomyCategoryBulkActionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "taxonomyCategoryIdsToAdd")) {
+			if (Objects.equals(jsonParserFieldName, "append")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryIdsToAdd")) {
 
 				return false;
 			}
@@ -278,8 +300,14 @@ public class TaxonomyCategoryBulkActionSerDes {
 			TaxonomyCategoryBulkAction taxonomyCategoryBulkAction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "taxonomyCategoryIdsToAdd")) {
+			if (Objects.equals(jsonParserFieldName, "append")) {
+				if (jsonParserFieldValue != null) {
+					taxonomyCategoryBulkAction.setAppend(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryIdsToAdd")) {
 
 				if (jsonParserFieldValue != null) {
 					taxonomyCategoryBulkAction.setTaxonomyCategoryIdsToAdd(

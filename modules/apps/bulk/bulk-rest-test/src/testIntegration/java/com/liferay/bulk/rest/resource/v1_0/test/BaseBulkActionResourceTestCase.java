@@ -340,6 +340,18 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("append", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof KeywordBulkAction)) {
+					continue;
+				}
+
+				if (((KeywordBulkAction)bulkAction).getAppend() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("keywordsToAdd", additionalAssertFieldName)) {
 				if (!(bulkAction instanceof KeywordBulkAction)) {
 					continue;
@@ -418,6 +430,20 @@ public abstract class BaseBulkActionResourceTestCase {
 				}
 
 				if (((StatusBulkAction)bulkAction).getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("append", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof TaxonomyCategoryBulkAction)) {
+					continue;
+				}
+
+				if (((TaxonomyCategoryBulkAction)bulkAction).getAppend() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -755,6 +781,23 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("append", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof KeywordBulkAction) ||
+					!(bulkAction2 instanceof KeywordBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((KeywordBulkAction)bulkAction1).getAppend(),
+						((KeywordBulkAction)bulkAction2).getAppend())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("keywordsToAdd", additionalAssertFieldName)) {
 				if (!(bulkAction1 instanceof KeywordBulkAction) ||
 					!(bulkAction2 instanceof KeywordBulkAction)) {
@@ -855,6 +898,24 @@ public abstract class BaseBulkActionResourceTestCase {
 				if (!Objects.deepEquals(
 						((StatusBulkAction)bulkAction1).getStatus(),
 						((StatusBulkAction)bulkAction2).getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("append", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof TaxonomyCategoryBulkAction) ||
+					!(bulkAction2 instanceof TaxonomyCategoryBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((TaxonomyCategoryBulkAction)bulkAction1).getAppend(),
+						((TaxonomyCategoryBulkAction)bulkAction2).
+							getAppend())) {
 
 					return false;
 				}
@@ -1212,6 +1273,8 @@ public abstract class BaseBulkActionResourceTestCase {
 			() -> {
 				KeywordBulkAction bulkAction = new KeywordBulkAction();
 
+				bulkAction.setAppend(RandomTestUtil.randomBoolean());
+
 				bulkAction.setType(BulkAction.Type.create("KeywordBulkAction"));
 
 				return bulkAction;
@@ -1248,6 +1311,8 @@ public abstract class BaseBulkActionResourceTestCase {
 			() -> {
 				TaxonomyCategoryBulkAction bulkAction =
 					new TaxonomyCategoryBulkAction();
+
+				bulkAction.setAppend(RandomTestUtil.randomBoolean());
 
 				bulkAction.setType(
 					BulkAction.Type.create("TaxonomyCategoryBulkAction"));

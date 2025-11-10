@@ -9,10 +9,8 @@ import com.liferay.headless.cms.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.cms.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.cms.internal.resource.v1_0.AssetPermissionActionResourceImpl;
 import com.liferay.headless.cms.internal.resource.v1_0.AssetUsageResourceImpl;
-import com.liferay.headless.cms.internal.resource.v1_0.BulkActionResourceImpl;
 import com.liferay.headless.cms.resource.v1_0.AssetPermissionActionResource;
 import com.liferay.headless.cms.resource.v1_0.AssetUsageResource;
-import com.liferay.headless.cms.resource.v1_0.BulkActionResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -40,8 +38,6 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setAssetPermissionActionResourceComponentServiceObjects(
 			_assetPermissionActionResourceComponentServiceObjects);
-		Mutation.setBulkActionResourceComponentServiceObjects(
-			_bulkActionResourceComponentServiceObjects);
 
 		Query.setAssetUsageResourceComponentServiceObjects(
 			_assetUsageResourceComponentServiceObjects);
@@ -86,15 +82,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AssetPermissionActionResourceImpl.class,
 							"postAssetPermission"));
-					put(
-						"mutation#createBulkAction",
-						new ObjectValuePair<>(
-							BulkActionResourceImpl.class, "postBulkAction"));
-					put(
-						"mutation#createBulkActionItemPreviewPage",
-						new ObjectValuePair<>(
-							BulkActionResourceImpl.class,
-							"postBulkActionItemPreviewPage"));
 
 					put(
 						"query#assetUsagesAsset",
@@ -107,10 +94,6 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AssetPermissionActionResource>
 		_assetPermissionActionResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<BulkActionResource>
-		_bulkActionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AssetUsageResource>

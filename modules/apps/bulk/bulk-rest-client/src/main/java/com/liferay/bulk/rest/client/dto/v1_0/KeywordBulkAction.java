@@ -26,6 +26,27 @@ public class KeywordBulkAction
 		return KeywordBulkActionSerDes.toDTO(json);
 	}
 
+	public Boolean getAppend() {
+		return append;
+	}
+
+	public void setAppend(Boolean append) {
+		this.append = append;
+	}
+
+	public void setAppend(
+		UnsafeSupplier<Boolean, Exception> appendUnsafeSupplier) {
+
+		try {
+			append = appendUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean append;
+
 	public String[] getKeywordsToAdd() {
 		return keywordsToAdd;
 	}

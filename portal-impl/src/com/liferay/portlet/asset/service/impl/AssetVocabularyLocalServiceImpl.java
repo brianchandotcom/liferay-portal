@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -505,7 +506,10 @@ public class AssetVocabularyLocalServiceImpl
 		AssetVocabulary vocabulary =
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
-		if (Validator.isNotNull(externalReferenceCode)) {
+		if (Validator.isNotNull(externalReferenceCode) &&
+			FeatureFlagManagerUtil.isEnabled(
+				vocabulary.getCompanyId(), "LPD-31228")) {
+
 			vocabulary.setExternalReferenceCode(externalReferenceCode);
 		}
 

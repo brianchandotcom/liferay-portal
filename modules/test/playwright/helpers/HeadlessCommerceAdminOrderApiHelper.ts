@@ -262,11 +262,10 @@ export class HeadlessCommerceAdminOrderApiHelper {
 	}
 
 	async postOrderRuleIdOrderRuleOrderType(
-		orderRuleId: number,
 		orderRuleOrderType: TOrderRuleOrderType
 	) {
 		orderRuleOrderType = await this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/order-rules/${orderRuleId}/order-rule-order-types`,
+			`${this.apiHelpers.baseUrl}${this.basePath}/order-rules/${orderRuleOrderType.orderRuleId}/order-rule-order-types`,
 			{
 				data: orderRuleOrderType,
 			}
@@ -275,7 +274,7 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		if (this.apiHelpers instanceof DataApiHelpers) {
 			this.apiHelpers.data.push({
 				id: orderRuleOrderType.orderRuleOrderTypeId,
-				type: 'orderType',
+				type: 'orderRuleOrderType',
 			});
 		}
 

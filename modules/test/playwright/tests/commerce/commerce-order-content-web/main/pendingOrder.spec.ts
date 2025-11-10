@@ -1333,6 +1333,7 @@ test(
 		commerceAdminChannelsPage,
 		commerceLayoutsPage,
 		page,
+		pendingOrdersPage,
 		site,
 	}) => {
 		await apiHelpers.headlessDelivery.createSitePage({
@@ -1368,55 +1369,10 @@ test(
 			'B2B'
 		);
 
-		const orderRule1 =
-			await apiHelpers.headlessCommerceAdminOrder.postOrderRule({
-				type: 'minimum-order-amount',
-				typeSettings:
-					'minimum-order-amount-field-amount=' +
-					'50.00' +
-					'\nminimum-order-amount-field-apply-to=' +
-					'minimum-order-amount-field-apply-to-order-total' +
-					'\nminimum-order-amount-field-currency-code=' +
-					'USD\n',
-			});
-
-		const orderType1 =
-			await apiHelpers.headlessCommerceAdminOrder.postOrderType({
-				active: true,
-			});
-
-		await apiHelpers.headlessCommerceAdminOrder.postOrderRuleIdOrderRuleOrderType(
-			orderRule1.id,
-			{
-				orderRuleId: orderRule1.id,
-				orderTypeId: orderType1.id,
-			}
-		);
-
-		const orderRule2 =
-			await apiHelpers.headlessCommerceAdminOrder.postOrderRule({
-				type: 'minimum-order-amount',
-				typeSettings:
-					'minimum-order-amount-field-amount=' +
-					'100.00' +
-					'\nminimum-order-amount-field-apply-to=' +
-					'minimum-order-amount-field-apply-to-order-total' +
-					'\nminimum-order-amount-field-currency-code=' +
-					'USD\n',
-			});
-
-		const orderType2 =
-			await apiHelpers.headlessCommerceAdminOrder.postOrderType({
-				active: true,
-			});
-
-		await apiHelpers.headlessCommerceAdminOrder.postOrderRuleIdOrderRuleOrderType(
-			orderRule2.id,
-			{
-				orderRuleId: orderRule2.id,
-				orderTypeId: orderType2.id,
-			}
-		);
+		const orderRuleOrderType1 =
+			await pendingOrdersPage.addOrderRuleOrderType(apiHelpers, 50);
+		const orderRuleOrderType2 =
+			await pendingOrdersPage.addOrderRuleOrderType(apiHelpers, 100);
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -1434,7 +1390,7 @@ test(
 
 		await commerceLayoutsPage.addOrderButton.click();
 		await commerceLayoutsPage.orderTypeModalInput.selectOption({
-			label: orderType1.name['en_US'],
+			label: orderRuleOrderType1.orderType.name['en_US'],
 		});
 		await commerceLayoutsPage.orderTypeModalButton.click();
 
@@ -1448,7 +1404,7 @@ test(
 
 		await commerceLayoutsPage.addOrderButton.click();
 		await commerceLayoutsPage.orderTypeModalInput.selectOption({
-			label: orderType2.name['en_US'],
+			label: orderRuleOrderType2.orderType.name['en_US'],
 		});
 		await commerceLayoutsPage.orderTypeModalButton.click();
 

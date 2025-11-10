@@ -31,8 +31,11 @@ export class FormViewPage {
 	 */
 
 	async getFileEntryId(page: Page): Promise<string> {
+		const DDM_FORM_PORTLET_PREFIX =
+			'_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_';
+
 		const fileEntryIdValue = await page.getAttribute(
-			'input[data-field-name^="undefined"]',
+			`input[name^="${DDM_FORM_PORTLET_PREFIX}ddm$$"][type="hidden"]`,
 			'value'
 		);
 

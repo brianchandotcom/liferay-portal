@@ -1,26 +1,25 @@
-import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import React, {useEffect, useState} from 'react';
-import SalesforceAccountsAndIndividuals from 'settings/components/salesforce/SalesforceAccountsAndIndividuals';
+import React, {useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import WizardPage from 'settings/components/base-page/WizardPage';
 import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
+import {AssignIndividualsDatatoPropertiesStep} from './steps/AssignIndividualsDataToChannelsStep';
+import {close, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
-import {ConnectSalesforceAuth} from 'settings/components/salesforce/ConnectSalesforceAuth';
-import {DataSource} from 'shared/util/records';
-import {disconnect, fetch} from 'shared/api/data-source';
+import {ConnectSalesforceStep} from './steps/ConnectSalesforceStep';
 import {Heading, Text} from '@clayui/core';
-import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
+import {SyncSalesforceDataStep} from './steps/SyncSalesforceDataStep';
 import {useHistory, useParams} from 'react-router-dom';
 import {useQueryParams} from 'shared/hooks/useQueryParams';
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
+interface IConnectSalesForceStepProps extends PropsFromRedux {
+	groupId: string;
+	onNext: () => void;
+	onPrev: () => void;
+}
 
 type Step = {
 	content: React.FC<IConnectSalesForceStepProps>;
@@ -30,7 +29,7 @@ type Step = {
 
 const steps: Step[] = [
 	{
-		content: props => <ConnectSalesForceStep {...props} />,
+		content: props => <ConnectSalesforceStep {...props} />,
 		description: Liferay.Language.get(
 			'to-connect-your-salesforce-environment-with-liferay-analytics-cloud,-generate-a-token-and-paste-the-code-on-the-input-below'
 		),
@@ -115,7 +114,11 @@ const ConnectSalesforce = ({addAlert, close, open}) => {
 					</Text>
 				</div>
 
-				<ClayLink href={URLConstants.HelpConnectDxp} target='_blank'>
+				<ClayLink
+					decoration='underline'
+					href={URLConstants.HelpConnectDxp}
+					target='_blank'
+				>
 					<Text size={4} weight='semi-bold'>
 						{Liferay.Language.get('learn-more-about-data-sources')}
 					</Text>
@@ -153,224 +156,10 @@ const ConnectSalesforce = ({addAlert, close, open}) => {
 	);
 };
 
-interface IButtonGroupProps {
-	nextButtonLabel: string;
-	onCancel: () => void;
-	prevButtonLabel: string;
-}
-
-const ButtonGroup: React.FC<IButtonGroupProps> = ({
-	nextButtonLabel,
-	onCancel,
-	prevButtonLabel
-}) => (
-	<div className='mt-5'>
-		<ClayButton block type='submit'>
-			{nextButtonLabel}
-		</ClayButton>
-
-		<ClayButton block borderless displayType='secondary' onClick={onCancel}>
-			{prevButtonLabel}
-		</ClayButton>
-	</div>
-);
-
 const connector = connect(null, {
 	addAlert,
 	close,
 	open
 });
-
-interface IConnectSalesForceStepProps extends PropsFromRedux {
-	groupId: string;
-	onNext: () => void;
-	onPrev: () => void;
-}
-
-const ConnectSalesForceStep: React.FC<IConnectSalesForceStepProps> = ({
-	addAlert,
-	close,
-	groupId,
-	onNext,
-	open
-}) => {
-	const history = useHistory();
-	const {id} = useQueryParams();
-	const [dataSource, setDataSource] = useState();
-
-	useEffect(() => {
-		async function fetchFn() {
-			try {
-				const dataSource = await fetch({
-					groupId,
-					id
-				});
-
-				setDataSource(dataSource);
-			} catch (error) {
-				throw new Error(error);
-			}
-		}
-
-		if (id) {
-			fetchFn();
-		}
-	}, [id]);
-
-	if (!id) {
-		return (
-			<ConnectSalesforceAuth
-				addAlert={addAlert}
-				buttonProps={{block: true}}
-				onCancel={() => {
-					history.push(
-						toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-							groupId
-						})
-					);
-				}}
-				onSubmit={({id}) => {
-					updateSearchParams(history, 'id', id);
-
-					onNext();
-				}}
-			/>
-		);
-	}
-
-	if (!dataSource) {
-		return null;
-	}
-
-	return (
-		<ClayForm
-			onSubmit={event => {
-				event.preventDefault();
-
-				onNext();
-			}}
-		>
-			<ClayAlert
-				displayType='success'
-				title={Liferay.Language.get('success')}
-			>
-				{Liferay.Language.get('connection-established-successfully')}
-			</ClayAlert>
-
-			<ConnectSalesforceAuth
-				addAlert={addAlert}
-				buttonProps={{block: true}}
-				dataSource={new DataSource(dataSource)}
-				disabled
-				onSubmit={onNext}
-			/>
-
-			<ButtonGroup
-				nextButtonLabel={Liferay.Language.get('continue')}
-				onCancel={() => {
-					open(modalTypes.CONFIRMATION_MODAL, {
-						message: (
-							<Text as='p' size={4}>
-								{Liferay.Language.get(
-									'this-action-will-stop-syncing-data-from-salesforce-to-this-analytics-cloud-workspace.-the-data-that-was-already-synced-will-remain-available-in-the-properties-the-data-source-was-connected-to.-are-you-sure-you-want-to-continue'
-								)}
-							</Text>
-						),
-						modalVariant: 'modal-warning',
-						onClose: close,
-						onSubmit: () =>
-							disconnect({
-								groupId,
-								id
-							})
-								.then(() => {
-									addAlert({
-										alertType: Alert.Types.Success,
-										message: Liferay.Language.get(
-											'data-source-disconnected'
-										)
-									});
-
-									history.push(
-										toRoute(
-											Routes.SETTINGS_SALESFORCE_ADD,
-											{
-												groupId
-											}
-										)
-									);
-
-									close();
-								})
-								.catch(() => {
-									addAlert({
-										alertType: Alert.Types.Error,
-										message: Liferay.Language.get(
-											'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists-please-contact-support'
-										),
-										timeout: false
-									});
-								}),
-						submitButtonDisplay: 'warning',
-						submitMessage: Liferay.Language.get('disconnect'),
-						title: Liferay.Language.get('disconnect-data-source'),
-						titleIcon: 'warning-full'
-					});
-				}}
-				prevButtonLabel={Liferay.Language.get('disconnect-data-source')}
-			/>
-		</ClayForm>
-	);
-};
-
-const SyncSalesforceDataStep = ({onNext, onPrev}) => {
-	const [accounts, setAccounts] = useState(false);
-	const [individuals, setIndividuals] = useState(false);
-
-	return (
-		<ClayForm
-			onSubmit={event => {
-				event.preventDefault();
-
-				onNext();
-
-				addAlert();
-			}}
-		>
-			<SalesforceAccountsAndIndividuals
-				accounts={accounts}
-				individuals={individuals}
-				onChange={({accounts, individuals}) => {
-					setAccounts(accounts);
-					setIndividuals(individuals);
-				}}
-			/>
-
-			<ButtonGroup
-				nextButtonLabel={Liferay.Language.get('continue')}
-				onCancel={onPrev}
-				prevButtonLabel={Liferay.Language.get('previous')}
-			/>
-		</ClayForm>
-	);
-};
-
-const AssignIndividualsDatatoPropertiesStep = ({onNext, onPrev}) => (
-	<ClayForm
-		onSubmit={event => {
-			event.preventDefault();
-
-			onNext();
-		}}
-	>
-		<span>{'working in progress...'}</span>
-
-		<ButtonGroup
-			nextButtonLabel={Liferay.Language.get('finish-setup')}
-			onCancel={onPrev}
-			prevButtonLabel={Liferay.Language.get('previous')}
-		/>
-	</ClayForm>
-);
 
 export default connector(ConnectSalesforce);

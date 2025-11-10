@@ -103,7 +103,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 
 	const activeFilters = filterBy.some(values => values.some(Boolean));
 
-	const classes = getCN('my-2', {
+	const classes = getCN({
 		disabled,
 		'items-selected': itemsSelected
 	});

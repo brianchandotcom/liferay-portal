@@ -109,8 +109,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	public void testExecuteBulkDocumentRequest() {
 		Document document1 = new DocumentImpl();
 
-		document1.addKeyword(Field.UID, "1");
 		document1.addKeyword(_FIELD_NAME, Boolean.TRUE.toString());
+		document1.addKeyword(Field.UID, "1");
 
 		IndexDocumentRequest indexDocumentRequest1 = new IndexDocumentRequest(
 			_INDEX_NAME, document1);
@@ -124,8 +124,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		Document document2 = new DocumentImpl();
 
-		document2.addKeyword(Field.UID, "2");
 		document2.addKeyword(_FIELD_NAME, Boolean.FALSE.toString());
+		document2.addKeyword(Field.UID, "2");
 
 		IndexDocumentRequest indexDocumentRequest2 = new IndexDocumentRequest(
 			_INDEX_NAME, document2);
@@ -169,8 +169,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		Document document2Update = new DocumentImpl();
 
-		document2Update.addKeyword(Field.UID, "2");
 		document2Update.addKeyword(_FIELD_NAME, Boolean.TRUE.toString());
+		document2Update.addKeyword(Field.UID, "2");
 
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			_INDEX_NAME, "2", document2Update);
@@ -279,9 +279,9 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		Document document2Update = new DocumentImpl();
 
+		document2Update.addKeyword(_FIELD_NAME, Boolean.TRUE.toString());
 		document2Update.addKeyword(
 			Field.UID, bulkDocumentItemResponse2.getId());
-		document2Update.addKeyword(_FIELD_NAME, Boolean.TRUE.toString());
 
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			_INDEX_NAME, bulkDocumentItemResponse2.getId(), document2Update);
@@ -471,8 +471,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, id);
 		document.addKeyword(_FIELD_NAME, false);
+		document.addKeyword(Field.UID, id);
 
 		UpdateDocumentResponse updateDocumentResponse =
 			_updateDocumentWithAdapter(id, document);
@@ -532,8 +532,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, id);
 		document.addKeyword(_FIELD_NAME, false);
+		document.addKeyword(Field.UID, id);
 
 		UpdateDocumentResponse updateDocumentResponse =
 			_updateDocumentWithAdapter(null, document);

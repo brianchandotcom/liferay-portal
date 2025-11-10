@@ -42,8 +42,8 @@ public class SharingEntryModelSummaryContributorTest {
 
 		Document document = new DocumentImpl();
 
-		document.addText("localized_title_es_ES", "título");
 		document.addText("localized_title_en_US", "title");
+		document.addText("localized_title_es_ES", "título");
 
 		Summary summary = modelSummaryContributor.getSummary(
 			document, LocaleUtil.SPAIN, StringPool.BLANK);

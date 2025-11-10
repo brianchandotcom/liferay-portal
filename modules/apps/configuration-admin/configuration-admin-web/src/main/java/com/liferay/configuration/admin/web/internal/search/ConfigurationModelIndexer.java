@@ -265,12 +265,12 @@ public class ConfigurationModelIndexer
 
 		_setUID(document, configurationModel);
 
+		document.addKeyword(Field.COMPANY_ID, CompanyConstants.SYSTEM);
 		document.addKeyword(
 			FieldNames.CONFIGURATION_MODEL_FACTORY_PID,
 			configurationModel.getFactoryPid());
 		document.addKeyword(
 			FieldNames.CONFIGURATION_MODEL_ID, configurationModel.getID());
-		document.addKeyword(Field.COMPANY_ID, CompanyConstants.SYSTEM);
 
 		document.addKeyword(Field.ENTRY_CLASS_NAME, getClassName());
 

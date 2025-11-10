@@ -300,8 +300,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	public void testUpdateDocument() {
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, "1");
 		document.addKeyword(Field.EXPIRATION_DATE, "text");
+		document.addKeyword(Field.UID, "1");
 
 		IndexWriter indexWriter = getIndexWriter();
 
@@ -324,8 +324,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	public void testUpdateDocumentBulkExecutor() {
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, "1");
 		document.addKeyword(Field.EXPIRATION_DATE, "text");
+		document.addKeyword(Field.UID, "1");
 
 		IndexWriter indexWriter = getIndexWriter();
 
@@ -350,8 +350,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, "1");
 		document.addKeyword(Field.EXPIRATION_DATE, "text");
+		document.addKeyword(Field.UID, "1");
 
 		documents.add(document);
 
@@ -378,8 +378,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, "1");
 		document.addKeyword(Field.EXPIRATION_DATE, "text");
+		document.addKeyword(Field.UID, "1");
 
 		documents.add(document);
 

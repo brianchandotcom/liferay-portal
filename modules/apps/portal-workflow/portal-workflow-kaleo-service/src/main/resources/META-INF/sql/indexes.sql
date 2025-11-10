@@ -36,6 +36,8 @@ create index IX_B0CDCA38 on KaleoLog (kaleoTaskInstanceTokenId);
 create index IX_4B1D16B4 on KaleoNode (companyId, kaleoDefinitionVersionId);
 create index IX_F066921C on KaleoNode (kaleoDefinitionVersionId);
 
+create unique index IX_905A7776 on KaleoNodeSetting (kaleoNodeId, name[$COLUMN_LENGTH:75$], ctCollectionId);
+
 create index IX_38829497 on KaleoNotification (companyId);
 create index IX_F3362E93 on KaleoNotification (kaleoClassName[$COLUMN_LENGTH:200$], kaleoClassPK, executionType[$COLUMN_LENGTH:20$]);
 create index IX_B8486585 on KaleoNotification (kaleoDefinitionVersionId);

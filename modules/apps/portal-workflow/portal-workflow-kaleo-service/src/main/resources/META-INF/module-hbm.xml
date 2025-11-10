@@ -10,6 +10,7 @@
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoLog" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoNode" />
+	<import class="com.liferay.portal.workflow.kaleo.model.KaleoNodeSetting" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoNotification" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTask" />
@@ -219,6 +220,21 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="initial_" name="initial" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="terminal" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeSettingImpl" table="KaleoNodeSetting">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="kaleoNodeSettingId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="kaleoNodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="value" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationImpl" table="KaleoNotification">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="kaleoNotificationId" type="long">

@@ -1,0 +1,1753 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.workflow.kaleo.service.persistence.impl;
+
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchNodeSettingException;
+import com.liferay.portal.workflow.kaleo.model.KaleoNodeSetting;
+import com.liferay.portal.workflow.kaleo.model.KaleoNodeSettingTable;
+import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeSettingImpl;
+import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeSettingModelImpl;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodeSettingPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodeSettingUtil;
+import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
+
+import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * The persistence implementation for the kaleo node setting service.
+ *
+ * <p>
+ * Caching information and settings can be found in <code>portal.properties</code>
+ * </p>
+ *
+ * @author Brian Wing Shun Chan
+ * @generated
+ */
+@Component(service = KaleoNodeSettingPersistence.class)
+public class KaleoNodeSettingPersistenceImpl
+	extends BasePersistenceImpl<KaleoNodeSetting>
+	implements KaleoNodeSettingPersistence {
+
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this class directly. Always use <code>KaleoNodeSettingUtil</code> to access the kaleo node setting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		KaleoNodeSettingImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByKaleoNodeId;
+	private FinderPath _finderPathWithoutPaginationFindByKaleoNodeId;
+	private FinderPath _finderPathCountByKaleoNodeId;
+
+	/**
+	 * Returns all the kaleo node settings where kaleoNodeId = &#63;.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @return the matching kaleo node settings
+	 */
+	@Override
+	public List<KaleoNodeSetting> findByKaleoNodeId(long kaleoNodeId) {
+		return findByKaleoNodeId(
+			kaleoNodeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the kaleo node settings where kaleoNodeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoNodeSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param start the lower bound of the range of kaleo node settings
+	 * @param end the upper bound of the range of kaleo node settings (not inclusive)
+	 * @return the range of matching kaleo node settings
+	 */
+	@Override
+	public List<KaleoNodeSetting> findByKaleoNodeId(
+		long kaleoNodeId, int start, int end) {
+
+		return findByKaleoNodeId(kaleoNodeId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo node settings where kaleoNodeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoNodeSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param start the lower bound of the range of kaleo node settings
+	 * @param end the upper bound of the range of kaleo node settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo node settings
+	 */
+	@Override
+	public List<KaleoNodeSetting> findByKaleoNodeId(
+		long kaleoNodeId, int start, int end,
+		OrderByComparator<KaleoNodeSetting> orderByComparator) {
+
+		return findByKaleoNodeId(
+			kaleoNodeId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo node settings where kaleoNodeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoNodeSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param start the lower bound of the range of kaleo node settings
+	 * @param end the upper bound of the range of kaleo node settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo node settings
+	 */
+	@Override
+	public List<KaleoNodeSetting> findByKaleoNodeId(
+		long kaleoNodeId, int start, int end,
+		OrderByComparator<KaleoNodeSetting> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoNodeSetting.class)) {
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByKaleoNodeId;
+					finderArgs = new Object[] {kaleoNodeId};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByKaleoNodeId;
+				finderArgs = new Object[] {
+					kaleoNodeId, start, end, orderByComparator
+				};
+			}
+
+			List<KaleoNodeSetting> list = null;
+
+			if (useFinderCache) {
+				list = (List<KaleoNodeSetting>)finderCache.getResult(
+					finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (KaleoNodeSetting kaleoNodeSetting : list) {
+						if (kaleoNodeId != kaleoNodeSetting.getKaleoNodeId()) {
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
+
+				sb.append(_SQL_SELECT_KALEONODESETTING_WHERE);
+
+				sb.append(_FINDER_COLUMN_KALEONODEID_KALEONODEID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(KaleoNodeSettingModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(kaleoNodeId);
+
+					list = (List<KaleoNodeSetting>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first kaleo node setting in the ordered set where kaleoNodeId = &#63;.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo node setting
+	 * @throws NoSuchNodeSettingException if a matching kaleo node setting could not be found
+	 */
+	@Override
+	public KaleoNodeSetting findByKaleoNodeId_First(
+			long kaleoNodeId,
+			OrderByComparator<KaleoNodeSetting> orderByComparator)
+		throws NoSuchNodeSettingException {
+
+		KaleoNodeSetting kaleoNodeSetting = fetchByKaleoNodeId_First(
+			kaleoNodeId, orderByComparator);
+
+		if (kaleoNodeSetting != null) {
+			return kaleoNodeSetting;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("kaleoNodeId=");
+		sb.append(kaleoNodeId);
+
+		sb.append("}");
+
+		throw new NoSuchNodeSettingException(sb.toString());
+	}
+
+	/**
+	 * Returns the first kaleo node setting in the ordered set where kaleoNodeId = &#63;.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo node setting, or <code>null</code> if a matching kaleo node setting could not be found
+	 */
+	@Override
+	public KaleoNodeSetting fetchByKaleoNodeId_First(
+		long kaleoNodeId,
+		OrderByComparator<KaleoNodeSetting> orderByComparator) {
+
+		List<KaleoNodeSetting> list = findByKaleoNodeId(
+			kaleoNodeId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last kaleo node setting in the ordered set where kaleoNodeId = &#63;.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo node setting
+	 * @throws NoSuchNodeSettingException if a matching kaleo node setting could not be found
+	 */
+	@Override
+	public KaleoNodeSetting findByKaleoNodeId_Last(
+			long kaleoNodeId,
+			OrderByComparator<KaleoNodeSetting> orderByComparator)
+		throws NoSuchNodeSettingException {
+
+		KaleoNodeSetting kaleoNodeSetting = fetchByKaleoNodeId_Last(
+			kaleoNodeId, orderByComparator);
+
+		if (kaleoNodeSetting != null) {
+			return kaleoNodeSetting;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("kaleoNodeId=");
+		sb.append(kaleoNodeId);
+
+		sb.append("}");
+
+		throw new NoSuchNodeSettingException(sb.toString());
+	}
+
+	/**
+	 * Returns the last kaleo node setting in the ordered set where kaleoNodeId = &#63;.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo node setting, or <code>null</code> if a matching kaleo node setting could not be found
+	 */
+	@Override
+	public KaleoNodeSetting fetchByKaleoNodeId_Last(
+		long kaleoNodeId,
+		OrderByComparator<KaleoNodeSetting> orderByComparator) {
+
+		int count = countByKaleoNodeId(kaleoNodeId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<KaleoNodeSetting> list = findByKaleoNodeId(
+			kaleoNodeId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the kaleo node settings before and after the current kaleo node setting in the ordered set where kaleoNodeId = &#63;.
+	 *
+	 * @param kaleoNodeSettingId the primary key of the current kaleo node setting
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo node setting
+	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
+	 */
+	@Override
+	public KaleoNodeSetting[] findByKaleoNodeId_PrevAndNext(
+			long kaleoNodeSettingId, long kaleoNodeId,
+			OrderByComparator<KaleoNodeSetting> orderByComparator)
+		throws NoSuchNodeSettingException {
+
+		KaleoNodeSetting kaleoNodeSetting = findByPrimaryKey(
+			kaleoNodeSettingId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KaleoNodeSetting[] array = new KaleoNodeSettingImpl[3];
+
+			array[0] = getByKaleoNodeId_PrevAndNext(
+				session, kaleoNodeSetting, kaleoNodeId, orderByComparator,
+				true);
+
+			array[1] = kaleoNodeSetting;
+
+			array[2] = getByKaleoNodeId_PrevAndNext(
+				session, kaleoNodeSetting, kaleoNodeId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KaleoNodeSetting getByKaleoNodeId_PrevAndNext(
+		Session session, KaleoNodeSetting kaleoNodeSetting, long kaleoNodeId,
+		OrderByComparator<KaleoNodeSetting> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_KALEONODESETTING_WHERE);
+
+		sb.append(_FINDER_COLUMN_KALEONODEID_KALEONODEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(KaleoNodeSettingModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(kaleoNodeId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						kaleoNodeSetting)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<KaleoNodeSetting> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the kaleo node settings where kaleoNodeId = &#63; from the database.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 */
+	@Override
+	public void removeByKaleoNodeId(long kaleoNodeId) {
+		for (KaleoNodeSetting kaleoNodeSetting :
+				findByKaleoNodeId(
+					kaleoNodeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(kaleoNodeSetting);
+		}
+	}
+
+	/**
+	 * Returns the number of kaleo node settings where kaleoNodeId = &#63;.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @return the number of matching kaleo node settings
+	 */
+	@Override
+	public int countByKaleoNodeId(long kaleoNodeId) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoNodeSetting.class)) {
+
+			FinderPath finderPath = _finderPathCountByKaleoNodeId;
+
+			Object[] finderArgs = new Object[] {kaleoNodeId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
+
+				sb.append(_SQL_COUNT_KALEONODESETTING_WHERE);
+
+				sb.append(_FINDER_COLUMN_KALEONODEID_KALEONODEID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(kaleoNodeId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_KALEONODEID_KALEONODEID_2 =
+		"kaleoNodeSetting.kaleoNodeId = ?";
+
+	private FinderPath _finderPathFetchByKNI_N;
+
+	/**
+	 * Returns the kaleo node setting where kaleoNodeId = &#63; and name = &#63; or throws a <code>NoSuchNodeSettingException</code> if it could not be found.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param name the name
+	 * @return the matching kaleo node setting
+	 * @throws NoSuchNodeSettingException if a matching kaleo node setting could not be found
+	 */
+	@Override
+	public KaleoNodeSetting findByKNI_N(long kaleoNodeId, String name)
+		throws NoSuchNodeSettingException {
+
+		KaleoNodeSetting kaleoNodeSetting = fetchByKNI_N(kaleoNodeId, name);
+
+		if (kaleoNodeSetting == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("kaleoNodeId=");
+			sb.append(kaleoNodeId);
+
+			sb.append(", name=");
+			sb.append(name);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchNodeSettingException(sb.toString());
+		}
+
+		return kaleoNodeSetting;
+	}
+
+	/**
+	 * Returns the kaleo node setting where kaleoNodeId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param name the name
+	 * @return the matching kaleo node setting, or <code>null</code> if a matching kaleo node setting could not be found
+	 */
+	@Override
+	public KaleoNodeSetting fetchByKNI_N(long kaleoNodeId, String name) {
+		return fetchByKNI_N(kaleoNodeId, name, true);
+	}
+
+	/**
+	 * Returns the kaleo node setting where kaleoNodeId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching kaleo node setting, or <code>null</code> if a matching kaleo node setting could not be found
+	 */
+	@Override
+	public KaleoNodeSetting fetchByKNI_N(
+		long kaleoNodeId, String name, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoNodeSetting.class)) {
+
+			name = Objects.toString(name, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {kaleoNodeId, name};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByKNI_N, finderArgs, this);
+			}
+
+			if (result instanceof KaleoNodeSetting) {
+				KaleoNodeSetting kaleoNodeSetting = (KaleoNodeSetting)result;
+
+				if ((kaleoNodeId != kaleoNodeSetting.getKaleoNodeId()) ||
+					!Objects.equals(name, kaleoNodeSetting.getName())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_KALEONODESETTING_WHERE);
+
+				sb.append(_FINDER_COLUMN_KNI_N_KALEONODEID_2);
+
+				boolean bindName = false;
+
+				if (name.isEmpty()) {
+					sb.append(_FINDER_COLUMN_KNI_N_NAME_3);
+				}
+				else {
+					bindName = true;
+
+					sb.append(_FINDER_COLUMN_KNI_N_NAME_2);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(kaleoNodeId);
+
+					if (bindName) {
+						queryPos.add(name);
+					}
+
+					List<KaleoNodeSetting> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByKNI_N, finderArgs, list);
+						}
+					}
+					else {
+						KaleoNodeSetting kaleoNodeSetting = list.get(0);
+
+						result = kaleoNodeSetting;
+
+						cacheResult(kaleoNodeSetting);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (KaleoNodeSetting)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the kaleo node setting where kaleoNodeId = &#63; and name = &#63; from the database.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param name the name
+	 * @return the kaleo node setting that was removed
+	 */
+	@Override
+	public KaleoNodeSetting removeByKNI_N(long kaleoNodeId, String name)
+		throws NoSuchNodeSettingException {
+
+		KaleoNodeSetting kaleoNodeSetting = findByKNI_N(kaleoNodeId, name);
+
+		return remove(kaleoNodeSetting);
+	}
+
+	/**
+	 * Returns the number of kaleo node settings where kaleoNodeId = &#63; and name = &#63;.
+	 *
+	 * @param kaleoNodeId the kaleo node ID
+	 * @param name the name
+	 * @return the number of matching kaleo node settings
+	 */
+	@Override
+	public int countByKNI_N(long kaleoNodeId, String name) {
+		KaleoNodeSetting kaleoNodeSetting = fetchByKNI_N(kaleoNodeId, name);
+
+		if (kaleoNodeSetting == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_KNI_N_KALEONODEID_2 =
+		"kaleoNodeSetting.kaleoNodeId = ? AND ";
+
+	private static final String _FINDER_COLUMN_KNI_N_NAME_2 =
+		"kaleoNodeSetting.name = ?";
+
+	private static final String _FINDER_COLUMN_KNI_N_NAME_3 =
+		"(kaleoNodeSetting.name IS NULL OR kaleoNodeSetting.name = '')";
+
+	public KaleoNodeSettingPersistenceImpl() {
+		setModelClass(KaleoNodeSetting.class);
+
+		setModelImplClass(KaleoNodeSettingImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(KaleoNodeSettingTable.INSTANCE);
+	}
+
+	/**
+	 * Caches the kaleo node setting in the entity cache if it is enabled.
+	 *
+	 * @param kaleoNodeSetting the kaleo node setting
+	 */
+	@Override
+	public void cacheResult(KaleoNodeSetting kaleoNodeSetting) {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					kaleoNodeSetting.getCtCollectionId())) {
+
+			entityCache.putResult(
+				KaleoNodeSettingImpl.class, kaleoNodeSetting.getPrimaryKey(),
+				kaleoNodeSetting);
+
+			finderCache.putResult(
+				_finderPathFetchByKNI_N,
+				new Object[] {
+					kaleoNodeSetting.getKaleoNodeId(),
+					kaleoNodeSetting.getName()
+				},
+				kaleoNodeSetting);
+		}
+	}
+
+	private int _valueObjectFinderCacheListThreshold;
+
+	/**
+	 * Caches the kaleo node settings in the entity cache if it is enabled.
+	 *
+	 * @param kaleoNodeSettings the kaleo node settings
+	 */
+	@Override
+	public void cacheResult(List<KaleoNodeSetting> kaleoNodeSettings) {
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (kaleoNodeSettings.size() >
+				 _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
+
+		for (KaleoNodeSetting kaleoNodeSetting : kaleoNodeSettings) {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						kaleoNodeSetting.getCtCollectionId())) {
+
+				if (entityCache.getResult(
+						KaleoNodeSettingImpl.class,
+						kaleoNodeSetting.getPrimaryKey()) == null) {
+
+					cacheResult(kaleoNodeSetting);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Clears the cache for all kaleo node settings.
+	 *
+	 * <p>
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
+	 * </p>
+	 */
+	@Override
+	public void clearCache() {
+		entityCache.clearCache(KaleoNodeSettingImpl.class);
+
+		finderCache.clearCache(KaleoNodeSettingImpl.class);
+	}
+
+	/**
+	 * Clears the cache for the kaleo node setting.
+	 *
+	 * <p>
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
+	 * </p>
+	 */
+	@Override
+	public void clearCache(KaleoNodeSetting kaleoNodeSetting) {
+		entityCache.removeResult(KaleoNodeSettingImpl.class, kaleoNodeSetting);
+	}
+
+	@Override
+	public void clearCache(List<KaleoNodeSetting> kaleoNodeSettings) {
+		for (KaleoNodeSetting kaleoNodeSetting : kaleoNodeSettings) {
+			entityCache.removeResult(
+				KaleoNodeSettingImpl.class, kaleoNodeSetting);
+		}
+	}
+
+	@Override
+	public void clearCache(Set<Serializable> primaryKeys) {
+		finderCache.clearCache(KaleoNodeSettingImpl.class);
+
+		for (Serializable primaryKey : primaryKeys) {
+			entityCache.removeResult(KaleoNodeSettingImpl.class, primaryKey);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		KaleoNodeSettingModelImpl kaleoNodeSettingModelImpl) {
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					kaleoNodeSettingModelImpl.getCtCollectionId())) {
+
+			Object[] args = new Object[] {
+				kaleoNodeSettingModelImpl.getKaleoNodeId(),
+				kaleoNodeSettingModelImpl.getName()
+			};
+
+			finderCache.putResult(
+				_finderPathFetchByKNI_N, args, kaleoNodeSettingModelImpl);
+		}
+	}
+
+	/**
+	 * Creates a new kaleo node setting with the primary key. Does not add the kaleo node setting to the database.
+	 *
+	 * @param kaleoNodeSettingId the primary key for the new kaleo node setting
+	 * @return the new kaleo node setting
+	 */
+	@Override
+	public KaleoNodeSetting create(long kaleoNodeSettingId) {
+		KaleoNodeSetting kaleoNodeSetting = new KaleoNodeSettingImpl();
+
+		kaleoNodeSetting.setNew(true);
+		kaleoNodeSetting.setPrimaryKey(kaleoNodeSettingId);
+
+		kaleoNodeSetting.setCompanyId(CompanyThreadLocal.getCompanyId());
+
+		return kaleoNodeSetting;
+	}
+
+	/**
+	 * Removes the kaleo node setting with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param kaleoNodeSettingId the primary key of the kaleo node setting
+	 * @return the kaleo node setting that was removed
+	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
+	 */
+	@Override
+	public KaleoNodeSetting remove(long kaleoNodeSettingId)
+		throws NoSuchNodeSettingException {
+
+		return remove((Serializable)kaleoNodeSettingId);
+	}
+
+	/**
+	 * Removes the kaleo node setting with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param primaryKey the primary key of the kaleo node setting
+	 * @return the kaleo node setting that was removed
+	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
+	 */
+	@Override
+	public KaleoNodeSetting remove(Serializable primaryKey)
+		throws NoSuchNodeSettingException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KaleoNodeSetting kaleoNodeSetting = (KaleoNodeSetting)session.get(
+				KaleoNodeSettingImpl.class, primaryKey);
+
+			if (kaleoNodeSetting == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				}
+
+				throw new NoSuchNodeSettingException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			return remove(kaleoNodeSetting);
+		}
+		catch (NoSuchNodeSettingException noSuchEntityException) {
+			throw noSuchEntityException;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	protected KaleoNodeSetting removeImpl(KaleoNodeSetting kaleoNodeSetting) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			if (!session.contains(kaleoNodeSetting)) {
+				kaleoNodeSetting = (KaleoNodeSetting)session.get(
+					KaleoNodeSettingImpl.class,
+					kaleoNodeSetting.getPrimaryKeyObj());
+			}
+
+			if ((kaleoNodeSetting != null) &&
+				ctPersistenceHelper.isRemove(kaleoNodeSetting)) {
+
+				session.delete(kaleoNodeSetting);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		if (kaleoNodeSetting != null) {
+			clearCache(kaleoNodeSetting);
+		}
+
+		return kaleoNodeSetting;
+	}
+
+	@Override
+	public KaleoNodeSetting updateImpl(KaleoNodeSetting kaleoNodeSetting) {
+		boolean isNew = kaleoNodeSetting.isNew();
+
+		if (!(kaleoNodeSetting instanceof KaleoNodeSettingModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoNodeSetting.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					kaleoNodeSetting);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoNodeSetting proxy " +
+						invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoNodeSetting implementation " +
+					kaleoNodeSetting.getClass());
+		}
+
+		KaleoNodeSettingModelImpl kaleoNodeSettingModelImpl =
+			(KaleoNodeSettingModelImpl)kaleoNodeSetting;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (kaleoNodeSetting.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				kaleoNodeSetting.setCreateDate(date);
+			}
+			else {
+				kaleoNodeSetting.setCreateDate(
+					serviceContext.getCreateDate(date));
+			}
+		}
+
+		if (!kaleoNodeSettingModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				kaleoNodeSetting.setModifiedDate(date);
+			}
+			else {
+				kaleoNodeSetting.setModifiedDate(
+					serviceContext.getModifiedDate(date));
+			}
+		}
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			if (ctPersistenceHelper.isInsert(kaleoNodeSetting)) {
+				if (!isNew) {
+					session.evict(
+						KaleoNodeSettingImpl.class,
+						kaleoNodeSetting.getPrimaryKeyObj());
+				}
+
+				session.save(kaleoNodeSetting);
+			}
+			else {
+				kaleoNodeSetting = (KaleoNodeSetting)session.merge(
+					kaleoNodeSetting);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		entityCache.putResult(
+			KaleoNodeSettingImpl.class, kaleoNodeSettingModelImpl, false, true);
+
+		cacheUniqueFindersCache(kaleoNodeSettingModelImpl);
+
+		if (isNew) {
+			kaleoNodeSetting.setNew(false);
+		}
+
+		kaleoNodeSetting.resetOriginalValues();
+
+		return kaleoNodeSetting;
+	}
+
+	/**
+	 * Returns the kaleo node setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
+	 *
+	 * @param primaryKey the primary key of the kaleo node setting
+	 * @return the kaleo node setting
+	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
+	 */
+	@Override
+	public KaleoNodeSetting findByPrimaryKey(Serializable primaryKey)
+		throws NoSuchNodeSettingException {
+
+		KaleoNodeSetting kaleoNodeSetting = fetchByPrimaryKey(primaryKey);
+
+		if (kaleoNodeSetting == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchNodeSettingException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+		}
+
+		return kaleoNodeSetting;
+	}
+
+	/**
+	 * Returns the kaleo node setting with the primary key or throws a <code>NoSuchNodeSettingException</code> if it could not be found.
+	 *
+	 * @param kaleoNodeSettingId the primary key of the kaleo node setting
+	 * @return the kaleo node setting
+	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
+	 */
+	@Override
+	public KaleoNodeSetting findByPrimaryKey(long kaleoNodeSettingId)
+		throws NoSuchNodeSettingException {
+
+		return findByPrimaryKey((Serializable)kaleoNodeSettingId);
+	}
+
+	/**
+	 * Returns the kaleo node setting with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param primaryKey the primary key of the kaleo node setting
+	 * @return the kaleo node setting, or <code>null</code> if a kaleo node setting with the primary key could not be found
+	 */
+	@Override
+	public KaleoNodeSetting fetchByPrimaryKey(Serializable primaryKey) {
+		if (ctPersistenceHelper.isProductionMode(
+				KaleoNodeSetting.class, primaryKey)) {
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
+		}
+
+		KaleoNodeSetting kaleoNodeSetting =
+			(KaleoNodeSetting)entityCache.getResult(
+				KaleoNodeSettingImpl.class, primaryKey);
+
+		if (kaleoNodeSetting != null) {
+			return kaleoNodeSetting;
+		}
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			kaleoNodeSetting = (KaleoNodeSetting)session.get(
+				KaleoNodeSettingImpl.class, primaryKey);
+
+			if (kaleoNodeSetting != null) {
+				cacheResult(kaleoNodeSetting);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return kaleoNodeSetting;
+	}
+
+	/**
+	 * Returns the kaleo node setting with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param kaleoNodeSettingId the primary key of the kaleo node setting
+	 * @return the kaleo node setting, or <code>null</code> if a kaleo node setting with the primary key could not be found
+	 */
+	@Override
+	public KaleoNodeSetting fetchByPrimaryKey(long kaleoNodeSettingId) {
+		return fetchByPrimaryKey((Serializable)kaleoNodeSettingId);
+	}
+
+	@Override
+	public Map<Serializable, KaleoNodeSetting> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (ctPersistenceHelper.isProductionMode(KaleoNodeSetting.class)) {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, KaleoNodeSetting> map =
+			new HashMap<Serializable, KaleoNodeSetting>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			KaleoNodeSetting kaleoNodeSetting = fetchByPrimaryKey(primaryKey);
+
+			if (kaleoNodeSetting != null) {
+				map.put(primaryKey, kaleoNodeSetting);
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+						KaleoNodeSetting.class, primaryKey)) {
+
+				KaleoNodeSetting kaleoNodeSetting =
+					(KaleoNodeSetting)entityCache.getResult(
+						KaleoNodeSettingImpl.class, primaryKey);
+
+				if (kaleoNodeSetting == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, kaleoNodeSetting);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		if ((databaseInMaxParameters > 0) &&
+			(primaryKeys.size() > databaseInMaxParameters)) {
+
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			while (iterator.hasNext()) {
+				Set<Serializable> page = new HashSet<>();
+
+				for (int i = 0;
+					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
+
+					page.add(iterator.next());
+				}
+
+				map.putAll(fetchByPrimaryKeys(page));
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (KaleoNodeSetting kaleoNodeSetting :
+					(List<KaleoNodeSetting>)query.list()) {
+
+				map.put(kaleoNodeSetting.getPrimaryKeyObj(), kaleoNodeSetting);
+
+				cacheResult(kaleoNodeSetting);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
+	}
+
+	/**
+	 * Returns all the kaleo node settings.
+	 *
+	 * @return the kaleo node settings
+	 */
+	@Override
+	public List<KaleoNodeSetting> findAll() {
+		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the kaleo node settings.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoNodeSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of kaleo node settings
+	 * @param end the upper bound of the range of kaleo node settings (not inclusive)
+	 * @return the range of kaleo node settings
+	 */
+	@Override
+	public List<KaleoNodeSetting> findAll(int start, int end) {
+		return findAll(start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo node settings.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoNodeSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of kaleo node settings
+	 * @param end the upper bound of the range of kaleo node settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of kaleo node settings
+	 */
+	@Override
+	public List<KaleoNodeSetting> findAll(
+		int start, int end,
+		OrderByComparator<KaleoNodeSetting> orderByComparator) {
+
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo node settings.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoNodeSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of kaleo node settings
+	 * @param end the upper bound of the range of kaleo node settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of kaleo node settings
+	 */
+	@Override
+	public List<KaleoNodeSetting> findAll(
+		int start, int end,
+		OrderByComparator<KaleoNodeSetting> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoNodeSetting.class)) {
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
+			}
+
+			List<KaleoNodeSetting> list = null;
+
+			if (useFinderCache) {
+				list = (List<KaleoNodeSetting>)finderCache.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_KALEONODESETTING);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_KALEONODESETTING;
+
+					sql = sql.concat(KaleoNodeSettingModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<KaleoNodeSetting>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Removes all the kaleo node settings from the database.
+	 *
+	 */
+	@Override
+	public void removeAll() {
+		for (KaleoNodeSetting kaleoNodeSetting : findAll()) {
+			remove(kaleoNodeSetting);
+		}
+	}
+
+	/**
+	 * Returns the number of kaleo node settings.
+	 *
+	 * @return the number of kaleo node settings
+	 */
+	@Override
+	public int countAll() {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoNodeSetting.class)) {
+
+			Long count = (Long)finderCache.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+
+			if (count == null) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(
+						_SQL_COUNT_KALEONODESETTING);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "kaleoNodeSettingId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEONODESETTING;
+	}
+
+	@Override
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.getOrDefault(
+			ctColumnResolutionType, Collections.emptySet());
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
+		return KaleoNodeSettingModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "KaleoNodeSetting";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("userName");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctMergeColumnNames.add("kaleoNodeId");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("value");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("kaleoNodeSettingId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(new String[] {"kaleoNodeId", "name"});
+	}
+
+	/**
+	 * Initializes the kaleo node setting persistence.
+	 */
+	@Activate
+	public void activate() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
+		_finderPathWithPaginationFindAll = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByKaleoNodeId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoNodeId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"kaleoNodeId"}, true);
+
+		_finderPathWithoutPaginationFindByKaleoNodeId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoNodeId",
+			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
+			true);
+
+		_finderPathCountByKaleoNodeId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoNodeId",
+			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
+			false);
+
+		_finderPathFetchByKNI_N = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByKNI_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"kaleoNodeId", "name"}, true);
+
+		KaleoNodeSettingUtil.setPersistence(this);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		KaleoNodeSettingUtil.setPersistence(null);
+
+		entityCache.removeCache(KaleoNodeSettingImpl.class.getName());
+	}
+
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+	}
+
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
+	protected CTPersistenceHelper ctPersistenceHelper;
+
+	@Reference
+	protected EntityCache entityCache;
+
+	@Reference
+	protected FinderCache finderCache;
+
+	private static final String _SQL_SELECT_KALEONODESETTING =
+		"SELECT kaleoNodeSetting FROM KaleoNodeSetting kaleoNodeSetting";
+
+	private static final String _SQL_SELECT_KALEONODESETTING_WHERE =
+		"SELECT kaleoNodeSetting FROM KaleoNodeSetting kaleoNodeSetting WHERE ";
+
+	private static final String _SQL_COUNT_KALEONODESETTING =
+		"SELECT COUNT(kaleoNodeSetting) FROM KaleoNodeSetting kaleoNodeSetting";
+
+	private static final String _SQL_COUNT_KALEONODESETTING_WHERE =
+		"SELECT COUNT(kaleoNodeSetting) FROM KaleoNodeSetting kaleoNodeSetting WHERE ";
+
+	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoNodeSetting.";
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No KaleoNodeSetting exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No KaleoNodeSetting exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoNodeSettingPersistenceImpl.class);
+
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
+	}
+
+}

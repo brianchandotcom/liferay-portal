@@ -167,10 +167,10 @@ public class DataSourceFactoryUtil {
 		Properties properties = new Properties();
 
 		properties.setProperty("driverClassName", driverClassName);
+		properties.setProperty("jndi.name", jndiName);
+		properties.setProperty("password", password);
 		properties.setProperty("url", url);
 		properties.setProperty("username", userName);
-		properties.setProperty("password", password);
-		properties.setProperty("jndi.name", jndiName);
 
 		return initDataSource(properties);
 	}

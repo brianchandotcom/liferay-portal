@@ -63,10 +63,10 @@ public class KoroneikiService {
 		).build();
 	}
 
-	public Account getKoroneikiAccount(String accountId) throws Exception {
+	public Account getKoroneikiAccount(String accountKey) throws Exception {
 		AccountResource accountResource = getAccountResource();
 
-		return accountResource.getAccount(accountId);
+		return accountResource.getAccount(accountKey);
 	}
 
 	public ProductPurchase getProductPurchase(String productPurchaseKey)

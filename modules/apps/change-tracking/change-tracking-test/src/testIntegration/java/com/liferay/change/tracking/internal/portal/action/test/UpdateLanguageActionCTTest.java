@@ -12,7 +12,10 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.action.UpdateLanguageAction;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -70,6 +73,15 @@ public class UpdateLanguageActionCTTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+
+		Layout layout = _layoutLocalService.getLayout(
+			TestPropsValues.getPlid());
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
 		themeDisplay.setSignedIn(true);
 		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -96,10 +108,16 @@ public class UpdateLanguageActionCTTest {
 	}
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private Portal _portal;

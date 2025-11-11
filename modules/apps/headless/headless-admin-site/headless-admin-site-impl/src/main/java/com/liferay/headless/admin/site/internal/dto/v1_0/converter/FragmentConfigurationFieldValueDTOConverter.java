@@ -93,7 +93,11 @@ public class FragmentConfigurationFieldValueDTOConverter
 			dtoConverterContext.getAttribute(
 				"fragmentFragmentConfigurationFieldValue");
 
-		if (fragmentFragmentConfigurationFieldValue == null) {
+		if ((fragmentFragmentConfigurationFieldValue == null) ||
+			(fragmentConfigurationField.isLocalizable() &&
+			 !(fragmentFragmentConfigurationFieldValue instanceof
+				 JSONObject))) {
+
 			return null;
 		}
 
@@ -103,6 +107,12 @@ public class FragmentConfigurationFieldValueDTOConverter
 
 		if (Objects.equals(
 				type, FragmentConfigurationFieldValue.Type.CATEGORY)) {
+
+			if (!(fragmentFragmentConfigurationFieldValue instanceof
+					JSONObject)) {
+
+				return null;
+			}
 
 			return _getCategoryFragmentConfigurationFieldValue(
 				dtoConverterContext, fragmentConfigurationField,
@@ -120,6 +130,12 @@ public class FragmentConfigurationFieldValueDTOConverter
 		if (Objects.equals(
 				type, FragmentConfigurationFieldValue.Type.COLLECTION)) {
 
+			if (!(fragmentFragmentConfigurationFieldValue instanceof
+					JSONObject)) {
+
+				return null;
+			}
+
 			return _getCollectionFragmentConfigurationFieldValue(
 				dtoConverterContext, fragmentConfigurationField,
 				(JSONObject)fragmentFragmentConfigurationFieldValue);
@@ -127,6 +143,12 @@ public class FragmentConfigurationFieldValueDTOConverter
 
 		if (Objects.equals(
 				type, FragmentConfigurationFieldValue.Type.COLOR_PALETTE)) {
+
+			if (!(fragmentFragmentConfigurationFieldValue instanceof
+					JSONObject)) {
+
+				return null;
+			}
 
 			return _getColorPaletteFragmentConfigurationFieldValue(
 				fragmentConfigurationField,
@@ -142,6 +164,12 @@ public class FragmentConfigurationFieldValueDTOConverter
 		}
 
 		if (Objects.equals(type, FragmentConfigurationFieldValue.Type.ITEM)) {
+			if (!(fragmentFragmentConfigurationFieldValue instanceof
+					JSONObject)) {
+
+				return null;
+			}
+
 			return _getItemFragmentConfigurationFieldValue(
 				dtoConverterContext, fragmentConfigurationField,
 				(JSONObject)fragmentFragmentConfigurationFieldValue);
@@ -155,6 +183,12 @@ public class FragmentConfigurationFieldValueDTOConverter
 
 		if (Objects.equals(
 				type, FragmentConfigurationFieldValue.Type.NAVIGATION_MENU)) {
+
+			if (!(fragmentFragmentConfigurationFieldValue instanceof
+					JSONObject)) {
+
+				return null;
+			}
 
 			return _getNavigationMenuFragmentConfigurationFieldValue(
 				dtoConverterContext, fragmentConfigurationField,
@@ -174,12 +208,24 @@ public class FragmentConfigurationFieldValueDTOConverter
 		}
 
 		if (Objects.equals(type, FragmentConfigurationFieldValue.Type.URL)) {
+			if (!(fragmentFragmentConfigurationFieldValue instanceof
+					JSONObject)) {
+
+				return null;
+			}
+
 			return _getURLFragmentConfigurationFieldValue(
 				dtoConverterContext, fragmentConfigurationField,
 				(JSONObject)fragmentFragmentConfigurationFieldValue);
 		}
 
 		if (Objects.equals(type, FragmentConfigurationFieldValue.Type.VIDEO)) {
+			if (!(fragmentFragmentConfigurationFieldValue instanceof
+					JSONObject)) {
+
+				return null;
+			}
+
 			return _getVideoFragmentConfigurationFieldValue(
 				fragmentConfigurationField,
 				(JSONObject)fragmentFragmentConfigurationFieldValue);

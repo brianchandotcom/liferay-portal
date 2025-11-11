@@ -480,24 +480,38 @@ public class JournalTransformer {
 			}
 		}
 		else if (type.equals(DDMFormFieldTypeConstants.SELECT) &&
-				 ddmFormField.isMultiple() && (dynamicContentElement != null) &&
+				 (dynamicContentElement != null) &&
 				 (dynamicContentElement.element("option") != null)) {
 
-			JSONArray dataJSONArray = JSONFactoryUtil.createJSONArray();
+			if (ddmFormField.isMultiple()) {
+				JSONArray dataJSONArray = JSONFactoryUtil.createJSONArray();
 
-			Iterator<Element> iterator = dynamicContentElement.elementIterator(
-				"option");
+				Iterator<Element> iterator =
+					dynamicContentElement.elementIterator("option");
 
-			while (iterator.hasNext()) {
-				Element optionElement = iterator.next();
+				while (iterator.hasNext()) {
+					Element optionElement = iterator.next();
 
-				if (Validator.isNotNull(optionElement.getData())) {
-					dataJSONArray.put(optionElement.getData());
+					if (Validator.isNotNull(optionElement.getData())) {
+						dataJSONArray.put(optionElement.getData());
+					}
+				}
+
+				if (dataJSONArray.length() != 0) {
+					data = JSONUtil.toString(dataJSONArray);
 				}
 			}
+			else {
+				Iterator<Element> iterator =
+					dynamicContentElement.elementIterator("option");
 
-			if (dataJSONArray.length() != 0) {
-				data = JSONUtil.toString(dataJSONArray);
+				if (iterator.hasNext()) {
+					Element optionElement = iterator.next();
+
+					if (Validator.isNotNull(optionElement.getData())) {
+						data = (String)optionElement.getData();
+					}
+				}
 			}
 		}
 		else if (type.equals(DDMFormFieldTypeConstants.TEXT)) {

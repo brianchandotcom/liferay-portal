@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.web.internal.util;
 
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -68,16 +69,22 @@ public class PublicationsPortletURLUtil {
 			Language language)
 		throws Exception {
 
-		return StringBundler.concat(
-			"javascript:Liferay.Util.openModal({containerProps: {}, ",
-			"iframeBodyCssClass: 'dialog-with-footer', title:'",
-			language.get(httpServletRequest, "permissions"), "', url:'",
-			PermissionsURLTag.doTag(
-				StringPool.BLANK, CTCollection.class.getName(),
-				HtmlUtil.escape(ctCollection.getName()), null,
-				String.valueOf(ctCollection.getCtCollectionId()),
-				LiferayWindowState.POP_UP.toString(), null, httpServletRequest),
-			"',});");
+		return _getPermissionsHref(
+			httpServletRequest, CTCollection.class.getName(),
+			ctCollection.getName(),
+			String.valueOf(ctCollection.getCtCollectionId()), language);
+	}
+
+	public static String getPermissionsHref(
+			HttpServletRequest httpServletRequest,
+			CTCollectionTemplate ctCollectionTemplate, Language language)
+		throws Exception {
+
+		return _getPermissionsHref(
+			httpServletRequest, CTCollectionTemplate.class.getName(),
+			ctCollectionTemplate.getName(),
+			String.valueOf(ctCollectionTemplate.getCtCollectionTemplateId()),
+			language);
 	}
 
 	public static void setWindowState(
@@ -89,6 +96,22 @@ public class PublicationsPortletURLUtil {
 		catch (WindowStateException windowStateException) {
 			ReflectionUtil.throwException(windowStateException);
 		}
+	}
+
+	private static String _getPermissionsHref(
+			HttpServletRequest httpServletRequest, String modelResource,
+			String resourceName, String resourcePrimKey, Language language)
+		throws Exception {
+
+		return StringBundler.concat(
+			"javascript:Liferay.Util.openModal({containerProps: {}, ",
+			"iframeBodyCssClass: 'dialog-with-footer', title:'",
+			language.get(httpServletRequest, "permissions"), "', url:'",
+			PermissionsURLTag.doTag(
+				StringPool.BLANK, modelResource, HtmlUtil.escape(resourceName),
+				null, String.valueOf(resourcePrimKey),
+				LiferayWindowState.POP_UP.toString(), null, httpServletRequest),
+			"',});");
 	}
 
 	private PublicationsPortletURLUtil() {

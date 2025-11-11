@@ -9,6 +9,7 @@ import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationH
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionTemplatePermission;
+import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,7 +57,7 @@ public class ViewTemplatesDisplayContext
 
 	public Map<String, Object> getDropdownReactData(
 			CTCollectionTemplate ctCollectionTemplate)
-		throws PortalException {
+		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
 			"deleteURL",
@@ -70,8 +71,26 @@ public class ViewTemplatesDisplayContext
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
+			"permissionsURL",
+			getEditTemplatePermissionsURL(ctCollectionTemplate)
+		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).build();
+	}
+
+	public String getEditTemplatePermissionsURL(
+			CTCollectionTemplate ctCollectionTemplate)
+		throws Exception {
+
+		if (!CTCollectionTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), ctCollectionTemplate,
+				ActionKeys.PERMISSIONS)) {
+
+			return null;
+		}
+
+		return PublicationsPortletURLUtil.getPermissionsHref(
+			_httpServletRequest, ctCollectionTemplate, _language);
 	}
 
 	public String getEditTemplateURL(long ctCollectionTemplateId)
@@ -171,7 +190,7 @@ public class ViewTemplatesDisplayContext
 	}
 
 	private String _getDeleteTemplateURL(long ctCollectionTemplateId)
-		throws PortalException {
+		throws Exception {
 
 		if (!CTCollectionTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), ctCollectionTemplateId,

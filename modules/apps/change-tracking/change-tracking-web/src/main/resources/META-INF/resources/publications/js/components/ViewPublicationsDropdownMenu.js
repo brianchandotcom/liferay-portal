@@ -75,11 +75,13 @@ export default function ViewPublicationsDropdownMenu({
 	}
 
 	if (permissionsURL) {
-		dropdownItems.push({
-			label: Liferay.Language.get('invite-users'),
-			onClick: () => setShowModal(true),
-			symbolLeft: 'users',
-		});
+		if (!isPublicationTemplate) {
+			dropdownItems.push({
+				label: Liferay.Language.get('invite-users'),
+				onClick: () => setShowModal(true),
+				symbolLeft: 'users',
+			});
+		}
 
 		dropdownItems.push({
 			href: permissionsURL,

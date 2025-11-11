@@ -229,8 +229,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return;
 		}
 
-		List<Long> roleIds = new ArrayList<>();
 		List<String> groupRoleIds = new ArrayList<>();
+		List<Long> roleIds = new ArrayList<>();
 
 		for (Role role : roles) {
 			if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||

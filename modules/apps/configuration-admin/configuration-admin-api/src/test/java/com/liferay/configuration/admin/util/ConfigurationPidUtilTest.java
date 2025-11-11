@@ -27,9 +27,9 @@ public class ConfigurationPidUtilTest {
 		_testGetRawPid(
 			"com.sample.SampleConfiguration",
 			"com.sample.SampleConfiguration",
-			"com.sample.SampleConfiguration~123",
 			"com.sample.SampleConfiguration.scoped",
-			"com.sample.SampleConfiguration.scoped~123");
+			"com.sample.SampleConfiguration.scoped~123",
+			"com.sample.SampleConfiguration~123");
 	}
 
 	private void _testGetRawPid(String rawPid, String... pids) {

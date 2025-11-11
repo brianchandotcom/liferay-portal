@@ -337,7 +337,8 @@ public class NavigationMenuResourceTest
 		}
 
 		if (!Objects.equals(
-				navigationMenu1.getSiteId(), navigationMenu2.getSiteId())) {
+				navigationMenu1.getSiteExternalReferenceCode(),
+				navigationMenu2.getSiteExternalReferenceCode())) {
 
 			return false;
 		}
@@ -1041,7 +1042,8 @@ public class NavigationMenuResourceTest
 		Assert.assertEquals(
 			postNavigationMenu.getName(), getNavigationMenu.getName());
 		Assert.assertEquals(
-			postNavigationMenu.getSiteId(), getNavigationMenu.getSiteId());
+			postNavigationMenu.getSiteExternalReferenceCode(),
+			getNavigationMenu.getSiteExternalReferenceCode());
 
 		NavigationMenuItem navigationMenuItem =
 			getNavigationMenu.getNavigationMenuItems()[0];

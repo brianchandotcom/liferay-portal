@@ -346,28 +346,6 @@ public class DataSourceFactoryUtil {
 		}
 	}
 
-	private static Map<String, String> _getExistingParameterValues(
-		char delimiter, String queryString) {
-
-		Map<String, String> existingParameterValues = new TreeMap<>();
-
-		for (String parameter : StringUtil.split(queryString, delimiter)) {
-			String[] parameterParts = StringUtil.split(
-				parameter, CharPool.EQUAL);
-
-			if (parameterParts.length == 2) {
-				existingParameterValues.put(
-					parameterParts[0], parameterParts[1]);
-			}
-			else {
-				existingParameterValues.put(
-					parameter, _MALFORMED_PARAMETER_PLACE_HOLDER);
-			}
-		}
-
-		return existingParameterValues;
-	}
-
 	private static void _populateIBMCipherSuites(Class<?> clazz) {
 		try {
 			SSLContext sslContext = SSLContext.getDefault();
@@ -452,8 +430,21 @@ public class DataSourceFactoryUtil {
 			String queryString = url.substring(index + 1);
 
 			if (!queryString.isEmpty()) {
-				existingParameterValues = _getExistingParameterValues(
-					parameterDelimiter, queryString);
+				for (String parameter :
+						StringUtil.split(queryString, parameterDelimiter)) {
+
+					String[] parameterParts = StringUtil.split(
+						parameter, CharPool.EQUAL);
+
+					if (parameterParts.length == 2) {
+						existingParameterValues.put(
+							parameterParts[0], parameterParts[1]);
+					}
+					else {
+						existingParameterValues.put(
+							parameter, _MALFORMED_PARAMETER_PLACE_HOLDER);
+					}
+				}
 			}
 		}
 

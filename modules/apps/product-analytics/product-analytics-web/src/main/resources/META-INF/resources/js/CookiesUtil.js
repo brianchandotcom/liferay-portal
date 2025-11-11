@@ -72,7 +72,10 @@ export function removeAllCookies(
 	removeCookieUtil(productAnalyticsConfiguredDateCookieName);
 }
 
-export function setProductAnalyticsConfigCookie(consentRenewalPeriod) {
+export function setProductAnalyticsConfigCookie(
+	consentRenewalPeriod,
+	modifiedDate
+) {
 	setCookie(
 		consentRenewalPeriod,
 		productAnalyticsConfiguredCookieName,
@@ -81,7 +84,7 @@ export function setProductAnalyticsConfigCookie(consentRenewalPeriod) {
 	setCookie(
 		consentRenewalPeriod,
 		productAnalyticsConfiguredDateCookieName,
-		new Date().getTime()
+		modifiedDate
 	);
 
 	getOpener()?.Liferay.fire('productAnalyticsBannerSetCookie');

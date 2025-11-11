@@ -2027,8 +2027,7 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getCompanyId(), objectEntry.getPermissions(),
 				GetterUtil.getLong(objectEntry.getId()),
 				objectDefinition.getClassName(), _resourceActionLocalService,
-				_resourcePermissionLocalService, _roleLocalService,
-				dtoConverterContext.getUserId());
+				_resourcePermissionLocalService, _roleLocalService);
 
 		return ServiceContextUtil.createServiceContext(
 			objectDefinition.getCompanyId(),

@@ -710,8 +710,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService,
-				contextUser.getUserId());
+				resourcePermissionLocalService, roleLocalService);
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 

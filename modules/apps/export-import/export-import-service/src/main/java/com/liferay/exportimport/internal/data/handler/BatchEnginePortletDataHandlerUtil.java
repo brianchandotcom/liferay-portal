@@ -42,7 +42,7 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildExportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		PortletDataContext portletDataContext, Group group,
+		Group group, PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
 		HashMap<String, Serializable> exportParameters =
@@ -133,7 +133,7 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildImportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		PortletDataContext portletDataContext, Group group,
+		Group group, PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
 		HashMap<String, Serializable> importParameters =

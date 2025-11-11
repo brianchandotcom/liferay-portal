@@ -57,15 +57,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class KoroneikiRestController extends BaseRestController {
 
-	@GetMapping("account/{accountId}")
+	@GetMapping("account/{accountKey}")
 	public Account getAccount(
 			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("accountId") String accountId)
+			@PathVariable("accountKey") String accountKey)
 		throws Exception {
 
 		MarketplacePermissionUtil.checkDefaultServiceAccountPermission(jwt);
 
-		return _koroneikiService.getKoroneikiAccount(accountId);
+		return _koroneikiService.getKoroneikiAccount(accountKey);
 	}
 
 	@GetMapping("contact/by-email-address/{emailAddress}")

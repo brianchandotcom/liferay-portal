@@ -132,7 +132,7 @@ else {
 						<portlet:param name="tabs2" value="export" />
 						<portlet:param name="tabs3" value="current-and-previous" />
 						<portlet:param name="portletResource" value="<%= portletResource %>" />
-						<portlet:param name="redirect" value='<%= redirect %>' />
+						<portlet:param name="redirect" value="<%= redirect %>" />
 					</liferay-portlet:renderURL>
 
 					<liferay-portlet:actionURL name="/export_import/delete_portlet_background_task" portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="deleteBackgroundTaskURL">

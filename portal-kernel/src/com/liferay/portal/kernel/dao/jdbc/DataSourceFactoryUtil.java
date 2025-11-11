@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -44,7 +45,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -349,43 +349,9 @@ public class DataSourceFactoryUtil {
 		}
 	}
 
-	private static String _rewriteJDBCURL(String url) {
-		if (url.startsWith("jdbc:mariadb://") ||
-			url.startsWith("jdbc:mysql://")) {
-
-			return _rewriteJDBCURL(
-				new String[][] {
-					{"cachePrepStmts", "true"}, {"characterEncoding", "UTF-8"},
-					{"dontTrackOpenResources", "true"},
-					{"holdResultsOpenOverStatementClose", "true"},
-					{"prepStmtCacheSize", "1000"},
-					{"prepStmtCacheSqlLimit", "2048"},
-					{"rewriteBatchedStatements", "true"},
-					{"serverTimezone", "GMT"}, {"useFastDateParsing", "false"},
-					{"useLocalSessionState", "true"},
-					{"useLocalTransactionState", "true"}, {"useUnicode", "true"}
-				},
-				CharPool.AMPERSAND, url, CharPool.QUESTION);
-		}
-
-		if (url.startsWith("jdbc:postgresql://")) {
-			return _rewriteJDBCURL(
-				new String[][] {{"reWriteBatchedInserts", "true"}},
-				CharPool.AMPERSAND, url, CharPool.QUESTION);
-		}
-
-		if (url.startsWith("jdbc:sqlserver://")) {
-			return _rewriteJDBCURL(
-				new String[][] {{"useBulkCopyForBatchInsert", "true"}},
-				CharPool.SEMICOLON, url, CharPool.SEMICOLON);
-		}
-
-		return url;
-	}
-
 	private static String _rewriteJDBCURL(
-		String[][] defaultParameters, char parameterDelimiter, String url,
-		char urlDelimiter) {
+		Map<String, String> defaultParameters, char parameterDelimiter,
+		String url, char urlDelimiter) {
 
 		Map<String, String> existingParameters = new TreeMap<>();
 
@@ -417,16 +383,14 @@ public class DataSourceFactoryUtil {
 			}
 		}
 
-		for (String[] defaultParameterParts : defaultParameters) {
-			if (existingParameters.containsKey(defaultParameterParts[0])) {
+		for (Map.Entry<String, String> entry : defaultParameters.entrySet()) {
+			if (existingParameters.containsKey(entry.getKey())) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipped " + Arrays.toString(defaultParameterParts));
+					_log.debug("Skipped " + entry.getKey());
 				}
 			}
 			else {
-				existingParameters.put(
-					defaultParameterParts[0], defaultParameterParts[1]);
+				existingParameters.put(entry.getKey(), entry.getValue());
 			}
 		}
 
@@ -466,6 +430,58 @@ public class DataSourceFactoryUtil {
 		}
 
 		return newURL;
+	}
+
+	private static String _rewriteJDBCURL(String url) {
+		if (url.startsWith("jdbc:mariadb://") ||
+			url.startsWith("jdbc:mysql://")) {
+
+			return _rewriteJDBCURL(
+				HashMapBuilder.put(
+					"cachePrepStmts", "true"
+				).put(
+					"characterEncoding", "UTF-8"
+				).put(
+					"dontTrackOpenResources", "true"
+				).put(
+					"holdResultsOpenOverStatementClose", "true"
+				).put(
+					"prepStmtCacheSize", "1000"
+				).put(
+					"prepStmtCacheSqlLimit", "2048"
+				).put(
+					"rewriteBatchedStatements", "true"
+				).put(
+					"serverTimezone", "GMT"
+				).put(
+					"useFastDateParsing", "false"
+				).put(
+					"useLocalSessionState", "true"
+				).put(
+					"useLocalTransactionState", "true"
+				).put(
+					"useUnicode", "true"
+				).build(),
+				CharPool.AMPERSAND, url, CharPool.QUESTION);
+		}
+
+		if (url.startsWith("jdbc:postgresql://")) {
+			return _rewriteJDBCURL(
+				HashMapBuilder.put(
+					"reWriteBatchedInserts", "true"
+				).build(),
+				CharPool.AMPERSAND, url, CharPool.QUESTION);
+		}
+
+		if (url.startsWith("jdbc:sqlserver://")) {
+			return _rewriteJDBCURL(
+				HashMapBuilder.put(
+					"useBulkCopyForBatchInsert", "true"
+				).build(),
+				CharPool.SEMICOLON, url, CharPool.SEMICOLON);
+		}
+
+		return url;
 	}
 
 	private static void _setProperty(

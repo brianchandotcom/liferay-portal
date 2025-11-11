@@ -6,7 +6,7 @@
 
 		<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-		<script ${nonceAttribute} type="text/javascript" src="${javascript_folder}/standalone/SpeedwellSlider.js" defer></script>
+		<script ${nonceAttribute} type="text/javascript" src="${javascript_folder}/SpeedwellSlider.js" defer></script>
 		<@liferay_util["include"] page=top_head_include />
 	</head>
 
@@ -64,10 +64,10 @@
 				<@liferay_util["include"] page=bottom_include />
 		</div>
 
-		<script ${nonceAttribute} src="${javascript_folder}/features/accessibility.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/features/scrollHandler.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/features/topbar.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/features/categoryMenu.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/features/mobile.js" type="text/javascript"></script>
+		<script ${nonceAttribute} src="${javascript_folder}/accessibility.js" type="text/javascript"></script>
+		<script ${nonceAttribute} src="${javascript_folder}/scrollHandler.js" type="text/javascript"></script>
+		<script ${nonceAttribute} src="${javascript_folder}/topbar.js" type="text/javascript"></script>
+		<script ${nonceAttribute} src="${javascript_folder}/categoryMenu.js" type="text/javascript"></script>
+		<script ${nonceAttribute} src="${javascript_folder}/mobile.js" type="text/javascript"></script>
 	</body>
 </html>

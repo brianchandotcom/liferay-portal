@@ -109,17 +109,17 @@ public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 
 		CPDefinition cpDefinition = _getCPDefinition(httpServletRequest);
 
-		if (cpDefinition != null) {
-			return _cpDefinitionHelper.getCPCatalogEntry(
-				CommerceUtil.getCommerceAccountId(
-					(CommerceContext)httpServletRequest.getAttribute(
-						CommerceWebKeys.COMMERCE_CONTEXT)),
-				_portal.getScopeGroupId(httpServletRequest),
-				cpDefinition.getCPDefinitionId(),
-				_portal.getLocale(httpServletRequest), false);
+		if (cpDefinition == null) {
+			return null;
 		}
 
-		return null;
+		return _cpDefinitionHelper.getCPCatalogEntry(
+			CommerceUtil.getCommerceAccountId(
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT)),
+			_portal.getScopeGroupId(httpServletRequest),
+			cpDefinition.getCPDefinitionId(),
+			_portal.getLocale(httpServletRequest), false);
 	}
 
 	private CPDefinition _getCPDefinition(

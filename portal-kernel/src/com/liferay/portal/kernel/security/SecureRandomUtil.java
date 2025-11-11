@@ -31,81 +31,97 @@ public class SecureRandomUtil {
 	}
 
 	public static byte nextByte() {
-		int index = _index.getAndIncrement();
+		Buffer buffer = _buffer;
+
+		int index = buffer.getAndAdd(1);
 
 		if (index < _BUFFER_SIZE) {
-			return _BYTES[index];
+			return buffer._bytes[index];
 		}
 
-		return (byte)_reload(index);
+		return (byte)_reload();
 	}
 
 	public static double nextDouble() {
-		int index = _index.getAndAdd(8);
+		Buffer buffer = _buffer;
+
+		int index = buffer.getAndAdd(8);
 
 		if ((index + 7) < _BUFFER_SIZE) {
-			return BigEndianCodec.getDouble(_BYTES, index);
+			return BigEndianCodec.getDouble(buffer._bytes, index);
 		}
 
-		return Double.longBitsToDouble(_reload(index));
+		return Double.longBitsToDouble(_reload());
 	}
 
 	public static float nextFloat() {
-		int index = _index.getAndAdd(4);
+		Buffer buffer = _buffer;
+
+		int index = buffer.getAndAdd(4);
 
 		if ((index + 3) < _BUFFER_SIZE) {
-			return BigEndianCodec.getFloat(_BYTES, index);
+			return BigEndianCodec.getFloat(buffer._bytes, index);
 		}
 
-		return Float.intBitsToFloat((int)_reload(index));
+		return Float.intBitsToFloat((int)_reload());
 	}
 
 	public static int nextInt() {
-		int index = _index.getAndAdd(4);
+		Buffer buffer = _buffer;
+
+		int index = buffer.getAndAdd(4);
 
 		if ((index + 3) < _BUFFER_SIZE) {
-			return BigEndianCodec.getInt(_BYTES, index);
+			return BigEndianCodec.getInt(buffer._bytes, index);
 		}
 
-		return (int)_reload(index);
+		return (int)_reload();
 	}
 
 	public static long nextLong() {
-		int index = _index.getAndAdd(8);
+		Buffer buffer = _buffer;
+
+		int index = buffer.getAndAdd(8);
 
 		if ((index + 7) < _BUFFER_SIZE) {
-			return BigEndianCodec.getLong(_BYTES, index);
+			return BigEndianCodec.getLong(buffer._bytes, index);
 		}
 
-		return _reload(index);
+		return _reload();
 	}
 
-	private static long _reload(int index) {
+	private static long _reload() {
 		if (_reloadingFlag.compareAndSet(false, true)) {
-			_random.nextBytes(_BYTES);
-
-			_gapRandom.setSeed(_random.nextLong());
-
-			_index.set(0);
+			_buffer = new Buffer();
 
 			_reloadingFlag.set(false);
 		}
 
-		return _gapRandom.nextLong() ^
-			   BigEndianCodec.getLong(
-				   _BYTES, Math.abs(index % (_BUFFER_SIZE - 7)));
+		return _random.nextLong();
 	}
 
 	private static final int _BUFFER_SIZE;
 
-	private static final byte[] _BYTES;
-
 	private static final int _MIN_BUFFER_SIZE = 1024;
 
-	private static final Random _gapRandom = new Random();
-	private static final AtomicInteger _index = new AtomicInteger();
+	private static volatile Buffer _buffer;
 	private static final Random _random = new SecureRandom();
 	private static final AtomicBoolean _reloadingFlag = new AtomicBoolean();
+
+	private static class Buffer {
+
+		public int getAndAdd(int delta) {
+			return _index.getAndAdd(delta);
+		}
+
+		private Buffer() {
+			_random.nextBytes(_bytes);
+		}
+
+		private final byte[] _bytes = new byte[_BUFFER_SIZE];
+		private final AtomicInteger _index = new AtomicInteger();
+
+	}
 
 	static {
 		int bufferSize = GetterUtil.getInteger(
@@ -118,11 +134,7 @@ public class SecureRandomUtil {
 
 		_BUFFER_SIZE = bufferSize;
 
-		_BYTES = new byte[_BUFFER_SIZE];
-
-		_random.nextBytes(_BYTES);
-
-		_gapRandom.setSeed(_random.nextLong());
+		_buffer = new Buffer();
 	}
 
 }

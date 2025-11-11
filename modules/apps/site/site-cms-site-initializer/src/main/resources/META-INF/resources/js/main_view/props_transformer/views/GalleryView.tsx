@@ -10,6 +10,9 @@ import React, {Context, useContext, useMemo, useState} from 'react';
 import '../../../../css/props_transformer/GalleryView.scss';
 
 import {ClayButtonWithIcon} from '@clayui/button';
+
+// eslint-disable-next-line
+import {IFrontendDataSetContext} from '@liferay/frontend-data-set-web/src/main/resources/META-INF/resources/FrontendDataSetContext';
 import classNames from 'classnames';
 
 import AssetPreview from '../../../common/components/AssetPreview';
@@ -28,7 +31,7 @@ const GalleryView = ({
 	additionalProps: {
 		contentViewURL: string;
 	};
-	frontendDataSetContext: Context<any>; // See IFrontendDataSetContext in modules/apps/frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/FrontendDataSetContext.tsx
+	frontendDataSetContext: Context<IFrontendDataSetContext>;
 	items: any[];
 	schema: ICardSchema;
 }) => {

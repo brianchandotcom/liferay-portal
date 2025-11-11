@@ -307,6 +307,10 @@ public interface PortletDataHandler {
 	 */
 	public boolean isPublishToLiveByDefault();
 
+	public default boolean isHidden() {
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the data handler stops operations and rolls
 	 * back their transactions on operations throwing exceptions.

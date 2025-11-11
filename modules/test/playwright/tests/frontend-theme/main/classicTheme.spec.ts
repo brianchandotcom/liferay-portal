@@ -31,6 +31,13 @@ export const test = mergeTests(
 const CUSTOM_BACKGROUND_COLOR = 'rgb(66, 244, 197)';
 const MENU_DISPLAY_NAME = 'Menu Display';
 const PAGE_NAME = getRandomString();
+const THEME_OPTIONS_TO_EDIT: Array<{
+	action: 'check' | 'uncheck';
+	name: string;
+}> = [
+	{action: 'uncheck', name: 'Show Header Search'},
+	{action: 'check', name: 'Show Maximize/Minimize Application Links'},
+];
 
 const togglePortletOptions = async (portletName: string, page: Page) => {
 	await page
@@ -55,6 +62,25 @@ const assertPortletOptionsVisible = async (
 	await togglePortletOptions(portletName, page);
 };
 
+const editThemeOptions = async (
+	page: Page,
+	options: Array<{action: 'check' | 'uncheck'; name: string}>
+) => {
+	for (const option of options) {
+		const locator = page.getByRole('checkbox', {
+			exact: true,
+			name: option.name,
+		});
+
+		if (option.action === 'check') {
+			await locator.check();
+		}
+		else {
+			await locator.uncheck();
+		}
+	}
+};
+
 test('Verify custom look and feel settings can be applied to page.', async ({
 	apiHelpers,
 	page,
@@ -77,29 +103,12 @@ test('Verify custom look and feel settings can be applied to page.', async ({
 	await test.step('When look and feel settings and CSS is edited.', async () => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		await pagesAdminPage.goToDesignTabConfiguration(PAGE_NAME);
+		await pagesAdminPage.addCustomCSS(
+			PAGE_NAME,
+			`body, #wrapper {background-color: ${CUSTOM_BACKGROUND_COLOR};}`
+		);
 
-		await pagesAdminPage.defineCustomThemeRadio.click();
-
-		await page
-			.getByRole('checkbox', {
-				exact: true,
-				name: 'Show Header Search',
-			})
-			.uncheck();
-
-		await page
-			.getByRole('checkbox', {
-				exact: true,
-				name: 'Show Maximize/Minimize Application Links',
-			})
-			.check();
-
-		await page
-			.getByRole('textbox', {exact: true, name: 'CSS'})
-			.fill(
-				`body, #wrapper {background-color: ${CUSTOM_BACKGROUND_COLOR};}`
-			);
+		await editThemeOptions(page, THEME_OPTIONS_TO_EDIT);
 
 		await pageConfigurationPage.save();
 

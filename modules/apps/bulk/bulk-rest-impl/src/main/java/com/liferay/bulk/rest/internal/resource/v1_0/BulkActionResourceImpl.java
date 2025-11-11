@@ -253,14 +253,14 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).build();
 		}
 
-		ObjectDefinition cmsBasicWebContentObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_WEB_CONTENT", contextCompany.getCompanyId());
 		ObjectDefinition cmsBasicDocumentObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BASIC_DOCUMENT", contextCompany.getCompanyId());
+		ObjectDefinition cmsBasicWebContentObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_WEB_CONTENT", contextCompany.getCompanyId());
 		Map<String, Role> roles = new HashMap<>();
 
 		return HashMapBuilder.put(

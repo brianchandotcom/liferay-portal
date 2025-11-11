@@ -144,20 +144,16 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		String scope, String search, Sort[] sorts) {
 
 		return new BulkActionBulkSelectionFactory.Builder(
+		).acceptLanguage(
+			contextAcceptLanguage
 		).blueprintExternalReferenceCode(
 			blueprintExternalReferenceCode
 		).bulkAction(
 			bulkAction
 		).bulkSelectionFactoryRegistry(
 			_bulkSelectionFactoryRegistry
-		).contextAcceptLanguage(
-			contextAcceptLanguage
-		).contextCompany(
+		).company(
 			contextCompany
-		).contextHttpServletRequest(
-			contextHttpServletRequest
-		).contextUser(
-			contextUser
 		).emptySearch(
 			emptySearch
 		).entryClassNames(
@@ -168,6 +164,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			_filterFactory
 		).groupLocalService(
 			_groupLocalService
+		).httpServletRequest(
+			contextHttpServletRequest
 		).localization(
 			_localization
 		).objectDefinitionLocalService(
@@ -184,6 +182,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			_searchRequestBuilderFactory
 		).sorts(
 			sorts
+		).user(
+			contextUser
 		).build();
 	}
 

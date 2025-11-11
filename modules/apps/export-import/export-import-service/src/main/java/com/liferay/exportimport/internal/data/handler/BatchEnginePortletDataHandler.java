@@ -380,7 +380,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						registration.getExportImportDescriptor(),
 						portletDataContext,
 						_groupLocalService.fetchGroup(
-							portletDataContext.getScopeGroupId())),
+							portletDataContext.getScopeGroupId()),
+						_stagingGroupHelper),
 					registration.getTaskItemDelegateName());
 
 			try (SafeCloseable safeCloseable =
@@ -483,7 +484,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					registration.getExportImportDescriptor(),
 					portletDataContext,
 					_groupLocalService.fetchGroup(
-						portletDataContext.getScopeGroupId())),
+						portletDataContext.getScopeGroupId()),
+					_stagingGroupHelper),
 				registration.getTaskItemDelegateName()),
 			new BatchEngineExportTaskExecutor.Settings() {
 

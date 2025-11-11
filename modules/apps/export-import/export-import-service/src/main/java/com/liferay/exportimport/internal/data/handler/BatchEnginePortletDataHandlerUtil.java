@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.io.Serializable;
 
@@ -43,7 +42,8 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildExportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		PortletDataContext portletDataContext, Group group) {
+		PortletDataContext portletDataContext, Group group,
+		StagingGroupHelper stagingGroupHelper) {
 
 		HashMap<String, Serializable> exportParameters =
 			HashMapBuilder.<String, Serializable>put(
@@ -111,7 +111,7 @@ public class BatchEnginePortletDataHandlerUtil {
 				exportImportDescriptor.getParameters(portletDataContext)
 			).build();
 
-		if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
+		if ((group != null) && !stagingGroupHelper.isCompanyGroup(group)) {
 			exportParameters.put(
 				"siteExternalReferenceCode", group.getExternalReferenceCode());
 
@@ -133,7 +133,8 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildImportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		PortletDataContext portletDataContext, Group group) {
+		PortletDataContext portletDataContext, Group group,
+		StagingGroupHelper stagingGroupHelper) {
 
 		HashMap<String, Serializable> importParameters =
 			HashMapBuilder.<String, Serializable>put(
@@ -172,7 +173,7 @@ public class BatchEnginePortletDataHandlerUtil {
 				exportImportDescriptor.getParameters(portletDataContext)
 			).build();
 
-		if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
+		if ((group != null) && !stagingGroupHelper.isCompanyGroup(group)) {
 			importParameters.put(
 				"siteExternalReferenceCode", group.getExternalReferenceCode());
 			importParameters.put("siteId", group.getGroupId());
@@ -184,7 +185,5 @@ public class BatchEnginePortletDataHandlerUtil {
 	private static final Format _format =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-	private static final StagingGroupHelper _stagingGroupHelper =
-		StagingGroupHelperUtil.getStagingGroupHelper();
 
 }

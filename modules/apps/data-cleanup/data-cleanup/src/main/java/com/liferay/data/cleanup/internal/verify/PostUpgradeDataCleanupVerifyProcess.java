@@ -8,7 +8,10 @@ package com.liferay.data.cleanup.internal.verify;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.verify.VerifyProcess;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -21,26 +24,23 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
-	public void cleanUpClassName() throws Exception {
-		PostUpgradeDataCleanupProcess postUpgradeDataCleanupProcess =
-			new ClassNamePostUpgradeDataCleanupProcess(
-				_classNameLocalService, connection);
-
-		postUpgradeDataCleanupProcess.cleanUp();
-	}
-
-	public void cleanUpServiceComponent() throws Exception {
-		PostUpgradeDataCleanupProcess postUpgradeDataCleanupProcess =
-			new ServiceComponentPostUpgradeDataCleanupProcess(
-				connection, _serviceComponentLocalService);
-
-		postUpgradeDataCleanupProcess.cleanUp();
-	}
-
 	@Override
 	protected void doVerify() throws Exception {
-		cleanUpClassName();
-		cleanUpServiceComponent();
+		for (PostUpgradeDataCleanupProcess postUpgradeDataCleanupProcess :
+				_getPostUpgradedataCleanupProcesses()) {
+
+			postUpgradeDataCleanupProcess.cleanUp();
+		}
+	}
+
+	private List<PostUpgradeDataCleanupProcess>
+		_getPostUpgradedataCleanupProcesses() {
+
+		return ListUtil.fromArray(
+			new ClassNamePostUpgradeDataCleanupProcess(
+				_classNameLocalService, connection),
+			new ServiceComponentPostUpgradeDataCleanupProcess(
+				connection, _serviceComponentLocalService));
 	}
 
 	@Reference

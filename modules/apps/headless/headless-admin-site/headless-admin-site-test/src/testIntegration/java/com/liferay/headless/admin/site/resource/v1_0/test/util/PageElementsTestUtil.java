@@ -6,11 +6,15 @@
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.util.FragmentRendererRegistryUtil;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElementDefinition;
@@ -28,6 +32,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageEleme
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
@@ -41,10 +46,15 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +68,23 @@ import java.util.Objects;
  * @author Lourdes Fernández Besada
  */
 public class PageElementsTestUtil {
+
+	public static PageElement getDropZonePageElement(
+			long groupId, String pageElementExternalReferenceCode)
+		throws PortalException {
+
+		DropZonePageElementDefinition dropZonePageElementDefinition =
+			new DropZonePageElementDefinition();
+
+		dropZonePageElementDefinition.setAddNewFragmentEntries(true);
+		dropZonePageElementDefinition.setAllowedFragments(
+			_getFragmentReferences(groupId));
+		dropZonePageElementDefinition.setType(
+			PageElementDefinition.Type.DROP_ZONE);
+
+		return _getPageElement(
+			dropZonePageElementDefinition, pageElementExternalReferenceCode);
+	}
 
 	public static FragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
@@ -431,6 +458,19 @@ public class PageElementsTestUtil {
 		return pageElements.toArray(new PageElement[0]);
 	}
 
+	private static FragmentEntry _addFragmentEntry(
+			long fragmentCollectionId, long groupId)
+		throws PortalException {
+
+		return FragmentEntryLocalServiceUtil.addFragmentEntry(
+			null, TestPropsValues.getUserId(), groupId, fragmentCollectionId,
+			null, RandomTestUtil.randomString(), StringPool.BLANK,
+			"Fragment Entry HTML", StringPool.BLANK, false, null, null, 0,
+			false, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
 	private static CollectionDisplayListStyle _getCollectionDisplayListStyle() {
 		TemplateListStyle templateListStyle = new TemplateListStyle();
 
@@ -465,6 +505,60 @@ public class PageElementsTestUtil {
 			});
 
 		return collectionDisplayPageElement;
+	}
+
+	private static FragmentReference[] _getFragmentReferences(long groupId)
+		throws PortalException {
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.addFragmentCollection(
+				null, TestPropsValues.getUserId(), groupId,
+				StringUtil.randomString(), StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(groupId));
+
+		List<FragmentReference> fragmentReferences = new ArrayList<>();
+
+		for (FragmentEntry fragmentEntry :
+				Arrays.asList(
+					FragmentCollectionContributorRegistryUtil.getFragmentEntry(
+						"BASIC_COMPONENT-button"),
+					FragmentCollectionContributorRegistryUtil.getFragmentEntry(
+						"INPUTS-date-input"))) {
+
+			fragmentReferences.add(
+				new DefaultFragmentReference() {
+					{
+						setDefaultFragmentKey(
+							fragmentEntry::getFragmentEntryKey);
+						setFragmentReferenceType(
+							FragmentReferenceType.DEFAULT_FRAGMENT_REFERENCE);
+					}
+				});
+		}
+
+		for (FragmentEntry fragmentEntry :
+				Arrays.asList(
+					_addFragmentEntry(
+						fragmentCollection.getFragmentCollectionId(), groupId),
+					_addFragmentEntry(
+						fragmentCollection.getFragmentCollectionId(), groupId),
+					_addFragmentEntry(
+						fragmentCollection.getFragmentCollectionId(),
+						groupId))) {
+
+			fragmentReferences.add(
+				new FragmentItemExternalReference() {
+					{
+						setExternalReferenceCode(
+							fragmentEntry::getExternalReferenceCode);
+						setFragmentReferenceType(
+							FragmentReferenceType.
+								FRAGMENT_ITEM_EXTERNAL_REFERENCE);
+					}
+				});
+		}
+
+		return fragmentReferences.toArray(new FragmentReference[0]);
 	}
 
 	private static PageElement _getGridPageElement(int position) {
@@ -555,6 +649,21 @@ public class PageElementsTestUtil {
 		modulePageElementDefinition.setType(PageElementDefinition.Type.MODULE);
 
 		return modulePageElementDefinition;
+	}
+
+	private static PageElement _getPageElement(
+		PageElementDefinition pageElementDefinition,
+		String pageElementExternalReferenceCode) {
+
+		PageElement pageElement = new PageElement();
+
+		pageElement.setExternalReferenceCode(pageElementExternalReferenceCode);
+		pageElement.setPageElementDefinition(pageElementDefinition);
+		pageElement.setPageElements(new PageElement[0]);
+		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
+		pageElement.setPosition(0);
+
+		return pageElement;
 	}
 
 	private static PageElement _getPageElement(

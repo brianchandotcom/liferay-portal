@@ -30,13 +30,13 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 
 	public ObjectBulkSelection(
 		DepotEntryLocalService depotEntryLocalService,
-		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
+		ObjectEntryLocalService objectEntryLocalService,
 		Map<String, String[]> parameterMap) {
 
 		_depotEntryLocalService = depotEntryLocalService;
-		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
 		_parameterMap = parameterMap;
 	}
 

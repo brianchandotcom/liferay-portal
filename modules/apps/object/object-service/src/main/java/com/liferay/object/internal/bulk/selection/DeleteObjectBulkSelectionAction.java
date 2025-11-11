@@ -52,11 +52,9 @@ public class DeleteObjectBulkSelectionAction
 
 		bulkActionTaskValues.put("numberOfItems", bulkSelection.getSize());
 
-		String status = "completed";
-
-		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
-
+		String executionStatus = "completed";
 		AtomicInteger numberOfFailedItems = new AtomicInteger(0);
+		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
 
 		try {
 			bulkActionTaskValues.put("executionStatus", "started");
@@ -99,11 +97,11 @@ public class DeleteObjectBulkSelectionAction
 				_log.warn(portalException);
 			}
 
-			status = "failed";
+			executionStatus = "failed";
 		}
 		finally {
 			bulkActionTaskValues.put("completionDate", new Date());
-			bulkActionTaskValues.put("executionStatus", status);
+			bulkActionTaskValues.put("executionStatus", executionStatus);
 			bulkActionTaskValues.put(
 				"numberOfFailedItems", numberOfFailedItems.get());
 			bulkActionTaskValues.put(

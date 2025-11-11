@@ -97,6 +97,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -269,7 +270,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo("LPD-56213")
+	@TestInfo({"LPD-56213", "LPD-70788"})
 	public void testGetSiteSitePageRenderedPage() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
@@ -298,6 +299,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertTrue(pageHTML, pageHTML.contains("<body"));
 		Assert.assertTrue(pageHTML, pageHTML.contains("</body>"));
 		Assert.assertTrue(pageHTML, pageHTML.contains("</html>"));
+
+		_testGetSiteSitePageRenderedPageWithAcceptLanguageHeader();
 	}
 
 	@Ignore
@@ -690,6 +693,45 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).user(
 			UserTestUtil.getAdminUser(testCompany.getCompanyId())
 		).build();
+	}
+
+	private void _testGetSiteSitePageRenderedPageWithAcceptLanguageHeader()
+		throws Exception {
+
+		SitePageResource.Builder builder = SitePageResource.builder();
+
+		SitePageResource sitePageResourceAcceptLanguageHeader =
+			builder.authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).header(
+				"Accept-Language", "nl-NL"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		String name = RandomTestUtil.randomString();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			testGroup.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.NETHERLANDS, name + "-NL"
+			).put(
+				LocaleUtil.US, name + "-US"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US,
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					StringPool.SLASH + RandomTestUtil.randomString())
+			).build());
+
+		String friendlyURL = layout.getFriendlyURL();
+
+		String pageHTML =
+			sitePageResourceAcceptLanguageHeader.getSiteSitePageRenderedPage(
+				testGroup.getGroupId(), friendlyURL.substring(1));
+
+		Assert.assertTrue(pageHTML.contains(name + "-NL"));
+		Assert.assertFalse(pageHTML.contains(name + "-US"));
 	}
 
 	private void _testGetSiteSitePageWithoutPermissions() throws Exception {
@@ -2208,6 +2250,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

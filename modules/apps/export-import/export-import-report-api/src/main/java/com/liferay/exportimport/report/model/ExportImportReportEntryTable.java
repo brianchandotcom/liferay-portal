@@ -63,9 +63,10 @@ public class ExportImportReportEntryTable
 	public final Column<ExportImportReportEntryTable, Clob> errorStacktrace =
 		createColumn(
 			"errorStacktrace", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ExportImportReportEntryTable, String> modelName =
-		createColumn(
-			"modelName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ExportImportReportEntryTable, String>
+		modelNameLanguageKey = createColumn(
+			"modelNameLanguageKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ExportImportReportEntryTable, Integer> origin =
 		createColumn(
 			"origin", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);

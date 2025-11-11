@@ -68,7 +68,7 @@ public class ExportImportReportEntryModelImpl
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"exportImportConfigurationId", Types.BIGINT},
 		{"errorMessage", Types.CLOB}, {"errorStacktrace", Types.CLOB},
-		{"modelName", Types.VARCHAR}, {"origin", Types.INTEGER},
+		{"modelNameLanguageKey", Types.VARCHAR}, {"origin", Types.INTEGER},
 		{"type_", Types.INTEGER}, {"status", Types.INTEGER}
 	};
 
@@ -88,14 +88,14 @@ public class ExportImportReportEntryModelImpl
 		TABLE_COLUMNS_MAP.put("exportImportConfigurationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("errorMessage", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("errorStacktrace", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("modelName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("modelNameLanguageKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("origin", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExportImportReportEntry (mvccVersion LONG default 0 not null,exportImportReportEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classExternalReferenceCode VARCHAR(75) null,classNameId LONG,classPK LONG,exportImportConfigurationId LONG,errorMessage TEXT null,errorStacktrace TEXT null,modelName VARCHAR(255) null,origin INTEGER,type_ INTEGER,status INTEGER)";
+		"create table ExportImportReportEntry (mvccVersion LONG default 0 not null,exportImportReportEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classExternalReferenceCode VARCHAR(75) null,classNameId LONG,classPK LONG,exportImportConfigurationId LONG,errorMessage TEXT null,errorStacktrace TEXT null,modelNameLanguageKey VARCHAR(75) null,origin INTEGER,type_ INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ExportImportReportEntry";
@@ -271,7 +271,8 @@ public class ExportImportReportEntryModelImpl
 			attributeGetterFunctions.put(
 				"errorStacktrace", ExportImportReportEntry::getErrorStacktrace);
 			attributeGetterFunctions.put(
-				"modelName", ExportImportReportEntry::getModelName);
+				"modelNameLanguageKey",
+				ExportImportReportEntry::getModelNameLanguageKey);
 			attributeGetterFunctions.put(
 				"origin", ExportImportReportEntry::getOrigin);
 			attributeGetterFunctions.put(
@@ -346,9 +347,9 @@ public class ExportImportReportEntryModelImpl
 				(BiConsumer<ExportImportReportEntry, String>)
 					ExportImportReportEntry::setErrorStacktrace);
 			attributeSetterBiConsumers.put(
-				"modelName",
+				"modelNameLanguageKey",
 				(BiConsumer<ExportImportReportEntry, String>)
-					ExportImportReportEntry::setModelName);
+					ExportImportReportEntry::setModelNameLanguageKey);
 			attributeSetterBiConsumers.put(
 				"origin",
 				(BiConsumer<ExportImportReportEntry, Integer>)
@@ -592,22 +593,22 @@ public class ExportImportReportEntryModelImpl
 	}
 
 	@Override
-	public String getModelName() {
-		if (_modelName == null) {
+	public String getModelNameLanguageKey() {
+		if (_modelNameLanguageKey == null) {
 			return "";
 		}
 		else {
-			return _modelName;
+			return _modelNameLanguageKey;
 		}
 	}
 
 	@Override
-	public void setModelName(String modelName) {
+	public void setModelNameLanguageKey(String modelNameLanguageKey) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_modelName = modelName;
+		_modelNameLanguageKey = modelNameLanguageKey;
 	}
 
 	@Override
@@ -725,7 +726,8 @@ public class ExportImportReportEntryModelImpl
 			getExportImportConfigurationId());
 		exportImportReportEntryImpl.setErrorMessage(getErrorMessage());
 		exportImportReportEntryImpl.setErrorStacktrace(getErrorStacktrace());
-		exportImportReportEntryImpl.setModelName(getModelName());
+		exportImportReportEntryImpl.setModelNameLanguageKey(
+			getModelNameLanguageKey());
 		exportImportReportEntryImpl.setOrigin(getOrigin());
 		exportImportReportEntryImpl.setType(getType());
 		exportImportReportEntryImpl.setStatus(getStatus());
@@ -764,8 +766,8 @@ public class ExportImportReportEntryModelImpl
 			this.<String>getColumnOriginalValue("errorMessage"));
 		exportImportReportEntryImpl.setErrorStacktrace(
 			this.<String>getColumnOriginalValue("errorStacktrace"));
-		exportImportReportEntryImpl.setModelName(
-			this.<String>getColumnOriginalValue("modelName"));
+		exportImportReportEntryImpl.setModelNameLanguageKey(
+			this.<String>getColumnOriginalValue("modelNameLanguageKey"));
 		exportImportReportEntryImpl.setOrigin(
 			this.<Integer>getColumnOriginalValue("origin"));
 		exportImportReportEntryImpl.setType(
@@ -916,12 +918,16 @@ public class ExportImportReportEntryModelImpl
 			exportImportReportEntryCacheModel.errorStacktrace = null;
 		}
 
-		exportImportReportEntryCacheModel.modelName = getModelName();
+		exportImportReportEntryCacheModel.modelNameLanguageKey =
+			getModelNameLanguageKey();
 
-		String modelName = exportImportReportEntryCacheModel.modelName;
+		String modelNameLanguageKey =
+			exportImportReportEntryCacheModel.modelNameLanguageKey;
 
-		if ((modelName != null) && (modelName.length() == 0)) {
-			exportImportReportEntryCacheModel.modelName = null;
+		if ((modelNameLanguageKey != null) &&
+			(modelNameLanguageKey.length() == 0)) {
+
+			exportImportReportEntryCacheModel.modelNameLanguageKey = null;
 		}
 
 		exportImportReportEntryCacheModel.origin = getOrigin();
@@ -1006,7 +1012,7 @@ public class ExportImportReportEntryModelImpl
 	private long _exportImportConfigurationId;
 	private String _errorMessage;
 	private String _errorStacktrace;
-	private String _modelName;
+	private String _modelNameLanguageKey;
 	private int _origin;
 	private int _type;
 	private int _status;
@@ -1056,7 +1062,8 @@ public class ExportImportReportEntryModelImpl
 			"exportImportConfigurationId", _exportImportConfigurationId);
 		_columnOriginalValues.put("errorMessage", _errorMessage);
 		_columnOriginalValues.put("errorStacktrace", _errorStacktrace);
-		_columnOriginalValues.put("modelName", _modelName);
+		_columnOriginalValues.put(
+			"modelNameLanguageKey", _modelNameLanguageKey);
 		_columnOriginalValues.put("origin", _origin);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("status", _status);
@@ -1107,7 +1114,7 @@ public class ExportImportReportEntryModelImpl
 
 		columnBitmasks.put("errorStacktrace", 2048L);
 
-		columnBitmasks.put("modelName", 4096L);
+		columnBitmasks.put("modelNameLanguageKey", 4096L);
 
 		columnBitmasks.put("origin", 8192L);
 

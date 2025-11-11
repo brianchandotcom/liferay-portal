@@ -95,8 +95,8 @@ public class ExportImportReportEntryCacheModel
 		sb.append(errorMessage);
 		sb.append(", errorStacktrace=");
 		sb.append(errorStacktrace);
-		sb.append(", modelName=");
-		sb.append(modelName);
+		sb.append(", modelNameLanguageKey=");
+		sb.append(modelNameLanguageKey);
 		sb.append(", origin=");
 		sb.append(origin);
 		sb.append(", type=");
@@ -148,11 +148,12 @@ public class ExportImportReportEntryCacheModel
 		exportImportReportEntryImpl.setErrorMessage(errorMessage);
 		exportImportReportEntryImpl.setErrorStacktrace(errorStacktrace);
 
-		if (modelName == null) {
-			exportImportReportEntryImpl.setModelName("");
+		if (modelNameLanguageKey == null) {
+			exportImportReportEntryImpl.setModelNameLanguageKey("");
 		}
 		else {
-			exportImportReportEntryImpl.setModelName(modelName);
+			exportImportReportEntryImpl.setModelNameLanguageKey(
+				modelNameLanguageKey);
 		}
 
 		exportImportReportEntryImpl.setOrigin(origin);
@@ -186,7 +187,7 @@ public class ExportImportReportEntryCacheModel
 		exportImportConfigurationId = objectInput.readLong();
 		errorMessage = (String)objectInput.readObject();
 		errorStacktrace = (String)objectInput.readObject();
-		modelName = objectInput.readUTF();
+		modelNameLanguageKey = objectInput.readUTF();
 
 		origin = objectInput.readInt();
 
@@ -234,11 +235,11 @@ public class ExportImportReportEntryCacheModel
 			objectOutput.writeObject(errorStacktrace);
 		}
 
-		if (modelName == null) {
+		if (modelNameLanguageKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(modelName);
+			objectOutput.writeUTF(modelNameLanguageKey);
 		}
 
 		objectOutput.writeInt(origin);
@@ -260,7 +261,7 @@ public class ExportImportReportEntryCacheModel
 	public long exportImportConfigurationId;
 	public String errorMessage;
 	public String errorStacktrace;
-	public String modelName;
+	public String modelNameLanguageKey;
 	public int origin;
 	public int type;
 	public int status;

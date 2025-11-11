@@ -50,7 +50,7 @@ public class ExportImportReportEntryWrapper
 			"exportImportConfigurationId", getExportImportConfigurationId());
 		attributes.put("errorMessage", getErrorMessage());
 		attributes.put("errorStacktrace", getErrorStacktrace());
-		attributes.put("modelName", getModelName());
+		attributes.put("modelNameLanguageKey", getModelNameLanguageKey());
 		attributes.put("origin", getOrigin());
 		attributes.put("type", getType());
 		attributes.put("status", getStatus());
@@ -135,10 +135,11 @@ public class ExportImportReportEntryWrapper
 			setErrorStacktrace(errorStacktrace);
 		}
 
-		String modelName = (String)attributes.get("modelName");
+		String modelNameLanguageKey = (String)attributes.get(
+			"modelNameLanguageKey");
 
-		if (modelName != null) {
-			setModelName(modelName);
+		if (modelNameLanguageKey != null) {
+			setModelNameLanguageKey(modelNameLanguageKey);
 		}
 
 		Integer origin = (Integer)attributes.get("origin");
@@ -276,13 +277,13 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
-	 * Returns the model name of this export import report entry.
+	 * Returns the model name language key of this export import report entry.
 	 *
-	 * @return the model name of this export import report entry
+	 * @return the model name language key of this export import report entry
 	 */
 	@Override
-	public String getModelName() {
-		return model.getModelName();
+	public String getModelNameLanguageKey() {
+		return model.getModelNameLanguageKey();
 	}
 
 	/**
@@ -460,13 +461,13 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
-	 * Sets the model name of this export import report entry.
+	 * Sets the model name language key of this export import report entry.
 	 *
-	 * @param modelName the model name of this export import report entry
+	 * @param modelNameLanguageKey the model name language key of this export import report entry
 	 */
 	@Override
-	public void setModelName(String modelName) {
-		model.setModelName(modelName);
+	public void setModelNameLanguageKey(String modelNameLanguageKey) {
+		model.setModelNameLanguageKey(modelNameLanguageKey);
 	}
 
 	/**

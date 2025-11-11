@@ -243,19 +243,19 @@ public interface ExportImportReportEntryModel
 	public void setErrorStacktrace(String errorStacktrace);
 
 	/**
-	 * Returns the model name of this export import report entry.
+	 * Returns the model name language key of this export import report entry.
 	 *
-	 * @return the model name of this export import report entry
+	 * @return the model name language key of this export import report entry
 	 */
 	@AutoEscape
-	public String getModelName();
+	public String getModelNameLanguageKey();
 
 	/**
-	 * Sets the model name of this export import report entry.
+	 * Sets the model name language key of this export import report entry.
 	 *
-	 * @param modelName the model name of this export import report entry
+	 * @param modelNameLanguageKey the model name language key of this export import report entry
 	 */
-	public void setModelName(String modelName);
+	public void setModelNameLanguageKey(String modelNameLanguageKey);
 
 	/**
 	 * Returns the origin of this export import report entry.

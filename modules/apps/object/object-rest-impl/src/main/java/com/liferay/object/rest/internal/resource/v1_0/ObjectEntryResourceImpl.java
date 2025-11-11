@@ -13,6 +13,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectEntryValidationException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectRelationshipModel;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.ValidationError;
@@ -31,6 +32,10 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.object.tree.Edge;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
+import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -58,8 +63,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.NestedFieldsContextResource;
+import com.liferay.portal.vulcan.util.NestedFieldsContextUtil;
 
 import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.Context;
@@ -68,7 +76,9 @@ import jakarta.ws.rs.core.Response;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -78,7 +88,8 @@ import java.util.function.Function;
  */
 public class ObjectEntryResourceImpl
 	extends BaseObjectEntryResourceImpl
-	implements ExportImportVulcanBatchEngineTaskItemDelegate<ObjectEntry> {
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<ObjectEntry>,
+			   NestedFieldsContextResource {
 
 	public ObjectEntryResourceImpl(
 		CommentManager commentManager,
@@ -157,6 +168,78 @@ public class ObjectEntryResourceImpl
 		else {
 			super.create(objectEntries, parameters);
 		}
+	}
+
+	@Override
+	public NestedFieldsContext customizeNestedFieldsContext(
+		NestedFieldsContext nestedFieldsContext) {
+
+		if (nestedFieldsContext == null) {
+			return null;
+		}
+
+		List<String> nestedFields = new ArrayList<>(
+			nestedFieldsContext.getNestedFields());
+
+		if (!nestedFields.contains("rootModelHierarchy")) {
+			return nestedFieldsContext;
+		}
+
+		int treeHeight = 1;
+
+		try {
+			ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+				new ObjectDefinitionTreeFactory(
+					_objectDefinitionLocalService,
+					_objectRelationshipLocalService);
+
+			Tree tree = objectDefinitionTreeFactory.create(
+				_objectDefinition.getObjectDefinitionId());
+
+			treeHeight += tree.getHeight(tree.getRootNode());
+
+			Iterator<Node> iterator = tree.iterator();
+
+			while (iterator.hasNext()) {
+				Node node = iterator.next();
+
+				List<Node> childNodes = node.getChildNodes();
+
+				if (ListUtil.isEmpty(childNodes)) {
+					continue;
+				}
+
+				for (int i = childNodes.size() - 1; i >= 0; i--) {
+					Node childNode = childNodes.get(i);
+
+					Edge edge = childNode.getEdge();
+
+					if (edge == null) {
+						continue;
+					}
+
+					ObjectRelationship objectRelationship =
+						_objectRelationshipLocalService.getObjectRelationship(
+							edge.getObjectRelationshipId());
+
+					nestedFields.add(objectRelationship.getName());
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return nestedFieldsContext;
+		}
+
+		ListUtil.distinct(nestedFields);
+
+		return new NestedFieldsContext(
+			NestedFieldsContextUtil.limitDepth(treeHeight),
+			nestedFieldsContext.getMessage(), nestedFields,
+			nestedFieldsContext.getPathParameters(),
+			nestedFieldsContext.getQueryParameters(),
+			nestedFieldsContext.getResourceVersion());
 	}
 
 	@Override

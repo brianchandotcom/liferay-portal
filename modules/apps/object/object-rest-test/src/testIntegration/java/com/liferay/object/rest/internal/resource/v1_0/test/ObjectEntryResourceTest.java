@@ -176,6 +176,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -202,6 +203,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.NestedFieldsContextResource;
 import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -232,11 +234,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -1089,6 +1093,112 @@ public class ObjectEntryResourceTest {
 			_listTypeDefinition);
 
 		_groupLocalService.deleteGroup(_group);
+	}
+
+	@Test
+	public void testCustomizeNestedFieldsContextWithoutRootModelHierarchy()
+		throws Exception {
+
+		String nestedField1 = RandomTestUtil.randomString();
+		String nestedField2 = RandomTestUtil.randomString();
+		String nestedField3 = RandomTestUtil.randomString();
+
+		NestedFieldsContextResource nestedFieldsContextResource =
+			(NestedFieldsContextResource)_getObjectEntryResource(
+				_objectDefinition1, TestPropsValues.getUser());
+
+		NestedFieldsContext nestedFieldsContext =
+			nestedFieldsContextResource.customizeNestedFieldsContext(
+				new NestedFieldsContext(
+					1,
+					Arrays.asList(nestedField1, nestedField2, nestedField3)));
+
+		Assert.assertEquals(
+			SetUtil.fromArray(nestedField1, nestedField2, nestedField3),
+			new HashSet<>(nestedFieldsContext.getNestedFields()));
+	}
+
+	@FeatureFlag("LPD-34594")
+	@Test
+	public void testCustomizeNestedFieldsContextWithRootModelHierarchy()
+		throws Exception {
+
+		String nestedField1 = RandomTestUtil.randomString();
+		String nestedField2 = RandomTestUtil.randomString();
+		String nestedField3 = RandomTestUtil.randomString();
+
+		try {
+			Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
+				_objectDefinitionLocalService, _objectRelationshipLocalService,
+				true,
+				LinkedHashMapBuilder.put(
+					"A", new String[] {"AA", "AB"}
+				).put(
+					"AA", new String[] {"AAA", "AAB"}
+				).put(
+					"AB", new String[0]
+				).put(
+					"AAA", new String[0]
+				).put(
+					"AAB", new String[0]
+				).build());
+
+			List<String> nestedFields = Arrays.asList(
+				nestedField1, nestedField2, nestedField3, "rootModelHierarchy");
+
+			Node objectDefinitionRootNode = objectDefinitionTree.getRootNode();
+
+			NestedFieldsContextResource nestedFieldsContextResource =
+				(NestedFieldsContextResource)_getObjectEntryResource(
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectDefinitionRootNode.getPrimaryKey()),
+					TestPropsValues.getUser());
+
+			NestedFieldsContext nestedFieldsContext =
+				nestedFieldsContextResource.customizeNestedFieldsContext(
+					new NestedFieldsContext(1, nestedFields));
+
+			Set<String> expectedNestedFields = new HashSet<>(nestedFields);
+
+			expectedNestedFields.addAll(
+				_getObjectRelationshipNames(objectDefinitionRootNode));
+
+			Assert.assertEquals(
+				expectedNestedFields,
+				new HashSet<>(nestedFieldsContext.getNestedFields()));
+		}
+		finally {
+			TreeTestUtil.deleteObjectDefinitionHierarchy(
+				_objectDefinitionLocalService,
+				new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
+				_objectEntryLocalService, _objectRelationshipLocalService);
+		}
+	}
+
+	@Test
+	public void testCustomizeNestedFieldsContextWithRootModelHierarchyNoHierarchy()
+		throws Exception {
+
+		String nestedField1 = RandomTestUtil.randomString();
+		String nestedField2 = RandomTestUtil.randomString();
+		String nestedField3 = RandomTestUtil.randomString();
+
+		NestedFieldsContextResource nestedFieldsContextResource =
+			(NestedFieldsContextResource)_getObjectEntryResource(
+				_objectDefinition1, TestPropsValues.getUser());
+
+		NestedFieldsContext nestedFieldsContext =
+			nestedFieldsContextResource.customizeNestedFieldsContext(
+				new NestedFieldsContext(
+					1,
+					Arrays.asList(
+						nestedField1, nestedField2, nestedField3,
+						"rootModelHierarchy")));
+
+		Assert.assertEquals(
+			SetUtil.fromArray(
+				nestedField1, nestedField2, nestedField3, "rootModelHierarchy"),
+			new HashSet<>(nestedFieldsContext.getNestedFields()));
 	}
 
 	@Test
@@ -16071,6 +16181,29 @@ public class ObjectEntryResourceTest {
 				edge.getObjectRelationshipId());
 
 		return objectRelationship.getName();
+	}
+
+	private Set<String> _getObjectRelationshipNames(Node node)
+		throws Exception {
+
+		Set<String> objectRelationshipNames = new HashSet<>();
+
+		Edge edge = node.getEdge();
+
+		if (edge != null) {
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					edge.getObjectRelationshipId());
+
+			objectRelationshipNames.add(objectRelationship.getName());
+		}
+
+		for (Node childNode : node.getChildNodes()) {
+			objectRelationshipNames.addAll(
+				_getObjectRelationshipNames(childNode));
+		}
+
+		return objectRelationshipNames;
 	}
 
 	private JSONObject _getOwnerPermissionsJSONObject() {

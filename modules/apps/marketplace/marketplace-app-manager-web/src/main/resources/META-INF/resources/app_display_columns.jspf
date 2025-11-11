@@ -6,9 +6,14 @@
 --%>
 
 <liferay-ui:search-container-column-text>
-	<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="iconURL" value="<%= appDisplay.getIconURL(request) %>" />
-	</liferay-util:include>
+	<clay:sticker
+		cssClass="search-container"
+		displaytype="secondary"
+	>
+		<svg class="lexicon-icon">
+			<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#slideshow" />
+		</svg>
+	</clay:sticker>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text

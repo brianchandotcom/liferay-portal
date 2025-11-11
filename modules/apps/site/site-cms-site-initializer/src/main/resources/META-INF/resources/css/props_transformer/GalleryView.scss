@@ -1,6 +1,6 @@
 @import 'atlas-variables';
 
-.fds-carousel-view {
+.fds-gallery-view {
 	&__preview {
 		height: 570px;
 
@@ -16,11 +16,11 @@
 		max-height: 100%;
 	}
 
-	.fds-carousel-view__thumbnails {
+	.fds-gallery-view__thumbnails {
 		min-width: 0;
 	}
 
-	.fds-carousel-view__thumbnail {
+	.fds-gallery-view__thumbnail {
 		max-width: 20%;
 
 		&.selected {

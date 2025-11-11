@@ -95,6 +95,25 @@ public class DDMFormFieldValue implements Serializable {
 		return _name;
 	}
 
+	public DDMFormFieldValue getNestedDDMFormFieldValue(String name) {
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				_nestedDDMFormFieldValues) {
+
+			if (Objects.equals(name, nestedDDMFormFieldValue.getName())) {
+				return nestedDDMFormFieldValue;
+			}
+
+			DDMFormFieldValue matchedDDMFormFieldValue =
+				nestedDDMFormFieldValue.getNestedDDMFormFieldValue(name);
+
+			if (matchedDDMFormFieldValue != null) {
+				return matchedDDMFormFieldValue;
+			}
+		}
+
+		return null;
+	}
+
 	public List<DDMFormFieldValue> getNestedDDMFormFieldValues() {
 		return _nestedDDMFormFieldValues;
 	}

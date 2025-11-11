@@ -25,6 +25,26 @@ import java.util.Set;
  */
 public class DDMFormValues implements Serializable {
 
+	public static List<DDMFormFieldValue> getDDMFormFieldValues(
+		List<DDMFormFieldValue> ddmFormFieldValues, String name,
+		boolean includeNestedDDMFormFieldValues) {
+
+		List<DDMFormFieldValue> matchedDDMFormFieldValues = new ArrayList<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (Objects.equals(name, ddmFormFieldValue.getName())) {
+				matchedDDMFormFieldValues.add(ddmFormFieldValue);
+			}
+
+			if (includeNestedDDMFormFieldValues) {
+				ddmFormFieldValue.populateNestedDDMFormFieldValues(
+					name, matchedDDMFormFieldValues);
+			}
+		}
+
+		return matchedDDMFormFieldValues;
+	}
+
 	public DDMFormValues(DDMForm ddmForm) {
 		_ddmForm = ddmForm;
 	}
@@ -71,6 +91,27 @@ public class DDMFormValues implements Serializable {
 		return _ddmForm;
 	}
 
+	public DDMFormFieldValue getDDMFormFieldValue(
+		String name, boolean includeNestedDDMFormFieldValues) {
+
+		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
+			if (Objects.equals(name, ddmFormFieldValue.getName())) {
+				return ddmFormFieldValue;
+			}
+
+			if (includeNestedDDMFormFieldValues) {
+				DDMFormFieldValue matchedDDMFormFieldValue =
+					ddmFormFieldValue.getNestedDDMFormFieldValue(name);
+
+				if (matchedDDMFormFieldValue != null) {
+					return matchedDDMFormFieldValue;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public List<DDMFormFieldValue> getDDMFormFieldValues() {
 		return _ddmFormFieldValues;
 	}
@@ -78,20 +119,8 @@ public class DDMFormValues implements Serializable {
 	public List<DDMFormFieldValue> getDDMFormFieldValues(
 		String name, boolean includeNestedDDMFormFieldValues) {
 
-		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
-
-		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
-			if (Objects.equals(name, ddmFormFieldValue.getName())) {
-				ddmFormFieldValues.add(ddmFormFieldValue);
-			}
-
-			if (includeNestedDDMFormFieldValues) {
-				ddmFormFieldValue.populateNestedDDMFormFieldValues(
-					name, ddmFormFieldValues);
-			}
-		}
-
-		return ddmFormFieldValues;
+		return getDDMFormFieldValues(
+			_ddmFormFieldValues, name, includeNestedDDMFormFieldValues);
 	}
 
 	/**

@@ -187,6 +187,8 @@ public class UserRolesDisplayContext {
 				return null;
 			}
 		).setParameter(
+			"assignRoles", _isAssignRoles()
+		).setParameter(
 			"displayStyle",
 			() -> {
 				String displayStyle = getDisplayStyle();

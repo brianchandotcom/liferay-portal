@@ -202,9 +202,13 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 
 		ReportEntry reportEntry = randomReportEntry();
 
-		reportEntry.setModelName("example-text");
-
-		_addReportEntry(reportEntry);
+		_exportImportReportEntryLocalService.addErrorExportImportReportEntry(
+			testGroup.getGroupId(), testCompany.getCompanyId(),
+			reportEntry.getClassExternalReferenceCode(),
+			reportEntry.getClassNameId(), reportEntry.getClassPK(),
+			_exportImportConfiguration.getExportImportConfigurationId(),
+			reportEntry.getErrorMessage(), reportEntry.getErrorStacktrace(),
+			"example-text", ExportImportReportEntryConstants.ORIGIN_BATCH);
 
 		Page<ReportEntry> page =
 			reportEntryResource.getImportProcessReportEntriesPage(

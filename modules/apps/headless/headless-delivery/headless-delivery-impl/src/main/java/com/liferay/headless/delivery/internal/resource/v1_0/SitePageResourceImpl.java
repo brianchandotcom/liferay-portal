@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -635,7 +636,11 @@ public class SitePageResourceImpl
 			(ThemeDisplay)contextHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		themeDisplay.setLanguageId(
+			LocaleUtil.toLanguageId(
+				contextAcceptLanguage.getPreferredLocale()));
 		themeDisplay.setLayout(layout);
+		themeDisplay.setLocale(contextAcceptLanguage.getPreferredLocale());
 		themeDisplay.setResponse(httpServletResponse);
 		themeDisplay.setScopeGroupId(layout.getGroupId());
 		themeDisplay.setSiteGroupId(layout.getGroupId());
@@ -798,6 +803,9 @@ public class SitePageResourceImpl
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout, contextUser)) {
+
+			contextHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
 
 			layout.includeLayoutContent(
 				contextHttpServletRequest, contextHttpServletResponse);

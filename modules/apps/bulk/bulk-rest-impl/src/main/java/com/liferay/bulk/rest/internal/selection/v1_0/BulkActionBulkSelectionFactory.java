@@ -443,12 +443,12 @@ public class BulkActionBulkSelectionFactory {
 		searchContext.setGroupIds(_toGroupIds(_company.getCompanyId(), scope));
 		searchContext.setKeywords(search);
 		searchContext.setLocale(_acceptLanguage.getPreferredLocale());
-		searchContext.setStart(start);
 
 		if (ArrayUtil.isNotEmpty(sorts)) {
 			searchContext.setSorts(sorts);
 		}
 
+		searchContext.setStart(start);
 		searchContext.setTimeZone(_user.getTimeZone());
 		searchContext.setUserId(_user.getUserId());
 	}

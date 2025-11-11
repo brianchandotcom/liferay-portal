@@ -181,8 +181,8 @@ public class TaxonomyVocabularyImportTaskPreActionTest {
 			roleExternalReferenceCode, _localGroup.getCompanyId());
 
 		Assert.assertEquals(
-			role.getExternalReferenceCode(), roleExternalReferenceCode);
-		Assert.assertEquals(role.getName(), roleName);
+			roleExternalReferenceCode, role.getExternalReferenceCode());
+		Assert.assertEquals(roleName, role.getName());
 		Assert.assertEquals(WorkflowConstants.STATUS_EMPTY, role.getStatus());
 
 		AssetVocabulary importedAssetVocabulary =

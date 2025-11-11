@@ -27,9 +27,9 @@ export default function AssetPreview(props: AssetPreviewProps) {
 	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
 		return (
 			<FolderPreview
-				filesLength={3}
+				filesLength={item.embedded.numberOfObjectEntries ?? 0}
 				name={item.embedded.title ?? ''}
-				subfoldersLength={1}
+				subfoldersLength={item.embedded.numberOfObjectEntryFolders ?? 0}
 			/>
 		);
 	}

@@ -100,7 +100,7 @@ public class SectionDisplayContextHelper {
 			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM),
 			rootObjectEntryFolderExternalReferenceCode);
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("emptySearch=true&filter=");
 
@@ -126,6 +126,7 @@ public class SectionDisplayContextHelper {
 
 		sb.append("&nestedFields=embedded,file.metadata,");
 		sb.append("file.previewURL,file.thumbnailURL,");
+		sb.append("numberOfObjectEntries,numberOfObjectEntryFolders,");
 		sb.append("systemProperties.objectDefinitionBrief");
 
 		return sb.toString();

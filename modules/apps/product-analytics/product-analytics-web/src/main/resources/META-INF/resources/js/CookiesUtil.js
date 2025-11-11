@@ -50,10 +50,17 @@ export function getCookie(name) {
 }
 
 export function setCookie(consentRenewalPeriod, name, value) {
-	setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
-		'max-age': 60 * 60 * 24 * 365 * (consentRenewalPeriod / 12),
-		'path': themeDisplay.getPathContext() || '/',
-	});
+	if (!Liferay.FeatureFlags['LPD-65277']) {
+		setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
+			path: themeDisplay.getPathContext() || '/',
+		});
+	}
+	else {
+		setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
+			'max-age': 60 * 60 * 24 * 365 * (consentRenewalPeriod / 12),
+			'path': themeDisplay.getPathContext() || '/',
+		});
+	}
 }
 
 export function removeAllCookies(
@@ -81,11 +88,14 @@ export function setProductAnalyticsConfigCookie(
 		productAnalyticsConfiguredCookieName,
 		'true'
 	);
-	setCookie(
-		consentRenewalPeriod,
-		productAnalyticsConfiguredDateCookieName,
-		modifiedDate
-	);
+
+	if (Liferay.FeatureFlags['LPD-65277']) {
+		setCookie(
+			consentRenewalPeriod,
+			productAnalyticsConfiguredDateCookieName,
+			modifiedDate
+		);
+	}
 
 	getOpener()?.Liferay.fire('productAnalyticsBannerSetCookie');
 }

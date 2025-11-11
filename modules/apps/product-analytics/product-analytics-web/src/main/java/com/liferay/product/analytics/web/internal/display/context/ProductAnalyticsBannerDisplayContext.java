@@ -6,12 +6,14 @@
 package com.liferay.product.analytics.web.internal.display.context;
 
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsPortletKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,24 +35,37 @@ public class ProductAnalyticsBannerDisplayContext extends BaseDisplayContext {
 	}
 
 	public Map<String, Object> getContext(Locale locale) {
-		return HashMapBuilder.<String, Object>put(
-			"configurationNamespace",
-			ProductAnalyticsPortletKeys.PRODUCT_ANALYTICS_CONSENT_PANEL
-		).put(
-			"configurationURL", _getConfigurationURL()
-		).put(
+		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
+			HashMapBuilder.<String, Object>put(
+				"configurationNamespace",
+				ProductAnalyticsPortletKeys.PRODUCT_ANALYTICS_CONSENT_PANEL
+			).put(
+				"configurationURL", _getConfigurationURL()
+			).put(
+				"optionalConsentCookieTypeNames",
+				getConsentCookieTypeNamesJSONArray(
+					getOptionalConsentCookieTypes())
+			).put(
+				"requiredConsentCookieTypeNames",
+				getConsentCookieTypeNamesJSONArray(
+					getRequiredConsentCookieTypes())
+			).put(
+				"title",
+				LanguageUtil.get(
+					locale, "product-analytics-consent-panel-title")
+			);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				PortalUtil.getCompanyId(getHttpServletRequest()),
+				"LPD-65277")) {
+
+			return hashMapWrapper.build();
+		}
+
+		return hashMapWrapper.put(
 			"consentRenewalPeriod", getConsentRenewalPeriod()
 		).put(
 			"modifiedDate", getModifiedDate()
-		).put(
-			"optionalConsentCookieTypeNames",
-			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())
-		).put(
-			"requiredConsentCookieTypeNames",
-			getConsentCookieTypeNamesJSONArray(getRequiredConsentCookieTypes())
-		).put(
-			"title",
-			LanguageUtil.get(locale, "product-analytics-consent-panel-title")
 		).build();
 	}
 

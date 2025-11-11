@@ -160,6 +160,7 @@ const AssetTags = ({
 								}}
 								displayType="secondary"
 								key={`${keyword}_${index}`}
+								style={{textTransform: 'none'}}
 							>
 								{keyword}
 							</Label>

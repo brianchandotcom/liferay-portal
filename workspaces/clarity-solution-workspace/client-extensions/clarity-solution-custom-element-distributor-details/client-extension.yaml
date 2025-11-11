@@ -2,6 +2,7 @@ assemble:
     -   from: build/vite
         into: static
 clarity-solution-custom-element-distributor-details:
+    friendlyURLMapping: clarity-solution-custom-element-distributor-details
     htmlElementName: clarity-solution-custom-element-distributor-details
     instanceable: false
     name: Clarity Solution Custom Element Distributor Details
@@ -10,4 +11,3 @@ clarity-solution-custom-element-distributor-details:
     urls:
         -   "*.js"
     useESM: true
-    friendlyURLMapping: clarity-solution-custom-element-distributor-details

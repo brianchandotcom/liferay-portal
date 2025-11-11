@@ -352,11 +352,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElementWithCollectionDisplayPageElement();
 		_testPutSitePageSpecificationPageExperiencePageElementWithContainerPageElement();
 		_testPutSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement();
-
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElement();
-
 		_testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement();
-
 		_testPutSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
 	}
 

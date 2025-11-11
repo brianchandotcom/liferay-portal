@@ -71,7 +71,7 @@ public abstract class BaseSiteConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-configuration/v1.0/sites/{siteExternalReferenceCode}/site-configurations/{siteConfigurationExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "properties": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-configuration/v1.0/sites/{siteExternalReferenceCode}/site-configurations/{siteConfigurationExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -90,7 +90,6 @@ public abstract class BaseSiteConfigurationResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "SiteConfiguration")
 		}
 	)
-	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
 		"/sites/{siteExternalReferenceCode}/site-configurations/{siteConfigurationExternalReferenceCode}"
@@ -105,8 +104,7 @@ public abstract class BaseSiteConfigurationResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteConfigurationExternalReferenceCode")
-			String siteConfigurationExternalReferenceCode,
-			SiteConfiguration siteConfiguration)
+			String siteConfigurationExternalReferenceCode)
 		throws Exception {
 
 		return new SiteConfiguration();

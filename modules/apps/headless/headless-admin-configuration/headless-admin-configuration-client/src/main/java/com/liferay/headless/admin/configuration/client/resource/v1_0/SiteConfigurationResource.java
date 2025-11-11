@@ -35,14 +35,12 @@ public interface SiteConfigurationResource {
 
 	public SiteConfiguration getSiteSiteConfiguration(
 			String siteExternalReferenceCode,
-			String siteConfigurationExternalReferenceCode,
-			SiteConfiguration siteConfiguration)
+			String siteConfigurationExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteSiteConfigurationHttpResponse(
 			String siteExternalReferenceCode,
-			String siteConfigurationExternalReferenceCode,
-			SiteConfiguration siteConfiguration)
+			String siteConfigurationExternalReferenceCode)
 		throws Exception;
 
 	public Page<SiteConfiguration> getSiteSiteConfigurationsPage(
@@ -205,14 +203,13 @@ public interface SiteConfigurationResource {
 
 		public SiteConfiguration getSiteSiteConfiguration(
 				String siteExternalReferenceCode,
-				String siteConfigurationExternalReferenceCode,
-				SiteConfiguration siteConfiguration)
+				String siteConfigurationExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteSiteConfigurationHttpResponse(
 					siteExternalReferenceCode,
-					siteConfigurationExternalReferenceCode, siteConfiguration);
+					siteConfigurationExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -275,8 +272,7 @@ public interface SiteConfigurationResource {
 
 		public HttpInvoker.HttpResponse getSiteSiteConfigurationHttpResponse(
 				String siteExternalReferenceCode,
-				String siteConfigurationExternalReferenceCode,
-				SiteConfiguration siteConfiguration)
+				String siteConfigurationExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

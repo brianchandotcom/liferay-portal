@@ -186,7 +186,7 @@ public abstract class BaseSiteConfigurationResourceTestCase {
 		SiteConfiguration getSiteConfiguration =
 			siteConfigurationResource.getSiteSiteConfiguration(
 				testGetSiteSiteConfiguration_getSiteExternalReferenceCode(),
-				postSiteConfiguration.getExternalReferenceCode(), null);
+				postSiteConfiguration.getExternalReferenceCode());
 
 		assertEquals(postSiteConfiguration, getSiteConfiguration);
 		assertValid(getSiteConfiguration);
@@ -347,7 +347,7 @@ public abstract class BaseSiteConfigurationResourceTestCase {
 		SiteConfiguration getSiteConfiguration =
 			siteConfigurationResource.getSiteSiteConfiguration(
 				testPutSiteSiteConfiguration_getSiteExternalReferenceCode(),
-				putSiteConfiguration.getExternalReferenceCode(), null);
+				putSiteConfiguration.getExternalReferenceCode());
 
 		assertEquals(randomSiteConfiguration, getSiteConfiguration);
 		assertValid(getSiteConfiguration);

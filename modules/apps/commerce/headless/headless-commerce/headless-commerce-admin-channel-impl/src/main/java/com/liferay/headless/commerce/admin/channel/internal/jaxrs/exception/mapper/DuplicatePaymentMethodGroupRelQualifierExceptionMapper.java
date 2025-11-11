@@ -6,13 +6,18 @@
 package com.liferay.headless.commerce.admin.channel.internal.jaxrs.exception.mapper;
 
 import com.liferay.commerce.payment.exception.DuplicateCommercePaymentMethodGroupRelQualifierException;
-import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -31,22 +36,23 @@ public class DuplicatePaymentMethodGroupRelQualifierExceptionMapper
 		<DuplicateCommercePaymentMethodGroupRelQualifierException> {
 
 	@Override
-	public String getErrorDescription() {
-		return "Duplicate payment method group relation qualifier";
-	}
-
-	@Override
-	public Response.Status getStatus() {
-		return Response.Status.CONFLICT;
-	}
-
-	@Override
-	protected String toJSON(
+	protected Problem getProblem(
 		DuplicateCommercePaymentMethodGroupRelQualifierException
-			duplicateCommercePaymentMethodGroupRelQualifierException,
-		int status) {
+			duplicateCommercePaymentMethodGroupRelQualifierException) {
 
-		return super.toJSON("the-qualifier-is-already-linked", status);
+		return new Problem(
+			null, Response.Status.CONFLICT,
+			_language.get(
+				_acceptLanguage.getPreferredLocale(),
+				"the-payment-method-group-relation-qualifier-already-exists"),
+			DuplicateCommercePaymentMethodGroupRelQualifierException.class.
+				getName());
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

@@ -6,14 +6,17 @@
 package com.liferay.headless.commerce.admin.channel.internal.jaxrs.exception.mapper;
 
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryIdException;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Crescenzo Rega
@@ -37,10 +40,15 @@ public class DuplicateChannelAccountIdExceptionMapper
 
 		return new Problem(
 			Response.Status.CONFLICT,
-			StringUtil.replace(
-				duplicateCommerceChannelAccountEntryIdException.getMessage(),
-				new String[] {"account entry ID", "commerce channel"},
-				new String[] {"account ID", "channel"}));
+			_language.get(
+				_acceptLanguage.getPreferredLocale(),
+				"a-channel-already-exists-with-the-same-account-entry-id"));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

@@ -34,16 +34,12 @@ export default function ({
 				});
 			})
 			.catch((error) => {
-				const errorsMap = {
-					'the-qualifier-is-already-linked': Liferay.Language.get(
-						'the-qualifier-is-already-linked'
-					),
-				};
-
 				openToast({
-					message:
-						errorsMap[error.message] ||
-						Liferay.Language.get('an-unexpected-error-occurred'),
+					message: error.type.includes(
+						'DuplicateCommerceShippingFixedOptionQualifierException'
+					)
+						? error.title
+						: Liferay.Language.get('an-unexpected-error-occurred'),
 					title: Liferay.Language.get('error'),
 					type: 'danger',
 				});

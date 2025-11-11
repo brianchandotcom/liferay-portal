@@ -6,14 +6,18 @@
 package com.liferay.headless.commerce.admin.channel.internal.jaxrs.exception.mapper;
 
 import com.liferay.commerce.product.exception.CPDisplayLayoutEntryUuidException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Danny Situ
@@ -35,7 +39,16 @@ public class DisplayPageUuidExceptionMapper
 		CPDisplayLayoutEntryUuidException cpDisplayLayoutEntryUuidException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "The display page UUID is invalid");
+			Response.Status.BAD_REQUEST,
+			_language.get(
+				_acceptLanguage.getPreferredLocale(),
+				"the-display-page-uuid-is-invalid"));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

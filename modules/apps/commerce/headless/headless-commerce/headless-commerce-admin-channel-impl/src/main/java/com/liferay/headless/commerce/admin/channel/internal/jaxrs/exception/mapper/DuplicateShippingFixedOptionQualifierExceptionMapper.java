@@ -6,13 +6,18 @@
 package com.liferay.headless.commerce.admin.channel.internal.jaxrs.exception.mapper;
 
 import com.liferay.commerce.shipping.engine.fixed.exception.DuplicateCommerceShippingFixedOptionQualifierException;
-import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -31,22 +36,23 @@ public class DuplicateShippingFixedOptionQualifierExceptionMapper
 		<DuplicateCommerceShippingFixedOptionQualifierException> {
 
 	@Override
-	public String getErrorDescription() {
-		return "Duplicate shipping fixed option qualifier";
-	}
-
-	@Override
-	public Response.Status getStatus() {
-		return Response.Status.CONFLICT;
-	}
-
-	@Override
-	protected String toJSON(
+	protected Problem getProblem(
 		DuplicateCommerceShippingFixedOptionQualifierException
-			duplicateCommerceShippingFixedOptionQualifierException,
-		int status) {
+			duplicateCommerceShippingFixedOptionQualifierException) {
 
-		return super.toJSON("the-qualifier-is-already-linked", status);
+		return new Problem(
+			null, Response.Status.CONFLICT,
+			_language.get(
+				_acceptLanguage.getPreferredLocale(),
+				"the-shipping-fixed-option-qualifier-already-exists"),
+			DuplicateCommerceShippingFixedOptionQualifierException.class.
+				getName());
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

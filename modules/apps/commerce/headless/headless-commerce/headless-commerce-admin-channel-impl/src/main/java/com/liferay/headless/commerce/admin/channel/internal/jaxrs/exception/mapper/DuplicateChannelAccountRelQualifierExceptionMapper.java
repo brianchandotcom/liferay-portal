@@ -6,14 +6,18 @@
 package com.liferay.headless.commerce.admin.channel.internal.jaxrs.exception.mapper;
 
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryRelException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Danny Situ
@@ -38,7 +42,15 @@ public class DuplicateChannelAccountRelQualifierExceptionMapper
 
 		return new Problem(
 			Response.Status.CONFLICT,
-			"Duplicate channel account relation qualifier");
+			_language.get(
+				_acceptLanguage.getPreferredLocale(),
+				"the-account-channel-relation-already-exists"));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

@@ -51,9 +51,9 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 	}
 
 	@Override
-	public String getAdditionalAPIURLParameters() {
+	public String getAPIURL() {
 		return HttpComponentsUtil.addParameters(
-			super.getAdditionalAPIURLParameters(), "sort", "dateModified:desc");
+			super.getAPIURL(), "sort", "dateModified:desc");
 	}
 
 	public String getAssetsAllURL() throws PortalException {

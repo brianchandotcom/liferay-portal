@@ -5,15 +5,12 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPermission;
 import com.liferay.layout.exporter.PortletPermissionsExporter;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -38,30 +35,16 @@ import org.osgi.util.tracker.ServiceTracker;
 public class WidgetInstanceUtil {
 
 	public static WidgetInstance getWidgetInstance(
-		FragmentEntryLink fragmentEntryLink) {
-
-		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
-
-		if (JSONUtil.isEmpty(jsonObject) || !jsonObject.has("portletId")) {
-			return null;
-		}
-
-		String instanceId = jsonObject.getString("instanceId", null);
-
-		String portletId = PortletIdCodec.encode(
-			jsonObject.getString("portletId"), instanceId);
+		String instanceId, long plid, String portletId) {
 
 		return new WidgetInstance() {
 			{
-				setWidgetConfig(
-					() -> _getWidgetConfig(
-						fragmentEntryLink.getPlid(), portletId));
+				setWidgetConfig(() -> _getWidgetConfig(plid, portletId));
 				setWidgetInstanceId(() -> instanceId);
 				setWidgetName(
 					() -> PortletIdCodec.decodePortletName(portletId));
 				setWidgetPermissions(
-					() -> _getWidgetPermissions(
-						fragmentEntryLink.getPlid(), portletId));
+					() -> _getWidgetPermissions(plid, portletId));
 			}
 		};
 	}

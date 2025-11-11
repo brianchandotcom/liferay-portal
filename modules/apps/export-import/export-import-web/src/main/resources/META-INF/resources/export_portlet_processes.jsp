@@ -20,8 +20,14 @@ PortletURL portletURL = PortletURLBuilder.create(
 	"tabs3", "current-and-previous"
 ).buildPortletURL();
 
+String redirect = ParamUtil.getString(request, "redirect");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(redirect)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+}
 
 if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
 	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", orderByCol);
@@ -126,6 +132,7 @@ else {
 						<portlet:param name="tabs2" value="export" />
 						<portlet:param name="tabs3" value="current-and-previous" />
 						<portlet:param name="portletResource" value="<%= portletResource %>" />
+						<portlet:param name="redirect" value='<%= redirect %>' />
 					</liferay-portlet:renderURL>
 
 					<liferay-portlet:actionURL name="/export_import/delete_portlet_background_task" portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="deleteBackgroundTaskURL">

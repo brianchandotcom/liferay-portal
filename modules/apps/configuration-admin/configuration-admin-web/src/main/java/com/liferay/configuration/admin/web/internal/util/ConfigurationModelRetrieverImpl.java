@@ -6,7 +6,6 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
-import com.liferay.configuration.admin.util.ConfigurationPidUtil;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.petra.string.StringBundler;
@@ -36,7 +35,6 @@ import java.util.TreeSet;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
@@ -243,7 +241,8 @@ public class ConfigurationModelRetrieverImpl
 		String pid, ExtendedObjectClassDefinition.Scope scope) {
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
-			return _getSystemPidFilterString(pid);
+			return ConfigurationFilterStringUtil.getSystemScopedFilterString(
+				pid);
 		}
 
 		return _getScopedPidFilterString(pid, scope);
@@ -378,68 +377,18 @@ public class ConfigurationModelRetrieverImpl
 	private String _getScopedPidFilterString(
 		String pid, ExtendedObjectClassDefinition.Scope scope) {
 
-		String rawPid = ConfigurationPidUtil.getRawPid(pid);
-
-		String filterString = StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
-			_getPropertyFilterString(
-				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid),
-			_getPropertyFilterString(
-				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid + ".scoped"),
-			StringPool.CLOSE_PARENTHESIS);
-
-		if (pid.contains("~")) {
-			filterString = StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
-				_getPropertyFilterString(Constants.SERVICE_PID, pid),
-				StringPool.CLOSE_PARENTHESIS);
-		}
-
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
-			return StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
-				ConfigurationFilterStringUtil.getCompanyScopedFilterString(
-					null, null),
-				StringPool.CLOSE_PARENTHESIS);
+			return ConfigurationFilterStringUtil.getCompanyScopedFilterString(
+				null, pid, null);
 		}
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
-			return StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
-				ConfigurationFilterStringUtil.getGroupScopedFilterString(
-					null, null),
-				StringPool.CLOSE_PARENTHESIS);
+			return ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				null, pid, null);
 		}
 
-		return StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
-			ConfigurationFilterStringUtil.getPortletScopedFilterString(
-				null, null, null),
-			StringPool.CLOSE_PARENTHESIS);
-	}
-
-	private String _getSystemPidFilterString(String pid) {
-		String filterString = StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
-			_getPropertyFilterString(
-				ConfigurationAdmin.SERVICE_FACTORYPID, pid),
-			_getPropertyFilterString(Constants.SERVICE_PID, pid),
-			StringPool.CLOSE_PARENTHESIS);
-
-		if (pid.contains("~")) {
-			filterString = StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-				_getPropertyFilterString(
-					ConfigurationAdmin.SERVICE_FACTORYPID,
-					ConfigurationPidUtil.getRawPid(pid)),
-				_getPropertyFilterString(Constants.SERVICE_PID, pid),
-				StringPool.CLOSE_PARENTHESIS);
-		}
-
-		return StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
-			ConfigurationFilterStringUtil.getSystemScopedFilterString(),
-			StringPool.CLOSE_PARENTHESIS);
+		return ConfigurationFilterStringUtil.getPortletScopedFilterString(
+			null, pid, null, null);
 	}
 
 	private BundleContext _bundleContext;

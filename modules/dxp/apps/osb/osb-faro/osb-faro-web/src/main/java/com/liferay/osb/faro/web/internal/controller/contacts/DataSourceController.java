@@ -249,24 +249,8 @@ public class DataSourceController extends BaseFaroController {
 		salesforceProvider.setContactsConfiguration(
 			contactsConfigurationFaroParam.getValue());
 
-		DataSourceDisplay dataSourceDisplay = create(
+		return create(
 			groupId, credentials, salesforceProvider, name, url, null, status);
-
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
-
-		createFieldMappings(
-			faroProject, dataSourceDisplay.getId(),
-			FieldMappingConstants.CONTEXT_ORGANIZATION,
-			FieldMappingConstants.OWNER_TYPE_ACCOUNT,
-			FieldMappingConstants.getSalesforceAccountFieldMappingMaps());
-		createFieldMappings(
-			faroProject, dataSourceDisplay.getId(),
-			FieldMappingConstants.CONTEXT_DEMOGRAPHICS,
-			FieldMappingConstants.OWNER_TYPE_INDIVIDUAL,
-			FieldMappingConstants.getSalesforceIndividualFieldMappingMaps());
-
-		return dataSourceDisplay;
 	}
 
 	@DELETE

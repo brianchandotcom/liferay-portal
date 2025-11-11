@@ -7,62 +7,27 @@ package com.liferay.data.cleanup.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ServiceComponent;
-import com.liferay.portal.kernel.module.util.BundleUtil;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 import java.sql.Connection;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
 
 /**
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class ServiceComponentPostUpgradeDataCleanupProcessTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_connection = DataAccess.getConnection();
-
-		_dbInspector = new DBInspector(_connection);
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		DataAccess.cleanUp(_connection);
-	}
+public class ServiceComponentPostUpgradeDataCleanupProcessTest
+	extends BasePostUpgradeDataCleanupProcessTestCase {
 
 	@Test
 	public void testLiferayExistentPortletBuildNumberOutdatedIsError()
@@ -74,7 +39,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 		AtomicReference<ServiceComponent> serviceComponentAtomicReference =
 			new AtomicReference<>();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -83,7 +48,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 					messages.contains(
 						StringBundler.concat(
 							"Content of table ",
-							_dbInspector.normalizeName("ServiceComponent"),
+							dbInspector.normalizeName("ServiceComponent"),
 							" for bundle com.liferay.layout.service is ",
 							"outdated")));
 			},
@@ -113,7 +78,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 		String originalData = serviceComponentAtomicReference.get(
 		).getData();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -122,7 +87,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 					messages.contains(
 						StringBundler.concat(
 							"Content of table ",
-							_dbInspector.normalizeName("ServiceComponent"),
+							dbInspector.normalizeName("ServiceComponent"),
 							" for bundle com.liferay.layout.service is ",
 							"outdated")));
 			},
@@ -153,7 +118,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 		AtomicReference<ServiceComponent> serviceComponentAtomicReference =
 			new AtomicReference<>();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -176,7 +141,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 
 		String portletName = "com.liferay.test.portlet";
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -185,7 +150,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 					messages.contains(
 						StringBundler.concat(
 							"Table ",
-							_dbInspector.normalizeName("ServiceComponent"),
+							dbInspector.normalizeName("ServiceComponent"),
 							", 1 row deleted because ", portletName,
 							" does not match with any existing bundle")));
 			},
@@ -204,7 +169,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 		AtomicReference<ServiceComponent> serviceComponentAtomicReference =
 			new AtomicReference<>();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -227,7 +192,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 
 		String portletName = "shortNamePortlet";
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -236,7 +201,7 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 					messages.contains(
 						StringBundler.concat(
 							"Table ",
-							_dbInspector.normalizeName("ServiceComponent"),
+							dbInspector.normalizeName("ServiceComponent"),
 							", 1 row deleted because ", portletName,
 							" is not a fully qualified name")));
 			},
@@ -248,6 +213,24 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 			},
 			() -> serviceComponentAtomicReference.set(
 				_addServiceComponent(portletName, 1, null)));
+	}
+
+	@Override
+	protected Object[] getPostUpgradeDataCleanupProcessArguments() {
+		return new Object[] {connection, _serviceComponentLocalService};
+	}
+
+	@Override
+	protected Class<?>[] getPostUpgradeDataCleanupProcessArgumentTypes() {
+		return new Class<?>[] {
+			Connection.class, ServiceComponentLocalService.class
+		};
+	}
+
+	@Override
+	protected String getPostUpgradeDataCleanupProcessClassName() {
+		return "com.liferay.data.cleanup.internal.verify." +
+			"ServiceComponentPostUpgradeDataCleanupProcess";
 	}
 
 	private ServiceComponent _addServiceComponent(
@@ -282,53 +265,6 @@ public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 
 		return null;
 	}
-
-	private void _runPostUpgradeDataCleanUpVerifyProcess() throws Exception {
-		Bundle bundle = BundleUtil.getBundle(
-			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
-
-		Class<?> postUpgradeDataCleanupProcessClass = bundle.loadClass(
-			_POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME);
-
-		Constructor<?> constructor =
-			postUpgradeDataCleanupProcessClass.getConstructor(
-				Connection.class, ServiceComponentLocalService.class);
-
-		Object object = constructor.newInstance(
-			_connection, _serviceComponentLocalService);
-
-		Method method = postUpgradeDataCleanupProcessClass.getMethod("cleanUp");
-
-		method.invoke(object);
-	}
-
-	private void _test(
-			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
-			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
-			UnsafeRunnable<Exception> initializeDataUnsafeRunnable)
-		throws Exception {
-
-		initializeDataUnsafeRunnable.run();
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME,
-				LoggerTestUtil.INFO)) {
-
-			_runPostUpgradeDataCleanUpVerifyProcess();
-
-			assertUnsafeConsumer.accept(logCapture);
-		}
-		finally {
-			cleanUpDataUnsafeRunnable.run();
-		}
-	}
-
-	private static final String _POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME =
-		"com.liferay.data.cleanup.internal.verify." +
-			"ServiceComponentPostUpgradeDataCleanupProcess";
-
-	private static Connection _connection;
-	private static DBInspector _dbInspector;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

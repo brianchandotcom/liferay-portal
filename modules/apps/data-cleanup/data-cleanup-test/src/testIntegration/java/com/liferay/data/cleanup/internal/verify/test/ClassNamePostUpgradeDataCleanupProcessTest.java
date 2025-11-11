@@ -7,26 +7,17 @@ package com.liferay.data.cleanup.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.osgi.util.BundleUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.module.util.BundleUtil;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,11 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,24 +39,8 @@ import org.osgi.framework.FrameworkUtil;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class ClassNamePostUpgradeDataCleanupProcessTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_connection = DataAccess.getConnection();
-
-		_dbInspector = new DBInspector(_connection);
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		DataAccess.cleanUp(_connection);
-	}
+public class ClassNamePostUpgradeDataCleanupProcessTest
+	extends BasePostUpgradeDataCleanupProcessTestCase {
 
 	@Test
 	public void testFoundLiferayClassNameWithDashIsNotDeleted()
@@ -81,7 +52,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 			ObjectDefinition.class.getName() + StringPool.DASH +
 				RandomTestUtil.randomString(4);
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -112,7 +83,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 			ObjectDefinition.class.getName() + StringPool.POUND +
 				RandomTestUtil.randomString(4);
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -140,7 +111,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 		String classNameValue =
 			"com.test.not.liferay." + RandomTestUtil.randomString();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -168,7 +139,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 		String classNameValue =
 			"com.liferay.test." + RandomTestUtil.randomString();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -203,7 +174,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 			"com.liferay.test." + RandomTestUtil.randomString();
 		long resourcePermissionId = RandomTestUtil.nextLong();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -214,7 +185,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 							"ClassName ", classNameValue,
 							" has not been found but is referenced in the ",
 							"next tables: ",
-							_dbInspector.normalizeName("ResourcePermission"))));
+							dbInspector.normalizeName("ResourcePermission"))));
 
 				ClassName className = _classNameLocalService.fetchClassName(
 					classNameValue);
@@ -228,7 +199,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 				}
 
 				try (PreparedStatement preparedStatement =
-						_connection.prepareStatement(
+						connection.prepareStatement(
 							"delete from ResourcePermission where " +
 								"resourcePermissionId = ?")) {
 
@@ -243,7 +214,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 				classNameAtomicReference.set(className);
 
 				try (PreparedStatement preparedStatement =
-						_connection.prepareStatement(
+						connection.prepareStatement(
 							"insert into ResourcePermission (mvccVersion, " +
 								"ctCollectionId, resourcePermissionId, name) " +
 									"values (0, 0, ?, ?)")) {
@@ -266,7 +237,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 			"com.liferay.test." + RandomTestUtil.randomString();
 		long addressId = RandomTestUtil.nextLong();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -277,7 +248,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 							"ClassName ", classNameValue,
 							" has not been found but is referenced in the ",
 							"next tables: ",
-							_dbInspector.normalizeName("Address"))));
+							dbInspector.normalizeName("Address"))));
 
 				ClassName className = _classNameLocalService.fetchClassName(
 					classNameValue);
@@ -291,7 +262,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 				}
 
 				try (PreparedStatement preparedStatement =
-						_connection.prepareStatement(
+						connection.prepareStatement(
 							"delete from Address where addressId = ?")) {
 
 					preparedStatement.setLong(1, addressId);
@@ -305,7 +276,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 				classNameAtomicReference.set(className);
 
 				try (PreparedStatement preparedStatement =
-						_connection.prepareStatement(
+						connection.prepareStatement(
 							"insert into Address (mvccVersion, " +
 								"ctCollectionId, addressId, classNameId) " +
 									"values (0, 0, ?, ?)")) {
@@ -322,7 +293,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 	public void testVerifyDoesNotRunIfModulesNotStarted() throws Exception {
 		AtomicReference<Bundle> bundleAtomicReference = new AtomicReference<>();
 
-		_test(
+		test(
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
@@ -343,43 +314,24 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 			() -> bundleAtomicReference.set(_uninstallBundle()));
 	}
 
-	private void _installBundle(Bundle bundle) throws Exception {
-		Bundle currentBundle = FrameworkUtil.getBundle(
-			ClassNamePostUpgradeDataCleanupProcessTest.class);
-
-		BundleContext bundleContext = currentBundle.getBundleContext();
-
-		com.liferay.osgi.util.BundleUtil.installBundle(
-			bundleContext, _lpkgDeployer, bundle.getLocation(), 1);
-
-		List<Bundle> bundlesToRefresh = new ArrayList<>();
-
-		bundlesToRefresh.add(bundle);
-
-		com.liferay.osgi.util.BundleUtil.refreshBundles(
-			bundleContext, bundlesToRefresh);
+	@Override
+	protected Object[] getPostUpgradeDataCleanupProcessArguments() {
+		return new Object[] {_classNameLocalService, connection};
 	}
 
-	private void _runPostUpgradeDataCleanUpVerifyProcess() throws Exception {
-		Bundle bundle = BundleUtil.getBundle(
-			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
-
-		Class<?> postUpgradeDataCleanupProcessClass = bundle.loadClass(
-			_POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME);
-
-		Constructor<?> constructor =
-			postUpgradeDataCleanupProcessClass.getConstructor(
-				ClassNameLocalService.class, Connection.class);
-
-		Object object = constructor.newInstance(
-			_classNameLocalService, _connection);
-
-		Method method = postUpgradeDataCleanupProcessClass.getMethod("cleanUp");
-
-		method.invoke(object);
+	@Override
+	protected Class<?>[] getPostUpgradeDataCleanupProcessArgumentTypes() {
+		return new Class<?>[] {ClassNameLocalService.class, Connection.class};
 	}
 
-	private void _test(
+	@Override
+	protected String getPostUpgradeDataCleanupProcessClassName() {
+		return "com.liferay.data.cleanup.internal.verify." +
+			"ClassNamePostUpgradeDataCleanupProcess";
+	}
+
+	@Override
+	protected void test(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
 			UnsafeRunnable<Exception> initializeDataUnsafeRunnable)
@@ -387,22 +339,31 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 
 		long classNameCount = _classNameLocalService.getClassNamesCount();
 
-		initializeDataUnsafeRunnable.run();
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME,
-				LoggerTestUtil.INFO)) {
-
-			_runPostUpgradeDataCleanUpVerifyProcess();
-
-			assertUnsafeConsumer.accept(logCapture);
+		try {
+			super.test(
+				assertUnsafeConsumer, cleanUpDataUnsafeRunnable,
+				initializeDataUnsafeRunnable);
 		}
 		finally {
-			cleanUpDataUnsafeRunnable.run();
-
 			Assert.assertEquals(
 				classNameCount, _classNameLocalService.getClassNamesCount());
 		}
+	}
+
+	private void _installBundle(Bundle bundle) throws Exception {
+		Bundle currentBundle = FrameworkUtil.getBundle(
+			ClassNamePostUpgradeDataCleanupProcessTest.class);
+
+		BundleContext bundleContext = currentBundle.getBundleContext();
+
+		BundleUtil.installBundle(
+			bundleContext, _lpkgDeployer, bundle.getLocation(), 1);
+
+		List<Bundle> bundlesToRefresh = new ArrayList<>();
+
+		bundlesToRefresh.add(bundle);
+
+		BundleUtil.refreshBundles(bundleContext, bundlesToRefresh);
 	}
 
 	private Bundle _uninstallBundle() throws Exception {
@@ -423,8 +384,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 
 				bundlesToRefresh.add(bundle);
 
-				com.liferay.osgi.util.BundleUtil.refreshBundles(
-					bundleContext, bundlesToRefresh);
+				BundleUtil.refreshBundles(bundleContext, bundlesToRefresh);
 
 				return bundle;
 			}
@@ -432,13 +392,6 @@ public class ClassNamePostUpgradeDataCleanupProcessTest {
 
 		return null;
 	}
-
-	private static final String _POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME =
-		"com.liferay.data.cleanup.internal.verify." +
-			"ClassNamePostUpgradeDataCleanupProcess";
-
-	private static Connection _connection;
-	private static DBInspector _dbInspector;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

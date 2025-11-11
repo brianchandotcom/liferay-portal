@@ -14,20 +14,20 @@ public class ConfigurationPidUtil {
 
 	public static String getRawPid(String pid) {
 
-		// Factory entry: com.liferay.MyConfiguration~1234
-		// Factory scoped entry: com.liferay.MyConfiguration.scoped~1234
-		// Raw: com.liferay.MyConfiguration
-		// Scoped: com.liferay.MyConfiguration.scoped
+		// Factory entry: com.acme.MyConfiguration~1234
+		// Factory scoped entry: com.acme.MyConfiguration.scoped~1234
+		// Raw: com.acme.MyConfiguration
+		// Scoped: com.acme.MyConfiguration.scoped
 
 		pid = pid.replaceFirst("~.*", StringPool.BLANK);
 
-		if (pid.endsWith(_DOT_SCOPED)) {
-			pid = pid.substring(0, pid.length() - _DOT_SCOPED.length());
+		if (pid.endsWith(_SUFFIX)) {
+			pid = pid.substring(0, pid.length() - _SUFFIX.length());
 		}
 
 		return pid;
 	}
 
-	private static final String _DOT_SCOPED = ".scoped";
+	private static final String _SUFFIX = ".scoped";
 
 }

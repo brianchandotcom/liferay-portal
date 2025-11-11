@@ -24,26 +24,23 @@ public class ConfigurationPidUtilTest {
 
 	@Test
 	public void testGetRawPid() {
-		String expectedRawPid =
-			"com.liferay.scoped.configuration.SampleConfiguration";
+		String expectedRawPid = "com.sample.SampleConfiguration";
 
 		Assert.assertEquals(
 			expectedRawPid,
-			ConfigurationPidUtil.getRawPid(
-				"com.liferay.scoped.configuration.SampleConfiguration"));
+			ConfigurationPidUtil.getRawPid("com.sample.SampleConfiguration"));
 		Assert.assertEquals(
 			expectedRawPid,
 			ConfigurationPidUtil.getRawPid(
-				"com.liferay.scoped.configuration.SampleConfiguration~123"));
+				"com.sample.SampleConfiguration~123"));
 		Assert.assertEquals(
 			expectedRawPid,
 			ConfigurationPidUtil.getRawPid(
-				"com.liferay.scoped.configuration.SampleConfiguration.scoped"));
+				"com.sample.SampleConfiguration.scoped"));
 		Assert.assertEquals(
 			expectedRawPid,
 			ConfigurationPidUtil.getRawPid(
-				"com.liferay.scoped.configuration.SampleConfiguration.scoped" +
-					"~123"));
+				"com.sample.SampleConfiguration.scoped~123"));
 	}
 
 }

@@ -58,7 +58,6 @@ public class ConfigurationFilterStringUtilTest {
 			).put(
 				"siteExternalReferenceCode", "any"
 			).build());
-
 		_test(
 			true, filterString,
 			HashMapBuilder.put(
@@ -103,7 +102,6 @@ public class ConfigurationFilterStringUtilTest {
 			).put(
 				"siteExternalReferenceCode", "any"
 			).build());
-
 		_test(
 			true, filterString,
 			HashMapBuilder.put(
@@ -136,7 +134,6 @@ public class ConfigurationFilterStringUtilTest {
 			).put(
 				"portletInstanceId", "any"
 			).build());
-
 		_test(
 			true, filterString,
 			HashMapBuilder.put(
@@ -166,7 +163,6 @@ public class ConfigurationFilterStringUtilTest {
 			).put(
 				"portletInstanceId", "any"
 			).build());
-
 		_test(
 			true, filterString,
 			HashMapBuilder.put(
@@ -195,7 +191,6 @@ public class ConfigurationFilterStringUtilTest {
 			HashMapBuilder.put(
 				"siteExternalReferenceCode", "any"
 			).build());
-
 		_test(
 			true, filterString,
 			HashMapBuilder.put(
@@ -238,7 +233,6 @@ public class ConfigurationFilterStringUtilTest {
 			HashMapBuilder.put(
 				"portletInstanceId", portletInstanceId
 			).build());
-
 		_test(
 			true, filterString,
 			HashMapBuilder.put(
@@ -285,7 +279,6 @@ public class ConfigurationFilterStringUtilTest {
 			HashMapBuilder.put(
 				"siteExternalReferenceCode", "any"
 			).build());
-
 		_test(true, filterString, Collections.emptyMap());
 		_test(
 			true, filterString,

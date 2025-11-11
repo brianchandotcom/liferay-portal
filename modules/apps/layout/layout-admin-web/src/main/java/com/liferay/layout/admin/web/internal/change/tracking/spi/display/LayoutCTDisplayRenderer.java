@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -30,7 +32,6 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import jakarta.portlet.PortletRequest;
-import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -72,25 +73,30 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		String currentURL = _portal.getCurrentURL(httpServletRequest);
+
+		if (layout.isTypeContent()) {
+			return HttpComponentsUtil.addParameters(
+				PortalUtil.getLayoutFullURL(
+					layout.fetchDraftLayout(), themeDisplay),
+				"p_l_back_url", currentURL, "p_l_mode", Constants.EDIT);
+		}
+
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout"
-		).buildPortletURL();
-
-		String currentURL = _portal.getCurrentURL(httpServletRequest);
-
-		portletURL.setParameter("redirect", currentURL);
-		portletURL.setParameter("backURL", currentURL);
-
-		portletURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-		portletURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
-		portletURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		return portletURL.toString();
+		).setBackURL(
+			currentURL
+		).setParameter(
+			"groupId", layout.getGroupId()
+		).setParameter(
+			"privateLayout", layout.isPrivateLayout()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
 	}
 
 	@Override

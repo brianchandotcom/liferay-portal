@@ -94,6 +94,11 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return parentDisplayContext.getExternalReferenceCode();
+	}
+
+	@Override
 	public String getFriendlyURLBase() throws PortalException {
 		return parentDisplayContext.getFriendlyURLBase();
 	}
@@ -157,6 +162,11 @@ public class BaseDLEditFileEntryDisplayContext
 		throws PortalException {
 
 		return parentDisplayContext.isDDMStructureVisible(ddmStructure);
+	}
+
+	@Override
+	public boolean isERCFieldEnabled() {
+		return parentDisplayContext.isERCFieldEnabled();
 	}
 
 	@Override

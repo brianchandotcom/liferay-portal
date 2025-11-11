@@ -144,7 +144,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 				LocaleUtil.fromLanguageId(entry.getKey()),
 				String.valueOf(
 					ObjectEntryValuesUtil.getValue(
-						entry.getKey(), objectField, new HashMap<>(values))));
+						entry.getKey(), objectField, values)));
 		}
 
 		return titleMap;
@@ -178,13 +178,12 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 			if (objectField != null) {
 				String title = String.valueOf(
 					ObjectEntryValuesUtil.getValue(
-						languageId, objectField, new HashMap<>(getValues())));
+						languageId, objectField, getValues()));
 
 				if (Validator.isNull(title) && useDefault) {
 					title = String.valueOf(
 						ObjectEntryValuesUtil.getValue(
-							getDefaultLanguageId(), objectField,
-							new HashMap<>(getValues())));
+							getDefaultLanguageId(), objectField, getValues()));
 				}
 
 				if (Validator.isNotNull(title)) {

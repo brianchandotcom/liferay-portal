@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.Serializable;
-
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +27,7 @@ public class ObjectEntryValuesUtil {
 
 	public static Object getTitleFieldValue(
 		String businessType, Map<String, Object> modelAttributes,
-		ObjectField objectField, User user, Map<String, Object> values) {
+		ObjectField objectField, User user, Map<String, ?> values) {
 
 		String objectFieldName = objectField.getName();
 
@@ -70,8 +67,7 @@ public class ObjectEntryValuesUtil {
 	}
 
 	public static Object getValue(
-		String languageId, ObjectField objectField,
-		Map<String, Object> values) {
+		String languageId, ObjectField objectField, Map<String, ?> values) {
 
 		if (objectField == null) {
 			return null;
@@ -124,10 +120,9 @@ public class ObjectEntryValuesUtil {
 	}
 
 	public static String getValueString(
-		ObjectField objectField, Map<String, Serializable> values) {
+		ObjectField objectField, Map<String, ?> values) {
 
-		return String.valueOf(
-			getValue(null, objectField, new HashMap<>(values)));
+		return String.valueOf(getValue(null, objectField, values));
 	}
 
 }

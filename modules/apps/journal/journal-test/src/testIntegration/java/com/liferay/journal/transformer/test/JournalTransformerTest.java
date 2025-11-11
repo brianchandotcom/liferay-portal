@@ -175,8 +175,8 @@ public class JournalTransformerTest {
 	@Test
 	public void testCreateTemplateNode() {
 		_testCreateTemplateNodeDocumentLibraryDDMFormField();
-		_testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions();
-		_testCreateTemplateNodeSelectTypeDDMFormFieldWithoutOptions();
+		_testCreateTemplateNodeMultipleSelectTypeDDMFormFieldWithOptions();
+		_testCreateTemplateNodeMultipleSelectTypeDDMFormFieldWithoutOptions();
 		_testCreateTemplateNodeSingleSelectTypeDDMFormFieldWithOptions();
 		_testCreateTemplateNodeTextDDMFormFieldWithHTML();
 		_testCreateTemplateNodeTextDDMFormFieldWithPlainText();
@@ -763,7 +763,7 @@ public class JournalTransformerTest {
 			templateNode.getAttribute("groupId"));
 	}
 
-	private void _testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions() {
+	private void _testCreateTemplateNodeMultipleSelectTypeDDMFormFieldWithOptions() {
 		DDMFormField ddmFormField = new DDMFormField(
 			"name", DDMFormFieldTypeConstants.SELECT);
 
@@ -812,7 +812,7 @@ public class JournalTransformerTest {
 		Assert.assertTrue(MapUtil.isEmpty(templateNode.getOptionsMap()));
 	}
 
-	private void _testCreateTemplateNodeSelectTypeDDMFormFieldWithoutOptions() {
+	private void _testCreateTemplateNodeMultipleSelectTypeDDMFormFieldWithoutOptions() {
 		DDMFormField ddmFormField = new DDMFormField(
 			"name", DDMFormFieldTypeConstants.SELECT);
 

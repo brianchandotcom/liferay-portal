@@ -296,14 +296,16 @@ public class DataSourceFactoryUtil {
 		String[][] defaultParameters,
 		Map<String, String> existingParameterValues) {
 
-		for (String[] parameter : defaultParameters) {
-			if (existingParameterValues.containsKey(parameter[0])) {
+		for (String[] defaultParameterParts : defaultParameters) {
+			if (existingParameterValues.containsKey(defaultParameterParts[0])) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Skipped " + Arrays.toString(parameter));
+					_log.debug(
+						"Skipped " + Arrays.toString(defaultParameterParts));
 				}
 			}
 			else {
-				existingParameterValues.put(parameter[0], parameter[1]);
+				existingParameterValues.put(
+					defaultParameterParts[0], defaultParameterParts[1]);
 			}
 		}
 
@@ -365,22 +367,21 @@ public class DataSourceFactoryUtil {
 	}
 
 	private static Map<String, String> _getExistingParameterValues(
-		char delimiter, String paramString) {
+		char delimiter, String queryString) {
 
 		Map<String, String> existingParameterValues = new TreeMap<>();
 
-		for (String parameterString :
-				StringUtil.split(paramString, delimiter)) {
+		for (String parameter : StringUtil.split(queryString, delimiter)) {
+			String[] parameterParts = StringUtil.split(
+				parameter, CharPool.EQUAL);
 
-			String[] parameter = StringUtil.split(
-				parameterString, CharPool.EQUAL);
-
-			if (parameter.length == 2) {
-				existingParameterValues.put(parameter[0], parameter[1]);
+			if (parameterParts.length == 2) {
+				existingParameterValues.put(
+					parameterParts[0], parameterParts[1]);
 			}
 			else {
 				existingParameterValues.put(
-					parameterString, _MALFORMED_PARAMETER_PLACE_HOLDER);
+					parameter, _MALFORMED_PARAMETER_PLACE_HOLDER);
 			}
 		}
 
@@ -458,11 +459,11 @@ public class DataSourceFactoryUtil {
 		if (index != -1) {
 			baseURL = url.substring(0, index);
 
-			String paramString = url.substring(index + 1);
+			String queryString = url.substring(index + 1);
 
-			if (!paramString.isEmpty()) {
+			if (!queryString.isEmpty()) {
 				existingParameterValues = _getExistingParameterValues(
-					parameterDelimiter, paramString);
+					parameterDelimiter, queryString);
 			}
 		}
 

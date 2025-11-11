@@ -33,6 +33,8 @@ export interface IAssetObjectEntry {
 	friendlyUrlPath: string;
 	id: number;
 	keywords: string[];
+	numberOfObjectEntries?: number;
+	numberOfObjectEntryFolders?: number;
 	objectEntryFolderExternalReferenceCode: string;
 	objectEntryFolderId: number;
 	reviewDate: string;

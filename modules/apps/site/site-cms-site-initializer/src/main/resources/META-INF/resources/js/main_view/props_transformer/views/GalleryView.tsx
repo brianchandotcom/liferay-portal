@@ -7,7 +7,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {Card, ICardSchema} from '@liferay/frontend-data-set-web';
 import React, {Context, useContext, useMemo, useState} from 'react';
 
-import '../../../../css/props_transformer/CarouselView.scss';
+import '../../../../css/props_transformer/GalleryView.scss';
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
@@ -18,7 +18,7 @@ const VISIBLE_ITEMS_COUNT = 5;
 const MAX_VISIBLE_INDEX = (itemsLength: number) =>
 	itemsLength - VISIBLE_ITEMS_COUNT;
 
-const CarouselView = ({
+const GalleryView = ({
 	additionalProps,
 	frontendDataSetContext,
 	items,
@@ -134,9 +134,9 @@ const CarouselView = ({
 	const isNavigationDisabled = items.length <= VISIBLE_ITEMS_COUNT;
 
 	return (
-		<div className="fds-carousel-view">
-			<div className="fds-carousel-view__preview">
-				<div className="align-items-center d-flex fds-carousel-view__preview-wrapper h-100 justify-content-center w-100">
+		<div className="fds-gallery-view">
+			<div className="fds-gallery-view__preview">
+				<div className="align-items-center d-flex fds-gallery-view__preview-wrapper h-100 justify-content-center w-100">
 					{selectedItems && selectedItems.length >= 2 ? (
 						<div className="bg-light d-flex h-100 justify-content-center w-100">
 							<ClayEmptyState
@@ -158,7 +158,7 @@ const CarouselView = ({
 				</div>
 			</div>
 
-			<div className="align-items-center c-gap-3 d-flex fds-carousel-view__navigation justify-content-center mt-4">
+			<div className="align-items-center c-gap-3 d-flex fds-gallery-view__navigation justify-content-center mt-4">
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('previous')}
 					className="flex-shrink-0"
@@ -169,11 +169,11 @@ const CarouselView = ({
 					symbol="angle-left"
 				/>
 
-				<div className="align-items-center c-gap-3 d-flex fds-carousel-view__thumbnails flex-grow-1 justify-content-center">
+				<div className="align-items-center c-gap-3 d-flex fds-gallery-view__thumbnails flex-grow-1 justify-content-center">
 					{visibleItems.map((item, index) => {
 						const actualIndex = visibleStartIndex + index;
 						const classes = classNames(
-							'fds-carousel-view__thumbnail',
+							'fds-gallery-view__thumbnail',
 							{
 								selected: actualIndex === selectedIndex,
 							}
@@ -194,6 +194,7 @@ const CarouselView = ({
 							>
 								<Card
 									item={item}
+									items={items}
 									schema={schema}
 									{...otherProps}
 								/>
@@ -216,4 +217,4 @@ const CarouselView = ({
 	);
 };
 
-export default CarouselView;
+export default GalleryView;

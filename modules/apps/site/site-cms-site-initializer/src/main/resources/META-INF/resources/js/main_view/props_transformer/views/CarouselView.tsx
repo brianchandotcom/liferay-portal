@@ -129,7 +129,7 @@ const CarouselView = ({
 		[items, selectedIndex]
 	);
 
-	const cardWidth = 100 / VISIBLE_ITEMS_COUNT;
+	const cardWidth = `calc((100% - ${VISIBLE_ITEMS_COUNT - 1}rem) / ${VISIBLE_ITEMS_COUNT})`;
 
 	const isNavigationDisabled = items.length <= VISIBLE_ITEMS_COUNT;
 
@@ -188,7 +188,7 @@ const CarouselView = ({
 									handleKeyDown(event, actualIndex)
 								}
 								style={{
-									width: `${cardWidth}%`,
+									width: cardWidth,
 								}}
 								tabIndex={0}
 							>

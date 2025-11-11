@@ -6,6 +6,7 @@
 
 		&-wrapper > * {
 			margin: 0;
+			padding: 0;
 			width: 100%;
 		}
 	}
@@ -24,9 +25,7 @@
 
 		&.selected {
 			.card {
-				border-color: transparent;
-				outline: 2px solid $primary-l1;
-				outline-offset: -2px;
+				box-shadow: 0 0 0 2px $primary-l1;
 			}
 		}
 	}

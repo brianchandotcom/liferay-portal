@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,7 +43,8 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildExportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		Group group, PortletDataContext portletDataContext,
+		GroupLocalService groupLocalService,
+		PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
 		HashMap<String, Serializable> exportParameters =
@@ -111,7 +113,10 @@ public class BatchEnginePortletDataHandlerUtil {
 				exportImportDescriptor.getParameters(portletDataContext)
 			).build();
 
-		if ((group != null) && !stagingGroupHelper.isCompanyGroup(group)) {
+		Group group = groupLocalService.fetchGroup(
+			portletDataContext.getScopeGroupId());
+
+		if (!_isCompanyScoped(group, stagingGroupHelper)) {
 			exportParameters.put(
 				"siteExternalReferenceCode", group.getExternalReferenceCode());
 
@@ -133,7 +138,8 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildImportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		Group group, PortletDataContext portletDataContext,
+		GroupLocalService groupLocalService,
+		PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
 		HashMap<String, Serializable> importParameters =
@@ -173,13 +179,28 @@ public class BatchEnginePortletDataHandlerUtil {
 				exportImportDescriptor.getParameters(portletDataContext)
 			).build();
 
-		if ((group != null) && !stagingGroupHelper.isCompanyGroup(group)) {
+		Group group = groupLocalService.fetchGroup(
+			portletDataContext.getScopeGroupId());
+
+		if (!_isCompanyScoped(group, stagingGroupHelper)) {
 			importParameters.put(
 				"siteExternalReferenceCode", group.getExternalReferenceCode());
 			importParameters.put("siteId", group.getGroupId());
 		}
 
 		return importParameters;
+	}
+
+	private static boolean _isCompanyScoped(
+		Group group, StagingGroupHelper stagingGroupHelper) {
+
+		if ((group == null) || group.isCompany() ||
+			stagingGroupHelper.isCompanyGroup(group)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Format _format =

@@ -259,19 +259,18 @@ public class BulkActionBulkSelectionFactory {
 	}
 
 	private BulkActionBulkSelectionFactory(Builder builder) {
+		_acceptLanguage = builder._acceptLanguage;
 		_blueprintExternalReferenceCode =
 			builder._blueprintExternalReferenceCode;
 		_bulkAction = builder._bulkAction;
 		_bulkSelectionFactoryRegistry = builder._bulkSelectionFactoryRegistry;
-		_acceptLanguage = builder._acceptLanguage;
 		_company = builder._company;
-		_httpServletRequest = builder._httpServletRequest;
-		_user = builder._user;
 		_emptySearch = builder._emptySearch;
 		_entryClassNames = builder._entryClassNames;
 		_filter = builder._filter;
 		_filterFactory = builder._filterFactory;
 		_groupLocalService = builder._groupLocalService;
+		_httpServletRequest = builder._httpServletRequest;
 		_localization = builder._localization;
 		_objectDefinitionLocalService = builder._objectDefinitionLocalService;
 		_objectEntryLocalService = builder._objectEntryLocalService;
@@ -280,6 +279,7 @@ public class BulkActionBulkSelectionFactory {
 		_searchRequestBuilderFactory = builder._searchRequestBuilderFactory;
 		_searcher = builder._searcher;
 		_sorts = builder._sorts;
+		_user = builder._user;
 	}
 
 	private BooleanClause<?> _getBooleanClause(

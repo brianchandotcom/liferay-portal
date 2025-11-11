@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -28,7 +29,7 @@ public class ModelPermissionsUtil {
 			String resourceName,
 			ResourceActionLocalService resourceActionLocalService,
 			ResourcePermissionLocalService resourcePermissionLocalService,
-			RoleLocalService roleLocalService, Long userId)
+			RoleLocalService roleLocalService)
 		throws PortalException {
 
 		if (permissions == null) {
@@ -46,7 +47,8 @@ public class ModelPermissionsUtil {
 			if (permission.getRoleExternalReferenceCode() != null) {
 				role = roleLocalService.getOrAddEmptyRole(
 					permission.getRoleExternalReferenceCode(), companyId,
-					userId, null, 0, permission.getRoleName(),
+					PrincipalThreadLocal.getUserId(), null, 0,
+					permission.getRoleName(),
 					RoleConstants.getLabelType(permission.getRoleType()));
 			}
 			else {

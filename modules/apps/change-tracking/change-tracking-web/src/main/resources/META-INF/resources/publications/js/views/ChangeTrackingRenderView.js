@@ -764,9 +764,20 @@ export default function ChangeTrackingRenderView({
 	};
 
 	const navigate = (editURL, checkoutURL, confirmationMessage) => {
-		const editPortletURL = createPortletURL(editURL, {
-			redirect: window.location.pathname + window.location.search,
-		});
+		const url = new URL(editURL);
+
+		let editPortletURL;
+
+		if (url.searchParams.has('p_l_back_url')) {
+			url.searchParams.set('p_l_back_url', window.location.href);
+
+			editPortletURL = url.toString();
+		}
+		else {
+			editPortletURL = createPortletURL(editURL, {
+				redirect: window.location.pathname + window.location.search,
+			});
+		}
 
 		if (!checkoutURL) {
 			navigateUtil(editPortletURL);

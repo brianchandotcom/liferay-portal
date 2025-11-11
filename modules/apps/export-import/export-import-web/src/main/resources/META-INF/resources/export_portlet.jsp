@@ -612,6 +612,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
 	</liferay-portlet:resourceURL>
 
 	var exportImport = new Liferay.ExportImport({

@@ -11,7 +11,7 @@ import AssetsFDSPropsTransformer, {
 } from './AssetsFDSPropsTransformer';
 import fileDropAction from './actions/fileDropAction';
 import {MultipleFileUploaderData} from './actions/multipleFilesUploadAction';
-import CarouselView from './views/CarouselView';
+import GalleryView from './views/GalleryView';
 
 export default function AssetsFilesDropFDSPropsTransformer({
 	additionalProps,
@@ -26,8 +26,8 @@ export default function AssetsFilesDropFDSPropsTransformer({
 	otherProps: any;
 	views: IView[];
 }) {
-	const carouselViewRenderer: IView = {
-		component: CarouselView,
+	const GalleryViewRenderer: IView = {
+		component: GalleryView,
 		default: true,
 		label: Liferay.Language.get('gallery'),
 		name: 'gallery',
@@ -45,7 +45,7 @@ export default function AssetsFilesDropFDSPropsTransformer({
 	const mergedViews = [
 		...views,
 		{
-			...carouselViewRenderer,
+			...GalleryViewRenderer,
 			additionalProps,
 		},
 	];

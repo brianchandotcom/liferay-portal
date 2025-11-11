@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
 import jakarta.ws.rs.core.UriInfo;
@@ -62,6 +63,10 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 		vulcanBatchEngineTaskItemDelegate.setResourcePermissionLocalService(
 			resourcePermissionLocalService);
 		vulcanBatchEngineTaskItemDelegate.setRoleLocalService(roleLocalService);
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			vulcanBatchEngineTaskItemDelegate.customizeNestedFieldsContext(
+				NestedFieldsContextThreadLocal.getNestedFieldsContext()));
 	}
 
 	@Override

@@ -8,6 +8,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
+import com.liferay.portal.vulcan.resource.NestedFieldsContextResource;
 import com.liferay.portal.vulcan.util.NestedFieldsContextUtil;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.cxf.jaxrs.utils.JAXRSUtils;
+import org.apache.cxf.message.Message;
 
 /**
  * @author Ivica Cardic
@@ -39,16 +42,29 @@ public class NestedFieldsContainerRequestFilter
 		MultivaluedMap<String, String> queryParameters =
 			uriInfo.getQueryParameters();
 
+		Message message = JAXRSUtils.getCurrentMessage();
+
+		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
+			NestedFieldsContextUtil.limitDepth(
+				GetterUtil.getInteger(
+					queryParameters.getFirst("nestedFieldsDepth"))),
+			message,
+			NestedFieldsContextUtil.toList(
+				queryParameters.getFirst("nestedFields")),
+			uriInfo.getPathParameters(), queryParameters,
+			_getResourceVersion(uriInfo.getPathSegments()));
+
+		if ((message != null) &&
+			(ContextProviderUtil.getMatchedResource(message) instanceof
+				NestedFieldsContextResource nestedFieldsContextResource)) {
+
+			nestedFieldsContext =
+				nestedFieldsContextResource.customizeNestedFieldsContext(
+					nestedFieldsContext);
+		}
+
 		NestedFieldsContextThreadLocal.setNestedFieldsContext(
-			new NestedFieldsContext(
-				NestedFieldsContextUtil.limitDepth(
-					GetterUtil.getInteger(
-						queryParameters.getFirst("nestedFieldsDepth"))),
-				JAXRSUtils.getCurrentMessage(),
-				NestedFieldsContextUtil.toList(
-					queryParameters.getFirst("nestedFields")),
-				uriInfo.getPathParameters(), queryParameters,
-				_getResourceVersion(uriInfo.getPathSegments())));
+			nestedFieldsContext);
 	}
 
 	private String _getResourceVersion(List<PathSegment> pathSegments) {

@@ -130,7 +130,7 @@ export class StyleBooksPage {
 			.filter({hasText: label})
 			.locator('input');
 
-		if (section && input.isHidden()) {
+		if (section && (await input.isHidden())) {
 			await this.page.getByRole('button', {name: section}).click();
 		}
 

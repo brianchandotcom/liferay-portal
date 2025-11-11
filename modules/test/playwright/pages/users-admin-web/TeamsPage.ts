@@ -10,6 +10,8 @@ import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ProductMenuPage} from '../product-navigation-control-menu-web/ProductMenuPage';
 
 export class TeamsPage {
+	readonly backButton: Locator;
+	readonly backTooltip: Locator;
 	readonly deleteButton: Locator;
 	readonly descriptionInput: Locator;
 	readonly editButton: Locator;
@@ -23,6 +25,8 @@ export class TeamsPage {
 	readonly userGroupTab: Locator;
 
 	constructor(page: Page) {
+		this.backButton = page.getByRole('link', {name: 'Go to Teams'});
+		this.backTooltip = page.getByRole('tooltip').getByText('Go to Teams');
 		this.deleteButton = page
 			.getByRole('button', {name: 'Delete'})
 			.or(page.getByRole('link', {name: 'Delete'}));

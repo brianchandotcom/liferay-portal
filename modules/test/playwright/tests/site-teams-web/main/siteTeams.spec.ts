@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -17,13 +18,14 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),
+	siteSettingsPagesTest,
 	siteTeamsPagesTest,
 	usersAndOrganizationsPagesTest
 );
 
 test(
 	'Can Add / Update / Delete a site team',
-	{tag: ['@TICKET']},
+	{tag: ['@LPD-71199']},
 	async ({page, site, teamsPage}) => {
 		page.on('dialog', (dialog) => dialog.accept());
 
@@ -110,7 +112,7 @@ test(
 
 test(
 	'Can add multiple teams to a site',
-	{tag: ['@TICKET']},
+	{tag: ['@LPD-71199']},
 	async ({page, site, teamsPage}) => {
 		page.on('dialog', (dialog) => dialog.accept());
 
@@ -153,7 +155,7 @@ test(
 
 test(
 	'Can assign / Unassing a user to a site team',
-	{tag: ['@TICKET']},
+	{tag: ['@LPD-71199']},
 	async ({apiHelpers, page, selectUserPage, site, teamsPage, usersPage}) => {
 		page.on('dialog', (dialog) => dialog.accept());
 
@@ -216,7 +218,7 @@ test(
 
 test(
 	'Can search users connected to a site team',
-	{tag: ['@TICKET']},
+	{tag: ['@LPD-71199']},
 	async ({apiHelpers, page, selectUserPage, site, teamsPage, usersPage}) => {
 		page.on('dialog', (dialog) => dialog.accept());
 
@@ -287,7 +289,7 @@ test(
 
 test(
 	'Can assign / Unassing a user group to a site team',
-	{tag: ['@TICKET']},
+	{tag: ['@LPD-71199']},
 	async ({
 		apiHelpers,
 		page,
@@ -374,7 +376,7 @@ test(
 
 test(
 	'Can search user groups connected to a site team',
-	{tag: ['@TICKET']},
+	{tag: ['@LPD-71199']},
 	async ({
 		apiHelpers,
 		selectUserGroupPage,
@@ -484,5 +486,157 @@ test(
 		await expect(
 			userGroupsPage.userGroupsTable.cell(userGroup2.name)
 		).toBeVisible();
+	}
+);
+
+test(
+	'The tooltip of the back button of a Team view or Team edit mode is Go to Teams',
+	{tag: ['@LPD-71199', '@LPS-177717']},
+	async ({page, site, teamsPage}) => {
+		const team = {
+			teamDescription: getRandomString(),
+			teamName: getRandomString(),
+		};
+
+		await test.step('using mouse hover', async () => {
+			await teamsPage.goTo(site.friendlyUrlPath);
+
+			await teamsPage.newTeamButton.click();
+			await teamsPage.backButton.hover();
+
+			await expect(teamsPage.backTooltip).toBeVisible();
+
+			await teamsPage.newTeam(team);
+
+			await expect(
+				await teamsPage.teamsTable.cellLink(team.teamName)
+			).toBeVisible();
+
+			await (await teamsPage.teamsTable.cellLink(team.teamName)).click();
+			await teamsPage.backButton.hover();
+
+			await expect(teamsPage.backTooltip).toBeVisible();
+
+			await teamsPage.backButton.click();
+
+			await expect(async () => {
+				await (
+					await teamsPage.teamsTable.rowActions(team.teamName)
+				).click();
+
+				await expect(teamsPage.editButton).toBeVisible({timeout: 200});
+			}).toPass({timeout: 5000});
+
+			await teamsPage.editButton.click();
+			await teamsPage.backButton.hover();
+
+			await expect(teamsPage.backTooltip).toBeVisible();
+		});
+
+		await test.step('using keyboard', async () => {
+			await teamsPage.goTo(site.friendlyUrlPath);
+
+			await teamsPage.newTeamButton.click();
+			await page.getByTestId('header').click();
+
+			await expect(async () => {
+				await page.keyboard.press('Tab');
+
+				await expect(teamsPage.backTooltip).toBeVisible({
+					timeout: 1000,
+				});
+			}).toPass({timeout: 20000});
+
+			await teamsPage.backButton.click();
+
+			await (await teamsPage.teamsTable.cellLink(team.teamName)).click();
+			await page.getByTestId('header').click();
+
+			await expect(async () => {
+				await page.keyboard.press('Tab');
+
+				await expect(teamsPage.backTooltip).toBeVisible({
+					timeout: 1000,
+				});
+			}).toPass({timeout: 20000});
+
+			await expect(teamsPage.backTooltip).toBeVisible();
+
+			await teamsPage.backButton.click();
+
+			await expect(async () => {
+				await (
+					await teamsPage.teamsTable.rowActions(team.teamName)
+				).click();
+
+				await expect(teamsPage.editButton).toBeVisible({timeout: 200});
+			}).toPass({timeout: 2000});
+
+			await teamsPage.editButton.click();
+			await page.getByTestId('header').click();
+
+			await expect(async () => {
+				await page.keyboard.press('Tab');
+
+				await expect(teamsPage.backTooltip).toBeVisible({
+					timeout: 1000,
+				});
+			}).toPass({timeout: 20000});
+
+			await expect(teamsPage.backTooltip).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Test XSS vulnerability when adding site team with malicious name',
+	{tag: ['@LPD-71199']},
+	async ({page, site, siteSettingsPage, teamsPage}) => {
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('XSS');
+			}
+		});
+
+		const team = {
+			teamName: '<script>alert(123);</script>',
+		};
+
+		await teamsPage.goTo(site.friendlyUrlPath);
+
+		await teamsPage.newTeamButton.click();
+		await teamsPage.newTeam(team);
+
+		await expect(teamsPage.teamsTable.cell(team.teamName)).toBeVisible();
+
+		await siteSettingsPage.goToSiteSetting(
+			'Users',
+			'Default User Associations',
+			site.friendlyUrlPath
+		);
+
+		await expect(async () => {
+			await page
+				.getByRole('heading', {name: 'Teams Select'})
+				.getByLabel('Select')
+				.click();
+
+			await expect(
+				page
+					.frameLocator('iframe[title="Select Team"]')
+					.getByRole('cell', {name: team.teamName})
+			).toBeVisible({timeout: 1000});
+		}).toPass({timeout: 5000});
+
+		await expect(async () => {
+			await page
+				.frameLocator('iframe[title="Select Team"]')
+				.getByRole('cell', {name: team.teamName})
+				.click();
+
+			await expect(
+				page.getByRole('cell', {name: team.teamName})
+			).toBeVisible({timeout: 1000});
+		}).toPass({timeout: 5000});
 	}
 );

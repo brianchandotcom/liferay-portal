@@ -326,18 +326,8 @@ public class CustomFDSSerializer
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
 
-		Object hideManagementBarInEmptyState = properties.get(
-			"hideManagementBarInEmptyState");
-
-		if (hideManagementBarInEmptyState == null) {
-			return false;
-		}
-
-		if (hideManagementBarInEmptyState instanceof Boolean) {
-			return (boolean)hideManagementBarInEmptyState;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			properties.get("hideManagementBarInEmptyState"));
 	}
 
 	@Override

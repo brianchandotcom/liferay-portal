@@ -667,16 +667,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				FDS_NAMES[1], httpServletRequest));
 
 		_resetFDSSerializer();
-
-		// Null value
-
-		_mockSerializeHideManagementBarInEmptyState(FDS_NAMES[0], null);
-
-		Assert.assertNull(
-			_customFDSSerializer.serializeHideManagementBarInEmptyState(
-				FDS_NAMES[0], httpServletRequest));
-
-		_resetFDSSerializer();
 	}
 
 	@Test

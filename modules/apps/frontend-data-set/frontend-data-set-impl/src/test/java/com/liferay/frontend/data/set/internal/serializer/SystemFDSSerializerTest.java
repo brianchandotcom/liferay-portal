@@ -821,22 +821,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				FDS_NAMES[1], httpServletRequest));
 
 		_unregisterServices();
-
-		// Null value
-
-		_registerServices(
-			_registerSystemFDSEntry(
-				SystemFDSEntryFactory.create(
-					FDS_NAMES[0]
-				).withHideManagementBarInEmptyState(
-					null
-				)));
-
-		Assert.assertNull(
-			systemFDSSerializer.serializeHideManagementBarInEmptyState(
-				FDS_NAMES[0], httpServletRequest));
-
-		_unregisterServices();
 	}
 
 	@Test

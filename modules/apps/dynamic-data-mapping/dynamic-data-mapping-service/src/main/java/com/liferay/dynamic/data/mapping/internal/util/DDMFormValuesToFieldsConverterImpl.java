@@ -56,9 +56,6 @@ public class DDMFormValuesToFieldsConverterImpl
 			_getDDMFormFieldAvailableLocales(
 				ddmFormValues.getDDMFormFieldValuesMap(true));
 
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
 		Fields fields = new Fields();
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
@@ -69,9 +66,9 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			_addFields(
-				ddmFormFieldAvailableLocales, ddmFormFieldsMap,
-				ddmFormFieldValue, ddmStructure.getStructureId(),
-				ddmFormValues.getDefaultLocale(), fields, fieldDisplayNamesSB);
+				ddmFormFieldAvailableLocales, ddmForm, ddmFormFieldValue,
+				ddmStructure.getStructureId(), ddmFormValues.getDefaultLocale(),
+				fields, fieldDisplayNamesSB);
 		}
 
 		if (!ddmFormFieldValues.isEmpty()) {
@@ -119,18 +116,15 @@ public class DDMFormValuesToFieldsConverterImpl
 
 	private void _addFields(
 			Map<String, Set<Locale>> ddmFormFieldAvailableLocales,
-			Map<String, DDMFormField> ddmFormFieldsMap,
-			DDMFormFieldValue ddmFormFieldValue, long ddmStructureId,
-			Locale defaultLocale, Fields fields,
+			DDMForm ddmForm, DDMFormFieldValue ddmFormFieldValue,
+			long ddmStructureId, Locale defaultLocale, Fields fields,
 			StringBundler fieldDisplayNamesSB)
 		throws PortalException {
 
-		DDMFormField ddmFormField = ddmFormFieldsMap.get(
-			ddmFormFieldValue.getName());
-
 		_addField(
-			ddmFormField, ddmFormFieldAvailableLocales, ddmFormFieldValue,
-			ddmStructureId, defaultLocale, fields);
+			ddmForm.getDDMFormField(ddmFormFieldValue.getName(), true),
+			ddmFormFieldAvailableLocales, ddmFormFieldValue, ddmStructureId,
+			defaultLocale, fields);
 
 		fieldDisplayNamesSB.append(ddmFormFieldValue.getName());
 		fieldDisplayNamesSB.append(DDMImpl.INSTANCE_SEPARATOR);
@@ -141,9 +135,8 @@ public class DDMFormValuesToFieldsConverterImpl
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 			_addFields(
-				ddmFormFieldAvailableLocales, ddmFormFieldsMap,
-				nestedDDMFormFieldValue, ddmStructureId, defaultLocale, fields,
-				fieldDisplayNamesSB);
+				ddmFormFieldAvailableLocales, ddmForm, nestedDDMFormFieldValue,
+				ddmStructureId, defaultLocale, fields, fieldDisplayNamesSB);
 		}
 	}
 

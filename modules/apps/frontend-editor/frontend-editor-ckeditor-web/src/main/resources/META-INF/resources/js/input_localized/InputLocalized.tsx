@@ -44,8 +44,8 @@ function InputLocalized({
 	componentId,
 	defaultLanguageId,
 	editorConfig,
-	fieldPrefix = '',
-	fieldPrefixSeparator = '',
+	fieldPrefix,
+	fieldPrefixSeparator,
 	languagesDropdownVisible,
 	name,
 	onBlur,
@@ -404,7 +404,9 @@ function InputLocalized({
 					data-languageid={languageId}
 					id={`${portletNamespace}${name}_${languageId}`}
 					key={languageId}
-					name={`${portletNamespace}${fieldPrefix}${fieldPrefixSeparator}${name}_${languageId}${fieldPrefixSeparator}`}
+					name={`${portletNamespace}${fieldPrefix ?? ''}${
+						fieldPrefixSeparator ?? ''
+					}${name}_${languageId}${fieldPrefixSeparator ?? ''}`}
 					type="hidden"
 					value={
 						translations?.[languageId as Liferay.Language.Locale]

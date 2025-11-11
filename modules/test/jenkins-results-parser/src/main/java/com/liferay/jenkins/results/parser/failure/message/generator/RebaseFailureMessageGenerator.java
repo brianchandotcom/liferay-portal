@@ -18,13 +18,18 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 	@Override
 	public String getMessage(String consoleText) {
 		if (!consoleText.contains(_TOKEN_COULD_NOT_APPLY) ||
+			!consoleText.contains(_TOKEN_MERGE_CONFLICT_IN) &&
 			!consoleText.contains(_TOKEN_UNABLE_TO_REBASE)) {
 
 			return null;
 		}
 
-		int start = consoleText.lastIndexOf(_TOKEN_UNABLE_TO_REBASE);
-
+		int start = consoleText.lastIndexOf(_TOKEN_MERGE_CONFLICT_IN);
+		
+		if (consoleText.contains(_TOKEN_UNABLE_TO_REBASE)) {
+			start = consoleText.lastIndexOf(_TOKEN_UNABLE_TO_REBASE);
+		}
+		
 		start = consoleText.lastIndexOf("\n", start);
 
 		int end = consoleText.indexOf(_TOKEN_COULD_NOT_APPLY, start);
@@ -55,6 +60,8 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 	}
 
 	private static final String _TOKEN_COULD_NOT_APPLY = "could not apply";
+
+	private static final String _TOKEN_MERGE_CONFLICT_IN = "Merge conflict in";
 
 	private static final String _TOKEN_UNABLE_TO_REBASE = "Unable to rebase";
 

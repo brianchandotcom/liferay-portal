@@ -2475,6 +2475,81 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
+	test('FDS table respects useInputAsEntered configuration not mutating value to UTC', async ({
+		accountSettingsPage,
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		try {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: [
+					{
+						businessType: 'DateTime',
+						objectFieldSettings: [
+							{
+								name: 'timeStorage',
+								value: 'useInputAsEntered',
+							},
+						],
+					},
+				],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			await accountSettingsPage.goToDisplaySettings();
+
+			await accountSettingsPage.setTimeZone('America/Sao_Paulo');
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			const date = new Date();
+
+			date.setHours(date.getHours() + 3);
+
+			const objectFieldLabel = page.getByLabel(
+				objectFields[0].label['en_US']
+			);
+
+			await objectFieldLabel.fill(getObjectEntryUIDateTimeFormat(date));
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page);
+
+			await viewObjectEntriesPage.backButton.click();
+
+			let formattedDate = date.toLocaleString('en-US', {
+				day: '2-digit',
+				hour: 'numeric',
+				hour12: true,
+				minute: '2-digit',
+				month: 'short',
+				year: 'numeric',
+			});
+
+			// inserts ":00" before the last space and "PM/AM"
+
+			formattedDate = formattedDate.replace(/(\s[AP]M)$/, ':00$1');
+
+			await expect(page.getByText(formattedDate)).toBeVisible();
+		}
+		finally {
+			await accountSettingsPage.goToDisplaySettings();
+
+			await accountSettingsPage.setTimeZone('UTC');
+		}
+	});
+
 	test('loading element count is one even when pressing save button multiple times', async ({
 		apiHelpers,
 		page,

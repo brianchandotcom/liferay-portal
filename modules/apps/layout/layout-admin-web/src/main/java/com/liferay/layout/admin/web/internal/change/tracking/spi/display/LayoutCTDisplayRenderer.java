@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -36,6 +37,7 @@ import jakarta.portlet.PortletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,14 +84,21 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 				"p_l_back_url", currentURL, "p_l_mode", Constants.EDIT);
 		}
 
+		if (layout.isTypePortlet() &&
+			!Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_FULL_PAGE_APPLICATION)) {
+
+			return HttpComponentsUtil.addParameters(
+				PortalUtil.getLayoutFullURL(layout, themeDisplay),
+				"p_l_back_url", currentURL);
+		}
+
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout"
-		).setBackURL(
-			currentURL
 		).setParameter(
 			"groupId", layout.getGroupId()
 		).setParameter(

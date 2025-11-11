@@ -60,8 +60,12 @@ const AssetTypeInfoPanelHeader = () => {
 					{context.objectEntries?.length === 1 && (
 						<ClayIcon
 							className={classnames({
-								'asset-icon-files':
+								'cms-asset-icon-basic-content':
+									context.type === ASSET_TYPE.CONTENTS,
+								'cms-asset-icon-document-image':
 									context.type === ASSET_TYPE.FILES,
+								'cms-asset-icon-folder':
+									context.type === ASSET_TYPE.FOLDER,
 							})}
 							fontSize={20}
 							symbol={context.icon || ''}

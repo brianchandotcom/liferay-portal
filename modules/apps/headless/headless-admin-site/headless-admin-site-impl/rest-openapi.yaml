@@ -2379,13 +2379,11 @@ components:
                     items:
                         type: permission
                     type: array
-                siteId:
-                    # @review
+                siteExternalReferenceCode:
                     description:
-                        The ID of the site to which this navigation menu is scoped.
-                    format: int64
+                        The external reference code of the site to which this navigation menu is scoped.
                     readOnly: true
-                    type: integer
+                    type: string
         NavigationMenuFragmentConfigurationFieldValue:
             allOf:
                 -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"

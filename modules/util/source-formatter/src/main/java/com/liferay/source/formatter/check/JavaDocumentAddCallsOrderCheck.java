@@ -56,18 +56,16 @@ public class JavaDocumentAddCallsOrderCheck extends BaseJavaTermCheck {
 				String sortedCodeBlock = _sortedCodeBlock(
 					codeBlock, variableName);
 
-				if (codeBlock.equals(sortedCodeBlock)) {
-					if (y == -1) {
-						break;
-					}
-
-					x = y;
-
-					continue;
+				if (!codeBlock.equals(sortedCodeBlock)) {
+					return StringUtil.replaceFirst(
+						content, codeBlock, sortedCodeBlock, matcher.start());
 				}
 
-				return StringUtil.replaceFirst(
-					content, codeBlock, sortedCodeBlock, matcher.start());
+				if (y == -1) {
+					break;
+				}
+
+				x = y;
 			}
 		}
 
@@ -115,20 +113,22 @@ public class JavaDocumentAddCallsOrderCheck extends BaseJavaTermCheck {
 
 				String s = codeBlock.substring(y, z + 1);
 
-				if ((ToolsUtil.getLevel(s, "(", ")") == 0) &&
-					(ToolsUtil.getLevel(s, "{", "}") == 0)) {
+				if ((ToolsUtil.getLevel(s, "(", ")") != 0) ||
+					(ToolsUtil.getLevel(s, "{", "}") != 0)) {
 
-					if (codeBlock.charAt(z + 1) != CharPool.SEMICOLON) {
-						return codeBlock;
-					}
-
-					methodCall = StringUtil.trim(codeBlock.substring(x, z + 1));
-					parameters = codeBlock.substring(y + 1, z);
-
-					x = z + 2;
-
-					break;
+					continue;
 				}
+
+				if (codeBlock.charAt(z + 1) != CharPool.SEMICOLON) {
+					return codeBlock;
+				}
+
+				methodCall = StringUtil.trim(codeBlock.substring(x, z + 1));
+				parameters = codeBlock.substring(y + 1, z);
+
+				x = z + 2;
+
+				break;
 			}
 
 			List<String> parametersList = JavaSourceUtil.splitParameters(
@@ -136,21 +136,28 @@ public class JavaDocumentAddCallsOrderCheck extends BaseJavaTermCheck {
 
 			String parameterName = parametersList.get(0);
 
-			if (previousParameterName != null) {
-				int compare = parameterNameComparator.compare(
-					previousParameterName, parameterName);
+			if (previousParameterName == null) {
+				previousMethodCall = methodCall;
+				previousParameterName = parameterName;
 
-				if (compare > 0) {
-					String sortedCodeBlock = StringUtil.replaceFirst(
-						codeBlock, previousMethodCall, methodCall);
-
-					return StringUtil.replaceLast(
-						sortedCodeBlock, methodCall, previousMethodCall);
-				}
+				continue;
 			}
 
-			previousMethodCall = methodCall;
-			previousParameterName = parameterName;
+			int compare = parameterNameComparator.compare(
+				previousParameterName, parameterName);
+
+			if (compare <= 0) {
+				previousMethodCall = methodCall;
+				previousParameterName = parameterName;
+
+				continue;
+			}
+
+			String sortedCodeBlock = StringUtil.replaceFirst(
+				codeBlock, previousMethodCall, methodCall);
+
+			return StringUtil.replaceLast(
+				sortedCodeBlock, methodCall, previousMethodCall);
 		}
 	}
 

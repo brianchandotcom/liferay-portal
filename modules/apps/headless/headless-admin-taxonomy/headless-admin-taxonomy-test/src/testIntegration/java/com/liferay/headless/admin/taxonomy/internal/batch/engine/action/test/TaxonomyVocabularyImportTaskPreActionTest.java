@@ -194,10 +194,8 @@ public class TaxonomyVocabularyImportTaskPreActionTest {
 					assetVocabulary.getExternalReferenceCode(),
 					_targetGroup.getGroupId());
 
-		Class<?> clazz = assetVocabulary.getClass();
-
 		_resourcePermissionLocalService.hasResourcePermission(
-			_localGroup.getCompanyId(), clazz.getName(),
+			_localGroup.getCompanyId(), AssetVocabulary.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(importedAssetVocabulary.getVocabularyId()),
 			role.getRoleId(), ActionKeys.UPDATE);

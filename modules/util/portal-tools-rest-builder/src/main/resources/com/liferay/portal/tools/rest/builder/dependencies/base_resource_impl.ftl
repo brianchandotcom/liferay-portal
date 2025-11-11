@@ -2084,10 +2084,7 @@ public abstract class Base${schemaName}ResourceImpl
 >
 	PermissionServiceUtil.checkPermission(${groupId}, ${resourceName}, ${resourceId});
 
-	ModelPermissions modelPermissions = ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService
-		<#if freeMarkerTool.isVersionCompatible(configYAML, 14)>
-			, contextUser.getUserId()
-		</#if>);
+	ModelPermissions modelPermissions = ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService);
 
 	Collection<String> roleNames = modelPermissions.getRoleNames();
 

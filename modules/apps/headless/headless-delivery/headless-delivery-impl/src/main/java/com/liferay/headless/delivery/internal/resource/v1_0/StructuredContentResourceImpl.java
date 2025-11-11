@@ -845,7 +845,7 @@ public class StructuredContentResourceImpl
 				getPermissionCheckerResourceId(structuredContent.getId()),
 				getPermissionCheckerResourceName(structuredContent.getId()),
 				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService, contextUser.getUserId())
+				roleLocalService)
 		).build();
 
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);

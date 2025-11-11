@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -31,6 +31,29 @@ export const test = mergeTests(
 const CUSTOM_BACKGROUND_COLOR = 'rgb(66, 244, 197)';
 const MENU_DISPLAY_NAME = 'Menu Display';
 const PAGE_NAME = getRandomString();
+
+const togglePortletOptions = async (portletName: string, page: Page) => {
+	await page
+		.locator('.portlet-topper', {hasText: portletName})
+		.getByLabel('Options')
+		.click();
+};
+
+const assertPortletOptionsVisible = async (
+	portletName: string,
+	actions: string[],
+	page: Page
+) => {
+	await togglePortletOptions(portletName, page);
+
+	for (const action of actions) {
+		await expect(
+			page.getByRole('menuitem', {exact: true, name: action})
+		).toBeVisible();
+	}
+
+	await togglePortletOptions(portletName, page);
+};
 
 test('Verify custom look and feel settings can be applied to page.', async ({
 	apiHelpers,
@@ -75,7 +98,7 @@ test('Verify custom look and feel settings can be applied to page.', async ({
 		await page
 			.getByRole('textbox', {exact: true, name: 'CSS'})
 			.fill(
-				`body, #wrapper{background-color: ${CUSTOM_BACKGROUND_COLOR};}`
+				`body, #wrapper {background-color: ${CUSTOM_BACKGROUND_COLOR};}`
 			);
 
 		await pageConfigurationPage.save();
@@ -114,10 +137,11 @@ test('Verify custom look and feel settings can be applied to page.', async ({
 	});
 
 	await test.step('Assert that the menu display can be minimized/maximized.', async () => {
-		await widgetPagePage.assertPortletOptionsVisible(MENU_DISPLAY_NAME, [
-			'Maximize',
-			'Minimize',
-		]);
+		await assertPortletOptionsVisible(
+			MENU_DISPLAY_NAME,
+			['Maximize', 'Minimize'],
+			page
+		);
 
 		await widgetPagePage.clickOnAction(MENU_DISPLAY_NAME, 'Minimize');
 

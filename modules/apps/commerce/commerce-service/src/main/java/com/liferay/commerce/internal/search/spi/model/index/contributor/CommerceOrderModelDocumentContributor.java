@@ -161,7 +161,8 @@ public class CommerceOrderModelDocumentContributor
 			document.addNumber(
 				"paymentStatus", commerceOrder.getPaymentStatus());
 			document.addKeyword(
-				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
+				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber(),
+				true);
 
 			if (address != null) {
 				Region region = address.getRegion();

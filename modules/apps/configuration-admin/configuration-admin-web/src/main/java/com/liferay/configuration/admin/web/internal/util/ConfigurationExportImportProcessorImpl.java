@@ -156,7 +156,8 @@ public class ConfigurationExportImportProcessorImpl
 		throws PortalException {
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
-			Company company = _companyLocalService.getCompany((long)scopePK);
+			Company company = _companyLocalService.getCompany(
+				GetterUtil.getLong(scopePK));
 
 			return company.getWebId();
 		}
@@ -165,7 +166,7 @@ public class ConfigurationExportImportProcessorImpl
 			return null;
 		}
 
-		Group group = _groupLocalService.getGroup((long)scopePK);
+		Group group = _groupLocalService.getGroup(GetterUtil.getLong(scopePK));
 
 		return StringBundler.concat(
 			_getPortableIdentifier(

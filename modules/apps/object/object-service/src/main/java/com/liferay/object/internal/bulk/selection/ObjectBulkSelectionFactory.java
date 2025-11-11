@@ -34,8 +34,8 @@ public class ObjectBulkSelectionFactory
 		}
 
 		return new ObjectBulkSelection(
-			_depotEntryLocalService, _objectEntryLocalService,
-			_objectEntryFolderLocalService, parameterMap);
+			_depotEntryLocalService, _objectEntryFolderLocalService,
+			_objectEntryLocalService, parameterMap);
 	}
 
 	@Reference

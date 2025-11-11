@@ -273,26 +273,28 @@ public class NavigationMenu implements Cloneable, Serializable {
 	protected com.liferay.headless.admin.site.client.permission.Permission[]
 		permissions;
 
-	public Long getSiteId() {
-		return siteId;
+	public String getSiteExternalReferenceCode() {
+		return siteExternalReferenceCode;
 	}
 
-	public void setSiteId(Long siteId) {
-		this.siteId = siteId;
+	public void setSiteExternalReferenceCode(String siteExternalReferenceCode) {
+		this.siteExternalReferenceCode = siteExternalReferenceCode;
 	}
 
-	public void setSiteId(
-		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+	public void setSiteExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			siteExternalReferenceCodeUnsafeSupplier) {
 
 		try {
-			siteId = siteIdUnsafeSupplier.get();
+			siteExternalReferenceCode =
+				siteExternalReferenceCodeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long siteId;
+	protected String siteExternalReferenceCode;
 
 	@Override
 	public NavigationMenu clone() throws CloneNotSupportedException {

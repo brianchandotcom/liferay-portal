@@ -563,31 +563,33 @@ public class NavigationMenu implements Serializable {
 		_permissionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The ID of the site to which this navigation menu is scoped."
+		description = "The external reference code of the site to which this navigation menu is scoped."
 	)
-	public Long getSiteId() {
-		if (_siteIdSupplier != null) {
-			siteId = _siteIdSupplier.get();
+	public String getSiteExternalReferenceCode() {
+		if (_siteExternalReferenceCodeSupplier != null) {
+			siteExternalReferenceCode =
+				_siteExternalReferenceCodeSupplier.get();
 
-			_siteIdSupplier = null;
+			_siteExternalReferenceCodeSupplier = null;
 		}
 
-		return siteId;
+		return siteExternalReferenceCode;
 	}
 
-	public void setSiteId(Long siteId) {
-		this.siteId = siteId;
+	public void setSiteExternalReferenceCode(String siteExternalReferenceCode) {
+		this.siteExternalReferenceCode = siteExternalReferenceCode;
 
-		_siteIdSupplier = null;
+		_siteExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSiteId(
-		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+	public void setSiteExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			siteExternalReferenceCodeUnsafeSupplier) {
 
-		_siteIdSupplier = () -> {
+		_siteExternalReferenceCodeSupplier = () -> {
 			try {
-				return siteIdUnsafeSupplier.get();
+				return siteExternalReferenceCodeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -599,13 +601,13 @@ public class NavigationMenu implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The ID of the site to which this navigation menu is scoped."
+		description = "The external reference code of the site to which this navigation menu is scoped."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long siteId;
+	protected String siteExternalReferenceCode;
 
 	@JsonIgnore
-	private Supplier<Long> _siteIdSupplier;
+	private Supplier<String> _siteExternalReferenceCodeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -808,16 +810,20 @@ public class NavigationMenu implements Serializable {
 			sb.append("]");
 		}
 
-		Long siteId = getSiteId();
+		String siteExternalReferenceCode = getSiteExternalReferenceCode();
 
-		if (siteId != null) {
+		if (siteExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"siteId\": ");
+			sb.append("\"siteExternalReferenceCode\": ");
 
-			sb.append(siteId);
+			sb.append("\"");
+
+			sb.append(_escape(siteExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

@@ -9,6 +9,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.util.FragmentRendererRegistryUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -18,25 +19,41 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefin
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.util.FragmentConfigurationFieldValuesUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.PortletUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Eudaldo Alonso
@@ -68,12 +85,23 @@ public class FragmentLayoutStructureItemImporter
 						getFragmentInstanceExternalReferenceCode(),
 					layoutStructureItemImporterContext.getGroupId());
 
+		List<String> fragmentEntryLinkPortletIds = null;
+
 		if (fragmentEntryLink == null) {
 			fragmentEntryLink = _addFragmentEntryLink(
 				fragmentInstancePageElementDefinition,
 				layoutStructureItemImporterContext);
 		}
 		else {
+			PortletRegistry portletRegistry =
+				_portletRegistryServiceTracker.getService();
+
+			if (portletRegistry != null) {
+				fragmentEntryLinkPortletIds =
+					portletRegistry.getFragmentEntryLinkPortletIds(
+						fragmentEntryLink);
+			}
+
 			fragmentEntryLink = _updateFragmentEntryLink(
 				fragmentEntryLink, fragmentInstancePageElementDefinition,
 				layoutStructureItemImporterContext);
@@ -81,6 +109,53 @@ public class FragmentLayoutStructureItemImporter
 
 		if (fragmentEntryLink == null) {
 			return null;
+		}
+
+		Layout layout = layoutStructureItemImporterContext.getLayout();
+
+		if (ArrayUtil.isNotEmpty(
+				fragmentInstancePageElementDefinition.getWidgetInstances())) {
+
+			for (WidgetInstance widgetInstance :
+					fragmentInstancePageElementDefinition.
+						getWidgetInstances()) {
+
+				if (Validator.isNull(widgetInstance.getWidgetName())) {
+					continue;
+				}
+
+				String portletId = PortletIdCodec.encode(
+					widgetInstance.getWidgetName(),
+					widgetInstance.getWidgetInstanceId());
+
+				PortletUtil.importPortletPreferences(
+					layout, portletId, widgetInstance.getWidgetConfig());
+
+				PortletUtil.importPortletPermissions(
+					layout, portletId, widgetInstance.getWidgetName(),
+					widgetInstance.getWidgetPermissions());
+			}
+		}
+
+		if (ListUtil.isNotEmpty(fragmentEntryLinkPortletIds)) {
+			for (String fragmentEntryLinkPortletId :
+					SetUtil.asymmetricDifference(
+						fragmentEntryLinkPortletIds,
+						_getPortletIds(
+							fragmentInstancePageElementDefinition.
+								getWidgetInstances()))) {
+
+				PortletPreferencesLocalServiceUtil.deletePortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+					fragmentEntryLinkPortletId);
+
+				ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+					layout.getCompanyId(), fragmentEntryLinkPortletId,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					PortletPermissionUtil.getPrimaryKey(
+						layout.getPlid(), fragmentEntryLinkPortletId));
+			}
 		}
 
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
@@ -300,6 +375,23 @@ public class FragmentLayoutStructureItemImporter
 		return fragmentEntryLink.getExternalReferenceCode();
 	}
 
+	private List<String> _getPortletIds(WidgetInstance[] widgetInstances) {
+		List<String> portletIds = new ArrayList<>();
+
+		if (ArrayUtil.isEmpty(widgetInstances)) {
+			return portletIds;
+		}
+
+		for (WidgetInstance widgetInstance : widgetInstances) {
+			portletIds.add(
+				PortletIdCodec.encode(
+					widgetInstance.getWidgetName(),
+					widgetInstance.getWidgetInstanceId()));
+		}
+
+		return portletIds;
+	}
+
 	private int _getType(
 		FragmentInstancePageElementDefinition
 			fragmentInstancePageElementDefinition) {
@@ -375,6 +467,11 @@ public class FragmentLayoutStructureItemImporter
 		return FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
 			fragmentEntryLink);
 	}
+
+	private static final ServiceTracker<PortletRegistry, PortletRegistry>
+		_portletRegistryServiceTracker = ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(FragmentLayoutStructureItemImporter.class),
+			PortletRegistry.class);
 
 	private static class FragmentEntryReference {
 

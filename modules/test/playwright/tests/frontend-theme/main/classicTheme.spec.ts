@@ -29,8 +29,8 @@ export const test = mergeTests(
 );
 
 const CUSTOM_BACKGROUND_COLOR = 'rgb(66, 244, 197)';
-const PAGE_NAME = getRandomString();
 const MENU_DISPLAY_NAME = 'Menu Display';
+const PAGE_NAME = getRandomString();
 
 test('Verify custom look and feel settings can be applied to page.', async ({
 	apiHelpers,

@@ -434,6 +434,12 @@ public interface ContactsEngineClient {
 			Map<String, List<String>> queryParameters)
 		throws Exception;
 
+	public long getSalesforceAccountsCount(
+		String dataSourceId, FaroProject faroProject);
+
+	public long getSalesforceUsersCount(
+		String dataSourceId, FaroProject faroProject);
+
 	public Results<String> getSessionValues(
 		FaroProject faroProject, String channelId, String fieldName,
 		String filter, String query, int cur, int delta);

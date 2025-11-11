@@ -896,6 +896,22 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public long getSalesforceAccountsCount(
+		String dataSourceId, FaroProject faroProject) {
+
+		return contactsEngineClient.getSalesforceAccountsCount(
+			dataSourceId, faroProject);
+	}
+
+	@Override
+	public long getSalesforceUsersCount(
+		String dataSourceId, FaroProject faroProject) {
+
+		return contactsEngineClient.getSalesforceUsersCount(
+			dataSourceId, faroProject);
+	}
+
+	@Override
 	public Results<String> getSessionValues(
 		FaroProject faroProject, String channelId, String fieldName,
 		String filter, String query, int cur, int delta) {

@@ -753,6 +753,7 @@ export default {
 	'use-their-email-address-to-invite-them-as-an-ssa-user-or-admin-and-define-their-access-level':
 		'Use their email address to invite them as an SSA user or admin and define their access level.',
 	'user-account': 'User Account',
+	'user-doesnt-exist': 'User doesn’t exist',
 	'user-email': 'User Email',
 	'user-roles-successfully-updated': 'User roles successfully updated',
 	'users-requests-to-become-a-publisher':

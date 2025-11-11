@@ -16,7 +16,7 @@ export default class HeadlessAdminUser {
 	}
 
 	static async deleteRoleAccountUser(
-		accountId: number,
+		accountId: number | string,
 		roleId: number,
 		userId: number
 	) {
@@ -108,7 +108,7 @@ export default class HeadlessAdminUser {
 	}
 
 	static async sendRoleAccountUser(
-		accountId: number,
+		accountId: number | string,
 		roleId: number,
 		userId: number
 	) {

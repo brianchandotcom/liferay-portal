@@ -41,7 +41,7 @@ const useManageUserActions = () => {
 							footer: [
 								<Button
 									displayType="secondary"
-									key="button-1"
+									key="cancel"
 									onClick={modalContext.onClose}
 								>
 									{i18n.translate('cancel')}
@@ -49,7 +49,7 @@ const useManageUserActions = () => {
 								null,
 								<Button
 									form="manage-roles"
-									key="button-2"
+									key="confirm"
 									type="submit"
 								>
 									{i18n.translate('apply')}
@@ -80,7 +80,7 @@ const useManageUserActions = () => {
 							footer: [
 								<Button
 									displayType="secondary"
-									key="button-3"
+									key="cancel"
 									onClick={modalContext.onClose}
 								>
 									{i18n.translate('cancel')}
@@ -88,7 +88,7 @@ const useManageUserActions = () => {
 								null,
 								<Button
 									displayType="warning"
-									key="button-3"
+									key="confirm"
 									onClick={async () => {
 										const userRoles =
 											await HeadlessAdminUser.getRolesPage(
@@ -97,16 +97,21 @@ const useManageUserActions = () => {
 												})
 											);
 
-										const ssaUser = userRoles.items.find(
-											(userRole) =>
-												userRole.name ===
-												UserRoleTypes.SSA_USER
-										);
+										const ssaUserRole =
+											userRoles.items.find(
+												(userRole) =>
+													userRole.name ===
+													UserRoleTypes.SSA_USER
+											);
+
+										if (!ssaUserRole) {
+											return;
+										}
 
 										try {
-											await marketplaceOAuth2.deleteAssignRoleUserAccount(
-												Number(ssaUser?.id),
-												user.id
+											await marketplaceOAuth2.deleteUserRoleAssociation(
+												user.id,
+												ssaUserRole.id
 											);
 
 											await HeadlessAdminUser.deleteAccountUserAccountByEmailAddress(

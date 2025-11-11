@@ -61,9 +61,9 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 		return newAccount;
 	}
 
-	async deleteAssignRoleUserAccount(roleId: number, userId: number) {
+	async deleteUserRoleAssociation(roleId: number, userId: number) {
 		const response = await this.delete(
-			`/assign-role/${roleId}/user-account/${userId}`
+			`/user-account/${roleId}/roles/${userId}`
 		);
 
 		return response;
@@ -88,9 +88,9 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 		await downloadFile('orders.csv', response);
 	}
 
-	async postAssignRoleUserAccount(roleId: number, userId: number) {
+	async postUserRoleAssociation(emailAddress: string, roleId: number) {
 		const response = await this.post(
-			`/assign-role/${roleId}/user-account/${userId}`,
+			`/user-account/${emailAddress}/roles/${roleId}`,
 			{
 				earlyReturn: true,
 			}

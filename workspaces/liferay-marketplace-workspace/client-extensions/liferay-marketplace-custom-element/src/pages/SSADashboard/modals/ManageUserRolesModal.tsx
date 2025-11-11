@@ -74,17 +74,23 @@ const ManageUserModal = ({
 				(role) => intialSet.has(role.name) && !newSet.has(role.name)
 			);
 
+			const accountId = Liferay.CommerceContext.account?.accountId;
+
+			if (!accountId) {
+				return;
+			}
+
 			await Promise.all([
 				...rolesToRemove.map((role) =>
 					HeadlessAdminUser.deleteRoleAccountUser(
-						Number(Liferay.CommerceContext.account?.accountId),
+						accountId,
 						role.id,
 						user.id
 					)
 				),
 				...rolesToAdd.map((role) =>
 					HeadlessAdminUser.sendRoleAccountUser(
-						Number(Liferay.CommerceContext.account?.accountId),
+						accountId,
 						role.id,
 						user.id
 					)

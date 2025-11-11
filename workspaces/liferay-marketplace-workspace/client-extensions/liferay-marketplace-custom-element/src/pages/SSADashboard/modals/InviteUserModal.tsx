@@ -57,20 +57,16 @@ const InviteUserModal = ({modal, mutate}: InviteUserModalPops) => {
 	const [selectedItems, setSelectedItems] = useState<Item[]>([]);
 
 	const onSubmit = async (formData: ModalForm) => {
-		const [accountRoles, user, userRoles] = await Promise.all([
+		const [accountRoles, userRoles] = await Promise.all([
 			HeadlessAdminUser.getAccountRoles(
 				properties.accountExternalReferenceCode
-			),
-			HeadlessAdminUser.postAccountUserAccountByEmailAddress(
-				properties.accountExternalReferenceCode,
-				formData.emailAddress
 			),
 			HeadlessAdminUser.getRolesPage(
 				new URLSearchParams({pageSize: '-1'})
 			),
 		]);
 
-		const ssaUser = userRoles.items.find(
+		const ssaUserRole = userRoles.items.find(
 			(userRole) => userRole.name === UserRoleTypes.SSA_USER
 		);
 
@@ -80,38 +76,56 @@ const InviteUserModal = ({modal, mutate}: InviteUserModalPops) => {
 			)
 		);
 
-		try {
-			await Promise.all([
-				marketplaceOAuth2.postAssignRoleUserAccount(
-					ssaUser?.id as number,
-					user.id
-				),
-				roles.map((role) =>
-					HeadlessAdminUser.sendRoleAccountUser(
-						Number(Liferay.CommerceContext.account?.accountId),
-						role?.id as number,
-						user.id
-					)
-				),
-			]);
+		if (!ssaUserRole) {
+			return;
 		}
-		catch {
+
+		try {
+			await marketplaceOAuth2.postUserRoleAssociation(
+				formData.emailAddress,
+				ssaUserRole?.id
+			);
+
+			const user =
+				await HeadlessAdminUser.postAccountUserAccountByEmailAddress(
+					properties.accountExternalReferenceCode,
+					formData.emailAddress
+				);
+
+			roles.map((role) =>
+				HeadlessAdminUser.sendRoleAccountUser(
+					Number(Liferay.CommerceContext.account?.accountId),
+					role?.id as number,
+					user.id
+				)
+			);
+
+			Liferay.Util.openToast({
+				message: i18n.translate('your-request-completed-successfully'),
+				title: i18n.translate('success'),
+				type: 'success',
+			});
+
+			mutate({revalidate: true});
+
+			return modal.onClose();
+		}
+		catch (error: any) {
+			console.log(error.status);
+
+			if (error.status === 404) {
+				return Liferay.Util.openToast({
+					message: i18n.translate('user-doesnt-exist'),
+					title: i18n.translate('error'),
+					type: 'danger',
+				});
+			}
 			return Liferay.Util.openToast({
 				message: i18n.translate('unable-to-assign-roles'),
 				title: i18n.translate('error'),
 				type: 'danger',
 			});
 		}
-
-		Liferay.Util.openToast({
-			message: i18n.translate('your-request-completed-successfully'),
-			title: i18n.translate('success'),
-			type: 'success',
-		});
-
-		mutate({revalidate: true});
-
-		return modal.onClose();
 	};
 
 	return (

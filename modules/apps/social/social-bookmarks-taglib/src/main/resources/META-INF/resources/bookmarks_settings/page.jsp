@@ -17,7 +17,7 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = displayStyles[0];
 }
 
-List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
+List<KeyValuePair> leftList = new ArrayList<>();
 
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
@@ -25,19 +25,19 @@ for (String socialBookmarkType : SocialBookmarksRegistryUtil.getSocialBookmarksT
 	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(socialBookmarkType);
 
 	if (!typesSet.contains(socialBookmarkType)) {
-		availableSocialBookmarkTypes.add(new KeyValuePair(socialBookmarkType, socialBookmark.getName(locale)));
+		leftList.add(new KeyValuePair(socialBookmarkType, socialBookmark.getName(locale)));
 	}
 }
 
-availableSocialBookmarkTypes = ListUtil.sort(availableSocialBookmarkTypes, new KeyValuePairComparator(false, true));
+leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
 
-List<KeyValuePair> currentSocialBookmarkTypes = new ArrayList<>();
+List<KeyValuePair> rightList = new ArrayList<>();
 
 for (String type : types) {
 	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(type);
 
 	if (socialBookmark != null) {
-		currentSocialBookmarkTypes.add(new KeyValuePair(type, socialBookmark.getName(locale)));
+		rightList.add(new KeyValuePair(type, socialBookmark.getName(locale)));
 	}
 }
 %>
@@ -46,10 +46,10 @@ for (String type : types) {
 
 <liferay-ui:input-move-boxes
 	leftBoxName="availableTypes"
-	leftList="<%= availableSocialBookmarkTypes %>"
+	leftList="<%= leftList %>"
 	leftTitle="available"
 	rightBoxName="currentTypes"
-	rightList="<%= currentSocialBookmarkTypes %>"
+	rightList="<%= rightList %>"
 	rightReorder="<%= Boolean.TRUE.toString() %>"
 	rightTitle="in-use"
 />

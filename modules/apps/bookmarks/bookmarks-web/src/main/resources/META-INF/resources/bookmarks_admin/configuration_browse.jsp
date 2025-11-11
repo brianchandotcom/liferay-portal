@@ -116,31 +116,31 @@ portletDisplay.setURLBackTitle("bookmarks");
 									<%
 									Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
 
-									List<KeyValuePair> currentItems = new ArrayList<>();
+									List<KeyValuePair> rightList = new ArrayList<>();
 
 									for (String folderColumn : folderColumns) {
-										currentItems.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
+										rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 									}
 
-									List<KeyValuePair> availableItems = new ArrayList<>();
+									List<KeyValuePair> leftList = new ArrayList<>();
 
 									Arrays.sort(folderColumns);
 
 									for (String folderColumn : availableFolderColumns) {
 										if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
-											availableItems.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
+											leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 										}
 									}
 
-									availableItems = ListUtil.sort(availableItems, new KeyValuePairComparator(false, true));
+									leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
 									%>
 
 									<liferay-ui:input-move-boxes
 										leftBoxName="availableFolderColumns"
-										leftList="<%= availableItems %>"
+										leftList="<%= leftList %>"
 										leftTitle="available"
 										rightBoxName="currentFolderColumns"
-										rightList="<%= currentItems %>"
+										rightList="<%= rightList %>"
 										rightReorder="<%= Boolean.TRUE.toString() %>"
 										rightTitle="in-use"
 									/>
@@ -209,31 +209,31 @@ portletDisplay.setURLBackTitle("bookmarks");
 								<%
 								Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
 
-								List<KeyValuePair> currentItems = new ArrayList<>();
+								List<KeyValuePair> rightList = new ArrayList<>();
 
 								for (String entryColumn : entryColumns) {
-									currentItems.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
+									rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
 								}
 
-								List<KeyValuePair> availableItems = new ArrayList<>();
+								List<KeyValuePair> leftList = new ArrayList<>();
 
 								Arrays.sort(entryColumns);
 
 								for (String entryColumn : availableEntryColumns) {
 									if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
-										availableItems.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
+										leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
 									}
 								}
 
-								availableItems = ListUtil.sort(availableItems, new KeyValuePairComparator(false, true));
+								leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
 								%>
 
 								<liferay-ui:input-move-boxes
 									leftBoxName="availableEntryColumns"
-									leftList="<%= availableItems %>"
+									leftList="<%= leftList %>"
 									leftTitle="available"
 									rightBoxName="currentEntryColumns"
-									rightList="<%= currentItems %>"
+									rightList="<%= rightList %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
 									rightTitle="in-use"
 								/>

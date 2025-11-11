@@ -368,12 +368,11 @@ public class DataSourceFactoryUtil {
 				for (String parameter :
 						StringUtil.split(queryString, parameterDelimiter)) {
 
-					String[] parameterParts = StringUtil.split(
+					String[] parts = StringUtil.split(
 						parameter, CharPool.EQUAL);
 
-					if (parameterParts.length == 2) {
-						existingParameters.put(
-							parameterParts[0], parameterParts[1]);
+					if (parts.length == 2) {
+						existingParameters.put(parts[0], parts[1]);
 					}
 					else {
 						existingParameters.put(
@@ -397,8 +396,7 @@ public class DataSourceFactoryUtil {
 		String newURL = baseURL;
 
 		if (!existingParameters.isEmpty()) {
-			StringBundler sb = new StringBundler(
-				(existingParameters.size() * 4) + 2);
+			StringBundler sb = new StringBundler();
 
 			sb.append(baseURL);
 			sb.append(urlDelimiter);
@@ -408,11 +406,11 @@ public class DataSourceFactoryUtil {
 
 				sb.append(entry.getKey());
 
-				String value = entry.getValue();
+				if (!_MALFORMED_PARAMETER_PLACE_HOLDER.equals(
+						entry.getValue())) {
 
-				if (!_MALFORMED_PARAMETER_PLACE_HOLDER.equals(value)) {
 					sb.append(CharPool.EQUAL);
-					sb.append(value);
+					sb.append(entry.getValue());
 				}
 
 				sb.append(parameterDelimiter);
@@ -426,7 +424,7 @@ public class DataSourceFactoryUtil {
 		if (!Objects.equals(url, newURL) && _log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Rewrite JDBC URL from ", url, " to ", newURL));
+					"Rewrote JDBC URL from ", url, " to ", newURL));
 		}
 
 		return newURL;

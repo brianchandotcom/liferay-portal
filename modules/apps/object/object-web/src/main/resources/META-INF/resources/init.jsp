@@ -27,6 +27,7 @@ page import="com.liferay.list.type.model.ListTypeDefinition" %><%@
 page import="com.liferay.object.constants.ObjectLayoutBoxConstants" %><%@
 page import="com.liferay.object.constants.ObjectWebKeys" %><%@
 page import="com.liferay.object.display.context.ObjectEntryDisplayContext" %><%@
+page import="com.liferay.object.exception.ObjectEntryGroupIdException" %><%@
 page import="com.liferay.object.model.ObjectAction" %><%@
 page import="com.liferay.object.model.ObjectDefinition" %><%@
 page import="com.liferay.object.model.ObjectEntry" %><%@

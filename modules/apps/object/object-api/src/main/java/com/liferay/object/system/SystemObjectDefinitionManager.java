@@ -63,6 +63,10 @@ public interface SystemObjectDefinitionManager {
 	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException;
 
+	public default long getBaseModelGroupId() {
+		return 0L;
+	}
+
 	public String getExternalReferenceCode();
 
 	public JaxRsApplicationDescriptor getJaxRsApplicationDescriptor();

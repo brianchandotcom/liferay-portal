@@ -16,6 +16,7 @@ import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.DuplicateObjectRelationshipExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
+import com.liferay.object.exception.ObjectEntryGroupIdException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
@@ -187,6 +188,19 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
+
+		if (Objects.equals(
+				objectDefinition1.getScope(), objectDefinition2.getScope()) &&
+			!Objects.equals(
+				_getObjectEntryGroupId(objectDefinition1, primaryKey1),
+				_getObjectEntryGroupId(objectDefinition2, primaryKey2))) {
+
+			throw new ObjectEntryGroupIdException(
+				"Object entries within the same scope must share the same " +
+					"group ID to be related",
+				"object-entries-within-the-same-scope-must-share-the-same-" +
+					"group-id-to-be-related");
+		}
 
 		if (Objects.equals(
 				objectRelationship.getType(),
@@ -1445,6 +1459,25 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		return classPKs.size();
+	}
+
+	private long _getObjectEntryGroupId(
+			ObjectDefinition objectDefinition, long primaryKey)
+		throws PortalException {
+
+		if (objectDefinition.isUnmodifiableSystemObject()) {
+			SystemObjectDefinitionManager systemObjectDefinitionManager =
+				_systemObjectDefinitionManagerRegistry.
+					getSystemObjectDefinitionManager(
+						objectDefinition.getName());
+
+			return systemObjectDefinitionManager.getBaseModelGroupId();
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			primaryKey);
+
+		return objectEntry.getGroupId();
 	}
 
 	private int _getRelatedRootDescendantNodeObjectEntriesCount(

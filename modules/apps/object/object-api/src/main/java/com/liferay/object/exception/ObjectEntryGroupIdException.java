@@ -12,19 +12,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectEntryGroupIdException extends PortalException {
 
-	public ObjectEntryGroupIdException() {
+	public ObjectEntryGroupIdException(String messageKey) {
+		_messageKey = messageKey;
 	}
 
-	public ObjectEntryGroupIdException(String msg) {
-		super(msg);
+	public ObjectEntryGroupIdException(String message, String messageKey) {
+		super(message);
+
+		_messageKey = messageKey;
 	}
 
-	public ObjectEntryGroupIdException(String msg, Throwable throwable) {
-		super(msg, throwable);
+	public String getMessageKey() {
+		return _messageKey;
 	}
 
-	public ObjectEntryGroupIdException(Throwable throwable) {
-		super(throwable);
-	}
+	private final String _messageKey;
 
 }

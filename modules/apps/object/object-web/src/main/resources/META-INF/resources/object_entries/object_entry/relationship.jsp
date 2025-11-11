@@ -103,4 +103,16 @@ portletDisplay.setURLBack(objectEntryDisplayContext.getBackURL());
 			});
 		});
 	</aui:script>
+
+	<c:if test="<%= SessionErrors.contains(renderRequest, ObjectEntryGroupIdException.class.getName()) %>">
+		<aui:script>
+			Liferay.Util.openToast({
+				autoClose: 5000,
+				message:
+					'<liferay-ui:message key="object-entries-within-the-same-scope-must-share-the-same-group-id-to-be-related" />',
+				title: '<liferay-ui:message key="error" />:',
+				type: 'danger',
+			});
+		</aui:script>
+	</c:if>
 </c:if>

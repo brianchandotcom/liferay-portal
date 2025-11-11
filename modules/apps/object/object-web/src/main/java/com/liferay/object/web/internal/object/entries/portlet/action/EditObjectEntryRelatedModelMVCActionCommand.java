@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.entries.portlet.action;
 
+import com.liferay.object.exception.ObjectEntryGroupIdException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
@@ -78,7 +79,9 @@ public class EditObjectEntryRelatedModelMVCActionCommand
 					objectDefinition.getClassName(), actionRequest));
 		}
 		catch (Exception exception) {
-			if (exception instanceof ObjectEntryValuesException) {
+			if (exception instanceof ObjectEntryGroupIdException ||
+				exception instanceof ObjectEntryValuesException) {
+
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = ParamUtil.getString(

@@ -8,13 +8,17 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
 import {dateUtils, sub} from 'frontend-js-web';
-import React, {useCallback, useContext} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
-import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
+import {
+	IAssetObjectEntry,
+	ISearchAssetObjectEntry,
+} from '../../../common/types/AssetType';
 import {
 	AssetTypeInfoPanelContext,
 	IAssetTypeInfoPanelContext,
 } from '../context';
+import ObjectEntryService from '../services/ObjectEntryService';
 import {ASSET_TYPE} from '../util/constants';
 
 const getAssetLanguages = (title_i18n: {[key: string]: string} = {}) => {
@@ -38,7 +42,8 @@ const AssetMetadata = () => {
 		title_i18n = {},
 	}: IAssetTypeInfoPanelContext = useContext(AssetTypeInfoPanelContext);
 
-	const [{embedded: objectEntry}]: ISearchAssetObjectEntry[] = objectEntries;
+	const [{actions, embedded: objectEntry}]: ISearchAssetObjectEntry[] =
+		objectEntries;
 
 	const copyText = useCallback(
 		(event: any) => {
@@ -54,6 +59,24 @@ const AssetMetadata = () => {
 	);
 
 	const assetLanguages = getAssetLanguages(title_i18n);
+
+	const [objectEntryWithNestedFields, setObjectEntryWithNestedFields] =
+		useState<IAssetObjectEntry>(objectEntry as IAssetObjectEntry);
+
+	useEffect(() => {
+		if (type === ASSET_TYPE.FOLDER && actions?.get?.href) {
+			ObjectEntryService.getObjectEntry(
+				actions.get.href,
+				'numberOfObjectEntries,numberOfObjectEntryFolders'
+			).then((result) => {
+				if (result.data) {
+					setObjectEntryWithNestedFields(
+						result.data as IAssetObjectEntry
+					);
+				}
+			});
+		}
+	}, [actions?.get?.href, type]);
 
 	return (
 		<ClayPanel
@@ -96,6 +119,22 @@ const AssetMetadata = () => {
 								></ClayButtonWithIcon>
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
+					</div>
+				)}
+
+				{type === ASSET_TYPE.FOLDER && (
+					<div
+						className="asset-metadata-section mt-3"
+						data-testid="number-of-assets"
+					>
+						<p className="d-block font-weight-bold mb-0">
+							{Liferay.Language.get('number-of-assets')}
+						</p>
+
+						<p className="d-block">
+							{objectEntryWithNestedFields.numberOfObjectEntries +
+								objectEntryWithNestedFields.numberOfObjectEntryFolders}
+						</p>
 					</div>
 				)}
 

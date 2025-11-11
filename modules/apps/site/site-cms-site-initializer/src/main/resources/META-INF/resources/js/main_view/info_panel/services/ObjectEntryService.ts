@@ -14,9 +14,16 @@ export type EntryCategorizationDTO = {
 };
 
 async function getObjectEntry(
-	url: string
+	url: string,
+	nestedFields = 'embeddedTaxonomyCategory'
 ): Promise<RequestResult<IAssetObjectEntry>> {
-	return await ApiHelper.get(`${url}?nestedFields=embeddedTaxonomyCategory`);
+	const getURL: URL = new URL(url, window.location.origin);
+
+	if (nestedFields) {
+		getURL.searchParams.append('nestedFields', nestedFields);
+	}
+
+	return await ApiHelper.get(getURL.toString());
 }
 
 async function patchObjectEntry(

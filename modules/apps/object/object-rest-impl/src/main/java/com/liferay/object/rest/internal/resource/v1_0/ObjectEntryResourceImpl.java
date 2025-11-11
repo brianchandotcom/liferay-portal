@@ -527,11 +527,13 @@ public class ObjectEntryResourceImpl
 
 			@Override
 			public List<String> getNestedFields() {
-				return transform(
-					_objectRelationshipLocalService.
-						getObjectRelationshipsByObjectDefinitionId2(
-							_objectDefinition.getObjectDefinitionId()),
-					ObjectRelationshipModel::getName);
+				return ListUtil.concat(
+					List.of("rootModelHierarchy"),
+					transform(
+						_objectRelationshipLocalService.
+							getObjectRelationshipsByObjectDefinitionId2(
+								_objectDefinition.getObjectDefinitionId()),
+						ObjectRelationshipModel::getName));
 			}
 
 			@Override

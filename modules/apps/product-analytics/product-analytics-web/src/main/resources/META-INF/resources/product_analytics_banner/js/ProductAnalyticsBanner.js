@@ -80,7 +80,7 @@ export default function ({
 				requiredConsentCookieTypeNames
 			);
 
-			setProductAnalyticsConfigCookie(consentRenewalPeriod);
+			setProductAnalyticsConfigCookie(consentRenewalPeriod, modifiedDate);
 			setBannerVisibility(modifiedDate, productAnalyticsBanner);
 		});
 
@@ -115,7 +115,8 @@ export default function ({
 							);
 
 							setProductAnalyticsConfigCookie(
-								consentRenewalPeriod
+								consentRenewalPeriod,
+								modifiedDate
 							);
 
 							setBannerVisibility(
@@ -147,7 +148,8 @@ export default function ({
 							);
 
 							setProductAnalyticsConfigCookie(
-								consentRenewalPeriod
+								consentRenewalPeriod,
+								modifiedDate
 							);
 
 							setBannerVisibility(
@@ -169,7 +171,8 @@ export default function ({
 							);
 
 							setProductAnalyticsConfigCookie(
-								consentRenewalPeriod
+								consentRenewalPeriod,
+								modifiedDate
 							);
 
 							setBannerVisibility(
@@ -206,7 +209,10 @@ export default function ({
 					requiredConsentCookieTypeNames
 				);
 
-				setProductAnalyticsConfigCookie(consentRenewalPeriod);
+				setProductAnalyticsConfigCookie(
+					consentRenewalPeriod,
+					modifiedDate
+				);
 				setBannerVisibility(modifiedDate, productAnalyticsBanner);
 			});
 		}
@@ -231,16 +237,13 @@ function checkProductAnalyticsConsentForTypes(cookieTypes, modalOptions) {
 }
 
 function isProductAnalyticsConfigurationModified(modifiedDate) {
-	if (modifiedDate === 0) {
-		return false;
-	}
-
 	const productAnalyticsConfiguredDateCookie = getCookie(
 		productAnalyticsConfiguredDateCookieName
 	);
 
 	if (
 		productAnalyticsConfiguredDateCookie === undefined ||
+		(modifiedDate === '0' && productAnalyticsConfiguredDateCookie > 0) ||
 		productAnalyticsConfiguredDateCookie < modifiedDate
 	) {
 		return true;

@@ -14,7 +14,6 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.internal.batch.engine.action.test.util.ExportImportTaskResourceTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -153,12 +152,12 @@ public class TaxonomyVocabularyImportTaskPreActionTest {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
-
 		String roleExternalReferenceCode = RandomTestUtil.randomString();
 		String roleName = RandomTestUtil.randomString();
 
-		jsonObject.put(
+		jsonArray.getJSONObject(
+			0
+		).put(
 			"permissions",
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -167,14 +166,12 @@ public class TaxonomyVocabularyImportTaskPreActionTest {
 					"roleExternalReferenceCode", roleExternalReferenceCode
 				).put(
 					"roleName", roleName
-				)));
+				))
+		);
 
 		ExportImportTaskResourceTestUtil.executeImportTask(
 			_ITEM_CLASS_NAME, "UPSERT", _targetGroup.getGroupId(),
-			"KEEP_CREATOR",
-			JSONUtil.putAll(
-				jsonObject
-			).toString());
+			"KEEP_CREATOR", jsonArray.toString());
 
 		_assertAssetVocabulary(
 			assetVocabulary.getExternalReferenceCode(),

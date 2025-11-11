@@ -606,6 +606,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						contextAcceptLanguage.getPreferredLocale()));
 				setDateCreated(siteNavigationMenuItem::getCreateDate);
 				setDateModified(siteNavigationMenuItem::getModifiedDate);
+				setExternalReferenceCode(
+					siteNavigationMenuItem::getExternalReferenceCode);
 				setId(siteNavigationMenuItem::getSiteNavigationMenuItemId);
 				setName(
 					() -> _getName(

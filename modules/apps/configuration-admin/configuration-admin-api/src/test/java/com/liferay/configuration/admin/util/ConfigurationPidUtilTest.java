@@ -25,10 +25,11 @@ public class ConfigurationPidUtilTest {
 	@Test
 	public void testGetRawPid() {
 		_testGetRawPid(
-			"com.sample.SampleConfiguration", "com.sample.SampleConfiguration",
-			"com.sample.SampleConfiguration.scoped",
-			"com.sample.SampleConfiguration.scoped~123",
-			"com.sample.SampleConfiguration~123");
+			"com.acme.scoped.configuration.SampleConfiguration",
+			"com.acme.scoped.configuration.SampleConfiguration",
+			"com.acme.scoped.configuration.SampleConfiguration.scoped",
+			"com.acme.scoped.configuration.SampleConfiguration.scoped~123",
+			"com.acme.scoped.configuration.SampleConfiguration~123");
 	}
 
 	private void _testGetRawPid(String rawPid, String... pids) {

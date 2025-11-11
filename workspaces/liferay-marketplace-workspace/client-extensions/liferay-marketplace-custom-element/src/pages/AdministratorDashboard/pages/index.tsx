@@ -15,7 +15,6 @@ import {formatCurrency} from '../../../utils/currencies';
 import InfoCard from '../components/InfoCard';
 import DonutKPIChart from '../components/charts/DonutKPIChart';
 import useAccountsMetrics from '../hooks/useAccountsMetrics';
-import useAnalyticsViewsMetrics from '../hooks/useAnalyticsViewsMetrics';
 import useKPI from '../hooks/useKPI';
 import useOrderMetrics from '../hooks/useOrderMetrics';
 import AdministratorAppsListView from './Apps/AdministratorAppsListView';
@@ -26,7 +25,6 @@ export default function AdministratorSummary() {
 	const {data: accounts} = useAccountsMetrics('week');
 	const {data: orderMetrics} = useOrderMetrics('week');
 	const {marketplaceUserAccount} = useMarketplaceContext();
-	const {visitorsMetric} = useAnalyticsViewsMetrics();
 
 	const infoCards = useMemo(
 		() => [
@@ -54,11 +52,6 @@ export default function AdministratorSummary() {
 				title: i18n.translate('orders'),
 				value: orderMetrics?.totalCount ?? 0,
 			},
-			{
-				symbol: 'analytics',
-				title: 'Site Visitors',
-				value: visitorsMetric ?? 0,
-			},
 		],
 		[
 			accounts?.growth,
@@ -68,7 +61,6 @@ export default function AdministratorSummary() {
 			orderMetrics?.lastPeriod,
 			orderMetrics?.totalCount,
 			projectsKPI?.totalAmount?.USD,
-			visitorsMetric,
 		]
 	);
 

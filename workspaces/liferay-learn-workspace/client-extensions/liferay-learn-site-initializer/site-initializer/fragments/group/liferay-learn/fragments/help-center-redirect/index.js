@@ -3,57 +3,71 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-  async function redirectToArticle() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const externalReferenceCode = urlParams.get('erc');
+async function redirectToArticle() {
+	const urlParams = new URLSearchParams(window.location.search);
+	const externalReferenceCode = urlParams.get('erc');
 
-    if (!externalReferenceCode) {
-      console.error("Erc not found in URL parameters");
-      window.location.href = `/not-found-404`;
+	if (!externalReferenceCode) {
+		handleError('ERC not found in URL parameters');
 
-      return;
-    }
+		return;
+	}
 
-    try {
-      const response = await fetch(
-        `/o/c/p2s3knowledgearticles/by-external-reference-code/${externalReferenceCode}?fields=id`,
-        {
-          credentials: 'include',
-          headers: {
-            'Accept': 'application/json',
-          },
-          method: 'GET'
-        }
-      );
+	try {
+		const response = await fetch(
+			`/o/c/p2s3knowledgearticles/by-external-reference-code/${externalReferenceCode}?fields=id,content_i18n`,
+			{
+				credentials: 'include',
+				headers: {
+					Accept: 'application/json',
+				},
+				method: 'GET',
+			}
+		);
 
-      if (!response.ok) {
-        window.location.href = `/not-found-404`;
+		if (!response.ok) {
+			handleError(`Request failed with status: ${response.status}`);
 
-        return;
-      }
+			return;
+		}
 
-      const data = await response.json();
-      const knowledgeArticleId = data.id;
+		const data = await response.json();
 
-      if (!knowledgeArticleId) {
-        console.error("Knowledge article ID not found in the response");
-        window.location.href = `/not-found-404`;
+		const knowledgeArticleId = data.id;
 
-        return;
-      }
+		if (!knowledgeArticleId) {
+			handleError('Knowledge article ID not found in the response');
 
-      let language = urlParams.get('lang') || 'en';
+			return;
+		}
 
-      if (language.toLowerCase() !== 'en' && language.toLowerCase() !== 'ja') {
-        language = 'en-us';
-      }
+		const language = resolveLanguage(
+			data.content_i18n,
+			urlParams.get('lang')?.toLowerCase()
+		);
 
-      window.location.href = `${Liferay.ThemeDisplay.getCDNBaseURL()}/${language}/l/${knowledgeArticleId}`;
+		window.location.href = `${Liferay.ThemeDisplay.getCDNBaseURL()}/${language}/l/${knowledgeArticleId}`;
+	}
+	catch (error) {
+		handleError(`An error occurred during redirect: ${error}`);
+	}
+}
 
-    } catch (error) {
-      console.error("Error: ", error);
-      window.location.href = `/not-found-404`;
-    }
-  }
+function handleError(errorMessage) {
+	console.error(errorMessage);
 
-  redirectToArticle();
+	window.location.href = `/not-found-404`;
+}
+
+function resolveLanguage(content, paramLang) {
+	if (
+		(paramLang === 'ja' && content?.ja_JP) ||
+		(!content?.en_US && content?.ja_JP)
+	) {
+		return 'ja';
+	}
+
+	return 'en';
+}
+
+redirectToArticle();

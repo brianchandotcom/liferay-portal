@@ -13,10 +13,12 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.NavigationMenuResource;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -552,7 +555,17 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 							[siteNavigationMenu.getType() - 1];
 					});
 				setPermissions(() -> _toPermissions(siteNavigationMenu));
-				setSiteId(siteNavigationMenu::getGroupId);
+				setSiteExternalReferenceCode(
+					() -> {
+						Group group = _groupLocalService.fetchGroup(
+							siteNavigationMenu.getGroupId());
+
+						if (group != null) {
+							return group.getExternalReferenceCode();
+						}
+
+						return StringPool.BLANK;
+					});
 			}
 		};
 	}
@@ -777,6 +790,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	private static final EntityModel _entityModel =
 		new NavigationMenuEntityModel();
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

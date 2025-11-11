@@ -47,6 +47,8 @@ export function AdvancedTab({
 		(values.businessType === 'Relationship' && isRootDescendantNode) ||
 		values.required ||
 		values.system;
+	const hasDefaultValue =
+		values.businessType === 'Boolean' || values.businessType === 'Picklist';
 
 	return (
 		<>
@@ -71,7 +73,7 @@ export function AdvancedTab({
 				</ContainerWrapper>
 			)}
 
-			{values.businessType === 'Picklist' && (
+			{hasDefaultValue && (
 				<ContainerWrapper
 					collapsable
 					defaultExpanded

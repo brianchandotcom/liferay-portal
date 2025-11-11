@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -81,5 +82,61 @@ test(
 		).toBeVisible();
 
 		await apiHelpers.objectFolder.deleteObjectEntryFolder(folderData.id);
+	}
+);
+
+test(
+	'Info panel shows correct number of assets in folder',
+	{tag: '@LPD-69166'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const folderName = `Folder ${getRandomInt()}`;
+
+		const folder = await apiHelpers.objectFolder.createObjectEntryFolder({
+			parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+			scopeKey: 'Default',
+			title: folderName,
+		});
+
+		try {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: `file_${getRandomString()}.png`,
+					},
+					objectEntryFolderExternalReferenceCode:
+						folder.externalReferenceCode,
+					title: `Content ${getRandomInt()}`,
+				},
+				'cms/basic-documents',
+				'Default'
+			);
+
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode:
+					folder.externalReferenceCode,
+				scopeKey: 'Default',
+				title: `Subfolder ${getRandomInt()}`,
+			});
+
+			await assetsPage.gotoFiles();
+
+			await page.getByLabel(/View Selected/i).click();
+			await page.getByRole('option', {name: 'Table'}).click();
+
+			await page
+				.getByRole('row', {name: folderName})
+				.getByRole('checkbox')
+				.check();
+
+			await page.getByRole('button', {name: 'Show Info Panel'}).click();
+
+			expect(
+				await page.getByTestId('number-of-assets').textContent()
+			).toContain('2');
+		}
+		finally {
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(folder.id);
+		}
 	}
 );

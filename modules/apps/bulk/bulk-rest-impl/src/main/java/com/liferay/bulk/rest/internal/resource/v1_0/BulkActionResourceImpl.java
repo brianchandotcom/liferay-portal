@@ -82,8 +82,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		BulkActionBulkSelectionFactory bulkActionBulkSelectionFactory =
 			_getBulkActionBulkSelectionFactory(
-				blueprintExternalReferenceCode, emptySearch, entryClassNames,
-				scope, search, filter, sorts, bulkAction);
+				blueprintExternalReferenceCode, bulkAction, emptySearch,
+				entryClassNames, filter, scope, search, sorts);
 
 		BulkSelection<Object> bulkSelection =
 			bulkActionBulkSelectionFactory.create();
@@ -139,33 +139,37 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private BulkActionBulkSelectionFactory _getBulkActionBulkSelectionFactory(
-		String blueprintExternalReferenceCode, Boolean emptySearch,
-		String entryClassNames, String scope, String search, Filter filter,
-		Sort[] sorts, BulkAction bulkAction) {
+		String blueprintExternalReferenceCode, BulkAction bulkAction,
+		Boolean emptySearch, String entryClassNames, Filter filter,
+		String scope, String search, Sort[] sorts) {
 
 		return new BulkActionBulkSelectionFactory.Builder(
+		).blueprintExternalReferenceCode(
+			blueprintExternalReferenceCode
+		).bulkAction(
+			bulkAction
 		).bulkSelectionFactoryRegistry(
 			_bulkSelectionFactoryRegistry
+		).contextAcceptLanguage(
+			contextAcceptLanguage
+		).contextCompany(
+			contextCompany
+		).contextHttpServletRequest(
+			contextHttpServletRequest
+		).contextUser(
+			contextUser
+		).emptySearch(
+			emptySearch
+		).entryClassNames(
+			entryClassNames
+		).filter(
+			filter
 		).filterFactory(
 			_filterFactory
 		).groupLocalService(
 			_groupLocalService
 		).localization(
 			_localization
-		).searcher(
-			_searcher
-		).searchRequestBuilderFactory(
-			_searchRequestBuilderFactory
-		).contextAcceptLanguage(
-			contextAcceptLanguage
-		).contextCompany(
-			contextCompany
-		).blueprintExternalReferenceCode(
-			blueprintExternalReferenceCode
-		).emptySearch(
-			emptySearch
-		).entryClassNames(
-			entryClassNames
 		).objectDefinitionLocalService(
 			_objectDefinitionLocalService
 		).objectEntryLocalService(
@@ -174,16 +178,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			scope
 		).search(
 			search
-		).filter(
-			filter
+		).searcher(
+			_searcher
+		).searchRequestBuilderFactory(
+			_searchRequestBuilderFactory
 		).sorts(
 			sorts
-		).bulkAction(
-			bulkAction
-		).contextHttpServletRequest(
-			contextHttpServletRequest
-		).contextUser(
-			contextUser
 		).build();
 	}
 

@@ -59,18 +59,14 @@ public class PermissionObjectBulkSelectionAction
 			_objectEntryLocalService.getObjectEntry(
 				GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
 
-		long companyId = bulkActionTaskObjectEntry.getCompanyId();
-
 		Map<String, Serializable> bulkActionTaskValues =
 			bulkActionTaskObjectEntry.getValues();
 
 		bulkActionTaskValues.put("numberOfItems", bulkSelection.getSize());
 
-		String status = "completed";
-
-		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
-
+		String executionStatus = "completed";
 		AtomicInteger numberOfFailedItems = new AtomicInteger(0);
+		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
 
 		try {
 			bulkActionTaskValues.put("executionStatus", "started");
@@ -80,42 +76,43 @@ public class PermissionObjectBulkSelectionAction
 
 			bulkActionTaskValues = bulkActionTaskObjectEntry.getValues();
 
+			long companyId = bulkActionTaskObjectEntry.getCompanyId();
+
 			bulkSelection.forEach(
 				object -> {
 					try {
-						long groupId = 0L;
-						String resourceName = null;
-						long resourceId = 0L;
 						String className = null;
+						long groupId = 0L;
+						long resourceId = 0L;
+						String resourceName = null;
 
 						if (object instanceof DepotEntry) {
 							DepotEntry depotEntry = (DepotEntry)object;
 
+							className = DepotEntry.class.getName();
 							groupId = depotEntry.getGroupId();
+							resourceId = depotEntry.getDepotEntryId();
 
 							resourceName = DepotEntry.class.getName();
-							resourceId = depotEntry.getDepotEntryId();
-							className = DepotEntry.class.getName();
 						}
 						else if (object instanceof ObjectEntry) {
 							ObjectEntry objectEntry = (ObjectEntry)object;
 
-							groupId = objectEntry.getGroupId();
-
-							resourceName = objectEntry.getModelClassName();
-							resourceId = objectEntry.getObjectEntryId();
 							className = objectEntry.getModelClassName();
+							groupId = objectEntry.getGroupId();
+							resourceId = objectEntry.getObjectEntryId();
+							resourceName = objectEntry.getModelClassName();
 						}
 						else {
 							ObjectEntryFolder objectEntryFolder =
 								(ObjectEntryFolder)object;
 
+							className = ObjectEntryFolder.class.getName();
 							groupId = objectEntryFolder.getGroupId();
-
-							resourceName = ObjectEntryFolder.class.getName();
 							resourceId =
 								objectEntryFolder.getObjectEntryFolderId();
-							className = ObjectEntryFolder.class.getName();
+
+							resourceName = ObjectEntryFolder.class.getName();
 						}
 
 						_permissionService.checkPermission(
@@ -187,11 +184,11 @@ public class PermissionObjectBulkSelectionAction
 				_log.warn(portalException);
 			}
 
-			status = "failed";
+			executionStatus = "failed";
 		}
 		finally {
 			bulkActionTaskValues.put("completionDate", new Date());
-			bulkActionTaskValues.put("executionStatus", status);
+			bulkActionTaskValues.put("executionStatus", executionStatus);
 			bulkActionTaskValues.put(
 				"numberOfFailedItems", numberOfFailedItems.get());
 			bulkActionTaskValues.put(

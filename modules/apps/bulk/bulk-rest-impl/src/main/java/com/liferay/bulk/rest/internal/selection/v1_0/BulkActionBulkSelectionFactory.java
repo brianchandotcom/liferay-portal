@@ -261,27 +261,27 @@ public class BulkActionBulkSelectionFactory {
 	}
 
 	private BulkActionBulkSelectionFactory(Builder builder) {
-		_bulkSelectionFactoryRegistry = builder._bulkSelectionFactoryRegistry;
-		_localization = builder._localization;
-		_searcher = builder._searcher;
-		_searchRequestBuilderFactory = builder._searchRequestBuilderFactory;
-		_contextAcceptLanguage = builder._contextAcceptLanguage;
-		_contextCompany = builder._contextCompany;
 		_blueprintExternalReferenceCode =
 			builder._blueprintExternalReferenceCode;
+		_bulkAction = builder._bulkAction;
+		_bulkSelectionFactoryRegistry = builder._bulkSelectionFactoryRegistry;
+		_contextAcceptLanguage = builder._contextAcceptLanguage;
+		_contextCompany = builder._contextCompany;
+		_contextHttpServletRequest = builder._contextHttpServletRequest;
+		_contextUser = builder._contextUser;
 		_emptySearch = builder._emptySearch;
 		_entryClassNames = builder._entryClassNames;
-		_scope = builder._scope;
-		_search = builder._search;
 		_filter = builder._filter;
 		_filterFactory = builder._filterFactory;
 		_groupLocalService = builder._groupLocalService;
+		_localization = builder._localization;
 		_objectDefinitionLocalService = builder._objectDefinitionLocalService;
 		_objectEntryLocalService = builder._objectEntryLocalService;
+		_scope = builder._scope;
+		_search = builder._search;
+		_searchRequestBuilderFactory = builder._searchRequestBuilderFactory;
+		_searcher = builder._searcher;
 		_sorts = builder._sorts;
-		_bulkAction = builder._bulkAction;
-		_contextHttpServletRequest = builder._contextHttpServletRequest;
-		_contextUser = builder._contextUser;
 	}
 
 	private BooleanClause<?> _getBooleanClause(

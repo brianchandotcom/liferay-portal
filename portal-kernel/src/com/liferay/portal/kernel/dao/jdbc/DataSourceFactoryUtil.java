@@ -292,37 +292,6 @@ public class DataSourceFactoryUtil {
 		}
 	}
 
-	private static String _buildURL(
-		String baseURL, char parameterDelimiter, Map<String, String> parameters,
-		char urlDelimiter) {
-
-		if (parameters.isEmpty()) {
-			return baseURL;
-		}
-
-		StringBundler sb = new StringBundler((parameters.size() * 4) + 2);
-
-		sb.append(baseURL);
-		sb.append(urlDelimiter);
-
-		for (Map.Entry<String, String> entry : parameters.entrySet()) {
-			sb.append(entry.getKey());
-
-			String value = entry.getValue();
-
-			if (!_MALFORMED_PARAMETER_PLACE_HOLDER.equals(value)) {
-				sb.append(CharPool.EQUAL);
-				sb.append(value);
-			}
-
-			sb.append(parameterDelimiter);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
 	private static void _downloadAndInstallJar(
 			URL url, Path path, URLClassLoader urlClassLoader, String sha1)
 		throws Exception {
@@ -461,8 +430,34 @@ public class DataSourceFactoryUtil {
 			}
 		}
 
-		String newURL = _buildURL(
-			baseURL, parameterDelimiter, existingParameterValues, urlDelimiter);
+		String newURL = baseURL;
+
+		if (!existingParameterValues.isEmpty()) {
+			StringBundler sb = new StringBundler(
+				(existingParameterValues.size() * 4) + 2);
+
+			sb.append(baseURL);
+			sb.append(urlDelimiter);
+
+			for (Map.Entry<String, String> entry :
+					existingParameterValues.entrySet()) {
+
+				sb.append(entry.getKey());
+
+				String value = entry.getValue();
+
+				if (!_MALFORMED_PARAMETER_PLACE_HOLDER.equals(value)) {
+					sb.append(CharPool.EQUAL);
+					sb.append(value);
+				}
+
+				sb.append(parameterDelimiter);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			newURL = sb.toString();
+		}
 
 		if (!Objects.equals(url, newURL) && _log.isInfoEnabled()) {
 			_log.info(

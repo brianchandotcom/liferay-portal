@@ -23,7 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.verify.VerifyProcess;
+
+import java.sql.Connection;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,17 +37,20 @@ import org.osgi.framework.Bundle;
 /**
  * @author Luis Ortiz
  */
-public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
+public class ServiceComponentPostUpgradeDataCleanupProcess
+	implements PostUpgradeDataCleanupProcess {
 
-	public ServiceComponentDataCleanupVerifyProcess(
+	public ServiceComponentPostUpgradeDataCleanupProcess(
+		Connection connection,
 		ServiceComponentLocalService serviceComponentLocalService) {
 
+		_connection = connection;
 		_serviceComponentLocalService = serviceComponentLocalService;
 	}
 
 	@Override
-	protected void doVerify() throws Exception {
-		DBInspector dbInspector = new DBInspector(connection);
+	public void cleanUp() throws Exception {
+		DBInspector dbInspector = new DBInspector(_connection);
 
 		Set<ServiceComponent> latestServiceComponents = new HashSet<>(
 			_serviceComponentLocalService.getLatestServiceComponents());
@@ -134,8 +138,9 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ServiceComponentDataCleanupVerifyProcess.class);
+		ServiceComponentPostUpgradeDataCleanupProcess.class);
 
+	private final Connection _connection;
 	private final ServiceComponentLocalService _serviceComponentLocalService;
 
 }

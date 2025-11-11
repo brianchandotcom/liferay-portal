@@ -22,9 +22,9 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.VerifyProcess;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import java.sql.Connection;
 
@@ -45,7 +45,7 @@ import org.osgi.framework.Bundle;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class ServiceComponentDataCleanupVerifyProcessTest {
+public class ServiceComponentPostUpgradeDataCleanupProcessTest {
 
 	@ClassRule
 	@Rule
@@ -283,17 +283,23 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 		return null;
 	}
 
-	private VerifyProcess _getVerifyProcess() throws Exception {
+	private void _runPostUpgradeDataCleanUpVerifyProcess() throws Exception {
 		Bundle bundle = BundleUtil.getBundle(
 			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
 
-		Class<?> verifyProcessClass = bundle.loadClass(_VERIFY_CLASS_NAME);
+		Class<?> postUpgradeDataCleanupProcessClass = bundle.loadClass(
+			_POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME);
 
-		Constructor<?> constructor = verifyProcessClass.getConstructor(
-			ServiceComponentLocalService.class);
+		Constructor<?> constructor =
+			postUpgradeDataCleanupProcessClass.getConstructor(
+				Connection.class, ServiceComponentLocalService.class);
 
-		return (VerifyProcess)constructor.newInstance(
-			_serviceComponentLocalService);
+		Object object = constructor.newInstance(
+			_connection, _serviceComponentLocalService);
+
+		Method method = postUpgradeDataCleanupProcessClass.getMethod("cleanUp");
+
+		method.invoke(object);
 	}
 
 	private void _test(
@@ -305,11 +311,10 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 		initializeDataUnsafeRunnable.run();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_VERIFY_CLASS_NAME, LoggerTestUtil.INFO)) {
+				_POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME,
+				LoggerTestUtil.INFO)) {
 
-			VerifyProcess verifyProcess = _getVerifyProcess();
-
-			verifyProcess.verify();
+			_runPostUpgradeDataCleanUpVerifyProcess();
 
 			assertUnsafeConsumer.accept(logCapture);
 		}
@@ -318,9 +323,9 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 		}
 	}
 
-	private static final String _VERIFY_CLASS_NAME =
+	private static final String _POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME =
 		"com.liferay.data.cleanup.internal.verify." +
-			"ServiceComponentDataCleanupVerifyProcess";
+			"ServiceComponentPostUpgradeDataCleanupProcess";
 
 	private static Connection _connection;
 	private static DBInspector _dbInspector;

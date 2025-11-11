@@ -19,19 +19,28 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "run.on.portal.upgrade=true", service = VerifyProcess.class
 )
-public class DataCleanupVerifyProcess extends VerifyProcess {
+public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
+
+	public void cleanUpClassName() throws Exception {
+		PostUpgradeDataCleanupProcess postUpgradeDataCleanupProcess =
+			new ClassNamePostUpgradeDataCleanupProcess(
+				_classNameLocalService, connection);
+
+		postUpgradeDataCleanupProcess.cleanUp();
+	}
+
+	public void cleanUpServiceComponent() throws Exception {
+		PostUpgradeDataCleanupProcess postUpgradeDataCleanupProcess =
+			new ServiceComponentPostUpgradeDataCleanupProcess(
+				connection, _serviceComponentLocalService);
+
+		postUpgradeDataCleanupProcess.cleanUp();
+	}
 
 	@Override
 	protected void doVerify() throws Exception {
-		VerifyProcess verifyProcess = new ClassNameDataCleanupVerifyProcess(
-			_classNameLocalService);
-
-		verifyProcess.verify();
-
-		verifyProcess = new ServiceComponentDataCleanupVerifyProcess(
-			_serviceComponentLocalService);
-
-		verifyProcess.verify();
+		cleanUpClassName();
+		cleanUpServiceComponent();
 	}
 
 	@Reference

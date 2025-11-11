@@ -16,8 +16,9 @@ import com.liferay.data.cleanup.internal.upgrade.OutdatedPublishedCTCollectionUp
 import com.liferay.data.cleanup.internal.upgrade.PublishedCTSContentDataUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.WidgetLayoutTypeSettingsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
-import com.liferay.data.cleanup.internal.verify.ClassNameDataCleanupVerifyProcess;
-import com.liferay.data.cleanup.internal.verify.ServiceComponentDataCleanupVerifyProcess;
+import com.liferay.data.cleanup.internal.verify.ClassNamePostUpgradeDataCleanupProcess;
+import com.liferay.data.cleanup.internal.verify.PostUpgradeDataCleanupProcess;
+import com.liferay.data.cleanup.internal.verify.ServiceComponentPostUpgradeDataCleanupProcess;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.manager.ContentManager;
@@ -138,16 +139,37 @@ public class DataRemovalExecutor {
 		}
 
 		if (dataRemovalConfiguration.removeClassNameOrphanData()) {
-			VerifyProcess verifyProcess = new ClassNameDataCleanupVerifyProcess(
-				_classNameLocalService);
+			VerifyProcess verifyProcess = new VerifyProcess() {
+
+				@Override
+				protected void doVerify() throws Exception {
+					PostUpgradeDataCleanupProcess
+						postUpgradeDataCleanupProcess =
+							new ClassNamePostUpgradeDataCleanupProcess(
+								_classNameLocalService, connection);
+
+					postUpgradeDataCleanupProcess.cleanUp();
+				}
+
+			};
 
 			verifyProcess.verify();
 		}
 
 		if (dataRemovalConfiguration.removeServiceComponentOrphanData()) {
-			VerifyProcess verifyProcess =
-				new ServiceComponentDataCleanupVerifyProcess(
-					_serviceComponentLocalService);
+			VerifyProcess verifyProcess = new VerifyProcess() {
+
+				@Override
+				protected void doVerify() throws Exception {
+					PostUpgradeDataCleanupProcess
+						postUpgradeDataCleanupProcess =
+							new ServiceComponentPostUpgradeDataCleanupProcess(
+								connection, _serviceComponentLocalService);
+
+					postUpgradeDataCleanupProcess.cleanUp();
+				}
+
+			};
 
 			verifyProcess.verify();
 		}

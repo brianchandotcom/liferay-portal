@@ -24,9 +24,9 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.VerifyProcess;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +52,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class ClassNameDataCleanupVerifyProcessTest {
+public class ClassNamePostUpgradeDataCleanupProcessTest {
 
 	@ClassRule
 	@Rule
@@ -343,21 +343,9 @@ public class ClassNameDataCleanupVerifyProcessTest {
 			() -> bundleAtomicReference.set(_uninstallBundle()));
 	}
 
-	private VerifyProcess _getVerifyProcess() throws Exception {
-		Bundle bundle = BundleUtil.getBundle(
-			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
-
-		Class<?> verifyProcessClass = bundle.loadClass(_VERIFY_CLASS_NAME);
-
-		Constructor<?> constructor = verifyProcessClass.getConstructor(
-			ClassNameLocalService.class);
-
-		return (VerifyProcess)constructor.newInstance(_classNameLocalService);
-	}
-
 	private void _installBundle(Bundle bundle) throws Exception {
 		Bundle currentBundle = FrameworkUtil.getBundle(
-			ClassNameDataCleanupVerifyProcessTest.class);
+			ClassNamePostUpgradeDataCleanupProcessTest.class);
 
 		BundleContext bundleContext = currentBundle.getBundleContext();
 
@@ -372,6 +360,25 @@ public class ClassNameDataCleanupVerifyProcessTest {
 			bundleContext, bundlesToRefresh);
 	}
 
+	private void _runPostUpgradeDataCleanUpVerifyProcess() throws Exception {
+		Bundle bundle = BundleUtil.getBundle(
+			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
+
+		Class<?> postUpgradeDataCleanupProcessClass = bundle.loadClass(
+			_POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME);
+
+		Constructor<?> constructor =
+			postUpgradeDataCleanupProcessClass.getConstructor(
+				ClassNameLocalService.class, Connection.class);
+
+		Object object = constructor.newInstance(
+			_classNameLocalService, _connection);
+
+		Method method = postUpgradeDataCleanupProcessClass.getMethod("cleanUp");
+
+		method.invoke(object);
+	}
+
 	private void _test(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
@@ -383,11 +390,10 @@ public class ClassNameDataCleanupVerifyProcessTest {
 		initializeDataUnsafeRunnable.run();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_VERIFY_CLASS_NAME, LoggerTestUtil.INFO)) {
+				_POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME,
+				LoggerTestUtil.INFO)) {
 
-			VerifyProcess verifyProcess = _getVerifyProcess();
-
-			verifyProcess.verify();
+			_runPostUpgradeDataCleanUpVerifyProcess();
 
 			assertUnsafeConsumer.accept(logCapture);
 		}
@@ -401,7 +407,7 @@ public class ClassNameDataCleanupVerifyProcessTest {
 
 	private Bundle _uninstallBundle() throws Exception {
 		Bundle currentBundle = FrameworkUtil.getBundle(
-			ClassNameDataCleanupVerifyProcessTest.class);
+			ClassNamePostUpgradeDataCleanupProcessTest.class);
 
 		BundleContext bundleContext = currentBundle.getBundleContext();
 
@@ -427,9 +433,9 @@ public class ClassNameDataCleanupVerifyProcessTest {
 		return null;
 	}
 
-	private static final String _VERIFY_CLASS_NAME =
+	private static final String _POST_UPGRADE_DATA_CLEANUP_PROCESS_CLASS_NAME =
 		"com.liferay.data.cleanup.internal.verify." +
-			"ClassNameDataCleanupVerifyProcess";
+			"ClassNamePostUpgradeDataCleanupProcess";
 
 	private static Connection _connection;
 	private static DBInspector _dbInspector;

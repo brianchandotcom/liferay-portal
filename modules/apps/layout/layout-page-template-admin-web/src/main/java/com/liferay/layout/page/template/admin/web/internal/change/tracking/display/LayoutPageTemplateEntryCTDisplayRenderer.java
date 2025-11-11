@@ -8,28 +8,29 @@ package com.liferay.layout.page.template.admin.web.internal.change.tracking.disp
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
-import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,41 +48,37 @@ public class LayoutPageTemplateEntryCTDisplayRenderer
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
 
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				httpServletRequest,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/layout_page_template_admin/edit_layout_page_template_entry"
-		).setTabs1(
-			() -> {
-				if ((layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.BASIC) ||
-					(layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-					return "page-templates";
-				}
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
-				if (layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeLocalService.fetchLayoutPrototype(
+					layoutPageTemplateEntry.getLayoutPrototypeId());
 
-					return "display-page-templates";
-				}
-
-				if (layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
-
-					return "master-layouts";
-				}
-
+			if (layoutPrototype == null) {
 				return null;
 			}
-		).setParameter(
-			"layoutPageTemplateEntryId",
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-		).buildString();
+
+			Group layoutPrototypeGroup = layoutPrototype.getGroup();
+
+			return HttpComponentsUtil.addParameters(
+				layoutPrototypeGroup.getDisplayURL(themeDisplay, true),
+				"p_l_back_url", themeDisplay.getURLCurrent());
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		return HttpComponentsUtil.addParameters(
+			PortalUtil.getLayoutFullURL(
+				layout.fetchDraftLayout(), themeDisplay),
+			"p_l_back_url", themeDisplay.getURLCurrent(), "p_l_mode",
+			Constants.EDIT);
 	}
 
 	@Override
@@ -209,6 +206,9 @@ public class LayoutPageTemplateEntryCTDisplayRenderer
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -231,6 +231,11 @@ public class SitePageResourceImpl
 				return false;
 			}
 
+			@Override
+			public boolean isHidden() {
+				return true;
+			}
+
 		};
 	}
 

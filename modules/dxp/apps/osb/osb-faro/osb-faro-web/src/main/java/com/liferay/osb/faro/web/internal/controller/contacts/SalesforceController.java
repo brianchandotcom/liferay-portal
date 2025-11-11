@@ -7,7 +7,6 @@ package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
-import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.portal.kernel.model.RoleConstants;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -24,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {SalesforceController.class, FaroController.class})
+@Component(service = SalesforceController.class)
 @Path("/{groupId}/salesforce")
 @Produces(MediaType.APPLICATION_JSON)
 public class SalesforceController extends BaseFaroController {

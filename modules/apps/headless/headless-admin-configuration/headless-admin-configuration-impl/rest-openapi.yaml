@@ -177,14 +177,6 @@ paths:
                     required: true
                     schema:
                         type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/SiteConfiguration"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/SiteConfiguration"
             responses:
                 200:
                     content:

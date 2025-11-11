@@ -1391,3 +1391,175 @@ test(
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.plid);
 	}
 );
+
+test(
+	'Can edit content page from review changes screen',
+	{tag: '@LPD-70037'},
+	async ({
+		apiHelpers,
+		changeTrackingPage,
+		ctCollection,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		await changeTrackingPage.workOnPublication(ctCollection);
+
+		// Add a page with an HTML fragment
+
+		const layoutTitle = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {type: 'content'},
+			title: layoutTitle,
+		});
+
+		// Go to edit content page template from review changes
+
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await changeTrackingPage.viewChanges({
+			changed: 'Added',
+			click: true,
+			site: site.name,
+			title: layoutTitle,
+			type: 'Page',
+		});
+
+		await changeTrackingPage.gotoEditChanges(ctCollection.body.name);
+
+		// Edit content page template and save
+
+		await pageEditorPage.addFragment('Basic Components', 'HTML');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator(
+				'//td[contains(@class,"publications-render-view-content")]'
+			),
+			trigger: pageEditorPage.publishButton,
+		});
+	}
+);
+
+test(
+	'Can edit content page template from review changes screen',
+	{tag: '@LPD-70037'},
+	async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+		pageEditorPage,
+		pageTemplatesPage,
+		site,
+	}) => {
+		await changeTrackingPage.workOnPublication(ctCollection);
+
+		// Create page template collection
+
+		await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const pageTemplateCollectionName = getRandomString();
+
+		await pageTemplatesPage.addPageTemplateCollection(
+			pageTemplateCollectionName
+		);
+
+		// Create content page template
+
+		const contentPageTemplateName = getRandomString();
+
+		await pageTemplatesPage.addContentPageTemplate(contentPageTemplateName);
+
+		await pageEditorPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'Success:The page template was published successfully.'
+		);
+
+		// Go to edit content page template from review changes
+
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await changeTrackingPage.viewChanges({
+			changed: 'Added',
+			click: true,
+			site: site.name,
+			title: contentPageTemplateName,
+			type: 'Layout Page Template Entry',
+		});
+
+		await changeTrackingPage.gotoEditChanges(ctCollection.body.name);
+
+		// Edit content page template and save
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator(
+				'//td[contains(@class,"publications-render-view-content")]'
+			),
+			trigger: pageEditorPage.publishButton,
+		});
+	}
+);
+
+test(
+	'Can edit widget page template from review changes screen',
+	{tag: '@LPD-70037'},
+	async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+		pageTemplatesPage,
+		site,
+		widgetPagePage,
+	}) => {
+		await changeTrackingPage.workOnPublication(ctCollection);
+
+		// Create page template collection
+
+		await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const pageTemplateCollectionName = getRandomString();
+
+		await pageTemplatesPage.addPageTemplateCollection(
+			pageTemplateCollectionName
+		);
+
+		// Create widget page template
+
+		const widgetPageTemplateName = getRandomString();
+
+		await pageTemplatesPage.addWidgetPageTemplate(widgetPageTemplateName);
+
+		// Go to edit content page template from review changes
+
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await changeTrackingPage.viewChanges({
+			changed: 'Added',
+			click: true,
+			site: site.name,
+			title: widgetPageTemplateName,
+			type: 'Layout Page Template Entry',
+		});
+
+		await changeTrackingPage.gotoEditChanges(ctCollection.body.name);
+
+		// Edit widget page template
+
+		await widgetPagePage.addPortlet('Web Content Display');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator(
+				'//td[contains(@class,"publications-render-view-content")]'
+			),
+			trigger: page.getByRole('link', {exact: true, name: 'Back'}),
+		});
+	}
+);

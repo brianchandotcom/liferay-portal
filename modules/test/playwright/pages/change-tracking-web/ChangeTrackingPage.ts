@@ -6,6 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {userData} from '../../utils/performLogin';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -269,6 +270,18 @@ export class ChangeTrackingPage {
 		await expect(
 			this.page.getByRole('button', {name: 'Create'})
 		).toBeVisible();
+	}
+
+	async gotoEditChanges(publicationName?: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: `Edit in ${publicationName}`,
+			}),
+			trigger: this.page.locator(
+				'.publications-changes-content .lexicon-icon-ellipsis-v'
+			),
+		});
 	}
 
 	async goToPublicationsViaApplicationMenu() {

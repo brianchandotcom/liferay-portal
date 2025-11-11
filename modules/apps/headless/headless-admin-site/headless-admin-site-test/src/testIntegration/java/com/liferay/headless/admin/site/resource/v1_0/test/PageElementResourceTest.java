@@ -113,6 +113,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -565,6 +566,20 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			String configuration, long groupId, ServiceContext serviceContext)
 		throws Exception {
 
+		return _addFragmentEntry(
+			configuration, groupId,
+			StringBundler.concat(
+				"<h1 data-lfr-editable-id=\"element-text\" ",
+				"data-lfr-editable-type=\"text\">",
+				RandomTestUtil.randomString(), "</h1>"),
+			serviceContext);
+	}
+
+	private FragmentEntry _addFragmentEntry(
+			String configuration, long groupId, String html,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
 				null, TestPropsValues.getUserId(), groupId,
@@ -574,13 +589,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			null, TestPropsValues.getUserId(), groupId,
 			fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK,
-			StringBundler.concat(
-				"<h1 data-lfr-editable-id=\"element-text\" ",
-				"data-lfr-editable-type=\"text\">",
-				RandomTestUtil.randomString(), "</h1>"),
-			StringPool.BLANK, false, configuration, null, 0, false, false,
-			FragmentConstants.TYPE_COMPONENT, null,
+			StringPool.BLANK, html, StringPool.BLANK, false, configuration,
+			null, 0, false, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
@@ -2270,6 +2280,56 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					_addFragmentEntry(
 						null, testGroup.getGroupId(), serviceContext),
 					testGroup.getGroupId())));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					Collections.emptyMap(), new FragmentEditableElement[0],
+					_addFragmentEntry(
+						null, testGroup.getGroupId(), serviceContext),
+					testGroup.getGroupId())));
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			null, testGroup.getGroupId(),
+			"<lfr-widget-web-content></lfr-widget-web-content>",
+			serviceContext);
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		String fragmentInstanceExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		String namespace = RandomTestUtil.randomString();
+
+		String uuid = RandomTestUtil.randomString();
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					Collections.emptyMap(), new FragmentEditableElement[0],
+					fragmentEntry, fragmentInstanceExternalReferenceCode,
+					testGroup.getGroupId(), namespace, uuid,
+					new WidgetInstance[] {
+						_getWidgetInstance(
+							_getWidgetConfig(), namespace,
+							JournalContentPortletKeys.JOURNAL_CONTENT,
+							_getWidgetPermissions())
+					})));
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					Collections.emptyMap(), new FragmentEditableElement[0],
+					fragmentEntry, fragmentInstanceExternalReferenceCode,
+					testGroup.getGroupId(), namespace, uuid,
+					new WidgetInstance[] {
+						_getWidgetInstance(
+							new HashMap<>(), namespace,
+							JournalContentPortletKeys.JOURNAL_CONTENT,
+							new WidgetPermission[0])
+					})));
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration();
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements();
@@ -2732,6 +2792,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	private int _position;
 

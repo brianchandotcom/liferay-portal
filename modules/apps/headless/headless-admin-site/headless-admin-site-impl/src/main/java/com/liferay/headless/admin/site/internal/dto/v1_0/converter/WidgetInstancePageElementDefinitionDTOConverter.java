@@ -7,10 +7,14 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.WidgetInstanceUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -103,12 +107,30 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 		widgetInstancePageElementDefinition.setName(
 			fragmentStyledLayoutStructureItem::getName);
 		widgetInstancePageElementDefinition.setWidgetInstance(
-			() -> WidgetInstanceUtil.getWidgetInstance(fragmentEntryLink));
+			() -> _getWidgetInstance(fragmentEntryLink));
 		widgetInstancePageElementDefinition.
 			setWidgetInstanceExternalReferenceCode(
 				fragmentEntryLink::getExternalReferenceCode);
 
 		return widgetInstancePageElementDefinition;
+	}
+
+	private WidgetInstance _getWidgetInstance(
+		FragmentEntryLink fragmentEntryLink) {
+
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
+
+		if (JSONUtil.isEmpty(jsonObject) || !jsonObject.has("portletId")) {
+			return null;
+		}
+
+		String instanceId = jsonObject.getString("instanceId", null);
+
+		String portletId = PortletIdCodec.encode(
+			jsonObject.getString("portletId"), instanceId);
+
+		return WidgetInstanceUtil.getWidgetInstance(
+			instanceId, fragmentEntryLink.getPlid(), portletId);
 	}
 
 	@Reference

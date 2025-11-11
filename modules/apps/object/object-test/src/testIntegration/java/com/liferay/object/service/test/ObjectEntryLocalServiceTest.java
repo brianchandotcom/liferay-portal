@@ -4720,7 +4720,7 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(groupId, exportImportReportEntry.getGroupId());
 			Assert.assertEquals(
 				_siteObjectDefinition.getShortName(),
-				exportImportReportEntry.getModelName());
+				exportImportReportEntry.getModelNameLanguageKey());
 			Assert.assertEquals(
 				ExportImportReportEntryConstants.TYPE_EMPTY,
 				exportImportReportEntry.getType());

@@ -108,7 +108,8 @@ public class BatchEnginePortletDataHandlerUtil {
 			).put(
 				"modelClassName", exportImportDescriptor.getModelClassName()
 			).put(
-				"modelName", exportImportDescriptor.getLabelLanguageKey()
+				"modelNameLanguageKey",
+				exportImportDescriptor.getLabelLanguageKey()
 			).putAll(
 				exportImportDescriptor.getParameters(portletDataContext)
 			).build();
@@ -174,7 +175,8 @@ public class BatchEnginePortletDataHandlerUtil {
 			).put(
 				"modelClassName", exportImportDescriptor.getModelClassName()
 			).put(
-				"modelName", exportImportDescriptor.getLabelLanguageKey()
+				"modelNameLanguageKey",
+				exportImportDescriptor.getLabelLanguageKey()
 			).putAll(
 				exportImportDescriptor.getParameters(portletDataContext)
 			).build();

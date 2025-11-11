@@ -61,7 +61,8 @@ public class ExportImportReportEntryModelDocumentContributor
 		for (Locale locale : _language.getAvailableLocales()) {
 			map.put(
 				locale,
-				_language.get(locale, exportImportReportEntry.getModelName()));
+				_language.get(
+					locale, exportImportReportEntry.getModelNameLanguageKey()));
 		}
 
 		return map;

@@ -62,7 +62,7 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			GetterUtil.getLong(
 				ExportImportThreadLocal.getExportImportConfigurationId()),
 			exception.getMessage(), _getErrorStackTrace(exception),
-			batchEngineImportTask.getParameterValue("modelName"),
+			batchEngineImportTask.getParameterValue("modelNameLanguageKey"),
 			ExportImportReportEntryConstants.ORIGIN_BATCH);
 	}
 

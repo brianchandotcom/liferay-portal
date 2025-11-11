@@ -213,7 +213,7 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 				setModelName(
 					() -> _language.get(
 						contextAcceptLanguage.getPreferredLocale(),
-						exportImportReportEntry.getModelName()));
+						exportImportReportEntry.getModelNameLanguageKey()));
 				setOrigin(() -> _toOrigin(exportImportReportEntry.getOrigin()));
 				setScope(
 					() -> Scope.of(

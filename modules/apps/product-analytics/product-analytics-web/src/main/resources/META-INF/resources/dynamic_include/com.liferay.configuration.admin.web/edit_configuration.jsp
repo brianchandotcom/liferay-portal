@@ -61,4 +61,39 @@ ProductAnalyticsConfiguration productAnalyticsConfiguration = (ProductAnalyticsC
 			}
 		});
 	}
+
+	var actionsButton = document.querySelector('[title="Actions"]');
+
+	if (actionsButton && <%= productAnalyticsConfiguration.enabled() %>) {
+		function addObserverIfDesiredNodeAvailable() {
+			var resetDefaultValuesButton = document.querySelector(
+				'[data-deleteconfigactionurl]'
+			);
+
+			if (!resetDefaultValuesButton) {
+				window.setTimeout(addObserverIfDesiredNodeAvailable, 500);
+				return;
+			}
+			else {
+				resetDefaultValuesButton.addEventListener('click', (event) => {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+
+					Liferay.Util.openConfirmModal({
+						message:
+							'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								window.location.href =
+									resetDefaultValuesButton.getAttribute(
+										'data-deleteconfigactionurl'
+									);
+							}
+						},
+					});
+				});
+			}
+		}
+		addObserverIfDesiredNodeAvailable();
+	}
 </aui:script>

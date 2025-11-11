@@ -98,13 +98,20 @@ public class Scope implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Scope)) {
+		if (!(object instanceof Scope scope)) {
 			return false;
 		}
 
-		Scope scope = (Scope)object;
+		if (Objects.equals(
+				getExternalReferenceCode(), scope.getExternalReferenceCode()) &&
+			Objects.equals(getKey(), scope.getKey()) &&
+			Objects.equals(getLabel(), scope.getLabel()) &&
+			Objects.equals(getType(), scope.getType())) {
 
-		return Objects.equals(toString(), scope.toString());
+			return true;
+		}
+
+		return false;
 	}
 
 	@Schema(description = "The scope's external reference code.")
@@ -164,9 +171,7 @@ public class Scope implements Serializable {
 
 	@Override
 	public int hashCode() {
-		String string = toString();
-
-		return string.hashCode();
+		return Objects.hash(getExternalReferenceCode(), getType());
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {

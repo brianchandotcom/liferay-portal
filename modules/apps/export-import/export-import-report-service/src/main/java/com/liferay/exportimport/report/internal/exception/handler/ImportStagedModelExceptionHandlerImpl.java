@@ -87,18 +87,6 @@ public class ImportStagedModelExceptionHandlerImpl
 		return outputStream.toString();
 	}
 
-	private long _getGroupId(PortletDataContext portletDataContext) {
-		long groupId = portletDataContext.getGroupId();
-
-		if (ExportImportReportEntryUtil.isCompanyScoped(
-			groupId, _groupLocalService)) {
-
-			groupId = 0;
-		}
-
-		return groupId;
-	}
-
 	private String _getExternalReferenceCode(StagedModel stagedModel) {
 		String externalReferenceCode = null;
 
@@ -111,6 +99,18 @@ public class ImportStagedModelExceptionHandlerImpl
 		}
 
 		return externalReferenceCode;
+	}
+
+	private long _getGroupId(PortletDataContext portletDataContext) {
+		long groupId = portletDataContext.getGroupId();
+
+		if (ExportImportReportEntryUtil.isCompanyScoped(
+				groupId, _groupLocalService)) {
+
+			groupId = 0;
+		}
+
+		return groupId;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

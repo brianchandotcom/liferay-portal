@@ -23,7 +23,10 @@ export default function FilePreview({
 }: {
 	file: IAssetFile;
 }) {
-	const params = new URLSearchParams(thumbnailURL);
+	const search = thumbnailURL
+		? thumbnailURL.substring(thumbnailURL.indexOf('?'))
+		: '';
+	const params = new URLSearchParams(search);
 	const hasDocumentPreview = numberOfPages && previewURL;
 	const baseDocumentImageURL = new URL(previewURL, window.location.href);
 	const hasImagePreview = params.has('imageThumbnail');

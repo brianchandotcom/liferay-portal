@@ -15,8 +15,8 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.verify.VerifyProcess;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -31,16 +31,18 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Luis Ortiz
  */
-public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
+public class ClassNamePostUpgradeDataCleanupProcess
+	implements PostUpgradeDataCleanupProcess {
 
-	public ClassNameDataCleanupVerifyProcess(
-		ClassNameLocalService classNameLocalService) {
+	public ClassNamePostUpgradeDataCleanupProcess(
+		ClassNameLocalService classNameLocalService, Connection connection) {
 
 		_classNameLocalService = classNameLocalService;
+		_connection = connection;
 	}
 
 	@Override
-	protected void doVerify() throws Exception {
+	public void cleanUp() throws Exception {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
@@ -64,7 +66,7 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 
 		List<ClassName> classNames = _classNameLocalService.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		DBInspector dbInspector = new DBInspector(connection);
+		DBInspector dbInspector = new DBInspector(_connection);
 		Set<String> models = new HashSet<>(ModelHintsUtil.getModels());
 
 		for (ClassName className : classNames) {
@@ -119,7 +121,7 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 				}
 
 				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
+						_connection.prepareStatement(
 							"select 1 from " + tableName +
 								" where classNameId = ?")) {
 
@@ -136,7 +138,7 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 			}
 
 			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
+					_connection.prepareStatement(
 						"select 1 from ResourcePermission where name = ?")) {
 
 				preparedStatement.setString(1, value);
@@ -170,8 +172,9 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClassNameDataCleanupVerifyProcess.class);
+		ClassNamePostUpgradeDataCleanupProcess.class);
 
 	private final ClassNameLocalService _classNameLocalService;
+	private final Connection _connection;
 
 }

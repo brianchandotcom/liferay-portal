@@ -12,7 +12,9 @@ import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelec
 import com.liferay.item.selector.taglib.internal.util.EntryURLUtil;
 import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorProviderRegistryUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -20,6 +22,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.search.GroupSearch;
 
@@ -95,7 +98,25 @@ public class GroupSelectorDisplayContext {
 			GroupItemSelectorProviderRegistryUtil.
 				getGroupItemSelectorProviderTypes();
 
-		groupItemSelectorProviderTypes.remove("space-depot");
+		if (!FeatureFlagManagerUtil.isEnabled(
+				PortalUtil.getCompanyId(_liferayPortletRequest), "LPD-17564")) {
+
+			groupItemSelectorProviderTypes.remove("space-depot");
+
+			return groupItemSelectorProviderTypes;
+		}
+
+		for (String criterion :
+				ParamUtil.getStringValues(_liferayPortletRequest, "criteria")) {
+
+			List<String> parts = StringUtil.split(criterion);
+
+			if (parts.contains("file") || parts.contains("image")) {
+				groupItemSelectorProviderTypes.remove("space-depot");
+
+				break;
+			}
+		}
 
 		return groupItemSelectorProviderTypes;
 	}

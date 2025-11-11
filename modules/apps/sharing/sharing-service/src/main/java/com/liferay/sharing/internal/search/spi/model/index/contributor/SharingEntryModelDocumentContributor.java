@@ -8,6 +8,7 @@ package com.liferay.sharing.internal.search.spi.model.index.contributor;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -15,6 +16,8 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
@@ -55,6 +58,7 @@ public class SharingEntryModelDocumentContributor
 			"toUserGroupId", String.valueOf(sharingEntry.getToUserGroupId()));
 		document.addKeyword(
 			"toUserId", String.valueOf(sharingEntry.getToUserId()));
+		document.addKeyword("visible", _isVisible(sharingEntry));
 	}
 
 	private Map<Locale, String> _getTitleMap(SharingEntry sharingEntry) {
@@ -97,6 +101,46 @@ public class SharingEntryModelDocumentContributor
 		return false;
 	}
 
+	private boolean _isVisible(SharingEntry sharingEntry) {
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
+				sharingEntry);
+
+		try {
+			if ((sharingEntryInterpreter == null) ||
+				!sharingEntryInterpreter.isVisible(sharingEntry)) {
+
+				return false;
+			}
+
+			Group group = _groupLocalService.fetchGroup(
+				sharingEntry.getGroupId());
+
+			if (group == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get group " + sharingEntry.getGroupId() +
+							" while indexing document");
+				}
+
+				return false;
+			}
+
+			SharingConfiguration groupSharingConfiguration =
+				_sharingConfigurationFactory.getGroupSharingConfiguration(
+					group);
+
+			return groupSharingConfiguration.isEnabled();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			return false;
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharingEntryModelDocumentContributor.class);
 
@@ -105,6 +149,9 @@ public class SharingEntryModelDocumentContributor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;

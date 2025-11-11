@@ -24,6 +24,7 @@ public class SharedAssetEntityModel implements EntityModel {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new BooleanEntityField(
 				"spaceDepotEntry", locale -> "spaceDepotEntry"),
+			new BooleanEntityField("visible", locale -> "visible"),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

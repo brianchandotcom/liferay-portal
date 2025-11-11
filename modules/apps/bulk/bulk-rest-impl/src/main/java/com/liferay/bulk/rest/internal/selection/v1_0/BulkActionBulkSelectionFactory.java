@@ -99,6 +99,12 @@ public class BulkActionBulkSelectionFactory {
 
 	public static class Builder {
 
+		public Builder acceptLanguage(AcceptLanguage acceptLanguage) {
+			_acceptLanguage = acceptLanguage;
+
+			return this;
+		}
+
 		public Builder blueprintExternalReferenceCode(
 			String blueprintExternalReferenceCode) {
 
@@ -125,30 +131,8 @@ public class BulkActionBulkSelectionFactory {
 			return this;
 		}
 
-		public Builder contextAcceptLanguage(
-			AcceptLanguage contextAcceptLanguage) {
-
-			_contextAcceptLanguage = contextAcceptLanguage;
-
-			return this;
-		}
-
-		public Builder contextCompany(Company contextCompany) {
-			_contextCompany = contextCompany;
-
-			return this;
-		}
-
-		public Builder contextHttpServletRequest(
-			HttpServletRequest contextHttpServletRequest) {
-
-			_contextHttpServletRequest = contextHttpServletRequest;
-
-			return this;
-		}
-
-		public Builder contextUser(User contextUser) {
-			_contextUser = contextUser;
+		public Builder company(Company company) {
+			_company = company;
 
 			return this;
 		}
@@ -179,6 +163,14 @@ public class BulkActionBulkSelectionFactory {
 
 		public Builder groupLocalService(GroupLocalService groupLocalService) {
 			_groupLocalService = groupLocalService;
+
+			return this;
+		}
+
+		public Builder httpServletRequest(
+			HttpServletRequest httpServletRequest) {
+
+			_httpServletRequest = httpServletRequest;
 
 			return this;
 		}
@@ -237,18 +229,23 @@ public class BulkActionBulkSelectionFactory {
 			return this;
 		}
 
+		public Builder user(User user) {
+			_user = user;
+
+			return this;
+		}
+
+		private AcceptLanguage _acceptLanguage;
 		private String _blueprintExternalReferenceCode;
 		private BulkAction _bulkAction;
 		private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;
-		private AcceptLanguage _contextAcceptLanguage;
-		private Company _contextCompany;
-		private HttpServletRequest _contextHttpServletRequest;
-		private User _contextUser;
+		private Company _company;
 		private Boolean _emptySearch;
 		private String _entryClassNames;
 		private Filter _filter;
 		private FilterFactory _filterFactory;
 		private GroupLocalService _groupLocalService;
+		private HttpServletRequest _httpServletRequest;
 		private Localization _localization;
 		private ObjectDefinitionLocalService _objectDefinitionLocalService;
 		private ObjectEntryLocalService _objectEntryLocalService;
@@ -257,6 +254,7 @@ public class BulkActionBulkSelectionFactory {
 		private Searcher _searcher;
 		private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 		private Sort[] _sorts;
+		private User _user;
 
 	}
 
@@ -265,10 +263,10 @@ public class BulkActionBulkSelectionFactory {
 			builder._blueprintExternalReferenceCode;
 		_bulkAction = builder._bulkAction;
 		_bulkSelectionFactoryRegistry = builder._bulkSelectionFactoryRegistry;
-		_contextAcceptLanguage = builder._contextAcceptLanguage;
-		_contextCompany = builder._contextCompany;
-		_contextHttpServletRequest = builder._contextHttpServletRequest;
-		_contextUser = builder._contextUser;
+		_acceptLanguage = builder._acceptLanguage;
+		_company = builder._company;
+		_httpServletRequest = builder._httpServletRequest;
+		_user = builder._user;
 		_emptySearch = builder._emptySearch;
 		_entryClassNames = builder._entryClassNames;
 		_filter = builder._filter;
@@ -370,15 +368,13 @@ public class BulkActionBulkSelectionFactory {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.
 					getObjectDefinitionByExternalReferenceCode(
-						"L_CMS_DEFAULT_PERMISSION",
-						_contextCompany.getCompanyId());
+						"L_CMS_DEFAULT_PERMISSION", _company.getCompanyId());
 
 			Predicate predicate = _filterFactory.create(
 				filterString, objectDefinition);
 
 			List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
-				new Long[0], _contextCompany.getCompanyId(),
-				_contextUser.getUserId(),
+				new Long[0], _company.getCompanyId(), _user.getUserId(),
 				objectDefinition.getObjectDefinitionId(), predicate, false,
 				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -430,7 +426,7 @@ public class BulkActionBulkSelectionFactory {
 
 			searchContext.setAttribute(
 				"search.experiences.ip.address",
-				_contextHttpServletRequest.getRemoteAddr());
+				_httpServletRequest.getRemoteAddr());
 		}
 
 		if (filter != null) {
@@ -444,18 +440,17 @@ public class BulkActionBulkSelectionFactory {
 		}
 
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(
-			_toGroupIds(_contextCompany.getCompanyId(), scope));
+		searchContext.setGroupIds(_toGroupIds(_company.getCompanyId(), scope));
 		searchContext.setKeywords(search);
-		searchContext.setLocale(_contextAcceptLanguage.getPreferredLocale());
+		searchContext.setLocale(_acceptLanguage.getPreferredLocale());
 		searchContext.setStart(start);
 
 		if (ArrayUtil.isNotEmpty(sorts)) {
 			searchContext.setSorts(sorts);
 		}
 
-		searchContext.setTimeZone(_contextUser.getTimeZone());
-		searchContext.setUserId(_contextUser.getUserId());
+		searchContext.setTimeZone(_user.getTimeZone());
+		searchContext.setUserId(_user.getUserId());
 	}
 
 	private String[] _searchRowIds() throws PortalException {
@@ -483,15 +478,13 @@ public class BulkActionBulkSelectionFactory {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.
 					getObjectDefinitionByExternalReferenceCode(
-						"L_CMS_DEFAULT_PERMISSION",
-						_contextCompany.getCompanyId());
+						"L_CMS_DEFAULT_PERMISSION", _company.getCompanyId());
 
 			Predicate predicate = _filterFactory.create(
 				filterString, objectDefinition);
 
 			List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
-				new Long[0], _contextCompany.getCompanyId(),
-				_contextUser.getUserId(),
+				new Long[0], _company.getCompanyId(), _user.getUserId(),
 				objectDefinition.getObjectDefinitionId(), predicate, false,
 				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -534,16 +527,16 @@ public class BulkActionBulkSelectionFactory {
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
 			).companyId(
-				_contextCompany.getCompanyId()
+				_company.getCompanyId()
 			).fetchSourceIncludes(
 				new String[] {
 					_localization.getLocalizedName(
 						Field.CONTENT,
-						_contextAcceptLanguage.getPreferredLanguageId()),
+						_acceptLanguage.getPreferredLanguageId()),
 					Field.CREATE_DATE,
 					_localization.getLocalizedName(
 						Field.DESCRIPTION,
-						_contextAcceptLanguage.getPreferredLanguageId()),
+						_acceptLanguage.getPreferredLanguageId()),
 					Field.MODIFIED_DATE
 				}
 			).withSearchContext(
@@ -655,18 +648,17 @@ public class BulkActionBulkSelectionFactory {
 		}
 	}
 
+	private final AcceptLanguage _acceptLanguage;
 	private final String _blueprintExternalReferenceCode;
 	private final BulkAction _bulkAction;
 	private final BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;
-	private final AcceptLanguage _contextAcceptLanguage;
-	private final Company _contextCompany;
-	private final HttpServletRequest _contextHttpServletRequest;
-	private final User _contextUser;
+	private final Company _company;
 	private final Boolean _emptySearch;
 	private final String _entryClassNames;
 	private final Filter _filter;
 	private final FilterFactory<Predicate> _filterFactory;
 	private final GroupLocalService _groupLocalService;
+	private final HttpServletRequest _httpServletRequest;
 	private final Localization _localization;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
@@ -675,5 +667,6 @@ public class BulkActionBulkSelectionFactory {
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final Sort[] _sorts;
+	private final User _user;
 
 }

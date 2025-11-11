@@ -387,7 +387,7 @@ public class DataSourceFactoryUtil {
 		String[][] defaultParameters, char parameterDelimiter, String url,
 		char urlDelimiter) {
 
-		Map<String, String> existingParameterValues = new TreeMap<>();
+		Map<String, String> existingParameters = new TreeMap<>();
 
 		String baseURL = url;
 
@@ -406,11 +406,11 @@ public class DataSourceFactoryUtil {
 						parameter, CharPool.EQUAL);
 
 					if (parameterParts.length == 2) {
-						existingParameterValues.put(
+						existingParameters.put(
 							parameterParts[0], parameterParts[1]);
 					}
 					else {
-						existingParameterValues.put(
+						existingParameters.put(
 							parameter, _MALFORMED_PARAMETER_PLACE_HOLDER);
 					}
 				}
@@ -418,29 +418,29 @@ public class DataSourceFactoryUtil {
 		}
 
 		for (String[] defaultParameterParts : defaultParameters) {
-			if (existingParameterValues.containsKey(defaultParameterParts[0])) {
+			if (existingParameters.containsKey(defaultParameterParts[0])) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Skipped " + Arrays.toString(defaultParameterParts));
 				}
 			}
 			else {
-				existingParameterValues.put(
+				existingParameters.put(
 					defaultParameterParts[0], defaultParameterParts[1]);
 			}
 		}
 
 		String newURL = baseURL;
 
-		if (!existingParameterValues.isEmpty()) {
+		if (!existingParameters.isEmpty()) {
 			StringBundler sb = new StringBundler(
-				(existingParameterValues.size() * 4) + 2);
+				(existingParameters.size() * 4) + 2);
 
 			sb.append(baseURL);
 			sb.append(urlDelimiter);
 
 			for (Map.Entry<String, String> entry :
-					existingParameterValues.entrySet()) {
+					existingParameters.entrySet()) {
 
 				sb.append(entry.getKey());
 

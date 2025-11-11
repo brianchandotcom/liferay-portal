@@ -58,10 +58,9 @@ public class EditAssetVocabularyMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
-
 		String externalReferenceCode = ParamUtil.getString(
 			actionRequest, "externalReferenceCode");
+		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
 
 		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "title");

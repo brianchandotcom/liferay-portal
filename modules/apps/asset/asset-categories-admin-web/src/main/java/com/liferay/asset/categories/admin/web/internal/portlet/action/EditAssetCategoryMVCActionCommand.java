@@ -53,10 +53,9 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
-
 		String externalReferenceCode = ParamUtil.getString(
 			actionRequest, "externalReferenceCode");
+		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
 		long parentCategoryId = ParamUtil.getLong(
 			actionRequest, "parentCategoryId");

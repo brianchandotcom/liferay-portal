@@ -10,7 +10,7 @@ import com.liferay.petra.string.StringPool;
 /**
  * @author Thiago Buarque
  */
-public class ConfigurationPIDUtil {
+public class ConfigurationPidUtil {
 
 	public static String getRawPid(String pid) {
 

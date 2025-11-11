@@ -6,7 +6,7 @@
 package com.liferay.configuration.admin.web.internal.display.context;
 
 import com.liferay.configuration.admin.menu.ConfigurationMenuItem;
-import com.liferay.configuration.admin.util.ConfigurationPIDUtil;
+import com.liferay.configuration.admin.util.ConfigurationPidUtil;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -71,7 +71,7 @@ public class EditConfigurationDisplayContext {
 						"/configuration_admin/edit_configuration");
 					portletURL.setParameter(
 						"pid",
-						ConfigurationPIDUtil.getRawPid(
+						ConfigurationPidUtil.getRawPid(
 							_configurationModel.getID()));
 				}
 

@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * @author Thiago Buarque
  */
-public class ConfigurationPIDUtilTest {
+public class ConfigurationPidUtilTest {
 
 	@ClassRule
 	@Rule
@@ -29,19 +29,19 @@ public class ConfigurationPIDUtilTest {
 
 		Assert.assertEquals(
 			expectedRawPid,
-			ConfigurationPIDUtil.getRawPid(
+			ConfigurationPidUtil.getRawPid(
 				"com.liferay.scoped.configuration.SampleConfiguration"));
 		Assert.assertEquals(
 			expectedRawPid,
-			ConfigurationPIDUtil.getRawPid(
+			ConfigurationPidUtil.getRawPid(
 				"com.liferay.scoped.configuration.SampleConfiguration~123"));
 		Assert.assertEquals(
 			expectedRawPid,
-			ConfigurationPIDUtil.getRawPid(
+			ConfigurationPidUtil.getRawPid(
 				"com.liferay.scoped.configuration.SampleConfiguration.scoped"));
 		Assert.assertEquals(
 			expectedRawPid,
-			ConfigurationPIDUtil.getRawPid(
+			ConfigurationPidUtil.getRawPid(
 				"com.liferay.scoped.configuration.SampleConfiguration.scoped" +
 					"~123"));
 	}

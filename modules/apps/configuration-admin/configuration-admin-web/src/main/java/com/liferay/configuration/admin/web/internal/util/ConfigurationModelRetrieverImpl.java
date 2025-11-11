@@ -6,7 +6,7 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
-import com.liferay.configuration.admin.util.ConfigurationPIDUtil;
+import com.liferay.configuration.admin.util.ConfigurationPidUtil;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.petra.string.StringBundler;
@@ -378,7 +378,7 @@ public class ConfigurationModelRetrieverImpl
 	private String _getScopedPidFilterString(
 		String pid, ExtendedObjectClassDefinition.Scope scope) {
 
-		String rawPid = ConfigurationPIDUtil.getRawPid(pid);
+		String rawPid = ConfigurationPidUtil.getRawPid(pid);
 
 		String filterString = StringBundler.concat(
 			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
@@ -431,7 +431,7 @@ public class ConfigurationModelRetrieverImpl
 				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
 				_getPropertyFilterString(
 					ConfigurationAdmin.SERVICE_FACTORYPID,
-					ConfigurationPIDUtil.getRawPid(pid)),
+					ConfigurationPidUtil.getRawPid(pid)),
 				_getPropertyFilterString(Constants.SERVICE_PID, pid),
 				StringPool.CLOSE_PARENTHESIS);
 		}

@@ -251,6 +251,16 @@ public class DLEditFolderDisplayContext {
 		return _updateDLFolderPermission;
 	}
 
+	public boolean isERCFieldEnabled() {
+		Folder folder = getFolder();
+
+		if (folder != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isFileEntryTypeSelected(DLFileEntryType dlFileEntryType) {
 		DLFolder dlFolder = _getDLFolder();
 

@@ -152,6 +152,15 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		if (_fileEntry != null) {
+			return _fileEntry.getExternalReferenceCode();
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getFriendlyURLBase() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -260,6 +269,15 @@ public class DefaultDLEditFileEntryDisplayContext
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		return !ddmFormFields.isEmpty();
+	}
+
+	@Override
+	public boolean isERCFieldEnabled() {
+		if (_fileEntry != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

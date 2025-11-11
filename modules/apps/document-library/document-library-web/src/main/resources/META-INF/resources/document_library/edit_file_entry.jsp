@@ -346,7 +346,7 @@ renderResponse.setTitle(headerTitle);
 
 							<div class="input-group">
 								<div class="input-group-item">
-									<aui:input label="" name="externalReferenceCode" type="text" />
+									<aui:input disabled="<%= dlEditFileEntryDisplayContext.isERCFieldEnabled() %>" label="" name="externalReferenceCode" type="text" value="<%= dlEditFileEntryDisplayContext.getExternalReferenceCode() %>" />
 								</div>
 							</div>
 						</aui:field-wrapper>

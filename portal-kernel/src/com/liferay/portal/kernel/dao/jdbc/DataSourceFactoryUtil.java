@@ -427,20 +427,30 @@ public class DataSourceFactoryUtil {
 			url.startsWith("jdbc:mysql://")) {
 
 			return _rewriteJDBCURL(
-				_MYSQL_DEFAULT_PARAMETERS, CharPool.AMPERSAND, url,
-				CharPool.QUESTION);
+				new String[][] {
+					{"cachePrepStmts", "true"}, {"characterEncoding", "UTF-8"},
+					{"dontTrackOpenResources", "true"},
+					{"holdResultsOpenOverStatementClose", "true"},
+					{"prepStmtCacheSize", "1000"},
+					{"prepStmtCacheSqlLimit", "2048"},
+					{"rewriteBatchedStatements", "true"},
+					{"serverTimezone", "GMT"}, {"useFastDateParsing", "false"},
+					{"useLocalSessionState", "true"},
+					{"useLocalTransactionState", "true"}, {"useUnicode", "true"}
+				},
+				CharPool.AMPERSAND, url, CharPool.QUESTION);
 		}
 
 		if (url.startsWith("jdbc:postgresql://")) {
 			return _rewriteJDBCURL(
-				_POSTGRESQL_DEFAULT_PARAMETERS, CharPool.AMPERSAND, url,
-				CharPool.QUESTION);
+				new String[][] {{"reWriteBatchedInserts", "true"}},
+				CharPool.AMPERSAND, url, CharPool.QUESTION);
 		}
 
 		if (url.startsWith("jdbc:sqlserver://")) {
 			return _rewriteJDBCURL(
-				_SQLSERVER_DEFAULT_PARAMETERS, CharPool.SEMICOLON, url,
-				CharPool.SEMICOLON);
+				new String[][] {{"useBulkCopyForBatchInsert", "true"}},
+				CharPool.SEMICOLON, url, CharPool.SEMICOLON);
 		}
 
 		return url;
@@ -593,24 +603,6 @@ public class DataSourceFactoryUtil {
 
 	private static final String _MALFORMED_PARAMETER_PLACE_HOLDER =
 		"_MALFORMED_PARAMETER_PLACE_HOLDER";
-
-	private static final String[][] _MYSQL_DEFAULT_PARAMETERS = {
-		{"cachePrepStmts", "true"}, {"characterEncoding", "UTF-8"},
-		{"dontTrackOpenResources", "true"},
-		{"holdResultsOpenOverStatementClose", "true"},
-		{"prepStmtCacheSize", "1000"}, {"prepStmtCacheSqlLimit", "2048"},
-		{"rewriteBatchedStatements", "true"}, {"serverTimezone", "GMT"},
-		{"useFastDateParsing", "false"}, {"useLocalSessionState", "true"},
-		{"useLocalTransactionState", "true"}, {"useUnicode", "true"}
-	};
-
-	private static final String[][] _POSTGRESQL_DEFAULT_PARAMETERS = {
-		{"reWriteBatchedInserts", "true"}
-	};
-
-	private static final String[][] _SQLSERVER_DEFAULT_PARAMETERS = {
-		{"useBulkCopyForBatchInsert", "true"}
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataSourceFactoryUtil.class);

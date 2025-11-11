@@ -725,3 +725,71 @@ test(
 		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}
 );
+
+test(
+	'Ensure pagination functions properly in Unassign Roles modal',
+	{
+		tag: '@LPD-71299',
+	},
+	async ({apiHelpers, membershipsPage, page}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const siteId = await page.evaluate(() => {
+			return String(Liferay.ThemeDisplay.getSiteGroupId());
+		});
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			siteId,
+			user.id
+		);
+
+		for (let i = 1; i <= 21; i++) {
+			const role = await apiHelpers.headlessAdminUser.postRole({
+				name: getRandomString(),
+				roleType: 'site',
+			});
+
+			await apiHelpers.headlessAdminUser.assignUserToSite(
+				role.id,
+				siteId,
+				user.id
+			);
+		}
+
+		await membershipsPage.goto();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Unassign Roles'}),
+			timeout: 500,
+			trigger: page
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
+						user.alternateName +
+						'"]'
+				)
+				.getByLabel('More actions'),
+		});
+
+		await page
+			.frameLocator('iframe[title="Unassign Roles"]')
+			.getByLabel('Page 2')
+			.click();
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Unassign Roles"]')
+				.getByText('Showing 21 to 21 of 21')
+		).toBeVisible();
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Unassign Roles"]')
+				.getByText('Site Administrator')
+		).not.toBeVisible();
+	}
+);

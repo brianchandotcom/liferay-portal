@@ -39,6 +39,25 @@ const THEME_OPTIONS_TO_EDIT: Array<{
 	{action: 'check', name: 'Show Maximize/Minimize Application Links'},
 ];
 
+const editThemeOptions = async (
+	page: Page,
+	options: Array<{action: 'check' | 'uncheck'; name: string}>
+) => {
+	for (const option of options) {
+		const locator = page.getByRole('checkbox', {
+			exact: true,
+			name: option.name,
+		});
+
+		if (option.action === 'check') {
+			await locator.check();
+		}
+		else {
+			await locator.uncheck();
+		}
+	}
+};
+
 const togglePortletOptions = async (portletName: string, page: Page) => {
 	await page
 		.locator('.portlet-topper', {hasText: portletName})
@@ -62,25 +81,6 @@ const assertPortletOptionsVisible = async (
 	await togglePortletOptions(portletName, page);
 };
 
-const editThemeOptions = async (
-	page: Page,
-	options: Array<{action: 'check' | 'uncheck'; name: string}>
-) => {
-	for (const option of options) {
-		const locator = page.getByRole('checkbox', {
-			exact: true,
-			name: option.name,
-		});
-
-		if (option.action === 'check') {
-			await locator.check();
-		}
-		else {
-			await locator.uncheck();
-		}
-	}
-};
-
 test('Verify custom look and feel settings can be applied to page.', async ({
 	apiHelpers,
 	page,
@@ -90,6 +90,10 @@ test('Verify custom look and feel settings can be applied to page.', async ({
 	site,
 	widgetPagePage,
 }) => {
+	const portletBody = page
+		.locator('.portlet-content', {hasText: PAGE_NAME})
+		.locator('.portlet-body');
+
 	const layout =
 		await test.step('Given a page with classic theme applied.', async () => {
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -158,20 +162,12 @@ test('Verify custom look and feel settings can be applied to page.', async ({
 			page.locator('.portlet-topper', {hasText: MENU_DISPLAY_NAME})
 		).toBeVisible();
 
-		await expect(
-			page
-				.locator('.portlet-content', {hasText: PAGE_NAME})
-				.locator('.portlet-body')
-		).toBeHidden();
+		await expect(portletBody).toBeHidden();
 	});
 
 	await test.step('Then restore menu display.', async () => {
 		await widgetPagePage.clickOnAction(MENU_DISPLAY_NAME, 'Restore');
 
-		await expect(
-			page
-				.locator('.portlet-content', {hasText: PAGE_NAME})
-				.locator('.portlet-body')
-		).toBeVisible();
+		await expect(portletBody).toBeVisible();
 	});
 });

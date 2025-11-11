@@ -698,17 +698,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testGetSiteSitePageRenderedPageWithAcceptLanguageHeader()
 		throws Exception {
 
-		SitePageResource.Builder builder = SitePageResource.builder();
-
-		SitePageResource sitePageResourceAcceptLanguageHeader =
-			builder.authentication(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-			).header(
-				"Accept-Language", "nl-NL"
-			).locale(
-				LocaleUtil.getDefault()
-			).build();
-
 		String name = RandomTestUtil.randomString();
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
@@ -726,8 +715,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String friendlyURL = layout.getFriendlyURL();
 
+		SitePageResource.Builder builder = SitePageResource.builder();
+
+		SitePageResource acceptLanguageHeaderSitePageResource =
+			builder.authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).header(
+				"Accept-Language", "nl-NL"
+			).build();
+
 		String pageHTML =
-			sitePageResourceAcceptLanguageHeader.getSiteSitePageRenderedPage(
+			acceptLanguageHeaderSitePageResource.getSiteSitePageRenderedPage(
 				testGroup.getGroupId(), friendlyURL.substring(1));
 
 		Assert.assertTrue(pageHTML.contains("lang=\"nl-NL\""));

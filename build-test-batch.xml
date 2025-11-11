@@ -4203,7 +4203,44 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 				</test-action>
 
 				<test-set-up>
-					<setup-test-environment />
+					<if>
+						<and>
+							<or>
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
+							</or>
+							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
+						</and>
+						<then>
+							<prepare-release-test-environment
+								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+								test.fix.pack.base.url="${test.fix.pack.base.url}"
+								test.license.xml.url="${test.license.xml.url}"
+								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+								test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
+								test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+								test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+								test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+								test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+								test.sql.zip.url="${test.sql.zip.url}"
+							/>
+						</then>
+						<elseif>
+							<and>
+								<or>
+									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+									<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+								</or>
+								<available file="liferay-portal-source.tar.gz" />
+							</and>
+							<then>
+								<prepare-test-environment />
+							</then>
+						</elseif>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
 				</test-set-up>
 			</run-batch-test>
 		</sequential>

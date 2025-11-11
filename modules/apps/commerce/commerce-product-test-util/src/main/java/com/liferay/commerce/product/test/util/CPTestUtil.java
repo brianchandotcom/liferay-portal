@@ -971,13 +971,18 @@ public class CPTestUtil {
 			boolean hasDefaultInstance, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyLocalServiceUtil.addCommerceCurrency(
+				null, serviceContext.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), BigDecimal.ONE, new HashMap<>(),
+				2, 2, "HALF_EVEN", false, 0, true);
 
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				user.getCompanyId(), true);
-
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+		CommerceCatalog commerceCatalog =
+			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				serviceContext);
 
 		addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(),
@@ -1310,11 +1315,18 @@ public class CPTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				user.getCompanyId(), true);
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyLocalServiceUtil.addCommerceCurrency(
+				null, serviceContext.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), BigDecimal.ONE, new HashMap<>(),
+				2, 2, "HALF_EVEN", false, 0, true);
 
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+		CommerceCatalog commerceCatalog =
+			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				serviceContext);
 
 		addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(),

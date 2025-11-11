@@ -191,11 +191,12 @@ public class TaxonomyVocabularyImportTaskPreActionTest {
 					assetVocabulary.getExternalReferenceCode(),
 					_targetGroup.getGroupId());
 
-		_resourcePermissionLocalService.hasResourcePermission(
-			_localGroup.getCompanyId(), AssetVocabulary.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(importedAssetVocabulary.getVocabularyId()),
-			role.getRoleId(), ActionKeys.UPDATE);
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				_localGroup.getCompanyId(), AssetVocabulary.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(importedAssetVocabulary.getVocabularyId()),
+				role.getRoleId(), ActionKeys.UPDATE));
 	}
 
 	@Test

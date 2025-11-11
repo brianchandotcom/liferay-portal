@@ -133,11 +133,7 @@ public abstract class BaseDisplayContext {
 	}
 
 	protected int getConsentRenewalPeriod() {
-		if (productAnalyticsConfiguration != null) {
-			return productAnalyticsConfiguration.consentRenewalPeriod();
-		}
-
-		return 12;
+		return productAnalyticsConfiguration.consentRenewalPeriod();
 	}
 
 	protected HttpServletRequest getHttpServletRequest() {
@@ -145,18 +141,7 @@ public abstract class BaseDisplayContext {
 	}
 
 	protected long getModifiedDate() {
-		if (_modifiedDate > 0) {
-			return _modifiedDate;
-		}
-
-		if (productAnalyticsConfiguration != null) {
-			_modifiedDate = productAnalyticsConfiguration.modifiedDate();
-		}
-		else {
-			_modifiedDate = 0;
-		}
-
-		return _modifiedDate;
+		return productAnalyticsConfiguration.modifiedDate();
 	}
 
 	protected ProductAnalyticsConfiguration productAnalyticsConfiguration;
@@ -207,7 +192,6 @@ public abstract class BaseDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutUtilityPageEntryLayoutProvider
 		_layoutUtilityPageEntryLayoutProvider;
-	private long _modifiedDate;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 

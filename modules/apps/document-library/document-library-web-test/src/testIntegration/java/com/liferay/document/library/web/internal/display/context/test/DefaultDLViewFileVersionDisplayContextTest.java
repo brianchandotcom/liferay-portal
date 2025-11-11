@@ -102,9 +102,9 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 	public void testCreateViewUsageDropdownItemWithoutUsage() throws Exception {
 		DropdownItem dropdownItem = _getViewUsageDropdownItem(_fileEntry);
 
+		Assert.assertTrue((Boolean)dropdownItem.get("disabled"));
 		Assert.assertEquals("list-ul", dropdownItem.get("icon"));
 		Assert.assertEquals("View Usages", dropdownItem.get("label"));
-		Assert.assertTrue((Boolean)dropdownItem.get("disabled"));
 	}
 
 	@Test
@@ -113,18 +113,18 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 
 		DropdownItem dropdownItem = _getViewUsageDropdownItem(_fileEntry);
 
+		Assert.assertFalse((Boolean)dropdownItem.get("disabled"));
 		Assert.assertEquals("list-ul", dropdownItem.get("icon"));
 		Assert.assertEquals("View Usages", dropdownItem.get("label"));
-		Assert.assertFalse((Boolean)dropdownItem.get("disabled"));
 	}
 
 	@Test
 	public void testGetActionDropdownItems() throws Exception {
 		DropdownItem dropdownItem = _getCheckoutDropdownItem(_fileEntry);
 
+		Assert.assertFalse((Boolean)dropdownItem.get("disabled"));
 		Assert.assertEquals("lock", dropdownItem.get("icon"));
 		Assert.assertEquals("Checkout", dropdownItem.get("label"));
-		Assert.assertFalse((Boolean)dropdownItem.get("disabled"));
 	}
 
 	@Test
@@ -152,9 +152,9 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 
 		DropdownItem dropdownItem = _getCheckoutDropdownItem(fileEntry);
 
+		Assert.assertTrue((Boolean)dropdownItem.get("disabled"));
 		Assert.assertEquals("lock", dropdownItem.get("icon"));
 		Assert.assertEquals("Checkout", dropdownItem.get("label"));
-		Assert.assertTrue((Boolean)dropdownItem.get("disabled"));
 	}
 
 	private FileEntry _addDLFileEntry(

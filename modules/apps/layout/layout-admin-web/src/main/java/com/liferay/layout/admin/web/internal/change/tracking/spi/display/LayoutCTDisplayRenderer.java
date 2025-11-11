@@ -135,6 +135,10 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 
 		Layout layout = displayContext.getModel();
 
+		if (layout.isTypeURL()) {
+			return null;
+		}
+
 		HttpServletRequest httpServletRequest =
 			displayContext.getHttpServletRequest();
 

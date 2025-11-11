@@ -290,7 +290,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private Permission[] _getPermissions(
 		String className, JSONObject jsonObject, Map<String, Role> roles) {
 
-		List<Permission> permissionList = new ArrayList<>(jsonObject.length());
+		List<Permission> permissionsList = new ArrayList<>(jsonObject.length());
 		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
 			className);
 
@@ -323,10 +323,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				permission.setRoleType(
 					RoleConstants.getTypeLabel(role.getType()));
 
-				permissionList.add(permission);
+				permissionsList.add(permission);
 			});
 
-		return permissionList.toArray(new Permission[0]);
+		return permissionsList.toArray(new Permission[0]);
 	}
 
 	@Reference

@@ -725,7 +725,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		}
 
 		for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
-			Long navigationMenuItemId = navigationMenuItem.getId();
+			String navigationMenuItemExternalReferenceCode =
+				navigationMenuItem.getExternalReferenceCode();
 
 			SiteNavigationMenuItem siteNavigationMenuItem = null;
 
@@ -733,9 +734,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					siteNavigationMenuItems) {
 
 				if (Objects.equals(
-						navigationMenuItemId,
-						curSiteNavigationMenuItem.
-							getSiteNavigationMenuItemId())) {
+						navigationMenuItemExternalReferenceCode,
+						curSiteNavigationMenuItem.getExternalReferenceCode())) {
 
 					siteNavigationMenuItem = curSiteNavigationMenuItem;
 
@@ -746,7 +746,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			if (siteNavigationMenuItem != null) {
 				SiteNavigationMenuItem updatedSiteNavigationMenuItem =
 					_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
-						navigationMenuItemId,
+						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 						String.valueOf(navigationMenuItem.getTypeSettings()),
 						ServiceContextBuilder.create(
 							groupId, contextHttpServletRequest, null

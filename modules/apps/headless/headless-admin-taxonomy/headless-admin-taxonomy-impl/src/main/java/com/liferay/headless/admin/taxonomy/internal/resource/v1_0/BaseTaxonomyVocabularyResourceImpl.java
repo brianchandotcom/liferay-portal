@@ -1520,8 +1520,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, assetLibraryId,
 				portletName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService,
-				contextUser.getUserId());
+				resourcePermissionLocalService, roleLocalService);
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -1687,7 +1686,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService, contextUser.getUserId());
+				roleLocalService);
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -1890,8 +1889,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService,
-				contextUser.getUserId());
+				resourcePermissionLocalService, roleLocalService);
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 

@@ -1144,8 +1144,7 @@ public abstract class BaseKeywordResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, assetLibraryId,
 				portletName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService,
-				contextUser.getUserId());
+				resourcePermissionLocalService, roleLocalService);
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -1448,7 +1447,7 @@ public abstract class BaseKeywordResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService, contextUser.getUserId());
+				roleLocalService);
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 

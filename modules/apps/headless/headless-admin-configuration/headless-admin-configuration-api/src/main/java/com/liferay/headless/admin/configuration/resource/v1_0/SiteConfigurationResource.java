@@ -47,8 +47,7 @@ public interface SiteConfigurationResource {
 
 	public SiteConfiguration getSiteSiteConfiguration(
 			String siteExternalReferenceCode,
-			String siteConfigurationExternalReferenceCode,
-			SiteConfiguration siteConfiguration)
+			String siteConfigurationExternalReferenceCode)
 		throws Exception;
 
 	public Page<SiteConfiguration> getSiteSiteConfigurationsPage(

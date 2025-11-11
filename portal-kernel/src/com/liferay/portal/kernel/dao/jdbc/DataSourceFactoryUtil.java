@@ -292,26 +292,6 @@ public class DataSourceFactoryUtil {
 		}
 	}
 
-	private static Map<String, String> _addDefaultParameters(
-		String[][] defaultParameters,
-		Map<String, String> existingParameterValues) {
-
-		for (String[] defaultParameterParts : defaultParameters) {
-			if (existingParameterValues.containsKey(defaultParameterParts[0])) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipped " + Arrays.toString(defaultParameterParts));
-				}
-			}
-			else {
-				existingParameterValues.put(
-					defaultParameterParts[0], defaultParameterParts[1]);
-			}
-		}
-
-		return existingParameterValues;
-	}
-
 	private static String _buildURL(
 		String baseURL, char parameterDelimiter, Map<String, String> parameters,
 		char urlDelimiter) {
@@ -477,8 +457,18 @@ public class DataSourceFactoryUtil {
 			}
 		}
 
-		existingParameterValues = _addDefaultParameters(
-			defaultParameters, existingParameterValues);
+		for (String[] defaultParameterParts : defaultParameters) {
+			if (existingParameterValues.containsKey(defaultParameterParts[0])) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipped " + Arrays.toString(defaultParameterParts));
+				}
+			}
+			else {
+				existingParameterValues.put(
+					defaultParameterParts[0], defaultParameterParts[1]);
+			}
+		}
 
 		String newURL = _buildURL(
 			baseURL, parameterDelimiter, existingParameterValues, urlDelimiter);

@@ -483,36 +483,9 @@ public class JournalTransformer {
 				 (dynamicContentElement != null) &&
 				 (dynamicContentElement.element("option") != null)) {
 
-			if (ddmFormField.isMultiple()) {
-				JSONArray dataJSONArray = JSONFactoryUtil.createJSONArray();
-
-				Iterator<Element> iterator =
-					dynamicContentElement.elementIterator("option");
-
-				while (iterator.hasNext()) {
-					Element optionElement = iterator.next();
-
-					if (Validator.isNotNull(optionElement.getData())) {
-						dataJSONArray.put(optionElement.getData());
-					}
-				}
-
-				if (dataJSONArray.length() != 0) {
-					data = JSONUtil.toString(dataJSONArray);
-				}
-			}
-			else {
-				Iterator<Element> iterator =
-					dynamicContentElement.elementIterator("option");
-
-				if (iterator.hasNext()) {
-					Element optionElement = iterator.next();
-
-					if (Validator.isNotNull(optionElement.getData())) {
-						data = (String)optionElement.getData();
-					}
-				}
-			}
+			data = ddmFormField.isMultiple() ?
+				_getMultipleSelectData(data, dynamicContentElement) :
+					_getSingleSelectData(data, dynamicContentElement);
 		}
 		else if (type.equals(DDMFormFieldTypeConstants.TEXT)) {
 			data = HtmlUtil.escape(data);
@@ -694,6 +667,40 @@ public class JournalTransformer {
 		}
 
 		return locale;
+	}
+
+	private String _getMultipleSelectData(String defaultData, Element element) {
+		JSONArray dataJSONArray = JSONFactoryUtil.createJSONArray();
+
+		Iterator<Element> iterator = element.elementIterator("option");
+
+		while (iterator.hasNext()) {
+			Element optionElement = iterator.next();
+
+			if (Validator.isNotNull(optionElement.getData())) {
+				dataJSONArray.put(optionElement.getData());
+			}
+		}
+
+		if (dataJSONArray.length() != 0) {
+			return JSONUtil.toString(dataJSONArray);
+		}
+
+		return defaultData;
+	}
+
+	private String _getSingleSelectData(String defaultData, Element element) {
+		Iterator<Element> iterator = element.elementIterator("option");
+
+		if (iterator.hasNext()) {
+			Element optionElement = iterator.next();
+
+			if (Validator.isNotNull(optionElement.getData())) {
+				return (String)optionElement.getData();
+			}
+		}
+
+		return defaultData;
 	}
 
 	private Template _getTemplate(String templateId, String script)

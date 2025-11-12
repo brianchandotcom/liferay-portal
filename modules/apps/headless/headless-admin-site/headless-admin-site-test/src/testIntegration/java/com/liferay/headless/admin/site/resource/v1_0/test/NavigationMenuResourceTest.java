@@ -808,7 +808,7 @@ public class NavigationMenuResourceTest
 
 		NavigationMenu getNavigationMenu =
 			navigationMenuResource.getSiteNavigationMenu(
-				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getSiteExternalReferenceCode(),
 				postNavigationMenu.getExternalReferenceCode());
 
 		assertValid(getNavigationMenu);
@@ -879,7 +879,7 @@ public class NavigationMenuResourceTest
 
 		NavigationMenu getNavigationMenu =
 			navigationMenuResource.getSiteNavigationMenu(
-				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getSiteExternalReferenceCode(),
 				postNavigationMenu.getExternalReferenceCode());
 
 		_assertNavigationMenuItem(
@@ -932,7 +932,7 @@ public class NavigationMenuResourceTest
 
 		NavigationMenu getNavigationMenu =
 			navigationMenuResource.getSiteNavigationMenu(
-				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getSiteExternalReferenceCode(),
 				postNavigationMenu.getExternalReferenceCode());
 
 		Assert.assertTrue(
@@ -966,7 +966,7 @@ public class NavigationMenuResourceTest
 
 		NavigationMenu getNavigationMenu =
 			navigationMenuResource.getSiteNavigationMenu(
-				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getSiteExternalReferenceCode(),
 				postNavigationMenu.getExternalReferenceCode());
 
 		Assert.assertNull(getNavigationMenu.getPermissions());
@@ -1029,7 +1029,7 @@ public class NavigationMenuResourceTest
 
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				testGroup.getExternalReferenceCode(), null,
+				postNavigationMenu.getSiteExternalReferenceCode(), null,
 				"externalReferenceCode eq '" +
 					postNavigationMenu.getExternalReferenceCode() + "'",
 				Pagination.of(1, 10), null);
@@ -1074,7 +1074,7 @@ public class NavigationMenuResourceTest
 				customFields, _getExpectedCustomFields(serviceContext)));
 
 		navigationMenuResource.deleteSiteNavigationMenu(
-			testGroup.getExternalReferenceCode(),
+			postNavigationMenu.getSiteExternalReferenceCode(),
 			postNavigationMenu.getExternalReferenceCode());
 	}
 
@@ -1086,7 +1086,7 @@ public class NavigationMenuResourceTest
 
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getSiteExternalReferenceCode(),
 				postNavigationMenu.getName(), null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
@@ -1182,7 +1182,7 @@ public class NavigationMenuResourceTest
 
 		NavigationMenu putNavigationMenu =
 			navigationMenuResource.putSiteNavigationMenu(
-				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getSiteExternalReferenceCode(),
 				postNavigationMenu.getExternalReferenceCode(),
 				randomNavigationMenu);
 

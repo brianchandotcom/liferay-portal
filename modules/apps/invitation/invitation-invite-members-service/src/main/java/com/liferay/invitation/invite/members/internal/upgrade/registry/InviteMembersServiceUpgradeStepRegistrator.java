@@ -22,9 +22,9 @@ public class InviteMembersServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"0.0.1", "1.0.1", new NamespaceUpgradeProcess(),
-			new UpgradePortletId());
+		registry.register("0.0.1", "0.0.2", new NamespaceUpgradeProcess());
+
+		registry.register("0.0.2", "1.0.1", new UpgradePortletId());
 
 		// See LPS-65946
 

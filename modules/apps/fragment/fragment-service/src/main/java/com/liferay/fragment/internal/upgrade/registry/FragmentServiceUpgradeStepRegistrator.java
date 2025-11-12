@@ -131,10 +131,13 @@ public class FragmentServiceUpgradeStepRegistrator
 				FragmentEntryVersionUpgradeProcess());
 
 		registry.register(
-			"2.6.0", "2.7.0",
+			"2.6.0", "2.6.1",
 			new CTModelUpgradeProcess(
 				"FragmentCollection", "FragmentComposition", "FragmentEntry",
-				"FragmentEntryLink", "FragmentEntryVersion"),
+				"FragmentEntryLink", "FragmentEntryVersion"));
+
+		registry.register(
+			"2.6.1", "2.7.0",
 			new MVCCVersionUpgradeProcess() {
 
 				@Override

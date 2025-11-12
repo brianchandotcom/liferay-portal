@@ -75,6 +75,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.StayInPageFormContainerSu
 import com.liferay.headless.admin.site.client.dto.v1_0.SuccessFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.client.dto.v1_0.SuccessNotificationMessage;
 import com.liferay.headless.admin.site.client.dto.v1_0.TemplateListStyle;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.URLFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
@@ -82,6 +83,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.serdes.v1_0.PageElementSerDes;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentConfigurationTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentElementTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -2270,6 +2272,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					testGroup.getGroupId())));
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration();
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentElements();
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
 			externalReferenceCode,
@@ -2571,6 +2574,52 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							configurationValuesMap, new FragmentElement[0],
 							fragmentEntry, testGroup.getGroupId())));
 		}
+	}
+
+	private void _testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentElements()
+		throws Exception {
+
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentElements(
+			FragmentElementTestUtil.getFragmentElements(
+				TextFragmentValue.Type.INLINE, null, null));
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentElements(
+			FragmentElementTestUtil.getFragmentElements(
+				TextFragmentValue.Type.MAPPED,
+				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
+				FragmentMappedValueItemContextReference.ContextSource.
+					COLLECTION_ITEM));
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentElements(
+			FragmentElementTestUtil.getFragmentElements(
+				TextFragmentValue.Type.MAPPED,
+				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
+				FragmentMappedValueItemContextReference.ContextSource.
+					DISPLAY_PAGE_ITEM));
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentElements(
+			FragmentElementTestUtil.getFragmentElements(
+				TextFragmentValue.Type.MAPPED,
+				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE,
+				null));
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentElements(
+			FragmentElementTestUtil.getFragmentElements(null, null, null));
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentElements(
+				FragmentElement[] fragmentElements)
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			null, testGroup.getGroupId(),
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					null, fragmentElements, fragmentEntry,
+					testGroup.getGroupId())));
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement()

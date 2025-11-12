@@ -185,13 +185,32 @@ function RuleItem({
 		hoverMultipleItems([]);
 	};
 
+	const onScroll = () => {
+		const fragment = document.querySelector('.highlighted-from-rule');
+
+		fragment?.scrollIntoView({
+			behavior: 'instant' as ScrollBehavior,
+			block: 'center',
+			inline: 'nearest',
+		});
+	};
+
 	return (
 		<ClayList.Item
+			aria-description={Liferay.Language.get(
+				'press-enter-or-space-to-scroll-to-the-first-fragment-under-this-rule'
+			)}
 			aria-label={getRuleAriaLabel(rule.name, conditions, actions)}
 			className="p-2 page-editor__rule"
 			key={rule.id}
 			onBlurCapture={onUnhighlightItems}
+			onClick={onScroll}
 			onFocusCapture={onHighlightItems}
+			onKeyDown={({key}) => {
+				if (key === 'Enter' || key === ' ') {
+					onScroll();
+				}
+			}}
 			onMouseLeave={onUnhighlightItems}
 			onMouseOver={onHighlightItems}
 			ref={setElement}
@@ -217,6 +236,7 @@ function RuleItem({
 								)}
 								borderless
 								displayType="secondary"
+								onClick={(event) => event.stopPropagation()}
 								ref={setTriggerElement}
 								size="sm"
 								symbol="ellipsis-v"

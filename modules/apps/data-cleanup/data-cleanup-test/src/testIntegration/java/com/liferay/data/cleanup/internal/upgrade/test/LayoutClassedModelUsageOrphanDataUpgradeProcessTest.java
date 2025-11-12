@@ -87,11 +87,11 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 		_updateLayoutClassedModelUsages(
 			0, _draftLayout.getPlid(), _layout.getPlid());
 
-		_runUpgrade(0);
+		_enableUpgradeAndAssert(0);
 
 		_updateLayoutClassedModelUsages(0);
 
-		_runUpgrade(0);
+		_enableUpgradeAndAssert(0);
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 				_updateLayoutClassedModelUsages(
 					ctCollection.getCtCollectionId());
 
-				_runUpgrade(ctCollection.getCtCollectionId());
+				_enableUpgradeAndAssert(ctCollection.getCtCollectionId());
 			}
 
 			_ctCollectionService.publishCTCollection(
@@ -135,7 +135,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 
 			_updateLayoutClassedModelUsages(ctCollection.getCtCollectionId());
 
-			_runUpgrade(0);
+			_enableUpgradeAndAssert(0);
 		}
 	}
 
@@ -191,7 +191,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 		}
 	}
 
-	private void _runUpgrade(long ctCollectionId) throws Exception {
+	private void _enableUpgradeAndAssert(long ctCollectionId) throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.data.cleanup.internal.configuration." +

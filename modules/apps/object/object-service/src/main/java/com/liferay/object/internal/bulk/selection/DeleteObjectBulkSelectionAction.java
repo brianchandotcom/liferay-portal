@@ -43,12 +43,10 @@ public class DeleteObjectBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		ObjectEntry bulkActionTaskObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
 
-		Map<String, Serializable> values =
-			bulkActionTaskObjectEntry.getValues();
+		Map<String, Serializable> values = objectEntry.getValues();
 
 		values.put("numberOfItems", bulkSelection.getSize());
 
@@ -59,10 +57,9 @@ public class DeleteObjectBulkSelectionAction
 		try {
 			values.put("executionStatus", "started");
 
-			bulkActionTaskObjectEntry = _partialUpdateObjectEntry(
-				bulkActionTaskObjectEntry, values);
+			objectEntry = _partialUpdateObjectEntry(objectEntry, values);
 
-			values = bulkActionTaskObjectEntry.getValues();
+			values = objectEntry.getValues();
 
 			bulkSelection.forEach(
 				object -> {
@@ -106,7 +103,7 @@ public class DeleteObjectBulkSelectionAction
 			values.put(
 				"numberOfSuccessfulItems", numberOfSuccessfulItems.get());
 
-			_partialUpdateObjectEntry(bulkActionTaskObjectEntry, values);
+			_partialUpdateObjectEntry(objectEntry, values);
 		}
 	}
 

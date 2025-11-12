@@ -199,6 +199,33 @@ public class FragmentMappingUtil {
 		return false;
 	}
 
+	public static FragmentMappedValue toFragmentMappedValue(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId)
+		throws Exception {
+
+		FragmentMappedValueItemReference fragmentMappedValueItemReference =
+			getFragmentMappedValueItemReference(
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+
+		if (fragmentMappedValueItemReference == null) {
+			return null;
+		}
+
+		FragmentMappedValue fragmentMappedValue = new FragmentMappedValue();
+
+		fragmentMappedValue.setMapping(
+			() -> new Mapping() {
+				{
+					setFieldKey(
+						() -> FragmentMappingUtil.getFieldKey(jsonObject));
+					setItemReference(() -> fragmentMappedValueItemReference);
+				}
+			});
+
+		return fragmentMappedValue;
+	}
+
 	private static FragmentMappedValueItemExternalReference
 			_getFragmentMappedValueItemExternalReference(
 				long companyId, InfoItemServiceRegistry infoItemServiceRegistry,

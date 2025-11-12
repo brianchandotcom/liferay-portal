@@ -728,8 +728,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			acceptLanguageHeaderSitePageResource.getSiteSitePageRenderedPage(
 				testGroup.getGroupId(), friendlyURL.substring(1));
 
-		Assert.assertTrue(pageHTML.contains("lang=\"nl-NL\""));
-		Assert.assertFalse(pageHTML.contains("lang=\"en-US\""));
+		Assert.assertTrue(pageHTML.contains(" lang=\"nl-NL\""));
+		Assert.assertFalse(pageHTML.contains(" lang=\"en-US\""));
 		Assert.assertTrue(pageHTML.contains(name + "-NL"));
 		Assert.assertFalse(pageHTML.contains(name + "-US"));
 	}

@@ -88,20 +88,22 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			(ctCollection != null) ? ctCollection.getCtCollectionId() :
 				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
 
-		LayoutClassedModelUsage layoutClassedModelUsage =
-			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				layoutClassedModelUsageId);
-
 		try {
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				_layoutClassedModelUsageLocalService.
+					fetchLayoutClassedModelUsage(layoutClassedModelUsageId);
+
 			if ((layoutClassedModelUsage == null) ||
 				((ctCollection != null) && ctCollection.isReadOnly())) {
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"delete from LayoutClassedModelUsage where " +
-								"layoutClassedModelUsageId = ?")) {
+								"ctCollectionId = ? and " +
+									"layoutClassedModelUsageId = ?")) {
 
-					preparedStatement.setLong(1, layoutClassedModelUsageId);
+					preparedStatement.setLong(1, ctCollectionId);
+					preparedStatement.setLong(2, layoutClassedModelUsageId);
 					preparedStatement.executeUpdate();
 				}
 			}
@@ -120,8 +122,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 				_log.debug(
 					StringBundler.concat(
 						"Deleted orphaned layout classed model usage ID ",
-						layoutClassedModelUsageId,
-						" from published CT collection ID ", ctCollectionId));
+						layoutClassedModelUsageId, " with CT collection ID ",
+						ctCollectionId));
 			}
 		}
 		catch (Exception exception) {
@@ -129,7 +131,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 				_log.warn(
 					StringBundler.concat(
 						"Unable to delete orphaned layout classed model usage ",
-						"ID ", layoutClassedModelUsageId),
+						"ID ", layoutClassedModelUsageId,
+						" with CT collection ID ", ctCollectionId),
 					exception);
 			}
 		}
@@ -221,8 +224,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 								StringBundler.concat(
 									"Updated layout classed model usage for ",
 									"layout with plid ", plid,
-									" and published CT collection ID ",
-									ctCollectionId));
+									" and CT collection ID ", ctCollectionId));
 						}
 					}
 					catch (Exception exception) {
@@ -231,8 +233,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 								StringBundler.concat(
 									"Unable to update layout classed model ",
 									"usage for layout with plid ", plid,
-									" and published CT collection ID ",
-									ctCollectionId),
+									" and CT collection ID ", ctCollectionId),
 								exception);
 						}
 					}

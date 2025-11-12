@@ -75,9 +75,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 
 	@Test
 	@TestInfo({"LPD-60259", "LPD-62154"})
-	public void testLayoutClassedModelUsageOrphanDataUpgradeProcess()
-		throws Exception {
-
+	public void testUpgrade() throws Exception {
 		_setUp();
 
 		_assertLayoutClassedModelUsages(
@@ -96,9 +94,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 
 	@Test
 	@TestInfo("LPD-70786")
-	public void testLayoutClassedModelUsageOrphanDataUpgradeProcessWithCTCollection()
-		throws Exception {
-
+	public void testUpgradeWithCTCollection() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(

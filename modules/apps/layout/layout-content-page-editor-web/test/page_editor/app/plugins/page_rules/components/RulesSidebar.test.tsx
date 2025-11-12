@@ -346,7 +346,7 @@ describe('RulesSidebar', () => {
 
 		await waitFor(() => {
 			expect(screen.queryByText('Apple')).not.toBeInTheDocument();
-			expect(screen.getByText('no-rules-yet')).toBeInTheDocument();
+			expect(screen.getByText('no-results-found')).toBeInTheDocument();
 			expect(newRuleButton).not.toBeInTheDocument();
 		});
 	});

@@ -31,7 +31,7 @@ public interface FDSView {
 
 	public String getThumbnail();
 
-	public default boolean isDefault() {
+	public default boolean isDefault(String fdsName) {
 		return false;
 	}
 

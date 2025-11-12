@@ -266,7 +266,7 @@ public class SystemFDSSerializer
 				"contentRendererModuleURL",
 				fdsView.getContentRendererModuleURL()
 			).put(
-				"default", fdsView.isDefault()
+				"default", fdsView.isDefault(fdsName)
 			).put(
 				"label",
 				LanguageUtil.get(

@@ -316,6 +316,7 @@ export default function SaveButtons({
 				<PublishModal
 					actionButton={publishModalAction}
 					articleId={articleId}
+					buttonDisabled={saveButtonDisabled}
 					displayDate={displayDate}
 					onCloseModal={() =>
 						setPublishModalState({

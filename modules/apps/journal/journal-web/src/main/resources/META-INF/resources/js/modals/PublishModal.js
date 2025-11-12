@@ -14,6 +14,7 @@ import ScheduleOptions from '../ScheduleOptions';
 export default function PublishModal({
 	actionButton,
 	articleId,
+	buttonDisabled,
 	displayDate: defaultDisplayDate,
 	onCloseModal,
 	onPublishButtonClick,
@@ -116,6 +117,7 @@ export default function PublishModal({
 						</ClayButton>
 
 						<ClayButton
+							disabled={buttonDisabled}
 							displayType="primary"
 							form={formId}
 							onClick={handleButtonClick}

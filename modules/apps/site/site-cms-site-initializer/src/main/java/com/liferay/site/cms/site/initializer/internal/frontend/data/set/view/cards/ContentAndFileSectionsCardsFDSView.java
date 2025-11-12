@@ -14,9 +14,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
+import com.liferay.site.cms.site.initializer.internal.util.FDSViewUtil;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -88,16 +88,7 @@ public class ContentAndFileSectionsCardsFDSView extends BaseCardsFDSView {
 
 	@Override
 	public boolean isDefault(String fdsName) {
-		if (Objects.equals(fdsName, CMSSiteInitializerFDSNames.ALL_SECTION) ||
-			Objects.equals(
-				fdsName, CMSSiteInitializerFDSNames.CONTENTS_SECTION) ||
-			Objects.equals(
-				fdsName, CMSSiteInitializerFDSNames.VIEW_CONTENTS_FOLDER)) {
-
-			return false;
-		}
-
-		return true;
+		return FDSViewUtil.isDefault(fdsName, getName());
 	}
 
 	private static final Snapshot<FDSCardSchemaBuilderFactory>

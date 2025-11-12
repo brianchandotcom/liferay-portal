@@ -183,7 +183,7 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 				dynamicObjectDefinitionLocalizationTable,
 				ObjectEntrySearchUtil.getLeftJoinLocalizationTablePredicate(
 					dynamicObjectDefinitionLocalizationTable,
-					dynamicObjectDefinitionTable)
+					dynamicObjectDefinitionTable, null)
 			).where(
 				predicate
 			));

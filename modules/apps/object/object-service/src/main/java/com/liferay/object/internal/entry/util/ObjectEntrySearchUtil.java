@@ -71,7 +71,8 @@ public class ObjectEntrySearchUtil {
 	public static Predicate getLeftJoinLocalizationTablePredicate(
 			DynamicObjectDefinitionLocalizationTable
 				dynamicObjectDefinitionLocalizationTable,
-			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			String languageId)
 		throws PortalException {
 
 		if (dynamicObjectDefinitionLocalizationTable == null) {
@@ -84,7 +85,7 @@ public class ObjectEntrySearchUtil {
 		).and(
 			dynamicObjectDefinitionLocalizationTable.getLanguageIdColumn(
 			).eq(
-				getLanguageId()
+				(languageId == null) ? getLanguageId() : languageId
 			)
 		);
 	}

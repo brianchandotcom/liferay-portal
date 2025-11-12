@@ -130,8 +130,8 @@ describe('GalleryView', () => {
 		expect(screen.getByTestId('asset-preview')).toHaveTextContent('item-0');
 	});
 
-	it('disables navigation buttons when there are 5 or fewer items', () => {
-		const fewItems = mockItems.slice(0, 5);
+	it('disables navigation buttons when there is only one item', () => {
+		const fewItems = mockItems.slice(0, 1);
 		render(
 			<GalleryView
 				additionalProps={mockAdditionalProps}

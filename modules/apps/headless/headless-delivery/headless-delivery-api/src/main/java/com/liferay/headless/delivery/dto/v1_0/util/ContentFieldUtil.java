@@ -319,14 +319,14 @@ public class ContentFieldUtil {
 						 DDMFormFieldTypeConstants.IMAGE,
 						 ddmFormField.getType())) {
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
-
 				FileEntry fileEntry = _getFileEntry(dlAppService, valueString);
 
 				if (fileEntry == null) {
 					return new ContentFieldValue();
 				}
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
 
 				return new ContentFieldValue() {
 					{

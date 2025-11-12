@@ -7,13 +7,15 @@ import ClayLabel from '@clayui/label';
 import React from 'react';
 
 const VisibleRenderer = ({value}: {value: boolean}) => {
+	if (value) {
+		return null;
+	}
+
 	return (
 		<span className="align-items-center d-flex">
-			{!value && (
-				<ClayLabel displayType="info">
-					{Liferay.Language.get('not-visible')}
-				</ClayLabel>
-			)}
+			<ClayLabel displayType="info">
+				{Liferay.Language.get('not-visible')}
+			</ClayLabel>
 		</span>
 	);
 };

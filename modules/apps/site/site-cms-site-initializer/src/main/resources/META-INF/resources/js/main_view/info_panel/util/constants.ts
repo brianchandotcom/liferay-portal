@@ -9,3 +9,12 @@ export const ASSET_TYPE = {
 	FILES: 'files',
 	FOLDER: 'folder',
 };
+
+export const COPY = 'copy';
+export const DELETE_VERSION = 'delete';
+export const EXPIRE = 'expire';
+export const L_CONTENTS = 'L_CONTENTS';
+export const L_FILES = 'L_FILES';
+export const RESTORE = 'restore';
+
+export const VIEW_CONTENT_VERSION_URL = `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathMain()}/cms`;

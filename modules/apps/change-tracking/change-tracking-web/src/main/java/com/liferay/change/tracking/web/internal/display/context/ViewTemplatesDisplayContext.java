@@ -13,6 +13,10 @@ import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -60,37 +64,10 @@ public class ViewTemplatesDisplayContext
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
-			"deleteURL",
-			_getDeleteTemplateURL(
-				ctCollectionTemplate.getCtCollectionTemplateId())
-		).put(
-			"editURL",
-			getEditTemplateURL(ctCollectionTemplate.getCtCollectionTemplateId())
-		).put(
-			"isPublicationTemplate", true
-		).put(
-			"namespace", _renderResponse.getNamespace()
-		).put(
-			"permissionsURL",
-			getEditTemplatePermissionsURL(ctCollectionTemplate)
+			"dropdownItems", _getDropdownItemsJSONArray(ctCollectionTemplate)
 		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).build();
-	}
-
-	public String getEditTemplatePermissionsURL(
-			CTCollectionTemplate ctCollectionTemplate)
-		throws Exception {
-
-		if (!CTCollectionTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), ctCollectionTemplate,
-				ActionKeys.PERMISSIONS)) {
-
-			return null;
-		}
-
-		return PublicationsPortletURLUtil.getPermissionsHref(
-			_httpServletRequest, ctCollectionTemplate, _language);
 	}
 
 	public String getEditTemplateURL(long ctCollectionTemplateId)
@@ -189,7 +166,7 @@ public class ViewTemplatesDisplayContext
 		return "templates";
 	}
 
-	private String _getDeleteTemplateURL(long ctCollectionTemplateId)
+	private JSONObject _getDeleteTemplateJSONObject(long ctCollectionTemplateId)
 		throws Exception {
 
 		if (!CTCollectionTemplatePermission.contains(
@@ -199,18 +176,97 @@ public class ViewTemplatesDisplayContext
 			return null;
 		}
 
-		return PublicationsPortletURLUtil.getDeleteHref(
-			_language.get(
-				_httpServletRequest, "are-you-sure-you-want-to-delete-this"),
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/change_tracking/delete_ct_collection_template"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"ctCollectionTemplateId", ctCollectionTemplateId
-			).buildString());
+		return JSONUtil.put(
+			"href",
+			PublicationsPortletURLUtil.getDeleteHref(
+				_language.get(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-this"),
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/change_tracking/delete_ct_collection_template"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionTemplateId", ctCollectionTemplateId
+				).buildString())
+		).put(
+			"label", _language.get(_httpServletRequest, "delete")
+		).put(
+			"symbolLeft", "times-circle"
+		);
+	}
+
+	private JSONArray _getDropdownItemsJSONArray(
+			CTCollectionTemplate ctCollectionTemplate)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		return jsonArray.put(
+			() -> _getEditTemplateJSONObject(
+				ctCollectionTemplate.getCtCollectionTemplateId())
+		).put(
+			() -> _getEditTemplatePermissionsJSONObject(ctCollectionTemplate)
+		).put(
+			() -> {
+				if ((jsonArray.length() == 0) ||
+					!CTCollectionTemplatePermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						ctCollectionTemplate.getCtCollectionTemplateId(),
+						ActionKeys.DELETE)) {
+
+					return null;
+				}
+
+				return JSONUtil.put("type", "divider");
+			}
+		).put(
+			() -> _getDeleteTemplateJSONObject(
+				ctCollectionTemplate.getCtCollectionTemplateId())
+		);
+	}
+
+	private JSONObject _getEditTemplateJSONObject(long ctCollectionTemplateId)
+		throws PortalException {
+
+		if (!CTCollectionTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), ctCollectionTemplateId,
+				ActionKeys.UPDATE)) {
+
+			return null;
+		}
+
+		return JSONUtil.put(
+			"href", getEditTemplateURL(ctCollectionTemplateId)
+		).put(
+			"label", _language.get(_httpServletRequest, "edit")
+		).put(
+			"symbolLeft", "pencil"
+		);
+	}
+
+	private JSONObject _getEditTemplatePermissionsJSONObject(
+			CTCollectionTemplate ctCollectionTemplate)
+		throws Exception {
+
+		if (!CTCollectionTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), ctCollectionTemplate,
+				ActionKeys.PERMISSIONS)) {
+
+			return null;
+		}
+
+		return JSONUtil.put(
+			"href",
+			PublicationsPortletURLUtil.getPermissionsHref(
+				_httpServletRequest, ctCollectionTemplate, _language)
+		).put(
+			"label", _language.get(_httpServletRequest, "permissions")
+		).put(
+			"symbolLeft", "password-policies"
+		);
 	}
 
 	private final CTCollectionTemplateService _ctCollectionTemplateService;

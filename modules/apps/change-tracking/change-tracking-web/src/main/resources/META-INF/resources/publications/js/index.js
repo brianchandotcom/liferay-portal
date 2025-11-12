@@ -7,10 +7,10 @@ export {default as ChangeTrackingIndicator} from './components/ChangeTrackingInd
 export {default as ChangeTrackingNotifications} from './components/ChangeTrackingNotifications';
 export {default as DeletePublicationsFDSPropsTransformer} from './components/DeletePublicationsFDSPropsTransformer';
 export {default as PublicationHistoryPropsTransformer} from './components/PublicationHistoryPropsTransformer';
+export {default as PublicationTemplateDropdownMenu} from './components/PublicationTemplateDropdownMenu';
 export {default as PublicationsExpiredInfoPanel} from './components/PublicationsExpiredInfoPanel';
 export {default as PublicationPermissions} from './components/PublicationsPermissions';
 export {default as StatusRenderer} from './components/StatusRenderer';
-export {default as ViewPublicationsDropdownMenu} from './components/ViewPublicationsDropdownMenu';
 export {default as ManageCollaborators} from './components/manage-collaborators-modal/ManageCollaborators';
 export {default as ChangeTrackingBaseScheduleView} from './views/ChangeTrackingBaseScheduleView';
 export {default as ChangeTrackingChangeView} from './views/ChangeTrackingChangeView';

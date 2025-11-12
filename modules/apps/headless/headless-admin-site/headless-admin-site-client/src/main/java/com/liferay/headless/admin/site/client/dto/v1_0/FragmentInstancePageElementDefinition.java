@@ -209,27 +209,30 @@ public class FragmentInstancePageElementDefinition
 	protected Map<String, FragmentConfigurationFieldValue>
 		fragmentConfigurationFieldValues;
 
-	public FragmentElement[] getFragmentElements() {
-		return fragmentElements;
+	public FragmentEditableElement[] getFragmentEditableElements() {
+		return fragmentEditableElements;
 	}
 
-	public void setFragmentElements(FragmentElement[] fragmentElements) {
-		this.fragmentElements = fragmentElements;
+	public void setFragmentEditableElements(
+		FragmentEditableElement[] fragmentEditableElements) {
+
+		this.fragmentEditableElements = fragmentEditableElements;
 	}
 
-	public void setFragmentElements(
-		UnsafeSupplier<FragmentElement[], Exception>
-			fragmentElementsUnsafeSupplier) {
+	public void setFragmentEditableElements(
+		UnsafeSupplier<FragmentEditableElement[], Exception>
+			fragmentEditableElementsUnsafeSupplier) {
 
 		try {
-			fragmentElements = fragmentElementsUnsafeSupplier.get();
+			fragmentEditableElements =
+				fragmentEditableElementsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentElement[] fragmentElements;
+	protected FragmentEditableElement[] fragmentEditableElements;
 
 	public String getFragmentInstanceExternalReferenceCode() {
 		return fragmentInstanceExternalReferenceCode;

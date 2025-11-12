@@ -37,26 +37,26 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment element value of type action.",
-	value = "ActionFragmentElementValue"
+	description = "A fragment editable element value of type action.",
+	value = "ActionFragmentEditableElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ActionFragmentElementValue")
-public class ActionFragmentElementValue
-	extends FragmentElementValue implements Serializable {
+@XmlRootElement(name = "ActionFragmentEditableElementValue")
+public class ActionFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Serializable {
 
-	public static ActionFragmentElementValue toDTO(String json) {
+	public static ActionFragmentEditableElementValue toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			ActionFragmentElementValue.class, json);
+			ActionFragmentEditableElementValue.class, json);
 	}
 
-	public static ActionFragmentElementValue unsafeToDTO(String json) {
+	public static ActionFragmentEditableElementValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			ActionFragmentElementValue.class, json);
+			ActionFragmentEditableElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment element's action. Must be mapped to an external value."
+		description = "The fragment editable element's action. Must be mapped to an external value."
 	)
 	@Valid
 	public Object getAction() {
@@ -93,7 +93,7 @@ public class ActionFragmentElementValue
 	}
 
 	@GraphQLField(
-		description = "The fragment element's action. Must be mapped to an external value."
+		description = "The fragment editable element's action. Must be mapped to an external value."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object action;
@@ -196,7 +196,7 @@ public class ActionFragmentElementValue
 	private Supplier<ActionExecutionResult> _onSuccessSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment element's text."
+		description = "The fragment editable element's text."
 	)
 	@Valid
 	public Object getText() {
@@ -230,7 +230,7 @@ public class ActionFragmentElementValue
 		};
 	}
 
-	@GraphQLField(description = "The fragment element's text.")
+	@GraphQLField(description = "The fragment editable element's text.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object text;
 
@@ -243,15 +243,15 @@ public class ActionFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof ActionFragmentElementValue)) {
+		if (!(object instanceof ActionFragmentEditableElementValue)) {
 			return false;
 		}
 
-		ActionFragmentElementValue actionFragmentElementValue =
-			(ActionFragmentElementValue)object;
+		ActionFragmentEditableElementValue actionFragmentEditableElementValue =
+			(ActionFragmentEditableElementValue)object;
 
 		return Objects.equals(
-			toString(), actionFragmentElementValue.toString());
+			toString(), actionFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -355,7 +355,7 @@ public class ActionFragmentElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ActionFragmentElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ActionFragmentEditableElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

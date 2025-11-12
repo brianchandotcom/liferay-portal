@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.TextFragmentElementValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.TextFragmentEditableElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class TextFragmentElementValue
-	extends FragmentElementValue implements Cloneable, Serializable {
+public class TextFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Cloneable, Serializable {
 
-	public static TextFragmentElementValue toDTO(String json) {
-		return TextFragmentElementValueSerDes.toDTO(json);
+	public static TextFragmentEditableElementValue toDTO(String json) {
+		return TextFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
 	public FragmentLink getFragmentLink() {
@@ -70,8 +70,10 @@ public class TextFragmentElementValue
 	protected TextFragmentValue textFragmentValue;
 
 	@Override
-	public TextFragmentElementValue clone() throws CloneNotSupportedException {
-		return (TextFragmentElementValue)super.clone();
+	public TextFragmentEditableElementValue clone()
+		throws CloneNotSupportedException {
+
+		return (TextFragmentEditableElementValue)super.clone();
 	}
 
 	@Override
@@ -80,14 +82,15 @@ public class TextFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof TextFragmentElementValue)) {
+		if (!(object instanceof TextFragmentEditableElementValue)) {
 			return false;
 		}
 
-		TextFragmentElementValue textFragmentElementValue =
-			(TextFragmentElementValue)object;
+		TextFragmentEditableElementValue textFragmentEditableElementValue =
+			(TextFragmentEditableElementValue)object;
 
-		return Objects.equals(toString(), textFragmentElementValue.toString());
+		return Objects.equals(
+			toString(), textFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -98,7 +101,7 @@ public class TextFragmentElementValue
 	}
 
 	public String toString() {
-		return TextFragmentElementValueSerDes.toJSON(this);
+		return TextFragmentEditableElementValueSerDes.toJSON(this);
 	}
 
 }

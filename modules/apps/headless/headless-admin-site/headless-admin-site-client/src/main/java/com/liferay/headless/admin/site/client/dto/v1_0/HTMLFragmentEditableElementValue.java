@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.HTMLFragmentElementValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.HTMLFragmentEditableElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class HTMLFragmentElementValue
-	extends FragmentElementValue implements Cloneable, Serializable {
+public class HTMLFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Cloneable, Serializable {
 
-	public static HTMLFragmentElementValue toDTO(String json) {
-		return HTMLFragmentElementValueSerDes.toDTO(json);
+	public static HTMLFragmentEditableElementValue toDTO(String json) {
+		return HTMLFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
 	public Object getHtml() {
@@ -46,8 +46,10 @@ public class HTMLFragmentElementValue
 	protected Object html;
 
 	@Override
-	public HTMLFragmentElementValue clone() throws CloneNotSupportedException {
-		return (HTMLFragmentElementValue)super.clone();
+	public HTMLFragmentEditableElementValue clone()
+		throws CloneNotSupportedException {
+
+		return (HTMLFragmentEditableElementValue)super.clone();
 	}
 
 	@Override
@@ -56,14 +58,15 @@ public class HTMLFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof HTMLFragmentElementValue)) {
+		if (!(object instanceof HTMLFragmentEditableElementValue)) {
 			return false;
 		}
 
-		HTMLFragmentElementValue htmlFragmentElementValue =
-			(HTMLFragmentElementValue)object;
+		HTMLFragmentEditableElementValue htmlFragmentEditableElementValue =
+			(HTMLFragmentEditableElementValue)object;
 
-		return Objects.equals(toString(), htmlFragmentElementValue.toString());
+		return Objects.equals(
+			toString(), htmlFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -74,7 +77,7 @@ public class HTMLFragmentElementValue
 	}
 
 	public String toString() {
-		return HTMLFragmentElementValueSerDes.toJSON(this);
+		return HTMLFragmentEditableElementValueSerDes.toJSON(this);
 	}
 
 }

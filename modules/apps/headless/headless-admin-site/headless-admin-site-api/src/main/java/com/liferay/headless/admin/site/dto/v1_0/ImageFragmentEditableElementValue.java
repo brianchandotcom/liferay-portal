@@ -36,25 +36,70 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment element of type text.",
-	value = "TextFragmentElementValue"
+	description = "A fragment editable element value of type image.",
+	value = "ImageFragmentEditableElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "TextFragmentElementValue")
-public class TextFragmentElementValue
-	extends FragmentElementValue implements Serializable {
+@XmlRootElement(name = "ImageFragmentEditableElementValue")
+public class ImageFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Serializable {
 
-	public static TextFragmentElementValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(TextFragmentElementValue.class, json);
+	public static ImageFragmentEditableElementValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			ImageFragmentEditableElementValue.class, json);
 	}
 
-	public static TextFragmentElementValue unsafeToDTO(String json) {
+	public static ImageFragmentEditableElementValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			TextFragmentElementValue.class, json);
+			ImageFragmentEditableElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment link of a text fragment element."
+		description = "The fragment editable element's image."
+	)
+	@Valid
+	public FragmentImage getFragmentImage() {
+		if (_fragmentImageSupplier != null) {
+			fragmentImage = _fragmentImageSupplier.get();
+
+			_fragmentImageSupplier = null;
+		}
+
+		return fragmentImage;
+	}
+
+	public void setFragmentImage(FragmentImage fragmentImage) {
+		this.fragmentImage = fragmentImage;
+
+		_fragmentImageSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFragmentImage(
+		UnsafeSupplier<FragmentImage, Exception> fragmentImageUnsafeSupplier) {
+
+		_fragmentImageSupplier = () -> {
+			try {
+				return fragmentImageUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The fragment editable element's image.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentImage fragmentImage;
+
+	@JsonIgnore
+	private Supplier<FragmentImage> _fragmentImageSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A link to a fragment."
 	)
 	@Valid
 	public FragmentLink getFragmentLink() {
@@ -90,57 +135,12 @@ public class TextFragmentElementValue
 		};
 	}
 
-	@GraphQLField(description = "The fragment link of a text fragment element.")
+	@GraphQLField(description = "A link to a fragment.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
 
 	@JsonIgnore
 	private Supplier<FragmentLink> _fragmentLinkSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment element's text."
-	)
-	@Valid
-	public TextFragmentValue getTextFragmentValue() {
-		if (_textFragmentValueSupplier != null) {
-			textFragmentValue = _textFragmentValueSupplier.get();
-
-			_textFragmentValueSupplier = null;
-		}
-
-		return textFragmentValue;
-	}
-
-	public void setTextFragmentValue(TextFragmentValue textFragmentValue) {
-		this.textFragmentValue = textFragmentValue;
-
-		_textFragmentValueSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTextFragmentValue(
-		UnsafeSupplier<TextFragmentValue, Exception>
-			textFragmentValueUnsafeSupplier) {
-
-		_textFragmentValueSupplier = () -> {
-			try {
-				return textFragmentValueUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment element's text.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected TextFragmentValue textFragmentValue;
-
-	@JsonIgnore
-	private Supplier<TextFragmentValue> _textFragmentValueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -148,14 +148,15 @@ public class TextFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof TextFragmentElementValue)) {
+		if (!(object instanceof ImageFragmentEditableElementValue)) {
 			return false;
 		}
 
-		TextFragmentElementValue textFragmentElementValue =
-			(TextFragmentElementValue)object;
+		ImageFragmentEditableElementValue imageFragmentEditableElementValue =
+			(ImageFragmentEditableElementValue)object;
 
-		return Objects.equals(toString(), textFragmentElementValue.toString());
+		return Objects.equals(
+			toString(), imageFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -170,6 +171,18 @@ public class TextFragmentElementValue
 
 		sb.append("{");
 
+		FragmentImage fragmentImage = getFragmentImage();
+
+		if (fragmentImage != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentImage\": ");
+
+			sb.append(String.valueOf(fragmentImage));
+		}
+
 		FragmentLink fragmentLink = getFragmentLink();
 
 		if (fragmentLink != null) {
@@ -180,18 +193,6 @@ public class TextFragmentElementValue
 			sb.append("\"fragmentLink\": ");
 
 			sb.append(String.valueOf(fragmentLink));
-		}
-
-		TextFragmentValue textFragmentValue = getTextFragmentValue();
-
-		if (textFragmentValue != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"textFragmentValue\": ");
-
-			sb.append(String.valueOf(textFragmentValue));
 		}
 
 		Type type = getType();
@@ -215,7 +216,7 @@ public class TextFragmentElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.TextFragmentElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ImageFragmentEditableElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

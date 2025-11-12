@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.BackgroundImageFragmentElementValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.BackgroundImageFragmentEditableElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,13 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class BackgroundImageFragmentElementValue
-	extends FragmentElementValue implements Cloneable, Serializable {
+public class BackgroundImageFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Cloneable, Serializable {
 
-	public static BackgroundImageFragmentElementValue toDTO(String json) {
-		return BackgroundImageFragmentElementValueSerDes.toDTO(json);
+	public static BackgroundImageFragmentEditableElementValue toDTO(
+		String json) {
+
+		return BackgroundImageFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
 	public FragmentImage getBackgroundFragmentImage() {
@@ -52,10 +54,10 @@ public class BackgroundImageFragmentElementValue
 	protected FragmentImage backgroundFragmentImage;
 
 	@Override
-	public BackgroundImageFragmentElementValue clone()
+	public BackgroundImageFragmentEditableElementValue clone()
 		throws CloneNotSupportedException {
 
-		return (BackgroundImageFragmentElementValue)super.clone();
+		return (BackgroundImageFragmentEditableElementValue)super.clone();
 	}
 
 	@Override
@@ -64,16 +66,16 @@ public class BackgroundImageFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof BackgroundImageFragmentElementValue)) {
+		if (!(object instanceof BackgroundImageFragmentEditableElementValue)) {
 			return false;
 		}
 
-		BackgroundImageFragmentElementValue
-			backgroundImageFragmentElementValue =
-				(BackgroundImageFragmentElementValue)object;
+		BackgroundImageFragmentEditableElementValue
+			backgroundImageFragmentEditableElementValue =
+				(BackgroundImageFragmentEditableElementValue)object;
 
 		return Objects.equals(
-			toString(), backgroundImageFragmentElementValue.toString());
+			toString(), backgroundImageFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -84,7 +86,7 @@ public class BackgroundImageFragmentElementValue
 	}
 
 	public String toString() {
-		return BackgroundImageFragmentElementValueSerDes.toJSON(this);
+		return BackgroundImageFragmentEditableElementValueSerDes.toJSON(this);
 	}
 
 }

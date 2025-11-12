@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.ActionFragmentElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.ActionFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,28 +21,28 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class ActionFragmentElementValueSerDes {
+public class ActionFragmentEditableElementValueSerDes {
 
-	public static ActionFragmentElementValue toDTO(String json) {
-		ActionFragmentElementValueJSONParser
-			actionFragmentElementValueJSONParser =
-				new ActionFragmentElementValueJSONParser();
+	public static ActionFragmentEditableElementValue toDTO(String json) {
+		ActionFragmentEditableElementValueJSONParser
+			actionFragmentEditableElementValueJSONParser =
+				new ActionFragmentEditableElementValueJSONParser();
 
-		return actionFragmentElementValueJSONParser.parseToDTO(json);
+		return actionFragmentEditableElementValueJSONParser.parseToDTO(json);
 	}
 
-	public static ActionFragmentElementValue[] toDTOs(String json) {
-		ActionFragmentElementValueJSONParser
-			actionFragmentElementValueJSONParser =
-				new ActionFragmentElementValueJSONParser();
+	public static ActionFragmentEditableElementValue[] toDTOs(String json) {
+		ActionFragmentEditableElementValueJSONParser
+			actionFragmentEditableElementValueJSONParser =
+				new ActionFragmentEditableElementValueJSONParser();
 
-		return actionFragmentElementValueJSONParser.parseToDTOs(json);
+		return actionFragmentEditableElementValueJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		ActionFragmentElementValue actionFragmentElementValue) {
+		ActionFragmentEditableElementValue actionFragmentEditableElementValue) {
 
-		if (actionFragmentElementValue == null) {
+		if (actionFragmentEditableElementValue == null) {
 			return "null";
 		}
 
@@ -50,34 +50,39 @@ public class ActionFragmentElementValueSerDes {
 
 		sb.append("{");
 
-		if (actionFragmentElementValue.getAction() != null) {
+		if (actionFragmentEditableElementValue.getAction() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"action\": ");
 
-			if (actionFragmentElementValue.getAction() instanceof String) {
+			if (actionFragmentEditableElementValue.getAction() instanceof
+					String) {
+
 				sb.append("\"");
-				sb.append((String)actionFragmentElementValue.getAction());
+				sb.append(
+					(String)actionFragmentEditableElementValue.getAction());
 				sb.append("\"");
 			}
 			else {
-				sb.append(actionFragmentElementValue.getAction());
+				sb.append(actionFragmentEditableElementValue.getAction());
 			}
 		}
 
-		if (actionFragmentElementValue.getOnError() != null) {
+		if (actionFragmentEditableElementValue.getOnError() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"onError\": ");
 
-			sb.append(String.valueOf(actionFragmentElementValue.getOnError()));
+			sb.append(
+				String.valueOf(
+					actionFragmentEditableElementValue.getOnError()));
 		}
 
-		if (actionFragmentElementValue.getOnSuccess() != null) {
+		if (actionFragmentEditableElementValue.getOnSuccess() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -85,27 +90,30 @@ public class ActionFragmentElementValueSerDes {
 			sb.append("\"onSuccess\": ");
 
 			sb.append(
-				String.valueOf(actionFragmentElementValue.getOnSuccess()));
+				String.valueOf(
+					actionFragmentEditableElementValue.getOnSuccess()));
 		}
 
-		if (actionFragmentElementValue.getText() != null) {
+		if (actionFragmentEditableElementValue.getText() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"text\": ");
 
-			if (actionFragmentElementValue.getText() instanceof String) {
+			if (actionFragmentEditableElementValue.getText() instanceof
+					String) {
+
 				sb.append("\"");
-				sb.append((String)actionFragmentElementValue.getText());
+				sb.append((String)actionFragmentEditableElementValue.getText());
 				sb.append("\"");
 			}
 			else {
-				sb.append(actionFragmentElementValue.getText());
+				sb.append(actionFragmentEditableElementValue.getText());
 			}
 		}
 
-		if (actionFragmentElementValue.getType() != null) {
+		if (actionFragmentEditableElementValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -113,7 +121,7 @@ public class ActionFragmentElementValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-			sb.append(actionFragmentElementValue.getType());
+			sb.append(actionFragmentEditableElementValue.getType());
 			sb.append("\"");
 		}
 
@@ -123,79 +131,85 @@ public class ActionFragmentElementValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ActionFragmentElementValueJSONParser
-			actionFragmentElementValueJSONParser =
-				new ActionFragmentElementValueJSONParser();
+		ActionFragmentEditableElementValueJSONParser
+			actionFragmentEditableElementValueJSONParser =
+				new ActionFragmentEditableElementValueJSONParser();
 
-		return actionFragmentElementValueJSONParser.parseToMap(json);
+		return actionFragmentEditableElementValueJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		ActionFragmentElementValue actionFragmentElementValue) {
+		ActionFragmentEditableElementValue actionFragmentEditableElementValue) {
 
-		if (actionFragmentElementValue == null) {
+		if (actionFragmentEditableElementValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (actionFragmentElementValue.getAction() == null) {
+		if (actionFragmentEditableElementValue.getAction() == null) {
 			map.put("action", null);
 		}
 		else {
 			map.put(
 				"action",
-				String.valueOf(actionFragmentElementValue.getAction()));
+				String.valueOf(actionFragmentEditableElementValue.getAction()));
 		}
 
-		if (actionFragmentElementValue.getOnError() == null) {
+		if (actionFragmentEditableElementValue.getOnError() == null) {
 			map.put("onError", null);
 		}
 		else {
 			map.put(
 				"onError",
-				String.valueOf(actionFragmentElementValue.getOnError()));
+				String.valueOf(
+					actionFragmentEditableElementValue.getOnError()));
 		}
 
-		if (actionFragmentElementValue.getOnSuccess() == null) {
+		if (actionFragmentEditableElementValue.getOnSuccess() == null) {
 			map.put("onSuccess", null);
 		}
 		else {
 			map.put(
 				"onSuccess",
-				String.valueOf(actionFragmentElementValue.getOnSuccess()));
+				String.valueOf(
+					actionFragmentEditableElementValue.getOnSuccess()));
 		}
 
-		if (actionFragmentElementValue.getText() == null) {
+		if (actionFragmentEditableElementValue.getText() == null) {
 			map.put("text", null);
 		}
 		else {
 			map.put(
-				"text", String.valueOf(actionFragmentElementValue.getText()));
+				"text",
+				String.valueOf(actionFragmentEditableElementValue.getText()));
 		}
 
-		if (actionFragmentElementValue.getType() == null) {
+		if (actionFragmentEditableElementValue.getType() == null) {
 			map.put("type", null);
 		}
 		else {
 			map.put(
-				"type", String.valueOf(actionFragmentElementValue.getType()));
+				"type",
+				String.valueOf(actionFragmentEditableElementValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class ActionFragmentElementValueJSONParser
-		extends BaseJSONParser<ActionFragmentElementValue> {
+	public static class ActionFragmentEditableElementValueJSONParser
+		extends BaseJSONParser<ActionFragmentEditableElementValue> {
 
 		@Override
-		protected ActionFragmentElementValue createDTO() {
-			return new ActionFragmentElementValue();
+		protected ActionFragmentEditableElementValue createDTO() {
+			return new ActionFragmentEditableElementValue();
 		}
 
 		@Override
-		protected ActionFragmentElementValue[] createDTOArray(int size) {
-			return new ActionFragmentElementValue[size];
+		protected ActionFragmentEditableElementValue[] createDTOArray(
+			int size) {
+
+			return new ActionFragmentEditableElementValue[size];
 		}
 
 		@Override
@@ -221,39 +235,40 @@ public class ActionFragmentElementValueSerDes {
 
 		@Override
 		protected void setField(
-			ActionFragmentElementValue actionFragmentElementValue,
+			ActionFragmentEditableElementValue
+				actionFragmentEditableElementValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "action")) {
 				if (jsonParserFieldValue != null) {
-					actionFragmentElementValue.setAction(
+					actionFragmentEditableElementValue.setAction(
 						(Object)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "onError")) {
 				if (jsonParserFieldValue != null) {
-					actionFragmentElementValue.setOnError(
+					actionFragmentEditableElementValue.setOnError(
 						ActionExecutionResultSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "onSuccess")) {
 				if (jsonParserFieldValue != null) {
-					actionFragmentElementValue.setOnSuccess(
+					actionFragmentEditableElementValue.setOnSuccess(
 						ActionExecutionResultSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "text")) {
 				if (jsonParserFieldValue != null) {
-					actionFragmentElementValue.setText(
+					actionFragmentEditableElementValue.setText(
 						(Object)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					actionFragmentElementValue.setType(
-						ActionFragmentElementValue.Type.create(
+					actionFragmentEditableElementValue.setType(
+						ActionFragmentEditableElementValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentElementValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentEditableElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public abstract class FragmentElementValue implements Cloneable, Serializable {
+public abstract class FragmentEditableElementValue
+	implements Cloneable, Serializable {
 
-	public static FragmentElementValue toDTO(String json) {
-		return FragmentElementValueSerDes.toDTO(json);
+	public static FragmentEditableElementValue toDTO(String json) {
+		return FragmentEditableElementValueSerDes.toDTO(json);
 	}
 
 	public Type getType() {
@@ -53,8 +54,10 @@ public abstract class FragmentElementValue implements Cloneable, Serializable {
 	protected Type type;
 
 	@Override
-	public FragmentElementValue clone() throws CloneNotSupportedException {
-		return (FragmentElementValue)super.clone();
+	public FragmentEditableElementValue clone()
+		throws CloneNotSupportedException {
+
+		return (FragmentEditableElementValue)super.clone();
 	}
 
 	@Override
@@ -63,14 +66,15 @@ public abstract class FragmentElementValue implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentElementValue)) {
+		if (!(object instanceof FragmentEditableElementValue)) {
 			return false;
 		}
 
-		FragmentElementValue fragmentElementValue =
-			(FragmentElementValue)object;
+		FragmentEditableElementValue fragmentEditableElementValue =
+			(FragmentEditableElementValue)object;
 
-		return Objects.equals(toString(), fragmentElementValue.toString());
+		return Objects.equals(
+			toString(), fragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -81,7 +85,7 @@ public abstract class FragmentElementValue implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return FragmentElementValueSerDes.toJSON(this);
+		return FragmentEditableElementValueSerDes.toJSON(this);
 	}
 
 	public static enum Type {

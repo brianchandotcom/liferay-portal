@@ -35,47 +35,52 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "A fragment element.", value = "FragmentElement")
+@GraphQLName(
+	description = "A fragment editable element.",
+	value = "FragmentEditableElement"
+)
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentElement")
-public class FragmentElement implements Serializable {
+@XmlRootElement(name = "FragmentEditableElement")
+public class FragmentEditableElement implements Serializable {
 
-	public static FragmentElement toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentElement.class, json);
+	public static FragmentEditableElement toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentEditableElement.class, json);
 	}
 
-	public static FragmentElement unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentElement.class, json);
+	public static FragmentEditableElement unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			FragmentEditableElement.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public FragmentElementValue getFragmentElementValue() {
-		if (_fragmentElementValueSupplier != null) {
-			fragmentElementValue = _fragmentElementValueSupplier.get();
+	public FragmentEditableElementValue getFragmentEditableElementValue() {
+		if (_fragmentEditableElementValueSupplier != null) {
+			fragmentEditableElementValue =
+				_fragmentEditableElementValueSupplier.get();
 
-			_fragmentElementValueSupplier = null;
+			_fragmentEditableElementValueSupplier = null;
 		}
 
-		return fragmentElementValue;
+		return fragmentEditableElementValue;
 	}
 
-	public void setFragmentElementValue(
-		FragmentElementValue fragmentElementValue) {
+	public void setFragmentEditableElementValue(
+		FragmentEditableElementValue fragmentEditableElementValue) {
 
-		this.fragmentElementValue = fragmentElementValue;
+		this.fragmentEditableElementValue = fragmentEditableElementValue;
 
-		_fragmentElementValueSupplier = null;
+		_fragmentEditableElementValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFragmentElementValue(
-		UnsafeSupplier<FragmentElementValue, Exception>
-			fragmentElementValueUnsafeSupplier) {
+	public void setFragmentEditableElementValue(
+		UnsafeSupplier<FragmentEditableElementValue, Exception>
+			fragmentEditableElementValueUnsafeSupplier) {
 
-		_fragmentElementValueSupplier = () -> {
+		_fragmentEditableElementValueSupplier = () -> {
 			try {
-				return fragmentElementValueUnsafeSupplier.get();
+				return fragmentEditableElementValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -88,10 +93,11 @@ public class FragmentElement implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentElementValue fragmentElementValue;
+	protected FragmentEditableElementValue fragmentEditableElementValue;
 
 	@JsonIgnore
-	private Supplier<FragmentElementValue> _fragmentElementValueSupplier;
+	private Supplier<FragmentEditableElementValue>
+		_fragmentEditableElementValueSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment element's ID."
@@ -140,13 +146,14 @@ public class FragmentElement implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentElement)) {
+		if (!(object instanceof FragmentEditableElement)) {
 			return false;
 		}
 
-		FragmentElement fragmentElement = (FragmentElement)object;
+		FragmentEditableElement fragmentEditableElement =
+			(FragmentEditableElement)object;
 
-		return Objects.equals(toString(), fragmentElement.toString());
+		return Objects.equals(toString(), fragmentEditableElement.toString());
 	}
 
 	@Override
@@ -161,16 +168,17 @@ public class FragmentElement implements Serializable {
 
 		sb.append("{");
 
-		FragmentElementValue fragmentElementValue = getFragmentElementValue();
+		FragmentEditableElementValue fragmentEditableElementValue =
+			getFragmentEditableElementValue();
 
-		if (fragmentElementValue != null) {
+		if (fragmentEditableElementValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentElementValue\": ");
+			sb.append("\"fragmentEditableElementValue\": ");
 
-			sb.append(String.valueOf(fragmentElementValue));
+			sb.append(String.valueOf(fragmentEditableElementValue));
 		}
 
 		String id = getId();
@@ -196,7 +204,7 @@ public class FragmentElement implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentElement",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElement",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -5,12 +5,12 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.ActionFragmentElementValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentElementValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentElementValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentElementValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.ImageFragmentElementValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.ActionFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.ImageFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -26,55 +26,65 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class FragmentElementValueSerDes {
+public class FragmentEditableElementValueSerDes {
 
-	public static FragmentElementValue toDTO(String json) {
-		FragmentElementValueJSONParser fragmentElementValueJSONParser =
-			new FragmentElementValueJSONParser();
+	public static FragmentEditableElementValue toDTO(String json) {
+		FragmentEditableElementValueJSONParser
+			fragmentEditableElementValueJSONParser =
+				new FragmentEditableElementValueJSONParser();
 
-		return fragmentElementValueJSONParser.parseToDTO(json);
+		return fragmentEditableElementValueJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentElementValue[] toDTOs(String json) {
-		FragmentElementValueJSONParser fragmentElementValueJSONParser =
-			new FragmentElementValueJSONParser();
+	public static FragmentEditableElementValue[] toDTOs(String json) {
+		FragmentEditableElementValueJSONParser
+			fragmentEditableElementValueJSONParser =
+				new FragmentEditableElementValueJSONParser();
 
-		return fragmentElementValueJSONParser.parseToDTOs(json);
+		return fragmentEditableElementValueJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FragmentElementValue fragmentElementValue) {
-		if (fragmentElementValue == null) {
+	public static String toJSON(
+		FragmentEditableElementValue fragmentEditableElementValue) {
+
+		if (fragmentEditableElementValue == null) {
 			return "null";
 		}
 
-		FragmentElementValue.Type type = fragmentElementValue.getType();
+		FragmentEditableElementValue.Type type =
+			fragmentEditableElementValue.getType();
 
 		if (type != null) {
 			String typeString = type.toString();
 
 			if (typeString.equals("Action")) {
-				return ActionFragmentElementValueSerDes.toJSON(
-					(ActionFragmentElementValue)fragmentElementValue);
+				return ActionFragmentEditableElementValueSerDes.toJSON(
+					(ActionFragmentEditableElementValue)
+						fragmentEditableElementValue);
 			}
 
 			if (typeString.equals("BackgroundImage")) {
-				return BackgroundImageFragmentElementValueSerDes.toJSON(
-					(BackgroundImageFragmentElementValue)fragmentElementValue);
+				return BackgroundImageFragmentEditableElementValueSerDes.toJSON(
+					(BackgroundImageFragmentEditableElementValue)
+						fragmentEditableElementValue);
 			}
 
 			if (typeString.equals("HTML")) {
-				return HTMLFragmentElementValueSerDes.toJSON(
-					(HTMLFragmentElementValue)fragmentElementValue);
+				return HTMLFragmentEditableElementValueSerDes.toJSON(
+					(HTMLFragmentEditableElementValue)
+						fragmentEditableElementValue);
 			}
 
 			if (typeString.equals("Image")) {
-				return ImageFragmentElementValueSerDes.toJSON(
-					(ImageFragmentElementValue)fragmentElementValue);
+				return ImageFragmentEditableElementValueSerDes.toJSON(
+					(ImageFragmentEditableElementValue)
+						fragmentEditableElementValue);
 			}
 
 			if (typeString.equals("Text")) {
-				return TextFragmentElementValueSerDes.toJSON(
-					(TextFragmentElementValue)fragmentElementValue);
+				return TextFragmentEditableElementValueSerDes.toJSON(
+					(TextFragmentEditableElementValue)
+						fragmentEditableElementValue);
 			}
 
 			throw new IllegalArgumentException("Unknown type " + typeString);
@@ -85,42 +95,44 @@ public class FragmentElementValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentElementValueJSONParser fragmentElementValueJSONParser =
-			new FragmentElementValueJSONParser();
+		FragmentEditableElementValueJSONParser
+			fragmentEditableElementValueJSONParser =
+				new FragmentEditableElementValueJSONParser();
 
-		return fragmentElementValueJSONParser.parseToMap(json);
+		return fragmentEditableElementValueJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		FragmentElementValue fragmentElementValue) {
+		FragmentEditableElementValue fragmentEditableElementValue) {
 
-		if (fragmentElementValue == null) {
+		if (fragmentEditableElementValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentElementValue.getType() == null) {
+		if (fragmentEditableElementValue.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(fragmentElementValue.getType()));
+			map.put(
+				"type", String.valueOf(fragmentEditableElementValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentElementValueJSONParser
-		extends BaseJSONParser<FragmentElementValue> {
+	public static class FragmentEditableElementValueJSONParser
+		extends BaseJSONParser<FragmentEditableElementValue> {
 
 		@Override
-		protected FragmentElementValue createDTO() {
+		protected FragmentEditableElementValue createDTO() {
 			return null;
 		}
 
 		@Override
-		protected FragmentElementValue[] createDTOArray(int size) {
-			return new FragmentElementValue[size];
+		protected FragmentEditableElementValue[] createDTOArray(int size) {
+			return new FragmentEditableElementValue[size];
 		}
 
 		@Override
@@ -133,7 +145,7 @@ public class FragmentElementValueSerDes {
 		}
 
 		@Override
-		public FragmentElementValue parseToDTO(String json) {
+		public FragmentEditableElementValue parseToDTO(String json) {
 			Map<String, Object> jsonMap = parseToMap(json);
 
 			Object type = jsonMap.get("type");
@@ -142,23 +154,24 @@ public class FragmentElementValueSerDes {
 				String typeString = type.toString();
 
 				if (typeString.equals("Action")) {
-					return ActionFragmentElementValue.toDTO(json);
+					return ActionFragmentEditableElementValue.toDTO(json);
 				}
 
 				if (typeString.equals("BackgroundImage")) {
-					return BackgroundImageFragmentElementValue.toDTO(json);
+					return BackgroundImageFragmentEditableElementValue.toDTO(
+						json);
 				}
 
 				if (typeString.equals("HTML")) {
-					return HTMLFragmentElementValue.toDTO(json);
+					return HTMLFragmentEditableElementValue.toDTO(json);
 				}
 
 				if (typeString.equals("Image")) {
-					return ImageFragmentElementValue.toDTO(json);
+					return ImageFragmentEditableElementValue.toDTO(json);
 				}
 
 				if (typeString.equals("Text")) {
-					return TextFragmentElementValue.toDTO(json);
+					return TextFragmentEditableElementValue.toDTO(json);
 				}
 
 				throw new IllegalArgumentException(
@@ -171,13 +184,13 @@ public class FragmentElementValueSerDes {
 
 		@Override
 		protected void setField(
-			FragmentElementValue fragmentElementValue,
+			FragmentEditableElementValue fragmentEditableElementValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					fragmentElementValue.setType(
-						FragmentElementValue.Type.create(
+					fragmentEditableElementValue.setType(
+						FragmentEditableElementValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

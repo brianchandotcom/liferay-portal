@@ -36,26 +36,30 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment element value of type background image.",
-	value = "BackgroundImageFragmentElementValue"
+	description = "A fragment editable element value of type background image.",
+	value = "BackgroundImageFragmentEditableElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BackgroundImageFragmentElementValue")
-public class BackgroundImageFragmentElementValue
-	extends FragmentElementValue implements Serializable {
+@XmlRootElement(name = "BackgroundImageFragmentEditableElementValue")
+public class BackgroundImageFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Serializable {
 
-	public static BackgroundImageFragmentElementValue toDTO(String json) {
+	public static BackgroundImageFragmentEditableElementValue toDTO(
+		String json) {
+
 		return ObjectMapperUtil.readValue(
-			BackgroundImageFragmentElementValue.class, json);
+			BackgroundImageFragmentEditableElementValue.class, json);
 	}
 
-	public static BackgroundImageFragmentElementValue unsafeToDTO(String json) {
+	public static BackgroundImageFragmentEditableElementValue unsafeToDTO(
+		String json) {
+
 		return ObjectMapperUtil.unsafeReadValue(
-			BackgroundImageFragmentElementValue.class, json);
+			BackgroundImageFragmentEditableElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment element's background image."
+		description = "The fragment editable element's background image."
 	)
 	@Valid
 	public FragmentImage getBackgroundFragmentImage() {
@@ -94,7 +98,9 @@ public class BackgroundImageFragmentElementValue
 		};
 	}
 
-	@GraphQLField(description = "The fragment element's background image.")
+	@GraphQLField(
+		description = "The fragment editable element's background image."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
 
@@ -107,16 +113,16 @@ public class BackgroundImageFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof BackgroundImageFragmentElementValue)) {
+		if (!(object instanceof BackgroundImageFragmentEditableElementValue)) {
 			return false;
 		}
 
-		BackgroundImageFragmentElementValue
-			backgroundImageFragmentElementValue =
-				(BackgroundImageFragmentElementValue)object;
+		BackgroundImageFragmentEditableElementValue
+			backgroundImageFragmentEditableElementValue =
+				(BackgroundImageFragmentEditableElementValue)object;
 
 		return Objects.equals(
-			toString(), backgroundImageFragmentElementValue.toString());
+			toString(), backgroundImageFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -164,7 +170,7 @@ public class BackgroundImageFragmentElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

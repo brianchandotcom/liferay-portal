@@ -15,8 +15,12 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
+import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
-import {useHoverMultipleItems} from '../../../app/js-index';
+import {
+	useHoverMultipleItems,
+	useKeyboardNavigation,
+} from '../../../app/js-index';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import deleteRule from '../../../app/thunks/deleteRule';
 import useActionValues, {
@@ -95,7 +99,7 @@ export default function RulesList({
 				</>
 			) : null}
 
-			<ClayList>
+			<ClayList role="menubar">
 				{rules.map((rule) => (
 					<RuleItem
 						key={rule.id}
@@ -140,6 +144,9 @@ function RuleItem({
 	setSavedRuleId: (id: string | null) => void;
 }) {
 	const hoverMultipleItems = useHoverMultipleItems();
+	const {isTarget, setElement} = useKeyboardNavigation({
+		type: LIST_ITEM_TYPES.listItem,
+	});
 	const [triggerElement, setTriggerElement] =
 		useState<HTMLButtonElement | null>(null);
 
@@ -187,6 +194,9 @@ function RuleItem({
 			onFocusCapture={onHighlightItems}
 			onMouseLeave={onUnhighlightItems}
 			onMouseOver={onHighlightItems}
+			ref={setElement}
+			role="menuitem"
+			tabIndex={isTarget ? 0 : -1}
 		>
 			<ClayList.ItemField expand>
 				<div className="align-items-center d-flex">

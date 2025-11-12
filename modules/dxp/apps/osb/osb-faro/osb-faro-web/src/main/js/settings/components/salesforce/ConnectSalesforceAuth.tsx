@@ -138,6 +138,11 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 				message: Liferay.Language.get('copied')
 			});
 
+			setTimeout(() => {
+				setCopyTitle(Liferay.Language.get('click-to-copy'));
+				setIsUrlCopied(false);
+			}, 3000);
+
 			event.clearSelection();
 		});
 
@@ -191,10 +196,12 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 
 										onSubmit(updatedDataSource);
 									})
-									.catch(err => {
+									.catch(() => {
 										addAlert({
 											alertType: Alert.Types.Error,
-											message: err.message
+											message: Liferay.Language.get(
+												'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
+											)
 										});
 									})
 									.finally(() => {
@@ -204,6 +211,10 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 								const dataSource = {
 									accountsConfiguration: {
 										enableAllAccounts: false
+									},
+									channelsConfiguration: {
+										channelIds: [],
+										enableAllChannels: false
 									},
 									contactsConfiguration: {
 										enableAllContacts: false,
@@ -225,13 +236,14 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 											)
 										});
 
-										// TODO: Add dataSource with id to the submit fn
 										onSubmit(response);
 									})
-									.catch(err => {
+									.catch(() => {
 										addAlert({
 											alertType: Alert.Types.Error,
-											message: err.message
+											message: Liferay.Language.get(
+												'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
+											)
 										});
 									})
 									.finally(() => {
@@ -247,8 +259,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 								err.type ===
 								ERROR_TYPES.AC_RECEIVE_CALLBACK_ERROR
 									? salesforceAuthErrorMessage(err.message)
-									: getOAuthWindowErrorMessage(err),
-							timeout: false
+									: getOAuthWindowErrorMessage(err)
 						});
 
 						setSubmitting(false);

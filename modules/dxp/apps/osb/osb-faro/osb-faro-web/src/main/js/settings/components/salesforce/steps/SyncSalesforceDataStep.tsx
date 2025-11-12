@@ -1,16 +1,19 @@
 import ClayForm from '@clayui/form';
-import React, {useState} from 'react';
+import React from 'react';
 import SalesforceAccountsAndIndividuals from 'settings/components/salesforce/SalesforceAccountsAndIndividuals';
 import {ButtonGroup} from './ButtonGroup';
+import {fetch} from 'shared/api/data-source';
 import {Text} from '@clayui/core';
+import {useConnectSalesforce} from '../ConnectSalesforceContext';
+import {useParams} from 'react-router-dom';
 
-const SyncSalesforceDataStep = ({onNext, onPrev}) => {
-	const [accounts, setAccounts] = useState(false);
-	const [individuals, setIndividuals] = useState(false);
+const SyncSalesforceDataStep = ({addAlert, onNext, onPrev}) => {
+	const {dataSource, setDataSource} = useConnectSalesforce();
+	const {groupId} = useParams();
 
 	return (
 		<ClayForm
-			onSubmit={event => {
+			onSubmit={async event => {
 				event.preventDefault();
 
 				onNext();
@@ -22,14 +25,18 @@ const SyncSalesforceDataStep = ({onNext, onPrev}) => {
 				</Text>
 			</div>
 
-			<SalesforceAccountsAndIndividuals
-				accounts={accounts}
-				individuals={individuals}
-				onChange={({accounts, individuals}) => {
-					setAccounts(accounts);
-					setIndividuals(individuals);
-				}}
-			/>
+			{dataSource && (
+				<SalesforceAccountsAndIndividuals
+					addAlert={addAlert}
+					dataSource={dataSource}
+					groupId={groupId}
+					onChange={async () => {
+						await fetch({groupId, id: dataSource.id});
+
+						setDataSource(dataSource);
+					}}
+				/>
+			)}
 
 			<ButtonGroup
 				nextButtonLabel={Liferay.Language.get('continue')}

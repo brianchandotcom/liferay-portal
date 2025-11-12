@@ -1,4 +1,3 @@
-import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'settings/components/base-page/BasePage';
 import ClayAlert, {DisplayType} from '@clayui/alert';
@@ -8,6 +7,7 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import InputWithEditToggle from 'shared/components/InputWithEditToggle';
+import Loading from 'shared/components/Loading';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import SalesforceAccountsAndIndividuals from './SalesforceAccountsAndIndividuals';
 import URLConstants from 'shared/util/url-constants';
@@ -20,9 +20,18 @@ import {ConnectSalesforceAuth} from './ConnectSalesforceAuth';
 import {DataSource} from 'shared/util/records';
 import {DataSourceStatuses} from 'shared/util/constants';
 import {
+	disconnect,
+	fetchAccountsCount,
+	fetchUserCount
+} from 'shared/api/data-source';
+import {
 	fetchDataSource,
 	updateSalesforceDataSource
 } from 'shared/actions/data-sources';
+import {
+	getDataSourceDisplayObject,
+	validateUniqueName
+} from 'shared/util/data-sources';
 import {sequence} from 'shared/util/promise';
 import {SubHeader} from 'shared/components/revamping/SubHeader';
 import {Text} from '@clayui/core';
@@ -33,22 +42,7 @@ import {
 } from 'shared/components/form';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useParams} from 'react-router-dom';
-import {validateUniqueName} from 'shared/util/data-sources';
-
-const mapDataSourceStatusToDisplayType = (status: string) => {
-	switch (status) {
-		case DataSourceStatuses.Active:
-			return 'success';
-		case DataSourceStatuses.Authenticated:
-		case DataSourceStatuses.Configuring:
-			return 'info';
-		case DataSourceStatuses.OauthExpired:
-			return 'warning';
-		case DataSourceStatuses.Inactive:
-		default:
-			return 'secondary';
-	}
-};
+import {useRequest} from 'shared/hooks/useRequest';
 
 const connector = connect(null, {
 	addAlert,
@@ -85,11 +79,26 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 		message: ''
 	};
 
-	const [accounts, setAccounts] = useState<boolean>(false);
 	const [alert, setAlert] = useState(initialAlert);
-	const [individuals, setIndividuals] = useState<boolean>(false);
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
+
+	const accounts = dataSource.provider.getIn(
+		['accountsConfiguration', 'enableAllAccounts'],
+		false
+	);
+
+	const enabledAllContacts = dataSource.provider.getIn(
+		['contactsConfiguration', 'enableAllContacts'],
+		false
+	);
+
+	const enableAllLeads = dataSource.provider.getIn(
+		['contactsConfiguration', 'enableAllLeads'],
+		false
+	);
+
+	const individuals = enabledAllContacts || enableAllLeads;
 
 	useEffect(() => {
 		const alert: Alert = {
@@ -127,41 +136,37 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 			),
 			modalVariant: 'modal-warning',
 			onClose: close,
-			onSubmit: () =>
-				API.dataSource
-					.disconnect({
+			onSubmit: async () => {
+				try {
+					await disconnect({groupId, id});
+
+					fetchDataSource({
 						groupId,
 						id
-					})
-					.then(() => {
-						fetchDataSource({
-							groupId,
-							id
-						});
+					});
 
-						addAlert({
-							alertType: Alert.Types.Success,
-							message: Liferay.Language.get(
-								'data-source-disconnected'
-							)
-						});
+					addAlert({
+						alertType: Alert.Types.Success,
+						message: Liferay.Language.get(
+							'data-source-disconnected'
+						)
+					});
 
-						close();
-					})
-					.catch(() => {
-						addAlert({
-							alertType: Alert.Types.Error,
-							message: Liferay.Language.get(
-								'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-							),
-							timeout: false
-						});
+					close();
+				} catch (error) {
+					addAlert({
+						alertType: Alert.Types.Error,
+						message: Liferay.Language.get(
+							'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
+						)
+					});
 
-						fetchDataSource({
-							groupId,
-							id
-						});
-					}),
+					fetchDataSource({
+						groupId,
+						id
+					});
+				}
+			},
 			submitButtonDisplay: 'warning',
 			submitMessage: Liferay.Language.get('disconnect'),
 			title: Liferay.Language.get('disconnect-data-source'),
@@ -193,6 +198,29 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 		[dataSource.name, groupId]
 	);
 
+	const {display, label} = getDataSourceDisplayObject(dataSource, true);
+
+	const accountsCountResponse = useRequest({
+		dataSourceFn: fetchAccountsCount,
+		variables: {groupId, id: dataSource.id}
+	});
+
+	const userCountResponse = useRequest({
+		dataSourceFn: fetchUserCount,
+		variables: {groupId, id: dataSource.id}
+	});
+
+	useEffect(() => {
+		if (accountsCountResponse.error || userCountResponse.error) {
+			addAlert({
+				alertType: Alert.Types.Error,
+				message: Liferay.Language.get(
+					'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
+				)
+			});
+		}
+	}, [accountsCountResponse.error, userCountResponse.error]);
+
 	return (
 		<BasePage
 			breadcrumbItems={[
@@ -205,15 +233,8 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 			documentTitle={Liferay.Language.get('configure-data-source')}
 		>
 			<div className='mb-5'>
-				<ClayLabel
-					className='mb-2'
-					displayType={
-						mapDataSourceStatusToDisplayType(
-							dataSource.status
-						) as any
-					}
-				>
-					{dataSource.status}
+				<ClayLabel className='mb-2' displayType={display as any}>
+					{label}
 				</ClayLabel>
 
 				<InputWithEditToggle
@@ -231,7 +252,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 				/>
 			</div>
 
-			<ClayLayout.Sheet className='p-4'>
+			<ClayLayout.Sheet className='mb-4 p-4'>
 				<ClayLayout.Row justify='center'>
 					<ClayLayout.Col size={12}>
 						<div className='mb-5'>
@@ -248,10 +269,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 							/>
 
 							{alert && (
-								<ClayAlert
-									className='font-weight-semi-bold mb-4 mt-3'
-									displayType={alert.displayType}
-								>
+								<ClayAlert displayType={alert.displayType}>
 									{alert.message}
 								</ClayAlert>
 							)}
@@ -364,51 +382,64 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 				</ClayLayout.Row>
 			</ClayLayout.Sheet>
 
-			<ClayLayout.Sheet className='mt-4 p-4'>
-				<ClayLayout.Row justify='center'>
-					<ClayLayout.Col size={12}>
-						<div className='mb-5'>
-							<Text size={6} weight='bold'>
-								{Liferay.Language.get('synced-data')}
-							</Text>
-						</div>
+			{accountsCountResponse.loading || userCountResponse.loading ? (
+				<Loading spacer />
+			) : (
+				<ClayLayout.Sheet className='mb-4 mt-0 p-4'>
+					<ClayLayout.Row justify='center'>
+						<ClayLayout.Col size={12}>
+							<div className='mb-5'>
+								<Text size={6} weight='bold'>
+									{Liferay.Language.get('synced-data')}
+								</Text>
+							</div>
 
-						<ClayLayout.SheetSection>
-							{dataSourceActive && !accounts && !individuals && (
-								<ClayAlert
-									className='mt-3'
-									displayType='warning'
-									title='Warning'
-								>
-									{Liferay.Language.get(
-										'the-data-source-setup-is-almost-complete.-sync-data-to-start-seeing-results-as-activities-occur-on-your-sites'
-									)}
-								</ClayAlert>
-							)}
-
-							<Text color='secondary' size={4}>
-								{Liferay.Language.get(
-									'to-configure-your-salesforce-data-source,-go-to-your-salesforce-environment-to-update-this-app-connection'
+							<ClayLayout.SheetSection>
+								{dataSourceActive && !accounts && !individuals && (
+									<ClayAlert
+										className='mt-3'
+										displayType='warning'
+										title='Warning'
+									>
+										{Liferay.Language.get(
+											'the-data-source-setup-is-almost-complete.-sync-data-to-start-seeing-results-as-activities-occur-on-your-sites'
+										)}
+									</ClayAlert>
 								)}
-							</Text>
 
-							<SalesforceAccountsAndIndividuals
-								accounts={accounts}
-								accountsSyncedCount={0}
-								disabled={!dataSourceActive}
-								individuals={individuals}
-								individualsSyncedCount={0}
-								onChange={({accounts, individuals}) => {
-									// TODO: fire sync accounts and individuals function
+								<Text color='secondary' size={4}>
+									{Liferay.Language.get(
+										'to-configure-your-salesforce-data-source,-go-to-your-salesforce-environment-to-update-this-app-connection'
+									)}
+								</Text>
 
-									setAccounts(accounts);
-									setIndividuals(individuals);
-								}}
-							/>
-						</ClayLayout.SheetSection>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			</ClayLayout.Sheet>
+								{dataSource && (
+									<SalesforceAccountsAndIndividuals
+										accountsSyncedCount={
+											accountsCountResponse.data
+										}
+										addAlert={
+											(addAlert as unknown) as Alert.AddAlert
+										}
+										dataSource={dataSource}
+										disabled={!dataSourceActive}
+										groupId={groupId}
+										individualsSyncedCount={
+											userCountResponse.data
+										}
+										onChange={() =>
+											fetchDataSource({
+												groupId,
+												id
+											})
+										}
+									/>
+								)}
+							</ClayLayout.SheetSection>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				</ClayLayout.Sheet>
+			)}
 		</BasePage>
 	);
 };

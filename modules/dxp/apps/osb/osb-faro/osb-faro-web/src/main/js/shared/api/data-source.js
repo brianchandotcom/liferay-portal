@@ -336,6 +336,7 @@ export function updateLiferay({
 
 export function updateSalesforce({
 	accountsConfiguration,
+	channelsConfiguration,
 	contactsConfiguration,
 	credentials,
 	fieldMappingMaps,
@@ -348,6 +349,7 @@ export function updateSalesforce({
 	const data = pickBy(
 		{
 			accountsConfiguration,
+			channelsConfiguration,
 			contactsConfiguration,
 			credentials,
 			fieldMappingMaps,
@@ -364,6 +366,20 @@ export function updateSalesforce({
 		},
 		method: 'PATCH',
 		path: `contacts/${groupId}/data_source/${id}/salesforce`
+	});
+}
+
+export function fetchAccountsCount({groupId, id}) {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/salesforce/accounts_count?dataSourceId=${id}`
+	});
+}
+
+export function fetchUserCount({groupId, id}) {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/salesforce/users_count?dataSourceId=${id}`
 	});
 }
 

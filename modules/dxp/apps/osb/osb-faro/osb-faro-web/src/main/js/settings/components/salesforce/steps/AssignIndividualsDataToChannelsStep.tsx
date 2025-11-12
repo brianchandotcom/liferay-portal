@@ -4,30 +4,105 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import getCN from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {Alert} from 'shared/types';
 import {ButtonGroup} from './ButtonGroup';
 import {ClayCheckbox} from '@clayui/form';
 import {modalTypes} from 'shared/actions/modals';
+import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
-import {useParams} from 'react-router-dom';
+import {updateSalesforce} from 'shared/api/data-source';
+import {useConnectSalesforce} from 'settings/components/salesforce/ConnectSalesforceContext';
+import {useHistory, useParams} from 'react-router-dom';
 
 const AssignIndividualsDatatoPropertiesStep = ({
+	addAlert,
 	close,
-	onNext,
 	onPrev,
 	open
 }) => {
+	const history = useHistory();
 	const {groupId} = useParams();
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [allChannelsSelected, setAllChannelsSelected] = useState(false);
+	const {dataSource} = useConnectSalesforce();
+
+	useEffect(() => {
+		const channelsConfiguration = dataSource?.provider?.get(
+			'channelsConfiguration'
+		);
+
+		if (channelsConfiguration) {
+			setSelectedItems(channelsConfiguration.get('channelIds').toArray());
+			setAllChannelsSelected(
+				channelsConfiguration.get('enableAllChannels')
+			);
+		}
+	}, [dataSource]);
 
 	return (
 		<ClayForm
-			onSubmit={event => {
+			onSubmit={async event => {
 				event.preventDefault();
 
-				onNext();
+				const updatedDataSource = {
+					channelsConfiguration: {
+						channelIds: selectedItems,
+						enableAllChannels: allChannelsSelected
+					},
+					groupId,
+					id: dataSource.id
+				} as any;
+
+				try {
+					await updateSalesforce(updatedDataSource);
+
+					const accountsEnabled = dataSource.provider.getIn([
+						'accountsConfiguration',
+						'enableAllAccounts'
+					]);
+
+					const contactsConfiguration = dataSource.provider.get(
+						'contactsConfiguration'
+					);
+
+					const individualsEnabled =
+						contactsConfiguration.get('enableAllContacts') &&
+						contactsConfiguration.get('enableAllLeads');
+
+					if (accountsEnabled || individualsEnabled) {
+						addAlert({
+							alertType: Alert.Types.Success,
+							message: Liferay.Language.get(
+								'the-data-source-setup-is-now-complete,-and-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
+							)
+						});
+					} else {
+						addAlert({
+							alertType: Alert.Types.Success,
+							message: Liferay.Language.get(
+								'the-data-source-setup-has-finished'
+							)
+						});
+					}
+
+					history.push(
+						toRoute(Routes.SETTINGS_DATA_SOURCE, {
+							groupId,
+							id: dataSource.id
+						})
+					);
+				} catch (error) {
+					addAlert({
+						alertType: Alert.Types.Error,
+						message: Liferay.Language.get(
+							'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
+						)
+					});
+
+					return;
+				}
 			}}
 		>
 			<div

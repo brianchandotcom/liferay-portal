@@ -1,11 +1,12 @@
 import * as API from 'shared/api';
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Modal from 'shared/components/modal';
 import NoResultsDisplay from '../NoResultsDisplay';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {CREATE_TIME, createOrderIOMap} from 'shared/util/pagination';
 import {Sizes} from 'shared/util/constants';
@@ -47,6 +48,14 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 		}
 	});
 
+	const [showAlert, setShowAlert] = useState(false);
+
+	useEffect(() => {
+		if (selectedItems.keySeq().toArray().length) {
+			setShowAlert(false);
+		}
+	}, [selectedItems]);
+
 	return (
 		<Modal size='lg'>
 			<Modal.Header
@@ -58,16 +67,32 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 				onSubmit={event => {
 					event.preventDefault();
 
-					onSelect(
-						!selectedItems.isEmpty()
-							? selectedItems.keySeq().toArray()
-							: []
-					);
+					if (selectedItems.isEmpty()) {
+						setShowAlert(true);
+
+						return;
+					}
+
+					onSelect(selectedItems.keySeq().toArray());
 
 					onClose();
 				}}
 			>
 				<Modal.Body className='p-0' inlineScroller>
+					{showAlert && (
+						<div className='px-4'>
+							<ClayAlert
+								displayType='danger'
+								onClose={() => setShowAlert(false)}
+								title={Liferay.Language.get('error')}
+							>
+								{Liferay.Language.get(
+									'unable-to-perform-this-action.-select-a-property-to-proceed'
+								)}
+							</ClayAlert>
+						</div>
+					)}
+
 					<CrossPageSelect
 						columns={[
 							{
@@ -103,7 +128,7 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 								description={
 									<>
 										{Liferay.Language.get(
-											'create-a-property-to-get-started'
+											'go-to-properties-under-workspace-settings-to-create-a-property'
 										)}
 
 										<ClayLink
@@ -124,7 +149,7 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 									symbol: 'ac_satellite'
 								}}
 								title={Liferay.Language.get(
-									'no-properties-found'
+									'there-are-no-properties-found'
 								)}
 							/>
 						}

@@ -215,7 +215,8 @@ export function getDataSourceDisplayObject(
 				return STATUS_DISPLAY.active;
 			}
 
-			return credentialsType === CredentialTypes.Token
+			return credentialsType === CredentialTypes.Token ||
+				credentialsType === CredentialTypes.OAuth2
 				? STATUS_DISPLAY.tokenCredentialsValid
 				: STATUS_DISPLAY[DataSourceStates.CredentialsValid];
 		case DataSourceStates.InProgressDeleting:
@@ -304,6 +305,8 @@ export function validContactsConfig(dataSource: DataSource): boolean {
 
 	const contactsConfiguration =
 		provider && provider.get('contactsConfiguration');
+	const accountsConfiguration =
+		provider && provider.get('accountsConfiguration');
 
 	if (!contactsConfiguration && providerType !== DataSourceTypes.Csv) {
 		return false;
@@ -318,8 +321,12 @@ export function validContactsConfig(dataSource: DataSource): boolean {
 					contactsConfiguration.get('organizations').size ||
 					contactsConfiguration.get('userGroups').size
 			);
-		// TODO: Add validation on salesforce contactsConfiguration
 		case DataSourceTypes.Salesforce:
+			return Boolean(
+				accountsConfiguration.get('enableAllAccounts') ||
+					contactsConfiguration.get('enableAllContacts') ||
+					contactsConfiguration.get('enableAllLeads')
+			);
 		default:
 			return Boolean(contactsConfiguration);
 	}

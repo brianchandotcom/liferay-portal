@@ -2,6 +2,7 @@ import ClayButton from '@clayui/button';
 import React from 'react';
 
 interface IButtonGroupProps {
+	nextButtonLoading?: boolean;
 	nextButtonLabel: string;
 	onCancel: () => void;
 	prevButtonLabel: string;
@@ -9,11 +10,17 @@ interface IButtonGroupProps {
 
 export const ButtonGroup: React.FC<IButtonGroupProps> = ({
 	nextButtonLabel,
+	nextButtonLoading,
 	onCancel,
 	prevButtonLabel
 }) => (
 	<div className='mt-5'>
-		<ClayButton block type='submit'>
+		<ClayButton
+			block
+			disabled={nextButtonLoading}
+			loading={nextButtonLoading}
+			type='submit'
+		>
 			{nextButtonLabel}
 		</ClayButton>
 

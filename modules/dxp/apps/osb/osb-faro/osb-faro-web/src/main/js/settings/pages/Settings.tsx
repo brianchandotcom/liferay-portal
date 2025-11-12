@@ -61,7 +61,7 @@ const Definitions = lazy(
 const ConnectSalesforce = lazy(
 	() =>
 		import(
-			/* webpackChunkName: "SalesforceConnnection" */ './data-source/salesforce/ConnectSalesforce'
+			/* webpackChunkName: "SalesforceConnnection" */ './data-source/ConnectSalesforce'
 		)
 );
 

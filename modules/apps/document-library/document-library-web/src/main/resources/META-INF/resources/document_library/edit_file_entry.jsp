@@ -219,6 +219,7 @@ renderResponse.setTitle(headerTitle);
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="please-enter-a-unique-document-name" />
+			<liferay-ui:error exception="<%= DuplicateFileEntryExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 			<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-document-name" />
 
 			<liferay-ui:error exception="<%= LiferayFileItemException.class %>">

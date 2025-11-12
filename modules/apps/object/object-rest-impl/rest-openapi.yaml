@@ -916,7 +916,7 @@ paths:
             tags: ["ObjectEntry"]
     "/by-external-reference-code/{objectEntryExternalReferenceCode}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments":
         post:
-            operationId: postByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeComment
+            operationId: postByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment
             parameters:
                 -   in: path
                     name: objectEntryExternalReferenceCode

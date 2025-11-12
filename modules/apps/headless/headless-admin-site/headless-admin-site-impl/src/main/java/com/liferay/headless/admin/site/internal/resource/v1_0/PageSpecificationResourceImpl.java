@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
@@ -313,11 +314,12 @@ public class PageSpecificationResourceImpl
 
 			return _pageSpecificationDTOConverter.toDTO(
 				LayoutUtil.updateLayout(
-					_cetManager, _infoItemServiceRegistry, layout,
-					layout.getNameMap(), layout.getTitleMap(),
-					layout.getDescriptionMap(), layout.getKeywordsMap(),
-					layout.getRobotsMap(), layout.getFriendlyURLMap(),
-					pageSpecification, layout.getStatus(), serviceContext));
+					_cetManager, _fragmentEntryProcessorRegistry,
+					_infoItemServiceRegistry, layout, layout.getNameMap(),
+					layout.getTitleMap(), layout.getDescriptionMap(),
+					layout.getKeywordsMap(), layout.getRobotsMap(),
+					layout.getFriendlyURLMap(), pageSpecification,
+					layout.getStatus(), serviceContext));
 		}
 
 		if (!Objects.equals(
@@ -333,12 +335,12 @@ public class PageSpecificationResourceImpl
 
 		return _pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.updateLayout(
-				_cetManager, _infoItemServiceRegistry, layout,
-				layout.getNameMap(), layout.getTitleMap(),
-				layout.getDescriptionMap(), layout.getKeywordsMap(),
-				layout.getRobotsMap(), layout.getFriendlyURLMap(),
-				pageSpecification, WorkflowConstants.STATUS_DRAFT,
-				serviceContext));
+				_cetManager, _fragmentEntryProcessorRegistry,
+				_infoItemServiceRegistry, layout, layout.getNameMap(),
+				layout.getTitleMap(), layout.getDescriptionMap(),
+				layout.getKeywordsMap(), layout.getRobotsMap(),
+				layout.getFriendlyURLMap(), pageSpecification,
+				WorkflowConstants.STATUS_DRAFT, serviceContext));
 	}
 
 	@Override
@@ -445,6 +447,9 @@ public class PageSpecificationResourceImpl
 
 	@Reference
 	private CETManager _cetManager;
+
+	@Reference
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

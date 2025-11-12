@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.SegmentsExperienceUtil;
@@ -189,8 +190,8 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		return _toPageExperience(
 			SegmentsExperienceUtil.updateSegmentsExperience(
-				_infoItemServiceRegistry, layout, pageExperience,
-				segmentsExperience,
+				_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
+				layout, pageExperience, segmentsExperience,
 				ServiceContextUtil.createServiceContext(
 					groupId, contextHttpServletRequest,
 					contextUser.getUserId())));
@@ -220,7 +221,8 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		return _toPageExperience(
 			SegmentsExperienceUtil.addSegmentsExperience(
-				_infoItemServiceRegistry, layout, pageExperience,
+				_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
+				layout, pageExperience,
 				ServiceContextUtil.createServiceContext(
 					groupId, contextHttpServletRequest,
 					contextUser.getUserId())));
@@ -258,6 +260,9 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		return _pageExperienceDTOConverter.toDTO(
 			dtoConverterContext, layoutPageTemplateStructureRel);
 	}
+
+	@Reference
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

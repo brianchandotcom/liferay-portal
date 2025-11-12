@@ -717,10 +717,6 @@ test(
 			await apiHelpers.objectFolder.deleteObjectEntryFolder(
 				folderData.id
 			);
-
-			// await page.getByLabel('Back').click();
-			// await assetsPage.changeVisualizationMode('Table');
-
 		}
 	}
 );

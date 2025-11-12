@@ -1000,6 +1000,7 @@ public class DataSourceController extends BaseFaroController {
 			salesforceProvider.setContactsConfiguration(contactsConfiguration);
 		}
 		else if ((accountsConfiguration != null) ||
+				 (channelsConfiguration != null) ||
 				 (contactsConfiguration != null)) {
 
 			DataSource dataSource = contactsEngineClient.getDataSource(

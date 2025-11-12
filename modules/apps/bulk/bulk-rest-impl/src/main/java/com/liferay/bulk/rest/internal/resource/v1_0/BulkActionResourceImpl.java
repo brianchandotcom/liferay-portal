@@ -78,6 +78,7 @@ import com.liferay.trash.TrashHelper;
 import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
 
@@ -89,7 +90,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import jakarta.ws.rs.core.MultivaluedMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -106,10 +106,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
+
 		return _entityModel;
 	}
-
-	private static final EntityModel _entityModel = new BulkActionEntityModel();
 
 	@Override
 	public BulkActionTask postBulkAction(
@@ -228,29 +227,31 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BULK_ACTION_TASK", contextCompany.getCompanyId());
 
+		String typeString = type.toString();
+
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, contextUser.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			contextAcceptLanguage.getPreferredLanguageId(),
 			HashMapBuilder.<String, Serializable>put(
-				"actionName", type.toString()
+				"actionName", typeString
 			).put(
 				"executionStatus", "initial"
 			).put(
-				"type", type.toString()
+				"type", typeString
 			).build(),
 			new ServiceContext());
 
 		return new BulkActionTask() {
 			{
-				setActionName(() -> GetterUtil.getString(type.toString()));
+				setActionName(() -> GetterUtil.getString(typeString));
 				setAuthor(objectEntry::getUserName);
 				setCreatedDate(objectEntry::getCreateDate);
 				setExecuteStatus(() -> GetterUtil.getString("initial"));
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setId(objectEntry::getObjectEntryId);
-				setType(() -> GetterUtil.getString(type.toString()));
+				setType(() -> GetterUtil.getString(typeString));
 			}
 		};
 	}
@@ -784,6 +785,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		return bulkActionItem;
 	}
+
+	private static final EntityModel _entityModel = new BulkActionEntityModel();
 
 	@Reference
 	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;

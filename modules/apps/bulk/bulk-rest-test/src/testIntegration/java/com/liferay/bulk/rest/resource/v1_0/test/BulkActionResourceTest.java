@@ -29,9 +29,6 @@ import com.liferay.bulk.rest.client.problem.Problem;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
-import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
-
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -47,7 +44,6 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -63,7 +59,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -71,13 +66,11 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -189,9 +182,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	public void testPostBulkAction() throws Exception {
 		_testPostBulkActionWithTypeDefaultPermission();
 		_testPostBulkActionWithTypeDelete();
-//		_testPostBulkActionWithTypeKeyword();
+		_testPostBulkActionWithTypeKeyword();
 		_testPostBulkActionWithTypePermission();
-//		_testPostBulkActionWithTypeTaxonomyCategory();
+		_testPostBulkActionWithTypeTaxonomyCategory();
 	}
 
 	@Override
@@ -422,6 +415,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			});
 
 		SelectionScope selectionScope = new SelectionScope();
+
 		selectionScope.setSelectAll(false);
 
 		bulkAction.setSelectionScope(selectionScope);
@@ -552,7 +546,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		throws Exception {
 
 		SelectionScope selectionScope = new SelectionScope();
+
 		selectionScope.setSelectAll(true);
+
 		bulkAction.setSelectionScope(selectionScope);
 
 		Page<BulkActionItem> page =
@@ -583,6 +579,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			"{\"test1\": \"test1\"}");
 
 		SelectionScope selectionScope = new SelectionScope();
+
 		selectionScope.setSelectAll(true);
 
 		defaultPermissionBulkAction.setSelectionScope(selectionScope);
@@ -592,7 +589,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		try {
 			bulkActionResource.postBulkAction(
-				null, null, null, null, null, null, null, null, defaultPermissionBulkAction);
+				null, null, null, null, null, null, null, null,
+				defaultPermissionBulkAction);
 
 			Assert.fail();
 		}
@@ -650,7 +648,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		defaultPermissionBulkAction.setDepotGroupId(_depotEntry2.getGroupId());
 
 		BulkActionTask bulkActionTask = bulkActionResource.postBulkAction(
-			null, null, null, null, null, null, null, null, defaultPermissionBulkAction);
+			null, null, null, null, null, null, null, null,
+			defaultPermissionBulkAction);
 
 		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
 
@@ -695,7 +694,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			objectEntryFolder3.getTreePath());
 
 		bulkActionTask = bulkActionResource.postBulkAction(
-			null, null, null, null, null, null, null, null, defaultPermissionBulkAction);
+			null, null, null, null, null, null, null, null,
+			defaultPermissionBulkAction);
 
 		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
 
@@ -730,7 +730,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		defaultPermissionBulkAction.setSelectionScope(selectionScope);
 
 		bulkActionTask = bulkActionResource.postBulkAction(
-			null, null, null, null, null, null, null, null, defaultPermissionBulkAction);
+			null, null, null, null, null, null, null, null,
+			defaultPermissionBulkAction);
 
 		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
 
@@ -758,12 +759,14 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertNull(bulkActionTask.getId());
 
 		SelectionScope selectionScope = new SelectionScope();
+
 		selectionScope.setSelectAll(true);
 
 		bulkAction.setSelectionScope(selectionScope);
 
 		try {
-			bulkActionResource.postBulkAction(null, null, null, null, null, null, null, null, bulkAction);
+			bulkActionResource.postBulkAction(
+				null, null, null, null, null, null, null, null, bulkAction);
 		}
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
@@ -785,31 +788,31 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				objectEntry.getObjectEntryId()));
 	}
 
-//	private void _testPostBulkActionWithTypeKeyword() throws Exception {
-//		KeywordBulkAction keywordBulkAction = new KeywordBulkAction();
-//
-//		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-//			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-//			_getObjectEntryValues());
-//
-//		keywordBulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
-//
-//		String[] keywords = {
-//			RandomTestUtil.randomString(), RandomTestUtil.randomString()
-//		};
-//
-//		keywordBulkAction.setKeywords(keywords);
-//
-//		keywordBulkAction.setType(BulkAction.Type.KEYWORD_BULK_ACTION);
-//
-//		_postBulkAction(keywordBulkAction);
-//
-//		Assert.assertArrayEquals(
-//			keywords,
-//			_assetTagLocalService.getTagNames(
-//				_cmsBasicWebContentObjectDefinition.getClassName(),
-//				objectEntry.getObjectEntryId()));
-//	}
+	private void _testPostBulkActionWithTypeKeyword() throws Exception {
+		KeywordBulkAction keywordBulkAction = new KeywordBulkAction();
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			_getObjectEntryValues());
+
+		keywordBulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
+
+		String[] keywords = {
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		};
+
+		keywordBulkAction.setKeywordsToAdd(keywords);
+
+		keywordBulkAction.setType(BulkAction.Type.KEYWORD_BULK_ACTION);
+
+		_postBulkAction(keywordBulkAction);
+
+		Assert.assertArrayEquals(
+			keywords,
+			_assetTagLocalService.getTagNames(
+				_cmsBasicWebContentObjectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
+	}
 
 	private void _testPostBulkActionWithTypePermission() throws Exception {
 		PermissionBulkAction permissionBulkAction = new PermissionBulkAction();
@@ -853,53 +856,54 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 
-//	private void _testPostBulkActionWithTypeTaxonomyCategory()
-//		throws Exception {
-//
-//		TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
-//			new TaxonomyCategoryBulkAction();
-//
-//		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-//			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-//			_getObjectEntryValues());
-//
-//		taxonomyCategoryBulkAction.setBulkActionItems(
-//			_toBulkActionItems(objectEntry));
-//
-//		ServiceContext serviceContext =
-//			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
-//
-//		AssetVocabulary assetVocabulary =
-//			_assetVocabularyLocalService.addVocabulary(
-//				TestPropsValues.getUserId(), testGroup.getGroupId(),
-//				RandomTestUtil.randomString(), serviceContext);
-//
-//		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-//			TestPropsValues.getUserId(), testGroup.getGroupId(),
-//			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
-//			serviceContext);
-//		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
-//			TestPropsValues.getUserId(), testGroup.getGroupId(),
-//			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
-//			serviceContext);
-//
-//		Long[] taxonomyCategoryIds = {
-//			assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
-//		};
-//
-//		taxonomyCategoryBulkAction.setTaxonomyCategoryIds(taxonomyCategoryIds);
-//
-//		taxonomyCategoryBulkAction.setType(
-//			BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION);
-//
-//		_postBulkAction(taxonomyCategoryBulkAction);
-//
-//		Assert.assertArrayEquals(
-//			ArrayUtil.toArray(taxonomyCategoryIds),
-//			_assetCategoryLocalService.getCategoryIds(
-//				_cmsBasicWebContentObjectDefinition.getClassName(),
-//				objectEntry.getObjectEntryId()));
-//	}
+	private void _testPostBulkActionWithTypeTaxonomyCategory()
+		throws Exception {
+
+		TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
+			new TaxonomyCategoryBulkAction();
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			_getObjectEntryValues());
+
+		taxonomyCategoryBulkAction.setBulkActionItems(
+			_toBulkActionItems(objectEntry));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		Long[] taxonomyCategoryIds = {
+			assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+		};
+
+		taxonomyCategoryBulkAction.setTaxonomyCategoryIdsToAdd(
+			taxonomyCategoryIds);
+
+		taxonomyCategoryBulkAction.setType(
+			BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION);
+
+		_postBulkAction(taxonomyCategoryBulkAction);
+
+		Assert.assertArrayEquals(
+			ArrayUtil.toArray(taxonomyCategoryIds),
+			_assetCategoryLocalService.getCategoryIds(
+				_cmsBasicWebContentObjectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
+	}
 
 	private BulkActionItem _toBulkActionItem(
 		ObjectEntryFolder objectEntryFolder) {
@@ -949,8 +953,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 	private void _waitForFinish(long bulkActionTaskId) throws Exception {
 		while (true) {
-			ObjectEntry objectEntry =
-				_objectEntryLocalService.getObjectEntry(bulkActionTaskId);
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				bulkActionTaskId);
 
 			Map<String, Serializable> values = objectEntry.getValues();
 

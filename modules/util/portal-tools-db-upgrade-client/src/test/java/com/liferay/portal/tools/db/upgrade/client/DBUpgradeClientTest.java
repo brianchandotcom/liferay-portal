@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jline.console.ConsoleReader;
 
@@ -123,6 +124,40 @@ public class DBUpgradeClientTest {
 
 		System.setErr(_originalErrorOutputStream);
 		System.setOut(_originalOutputStream);
+	}
+
+	@Test
+	public void testAddDefaultJVMOptsDoesNotOverrideCustom() throws Exception {
+		List<String> jvmOpts = new ArrayList<>();
+
+		jvmOpts.add("-Xmx8192m");
+		jvmOpts.add("-Dfile.encoding=ISO-8859-1");
+
+		ReflectionTestUtil.invoke(
+			DBUpgradeClient.class, "_addDefaultJVMOpts",
+			new Class<?>[] {List.class}, jvmOpts);
+
+		Assert.assertEquals("Expected 5 JVM options", 5, jvmOpts.size());
+		Assert.assertFalse(jvmOpts.contains("-Xmx4096m"));
+		Assert.assertTrue(jvmOpts.contains("-Xmx8192m"));
+		Assert.assertFalse(jvmOpts.contains("-Dfile.encoding=UTF8"));
+		Assert.assertTrue(jvmOpts.contains("-Dfile.encoding=ISO-8859-1"));
+	}
+
+	@Test
+	public void testAddDefaultJVMOptsWhenEmpty() throws Exception {
+		List<String> jvmOpts = new ArrayList<>();
+
+		ReflectionTestUtil.invoke(
+			DBUpgradeClient.class, "_addDefaultJVMOpts",
+			new Class<?>[] {List.class}, jvmOpts);
+
+		Assert.assertEquals("Expected 5 JVM options", 5, jvmOpts.size());
+		Assert.assertTrue(jvmOpts.contains("-Xmx4096m"));
+		Assert.assertTrue(jvmOpts.contains("-Dfile.encoding=UTF8"));
+		Assert.assertTrue(jvmOpts.contains("-Duser.country=US"));
+		Assert.assertTrue(jvmOpts.contains("-Duser.language=en"));
+		Assert.assertTrue(jvmOpts.contains("-Duser.timezone=GMT"));
 	}
 
 	@Test

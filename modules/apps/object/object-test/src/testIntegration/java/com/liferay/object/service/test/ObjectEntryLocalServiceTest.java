@@ -2798,6 +2798,20 @@ public class ObjectEntryLocalServiceTest {
 
 		// Composite key field values must be unique
 
+		ObjectField localizedObjectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
+			).name(
+				"textLocalized"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
 		ObjectValidationRule objectValidationRule1 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
 			LocalizedMapUtil.getLocalizedMap(
@@ -2860,6 +2874,13 @@ public class ObjectEntryLocalServiceTest {
 
 						return String.valueOf(objectField.getObjectFieldId());
 					}
+				).build(),
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(localizedObjectField.getObjectFieldId())
 				).build()));
 
 		Map<String, Serializable> values =
@@ -2869,6 +2890,13 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).put(
 				"numberOfBooksWritten", 5
+			).put(
+				"textLocalized_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).put(
+					"pt_BR", RandomTestUtil.randomString()
+				).build()
 			).build();
 
 		_addObjectEntry(values);
@@ -2974,20 +3002,6 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(4);
 
 		// Field must not be empty
-
-		ObjectField localizedObjectField = ObjectFieldUtil.addCustomObjectField(
-			new TextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).localized(
-				true
-			).name(
-				"textLocalized"
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).userId(
-				TestPropsValues.getUserId()
-			).build());
 
 		ObjectValidationRule objectValidationRule5 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,

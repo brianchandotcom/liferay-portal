@@ -26,11 +26,18 @@ export async function getCMSBlogPostings({
 		const response = await liferay.fetch(
 			liferay.cmsEndpoints.blogPosts({
 				page,
-				pageSize: 21,
+				pageSize: 20,
 				sort: 'dateCreated:desc',
 				spaceId: liferaySpace.id,
 			})
 		);
+
+		if (!response.ok) {
+			return {
+				error: await response.text(),
+				data: null,
+			};
+		}
 
 		const data = (await response.json()) as Page<CMSBlogPosting>;
 

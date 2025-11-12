@@ -6,6 +6,7 @@
 import {Metadata} from 'next';
 import Image from 'next/image';
 import {PropsWithChildren} from 'react';
+import DOMPurify from 'isomorphic-dompurify';
 
 import {Button} from '../../components/button';
 import {liferay} from '../../liferay/server';
@@ -17,11 +18,7 @@ interface PageProps {
 
 const PageTemplate = ({children}: PropsWithChildren) => {
 	return (
-		<div className="container mx-auto sm:max-w-4xl">
-			<Button href="/">&lt;&lt; Back</Button>
-
-			{children}
-		</div>
+		<div className="mx-auto w-full max-w-4xl px-6 sm:px-8">{children}</div>
 	);
 };
 
@@ -63,21 +60,30 @@ export default async function BlogPost(pageProps: PageProps) {
 		);
 	}
 
+	const imageSrc = liferay.getDocument(data.coverImage?.link?.href || '');
+
 	return (
 		<PageTemplate>
+			<Button active href="../..">
+				Back
+			</Button>
+
 			<article>
 				<header className="flex flex-col gap-8 my-4">
-					<div className="card">
-						<Image
-							alt={data.coverImage.link.label}
-							className="aspect-video object-cover w-full"
-							height={90}
-							priority={true}
-							src={liferay.getDocument(data.coverImage.link.href)}
-							unoptimized={true}
-							width={160}
-						/>
-					</div>
+					{imageSrc && (
+						<div className="card">
+							<Image
+								alt={data.coverImage.link.label}
+								className="object-cover w-full"
+								draggable="false"
+								height={90}
+								priority={true}
+								src={imageSrc}
+								unoptimized={true}
+								width={160}
+							/>
+						</div>
+					)}
 
 					<div>
 						<h1 className="font-bold sm:text-4xl text-3xl">
@@ -107,18 +113,27 @@ export default async function BlogPost(pageProps: PageProps) {
 				<section>
 					<div
 						className="flex flex-col gap-4 text-justify"
-						dangerouslySetInnerHTML={{__html: data.content}}
+						dangerouslySetInnerHTML={{
+							__html: DOMPurify.sanitize(data.content),
+						}}
 					/>
 
-					<footer className="my-12">
-						<div className="flex gap-2">
-							<span>Tags:</span>
+					{!!data.keywords.length && (
+						<footer className="my-12">
+							<div className="flex gap-2">
+								<span>Tags:</span>
 
-							{data.keywords.map((tag) => (
-								<strong key={tag}>{tag}</strong>
-							))}
-						</div>
-					</footer>
+								{[...data.keywords].sort().map((tag) => (
+									<strong
+										className="bg-emerald-300 px-2 rounded-sm text-black"
+										key={tag}
+									>
+										{tag}
+									</strong>
+								))}
+							</div>
+						</footer>
+					)}
 				</section>
 			</article>
 		</PageTemplate>

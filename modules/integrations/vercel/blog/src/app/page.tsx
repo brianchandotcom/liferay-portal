@@ -41,9 +41,11 @@ export default async function Home({
 
 	return (
 		<PageTemplate>
-			<ol className="gap-4 grid grid-rows-1 mb-4 sm:grid-cols-2 text-left text-sm/6">
+			<ol className="gap-4 grid grid-cols-1 sm:grid-cols-2 mb-4 text-left text-sm/6">
 				{data.items.map((blog, index) => {
-					const src = liferay.getDocument(blog.coverImage.link.href);
+					const src = liferay.getDocument(
+						blog.coverImage?.link.href ?? ''
+					);
 
 					return (
 						<li
@@ -51,17 +53,20 @@ export default async function Home({
 							key={blog.id}
 						>
 							<article className="card">
-								<div className="border-b-1 border-blue-200">
-									<Image
-										alt={blog.coverImage.link.label}
-										className="aspect-video object-cover w-full"
-										height={90}
-										priority={index < 5}
-										src={src}
-										unoptimized={true}
-										width={160}
-									/>
-								</div>
+								{src && blog.coverImage && (
+									<div className="border-b-1 border-blue-200">
+										<Image
+											alt={blog.coverImage.link.label}
+											className="object-cover w-full"
+											draggable="false"
+											height={90}
+											priority={index < 5}
+											src={src}
+											unoptimized={true}
+											width={160}
+										/>
+									</div>
+								)}
 
 								<div className="flex flex-col gap-4 p-5">
 									<h2 className="font-bold text-xl">
@@ -94,7 +99,7 @@ export default async function Home({
 									<Button
 										href={`/blog/${blog.id}/${blog.friendlyUrlPath}`}
 									>
-										read more
+										Read More
 									</Button>
 								</div>
 							</article>
@@ -103,7 +108,9 @@ export default async function Home({
 				})}
 			</ol>
 
-			<Pagination currentPage={page} lastPage={data.lastPage} />
+			{data.totalCount > 20 && (
+				<Pagination currentPage={page} lastPage={data.lastPage} />
+			)}
 		</PageTemplate>
 	);
 }

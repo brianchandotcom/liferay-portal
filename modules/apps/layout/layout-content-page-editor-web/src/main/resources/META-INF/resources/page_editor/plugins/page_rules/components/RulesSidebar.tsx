@@ -50,7 +50,7 @@ export default function RulesSidebar() {
 						rules={filteredRules}
 					/>
 				) : (
-					<RulesEmptyState showNewRuleButton={!isSearching} />
+					<RulesEmptyState isSearching={isSearching} />
 				)}
 			</div>
 		</>

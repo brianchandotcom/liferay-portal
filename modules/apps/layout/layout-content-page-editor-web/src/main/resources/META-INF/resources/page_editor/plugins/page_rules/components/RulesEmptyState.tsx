@@ -9,36 +9,43 @@ import React, {useState} from 'react';
 
 import RulesModal from './RulesModal';
 
-export default function RulesEmptyState({
-	showNewRuleButton,
-}: {
-	showNewRuleButton: boolean;
-}) {
+export default function RulesEmptyState({isSearching}: {isSearching: boolean}) {
 	const [modalVisible, setModalVisible] = useState(false);
 
 	return (
 		<>
 			<div className="align-items-center d-flex flex-column justify-content-between">
-				<ClayEmptyState
-					className="mb-0"
-					description={Liferay.Language.get(
-						'fortunately-it-is-very-easy-to-add-new-ones'
-					)}
-					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`}
-					small
-					title={Liferay.Language.get('no-rules-yet')}
-				/>
+				{isSearching ? (
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'try-again-with-a-different-search'
+						)}
+						imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`}
+						small
+						title={Liferay.Language.get('no-results-found')}
+					/>
+				) : (
+					<>
+						<ClayEmptyState
+							className="mb-0"
+							description={Liferay.Language.get(
+								'fortunately-it-is-very-easy-to-add-new-ones'
+							)}
+							imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`}
+							small
+							title={Liferay.Language.get('no-rules-yet')}
+						/>
 
-				{showNewRuleButton ? (
-					<ClayButton
-						className="mt-2"
-						displayType="secondary"
-						onClick={() => setModalVisible(true)}
-						size="sm"
-					>
-						{Liferay.Language.get('new-rule')}
-					</ClayButton>
-				) : null}
+						<ClayButton
+							className="mt-2"
+							displayType="secondary"
+							onClick={() => setModalVisible(true)}
+							size="sm"
+						>
+							{Liferay.Language.get('new-rule')}
+						</ClayButton>
+					</>
+				)}
 			</div>
 
 			{modalVisible && (

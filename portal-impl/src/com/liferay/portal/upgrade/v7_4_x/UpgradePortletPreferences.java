@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
+import com.liferay.portal.upgrade.v7_4_x.util.PortletPreferenceValueTable;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.Preference;
 
@@ -30,16 +31,6 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			StringBundler.concat(
-				"create table PortletPreferenceValue (mvccVersion LONG ",
-				"default 0 not null, ctCollectionId LONG default 0 not null, ",
-				"portletPreferenceValueId LONG not null, companyId LONG, ",
-				"portletPreferencesId LONG, index_ INTEGER, largeValue TEXT ",
-				"null, name VARCHAR(255) null, readOnly BOOLEAN, smallValue ",
-				"VARCHAR(255) null, primary key (portletPreferenceValueId, ",
-				"ctCollectionId))"));
-
 		processConcurrently(
 			SQLTransformer.transform(
 				StringBundler.concat(
@@ -77,6 +68,11 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 			UpgradeProcessFactory.dropColumns(
 				"PortletPreferences", "preferences")
 		};
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {PortletPreferenceValueTable.create()};
 	}
 
 	private void _upgradePortletPreferences(

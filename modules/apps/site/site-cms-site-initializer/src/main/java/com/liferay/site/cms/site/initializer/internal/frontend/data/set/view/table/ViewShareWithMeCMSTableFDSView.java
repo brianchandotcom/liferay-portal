@@ -51,6 +51,10 @@ public class ViewShareWithMeCMSTableFDSView extends BaseCMSTableFDSView {
 			addDateFDSTableSchemaField("dateCreated", "shared-date")
 		).add(
 			addDateFDSTableSchemaField("dateModified", "modified")
+		).add(
+			"visible", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"visibleTableCellRenderer")
 		).build();
 	}
 

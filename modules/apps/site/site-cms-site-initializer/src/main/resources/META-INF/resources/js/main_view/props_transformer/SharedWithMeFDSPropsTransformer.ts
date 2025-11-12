@@ -11,6 +11,7 @@ import {AdditionalProps} from './AssetsFDSPropsTransformer';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SharedItemRenderer from './cell_renderers/SharedItemRenderer';
+import VisibleRenderer from './cell_renderers/VisibleRenderer';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -36,6 +37,11 @@ export default function SharedWithMeFDSPropsTransformer({
 				{
 					component: SharedItemRenderer,
 					name: 'sharedItemTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: VisibleRenderer,
+					name: 'visibleTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],

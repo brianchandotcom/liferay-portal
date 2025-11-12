@@ -129,8 +129,10 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			new CommerceCatalogUpgradeProcess(
 				_classNameLocalService, _groupLocalService));
 
+		registry.register("1.5.1", "1.5.2", CommerceCatalogTable.create());
+
 		registry.register(
-			"1.5.1", "1.6.0", CommerceCatalogTable.create(),
+			"1.5.2", "1.6.0",
 			new CPDefinitionTrashEntriesUpgradeProcess(_classNameLocalService));
 
 		registry.register(

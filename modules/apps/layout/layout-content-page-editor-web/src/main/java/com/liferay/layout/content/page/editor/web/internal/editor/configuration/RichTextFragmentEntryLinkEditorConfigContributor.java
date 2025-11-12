@@ -179,9 +179,9 @@ public class RichTextFragmentEntryLinkEditorConfigContributor
 	}
 
 	private String _getAllowedContentTable() {
-		return "table[border, cellpadding, cellspacing] {width}; tbody td " +
-			"th[scope, colspan, rowspan]; td[colspan, rowspan]; thead " +
-				"tr[scope];";
+		return "table[border, cellpadding, cellspacing]" +
+			"{table-layout,width}; tbody td th[scope, colspan, rowspan]; " +
+				"td[colspan, rowspan]; thead tr[scope];";
 	}
 
 	private String _getAllowedContentText() {

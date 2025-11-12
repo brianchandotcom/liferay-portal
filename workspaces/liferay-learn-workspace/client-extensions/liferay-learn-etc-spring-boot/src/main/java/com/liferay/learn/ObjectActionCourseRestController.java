@@ -6,6 +6,7 @@
 package com.liferay.learn;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

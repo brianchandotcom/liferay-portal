@@ -278,6 +278,14 @@ public class LearnRestController extends BaseRestController {
 		return ResponseEntity.ok(quizResultMap);
 	}
 
+	private String _applyReplacements(String lessonContent) {
+		lessonContent = lessonContent.replaceAll("\\bPaaS\\b", "pass");
+		lessonContent = lessonContent.replaceAll("\\bSaaS\\b", "saas");
+		lessonContent = lessonContent.replaceAll("\\bLiferay\\b", "Life-ray");
+
+		return lessonContent;
+	}
+
 	private Map<String, Object> _generateAudioResource(
 			String content, long documentId, String fileName,
 			String languageCode, String voiceName)
@@ -584,16 +592,52 @@ public class LearnRestController extends BaseRestController {
 		Document document = Jsoup.parse(html);
 
 		for (Element table : document.select("table")) {
-			StringBuilder sb = new StringBuilder();
+			StringBundler sb = new StringBundler();
+			List<String> headers = new ArrayList<>();
 
-			for (Element row : table.select("tr")) {
-				Elements cols = row.select("th, td");
+			Elements headerEls = table.select("thead th");
 
-				for (Element col : cols) {
+			if (headerEls.isEmpty()) {
+				Element firstRow = table.selectFirst("tr");
+
+				if (firstRow != null) {
+					headerEls = firstRow.select("th, td");
+				}
+			}
+
+			for (Element header : headerEls) {
+				headers.add(
+					header.text(
+					).trim());
+			}
+
+			for (Element row : table.select("tbody tr")) {
+				Elements cols = row.select("td, th");
+
+				if (cols.isEmpty()) {
+					continue;
+				}
+
+				int headerCount = headers.size();
+
+				for (int i = 0; i < cols.size(); i++) {
+					String label =
+						(i < headerCount) ? headers.get(i) :
+							"Column " + (i + 1);
+					String text = _normalizeCell(
+						cols.get(
+							i
+						).text(
+						).trim());
+
 					sb.append(
-						col.text()
+						label
 					).append(
-						" | "
+						": "
+					).append(
+						text
+					).append(
+						". "
 					);
 				}
 
@@ -609,7 +653,7 @@ public class LearnRestController extends BaseRestController {
 		}
 
 		for (Element list : document.select("ul, ol")) {
-			StringBuilder sb = new StringBuilder();
+			StringBundler sb = new StringBundler();
 
 			for (Element li : list.select("li")) {
 				sb.append(
@@ -617,7 +661,7 @@ public class LearnRestController extends BaseRestController {
 				).append(
 					li.text()
 				).append(
-					"\n"
+					"\n ,"
 				);
 			}
 
@@ -629,7 +673,28 @@ public class LearnRestController extends BaseRestController {
 				));
 		}
 
-		return document.text();
+		for (Element heading : document.select("h1, h2, h3, h4, h5, h6")) {
+			heading.after(
+				document.createElement(
+					"p"
+				).text(
+					". "
+				));
+		}
+
+		return _applyReplacements(document.text());
+	}
+
+	private String _normalizeCell(String text) {
+		if (text.equals("✔") || text.equals("✓")) {
+			return "Supported";
+		}
+
+		if (text.isEmpty() || text.equals("\u00A0")) {
+			return "Not supported";
+		}
+
+		return text;
 	}
 
 	private void _postUserBadge(long quizId, long userId) {

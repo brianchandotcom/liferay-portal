@@ -40,8 +40,10 @@ public class PatcherServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.runSQL(
 				"delete from OSB_PatcherFixPack where patcherBuildId = 0"));
 
+		registry.register("7.4.0", "7.4.1", new SchemaUpgradeProcess());
+
 		registry.register(
-			"7.4.0", "8.0.0", new SchemaUpgradeProcess(),
+			"7.4.1", "7.4.2",
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
@@ -57,9 +59,16 @@ public class PatcherServiceUpgradeStepRegistrator
 					};
 				}
 
-			},
-			new UpgradeCompanyId(), new UpgradePortletId(),
-			new UpgradeThemeId(),
+			});
+
+		registry.register("7.4.2", "7.4.3", new UpgradeCompanyId());
+
+		registry.register("7.4.3", "7.4.4", new UpgradePortletId());
+
+		registry.register("7.4.4", "7.4.5", new UpgradeThemeId());
+
+		registry.register(
+			"7.4.5", "8.0.0",
 			UpgradeProcessFactory.alterColumnName(
 				"OSBPatcher_PatcherBuild", "originalName", "initialName TEXT"),
 			UpgradeProcessFactory.alterColumnType(

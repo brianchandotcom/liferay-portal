@@ -28,8 +28,10 @@ public class AssetPublisherWebUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.registerInitialization();
 
+		registry.register("0.0.1", "0.0.2", new UpgradePortletId());
+
 		registry.register(
-			"0.0.1", "1.0.0", new UpgradePortletId(),
+			"0.0.2", "1.0.0",
 			new UpgradePortletPreferences(
 				_ddmStructureLocalService, _ddmStructureLinkLocalService,
 				_saxReader));

@@ -24,8 +24,10 @@ public class FaroContactsServiceUpgradeStepRegistrator
 		registry.register(
 			"1.0.0", "2.0.0", new UpgradeContactsCriterionUpgradeProcess());
 
+		registry.register("2.0.0", "2.0.1", new UpgradeCompanyId());
+
 		registry.register(
-			"2.0.0", "2.1.0", new UpgradeCompanyId(),
+			"2.0.1", "2.1.0",
 			new MVCCVersionUpgradeProcess() {
 
 				@Override

@@ -33,6 +33,12 @@ import java.util.Objects;
 public class FragmentMappingUtil {
 
 	public static String getFieldKey(JSONObject jsonObject) {
+		String collectionFieldId = jsonObject.getString("collectionFieldId");
+
+		if (Validator.isNotNull(collectionFieldId)) {
+			return collectionFieldId;
+		}
+
 		String fieldId = jsonObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
@@ -54,7 +60,9 @@ public class FragmentMappingUtil {
 				JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
-		if (!jsonObject.has("mappedField")) {
+		if (!jsonObject.has("collectionFieldId") &&
+			!jsonObject.has("mappedField")) {
+
 			return _getFragmentMappedValueItemExternalReference(
 				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}
@@ -63,10 +71,21 @@ public class FragmentMappingUtil {
 			fragmentMappedValueItemContextReference =
 				new FragmentMappedValueItemContextReference();
 
-		fragmentMappedValueItemContextReference.setContextSource(
-			() ->
+		FragmentMappedValueItemContextReference.ContextSource contextSource;
+
+		if (jsonObject.has("collectionFieldId")) {
+			contextSource =
 				FragmentMappedValueItemContextReference.ContextSource.
-					DISPLAY_PAGE_ITEM);
+					COLLECTION_ITEM;
+		}
+		else {
+			contextSource =
+				FragmentMappedValueItemContextReference.ContextSource.
+					DISPLAY_PAGE_ITEM;
+		}
+
+		fragmentMappedValueItemContextReference.setContextSource(
+			() -> contextSource);
 
 		return fragmentMappedValueItemContextReference;
 	}
@@ -92,9 +111,38 @@ public class FragmentMappingUtil {
 		if (fragmentMappedValueItemReference instanceof
 				FragmentMappedValueItemContextReference) {
 
-			if (Validator.isNotNull(fieldKey)) {
+			if (Validator.isNull(fieldKey)) {
+				return null;
+			}
+
+			FragmentMappedValueItemContextReference
+				fragmentMappedValueItemContextReference =
+					(FragmentMappedValueItemContextReference)
+						fragmentMappedValueItemReference;
+
+			FragmentMappedValueItemContextReference.ContextSource
+				contextSource =
+					fragmentMappedValueItemContextReference.getContextSource();
+
+			if (contextSource ==
+					FragmentMappedValueItemContextReference.ContextSource.
+						COLLECTION_ITEM) {
+
+				return JSONUtil.put("collectionFieldId", fieldKey);
+			}
+
+			if (contextSource ==
+					FragmentMappedValueItemContextReference.ContextSource.
+						DISPLAY_PAGE_ITEM) {
+
 				return JSONUtil.put("mappedField", fieldKey);
 			}
+
+			return null;
+		}
+
+		if (!(fragmentMappedValueItemReference instanceof
+				FragmentMappedValueItemExternalReference)) {
 
 			return null;
 		}
@@ -135,14 +183,16 @@ public class FragmentMappingUtil {
 			return false;
 		}
 
-		if (jsonObject.has("classNameId") &&
-			jsonObject.has("externalReferenceCode") &&
-			jsonObject.has("fieldId")) {
+		if ((jsonObject.has("classNameId") && jsonObject.has("classPK")) ||
+			(jsonObject.has("externalReferenceCode") &&
+			 jsonObject.has("fieldId"))) {
 
 			return true;
 		}
 
-		if (jsonObject.has("layout") || jsonObject.has("mappedField")) {
+		if (jsonObject.has("layout") || jsonObject.has("mappedField") ||
+			jsonObject.has("collectionFieldId")) {
+
 			return true;
 		}
 

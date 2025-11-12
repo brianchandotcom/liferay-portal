@@ -88,14 +88,14 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 		Class<?> postUpgradeDataCleanupProcessClass = bundle.loadClass(
 			getPostUpgradeDataCleanupProcessClassName());
 
+		Method method = postUpgradeDataCleanupProcessClass.getMethod("cleanUp");
+
 		Constructor<?> constructor =
 			postUpgradeDataCleanupProcessClass.getConstructor(
 				getPostUpgradeDataCleanupProcessArgumentTypes());
 
 		Object object = constructor.newInstance(
 			getPostUpgradeDataCleanupProcessArguments());
-
-		Method method = postUpgradeDataCleanupProcessClass.getMethod("cleanUp");
 
 		method.invoke(object);
 	}

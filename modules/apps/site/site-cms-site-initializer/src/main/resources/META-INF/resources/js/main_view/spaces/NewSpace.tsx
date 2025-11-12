@@ -75,10 +75,20 @@ const NewSpace = (props: NewSpaceProps) => {
 
 				if (response.error) {
 					setSubmitting(false);
-					openToast({
-						message: Liferay.Language.get('unable-to-create-space'),
-						type: 'danger',
-					});
+					if (response.status === 'BAD_REQUEST') {
+						openToast({
+							message: response.error,
+							type: 'danger',
+						});
+					}
+					else {
+						openToast({
+							message: Liferay.Language.get(
+								'unable-to-create-space'
+							),
+							type: 'danger',
+						});
+					}
 				}
 			});
 		},

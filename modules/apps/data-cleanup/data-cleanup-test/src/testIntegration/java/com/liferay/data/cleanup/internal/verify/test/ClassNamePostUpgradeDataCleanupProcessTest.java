@@ -146,7 +146,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 				Assert.assertTrue(
 					messages.toString(),
 					messages.contains(
-						"ClassName " + classNameValue +
+						"Class name " + classNameValue +
 							" has been deleted because it is not in use"));
 
 				ClassName className = _classNameLocalService.fetchClassName(
@@ -182,7 +182,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 					messages.toString(),
 					messages.contains(
 						StringBundler.concat(
-							"ClassName ", classNameValue,
+							"Class name ", classNameValue,
 							" has not been found but is referenced in the ",
 							"next tables: ",
 							dbInspector.normalizeName("ResourcePermission"))));
@@ -245,7 +245,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 					messages.toString(),
 					messages.contains(
 						StringBundler.concat(
-							"ClassName ", classNameValue,
+							"Class name ", classNameValue,
 							" has not been found but is referenced in the ",
 							"next tables: ",
 							dbInspector.normalizeName("Address"))));

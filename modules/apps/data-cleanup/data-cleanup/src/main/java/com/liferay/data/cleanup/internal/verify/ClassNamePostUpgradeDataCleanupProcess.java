@@ -158,14 +158,14 @@ public class ClassNamePostUpgradeDataCleanupProcess
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"ClassName " + value +
+						"Class name " + value +
 							" has been deleted because it is not in use");
 				}
 			}
 			else if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"ClassName ", value,
+						"Class name ", value,
 						" has not been found but is referenced in the next ",
 						"tables: ",
 						String.join(", ", new TreeSet<>(usedTableNames))));

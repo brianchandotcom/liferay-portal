@@ -8,6 +8,8 @@ package com.liferay.change.tracking.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.client.dto.v1_0.CTProcess;
+import com.liferay.change.tracking.rest.client.pagination.Page;
+import com.liferay.change.tracking.rest.client.pagination.Pagination;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -19,6 +21,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -43,6 +47,12 @@ public class CTProcessResourceTest extends BaseCTProcessResourceTestCase {
 	@Test
 	public void testDeleteCTProcessBatch() throws Exception {
 		super.testDeleteCTProcessBatch();
+	}
+
+	@Override
+	@Test
+	public void testGetCTProcessesPage() throws Exception {
+		_getCTProcessesPage();
 	}
 
 	@Override
@@ -133,6 +143,24 @@ public class CTProcessResourceTest extends BaseCTProcessResourceTestCase {
 
 		return ctProcessResource.getCTProcess(
 			serviceBuilderCTProcess.getCtProcessId());
+	}
+
+	private void _getCTProcessesPage() throws Exception {
+		super.testGetCTProcessesPage();
+
+		_addCTProcess();
+
+		_addCTProcess();
+
+		Page<CTProcess> page = ctProcessResource.getCTProcessesPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		Page<CTProcess> descPage = ctProcessResource.getCTProcessesPage(
+			null, null, null, Pagination.of(1, 10), "datePublished:desc");
+
+		assertEquals(
+			(List<CTProcess>)descPage.getItems(),
+			(List<CTProcess>)page.getItems());
 	}
 
 	@Inject

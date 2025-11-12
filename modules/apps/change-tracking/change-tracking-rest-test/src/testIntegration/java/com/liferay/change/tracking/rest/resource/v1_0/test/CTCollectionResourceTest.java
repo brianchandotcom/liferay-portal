@@ -11,6 +11,8 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.rest.client.dto.v1_0.CTCollection;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Status;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
+import com.liferay.change.tracking.rest.client.pagination.Page;
+import com.liferay.change.tracking.rest.client.pagination.Pagination;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -34,6 +36,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import jakarta.ws.rs.core.Response;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -154,6 +157,12 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 			StringPool.BLANK,
 			ctCollectionResource.getCTCollectionShareLink(
 				ctCollection.getId()));
+	}
+
+	@Override
+	@Test
+	public void testGetCTCollectionsPage() throws Exception {
+		_getCTCollectionsPage();
 	}
 
 	@Override
@@ -443,6 +452,24 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 			Assert.assertEquals(
 				exceptionClass.getSimpleName(), jsonObject.get("type"));
 		}
+	}
+
+	private void _getCTCollectionsPage() throws Exception {
+		super.testGetCTCollectionsPage();
+
+		_postCTCollection(randomCTCollection());
+
+		_postCTCollection(randomCTCollection());
+
+		Page<CTCollection> page = ctCollectionResource.getCTCollectionsPage(
+			null, null, Pagination.of(1, 10), null);
+
+		Page<CTCollection> descPage = ctCollectionResource.getCTCollectionsPage(
+			null, null, Pagination.of(1, 10), "dateModified:desc");
+
+		assertEquals(
+			(List<CTCollection>)descPage.getItems(),
+			(List<CTCollection>)page.getItems());
 	}
 
 	private CTCollection _postCTCollection(CTCollection ctCollection)

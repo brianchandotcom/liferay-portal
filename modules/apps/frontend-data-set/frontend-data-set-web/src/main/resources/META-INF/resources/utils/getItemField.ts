@@ -52,8 +52,8 @@ export const getItemField = function (path: string, item: any) {
 
 					return [].concat.apply([], next);
 				}
-				else if (navigatedValue.constructor.name === 'Object') {
-					return navigatedValue[chunk];
+				else if (navigatedValue?.constructor.name === 'Object') {
+					return navigatedValue?.[chunk];
 				}
 			}, item) || {};
 

@@ -761,7 +761,9 @@ export const patchOrderItemByExternalReferenceCode = gql`
 		patchOrderItemByExternalReferenceCode(
 			externalReferenceCode: $externalReferenceCode
 			orderItem: $orderItem
-		)
+		) {
+			externalReferenceCode
+		}
 	}
 `;
 

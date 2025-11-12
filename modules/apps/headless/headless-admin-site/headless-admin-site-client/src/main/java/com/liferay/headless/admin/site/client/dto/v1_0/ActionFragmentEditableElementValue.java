@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.ActionFragmentElementValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.ActionFragmentEditableElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ActionFragmentElementValue
-	extends FragmentElementValue implements Cloneable, Serializable {
+public class ActionFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Cloneable, Serializable {
 
-	public static ActionFragmentElementValue toDTO(String json) {
-		return ActionFragmentElementValueSerDes.toDTO(json);
+	public static ActionFragmentEditableElementValue toDTO(String json) {
+		return ActionFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
 	public Object getAction() {
@@ -111,10 +111,10 @@ public class ActionFragmentElementValue
 	protected Object text;
 
 	@Override
-	public ActionFragmentElementValue clone()
+	public ActionFragmentEditableElementValue clone()
 		throws CloneNotSupportedException {
 
-		return (ActionFragmentElementValue)super.clone();
+		return (ActionFragmentEditableElementValue)super.clone();
 	}
 
 	@Override
@@ -123,15 +123,15 @@ public class ActionFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof ActionFragmentElementValue)) {
+		if (!(object instanceof ActionFragmentEditableElementValue)) {
 			return false;
 		}
 
-		ActionFragmentElementValue actionFragmentElementValue =
-			(ActionFragmentElementValue)object;
+		ActionFragmentEditableElementValue actionFragmentEditableElementValue =
+			(ActionFragmentEditableElementValue)object;
 
 		return Objects.equals(
-			toString(), actionFragmentElementValue.toString());
+			toString(), actionFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class ActionFragmentElementValue
 	}
 
 	public String toString() {
-		return ActionFragmentElementValueSerDes.toJSON(this);
+		return ActionFragmentEditableElementValueSerDes.toJSON(this);
 	}
 
 }

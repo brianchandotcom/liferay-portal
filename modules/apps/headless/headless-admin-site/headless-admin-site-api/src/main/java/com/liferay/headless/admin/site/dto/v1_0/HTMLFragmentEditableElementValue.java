@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -36,51 +37,49 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment element value of type image.",
-	value = "ImageFragmentElementValue"
+	description = "A fragment editable element value of type HTML.",
+	value = "HTMLFragmentEditableElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ImageFragmentElementValue")
-public class ImageFragmentElementValue
-	extends FragmentElementValue implements Serializable {
+@XmlRootElement(name = "HTMLFragmentEditableElementValue")
+public class HTMLFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Serializable {
 
-	public static ImageFragmentElementValue toDTO(String json) {
+	public static HTMLFragmentEditableElementValue toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			ImageFragmentElementValue.class, json);
+			HTMLFragmentEditableElementValue.class, json);
 	}
 
-	public static ImageFragmentElementValue unsafeToDTO(String json) {
+	public static HTMLFragmentEditableElementValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			ImageFragmentElementValue.class, json);
+			HTMLFragmentEditableElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment element's image."
+		description = "The fragment editable element's HTML. Can be inline or mapped to an external value."
 	)
 	@Valid
-	public FragmentImage getFragmentImage() {
-		if (_fragmentImageSupplier != null) {
-			fragmentImage = _fragmentImageSupplier.get();
+	public Object getHtml() {
+		if (_htmlSupplier != null) {
+			html = _htmlSupplier.get();
 
-			_fragmentImageSupplier = null;
+			_htmlSupplier = null;
 		}
 
-		return fragmentImage;
+		return html;
 	}
 
-	public void setFragmentImage(FragmentImage fragmentImage) {
-		this.fragmentImage = fragmentImage;
+	public void setHtml(Object html) {
+		this.html = html;
 
-		_fragmentImageSupplier = null;
+		_htmlSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFragmentImage(
-		UnsafeSupplier<FragmentImage, Exception> fragmentImageUnsafeSupplier) {
-
-		_fragmentImageSupplier = () -> {
+	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
+		_htmlSupplier = () -> {
 			try {
-				return fragmentImageUnsafeSupplier.get();
+				return htmlUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -91,56 +90,14 @@ public class ImageFragmentElementValue
 		};
 	}
 
-	@GraphQLField(description = "The fragment element's image.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImage fragmentImage;
-
-	@JsonIgnore
-	private Supplier<FragmentImage> _fragmentImageSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A link to a fragment."
+	@GraphQLField(
+		description = "The fragment editable element's HTML. Can be inline or mapped to an external value."
 	)
-	@Valid
-	public FragmentLink getFragmentLink() {
-		if (_fragmentLinkSupplier != null) {
-			fragmentLink = _fragmentLinkSupplier.get();
-
-			_fragmentLinkSupplier = null;
-		}
-
-		return fragmentLink;
-	}
-
-	public void setFragmentLink(FragmentLink fragmentLink) {
-		this.fragmentLink = fragmentLink;
-
-		_fragmentLinkSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFragmentLink(
-		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
-
-		_fragmentLinkSupplier = () -> {
-			try {
-				return fragmentLinkUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "A link to a fragment.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentLink fragmentLink;
+	protected Object html;
 
 	@JsonIgnore
-	private Supplier<FragmentLink> _fragmentLinkSupplier;
+	private Supplier<Object> _htmlSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -148,14 +105,15 @@ public class ImageFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof ImageFragmentElementValue)) {
+		if (!(object instanceof HTMLFragmentEditableElementValue)) {
 			return false;
 		}
 
-		ImageFragmentElementValue imageFragmentElementValue =
-			(ImageFragmentElementValue)object;
+		HTMLFragmentEditableElementValue htmlFragmentEditableElementValue =
+			(HTMLFragmentEditableElementValue)object;
 
-		return Objects.equals(toString(), imageFragmentElementValue.toString());
+		return Objects.equals(
+			toString(), htmlFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -170,28 +128,26 @@ public class ImageFragmentElementValue
 
 		sb.append("{");
 
-		FragmentImage fragmentImage = getFragmentImage();
+		Object html = getHtml();
 
-		if (fragmentImage != null) {
+		if (html != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentImage\": ");
+			sb.append("\"html\": ");
 
-			sb.append(String.valueOf(fragmentImage));
-		}
-
-		FragmentLink fragmentLink = getFragmentLink();
-
-		if (fragmentLink != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			if (html instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)html));
 			}
-
-			sb.append("\"fragmentLink\": ");
-
-			sb.append(String.valueOf(fragmentLink));
+			else if (html instanceof String) {
+				sb.append("\"");
+				sb.append(_escape((String)html));
+				sb.append("\"");
+			}
+			else {
+				sb.append(html);
+			}
 		}
 
 		Type type = getType();
@@ -215,7 +171,7 @@ public class ImageFragmentElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ImageFragmentElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentEditableElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

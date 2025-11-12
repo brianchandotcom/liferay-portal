@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,29 +21,35 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class BackgroundImageFragmentElementValueSerDes {
+public class BackgroundImageFragmentEditableElementValueSerDes {
 
-	public static BackgroundImageFragmentElementValue toDTO(String json) {
-		BackgroundImageFragmentElementValueJSONParser
-			backgroundImageFragmentElementValueJSONParser =
-				new BackgroundImageFragmentElementValueJSONParser();
+	public static BackgroundImageFragmentEditableElementValue toDTO(
+		String json) {
 
-		return backgroundImageFragmentElementValueJSONParser.parseToDTO(json);
+		BackgroundImageFragmentEditableElementValueJSONParser
+			backgroundImageFragmentEditableElementValueJSONParser =
+				new BackgroundImageFragmentEditableElementValueJSONParser();
+
+		return backgroundImageFragmentEditableElementValueJSONParser.parseToDTO(
+			json);
 	}
 
-	public static BackgroundImageFragmentElementValue[] toDTOs(String json) {
-		BackgroundImageFragmentElementValueJSONParser
-			backgroundImageFragmentElementValueJSONParser =
-				new BackgroundImageFragmentElementValueJSONParser();
+	public static BackgroundImageFragmentEditableElementValue[] toDTOs(
+		String json) {
 
-		return backgroundImageFragmentElementValueJSONParser.parseToDTOs(json);
+		BackgroundImageFragmentEditableElementValueJSONParser
+			backgroundImageFragmentEditableElementValueJSONParser =
+				new BackgroundImageFragmentEditableElementValueJSONParser();
+
+		return backgroundImageFragmentEditableElementValueJSONParser.
+			parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		BackgroundImageFragmentElementValue
-			backgroundImageFragmentElementValue) {
+		BackgroundImageFragmentEditableElementValue
+			backgroundImageFragmentEditableElementValue) {
 
-		if (backgroundImageFragmentElementValue == null) {
+		if (backgroundImageFragmentEditableElementValue == null) {
 			return "null";
 		}
 
@@ -51,8 +57,8 @@ public class BackgroundImageFragmentElementValueSerDes {
 
 		sb.append("{");
 
-		if (backgroundImageFragmentElementValue.getBackgroundFragmentImage() !=
-				null) {
+		if (backgroundImageFragmentEditableElementValue.
+				getBackgroundFragmentImage() != null) {
 
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -62,11 +68,11 @@ public class BackgroundImageFragmentElementValueSerDes {
 
 			sb.append(
 				String.valueOf(
-					backgroundImageFragmentElementValue.
+					backgroundImageFragmentEditableElementValue.
 						getBackgroundFragmentImage()));
 		}
 
-		if (backgroundImageFragmentElementValue.getType() != null) {
+		if (backgroundImageFragmentEditableElementValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -74,7 +80,7 @@ public class BackgroundImageFragmentElementValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-			sb.append(backgroundImageFragmentElementValue.getType());
+			sb.append(backgroundImageFragmentEditableElementValue.getType());
 			sb.append("\"");
 		}
 
@@ -84,25 +90,26 @@ public class BackgroundImageFragmentElementValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		BackgroundImageFragmentElementValueJSONParser
-			backgroundImageFragmentElementValueJSONParser =
-				new BackgroundImageFragmentElementValueJSONParser();
+		BackgroundImageFragmentEditableElementValueJSONParser
+			backgroundImageFragmentEditableElementValueJSONParser =
+				new BackgroundImageFragmentEditableElementValueJSONParser();
 
-		return backgroundImageFragmentElementValueJSONParser.parseToMap(json);
+		return backgroundImageFragmentEditableElementValueJSONParser.parseToMap(
+			json);
 	}
 
 	public static Map<String, String> toMap(
-		BackgroundImageFragmentElementValue
-			backgroundImageFragmentElementValue) {
+		BackgroundImageFragmentEditableElementValue
+			backgroundImageFragmentEditableElementValue) {
 
-		if (backgroundImageFragmentElementValue == null) {
+		if (backgroundImageFragmentEditableElementValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (backgroundImageFragmentElementValue.getBackgroundFragmentImage() ==
-				null) {
+		if (backgroundImageFragmentEditableElementValue.
+				getBackgroundFragmentImage() == null) {
 
 			map.put("backgroundFragmentImage", null);
 		}
@@ -110,35 +117,36 @@ public class BackgroundImageFragmentElementValueSerDes {
 			map.put(
 				"backgroundFragmentImage",
 				String.valueOf(
-					backgroundImageFragmentElementValue.
+					backgroundImageFragmentEditableElementValue.
 						getBackgroundFragmentImage()));
 		}
 
-		if (backgroundImageFragmentElementValue.getType() == null) {
+		if (backgroundImageFragmentEditableElementValue.getType() == null) {
 			map.put("type", null);
 		}
 		else {
 			map.put(
 				"type",
-				String.valueOf(backgroundImageFragmentElementValue.getType()));
+				String.valueOf(
+					backgroundImageFragmentEditableElementValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class BackgroundImageFragmentElementValueJSONParser
-		extends BaseJSONParser<BackgroundImageFragmentElementValue> {
+	public static class BackgroundImageFragmentEditableElementValueJSONParser
+		extends BaseJSONParser<BackgroundImageFragmentEditableElementValue> {
 
 		@Override
-		protected BackgroundImageFragmentElementValue createDTO() {
-			return new BackgroundImageFragmentElementValue();
+		protected BackgroundImageFragmentEditableElementValue createDTO() {
+			return new BackgroundImageFragmentEditableElementValue();
 		}
 
 		@Override
-		protected BackgroundImageFragmentElementValue[] createDTOArray(
+		protected BackgroundImageFragmentEditableElementValue[] createDTOArray(
 			int size) {
 
-			return new BackgroundImageFragmentElementValue[size];
+			return new BackgroundImageFragmentEditableElementValue[size];
 		}
 
 		@Override
@@ -157,15 +165,15 @@ public class BackgroundImageFragmentElementValueSerDes {
 
 		@Override
 		protected void setField(
-			BackgroundImageFragmentElementValue
-				backgroundImageFragmentElementValue,
+			BackgroundImageFragmentEditableElementValue
+				backgroundImageFragmentEditableElementValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(
 					jsonParserFieldName, "backgroundFragmentImage")) {
 
 				if (jsonParserFieldValue != null) {
-					backgroundImageFragmentElementValue.
+					backgroundImageFragmentEditableElementValue.
 						setBackgroundFragmentImage(
 							FragmentImageSerDes.toDTO(
 								(String)jsonParserFieldValue));
@@ -173,8 +181,8 @@ public class BackgroundImageFragmentElementValueSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					backgroundImageFragmentElementValue.setType(
-						BackgroundImageFragmentElementValue.Type.create(
+					backgroundImageFragmentEditableElementValue.setType(
+						BackgroundImageFragmentEditableElementValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

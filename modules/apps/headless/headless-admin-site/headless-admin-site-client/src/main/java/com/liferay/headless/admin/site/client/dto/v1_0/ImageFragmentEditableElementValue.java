@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.ImageFragmentElementValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.ImageFragmentEditableElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ImageFragmentElementValue
-	extends FragmentElementValue implements Cloneable, Serializable {
+public class ImageFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Cloneable, Serializable {
 
-	public static ImageFragmentElementValue toDTO(String json) {
-		return ImageFragmentElementValueSerDes.toDTO(json);
+	public static ImageFragmentEditableElementValue toDTO(String json) {
+		return ImageFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
 	public FragmentImage getFragmentImage() {
@@ -69,8 +69,10 @@ public class ImageFragmentElementValue
 	protected FragmentLink fragmentLink;
 
 	@Override
-	public ImageFragmentElementValue clone() throws CloneNotSupportedException {
-		return (ImageFragmentElementValue)super.clone();
+	public ImageFragmentEditableElementValue clone()
+		throws CloneNotSupportedException {
+
+		return (ImageFragmentEditableElementValue)super.clone();
 	}
 
 	@Override
@@ -79,14 +81,15 @@ public class ImageFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof ImageFragmentElementValue)) {
+		if (!(object instanceof ImageFragmentEditableElementValue)) {
 			return false;
 		}
 
-		ImageFragmentElementValue imageFragmentElementValue =
-			(ImageFragmentElementValue)object;
+		ImageFragmentEditableElementValue imageFragmentEditableElementValue =
+			(ImageFragmentEditableElementValue)object;
 
-		return Objects.equals(toString(), imageFragmentElementValue.toString());
+		return Objects.equals(
+			toString(), imageFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -97,7 +100,7 @@ public class ImageFragmentElementValue
 	}
 
 	public String toString() {
-		return ImageFragmentElementValueSerDes.toJSON(this);
+		return ImageFragmentEditableElementValueSerDes.toJSON(this);
 	}
 
 }

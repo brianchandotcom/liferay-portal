@@ -5,13 +5,17 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -37,48 +41,84 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment element value of type HTML.",
-	value = "HTMLFragmentElementValue"
+	description = "The fragment editable element value.",
+	value = "FragmentEditableElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "HTMLFragmentElementValue")
-public class HTMLFragmentElementValue
-	extends FragmentElementValue implements Serializable {
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(
+			name = "Action", value = ActionFragmentEditableElementValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "BackgroundImage",
+			value = BackgroundImageFragmentEditableElementValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "HTML", value = HTMLFragmentEditableElementValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "Image", value = ImageFragmentEditableElementValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "Text", value = TextFragmentEditableElementValue.class
+		)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.PROPERTY, property = "type",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
+@XmlRootElement(name = "FragmentEditableElementValue")
+public abstract class FragmentEditableElementValue implements Serializable {
 
-	public static HTMLFragmentElementValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(HTMLFragmentElementValue.class, json);
+	public static FragmentEditableElementValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			FragmentEditableElementValue.class, json);
 	}
 
-	public static HTMLFragmentElementValue unsafeToDTO(String json) {
+	public static FragmentEditableElementValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			HTMLFragmentElementValue.class, json);
+			FragmentEditableElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment element's HTML. Can be inline or mapped to an external value."
+		description = "The fragment editable element's type."
 	)
+	@JsonGetter("type")
 	@Valid
-	public Object getHtml() {
-		if (_htmlSupplier != null) {
-			html = _htmlSupplier.get();
+	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
 
-			_htmlSupplier = null;
+			_typeSupplier = null;
 		}
 
-		return html;
-	}
-
-	public void setHtml(Object html) {
-		this.html = html;
-
-		_htmlSupplier = null;
+		return type;
 	}
 
 	@JsonIgnore
-	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
-		_htmlSupplier = () -> {
+	public String getTypeAsString() {
+		Type type = getType();
+
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
 			try {
-				return htmlUnsafeSupplier.get();
+				return typeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -89,14 +129,12 @@ public class HTMLFragmentElementValue
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment element's HTML. Can be inline or mapped to an external value."
-	)
+	@GraphQLField(description = "The fragment editable element's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object html;
+	protected Type type;
 
 	@JsonIgnore
-	private Supplier<Object> _htmlSupplier;
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -104,14 +142,15 @@ public class HTMLFragmentElementValue
 			return true;
 		}
 
-		if (!(object instanceof HTMLFragmentElementValue)) {
+		if (!(object instanceof FragmentEditableElementValue)) {
 			return false;
 		}
 
-		HTMLFragmentElementValue htmlFragmentElementValue =
-			(HTMLFragmentElementValue)object;
+		FragmentEditableElementValue fragmentEditableElementValue =
+			(FragmentEditableElementValue)object;
 
-		return Objects.equals(toString(), htmlFragmentElementValue.toString());
+		return Objects.equals(
+			toString(), fragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -125,28 +164,6 @@ public class HTMLFragmentElementValue
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		Object html = getHtml();
-
-		if (html != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"html\": ");
-
-			if (html instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)html));
-			}
-			else if (html instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)html));
-				sb.append("\"");
-			}
-			else {
-				sb.append(html);
-			}
-		}
 
 		Type type = getType();
 
@@ -169,10 +186,49 @@ public class HTMLFragmentElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		ACTION("Action"), BACKGROUND_IMAGE("BackgroundImage"), HTML("HTML"),
+		IMAGE("Image"), TEXT("Text");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

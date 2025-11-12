@@ -5,14 +5,9 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -41,82 +36,51 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The fragment element value.", value = "FragmentElementValue"
+	description = "A fragment editable element of type text.",
+	value = "TextFragmentEditableElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "Action", value = ActionFragmentElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "BackgroundImage",
-			value = BackgroundImageFragmentElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "HTML", value = HTMLFragmentElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "Image", value = ImageFragmentElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "Text", value = TextFragmentElementValue.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "FragmentElementValue")
-public abstract class FragmentElementValue implements Serializable {
+@XmlRootElement(name = "TextFragmentEditableElementValue")
+public class TextFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Serializable {
 
-	public static FragmentElementValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentElementValue.class, json);
+	public static TextFragmentEditableElementValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			TextFragmentEditableElementValue.class, json);
 	}
 
-	public static FragmentElementValue unsafeToDTO(String json) {
+	public static TextFragmentEditableElementValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			FragmentElementValue.class, json);
+			TextFragmentEditableElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment element's type."
+		description = "The fragment link of a text fragment editable element."
 	)
-	@JsonGetter("type")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public FragmentLink getFragmentLink() {
+		if (_fragmentLinkSupplier != null) {
+			fragmentLink = _fragmentLinkSupplier.get();
 
-			_typeSupplier = null;
+			_fragmentLinkSupplier = null;
 		}
 
-		return type;
+		return fragmentLink;
+	}
+
+	public void setFragmentLink(FragmentLink fragmentLink) {
+		this.fragmentLink = fragmentLink;
+
+		_fragmentLinkSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public void setFragmentLink(
+		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
 
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+		_fragmentLinkSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return fragmentLinkUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -127,12 +91,59 @@ public abstract class FragmentElementValue implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The fragment element's type.")
+	@GraphQLField(
+		description = "The fragment link of a text fragment editable element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected FragmentLink fragmentLink;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<FragmentLink> _fragmentLinkSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment editable element's text."
+	)
+	@Valid
+	public TextFragmentValue getTextFragmentValue() {
+		if (_textFragmentValueSupplier != null) {
+			textFragmentValue = _textFragmentValueSupplier.get();
+
+			_textFragmentValueSupplier = null;
+		}
+
+		return textFragmentValue;
+	}
+
+	public void setTextFragmentValue(TextFragmentValue textFragmentValue) {
+		this.textFragmentValue = textFragmentValue;
+
+		_textFragmentValueSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTextFragmentValue(
+		UnsafeSupplier<TextFragmentValue, Exception>
+			textFragmentValueUnsafeSupplier) {
+
+		_textFragmentValueSupplier = () -> {
+			try {
+				return textFragmentValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The fragment editable element's text.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected TextFragmentValue textFragmentValue;
+
+	@JsonIgnore
+	private Supplier<TextFragmentValue> _textFragmentValueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -140,14 +151,15 @@ public abstract class FragmentElementValue implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentElementValue)) {
+		if (!(object instanceof TextFragmentEditableElementValue)) {
 			return false;
 		}
 
-		FragmentElementValue fragmentElementValue =
-			(FragmentElementValue)object;
+		TextFragmentEditableElementValue textFragmentEditableElementValue =
+			(TextFragmentEditableElementValue)object;
 
-		return Objects.equals(toString(), fragmentElementValue.toString());
+		return Objects.equals(
+			toString(), textFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -161,6 +173,30 @@ public abstract class FragmentElementValue implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		FragmentLink fragmentLink = getFragmentLink();
+
+		if (fragmentLink != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentLink\": ");
+
+			sb.append(String.valueOf(fragmentLink));
+		}
+
+		TextFragmentValue textFragmentValue = getTextFragmentValue();
+
+		if (textFragmentValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"textFragmentValue\": ");
+
+			sb.append(String.valueOf(textFragmentValue));
+		}
 
 		Type type = getType();
 
@@ -183,49 +219,10 @@ public abstract class FragmentElementValue implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.TextFragmentEditableElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		ACTION("Action"), BACKGROUND_IMAGE("BackgroundImage"), HTML("HTML"),
-		IMAGE("Image"), TEXT("Text");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

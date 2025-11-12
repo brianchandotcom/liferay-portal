@@ -1298,7 +1298,7 @@ components:
                             $ref: "#/components/schemas/FragmentLink"
                             # @review
                             description:
-                                A link to a fragment.
+                                The fragment link of a text fragment element.
                         textFragmentValue:
                             $ref: "#/components/schemas/TextFragmentValue"
                             # @review

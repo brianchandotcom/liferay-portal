@@ -250,7 +250,7 @@ public class CommerceServiceUpgradeStepRegistrator
 				_classNameLocalService, _groupLocalService));
 
 		registry.register(
-			"4.5.1", "4.6.0", new DummyUpgradeProcess(),
+			"4.5.1", "4.6.0",
 			UpgradeProcessFactory.alterColumnType(
 				"CommerceShipment", "shippingOptionName", "TEXT"),
 			UpgradeProcessFactory.addColumns(

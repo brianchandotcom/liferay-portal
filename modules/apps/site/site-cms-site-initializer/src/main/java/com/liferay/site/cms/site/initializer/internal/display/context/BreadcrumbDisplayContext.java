@@ -93,6 +93,26 @@ public class BreadcrumbDisplayContext {
 							));
 					}
 
+					unsafeConsumer.accept(
+						JSONUtil.put(
+							"href", _getAppURL(ExportImportPortletKeys.EXPORT)
+						).put(
+							"label",
+							LanguageUtil.get(_httpServletRequest, "export")
+						).put(
+							"symbolLeft", "export"
+						));
+
+					unsafeConsumer.accept(
+						JSONUtil.put(
+							"href", _getAppURL(ExportImportPortletKeys.IMPORT)
+						).put(
+							"label",
+							LanguageUtil.get(_httpServletRequest, "import")
+						).put(
+							"symbolLeft", "import"
+						));
+
 					if (permissionChecker.hasPermission(
 							group, DepotEntry.class.getName(),
 							group.getClassPK(), ActionKeys.PERMISSIONS)) {
@@ -185,26 +205,6 @@ public class BreadcrumbDisplayContext {
 								"target", "asyncDelete"
 							));
 					}
-
-					unsafeConsumer.accept(
-						JSONUtil.put(
-							"href", _getAppURL(ExportImportPortletKeys.EXPORT)
-						).put(
-							"label",
-							LanguageUtil.get(_httpServletRequest, "export")
-						).put(
-							"symbolLeft", "export"
-						));
-
-					unsafeConsumer.accept(
-						JSONUtil.put(
-							"href", _getAppURL(ExportImportPortletKeys.IMPORT)
-						).put(
-							"label",
-							LanguageUtil.get(_httpServletRequest, "import")
-						).put(
-							"symbolLeft", "import"
-						));
 				})
 		).put(
 			"breadcrumbItems",

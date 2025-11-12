@@ -17,12 +17,14 @@ import com.liferay.portal.kernel.workflow.DefaultWorkflowDefinition;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowInstance;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowLog;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowNode;
+import com.liferay.portal.kernel.workflow.DefaultWorkflowNodeSetting;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTransition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowNode;
+import com.liferay.portal.kernel.workflow.WorkflowNodeSetting;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTransition;
@@ -37,6 +39,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.model.KaleoNodeSetting;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.LazyWorkflowTaskAssigneeList;
@@ -46,6 +49,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeSettingLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
@@ -480,7 +484,25 @@ public class KaleoWorkflowModelConverterImpl
 
 		defaultWorkflowNode.setType(workflowNodeType);
 
+		defaultWorkflowNode.setWorkflowNodeSettings(
+			TransformUtil.transform(
+				_kaleoNodeSettingLocalService.getKaleoNodeSettings(
+					kaleoNode.getKaleoNodeId()),
+				this::_toWorkflowNodeSetting));
+
 		return defaultWorkflowNode;
+	}
+
+	private WorkflowNodeSetting _toWorkflowNodeSetting(
+		KaleoNodeSetting kaleoNodeSetting) {
+
+		DefaultWorkflowNodeSetting defaultWorkflowNodeSetting =
+			new DefaultWorkflowNodeSetting();
+
+		defaultWorkflowNodeSetting.setName(kaleoNodeSetting.getName());
+		defaultWorkflowNodeSetting.setValue(kaleoNodeSetting.getValue());
+
+		return defaultWorkflowNodeSetting;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -501,6 +523,9 @@ public class KaleoWorkflowModelConverterImpl
 
 	@Reference
 	private KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@Reference
+	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
 
 	@Reference
 	private KaleoTaskAssignmentInstanceLocalService

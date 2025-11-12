@@ -14,17 +14,18 @@ import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.Notification;
+import com.liferay.portal.workflow.kaleo.definition.Setting;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeSettingLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoNodeLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,8 +44,6 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 			long kaleoDefinitionId, long kaleoDefinitionVersionId, Node node,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		// Kaleo node
 
 		User user = _userLocalService.getUser(
 			serviceContext.getGuestOrUserId());
@@ -70,48 +69,34 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 
 		kaleoNode.setType(nodeType.name());
 
-		boolean initial = false;
-		boolean terminal = false;
-
-		if (nodeType.equals(NodeType.STATE)) {
-			State state = (State)node;
-
-			initial = state.isInitial();
-			terminal = state.isTerminal();
+		if (node instanceof State state) {
+			kaleoNode.setInitial(state.isInitial());
+			kaleoNode.setTerminal(state.isTerminal());
 		}
-
-		kaleoNode.setInitial(initial);
-		kaleoNode.setTerminal(terminal);
 
 		kaleoNode = kaleoNodePersistence.update(kaleoNode);
 
-		// Kaleo actions
-
-		Set<Action> actions = node.getActions();
-
-		for (Action action : actions) {
+		for (Action action : node.getActions()) {
 			_kaleoActionLocalService.addKaleoAction(
 				KaleoNode.class.getName(), kaleoNodeId, kaleoDefinitionId,
 				kaleoDefinitionVersionId, node.getName(), action,
 				serviceContext);
 		}
 
-		// Kaleo notifications
-
-		Set<Notification> notifications = node.getNotifications();
-
-		for (Notification notification : notifications) {
+		for (Notification notification : node.getNotifications()) {
 			_kaleoNotificationLocalService.addKaleoNotification(
 				KaleoNode.class.getName(), kaleoNodeId, kaleoDefinitionId,
 				kaleoDefinitionVersionId, node.getName(), notification,
 				serviceContext);
 		}
 
-		// Kaleo timers
+		for (Setting setting : node.getSettings()) {
+			_kaleoNodeSettingLocalService.addKaleoNodeSetting(
+				user.getUserId(), kaleoNodeId, setting.getName(),
+				setting.getValue());
+		}
 
-		Set<Timer> timers = node.getTimers();
-
-		for (Timer timer : timers) {
+		for (Timer timer : node.getTimers()) {
 			_kaleoTimerLocalService.addKaleoTimer(
 				KaleoNode.class.getName(), kaleoNodeId, kaleoDefinitionId,
 				kaleoDefinitionVersionId, timer, serviceContext);
@@ -168,6 +153,9 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 
 	@Reference
 	private KaleoActionLocalService _kaleoActionLocalService;
+
+	@Reference
+	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
 
 	@Reference
 	private KaleoNotificationLocalService _kaleoNotificationLocalService;

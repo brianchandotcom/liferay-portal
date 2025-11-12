@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -54,6 +55,11 @@ public abstract class BaseWorkflowNode implements WorkflowNode {
 		return _type;
 	}
 
+	@Override
+	public List<WorkflowNodeSetting> getWorkflowNodeSettings() {
+		return _workflowNodeSettings;
+	}
+
 	public void setLabelMap(Map<Locale, String> labelMap) {
 		_labelMap = labelMap;
 	}
@@ -66,8 +72,15 @@ public abstract class BaseWorkflowNode implements WorkflowNode {
 		_type = type;
 	}
 
+	public void setWorkflowNodeSettings(
+		List<WorkflowNodeSetting> workflowNodeSettings) {
+
+		_workflowNodeSettings = workflowNodeSettings;
+	}
+
 	private Map<Locale, String> _labelMap;
 	private String _name;
 	private Type _type;
+	private List<WorkflowNodeSetting> _workflowNodeSettings;
 
 }

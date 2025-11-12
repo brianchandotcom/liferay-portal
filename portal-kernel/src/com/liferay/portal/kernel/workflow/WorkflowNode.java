@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -20,6 +21,8 @@ public interface WorkflowNode {
 	public String getName();
 
 	public Type getType();
+
+	public List<WorkflowNodeSetting> getWorkflowNodeSettings();
 
 	public enum Type {
 

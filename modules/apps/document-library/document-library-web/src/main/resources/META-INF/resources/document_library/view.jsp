@@ -171,6 +171,16 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 						<aui:input name="versionIncrease" type="hidden" />
 						<aui:input name="selectAll" type="hidden" value="<%= false %>" />
 
+						<%
+						String keywordsParam = ParamUtil.getString(request, "keywords");
+
+						if (Validator.isNull(keywordsParam)) {
+							keywordsParam = (String)request.getAttribute("keywords");
+						}
+						%>
+
+						<aui:input name="keywords" type="hidden" value="<%= HtmlUtil.escape(keywordsParam) %>" />
+
 						<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#errors" />
 
 						<liferay-ui:error exception="<%= AuthenticationRepositoryException.class %>" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />

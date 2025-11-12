@@ -82,11 +82,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 	}
 
 	private void _deleteOrphanLayoutClassedModelUsage(
-		CTCollection ctCollection, long layoutClassedModelUsageId) {
-
-		long ctCollectionId =
-			(ctCollection != null) ? ctCollection.getCtCollectionId() :
-				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
+		CTCollection ctCollection, long ctCollectionId,
+		long layoutClassedModelUsageId) {
 
 		try {
 			LayoutClassedModelUsage layoutClassedModelUsage =
@@ -173,7 +170,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 							ctCollectionId);
 
 					_deleteOrphanLayoutClassedModelUsage(
-						ctCollection, layoutClassedModelUsageId);
+						ctCollection, ctCollectionId,
+						layoutClassedModelUsageId);
 
 					if ((ctCollection == null) || !ctCollection.isReadOnly()) {
 						long groupId = resultSet.getLong("groupId");

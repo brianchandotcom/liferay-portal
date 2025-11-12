@@ -211,7 +211,7 @@ test('LPD-35562 Enter reserved screen name', async ({
 	});
 });
 
-test('LPD-38043 Assert that a configuration at the site scope can override a falsy configuration at the instance scope', async ({
+test('LPD-38043 Assert that a configuration at the site scope can override a configuration from the instance scope', async ({
 	accessibilityMenuPage,
 	instanceSettingsPage,
 	page,

@@ -89,11 +89,10 @@ public class PermissionObjectBulkSelectionAction
 						if (object instanceof DepotEntry) {
 							DepotEntry depotEntry = (DepotEntry)object;
 
-							className = DepotEntry.class.getName();
+							className = depotEntry.getModelClassName();
 							groupId = depotEntry.getGroupId();
 							resourceId = depotEntry.getDepotEntryId();
-
-							resourceName = DepotEntry.class.getName();
+							resourceName = depotEntry.getModelClassName();
 						}
 						else if (object instanceof ObjectEntry) {
 							ObjectEntry objectEntry = (ObjectEntry)object;
@@ -107,12 +106,12 @@ public class PermissionObjectBulkSelectionAction
 							ObjectEntryFolder objectEntryFolder =
 								(ObjectEntryFolder)object;
 
-							className = ObjectEntryFolder.class.getName();
+							className = objectEntryFolder.getModelClassName();
 							groupId = objectEntryFolder.getGroupId();
 							resourceId =
 								objectEntryFolder.getObjectEntryFolderId();
-
-							resourceName = ObjectEntryFolder.class.getName();
+							resourceName =
+								objectEntryFolder.getModelClassName();
 						}
 
 						_permissionService.checkPermission(

@@ -15,14 +15,7 @@
 					"#value": "start"
 				},
 				{
-					"#cdata-value": [
-						"{",
-						"    \"xy\": [",
-						"        273,",
-						"        25",
-						"    ]",
-						"}"
-					],
+					"#cdata-value": ["{\"xy\": [273,25]}"],
 					"#tag-name": "metadata"
 				},
 				{
@@ -55,11 +48,11 @@
 								},
 								{
 									"#tag-name": "name",
-									"#value": "[$WORKFLOW_TASK_NAME$]"
+									"#value": "[$WORKFLOW_NODE_NAME$]"
 								},
 								{
 									"#tag-name": "target",
-									"#value": "[$WORKFLOW_TASK_NAME$]"
+									"#value": "[$WORKFLOW_NODE_NAME$]"
 								},
 								{
 									"#tag-name": "default",
@@ -81,15 +74,7 @@
 					"#value": "end"
 				},
 				{
-					"#cdata-value": [
-						"{",
-						"    \"terminal\": true,",
-						"    \"xy\": [",
-						"        277,",
-						"        459",
-						"    ]",
-						"}"
-					],
+					"#cdata-value": ["{\"terminal\": true, \"xy\": [277,459]}"],
 					"#tag-name": "metadata"
 				},
 				{
@@ -106,74 +91,80 @@
 			"#tag-name": "state"
 		},
 		{
+		"#tag-name": "llm",
+		"#child-nodes": [
+			{
+			"#tag-name": "name",
+			"#value": "[$WORKFLOW_NODE_NAME$]"
+			},
+			{
+			"#tag-name": "metadata",
+			"#cdata-value": ["{\"xy\": [276,242]}"]
+			},
+			{
+			"#tag-name": "labels",
 			"#child-nodes": [
 				{
-					"#tag-name": "name",
-					"#value": "[$WORKFLOW_TASK_NAME$]"
-				},
-				{
-					"#cdata-value": [
-						"{",
-						"    \"xy\": [",
-						"        276,",
-						"        242",
-						"    ]",
-						"}"
-					],
-					"#tag-name": "metadata"
-				},
-				{
-					"#child-nodes": [
-						{
-							"#tag-name": "user"
-						}
-					],
-					"#tag-name": "assignments"
-				},
-				{
-					"#child-nodes": [
-						{
-							"#tag-name": "label",
-							"#value": "[$WORKFLOW_DEFINITION_NAME$]",
-							"language-id": "en_US"
-						}
-					],
-					"#tag-name": "labels"
-				},
-				{
-					"#child-nodes": [
-						{
-							"#child-nodes": [
-								{
-									"#child-nodes": [
-										{
-											"#tag-name": "label",
-											"#value": "end",
-											"language-id": "en_US"
-										}
-									],
-									"#tag-name": "labels"
-								},
-								{
-									"#tag-name": "name",
-									"#value": "end"
-								},
-								{
-									"#tag-name": "target",
-									"#value": "end"
-								},
-								{
-									"#tag-name": "default",
-									"#value": "true"
-								}
-							],
-							"#tag-name": "transition"
-						}
-					],
-					"#tag-name": "transitions"
+				"#tag-name": "label",
+				"#value": "[$WORKFLOW_DEFINITION_NAME$]",
+				"language-id": "en_US"
 				}
-			],
-			"#tag-name": "task"
+			]
+			},
+			{
+			"#tag-name": "transitions",
+			"#child-nodes": [
+				{
+				"#tag-name": "transition",
+				"#child-nodes": [
+					{
+					"#tag-name": "labels",
+					"#child-nodes": [
+						{
+						"#tag-name": "label",
+						"#value": "end",
+						"language-id": "en_US"
+						}
+					]
+					},
+					{
+					"#tag-name": "name",
+					"#value": "end"
+					},
+					{
+					"#tag-name": "target",
+					"#value": "end"
+					},
+					{
+					"#tag-name": "default",
+					"#value": "true"
+					}
+				]
+				}
+			]
+			},
+			{
+			"#tag-name": "input-variables",
+			"#cdata-value": [
+					"[{\"name\":\"text\",\"type\":\"string\"},",
+					"{\"name\":\"tone\",\"type\":\"string\"}]"
+				]
+			},
+			{
+			"#tag-name": "output-variables",
+			"#cdata-value": [
+					"[{\"name\":\"rewrittenText\",\"type\":\"string\"}]"
+				]
+			},
+			{
+			"#tag-name": "prompt",
+			"#cdata-value": ["[$WORKFLOW_NODE_SETTING_PROMPT$]"]
+			},
+			{
+			"#tag-name": "user-message",
+			"#cdata-value": ["[$WORKFLOW_NODE_SETTING_USER_MESSAGE$]"]
+			}
+		]
 		}
 	],
 	"#tag-name": "workflow-definition",

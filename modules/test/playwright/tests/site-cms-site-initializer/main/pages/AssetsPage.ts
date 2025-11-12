@@ -15,6 +15,9 @@ export class AssetsPage {
 	readonly page: Page;
 
 	readonly dataSetFragmentPage: DataSetPage;
+	readonly galleryNavigation: Locator;
+	readonly galleryPreview: Locator;
+	readonly galleryThumbnails: Locator;
 	readonly modalDeleteButton: Locator;
 	readonly newButton: Locator;
 	readonly processingTasksButton: Locator;
@@ -42,6 +45,9 @@ export class AssetsPage {
 		this.page = page;
 
 		this.dataSetFragmentPage = new DataSetPage(page);
+		this.galleryNavigation = page.locator('.fds-gallery-view__navigation');
+		this.galleryPreview = page.locator('.fds-gallery-view__preview');
+		this.galleryThumbnails = page.locator('.fds-gallery-view__thumbnails');
 		this.newButton = page.getByTestId('fdsCreationActionButton').first();
 		this.processingTasksButton = page.getByRole('button', {
 			name: /Processing Tasks?/,
@@ -143,5 +149,11 @@ export class AssetsPage {
 
 			await card.getByRole('checkbox').check();
 		}
+	}
+
+	async navigateByGalleryArrows(direction: 'Previous' | 'Next') {
+		await this.galleryNavigation
+			.getByRole('button', {name: direction})
+			.click();
 	}
 }

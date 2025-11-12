@@ -62,7 +62,7 @@ public class BulkActionTaskReportCMSTableFDSView extends BaseCMSTableFDSView {
 	}
 
 	@Override
-	public boolean isDefault() {
+	public boolean isDefault(String fdsName) {
 		return true;
 	}
 

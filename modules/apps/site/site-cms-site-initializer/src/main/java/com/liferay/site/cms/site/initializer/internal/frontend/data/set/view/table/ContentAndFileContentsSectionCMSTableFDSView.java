@@ -30,7 +30,7 @@ public class ContentAndFileContentsSectionCMSTableFDSView
 	extends BaseContentsSectionCMSTableFDSView {
 
 	@Override
-	public boolean isDefault() {
+	public boolean isDefault(String fdsName) {
 		return true;
 	}
 

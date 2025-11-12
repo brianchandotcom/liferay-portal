@@ -160,7 +160,7 @@ public class AdvancedTableFDSView extends BaseTableFDSView {
 	}
 
 	@Override
-	public boolean isDefault() {
+	public boolean isDefault(String fdsName) {
 		return true;
 	}
 

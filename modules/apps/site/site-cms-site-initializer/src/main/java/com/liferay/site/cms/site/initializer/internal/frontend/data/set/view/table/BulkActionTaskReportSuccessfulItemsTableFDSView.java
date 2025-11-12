@@ -50,7 +50,7 @@ public class BulkActionTaskReportSuccessfulItemsTableFDSView
 	}
 
 	@Override
-	public boolean isDefault() {
+	public boolean isDefault(String fdsName) {
 		return true;
 	}
 

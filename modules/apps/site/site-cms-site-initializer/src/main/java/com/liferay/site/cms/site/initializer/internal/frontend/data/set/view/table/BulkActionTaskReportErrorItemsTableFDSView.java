@@ -48,7 +48,7 @@ public class BulkActionTaskReportErrorItemsTableFDSView
 	}
 
 	@Override
-	public boolean isDefault() {
+	public boolean isDefault(String fdsName) {
 		return true;
 	}
 

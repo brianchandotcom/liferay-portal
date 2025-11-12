@@ -71,7 +71,7 @@ public class SingleSelectionTableFDSView extends BaseTableFDSView {
 	}
 
 	@Override
-	public boolean isDefault() {
+	public boolean isDefault(String fdsName) {
 		return true;
 	}
 

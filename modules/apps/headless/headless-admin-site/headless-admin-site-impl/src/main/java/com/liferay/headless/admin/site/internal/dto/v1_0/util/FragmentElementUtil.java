@@ -9,13 +9,16 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentElement;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextInlineFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextMappedFragmentValue;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -64,6 +67,128 @@ public class FragmentElementUtil {
 		return fragmentElements.toArray(new FragmentElement[0]);
 	}
 
+	public static JSONObject getFragmentElementsEditableValuesJSONObject(
+		long companyId, FragmentElement[] fragmentElements,
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+
+		return JSONUtil.put(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			() -> {
+				JSONObject editableFragmentEntryProcessorJSONObject =
+					_getEditableFragmentEntryProcessorJSONObject(
+						companyId, fragmentElements, infoItemServiceRegistry,
+						scopeGroupId);
+
+				if (editableFragmentEntryProcessorJSONObject.length() > 0) {
+					return editableFragmentEntryProcessorJSONObject;
+				}
+
+				return null;
+			});
+	}
+
+	private static JSONObject _getEditableFragmentEntryProcessorJSONObject(
+			long companyId, FragmentElement[] fragmentElements,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentElements == null) {
+			return jsonObject;
+		}
+
+		for (FragmentElement fragmentElement : fragmentElements) {
+			if ((fragmentElement == null) ||
+				(fragmentElement.getId() == null)) {
+
+				continue;
+			}
+
+			FragmentElementValue fragmentElementValue =
+				fragmentElement.getFragmentElementValue();
+
+			if ((fragmentElementValue == null) ||
+				(fragmentElementValue.getType() !=
+					FragmentElementValue.Type.TEXT)) {
+
+				jsonObject.put(fragmentElement.getId(), (JSONObject)null);
+
+				continue;
+			}
+
+			jsonObject.put(
+				fragmentElement.getId(),
+				_getFragmentElementJSONObject(
+					companyId, infoItemServiceRegistry, scopeGroupId,
+					(TextFragmentElementValue)fragmentElementValue));
+		}
+
+		return jsonObject;
+	}
+
+	private static JSONObject _getFragmentElementJSONObject(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			long scopeGroupId,
+			TextFragmentElementValue textFragmentElementValue)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (textFragmentElementValue == null) {
+			return jsonObject;
+		}
+
+		TextFragmentValue textFragmentValue =
+			textFragmentElementValue.getTextFragmentValue();
+
+		if (textFragmentValue == null) {
+			return jsonObject;
+		}
+
+		if (textFragmentValue instanceof TextInlineFragmentValue) {
+			TextInlineFragmentValue textInlineFragmentValue =
+				(TextInlineFragmentValue)textFragmentValue;
+
+			FragmentInlineValue inlineValue =
+				textInlineFragmentValue.getFragmentInlineValue();
+
+			if (inlineValue == null) {
+				return jsonObject;
+			}
+
+			Map<String, String> languageIdMap =
+				LocalizedMapUtil.getLanguageIdMap(
+					LocalizedMapUtil.getLocalizedMap(
+						inlineValue.getValue_i18n()));
+
+			for (Map.Entry<String, String> entry : languageIdMap.entrySet()) {
+				jsonObject.put(entry.getKey(), entry.getValue());
+			}
+
+			return jsonObject;
+		}
+
+		if (!(textFragmentValue instanceof TextMappedFragmentValue)) {
+			return jsonObject;
+		}
+
+		TextMappedFragmentValue textMappedFragmentValue =
+			(TextMappedFragmentValue)textFragmentValue;
+
+		FragmentMappedValue fragmentMappedValue =
+			textMappedFragmentValue.getFragmentMappedValue();
+
+		if (fragmentMappedValue == null) {
+			return jsonObject;
+		}
+
+		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
+			companyId, fragmentMappedValue.getMapping(),
+			infoItemServiceRegistry, scopeGroupId);
+	}
+
 	private static List<FragmentElement> _getTextFragmentElements(
 		long companyId, Map<String, String> editableTypes,
 		final InfoItemServiceRegistry infoItemServiceRegistry,
@@ -82,11 +207,9 @@ public class FragmentElementUtil {
 								return null;
 							}
 
-							return FragmentElementUtil.
-								_toTextFragmentElementValue(
-									companyId, infoItemServiceRegistry,
-									jsonObject.getJSONObject(textId),
-									scopeGroupId);
+							return _toTextFragmentElementValue(
+								companyId, infoItemServiceRegistry,
+								jsonObject.getJSONObject(textId), scopeGroupId);
 						});
 					setId(() -> textId);
 				}

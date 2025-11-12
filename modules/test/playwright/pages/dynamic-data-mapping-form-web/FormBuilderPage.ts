@@ -84,6 +84,22 @@ export class FormBuilderPage {
 		await this.saveButton.click();
 	}
 
+	async deleteField(fieldName: string) {
+		const fieldContainer = this.page.locator(
+			`.ddm-field-container[data-field-name="${fieldName}"]`
+		);
+
+		await fieldContainer.locator('.ddm-drag').click();
+
+		const actionsButton = fieldContainer.locator(
+			'.dropdown-action .dropdown-toggle[aria-label="Actions"]'
+		);
+
+		await actionsButton.click();
+
+		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+	}
+
 	async fillFormTitle(title: string) {
 		await this.formTitle.fill(title);
 	}

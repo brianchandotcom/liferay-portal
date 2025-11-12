@@ -32,17 +32,24 @@ public class PublicationsPortletURLUtil {
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		String backURL, long ctCollectionId, Language language) {
 
-		return StringBundler.concat(
-			"javascript:Liferay.Util.openConfirmModal({message: '",
+		return getDeleteHref(
 			language.get(
 				httpServletRequest,
 				"are-you-sure-you-want-to-delete-this-publication"),
-			"', onConfirm: (isConfirmed) => {if (isConfirmed) {",
-			"submitForm(document.hrefFm, '",
 			getHref(
 				renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
 				"/change_tracking/delete_ct_collection", "redirect", backURL,
-				"ctCollectionId", String.valueOf(ctCollectionId)),
+				"ctCollectionId", String.valueOf(ctCollectionId)));
+	}
+
+	public static String getDeleteHref(
+		String confirmationMessage, String deleteURL) {
+
+		return StringBundler.concat(
+			"javascript:Liferay.Util.openConfirmModal({message: '",
+			confirmationMessage,
+			"', onConfirm: (isConfirmed) => {if (isConfirmed) {",
+			"submitForm(document.hrefFm, '", HtmlUtil.escapeJS(deleteURL),
 			"');} else {self.focus();}}});");
 	}
 

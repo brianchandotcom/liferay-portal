@@ -199,15 +199,18 @@ public class ViewTemplatesDisplayContext
 			return null;
 		}
 
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/change_tracking/delete_ct_collection_template"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"ctCollectionTemplateId", ctCollectionTemplateId
-		).buildString();
+		return PublicationsPortletURLUtil.getDeleteHref(
+			_language.get(
+				_httpServletRequest, "are-you-sure-you-want-to-delete-this"),
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/delete_ct_collection_template"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"ctCollectionTemplateId", ctCollectionTemplateId
+			).buildString());
 	}
 
 	private final CTCollectionTemplateService _ctCollectionTemplateService;

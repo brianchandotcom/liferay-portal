@@ -1187,16 +1187,16 @@ components:
                     type: string
                 value:
                     anyOf:
-                        -   $ref: "#/components/schemas/FragmentFieldAction"
-                        -   $ref: "#/components/schemas/FragmentFieldBackgroundImage"
-                        -   $ref: "#/components/schemas/FragmentFieldHTML"
-                        -   $ref: "#/components/schemas/FragmentFieldImage"
-                        -   $ref: "#/components/schemas/FragmentFieldText"
+                        -   $ref: "#/components/schemas/FragmentFieldActionValue"
+                        -   $ref: "#/components/schemas/FragmentFieldBackgroundImageValue"
+                        -   $ref: "#/components/schemas/FragmentFieldHTMLValue"
+                        -   $ref: "#/components/schemas/FragmentFieldImageValue"
+                        -   $ref: "#/components/schemas/FragmentFieldTextValue"
                     # @review
                     description:
                         The fragment field's value.
             type: object
-        FragmentFieldAction:
+        FragmentFieldActionValue:
             # @review
             description:
                 A fragment field with an action.
@@ -1225,7 +1225,7 @@ components:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
                         -   $ref: "#/components/schemas/FragmentMappedValue"
             type: object
-        FragmentFieldBackgroundImage:
+        FragmentFieldBackgroundImageValue:
             # @review
             description:
                 A fragment field with a background image.
@@ -1236,7 +1236,7 @@ components:
                     description:
                         The fragment field's background image.
             type: object
-        FragmentFieldHTML:
+        FragmentFieldHTMLValue:
             # @review
             description:
                 A fragment field with HTML.
@@ -1249,7 +1249,7 @@ components:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
                         -   $ref: "#/components/schemas/FragmentMappedValue"
             type: object
-        FragmentFieldImage:
+        FragmentFieldImageValue:
             # @review
             description:
                 A fragment field with an image.
@@ -1265,7 +1265,7 @@ components:
                     description:
                         A link to a fragment.
             type: object
-        FragmentFieldText:
+        FragmentFieldTextValue:
             # @review
             description:
                 A fragment field with text.

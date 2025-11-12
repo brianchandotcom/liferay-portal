@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context;
 
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.model.Layout;
 
@@ -14,11 +15,13 @@ import com.liferay.portal.kernel.model.Layout;
 public class LayoutStructureItemImporterContext {
 
 	public LayoutStructureItemImporterContext(
-		long companyId, long groupId,
-		InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
-		long segmentsExperienceId, long userId) {
+		long companyId,
+		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
+		long groupId, InfoItemServiceRegistry infoItemServiceRegistry,
+		Layout layout, long segmentsExperienceId, long userId) {
 
 		_companyId = companyId;
+		_fragmentEntryProcessorRegistry = fragmentEntryProcessorRegistry;
 		_groupId = groupId;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_layout = layout;
@@ -28,6 +31,10 @@ public class LayoutStructureItemImporterContext {
 
 	public long getCompanyId() {
 		return _companyId;
+	}
+
+	public FragmentEntryProcessorRegistry getFragmentEntryProcessorRegistry() {
+		return _fragmentEntryProcessorRegistry;
 	}
 
 	public long getGroupId() {
@@ -51,6 +58,8 @@ public class LayoutStructureItemImporterContext {
 	}
 
 	private final long _companyId;
+	private final FragmentEntryProcessorRegistry
+		_fragmentEntryProcessorRegistry;
 	private final long _groupId;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final Layout _layout;

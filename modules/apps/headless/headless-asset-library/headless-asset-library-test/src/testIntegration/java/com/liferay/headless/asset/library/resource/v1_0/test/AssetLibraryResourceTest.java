@@ -261,6 +261,25 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		Assert.assertEquals(
 			AssetLibrary.Type.SPACE, postedAssetLibrary.getType());
+
+		randomAssetLibrary = randomAssetLibrary();
+
+		randomAssetLibrary.setName(postedAssetLibrary.getName());
+
+		try {
+			testPostAssetLibrary_addAssetLibrary(randomAssetLibrary);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				_language.get(
+					LocaleUtil.getDefault(), "please-enter-a-unique-name"),
+				problem.getTitle());
+		}
 	}
 
 	@Override

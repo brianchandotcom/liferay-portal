@@ -1299,7 +1299,7 @@ components:
                             # @review
                             description:
                                 A link to a fragment.
-                        text:
+                        textFragmentValue:
                             $ref: "#/components/schemas/TextFragmentValue"
                             # @review
                             description:

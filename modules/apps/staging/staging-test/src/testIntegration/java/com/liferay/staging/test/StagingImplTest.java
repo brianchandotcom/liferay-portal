@@ -777,8 +777,8 @@ public class StagingImplTest {
 		}
 
 		return AssetCategoryLocalServiceUtil.updateCategory(
-			TestPropsValues.getUserId(), category.getCategoryId(),
-			category.getParentCategoryId(), titleMap,
+			category.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			category.getCategoryId(), category.getParentCategoryId(), titleMap,
 			category.getDescriptionMap(), category.getVocabularyId(), null,
 			ServiceContextTestUtil.getServiceContext());
 	}

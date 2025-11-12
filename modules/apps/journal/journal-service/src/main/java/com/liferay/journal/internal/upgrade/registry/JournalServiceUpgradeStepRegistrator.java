@@ -129,21 +129,34 @@ public class JournalServiceUpgradeStepRegistrator
 
 		registry.register("0.0.3", "0.0.4", new SchemaUpgradeProcess());
 
+		registry.register("0.0.4", "0.0.4.step-1", new UpgradeCompanyId());
+
 		registry.register(
-			"0.0.4", "0.0.5", new UpgradeCompanyId(),
+			"0.0.4.step-1", "0.0.4.step-2",
 			new JournalUpgradeProcess(
 				_companyLocalService, _ddmStorageLinkLocalService,
 				_ddmStructureLocalService, _ddmTemplateLinkLocalService,
 				_defaultDDMStructureHelper, _groupLocalService,
 				_resourceActionLocalService, _resourceActions,
-				_resourceLocalService, _userLocalService),
+				_resourceLocalService, _userLocalService));
+
+		registry.register(
+			"0.0.4.step-2", "0.0.4.step-3",
 			new UpgradeJournalArticles(
 				_assetCategoryLocalService, _ddmStructureLocalService,
 				_groupLocalService, _layoutLocalService,
 				_portletPreferenceValueLocalService,
-				_portletPreferencesLocalService),
-			new UpgradeJournalDisplayPreferences(),
-			new UpgradeLastPublishDate(),
+				_portletPreferencesLocalService));
+
+		registry.register(
+			"0.0.4.step-3", "0.0.4.step-4",
+			new UpgradeJournalDisplayPreferences());
+
+		registry.register(
+			"0.0.4.step-4", "0.0.4.step-5", new UpgradeLastPublishDate());
+
+		registry.register(
+			"0.0.4.step-5", "0.0.5",
 			new UpgradePortletSettings(_settingsLocatorHelper),
 			() -> {
 				try {

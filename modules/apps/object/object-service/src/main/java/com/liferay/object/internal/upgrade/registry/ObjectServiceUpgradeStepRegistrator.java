@@ -501,9 +501,15 @@ public class ObjectServiceUpgradeStepRegistrator
 				"ObjectEntry", "externalReferenceCode", "VARCHAR(1000)"));
 
 		registry.register(
-			"10.1.0", "10.1.1",
-			new ObjectDefinitionStaleUserIdUpgradeProcess(_userLocalService),
-			new ObjectFieldStaleUserIdUpgradeProcess(_userLocalService),
+			"10.1.0", "10.1.0.step-1",
+			new ObjectDefinitionStaleUserIdUpgradeProcess(_userLocalService));
+
+		registry.register(
+			"10.1.0.step-1", "10.1.0.step-2",
+			new ObjectFieldStaleUserIdUpgradeProcess(_userLocalService));
+
+		registry.register(
+			"10.1.0.step-2", "10.1.1",
 			new ObjectRelationshipStaleUserIdUpgradeProcess(_userLocalService));
 
 		registry.register(
@@ -534,9 +540,15 @@ public class ObjectServiceUpgradeStepRegistrator
 				"ObjectEntry", "externalReferenceCode", "VARCHAR(1000)"));
 
 		registry.register(
-			"10.5.0", "10.5.1",
-			new ObjectDefinitionStaleUserIdUpgradeProcess(_userLocalService),
-			new ObjectFieldStaleUserIdUpgradeProcess(_userLocalService),
+			"10.5.0", "10.5.0.step-1",
+			new ObjectDefinitionStaleUserIdUpgradeProcess(_userLocalService));
+
+		registry.register(
+			"10.5.0.step-1", "10.5.0.step-2",
+			new ObjectFieldStaleUserIdUpgradeProcess(_userLocalService));
+
+		registry.register(
+			"10.5.0.step-2", "10.5.1",
 			new ObjectRelationshipStaleUserIdUpgradeProcess(_userLocalService));
 
 		registry.register(

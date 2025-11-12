@@ -73,7 +73,32 @@ public class DBUpgradeClient {
 			if (commandLine.hasOption("jvm-opts")) {
 				String optionValue = commandLine.getOptionValue("jvm-opts");
 
-				Collections.addAll(jvmOpts, optionValue.split(" "));
+				if ((optionValue != null) &&
+					!optionValue.trim(
+					).isEmpty()) {
+
+					Collections.addAll(jvmOpts, optionValue.split(" "));
+				}
+
+				if (!_containsPrefix(jvmOpts, "-Dfile.encoding=")) {
+					jvmOpts.add("-Dfile.encoding=UTF8");
+				}
+
+				if (!_containsPrefix(jvmOpts, "-Duser.country=")) {
+					jvmOpts.add("-Duser.country=US");
+				}
+
+				if (!_containsPrefix(jvmOpts, "-Duser.language=")) {
+					jvmOpts.add("-Duser.language=en");
+				}
+
+				if (!_containsPrefix(jvmOpts, "-Duser.timezone=")) {
+					jvmOpts.add("-Duser.timezone=GMT");
+				}
+
+				if (!_containsPrefix(jvmOpts, "-Xmx")) {
+					jvmOpts.add("-Xmx4096m");
+				}
 			}
 			else {
 				jvmOpts.add("-Dfile.encoding=UTF8");
@@ -322,6 +347,16 @@ public class DBUpgradeClient {
 
 			System.exit(1);
 		}
+	}
+
+	private static boolean _containsPrefix(List<String> opts, String prefix) {
+		for (String opt : opts) {
+			if ((opt != null) && opt.startsWith(prefix)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static Options _getOptions() {

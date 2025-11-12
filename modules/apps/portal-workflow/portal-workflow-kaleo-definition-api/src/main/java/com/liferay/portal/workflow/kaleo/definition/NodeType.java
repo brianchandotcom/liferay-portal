@@ -10,6 +10,6 @@ package com.liferay.portal.workflow.kaleo.definition;
  */
 public enum NodeType {
 
-	CONDITION, FORK, JOIN, JOIN_XOR, STATE, TASK
+	CONDITION, FORK, JOIN, JOIN_XOR, LLM, STATE, TASK
 
 }

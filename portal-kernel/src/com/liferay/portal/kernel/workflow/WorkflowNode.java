@@ -26,7 +26,7 @@ public interface WorkflowNode {
 
 	public enum Type {
 
-		CONDITION, FORK, INITIAL_STATE, JOIN, JOIN_XOR, STATE, TASK,
+		CONDITION, FORK, INITIAL_STATE, JOIN, JOIN_XOR, LLM, STATE, TASK,
 		TERMINAL_STATE
 
 	}

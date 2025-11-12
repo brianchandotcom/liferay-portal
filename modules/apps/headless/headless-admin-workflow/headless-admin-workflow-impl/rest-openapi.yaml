@@ -93,7 +93,7 @@ components:
                     # @review
                     description:
                         The workflow's node types.
-                    enum: [CONDITION, FORK, INITIAL_STATE, JOIN, JOIN_XOR, STATE, TASK, TERMINAL_STATE]
+                    enum: [CONDITION, FORK, INITIAL_STATE, JOIN, JOIN_XOR, LLM, STATE, TASK, TERMINAL_STATE]
                     readOnly: true
                     type: string
             type: object

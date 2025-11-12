@@ -5,6 +5,8 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0;
 
+import com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0.util.DDMFieldAttributeTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0.util.DDMFieldTable;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -69,26 +72,6 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			StringBundler.concat(
-				"create table DDMField (mvccVersion LONG default 0 not null, ",
-				"ctCollectionId LONG default 0 not null, fieldId LONG not ",
-				"null, companyId LONG, parentFieldId LONG, storageId LONG, ",
-				"structureVersionId LONG, fieldName TEXT null, fieldType ",
-				"VARCHAR(255) null, instanceId VARCHAR(75) null, localizable ",
-				"BOOLEAN, priority INTEGER, primary key (fieldId, ",
-				"ctCollectionId))"));
-
-		runSQL(
-			StringBundler.concat(
-				"create table DDMFieldAttribute (mvccVersion LONG default 0 ",
-				"not null, ctCollectionId LONG default 0 not null, ",
-				"fieldAttributeId LONG not null, companyId LONG, fieldId ",
-				"LONG, storageId LONG, attributeName VARCHAR(255) null, ",
-				"languageId VARCHAR(75) null, largeAttributeValue TEXT null, ",
-				"smallAttributeValue VARCHAR(255) null, primary key ",
-				"(fieldAttributeId, ctCollectionId))"));
-
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					StringBundler.concat(
@@ -224,6 +207,13 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 
 			updatePreparedStatement.executeBatch();
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			DDMFieldTable.create(), DDMFieldAttributeTable.create()
+		};
 	}
 
 	private void _addDDMFieldAndDDMFieldAttribute(

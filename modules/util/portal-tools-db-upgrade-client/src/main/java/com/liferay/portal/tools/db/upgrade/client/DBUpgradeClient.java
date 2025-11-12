@@ -82,19 +82,7 @@ public class DBUpgradeClient {
 				}
 			}
 
-			Map<String, String> defaultOpts = new LinkedHashMap<>();
-
-			defaultOpts.put("-Dfile.encoding=", "-Dfile.encoding=UTF8");
-			defaultOpts.put("-Duser.country=", "-Duser.country=US");
-			defaultOpts.put("-Duser.language=", "-Duser.language=en");
-			defaultOpts.put("-Duser.timezone=", "-Duser.timezone=GMT");
-			defaultOpts.put("-Xmx", "-Xmx4096m");
-
-			for (Map.Entry<String, String> entry : defaultOpts.entrySet()) {
-				if (!_containsPrefix(jvmOpts, entry.getKey())) {
-					jvmOpts.add(entry.getValue());
-				}
-			}
+			_addDefaultJVMOpts(jvmOpts);
 
 			if (commandLine.hasOption("debug")) {
 				jvmOpts.add(
@@ -331,9 +319,27 @@ public class DBUpgradeClient {
 		}
 	}
 
-	private static boolean _containsPrefix(List<String> opts, String prefix) {
-		for (String opt : opts) {
-			if ((opt != null) && opt.startsWith(prefix)) {
+	private static void _addDefaultJVMOpts(List<String> jvmOpts) {
+		Map<String, String> defaultOpts = new LinkedHashMap<>();
+
+		defaultOpts.put("-Dfile.encoding=", "-Dfile.encoding=UTF8");
+		defaultOpts.put("-Duser.country=", "-Duser.country=US");
+		defaultOpts.put("-Duser.language=", "-Duser.language=en");
+		defaultOpts.put("-Duser.timezone=", "-Duser.timezone=GMT");
+		defaultOpts.put("-Xmx", "-Xmx4096m");
+
+		for (Map.Entry<String, String> entry : defaultOpts.entrySet()) {
+			if (!_containsPrefix(jvmOpts, entry.getKey())) {
+				jvmOpts.add(entry.getValue());
+			}
+		}
+	}
+
+	private static boolean _containsPrefix(
+		List<String> jvmOpts, String prefix) {
+
+		for (String jvmOpt : jvmOpts) {
+			if ((jvmOpt != null) && jvmOpt.startsWith(prefix)) {
 				return true;
 			}
 		}

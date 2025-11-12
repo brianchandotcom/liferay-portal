@@ -43,16 +43,11 @@ export default function RulesSidebar() {
 
 			<SearchResultsMessage numberOfResults={filteredRules.length} />
 
-			<div className="border-top overflow-auto p-3">
-				{filteredRules.length ? (
-					<RulesList
-						isSearching={isSearching}
-						rules={filteredRules}
-					/>
-				) : (
-					<RulesEmptyState isSearching={isSearching} />
-				)}
-			</div>
+			{filteredRules.length ? (
+				<RulesList isSearching={isSearching} rules={filteredRules} />
+			) : (
+				<RulesEmptyState isSearching={isSearching} />
+			)}
 		</>
 	);
 }

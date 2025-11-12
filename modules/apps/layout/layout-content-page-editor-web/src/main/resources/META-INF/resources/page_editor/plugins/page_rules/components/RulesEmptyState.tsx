@@ -14,7 +14,7 @@ export default function RulesEmptyState({isSearching}: {isSearching: boolean}) {
 
 	return (
 		<>
-			<div className="align-items-center d-flex flex-column justify-content-between">
+			<div className="align-items-center d-flex flex-column justify-content-between px-3">
 				{isSearching ? (
 					<ClayEmptyState
 						description={Liferay.Language.get(

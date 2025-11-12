@@ -73,59 +73,59 @@ export default function RulesList({
 	return (
 		<>
 			{!isSearching ? (
-				<>
-					<ClayButton
-						className="mb-3 w-100"
-						displayType="secondary"
-						onClick={onCreateRule}
-						size="sm"
-					>
-						<ClayIcon className="mr-2" symbol="plus" />
+				<ClayButton
+					className="mb-3 mx-3"
+					displayType="secondary"
+					onClick={onCreateRule}
+					size="sm"
+				>
+					<ClayIcon className="mr-2" symbol="plus" />
 
-						{Liferay.Language.get('new-rule')}
-					</ClayButton>
-
-					{rules.length >= MAX_RULES ? (
-						<ClayAlert
-							className="mb-4 mt-2"
-							displayType="warning"
-							title="Warning"
-						>
-							{Liferay.Language.get(
-								'excessive-rules-may-affect-page-performance'
-							)}
-						</ClayAlert>
-					) : null}
-				</>
+					{Liferay.Language.get('new-rule')}
+				</ClayButton>
 			) : null}
 
-			<ClayList role="menubar">
-				{rules.map((rule) => (
-					<RuleItem
-						key={rule.id}
-						onDelete={onDeleteRule}
-						onEdit={onEditRule}
-						rule={rule}
-						savedRuleId={savedRuleId}
-						setSavedRuleId={setSavedRuleId}
+			<div className="border-top overflow-auto p-3">
+				{!isSearching && rules.length >= MAX_RULES ? (
+					<ClayAlert
+						className="mb-4 mt-2"
+						displayType="warning"
+						title="Warning"
+					>
+						{Liferay.Language.get(
+							'excessive-rules-may-affect-page-performance'
+						)}
+					</ClayAlert>
+				) : null}
+
+				<ClayList role="menubar">
+					{rules.map((rule) => (
+						<RuleItem
+							key={rule.id}
+							onDelete={onDeleteRule}
+							onEdit={onEditRule}
+							rule={rule}
+							savedRuleId={savedRuleId}
+							setSavedRuleId={setSavedRuleId}
+						/>
+					))}
+				</ClayList>
+
+				{modalVisible && (
+					<RulesModal
+						editingRule={editingRule}
+						onCloseModal={(ruleId) => {
+							if (ruleId) {
+								setSavedRuleId(ruleId);
+							}
+
+							setEditingRule(null);
+
+							setModalVisible(false);
+						}}
 					/>
-				))}
-			</ClayList>
-
-			{modalVisible && (
-				<RulesModal
-					editingRule={editingRule}
-					onCloseModal={(ruleId) => {
-						if (ruleId) {
-							setSavedRuleId(ruleId);
-						}
-
-						setEditingRule(null);
-
-						setModalVisible(false);
-					}}
-				/>
-			)}
+				)}
+			</div>
 		</>
 	);
 }

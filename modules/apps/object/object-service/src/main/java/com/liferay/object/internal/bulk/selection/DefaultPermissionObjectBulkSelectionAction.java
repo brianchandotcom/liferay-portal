@@ -66,17 +66,17 @@ public class DefaultPermissionObjectBulkSelectionAction
 			bulkSelection.forEach(
 				object -> {
 					try {
-						ObjectEntry objectEntry = (ObjectEntry)object;
+						ObjectEntry objectObjectEntry = (ObjectEntry)object;
 
-						Map<String, Serializable> objectEntryValues =
-							objectEntry.getValues();
+						Map<String, Serializable> objectObjectEntryValues =
+							objectObjectEntry.getValues();
 
-						objectEntryValues.put(
+						objectObjectEntryValues.put(
 							"defaultPermissions",
 							MapUtil.getString(inputMap, "defaultPermissions"));
 
 						_partialUpdateObjectEntry(
-							objectEntry, objectEntryValues);
+							objectObjectEntry, objectObjectEntryValues);
 
 						numberOfSuccessfulItems.getAndIncrement();
 					}

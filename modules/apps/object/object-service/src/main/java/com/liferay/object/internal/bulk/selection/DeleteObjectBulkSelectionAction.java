@@ -68,10 +68,10 @@ public class DeleteObjectBulkSelectionAction
 				object -> {
 					try {
 						if (object instanceof ObjectEntry) {
-							ObjectEntry objectEntry = (ObjectEntry)object;
+							ObjectEntry objectObjectEntry = (ObjectEntry)object;
 
 							_objectEntryLocalService.deleteObjectEntry(
-								objectEntry);
+								objectObjectEntry);
 						}
 						else {
 							ObjectEntryFolder objectEntryFolder =

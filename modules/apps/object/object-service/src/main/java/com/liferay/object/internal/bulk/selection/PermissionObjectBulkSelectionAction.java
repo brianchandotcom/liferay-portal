@@ -95,12 +95,13 @@ public class PermissionObjectBulkSelectionAction
 							resourceName = depotEntry.getModelClassName();
 						}
 						else if (object instanceof ObjectEntry) {
-							ObjectEntry objectEntry = (ObjectEntry)object;
+							ObjectEntry objectObjectEntry = (ObjectEntry)object;
 
-							className = objectEntry.getModelClassName();
-							groupId = objectEntry.getGroupId();
-							resourceId = objectEntry.getObjectEntryId();
-							resourceName = objectEntry.getModelClassName();
+							className = objectObjectEntry.getModelClassName();
+							groupId = objectObjectEntry.getGroupId();
+							resourceId = objectObjectEntry.getObjectEntryId();
+							resourceName =
+								objectObjectEntry.getModelClassName();
 						}
 						else {
 							ObjectEntryFolder objectEntryFolder =

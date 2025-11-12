@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -37,24 +37,26 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment field with an action.",
-	value = "FragmentFieldAction"
+	description = "A fragment element value of type action.",
+	value = "ActionFragmentElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentFieldAction")
-public class FragmentFieldAction implements Serializable {
+@XmlRootElement(name = "ActionFragmentElementValue")
+public class ActionFragmentElementValue
+	extends FragmentElementValue implements Serializable {
 
-	public static FragmentFieldAction toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentFieldAction.class, json);
+	public static ActionFragmentElementValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			ActionFragmentElementValue.class, json);
 	}
 
-	public static FragmentFieldAction unsafeToDTO(String json) {
+	public static ActionFragmentElementValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			FragmentFieldAction.class, json);
+			ActionFragmentElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment field's action. Must be mapped to an external value."
+		description = "The fragment element's action. Must be mapped to an external value."
 	)
 	@Valid
 	public Object getAction() {
@@ -91,7 +93,7 @@ public class FragmentFieldAction implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The fragment field's action. Must be mapped to an external value."
+		description = "The fragment element's action. Must be mapped to an external value."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object action;
@@ -194,7 +196,7 @@ public class FragmentFieldAction implements Serializable {
 	private Supplier<ActionExecutionResult> _onSuccessSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment field's text."
+		description = "The fragment element's text."
 	)
 	@Valid
 	public Object getText() {
@@ -228,7 +230,7 @@ public class FragmentFieldAction implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The fragment field's text.")
+	@GraphQLField(description = "The fragment element's text.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object text;
 
@@ -241,13 +243,15 @@ public class FragmentFieldAction implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentFieldAction)) {
+		if (!(object instanceof ActionFragmentElementValue)) {
 			return false;
 		}
 
-		FragmentFieldAction fragmentFieldAction = (FragmentFieldAction)object;
+		ActionFragmentElementValue actionFragmentElementValue =
+			(ActionFragmentElementValue)object;
 
-		return Objects.equals(toString(), fragmentFieldAction.toString());
+		return Objects.equals(
+			toString(), actionFragmentElementValue.toString());
 	}
 
 	@Override
@@ -330,6 +334,20 @@ public class FragmentFieldAction implements Serializable {
 			}
 		}
 
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -337,7 +355,7 @@ public class FragmentFieldAction implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentFieldAction",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ActionFragmentElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

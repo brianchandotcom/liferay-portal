@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentFieldImageSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.ImageFragmentElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class FragmentFieldImage implements Cloneable, Serializable {
+public class ImageFragmentElementValue
+	extends FragmentElementValue implements Cloneable, Serializable {
 
-	public static FragmentFieldImage toDTO(String json) {
-		return FragmentFieldImageSerDes.toDTO(json);
+	public static ImageFragmentElementValue toDTO(String json) {
+		return ImageFragmentElementValueSerDes.toDTO(json);
 	}
 
 	public FragmentImage getFragmentImage() {
@@ -68,8 +69,8 @@ public class FragmentFieldImage implements Cloneable, Serializable {
 	protected FragmentLink fragmentLink;
 
 	@Override
-	public FragmentFieldImage clone() throws CloneNotSupportedException {
-		return (FragmentFieldImage)super.clone();
+	public ImageFragmentElementValue clone() throws CloneNotSupportedException {
+		return (ImageFragmentElementValue)super.clone();
 	}
 
 	@Override
@@ -78,13 +79,14 @@ public class FragmentFieldImage implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentFieldImage)) {
+		if (!(object instanceof ImageFragmentElementValue)) {
 			return false;
 		}
 
-		FragmentFieldImage fragmentFieldImage = (FragmentFieldImage)object;
+		ImageFragmentElementValue imageFragmentElementValue =
+			(ImageFragmentElementValue)object;
 
-		return Objects.equals(toString(), fragmentFieldImage.toString());
+		return Objects.equals(toString(), imageFragmentElementValue.toString());
 	}
 
 	@Override
@@ -95,7 +97,7 @@ public class FragmentFieldImage implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return FragmentFieldImageSerDes.toJSON(this);
+		return ImageFragmentElementValueSerDes.toJSON(this);
 	}
 
 }

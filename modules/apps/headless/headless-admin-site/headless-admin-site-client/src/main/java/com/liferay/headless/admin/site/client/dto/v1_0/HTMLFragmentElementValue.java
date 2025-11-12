@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentFieldHTMLSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.HTMLFragmentElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class FragmentFieldHTML implements Cloneable, Serializable {
+public class HTMLFragmentElementValue
+	extends FragmentElementValue implements Cloneable, Serializable {
 
-	public static FragmentFieldHTML toDTO(String json) {
-		return FragmentFieldHTMLSerDes.toDTO(json);
+	public static HTMLFragmentElementValue toDTO(String json) {
+		return HTMLFragmentElementValueSerDes.toDTO(json);
 	}
 
 	public Object getHtml() {
@@ -45,8 +46,8 @@ public class FragmentFieldHTML implements Cloneable, Serializable {
 	protected Object html;
 
 	@Override
-	public FragmentFieldHTML clone() throws CloneNotSupportedException {
-		return (FragmentFieldHTML)super.clone();
+	public HTMLFragmentElementValue clone() throws CloneNotSupportedException {
+		return (HTMLFragmentElementValue)super.clone();
 	}
 
 	@Override
@@ -55,13 +56,14 @@ public class FragmentFieldHTML implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentFieldHTML)) {
+		if (!(object instanceof HTMLFragmentElementValue)) {
 			return false;
 		}
 
-		FragmentFieldHTML fragmentFieldHTML = (FragmentFieldHTML)object;
+		HTMLFragmentElementValue htmlFragmentElementValue =
+			(HTMLFragmentElementValue)object;
 
-		return Objects.equals(toString(), fragmentFieldHTML.toString());
+		return Objects.equals(toString(), htmlFragmentElementValue.toString());
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class FragmentFieldHTML implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return FragmentFieldHTMLSerDes.toJSON(this);
+		return HTMLFragmentElementValueSerDes.toJSON(this);
 	}
 
 }

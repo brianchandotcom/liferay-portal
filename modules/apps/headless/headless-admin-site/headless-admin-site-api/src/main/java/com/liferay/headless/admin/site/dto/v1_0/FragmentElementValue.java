@@ -1,13 +1,18 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -36,53 +41,82 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment field with a background image.",
-	value = "FragmentFieldBackgroundImage"
+	description = "The fragment element value.", value = "FragmentElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentFieldBackgroundImage")
-public class FragmentFieldBackgroundImage implements Serializable {
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(
+			name = "Action", value = ActionFragmentElementValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "BackgroundImage",
+			value = BackgroundImageFragmentElementValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "HTML", value = HTMLFragmentElementValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "Image", value = ImageFragmentElementValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "Text", value = TextFragmentElementValue.class
+		)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.PROPERTY, property = "type",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
+@XmlRootElement(name = "FragmentElementValue")
+public abstract class FragmentElementValue implements Serializable {
 
-	public static FragmentFieldBackgroundImage toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			FragmentFieldBackgroundImage.class, json);
+	public static FragmentElementValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentElementValue.class, json);
 	}
 
-	public static FragmentFieldBackgroundImage unsafeToDTO(String json) {
+	public static FragmentElementValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			FragmentFieldBackgroundImage.class, json);
+			FragmentElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment field's background image."
+		description = "The fragment element's type."
 	)
+	@JsonGetter("type")
 	@Valid
-	public FragmentImage getBackgroundFragmentImage() {
-		if (_backgroundFragmentImageSupplier != null) {
-			backgroundFragmentImage = _backgroundFragmentImageSupplier.get();
+	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
 
-			_backgroundFragmentImageSupplier = null;
+			_typeSupplier = null;
 		}
 
-		return backgroundFragmentImage;
-	}
-
-	public void setBackgroundFragmentImage(
-		FragmentImage backgroundFragmentImage) {
-
-		this.backgroundFragmentImage = backgroundFragmentImage;
-
-		_backgroundFragmentImageSupplier = null;
+		return type;
 	}
 
 	@JsonIgnore
-	public void setBackgroundFragmentImage(
-		UnsafeSupplier<FragmentImage, Exception>
-			backgroundFragmentImageUnsafeSupplier) {
+	public String getTypeAsString() {
+		Type type = getType();
 
-		_backgroundFragmentImageSupplier = () -> {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
 			try {
-				return backgroundFragmentImageUnsafeSupplier.get();
+				return typeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -93,12 +127,12 @@ public class FragmentFieldBackgroundImage implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The fragment field's background image.")
+	@GraphQLField(description = "The fragment element's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImage backgroundFragmentImage;
+	protected Type type;
 
 	@JsonIgnore
-	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -106,15 +140,14 @@ public class FragmentFieldBackgroundImage implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentFieldBackgroundImage)) {
+		if (!(object instanceof FragmentElementValue)) {
 			return false;
 		}
 
-		FragmentFieldBackgroundImage fragmentFieldBackgroundImage =
-			(FragmentFieldBackgroundImage)object;
+		FragmentElementValue fragmentElementValue =
+			(FragmentElementValue)object;
 
-		return Objects.equals(
-			toString(), fragmentFieldBackgroundImage.toString());
+		return Objects.equals(toString(), fragmentElementValue.toString());
 	}
 
 	@Override
@@ -129,16 +162,18 @@ public class FragmentFieldBackgroundImage implements Serializable {
 
 		sb.append("{");
 
-		FragmentImage backgroundFragmentImage = getBackgroundFragmentImage();
+		Type type = getType();
 
-		if (backgroundFragmentImage != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImage\": ");
+			sb.append("\"type\": ");
 
-			sb.append(String.valueOf(backgroundFragmentImage));
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -148,10 +183,49 @@ public class FragmentFieldBackgroundImage implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentFieldBackgroundImage",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		ACTION("Action"), BACKGROUND_IMAGE("BackgroundImage"), HTML("HTML"),
+		IMAGE("Image"), TEXT("Text");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

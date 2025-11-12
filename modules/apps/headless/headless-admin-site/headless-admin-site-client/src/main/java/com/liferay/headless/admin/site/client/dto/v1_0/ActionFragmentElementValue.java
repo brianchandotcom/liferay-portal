@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentFieldActionSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.ActionFragmentElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class FragmentFieldAction implements Cloneable, Serializable {
+public class ActionFragmentElementValue
+	extends FragmentElementValue implements Cloneable, Serializable {
 
-	public static FragmentFieldAction toDTO(String json) {
-		return FragmentFieldActionSerDes.toDTO(json);
+	public static ActionFragmentElementValue toDTO(String json) {
+		return ActionFragmentElementValueSerDes.toDTO(json);
 	}
 
 	public Object getAction() {
@@ -110,8 +111,10 @@ public class FragmentFieldAction implements Cloneable, Serializable {
 	protected Object text;
 
 	@Override
-	public FragmentFieldAction clone() throws CloneNotSupportedException {
-		return (FragmentFieldAction)super.clone();
+	public ActionFragmentElementValue clone()
+		throws CloneNotSupportedException {
+
+		return (ActionFragmentElementValue)super.clone();
 	}
 
 	@Override
@@ -120,13 +123,15 @@ public class FragmentFieldAction implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentFieldAction)) {
+		if (!(object instanceof ActionFragmentElementValue)) {
 			return false;
 		}
 
-		FragmentFieldAction fragmentFieldAction = (FragmentFieldAction)object;
+		ActionFragmentElementValue actionFragmentElementValue =
+			(ActionFragmentElementValue)object;
 
-		return Objects.equals(toString(), fragmentFieldAction.toString());
+		return Objects.equals(
+			toString(), actionFragmentElementValue.toString());
 	}
 
 	@Override
@@ -137,7 +142,7 @@ public class FragmentFieldAction implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return FragmentFieldActionSerDes.toJSON(this);
+		return ActionFragmentElementValueSerDes.toJSON(this);
 	}
 
 }

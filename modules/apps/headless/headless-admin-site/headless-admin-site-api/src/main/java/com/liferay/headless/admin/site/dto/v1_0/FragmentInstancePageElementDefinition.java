@@ -438,33 +438,33 @@ public class FragmentInstancePageElementDefinition
 		_fragmentConfigurationFieldValuesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment field values of the the fragment instance."
+		description = "The fragment elements of the the fragment instance."
 	)
 	@Valid
-	public FragmentField[] getFragmentFields() {
-		if (_fragmentFieldsSupplier != null) {
-			fragmentFields = _fragmentFieldsSupplier.get();
+	public FragmentElement[] getFragmentElements() {
+		if (_fragmentElementsSupplier != null) {
+			fragmentElements = _fragmentElementsSupplier.get();
 
-			_fragmentFieldsSupplier = null;
+			_fragmentElementsSupplier = null;
 		}
 
-		return fragmentFields;
+		return fragmentElements;
 	}
 
-	public void setFragmentFields(FragmentField[] fragmentFields) {
-		this.fragmentFields = fragmentFields;
+	public void setFragmentElements(FragmentElement[] fragmentElements) {
+		this.fragmentElements = fragmentElements;
 
-		_fragmentFieldsSupplier = null;
+		_fragmentElementsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFragmentFields(
-		UnsafeSupplier<FragmentField[], Exception>
-			fragmentFieldsUnsafeSupplier) {
+	public void setFragmentElements(
+		UnsafeSupplier<FragmentElement[], Exception>
+			fragmentElementsUnsafeSupplier) {
 
-		_fragmentFieldsSupplier = () -> {
+		_fragmentElementsSupplier = () -> {
 			try {
-				return fragmentFieldsUnsafeSupplier.get();
+				return fragmentElementsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -476,13 +476,13 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The fragment field values of the the fragment instance."
+		description = "The fragment elements of the the fragment instance."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentField[] fragmentFields;
+	protected FragmentElement[] fragmentElements;
 
 	@JsonIgnore
-	private Supplier<FragmentField[]> _fragmentFieldsSupplier;
+	private Supplier<FragmentElement[]> _fragmentElementsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment instance's external reference code."
@@ -1212,21 +1212,21 @@ public class FragmentInstancePageElementDefinition
 			sb.append(_toJSON(fragmentConfigurationFieldValues));
 		}
 
-		FragmentField[] fragmentFields = getFragmentFields();
+		FragmentElement[] fragmentElements = getFragmentElements();
 
-		if (fragmentFields != null) {
+		if (fragmentElements != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentFields\": ");
+			sb.append("\"fragmentElements\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < fragmentFields.length; i++) {
-				sb.append(String.valueOf(fragmentFields[i]));
+			for (int i = 0; i < fragmentElements.length; i++) {
+				sb.append(String.valueOf(fragmentElements[i]));
 
-				if ((i + 1) < fragmentFields.length) {
+				if ((i + 1) < fragmentElements.length) {
 					sb.append(", ");
 				}
 			}

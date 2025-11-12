@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentFieldBackgroundImage;
+import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentElementValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,28 +21,29 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class FragmentFieldBackgroundImageSerDes {
+public class BackgroundImageFragmentElementValueSerDes {
 
-	public static FragmentFieldBackgroundImage toDTO(String json) {
-		FragmentFieldBackgroundImageJSONParser
-			fragmentFieldBackgroundImageJSONParser =
-				new FragmentFieldBackgroundImageJSONParser();
+	public static BackgroundImageFragmentElementValue toDTO(String json) {
+		BackgroundImageFragmentElementValueJSONParser
+			backgroundImageFragmentElementValueJSONParser =
+				new BackgroundImageFragmentElementValueJSONParser();
 
-		return fragmentFieldBackgroundImageJSONParser.parseToDTO(json);
+		return backgroundImageFragmentElementValueJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentFieldBackgroundImage[] toDTOs(String json) {
-		FragmentFieldBackgroundImageJSONParser
-			fragmentFieldBackgroundImageJSONParser =
-				new FragmentFieldBackgroundImageJSONParser();
+	public static BackgroundImageFragmentElementValue[] toDTOs(String json) {
+		BackgroundImageFragmentElementValueJSONParser
+			backgroundImageFragmentElementValueJSONParser =
+				new BackgroundImageFragmentElementValueJSONParser();
 
-		return fragmentFieldBackgroundImageJSONParser.parseToDTOs(json);
+		return backgroundImageFragmentElementValueJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		FragmentFieldBackgroundImage fragmentFieldBackgroundImage) {
+		BackgroundImageFragmentElementValue
+			backgroundImageFragmentElementValue) {
 
-		if (fragmentFieldBackgroundImage == null) {
+		if (backgroundImageFragmentElementValue == null) {
 			return "null";
 		}
 
@@ -50,7 +51,9 @@ public class FragmentFieldBackgroundImageSerDes {
 
 		sb.append("{");
 
-		if (fragmentFieldBackgroundImage.getBackgroundFragmentImage() != null) {
+		if (backgroundImageFragmentElementValue.getBackgroundFragmentImage() !=
+				null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -59,7 +62,20 @@ public class FragmentFieldBackgroundImageSerDes {
 
 			sb.append(
 				String.valueOf(
-					fragmentFieldBackgroundImage.getBackgroundFragmentImage()));
+					backgroundImageFragmentElementValue.
+						getBackgroundFragmentImage()));
+		}
+
+		if (backgroundImageFragmentElementValue.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(backgroundImageFragmentElementValue.getType());
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -68,46 +84,61 @@ public class FragmentFieldBackgroundImageSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentFieldBackgroundImageJSONParser
-			fragmentFieldBackgroundImageJSONParser =
-				new FragmentFieldBackgroundImageJSONParser();
+		BackgroundImageFragmentElementValueJSONParser
+			backgroundImageFragmentElementValueJSONParser =
+				new BackgroundImageFragmentElementValueJSONParser();
 
-		return fragmentFieldBackgroundImageJSONParser.parseToMap(json);
+		return backgroundImageFragmentElementValueJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		FragmentFieldBackgroundImage fragmentFieldBackgroundImage) {
+		BackgroundImageFragmentElementValue
+			backgroundImageFragmentElementValue) {
 
-		if (fragmentFieldBackgroundImage == null) {
+		if (backgroundImageFragmentElementValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentFieldBackgroundImage.getBackgroundFragmentImage() == null) {
+		if (backgroundImageFragmentElementValue.getBackgroundFragmentImage() ==
+				null) {
+
 			map.put("backgroundFragmentImage", null);
 		}
 		else {
 			map.put(
 				"backgroundFragmentImage",
 				String.valueOf(
-					fragmentFieldBackgroundImage.getBackgroundFragmentImage()));
+					backgroundImageFragmentElementValue.
+						getBackgroundFragmentImage()));
+		}
+
+		if (backgroundImageFragmentElementValue.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put(
+				"type",
+				String.valueOf(backgroundImageFragmentElementValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentFieldBackgroundImageJSONParser
-		extends BaseJSONParser<FragmentFieldBackgroundImage> {
+	public static class BackgroundImageFragmentElementValueJSONParser
+		extends BaseJSONParser<BackgroundImageFragmentElementValue> {
 
 		@Override
-		protected FragmentFieldBackgroundImage createDTO() {
-			return new FragmentFieldBackgroundImage();
+		protected BackgroundImageFragmentElementValue createDTO() {
+			return new BackgroundImageFragmentElementValue();
 		}
 
 		@Override
-		protected FragmentFieldBackgroundImage[] createDTOArray(int size) {
-			return new FragmentFieldBackgroundImage[size];
+		protected BackgroundImageFragmentElementValue[] createDTOArray(
+			int size) {
+
+			return new BackgroundImageFragmentElementValue[size];
 		}
 
 		@Override
@@ -117,21 +148,33 @@ public class FragmentFieldBackgroundImageSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
 
 			return false;
 		}
 
 		@Override
 		protected void setField(
-			FragmentFieldBackgroundImage fragmentFieldBackgroundImage,
+			BackgroundImageFragmentElementValue
+				backgroundImageFragmentElementValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(
 					jsonParserFieldName, "backgroundFragmentImage")) {
 
 				if (jsonParserFieldValue != null) {
-					fragmentFieldBackgroundImage.setBackgroundFragmentImage(
-						FragmentImageSerDes.toDTO(
+					backgroundImageFragmentElementValue.
+						setBackgroundFragmentImage(
+							FragmentImageSerDes.toDTO(
+								(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					backgroundImageFragmentElementValue.setType(
+						BackgroundImageFragmentElementValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

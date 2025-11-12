@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -36,87 +36,49 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "A fragment field.", value = "FragmentField")
+@GraphQLName(
+	description = "A fragment element value of type HTML.",
+	value = "HTMLFragmentElementValue"
+)
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentField")
-public class FragmentField implements Serializable {
+@XmlRootElement(name = "HTMLFragmentElementValue")
+public class HTMLFragmentElementValue
+	extends FragmentElementValue implements Serializable {
 
-	public static FragmentField toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentField.class, json);
+	public static HTMLFragmentElementValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(HTMLFragmentElementValue.class, json);
 	}
 
-	public static FragmentField unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentField.class, json);
+	public static HTMLFragmentElementValue unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			HTMLFragmentElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment field's ID."
-	)
-	public String getId() {
-		if (_idSupplier != null) {
-			id = _idSupplier.get();
-
-			_idSupplier = null;
-		}
-
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-
-		_idSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		_idSupplier = () -> {
-			try {
-				return idUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment field's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String id;
-
-	@JsonIgnore
-	private Supplier<String> _idSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment field's value."
+		description = "The fragment element's HTML. Can be inline or mapped to an external value."
 	)
 	@Valid
-	public Object getValue() {
-		if (_valueSupplier != null) {
-			value = _valueSupplier.get();
+	public Object getHtml() {
+		if (_htmlSupplier != null) {
+			html = _htmlSupplier.get();
 
-			_valueSupplier = null;
+			_htmlSupplier = null;
 		}
 
-		return value;
+		return html;
 	}
 
-	public void setValue(Object value) {
-		this.value = value;
+	public void setHtml(Object html) {
+		this.html = html;
 
-		_valueSupplier = null;
+		_htmlSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		_valueSupplier = () -> {
+	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
+		_htmlSupplier = () -> {
 			try {
-				return valueUnsafeSupplier.get();
+				return htmlUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -127,12 +89,14 @@ public class FragmentField implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The fragment field's value.")
+	@GraphQLField(
+		description = "The fragment element's HTML. Can be inline or mapped to an external value."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object value;
+	protected Object html;
 
 	@JsonIgnore
-	private Supplier<Object> _valueSupplier;
+	private Supplier<Object> _htmlSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -140,13 +104,14 @@ public class FragmentField implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentField)) {
+		if (!(object instanceof HTMLFragmentElementValue)) {
 			return false;
 		}
 
-		FragmentField fragmentField = (FragmentField)object;
+		HTMLFragmentElementValue htmlFragmentElementValue =
+			(HTMLFragmentElementValue)object;
 
-		return Objects.equals(toString(), fragmentField.toString());
+		return Objects.equals(toString(), htmlFragmentElementValue.toString());
 	}
 
 	@Override
@@ -161,42 +126,40 @@ public class FragmentField implements Serializable {
 
 		sb.append("{");
 
-		String id = getId();
+		Object html = getHtml();
 
-		if (id != null) {
+		if (html != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"html\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(id));
-
-			sb.append("\"");
-		}
-
-		Object value = getValue();
-
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			if (html instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)html));
 			}
-
-			sb.append("\"value\": ");
-
-			if (value instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
-			}
-			else if (value instanceof String) {
+			else if (html instanceof String) {
 				sb.append("\"");
-				sb.append(_escape((String)value));
+				sb.append(_escape((String)html));
 				sb.append("\"");
 			}
 			else {
-				sb.append(value);
+				sb.append(html);
 			}
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -206,7 +169,7 @@ public class FragmentField implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentField",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

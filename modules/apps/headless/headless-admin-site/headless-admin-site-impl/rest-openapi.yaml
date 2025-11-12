@@ -1175,36 +1175,36 @@ components:
             # @review
             description:
                 The page element definition of a fragment drop zone.
-        FragmentField:
+        FragmentElement:
             # @review
             description:
-                A fragment field.
+                A fragment element.
             properties:
                 id:
                     # @review
                     description:
-                        The fragment field's ID.
+                        The fragment element's ID.
                     type: string
                 value:
                     anyOf:
-                        -   $ref: "#/components/schemas/ActionFragmentFieldValue"
-                        -   $ref: "#/components/schemas/BackgroundImageFragmentFieldValue"
-                        -   $ref: "#/components/schemas/HTMLFragmentFieldValue"
-                        -   $ref: "#/components/schemas/ImageFragmentFieldValue"
-                        -   $ref: "#/components/schemas/TextFragmentFieldValue"
+                        -   $ref: "#/components/schemas/ActionFragmentElementValue"
+                        -   $ref: "#/components/schemas/BackgroundImageFragmentElementValue"
+                        -   $ref: "#/components/schemas/HTMLFragmentElementValue"
+                        -   $ref: "#/components/schemas/ImageFragmentElementValue"
+                        -   $ref: "#/components/schemas/TextFragmentElementValue"
                     # @review
                     description:
-                        The fragment field's value.
+                        The fragment element's value.
             type: object
-        ActionFragmentFieldValue:
+        ActionFragmentElementValue:
             # @review
             description:
-                A fragment field with an action.
+                A fragment element with an action.
             properties:
                 action:
                     # @review
                     description:
-                        The fragment field's action. Must be mapped to an external value.
+                        The fragment element's action. Must be mapped to an external value.
                     oneOf:
                         -   $ref: "#/components/schemas/FragmentMappedValue"
                 onError:
@@ -1220,55 +1220,55 @@ components:
                 text:
                     # @review
                     description:
-                        The fragment field's text.
+                        The fragment element's text.
                     oneOf:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
                         -   $ref: "#/components/schemas/FragmentMappedValue"
             type: object
-        BackgroundImageFragmentFieldValue:
+        BackgroundImageFragmentElementValue:
             # @review
             description:
-                A fragment field with a background image.
+                A fragment element with a background image.
             properties:
                 backgroundFragmentImage:
                     $ref: "#/components/schemas/FragmentImage"
                     # @review
                     description:
-                        The fragment field's background image.
+                        The fragment element's background image.
             type: object
-        HTMLFragmentFieldValue:
+        HTMLFragmentElementValue:
             # @review
             description:
-                A fragment field with HTML.
+                A fragment element with HTML.
             properties:
                 html:
                     # @review
                     description:
-                        The fragment field's HTML. Can be inline or mapped to an external value.
+                        The fragment element's HTML. Can be inline or mapped to an external value.
                     oneOf:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
                         -   $ref: "#/components/schemas/FragmentMappedValue"
             type: object
-        ImageFragmentFieldValue:
+        ImageFragmentElementValue:
             # @review
             description:
-                A fragment field with an image.
+                A fragment element with an image.
             properties:
                 fragmentImage:
                     $ref: "#/components/schemas/FragmentImage"
                     # @review
                     description:
-                        The fragment field's image.
+                        The fragment element's image.
                 fragmentLink:
                     $ref: "#/components/schemas/FragmentLink"
                     # @review
                     description:
                         A link to a fragment.
             type: object
-        TextFragmentFieldValue:
+        TextFragmentElementValue:
             # @review
             description:
-                A fragment field with text.
+                A fragment element with text.
             properties:
                 fragmentLink:
                     $ref: "#/components/schemas/FragmentLink"
@@ -1278,7 +1278,7 @@ components:
                 text:
                     # @review
                     description:
-                        The fragment field's text.
+                        The fragment element's text.
                     oneOf:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
                         -   $ref: "#/components/schemas/FragmentMappedValue"
@@ -1395,12 +1395,12 @@ components:
                             description:
                                 The fragment configuration field values of the fragment instance.
                             type: object
-                        fragmentFields:
+                        fragmentElements:
                             # @review
                             description:
-                                The fragment field values of the the fragment instance.
+                                The fragment elements of the the fragment instance.
                             items:
-                                $ref: "#/components/schemas/FragmentField"
+                                $ref: "#/components/schemas/FragmentElement"
                             type: array
                         fragmentInstanceExternalReferenceCode:
                             # @review

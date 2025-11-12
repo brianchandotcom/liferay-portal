@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -83,6 +84,20 @@ public class ContentAndFileSectionsCardsFDSView extends BaseCardsFDSView {
 	@Override
 	public String getTitle() {
 		return "embedded.title";
+	}
+
+	@Override
+	public boolean isDefault(String fdsName) {
+		if (Objects.equals(fdsName, CMSSiteInitializerFDSNames.ALL_SECTION) ||
+			Objects.equals(
+				fdsName, CMSSiteInitializerFDSNames.CONTENTS_SECTION) ||
+			Objects.equals(
+				fdsName, CMSSiteInitializerFDSNames.VIEW_CONTENTS_FOLDER)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Snapshot<FDSCardSchemaBuilderFactory>

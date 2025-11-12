@@ -8,6 +8,8 @@ package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.ta
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -31,7 +33,16 @@ public class ContentAndFileContentsSectionCMSTableFDSView
 
 	@Override
 	public boolean isDefault(String fdsName) {
-		return true;
+		if (Objects.equals(fdsName, CMSSiteInitializerFDSNames.ALL_SECTION) ||
+			Objects.equals(
+				fdsName, CMSSiteInitializerFDSNames.CONTENTS_SECTION) ||
+			Objects.equals(
+				fdsName, CMSSiteInitializerFDSNames.VIEW_CONTENTS_FOLDER)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

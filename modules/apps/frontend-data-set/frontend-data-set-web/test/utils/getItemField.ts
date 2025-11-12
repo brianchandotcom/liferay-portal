@@ -255,5 +255,25 @@ describe('resolveField', () => {
 
 			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
+
+		it('does not fail when no property matches the path, root', () => {
+			const given = 'nonexistentRoot';
+
+			const expected = itemWithAudit;
+
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
+		});
+
+		it('does not fail when no property matches the path, nested', () => {
+			const pathNested = 'nonexistentRoot.nonexistentLeaf';
+			const pathNestedDeeper =
+				'nonexistentRoot.nonexistentMid.nonexistentLeaf';
+			const expected = {};
+
+			expect(getItemField(pathNested, itemWithAudit)).toEqual(expected);
+			expect(getItemField(pathNestedDeeper, itemWithAudit)).toEqual(
+				expected
+			);
+		});
 	});
 });

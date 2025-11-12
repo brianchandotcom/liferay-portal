@@ -1185,7 +1185,7 @@ components:
                     description:
                         The fragment element's ID.
                     type: string
-                value:
+                fragmentElementValue:
                     $ref: "#/components/schemas/FragmentElementValue"
             type: object
         FragmentElementValue:

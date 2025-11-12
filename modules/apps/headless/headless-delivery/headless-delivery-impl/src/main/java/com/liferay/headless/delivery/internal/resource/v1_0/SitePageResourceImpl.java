@@ -804,8 +804,14 @@ public class SitePageResourceImpl
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout, contextUser)) {
 
-			contextHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)contextHttpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			themeDisplay.setLanguageId(
+				LocaleUtil.toLanguageId(
+					contextAcceptLanguage.getPreferredLocale()));
+			themeDisplay.setLocale(contextAcceptLanguage.getPreferredLocale());
 
 			layout.includeLayoutContent(
 				contextHttpServletRequest, contextHttpServletResponse);

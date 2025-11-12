@@ -55,6 +55,10 @@ public class InfoItemUtil {
 					ItemScopeUtil.getItemScopeExternalReferenceCode(
 						scope, scopeGroupId)));
 
+			if (infoItem == null) {
+				return null;
+			}
+
 			InfoItemDetails infoItemDetails =
 				infoItemDetailsProvider.getInfoItemDetails(
 					scopeGroupId, ClassPKInfoItemIdentifier.class, infoItem);
@@ -108,6 +112,10 @@ public class InfoItemUtil {
 		try {
 			Object infoItem = infoItemObjectProvider.getInfoItem(
 				scopeGroupId, new ClassPKInfoItemIdentifier(classPK));
+
+			if (infoItem == null) {
+				return null;
+			}
 
 			InfoItemDetails infoItemDetails =
 				infoItemDetailsProvider.getInfoItemDetails(

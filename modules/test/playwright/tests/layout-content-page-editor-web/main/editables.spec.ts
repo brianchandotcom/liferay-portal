@@ -189,6 +189,71 @@ testWithCKEditor4(
 	}
 );
 
+testWithCKEditor4(
+	'Checks table-layout style is not removed when editing',
+	{tag: '@LPD-71383'},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page with a Paragraph fragment containing a table with correct styles
+
+		const paragraphId = getRandomString();
+		const paragraphDefinition = getFragmentDefinition({
+			fragmentFields: [
+				{
+					id: 'element-text',
+					value: {
+						fragmentLink: {},
+						text: {
+							value_i18n: {
+								en_US: '<table class="my-table" border="1" style="table-layout: fixed; width: 100%;"><tbody><tr><td><br></td></tr></tbody></table>',
+							},
+						},
+					},
+				},
+			],
+			id: paragraphId,
+			key: 'BASIC_COMPONENT-paragraph',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([paragraphDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Edit the editable and blur
+
+		await pageEditorPage.selectFragment(paragraphId);
+
+		await pageEditorPage.selectEditable(paragraphId, 'element-text');
+
+		const editable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: paragraphId,
+		});
+
+		await editable.click();
+
+		await editable.locator('.cke_editable_inline').waitFor();
+
+		await expect(async () => {
+			await page.keyboard.press('Escape');
+
+			await pageEditorPage.waitForChangesSaved({timeout: 1000});
+		}).toPass();
+
+		// Check table-layout style persists
+
+		const html = await page.locator('.component-paragraph').innerHTML();
+
+		expect(html).toContain('table-layout:fixed');
+	}
+);
+
 test(
 	'Saves edited content when leaving page while editing',
 	{

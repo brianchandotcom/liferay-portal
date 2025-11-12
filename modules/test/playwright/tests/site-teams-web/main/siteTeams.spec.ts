@@ -6,16 +6,28 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import {
+	performLoginViaApi,
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {siteTeamsPagesTest} from './fixtures/siteTeamsPagesTest';
 
 const test = mergeTests(
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-35914': {enabled: true},
+		'LPS-178052': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	siteSettingsPagesTest,
@@ -638,5 +650,114 @@ test(
 				page.getByRole('cell', {name: team.teamName})
 			).toBeVisible({timeout: 1000});
 		}).toPass({timeout: 5000});
+	}
+);
+
+test(
+	'A site team can have dedicated permissions',
+	{tag: ['@LPD-71199']},
+	async ({apiHelpers, page, site, teamsPage}) => {
+		const createUserAndAssignToSite = async () => {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			await apiHelpers.jsonWebServicesUser.assignUsersToSite(
+				site.id,
+				user.id
+			);
+
+			return user;
+		};
+
+		const user1 = await createUserAndAssignToSite();
+		const user2 = await createUserAndAssignToSite();
+
+		const newTeam = {
+			teamName: getRandomString(),
+		};
+
+		await teamsPage.goTo(site.friendlyUrlPath);
+
+		await teamsPage.newTeamButton.click();
+		await teamsPage.newTeam(newTeam);
+
+		await expect(teamsPage.teamsTable.cell(newTeam.teamName)).toBeVisible();
+
+		const team = await apiHelpers.jsonWebServicesTeam.getTeam(
+			site.id,
+			newTeam.teamName
+		);
+
+		await apiHelpers.jsonWebServicesUser.addTeamUsers(team.teamId, [
+			user2.id,
+		]);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_journal_content_web_portlet_JournalContentPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		for (const roleName of ['Guest', 'Site Member']) {
+			const role = await apiHelpers.headlessAdminUser.getRoleByName(
+				roleName,
+				'rolePermissions'
+			);
+
+			await apiHelpers.jsonWebServicesResourcePermissionApiHelper.setIndividualResourcePermissions(
+				[],
+				companyId,
+				'0',
+				'com.liferay.portal.kernel.model.Layout',
+				String(layout.id),
+				String(role.id)
+			);
+		}
+
+		await apiHelpers.jsonWebServicesResourcePermissionApiHelper.setIndividualResourcePermissions(
+			['VIEW'],
+			companyId,
+			String(team.groupId),
+			'com.liferay.portal.kernel.model.Layout',
+			String(layout.id),
+			String(Number(team.teamId) + 1)
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user1.alternateName});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(
+			page
+				.getByRole('heading', {name: '404'})
+				.or(page.getByText('requested resource could not be found'))
+		).toBeVisible();
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user2.alternateName});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(
+			page
+				.getByRole('heading', {name: '404'})
+				.or(page.getByText('requested resource could not be found'))
+		).toHaveCount(0);
 	}
 );

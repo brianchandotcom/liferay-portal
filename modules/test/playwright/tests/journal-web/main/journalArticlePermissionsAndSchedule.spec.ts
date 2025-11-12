@@ -65,6 +65,7 @@ scheduleTest(
 				name: 'Permissions',
 			}),
 			trigger: page.getByRole('button', {
+				exact: true,
 				name: 'Options',
 			}),
 		});

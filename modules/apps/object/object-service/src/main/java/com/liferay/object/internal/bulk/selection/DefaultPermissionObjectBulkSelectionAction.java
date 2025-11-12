@@ -99,13 +99,11 @@ public class DefaultPermissionObjectBulkSelectionAction
 		finally {
 			values.put("completionDate", new Date());
 			values.put("executionStatus", executionStatus);
-			values.put(
-				"numberOfFailedItems", numberOfFailedItems.get());
+			values.put("numberOfFailedItems", numberOfFailedItems.get());
 			values.put(
 				"numberOfSuccessfulItems", numberOfSuccessfulItems.get());
 
-			_partialUpdateObjectEntry(
-				bulkActionTaskObjectEntry, values);
+			_partialUpdateObjectEntry(bulkActionTaskObjectEntry, values);
 		}
 	}
 

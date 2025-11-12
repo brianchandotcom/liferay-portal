@@ -9,5 +9,6 @@ export const ITEM_ACTIVATION_ORIGINS = {
 	itemActions: 'itemActions',
 	keyboard: 'keyboard',
 	layout: 'layout',
+	rules: 'rules',
 	sidebar: 'sidebar',
 };

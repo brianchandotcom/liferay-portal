@@ -12,9 +12,11 @@ import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
+import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
+import {useHoverMultipleItems} from '../../../app/js-index';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import deleteRule from '../../../app/thunks/deleteRule';
 import useActionValues, {
@@ -137,6 +139,7 @@ function RuleItem({
 	savedRuleId: string | null;
 	setSavedRuleId: (id: string | null) => void;
 }) {
+	const hoverMultipleItems = useHoverMultipleItems();
 	const [triggerElement, setTriggerElement] =
 		useState<HTMLButtonElement | null>(null);
 
@@ -158,11 +161,32 @@ function RuleItem({
 	const conditions = useConditionValues({...rule, items});
 	const actions = useActionValues({...rule, items});
 
+	const hoveredItemIds = useMemo(() => {
+		const actionsItemIds = rule.actions.map(({itemId}) => itemId);
+		const conditionsItemIds = rule.conditions.map(({field}) => field);
+
+		return [...actionsItemIds, ...conditionsItemIds];
+	}, [rule.actions, rule.conditions]);
+
+	const onHighlightItems = () => {
+		hoverMultipleItems(hoveredItemIds, {
+			origin: ITEM_ACTIVATION_ORIGINS.rules,
+		});
+	};
+
+	const onUnhighlightItems = () => {
+		hoverMultipleItems([]);
+	};
+
 	return (
 		<ClayList.Item
 			aria-label={getRuleAriaLabel(rule.name, conditions, actions)}
 			className="p-2 page-editor__rule"
 			key={rule.id}
+			onBlurCapture={onUnhighlightItems}
+			onFocusCapture={onHighlightItems}
+			onMouseLeave={onUnhighlightItems}
+			onMouseOver={onHighlightItems}
 		>
 			<ClayList.ItemField expand>
 				<div className="align-items-center d-flex">

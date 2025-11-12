@@ -22,6 +22,7 @@ import {
 	useActivationOrigin,
 	useActiveItemIds,
 	useHoverItem,
+	useHoveringOrigin,
 	useIsActive,
 	useIsHovered,
 	useMultiSelectType,
@@ -99,7 +100,7 @@ function TopperContent({
 	children,
 	className,
 	isActive,
-	isHovered,
+	isHovered: initialIsHovered,
 	item,
 	itemElement,
 	multiSelectType,
@@ -109,10 +110,12 @@ function TopperContent({
 	const commentsPanelId = config.sidebarPanelsMap?.comments?.sidebarPanelId;
 	const dispatch = useDispatch();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
+	const hoveringOrigin = useHoveringOrigin();
 	const hoverItem = useHoverItem();
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
 	const isMultiSelect = activeItemIds.length > 1;
 	const isKeyboardTarget = useIsMovementTarget();
+	const isRuleHover = hoveringOrigin === ITEM_ACTIVATION_ORIGINS.rules;
 
 	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();
@@ -122,6 +125,8 @@ function TopperContent({
 	const dropTargetPosition = targetPosition || keyboardMovementPosition;
 
 	const isHighlighted = isItemHighlighted(item, dropContainerId);
+	const isHighlightedFromRule = initialIsHovered && isRuleHover;
+	const isHovered = initialIsHovered && !isRuleHover;
 
 	const selectable =
 		!multiSelectType ||
@@ -223,6 +228,7 @@ function TopperContent({
 				'dragged': isDraggingSource,
 				'drop-container': dropContainerId === item.itemId,
 				'highlighted': isHighlighted,
+				'highlighted-from-rule': isHighlightedFromRule,
 				'hovered': isHovered,
 				'not-allowed': !selectable,
 			})}

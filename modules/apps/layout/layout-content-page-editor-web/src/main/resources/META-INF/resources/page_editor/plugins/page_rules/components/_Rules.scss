@@ -1,8 +1,17 @@
 @import 'cadmin-variables';
 
 html#{$cadmin-selector} .cadmin {
-	.page-editor__rule:hover {
-		background: $cadmin-list-group-active-bg;
+	.page-editor__rule {
+		&:focus-visible,
+		&:hover {
+			background: $cadmin-list-group-active-bg;
+		}
+
+		&:focus-visible {
+			box-shadow: 0 0 0 2px $cadmin-primary-l0;
+			outline: 0;
+			z-index: 1;
+		}
 	}
 
 	.page-editor__rule-builder-item {

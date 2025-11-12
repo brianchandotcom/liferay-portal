@@ -33,6 +33,14 @@ export {useActiveItemIds} from './contexts/ControlsContext';
 
 // @ts-ignore
 
+export {useHoveringOrigin} from './contexts/ControlsContext';
+
+// @ts-ignore
+
+export {useHoverMultipleItems} from './contexts/ControlsContext';
+
+// @ts-ignore
+
 export {default as getAlloyEditorProcessor} from './processors/getAlloyEditorProcessor';
 
 // @ts-ignore

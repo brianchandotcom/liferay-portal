@@ -47,9 +47,13 @@ export default function initializeLock(
 		});
 	};
 
-	Liferay.component(`${namespace}${name}`, {
-		isLocked: () => locked,
-		lock: (error) => toggle(true, error),
-		unlock: (error) => toggle(false, error),
-	});
+	Liferay.component(
+		`${namespace}${name}`,
+		{
+			isLocked: () => locked,
+			lock: (error) => toggle(true, error),
+			unlock: (error) => toggle(false, error),
+		},
+		{destroyOnNavigate: true}
+	);
 }

@@ -98,7 +98,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		if (matches) {
 			String[] requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAKARTA;
 
-			if (_isUseJavaxImports(taglibURIs)) {
+			String javaeePackage = analyzer.getProperty("-javaee-package");
+
+			if (_isUseJavaxImports(javaeePackage, taglibURIs)) {
 				requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAVAX;
 			}
 
@@ -562,8 +564,19 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		return false;
 	}
 
-	private boolean _isUseJavaxImports(Set<String> taglibURIs) {
+	private boolean _isUseJavaxImports(
+		String javaeePackage, Set<String> taglibURIs) {
+
 		if (taglibURIs.isEmpty()) {
+			if (javaeePackage != null) {
+				if (javaeePackage.equals("javax")) {
+					return true;
+				}
+				else if (javaeePackage.equals("jakarta")) {
+					return false;
+				}
+			}
+
 			return false;
 		}
 

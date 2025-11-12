@@ -1291,6 +1291,7 @@ components:
                 A fragment element value of type image.
             type: object
         TextFragmentElementValue:
+            allOf:
                 -   $ref: "#/components/schemas/FragmentElementValue"
                 -   properties:
                         fragmentLink:
@@ -1299,12 +1300,10 @@ components:
                             description:
                                 A link to a fragment.
                         text:
+                            $ref: "#/components/schemas/TextFragmentValue"
                             # @review
                             description:
                                 The fragment element's text.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentInlineValue"
-                                -   $ref: "#/components/schemas/FragmentMappedValue"
             # @review
             description:
                 A fragment element of type text.
@@ -3627,6 +3626,51 @@ components:
             # @review
             description:
                 The value of a fragment configuration field of type text.
+            type: object
+        TextFragmentValue:
+            # @review
+            description:
+                The value of a fragment text element.
+            discriminator:
+                mapping:
+                    Inline: "#/components/schemas/TextInlineFragmentValue"
+                    Mapped: "#/components/schemas/TextMappedFragmentValue"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        Whether the value is set inline or mapped.
+                    enum: [Inline, Mapped]
+                    type: string
+            type: object
+        TextInlineFragmentValue:
+            # @review
+            allOf:
+                -   properties:
+                        fragmentInlineValue:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The fragment inline value.
+                -   $ref: "#/components/schemas/TextFragmentValue"
+            # @review
+            description:
+                An inline value of a fragment text element.
+            type: object
+        TextMappedFragmentValue:
+            # @review
+            allOf:
+                -   properties:
+                        fragmentMappedValue:
+                            $ref: "#/components/schemas/FragmentMappedValue"
+                            # @review
+                            description:
+                                The fragment mapped value.
+                -   $ref: "#/components/schemas/TextFragmentValue"
+            # @review
+            description:
+                A mapped value of a fragment text element.
             type: object
         URLActionExecutionResult:
             # @review

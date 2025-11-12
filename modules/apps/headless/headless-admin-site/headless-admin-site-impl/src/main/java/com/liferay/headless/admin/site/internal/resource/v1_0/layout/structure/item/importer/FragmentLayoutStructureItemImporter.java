@@ -18,7 +18,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefin
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentElementUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.util.FragmentConfigurationFieldValuesUtil;
@@ -181,11 +181,14 @@ public class FragmentLayoutStructureItemImporter
 					fragmentInstancePageElementDefinition.
 						getFragmentConfigurationFieldValues(),
 					layoutStructureItemImporterContext),
-			FragmentElementUtil.getFragmentElementsEditableValuesJSONObject(
-				layoutStructureItemImporterContext.getCompanyId(),
-				fragmentInstancePageElementDefinition.getFragmentElements(),
-				layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
-				layoutStructureItemImporterContext.getGroupId())
+			FragmentEditableElementUtil.
+				getFragmentEditableElementsEditableValuesJSONObject(
+					layoutStructureItemImporterContext.getCompanyId(),
+					fragmentInstancePageElementDefinition.
+						getFragmentEditableElements(),
+					layoutStructureItemImporterContext.
+						getInfoItemServiceRegistry(),
+					layoutStructureItemImporterContext.getGroupId())
 		).toString();
 	}
 

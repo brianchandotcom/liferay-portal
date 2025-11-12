@@ -15,7 +15,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentElementUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -96,10 +96,11 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 				setFragmentConfigurationFieldValues(
 					() -> _getFragmentConfigurationFieldValues(
 						fragmentEntryLink));
-				setFragmentElements(
-					() -> FragmentElementUtil.getFragmentElements(
-						companyId, fragmentEntryLink, _infoItemServiceRegistry,
-						scopeGroupId));
+				setFragmentEditableElements(
+					() ->
+						FragmentEditableElementUtil.getFragmentEditableElements(
+							companyId, fragmentEntryLink,
+							_infoItemServiceRegistry, scopeGroupId));
 				setFragmentInstanceExternalReferenceCode(
 					fragmentEntryLink::getExternalReferenceCode);
 				setFragmentReference(

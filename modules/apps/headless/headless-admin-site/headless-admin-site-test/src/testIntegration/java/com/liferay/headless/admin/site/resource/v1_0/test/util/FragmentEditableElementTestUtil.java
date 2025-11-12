@@ -5,14 +5,14 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
-import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextInlineFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextMappedFragmentValue;
@@ -23,19 +23,19 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 /**
  * @author Rubén Pulido
  */
-public class FragmentElementTestUtil {
+public class FragmentEditableElementTestUtil {
 
-	public static FragmentElement[] getFragmentElements(
+	public static FragmentEditableElement[] getFragmentEditableElements(
 		TextFragmentValue.Type textFragmentValueType,
 		FragmentMappedValueItemReference.Type
 			fragmentMappedValueItemReferenceType,
 		FragmentMappedValueItemContextReference.ContextSource contextSource) {
 
-		return new FragmentElement[] {
-			new FragmentElement() {
+		return new FragmentEditableElement[] {
+			new FragmentEditableElement() {
 				{
-					setFragmentElementValue(
-						() -> new TextFragmentElementValue() {
+					setFragmentEditableElementValue(
+						() -> new TextFragmentEditableElementValue() {
 							{
 								setTextFragmentValue(
 									() -> _getTextFragmentValue(

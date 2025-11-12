@@ -8,11 +8,11 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentElement;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentElementValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElement;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
-import com.liferay.headless.admin.site.dto.v1_0.TextFragmentElementValue;
+import com.liferay.headless.admin.site.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextInlineFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextMappedFragmentValue;
@@ -32,9 +32,9 @@ import java.util.Objects;
 /**
  * @author Rubén Pulido
  */
-public class FragmentElementUtil {
+public class FragmentEditableElementUtil {
 
-	public static FragmentElement[] getFragmentElements(
+	public static FragmentEditableElement[] getFragmentEditableElements(
 		long companyId, FragmentEntryLink fragmentEntryLink,
 		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
 
@@ -45,7 +45,8 @@ public class FragmentElementUtil {
 			return null;
 		}
 
-		List<FragmentElement> fragmentElements = new ArrayList<>();
+		List<FragmentEditableElement> fragmentEditableElements =
+			new ArrayList<>();
 
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
@@ -53,23 +54,26 @@ public class FragmentElementUtil {
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (editableFragmentEntryProcessorJSONObject == null) {
-			return fragmentElements.toArray(new FragmentElement[0]);
+			return fragmentEditableElements.toArray(
+				new FragmentEditableElement[0]);
 		}
 
-		fragmentElements.addAll(
-			_getTextFragmentElements(
+		fragmentEditableElements.addAll(
+			_getTextFragmentEditableElements(
 				companyId,
 				EditableFragmentEntryProcessorUtil.getEditableTypes(
 					fragmentEntryLink.getHtml()),
 				infoItemServiceRegistry,
 				editableFragmentEntryProcessorJSONObject, scopeGroupId));
 
-		return fragmentElements.toArray(new FragmentElement[0]);
+		return fragmentEditableElements.toArray(new FragmentEditableElement[0]);
 	}
 
-	public static JSONObject getFragmentElementsEditableValuesJSONObject(
-		long companyId, FragmentElement[] fragmentElements,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+	public static JSONObject
+		getFragmentEditableElementsEditableValuesJSONObject(
+			long companyId, FragmentEditableElement[] fragmentEditableElements,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			long scopeGroupId) {
 
 		return JSONUtil.put(
 			FragmentEntryProcessorConstants.
@@ -77,8 +81,8 @@ public class FragmentElementUtil {
 			() -> {
 				JSONObject editableFragmentEntryProcessorJSONObject =
 					_getEditableFragmentEntryProcessorJSONObject(
-						companyId, fragmentElements, infoItemServiceRegistry,
-						scopeGroupId);
+						companyId, fragmentEditableElements,
+						infoItemServiceRegistry, scopeGroupId);
 
 				if (editableFragmentEntryProcessorJSONObject.length() > 0) {
 					return editableFragmentEntryProcessorJSONObject;
@@ -89,59 +93,63 @@ public class FragmentElementUtil {
 	}
 
 	private static JSONObject _getEditableFragmentEntryProcessorJSONObject(
-			long companyId, FragmentElement[] fragmentElements,
+			long companyId, FragmentEditableElement[] fragmentEditableElements,
 			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (fragmentElements == null) {
+		if (fragmentEditableElements == null) {
 			return jsonObject;
 		}
 
-		for (FragmentElement fragmentElement : fragmentElements) {
-			if ((fragmentElement == null) ||
-				(fragmentElement.getId() == null)) {
+		for (FragmentEditableElement fragmentEditableElement :
+				fragmentEditableElements) {
+
+			if ((fragmentEditableElement == null) ||
+				(fragmentEditableElement.getId() == null)) {
 
 				continue;
 			}
 
-			FragmentElementValue fragmentElementValue =
-				fragmentElement.getFragmentElementValue();
+			FragmentEditableElementValue fragmentEditableElementValue =
+				fragmentEditableElement.getFragmentEditableElementValue();
 
-			if ((fragmentElementValue == null) ||
-				(fragmentElementValue.getType() !=
-					FragmentElementValue.Type.TEXT)) {
+			if ((fragmentEditableElementValue == null) ||
+				(fragmentEditableElementValue.getType() !=
+					FragmentEditableElementValue.Type.TEXT)) {
 
-				jsonObject.put(fragmentElement.getId(), (JSONObject)null);
+				jsonObject.put(
+					fragmentEditableElement.getId(), (JSONObject)null);
 
 				continue;
 			}
 
 			jsonObject.put(
-				fragmentElement.getId(),
-				_getFragmentElementJSONObject(
+				fragmentEditableElement.getId(),
+				_getFragmentEditableElementJSONObject(
 					companyId, infoItemServiceRegistry, scopeGroupId,
-					(TextFragmentElementValue)fragmentElementValue));
+					(TextFragmentEditableElementValue)
+						fragmentEditableElementValue));
 		}
 
 		return jsonObject;
 	}
 
-	private static JSONObject _getFragmentElementJSONObject(
+	private static JSONObject _getFragmentEditableElementJSONObject(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 			long scopeGroupId,
-			TextFragmentElementValue textFragmentElementValue)
+			TextFragmentEditableElementValue textFragmentEditableElementValue)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (textFragmentElementValue == null) {
+		if (textFragmentEditableElementValue == null) {
 			return jsonObject;
 		}
 
 		TextFragmentValue textFragmentValue =
-			textFragmentElementValue.getTextFragmentValue();
+			textFragmentEditableElementValue.getTextFragmentValue();
 
 		if (textFragmentValue == null) {
 			return jsonObject;
@@ -189,16 +197,17 @@ public class FragmentElementUtil {
 			infoItemServiceRegistry, scopeGroupId);
 	}
 
-	private static List<FragmentElement> _getTextFragmentElements(
-		long companyId, Map<String, String> editableTypes,
-		final InfoItemServiceRegistry infoItemServiceRegistry,
-		JSONObject jsonObject, long scopeGroupId) {
+	private static List<FragmentEditableElement>
+		_getTextFragmentEditableElements(
+			long companyId, Map<String, String> editableTypes,
+			final InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId) {
 
 		return TransformUtil.transform(
 			jsonObject.keySet(),
-			textId -> new FragmentElement() {
+			textId -> new FragmentEditableElement() {
 				{
-					setFragmentElementValue(
+					setFragmentEditableElementValue(
 						() -> {
 							String type = editableTypes.getOrDefault(
 								textId, "text");
@@ -207,7 +216,7 @@ public class FragmentElementUtil {
 								return null;
 							}
 
-							return _toTextFragmentElementValue(
+							return _toTextFragmentEditableElementValue(
 								companyId, infoItemServiceRegistry,
 								jsonObject.getJSONObject(textId), scopeGroupId);
 						});
@@ -216,22 +225,23 @@ public class FragmentElementUtil {
 			});
 	}
 
-	private static TextFragmentElementValue _toTextFragmentElementValue(
-		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-		JSONObject jsonObject, long scopeGroupId) {
+	private static TextFragmentEditableElementValue
+		_toTextFragmentEditableElementValue(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId) {
 
 		if (jsonObject == null) {
 			return null;
 		}
 
-		TextFragmentElementValue textFragmentElementValue =
-			new TextFragmentElementValue();
+		TextFragmentEditableElementValue textFragmentEditableElementValue =
+			new TextFragmentEditableElementValue();
 
-		textFragmentElementValue.setTextFragmentValue(
+		textFragmentEditableElementValue.setTextFragmentValue(
 			() -> _toTextFragmentValue(
 				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId));
 
-		return textFragmentElementValue;
+		return textFragmentEditableElementValue;
 	}
 
 	private static TextFragmentValue _toTextFragmentValue(

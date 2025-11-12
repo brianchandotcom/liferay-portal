@@ -297,7 +297,18 @@ while (manageableCalendarsIterator.hasNext()) {
 					<a class="calendar-portlet-recurrence-summary" href="javascript:void(0);" id="<portlet:namespace />summary"></a>
 				</aui:field-wrapper>
 
-				<aui:input defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="description" />
+				<c:choose>
+					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+						<liferay-editor:input-localized
+							defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+							name="description"
+							xml='<%= (calendarBooking != null) ? calendarBooking.getDescription() : StringPool.BLANK %>'
+						/>
+					</c:when>
+					<c:otherwise>
+						<aui:input defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="description" />
+					</c:otherwise>
+				</c:choose>
 			</clay:sheet-section>
 
 			<clay:panel-group>

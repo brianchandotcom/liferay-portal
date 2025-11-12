@@ -1541,8 +1541,6 @@ public class StructuredContentResourceTest
 
 		StructuredContent structuredContent = randomStructuredContent();
 
-		String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
-
 		Map<String, ContentFieldValue> contentFieldValues = HashMapBuilder.put(
 			"en-US",
 			(ContentFieldValue)new ContentFieldValue() {
@@ -1560,7 +1558,6 @@ public class StructuredContentResourceTest
 				}
 			}
 		).build();
-
 		ContentFieldValue documentFieldValue = new ContentFieldValue() {
 			{
 				document = new ContentDocument() {
@@ -1570,7 +1567,6 @@ public class StructuredContentResourceTest
 				};
 			}
 		};
-
 		ContentFieldValue imageFieldValue = new ContentFieldValue() {
 			{
 				image = new ContentDocument() {
@@ -1580,6 +1576,7 @@ public class StructuredContentResourceTest
 				};
 			}
 		};
+		String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
 
 		structuredContent.setContentFields(
 			new ContentField[] {
@@ -3002,12 +2999,6 @@ public class StructuredContentResourceTest
 		StructuredContent structuredContent2 = _randomStructuredContent(
 			LocaleUtil.getDefault());
 
-		ContentFieldValue englishContentFieldValue = new ContentFieldValue() {
-			{
-				data = RandomTestUtil.randomString(10);
-			}
-		};
-
 		ContentFieldValue documentFieldValue = new ContentFieldValue() {
 			{
 				document = new ContentDocument() {
@@ -3017,7 +3008,11 @@ public class StructuredContentResourceTest
 				};
 			}
 		};
-
+		ContentFieldValue englishContentFieldValue = new ContentFieldValue() {
+			{
+				data = RandomTestUtil.randomString(10);
+			}
+		};
 		ContentFieldValue imageFieldValue = new ContentFieldValue() {
 			{
 				image = new ContentDocument() {

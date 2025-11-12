@@ -9,7 +9,11 @@ import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import jakarta.portlet.PortletRequest;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +53,12 @@ public class GroupSelectorDisplayContextTest {
 			bundleContext.getBundle()
 		);
 
+		Mockito.when(
+			PortalUtil.getCompanyId(Mockito.any(PortletRequest.class))
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
 		_serviceRegistration = bundleContext.registerService(
 			GroupItemSelectorProvider.class,
 			new MockGroupItemSelectorProvider(), null);
@@ -59,6 +69,7 @@ public class GroupSelectorDisplayContextTest {
 		_serviceRegistration.unregister();
 
 		_frameworkUtilMockedStatic.close();
+		_portalUtilMockedStatic.close();
 	}
 
 	@Test
@@ -93,6 +104,8 @@ public class GroupSelectorDisplayContextTest {
 
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
+		Mockito.mockStatic(PortalUtil.class);
 	private static ServiceRegistration<GroupItemSelectorProvider>
 		_serviceRegistration;
 

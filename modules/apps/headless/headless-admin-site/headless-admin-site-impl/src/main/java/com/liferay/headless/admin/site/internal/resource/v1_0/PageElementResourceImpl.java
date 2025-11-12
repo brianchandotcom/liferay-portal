@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
@@ -364,7 +365,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			LayoutStructureUtil.addLayoutStructureItem(
 				layoutStructure,
 				new LayoutStructureItemImporterContext(
-					contextCompany.getCompanyId(), groupId,
+					contextCompany.getCompanyId(),
+					_fragmentEntryProcessorRegistry, groupId,
 					_infoItemServiceRegistry, layout, segmentsExperienceId,
 					contextUser.getUserId()),
 				pageElement);
@@ -393,6 +395,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		return dtoConverterContext;
 	}
+
+	@Reference
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

@@ -29,8 +29,9 @@ public class InviteMembersServiceUpgradeStepRegistrator
 		// See LPS-65946
 
 		registry.register(
-			"1.0.0", "1.0.1", new NamespaceUpgradeProcess(),
-			new UpgradePortletId());
+			"1.0.0", "1.0.0.step-1", new NamespaceUpgradeProcess());
+
+		registry.register("1.0.0.step-1", "1.0.1", new UpgradePortletId());
 
 		registry.register(
 			"1.0.1", "2.0.0",

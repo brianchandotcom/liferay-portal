@@ -72,8 +72,11 @@ public class ListTypeServiceUpgradeStepRegistrator
 					"' or type_ = '", ListTypeConstants.CONTACT_SUFFIX, "')")));
 
 		registry.register(
-			"1.3.1", "1.3.2",
-			new ListTypeDefinitionStaleUserIdUpgradeProcess(_userLocalService),
+			"1.3.1", "1.3.1.step-1",
+			new ListTypeDefinitionStaleUserIdUpgradeProcess(_userLocalService));
+
+		registry.register(
+			"1.3.1.step-1", "1.3.2",
 			new ListTypeEntryStaleUserIdUpgradeProcess(_userLocalService));
 
 		registry.register("1.3.2", "1.4.0", new ListTypeEntryUpgradeProcess());

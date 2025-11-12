@@ -26,9 +26,9 @@ public class BackgroundTaskServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"0.0.1", "0.0.2", new SchemaUpgradeProcess(),
-			new UpgradeKernelPackage());
+		registry.register("0.0.1", "0.0.1.step-1", new SchemaUpgradeProcess());
+
+		registry.register("0.0.1.step-1", "0.0.2", new UpgradeKernelPackage());
 
 		registry.register(
 			"0.0.2", "1.0.0",

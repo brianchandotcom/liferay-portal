@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourcePermissionsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -100,8 +101,15 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"4.0.0", "5.0.0",
-			UpgradeProcessFactory.dropColumns("MBThread", "messageCount"),
 			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected UpgradeStep[] getPreUpgradeSteps() {
+					return new UpgradeStep[] {
+						UpgradeProcessFactory.dropColumns(
+							"MBThread", "messageCount")
+					};
+				}
 
 				@Override
 				protected String[] getTableNames() {

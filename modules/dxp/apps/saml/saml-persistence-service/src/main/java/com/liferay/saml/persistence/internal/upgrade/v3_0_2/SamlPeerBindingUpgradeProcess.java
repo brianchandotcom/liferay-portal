@@ -6,6 +6,8 @@
 package com.liferay.saml.persistence.internal.upgrade.v3_0_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.saml.persistence.model.impl.SamlPeerBindingImpl;
 
 import java.util.Arrays;
@@ -20,6 +22,18 @@ public class SamlPeerBindingUpgradeProcess extends UpgradeProcess {
 		dropIndexes(
 			Arrays.asList("IX_E642E1AE", "IX_81ACF542", "IX_BC82BDFC"),
 			SamlPeerBindingImpl.TABLE_NAME);
+	}
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.alterColumnType(
+				"SamlPeerBinding", "samlPeerEntityId", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlPeerBinding", "samlNameIdFormat", "VARCHAR(128) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlPeerBinding", "samlNameIdValue", "VARCHAR(1024) null")
+		};
 	}
 
 }

@@ -42,8 +42,15 @@ export default function AssetsFilesDropFDSPropsTransformer({
 		thumbnail: 'gallery',
 	};
 
+	const nonDefaultViews = views.map((view) => {
+		return {
+			...view,
+			default: false,
+		};
+	});
+
 	const mergedViews = [
-		...views,
+		...nonDefaultViews,
 		{
 			...GalleryViewRenderer,
 			additionalProps,

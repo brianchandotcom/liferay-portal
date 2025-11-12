@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
-import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkMappedValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference;
@@ -72,11 +72,9 @@ public class FragmentMappingUtil {
 	}
 
 	public static JSONObject getFragmentMappedValueJSONObject(
-			long companyId, FragmentLinkMappedValue fragmentLinkMappedValue,
+			long companyId, Mapping mapping,
 			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
 		throws PortalException {
-
-		Mapping mapping = fragmentLinkMappedValue.getMapping();
 
 		if (mapping == null) {
 			return null;

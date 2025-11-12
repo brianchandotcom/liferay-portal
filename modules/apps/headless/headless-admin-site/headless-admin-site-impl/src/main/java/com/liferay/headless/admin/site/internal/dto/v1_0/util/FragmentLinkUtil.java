@@ -92,8 +92,11 @@ public class FragmentLinkUtil {
 					fragmentLinkInlineValue.getValue_i18n()));
 		}
 		else {
+			FragmentLinkMappedValue fragmentLinkMappedValue =
+				(FragmentLinkMappedValue)fragmentLinkValue;
+
 			jsonObject = FragmentMappingUtil.getFragmentMappedValueJSONObject(
-				companyId, (FragmentLinkMappedValue)fragmentLinkValue,
+				companyId, fragmentLinkMappedValue.getMapping(),
 				infoItemServiceRegistry, scopeGroupId);
 
 			if (jsonObject == null) {

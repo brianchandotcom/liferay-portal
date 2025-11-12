@@ -100,19 +100,27 @@ export class FormBuilderSidePanelPage {
 		await this.backButton.click();
 	}
 
-	async dragAndDropField(sourceFieldName: string, targetFieldName: string) {
-		const source = this.page
+	async dragAndDropField(sourceFieldName: string, target: string | number) {
+		const sourceLocator = this.page
 			.locator(
 				`.ddm-field-container[data-field-name="${sourceFieldName}"]`
 			)
 			.locator('.ddm-drag');
 
-		const target = this.page.locator(
-			`.ddm-field-container[data-field-name="${targetFieldName}"].ddm-target`
-		);
-		await source.dragTo(target);
+		let targetLocator;
+
+		if (typeof target === 'string') {
+			targetLocator = this.page.locator(
+				`.ddm-field-container[data-field-name="${target}"].ddm-target`
+			);
+		}
+		else {
+			targetLocator = this.page.locator('.col-ddm.col-md-12').nth(target);
+		}
 
 		// We need this pause to render forms group (if applicable)
+
+		await sourceLocator.dragTo(targetLocator);
 
 		await this.page.waitForTimeout(1000);
 	}
@@ -134,12 +142,8 @@ export class FormBuilderSidePanelPage {
 		await option.click();
 	}
 
-	getFieldReference() {
-		const fieldReferenceValue = this.page
-			.getByLabel('Field Reference')
-			.inputValue();
-
-		return fieldReferenceValue;
+	async getFieldReference() {
+		return this.page.getByLabel('Field Reference').inputValue();
 	}
 
 	getSelectOptionLocator(optionLabel: string) {

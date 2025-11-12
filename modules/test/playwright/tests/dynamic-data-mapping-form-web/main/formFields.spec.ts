@@ -493,67 +493,6 @@ test.describe('Manage fields through Form Builder page', () => {
 		).toHaveCount(2);
 	});
 
-	test(
-		'Deletes fields group when last field is dragged into another field',
-		{
-			tag: '@LPD-70472',
-		},
-		async ({formBuilderPage, formBuilderSidePanelPage, page}) => {
-			await formBuilderPage.goToNew();
-
-			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
-
-			await formBuilderPage.openFieldSettings('Text', 0);
-
-			const textFieldReference1 =
-				await formBuilderSidePanelPage.getFieldReference();
-
-			await formBuilderSidePanelPage.backButton.click();
-
-			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
-
-			await formBuilderPage.openFieldSettings('Text', 1);
-
-			const textFieldReference2 =
-				await formBuilderSidePanelPage.getFieldReference();
-
-			await formBuilderSidePanelPage.backButton.click();
-
-			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
-
-			await formBuilderPage.openFieldSettings('Text', 2);
-
-			const textFieldReference3 =
-				await formBuilderSidePanelPage.getFieldReference();
-
-			await formBuilderSidePanelPage.backButton.click();
-
-			await formBuilderSidePanelPage.dragAndDropField(
-				textFieldReference1,
-				textFieldReference2
-			);
-
-			await formBuilderSidePanelPage.dragAndDropField(
-				textFieldReference3,
-				textFieldReference1
-			);
-
-			await formBuilderSidePanelPage.dragAndDropField(
-				textFieldReference1,
-				textFieldReference2
-			);
-
-			await formBuilderSidePanelPage.dragAndDropField(
-				textFieldReference3,
-				textFieldReference2
-			);
-
-			const dropZoneTargets = page.locator('.ddm-target');
-
-			await expect(dropZoneTargets).toHaveCount(16);
-		}
-	);
-
 	test('Fields group can be translated and collapsed', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
@@ -708,4 +647,109 @@ test.describe('Manage fields through Form Builder page', () => {
 			).not.toBeVisible();
 		});
 	});
+
+	test(
+		'Validates field group automatic deletion when the last field is dragged out, covering deletion of nested child groups and top-level groups',
+		{tag: ['@LPD-70472', '@LPD-71315']},
+		async ({formBuilderPage, formBuilderSidePanelPage, page}) => {
+			let textFieldReference1;
+
+			let textFieldReference2;
+
+			let textFieldReference3;
+
+			await test.step('go to form builder and create 3 text fields', async () => {
+				await formBuilderPage.goToNew();
+
+				await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+				await formBuilderPage.openFieldSettings('Text', 0);
+
+				textFieldReference1 =
+					await formBuilderSidePanelPage.getFieldReference();
+
+				await formBuilderSidePanelPage.backButton.click();
+
+				await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+				await formBuilderPage.openFieldSettings('Text', 1);
+
+				textFieldReference2 =
+					await formBuilderSidePanelPage.getFieldReference();
+
+				await formBuilderSidePanelPage.backButton.click();
+
+				await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+				await formBuilderPage.openFieldSettings('Text', 2);
+
+				textFieldReference3 =
+					await formBuilderSidePanelPage.getFieldReference();
+
+				await formBuilderSidePanelPage.backButton.click();
+			});
+
+			await test.step('create the three-level nested field group structure', async () => {
+				await formBuilderSidePanelPage.dragAndDropField(
+					textFieldReference1,
+					textFieldReference2
+				);
+
+				await formBuilderSidePanelPage.dragAndDropField(
+					textFieldReference3,
+					textFieldReference1
+				);
+
+				await formBuilderSidePanelPage.dragAndDropField(
+					textFieldReference1,
+					textFieldReference2
+				);
+			});
+
+			await test.step('test case 1: drag the innermost field (textFieldReference3) to a field in a higher level to delete its parent group', async () => {
+				await formBuilderSidePanelPage.dragAndDropField(
+					textFieldReference3,
+					textFieldReference2
+				);
+
+				const dropZoneTargets = page.locator('.ddm-target');
+
+				await expect(dropZoneTargets).toHaveCount(16);
+			});
+
+			await test.step('test case 2: clean up field structure and drag the last remaining field out of its group to validate group deletion', async () => {
+				await formBuilderPage.deleteField(textFieldReference1);
+
+				await formBuilderPage.deleteField(textFieldReference2);
+
+				const lastFieldsGroupLocator = page
+					.locator(
+						'.ddm-field-container[data-field-name^="Fieldset"]'
+					)
+					.last();
+
+				const lastFieldsGroupName =
+					await lastFieldsGroupLocator.evaluate(
+						(element) => element.dataset.fieldName
+					);
+
+				await formBuilderSidePanelPage.dragAndDropField(
+					textFieldReference3,
+					4
+				);
+
+				await expect(
+					page.locator(
+						`.ddm-field-container[data-field-name="${lastFieldsGroupName}"]`
+					)
+				).toHaveCount(0);
+
+				await expect(
+					page.locator(
+						`.ddm-field-container[data-field-name="${textFieldReference3}"]`
+					)
+				).toBeVisible();
+			});
+		}
+	);
 });

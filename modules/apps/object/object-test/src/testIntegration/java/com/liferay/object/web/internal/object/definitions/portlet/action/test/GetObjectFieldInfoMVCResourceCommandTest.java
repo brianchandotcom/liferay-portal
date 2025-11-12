@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,7 +80,9 @@ public class GetObjectFieldInfoMVCResourceCommandTest
 			).build());
 
 		JSONObject jsonObject = getJSONObject(
-			"objectFieldId", String.valueOf(objectField.getObjectFieldId()));
+			Collections.singletonMap(
+				"objectFieldId",
+				String.valueOf(objectField.getObjectFieldId())));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(

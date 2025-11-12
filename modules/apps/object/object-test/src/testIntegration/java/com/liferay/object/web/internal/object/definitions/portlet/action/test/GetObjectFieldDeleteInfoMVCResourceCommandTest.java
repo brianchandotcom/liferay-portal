@@ -24,6 +24,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -104,7 +105,9 @@ public class GetObjectFieldDeleteInfoMVCResourceCommandTest
 		throws Exception {
 
 		JSONObject jsonObject = getJSONObject(
-			"objectFieldId", String.valueOf(objectField.getObjectFieldId()));
+			Collections.singletonMap(
+				"objectFieldId",
+				String.valueOf(objectField.getObjectFieldId())));
 
 		Assert.assertEquals(
 			expectedDeleteObjectFieldObjectValidationRuleSetting,

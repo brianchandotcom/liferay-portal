@@ -48,8 +48,9 @@ public class GetObjectDefinitionDeleteInfoMVCResourceCommandTest
 			objectDefinition.getObjectDefinitionId(), Collections.emptyMap());
 
 		JSONObject jsonObject = getJSONObject(
-			"objectDefinitionId",
-			String.valueOf(objectDefinition.getObjectDefinitionId()));
+			Collections.singletonMap(
+				"objectDefinitionId",
+				String.valueOf(objectDefinition.getObjectDefinitionId())));
 
 		Assert.assertEquals(1, jsonObject.getInt("objectEntriesCount"));
 	}

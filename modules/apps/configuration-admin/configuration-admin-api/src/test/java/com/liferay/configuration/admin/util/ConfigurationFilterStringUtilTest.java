@@ -18,8 +18,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.osgi.framework.Constants;
 import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Thiago Buarque
@@ -119,6 +121,31 @@ public class ConfigurationFilterStringUtilTest {
 			HashMapBuilder.put(
 				"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId
 			).build());
+
+		String pid = "foo.scoped~123";
+
+		filterString =
+			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
+				null, pid, null);
+
+		String rawPid = ConfigurationPidUtil.getRawPid(pid);
+
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				"companyId", "any"
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				Constants.SERVICE_PID, pid
+			).put(
+				"companyId", "any"
+			).build());
 	}
 
 	@Test
@@ -172,6 +199,30 @@ public class ConfigurationFilterStringUtilTest {
 			true, filterString,
 			HashMapBuilder.put(
 				"siteExternalReferenceCode", siteExternalReferenceCode
+			).build());
+
+		String pid = "foo.scoped~123";
+
+		filterString = ConfigurationFilterStringUtil.getGroupScopedFilterString(
+			null, pid, null);
+
+		String rawPid = ConfigurationPidUtil.getRawPid(pid);
+
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				"groupId", "any"
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				Constants.SERVICE_PID, pid
+			).put(
+				"groupId", "any"
 			).build());
 	}
 
@@ -247,6 +298,35 @@ public class ConfigurationFilterStringUtilTest {
 			).put(
 				"siteExternalReferenceCode", siteExternalReferenceCode
 			).build());
+
+		String pid = "foo.scoped~123";
+
+		filterString =
+			ConfigurationFilterStringUtil.getPortletScopedFilterString(
+				null, pid, null, null);
+
+		String rawPid = ConfigurationPidUtil.getRawPid(pid);
+
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				"groupId", "any"
+			).put(
+				"portletInstanceId", "any"
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				Constants.SERVICE_PID, pid
+			).put(
+				"groupId", "any"
+			).put(
+				"portletInstanceId", "any"
+			).build());
 	}
 
 	@Test
@@ -283,6 +363,78 @@ public class ConfigurationFilterStringUtilTest {
 		_test(
 			true, filterString,
 			HashMapBuilder.put(
+				"companyId", "0"
+			).build());
+
+		String pid = "foo";
+
+		filterString =
+			ConfigurationFilterStringUtil.getSystemScopedFilterString(pid);
+
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, pid
+			).put(
+				Constants.SERVICE_PID, pid
+			).put(
+				"companyId", "any"
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, pid
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				Constants.SERVICE_PID, pid
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, pid
+			).put(
+				Constants.SERVICE_PID, pid
+			).put(
+				"companyId", "0"
+			).build());
+
+		pid = "foo~123";
+
+		filterString =
+			ConfigurationFilterStringUtil.getSystemScopedFilterString(pid);
+
+		String rawPid = ConfigurationPidUtil.getRawPid(pid);
+
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).build());
+		_test(
+			false, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				Constants.SERVICE_PID, pid
+			).put(
+				"companyId", "any"
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				Constants.SERVICE_PID, pid
+			).build());
+		_test(
+			true, filterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				Constants.SERVICE_PID, pid
+			).put(
 				"companyId", "0"
 			).build());
 	}

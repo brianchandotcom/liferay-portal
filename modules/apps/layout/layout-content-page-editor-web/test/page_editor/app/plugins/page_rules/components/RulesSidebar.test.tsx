@@ -299,31 +299,7 @@ describe('RulesSidebar', () => {
 			},
 		] as Rule[];
 
-		renderComponent({
-			rules: [
-				{
-					actions: [],
-					conditionType: 'any',
-					conditions: [],
-					id: 'apple-rule',
-					name: 'Apple',
-				},
-				{
-					actions: [],
-					conditionType: 'any',
-					conditions: [],
-					id: 'blackberry-rule',
-					name: 'Blackberry',
-				},
-				{
-					actions: [],
-					conditionType: 'any',
-					conditions: [],
-					id: 'orange-rule',
-					name: 'Orange',
-				},
-			],
-		});
+		renderComponent({rules});
 
 		const newRuleButton = screen.getByText('new-rule');
 
@@ -380,6 +356,44 @@ describe('RulesSidebar', () => {
 				)
 			).not.toBeInTheDocument();
 		});
+	});
+
+	it('navigates through the rules using the keyboard', async () => {
+		renderComponent({
+			rules: [
+				{
+					actions: [],
+					conditionType: 'any',
+					conditions: [],
+					id: 'apple-rule',
+					name: 'Apple',
+				},
+				{
+					actions: [],
+					conditionType: 'any',
+					conditions: [],
+					id: 'blackberry-rule',
+					name: 'Blackberry',
+				},
+			],
+		});
+
+		const appleRule = screen.getByRole('menuitem', {name: 'Apple:'});
+		const blackberryRule = screen.getByRole('menuitem', {
+			name: 'Blackberry:',
+		});
+
+		appleRule.focus();
+
+		expect(appleRule).toHaveFocus();
+
+		await userEvent.keyboard('{ArrowDown}');
+
+		expect(blackberryRule).toHaveFocus();
+
+		await userEvent.keyboard('{ArrowUp}');
+
+		expect(appleRule).toHaveFocus();
 	});
 
 	describe('Rules Modal', () => {

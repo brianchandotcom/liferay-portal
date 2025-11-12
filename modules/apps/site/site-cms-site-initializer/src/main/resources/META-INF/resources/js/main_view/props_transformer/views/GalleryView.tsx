@@ -42,10 +42,6 @@ const GalleryView = ({
 	const handlePrevClick = () => {
 		const itemsLength = items.length;
 
-		if (itemsLength <= VISIBLE_ITEMS_COUNT) {
-			return;
-		}
-
 		let newSelectedIndex;
 		let newVisibleIndex;
 
@@ -69,10 +65,6 @@ const GalleryView = ({
 	const handleNextClick = () => {
 		const itemsLength = items.length;
 		const maxVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
-
-		if (itemsLength <= VISIBLE_ITEMS_COUNT) {
-			return;
-		}
 
 		let newSelectedIndex;
 		let newVisibleIndex;
@@ -134,7 +126,7 @@ const GalleryView = ({
 
 	const cardWidth = `calc((100% - ${VISIBLE_ITEMS_COUNT - 1}rem) / ${VISIBLE_ITEMS_COUNT})`;
 
-	const isNavigationDisabled = items.length <= VISIBLE_ITEMS_COUNT;
+	const isNavigationDisabled = items.length === 1;
 
 	return (
 		<div className="fds-gallery-view">

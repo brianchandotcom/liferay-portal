@@ -31,6 +31,7 @@ import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -79,33 +80,20 @@ public class DBUpgradeClient {
 
 					Collections.addAll(jvmOpts, optionValue.split(" "));
 				}
-
-				if (!_containsPrefix(jvmOpts, "-Dfile.encoding=")) {
-					jvmOpts.add("-Dfile.encoding=UTF8");
-				}
-
-				if (!_containsPrefix(jvmOpts, "-Duser.country=")) {
-					jvmOpts.add("-Duser.country=US");
-				}
-
-				if (!_containsPrefix(jvmOpts, "-Duser.language=")) {
-					jvmOpts.add("-Duser.language=en");
-				}
-
-				if (!_containsPrefix(jvmOpts, "-Duser.timezone=")) {
-					jvmOpts.add("-Duser.timezone=GMT");
-				}
-
-				if (!_containsPrefix(jvmOpts, "-Xmx")) {
-					jvmOpts.add("-Xmx4096m");
-				}
 			}
-			else {
-				jvmOpts.add("-Dfile.encoding=UTF8");
-				jvmOpts.add("-Duser.country=US");
-				jvmOpts.add("-Duser.language=en");
-				jvmOpts.add("-Duser.timezone=GMT");
-				jvmOpts.add("-Xmx4096m");
+
+			Map<String, String> defaultOpts = new LinkedHashMap<>();
+
+			defaultOpts.put("-Dfile.encoding=", "-Dfile.encoding=UTF8");
+			defaultOpts.put("-Duser.country=", "-Duser.country=US");
+			defaultOpts.put("-Duser.language=", "-Duser.language=en");
+			defaultOpts.put("-Duser.timezone=", "-Duser.timezone=GMT");
+			defaultOpts.put("-Xmx", "-Xmx4096m");
+
+			for (Map.Entry<String, String> entry : defaultOpts.entrySet()) {
+				if (!_containsPrefix(jvmOpts, entry.getKey())) {
+					jvmOpts.add(entry.getValue());
+				}
 			}
 
 			if (commandLine.hasOption("debug")) {

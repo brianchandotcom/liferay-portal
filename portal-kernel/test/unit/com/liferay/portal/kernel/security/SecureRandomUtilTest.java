@@ -14,8 +14,15 @@ import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.security.SecureRandom;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -81,6 +88,45 @@ public class SecureRandomUtilTest {
 	@Test
 	public void testConstructor() {
 		new SecureRandomUtil();
+	}
+
+	@Test
+	public void testHighConcurrency() throws Exception {
+		Set<String> values = ConcurrentHashMap.newKeySet();
+
+		Runtime runtime = Runtime.getRuntime();
+
+		int processors = runtime.availableProcessors();
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			processors);
+
+		List<Future<Void>> list = new ArrayList<>();
+
+		AtomicInteger duplicateCounter = new AtomicInteger();
+
+		for (int i = 0; i < (processors * 10000); i++) {
+			list.add(
+				executorService.submit(
+					() -> {
+						if (!values.add(
+								SecureRandomUtil.nextLong() + "-" +
+									SecureRandomUtil.nextLong())) {
+
+							duplicateCounter.incrementAndGet();
+						}
+
+						return null;
+					}));
+		}
+
+		for (Future<Void> future : list) {
+			future.get();
+		}
+
+		executorService.shutdownNow();
+
+		Assert.assertEquals(0, duplicateCounter.get());
 	}
 
 	@Test

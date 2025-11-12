@@ -300,7 +300,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 				Assert.assertTrue(
 					messages.toString(),
 					messages.contains(
-						"ClassNameDataCleanupVerifyProcess cannot be " +
+						"ClassNamePostUpgradeDataCleanupProcess cannot be " +
 							"executed because there are modules with " +
 								"unsatisfied references"));
 			},

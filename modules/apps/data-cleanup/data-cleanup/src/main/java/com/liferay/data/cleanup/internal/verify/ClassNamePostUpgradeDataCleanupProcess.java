@@ -55,9 +55,11 @@ public class ClassNamePostUpgradeDataCleanupProcess
 			if (bundle.getState() == Bundle.INSTALLED) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"ClassNameDataCleanupVerifyProcess cannot be " +
-							"executed because there are modules with " +
-								"unsatisfied references");
+						StringBundler.concat(
+							ClassNamePostUpgradeDataCleanupProcess.class.
+								getSimpleName(),
+							" cannot be executed because there are modules ",
+							"with unsatisfied references"));
 				}
 
 				return;

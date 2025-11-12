@@ -15,7 +15,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TrialExtensionRequest$]",
-		"roleName": "SSA",
+		"roleName": "SSA Admin",
 		"scope": "3"
 	},
 	{
@@ -25,7 +25,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TrialExtensionRequest$]",
-		"roleName": "SSA Admin",
+		"roleName": "SSA User",
 		"scope": "3"
 	},
 	{
@@ -163,7 +163,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
-		"roleName": "SSA User",
+		"roleName": "Liferay User",
 		"scope": "1"
 	},
 	{
@@ -235,7 +235,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TrialExtensionRequest$]",
-		"roleName": "SSA",
+		"roleName": "SSA Admin",
 		"scope": "3"
 	},
 	{
@@ -244,7 +244,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TrialExtensionRequest$]",
-		"roleName": "SSA Admin",
+		"roleName": "SSA User",
 		"scope": "3"
 	}
 ]

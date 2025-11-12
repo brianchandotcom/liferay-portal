@@ -341,9 +341,6 @@ export default {
 	'instance-size': 'Instance Size',
 	'insufficient-resource-requirements': 'Insufficient Resource Requirements',
 	'intl-code': 'Intl. Code',
-	'invite': 'Invite',
-	'invite-new-user': 'Invite New User',
-	'invite-user': 'Invite User',
 	'ip-addresses': 'IP Addresses',
 	'join-an-existing-business-account-e-g-your-company-and-gain-full-access':
 		'Join an existing business account (e.g., your company) and gain full access.',
@@ -553,6 +550,7 @@ export default {
 	'reject-request': 'Reject Request',
 	'remove': 'Remove',
 	'remove-a-version': 'Remove a Version',
+	'remove-all-roles': 'Remove all roles',
 	'remove-user': 'Remove User',
 	'removed-user-from-account': 'Removed user from account',
 	'request-a-marketplace-publisher-account':
@@ -633,6 +631,7 @@ export default {
 	'subtotal': 'Subtotal',
 	'subtotal-discount': 'Subtotal Discount',
 	'success': 'Success',
+	'successfully-removed-roles': 'Successfully removed roles',
 	'summary': 'Summary',
 	'support': 'Support',
 	'support-and-help': 'Support & Help',
@@ -729,7 +728,7 @@ export default {
 	'unable-to-assign-roles': 'Unable to assign roles',
 	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':
 		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',
-	'unable-to-remove-user-from-account': 'Unable to remove user from account',
+	'unable-to-remove-roles': 'Unable to remove roles',
 	'under-review': 'Under Review',
 	'uninstall': 'Uninstall',
 	'unlock-exclusive-benefits-with-a-business-account':
@@ -748,8 +747,6 @@ export default {
 		'Use any local ZIP files to upload. Max file size is 500MB',
 	'use-one-of-the-following-methods-to-provide-your-app-builds':
 		'Use one of the following methods to provide your app builds.',
-	'use-their-email-address-to-invite-them-as-an-ssa-user-or-admin-and-define-their-access-level':
-		'Use their email address to invite them as an SSA user or admin and define their access level.',
 	'user-account': 'User Account',
 	'user-doesnt-exist': 'User doesn’t exist',
 	'user-email': 'User Email',

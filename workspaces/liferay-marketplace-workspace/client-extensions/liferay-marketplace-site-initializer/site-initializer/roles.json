@@ -115,7 +115,7 @@
 				"scope": 3
 			}
 		],
-		"name": "SSA",
+		"name": "SSA User",
 		"type": 6
 	},
 	{
@@ -135,7 +135,7 @@
 		"type": 6
 	},
 	{
-		"name": "SSA User",
+		"name": "Liferay User",
 		"type": 1
 	},
 	{

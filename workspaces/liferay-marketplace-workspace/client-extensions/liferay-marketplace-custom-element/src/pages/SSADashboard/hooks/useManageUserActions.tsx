@@ -7,15 +7,41 @@ import Button from '@clayui/button';
 import {useMemo} from 'react';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import {UserRoleTypes} from '../../../enums/Account';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
-import {Liferay} from '../../../liferay/liferay';
-import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
-import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
 import {Action} from '../../../utils/constants';
 import HeaderWithTooltip from '../components/HeaderWithTooltip';
 import ManageUserModal from '../modals/ManageUserRolesModal';
+import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
+import {ssaRoles as ssaRolesValues} from '../constants';
+import {Liferay} from '../../../liferay/liferay';
+
+function mutateUser(
+	users: APIResponse<UserAccount>,
+	user: UserAccount,
+	accountERC: string
+) {
+	return {
+		...users,
+		items: users.items.map((prevUser) => {
+			if (prevUser.id !== user.id) {
+				return prevUser;
+			}
+
+			return {
+				...prevUser,
+				accountBriefs: prevUser.accountBriefs.map((account) =>
+					account.externalReferenceCode === accountERC
+						? {
+								...account,
+								roleBriefs: [],
+							}
+						: account
+				),
+			};
+		}),
+	};
+}
 
 const useManageUserActions = () => {
 	const {properties} = useMarketplaceContext();
@@ -67,7 +93,7 @@ const useManageUserActions = () => {
 					},
 				},
 				{
-					name: i18n.translate('remove-user'),
+					name: i18n.translate('remove-all-roles'),
 					onClick: (user: UserAccount, mutate) => {
 						modalContext.onOpenModal({
 							body: (
@@ -90,53 +116,64 @@ const useManageUserActions = () => {
 									displayType="warning"
 									key="confirm"
 									onClick={async () => {
-										const userRoles =
-											await HeadlessAdminUser.getRolesPage(
-												new URLSearchParams({
-													pageSize: '-1',
-												})
+										const {items: roles} =
+											await HeadlessAdminUser.getAccountRoles(
+												properties.accountExternalReferenceCode
 											);
 
-										const ssaUserRole =
-											userRoles.items.find(
-												(userRole) =>
-													userRole.name ===
-													UserRoleTypes.SSA_USER
-											);
+										const ssaRoles = roles.filter((role) =>
+											ssaRolesValues.some(
+												(ssaRole) =>
+													ssaRole.key === role.name
+											)
+										);
 
-										if (!ssaUserRole) {
+										const accountId =
+											Liferay.CommerceContext.account
+												?.accountId;
+
+										if (!accountId) {
 											return;
 										}
 
 										try {
-											await marketplaceOAuth2.deleteUserRoleAssociation(
-												user.id,
-												ssaUserRole.id
-											);
-
-											await HeadlessAdminUser.deleteAccountUserAccountByEmailAddress(
-												properties.accountExternalReferenceCode,
-												user.emailAddress
-											);
+											Promise.all([
+												ssaRoles.forEach((role) => {
+													HeadlessAdminUser.deleteRoleAccountUser(
+														accountId,
+														role.id,
+														user.id
+													);
+												}),
+											]);
 										}
 										catch {
 											Liferay.Util.openToast({
 												message: i18n.translate(
-													'unable-to-remove-user-from-account'
+													'unable-to-remove-roles'
 												),
+												title: i18n.translate('error'),
 												type: 'danger',
 											});
-
-											return;
 										}
-
 										Liferay.Util.openToast({
 											message: i18n.translate(
-												'removed-user-from-account'
+												'successfully-removed-roles'
 											),
 										});
 
-										mutate({revalidate: true});
+										mutate(
+											(
+												users: APIResponse<UserAccount>
+											) => {
+												return mutateUser(
+													users,
+													user,
+													properties.accountExternalReferenceCode
+												);
+											},
+											{revalidate: false}
+										);
 
 										modalContext.onClose();
 									}}

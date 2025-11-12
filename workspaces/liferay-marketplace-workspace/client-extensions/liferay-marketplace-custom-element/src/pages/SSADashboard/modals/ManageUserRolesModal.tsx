@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 import {KeyedMutator} from 'swr';
 
@@ -16,9 +15,7 @@ import {ssaRoles} from '../constants';
 import {getFilteredItems} from '../utils';
 
 const formSchema = z.object({
-	roles: z
-		.array(z.object({value: z.string()}))
-		.nonempty(i18n.translate('at-least-one-role-must-be-provided')),
+	roles: z.array(z.object({value: z.string()})),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -53,7 +50,6 @@ const ManageUserModal = ({
 
 	const {formState, handleSubmit, setValue, watch} = useForm<FormValues>({
 		defaultValues: {roles: currentRoles},
-		resolver: zodResolver(formSchema),
 	});
 
 	const selectedRoles = watch('roles');

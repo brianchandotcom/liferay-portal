@@ -34,7 +34,7 @@ export class MarketplaceUserAccount {
 	}
 
 	get isSSAUser() {
-		return this.hasAccountRole(AccountRoleType.SSA);
+		return this.hasAccountRole(AccountRoleType.SSA_USER);
 	}
 
 	private hasAccountRole(roleName: AccountRoleType) {

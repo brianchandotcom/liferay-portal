@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Button from '@clayui/button';
-import {useModal} from '@clayui/modal';
 import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 
@@ -15,13 +13,11 @@ import i18n from '../../../i18n';
 import {formatDate} from '../../../utils/date';
 import {ssaRoles} from '../constants';
 import useManageUserActions from '../hooks/useManageUserActions';
-import InviteUserModal from '../modals/InviteUserModal';
 
 export default function ManageUsers() {
 	const {marketplaceUserAccount} = useMarketplaceContext();
 	const {properties} = useMarketplaceContext();
 	const actions = useManageUserActions();
-	const modal = useModal();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -36,15 +32,6 @@ export default function ManageUsers() {
 				'manage-members-and-access-for-ssa-accounts'
 			)}
 			pageRendererProps={{className: 'border py-2 rounded'}}
-			rightButton={
-				<Button
-					onClick={() => {
-						modal.onOpenChange(true);
-					}}
-				>
-					{i18n.translate('invite-new-user')}
-				</Button>
-			}
 			title={i18n.translate('manage-users')}
 		>
 			<ListView<UserAccount>
@@ -105,11 +92,7 @@ export default function ManageUsers() {
 						},
 					],
 				}}
-			>
-				{(_, {mutate}) => (
-					<InviteUserModal modal={modal} mutate={mutate} />
-				)}
-			</ListView>
+			/>
 		</Page>
 	);
 }

@@ -61,13 +61,14 @@ export const siteInitializers = [
 	},
 ];
 
-export const ssaRoles = [AccountRoleType.SSA, AccountRoleType.SSA_ADMIN].map(
-	(role) => ({
-		key: role,
-		label: role,
-		value: role,
-	})
-);
+export const ssaRoles = [
+	AccountRoleType.SSA_ADMIN,
+	AccountRoleType.SSA_USER,
+].map((role) => ({
+	key: role,
+	label: role,
+	value: role,
+}));
 
 export const TRIAL_STATUS_LABEL = {
 	'approved': 'Expired',

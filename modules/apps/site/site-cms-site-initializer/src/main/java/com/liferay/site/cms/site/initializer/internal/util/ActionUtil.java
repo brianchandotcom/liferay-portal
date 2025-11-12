@@ -679,6 +679,19 @@ public class ActionUtil {
 		return dropdownItems;
 	}
 
+	public static String getControlPanelPortletURL(
+		ThemeDisplay themeDisplay, String portletId) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(themeDisplay.getCDNBaseURL());
+		sb.append(themeDisplay.getPathFriendlyURLPrivateGroup());
+		sb.append("/asset-library-{id}/~/control_panel/manage?p_p_id=");
+		sb.append(portletId);
+
+		return sb.toString();
+	}
+
 	public static DropdownItem getCreateFolderDropdownItem(
 		HttpServletRequest httpServletRequest,
 		String parentObjectEntryFolderExternalReferenceCode) {

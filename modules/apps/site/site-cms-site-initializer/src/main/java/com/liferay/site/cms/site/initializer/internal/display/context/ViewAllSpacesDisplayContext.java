@@ -167,11 +167,15 @@ public class ViewAllSpacesDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "space-settings"), "get",
 				"update", null),
 			new FDSActionDropdownItem(
-				_getAppURL(ExportImportPortletKeys.EXPORT), "export", "export",
+				ActionUtil.getControlPanelPortletURL(
+					_themeDisplay, ExportImportPortletKeys.EXPORT),
+				"export", "export",
 				LanguageUtil.get(_httpServletRequest, "export"), "get",
 				"update", null),
 			new FDSActionDropdownItem(
-				_getAppURL(ExportImportPortletKeys.IMPORT), "import", "import",
+				ActionUtil.getControlPanelPortletURL(
+					_themeDisplay, ExportImportPortletKeys.IMPORT),
+				"import", "import",
 				LanguageUtil.get(_httpServletRequest, "import"), "get",
 				"update", null),
 			new FDSActionDropdownItem(
@@ -243,17 +247,6 @@ public class ViewAllSpacesDisplayContext {
 			).put(
 				"label", label
 			));
-	}
-
-	private String _getAppURL(String portletId) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_themeDisplay.getCDNBaseURL());
-		sb.append(_themeDisplay.getPathFriendlyURLPrivateGroup());
-		sb.append("/asset-library-{id}/~/control_panel/manage?p_p_id=");
-		sb.append(portletId);
-
-		return sb.toString();
 	}
 
 	private String _getLayoutName() {

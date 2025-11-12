@@ -19,7 +19,7 @@ import AssetPreview from '../../../common/components/AssetPreview';
 
 const VISIBLE_ITEMS_COUNT = 5;
 const MAX_VISIBLE_INDEX = (itemsLength: number) =>
-	itemsLength - VISIBLE_ITEMS_COUNT;
+	Math.max(0, itemsLength - VISIBLE_ITEMS_COUNT);
 
 const GalleryView = ({
 	additionalProps,

@@ -21,6 +21,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.Map;
+
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -36,8 +38,7 @@ public abstract class BaseMVCResourceCommandTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	protected JSONObject getJSONObject(
-			String parameterName, String parameterValue)
+	protected JSONObject getJSONObject(Map<String, String> parameters)
 		throws Exception {
 
 		MVCResourceCommand mvcResourceCommand = getMVCResourceCommand();
@@ -45,7 +46,11 @@ public abstract class BaseMVCResourceCommandTestCase {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
-		mockLiferayResourceRequest.addParameter(parameterName, parameterValue);
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			mockLiferayResourceRequest.addParameter(
+				entry.getKey(), entry.getValue());
+		}
+
 		mockLiferayResourceRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_CONFIG,
 			PortletConfigFactoryUtil.create(

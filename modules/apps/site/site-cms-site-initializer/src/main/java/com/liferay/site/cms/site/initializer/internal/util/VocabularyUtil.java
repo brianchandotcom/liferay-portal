@@ -25,17 +25,17 @@ import java.util.Map;
  */
 public class VocabularyUtil {
 
-	public static List<Map<String, String>> getAvailableAssetTypeOptions(
-			ThemeDisplay themeDisplay)
+	public static List<Map<String, String>> getAssetTypesSelectOptions(
+		ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<Map<String, String>> selectOptions = new ArrayList<>();
 
-		_buildObjectDefinitionSelectOptions(
+		_buildSelectOptions(
 			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
 				"L_CMS_CONTENT_STRUCTURES", themeDisplay.getCompanyId()),
 			selectOptions);
-		_buildObjectDefinitionSelectOptions(
+		_buildSelectOptions(
 			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
 				"L_CMS_FILE_TYPES", themeDisplay.getCompanyId()),
 			selectOptions);
@@ -43,13 +43,13 @@ public class VocabularyUtil {
 		return selectOptions;
 	}
 
-	private static void _buildObjectDefinitionSelectOptions(
+	private static void _buildSelectOptions(
 		ObjectFolder objectFolder, List<Map<String, String>> selectOptions) {
 
 		for (ObjectDefinition objectDefinition :
-				ObjectDefinitionLocalServiceUtil.
-					getObjectFolderObjectDefinitions(
-						objectFolder.getObjectFolderId())) {
+			ObjectDefinitionLocalServiceUtil.
+				getObjectFolderObjectDefinitions(
+					objectFolder.getObjectFolderId())) {
 
 			String className = objectDefinition.getClassName();
 

@@ -122,12 +122,6 @@ public class ViewVocabulariesDisplayContext {
 				null));
 	}
 
-	public List<FDSFilter> getFDSFilters() throws Exception {
-		return ListUtil.fromArray(
-			new VocabularyAssetTypesSelectionFDSFilter(
-				VocabularyUtil.getAvailableAssetTypeOptions(_themeDisplay)));
-	}
-
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"activeTab", "vocabularies"
@@ -146,6 +140,14 @@ public class ViewVocabulariesDisplayContext {
 					"/categorization/view-vocabularies"),
 				_themeDisplay)
 		).build();
+	}
+
+	public List<FDSFilter> getVocabularyAssetTypesSelectFDSFilters()
+		throws Exception {
+
+		return ListUtil.fromArray(
+			new VocabularyAssetTypesSelectionFDSFilter(
+				VocabularyUtil.getAssetTypesSelectOptions(_themeDisplay)));
 	}
 
 	private String _getEditPermissionsURL() {

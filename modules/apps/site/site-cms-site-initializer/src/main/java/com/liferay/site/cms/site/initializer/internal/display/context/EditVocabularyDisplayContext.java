@@ -36,7 +36,7 @@ public class EditVocabularyDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"availableAssetTypes",
-			VocabularyUtil.getAvailableAssetTypeOptions(_themeDisplay)
+			VocabularyUtil.getAssetTypesSelectOptions(_themeDisplay)
 		).put(
 			"backURL",
 			PortalUtil.getLayoutFullURL(

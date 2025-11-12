@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenu;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.NavigationMenuEntityModel;
@@ -47,6 +48,7 @@ import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -76,9 +78,12 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/navigation-menu.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = NavigationMenuResource.class
 )
-public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
+public class NavigationMenuResourceImpl
+	extends BaseNavigationMenuResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<NavigationMenu> {
 
 	@Override
 	public void deleteSiteNavigationMenu(
@@ -102,6 +107,33 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
+
+			@Override
+			public String getModelClassName() {
+				return SiteNavigationMenu.class.getName();
+			}
+
+			@Override
+			public String getPortletId() {
+				return SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN;
+			}
+
+			@Override
+			public String getResourceClassName() {
+				return NavigationMenuResourceImpl.class.getName();
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.SITE;
+			}
+
+		};
 	}
 
 	@Override

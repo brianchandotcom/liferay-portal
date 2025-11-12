@@ -490,35 +490,10 @@
 		<clean-database-upgrade-client />
 	</target>
 
-	<target name="check-upgrade-properties-app-db-set">
-		<get-database-upgrade-client-paths />
-
-		<prepare-database-upgrade-properties />
-
-		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
-
-		<run-expect
-			db.upgrade.client.home="${db.upgrade.client.home}"
-			expect.file="check-upgrade-properties-app-db-set.expect"
-			file.suffix.bat="${file.suffix.bat}"
-		/>
-
-		<fail message="Exception thrown, failing.">
-			<condition>
-				<resourcecontains
-					resource="${db.upgrade.client.log}"
-					substring="Exception"
-				/>
-			</condition>
-		</fail>
-	</target>
-
 	<target name="check-upgrade-properties-app-ext-set">
 		<get-database-upgrade-client-paths />
 
 		<prepare-database-upgrade-properties />
-
-		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
@@ -536,7 +511,30 @@
 		</fail>
 	</target>
 
-	<target name="check-upgrade-properties-db-ext-set">
+	<target name="check-upgrade-properties-app-set">
+		<get-database-upgrade-client-paths />
+
+		<prepare-database-upgrade-properties />
+
+		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
+
+		<run-expect
+			db.upgrade.client.home="${db.upgrade.client.home}"
+			expect.file="check-upgrade-properties-app-set.expect"
+			file.suffix.bat="${file.suffix.bat}"
+		/>
+
+		<fail message="Exception thrown, failing.">
+			<condition>
+				<resourcecontains
+					resource="${db.upgrade.client.log}"
+					substring="Exception"
+				/>
+			</condition>
+		</fail>
+	</target>
+
+	<target name="check-upgrade-properties-ext-set">
 		<get-database-upgrade-client-paths />
 
 		<prepare-database-upgrade-properties />
@@ -545,7 +543,7 @@
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			expect.file="check-upgrade-properties-db-ext-set.expect"
+			expect.file="check-upgrade-properties-ext-set.expect"
 			file.suffix.bat="${file.suffix.bat}"
 		/>
 

@@ -3257,14 +3257,13 @@ public class ObjectEntryLocalServiceTest {
 				"richText",
 				StringBundler.concat(
 					"<figure class=\"media\"><div data-oembed-url=\"",
-					"https://www.youtube.com/watch?v=6LjQ7Z99N74\"><div ",
-					"style=\"position: relative; padding-bottom: 100%; ",
-					"height: 0; padding-bottom: 56.2493%;\"><iframe ",
+					"https://www.youtube.com/watch?v=6LjQ7Z99N74\">",
+					"<div style=\"height: 0; padding-bottom: 56.2493%; ",
+					"position: relative;\"><iframe allow=\"autoplay; ",
+					"encrypted-media\" allowfullscreen=\"\" frameborder=\"0\" ",
 					"src=\"https://www.youtube.com/embed/6LjQ7Z99N74\" ",
-					"style=\"position: absolute; width: 100%; height: 100%; ",
-					"top: 0; left: 0;\" frameborder=\"0\" allow=\"autoplay; ",
-					"encrypted-media\" allowfullscreen=\"\"></iframe>",
-					"</div></div></figure>")
+					"style=\"height: 100%; left: 0; position: absolute; top: ",
+					"0; width: 100%;\"></iframe></div></div></figure>")
 			).build());
 	}
 

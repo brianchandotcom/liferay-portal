@@ -124,25 +124,25 @@ definition {
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-debug-options");
 	}
 
-	@description = "LPS-158522: Upgrade client can run with app server and database properties set"
-	@priority = 3
-	test CheckUpgradePropertiesAppDBSet {
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-properties-app-db-set");
-	}
-
-	@description = "LPS-158522: Upgrade client can run with app server properties set"
+	@description = "LPD-66149: Upgrade client can run with app server and ext properties set"
 	@priority = 3
 	test CheckUpgradePropertiesAppExtSet {
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-properties-app-ext-set");
 	}
 
-	@description = "LPS-158522: Upgrade client can run with database properties set"
+	@description = "LPD-66149: Upgrade client can run with app server properties set"
 	@priority = 3
-	test CheckUpgradePropertiesDBExtSet {
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-properties-db-ext-set");
+	test CheckUpgradePropertiesAppSet {
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-properties-app-set");
 	}
 
-	@description = "LPS-158522: Upgrade client can run with no properties set"
+	@description = "LPD-66149: Upgrade client can run with ext properties set"
+	@priority = 3
+	test CheckUpgradePropertiesExtSet {
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-properties-ext-set");
+	}
+
+	@description = "LPD-66149: Upgrade client can run with no properties set"
 	@priority = 4
 	test CheckUpgradePropertiesNoneSet {
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-properties-none-set");

@@ -299,11 +299,15 @@ while (manageableCalendarsIterator.hasNext()) {
 
 				<c:choose>
 					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
-						<liferay-editor:input-localized
-							defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
-							name="description"
-							xml='<%= (calendarBooking != null) ? calendarBooking.getDescription() : StringPool.BLANK %>'
-						/>
+						<div data-testid="descriptionContainer">
+							<label for="<portlet:namespace />description"><liferay-ui:message key="description" /></label>
+
+							<liferay-editor:input-localized
+								defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+								name="description"
+								xml='<%= (calendarBooking != null) ? calendarBooking.getDescription() : StringPool.BLANK %>'
+							/>
+						</div>
 					</c:when>
 					<c:otherwise>
 						<aui:input defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="description" />

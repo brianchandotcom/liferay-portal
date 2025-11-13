@@ -1160,6 +1160,29 @@ components:
                             type: string
                     type: object
             type: object
+        DisplayPageFormSubmissionResult:
+            # @review
+            description:
+                Represents a definition of a submission result of type display page template.
+            properties:
+                mapping:
+                    # @review
+                    description:
+                        The mapping of the display page template submission result.
+                    properties:
+                        fieldKey:
+                            # @review
+                            description:
+                                The mapping's field key.
+                            type: string
+                    type: object
+                notificationText:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                    description:
+                        The localized display page template form submission result's notification text.
+                showNotification:
+                    type: boolean
+            type: object
         DisplayPageTemplate:
             description:
                 Represents a Display Page template.
@@ -3413,6 +3436,10 @@ components:
                         The message form submission type (embedded, none).
                     enum: [Embedded, None]
                     type: string
+                notificationText:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                    description:
+                        The localized message form submission result's notification text.
                 showNotification:
                     type: boolean
             type: object
@@ -3986,6 +4013,7 @@ components:
                             description:
                                 The definition for the success message of the form.
                             oneOf:
+                                -   $ref: "#/components/schemas/DisplayPageFormSubmissionResult"
                                 -   $ref: "#/components/schemas/MessageFormSubmissionResult"
                                 -   $ref: "#/components/schemas/SitePageFormSubmissionResult"
                                 -   $ref: "#/components/schemas/URLFormSubmissionResult"
@@ -5415,6 +5443,12 @@ components:
                     # @review
                     description:
                         The localized submission of page type.
+                notificationText:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                    description:
+                        The localized site page form submission result's notification text.
+                showNotification:
+                    type: boolean
             type: object
         SitePageNavigationMenuSettings:
             # @review

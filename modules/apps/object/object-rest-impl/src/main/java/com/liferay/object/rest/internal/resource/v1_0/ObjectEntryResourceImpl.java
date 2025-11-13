@@ -756,7 +756,7 @@ public class ObjectEntryResourceImpl
 			externalReferenceCode, _objectDefinition, null);
 
 		return CommentUtil.toComment(
-			_commentManager.addComment(
+			() -> _commentManager.addComment(
 				comment.getExternalReferenceCode(),
 				_getNonzeroGroupId(objectEntry.getId()),
 				ObjectEntry.class.getName(), objectEntry.getId(),
@@ -1028,7 +1028,7 @@ public class ObjectEntryResourceImpl
 			externalReferenceCode, _objectDefinition, scopeKey);
 
 		return CommentUtil.toComment(
-			_commentManager.addComment(
+			() -> _commentManager.addComment(
 				comment.getExternalReferenceCode(), objectEntry.getScopeId(),
 				ObjectEntry.class.getName(), objectEntry.getId(),
 				comment.getText()),

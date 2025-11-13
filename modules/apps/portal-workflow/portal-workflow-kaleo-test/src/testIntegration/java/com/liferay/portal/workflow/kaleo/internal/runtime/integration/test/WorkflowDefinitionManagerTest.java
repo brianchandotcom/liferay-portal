@@ -136,19 +136,19 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 	public void testDeployWorkflowDefinitionWithLLMNode() throws Exception {
 		AssertUtils.assertFailure(
 			KaleoDefinitionValidationException.
-				MustNotSetMoreThanOneOutgoingTransition.class,
-			"The LLM node cannot have more than one outgoing transition",
+				MustNotSetMultipleOutgoingTransitions.class,
+			"The LLM node cannot have multiple outgoing transitions",
 			() -> {
 				InputStream inputStream = getResourceInputStream(
-					"llm-node-with-more-than-one-outgoing-transition-" +
-						"workflow-definition.json");
+					"llm-node-with-multiple-outgoing-transitions-workflow-" +
+						"definition.json");
 
 				_workflowDefinitionManager.deployWorkflowDefinition(
 					RandomTestUtil.randomString(),
 					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 					RandomTestUtil.randomString(),
-					"LLM Node With More Than One Outgoing Transition " +
-						"Workflow Definition",
+					"LLM Node With Multiple Outgoing Transition Workflow " +
+						"Definition",
 					FileUtil.getBytes(inputStream));
 			});
 

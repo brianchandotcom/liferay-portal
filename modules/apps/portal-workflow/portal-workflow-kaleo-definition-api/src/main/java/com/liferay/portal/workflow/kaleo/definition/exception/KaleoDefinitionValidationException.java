@@ -252,13 +252,13 @@ public class KaleoDefinitionValidationException extends WorkflowException {
 
 	}
 
-	public static class MustNotSetMoreThanOneOutgoingTransition
+	public static class MustNotSetMultipleOutgoingTransitions
 		extends KaleoDefinitionValidationException {
 
-		public MustNotSetMoreThanOneOutgoingTransition(String node) {
+		public MustNotSetMultipleOutgoingTransitions(String node) {
 			super(
 				String.format(
-					"The %s node cannot have more than one outgoing transition",
+					"The %s node cannot have multiple outgoing transitions",
 					node));
 
 			_node = node;

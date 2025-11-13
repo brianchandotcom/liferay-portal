@@ -30,7 +30,7 @@ public class LLMNodeValidator extends BaseNodeValidator<LLM> {
 
 		if (llm.getOutgoingTransitionsCount() > 1) {
 			throw new KaleoDefinitionValidationException.
-				MustNotSetMoreThanOneOutgoingTransition(llm.getDefaultLabel());
+				MustNotSetMultipleOutgoingTransitions(llm.getDefaultLabel());
 		}
 	}
 

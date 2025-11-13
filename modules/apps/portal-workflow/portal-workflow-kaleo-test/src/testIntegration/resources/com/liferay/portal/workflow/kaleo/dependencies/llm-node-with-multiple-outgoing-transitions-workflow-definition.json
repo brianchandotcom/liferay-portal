@@ -2,7 +2,7 @@
 	"#child-nodes": [
 		{
 			"#tag-name": "name",
-			"#value": "LLM Node With More Than One Outgoing Transition Workflow Definition"
+			"#value": "LLM Node With Multiple Outgoing Transitions Workflow Definition"
 		},
 		{
 			"#tag-name": "version",

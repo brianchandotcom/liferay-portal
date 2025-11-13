@@ -13,3 +13,5 @@ export {
 export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';
 export {updateDLVideo} from './updateDLVideo';
+
+export {localStorage} from 'frontend-js-web';

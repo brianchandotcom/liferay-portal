@@ -144,16 +144,16 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			definition.addNode(_parseJoinXor(joinXorElement));
 		}
 
-		List<Element> stateElements = rootElement.elements("state");
-
-		for (Element stateElement : stateElements) {
-			definition.addNode(_parseState(stateElement));
-		}
-
 		List<Element> llmElements = rootElement.elements("llm");
 
 		for (Element llmElement : llmElements) {
 			definition.addNode(_parseLLM(llmElement));
+		}
+
+		List<Element> stateElements = rootElement.elements("state");
+
+		for (Element stateElement : stateElements) {
+			definition.addNode(_parseState(stateElement));
 		}
 
 		List<Element> taskElements = rootElement.elements("task");
@@ -164,7 +164,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		_parseTransitions(
 			definition, conditionElements, forkElements, joinElements,
-			joinXorElements, stateElements, llmElements, taskElements);
+			joinXorElements, llmElements, stateElements, taskElements);
 
 		return definition;
 	}
@@ -923,8 +923,8 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 	private void _parseTransitions(
 			Definition definition, List<Element> conditionElements,
 			List<Element> forkElements, List<Element> joinElements,
-			List<Element> joinXorElements, List<Element> stateElements,
-			List<Element> llmElements, List<Element> taskElements)
+			List<Element> joinXorElements, List<Element> llmElements,
+			List<Element> stateElements, List<Element> taskElements)
 		throws Exception {
 
 		for (Element conditionElement : conditionElements) {
@@ -943,12 +943,12 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			_parseTransition(definition, joinXorElement);
 		}
 
-		for (Element stateElement : stateElements) {
-			_parseTransition(definition, stateElement);
-		}
-
 		for (Element llmElement : llmElements) {
 			_parseTransition(definition, llmElement);
+		}
+
+		for (Element stateElement : stateElements) {
+			_parseTransition(definition, stateElement);
 		}
 
 		for (Element taskElement : taskElements) {

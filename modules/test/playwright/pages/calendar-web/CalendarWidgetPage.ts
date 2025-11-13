@@ -21,6 +21,8 @@ export class CalendarWidgetPage {
 	readonly closeConfigurationButton: Locator;
 	readonly closeEventModalButton: Locator;
 	readonly configurationMenuItem: Locator;
+	readonly description: Locator;
+	readonly descriptionLocalesDropdown: Locator;
 	readonly endDate: Locator;
 	readonly endTime: Locator;
 	readonly hideSidebarIcon: Locator;
@@ -83,6 +85,14 @@ export class CalendarWidgetPage {
 			exact: true,
 			name: 'Configuration',
 		});
+
+		const descriptionContainer = page
+			.frameLocator('iframe')
+			.getByTestId('descriptionContainer');
+
+		this.description = descriptionContainer.locator('.ck-editor__editable');
+		this.descriptionLocalesDropdown =
+			descriptionContainer.getByTitle('Select a Language');
 		this.endDate = page
 			.frameLocator('iframe')
 			.getByLabel('Ends Required', {exact: true});
@@ -167,6 +177,7 @@ export class CalendarWidgetPage {
 
 	async addEvent({
 		allDay,
+		description,
 		endDate,
 		endTime,
 		publishEvent,
@@ -176,6 +187,7 @@ export class CalendarWidgetPage {
 		title,
 	}: {
 		allDay: boolean;
+		description?: string;
 		endDate?: string;
 		endTime?: string;
 		publishEvent?: boolean;
@@ -215,6 +227,10 @@ export class CalendarWidgetPage {
 
 		if (endTime) {
 			await this.endTime.pressSequentially(endTime, {delay: 100});
+		}
+
+		if (description) {
+			await this.description.fill(description);
 		}
 
 		if (publishEvent) {

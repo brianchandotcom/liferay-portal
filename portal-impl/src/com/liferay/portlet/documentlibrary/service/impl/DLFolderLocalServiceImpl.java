@@ -33,6 +33,7 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1016,7 +1017,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		DLFolder dlFolder = dlFolderPersistence.fetchByPrimaryKey(folderId);
 
 		if ((dlFolder == null) ||
-			lastPostDate.before(dlFolder.getLastPostDate())) {
+			lastPostDate.before(dlFolder.getLastPostDate()) ||
+			(!CTCollectionThreadLocal.isProductionMode() &&
+			 dlFolder.isInHiddenFolder())) {
 
 			return;
 		}

@@ -53,7 +53,11 @@ public class PortalHotfixRelease {
 	}
 
 	public Set<String> getModifiedPackageNames() {
-		Set<String> packageNames = _getJSONPackageNames();
+		Set<String> packageNames = _getHotfixPackageNames();
+
+		if (packageNames == null) {
+			packageNames = _getFixpackDocumentationPackageNames();
+		}
 
 		if (packageNames == null) {
 			packageNames = _getXMLPackageNames();
@@ -250,7 +254,7 @@ public class PortalHotfixRelease {
 		}
 	}
 
-	private Set<String> _getJSONPackageNames() {
+	private Set<String> _getFixpackDocumentationPackageNames() {
 		JSONObject fixpackDocumentationJSONObject =
 			_getFixpackDocumentationJSONObject();
 
@@ -287,6 +291,65 @@ public class PortalHotfixRelease {
 
 				packageNames.add(modifiedJarJSONObject.optString("new_name"));
 			}
+		}
+
+		return packageNames;
+	}
+
+	private JSONObject _getHotfixJSONObject() {
+		synchronized (_portalHotfixReleaseURL) {
+			if (_hotfixJSONObject != null) {
+				return _hotfixJSONObject;
+			}
+
+			File tempDir = new File(
+				JenkinsResultsParserUtil.getDistinctTimeStamp());
+
+			try {
+				tempDir.mkdirs();
+
+				File hotfixFile = new File(tempDir, "hotfix.zip");
+
+				JenkinsResultsParserUtil.toFile(
+					getPortalHotfixReleaseURL(), hotfixFile);
+
+				JenkinsResultsParserUtil.unzip(hotfixFile, tempDir);
+
+				File hotfixJSONFile = new File(tempDir, "hotfix.json");
+
+				if (!hotfixJSONFile.exists()) {
+					return null;
+				}
+
+				_hotfixJSONObject = new JSONObject(
+					JenkinsResultsParserUtil.read(hotfixJSONFile));
+
+				return _hotfixJSONObject;
+			}
+			catch (Exception exception) {
+				return null;
+			}
+			finally {
+				JenkinsResultsParserUtil.delete(tempDir);
+			}
+		}
+	}
+
+	private Set<String> _getHotfixPackageNames() {
+		JSONObject hotfixJSONObject = _getHotfixJSONObject();
+
+		if (hotfixJSONObject == null) {
+			return null;
+		}
+
+		Set<String> packageNames = new HashSet<>();
+
+		JSONArray addedJSONArray = hotfixJSONObject.getJSONArray("added");
+
+		for (int i = 0; i < addedJSONArray.length(); i++) {
+			JSONObject addedJSONObject = addedJSONArray.getJSONObject(i);
+
+			packageNames.add(addedJSONObject.optString("path"));
 		}
 
 		return packageNames;
@@ -340,10 +403,11 @@ public class PortalHotfixRelease {
 	private static final Pattern _mirrorsURLPattern = Pattern.compile(
 		"https?://(mirrors(.lax.liferay.com)?/)?(?<urlPath>.+)");
 	private static final Pattern _packageNamePattern = Pattern.compile(
-		"(?<packageName>[\\.\\w]+|[\\-\\w]+)(-\\d.*)?\\.jar");
+		"(.+/)?(?<packageName>[\\.\\w]+|[\\-\\w]+)(-\\d.*)?\\.jar");
 
 	private Element _fixpackDocumentationElement;
 	private JSONObject _fixpackDocumentationJSONObject;
+	private JSONObject _hotfixJSONObject;
 	private final PortalFixpackRelease _portalFixpackRelease;
 	private final URL _portalHotfixReleaseURL;
 	private final PortalRelease _portalRelease;

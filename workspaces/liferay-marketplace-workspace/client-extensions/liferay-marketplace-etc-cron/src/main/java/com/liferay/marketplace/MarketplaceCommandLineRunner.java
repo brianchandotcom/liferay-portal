@@ -29,6 +29,7 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -39,7 +40,6 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -68,19 +68,25 @@ public class MarketplaceCommandLineRunner
 	extends BaseRestController implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
-		_processLiferayUserAccounts();
+		_invoke("_processInProgressTrials", this::_processInProgressTrials);
 
-		_processInProgressTrials();
+		_invoke("_processOnHoldTrials", this::_processOnHoldTrials);
 
-		_processOnHoldTrials();
+		_invoke("_processPendingOrders", this::_processPendingOrders);
 
-		_processPendingOrders();
+		_invoke("_processOrdersTotalAmount", this::_processOrdersTotalAmount);
 
-		_processOrdersTotalAmount();
+		_invoke(
+			"_processProjectsUsingMarketplaceApps",
+			this::_processProjectsUsingMarketplaceApps);
 
-		_processProjectsUsingMarketplaceApps();
+		_invoke(
+			"_processPublisherSalesSummary",
+			this::_processPublisherSalesSummary);
 
-		_processPublisherSalesSummary();
+		_invoke(
+			"_processLiferayStaffUserGroups",
+			this::_processLiferayStaffUserGroups);
 	}
 
 	private JSONObject _createPublisherSalesSummary(
@@ -541,7 +547,7 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
-	private void _processLiferayUserAccounts() throws Exception {
+	private void _processLiferayStaffUserGroups() throws Exception {
 		RoleResource roleResource = _getRoleResource();
 
 		com.liferay.headless.admin.user.client.pagination.Page<Role> rolesPage =

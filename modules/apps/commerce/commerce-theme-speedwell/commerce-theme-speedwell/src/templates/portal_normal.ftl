@@ -65,9 +65,9 @@
 		</div>
 
 		<script ${nonceAttribute} src="${javascript_folder}/accessibility.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/scrollHandler.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/topbar.js" type="text/javascript"></script>
 		<script ${nonceAttribute} src="${javascript_folder}/categoryMenu.js" type="text/javascript"></script>
 		<script ${nonceAttribute} src="${javascript_folder}/mobile.js" type="text/javascript"></script>
+		<script ${nonceAttribute} src="${javascript_folder}/scrollHandler.js" type="text/javascript"></script>
+		<script ${nonceAttribute} src="${javascript_folder}/topbar.js" type="text/javascript"></script>
 	</body>
 </html>

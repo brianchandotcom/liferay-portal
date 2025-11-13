@@ -29,9 +29,9 @@ export const EVENT_TRANSLATION_STATUS =
 
 export const EVENT_INPUT_REGISTERED = 'localizedInput:registered';
 
-const selectedLocaleAtom = State.atom(
-	'LocalizationSelect:selectedLocaleId',
-	Liferay.ThemeDisplay.getDefaultLanguageId()
+const selectedLocalesAtom = State.atom<Record<string, Liferay.Language.Locale>>(
+	'LocalizationSelect:selectedLocaleIds',
+	{}
 );
 
 type Props = {
@@ -70,8 +70,12 @@ export function LocalizationSelect({
 	const [translations, setTranslations] = useState<Translations>({});
 	const [form, setForm] = useState<HTMLFormElement>();
 
-	const [selectedLocaleId, setSelectedLocaleId] =
-		useLiferayState(selectedLocaleAtom);
+	const [selectedLocaleId, setSelectedLocaleId] = useState(
+		Liferay.ThemeDisplay.getDefaultLanguageId()
+	);
+
+	const [selectedLocaleIds, setSelectedLocaleIds] =
+		useLiferayState(selectedLocalesAtom);
 
 	const selectedLocaleLabel = useMemo(() => {
 		return locales.find(({id}) => id === selectedLocaleId)?.label;
@@ -106,9 +110,24 @@ export function LocalizationSelect({
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
+	const saveSelectedLocale = useCallback(
+		(localeId: Liferay.Language.Locale) => {
+			setSelectedLocaleId(localeId);
+
+			if (form) {
+				setSelectedLocaleIds({
+					...selectedLocaleIds,
+					[form.id]: localeId,
+				});
+			}
+		},
+		[form, selectedLocaleIds, setSelectedLocaleIds]
+	);
+
 	const onSelectedLocaleChange = (localeId: Liferay.Language.Locale) => {
-		setSelectedLocaleId(localeId);
 		setDropdownActive(false);
+
+		saveSelectedLocale(localeId);
 	};
 
 	const autoTranslate = useCallback(async () => {
@@ -333,7 +352,7 @@ export function LocalizationSelect({
 			// Otherwise, store it as selected
 
 			if (selectedLocaleId !== languageId) {
-				setSelectedLocaleId(languageId);
+				saveSelectedLocale(languageId);
 			}
 		};
 
@@ -342,7 +361,7 @@ export function LocalizationSelect({
 		return () => {
 			Liferay.detach('localizationSelect:localeChanged', onLocaleChanged);
 		};
-	}, [form, selectedLocaleId, setSelectedLocaleId]);
+	}, [form, saveSelectedLocale, selectedLocaleId]);
 
 	return (
 		<div className="align-items-center c-gap-2 d-flex" ref={containerRef}>
@@ -511,6 +530,12 @@ function hasValue(input: HTMLInputElement) {
 	return Boolean(input.getAttribute('value')?.length);
 }
 
-export function getSelectedLanguageId() {
-	return State.readAtom(selectedLocaleAtom);
+export function getSelectedLanguageId(formId?: string) {
+	if (!formId) {
+		return null;
+	}
+
+	const localeIds = State.readAtom(selectedLocalesAtom);
+
+	return localeIds[formId];
 }

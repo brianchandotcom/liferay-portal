@@ -68,7 +68,10 @@ export function registerLocalizedInput({
 		});
 	}
 
-	let currentLanguageId = getSelectedLanguageId() || defaultLanguageId;
+	const form = inputElement?.closest('.lfr-layout-structure-item-form');
+
+	let currentLanguageId =
+		getSelectedLanguageId(form?.id) || defaultLanguageId;
 
 	if (changeTextDirection) {
 		inputElement?.setAttribute(

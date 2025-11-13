@@ -25,12 +25,22 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
+	public Comment addComment(
+			String externalReferenceCode, long groupId, long parentCommentId,
+			String className, long classPK, String text)
+		throws Exception;
+
 	public long addComment(
 			String externalReferenceCode, long userId, long groupId,
 			String className, long classPK, String userName, String subject,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
+
+	public Comment addComment(
+			String externalReferenceCode, long groupId, String className,
+			long classPK, String text)
+		throws Exception;
 
 	public long addComment(
 			String externalReferenceCode, long userId, String className,
@@ -43,16 +53,6 @@ public interface CommentManager {
 			long userId, long groupId, String className, long classPK,
 			String userName)
 		throws PortalException;
-
-	public Comment addEntityComment(
-			String externalReferenceCode, long groupId, String className,
-			long classPK, String text)
-		throws Exception;
-
-	public Comment addParentComment(
-		String externalReferenceCode, long groupId, long parentCommentId,
-		String className, long classPK, String text)
-		throws Exception;
 
 	public Discussion copyDiscussion(
 			long userId, long groupId, String className, long classPK,

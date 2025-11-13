@@ -102,6 +102,7 @@ function Actions({
 			executeAsyncItemAction,
 			highlightItems,
 			infoPanelOpen,
+			isRowSelected,
 			itemData,
 			itemId,
 			items,

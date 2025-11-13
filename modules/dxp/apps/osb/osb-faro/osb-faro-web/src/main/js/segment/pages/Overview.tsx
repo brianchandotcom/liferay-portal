@@ -6,9 +6,10 @@ import React, {useCallback, useEffect, useRef} from 'react';
 import SegmentProfileCard from 'segment/components/ProfileCard';
 import {connect, ConnectedProps} from 'react-redux';
 import {debounce} from 'lodash';
+import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {RootState} from 'shared/store';
+
 import {Segment} from 'shared/util/records';
-import {SegmentTypes} from 'shared/util/constants';
 
 const HEADER_MARGIN = 16;
 const connector = connect((store: RootState, {groupId}: {groupId: string}) => ({
@@ -68,8 +69,7 @@ const Overview: React.FC<IOverviewProps> = ({
 		criteriaString,
 		includeAnonymousUsers,
 		individualCount,
-		knownIndividualCount,
-		segmentType
+		knownIndividualCount
 	} = segment;
 
 	return (
@@ -102,14 +102,13 @@ const Overview: React.FC<IOverviewProps> = ({
 					knownIndividualCount={knownIndividualCount}
 				/>
 
-				{segmentType === SegmentTypes.Batch && (
+				<ReferencedObjectsProvider segment={segment}>
 					<CriteriaCard
 						criteriaString={criteriaString}
 						includeAnonymousUsers={includeAnonymousUsers}
-						segment={segment}
 						timeZoneId={timeZoneId}
 					/>
-				)}
+				</ReferencedObjectsProvider>
 			</div>
 		</div>
 	);

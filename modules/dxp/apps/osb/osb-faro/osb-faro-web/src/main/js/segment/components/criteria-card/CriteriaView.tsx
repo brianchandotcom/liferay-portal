@@ -1,5 +1,5 @@
 import DisplayComponent from './display-components';
-import React, {Fragment} from 'react';
+import React, {Fragment, useContext} from 'react';
 import {ConjunctionKey} from 'shared/util/constants';
 import {Criteria} from 'segment/segment-editor/dynamic/utils/types';
 import {findPropertyByCriterion} from 'segment/segment-editor/dynamic/utils/utils';
@@ -16,10 +16,14 @@ const CONJUNCTION_MAP = {
 	[ConjunctionKey.Or]: Liferay.Language.get('or')
 };
 
-class CriteriaView extends React.Component<ICriteriaViewProps> {
-	static contextType = ReferencedObjectsContext;
+const CriteriaView: React.FC<ICriteriaViewProps> = ({
+	criteria,
+	forwardedRef,
+	timeZoneId
+}) => {
+	const {referencedProperties} = useContext(ReferencedObjectsContext);
 
-	renderCriteriaGroup(criteria) {
+	const renderCriteriaGroup = criteria => {
 		const {conjunctionName, criteriaGroupId, items} = criteria;
 
 		return (
@@ -33,20 +37,15 @@ class CriteriaView extends React.Component<ICriteriaViewProps> {
 						)}
 
 						{criterion.items
-							? this.renderCriteriaGroup(criterion)
-							: this.renderCriteriaRow(criterion)}
+							? renderCriteriaGroup(criterion)
+							: renderCriteriaRow(criterion)}
 					</Fragment>
 				))}
 			</div>
 		);
-	}
+	};
 
-	renderCriteriaRow(criterion) {
-		const {
-			context: {referencedProperties},
-			props: {timeZoneId}
-		} = this;
-
+	const renderCriteriaRow = criterion => {
 		const property = findPropertyByCriterion(
 			criterion,
 			referencedProperties
@@ -67,18 +66,14 @@ class CriteriaView extends React.Component<ICriteriaViewProps> {
 				)}
 			</div>
 		);
-	}
+	};
 
-	render() {
-		const {criteria, forwardedRef} = this.props;
-
-		return (
-			<div className='criteria-view-root' ref={forwardedRef}>
-				{this.renderCriteriaGroup(criteria)}
-			</div>
-		);
-	}
-}
+	return (
+		<div className='criteria-view-root' ref={forwardedRef}>
+			{renderCriteriaGroup(criteria)}
+		</div>
+	);
+};
 
 export default React.forwardRef<HTMLDivElement, ICriteriaViewProps>(
 	(props, ref) => <CriteriaView forwardedRef={ref} {...props} />

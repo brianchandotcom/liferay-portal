@@ -95,7 +95,9 @@ public class BreadcrumbDisplayContext {
 
 					unsafeConsumer.accept(
 						JSONUtil.put(
-							"href", _getAppURL(ExportImportPortletKeys.EXPORT)
+							"href",
+							_getControlPanelPortletURL(
+								ExportImportPortletKeys.EXPORT)
 						).put(
 							"label",
 							LanguageUtil.get(_httpServletRequest, "export")
@@ -105,7 +107,9 @@ public class BreadcrumbDisplayContext {
 
 					unsafeConsumer.accept(
 						JSONUtil.put(
-							"href", _getAppURL(ExportImportPortletKeys.IMPORT)
+							"href",
+							_getControlPanelPortletURL(
+								ExportImportPortletKeys.IMPORT)
 						).put(
 							"label",
 							LanguageUtil.get(_httpServletRequest, "import")
@@ -230,7 +234,9 @@ public class BreadcrumbDisplayContext {
 		).build();
 	}
 
-	private String _getAppURL(String portletId) throws Exception {
+	private String _getControlPanelPortletURL(String portletId)
+		throws Exception {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			_httpServletRequest, _getGroup(), portletId, 0, 0,
 			PortletRequest.RENDER_PHASE);

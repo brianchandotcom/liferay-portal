@@ -740,7 +740,10 @@ public class ObjectEntryResourceImpl
 			String externalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments()) {
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -1018,7 +1021,10 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_objectDefinition.isEnableComments()) {
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
 			throw new UnsupportedOperationException();
 		}
 

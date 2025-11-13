@@ -11,7 +11,10 @@ import {useMemo} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
-import {ProductWorkflowStatusCode} from '../../../../enums/Product';
+import {
+	ProductWorkflowStatusCode,
+	ProductWorkflowStatusLabel,
+} from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
@@ -134,7 +137,12 @@ const App: React.FC<AppProps> = ({header}) => {
 							/>
 
 							<span className="app-details-page-app-info-subtitle-text">
-								{product.workflowStatusInfo.label_i18n}
+								{
+									ProductWorkflowStatusLabel[
+										product.workflowStatusInfo
+											.code as keyof typeof ProductWorkflowStatusLabel
+									]
+								}
 							</span>
 						</div>
 					</div>

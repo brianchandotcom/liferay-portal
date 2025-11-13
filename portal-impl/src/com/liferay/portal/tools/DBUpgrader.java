@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -64,6 +65,7 @@ import java.util.Collection;
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.logging.log4j.core.Appender;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -310,7 +312,12 @@ public class DBUpgrader {
 			IndexUpdaterUtil.updateAllIndexes();
 		}
 
-		upgradeModulesCallbackRunnable.run();
+		Bundle bundle = BundleUtil.getBundle(
+			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
+
+		if ((bundle == null) || (bundle.getState() == Bundle.INSTALLED)) {
+			upgradeModulesCallbackRunnable.run();
+		}
 
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortletsInitialized);

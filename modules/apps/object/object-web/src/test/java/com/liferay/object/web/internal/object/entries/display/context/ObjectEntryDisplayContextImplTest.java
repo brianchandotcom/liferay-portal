@@ -141,6 +141,12 @@ public class ObjectEntryDisplayContextImplTest {
 
 		long companyId = _themeDisplay.getCompanyId();
 
+		Mockito.when(
+			_objectDefinition.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
 		Company company = Mockito.mock(Company.class);
 
 		Mockito.when(

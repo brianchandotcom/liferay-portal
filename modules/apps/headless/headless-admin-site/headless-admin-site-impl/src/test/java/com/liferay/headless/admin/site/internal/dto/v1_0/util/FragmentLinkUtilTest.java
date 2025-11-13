@@ -1182,6 +1182,7 @@ public class FragmentLinkUtilTest {
 
 		Mockito.when(
 			infoItemObjectProvider.getInfoItem(
+				Mockito.eq(_SCOPE_GROUP_ID),
 				Mockito.any(InfoItemIdentifier.class))
 		).thenReturn(
 			Mockito.mock(Object.class)

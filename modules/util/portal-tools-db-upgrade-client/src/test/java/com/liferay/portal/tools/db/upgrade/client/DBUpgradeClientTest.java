@@ -138,10 +138,10 @@ public class DBUpgradeClientTest {
 			new Class<?>[] {List.class}, jvmOpts);
 
 		Assert.assertEquals("Expected 5 JVM options", 5, jvmOpts.size());
-		Assert.assertFalse(jvmOpts.contains("-Xmx4096m"));
-		Assert.assertTrue(jvmOpts.contains("-Xmx8192m"));
 		Assert.assertFalse(jvmOpts.contains("-Dfile.encoding=UTF8"));
+		Assert.assertFalse(jvmOpts.contains("-Xmx4096m"));
 		Assert.assertTrue(jvmOpts.contains("-Dfile.encoding=ISO-8859-1"));
+		Assert.assertTrue(jvmOpts.contains("-Xmx8192m"));
 	}
 
 	@Test
@@ -153,11 +153,11 @@ public class DBUpgradeClientTest {
 			new Class<?>[] {List.class}, jvmOpts);
 
 		Assert.assertEquals("Expected 5 JVM options", 5, jvmOpts.size());
-		Assert.assertTrue(jvmOpts.contains("-Xmx4096m"));
 		Assert.assertTrue(jvmOpts.contains("-Dfile.encoding=UTF8"));
 		Assert.assertTrue(jvmOpts.contains("-Duser.country=US"));
 		Assert.assertTrue(jvmOpts.contains("-Duser.language=en"));
 		Assert.assertTrue(jvmOpts.contains("-Duser.timezone=GMT"));
+		Assert.assertTrue(jvmOpts.contains("-Xmx4096m"));
 	}
 
 	@Test

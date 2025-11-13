@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -36,51 +36,50 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "Represents a definition of a submission result of type page.",
-	value = "SitePageFormSubmissionResult"
+	description = "Represents a definition of a submission result of type display page template.",
+	value = "DisplayPageFormSubmissionResult"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SitePageFormSubmissionResult")
-public class SitePageFormSubmissionResult implements Serializable {
+@XmlRootElement(name = "DisplayPageFormSubmissionResult")
+public class DisplayPageFormSubmissionResult implements Serializable {
 
-	public static SitePageFormSubmissionResult toDTO(String json) {
+	public static DisplayPageFormSubmissionResult toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			SitePageFormSubmissionResult.class, json);
+			DisplayPageFormSubmissionResult.class, json);
 	}
 
-	public static SitePageFormSubmissionResult unsafeToDTO(String json) {
+	public static DisplayPageFormSubmissionResult unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			SitePageFormSubmissionResult.class, json);
+			DisplayPageFormSubmissionResult.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The localized submission of page type."
+		description = "The mapping of the display page template submission result."
 	)
 	@Valid
-	public ClassFieldsReference getItemReference() {
-		if (_itemReferenceSupplier != null) {
-			itemReference = _itemReferenceSupplier.get();
+	public Mapping getMapping() {
+		if (_mappingSupplier != null) {
+			mapping = _mappingSupplier.get();
 
-			_itemReferenceSupplier = null;
+			_mappingSupplier = null;
 		}
 
-		return itemReference;
+		return mapping;
 	}
 
-	public void setItemReference(ClassFieldsReference itemReference) {
-		this.itemReference = itemReference;
+	public void setMapping(Mapping mapping) {
+		this.mapping = mapping;
 
-		_itemReferenceSupplier = null;
+		_mappingSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setItemReference(
-		UnsafeSupplier<ClassFieldsReference, Exception>
-			itemReferenceUnsafeSupplier) {
+	public void setMapping(
+		UnsafeSupplier<Mapping, Exception> mappingUnsafeSupplier) {
 
-		_itemReferenceSupplier = () -> {
+		_mappingSupplier = () -> {
 			try {
-				return itemReferenceUnsafeSupplier.get();
+				return mappingUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -91,15 +90,17 @@ public class SitePageFormSubmissionResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The localized submission of page type.")
+	@GraphQLField(
+		description = "The mapping of the display page template submission result."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ClassFieldsReference itemReference;
+	protected Mapping mapping;
 
 	@JsonIgnore
-	private Supplier<ClassFieldsReference> _itemReferenceSupplier;
+	private Supplier<Mapping> _mappingSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The localized site page form submission result's notification text."
+		description = "The localized display page template form submission result's notification text."
 	)
 	@Valid
 	public FragmentInlineValue getNotificationText() {
@@ -137,7 +138,7 @@ public class SitePageFormSubmissionResult implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The localized site page form submission result's notification text."
+		description = "The localized display page template form submission result's notification text."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentInlineValue notificationText;
@@ -192,15 +193,15 @@ public class SitePageFormSubmissionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SitePageFormSubmissionResult)) {
+		if (!(object instanceof DisplayPageFormSubmissionResult)) {
 			return false;
 		}
 
-		SitePageFormSubmissionResult sitePageFormSubmissionResult =
-			(SitePageFormSubmissionResult)object;
+		DisplayPageFormSubmissionResult displayPageFormSubmissionResult =
+			(DisplayPageFormSubmissionResult)object;
 
 		return Objects.equals(
-			toString(), sitePageFormSubmissionResult.toString());
+			toString(), displayPageFormSubmissionResult.toString());
 	}
 
 	@Override
@@ -215,16 +216,16 @@ public class SitePageFormSubmissionResult implements Serializable {
 
 		sb.append("{");
 
-		ClassFieldsReference itemReference = getItemReference();
+		Mapping mapping = getMapping();
 
-		if (itemReference != null) {
+		if (mapping != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemReference\": ");
+			sb.append("\"mapping\": ");
 
-			sb.append(String.valueOf(itemReference));
+			sb.append(String.valueOf(mapping));
 		}
 
 		FragmentInlineValue notificationText = getNotificationText();
@@ -258,7 +259,7 @@ public class SitePageFormSubmissionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.SitePageFormSubmissionResult",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.DisplayPageFormSubmissionResult",
 		name = "x-class-name"
 	)
 	public String xClassName;

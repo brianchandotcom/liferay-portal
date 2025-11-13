@@ -27,7 +27,7 @@ public interface CommentManager {
 
 	public Comment addComment(
 			String externalReferenceCode, long groupId, long parentCommentId,
-			String className, long classPK, String text)
+			String className, long classPK, String body)
 		throws Exception;
 
 	public long addComment(
@@ -39,7 +39,7 @@ public interface CommentManager {
 
 	public Comment addComment(
 			String externalReferenceCode, long groupId, String className,
-			long classPK, String text)
+			long classPK, String body)
 		throws Exception;
 
 	public long addComment(

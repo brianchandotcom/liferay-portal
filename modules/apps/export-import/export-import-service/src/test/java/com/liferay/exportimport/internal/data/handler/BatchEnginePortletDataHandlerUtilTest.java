@@ -343,11 +343,11 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		return exportImportDescriptor;
 	}
 
-	private Group _mockGroup(String groupExternalReferenceCode, long groupId) {
+	private Group _mockGroup(String externalReferenceCode, long groupId) {
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.doReturn(
-			groupExternalReferenceCode
+			externalReferenceCode
 		).when(
 			group
 		).getExternalReferenceCode();

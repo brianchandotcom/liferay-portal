@@ -1106,8 +1106,8 @@ public class DisplayPageTemplateResourceTest
 
 		for (DisplayPageTemplate displayPageTemplate : page.getItems()) {
 			if (StringUtil.equals(
-					postDisplayPageTemplate.getExternalReferenceCode(),
-					displayPageTemplate.getExternalReferenceCode())) {
+					displayPageTemplate.getExternalReferenceCode(),
+					postDisplayPageTemplate.getExternalReferenceCode())) {
 
 				URLReference thumbnail = displayPageTemplate.getThumbnail();
 

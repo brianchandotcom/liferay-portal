@@ -6,11 +6,11 @@
 import {Metadata} from 'next';
 import Image from 'next/image';
 import {PropsWithChildren} from 'react';
-import DOMPurify from 'isomorphic-dompurify';
 
 import {Button} from '../../components/button';
 import {liferay} from '../../liferay/server';
 import {getCMSBlogPosting} from './data';
+import PreviewHTML from '../../components/preview-html';
 
 interface PageProps {
 	params: Promise<{blogPostId: [string, string]}>;
@@ -111,12 +111,7 @@ export default async function BlogPost(pageProps: PageProps) {
 				</header>
 
 				<section>
-					<div
-						className="flex flex-col gap-4 text-justify"
-						dangerouslySetInnerHTML={{
-							__html: DOMPurify.sanitize(data.content),
-						}}
-					/>
+					<PreviewHTML content={data.content} />
 
 					{!!data.keywords.length && (
 						<footer className="my-12">

@@ -99,6 +99,14 @@ public class UserSearchPermissionFilterContributorTest {
 			ActionKeys.MANAGE_SUBORGANIZATIONS_USERS);
 
 		Assert.assertEquals(2, _performUserSearchCount(user1));
+
+		Organization organization3 = OrganizationTestUtil.addOrganization(
+			organization2.getOrganizationId(), RandomTestUtil.randomString(),
+			true);
+
+		_addOrganizationUser(organization3);
+
+		Assert.assertEquals(3, _performUserSearchCount(user1));
 	}
 
 	@Test

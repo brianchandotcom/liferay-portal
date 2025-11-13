@@ -291,6 +291,7 @@ public class TaxonomyVocabularyResourceTest
 					RandomTestUtil.randomString());
 				multiValued = RandomTestUtil.randomBoolean();
 				name = RandomTestUtil.randomString();
+				numberOfTaxonomyCategories = 0;
 				siteId = testGroup.getGroupId();
 				visibilityType = VisibilityType.PUBLIC;
 			}

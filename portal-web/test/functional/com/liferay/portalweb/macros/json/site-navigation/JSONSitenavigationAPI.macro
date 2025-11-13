@@ -58,6 +58,29 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro _getLayoutExternalReferenceCodeByName(groupId = null, privateLayout = null, layoutName = null) {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u ${userLoginInfo} \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+
+		var externalReferenceCode = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${layoutName}')]['externalReferenceCode']");
+
+		if (${externalReferenceCode} == "") {
+			fail("FAIL. Cannot find external reference code.");
+		}
+
+		return ${externalReferenceCode};
+	}
+
+	@summary = "Default summary"
 	macro _getSiteNavigationMenuIdByName(siteNavigationMenuName = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${siteNavigationMenuName}");
 

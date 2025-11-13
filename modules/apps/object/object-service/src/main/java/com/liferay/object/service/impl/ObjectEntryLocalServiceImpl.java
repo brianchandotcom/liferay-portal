@@ -5526,9 +5526,9 @@ public class ObjectEntryLocalServiceImpl
 			Expression<?>[] selectExpressions)
 		throws PortalException {
 
-		List<Object[]> results = new ArrayList<>();
-
 		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
+
+		List<Object[]> results = new ArrayList<>(entriesValues.size());
 
 		for (Object entryValues : entriesValues) {
 			Object[] result = new Object[selectExpressions.length];

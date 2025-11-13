@@ -114,9 +114,14 @@ public class BuildFactory {
 				}
 				else if (jobVariant.startsWith("integration") ||
 						 jobVariant.startsWith("js-unit") ||
+						 jobVariant.startsWith("modules-compile") ||
 						 jobVariant.startsWith("modules-integration") ||
+						 jobVariant.startsWith("modules-semantic-versioning") ||
 						 jobVariant.startsWith("modules-unit") ||
-						 jobVariant.startsWith("playwright-js")) {
+						 jobVariant.startsWith("playwright-js") ||
+						 jobVariant.startsWith("rest-builder") ||
+						 jobVariant.startsWith("semantic-versioning") ||
+						 jobVariant.startsWith("service-builder")) {
 
 					return new JUnitDownstreamBuild(
 						buildURL, cachedDownstreamBuildReport,

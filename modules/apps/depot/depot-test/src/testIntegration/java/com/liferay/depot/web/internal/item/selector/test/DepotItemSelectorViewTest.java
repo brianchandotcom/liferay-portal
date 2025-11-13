@@ -21,7 +21,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,10 +40,8 @@ public class DepotItemSelectorViewTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_themeDisplay = new ThemeDisplay();
-
+	@Before
+	public void setUp() throws Exception {
 		_themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 	}
@@ -90,16 +88,14 @@ public class DepotItemSelectorViewTest {
 				groupItemSelectorCriterion, _themeDisplay));
 	}
 
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	private static ThemeDisplay _themeDisplay;
-
 	@Inject(
 		filter = "component.name=com.liferay.depot.web.internal.item.selector.AssetLibraryDepotItemSelectorView"
 	)
 	private ItemSelectorView<GroupItemSelectorCriterion>
 		_assetLibraryDepotItemSelectorView;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
@@ -109,5 +105,7 @@ public class DepotItemSelectorViewTest {
 	)
 	private ItemSelectorView<GroupItemSelectorCriterion>
 		_spacesDepotItemSelectorView;
+
+	private final ThemeDisplay _themeDisplay = new ThemeDisplay();
 
 }

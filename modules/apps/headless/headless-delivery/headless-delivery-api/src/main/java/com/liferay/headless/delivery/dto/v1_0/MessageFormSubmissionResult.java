@@ -158,6 +158,53 @@ public class MessageFormSubmissionResult implements Serializable {
 	@JsonIgnore
 	private Supplier<MessageType> _messageTypeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized message form submission result's notification text."
+	)
+	@Valid
+	public FragmentInlineValue getNotificationText() {
+		if (_notificationTextSupplier != null) {
+			notificationText = _notificationTextSupplier.get();
+
+			_notificationTextSupplier = null;
+		}
+
+		return notificationText;
+	}
+
+	public void setNotificationText(FragmentInlineValue notificationText) {
+		this.notificationText = notificationText;
+
+		_notificationTextSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setNotificationText(
+		UnsafeSupplier<FragmentInlineValue, Exception>
+			notificationTextUnsafeSupplier) {
+
+		_notificationTextSupplier = () -> {
+			try {
+				return notificationTextUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The localized message form submission result's notification text."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentInlineValue notificationText;
+
+	@JsonIgnore
+	private Supplier<FragmentInlineValue> _notificationTextSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getShowNotification() {
 		if (_showNotificationSupplier != null) {
@@ -252,6 +299,18 @@ public class MessageFormSubmissionResult implements Serializable {
 			sb.append("\"");
 			sb.append(messageType);
 			sb.append("\"");
+		}
+
+		FragmentInlineValue notificationText = getNotificationText();
+
+		if (notificationText != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"notificationText\": ");
+
+			sb.append(String.valueOf(notificationText));
 		}
 
 		Boolean showNotification = getShowNotification();

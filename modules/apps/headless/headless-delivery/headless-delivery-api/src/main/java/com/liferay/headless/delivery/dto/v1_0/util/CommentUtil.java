@@ -26,27 +26,7 @@ public class CommentUtil {
 			CommentManager commentManager, Portal portal)
 		throws Exception {
 
-		if (comment == null) {
-			return null;
-		}
-
-		return new Comment() {
-			{
-				setCreator(
-					() -> CreatorUtil.toCreator(
-						null, portal, comment.getUser()));
-				setDateCreated(comment::getCreateDate);
-				setDateModified(comment::getModifiedDate);
-				setExternalReferenceCode(comment::getExternalReferenceCode);
-				setId(comment::getCommentId);
-				setNumberOfComments(
-					() -> commentManager.getChildCommentsCount(
-						comment.getCommentId(),
-						WorkflowConstants.STATUS_APPROVED));
-				setParentCommentId(comment::getParentCommentId);
-				setText(comment::getBody);
-			}
-		};
+		return _toComment(comment, commentManager, portal);
 	}
 
 	public static Comment toComment(
@@ -74,6 +54,13 @@ public class CommentUtil {
 			throw new ClientErrorException(
 				"Comment text is null", 422, messageSubjectException);
 		}
+
+		return _toComment(comment, commentManager, portal);
+	}
+
+	private static Comment _toComment(
+		com.liferay.portal.kernel.comment.Comment comment,
+		CommentManager commentManager, Portal portal) {
 
 		if (comment == null) {
 			return null;

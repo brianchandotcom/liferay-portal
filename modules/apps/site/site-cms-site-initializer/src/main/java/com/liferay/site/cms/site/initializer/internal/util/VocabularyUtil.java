@@ -5,8 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.util;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -26,47 +24,43 @@ import java.util.Map;
 public class VocabularyUtil {
 
 	public static List<Map<String, String>> getAssetTypesSelectOptions(
-		ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<Map<String, String>> selectOptions = new ArrayList<>();
+		long companyId = themeDisplay.getCompanyId();
 
 		_buildSelectOptions(
-			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_CONTENT_STRUCTURES", themeDisplay.getCompanyId()),
-			selectOptions);
-		_buildSelectOptions(
-			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_FILE_TYPES", themeDisplay.getCompanyId()),
-			selectOptions);
+			"L_CMS_CONTENT_STRUCTURES", companyId, selectOptions);
+		_buildSelectOptions("L_CMS_FILE_TYPES", companyId, selectOptions);
 
 		return selectOptions;
 	}
 
 	private static void _buildSelectOptions(
-		ObjectFolder objectFolder, List<Map<String, String>> selectOptions) {
+			String externalReferenceCode, long companyId,
+			List<Map<String, String>> selectOptions)
+		throws PortalException {
+
+		ObjectFolder objectFolder =
+			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
+				externalReferenceCode, companyId);
 
 		for (ObjectDefinition objectDefinition :
-			ObjectDefinitionLocalServiceUtil.
-				getObjectFolderObjectDefinitions(
-					objectFolder.getObjectFolderId())) {
-
-			String className = objectDefinition.getClassName();
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
+				ObjectDefinitionLocalServiceUtil.
+					getObjectFolderObjectDefinitions(
+						objectFolder.getObjectFolderId())) {
 
 			selectOptions.add(
 				HashMapBuilder.put(
-					"icon", assetRendererFactory.getIconCssClass()
-				).put(
 					"restricted", Boolean.FALSE.toString()
 				).put(
 					"type", objectDefinition.getLabelCurrentValue()
 				).put(
 					"typeId",
-					String.valueOf(PortalUtil.getClassNameId(className))
+					String.valueOf(
+						PortalUtil.getClassNameId(
+							objectDefinition.getClassName()))
 				).build());
 		}
 	}

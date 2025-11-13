@@ -9,13 +9,13 @@ import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowNodeManager;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoNodeSetting;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
@@ -69,7 +69,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				String reason,
 				@P("Transition name") String transitionName,
 				InvocationParameters parameters)
-			throws WorkflowException {
+			throws PortalException {
 
 			ExecutionContext executionContext = parameters.get(
 				"executionContext");
@@ -82,14 +82,14 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			PermissionThreadLocal.setPermissionChecker(
 				parameters.get("permissionChecker"));
 
-			try {
-				_kaleoSignaler.signalExit(
-					transitionName, executionContext, false);
-			}
-			catch (Exception exception) {
-				throw new WorkflowException(
-					"Unable to signal next transition", exception);
-			}
+			KaleoInstanceToken kaleoInstanceToken =
+				executionContext.getKaleoInstanceToken();
+
+			_workflowNodeManager.completeWorkflowNode(
+				kaleoInstanceToken.getCompanyId(),
+				kaleoInstanceToken.getUserId(),
+				kaleoInstanceToken.getKaleoInstanceTokenId(), transitionName,
+				workflowContext, false);
 		}
 
 	}
@@ -185,6 +185,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
 
 	@Reference
-	private KaleoSignaler _kaleoSignaler;
+	private WorkflowNodeManager _workflowNodeManager;
 
 }

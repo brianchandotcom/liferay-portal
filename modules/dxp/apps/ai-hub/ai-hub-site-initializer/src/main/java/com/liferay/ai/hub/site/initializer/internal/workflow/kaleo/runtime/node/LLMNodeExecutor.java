@@ -7,13 +7,15 @@ package com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node
 
 import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.InputVariablesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.WorkflowNodeManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoNodeSetting;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
@@ -108,8 +110,31 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 	@Override
 	protected void doExit(
-		KaleoNode currentKaleoNode, ExecutionContext executionContext,
-		List<PathElement> remainingPathElements) {
+			KaleoNode currentKaleoNode, ExecutionContext executionContext,
+			List<PathElement> remainingPathElements)
+		throws PortalException {
+
+		String transitionName = executionContext.getTransitionName();
+
+		KaleoTransition kaleoTransition = null;
+
+		if (Validator.isNull(transitionName)) {
+			kaleoTransition = currentKaleoNode.getDefaultKaleoTransition();
+		}
+		else {
+			kaleoTransition = currentKaleoNode.getKaleoTransition(
+				transitionName);
+		}
+
+		ExecutionContext newExecutionContext = new ExecutionContext(
+			executionContext.getKaleoInstanceToken(),
+			executionContext.getWorkflowContext(),
+			executionContext.getServiceContext());
+
+		PathElement pathElement = new PathElement(
+			null, kaleoTransition.getTargetKaleoNode(), newExecutionContext);
+
+		remainingPathElements.add(pathElement);
 	}
 
 	@Reference
@@ -144,14 +169,11 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				kaleoInstanceToken.getCompanyId(),
 				kaleoInstanceToken.getKaleoInstanceId(), workflowContext);
 
-			KaleoTaskInstanceToken kaleoTaskInstanceToken =
-				executionContext.getKaleoTaskInstanceToken();
-
-			workflowTaskManager.completeWorkflowTask(
-				kaleoTaskInstanceToken.getCompanyId(),
-				kaleoTaskInstanceToken.getUserId(),
-				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(), "end", "",
-				executionContext.getWorkflowContext());
+			_workflowNodeManager.completeWorkflowNode(
+				kaleoInstanceToken.getCompanyId(),
+				kaleoInstanceToken.getUserId(),
+				kaleoInstanceToken.getKaleoInstanceTokenId(), "end",
+				workflowContext, false);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -163,5 +185,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
+
+	@Reference
+	private WorkflowNodeManager _workflowNodeManager;
 
 }

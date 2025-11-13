@@ -13,7 +13,6 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.HttpURLConnection;
@@ -39,10 +37,34 @@ import java.util.Set;
  */
 public class FileEntryUtil {
 
+	public static long getPreviewFileEntryId(
+			long groupId, String resourceName, ServiceContext serviceContext,
+			URLReference urlReference, User user)
+		throws Exception {
+
+		if ((urlReference == null) ||
+			Validator.isNull(urlReference.getExternalReferenceCode())) {
+
+			return 0;
+		}
+
+		FileEntry fileEntry =
+			PortletFileRepositoryUtil.
+				fetchPortletFileEntryByExternalReferenceCode(
+					urlReference.getExternalReferenceCode(), groupId);
+
+		if (fileEntry == null) {
+			fileEntry = _getFileEntry(
+				groupId, resourceName, serviceContext, urlReference, user);
+		}
+
+		return fileEntry.getFileEntryId();
+	}
+
 	private static FileEntry _getFileEntry(
 			long groupId, String resourceName, ServiceContext serviceContext,
 			URLReference urlReference, User user)
-		throws IOException, PortalException {
+		throws Exception {
 
 		URL url = ExportImportAttachmentManagerUtil.getURL(
 			urlReference.getUrl());
@@ -96,30 +118,6 @@ public class FileEntryUtil {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			resourceName + "_" + fileName, mimeType, fileName, null, null, null,
 			fileBytes, null, null, null, serviceContext);
-	}
-
-	public static long getPreviewFileEntryId(
-			long groupId, String resourceName, ServiceContext serviceContext,
-			URLReference urlReference, User user)
-		throws Exception {
-
-		if ((urlReference == null) ||
-			Validator.isNull(urlReference.getExternalReferenceCode())) {
-
-			return 0;
-		}
-
-		FileEntry fileEntry =
-			PortletFileRepositoryUtil.
-				fetchPortletFileEntryByExternalReferenceCode(
-					urlReference.getExternalReferenceCode(), groupId);
-
-		if (fileEntry == null) {
-			fileEntry = _getFileEntry(
-				groupId, resourceName, serviceContext, urlReference, user);
-		}
-
-		return fileEntry.getFileEntryId();
 	}
 
 }

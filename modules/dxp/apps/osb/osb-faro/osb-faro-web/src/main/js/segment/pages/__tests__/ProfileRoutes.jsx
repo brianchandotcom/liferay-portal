@@ -1,5 +1,5 @@
-import * as data from 'test/data';
 import * as API from 'shared/api';
+import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';

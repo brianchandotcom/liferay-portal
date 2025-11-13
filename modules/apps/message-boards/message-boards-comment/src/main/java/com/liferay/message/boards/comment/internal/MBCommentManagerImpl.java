@@ -101,8 +101,7 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		long commentId = addComment(
 			externalReferenceCode, PrincipalThreadLocal.getUserId(), className,
-			classPK, StringPool.BLANK, parentCommentId, StringPool.BLANK,
-			StringBundler.concat("<p>", text, "</p>"),
+			classPK, StringPool.BLANK, parentCommentId, StringPool.BLANK, text,
 			_createServiceContextFunction());
 
 		return fetchComment(commentId);
@@ -142,8 +141,7 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		long commentId = addComment(
 			externalReferenceCode, PrincipalThreadLocal.getUserId(), groupId,
-			className, classPK, StringPool.BLANK, StringPool.BLANK,
-			StringBundler.concat("<p>", text, "</p>"),
+			className, classPK, StringPool.BLANK, StringPool.BLANK, text,
 			_createServiceContextFunction());
 
 		return fetchComment(commentId);

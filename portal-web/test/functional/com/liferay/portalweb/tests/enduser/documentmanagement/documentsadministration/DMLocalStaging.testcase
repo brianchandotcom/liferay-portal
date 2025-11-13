@@ -1371,6 +1371,7 @@ definition {
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
+			noAutocomplete = "true",
 			shareable = "true",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");

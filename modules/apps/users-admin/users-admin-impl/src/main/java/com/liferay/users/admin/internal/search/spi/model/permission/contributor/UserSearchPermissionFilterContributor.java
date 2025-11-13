@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactTable;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.OrganizationModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -69,42 +68,35 @@ public class UserSearchPermissionFilterContributor
 
 			long[] userOrgIds = userBag.getUserOrgIds();
 
-			Set<Organization> organizations = new HashSet<>();
+			Set<Long> organizationIds = new HashSet<>();
 
 			for (long userOrgId : userOrgIds) {
 				if (OrganizationPermissionUtil.contains(
 						permissionChecker, userOrgId,
 						ActionKeys.MANAGE_USERS)) {
 
-					termsFilter.addValue(String.valueOf(userOrgId));
+					organizationIds.add(userOrgId);
 				}
 
 				if (OrganizationPermissionUtil.contains(
 						permissionChecker, userOrgId,
 						ActionKeys.MANAGE_SUBORGANIZATIONS_USERS)) {
 
-					List<Organization> suborganizations =
-						_organizationLocalService.getSuborganizations(
-							companyId, userOrgId);
+					Organization organization =
+						_organizationLocalService.getOrganization(userOrgId);
 
-					while (!suborganizations.isEmpty()) {
-						organizations.addAll(suborganizations);
+					for (Organization suborganization :
+							_organizationLocalService.getOrganizations(
+								companyId, organization.getTreePath() + "%")) {
 
-						suborganizations =
-							_organizationLocalService.getSuborganizations(
-								suborganizations);
+						organizationIds.add(
+							suborganization.getOrganizationId());
 					}
 				}
+			}
 
-				if (!organizations.isEmpty()) {
-					long[] organizationIds = organizations.stream(
-					).mapToLong(
-						OrganizationModel::getOrganizationId
-					).toArray();
-
-					termsFilter.addValues(
-						ArrayUtil.toStringArray(organizationIds));
-				}
+			if (!organizationIds.isEmpty()) {
+				termsFilter.addValues(ArrayUtil.toStringArray(organizationIds));
 			}
 
 			if (!termsFilter.isEmpty()) {

@@ -159,17 +159,17 @@ public class FragmentEditableElementUtil {
 			TextInlineFragmentValue textInlineFragmentValue =
 				(TextInlineFragmentValue)textFragmentValue;
 
-			FragmentInlineValue inlineValue =
+			FragmentInlineValue fragmentInlineValue =
 				textInlineFragmentValue.getFragmentInlineValue();
 
-			if (inlineValue == null) {
+			if (fragmentInlineValue == null) {
 				return jsonObject;
 			}
 
 			Map<String, String> languageIdMap =
 				LocalizedMapUtil.getLanguageIdMap(
 					LocalizedMapUtil.getLocalizedMap(
-						inlineValue.getValue_i18n()));
+						fragmentInlineValue.getValue_i18n()));
 
 			for (Map.Entry<String, String> entry : languageIdMap.entrySet()) {
 				jsonObject.put(entry.getKey(), entry.getValue());

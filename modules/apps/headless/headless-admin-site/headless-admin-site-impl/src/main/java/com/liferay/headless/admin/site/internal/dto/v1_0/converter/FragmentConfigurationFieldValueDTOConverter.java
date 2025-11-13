@@ -162,10 +162,10 @@ public class FragmentConfigurationFieldValueDTOConverter
 		}
 
 		long categoryTreeNodeId = jsonObject.getLong("categoryTreeNodeId");
-		String externalReferenceCode = jsonObject.getString(
-			"externalReferenceCode");
 		String categoryTreeNodeType = jsonObject.getString(
 			"categoryTreeNodeType");
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
 
 		if (((categoryTreeNodeId == 0) &&
 			 Validator.isNull(externalReferenceCode)) ||

@@ -415,7 +415,8 @@ public class LayoutServiceContextHelperImpl
 
 			themeDisplay.setPortalURL(
 				_portal.getPortalURL(
-					company.getVirtualHostname(), portalServerPort, httpsEnabled));
+					company.getVirtualHostname(), portalServerPort,
+					httpsEnabled));
 
 			themeDisplay.setRealUser(user);
 			themeDisplay.setScopeGroupId(_group.getGroupId());

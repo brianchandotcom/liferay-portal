@@ -19,7 +19,7 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 
 	return (
 		<Panel
-			className='card-root p-3'
+			className='card-root'
 			collapsable
 			defaultExpanded
 			displayTitle={
@@ -28,7 +28,7 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 				</Panel.Title>
 			}
 		>
-			<Panel.Body className='criteria-card-root pt-3'>
+			<Panel.Body className='criteria-card-root'>
 				{includeAnonymousUsers && (
 					<Label display='info' size='lg' uppercase>
 						{Liferay.Language.get('includes-anonymous-individuals')}

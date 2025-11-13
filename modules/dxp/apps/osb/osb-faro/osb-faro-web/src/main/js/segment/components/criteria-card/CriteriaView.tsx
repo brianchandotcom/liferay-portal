@@ -69,7 +69,7 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 	};
 
 	return (
-		<div className='criteria-view-root' ref={forwardedRef}>
+		<div className='criteria-view-root pt-2' ref={forwardedRef}>
 			{renderCriteriaGroup(criteria)}
 		</div>
 	);

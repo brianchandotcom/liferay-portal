@@ -144,13 +144,13 @@
 	<div class="d-flex flex-column mt-4">
 		<#if (appDocumentationURL?has_content || appInstallationGuideURL?has_content)>
 			<div class="d-flex mb-4">
-				<span class="support-modal-icon" id="installation-documentation">
+				<span class="support-modal-icon" id="app-documentation">
 					<@clay["icon"] symbol="document" />
 				</span>
 
 				<a class="d-flex support-modal justify-content-between w-100" href="javascript:void(0)" onClick="openInstallationDocsModal();">
 					<span class="ml-1 ">
-						${languageUtil.get(locale, "installation-documentation", "Installation Documentation")}
+						${languageUtil.get(locale, "app-documentation", "App Documentation")}
 					</span>
 				</a>
 			</div>
@@ -200,7 +200,7 @@
 
 			<a
 				class="d-flex justify-content-between support-link w-100"
-				href="${(appUsageTerms?has_content)?then(appUsageTerms, 'https://marketplace.liferay.com/license-agreement')}"
+				href="${(appUsageTerms?has_content)?then(appUsageTerms, '/documents/d/marketplace/end_user_license_agreement-pdf')}"
 				target="_blank">
 
 				<span class="ml-1">
@@ -269,7 +269,7 @@
 					<div class="d-flex flex-column">
 						<span class="text-black-50">${languageUtil.get(locale, "app-documentation-url", "App Documentation URL")}</span>
 
-						<a class="font-weight-bold" href="tel:${appDocumentationURL}" target="_blank">
+						<a class="font-weight-bold" href="${appDocumentationURL}" target="_blank">
 							${appDocumentationURL}
 						</a>
 					</div>
@@ -288,7 +288,7 @@
 					<div class="d-flex flex-column">
 						<span class="text-black-50">${languageUtil.get(locale, "app-installation-guide-url", "App Installation Guide URL")}</span>
 
-						<a class="font-weight-bold" href="tel:${appInstallationGuideURL}" target="_blank">
+						<a class="font-weight-bold" href="${appInstallationGuideURL}" target="_blank">
 							${appInstallationGuideURL}
 						</a>
 					</div>
@@ -410,7 +410,7 @@
 	}
 
 	.support-link-icon {
-		color: #0B5FFF;#54555F
+		color: #0B5FFF;
 	}
 
 	.support-link-icon-arrow {

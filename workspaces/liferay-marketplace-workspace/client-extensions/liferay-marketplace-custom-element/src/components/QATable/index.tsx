@@ -17,7 +17,7 @@ type QAItem = {
 	className?: HTMLAttributes<HTMLTableRowElement>['className'];
 	divider?: boolean;
 	flexHeading?: boolean;
-	title: string;
+	title: string | ReactNode;
 	value: string | ReactNode;
 	visible?: boolean;
 };

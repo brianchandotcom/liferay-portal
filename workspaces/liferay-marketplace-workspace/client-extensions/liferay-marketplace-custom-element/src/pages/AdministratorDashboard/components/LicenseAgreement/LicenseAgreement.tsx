@@ -28,7 +28,7 @@ const LicenseAgreement = () => (
 					displayType="secondary"
 					onClick={() =>
 						window.open(
-							`/documents/d/${getSiteName()}/developer_agreement_marketplace-pdf`
+							`/documents/d/${getSiteName()}/liferay_publisher_license_argeement-pdf`
 						)
 					}
 				>

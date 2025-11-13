@@ -17,6 +17,7 @@ import {getCustomFieldValue} from '../../../../utils/customFieldUtil';
 import {getAccountImage} from '../../../../utils/util';
 
 import './Accounts.scss';
+import {getSiteName} from '../../../../utils/site';
 
 type AccountDetailsPageProps = {
 	selectedAccount: Account;
@@ -252,8 +253,15 @@ function AccountDetailsPage({
 							<QATable
 								items={[
 									{
-										title: i18n.translate(
-											'liferay-publisher-license-agreement'
+										title: (
+											<a
+												href={`/documents/d/${getSiteName()}/liferay_publisher_license_argeement-pdf`}
+												target="_blank"
+											>
+												{i18n.translate(
+													'liferay-publisher-license-agreement'
+												)}
+											</a>
 										),
 										value: (
 											<ClayIcon
@@ -263,8 +271,15 @@ function AccountDetailsPage({
 										),
 									},
 									{
-										title: i18n.translate(
-											'end-user-license-agreement'
+										title: (
+											<a
+												href={`/documents/d/${getSiteName()}/end_user_license_agreement-pdf`}
+												target="_blank"
+											>
+												{i18n.translate(
+													'end-user-license-agreement'
+												)}
+											</a>
 										),
 										value: (
 											<ClayIcon

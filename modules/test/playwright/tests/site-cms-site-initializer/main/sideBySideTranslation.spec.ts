@@ -240,11 +240,19 @@ test(
 			'readonly'
 		);
 
-		// Change right side language and translate
+		// Change right side language
 
 		const rightLocalizationSelectPage = new LocalizationSelectPage(page, 1);
 
 		await rightLocalizationSelectPage.switchLanguage('es-ES');
+
+		// Check left side language does not change
+
+		const localizationSelectPage = new LocalizationSelectPage(page);
+
+		await expect(localizationSelectPage.trigger).toHaveText('en-US');
+
+		// Translate in right side
 
 		const spanishTitle = `Spanish ${contentTitle}`;
 
@@ -257,8 +265,6 @@ test(
 		]);
 
 		// Change left side language and check it shows persisted values
-
-		const localizationSelectPage = new LocalizationSelectPage(page);
 
 		await localizationSelectPage.switchLanguage('es-ES');
 

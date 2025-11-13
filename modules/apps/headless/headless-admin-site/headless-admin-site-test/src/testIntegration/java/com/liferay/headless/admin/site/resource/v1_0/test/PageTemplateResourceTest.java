@@ -1195,8 +1195,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		for (PageTemplate pageTemplate : page.getItems()) {
 			if (StringUtil.equals(
-					postPageTemplate.getExternalReferenceCode(),
-					pageTemplate.getExternalReferenceCode())) {
+					pageTemplate.getExternalReferenceCode(),
+					postPageTemplate.getExternalReferenceCode())) {
 
 				URLReference thumbnail = pageTemplate.getThumbnail();
 

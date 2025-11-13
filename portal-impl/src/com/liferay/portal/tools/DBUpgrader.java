@@ -176,10 +176,11 @@ public class DBUpgrader {
 			InitUtil.initWithSpring(
 				ListUtil.fromArray(
 					PropsUtil.getArray(PropsKeys.SPRING_CONFIGS)),
-				true, false, () ->  {
+				true, false,
+				() -> {
 					StartupHelperUtil.setUpgrading(true);
 
-					DBUpgrader.startUpgradeLogAppender();
+					startUpgradeLogAppender();
 				});
 
 			StartupHelperUtil.printPatchLevel();

@@ -228,9 +228,7 @@ public class DBUpgraderTest {
 
 			StartupHelperUtil.setUpgrading(true);
 
-			DBUpgrader.upgradeModules(
-				() -> {
-				});
+			DBUpgrader.upgradeModules();
 
 			DBInspector dbInspector = new DBInspector(_connection);
 
@@ -238,18 +236,14 @@ public class DBUpgraderTest {
 
 			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 
-			DBUpgrader.upgradeModules(
-				() -> {
-				});
+			DBUpgrader.upgradeModules();
 
 			Assert.assertTrue(dbInspector.hasIndex("Lock_", "IX_TEST"));
 
 			ReflectionTestUtil.setFieldValue(
 				StartupHelperUtil.class, "_newRelease", true);
 
-			DBUpgrader.upgradeModules(
-				() -> {
-				});
+			DBUpgrader.upgradeModules();
 
 			Assert.assertFalse(dbInspector.hasIndex("Lock_", "IX_TEST"));
 		}

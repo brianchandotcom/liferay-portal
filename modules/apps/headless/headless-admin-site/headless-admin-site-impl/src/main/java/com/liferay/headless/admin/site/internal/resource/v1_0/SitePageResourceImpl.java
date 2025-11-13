@@ -154,10 +154,19 @@ public class SitePageResourceImpl
 				return HashMapBuilder.<String, Serializable>put(
 					"filter",
 					() -> {
+						if (portletDataContext.getLayoutIds() == null) {
+							return null;
+						}
+
 						if ((portletDataContext.getLayoutIds() == null) ||
-							(portletDataContext.getLayoutIds().length == 0) ||
-							((portletDataContext.getLayoutIds().length == 1) &&
-							 (portletDataContext.getLayoutIds()[0] == 0))) {
+							(portletDataContext.getLayoutIds().length == 0)) {
+
+							return "externalReferenceCode eq null and " +
+								"externalReferenceCode ne null";
+						}
+
+						if ((portletDataContext.getLayoutIds().length == 1) &&
+							(portletDataContext.getLayoutIds()[0] == 0)) {
 
 							return null;
 						}

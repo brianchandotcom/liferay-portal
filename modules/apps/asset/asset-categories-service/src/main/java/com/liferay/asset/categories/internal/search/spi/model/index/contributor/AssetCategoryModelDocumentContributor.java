@@ -81,7 +81,6 @@ public class AssetCategoryModelDocumentContributor
 			document, Field.TITLE, siteDefaultLocale,
 			assetCategory.getTitleMap());
 
-		document.addKeyword("treePath", assetCategory.getTreePath());
 		document.addLocalizedKeyword(
 			"localized_title",
 			_localization.populateLocalizationMap(
@@ -89,6 +88,7 @@ public class AssetCategoryModelDocumentContributor
 				assetCategory.getDefaultLanguageId(),
 				assetCategory.getGroupId()),
 			true, true);
+		document.addKeyword("treePath", assetCategory.getTreePath());
 	}
 
 	protected Locale getSiteDefaultLocale(AssetCategory assetCategory) {

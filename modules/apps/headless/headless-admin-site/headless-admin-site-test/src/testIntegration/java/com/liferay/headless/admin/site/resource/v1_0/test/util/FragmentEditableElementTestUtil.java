@@ -54,14 +54,17 @@ public class FragmentEditableElementTestUtil {
 	private static FragmentMappedValueItemContextReference
 		_getFragmentMappedValueItemContextReference(
 			FragmentMappedValueItemContextReference.ContextSource
-				curContextSource) {
+				contextSource) {
 
-		return new FragmentMappedValueItemContextReference() {
-			{
-				setContextSource(curContextSource);
-				setType(Type.CONTEXT_REFERENCE);
-			}
-		};
+		FragmentMappedValueItemContextReference
+			fragmentMappedValueItemContextReference =
+				new FragmentMappedValueItemContextReference();
+
+		fragmentMappedValueItemContextReference.setContextSource(contextSource);
+		fragmentMappedValueItemContextReference.setType(
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
+		return fragmentMappedValueItemContextReference;
 	}
 
 	private static FragmentMappedValueItemExternalReference

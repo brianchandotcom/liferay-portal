@@ -130,8 +130,8 @@ public class DBUpgradeClientTest {
 	public void testAddDefaultJVMOptsDoesNotOverrideCustom() throws Exception {
 		List<String> jvmOpts = new ArrayList<>();
 
-		jvmOpts.add("-Xmx8192m");
 		jvmOpts.add("-Dfile.encoding=ISO-8859-1");
+		jvmOpts.add("-Xmx8192m");
 
 		ReflectionTestUtil.invoke(
 			DBUpgradeClient.class, "_addDefaultJVMOpts",

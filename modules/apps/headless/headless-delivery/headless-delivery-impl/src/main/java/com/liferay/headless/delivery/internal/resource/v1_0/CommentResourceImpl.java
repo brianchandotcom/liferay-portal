@@ -397,7 +397,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return CommentUtil.toComment(
-			_commentManager.addEntityComment(
+			_commentManager.addComment(
 				comment.getExternalReferenceCode(), blogsEntry.getGroupId(),
 				BlogsEntry.class.getName(), blogPostingId, comment.getText()),
 			_commentManager, _portal);
@@ -415,7 +415,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return CommentUtil.toComment(
-			_commentManager.addParentComment(
+			_commentManager.addComment(
 				comment.getExternalReferenceCode(), parentComment.getGroupId(),
 				parentComment.getCommentId(), parentComment.getClassName(),
 				parentComment.getClassPK(), comment.getText()),
@@ -429,7 +429,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DLFileEntry fileEntry = _dlFileEntryService.getFileEntry(documentId);
 
 		return CommentUtil.toComment(
-			_commentManager.addEntityComment(
+			_commentManager.addComment(
 				comment.getExternalReferenceCode(), fileEntry.getGroupId(),
 				DLFileEntry.class.getName(), documentId, comment.getText()),
 			_commentManager, _portal);
@@ -444,7 +444,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			structuredContentId);
 
 		return CommentUtil.toComment(
-			_commentManager.addEntityComment(
+			_commentManager.addComment(
 				comment.getExternalReferenceCode(), journalArticle.getGroupId(),
 				JournalArticle.class.getName(), structuredContentId,
 				comment.getText()),
@@ -483,7 +483,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return CommentUtil.toComment(
-			_commentManager.addEntityComment(
+			_commentManager.addComment(
 				externalReferenceCode, blogsEntry.getGroupId(),
 				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 				comment.getText()),
@@ -515,7 +515,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return CommentUtil.toComment(
-			_commentManager.addParentComment(
+			_commentManager.addComment(
 				externalReferenceCode, parentComment.getGroupId(),
 				parentComment.getCommentId(), parentComment.getClassName(),
 				parentComment.getClassPK(), comment.getText()),
@@ -545,7 +545,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return CommentUtil.toComment(
-			_commentManager.addEntityComment(
+			_commentManager.addComment(
 				externalReferenceCode, dlFileEntry.getGroupId(),
 				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
 				comment.getText()),
@@ -575,7 +575,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return CommentUtil.toComment(
-			_commentManager.addEntityComment(
+			_commentManager.addComment(
 				externalReferenceCode, journalArticle.getGroupId(),
 				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey(), comment.getText()),

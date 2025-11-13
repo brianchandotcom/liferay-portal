@@ -7,6 +7,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.document.library.kernel.exception.DuplicateFolderExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FolderNameException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
@@ -121,6 +122,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		parentFolderId = getParentFolderId(
 			groupId, repositoryId, parentFolderId);
 		Date date = new Date();
+
+		validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		validateFolder(groupId, parentFolderId, name);
 
@@ -1364,6 +1367,25 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		return parentDLFolder.getFolderId();
+	}
+
+	protected void validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws DuplicateFolderExternalReferenceCodeException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		DLFolder dlFolder = dlFolderPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		if (dlFolder != null) {
+			throw new DuplicateFolderExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate folder external reference code ",
+					externalReferenceCode, " in group ", groupId));
+		}
 	}
 
 	protected void validateFolder(

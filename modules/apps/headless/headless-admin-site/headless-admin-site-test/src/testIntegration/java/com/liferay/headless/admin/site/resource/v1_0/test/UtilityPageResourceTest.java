@@ -712,7 +712,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	private void _testGetSiteUtilityPagesPageWithThumbnailAsNestedField()
 		throws Exception {
 
-		UtilityPage random = randomUtilityPage();
+		UtilityPage randomUtilityPage = randomUtilityPage();
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -723,7 +723,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		String thumbnailURL = RandomTestUtil.randomString();
 
-		random.setThumbnail(
+		randomUtilityPage.setThumbnail(
 			() -> new URLReference() {
 				{
 					setExternalReferenceCode(
@@ -733,7 +733,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			});
 
 		UtilityPage postUtilityPage = testPostSiteUtilityPage_addUtilityPage(
-			random);
+			randomUtilityPage);
 
 		UtilityPageResource utilityPageResource = _getUtilityPageResource();
 
@@ -745,14 +745,13 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					postUtilityPage.getExternalReferenceCode(),
 					utilityPage.getExternalReferenceCode())) {
 
+				URLReference thumbnail = utilityPage.getThumbnail();
+
 				_assertThumbnailURLReference(
 					false, postUtilityPage.getExternalReferenceCode(),
-					utilityPage.getThumbnail(
-					).getExternalReferenceCode());
+					thumbnail.getExternalReferenceCode());
 
-				URL url = new URL(
-					utilityPage.getThumbnail(
-					).getUrl());
+				URL url = new URL(thumbnail.getUrl());
 
 				URLConnection urlConnection = url.openConnection();
 

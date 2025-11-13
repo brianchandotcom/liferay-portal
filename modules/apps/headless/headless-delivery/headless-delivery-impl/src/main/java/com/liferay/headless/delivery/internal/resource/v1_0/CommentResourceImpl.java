@@ -396,11 +396,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				comment.getExternalReferenceCode(), blogsEntry.getGroupId(),
-				BlogsEntry.class.getName(), blogPostingId, comment.getText()),
-			_commentManager, _portal);
+		return _postComment(
+			comment.getExternalReferenceCode(), blogsEntry.getGroupId(), null,
+			BlogsEntry.class.getName(), blogPostingId, comment.getText());
 	}
 
 	@Override
@@ -414,12 +412,10 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				comment.getExternalReferenceCode(), parentComment.getGroupId(),
-				parentComment.getCommentId(), parentComment.getClassName(),
-				parentComment.getClassPK(), comment.getText()),
-			_commentManager, _portal);
+		return _postComment(
+			comment.getExternalReferenceCode(), parentComment.getGroupId(),
+			parentComment.getCommentId(), parentComment.getClassName(),
+			parentComment.getClassPK(), comment.getText());
 	}
 
 	@Override
@@ -428,11 +424,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		DLFileEntry fileEntry = _dlFileEntryService.getFileEntry(documentId);
 
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				comment.getExternalReferenceCode(), fileEntry.getGroupId(),
-				DLFileEntry.class.getName(), documentId, comment.getText()),
-			_commentManager, _portal);
+		return _postComment(
+			comment.getExternalReferenceCode(), fileEntry.getGroupId(), null,
+			DLFileEntry.class.getName(), documentId, comment.getText());
 	}
 
 	@Override
@@ -443,12 +437,10 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				comment.getExternalReferenceCode(), journalArticle.getGroupId(),
-				JournalArticle.class.getName(), structuredContentId,
-				comment.getText()),
-			_commentManager, _portal);
+		return _postComment(
+			comment.getExternalReferenceCode(), journalArticle.getGroupId(),
+			null, JournalArticle.class.getName(), structuredContentId,
+			comment.getText());
 	}
 
 	@Override
@@ -482,12 +474,10 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				comment.getText());
 		}
 
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				externalReferenceCode, blogsEntry.getGroupId(),
-				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
-				comment.getText()),
-			_commentManager, _portal);
+		return _postComment(
+			comment.getExternalReferenceCode(), blogsEntry.getGroupId(), null,
+			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+			comment.getText());
 	}
 
 	@Override
@@ -514,12 +504,10 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				comment.getText());
 		}
 
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				externalReferenceCode, parentComment.getGroupId(),
-				parentComment.getCommentId(), parentComment.getClassName(),
-				parentComment.getClassPK(), comment.getText()),
-			_commentManager, _portal);
+		return _postComment(
+			comment.getExternalReferenceCode(), parentComment.getGroupId(),
+			parentComment.getCommentId(), parentComment.getClassName(),
+			parentComment.getClassPK(), comment.getText());
 	}
 
 	@Override
@@ -544,12 +532,10 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				comment.getText());
 		}
 
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				externalReferenceCode, dlFileEntry.getGroupId(),
-				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
-				comment.getText()),
-			_commentManager, _portal);
+		return _postComment(
+			comment.getExternalReferenceCode(), dlFileEntry.getGroupId(), null,
+			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
+			comment.getText());
 	}
 
 	@Override
@@ -574,12 +560,10 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				comment.getText());
 		}
 
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				externalReferenceCode, journalArticle.getGroupId(),
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey(), comment.getText()),
-			_commentManager, _portal);
+		return _postComment(
+			comment.getExternalReferenceCode(), journalArticle.getGroupId(),
+			null, JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey(), comment.getText());
 	}
 
 	private Function<String, ServiceContext> _createServiceContextFunction() {
@@ -726,6 +710,30 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return false;
+	}
+
+	private Comment _postComment(
+			String externalReferenceCode, long groupId, Long parentCommentId,
+			String className, long classPK, String text)
+		throws Exception {
+
+		_discussionPermission.checkAddPermission(
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getCompanyId(), groupId, className, classPK);
+
+		if (parentCommentId != null) {
+			return CommentUtil.toComment(
+				() -> _commentManager.addComment(
+					externalReferenceCode, groupId, parentCommentId, className,
+					classPK, StringBundler.concat("<p>", text, "</p>")),
+				_commentManager, _portal);
+		}
+
+		return CommentUtil.toComment(
+			() -> _commentManager.addComment(
+				externalReferenceCode, groupId, className, classPK,
+				StringBundler.concat("<p>", text, "</p>")),
+			_commentManager, _portal);
 	}
 
 	private Comment _updateComment(

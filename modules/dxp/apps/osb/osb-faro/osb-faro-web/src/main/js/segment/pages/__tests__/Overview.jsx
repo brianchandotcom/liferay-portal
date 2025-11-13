@@ -12,20 +12,44 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
+const segment = new Segment(
+	data.mockSegment(0, {
+		criteriaString: "(demographics/middleName/value eq 'additionalName')",
+		referencedObjects: {
+			fieldMappings: {
+				individual: {
+					demographics: {
+						middleName: {
+							context: 'demographics',
+							dataSourceFieldNames: {},
+							displayName: 'Middle Name',
+							displayType: 'input-field',
+							id: 'middleName',
+							name: 'additionalName',
+							ownerType: 'individual',
+							rawType: 'Text',
+							type: 'text'
+						}
+					}
+				}
+			}
+		}
+	})
+);
+
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({
+		timeZoneId: 'UTC'
+	})
+}));
+
 describe('SegmentOverview', () => {
 	it('should render', async () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<ApolloProvider client={client}>
 					<StaticRouter>
-						<Overview
-							groupId='23'
-							id='test'
-							segment={data.getImmutableMock(
-								Segment,
-								data.mockSegment
-							)}
-						/>
+						<Overview groupId='23' segment={segment} />
 					</StaticRouter>
 				</ApolloProvider>
 			</Provider>

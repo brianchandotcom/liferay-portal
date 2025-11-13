@@ -7,7 +7,6 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
-import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -176,16 +175,12 @@ public class FragmentLayoutStructureItemImporter
 		throws Exception {
 
 		return JSONUtil.merge(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				FragmentConfigurationFieldValuesUtil.
-					getFreeMarkerFragmentEntryProcessorJSONObject(
-						fragmentInstancePageElementDefinition.
-							getConfiguration(),
-						fragmentInstancePageElementDefinition.
-							getFragmentConfigurationFieldValues(),
-						layoutStructureItemImporterContext)),
+			FragmentConfigurationFieldValuesUtil.
+				getFragmentConfigurationFieldValuesEditableValuesJSONObject(
+					fragmentInstancePageElementDefinition.getConfiguration(),
+					fragmentInstancePageElementDefinition.
+						getFragmentConfigurationFieldValues(),
+					layoutStructureItemImporterContext),
 			FragmentElementUtil.getFragmentElementsEditableValuesJSONObject(
 				layoutStructureItemImporterContext.getCompanyId(),
 				fragmentInstancePageElementDefinition.getFragmentElements(),

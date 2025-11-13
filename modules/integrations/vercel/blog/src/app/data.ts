@@ -34,8 +34,8 @@ export async function getCMSBlogPostings({
 
 		if (!response.ok) {
 			return {
-				error: await response.text(),
 				data: null,
+				error: await response.text(),
 			};
 		}
 

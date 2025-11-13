@@ -41,7 +41,7 @@ export default async function Home({
 
 	return (
 		<PageTemplate>
-			<ol className="gap-4 grid grid-cols-1 sm:grid-cols-2 mb-4 text-left text-sm/6">
+			<ol className="gap-4 grid grid-cols-1 mb-4 sm:grid-cols-2 text-left text-sm/6">
 				{data.items.map((blog, index) => {
 					const src = liferay.getDocument(
 						blog.coverImage?.link.href ?? ''
@@ -108,7 +108,7 @@ export default async function Home({
 				})}
 			</ol>
 
-			{data.totalCount > 20 && (
+			{data.lastPage > 1 && (
 				<Pagination currentPage={page} lastPage={data.lastPage} />
 			)}
 		</PageTemplate>

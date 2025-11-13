@@ -8,9 +8,9 @@ import Image from 'next/image';
 import {PropsWithChildren} from 'react';
 
 import {Button} from '../../components/button';
+import PreviewHTML from '../../components/preview-html';
 import {liferay} from '../../liferay/server';
 import {getCMSBlogPosting} from './data';
-import PreviewHTML from '../../components/preview-html';
 
 interface PageProps {
 	params: Promise<{blogPostId: [string, string]}>;
@@ -18,7 +18,7 @@ interface PageProps {
 
 const PageTemplate = ({children}: PropsWithChildren) => {
 	return (
-		<div className="mx-auto w-full max-w-4xl px-6 sm:px-8">{children}</div>
+		<div className="max-w-4xl mx-auto px-6 sm:px-8 w-full">{children}</div>
 	);
 };
 

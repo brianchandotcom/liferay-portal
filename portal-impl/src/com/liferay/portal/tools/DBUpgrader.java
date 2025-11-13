@@ -176,7 +176,11 @@ public class DBUpgrader {
 			InitUtil.initWithSpring(
 				ListUtil.fromArray(
 					PropsUtil.getArray(PropsKeys.SPRING_CONFIGS)),
-				true, false, () -> StartupHelperUtil.setUpgrading(true));
+				true, false, () ->  {
+					StartupHelperUtil.setUpgrading(true);
+
+					DBUpgrader.startUpgradeLogAppender();
+				});
 
 			StartupHelperUtil.printPatchLevel();
 
@@ -184,7 +188,7 @@ public class DBUpgrader {
 
 			InitUtil.registerContext();
 
-			upgradeModules(() -> StartupHelperUtil.setUpgrading(false));
+			upgradeModules();
 
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -297,7 +301,7 @@ public class DBUpgrader {
 			).getTime());
 	}
 
-	public static void upgradeModules(Runnable upgradeModulesCallbackRunnable) {
+	public static void upgradeModules() {
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortalInitialized);
 
@@ -312,11 +316,13 @@ public class DBUpgrader {
 			IndexUpdaterUtil.updateAllIndexes();
 		}
 
+		StartupHelperUtil.setUpgrading(false);
+
 		Bundle bundle = BundleUtil.getBundle(
 			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
 
 		if ((bundle == null) || (bundle.getState() == Bundle.INSTALLED)) {
-			upgradeModulesCallbackRunnable.run();
+			stopUpgradeLogAppender();
 		}
 
 		_registerModuleServiceLifecycle(

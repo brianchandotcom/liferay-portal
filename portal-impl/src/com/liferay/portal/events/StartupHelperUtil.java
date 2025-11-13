@@ -148,12 +148,8 @@ public class StartupHelperUtil {
 				_serviceRegistration = bundleContext.registerService(
 					LogContext.class, UpgradeLogContext.getInstance(), null);
 			}
-
-			DBUpgrader.startUpgradeLogAppender();
 		}
 		else {
-			DBUpgrader.stopUpgradeLogAppender();
-
 			ServiceRegistration<?> serviceRegistration = _serviceRegistration;
 
 			if (serviceRegistration != null) {

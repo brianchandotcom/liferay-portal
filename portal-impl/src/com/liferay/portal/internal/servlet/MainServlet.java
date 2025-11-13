@@ -383,8 +383,7 @@ public class MainServlet extends HttpServlet {
 		}
 
 		if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
-			DBUpgrader.upgradeModules(
-				() -> StartupHelperUtil.setUpgrading(false));
+			DBUpgrader.upgradeModules();
 		}
 		else if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP &&
 				 !StartupHelperUtil.isDBNew()) {

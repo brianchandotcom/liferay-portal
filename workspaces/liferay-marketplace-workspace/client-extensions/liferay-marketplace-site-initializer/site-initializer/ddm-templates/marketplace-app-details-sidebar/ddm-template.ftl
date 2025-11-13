@@ -200,7 +200,7 @@
 
 			<a
 				class="d-flex justify-content-between support-link w-100"
-				href="${(appUsageTerms?has_content)?then(appUsageTerms, '/documents/d/marketplace/end_user_license_agreement-pdf')}"
+				href="/documents/d/marketplace/end_user_license_agreement-pdf"
 				target="_blank">
 
 				<span class="ml-1">

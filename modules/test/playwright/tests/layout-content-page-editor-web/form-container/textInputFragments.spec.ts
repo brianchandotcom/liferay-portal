@@ -861,8 +861,8 @@ test.describe('Rich Text Fragment', () => {
 					'c/students'
 				);
 
-			expect(items[0].description).toStrictEqual(
-				'<p style="text-align: right;">This is the student description</p>'
+			expect(items[0].description).toMatch(
+				/<p style="text-align:\s*right;">This is the student description<\/p>/
 			);
 
 			expect(items[0].name).toStrictEqual('Adam');

@@ -101,6 +101,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 
 					preparedStatement.setLong(1, ctCollectionId);
 					preparedStatement.setLong(2, layoutClassedModelUsageId);
+
 					preparedStatement.executeUpdate();
 				}
 			}

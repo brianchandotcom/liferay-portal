@@ -148,8 +148,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		return mbMessage.getMessageId();
 	}
 
-	@Override
-	public Comment addComment(
+	private Comment _doAddComment(
 			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier,
 			String className, long classPK, long groupId)
 		throws Exception {
@@ -200,7 +199,7 @@ public class MBCommentManagerImpl implements CommentManager {
 			long classPK, String text)
 		throws Exception {
 
-		return addComment(
+		return _doAddComment(
 			() -> addComment(
 				externalReferenceCode, PrincipalThreadLocal.getUserId(),
 				groupId, className, classPK, StringPool.BLANK, StringPool.BLANK,

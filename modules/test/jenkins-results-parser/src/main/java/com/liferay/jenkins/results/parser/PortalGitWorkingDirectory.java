@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -377,8 +380,48 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			AntUtil.callTarget(
 				workingDirectory, "build.xml", "setup-sdk setup-yarn", null,
 				filteredEnv);
+
+			File nodeModulesCacheDir = new File(
+				workingDirectory, "modules/node_modules_cache");
+
+			if (!nodeModulesCacheDir.exists()) {
+				return;
+			}
+
+			for (File file :
+					nodeModulesCacheDir.listFiles(
+						JenkinsResultsParserUtil.newFilenameFilter(
+							"@esbuild-linux-.*(arm64|x64).*"))) {
+
+				Matcher matcher = _esBuildFileNamePattern.matcher(
+					file.getName());
+
+				if (matcher.find()) {
+					File esBuildDir = new File(
+						getWorkingDirectory(),
+						"modules/node_modules/@esbuild/" + matcher.group(1));
+
+					if (esBuildDir.exists()) {
+						continue;
+					}
+
+					File tmpDir = new File(getWorkingDirectory(), "tmp");
+
+					JenkinsResultsParserUtil.unTarGzip(file, tmpDir);
+
+					JenkinsResultsParserUtil.move(
+						new File(tmpDir, "package"), esBuildDir);
+
+					File esBuildBinFile = new File(esBuildDir, "bin/esbuild");
+
+					JenkinsResultsParserUtil.executeBashCommands(
+						"chmod +x " + esBuildBinFile);
+
+					JenkinsResultsParserUtil.delete(tmpDir);
+				}
+			}
 		}
-		catch (AntException antException) {
+		catch (AntException | IOException | TimeoutException exception) {
 			throw new GitWorkingDirectoryRuntimeException(
 				this, "Failed to run setup-yarn in " + workingDirectory);
 		}
@@ -496,6 +539,9 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 		return false;
 	}
+
+	private static final Pattern _esBuildFileNamePattern = Pattern.compile(
+		"@esbuild-(linux-.*?)-.*");
 
 	private Properties _appServerProperties;
 	private List<File> _jsUnitFiles;

@@ -992,13 +992,13 @@ public class DBUpgradeClient {
 				"An existing database configuration was found in: " +
 					portalExtPropertiesFile.getAbsolutePath());
 			System.out.println(
-				"jdbc.default.driverClassName=" + driverClassName);
-			System.out.println("jdbc.default.url=" + url);
-			System.out.println("jdbc.default.username=" + userName);
+				"  jdbc.default.driverClassName=" + driverClassName);
+			System.out.println("  jdbc.default.url=" + url);
+			System.out.println("  jdbc.default.username=" + userName);
 			System.out.println(
-				"jdbc.default.password=" + password.replaceAll(".", "*"));
+				"  jdbc.default.password=" + password.replaceAll(".", "*"));
 
-			System.out.println("Use existing JDBC properties (y/N):");
+			System.out.println("\nUse existing JDBC properties (y/N):");
 
 			response = _consoleReader.readLine();
 

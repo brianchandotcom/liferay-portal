@@ -91,6 +91,87 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 	}
 
 	@Test
+	public void testDeployWorkflowDefinitionWithAIDecisionNode()
+		throws Exception {
+
+		AssertUtils.assertFailure(
+			KaleoDefinitionValidationException.MustSetIncomingTransition.class,
+			"The AI Decision node must have an incoming transition",
+			() -> {
+				InputStream inputStream = getResourceInputStream(
+					"ai-decision-node-with-no-incoming-transitions-workflow-" +
+						"definition.json");
+
+				_workflowDefinitionManager.deployWorkflowDefinition(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(),
+					"AI Decision Node With No Incoming Transitions Workflow " +
+						"Definition",
+					FileUtil.getBytes(inputStream));
+			});
+		AssertUtils.assertFailure(
+			KaleoDefinitionValidationException.
+				MustSetMultipleOutgoingTransition.class,
+			"The AI Decision node must have at least 2 outgoing transitions",
+			() -> {
+				InputStream inputStream = getResourceInputStream(
+					"ai-decision-node-with-less-than-two-outgoing-transition-" +
+						"workflow-definition.json");
+
+				_workflowDefinitionManager.deployWorkflowDefinition(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(),
+					"AI Decision Node With Less Than Two Outgoing Transition " +
+						"Workflow Definition",
+					FileUtil.getBytes(inputStream));
+			});
+
+		InputStream inputStream = getResourceInputStream(
+			"ai-decision-node-workflow-definition.json");
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				"AI Decision Node Workflow Definition",
+				FileUtil.getBytes(inputStream));
+
+		List<WorkflowNode> workflowNodes =
+			workflowDefinition.getWorkflowNodes();
+
+		WorkflowNode workflowNode = workflowNodes.get(1);
+
+		Assert.assertEquals(
+			WorkflowNode.Type.AI_DECISION, workflowNode.getType());
+
+		_assertEquals(
+			List.of(
+				_createWorkflowNodeSetting(
+					"inputVariables",
+					JSONUtil.put(
+						JSONUtil.put(
+							"name", "inputVariable"
+						).put(
+							"type", "string"
+						)
+					).toString()),
+				_createWorkflowNodeSetting(
+					"outputVariables",
+					JSONUtil.put(
+						JSONUtil.put(
+							"name", "outputVariable"
+						).put(
+							"type", "string"
+						)
+					).toString()),
+				_createWorkflowNodeSetting("prompt", "Prompt"),
+				_createWorkflowNodeSetting("userMessage", "User Message")),
+			workflowNode.getWorkflowNodeSettings());
+	}
+
+	@Test
 	public void testDeployWorkflowDefinitionWithContentAsJSON()
 		throws Exception {
 

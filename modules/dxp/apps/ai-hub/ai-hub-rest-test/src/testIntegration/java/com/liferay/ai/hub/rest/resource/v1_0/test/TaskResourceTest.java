@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.WorkflowNode;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
@@ -70,7 +72,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			StringUtil.randomId(), _WORKFLOW_DEFINITION_NAME,
-			_getContentBytes());
+			_getContentBytes("workflow-definition.json"));
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			StringUtil.randomId(), "AI Decision Node Workflow Definition",
+			_getContentBytes("ai-decision-node-workflow-definition.json"));
 	}
 
 	@After
@@ -89,6 +95,21 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	public void testPostTask() throws Exception {
 		_testPostTask();
 		_testPostTaskWithScope();
+	}
+
+	@Ignore
+	@Test
+	public void testPostTaskWithTypeAIDecisionWorkflowDefinition()
+		throws Exception {
+
+		_testPostTaskWithTypeAIDecisionWorkflowDefinition(
+			"Blue banana, or Blue Java, is a variety of a banana that grows " +
+				"in Brazil.",
+			"approved");
+		_testPostTaskWithTypeAIDecisionWorkflowDefinition(
+			"Innovative technology transforms everyday life with smarter " +
+				"digital solutions.",
+			"rejected");
 	}
 
 	@Ignore
@@ -117,9 +138,9 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertEquals("data: This text is wrong.", lines.get(4));
 	}
 
-	private static byte[] _getContentBytes() throws Exception {
+	private static byte[] _getContentBytes(String fileName) throws Exception {
 		InputStream inputStream = TaskResourceTest.class.getResourceAsStream(
-			"dependencies/workflow-definition.json");
+			"dependencies/" + fileName);
 
 		String content = StringUtil.read(inputStream);
 
@@ -232,6 +253,37 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertEquals(
 			_WORKFLOW_DEFINITION_NAME,
 			workflowInstance.getWorkflowDefinitionName());
+	}
+
+	private void _testPostTaskWithTypeAIDecisionWorkflowDefinition(
+			String content, String workflowNodeName)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"context", JSONUtil.put("content", content)
+			).put(
+				"type", "AI Decision Node Workflow Definition"
+			).toString(),
+			"ai-hub/v1.0/tasks", Http.Method.POST);
+
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				WorkflowInstance workflowInstance =
+					_workflowInstanceManager.getWorkflowInstance(
+						TestPropsValues.getCompanyId(),
+						jsonObject.getLong("externalReferenceCode"));
+
+				List<WorkflowNode> workflowNodes =
+					workflowInstance.getCurrentWorkflowNodes();
+
+				WorkflowNode workflowNode = workflowNodes.get(0);
+
+				Assert.assertEquals(workflowNodeName, workflowNode.getName());
+
+				return null;
+			});
 	}
 
 	private static final String _WORKFLOW_DEFINITION_NAME =

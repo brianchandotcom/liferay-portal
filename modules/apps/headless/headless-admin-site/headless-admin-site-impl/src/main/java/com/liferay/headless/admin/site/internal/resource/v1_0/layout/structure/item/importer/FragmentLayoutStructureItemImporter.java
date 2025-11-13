@@ -19,6 +19,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefin
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentElementUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.util.FragmentConfigurationFieldValuesUtil;
@@ -174,15 +175,22 @@ public class FragmentLayoutStructureItemImporter
 				layoutStructureItemImporterContext)
 		throws Exception {
 
-		return JSONUtil.put(
-			FragmentEntryProcessorConstants.
-				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-			FragmentConfigurationFieldValuesUtil.
-				getFreeMarkerFragmentEntryProcessorJSONObject(
-					fragmentInstancePageElementDefinition.getConfiguration(),
-					fragmentInstancePageElementDefinition.
-						getFragmentConfigurationFieldValues(),
-					layoutStructureItemImporterContext)
+		return JSONUtil.merge(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				FragmentConfigurationFieldValuesUtil.
+					getFreeMarkerFragmentEntryProcessorJSONObject(
+						fragmentInstancePageElementDefinition.
+							getConfiguration(),
+						fragmentInstancePageElementDefinition.
+							getFragmentConfigurationFieldValues(),
+						layoutStructureItemImporterContext)),
+			FragmentElementUtil.getFragmentElementsEditableValuesJSONObject(
+				layoutStructureItemImporterContext.getCompanyId(),
+				fragmentInstancePageElementDefinition.getFragmentElements(),
+				layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
+				layoutStructureItemImporterContext.getGroupId())
 		).toString();
 	}
 

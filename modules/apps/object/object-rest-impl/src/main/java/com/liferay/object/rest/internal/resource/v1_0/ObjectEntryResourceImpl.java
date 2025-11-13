@@ -33,12 +33,14 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -74,6 +76,7 @@ public class ObjectEntryResourceImpl
 
 	public ObjectEntryResourceImpl(
 		CommentManager commentManager,
+		DiscussionPermission discussionPermission,
 		DTOConverterRegistry dtoConverterRegistry,
 		EntityModelProvider entityModelProvider,
 		ObjectDefinition objectDefinition,
@@ -90,6 +93,7 @@ public class ObjectEntryResourceImpl
 		UserLocalService userLocalService) {
 
 		_commentManager = commentManager;
+		_discussionPermission = discussionPermission;
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_entityModelProvider = entityModelProvider;
 		_objectDefinition = objectDefinition;
@@ -755,6 +759,12 @@ public class ObjectEntryResourceImpl
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, _objectDefinition, null);
 
+		_discussionPermission.checkAddPermission(
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getCompanyId(),
+			_getNonzeroGroupId(objectEntry.getId()),
+			ObjectEntry.class.getName(), objectEntry.getId());
+
 		return CommentUtil.toComment(
 			() -> _commentManager.addComment(
 				comment.getExternalReferenceCode(),
@@ -1026,6 +1036,11 @@ public class ObjectEntryResourceImpl
 		ObjectEntry objectEntry = defaultObjectEntryManager.getObjectEntry(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, _objectDefinition, scopeKey);
+
+		_discussionPermission.checkAddPermission(
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getCompanyId(), objectEntry.getScopeId(),
+			ObjectEntry.class.getName(), objectEntry.getId());
 
 		return CommentUtil.toComment(
 			() -> _commentManager.addComment(
@@ -1515,6 +1530,7 @@ public class ObjectEntryResourceImpl
 		ObjectEntryResourceImpl.class);
 
 	private final CommentManager _commentManager;
+	private final DiscussionPermission _discussionPermission;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final EntityModelProvider _entityModelProvider;
 

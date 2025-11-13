@@ -477,12 +477,12 @@ public class DBUpgradeClientTest {
 		ReflectionTestUtil.setFieldValue(
 			_dbUpgradeClient, "_appServer", _appServer);
 
+		Properties properties = ReflectionTestUtil.getFieldValue(
+			_dbUpgradeClient, "_portalUpgradeExtProperties");
+
 		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyPortalUpgradeExtPropertiesDatabase",
 			new Class<?>[0]);
-
-		Properties properties = ReflectionTestUtil.getFieldValue(
-			_dbUpgradeClient, "_portalUpgradeExtProperties");
 
 		String consoleString = _consoleByteArrayOutputStream.toString();
 
@@ -502,14 +502,14 @@ public class DBUpgradeClientTest {
 			portalExtProperties.getProperty("jdbc.default.driverClassName"),
 			properties.getProperty("jdbc.default.driverClassName"));
 		Assert.assertEquals(
+			portalExtProperties.getProperty("jdbc.default.password"),
+			properties.getProperty("jdbc.default.password"));
+		Assert.assertEquals(
 			portalExtProperties.getProperty("jdbc.default.url"),
 			properties.getProperty("jdbc.default.url"));
 		Assert.assertEquals(
 			portalExtProperties.getProperty("jdbc.default.userName"),
 			properties.getProperty("jdbc.default.userName"));
-		Assert.assertEquals(
-			portalExtProperties.getProperty("jdbc.default.password"),
-			properties.getProperty("jdbc.default.password"));
 	}
 
 	@Test
@@ -687,11 +687,11 @@ public class DBUpgradeClientTest {
 		portalExtProperties.setProperty(
 			"jdbc.default.driverClassName", RandomTestUtil.randomString());
 		portalExtProperties.setProperty(
+			"jdbc.default.password", RandomTestUtil.randomString());
+		portalExtProperties.setProperty(
 			"jdbc.default.url", RandomTestUtil.randomString());
 		portalExtProperties.setProperty(
 			"jdbc.default.username", RandomTestUtil.randomString());
-		portalExtProperties.setProperty(
-			"jdbc.default.password", RandomTestUtil.randomString());
 
 		portalExtProperties.store(portalExtPropertiesFile);
 

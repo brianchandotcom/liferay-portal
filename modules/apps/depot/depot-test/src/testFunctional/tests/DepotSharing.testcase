@@ -229,6 +229,7 @@ definition {
 		DMNavigator.gotoShareInfoPanel(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
+			noAutocomplete = "true",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 

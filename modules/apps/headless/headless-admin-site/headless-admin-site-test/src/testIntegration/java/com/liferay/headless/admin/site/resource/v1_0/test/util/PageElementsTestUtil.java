@@ -186,7 +186,8 @@ public class PageElementsTestUtil {
 
 		if (fragmentEntry != null) {
 			return getFragmentInstancePageElementDefinition(
-				configurationValuesMap, fragmentEntry, scopeGroupId);
+				configurationValuesMap, new FragmentElement[0], fragmentEntry,
+				scopeGroupId);
 		}
 
 		FragmentRenderer fragmentRenderer =
@@ -194,7 +195,8 @@ public class PageElementsTestUtil {
 
 		if (fragmentRenderer != null) {
 			return getFragmentInstancePageElementDefinition(
-				configurationValuesMap, fragmentRenderer, scopeGroupId);
+				configurationValuesMap, new FragmentElement[0],
+				fragmentRenderer, scopeGroupId);
 		}
 
 		return null;

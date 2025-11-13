@@ -17,6 +17,7 @@ import com.liferay.portal.vulcan.internal.constants.VulcanConstants;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.Arrays;
@@ -28,14 +29,17 @@ import java.util.Map;
 /**
  * @author Alejandro Tardín
  */
-public class RESTClientHttpRequestDelegate {
+public class RESTClientHttpServletRequestWrapper
+	extends HttpServletRequestWrapper {
 
-	public RESTClientHttpRequestDelegate(
+	public RESTClientHttpServletRequestWrapper(
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest, String pathInfo) {
 
+		super(httpServletRequest);
+
 		_attributes = HashMapBuilder.<String, Object>put(
-			RESTClientHttpRequestDelegate.class.getName(), true
+			RESTClientHttpServletRequestWrapper.class.getName(), true
 		).put(
 			WebKeys.USER,
 			() -> {
@@ -86,6 +90,7 @@ public class RESTClientHttpRequestDelegate {
 		_pathInfo = pathInfo;
 	}
 
+	@Override
 	public Object getAttribute(String name) {
 		Object attributeValue = _attributes.get(name);
 
@@ -102,14 +107,17 @@ public class RESTClientHttpRequestDelegate {
 		return _httpServletRequest.getAttribute(name);
 	}
 
+	@Override
 	public DispatcherType getDispatcherType() {
 		return DispatcherType.FORWARD;
 	}
 
+	@Override
 	public String getHeader(String name) {
 		return _headers.get(name);
 	}
 
+	@Override
 	public Enumeration<String> getHeaders(String name) {
 		String value = _headers.get(name);
 
@@ -120,38 +128,47 @@ public class RESTClientHttpRequestDelegate {
 		return Collections.emptyEnumeration();
 	}
 
+	@Override
 	public String getMethod() {
 		return HttpMethods.GET;
 	}
 
+	@Override
 	public String getParameter(String name) {
 		return null;
 	}
 
+	@Override
 	public Map<String, String[]> getParameterMap() {
 		return Collections.emptyMap();
 	}
 
+	@Override
 	public Enumeration<String> getParameterNames() {
 		return Collections.emptyEnumeration();
 	}
 
+	@Override
 	public String[] getParameterValues(String name) {
 		return new String[0];
 	}
 
+	@Override
 	public String getPathInfo() {
 		return _pathInfo;
 	}
 
+	@Override
 	public void removeAttribute(String name) {
 		_attributes.remove(name);
 	}
 
+	@Override
 	public void setAttribute(String name, Object object) {
 		_attributes.put(name, object);
 	}
 
+	@Override
 	public void setCharacterEncoding(String characterEncoding) {
 	}
 

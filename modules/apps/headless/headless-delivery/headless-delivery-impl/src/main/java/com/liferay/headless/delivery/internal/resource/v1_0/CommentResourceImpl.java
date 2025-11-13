@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -415,10 +414,12 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return _postParentCommentComment(
-			comment.getExternalReferenceCode(), parentComment.getGroupId(),
-			parentComment.getCommentId(), parentComment.getClassName(),
-			parentComment.getClassPK(), comment.getText());
+		return CommentUtil.toComment(
+			_commentManager.addParentComment(
+				comment.getExternalReferenceCode(), parentComment.getGroupId(),
+				parentComment.getCommentId(), parentComment.getClassName(),
+				parentComment.getClassPK(), comment.getText()),
+			_commentManager, _portal);
 	}
 
 	@Override
@@ -513,10 +514,12 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				comment.getText());
 		}
 
-		return _postParentCommentComment(
-			externalReferenceCode, parentComment.getGroupId(),
-			parentComment.getCommentId(), parentComment.getClassName(),
-			parentComment.getClassPK(), comment.getText());
+		return CommentUtil.toComment(
+			_commentManager.addParentComment(
+				externalReferenceCode, parentComment.getGroupId(),
+				parentComment.getCommentId(), parentComment.getClassName(),
+				parentComment.getClassPK(), comment.getText()),
+			_commentManager, _portal);
 	}
 
 	@Override
@@ -712,13 +715,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				_commentManager, _portal));
 	}
 
-	private long _getUserId() {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		return permissionChecker.getUserId();
-	}
-
 	private boolean _isAssociated(
 		String className, long classPK,
 		com.liferay.portal.kernel.comment.Comment comment) {
@@ -730,22 +726,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return false;
-	}
-
-	private Comment _postParentCommentComment(
-			String externalReferenceCode, long groupId, long parentCommentId,
-			String className, long classPK, String text)
-		throws Exception {
-
-		return CommentUtil.toComment(
-			_commentManager.addComment(
-				() -> _commentManager.addComment(
-					externalReferenceCode, _getUserId(), className, classPK,
-					StringPool.BLANK, parentCommentId, StringPool.BLANK,
-					StringBundler.concat("<p>", text, "</p>"),
-					_createServiceContextFunction()),
-				className, classPK, groupId),
-			_commentManager, _portal);
 	}
 
 	private Comment _updateComment(

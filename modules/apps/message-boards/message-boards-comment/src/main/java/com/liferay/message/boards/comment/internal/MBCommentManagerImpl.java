@@ -209,6 +209,21 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public Comment addParentComment(
+		String externalReferenceCode, long groupId, long parentCommentId,
+		String className, long classPK, String text)
+		throws Exception {
+
+		return _doAddComment(
+			() -> addComment(
+				externalReferenceCode, PrincipalThreadLocal.getUserId(), className, classPK,
+				StringPool.BLANK, parentCommentId, StringPool.BLANK,
+				StringBundler.concat("<p>", text, "</p>"),
+				_createServiceContextFunction()),
+			className, classPK, groupId);
+	}
+
+	@Override
 	public Discussion copyDiscussion(
 			long userId, long groupId, String className, long classPK,
 			long newClassPK,

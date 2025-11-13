@@ -9,7 +9,7 @@ export interface ContentData
 	extends LocalizedField<'title'>,
 		LocalizedField<'content'>,
 		LocalizedField<'summary'> {
-	dateTime: string;
+	dateCreated: string;
 	id: number;
 	image: {
 		link: {href: string; label: string};

@@ -117,6 +117,7 @@ export default async function Home({
 						<iframe
 							allowFullScreen={false}
 							className="w-full"
+							draggable="false"
 							height="350"
 							loading="lazy"
 							referrerPolicy="no-referrer-when-downgrade"
@@ -139,7 +140,9 @@ export default async function Home({
 							<strong className="block">Date and Time</strong>
 
 							<span className="block">
-								{new Date(data.dateTime).toLocaleString(lang)}
+								{new Date(data.dateCreated).toLocaleString(
+									lang
+								)}
 							</span>
 						</p>
 

@@ -40,11 +40,6 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
-	public Comment addComment(
-			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier,
-			String className, long classPK, long groupId)
-		throws Exception;
-
 	public void addDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)

@@ -44,6 +44,8 @@ public class BackgroundTaskConstants {
 
 	public static final int STATUS_CANCELLED = 5;
 
+	public static final int STATUS_COMPLETED_WITH_ERRORS = 6;
+
 	public static final int STATUS_FAILED = 2;
 
 	public static final int STATUS_IN_PROGRESS = 1;

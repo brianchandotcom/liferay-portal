@@ -14,6 +14,7 @@ import {
 	ProductTypeLabels,
 	ProductTypeVocabulary,
 	ProductWorkflowDisplayType,
+	ProductWorkflowStatusLabel,
 } from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import {formatDate} from '../../../../utils/date';
@@ -137,7 +138,11 @@ const AdministratorAppsListView: React.FC<AdministratorAppsListViewProps> = ({
 								] as ComponentProps<typeof Label>['displayType']
 							}
 						>
-							{workflowStatusInfo.label}
+							{
+								ProductWorkflowStatusLabel[
+									workflowStatusInfo.code as keyof typeof ProductWorkflowStatusLabel
+								]
+							}
 						</Label>
 					),
 				},

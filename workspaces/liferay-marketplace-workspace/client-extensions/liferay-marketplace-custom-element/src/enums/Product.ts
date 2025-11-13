@@ -197,7 +197,7 @@ export const ProductTypeLicenseOptions = {
 export const ProductWorkflowDisplayType = {
 	[ProductWorkflowStatusCode.APPROVED]: 'success',
 	[ProductWorkflowStatusCode.DRAFT]: 'secondary',
-	[ProductWorkflowStatusCode.PENDING]: 'warn',
+	[ProductWorkflowStatusCode.PENDING]: 'warning',
 };
 
 export const ProductWorkflowStatusLabel = {

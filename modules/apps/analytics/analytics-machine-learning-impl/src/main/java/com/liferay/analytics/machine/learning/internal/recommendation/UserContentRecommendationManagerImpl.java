@@ -94,25 +94,25 @@ public class UserContentRecommendationManagerImpl
 		document.addNumber(
 			Field.ASSET_CATEGORY_IDS,
 			userContentRecommendation.getAssetCategoryIds());
+		document.addNumber(
+			Field.COMPANY_ID, userContentRecommendation.getCompanyId());
 		document.addDate(
 			Field.CREATE_DATE, userContentRecommendation.getCreateDate());
 		document.addNumber(
-			Field.COMPANY_ID, userContentRecommendation.getCompanyId());
-		document.addNumber(
 			Field.ENTRY_CLASS_PK, userContentRecommendation.getEntryClassPK());
-		document.addNumber(
-			RecommendationField.RECOMMENDED_ENTRY_CLASS_PK,
-			userContentRecommendation.getRecommendedEntryClassPK());
-		document.addNumber(
-			RecommendationField.SCORE, userContentRecommendation.getScore());
-		document.addText(
-			RecommendationField.JOB_ID, userContentRecommendation.getJobId());
 		document.addKeyword(
 			Field.UID,
 			String.valueOf(
 				getHash(
 					userContentRecommendation.getEntryClassPK(),
 					userContentRecommendation.getRecommendedEntryClassPK())));
+		document.addText(
+			RecommendationField.JOB_ID, userContentRecommendation.getJobId());
+		document.addNumber(
+			RecommendationField.RECOMMENDED_ENTRY_CLASS_PK,
+			userContentRecommendation.getRecommendedEntryClassPK());
+		document.addNumber(
+			RecommendationField.SCORE, userContentRecommendation.getScore());
 
 		return document;
 	}

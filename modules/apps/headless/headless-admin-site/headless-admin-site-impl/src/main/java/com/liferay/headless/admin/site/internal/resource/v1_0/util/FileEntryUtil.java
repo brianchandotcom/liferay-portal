@@ -8,7 +8,6 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.URLReference;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.io.StreamUtil;
@@ -40,7 +39,7 @@ import java.util.Set;
  */
 public class FileEntryUtil {
 
-	public static FileEntry getFileEntryLar(
+	private static FileEntry _getFileEntry(
 			long groupId, String resourceName, ServiceContext serviceContext,
 			URLReference urlReference, User user)
 		throws IOException, PortalException {
@@ -100,29 +99,6 @@ public class FileEntryUtil {
 	}
 
 	public static long getPreviewFileEntryId(
-			long groupId, ItemExternalReference itemExternalReference)
-		throws Exception {
-
-		if ((itemExternalReference == null) ||
-			Validator.isNull(
-				itemExternalReference.getExternalReferenceCode())) {
-
-			return 0;
-		}
-
-		FileEntry fileEntry =
-			PortletFileRepositoryUtil.
-				fetchPortletFileEntryByExternalReferenceCode(
-					itemExternalReference.getExternalReferenceCode(), groupId);
-
-		if (fileEntry == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		return fileEntry.getFileEntryId();
-	}
-
-	public static long getPreviewFileEntryId(
 			long groupId, String resourceName, ServiceContext serviceContext,
 			URLReference urlReference, User user)
 		throws Exception {
@@ -139,7 +115,7 @@ public class FileEntryUtil {
 					urlReference.getExternalReferenceCode(), groupId);
 
 		if (fileEntry == null) {
-			fileEntry = getFileEntryLar(
+			fileEntry = _getFileEntry(
 				groupId, resourceName, serviceContext, urlReference, user);
 		}
 

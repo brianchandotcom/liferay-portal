@@ -5,11 +5,11 @@
 
 package com.liferay.data.cleanup.internal.verify;
 
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -32,7 +32,7 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 			super.verify();
 		}
 		finally {
-			StartupHelperUtil.setUpgrading(false);
+			DBUpgrader.stopUpgradeLogAppender();
 		}
 	}
 

@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.URLReference;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -31,6 +32,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -71,11 +73,12 @@ public class FileEntryUtil {
 
 		Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
 
-		String extension = "";
+		String extension = StringPool.BLANK;
 
 		if (!extensions.isEmpty()) {
-			extension = extensions.iterator(
-			).next();
+			Iterator<String> iterator = extensions.iterator();
+
+			extension = iterator.next();
 		}
 
 		serviceContext.setAddGroupPermissions(true);
@@ -90,7 +93,8 @@ public class FileEntryUtil {
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			urlReference.getExternalReferenceCode(), user.getUserId(),
-			repository.getRepositoryId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			resourceName + "_" + fileName, mimeType, fileName, null, null, null,
 			fileBytes, null, null, null, serviceContext);
 	}

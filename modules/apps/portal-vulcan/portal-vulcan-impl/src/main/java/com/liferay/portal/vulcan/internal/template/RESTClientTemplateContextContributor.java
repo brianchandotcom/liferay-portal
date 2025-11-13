@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpRequestDelegate;
 import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpResponse;
+import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpServletRequestWrapper;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -95,12 +94,8 @@ public class RESTClientTemplateContextContributor
 				AccessControlUtil.setAccessControlContext(null);
 
 				requestDispatcher.forward(
-					ProxyUtil.newDelegateProxyInstance(
-						HttpServletRequest.class.getClassLoader(),
-						HttpServletRequest.class,
-						new RESTClientHttpRequestDelegate(
-							_contextObjects, _httpServletRequest, path),
-						_httpServletRequest),
+					new RESTClientHttpServletRequestWrapper(
+						_contextObjects, _httpServletRequest, path),
 					httpServletResponse);
 			}
 			finally {

@@ -8,25 +8,27 @@ const cookieBanner = fragmentElement.querySelector('.cookie-banner');
 
 const editMode = layoutMode === 'edit';
 
-function handleButtonClick() {
-	hideBanner();
+import('@liferay/fragment-impl/api').then(({localStorage}) => {
+	function handleButtonClick() {
+		hideBanner();
 
-	localStorage.setItem('liferay.cookie.consent', 'accepted');
-}
+		localStorage.setItem('liferay.cookie.consent', 'accepted');
+	}
 
-function hideBanner() {
-	cookieBanner.style.display = 'none';
-}
+	function hideBanner() {
+		cookieBanner.style.display = 'none';
+	}
 
-function main() {
-	if (!editMode) {
-		if (localStorage.getItem('liferay.cookie.consent') === 'accepted') {
-			hideBanner();
-		}
-		else {
-			button.addEventListener('click', handleButtonClick);
+	function main() {
+		if (!editMode) {
+			if (localStorage.getItem('liferay.cookie.consent') === 'accepted') {
+				hideBanner();
+			}
+			else {
+				button.addEventListener('click', handleButtonClick);
+			}
 		}
 	}
-}
 
-main();
+	main();
+});

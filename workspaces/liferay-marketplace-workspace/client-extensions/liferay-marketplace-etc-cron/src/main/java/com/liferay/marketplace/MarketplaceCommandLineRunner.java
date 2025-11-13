@@ -8,6 +8,7 @@ package com.liferay.marketplace;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.Role;
 import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
@@ -197,35 +198,6 @@ public class MarketplaceCommandLineRunner
 		return localDate.getYear() + " Q" + quarter;
 	}
 
-	private Collection<UserAccount> _getCustomerUserAccounts()
-		throws Exception {
-
-		UserGroupResource userGroupResource = _getUserGroupResource();
-
-		UserGroup userGroup = userGroupResource.getUserGroupsPage(
-			"", "name eq 'Customers'",
-			com.liferay.headless.admin.user.client.pagination.Pagination.of(
-				-1, -1),
-			""
-		).fetchFirstItem();
-
-		if (userGroup == null) {
-			return Collections.emptyList();
-		}
-
-		UserAccountResource userAccountResource = _getUserAccountResource();
-
-		com.liferay.headless.admin.user.client.pagination.Page<UserAccount>
-			userAccountPage = userAccountResource.getUserGroupUsersPage(
-				userGroup.getId(), "",
-				"not contains(emailAddress, '@liferay.com')",
-				com.liferay.headless.admin.user.client.pagination.Pagination.of(
-					-1, -1),
-				"");
-
-		return userAccountPage.getItems();
-	}
-
 	private String _getKoroneikiProject(Order order) {
 		JSONArray jsonArray = new JSONArray();
 
@@ -399,6 +371,46 @@ public class MarketplaceCommandLineRunner
 		).build();
 	}
 
+	private Collection<UserAccount> _getUserGroupUsersAccounts(
+			String userFilter, String userGroupFilter)
+		throws Exception {
+
+		UserGroupResource userGroupResource = _getUserGroupResource();
+
+		UserGroup userGroup = userGroupResource.getUserGroupsPage(
+			"", userGroupFilter,
+			com.liferay.headless.admin.user.client.pagination.Pagination.of(
+				-1, -1),
+			""
+		).fetchFirstItem();
+
+		if (userGroup == null) {
+			return Collections.emptyList();
+		}
+
+		UserAccountResource userAccountResource = _getUserAccountResource();
+
+		com.liferay.headless.admin.user.client.pagination.Page<UserAccount>
+			userAccountPage = userAccountResource.getUserGroupUsersPage(
+				userGroup.getId(), "", userFilter,
+				com.liferay.headless.admin.user.client.pagination.Pagination.of(
+					-1, -1),
+				"");
+
+		return userAccountPage.getItems();
+	}
+
+	private void _invoke(String name, UnsafeRunnable<?> task) {
+		try {
+			task.run();
+		}
+		catch (Throwable throwable) {
+			_log.error("Unable to process " + name);
+
+			_log.error(throwable);
+		}
+	}
+
 	private void _patchOrder(long orderId, long publisherSalesSummaryId) {
 		patch(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -530,70 +542,61 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processLiferayUserAccounts() throws Exception {
-		UserAccountResource userAccountResource = _getUserAccountResource();
-
-		UserGroupResource userGroupResource = _getUserGroupResource();
-
-		UserGroup userGroup = userGroupResource.getUserGroupsPage(
-			"", "name eq 'Employees'",
-			com.liferay.headless.admin.user.client.pagination.Pagination.of(
-				-1, -1),
-			""
-		).fetchFirstItem();
-
-		com.liferay.headless.admin.user.client.pagination.Page<UserAccount>
-			userAccountPage = userAccountResource.getUserGroupUsersPage(
-				userGroup.getId(), null, null,
-				com.liferay.headless.admin.user.client.pagination.Pagination.of(
-					-1, -1),
-				"");
-
-		AccountResource accountResource = _getAccountResource();
-
-		Account account = accountResource.getAccountByExternalReferenceCode(
-			_SSA_ACCOUNT);
-
 		RoleResource roleResource = _getRoleResource();
 
 		com.liferay.headless.admin.user.client.pagination.Page<Role> rolesPage =
 			roleResource.getRolesPage(
-				null, null, "name eq 'Liferay User'",
+				null, null, "name eq '" + _LIFERAY_STAFF_USER_ROLE + "'",
 				com.liferay.headless.admin.user.client.pagination.Pagination.of(
 					-1, -1));
 
 		Role liferayUserRole = rolesPage.fetchFirstItem();
 
-		for (UserAccount userAccount : userAccountPage.getItems()) {
-			if (Arrays.stream(
-					userAccount.getAccountBriefs()
-				).noneMatch(
-					accountBrief -> Objects.equals(
-						accountBrief.getExternalReferenceCode(), _SSA_ACCOUNT)
-				)) {
+		if (liferayUserRole == null) {
+			return;
+		}
 
-				try {
-					userAccountResource.postAccountUserAccountByEmailAddress(
-						account.getId(), userAccount.getEmailAddress());
-				}
-				catch (Exception exception) {
-					_log.error(exception);
+		AccountResource accountResource = _getAccountResource();
+		UserAccountResource userAccountResource = _getUserAccountResource();
+
+		Account account = accountResource.getAccountByExternalReferenceCode(
+			_SSA_ACCOUNT_ERC);
+
+		for (UserAccount userAccount :
+				_getUserGroupUsersAccounts(null, "name eq 'Employees'")) {
+
+			boolean hasLiferayStaffRole = false;
+			boolean hasSSAAccount = false;
+
+			for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
+				if (Objects.equals(
+						roleBrief.getName(), _LIFERAY_STAFF_USER_ROLE)) {
+
+					hasLiferayStaffRole = true;
+
+					break;
 				}
 			}
-			
-			if (Arrays.stream(
-					userAccount.getRoleBriefs()
-				).noneMatch(
-					roleBrief -> Objects.equals(
-						roleBrief.getName(), "Liferay User")
-				)) {
 
-				try {
-					roleResource.postRoleUserAccountAssociation(
-						liferayUserRole.getId(), userAccount.getId());
+			for (AccountBrief accountBrief : userAccount.getAccountBriefs()) {
+				if (Objects.equals(
+						accountBrief.getExternalReferenceCode(),
+						_SSA_ACCOUNT_ERC)) {
+
+					hasSSAAccount = true;
+
+					break;
 				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
+			}
+
+			if (!hasLiferayStaffRole) {
+				roleResource.postRoleUserAccountAssociation(
+					liferayUserRole.getId(), userAccount.getId());
+			}
+
+			if (!hasSSAAccount) {
+				userAccountResource.postAccountUserAccountByEmailAddress(
+					account.getId(), userAccount.getEmailAddress());
 			}
 		}
 	}
@@ -723,7 +726,9 @@ public class MarketplaceCommandLineRunner
 		Map<String, JSONObject> projectsUsingMarketplace = new HashMap<>();
 
 		OrderResource orderResource = _getOrderResource();
-		Collection<UserAccount> userAccounts = _getCustomerUserAccounts();
+		Collection<UserAccount> userAccounts = _getUserGroupUsersAccounts(
+			"not contains(emailAddress, '@liferay.com')",
+			"name eq 'Customers'");
 
 		_forEachOrder(
 			StringBundler.concat(
@@ -889,6 +894,8 @@ public class MarketplaceCommandLineRunner
 		orderResource.patchOrder(orderId, order);
 	}
 
+	private static final String _LIFERAY_STAFF_USER_ROLE = "Liferay Staff";
+
 	private static final int _ORDER_PAYMENT_STATUS_COMPLETED = 0;
 
 	private static final int _ORDER_STATUS_COMPLETED = 0;
@@ -901,7 +908,7 @@ public class MarketplaceCommandLineRunner
 
 	private static final int _ORDER_STATUS_PROCESSING = 10;
 
-	private static final String _SSA_ACCOUNT = "SSA-ACCOUNT";
+	private static final String _SSA_ACCOUNT_ERC = "SSA-ACCOUNT";
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceCommandLineRunner.class);

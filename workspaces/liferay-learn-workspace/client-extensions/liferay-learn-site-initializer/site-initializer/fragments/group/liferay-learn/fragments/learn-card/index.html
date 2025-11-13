@@ -1,0 +1,37 @@
+[#if configuration.url?has_content]
+	<a class="learn-card-link" href="${configuration.url}" id="${fragmentEntryLinkNamespace}">
+[/#if]
+	<div class="learn-card ${configuration.iconPlacement}" data-lfr-styles id="${fragmentEntryLinkNamespace}-card" >
+		[#if configuration.showIcon]
+		<div class="${configuration.iconBackgroundGradient} learn-card-icon">
+			<img data-lfr-editable-id="image" data-lfr-editable-type="image" />
+		</div>
+		[/#if]
+
+		<div class="learn-card-content">
+			<h2 class="learn-card-title" data-lfr-editable-id="title" data-lfr-editable-type="rich-text">
+				Title
+			</h2>
+
+			[#if configuration.showDescription]
+			<p class="learn-card-description" data-lfr-editable-id="description" data-lfr-editable-type="rich-text">
+				Description
+			</p>
+			[/#if]
+
+			[#if configuration.showCTA]
+			<div class="learn-card-cta">
+				<span class="learn-card-cta-text" data-lfr-editable-id="cta-text" data-lfr-editable-type="text">Go to</span>
+
+				<i class="learn-card-cta-icon" data-lfr-editable-id="cta-icon" data-lfr-editable-type="html">
+					<svg class="lexicon-icon lexicon-icon-order-arrow-right" fill="#0B5FFF" role="presentation" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+						<path class="lexicon-icon-outline" d="M367.9,350.3l71.6-71.6c10.8-11.9,11.2-32.9,0-45.8l-71.6-71.6c-33.6-29.8-74.9,15.8-45.8,45.8l16.7,16.7H96c-42.5,0-42.5,64,0,64h242.8l-16.7,16.7C292.2,336.3,337,380,367.9,350.3z" />
+					</svg>
+				</i>
+			</div>
+			[/#if]
+		</div>
+	</div>
+[#if configuration.url?has_content]
+	</a>
+[/#if]

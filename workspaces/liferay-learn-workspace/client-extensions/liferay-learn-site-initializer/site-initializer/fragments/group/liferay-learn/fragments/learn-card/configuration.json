@@ -1,0 +1,80 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "URL",
+					"name": "url",
+					"type": "url"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "bg-gradient-blue",
+					"label": "Icon Background",
+					"name": "iconBackgroundGradient",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Gradient Blue",
+								"value": "bg-gradient-blue"
+							},
+							{
+								"label": "Gradient Green",
+								"value": "bg-gradient-green"
+							},
+							{
+								"label": "None",
+								"value": ""
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "learn-card-icon-top",
+					"label": "Icon Placement",
+					"name": "iconPlacement",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Left",
+								"value": "learn-card-icon-left"
+							},
+							{
+								"label": "Right",
+								"value": "learn-card-icon-right"
+							},
+							{
+								"label": "Top",
+								"value": "learn-card-icon-top"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": true,
+					"description": "Show Card Icon",
+					"label": "Show Icon",
+					"name": "showIcon",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"description": "Show Card Description",
+					"label": "Show Description",
+					"name": "showDescription",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"description": "Show Card CTA",
+					"label": "Show CTA",
+					"name": "showCTA",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

@@ -78,15 +78,15 @@ public class FileEntryUtil {
 			).next();
 		}
 
-		String fileName =
-			urlReference.getExternalReferenceCode() + "_preview" + extension;
-
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setIndexingEnabled(false);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			groupId, LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
+
+		String fileName =
+			urlReference.getExternalReferenceCode() + "_preview" + extension;
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			urlReference.getExternalReferenceCode(), user.getUserId(),

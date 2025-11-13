@@ -15,7 +15,7 @@ import ViewsContext, {
 import Filter, {FilterComponentArgs, IFilter} from './Filter';
 
 const FiltersDropdown = () => {
-	const [{filters: initialFilters}]: [IViewsContext, TViewsContextDispatch] =
+	const [{filters, filtersGroups}]: [IViewsContext, TViewsContextDispatch] =
 		useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
@@ -50,6 +50,20 @@ const FiltersDropdown = () => {
 			);
 		});
 	}, [initialFilters, setActiveFilter, setFilters]);
+
+	const validFilters = filters.filter(
+		(filter) => !filter.clientExtensionResolutionError
+	);
+
+	const groupedFilters = filtersGroups?.map((group) => ({
+		children: group.filters.map((filterId: string) =>
+				validFilters.find((f) => f.id === filterId)
+			)
+			.filter(Boolean),
+		label: group.label,
+	}));
+
+	const filtersList = filtersGroups ? groupedFilters : validFilters;
 
 	return (
 		<ClayDropDown
@@ -107,30 +121,41 @@ const FiltersDropdown = () => {
 				<ClayDropDown.Group header={Liferay.Language.get('filters')}>
 					<ClayDropDown.Search
 						aria-label={Liferay.Language.get('search')}
-						onChange={onSearch}
-						role="textbox"
-						value={query}
 					/>
 
 					<ClayDropDown.Divider />
 
-					{filters.length ? (
-						<ClayDropDown.ItemList>
-							{filters
-								.filter(
-									(filter) =>
-										!filter.clientExtensionResolutionError
-								)
-								.map((filter) => (
-									<ClayDropDown.Item
-										key={filter.id}
-										onClick={() => {
-											setActiveFilter(filter);
-										}}
-									>
-										{filter.label}
-									</ClayDropDown.Item>
-								))}
+					{filtersList.length ? (
+						<ClayDropDown.ItemList items={filtersList}>
+							{filtersGroups
+								? (group: any) => (
+										<ClayDropDown.Group
+											header={group.label}
+											items={group.children}
+											key={group.label}
+										>
+											{(filter: any) => (
+												<ClayDropDown.Item
+													key={filter.id}
+													onClick={() =>
+														setActiveFilter(filter)
+													}
+												>
+													{filter.label}
+												</ClayDropDown.Item>
+											)}
+										</ClayDropDown.Group>
+									)
+								: (filter: any) => (
+										<ClayDropDown.Item
+											key={filter.id}
+											onClick={() =>
+												setActiveFilter(filter)
+											}
+										>
+											{filter.label}
+										</ClayDropDown.Item>
+									)}
 						</ClayDropDown.ItemList>
 					) : (
 						<ClayDropDown.Caption>

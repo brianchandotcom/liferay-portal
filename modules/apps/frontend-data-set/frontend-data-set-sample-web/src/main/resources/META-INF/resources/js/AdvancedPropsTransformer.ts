@@ -37,7 +37,7 @@ export default function propsTransformer({
 		isDropTarget: ({item}: {item: any}) => item.color !== 'Green',
 		onFileDrop: dummyUploader,
 	};
-
+	
 	const views: Array<IView> = otherProps.views;
 
 	const cardView = views.find((view) => view.name === 'cards')!;
@@ -119,6 +119,14 @@ export default function propsTransformer({
 			className: 'text-danger',
 		};
 	});
+
+	if (Liferay.FeatureFlags['LPD-68829']) {
+		otherProps.filtersGroups = [
+			{ label: "Group 1", filters: ["date", "color"] },
+			{ label: "Group 2", filters: ["invalid", "size"] },
+			{ label: "Group 3", filters: ["status", "title"] }
+		  ];
+	}
 
 	return {
 		...otherProps,

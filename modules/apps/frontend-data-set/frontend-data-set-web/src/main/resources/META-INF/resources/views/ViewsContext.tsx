@@ -13,6 +13,7 @@ export interface IViewsContext {
 	customViews: any;
 	customViewsEnabled: boolean;
 	filters: IFilter[];
+	filtersGroups: any[];
 	modifiedFields: any;
 	paginationDelta: any;
 	sorts: any[];
@@ -32,6 +33,7 @@ const initialState: IViewsContext = {
 	customViews: {},
 	customViewsEnabled: false,
 	filters: [],
+	filtersGroups: [],
 	modifiedFields: {},
 	paginationDelta: null,
 	sorts: [],

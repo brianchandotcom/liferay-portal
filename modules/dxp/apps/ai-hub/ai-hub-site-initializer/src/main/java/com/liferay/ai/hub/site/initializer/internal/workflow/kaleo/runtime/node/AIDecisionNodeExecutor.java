@@ -5,14 +5,9 @@
 
 package com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node;
 
+import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.InputVariablesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -37,7 +32,6 @@ import dev.langchain4j.service.UserMessage;
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -136,8 +130,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		DecisionAssistant decisionAssistant = AiServices.builder(
 			DecisionAssistant.class
 		).systemMessageProvider(
-			object -> _applyVariables(
-				kaleoNodeSettingsMap, "prompt", executionContext)
+			object -> InputVariablesUtil.applyInputVariables(
+				executionContext, kaleoNodeSettingsMap, "prompt")
 		).streamingChatModel(
 			vertexAiGeminiStreamingChatModel
 		).tools(
@@ -145,8 +139,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		).build();
 
 		decisionAssistant.decide(
-			_applyVariables(
-				kaleoNodeSettingsMap, "userMessage", executionContext),
+			InputVariablesUtil.applyInputVariables(
+				executionContext, kaleoNodeSettingsMap, "userMessage"),
 			InvocationParameters.from(
 				Map.of(
 					"executionContext", executionContext, "permissionChecker",
@@ -186,60 +180,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		remainingPathElements.add(pathElement);
 	}
-
-	private String _applyVariables(
-		Map<String, String> kaleoNodeSettingsMap, String kaleoNodeSettingName,
-		ExecutionContext executionContext) {
-
-		Map<String, String> inputVariables = _getInputVariables(
-			kaleoNodeSettingsMap, executionContext.getWorkflowContext());
-
-		String message = kaleoNodeSettingsMap.get(kaleoNodeSettingName);
-
-		for (Map.Entry<String, String> entry : inputVariables.entrySet()) {
-			message = StringUtil.replace(
-				message, "{{" + entry.getKey() + "}}", entry.getValue());
-		}
-
-		return message;
-	}
-
-	private Map<String, String> _getInputVariables(
-		Map<String, String> kaleoNodeSettingsMap,
-		Map<String, Serializable> workflowContext) {
-
-		String inputVariablesString = kaleoNodeSettingsMap.get(
-			"inputVariables");
-
-		if (inputVariablesString == null) {
-			return Map.of();
-		}
-
-		Map<String, String> inputVariables = new HashMap<>();
-
-		try {
-			JSONArray jsonArray = _jsonFactory.createJSONArray(
-				inputVariablesString);
-
-			Iterator<JSONObject> iterator = jsonArray.iterator();
-
-			iterator.forEachRemaining(
-				jsonObject -> {
-					String name = jsonObject.getString("name");
-
-					inputVariables.put(
-						name, GetterUtil.getString(workflowContext.get(name)));
-				});
-		}
-		catch (JSONException jsonException) {
-			throw new RuntimeException(jsonException);
-		}
-
-		return inputVariables;
-	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;

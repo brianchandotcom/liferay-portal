@@ -9,6 +9,7 @@ import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import {
 	performLoginViaApi,
@@ -23,7 +24,8 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-35914': {enabled: true},
 	}),
-	loginTest()
+	loginTest(),
+	usersAndOrganizationsPagesTest
 );
 
 test(
@@ -1665,6 +1667,68 @@ test(
 		});
 
 		await accountGroupAccountSelectorPage.selectAccounts([xssString]);
+
+		await expect(
+			accountGroupAccountsPage.accountsTable.cell(xssString)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Test XSS vulnerability when adding organization with malicious name to an account in account group',
+	{tag: ['@LPD-71278']},
+	async ({
+		accountGroupAccountsPage,
+		accountGroupsPage,
+		apiHelpers,
+		editOrganizationPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		const xssString = `AnyName<img src=x onerror="alert('xss')">`;
+
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+
+		const account = await apiHelpers.headlessAdminUser.postAccount();
+
+		await apiHelpers.headlessAdminUser.postAccountOrganization(
+			account.id,
+			organization.id
+		);
+
+		const accountGroup =
+			await apiHelpers.headlessAdminUser.postAccountGroup({
+				name: getRandomString(),
+			});
+
+		await apiHelpers.headlessAdminUser.assignAccountToAccountGroup(
+			account.externalReferenceCode,
+			accountGroup.externalReferenceCode
+		);
+
+		apiHelpers.data.push({id: accountGroup.id, type: 'accountGroup'});
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await (
+			await usersAndOrganizationsPage.organizationsTable.rowActions(
+				organization.name
+			)
+		).click();
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+		await editOrganizationPage.nameInput.fill(xssString);
+		await editOrganizationPage.saveButton.click();
+
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('XSS');
+			}
+		});
+
+		await accountGroupsPage.goto(false);
+
+		await accountGroupsPage.accountGroupLink(accountGroup.name).click();
 
 		await expect(
 			accountGroupAccountsPage.accountsTable.cell(xssString)

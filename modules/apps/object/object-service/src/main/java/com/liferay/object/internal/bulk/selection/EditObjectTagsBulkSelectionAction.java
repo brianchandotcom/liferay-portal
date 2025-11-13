@@ -12,6 +12,7 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -20,13 +21,17 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,6 +52,17 @@ public class EditObjectTagsBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		values.put("numberOfItems", bulkSelection.getSize());
+
+		String executionStatus = "completed";
+		AtomicInteger numberOfFailedItems = new AtomicInteger(0);
+		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
+
 		Set<String> toAddTagNames = _toStringSet(inputMap, "toAddTagNames");
 		Set<String> toRemoveTagNames = _toStringSet(
 			inputMap, "toRemoveTagNames");
@@ -54,57 +70,87 @@ public class EditObjectTagsBulkSelectionAction
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		bulkSelection.forEach(
-			object -> {
-				try {
-					if (object instanceof ObjectEntry) {
-						ObjectEntry objectEntry = (ObjectEntry)object;
+		try {
+			values.put("executionStatus", "started");
 
-						AssetEntry assetEntry =
-							_assetEntryLocalService.fetchEntry(
-								objectEntry.getModelClassName(),
-								objectEntry.getObjectEntryId());
+			objectEntry = _partialUpdateObjectEntry(objectEntry, values);
 
-						if (!_hasEditPermission(
-								assetEntry, permissionChecker)) {
+			values = objectEntry.getValues();
 
-							return;
+			bulkSelection.forEach(
+				object -> {
+					try {
+						if (object instanceof ObjectEntry) {
+							ObjectEntry objectObjectEntry = (ObjectEntry)object;
+
+							AssetEntry assetEntry =
+								_assetEntryLocalService.fetchEntry(
+									objectObjectEntry.getModelClassName(),
+									objectObjectEntry.getObjectEntryId());
+
+							if (!_hasEditPermission(
+									assetEntry, permissionChecker)) {
+
+								return;
+							}
+
+							String[] newTagNames = new String[0];
+
+							if (SetUtil.isNotEmpty(toAddTagNames)) {
+								newTagNames = (String[])inputMap.get(
+									"toAddTagNames");
+							}
+
+							if (MapUtil.getBoolean(inputMap, "append")) {
+								Set<String> currentTagNames = SetUtil.fromArray(
+									assetEntry.getTagNames());
+
+								currentTagNames.removeAll(toRemoveTagNames);
+
+								currentTagNames.addAll(toAddTagNames);
+
+								currentTagNames.removeIf(
+									tagName -> !_assetHelper.isValidWord(
+										tagName));
+
+								newTagNames = currentTagNames.toArray(
+									new String[0]);
+							}
+
+							_assetEntryLocalService.updateEntry(
+								assetEntry.getUserId(), assetEntry.getGroupId(),
+								assetEntry.getClassName(),
+								assetEntry.getClassPK(),
+								assetEntry.getCategoryIds(), newTagNames);
 						}
 
-						String[] newTagNames = new String[0];
-
-						if (SetUtil.isNotEmpty(toAddTagNames)) {
-							newTagNames = (String[])inputMap.get(
-								"toAddTagNames");
-						}
-
-						if (MapUtil.getBoolean(inputMap, "append")) {
-							Set<String> currentTagNames = SetUtil.fromArray(
-								assetEntry.getTagNames());
-
-							currentTagNames.removeAll(toRemoveTagNames);
-
-							currentTagNames.addAll(toAddTagNames);
-
-							currentTagNames.removeIf(
-								tagName -> !_assetHelper.isValidWord(tagName));
-
-							newTagNames = currentTagNames.toArray(
-								new String[0]);
-						}
-
-						_assetEntryLocalService.updateEntry(
-							assetEntry.getUserId(), assetEntry.getGroupId(),
-							assetEntry.getClassName(), assetEntry.getClassPK(),
-							assetEntry.getCategoryIds(), newTagNames);
+						numberOfSuccessfulItems.getAndIncrement();
 					}
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(portalException);
+					catch (PortalException portalException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(portalException);
+						}
+
+						numberOfFailedItems.getAndIncrement();
 					}
-				}
-			});
+				});
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			executionStatus = "failed";
+		}
+		finally {
+			values.put("completionDate", new Date());
+			values.put("executionStatus", executionStatus);
+			values.put("numberOfFailedItems", numberOfFailedItems.get());
+			values.put(
+				"numberOfSuccessfulItems", numberOfSuccessfulItems.get());
+
+			_partialUpdateObjectEntry(objectEntry, values);
+		}
 	}
 
 	private boolean _hasEditPermission(
@@ -121,6 +167,15 @@ public class EditObjectTagsBulkSelectionAction
 			permissionChecker, assetEntry.getGroupId(),
 			assetEntry.getClassName(), assetEntry.getClassPK(),
 			ActionKeys.UPDATE);
+	}
+
+	private ObjectEntry _partialUpdateObjectEntry(
+			ObjectEntry objectEntry, Map<String, Serializable> values)
+		throws PortalException {
+
+		return _objectEntryLocalService.partialUpdateObjectEntry(
+			objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(), values, new ServiceContext());
 	}
 
 	private Set<String> _toStringSet(
@@ -147,5 +202,8 @@ public class EditObjectTagsBulkSelectionAction
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

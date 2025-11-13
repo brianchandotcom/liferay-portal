@@ -201,15 +201,18 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				pagination, search, sorts[0]);
 		}
 
+		boolean selectAll = false;
 		SelectionScope selectionScope = bulkAction.getSelectionScope();
 
-		if (ArrayUtil.isEmpty(bulkActionItems) &&
-			!GetterUtil.getBoolean(selectionScope.getSelectAll())) {
+		if (selectionScope != null) {
+			selectAll = GetterUtil.getBoolean(selectionScope.getSelectAll());
+		}
 
+		if (ArrayUtil.isEmpty(bulkActionItems) && !selectAll) {
 			return Page.of(Collections.emptyList());
 		}
 
-		if (!GetterUtil.getBoolean(selectionScope.getSelectAll())) {
+		if (!selectAll) {
 			return _getBulkActionItemPreviewPage(
 				ListUtil.fromArray(bulkActionItems), pagination, search,
 				sorts[0]);
@@ -395,8 +398,14 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
 			return _deleteObjectBulkSelectionAction;
 		}
+		else if (BulkAction.Type.KEYWORD_BULK_ACTION.equals(type)) {
+			return _editObjectTagsBulkSelectionAction;
+		}
 		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
 			return _permissionObjectBulkSelectionAction;
+		}
+		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
+			return _editObjectCategoriesBulkSelectionAction;
 		}
 
 		throw new UnsupportedOperationException();
@@ -803,6 +812,13 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Reference
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
+	@Reference(target = "(bulk.selection.action.key=edit.object.categories)")
+	private BulkSelectionAction<Object>
+		_editObjectCategoriesBulkSelectionAction;
+
+	@Reference(target = "(bulk.selection.action.key=edit.object.tags)")
+	private BulkSelectionAction<Object> _editObjectTagsBulkSelectionAction;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

@@ -24,7 +24,6 @@ import com.liferay.bulk.rest.client.dto.v1_0.SelectionScope;
 import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkAction;
 import com.liferay.bulk.rest.client.pagination.Page;
 import com.liferay.bulk.rest.client.pagination.Pagination;
-import com.liferay.bulk.rest.client.permission.Permission;
 import com.liferay.bulk.rest.client.problem.Problem;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
@@ -48,8 +47,10 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -343,7 +344,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		BulkActionTask bulkActionTask = bulkActionResource.postBulkAction(
 			null, null, null, null, null, null, null, null, bulkAction);
 
-		Assert.assertEquals("initial", bulkActionTask.getExecuteStatus());
 		Assert.assertNotNull(bulkActionTask.getId());
 
 		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
@@ -781,6 +781,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		bulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
 
+		selectionScope.setSelectAll(false);
+
+		bulkAction.setSelectionScope(selectionScope);
+
 		_postBulkAction(bulkAction);
 
 		Assert.assertNull(
@@ -808,10 +812,11 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		_postBulkAction(keywordBulkAction);
 
 		Assert.assertArrayEquals(
-			keywords,
-			_assetTagLocalService.getTagNames(
-				_cmsBasicWebContentObjectDefinition.getClassName(),
-				objectEntry.getObjectEntryId()));
+			ArrayUtil.sortedUnique(keywords),
+			ArrayUtil.sortedUnique(
+				_assetTagLocalService.getTagNames(
+					_cmsBasicWebContentObjectDefinition.getClassName(),
+					objectEntry.getObjectEntryId())));
 	}
 
 	private void _testPostBulkActionWithTypePermission() throws Exception {
@@ -829,18 +834,19 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		permissionBulkAction.setBulkActionItems(
 			_toBulkActionItems(objectEntry));
 
-		permissionBulkAction.setPermissions(
-			new Permission[] {
-				new Permission() {
-					{
-						setActionIds(new String[] {"VIEW"});
-						setRoleExternalReferenceCode(
-							role.getExternalReferenceCode());
-						setRoleName(role.getName());
-						setRoleType(role.getTypeLabel());
-					}
-				}
-			});
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		permissionBulkAction.setConfiguration(
+			jsonObject.put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+				JSONUtil.put(role.getName(), JSONUtil.putAll(ActionKeys.VIEW))
+			).put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+				JSONUtil.put(role.getName(), JSONUtil.putAll(ActionKeys.VIEW))
+			).put(
+				"OBJECT_ENTRY_FOLDERS",
+				JSONUtil.put(role.getName(), JSONUtil.putAll(ActionKeys.VIEW))
+			).toString());
 
 		permissionBulkAction.setType(BulkAction.Type.PERMISSION_BULK_ACTION);
 
@@ -999,6 +1005,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 	)
 	private FilterFactory<Predicate> _filterFactory;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService

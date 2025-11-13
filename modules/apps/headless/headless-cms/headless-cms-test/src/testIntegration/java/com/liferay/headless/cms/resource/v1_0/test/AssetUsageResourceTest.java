@@ -114,7 +114,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 		if (!_isCMSSiteInitialized()) {
 			Bundle testBundle = FrameworkUtil.getBundle(
-				BulkActionResourceTest.class);
+				AssetPermissionActionResourceTest.class);
 
 			BundleContext bundleContext = testBundle.getBundleContext();
 

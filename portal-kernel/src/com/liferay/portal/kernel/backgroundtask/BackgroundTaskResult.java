@@ -14,6 +14,10 @@ import java.io.Serializable;
  */
 public class BackgroundTaskResult implements Serializable {
 
+	public static BackgroundTaskResult COMPLETED_WITH_ERRORS =
+		new BackgroundTaskResult(
+			BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS);
+
 	public static BackgroundTaskResult SUCCESS = new BackgroundTaskResult(
 		BackgroundTaskConstants.STATUS_SUCCESSFUL);
 

@@ -7,8 +7,13 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.Role;
+import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
+import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.client.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserGroupResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
@@ -33,6 +38,7 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -61,6 +67,8 @@ public class MarketplaceCommandLineRunner
 	extends BaseRestController implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
+		_processLiferayUserAccounts();
+
 		_processInProgressTrials();
 
 		_processOnHoldTrials();
@@ -119,6 +127,17 @@ public class MarketplaceCommandLineRunner
 				break;
 			}
 		}
+	}
+
+	private AccountResource _getAccountResource() throws Exception {
+		return AccountResource.builder(
+		).endpoint(
+			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes)
+		).build();
 	}
 
 	private JSONObject _getAvailabilityJSONObject() {
@@ -324,6 +343,17 @@ public class MarketplaceCommandLineRunner
 		return publisherSummaryJSONObject.getLong("id");
 	}
 
+	private RoleResource _getRoleResource() throws Exception {
+		return RoleResource.builder(
+		).endpoint(
+			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes)
+		).build();
+	}
+
 	private SkuResource _getSkuResource() throws Exception {
 		return SkuResource.builder(
 		).endpoint(
@@ -495,6 +525,75 @@ public class MarketplaceCommandLineRunner
 			}
 			catch (Exception exception) {
 				_log.error(exception);
+			}
+		}
+	}
+
+	private void _processLiferayUserAccounts() throws Exception {
+		UserAccountResource userAccountResource = _getUserAccountResource();
+
+		UserGroupResource userGroupResource = _getUserGroupResource();
+
+		UserGroup userGroup = userGroupResource.getUserGroupsPage(
+			"", "name eq 'Employees'",
+			com.liferay.headless.admin.user.client.pagination.Pagination.of(
+				-1, -1),
+			""
+		).fetchFirstItem();
+
+		com.liferay.headless.admin.user.client.pagination.Page<UserAccount>
+			userAccountPage = userAccountResource.getUserGroupUsersPage(
+				userGroup.getId(), null, null,
+				com.liferay.headless.admin.user.client.pagination.Pagination.of(
+					-1, -1),
+				"");
+
+		AccountResource accountResource = _getAccountResource();
+
+		Account account = accountResource.getAccountByExternalReferenceCode(
+			_SSA_ACCOUNT);
+
+		RoleResource roleResource = _getRoleResource();
+
+		com.liferay.headless.admin.user.client.pagination.Page<Role> rolesPage =
+			roleResource.getRolesPage(
+				null, null, "name eq 'Liferay User'",
+				com.liferay.headless.admin.user.client.pagination.Pagination.of(
+					-1, -1));
+
+		Role liferayUserRole = rolesPage.fetchFirstItem();
+
+		for (UserAccount userAccount : userAccountPage.getItems()) {
+			if (Arrays.stream(
+					userAccount.getAccountBriefs()
+				).noneMatch(
+					accountBrief -> Objects.equals(
+						accountBrief.getExternalReferenceCode(), _SSA_ACCOUNT)
+				)) {
+
+				try {
+					userAccountResource.postAccountUserAccountByEmailAddress(
+						account.getId(), userAccount.getEmailAddress());
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
+			
+			if (Arrays.stream(
+					userAccount.getRoleBriefs()
+				).noneMatch(
+					roleBrief -> Objects.equals(
+						roleBrief.getName(), "Liferay User")
+				)) {
+
+				try {
+					roleResource.postRoleUserAccountAssociation(
+						liferayUserRole.getId(), userAccount.getId());
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
 			}
 		}
 	}
@@ -801,6 +900,8 @@ public class MarketplaceCommandLineRunner
 	private static final int _ORDER_STATUS_PENDING = 1;
 
 	private static final int _ORDER_STATUS_PROCESSING = 10;
+
+	private static final String _SSA_ACCOUNT = "SSA-ACCOUNT";
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceCommandLineRunner.class);

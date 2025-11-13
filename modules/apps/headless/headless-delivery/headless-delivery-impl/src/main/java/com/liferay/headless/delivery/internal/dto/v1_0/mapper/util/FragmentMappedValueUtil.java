@@ -9,6 +9,8 @@ import com.liferay.headless.delivery.dto.v1_0.ClassFieldsReference;
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.Field;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -17,8 +19,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Jürgen Kappler
@@ -67,6 +73,49 @@ public class FragmentMappedValueUtil {
 		}
 
 		return false;
+	}
+
+	public static ClassFieldsReference toDisplayPageClassFieldsReference(
+		String displayPageTemplateId) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry;
+
+		try {
+			Matcher matcher = _pattern.matcher(displayPageTemplateId);
+
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					getLayoutPageTemplateEntry(
+						GetterUtil.getLong(matcher.group(1)));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Item reference could not be set since no display page " +
+						"template could be obtained",
+					exception);
+			}
+
+			return null;
+		}
+
+		return new ClassFieldsReference() {
+			{
+				setClassName(() -> LayoutPageTemplateEntry.class.getName());
+				setFields(
+					() -> new Field[] {
+						new Field() {
+							{
+								setFieldName(() -> "externalReferenceCode");
+								setFieldValue(
+									() ->
+										layoutPageTemplateEntry.
+											getExternalReferenceCode());
+							}
+						}
+					});
+			}
+		};
 	}
 
 	public static Object toItemReference(JSONObject jsonObject) {
@@ -240,5 +289,7 @@ public class FragmentMappedValueUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentMappedValueUtil.class);
+
+	private static final Pattern _pattern = Pattern.compile("_(\\d+)$");
 
 }

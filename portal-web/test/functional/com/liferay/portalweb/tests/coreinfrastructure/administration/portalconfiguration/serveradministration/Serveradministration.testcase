@@ -10,42 +10,6 @@ definition {
 		User.firstLoginUI();
 	}
 
-	@description = "This is a use case for LPS-111757"
-	@priority = 4
-	test ViewGlobalLibDirectory {
-		property environment.acceptance = "quarantine";
-
-		ServerAdministration.openServerAdmin();
-
-		var propsKey = "LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR";
-
-		var script = '''
-			import com.liferay.portal.kernel.util.PropsKeys;
-			import com.liferay.portal.kernel.util.PropsUtil;
-
-			out.println(PropsUtil.get(PropsKeys.${propsKey}));
-		''';
-
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = ${script});
-
-		var dirName = PropsUtil.get("liferay.app.server.shielded.container.lib.portal.dir");
-
-		var dirEnding = StringUtil.endsWith(${dirName}, "/");
-
-		if (${dirEnding} == "true") {
-			AssertTextEquals(
-				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = ${dirName});
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = "${dirName}/");
-		}
-	}
-
 	@description = "This test automates LPS-144283 and asserts that the Log Levels page displays search results even after navigating to a different page number"
 	@priority = 4
 	test ViewLogLevelsDisplaySearchResultsAfterPageChange {

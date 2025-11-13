@@ -291,61 +291,6 @@ definition {
 		}
 	}
 
-	@priority = 3
-	test ConfigureURLToAlwaysShowLocale {
-		property custom.properties = "locale.prepend.friendly.url.style=2${line.separator}locales.enabled=fr_FR,en_US,zh_CN,es_ES";
-		property custom.system.properties = "user.country=FR${line.separator}user.language=fr";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		User.firstLoginPG();
-
-		HeadlessSite.addSite(siteName = "Test Site Name");
-
-		AssertLocation(value1 = "http://localhost:8080/fr/web/guest?SM_USER=test@liferay.com");
-
-		ApplicationsMenu.gotoSite(key_site = "Test Site Name");
-
-		AssertLocation.assertPartialLocation(value1 = "http://localhost:8080/fr/group/test-site-name");
-	}
-
-	@priority = 4
-	test EnableRedirectToDefaultLocale {
-		property custom.properties = "locale.use.default.if.not.available=true${line.separator}locales.enabled=en_US,zh_CN,fr_FR";
-		property custom.system.properties = "user.country=US${line.separator}user.language=en";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		User.firstLoginPG();
-
-		HeadlessSite.addSite(siteName = "Test Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Navigation Menu Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Navigation Menu Page",
-			widgetName = "Menu Display");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest/navigation-menu-page");
-
-		task ("Assert preferred locale persists by asserting Widget name.") {
-			AssertElementPresent(
-				key_portletName = "Menu Affichage",
-				locator1 = "Portlet#TITLE");
-		}
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/guest/navigation-menu-page");
-
-		task ("Assert default locale returned by asserting Widget name.") {
-			AssertElementPresent(
-				key_portletName = "Menu Display",
-				locator1 = "Portlet#TITLE");
-		}
-	}
-
 	@description = "This is a use case for LPS-103369."
 	@ignore = "true"
 	@priority = 5

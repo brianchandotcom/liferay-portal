@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
@@ -26,14 +27,22 @@ import org.osgi.service.component.annotations.Reference;
 public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
 	@Override
+	public void verify() throws VerifyException {
+		try {
+			super.verify();
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(false);
+		}
+	}
+
+	@Override
 	protected void doVerify() throws Exception {
 		for (PostUpgradeDataCleanupProcess postUpgradeDataCleanupProcess :
 				_getPostUpgradedataCleanupProcesses()) {
 
 			postUpgradeDataCleanupProcess.cleanUp();
 		}
-
-		StartupHelperUtil.setUpgrading(false);
 	}
 
 	private List<PostUpgradeDataCleanupProcess>

@@ -15,7 +15,14 @@
 					"#value": "start"
 				},
 				{
-					"#cdata-value": ["{\"xy\": [273,25]}"],
+					"#cdata-value": [
+						"{",
+						"    \"xy\": [",
+						"        273,",
+						"        25",
+						"    ]",
+						"}"
+					],
 					"#tag-name": "metadata"
 				},
 				{
@@ -74,7 +81,15 @@
 					"#value": "end"
 				},
 				{
-					"#cdata-value": ["{\"terminal\": true, \"xy\": [277,459]}"],
+					"#cdata-value": [
+						"{",
+						"    \"terminal\": true,",
+						"    \"xy\": [",
+						"        277,",
+						"        459",
+						"    ]",
+						"}"
+					],
 					"#tag-name": "metadata"
 				},
 				{
@@ -99,7 +114,14 @@
 			},
 			{
 			"#tag-name": "metadata",
-			"#cdata-value": ["{\"xy\": [276,242]}"]
+			"#cdata-value": [
+				"{",
+				"    \"xy\": [",
+				"        276,",
+				"        242",
+				"    ]",
+				"}"
+			]
 			},
 			{
 			"#tag-name": "labels",
@@ -114,15 +136,28 @@
 			{
 			"#tag-name": "input-variables",
 			"#cdata-value": [
-					"[{\"name\":\"text\",\"type\":\"string\"},",
-					"{\"name\":\"tone\",\"type\":\"string\"}]"
-				]
+				"[",
+				"    {",
+				"        \"name\": \"text\",",
+				"        \"type\": \"string\"",
+				"    },",
+				"    {",
+				"        \"name\": \"tone\",",
+				"        \"type\": \"string\"",
+				"    }",
+				"]"
+			]
 			},
 			{
 			"#tag-name": "output-variables",
 			"#cdata-value": [
-					"[{\"name\":\"rewrittenText\",\"type\":\"string\"}]"
-				]
+				"[",
+				"    {",
+				"        \"name\": \"rewrittenText\",",
+				"        \"type\": \"string\"",
+				"    }",
+				"]"
+			]
 			},
 			{
 			"#tag-name": "prompt",

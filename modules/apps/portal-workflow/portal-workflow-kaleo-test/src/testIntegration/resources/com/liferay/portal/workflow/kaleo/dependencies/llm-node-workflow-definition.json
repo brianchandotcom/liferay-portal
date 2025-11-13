@@ -16,7 +16,12 @@
 				},
 				{
 					"#cdata-value": [
-						"{\"xy\": [291,34]}"
+						"{",
+						"    \"xy\": [",
+						"        291,",
+						"        34",
+						"    ]",
+						"}"
 					],
 					"#tag-name": "metadata"
 				},
@@ -77,7 +82,13 @@
 				},
 				{
 					"#cdata-value": [
-						"{\"terminal\": true,\"xy\": [102,424]}"
+						"{",
+						"    \"terminal\": true,",
+						"    \"xy\": [",
+						"        102,",
+						"        424",
+						"    ]",
+						"}"
 					],
 					"#tag-name": "metadata"
 				},
@@ -102,7 +113,12 @@
 				},
 				{
 					"#cdata-value": [
-						"{\"xy\": [300,227]}"
+						"{",
+						"    \"xy\": [",
+						"        300,",
+						"        227",
+						"    ]",
+						"}"
 					],
 					"#tag-name": "metadata"
 				},
@@ -118,13 +134,23 @@
 				},
 				{
 					"#cdata-value": [
-						"[{\"name\":\"inputVariable\",\"type\":\"string\"}]"
+						"[",
+						"    {",
+						"        \"name\": \"inputVariable\",",
+						"        \"type\": \"string\"",
+						"    }",
+						"]"
 					],
 					"#tag-name": "input-variables"
 				},
 				{
 					"#cdata-value": [
-						"[{\"name\":\"outputVariable\",\"type\":\"string\"}]"
+						"[",
+						"    {",
+						"        \"name\": \"outputVariable\",",
+						"        \"type\": \"string\"",
+						"    }",
+						"]"
 					],
 					"#tag-name": "output-variables"
 				},

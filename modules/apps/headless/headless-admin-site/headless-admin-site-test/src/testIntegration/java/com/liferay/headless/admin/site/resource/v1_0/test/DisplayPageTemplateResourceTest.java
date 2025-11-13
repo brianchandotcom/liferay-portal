@@ -1071,7 +1071,8 @@ public class DisplayPageTemplateResourceTest
 	private void _testGetSiteDisplayPageTemplatesPageWithThumbnailAsNestedField()
 		throws Exception {
 
-		DisplayPageTemplate random = randomDisplayPageTemplate();
+		DisplayPageTemplate randomDisplayPageTemplate =
+			randomDisplayPageTemplate();
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -1082,7 +1083,7 @@ public class DisplayPageTemplateResourceTest
 
 		String thumbnailURL = RandomTestUtil.randomString();
 
-		random.setThumbnail(
+		randomDisplayPageTemplate.setThumbnail(
 			() -> new URLReference() {
 				{
 					setExternalReferenceCode(
@@ -1092,7 +1093,8 @@ public class DisplayPageTemplateResourceTest
 			});
 
 		DisplayPageTemplate postDisplayPageTemplate =
-			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(random);
+			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
+				randomDisplayPageTemplate);
 
 		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource("thumbnail");
@@ -1107,14 +1109,13 @@ public class DisplayPageTemplateResourceTest
 					postDisplayPageTemplate.getExternalReferenceCode(),
 					displayPageTemplate.getExternalReferenceCode())) {
 
+				URLReference thumbnail = displayPageTemplate.getThumbnail();
+
 				_assertThumbnailURLReference(
 					false, postDisplayPageTemplate.getExternalReferenceCode(),
-					displayPageTemplate.getThumbnail(
-					).getExternalReferenceCode());
+					thumbnail.getExternalReferenceCode());
 
-				URL url = new URL(
-					displayPageTemplate.getThumbnail(
-					).getUrl());
+				URL url = new URL(thumbnail.getUrl());
 
 				URLConnection urlConnection = url.openConnection();
 

@@ -1390,7 +1390,8 @@ public class ObjectEntryResourceImpl
 		return CommentUtil.toComment(
 			() -> _commentManager.addComment(
 				comment.getExternalReferenceCode(), groupId,
-				ObjectEntry.class.getName(), objectEntryId, comment.getText()),
+				ObjectEntry.class.getName(), objectEntryId,
+				StringBundler.concat("<p>", comment.getText(), "</p>")),
 			_commentManager, PortalUtil.getPortal());
 	}
 

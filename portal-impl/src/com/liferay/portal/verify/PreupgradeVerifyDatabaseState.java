@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -227,7 +228,8 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		if (_log.isWarnEnabled()) {
 			for (Map.Entry<String, List<String>>
 					mismatchedTableColumnDefinitionsEntry :
-						mismatchedTableColumnDefinitions.entrySet()) {
+						new TreeMap<>(mismatchedTableColumnDefinitions).
+							entrySet()) {
 
 				if (dbInspector.hasView(
 						mismatchedTableColumnDefinitionsEntry.getKey())) {
@@ -257,7 +259,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		StringBundler sb = new StringBundler();
 
 		for (Map.Entry<String, List<String>> missingTableColumnNamesEntry :
-				missingTableColumnNames.entrySet()) {
+				new TreeMap<>(missingTableColumnNames).entrySet()) {
 
 			for (String columnName : missingTableColumnNamesEntry.getValue()) {
 				sb.append(

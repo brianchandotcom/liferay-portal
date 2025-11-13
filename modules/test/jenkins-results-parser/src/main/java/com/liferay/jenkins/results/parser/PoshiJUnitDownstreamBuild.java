@@ -17,7 +17,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class PoshiJUnitDownstreamBuild extends BaseDownstreamBuild {
+public class PoshiJUnitDownstreamBuild extends JUnitDownstreamBuild {
 
 	@Override
 	public List<TestResult> getTestResults() {

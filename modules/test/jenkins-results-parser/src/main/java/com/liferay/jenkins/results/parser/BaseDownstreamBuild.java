@@ -645,6 +645,31 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 	}
 
 	@Override
+	public boolean isUniqueFailure() {
+		if (!isFailing()) {
+			return false;
+		}
+
+		if (!isCompareToUpstream()) {
+			return true;
+		}
+
+		String currentFailure = JenkinsResultsParserUtil.combine(
+			getBatchName(), ",", getResult());
+
+		for (String upstreamFailure :
+				UpstreamFailureUtil.getUpstreamJobFailures(
+					"build", getTopLevelBuild())) {
+
+			if (upstreamFailure.equals(currentFailure)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	@Override
 	public void saveBuildURLInBuildDatabase() {
 		BuildDatabase buildDatabase = getBuildDatabase();
 

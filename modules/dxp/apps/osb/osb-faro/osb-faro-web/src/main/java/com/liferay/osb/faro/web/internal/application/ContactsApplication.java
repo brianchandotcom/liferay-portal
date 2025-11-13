@@ -20,6 +20,7 @@ import com.liferay.osb.faro.web.internal.controller.contacts.IndividualControlle
 import com.liferay.osb.faro.web.internal.controller.contacts.IndividualSegmentController;
 import com.liferay.osb.faro.web.internal.controller.contacts.InterestController;
 import com.liferay.osb.faro.web.internal.controller.contacts.PagesVisitedController;
+import com.liferay.osb.faro.web.internal.controller.contacts.SalesforceController;
 import com.liferay.osb.faro.web.internal.controller.contacts.SessionController;
 
 import jakarta.ws.rs.ApplicationPath;
@@ -56,6 +57,7 @@ public class ContactsApplication extends BaseApplication {
 		controllers.add(_individualSegmentController);
 		controllers.add(_interestController);
 		controllers.add(_pagesVisitedController);
+		controllers.add(_salesforceController);
 		controllers.add(_sessionController);
 
 		return controllers;
@@ -102,6 +104,9 @@ public class ContactsApplication extends BaseApplication {
 
 	@Reference
 	private PagesVisitedController _pagesVisitedController;
+
+	@Reference
+	private SalesforceController _salesforceController;
 
 	@Reference
 	private SessionController _sessionController;

@@ -305,7 +305,7 @@ while (manageableCalendarsIterator.hasNext()) {
 							<liferay-editor:input-localized
 								defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
 								name="description"
-								xml='<%= (calendarBooking != null) ? calendarBooking.getDescription() : StringPool.BLANK %>'
+								xml="<%= (calendarBooking != null) ? calendarBooking.getDescription() : StringPool.BLANK %>"
 							/>
 						</div>
 					</c:when>

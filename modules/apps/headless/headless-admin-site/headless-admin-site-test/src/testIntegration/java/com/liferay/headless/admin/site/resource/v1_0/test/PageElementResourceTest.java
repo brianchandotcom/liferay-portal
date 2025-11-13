@@ -2584,24 +2584,24 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 			FragmentEditableElementTestUtil.getFragmentEditableElements(
-				TextFragmentValue.Type.INLINE, null, null));
+				null, null, TextFragmentValue.Type.INLINE));
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 			FragmentEditableElementTestUtil.getFragmentEditableElements(
-				TextFragmentValue.Type.MAPPED,
-				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
 				FragmentMappedValueItemContextReference.ContextSource.
-					COLLECTION_ITEM));
-		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-			FragmentEditableElementTestUtil.getFragmentEditableElements(
-				TextFragmentValue.Type.MAPPED,
+					COLLECTION_ITEM,
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
-				FragmentMappedValueItemContextReference.ContextSource.
-					DISPLAY_PAGE_ITEM));
+				TextFragmentValue.Type.MAPPED));
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 			FragmentEditableElementTestUtil.getFragmentEditableElements(
-				TextFragmentValue.Type.MAPPED,
+				FragmentMappedValueItemContextReference.ContextSource.
+					DISPLAY_PAGE_ITEM,
+				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
+				TextFragmentValue.Type.MAPPED));
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
+			FragmentEditableElementTestUtil.getFragmentEditableElements(
+				null,
 				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE,
-				null));
+				TextFragmentValue.Type.MAPPED));
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 			FragmentEditableElementTestUtil.getFragmentEditableElements(
 				null, null, null));

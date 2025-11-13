@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 public class FragmentEditableElementTestUtil {
 
 	public static FragmentEditableElement[] getFragmentEditableElements(
-		TextFragmentValue.Type textFragmentValueType,
+		FragmentMappedValueItemContextReference.ContextSource contextSource,
 		FragmentMappedValueItemReference.Type
 			fragmentMappedValueItemReferenceType,
-		FragmentMappedValueItemContextReference.ContextSource contextSource) {
+		TextFragmentValue.Type textFragmentValueType) {
 
 		return new FragmentEditableElement[] {
 			new FragmentEditableElement() {

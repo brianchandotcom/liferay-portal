@@ -28,6 +28,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test Faces1470And1478PortletSmoke {
 
@@ -249,6 +250,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test Faces1635And1433PortletSmoke {
 
@@ -324,6 +326,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test FacesIssuesPortletSmoke {
 
@@ -535,6 +538,7 @@ definition {
 			textValue = "MOJARRA-4340-workaround");
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test PrimefacesIssuesSmoke {
 

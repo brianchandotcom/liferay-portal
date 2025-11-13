@@ -8,7 +8,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.Scope;
+import com.liferay.headless.admin.site.client.scope.Scope;
 
 import java.util.Map;
 

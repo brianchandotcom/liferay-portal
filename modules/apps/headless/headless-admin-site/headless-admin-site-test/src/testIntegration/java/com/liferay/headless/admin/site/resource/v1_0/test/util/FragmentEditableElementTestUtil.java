@@ -139,7 +139,8 @@ public class FragmentEditableElementTestUtil {
 
 	private static TextMappedFragmentValue _getTextMappedFragmentValue(
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
-		FragmentMappedValueItemReference.Type curType) {
+		FragmentMappedValueItemReference.Type
+			fragmentMappedValueItemReferenceType) {
 
 		return new TextMappedFragmentValue() {
 			{
@@ -152,7 +153,8 @@ public class FragmentEditableElementTestUtil {
 										setFieldKey("field-key");
 										setItemReference(
 											_getFragmentMappedValueItemReference(
-												contextSource, curType));
+												contextSource,
+												fragmentMappedValueItemReferenceType));
 									}
 								});
 						}

@@ -94,6 +94,28 @@ describe('loadData util', () => {
 		);
 	});
 
+	it('requests a customField data for a Frontend Data Set with a sort parameter', async () => {
+		await loadData({
+			apiURL: '/o/products',
+			currentURL: '/sample-portlet-page-url',
+			delta: 20,
+			page: 1,
+			sorts: [
+				{
+					active: true,
+					direction: 'asc',
+					key: 'customFields.customDate',
+				},
+			],
+		});
+
+		const requestUrl = fetch.mock.calls[0][0];
+
+		expect(requestUrl).toContain(
+			'/o/products?currentURL=%2Fsample-portlet-page-url&page=1&pageSize=20&sort=customFields%2FcustomDate%3Aasc'
+		);
+	});
+
 	it('handles "LANG" property when it comes as a sort parameter', async () => {
 		await loadData({
 			apiURL: '/o/products',

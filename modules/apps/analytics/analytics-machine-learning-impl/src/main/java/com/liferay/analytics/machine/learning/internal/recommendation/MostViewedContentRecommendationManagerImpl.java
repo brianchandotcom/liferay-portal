@@ -95,10 +95,17 @@ public class MostViewedContentRecommendationManagerImpl
 		document.addNumber(
 			Field.ASSET_CATEGORY_IDS,
 			mostViewedContentRecommendation.getAssetCategoryIds());
-		document.addDate(
-			Field.CREATE_DATE, mostViewedContentRecommendation.getCreateDate());
 		document.addNumber(
 			Field.COMPANY_ID, mostViewedContentRecommendation.getCompanyId());
+		document.addDate(
+			Field.CREATE_DATE, mostViewedContentRecommendation.getCreateDate());
+		document.addKeyword(
+			Field.UID,
+			String.valueOf(
+				getHash(
+					mostViewedContentRecommendation.getCompanyId(),
+					mostViewedContentRecommendation.
+						getRecommendedEntryClassPK())));
 		document.addText(
 			RecommendationField.JOB_ID,
 			mostViewedContentRecommendation.getJobId());
@@ -108,13 +115,6 @@ public class MostViewedContentRecommendationManagerImpl
 		document.addNumber(
 			RecommendationField.SCORE,
 			mostViewedContentRecommendation.getScore());
-		document.addKeyword(
-			Field.UID,
-			String.valueOf(
-				getHash(
-					mostViewedContentRecommendation.getCompanyId(),
-					mostViewedContentRecommendation.
-						getRecommendedEntryClassPK())));
 
 		return document;
 	}

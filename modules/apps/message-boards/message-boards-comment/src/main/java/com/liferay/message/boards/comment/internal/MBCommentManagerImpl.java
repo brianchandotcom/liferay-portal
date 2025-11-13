@@ -7,8 +7,6 @@ package com.liferay.message.boards.comment.internal;
 
 import com.liferay.comment.constants.CommentConstants;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
-import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
@@ -44,8 +42,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
-
-import jakarta.ws.rs.ClientErrorException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,6 +97,21 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public Comment addComment(
+			String externalReferenceCode, long groupId, long parentCommentId,
+			String className, long classPK, String text)
+		throws Exception {
+
+		return _doAddComment(
+			() -> addComment(
+				externalReferenceCode, PrincipalThreadLocal.getUserId(),
+				className, classPK, StringPool.BLANK, parentCommentId,
+				StringPool.BLANK, StringBundler.concat("<p>", text, "</p>"),
+				_createServiceContextFunction()),
+			className, classPK, groupId);
+	}
+
+	@Override
 	public long addComment(
 			String externalReferenceCode, long userId, long groupId,
 			String className, long classPK, String userName, String subject,
@@ -127,6 +138,21 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public Comment addComment(
+			String externalReferenceCode, long groupId, String className,
+			long classPK, String text)
+		throws Exception {
+
+		return _doAddComment(
+			() -> addComment(
+				externalReferenceCode, PrincipalThreadLocal.getUserId(),
+				groupId, className, classPK, StringPool.BLANK, StringPool.BLANK,
+				StringBundler.concat("<p>", text, "</p>"),
+				_createServiceContextFunction()),
+			className, classPK, groupId);
+	}
+
+	@Override
 	public long addComment(
 			String externalReferenceCode, long userId, String className,
 			long classPK, String userName, long parentCommentId, String subject,
@@ -148,40 +174,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		return mbMessage.getMessageId();
 	}
 
-	private Comment _doAddComment(
-			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier,
-			String className, long classPK, long groupId)
-		throws Exception {
-
-		_discussionPermission.checkAddPermission(
-			PermissionThreadLocal.getPermissionChecker(),
-			CompanyThreadLocal.getCompanyId(), groupId, className, classPK);
-
-		try {
-			long commentId = addCommentUnsafeSupplier.get();
-
-			return fetchComment(commentId);
-		}
-		catch (Exception exception) {
-			if (exception instanceof DiscussionMaxCommentsException) {
-				throw new ClientErrorException(
-					"Maximum number of comments has been reached", 422,
-					exception);
-			}
-			else if (exception instanceof DuplicateCommentException) {
-				throw new ClientErrorException(
-					"A comment with the same text already exists", 409,
-					exception);
-			}
-			else if (exception instanceof MessageSubjectException) {
-				throw new ClientErrorException(
-					"Comment text is null", 422, exception);
-			}
-
-			throw exception;
-		}
-	}
-
 	@Override
 	public void addDiscussion(
 			long userId, long groupId, String className, long classPK,
@@ -191,36 +183,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		_mbMessageLocalService.addDiscussionMessage(
 			userId, userName, groupId, className, classPK,
 			WorkflowConstants.ACTION_PUBLISH);
-	}
-
-	@Override
-	public Comment addComment(
-			String externalReferenceCode, long groupId, String className,
-			long classPK, String text)
-		throws Exception {
-
-		return _doAddComment(
-			() -> addComment(
-				externalReferenceCode, PrincipalThreadLocal.getUserId(),
-				groupId, className, classPK, StringPool.BLANK, StringPool.BLANK,
-				StringBundler.concat("<p>", text, "</p>"),
-				_createServiceContextFunction()),
-			className, classPK, groupId);
-	}
-
-	@Override
-	public Comment addComment(
-		String externalReferenceCode, long groupId, long parentCommentId,
-		String className, long classPK, String text)
-		throws Exception {
-
-		return _doAddComment(
-			() -> addComment(
-				externalReferenceCode, PrincipalThreadLocal.getUserId(), className, classPK,
-				StringPool.BLANK, parentCommentId, StringPool.BLANK,
-				StringBundler.concat("<p>", text, "</p>"),
-				_createServiceContextFunction()),
-			className, classPK, groupId);
 	}
 
 	@Override
@@ -508,6 +470,20 @@ public class MBCommentManagerImpl implements CommentManager {
 
 			return serviceContext;
 		};
+	}
+
+	private Comment _doAddComment(
+			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier,
+			String className, long classPK, long groupId)
+		throws Exception {
+
+		_discussionPermission.checkAddPermission(
+			PermissionThreadLocal.getPermissionChecker(),
+			CompanyThreadLocal.getCompanyId(), groupId, className, classPK);
+
+		long commentId = addCommentUnsafeSupplier.get();
+
+		return fetchComment(commentId);
 	}
 
 	private void _duplicateComment(

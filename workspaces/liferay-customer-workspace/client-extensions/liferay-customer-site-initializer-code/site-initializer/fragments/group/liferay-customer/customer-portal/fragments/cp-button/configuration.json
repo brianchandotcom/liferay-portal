@@ -11,7 +11,7 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "Netral",
+								"label": "Neutral",
 								"value": "neutral"
 							},
 							{
@@ -95,6 +95,12 @@
 					"label": "Inverted",
 					"name": "inverted",
 					"type": "checkbox"
+				},
+				{
+					"label": "Button URL",
+					"localizable": true,
+					"name": "buttonUrl",
+					"type": "url"
 				}
 			]
 		}

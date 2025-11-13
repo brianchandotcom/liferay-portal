@@ -6,21 +6,16 @@
 package com.liferay.exportimport.internal.background.task.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
-import com.liferay.exportimport.kernel.service.StagingLocalService;
-import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
-import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -31,7 +26,6 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -41,9 +35,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -54,12 +46,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.SAXReader;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.staging.StagingGroupHelper;
@@ -411,9 +399,6 @@ public class LayoutImportBackgroundTaskExecutorTest {
 			PortletDataHandlerKeys.PERMISSIONS,
 			new String[] {Boolean.FALSE.toString()}
 		).put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
@@ -449,61 +434,6 @@ public class LayoutImportBackgroundTaskExecutorTest {
 		return parameterMap;
 	}
 
-	private LogCapture _getLogCapture(boolean expectError) {
-		LogCapture logCapture = null;
-
-		if (expectError) {
-			logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR);
-		}
-
-		return logCapture;
-	}
-
-	private ExportImportConfiguration _importLayouts(
-			boolean deletions, boolean expectError, File file, long groupId,
-			boolean includeLayoutSetLayoutsPortlet, boolean privateLayout,
-			ObjectDefinition... objectDefinitions)
-		throws Exception {
-
-		try (LogCapture logCapture = _getLogCapture(expectError)) {
-			ExportImportConfiguration exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						TestPropsValues.getUserId(),
-						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						ExportImportConfigurationSettingsMapFactoryUtil.
-							buildImportLayoutSettingsMap(
-								TestPropsValues.getUser(), groupId,
-								privateLayout, null,
-								_getExportImportParameterMap(
-									deletions, includeLayoutSetLayoutsPortlet,
-									Arrays.asList(objectDefinitions))));
-
-			if (deletions) {
-				_exportImportLocalService.importLayoutsDataDeletions(
-					exportImportConfiguration, file);
-			}
-
-			_exportImportLocalService.importLayouts(
-				exportImportConfiguration, file);
-
-			return exportImportConfiguration;
-		}
-	}
-
-	private ExportImportConfiguration _importLayouts(
-			boolean deletions, boolean expectError, File file, long groupId,
-			ObjectDefinition... objectDefinitions)
-		throws Exception {
-
-		return _importLayouts(
-			deletions, expectError, file, groupId, false, false,
-			objectDefinitions);
-	}
-
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA =
 		"x" + RandomTestUtil.randomString();
 
@@ -531,13 +461,6 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Inject
-	private BatchEngineImportTaskLocalService
-		_batchEngineImportTaskLocalService;
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
@@ -554,31 +477,9 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	private ExportImportLocalService _exportImportLocalService;
 
 	@Inject
-	private ExportImportReportEntryLocalService
-		_exportImportReportEntryLocalService;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
-
-	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Inject
-	private Portal _portal;
-
-	@Inject
-	private PortletDataHandlerProvider _portletDataHandlerProvider;
-
-	@Inject
-	private SAXReader _saxReader;
-
-	@Inject
 	private StagingGroupHelper _stagingGroupHelper;
-
-	@Inject
-	private StagingLocalService _stagingLocalService;
 
 }

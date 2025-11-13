@@ -193,8 +193,8 @@ public class FragmentEditableElementUtil {
 		}
 
 		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
-			companyId, fragmentMappedValue.getMapping(),
-			infoItemServiceRegistry, scopeGroupId);
+			companyId, infoItemServiceRegistry,
+			fragmentMappedValue.getMapping(), scopeGroupId);
 	}
 
 	private static List<FragmentEditableElement>

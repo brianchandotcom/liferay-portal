@@ -91,8 +91,8 @@ public class FragmentMappingUtil {
 	}
 
 	public static JSONObject getFragmentMappedValueJSONObject(
-			long companyId, Mapping mapping,
-			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			Mapping mapping, long scopeGroupId)
 		throws PortalException {
 
 		if (mapping == null) {

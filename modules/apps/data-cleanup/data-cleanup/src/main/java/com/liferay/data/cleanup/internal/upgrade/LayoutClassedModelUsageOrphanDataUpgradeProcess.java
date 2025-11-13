@@ -69,16 +69,17 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 	}
 
 	private void _cleanUpdateLayoutClassedModelUsages() throws Exception {
-		_processLayoutClassedModelUsage(
+		_processLayoutClassedModelUsages(
 			_classNameLocalService.getClassNameId(
 				FragmentEntryLink.class.getName()),
 			"fragmentEntryLinkId", "FragmentEntryLink",
-			this::_updateFragmentEntryLayoutClassedModelUsage);
-		_processLayoutClassedModelUsage(
+			this::_updateLayoutClassedModelUsagesForFragmentEntryLinks);
+		_processLayoutClassedModelUsages(
 			_classNameLocalService.getClassNameId(
 				LayoutPageTemplateStructure.class.getName()),
 			"layoutPageTemplateStructureId", "LayoutPageTemplateStructure",
-			this::_updateLayoutPageTemplateStructureClassedModelUsage);
+			this::
+				_updateLayoutClassedModelUsagesForLayoutPageTemplateStructure);
 	}
 
 	private void _deleteOrphanLayoutClassedModelUsage(
@@ -119,8 +120,9 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Deleted orphaned layout classed model usage ID ",
-						layoutClassedModelUsageId, " with CT collection ID ",
+						"Deleted orphaned layout classed model usage ",
+						layoutClassedModelUsageId,
+						" with change tracking collection ID ",
 						ctCollectionId));
 			}
 		}
@@ -129,14 +131,14 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 				_log.warn(
 					StringBundler.concat(
 						"Unable to delete orphaned layout classed model usage ",
-						"ID ", layoutClassedModelUsageId,
-						" with CT collection ID ", ctCollectionId),
+						layoutClassedModelUsageId,
+						" with change tracking collection ID ", ctCollectionId),
 					exception);
 			}
 		}
 	}
 
-	private void _processLayoutClassedModelUsage(
+	private void _processLayoutClassedModelUsages(
 			long classNameId, String keyColumnName, String tableName,
 			UnsafeBiConsumer<Long, Long, Exception> unsafeBiConsumer)
 		throws Exception {
@@ -191,10 +193,10 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			}
 		}
 
-		_processLayoutClassedModelUsage(groupIdMap, unsafeBiConsumer);
+		_processLayoutClassedModelUsages(groupIdMap, unsafeBiConsumer);
 	}
 
-	private void _processLayoutClassedModelUsage(
+	private void _processLayoutClassedModelUsages(
 		Map<Long, Map<Long, Set<Long>>> plidMap,
 		UnsafeBiConsumer<Long, Long, Exception> unsafeBiConsumer) {
 
@@ -221,9 +223,9 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 						if (_log.isDebugEnabled()) {
 							_log.debug(
 								StringBundler.concat(
-									"Updated layout classed model usage for ",
-									"layout with plid ", plid,
-									" and CT collection ID ", ctCollectionId));
+									"Updated layout classed model usage with ",
+									"change tracking collection ID ",
+									ctCollectionId, " and PLID ", plid));
 						}
 					}
 					catch (Exception exception) {
@@ -231,8 +233,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 							_log.warn(
 								StringBundler.concat(
 									"Unable to update layout classed model ",
-									"usage for layout with plid ", plid,
-									" and CT collection ID ", ctCollectionId),
+									"usage with change tracking collection ID ",
+									ctCollectionId, " and PLID ", plid),
 								exception);
 						}
 					}
@@ -241,7 +243,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 		}
 	}
 
-	private void _updateFragmentEntryLayoutClassedModelUsage(
+	private void _updateLayoutClassedModelUsagesForFragmentEntryLinks(
 		long groupId, long plid) {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
@@ -260,16 +262,15 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						StringBundler.concat(
-							"Unable to update usages for fragment entry link ",
-							"ID ", fragmentEntryLink.getFragmentEntryLinkId()),
+						"Unable to update usages for fragment entry link " +
+							fragmentEntryLink.getFragmentEntryLinkId(),
 						exception);
 				}
 			}
 		}
 	}
 
-	private void _updateLayoutPageTemplateStructureClassedModelUsage(
+	private void _updateLayoutClassedModelUsagesForLayoutPageTemplateStructure(
 		long groupId, long plid) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -302,7 +303,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 					_log.warn(
 						StringBundler.concat(
 							"Unable to update usages for layout page template ",
-							"structure rel ID ",
+							"structure relationship ",
 							layoutPageTemplateStructureRel.
 								getLayoutPageTemplateStructureRelId()),
 						exception);

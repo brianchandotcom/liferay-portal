@@ -6,57 +6,30 @@
 import Button, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import ViewsContext, {
 	IViewsContext,
 	TViewsContextDispatch,
 } from '../../../views/ViewsContext';
-import Filter, {FilterComponentArgs, IFilter} from './Filter';
+import Filter, {IFilter} from './Filter';
 
 const FiltersDropdown = () => {
-	const [{filters, filtersGroups}]: [IViewsContext, TViewsContextDispatch] =
-		useContext(ViewsContext);
+	const [{filters, filtersGroups}]: [
+		IViewsContext,
+		TViewsContextDispatch,
+	] = useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
 	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
-	const [filters, setFilters] = useState<IFilter[]>(initialFilters);
-	const [query, setQuery] = useState('');
-
-	const onSearch = (query: string) => {
-		setQuery(query);
-
-		setFilters(
-			query
-				? initialFilters.filter(({label}) =>
-						label.toLowerCase().match(query.toLowerCase())
-					) || []
-				: initialFilters
-		);
-	};
-
-	useEffect(() => {
-		setFilters(initialFilters);
-
-		setActiveFilter((currentActiveFilter: FilterComponentArgs | null) => {
-			if (!currentActiveFilter) {
-				return null;
-			}
-
-			return (
-				initialFilters.find(
-					(filter) => filter.id === currentActiveFilter.id
-				) || null
-			);
-		});
-	}, [initialFilters, setActiveFilter, setFilters]);
 
 	const validFilters = filters.filter(
 		(filter) => !filter.clientExtensionResolutionError
 	);
 
 	const groupedFilters = filtersGroups?.map((group) => ({
-		children: group.filters.map((filterId: string) =>
+		children: group.filters
+			.map((filterId: string) =>
 				validFilters.find((f) => f.id === filterId)
 			)
 			.filter(Boolean),
@@ -102,8 +75,6 @@ const FiltersDropdown = () => {
 							displayType="unstyled"
 							onClick={() => {
 								setActiveFilter(null);
-
-								setFilters(initialFilters);
 							}}
 							size="sm"
 							symbol="angle-left"
@@ -119,9 +90,7 @@ const FiltersDropdown = () => {
 				</>
 			) : (
 				<ClayDropDown.Group header={Liferay.Language.get('filters')}>
-					<ClayDropDown.Search
-						aria-label={Liferay.Language.get('search')}
-					/>
+					<ClayDropDown.Search aria-label={Liferay.Language.get('search')} />
 
 					<ClayDropDown.Divider />
 

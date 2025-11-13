@@ -78,8 +78,6 @@ public class FileEntryUtil {
 			).next();
 		}
 
-		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
 		String fileName =
 			urlReference.getExternalReferenceCode() + "_preview" + extension;
 
@@ -92,7 +90,7 @@ public class FileEntryUtil {
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			urlReference.getExternalReferenceCode(), user.getUserId(),
-			repository.getRepositoryId(), folderId,
+			repository.getRepositoryId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			resourceName + "_" + fileName, mimeType, fileName, null, null, null,
 			fileBytes, null, null, null, serviceContext);
 	}

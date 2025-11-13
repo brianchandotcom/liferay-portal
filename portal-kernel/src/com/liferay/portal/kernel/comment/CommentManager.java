@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.comment;
 
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -48,6 +47,11 @@ public interface CommentManager {
 	public Comment addEntityComment(
 			String externalReferenceCode, long groupId, String className,
 			long classPK, String text)
+		throws Exception;
+
+	public Comment addParentComment(
+		String externalReferenceCode, long groupId, long parentCommentId,
+		String className, long classPK, String text)
 		throws Exception;
 
 	public Discussion copyDiscussion(

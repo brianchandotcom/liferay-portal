@@ -252,9 +252,7 @@ public class FragmentEditableElementUtil {
 			return null;
 		}
 
-		boolean mappedValue = FragmentMappingUtil.isMappedValue(jsonObject);
-
-		if (mappedValue) {
+		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
 			TextMappedFragmentValue textMappedFragmentValue =
 				new TextMappedFragmentValue();
 

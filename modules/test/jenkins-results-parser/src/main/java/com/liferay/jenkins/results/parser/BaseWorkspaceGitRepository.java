@@ -636,12 +636,10 @@ public abstract class BaseWorkspaceGitRepository
 
 		LocalGitBranch localGitBranch = getLocalGitBranch();
 
-		int depth =
-			gitWorkingDirectory.getCommitCountBetweenBranches(
-				localGitBranch.getUpstreamBranchName(),
-				localGitBranch.getName()) + 1;
+		int commitCount = gitWorkingDirectory.getCommitCountBetweenBranches(
+			localGitBranch.getUpstreamBranchName(), localGitBranch.getName());
 
-		sb.append(depth);
+		sb.append(commitCount + 1);
 
 		sb.append(" --no-checkout file://");
 

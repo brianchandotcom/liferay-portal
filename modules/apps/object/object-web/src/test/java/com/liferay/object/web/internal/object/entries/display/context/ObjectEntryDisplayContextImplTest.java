@@ -96,6 +96,38 @@ public class ObjectEntryDisplayContextImplTest {
 	}
 
 	@Test
+	public void testGetDefaultLocale() {
+		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
+			_createObjectEntryDisplayContextImpl(_mockHttpServletRequest);
+
+		LocaleUtil.setDefault(
+			LocaleUtil.BRAZIL.getLanguage(), LocaleUtil.BRAZIL.getCountry(),
+			LocaleUtil.BRAZIL.getVariant());
+
+		Mockito.when(
+			_objectDefinition.getScope()
+		).thenReturn(
+			ObjectDefinitionConstants.SCOPE_COMPANY
+		);
+
+		Assert.assertEquals(
+			LocaleUtil.BRAZIL,
+			objectEntryDisplayContextImpl.getDefaultLocale(
+				LocaleUtil.US, null));
+
+		Mockito.when(
+			_objectDefinition.getScope()
+		).thenReturn(
+			ObjectDefinitionConstants.SCOPE_SITE
+		);
+
+		Assert.assertEquals(
+			LocaleUtil.US,
+			objectEntryDisplayContextImpl.getDefaultLocale(
+				LocaleUtil.US, null));
+	}
+
+	@Test
 	public void testGetObjectEntry() throws Exception {
 		String groupId = String.valueOf(RandomTestUtil.randomLong());
 

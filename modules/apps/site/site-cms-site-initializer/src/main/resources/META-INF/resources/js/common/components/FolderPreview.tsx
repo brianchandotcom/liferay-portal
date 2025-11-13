@@ -19,28 +19,15 @@ interface FolderPreviewProps {
 export default function FolderPreview(props: FolderPreviewProps) {
 	const {filesLength, name, subfoldersLength} = props;
 
-	let subfolderLabel;
-	let fileLabel;
+	const subfolderLabel =
+		subfoldersLength === 1
+			? sub(Liferay.Language.get('x-folder'), subfoldersLength)
+			: sub(Liferay.Language.get('x-folders'), subfoldersLength);
 
-	if (subfoldersLength === 1) {
-		subfolderLabel = sub(
-			Liferay.Language.get('x-folder'),
-			subfoldersLength
-		);
-	}
-	else {
-		subfolderLabel = sub(
-			Liferay.Language.get('x-folders'),
-			subfoldersLength
-		);
-	}
-
-	if (filesLength === 1) {
-		fileLabel = sub(Liferay.Language.get('x-file'), filesLength);
-	}
-	else {
-		fileLabel = sub(Liferay.Language.get('x-files'), filesLength);
-	}
+	const fileLabel =
+		subfoldersLength === 1
+			? sub(Liferay.Language.get('x-file'), filesLength)
+			: sub(Liferay.Language.get('x-files'), filesLength);
 
 	return (
 		<div className="align-items-center bg-light d-flex folder-preview h-100 justify-content-center text-center w-100">

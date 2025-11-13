@@ -51,9 +51,19 @@
 
 			> .conjunction {
 				font-weight: $fontWeightBold;
-				margin-left: 8px;
 				padding: 4px;
+				padding-left: 0;
 				text-transform: uppercase;
+			}
+
+			.criteria-group {
+				& .criteria-row {
+					padding-left: 8px;
+				}
+
+				& .conjunction {
+					padding-left: 8px;
+				}
 			}
 		}
 

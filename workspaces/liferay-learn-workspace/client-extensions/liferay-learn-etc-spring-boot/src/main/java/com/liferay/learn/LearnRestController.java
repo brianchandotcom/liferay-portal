@@ -24,11 +24,14 @@ import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.json.JSONArray;
@@ -278,14 +281,6 @@ public class LearnRestController extends BaseRestController {
 		return ResponseEntity.ok(quizResultMap);
 	}
 
-	private String _applyReplacements(String lessonContent) {
-		lessonContent = lessonContent.replaceAll("\\bPaaS\\b", "pass");
-		lessonContent = lessonContent.replaceAll("\\bSaaS\\b", "saas");
-		lessonContent = lessonContent.replaceAll("\\bLiferay\\b", "Life-ray");
-
-		return lessonContent;
-	}
-
 	private Map<String, Object> _generateAudioResource(
 			String content, long documentId, String fileName,
 			String languageCode, String voiceName)
@@ -294,9 +289,7 @@ public class LearnRestController extends BaseRestController {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		List<String> ssmls = _splitSsml(
-			_replace(
-				_htmlToReadableText(content), "Life-ray", "\\bLiferay\\b"));
+		List<String> ssmls = _splitSsml(_htmlToReadableText(content));
 
 		for (String ssml : ssmls) {
 			String response = post(
@@ -595,106 +588,84 @@ public class LearnRestController extends BaseRestController {
 			StringBundler sb = new StringBundler();
 			List<String> headers = new ArrayList<>();
 
-			Elements headerEls = table.select("thead th");
+			Elements tableHeaders = table.select("thead th");
 
-			if (headerEls.isEmpty()) {
-				Element firstRow = table.selectFirst("tr");
+			if (tableHeaders.isEmpty()) {
+				Element element = table.selectFirst("tr");
 
-				if (firstRow != null) {
-					headerEls = firstRow.select("th, td");
+				if (element != null) {
+					tableHeaders = element.select("td, th");
 				}
 			}
 
-			for (Element header : headerEls) {
-				headers.add(
-					header.text(
-					).trim());
+			for (Element element : tableHeaders) {
+				headers.add(StringUtil.trim(element.text()));
 			}
 
-			for (Element row : table.select("tbody tr")) {
-				Elements cols = row.select("td, th");
+			for (Element element : table.select("tbody tr")) {
+				Elements tableColumns = element.select("td, th");
 
-				if (cols.isEmpty()) {
+				if (tableColumns.isEmpty()) {
 					continue;
 				}
 
-				int headerCount = headers.size();
-
-				for (int i = 0; i < cols.size(); i++) {
+				for (int i = 0; i < tableColumns.size(); i++) {
 					String label =
-						(i < headerCount) ? headers.get(i) :
+						(i < headers.size()) ? headers.get(i) :
 							"Column " + (i + 1);
-					String text = _normalizeCell(
-						cols.get(
-							i
-						).text(
-						).trim());
 
-					sb.append(
-						label
-					).append(
-						": "
-					).append(
-						text
-					).append(
-						". "
-					);
+					sb.append(label);
+
+					sb.append(": ");
+					sb.append(_normalizeCell(tableColumns.get(i)));
+					sb.append(". ");
 				}
 
 				sb.append("\n");
 			}
 
-			table.replaceWith(
-				document.createElement(
-					"p"
-				).text(
-					sb.toString()
-				));
+			_replaceElementWithText(table, "p", sb.toString());
 		}
 
 		for (Element list : document.select("ul, ol")) {
 			StringBundler sb = new StringBundler();
 
 			for (Element li : list.select("li")) {
-				sb.append(
-					"- "
-				).append(
-					li.text()
-				).append(
-					"\n ,"
-				);
+				sb.append("- ");
+				sb.append(li.text());
+				sb.append("\n ,");
 			}
 
-			list.replaceWith(
-				document.createElement(
-					"p"
-				).text(
-					sb.toString()
-				));
+			_replaceElementWithText(list, "p", sb.toString());
 		}
 
 		for (Element heading : document.select("h1, h2, h3, h4, h5, h6")) {
-			heading.after(
-				document.createElement(
-					"p"
-				).text(
-					". "
-				));
+			Element paragraph = document.createElement("p");
+
+			heading.after(paragraph.text(". "));
 		}
 
-		return _applyReplacements(document.text());
+		String content = document.text();
+
+		for (String[] replacements : _LEARN_PATTERN_REPLACEMENTS) {
+			content = _replace(content, replacements[1], replacements[0]);
+		}
+
+		return content;
 	}
 
-	private String _normalizeCell(String text) {
-		if (text.equals("✔") || text.equals("✓")) {
+	private String _normalizeCell(Element element) {
+		String text = element.text();
+
+		if (_supportedValuesContentTable.contains(text)) {
 			return "Supported";
 		}
 
-		if (text.isEmpty() || text.equals("\u00A0")) {
+		if (_notSupportedValuesContentTable.contains(text)) {
 			return "Not supported";
 		}
 
-		return text;
+		return StringUtil.trim(text);
 	}
 
 	private void _postUserBadge(long quizId, long userId) {
@@ -750,47 +721,44 @@ public class LearnRestController extends BaseRestController {
 			).toUri());
 	}
 
-	private String _replace(String s, String replacement, String regex) {
+	private String _replace(String string, String replacement, String regex) {
 		Pattern pattern = Pattern.compile(regex);
 
 		return pattern.matcher(
-			s
+			string
 		).replaceAll(
 			replacement
 		);
+	}
+
+	private void _replaceElementWithText(
+		Element element, String tagName, String string) {
+
+		Element replacementElement = new Element(tagName);
+
+		replacementElement.text(string);
+
+		element.replaceWith(replacementElement);
 	}
 
 	private List<String> _splitSsml(String ssml) {
 		List<String> parts = new ArrayList<>();
 		StringBundler sb = new StringBundler();
 
-		String ssmlContent = ssml.replaceFirst(
-			"^<speak>", ""
-		).replaceFirst(
-			"</speak>$", ""
-		).trim();
-
-		String[] sentences = ssmlContent.split("(?<=[.!?])\\s+");
+		String[] sentences = ssml.split("(?<=[.!?])\\s+");
 
 		for (String sentence : sentences) {
 			if ((sb.length() + sentence.length()) > 5000) {
-				parts.add(
-					sb.toString(
-					).trim());
+				parts.add(StringUtil.trim(sb.toString()));
 				sb = new StringBundler();
 			}
 
-			sb.append(
-				sentence
-			).append(
-				" "
-			);
+			sb.append(sentence);
+			sb.append(" ");
 		}
 
 		if (sb.length() > 0) {
-			parts.add(
-				sb.toString(
-				).trim());
+			parts.add(StringUtil.trim(sb.toString()));
 		}
 
 		return parts;
@@ -815,6 +783,17 @@ public class LearnRestController extends BaseRestController {
 			"title", objectDefinitionMap.get("pluralLabel")
 		).build();
 	}
+
+	private static final String[][] _LEARN_PATTERN_REPLACEMENTS = {
+		{"[\\u00A0\\u200B]+", " "}, {"(?i)\\bLiferay\\b", "Life-ray"},
+		{"(?i)\\bP\\s*a\\s*a\\s*S\\b", "pass"},
+		{"(?i)\\bS\\s*a\\s*a\\s*S\\b", "saas"}, {"(?i)^<speak>|</speak>$", ""}
+	};
+
+	private static final Set<String> _notSupportedValuesContentTable =
+		new HashSet<>(Arrays.asList("✖", "✕", "✗", ""));
+	private static final Set<String> _supportedValuesContentTable =
+		new HashSet<>(Arrays.asList("✔", "✓"));
 
 	@Value("${liferay.learn.audio.lessons.document.folder.id}")
 	private long _audioLessonsDocumentFolderId;

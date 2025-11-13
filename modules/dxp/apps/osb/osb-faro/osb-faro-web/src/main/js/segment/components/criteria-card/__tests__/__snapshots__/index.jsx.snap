@@ -3,39 +3,73 @@
 exports[`CriteriaCard should render 1`] = `
 <div>
   <div
-    class="card card-root criteria-card-root"
+    class="panel card-root"
   >
-    <div
-      class="card-header"
+    <button
+      aria-controls="clay-id-1"
+      aria-expanded="true"
+      class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
+      type="button"
     >
       <div
         class="card-title"
       >
         Segment Criteria
       </div>
-    </div>
+      <span
+        class="collapse-icon-closed"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-angle-right"
+          role="presentation"
+        >
+          <use
+            href="#angle-right"
+          />
+        </svg>
+      </span>
+      <span
+        class="collapse-icon-open"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-angle-down"
+          role="presentation"
+        >
+          <use
+            href="#angle-down"
+          />
+        </svg>
+      </span>
+    </button>
     <div
-      class="card-body"
+      aria-labelledby="clay-id-1"
+      class="panel-collapse"
+      id="clay-id-1"
+      role="region"
     >
       <div
-        class="criteria-view-root"
+        class="panel-body criteria-card-root"
       >
         <div
-          class="criteria-group"
+          class="criteria-view-root pt-2"
         >
           <div
-            class="criteria-row"
+            class="criteria-group"
           >
-            Individual
-            <b>
-              firstName
-            </b>
-            <span>
-              is
-            </span>
-            <b>
-              "Test"
-            </b>
+            <div
+              class="criteria-row"
+            >
+              Individual
+              <b>
+                firstName
+              </b>
+              <span>
+                is
+              </span>
+              <b>
+                "Test"
+              </b>
+            </div>
           </div>
         </div>
       </div>

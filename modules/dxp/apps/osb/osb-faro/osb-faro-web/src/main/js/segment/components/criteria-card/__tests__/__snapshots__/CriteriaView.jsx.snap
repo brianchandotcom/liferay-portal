@@ -3,7 +3,7 @@
 exports[`CriteriaView should render 1`] = `
 <div>
   <div
-    class="criteria-view-root"
+    class="criteria-view-root pt-2"
   >
     <div
       class="criteria-group"
@@ -30,7 +30,7 @@ exports[`CriteriaView should render 1`] = `
 exports[`CriteriaView should render with multiple values 1`] = `
 <div>
   <div
-    class="criteria-view-root"
+    class="criteria-view-root pt-2"
   >
     <div
       class="criteria-group"
@@ -76,7 +76,7 @@ exports[`CriteriaView should render with multiple values 1`] = `
 exports[`CriteriaView should render with nested criterias 1`] = `
 <div>
   <div
-    class="criteria-view-root"
+    class="criteria-view-root pt-2"
   >
     <div
       class="criteria-group"

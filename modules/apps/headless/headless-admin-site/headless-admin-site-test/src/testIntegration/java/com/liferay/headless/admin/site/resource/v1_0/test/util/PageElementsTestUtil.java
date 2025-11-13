@@ -25,6 +25,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementD
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
@@ -61,7 +62,8 @@ public class PageElementsTestUtil {
 	public static FragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
-			FragmentEntry fragmentEntry, long scopeGroupId) {
+			FragmentElement[] curFragmentElements, FragmentEntry fragmentEntry,
+			long scopeGroupId) {
 
 		return new FragmentInstancePageElementDefinition() {
 			{
@@ -78,6 +80,7 @@ public class PageElementsTestUtil {
 								JSONFactoryUtil.createJSONObject(
 									fragmentEntry.getConfiguration()),
 								configurationValuesMap, scopeGroupId));
+				setFragmentElements(() -> curFragmentElements);
 				setFragmentInstanceExternalReferenceCode(
 					RandomTestUtil::randomString);
 				setFragmentReference(
@@ -125,6 +128,7 @@ public class PageElementsTestUtil {
 	public static FragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
+			FragmentElement[] curFragmentElements,
 			FragmentRenderer fragmentRenderer, long scopeGroupId) {
 
 		JSONObject configurationJSONObject =
@@ -147,6 +151,7 @@ public class PageElementsTestUtil {
 							getFragmentConfigurationFieldValuesMap(
 								configurationJSONObject, configurationValuesMap,
 								scopeGroupId));
+				setFragmentElements(() -> curFragmentElements);
 				setFragmentInstanceExternalReferenceCode(
 					RandomTestUtil::randomString);
 				setFragmentReference(

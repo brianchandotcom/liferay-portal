@@ -1,0 +1,19 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+tasks.named('jarSources') {
+	dependsOn patch
+}
+dependencies {
+	compileInclude group: "org.apache.tika", name: "tika-core", version: "1.28.5"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+	fileNames "org/apache/tika/utils/XMLReaderUtils.java"
+	originalLibModuleName = "tika-core"
+}

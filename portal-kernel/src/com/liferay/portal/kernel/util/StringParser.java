@@ -103,10 +103,8 @@ public class StringParser {
 			builder.setTokenValue(value);
 		}
 
-		for (StringParserFragment stringParserFragment :
-				_stringParserFragments) {
-
-			parameters.remove(stringParserFragment.getName());
+		for (String stringParserFragmentName : getStringParserFragmentNames()) {
+			parameters.remove(stringParserFragmentName);
 		}
 
 		if (builder == null) {
@@ -114,6 +112,19 @@ public class StringParser {
 		}
 
 		return builder.toString();
+	}
+
+	public List<String> getStringParserFragmentNames() {
+		List<String> stringParserFragmentNames = new ArrayList<>(
+			_stringParserFragments.size());
+
+		for (StringParserFragment stringParserFragment :
+				_stringParserFragments) {
+
+			stringParserFragmentNames.add(stringParserFragment.getName());
+		}
+
+		return stringParserFragmentNames;
 	}
 
 	/**

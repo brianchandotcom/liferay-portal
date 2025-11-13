@@ -85,10 +85,16 @@ public class BulkActionBulkSelectionFactory {
 				() -> {
 					_validate();
 
+					boolean selectAll = false;
 					SelectionScope selectionScope =
 						_bulkAction.getSelectionScope();
 
-					if (GetterUtil.getBoolean(selectionScope.getSelectAll())) {
+					if (selectionScope != null) {
+						selectAll = GetterUtil.getBoolean(
+							selectionScope.getSelectAll());
+					}
+
+					if (selectAll) {
 						return _getRowIds();
 					}
 
@@ -615,11 +621,16 @@ public class BulkActionBulkSelectionFactory {
 
 	private void _validate() {
 		SelectionScope selectionScope = _bulkAction.getSelectionScope();
+		boolean selectAll = false;
+
+		if (selectionScope != null) {
+			selectAll = GetterUtil.getBoolean(selectionScope.getSelectAll());
+		}
 
 		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
 				_bulkAction.getType())) {
 
-			if (GetterUtil.getBoolean(selectionScope.getSelectAll()) &&
+			if (selectAll &&
 				ArrayUtil.isEmpty(_bulkAction.getBulkActionItems())) {
 
 				DefaultPermissionBulkAction defaultPermissionBulkAction =
@@ -638,7 +649,7 @@ public class BulkActionBulkSelectionFactory {
 			}
 		}
 		else {
-			if (GetterUtil.getBoolean(selectionScope.getSelectAll()) &&
+			if (selectAll &&
 				ArrayUtil.isEmpty(_bulkAction.getBulkActionItems()) &&
 				(_filter == null)) {
 

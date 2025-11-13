@@ -38,10 +38,12 @@ const fetchUsageAssetData = async ({
 	});
 
 	const {data, error} = await ApiHelper.post<BulkActionItemResponse>(
-		`/o/headless-cms/v1.0/bulk-action-item/preview${queryString}`,
+		`/o/bulk/v1.0/bulk-action-item/preview${queryString}`,
 		{
 			bulkActionItems,
-			selectAll,
+			selectionScope: {
+				selectAll,
+			},
 			type: 'DeleteBulkAction',
 		}
 	);

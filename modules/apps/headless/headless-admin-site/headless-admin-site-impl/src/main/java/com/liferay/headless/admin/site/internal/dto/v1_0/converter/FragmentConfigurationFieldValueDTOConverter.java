@@ -164,12 +164,13 @@ public class FragmentConfigurationFieldValueDTOConverter
 		long categoryTreeNodeId = jsonObject.getLong("categoryTreeNodeId");
 		String externalReferenceCode = jsonObject.getString(
 			"externalReferenceCode");
-		String type = jsonObject.getString("categoryTreeNodeType");
+		String categoryTreeNodeType = jsonObject.getString(
+			"categoryTreeNodeType");
 
 		if (((categoryTreeNodeId == 0) &&
 			 Validator.isNull(externalReferenceCode)) ||
-			(!Objects.equals(type, "Category") &&
-			 !Objects.equals(type, "Vocabulary"))) {
+			(!Objects.equals(categoryTreeNodeType, "Category") &&
+			 !Objects.equals(categoryTreeNodeType, "Vocabulary"))) {
 
 			return null;
 		}
@@ -177,7 +178,7 @@ public class FragmentConfigurationFieldValueDTOConverter
 		if (categoryTreeNodeId == 0) {
 			String className = AssetCategory.class.getName();
 
-			if (Objects.equals(type, "Vocabulary")) {
+			if (Objects.equals(categoryTreeNodeType, "Vocabulary")) {
 				className = AssetVocabulary.class.getName();
 			}
 
@@ -189,7 +190,7 @@ public class FragmentConfigurationFieldValueDTOConverter
 					scopeGroupId));
 		}
 
-		if (Objects.equals(type, "Category")) {
+		if (Objects.equals(categoryTreeNodeType, "Category")) {
 			AssetCategory assetCategory =
 				_assetCategoryLocalService.fetchAssetCategory(
 					categoryTreeNodeId);

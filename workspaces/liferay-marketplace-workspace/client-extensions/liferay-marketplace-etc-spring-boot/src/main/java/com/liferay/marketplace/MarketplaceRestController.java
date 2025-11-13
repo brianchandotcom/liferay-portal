@@ -15,7 +15,9 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CurrencyResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
@@ -448,10 +450,13 @@ public class MarketplaceRestController extends BaseRestController {
 				});
 		}
 
+		_setExchangeRateOrderMetadata(order);
+
 		orderResource.patchOrder(
 			orderId,
 			new Order() {
 				{
+					setCustomFields(order::getCustomFields);
 					setTaxAmount(() -> finalTaxAmount);
 					setTotal(() -> finalTotal);
 				}
@@ -478,6 +483,23 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 
 		return accountRole.getId();
+	}
+
+	private String _getExchangeRate(Order order) {
+		if (!Objects.equals(order.getCurrencyCode(), "USD")) {
+			return "Not applicable";
+		}
+
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		JSONObject orderMetadataJSONObject = new JSONObject(
+			customFields.getOrDefault("order-metadata", "{}"));
+
+		double exchangeRate = orderMetadataJSONObject.optDouble(
+			"exchange-rate", 0);
+
+		return "1 USD = " + String.format("%.5f", exchangeRate) + " EUR";
 	}
 
 	private void _sendOrderPurchasedNotification(Order order) throws Exception {
@@ -545,6 +567,8 @@ public class MarketplaceRestController extends BaseRestController {
 			).put(
 				"[%EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
 			).put(
+				"[%EXCHANGE_RATE%]", _getExchangeRate(order)
+			).put(
 				"[%LICENSE_TYPE%]", productSpecificationsMap.get("license-type")
 			).put(
 				"[%NET_PRICE_FORMATTED%]", order.getSubtotalFormatted()
@@ -585,6 +609,46 @@ public class MarketplaceRestController extends BaseRestController {
 			).put(
 				"[%VAT_NUMBER%]", account.getTaxId()
 			).build());
+	}
+
+	private void _setExchangeRateOrderMetadata(Order order) throws Exception {
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		String orderMetadata = customFields.getOrDefault(
+			"order-metadata", "{}");
+
+		if (Objects.equals(orderMetadata, "")) {
+			orderMetadata = "{}";
+		}
+
+		JSONObject orderMetadataJSONObject = new JSONObject(orderMetadata);
+
+		if (orderMetadataJSONObject.has("exchange-rate")) {
+			return;
+		}
+
+		CurrencyResource currencyResource =
+			_marketplaceService.getCurrencyResource();
+
+		com.liferay.headless.commerce.admin.catalog.client.pagination.Page
+			<Currency> currenciesPage = currencyResource.getCurrenciesPage(
+				null, "code eq 'EUR'",
+				com.liferay.headless.commerce.admin.catalog.client.pagination.
+					Pagination.of(1, 1),
+				null);
+
+		Currency currency = currenciesPage.fetchFirstItem();
+
+		if (currency == null) {
+			return;
+		}
+
+		customFields.put(
+			"order-metadata",
+			orderMetadataJSONObject.put(
+				"exchange-rate", currency.getRate()
+			).toString());
 	}
 
 	private void _setUpCloudProductPurchase(

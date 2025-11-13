@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CatalogResource;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CurrencyResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
@@ -169,6 +170,17 @@ public class MarketplaceService extends BaseService {
 		CatalogResource catalogResource = _getCatalogResource();
 
 		return catalogResource.getCatalog(catalogId);
+	}
+
+	public CurrencyResource getCurrencyResource() throws Exception {
+		return CurrencyResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
 	}
 
 	public Order getOrder(Long id) throws Exception {

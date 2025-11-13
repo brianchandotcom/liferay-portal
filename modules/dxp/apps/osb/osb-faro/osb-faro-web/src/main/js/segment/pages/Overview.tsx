@@ -9,19 +9,11 @@ import {useTimeZone} from 'shared/hooks/useTimeZone';
 interface IOverviewProps {
 	channelId: string;
 	groupId: string;
-	id: string;
 	segment: Segment;
-	tabId?: string;
-	timeZoneId: string;
 }
 
-const Overview: React.FC<IOverviewProps> = ({
-	channelId,
-	groupId,
-	id,
-	segment
-}) => {
-	const {criteriaString, includeAnonymousUsers} = segment;
+const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
+	const {criteriaString, id, includeAnonymousUsers} = segment;
 	const {timeZoneId} = useTimeZone();
 
 	return (

@@ -5,6 +5,7 @@
 
 package com.liferay.data.cleanup.internal.verify;
 
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
@@ -31,6 +32,8 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
 			postUpgradeDataCleanupProcess.cleanUp();
 		}
+
+		StartupHelperUtil.setUpgrading(false);
 	}
 
 	private List<PostUpgradeDataCleanupProcess>

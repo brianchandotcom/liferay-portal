@@ -4,6 +4,11 @@
 	"devDependencies": {
 		"vite": "^5.2.0"
 	},
+	"exports": {
+		".": {
+			"import": "./build/vite/index.js"
+		}
+	},
 	"name": "clarity-solution-js-import-maps-entry",
 	"private": true,
 	"scripts": {
@@ -11,10 +16,5 @@
 		"dev": "vite",
 		"preview": "vite preview"
 	},
-	"version": "0.0.0",
-	"exports": {
-		".": {
-			"import": "./build/vite/index.js"
-		}
-	}
+	"version": "0.0.0"
 }

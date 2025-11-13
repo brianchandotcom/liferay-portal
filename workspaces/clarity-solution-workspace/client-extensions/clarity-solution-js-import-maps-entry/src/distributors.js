@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export default [
 	{
 		id: 1,
@@ -8,8 +13,8 @@ export default [
 		zipCode: '78758',
 		position: {
 			lat: 30.402968,
-			lng: -97.720991
-		}
+			lng: -97.720991,
+		},
 	},
 	{
 		id: 2,
@@ -20,8 +25,8 @@ export default [
 		zipCode: '76092',
 		position: {
 			lat: 32.945113,
-			lng: -97.121117
-		}
+			lng: -97.121117,
+		},
 	},
 	{
 		id: 3,
@@ -32,8 +37,8 @@ export default [
 		zipCode: '75071',
 		position: {
 			lat: 33.217463,
-			lng: -96.660282
-		}
+			lng: -96.660282,
+		},
 	},
 	{
 		id: 3,
@@ -44,7 +49,7 @@ export default [
 		zipCode: '75206',
 		position: {
 			lat: 32.848092,
-			lng: -96.770822
-		}
-	}
+			lng: -96.770822,
+		},
+	},
 ];

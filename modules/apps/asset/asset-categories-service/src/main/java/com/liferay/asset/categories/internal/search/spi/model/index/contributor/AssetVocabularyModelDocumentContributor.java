@@ -54,9 +54,9 @@ public class AssetVocabularyModelDocumentContributor
 			assetVocabulary.getTitleMap());
 
 		document.addNumber(
-			"categoriesCount", assetVocabulary.getCategoriesCount());
-		document.addNumber(
 			Field.VISIBILITY_TYPE, assetVocabulary.getVisibilityType());
+		document.addNumber(
+			"categoriesCount", assetVocabulary.getCategoriesCount());
 		document.addKeyword("classNameIds", _getClassNameIds(assetVocabulary));
 		document.addKeyword(
 			"groupIds", _getGroupIds(assetVocabulary.getVocabularyId()));

@@ -409,13 +409,13 @@ public class LayoutServiceContextHelperImpl
 			themeDisplay.setPermissionChecker(permissionChecker);
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
 
-			boolean secure = _isHttpsEnabled();
+			boolean httpsEnabled = _isHttpsEnabled();
 
-			int portalServerPort = _portal.getPortalServerPort(secure);
+			int portalServerPort = _portal.getPortalServerPort(httpsEnabled);
 
 			themeDisplay.setPortalURL(
 				_portal.getPortalURL(
-					company.getVirtualHostname(), portalServerPort, secure));
+					company.getVirtualHostname(), portalServerPort, httpsEnabled));
 
 			themeDisplay.setRealUser(user);
 			themeDisplay.setScopeGroupId(_group.getGroupId());

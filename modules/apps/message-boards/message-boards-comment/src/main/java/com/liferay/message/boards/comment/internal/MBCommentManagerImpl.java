@@ -18,7 +18,6 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -96,12 +95,12 @@ public class MBCommentManagerImpl implements CommentManager {
 	@Override
 	public Comment addComment(
 			String externalReferenceCode, long groupId, long parentCommentId,
-			String className, long classPK, String text)
+			String className, long classPK, String body)
 		throws Exception {
 
 		long commentId = addComment(
 			externalReferenceCode, PrincipalThreadLocal.getUserId(), className,
-			classPK, StringPool.BLANK, parentCommentId, StringPool.BLANK, text,
+			classPK, StringPool.BLANK, parentCommentId, StringPool.BLANK, body,
 			_createServiceContextFunction());
 
 		return fetchComment(commentId);
@@ -136,12 +135,12 @@ public class MBCommentManagerImpl implements CommentManager {
 	@Override
 	public Comment addComment(
 			String externalReferenceCode, long groupId, String className,
-			long classPK, String text)
+			long classPK, String body)
 		throws Exception {
 
 		long commentId = addComment(
 			externalReferenceCode, PrincipalThreadLocal.getUserId(), groupId,
-			className, classPK, StringPool.BLANK, StringPool.BLANK, text,
+			className, classPK, StringPool.BLANK, StringPool.BLANK, body,
 			_createServiceContextFunction());
 
 		return fetchComment(commentId);

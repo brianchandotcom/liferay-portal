@@ -624,12 +624,11 @@ public class DBUpgradeClientTest {
 
 		Properties portalUpgradeExtProperties = new Properties();
 
-		portalUpgradeExtProperties.setProperty(
-			"liferay.home", _liferayHomeDir.getCanonicalPath());
-
 		if (includeDatabaseProperties) {
 			portalUpgradeExtProperties.setProperty(
 				"jdbc.default.driverClassName", "com.mysql.cj.jdbc.Driver");
+			portalUpgradeExtProperties.setProperty(
+				"jdbc.default.password", StringPool.BLANK);
 			portalUpgradeExtProperties.setProperty(
 				"jdbc.default.url",
 				StringBundler.concat(
@@ -640,9 +639,10 @@ public class DBUpgradeClientTest {
 					"&useUnicode=true"));
 			portalUpgradeExtProperties.setProperty(
 				"jdbc.default.username", StringPool.BLANK);
-			portalUpgradeExtProperties.setProperty(
-				"jdbc.default.password", StringPool.BLANK);
 		}
+
+		portalUpgradeExtProperties.setProperty(
+			"liferay.home", _liferayHomeDir.getCanonicalPath());
 
 		portalUpgradeExtProperties.store(portalUpgradeExtPropertiesFile);
 	}

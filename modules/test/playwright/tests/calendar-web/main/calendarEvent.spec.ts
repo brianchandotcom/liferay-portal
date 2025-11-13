@@ -429,7 +429,6 @@ test('can create calendar event with invitation', async ({
 
 test('can create calendar event with description', async ({
 	calendarWidgetPage,
-	page,
 }) => {
 	const title = getRandomInt().toString();
 	const description = 'English description';
@@ -442,6 +441,8 @@ test('can create calendar event with description', async ({
 			title,
 		});
 
+		await calendarWidgetPage.description.scrollIntoViewIfNeeded();
+
 		await expect(calendarWidgetPage.description).toContainText(description);
 	});
 
@@ -449,13 +450,17 @@ test('can create calendar event with description', async ({
 		await test.step('Fill in a description for es-ES', async () => {
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.locator('.dropdown-menu.show #es_ES'),
-				trigger: calendarWidgetPage.descriptionLocalesDropdown,
+				target: calendarWidgetPage.descriptionLocalesDropdownMenu.locator(
+					'#es_ES'
+				),
+				trigger: calendarWidgetPage.descriptionLocalesDropdownButton,
 			});
+
+			await calendarWidgetPage.description.scrollIntoViewIfNeeded();
 
 			await expect(async () => {
 				await expect(
-					calendarWidgetPage.descriptionLocalesDropdown
+					calendarWidgetPage.descriptionLocalesDropdownButton
 				).toContainText('es-ES');
 			}).toPass();
 
@@ -467,19 +472,23 @@ test('can create calendar event with description', async ({
 		});
 
 		await test.step('Check that "English description" and "Spanish description" are persisted', async () => {
+			await calendarWidgetPage.description.scrollIntoViewIfNeeded();
+
 			await expect(calendarWidgetPage.description).toContainText(
 				'English description'
 			);
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.locator('.dropdown-menu.show #es_ES'),
-				trigger: calendarWidgetPage.descriptionLocalesDropdown,
+				target: calendarWidgetPage.descriptionLocalesDropdownMenu.locator(
+					'#es_ES'
+				),
+				trigger: calendarWidgetPage.descriptionLocalesDropdownButton,
 			});
 
 			await expect(async () => {
 				await expect(
-					calendarWidgetPage.descriptionLocalesDropdown
+					calendarWidgetPage.descriptionLocalesDropdownButton
 				).toContainText('es-ES');
 			}).toPass();
 

@@ -22,7 +22,8 @@ export class CalendarWidgetPage {
 	readonly closeEventModalButton: Locator;
 	readonly configurationMenuItem: Locator;
 	readonly description: Locator;
-	readonly descriptionLocalesDropdown: Locator;
+	readonly descriptionLocalesDropdownButton: Locator;
+	readonly descriptionLocalesDropdownMenu: Locator;
 	readonly endDate: Locator;
 	readonly endTime: Locator;
 	readonly hideSidebarIcon: Locator;
@@ -91,8 +92,11 @@ export class CalendarWidgetPage {
 			.getByTestId('descriptionContainer');
 
 		this.description = descriptionContainer.locator('.ck-editor__editable');
-		this.descriptionLocalesDropdown =
+		this.descriptionLocalesDropdownButton =
 			descriptionContainer.getByTitle('Select a Language');
+		this.descriptionLocalesDropdownMenu = page
+			.frameLocator('iframe')
+			.locator('.dropdown-menu.show');
 		this.endDate = page
 			.frameLocator('iframe')
 			.getByLabel('Ends Required', {exact: true});

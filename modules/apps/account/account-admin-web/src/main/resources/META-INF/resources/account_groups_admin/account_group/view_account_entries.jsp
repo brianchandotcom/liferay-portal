@@ -77,7 +77,7 @@ renderResponse.setTitle(accountGroupDisplay.getName());
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="organizations"
-					property="organizationNames"
+					value="<%= HtmlUtil.escape(accountEntryDisplay.getOrganizationNames()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

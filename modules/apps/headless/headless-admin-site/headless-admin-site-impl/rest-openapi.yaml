@@ -20,6 +20,50 @@ components:
                         -   $ref: "#/components/schemas/SitePageActionExecutionResult"
                         -   $ref: "#/components/schemas/URLActionExecutionResult"
             type: object
+        ActionFragmentElementValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentElementValue"
+                -   properties:
+                        action:
+                            # @review
+                            description:
+                                The fragment element's action. Must be mapped to an external value.
+                            oneOf:
+                                -   $ref: "#/components/schemas/FragmentMappedValue"
+                        onError:
+                            $ref: "#/components/schemas/ActionExecutionResult"
+                            # @review
+                            description:
+                                The action execution result in case the action fails.
+                        onSuccess:
+                            $ref: "#/components/schemas/ActionExecutionResult"
+                            # @review
+                            description:
+                                The action execution result in case the action succeeds.
+                        text:
+                            # @review
+                            description:
+                                The fragment element's text.
+                            oneOf:
+                                -   $ref: "#/components/schemas/FragmentInlineValue"
+                                -   $ref: "#/components/schemas/FragmentMappedValue"
+            # @review
+            description:
+                A fragment element value of type action.
+            type: object
+        BackgroundImageFragmentElementValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentElementValue"
+                -   properties:
+                        backgroundFragmentImage:
+                            $ref: "#/components/schemas/FragmentImage"
+                            # @review
+                            description:
+                                The fragment element's background image.
+            # @review
+            description:
+                A fragment element value of type background image.
+            type: object
         BasicLayout:
             properties:
                 align:
@@ -1180,13 +1224,13 @@ components:
             description:
                 A fragment element.
             properties:
+                fragmentElementValue:
+                    $ref: "#/components/schemas/FragmentElementValue"
                 id:
                     # @review
                     description:
                         The fragment element's ID.
                     type: string
-                fragmentElementValue:
-                    $ref: "#/components/schemas/FragmentElementValue"
             type: object
         FragmentElementValue:
             # @review
@@ -1212,101 +1256,6 @@ components:
                         -   Image
                         -   Text
                     type: string
-            type: object
-        ActionFragmentElementValue:
-            allOf:
-                -   $ref: "#/components/schemas/FragmentElementValue"
-                -   properties:
-                        action:
-                            # @review
-                            description:
-                                The fragment element's action. Must be mapped to an external value.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentMappedValue"
-                        onError:
-                            $ref: "#/components/schemas/ActionExecutionResult"
-                            # @review
-                            description:
-                                The action execution result in case the action fails.
-                        onSuccess:
-                            $ref: "#/components/schemas/ActionExecutionResult"
-                            # @review
-                            description:
-                                The action execution result in case the action succeeds.
-                        text:
-                            # @review
-                            description:
-                                The fragment element's text.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentInlineValue"
-                                -   $ref: "#/components/schemas/FragmentMappedValue"
-            # @review
-            description:
-                A fragment element value of type action.
-            type: object
-        BackgroundImageFragmentElementValue:
-            allOf:
-                -   $ref: "#/components/schemas/FragmentElementValue"
-                -   properties:
-                        backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
-                            # @review
-                            description:
-                                The fragment element's background image.
-            # @review
-            description:
-                A fragment element value of type background image.
-            type: object
-        HTMLFragmentElementValue:
-            allOf:
-                -   $ref: "#/components/schemas/FragmentElementValue"
-                -   properties:
-                        html:
-                            # @review
-                            description:
-                                The fragment element's HTML. Can be inline or mapped to an external value.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentInlineValue"
-                                -   $ref: "#/components/schemas/FragmentMappedValue"
-            # @review
-            description:
-                A fragment element value of type HTML.
-            type: object
-        ImageFragmentElementValue:
-            allOf:
-                -   $ref: "#/components/schemas/FragmentElementValue"
-                -   properties:
-                        fragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
-                            # @review
-                            description:
-                                The fragment element's image.
-                        fragmentLink:
-                            $ref: "#/components/schemas/FragmentLink"
-                            # @review
-                            description:
-                                A link to a fragment.
-            # @review
-            description:
-                A fragment element value of type image.
-            type: object
-        TextFragmentElementValue:
-            allOf:
-                -   $ref: "#/components/schemas/FragmentElementValue"
-                -   properties:
-                        fragmentLink:
-                            $ref: "#/components/schemas/FragmentLink"
-                            # @review
-                            description:
-                                The fragment link of a text fragment element.
-                        textFragmentValue:
-                            $ref: "#/components/schemas/TextFragmentValue"
-                            # @review
-                            description:
-                                The fragment element's text.
-            # @review
-            description:
-                A fragment element of type text.
             type: object
         FragmentImage:
             # @review
@@ -2082,6 +2031,21 @@ components:
                 -   gridViewportDefinition
                 -   id
             type: object
+        HTMLFragmentElementValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentElementValue"
+                -   properties:
+                        html:
+                            # @review
+                            description:
+                                The fragment element's HTML. Can be inline or mapped to an external value.
+                            oneOf:
+                                -   $ref: "#/components/schemas/FragmentInlineValue"
+                                -   $ref: "#/components/schemas/FragmentMappedValue"
+            # @review
+            description:
+                A fragment element value of type HTML.
+            type: object
         HrefURLValue:
             allOf:
                 -   $ref: "#/components/schemas/URLValue"
@@ -2094,6 +2058,24 @@ components:
                 htmlTag:
                     enum: [Article, Aside, Div, Footer, Header, Nav, Section]
                     type: string
+            type: object
+        ImageFragmentElementValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentElementValue"
+                -   properties:
+                        fragmentImage:
+                            $ref: "#/components/schemas/FragmentImage"
+                            # @review
+                            description:
+                                The fragment element's image.
+                        fragmentLink:
+                            $ref: "#/components/schemas/FragmentLink"
+                            # @review
+                            description:
+                                A link to a fragment.
+            # @review
+            description:
+                A fragment element value of type image.
             type: object
         ItemExternalReference:
             # @review
@@ -3626,6 +3608,24 @@ components:
             # @review
             description:
                 The value of a fragment configuration field of type text.
+            type: object
+        TextFragmentElementValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentElementValue"
+                -   properties:
+                        fragmentLink:
+                            $ref: "#/components/schemas/FragmentLink"
+                            # @review
+                            description:
+                                The fragment link of a text fragment element.
+                        textFragmentValue:
+                            $ref: "#/components/schemas/TextFragmentValue"
+                            # @review
+                            description:
+                                The fragment element's text.
+            # @review
+            description:
+                A fragment element of type text.
             type: object
         TextFragmentValue:
             # @review

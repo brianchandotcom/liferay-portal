@@ -1417,9 +1417,9 @@ app.server.type=@{app.server.type}]]></echo>
 			</chmod>
 
 			<execute>
-				tar --create --format=${app.server.tar.gz.format} --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip bundles/
+				tar --create --format=${app.server.tar.gz.format} --file=liferay-portal-bundle-@{app.server.type}.tar.gz --use-compress-program=pigz bundles/
 
-				tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
+				tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --list --use-compress-program=pigz --verbose
 			</execute>
 
 			<lstopwatch action="total" name="prepare-test-build-dist.bundles.@{app.server.type}.compress" />

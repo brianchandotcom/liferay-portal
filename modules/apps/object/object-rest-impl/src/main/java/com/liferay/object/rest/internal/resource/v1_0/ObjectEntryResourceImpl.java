@@ -757,19 +757,9 @@ public class ObjectEntryResourceImpl
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, _objectDefinition, null);
 
-		_discussionPermission.checkAddPermission(
-			PermissionThreadLocal.getPermissionChecker(),
-			contextCompany.getCompanyId(),
-			_getNonzeroGroupId(objectEntry.getId()),
-			ObjectEntry.class.getName(), objectEntry.getId());
-
-		return CommentUtil.toComment(
-			() -> _commentManager.addComment(
-				comment.getExternalReferenceCode(),
-				_getNonzeroGroupId(objectEntry.getId()),
-				ObjectEntry.class.getName(), objectEntry.getId(),
-				comment.getText()),
-			_commentManager, PortalUtil.getPortal());
+		return _addComment(
+			_getNonzeroGroupId(objectEntry.getId()), comment,
+			objectEntry.getId());
 	}
 
 	@Override
@@ -1038,17 +1028,8 @@ public class ObjectEntryResourceImpl
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, _objectDefinition, scopeKey);
 
-		_discussionPermission.checkAddPermission(
-			PermissionThreadLocal.getPermissionChecker(),
-			contextCompany.getCompanyId(), objectEntry.getScopeId(),
-			ObjectEntry.class.getName(), objectEntry.getId());
-
-		return CommentUtil.toComment(
-			() -> _commentManager.addComment(
-				comment.getExternalReferenceCode(), objectEntry.getScopeId(),
-				ObjectEntry.class.getName(), objectEntry.getId(),
-				comment.getText()),
-			_commentManager, PortalUtil.getPortal());
+		return _addComment(
+			objectEntry.getScopeId(), comment, objectEntry.getId());
 	}
 
 	@Override
@@ -1390,6 +1371,22 @@ public class ObjectEntryResourceImpl
 		if (objectEntry.getStatus() != null) {
 			existingObjectEntry.setStatus(objectEntry::getStatus);
 		}
+	}
+
+	private Comment _addComment(
+			long groupId, Comment comment, long objectEntryId)
+		throws Exception {
+
+		_discussionPermission.checkAddPermission(
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getCompanyId(), groupId, ObjectEntry.class.getName(),
+			objectEntryId);
+
+		return CommentUtil.toComment(
+			() -> _commentManager.addComment(
+				comment.getExternalReferenceCode(), groupId,
+				ObjectEntry.class.getName(), objectEntryId, comment.getText()),
+			_commentManager, PortalUtil.getPortal());
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(

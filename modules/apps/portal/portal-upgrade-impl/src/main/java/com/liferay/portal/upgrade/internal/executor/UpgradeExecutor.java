@@ -12,6 +12,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
@@ -195,6 +196,8 @@ public class UpgradeExecutor {
 
 		try {
 			_updateReleaseState(bundleSymbolicName, _STATE_IN_PROGRESS);
+
+			StartupHelperUtil.setRunOnPortalUpgradeVerifiers(true);
 
 			for (UpgradeInfo upgradeInfo : upgradeInfos) {
 				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();

@@ -52,11 +52,11 @@ public class ExportImportAttachmentManagerImpl
 			Company company = _companyLocalService.getCompany(
 				fileEntry.getCompanyId());
 
-			boolean secure = _isHttpsEnabled();
+			boolean httpsEnabled = _isHttpsEnabled();
 
 			String baseURL = _portal.getPortalURL(
 				company.getVirtualHostname(),
-				_portal.getPortalServerPort(secure), secure);
+				_portal.getPortalServerPort(httpsEnabled), httpsEnabled);
 
 			return baseURL + _dlurlHelper.getImagePreviewURL(fileEntry, null);
 		}

@@ -166,6 +166,10 @@ public class UpgradeLogAppender implements Appender {
 	}
 
 	private boolean _isDataCleanupMessage(String loggerName) {
+		if (loggerName.startsWith("com.liferay.data.cleanup.internal.verify")) {
+			return true;
+		}
+
 		try {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 

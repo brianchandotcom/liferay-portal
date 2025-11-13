@@ -6,8 +6,8 @@
 import {fetch} from 'frontend-js-web';
 
 import {DEFAULT_FETCH_HEADERS} from '../constants';
-import {TSort} from './types';
 import {parseSortForCustomField} from './parseSortForCustomField';
+import {TSort} from './types';
 
 function createOdataFilter(filters: Array<string>): string {
 	return filters.map((filter: string) => `(${filter})`).join(' and ');
@@ -98,7 +98,7 @@ export async function loadData({
 				? sort.key.split(',')[0]
 				: sort.key;
 
-			if(key) key = parseSortForCustomField(key);
+			if (key) {key = parseSortForCustomField(key);}
 
 			return {
 				...sort,

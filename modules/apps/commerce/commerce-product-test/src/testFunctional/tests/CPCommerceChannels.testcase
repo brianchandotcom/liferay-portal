@@ -628,7 +628,7 @@ definition {
 		}
 
 		task ("Then an error message is shown") {
-			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+			Alert.viewErrorMessage(errorMessage = "The payment method group relation qualifier already exists.");
 		}
 
 		task ("When the admin selects the same term eligibility once again") {
@@ -638,7 +638,7 @@ definition {
 		}
 
 		task ("Then an error message is shown") {
-			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+			Alert.viewErrorMessage(errorMessage = "The payment method group relation qualifier already exists.");
 		}
 	}
 
@@ -679,7 +679,7 @@ definition {
 		}
 
 		task ("Then an error message is shown") {
-			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+			Alert.viewErrorMessage(errorMessage = "The shipping fixed option qualifier already exists.");
 		}
 
 		task ("When the admin selects the same term eligibility once again") {
@@ -689,7 +689,7 @@ definition {
 		}
 
 		task ("Then an error message is shown") {
-			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+			Alert.viewErrorMessage(errorMessage = "The shipping fixed option qualifier already exists");
 		}
 	}
 

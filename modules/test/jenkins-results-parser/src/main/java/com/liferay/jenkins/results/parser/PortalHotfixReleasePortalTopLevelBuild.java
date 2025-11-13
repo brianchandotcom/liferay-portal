@@ -333,7 +333,9 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			String patcherPortalVersion = getParameterValue(
 				"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(patcherPortalVersion)) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(patcherPortalVersion) ||
+				PortalRelease.isQuarterlyRelease(patcherPortalVersion)) {
+
 				return null;
 			}
 

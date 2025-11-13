@@ -45,7 +45,8 @@ public abstract class BaseDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_layoutUtilityPageEntryLayoutProvider =
 			layoutUtilityPageEntryLayoutProvider;
-		productAnalyticsConfiguration = _getProductAnalyticsConfiguration(
+
+		_productAnalyticsConfiguration = _getProductAnalyticsConfiguration(
 			httpServletRequest);
 	}
 
@@ -133,7 +134,7 @@ public abstract class BaseDisplayContext {
 	}
 
 	protected int getConsentRenewalPeriod() {
-		return productAnalyticsConfiguration.consentRenewalPeriod();
+		return _productAnalyticsConfiguration.consentRenewalPeriod();
 	}
 
 	protected HttpServletRequest getHttpServletRequest() {
@@ -141,10 +142,8 @@ public abstract class BaseDisplayContext {
 	}
 
 	protected long getModifiedDate() {
-		return productAnalyticsConfiguration.modifiedDate();
+		return _productAnalyticsConfiguration.modifiedDate();
 	}
-
-	protected ProductAnalyticsConfiguration productAnalyticsConfiguration;
 
 	private ConsentCookieType _getConsentCookieType(
 		boolean hideFromEndUser, String name, boolean prechecked) {
@@ -193,6 +192,7 @@ public abstract class BaseDisplayContext {
 	private final LayoutUtilityPageEntryLayoutProvider
 		_layoutUtilityPageEntryLayoutProvider;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
+	private final ProductAnalyticsConfiguration _productAnalyticsConfiguration;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 
 }

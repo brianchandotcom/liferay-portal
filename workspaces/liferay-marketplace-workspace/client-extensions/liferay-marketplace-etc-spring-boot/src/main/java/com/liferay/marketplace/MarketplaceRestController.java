@@ -486,18 +486,19 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	private String _getExchangeRate(Order order) {
-		if (!Objects.equals(order.getCurrencyCode(), "USD")) {
-			return "Not applicable";
-		}
-
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 
 		JSONObject orderMetadataJSONObject = new JSONObject(
 			customFields.getOrDefault("order-metadata", "{}"));
 
-		double exchangeRate = orderMetadataJSONObject.optDouble(
-			"exchange-rate", 0);
+		if (!Objects.equals(order.getCurrencyCode(), "USD") ||
+			!orderMetadataJSONObject.has("exchangeRate")) {
+
+			return "Not applicable";
+		}
+
+		double exchangeRate = orderMetadataJSONObject.getDouble("exchangeRate");
 
 		return "1 USD = " + String.format("%.5f", exchangeRate) + " EUR";
 	}
@@ -615,16 +616,10 @@ public class MarketplaceRestController extends BaseRestController {
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 
-		String orderMetadata = customFields.getOrDefault(
-			"order-metadata", "{}");
+		JSONObject orderMetadataJSONObject = new JSONObject(
+			customFields.getOrDefault("order-metadata", "{}"));
 
-		if (Objects.equals(orderMetadata, "")) {
-			orderMetadata = "{}";
-		}
-
-		JSONObject orderMetadataJSONObject = new JSONObject(orderMetadata);
-
-		if (orderMetadataJSONObject.has("exchange-rate")) {
+		if (orderMetadataJSONObject.has("exchangeRate")) {
 			return;
 		}
 
@@ -647,7 +642,7 @@ public class MarketplaceRestController extends BaseRestController {
 		customFields.put(
 			"order-metadata",
 			orderMetadataJSONObject.put(
-				"exchange-rate", currency.getRate()
+				"exchangeRate", currency.getRate()
 			).toString());
 	}
 

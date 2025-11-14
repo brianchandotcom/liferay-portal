@@ -1262,6 +1262,22 @@ components:
                         -   Text
                     type: string
             type: object
+        FragmentEditableElementValueFragmentLink:
+            # @review
+            description:
+                A fragment editable element value fragment link.
+            properties:
+                fragmentLink:
+                    $ref: "#/components/schemas/FragmentLink"
+                    # @review
+                    description:
+                        The fragment link of a fragment editable element value.
+                prefix:
+                    description:
+                        The fragment link prefix of a fragment editable element value.
+                    enum: [None,Email, Phone]
+                    type: string
+            type: object
         FragmentImage:
             # @review
             description:
@@ -3643,11 +3659,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
                 -   properties:
-                        fragmentLink:
-                            $ref: "#/components/schemas/FragmentLink"
+                        fragmentEditableElementValueFragmentLink:
+                            $ref: "#/components/schemas/FragmentEditableElementValueFragmentLink"
                             # @review
                             description:
-                                The fragment link of a text fragment editable element.
+                                The fragment link of a text fragment editable element value.
                         textFragmentValue:
                             $ref: "#/components/schemas/TextFragmentValue"
                             # @review

@@ -216,6 +216,30 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 			);
 			var valuesContainer = document.getElementById('values-container');
 
+			if (
+				formFieldTypeSelect.value != '' &&
+				endsWith(
+					formFieldTypeSelect.value,
+					allowedSkuContributorFieldTypeSelectOptions
+				) &&
+				skuContributorInput.checked
+			) {
+				for (var i = 0; i < formFieldTypeSelect.options.length; i++) {
+					var formFieldTypeSelectOption = formFieldTypeSelect.options[i];
+
+					if (
+						endsWith(
+							formFieldTypeSelectOption.value,
+							allowedSkuContributorFieldTypeSelectOptions
+						)
+					) {
+						continue;
+					}
+
+					formFieldTypeSelectOption.setAttribute('disabled', true);
+				}
+			}
+
 			function checkDDMFormFieldType(event) {
 				var priceTypeSelectValue =
 					priceTypeSelect.options[priceTypeSelect.selectedIndex].value;

@@ -8963,6 +8963,8 @@ public class ObjectEntryLocalServiceTest {
 	private void _testUpdateObjectEntryObjectStateTransitions()
 		throws Exception {
 
+		// Update with existing picklist field
+
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			_objectDefinition.getObjectDefinitionId(), "state");
 
@@ -9066,6 +9068,62 @@ public class ObjectEntryLocalServiceTest {
 					requiredValues
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
+
+		// Update with new picklist field
+
+		_addCustomObjectField(
+			new PicklistObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("New State")
+			).listTypeDefinitionId(
+				_listTypeDefinition.getListTypeDefinitionId()
+			).name(
+				"newState"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+					).value(
+						"listTypeEntryKey2"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+					).value(
+						ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+					).build())
+			).required(
+				true
+			).state(
+				true
+			).build());
+
+		objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals("listTypeEntryKey2", values.get("newState"));
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"newState", "listTypeEntryKey3"
+			).putAll(
+				requiredValues
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		values = objectEntry.getValues();
+
+		Assert.assertEquals("listTypeEntryKey3", values.get("newState"));
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());

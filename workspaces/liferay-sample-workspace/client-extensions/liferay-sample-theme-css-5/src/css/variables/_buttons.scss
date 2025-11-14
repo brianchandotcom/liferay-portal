@@ -1,0 +1,111 @@
+$btn: (
+	active: (
+		color: $white,
+	),
+	color: $white,
+	disabled: (
+		color: $white,
+	),
+	focus: (
+		color: $white,
+	),
+	hover: (
+		color: $white,
+	),
+);
+
+$btn-primary: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	disabled: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
+	),
+);
+
+$btn-secondary: (
+	active: (
+		color: $secondary,
+	),
+	color: $secondary,
+	disabled: (
+		color: $secondary-l1,
+	),
+	focus: (
+		color: $secondary-d1,
+	),
+	hover: (
+		color: $secondary-d1,
+	),
+);
+
+$btn-danger: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	disabled: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
+	),
+);
+
+$btn-info: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	disabled: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
+	),
+);
+
+$btn-success: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	disabled: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
+	),
+);
+
+$btn-warning: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	disabled: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
+	),
+);

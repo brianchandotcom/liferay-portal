@@ -1,0 +1,222 @@
+// Category: border radius
+
+// Set: border radius
+
+$rounded-full: var(--rounded-full);
+$rounded-lg: var(--rounded-lg);
+$rounded-md: var(--rounded-md);
+$rounded-sm: var(--rounded-sm);
+
+// Category: color
+
+// Set: charts
+
+$blue: var(--blue);
+$blue-d1: var(--blue-d1);
+$blue-d2: var(--blue-d2);
+$blue-d3: var(--blue-d3);
+$blue-d4: var(--blue-d4);
+$blue-l1: var(--blue-l1);
+$blue-l2: var(--blue-l2);
+$blue-l3: var(--blue-l3);
+$blue-l4: var(--blue-l4);
+$blue-l5: var(--blue-l5);
+$cyan: var(--cyan);
+$cyan-d1: var(--cyan-d1);
+$cyan-d2: var(--cyan-d2);
+$cyan-d3: var(--cyan-d3);
+$cyan-d4: var(--cyan-d4);
+$cyan-l1: var(--cyan-l1);
+$cyan-l2: var(--cyan-l2);
+$cyan-l3: var(--cyan-l3);
+$cyan-l4: var(--cyan-l4);
+$cyan-l5: var(--cyan-l5);
+$green: var(--green);
+$green-d1: var(--green-d1);
+$green-d2: var(--green-d2);
+$green-d3: var(--green-d3);
+$green-d4: var(--green-d4);
+$green-l1: var(--green-l1);
+$green-l2: var(--green-l2);
+$green-l3: var(--green-l3);
+$green-l4: var(--green-l4);
+$green-l5: var(--green-l5);
+$indigo: var(--indigo);
+$indigo-d1: var(--indigo-d1);
+$indigo-d2: var(--indigo-d2);
+$indigo-d3: var(--indigo-d3);
+$indigo-d4: var(--indigo-d4);
+$indigo-l1: var(--indigo-l1);
+$indigo-l2: var(--indigo-l2);
+$indigo-l3: var(--indigo-l3);
+$indigo-l4: var(--indigo-l4);
+$indigo-l5: var(--indigo-l5);
+$orange: var(--orange);
+$orange-d1: var(--orange-d1);
+$orange-d2: var(--orange-d2);
+$orange-d3: var(--orange-d3);
+$orange-d4: var(--orange-d4);
+$orange-l1: var(--orange-l1);
+$orange-l2: var(--orange-l2);
+$orange-l3: var(--orange-l3);
+$orange-l4: var(--orange-l4);
+$orange-l5: var(--orange-l5);
+$pink: var(--pink);
+$pink-d1: var(--pink-d1);
+$pink-d2: var(--pink-d2);
+$pink-d3: var(--pink-d3);
+$pink-d4: var(--pink-d4);
+$pink-l1: var(--pink-l1);
+$pink-l2: var(--pink-l2);
+$pink-l3: var(--pink-l3);
+$pink-l4: var(--pink-l4);
+$pink-l5: var(--pink-l5);
+$purple: var(--purple);
+$purple-d1: var(--purple-d1);
+$purple-d2: var(--purple-d2);
+$purple-d3: var(--purple-d3);
+$purple-d4: var(--purple-d4);
+$purple-l1: var(--purple-l1);
+$purple-l2: var(--purple-l2);
+$purple-l3: var(--purple-l3);
+$purple-l4: var(--purple-l4);
+$purple-l5: var(--purple-l5);
+$red: var(--red);
+$red-d1: var(--red-d1);
+$red-d2: var(--red-d2);
+$red-d3: var(--red-d3);
+$red-d4: var(--red-d4);
+$red-l1: var(--red-l1);
+$red-l2: var(--red-l2);
+$red-l3: var(--red-l3);
+$red-l4: var(--red-l4);
+$red-l5: var(--red-l5);
+$teal: var(--teal);
+$teal-d1: var(--teal-d1);
+$teal-d2: var(--teal-d2);
+$teal-d3: var(--teal-d3);
+$teal-d4: var(--teal-d4);
+$teal-l1: var(--teal-l1);
+$teal-l2: var(--teal-l2);
+$teal-l3: var(--teal-l3);
+$teal-l4: var(--teal-l4);
+$teal-l5: var(--teal-l5);
+$yellow: var(--yellow);
+$yellow-d1: var(--yellow-d1);
+$yellow-d2: var(--yellow-d2);
+$yellow-d3: var(--yellow-d3);
+$yellow-d4: var(--yellow-d4);
+$yellow-l1: var(--yellow-l1);
+$yellow-l2: var(--yellow-l2);
+$yellow-l3: var(--yellow-l3);
+$yellow-l4: var(--yellow-l4);
+$yellow-l5: var(--yellow-l5);
+
+// Set: danger
+
+$danger: var(--danger);
+$danger-d1: var(--danger-d1);
+$danger-d2: var(--danger-d2);
+$danger-l1: var(--danger-l1);
+$danger-l2: var(--danger-l2);
+
+// Set: dark
+
+$dark: var(--dark);
+$dark-d1: var(--dark-d1);
+$dark-d2: var(--dark-d2);
+$dark-l1: var(--dark-l1);
+$dark-l2: var(--dark-l2);
+
+// Set: info
+
+$info: var(--info);
+$info-d1: var(--info-d1);
+$info-d2: var(--info-d2);
+$info-l1: var(--info-l1);
+$info-l2: var(--info-l2);
+
+// Set: light
+
+$light: var(--light);
+$light-d1: var(--light-d1);
+$light-d2: var(--light-d2);
+$light-l1: var(--light-l1);
+$white: var(--white);
+
+// Set: primary
+
+$primary: var(--primary);
+$primary-d1: var(--primary-d1);
+$primary-d2: var(--primary-d2);
+$primary-l0: var(--primary-l0);
+$primary-l1: var(--primary-l1);
+$primary-l2: var(--primary-l2);
+$primary-l3: var(--primary-l3);
+
+// Set: secondary
+
+$secondary: var(--secondary);
+$secondary-d1: var(--secondary-d1);
+$secondary-d2: var(--secondary-d2);
+$secondary-l0: var(--secondary-l0);
+$secondary-l1: var(--secondary-l1);
+$secondary-l2: var(--secondary-l2);
+$secondary-l3: var(--secondary-l3);
+
+// Set: success
+
+$success: var(--success);
+$success-d1: var(--success-d1);
+$success-d2: var(--success-d2);
+$success-l1: var(--success-l1);
+$success-l2: var(--success-l2);
+
+// Set: warning
+
+$warning: var(--warning);
+$warning-d1: var(--warning-d1);
+$warning-d2: var(--warning-d2);
+$warning-l1: var(--warning-l1);
+$warning-l2: var(--warning-l2);
+
+// Category: container
+
+// Set: container
+
+$container-lg: var(--container-lg);
+$container-md: var(--container-md);
+$container-sm: var(--container-sm);
+$container-xl: var(--container-xl);
+$container-xxl: var(--container-xxl);
+$container-xxxl: var(--container-xxxl);
+
+// Category: opacity
+
+// Set: opacity
+
+$translucent-0: var(--translucent-0);
+$translucent-1: var(--translucent-1);
+$translucent-2: var(--translucent-2);
+$translucent-3: var(--translucent-3);
+$translucent-4: var(--translucent-4);
+
+// Category: spacing
+
+// Set: spacing
+
+$spacing-1: var(--spacing-1);
+$spacing-10: var(--spacing-10);
+$spacing-11: var(--spacing-11);
+$spacing-12: var(--spacing-12);
+$spacing-13: var(--spacing-13);
+$spacing-14: var(--spacing-14);
+$spacing-15: var(--spacing-15);
+$spacing-2: var(--spacing-2);
+$spacing-3: var(--spacing-3);
+$spacing-4: var(--spacing-4);
+$spacing-5: var(--spacing-5);
+$spacing-6: var(--spacing-6);
+$spacing-7: var(--spacing-7);
+$spacing-8: var(--spacing-8);
+$spacing-9: var(--spacing-9);

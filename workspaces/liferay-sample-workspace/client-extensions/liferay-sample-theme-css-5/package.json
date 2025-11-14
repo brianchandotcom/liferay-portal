@@ -1,0 +1,19 @@
+{
+	"devDependencies": {
+		"@types/node": "^24.10.1",
+		"fs": "^0.0.1-security",
+		"path": "^0.12.7",
+		"tsx": "^4.20.6",
+		"typescript": "4.7.4"
+	},
+	"liferayDesignPack": {
+		"baseTheme": "styled"
+	},
+	"name": "@liferay/liferay-sample-theme-css-5",
+	"scripts": {
+		"checkFormat": "tsc",
+		"format": "tsc",
+		"generateTokens": "tsx ./scripts/generateTokens.ts"
+	},
+	"version": "1.0.0"
+}

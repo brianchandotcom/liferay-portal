@@ -135,7 +135,7 @@ function FragmentSelector({
 	return (
 		<RuleSelect
 			aria-label={sub(
-				Liferay.Language.get('select-x'),
+				Liferay.Language.get('select-x-for-the-action'),
 				Liferay.Language.get('fragment')
 			)}
 			items={layoutDataItems}

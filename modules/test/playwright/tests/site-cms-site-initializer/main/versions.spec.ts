@@ -81,7 +81,7 @@ test(
 async function testCanViewVersion(assetsPage, page, title: string) {
 	expect(page.getByRole('heading', {name: title})).toBeVisible();
 
-	assetsPage.execItemAction({action: 'View History', filter: title});
+	assetsPage.execCardItemAction({action: 'View History', filter: title});
 
 	await expect(
 		page.getByRole('heading', {name: `"${title}" History`})

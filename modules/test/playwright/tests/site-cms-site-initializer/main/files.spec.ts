@@ -630,14 +630,13 @@ test(
 			).toBeVisible();
 		}
 		finally {
-			await assetsPage.changeVisualizationMode('Gallery');
-
 			await apiHelpers.objectEntry.deleteObjectEntry(
 				applicationName,
 				String(objectEntry.id)
 			);
 
 			await page.getByLabel('Back').click();
+			await assetsPage.changeVisualizationMode('Gallery');
 		}
 	}
 );

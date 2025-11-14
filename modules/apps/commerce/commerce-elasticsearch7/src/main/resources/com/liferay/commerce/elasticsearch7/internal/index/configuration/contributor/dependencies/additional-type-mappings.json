@@ -53,6 +53,9 @@
 		"CPConfigurationListIds": {
 			"type": "keyword"
 		},
+		"CProductId": {
+			"type": "keyword"
+		},
 		"accountName": {
 			"type": "keyword"
 		},

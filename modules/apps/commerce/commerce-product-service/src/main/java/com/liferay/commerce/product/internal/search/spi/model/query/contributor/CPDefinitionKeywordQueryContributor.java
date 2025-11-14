@@ -57,6 +57,8 @@ public class CPDefinitionKeywordQueryContributor
 			false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, CPField.GTINS, false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, CPField.PRODUCT_ID, false);
 		_queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, CPField.SHORT_DESCRIPTION, false);
 		_queryHelper.addSearchTerm(

@@ -3,14 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import React, {useContext} from 'react';
 
+import {liferayNavigate} from '../../utilities';
 import MiniCartContext from './MiniCartContext';
 import {hasPriceOnApplication} from './util/index';
 
 function Wrapper() {
 	const {
 		CartViews,
+		actionURLs,
 		cartState,
 		editedItem,
 		isOpen,
@@ -56,9 +59,19 @@ function Wrapper() {
 
 					{(requestQuoteEnabled || cartHasPriceOnApplicationItems) &&
 						!!itemsCount && (
-							<CartViews.RequestQuoteButton
-								disabled={isUpdating}
-							/>
+							<div className="mini-cart-request-quote">
+								<ClayButton
+									block
+									displayType="secondary"
+									onClick={() => {
+										liferayNavigate(
+											actionURLs.orderDetailURL
+										);
+									}}
+								>
+									{Liferay.Language.get('request-a-quote')}
+								</ClayButton>
+							</div>
 						)}
 				</>
 			)}

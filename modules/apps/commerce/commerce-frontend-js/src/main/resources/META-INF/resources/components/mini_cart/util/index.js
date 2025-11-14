@@ -8,11 +8,9 @@ import {sub} from 'frontend-js-web';
 
 import {ACCOUNT_ENTRY_ID_DEFAULT} from '../../../utilities/constants';
 import {
-	DEFAULT_ORDER_DETAILS_PORTLET_ID,
 	MAXIMUM_ALLOWED_QUANTITY_NOT_VALID_ERROR,
 	MAXIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
 	MINIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
-	ORDER_UUID_PARAMETER,
 	PRODUCT_MULTIPLE_OF_QUANTITY_NOT_VALID_ERROR,
 	PRODUCT_QUANTITY_NOT_VALID_ERROR,
 	WORKFLOW_STATUS_APPROVED,
@@ -243,44 +241,6 @@ export function hasOptions(jsonString) {
 
 export function hasPriceOnApplication(cartItems) {
 	return cartItems.some(({price}) => price.priceOnApplication);
-}
-
-export function regenerateOrderDetailURL(
-	baseOrderDetailURL,
-	orderId,
-	orderUUID
-) {
-	if (!baseOrderDetailURL) {
-		throw new Error(
-			'Cannot generate a new Order Detail URL. Invalid "baseOrderDetailURL"'
-		);
-	}
-
-	if (baseOrderDetailURL.includes(DEFAULT_ORDER_DETAILS_PORTLET_ID)) {
-		if (!orderUUID) {
-			throw new Error(
-				'Cannot generate a new Order Detail URL. Invalid "orderUUID"'
-			);
-		}
-
-		const orderDetailURL = new URL(baseOrderDetailURL);
-
-		orderDetailURL.searchParams.append(
-			`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_${ORDER_UUID_PARAMETER}`,
-			orderUUID
-		);
-
-		return orderDetailURL.toString();
-	}
-	else {
-		if (!orderId) {
-			throw new Error(
-				'Cannot generate a new Order Detail URL. Invalid "orderId"'
-			);
-		}
-
-		return `${baseOrderDetailURL}${orderId}`;
-	}
 }
 
 export function parseOptions(options) {

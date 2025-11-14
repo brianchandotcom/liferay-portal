@@ -38,7 +38,7 @@ import {
 	VIEW_DETAILS,
 	YOUR_ORDER,
 } from './util/constants';
-import {regenerateOrderDetailURL, summaryDataMapper} from './util/index';
+import {summaryDataMapper} from './util/index';
 import {DEFAULT_LABELS} from './util/labels';
 import {resolveCartViews} from './util/views';
 
@@ -47,6 +47,7 @@ import './mini_cart.scss';
 import LoadingIndicator from '@clayui/loading-indicator';
 
 import {isLowEndDevice} from '../../utilities/device';
+import {regenerateOrderDetailURL} from '../../utilities/regenerateOrderDetailURL';
 
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 

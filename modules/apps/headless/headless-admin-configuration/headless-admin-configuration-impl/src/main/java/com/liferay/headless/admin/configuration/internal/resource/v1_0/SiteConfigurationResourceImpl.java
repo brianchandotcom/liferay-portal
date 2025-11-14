@@ -12,6 +12,7 @@ import com.liferay.headless.admin.configuration.internal.util.ConfigurationUtil;
 import com.liferay.headless.admin.configuration.resource.v1_0.SiteConfigurationResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotAuthorizedException;
@@ -135,6 +138,69 @@ public class SiteConfigurationResourceImpl
 		return Page.of(siteConfigurations);
 	}
 
+	@Override
+	public SiteConfiguration postSiteSiteConfiguration(
+			String siteExternalReferenceCode,
+			SiteConfiguration siteConfiguration)
+		throws Exception {
+
+		return putSiteSiteConfiguration(
+			siteExternalReferenceCode,
+			siteConfiguration.getExternalReferenceCode(), siteConfiguration);
+	}
+
+	@Override
+	public SiteConfiguration putSiteSiteConfiguration(
+			String siteExternalReferenceCode,
+			String siteConfigurationExternalReferenceCode,
+			SiteConfiguration siteConfiguration)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-65399")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		long groupId = group.getGroupId();
+
+		_checkPermission(groupId);
+
+		siteConfiguration.setExternalReferenceCode(
+			() -> siteConfigurationExternalReferenceCode);
+
+		String filterString =
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				String.valueOf(groupId),
+				siteConfiguration.getExternalReferenceCode(),
+				siteExternalReferenceCode);
+
+		try {
+			Configuration configuration =
+				ConfigurationUtil.addOrUpdateConfiguration(
+					groupId, _configurationAdmin,
+					siteConfiguration.getExternalReferenceCode(), filterString,
+					siteConfiguration.getProperties(),
+					ExtendedObjectClassDefinition.Scope.GROUP,
+					_settingsLocatorHelper);
+
+			if (configuration == null) {
+				throw new NotFoundException(
+					"Unable to find site configuration with external " +
+						"reference code " +
+							siteConfiguration.getExternalReferenceCode());
+			}
+
+			return _toSiteConfiguration(configuration);
+		}
+		catch (ValidationException validationException) {
+			throw new BadRequestException(validationException.getMessage());
+		}
+	}
+
 	private void _checkPermission(long groupId) {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -152,7 +218,7 @@ public class SiteConfigurationResourceImpl
 
 		Map<String, Object> properties = ConfigurationUtil.getProperties(
 			configuration, _configurationExportImportProcessor,
-			_settingsLocatorHelper);
+			ExtendedObjectClassDefinition.Scope.GROUP, _settingsLocatorHelper);
 
 		if (properties.isEmpty()) {
 			return null;

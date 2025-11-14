@@ -6,7 +6,9 @@
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValueFragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
@@ -26,6 +28,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 public class FragmentEditableElementTestUtil {
 
 	public static FragmentEditableElement[] getFragmentEditableElements(
+		FragmentEditableElementValueFragmentLink.Prefix prefix,
+		FragmentLink fragmentLink,
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
 		FragmentMappedValueItemReference.Type
 			fragmentMappedValueItemReferenceType,
@@ -37,6 +41,10 @@ public class FragmentEditableElementTestUtil {
 					setFragmentEditableElementValue(
 						() -> new TextFragmentEditableElementValue() {
 							{
+								setFragmentEditableElementValueFragmentLink(
+									() ->
+										_getFragmentEditableElementValueFragmentLink(
+											prefix, fragmentLink));
 								setTextFragmentValue(
 									() -> _getTextFragmentValue(
 										contextSource,
@@ -49,6 +57,26 @@ public class FragmentEditableElementTestUtil {
 				}
 			}
 		};
+	}
+
+	private static FragmentEditableElementValueFragmentLink
+		_getFragmentEditableElementValueFragmentLink(
+			FragmentEditableElementValueFragmentLink.Prefix prefix,
+			FragmentLink fragmentLink) {
+
+		if (fragmentLink == null) {
+			return null;
+		}
+
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink =
+				new FragmentEditableElementValueFragmentLink();
+
+		fragmentEditableElementValueFragmentLink.setFragmentLink(
+			() -> fragmentLink);
+		fragmentEditableElementValueFragmentLink.setPrefix(() -> prefix);
+
+		return fragmentEditableElementValueFragmentLink;
 	}
 
 	private static FragmentMappedValueItemContextReference

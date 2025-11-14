@@ -11,6 +11,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -28,6 +29,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -75,6 +78,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -108,11 +112,20 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
+		_serviceContext.setRequest(_getMockHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
 		_fragmentCollection = _fragmentCollectionService.addFragmentCollection(
 			null, _group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 			_serviceContext);
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -133,7 +146,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, LocaleUtil.getDefault());
 
 		defaultFragmentEntryProcessorContext.setFragmentElementId("elementId");
@@ -168,7 +181,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, LocaleUtil.getDefault());
 
 		Assert.assertEquals(
@@ -192,8 +205,6 @@ public class FreeMarkerFragmentEntryProcessorTest {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"freemarker.runtime", LoggerTestUtil.ERROR)) {
-
-			_serviceContext.setRequest(_getMockHttpServletRequest());
 
 			FragmentEntry draftFragmentEntry =
 				_fragmentEntryService.addFragmentEntry(
@@ -230,7 +241,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, LocaleUtil.getDefault());
 
 		Assert.assertEquals(
@@ -269,7 +280,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		String actualProcessedHTML = _getProcessedHTML(
@@ -301,7 +312,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		String actualProcessedHTML = _getProcessedHTML(
@@ -372,7 +383,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		String actualProcessedHTML = _getProcessedHTML(
@@ -432,7 +443,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		String actualProcessedHTML = _getProcessedHTML(
@@ -457,6 +468,82 @@ public class FreeMarkerFragmentEntryProcessorTest {
 				).build()));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
+
+		fragmentEntryLink.setHtml(
+			"<div class=\"fragment_name\">[#if itemSelector1Object??]" +
+				"${itemSelector1Object}[/#if]</div>");
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector1",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classPK", fileEntry.getFileEntryId()
+					))
+			).toString());
+
+		actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		_assertContainsFileEntryInfo(actualProcessedHTML, fileEntry);
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector1",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"externalReferenceCode",
+						fileEntry.getExternalReferenceCode()
+					))
+			).toString());
+
+		actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		_assertContainsFileEntryInfo(actualProcessedHTML, fileEntry);
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				FreeMarkerFragmentEntryProcessorTest.class,
+				"dependencies/image.jpg"),
+			null, null, null, new ServiceContext());
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector1",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"externalReferenceCode",
+						fileEntry.getExternalReferenceCode()
+					).put(
+						"scopeExternalReferenceCode",
+						group.getExternalReferenceCode()
+					))
+			).toString());
+
+		actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		_assertContainsFileEntryInfo(actualProcessedHTML, fileEntry);
 	}
 
 	@Test
@@ -504,7 +591,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		String actualProcessedHTML = _getProcessedHTML(
@@ -535,6 +622,90 @@ public class FreeMarkerFragmentEntryProcessorTest {
 				).build()));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
+
+		fragmentEntryLink.setHtml(
+			"<div class=\"fragment_name\">[#if itemSelector1Object??]" +
+				"${itemSelector1Object}[/#if]</div>");
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector1",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classPK",
+						String.valueOf(journalArticle.getResourcePrimKey())
+					))
+			).toString());
+
+		actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		_assertContainsJournalArticleInfo(actualProcessedHTML, journalArticle);
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector1",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"externalReferenceCode",
+						journalArticle.getExternalReferenceCode()
+					))
+			).toString());
+
+		actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		_assertContainsJournalArticleInfo(actualProcessedHTML, journalArticle);
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		journalArticle = JournalTestUtil.addArticle(
+			group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, "t1-es"
+			).put(
+				LocaleUtil.US, "t1"
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, "c1-es"
+			).put(
+				LocaleUtil.US, "c1"
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector1",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"externalReferenceCode",
+						journalArticle.getExternalReferenceCode()
+					).put(
+						"scopeExternalReferenceCode",
+						group.getExternalReferenceCode()
+					))
+			).toString());
+
+		actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		_assertContainsJournalArticleInfo(actualProcessedHTML, journalArticle);
 	}
 
 	@Test
@@ -558,7 +729,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					Constants.VIEW, LocaleUtil.fromLanguageId("en_US"));
 
 		String actualProcessedHTML = _getProcessedHTML(
@@ -570,7 +741,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 
 		defaultFragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				_getMockHttpServletRequest(), new MockHttpServletResponse(),
+				_serviceContext.getRequest(), new MockHttpServletResponse(),
 				Constants.VIEW, LocaleUtil.fromLanguageId("es_ES"));
 
 		actualProcessedHTML = _getProcessedHTML(
@@ -582,7 +753,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 
 		defaultFragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				_getMockHttpServletRequest(), new MockHttpServletResponse(),
+				_serviceContext.getRequest(), new MockHttpServletResponse(),
 				Constants.VIEW, LocaleUtil.fromLanguageId("fr_FR"));
 
 		actualProcessedHTML = _getProcessedHTML(
@@ -608,7 +779,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, LocaleUtil.getDefault());
 
 		expectedException.expect(FragmentEntryContentException.class);
@@ -652,6 +823,39 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			configuration, null, 0, false, false,
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+	}
+
+	private void _assertContainsFileEntryInfo(
+		String html, FileEntry fileEntry) {
+
+		Assert.assertTrue(
+			"Missing externalReferenceCode. Value: " + html,
+			html.contains(
+				"\"externalReferenceCode\": \"" +
+					fileEntry.getExternalReferenceCode()));
+		Assert.assertTrue(
+			"Missing fileEntryId. Value: " + html,
+			html.contains("\"fileEntryId\": " + fileEntry.getFileEntryId()));
+		Assert.assertTrue(
+			"Missing title. Value: " + html,
+			html.contains("\"title\": \"" + fileEntry.getFileName()));
+	}
+
+	private void _assertContainsJournalArticleInfo(
+		String html, JournalArticle journalArticle) {
+
+		Assert.assertTrue(
+			"Missing externalReferenceCode. Value: " + html,
+			html.contains(
+				"\"externalReferenceCode\": \"" +
+					journalArticle.getExternalReferenceCode()));
+		Assert.assertTrue(
+			"Missing resourcePrimKey. Value: " + html,
+			html.contains(
+				"\"resourcePrimKey\": " + journalArticle.getResourcePrimKey()));
+		Assert.assertTrue(
+			"Missing title. Value: " + html,
+			html.contains("\"urlTitle\": \"" + journalArticle.getUrlTitle()));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()
@@ -705,6 +909,8 @@ public class FreeMarkerFragmentEntryProcessorTest {
 
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(httpServletRequest);
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
@@ -801,6 +1007,9 @@ public class FreeMarkerFragmentEntryProcessorTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

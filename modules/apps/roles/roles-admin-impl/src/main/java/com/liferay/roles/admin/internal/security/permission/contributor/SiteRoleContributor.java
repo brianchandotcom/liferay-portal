@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.security.permission.contributor.RoleContributor
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -62,16 +64,11 @@ public class SiteRoleContributor implements RoleContributor {
 			return false;
 		}
 
-		for (long groupId :
-				_depotEntryLocalService.getDepotEntryGroupIds(
-					companyId, DepotConstants.TYPE_SPACE)) {
+		List<Long> depotEntryGroupIds =
+			_depotEntryLocalService.getDepotEntryGroupIds(
+				companyId, user.getUserId(), DepotConstants.TYPE_SPACE);
 
-			if (_groupLocalService.hasUserGroup(user.getUserId(), groupId)) {
-				return true;
-			}
-		}
-
-		return false;
+		return !depotEntryGroupIds.isEmpty();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

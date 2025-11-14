@@ -79,6 +79,8 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -1270,7 +1272,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		HashMapBuilder.<Class<?>, Type>put(
 			BigDecimal.class, Type.BIG_DECIMAL
 		).put(
+			Blob.class, Type.BINARY
+		).put(
 			Boolean.class, Type.BOOLEAN
+		).put(
+			Clob.class, Type.STRING
 		).put(
 			Date.class, Type.DATE
 		).put(

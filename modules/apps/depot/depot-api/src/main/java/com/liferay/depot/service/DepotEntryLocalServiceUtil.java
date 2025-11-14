@@ -341,6 +341,19 @@ public class DepotEntryLocalServiceUtil {
 		return getService().getDepotEntryGroupIds(companyId, type);
 	}
 
+	public static List<Long> getDepotEntryGroupIds(
+		long companyId, long userId, int type) {
+
+		return getService().getDepotEntryGroupIds(companyId, userId, type);
+	}
+
+	public static List<Long> getDepotEntryGroupIds(
+		long companyId, long userId, int type, boolean userGroupsOnly) {
+
+		return getService().getDepotEntryGroupIds(
+			companyId, userId, type, userGroupsOnly);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */

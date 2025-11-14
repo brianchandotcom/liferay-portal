@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import java.net.URI;
-
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -31,19 +29,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -74,7 +72,7 @@ public class LearnRestController extends BaseRestController {
 	@ResponseBody
 	public ResponseEntity<Object> getLessonAudioBase64(
 		@PathVariable long lessonId, @RequestParam String languageCode,
-		@RequestParam String voiceName, @RequestParam String voiceType) {
+		@RequestParam String voiceName) {
 
 		try {
 			JSONObject lessonJSONObject = new JSONObject(
@@ -98,12 +96,12 @@ public class LearnRestController extends BaseRestController {
 			}
 
 			String fileName = StringBundler.concat(
-				"lesson-", lessonId, "-", voiceType, ".mp3");
+				"lesson-", lessonId, "-", voiceName, ".mp3");
 
-			JSONObject jsonObject = null;
+			JSONObject documentJSONObject = null;
 
 			try {
-				jsonObject = new JSONObject(
+				documentJSONObject = new JSONObject(
 					get(
 						"",
 						UriComponentsBuilder.fromPath(
@@ -135,20 +133,20 @@ public class LearnRestController extends BaseRestController {
 
 			if (offsetDateTime.isAfter(
 					OffsetDateTime.parse(
-						jsonObject.getString("dateModified")
+						documentJSONObject.getString("dateModified")
 					).truncatedTo(
 						ChronoUnit.MINUTES
 					))) {
 
 				return ResponseEntity.ok(
 					_generateAudioResource(
-						content, _documentFolderId, fileName, languageCode,
-						voiceName));
+						content, documentJSONObject.getLong("id"), fileName,
+						languageCode, voiceName));
 			}
 
 			return ResponseEntity.ok(
 				Collections.singletonMap(
-					"contentUrl", jsonObject.getString("contentUrl")));
+					"contentUrl", documentJSONObject.getString("contentUrl")));
 		}
 		catch (Exception exception) {
 			return ResponseEntity.status(
@@ -280,155 +278,8 @@ public class LearnRestController extends BaseRestController {
 		return ResponseEntity.ok(quizResultMap);
 	}
 
-	private String _convertHTMLListToTextInline(String html) {
-		Matcher matcher = _liPattern.matcher(html);
-		StringBuffer stringBuffer = new StringBuffer();
-
-		while (matcher.find()) {
-			String closingTag = matcher.group(3);
-			String innerContent = StringUtil.trim(matcher.group(2));
-			String openingTag = matcher.group(1);
-
-			String text = StringUtil.trim(
-				_replace(
-					_replace(innerContent, " ", "(?s)<[^>]+>"), " ", "\\s+"));
-
-			if (!text.matches(".*[.!?;:]$")) {
-				int lastCloseTagIndex = innerContent.lastIndexOf("</");
-
-				if (lastCloseTagIndex != -1) {
-					innerContent = StringBundler.concat(
-						_replace(
-							innerContent.substring(0, lastCloseTagIndex), "",
-							"\\s+$"),
-						".", innerContent.substring(lastCloseTagIndex));
-				}
-				else {
-					innerContent = innerContent + ".";
-				}
-			}
-
-			matcher.appendReplacement(
-				stringBuffer,
-				Matcher.quoteReplacement(
-					StringBundler.concat(
-						openingTag, innerContent, closingTag)));
-		}
-
-		matcher.appendTail(stringBuffer);
-
-		return StringUtil.trim(
-			_replace(
-				_replace(stringBuffer.toString(), " ", "(?s)<[^>]+>"), " ",
-				"\\s+"));
-	}
-
-	private String _convertHTMLTableToTextInline(String html) {
-		if (html == null) {
-			return "";
-		}
-
-		StringBuffer stringBuffer = new StringBuffer();
-		Matcher tableMatcher = _tablePattern.matcher(html);
-
-		while (tableMatcher.find()) {
-			String tableHTML = tableMatcher.group(1);
-
-			List<String> headers = new ArrayList<>();
-			Matcher theadMatcher = _theadPattern.matcher(tableHTML);
-
-			if (theadMatcher.find()) {
-				Matcher headTrMatcher = _trPattern.matcher(
-					theadMatcher.group(1));
-
-				if (headTrMatcher.find()) {
-					Matcher headCellsMatcher = _cellPattern.matcher(
-						headTrMatcher.group(1));
-
-					while (headCellsMatcher.find()) {
-						headers.add(_unescapeHTML(headCellsMatcher.group(1)));
-					}
-				}
-			}
-
-			String bodyHTML = tableHTML;
-			Matcher tbodyMatcher = _tbodyPattern.matcher(tableHTML);
-
-			if (tbodyMatcher.find()) {
-				bodyHTML = tbodyMatcher.group(1);
-			}
-
-			Matcher trMatcher = _trPattern.matcher(bodyHTML);
-
-			StringBundler tableSB = new StringBundler("Table: ");
-
-			if (!headers.isEmpty()) {
-				StringBundler sb = new StringBundler("Column headings: ");
-
-				for (int i = 0; i < headers.size(); i++) {
-					sb.append(headers.get(i));
-
-					if (i < (headers.size() - 1)) {
-						sb.append("; ");
-					}
-					else {
-						sb.append(". ");
-					}
-				}
-
-				tableSB.append(sb);
-			}
-
-			int row = 0;
-
-			while (trMatcher.find()) {
-				row++;
-
-				Matcher cellMatcher = _cellPattern.matcher(trMatcher.group(1));
-				List<String> cells = new ArrayList<>();
-
-				while (cellMatcher.find()) {
-					String raw = _unescapeHTML(cellMatcher.group(1));
-
-					if (Objects.equals(raw, "✔") || Objects.equals(raw, "✓")) {
-						raw = "supported";
-					}
-					else if (raw.isEmpty() || Objects.equals(raw, "&nbsp;")) {
-						raw = "not supported";
-					}
-
-					cells.add(raw);
-				}
-
-				if (!cells.isEmpty()) {
-					tableSB.append("Row ");
-					tableSB.append(row);
-					tableSB.append(". ");
-
-					for (int c = 0; c < cells.size(); c++) {
-						tableSB.append(
-							(c < headers.size()) ? headers.get(c) :
-								("Column " + (c + 1)));
-						tableSB.append(": ");
-						tableSB.append(cells.get(c));
-						tableSB.append(". ");
-					}
-				}
-			}
-
-			tableMatcher.appendReplacement(
-				stringBuffer,
-				Matcher.quoteReplacement(
-					StringUtil.trim(tableSB.toString()) + " "));
-		}
-
-		tableMatcher.appendTail(stringBuffer);
-
-		return stringBuffer.toString();
-	}
-
 	private Map<String, Object> _generateAudioResource(
-			String content, long documentFolderId, String fileName,
+			String content, long documentId, String fileName,
 			String languageCode, String voiceName)
 		throws Exception {
 
@@ -436,7 +287,8 @@ public class LearnRestController extends BaseRestController {
 			new ByteArrayOutputStream();
 
 		List<String> ssmls = _splitSsml(
-			_replace(content, "Life-ray", "\\bLiferay\\b"), 5000);
+			_replace(
+				_htmlToReadableText(content), "Life-ray", "\\bLiferay\\b"));
 
 		for (String ssml : ssmls) {
 			String response = post(
@@ -478,7 +330,7 @@ public class LearnRestController extends BaseRestController {
 				));
 		}
 
-		ByteArrayResource fileResource = new ByteArrayResource(
+		ByteArrayResource byteArrayResource = new ByteArrayResource(
 			byteArrayOutputStream.toByteArray()) {
 
 			@Override
@@ -488,13 +340,13 @@ public class LearnRestController extends BaseRestController {
 
 		};
 
-		MultipartBodyBuilder builder = new MultipartBodyBuilder();
+		MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
 
-		builder.part(
+		multipartBodyBuilder.part(
 			"document",
 			new JSONObject(
 			).put(
-				"documentFolderId", _documentFolderId
+				"documentFolderId", _audioLessonsDocumentFolderId
 			).put(
 				"externalReferenceCode", StringUtil.toUpperCase(fileName)
 			).put(
@@ -505,29 +357,39 @@ public class LearnRestController extends BaseRestController {
 				"viewableBy", "Anyone"
 			).toString(),
 			MediaType.APPLICATION_JSON);
+		multipartBodyBuilder.part(
+			"file", byteArrayResource, MediaType.APPLICATION_OCTET_STREAM);
 
-		builder.part("file", fileResource, MediaType.APPLICATION_OCTET_STREAM);
-
-		HttpMethod method = null;
-		URI uri = null;
-
-		if (documentFolderId != 0) {
-			method = HttpMethod.PUT;
-			uri = UriComponentsBuilder.fromPath(
-				"/o/headless-delivery/v1.0/sites/{siteGroupId}/documents" +
-					"/by-external-reference-code/{fileName}"
-			).build(
-				_siteGroupId, StringUtil.toUpperCase(fileName)
-			);
-		}
-		else {
-			method = HttpMethod.POST;
-			uri = UriComponentsBuilder.fromPath(
-				"/o/headless-delivery/v1.0/document-folders" +
-					"/{documentFolderId}/documents"
-			).build(
-				_documentFolderId
-			);
+		if (documentId != 0) {
+			return Collections.singletonMap(
+				"contentUrl",
+				new JSONObject(
+					_webClientBuilder.baseUrl(
+						_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+					).build(
+					).put(
+					).uri(
+						UriComponentsBuilder.fromPath(
+							"/o/headless-delivery/v1.0/sites/{siteGroupId}" +
+								"/documents/by-external-reference-code" +
+									"/{fileName}"
+						).build(
+							_siteGroupId, StringUtil.toUpperCase(fileName)
+						).toString()
+					).contentType(
+						MediaType.MULTIPART_FORM_DATA
+					).header(
+						HttpHeaders.AUTHORIZATION, _getAuthorization()
+					).body(
+						BodyInserters.fromMultipartData(
+							multipartBodyBuilder.build())
+					).retrieve(
+					).bodyToMono(
+						String.class
+					).block()
+				).optString(
+					"contentUrl", null
+				));
 		}
 
 		return Collections.singletonMap(
@@ -536,16 +398,21 @@ public class LearnRestController extends BaseRestController {
 				_webClientBuilder.baseUrl(
 					_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
 				).build(
-				).method(
-					method
+				).post(
 				).uri(
-					uri.toString()
+					UriComponentsBuilder.fromPath(
+						"/o/headless-delivery/v1.0/document-folders" +
+							"/{documentFolderId}/documents"
+					).build(
+						_audioLessonsDocumentFolderId
+					).toString()
 				).contentType(
 					MediaType.MULTIPART_FORM_DATA
 				).header(
 					HttpHeaders.AUTHORIZATION, _getAuthorization()
 				).body(
-					BodyInserters.fromMultipartData(builder.build())
+					BodyInserters.fromMultipartData(
+						multipartBodyBuilder.build())
 				).retrieve(
 				).bodyToMono(
 					String.class
@@ -713,6 +580,58 @@ public class LearnRestController extends BaseRestController {
 		return map;
 	}
 
+	private String _htmlToReadableText(String html) {
+		Document document = Jsoup.parse(html);
+
+		for (Element table : document.select("table")) {
+			StringBuilder sb = new StringBuilder();
+
+			for (Element row : table.select("tr")) {
+				Elements cols = row.select("th, td");
+
+				for (Element col : cols) {
+					sb.append(
+						col.text()
+					).append(
+						" | "
+					);
+				}
+
+				sb.append("\n");
+			}
+
+			table.replaceWith(
+				document.createElement(
+					"p"
+				).text(
+					sb.toString()
+				));
+		}
+
+		for (Element list : document.select("ul, ol")) {
+			StringBuilder sb = new StringBuilder();
+
+			for (Element li : list.select("li")) {
+				sb.append(
+					"- "
+				).append(
+					li.text()
+				).append(
+					"\n"
+				);
+			}
+
+			list.replaceWith(
+				document.createElement(
+					"p"
+				).text(
+					sb.toString()
+				));
+		}
+
+		return document.text();
+	}
+
 	private void _postUserBadge(long quizId, long userId) {
 		JSONArray jsonArray = new JSONObject(
 			get(
@@ -776,31 +695,37 @@ public class LearnRestController extends BaseRestController {
 		);
 	}
 
-	private List<String> _splitSsml(String ssml, int maxLength) {
+	private List<String> _splitSsml(String ssml) {
 		List<String> parts = new ArrayList<>();
 		StringBundler sb = new StringBundler();
 
-		String ssmlContent = StringUtil.trim(
-			_replace(_replace(ssml, "", "^<speak>"), "", "</speak>$"));
+		String ssmlContent = ssml.replaceFirst(
+			"^<speak>", ""
+		).replaceFirst(
+			"</speak>$", ""
+		).trim();
 
-		String[] sentences = _convertHTMLListToTextInline(
-			_convertHTMLTableToTextInline(_unescapeHTML(ssmlContent))
-		).split(
-			"(?<=[.!?])\\s+"
-		);
+		String[] sentences = ssmlContent.split("(?<=[.!?])\\s+");
 
 		for (String sentence : sentences) {
-			if ((sb.length() + sentence.length()) > maxLength) {
-				parts.add(StringUtil.trim(sb.toString()));
+			if ((sb.length() + sentence.length()) > 5000) {
+				parts.add(
+					sb.toString(
+					).trim());
 				sb = new StringBundler();
 			}
 
-			sb.append(sentence);
-			sb.append(" ");
+			sb.append(
+				sentence
+			).append(
+				" "
+			);
 		}
 
 		if (sb.length() > 0) {
-			parts.add(sb.toString());
+			parts.add(
+				sb.toString(
+				).trim());
 		}
 
 		return parts;
@@ -826,34 +751,8 @@ public class LearnRestController extends BaseRestController {
 		).build();
 	}
 
-	private String _unescapeHTML(String html) {
-		if (html == null) {
-			return "";
-		}
-
-		return StringUtils.trim(
-			StringEscapeUtils.unescapeHtml4(
-				html
-			).replace(
-				'\u00A0', ' '
-			));
-	}
-
-	private static final Pattern _cellPattern = Pattern.compile(
-		"(?is)<t(?:h|d)[^>]*>(.*?)</t(?:h|d)>");
-	private static final Pattern _liPattern = Pattern.compile(
-		"(?i)(<li[^>]*>)(.*?)(</li>)", Pattern.DOTALL);
-	private static final Pattern _tablePattern = Pattern.compile(
-		"(?is)<table[^>]*>(.*?)</table>");
-	private static final Pattern _tbodyPattern = Pattern.compile(
-		"(?is)<tbody[^>]*>(.*?)</tbody>");
-	private static final Pattern _theadPattern = Pattern.compile(
-		"(?is)<thead[^>]*>(.*?)</thead>");
-	private static final Pattern _trPattern = Pattern.compile(
-		"(?is)<tr[^>]*>(.*?)</tr>");
-
 	@Value("${liferay.learn.audio.lessons.document.folder.id}")
-	private long _documentFolderId;
+	private long _audioLessonsDocumentFolderId;
 
 	@Value("${liferay.learn.google.credentials}")
 	private String _googleCredentials;

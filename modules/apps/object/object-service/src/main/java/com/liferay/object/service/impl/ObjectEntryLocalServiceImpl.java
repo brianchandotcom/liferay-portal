@@ -4763,40 +4763,34 @@ public class ObjectEntryLocalServiceImpl
 
 		Object result = null;
 
-		try {
-			if (selectExpression instanceof Alias) {
-				Alias<?> alias = (Alias<?>)selectExpression;
+		if (selectExpression instanceof Alias) {
+			Alias<?> alias = (Alias<?>)selectExpression;
 
-				result = _getValue(
-					entryValues,
-					DynamicObjectDefinitionTableUtil.getSQLType(
-						_getDBType(alias, objectDefinitionId)));
-			}
-			else if (selectExpression instanceof Column) {
-				Column<?, ?> column = (Column<?, ?>)selectExpression;
-
-				result = _getValue(entryValues, column.getSQLType());
-			}
-			else if (selectExpression instanceof ScalarDSLQueryAlias) {
-				ScalarDSLQueryAlias scalarDSLQueryAlias =
-					(ScalarDSLQueryAlias)selectExpression;
-
-				result = _getValue(
-					entryValues, scalarDSLQueryAlias.getSQLType());
-
-				if (result == null) {
-					result = "0";
-				}
-				else {
-					BigDecimal bigDecimal = new BigDecimal(result.toString());
-
-					result = String.valueOf(
-						BigDecimalUtil.stripTrailingZeros(bigDecimal));
-				}
-			}
+			result = _getValue(
+				entryValues,
+				DynamicObjectDefinitionTableUtil.getSQLType(
+					_getDBType(alias, objectDefinitionId)));
 		}
-		catch (SQLException sqlException) {
-			throw new SystemException(sqlException);
+		else if (selectExpression instanceof Column) {
+			Column<?, ?> column = (Column<?, ?>)selectExpression;
+
+			result = _getValue(entryValues, column.getSQLType());
+		}
+		else if (selectExpression instanceof ScalarDSLQueryAlias) {
+			ScalarDSLQueryAlias scalarDSLQueryAlias =
+				(ScalarDSLQueryAlias)selectExpression;
+
+			result = _getValue(entryValues, scalarDSLQueryAlias.getSQLType());
+
+			if (result == null) {
+				result = "0";
+			}
+			else {
+				BigDecimal bigDecimal = new BigDecimal(result.toString());
+
+				result = String.valueOf(
+					BigDecimalUtil.stripTrailingZeros(bigDecimal));
+			}
 		}
 
 		return result;
@@ -5054,7 +5048,7 @@ public class ObjectEntryLocalServiceImpl
 	/**
 	 * @see com.liferay.portal.upgrade.util.Table#getValue
 	 */
-	private Object _getValue(Object object, int sqlType) throws SQLException {
+	private Object _getValue(Object object, int sqlType) {
 		if (sqlType == Types.BIGINT) {
 			return GetterUtil.getLong(object);
 		}

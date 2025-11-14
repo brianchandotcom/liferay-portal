@@ -126,6 +126,27 @@ public class CartTransition implements Cloneable, Serializable {
 
 	protected Boolean open;
 
+	public Boolean getRestricted() {
+		return restricted;
+	}
+
+	public void setRestricted(Boolean restricted) {
+		this.restricted = restricted;
+	}
+
+	public void setRestricted(
+		UnsafeSupplier<Boolean, Exception> restrictedUnsafeSupplier) {
+
+		try {
+			restricted = restrictedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean restricted;
+
 	public Long getWorkflowTaskId() {
 		return workflowTaskId;
 	}

@@ -410,6 +410,14 @@ public abstract class BaseCartTransitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("restricted", additionalAssertFieldName)) {
+				if (cartTransition.getRestricted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("workflowTaskId", additionalAssertFieldName)) {
 				if (cartTransition.getWorkflowTaskId() == null) {
 					valid = false;
@@ -583,6 +591,17 @@ public abstract class BaseCartTransitionResourceTestCase {
 			if (Objects.equals("open", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cartTransition1.getOpen(), cartTransition2.getOpen())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("restricted", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cartTransition1.getRestricted(),
+						cartTransition2.getRestricted())) {
 
 					return false;
 				}
@@ -857,6 +876,11 @@ public abstract class BaseCartTransitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("restricted")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("workflowTaskId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -912,6 +936,7 @@ public abstract class BaseCartTransitionResourceTestCase {
 				label = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				open = RandomTestUtil.randomBoolean();
+				restricted = RandomTestUtil.randomBoolean();
 				workflowTaskId = RandomTestUtil.randomLong();
 			}
 		};

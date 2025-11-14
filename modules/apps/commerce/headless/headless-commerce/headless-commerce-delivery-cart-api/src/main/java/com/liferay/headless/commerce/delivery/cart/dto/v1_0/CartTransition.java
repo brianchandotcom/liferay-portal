@@ -248,6 +248,47 @@ public class CartTransition implements Serializable {
 	private Supplier<Boolean> _openSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getRestricted() {
+		if (_restrictedSupplier != null) {
+			restricted = _restrictedSupplier.get();
+
+			_restrictedSupplier = null;
+		}
+
+		return restricted;
+	}
+
+	public void setRestricted(Boolean restricted) {
+		this.restricted = restricted;
+
+		_restrictedSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRestricted(
+		UnsafeSupplier<Boolean, Exception> restrictedUnsafeSupplier) {
+
+		_restrictedSupplier = () -> {
+			try {
+				return restrictedUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean restricted;
+
+	@JsonIgnore
+	private Supplier<Boolean> _restrictedSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getWorkflowTaskId() {
 		if (_workflowTaskIdSupplier != null) {
 			workflowTaskId = _workflowTaskIdSupplier.get();
@@ -385,6 +426,18 @@ public class CartTransition implements Serializable {
 			sb.append("\"open\": ");
 
 			sb.append(open);
+		}
+
+		Boolean restricted = getRestricted();
+
+		if (restricted != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"restricted\": ");
+
+			sb.append(restricted);
 		}
 
 		Long workflowTaskId = getWorkflowTaskId();

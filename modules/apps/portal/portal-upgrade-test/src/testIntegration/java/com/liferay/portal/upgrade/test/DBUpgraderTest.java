@@ -118,7 +118,7 @@ public class DBUpgraderTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"UPGRADE_DATABASE_PREUPGRADE_VERIFY_ENABLED", false)) {
 
-			_updatePortalSchemaVersion(currentSchemaVersion + ".0");
+			_updatePortalSchemaVersion(Integer.MAX_VALUE + ".0.0");
 
 			DBUpgrader.upgradePortal();
 
@@ -146,7 +146,7 @@ public class DBUpgraderTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"UPGRADE_DATABASE_PREUPGRADE_VERIFY_ENABLED", false)) {
 
-			_updatePortalSchemaVersion(currentSchemaVersion + ".0");
+			_updatePortalSchemaVersion(Integer.MAX_VALUE + ".0.0");
 
 			DBUpgrader.upgradePortal();
 

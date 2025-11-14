@@ -190,8 +190,8 @@ public class FragmentMappingUtil {
 			return true;
 		}
 
-		if (jsonObject.has("layout") || jsonObject.has("mappedField") ||
-			jsonObject.has("collectionFieldId")) {
+		if (jsonObject.has("collectionFieldId") || jsonObject.has("layout") ||
+			jsonObject.has("mappedField")) {
 
 			return true;
 		}

@@ -616,6 +616,15 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		assertValid(page, testGetProductsPage_getExpectedActions());
 
 		page = productResource.getProductsPage(
+			null, String.format("(productId eq %s)", product1.getProductId()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		assertContains(product1, (List<Product>)page.getItems());
+		assertValid(page, testGetProductsPage_getExpectedActions());
+
+		page = productResource.getProductsPage(
 			null, "(specificationValues/any(x:contains(x, 'test')))",
 			Pagination.of(1, 10), null);
 
@@ -656,6 +665,12 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 				StringBundler.concat(string1, StringPool.SPACE, string2)));
 
 		Page<Product> page = productResource.getProductsPage(
+			String.valueOf(product1.getProductId()), null, Pagination.of(1, 10),
+			null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = productResource.getProductsPage(
 			string1, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());

@@ -24,5 +24,5 @@ export enum AccountTypes {
 }
 
 export enum UserRoleTypes {
-	LIFERAY_USER = 'Liferay User',
+	LIFERAY_USER = 'Liferay Staff',
 }

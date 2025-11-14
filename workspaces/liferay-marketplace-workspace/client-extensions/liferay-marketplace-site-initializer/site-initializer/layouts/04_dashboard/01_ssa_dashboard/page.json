@@ -18,7 +18,7 @@
 			"actionIds": [
 				"VIEW"
 			],
-			"roleName": "Liferay User",
+			"roleName": "Liferay Staff",
 			"scope": 4
 		},
 		{

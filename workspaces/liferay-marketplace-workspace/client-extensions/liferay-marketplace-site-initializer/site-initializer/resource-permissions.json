@@ -163,7 +163,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
-		"roleName": "Liferay User",
+		"roleName": "Liferay Staff",
 		"scope": "1"
 	},
 	{

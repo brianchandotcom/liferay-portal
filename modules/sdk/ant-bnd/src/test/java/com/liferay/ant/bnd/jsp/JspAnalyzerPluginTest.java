@@ -97,11 +97,23 @@ public class JspAnalyzerPluginTest {
 			"javax.servlet", "javax.servlet.http");
 
 		_testImplicitImports(
-			"dependencies/imports_without_comments_with_javax.jsp", javaxFQNs,
+			"dependencies/imports_without_comments_with_javax.jsp", null,
+			javaxFQNs, jakartaFQNs);
+		_testImplicitImports(
+			"dependencies/imports_without_comments.jsp", null, jakartaFQNs,
+			javaxFQNs);
+		_testImplicitImports(
+			"dependencies/imports_without_packages.jsp", "javax", javaxFQNs,
 			jakartaFQNs);
 		_testImplicitImports(
-			"dependencies/imports_without_comments.jsp", jakartaFQNs,
+			"dependencies/imports_without_packages.jsp", "jakarta", jakartaFQNs,
 			javaxFQNs);
+		_testImplicitImports(
+			"dependencies/imports_without_javaee_packages.jsp", "javax",
+			javaxFQNs, jakartaFQNs);
+		_testImplicitImports(
+			"dependencies/imports_without_javaee_packages.jsp", "jakarta",
+			jakartaFQNs, javaxFQNs);
 	}
 
 	@Test
@@ -235,7 +247,7 @@ public class JspAnalyzerPluginTest {
 	}
 
 	private void _testImplicitImports(
-			String jspPath, List<String> expectedFQNs,
+			String jspPath, String javaeePackage, List<String> expectedFQNs,
 			List<String> notExpectedFQNs)
 		throws Exception {
 
@@ -254,6 +266,10 @@ public class JspAnalyzerPluginTest {
 			builder.setJar(jar);
 
 			builder.setProperty("-jsp", "*.jsp");
+
+			if (javaeePackage != null) {
+				builder.setProperty("-javaee-package", javaeePackage);
+			}
 
 			JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 

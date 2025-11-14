@@ -116,7 +116,8 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
+		layout.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		layout = _layoutLocalService.updateLayout(layout);
 

@@ -232,7 +232,8 @@ public class ClientExtensionServicePreActionTest {
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
+		_layout.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
@@ -261,7 +262,8 @@ public class ClientExtensionServicePreActionTest {
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
+		_layout.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 

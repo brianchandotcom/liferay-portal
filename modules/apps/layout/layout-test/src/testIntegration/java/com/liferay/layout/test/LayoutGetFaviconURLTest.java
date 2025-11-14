@@ -207,7 +207,8 @@ public class LayoutGetFaviconURLTest {
 
 		_layoutLocalService.updateLayout(masterLayout);
 
-		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
+		_layout.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		byte[] layoutFaviconBytes = _getExpectedBytes("dxp_logo.png");
 

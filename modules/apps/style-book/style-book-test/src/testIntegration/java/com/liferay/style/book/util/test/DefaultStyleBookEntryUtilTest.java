@@ -309,8 +309,8 @@ public class DefaultStyleBookEntryUtilTest {
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		masterLayoutBasedLayout.setMasterLayoutPlid(
-			masterLayoutPageTemplateEntry.getPlid());
+		masterLayoutBasedLayout.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		return _layoutLocalService.updateLayout(masterLayoutBasedLayout);
 	}

@@ -356,7 +356,7 @@ public class LayoutServiceTest {
 				_friendlyURLNormalizer.normalizeWithEncoding(
 					StringPool.SLASH + name)
 			).build(),
-			0,
+			null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 	}

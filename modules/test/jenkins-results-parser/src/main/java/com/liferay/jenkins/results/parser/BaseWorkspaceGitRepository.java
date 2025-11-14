@@ -630,9 +630,24 @@ public abstract class BaseWorkspaceGitRepository
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git clone --depth ");
+		sb.setLength(0);
+
+		sb.append("rm -rf ");
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+		File clonedWorkingDirectory = new File(
+			workingDirectory.getParent(), getDirectoryName() + "-git");
+
+		sb.append(clonedWorkingDirectory);
+
+		commands.add(sb.toString());
+
+		sb.setLength(0);
+
+		sb.append("git clone --depth ");
 
 		LocalGitBranch localGitBranch = getLocalGitBranch();
 
@@ -642,16 +657,8 @@ public abstract class BaseWorkspaceGitRepository
 		sb.append(commitCount + 1);
 
 		sb.append(" --no-checkout file://");
-
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
-
 		sb.append(workingDirectory);
-
 		sb.append(" ");
-
-		File clonedWorkingDirectory = new File(
-			workingDirectory, getDirectoryName() + "-git");
-
 		sb.append(clonedWorkingDirectory);
 
 		commands.add(sb.toString());
@@ -673,13 +680,22 @@ public abstract class BaseWorkspaceGitRepository
 		commands.add(sb.toString());
 
 		sb.setLength(0);
+
 		sb.append("zip -r ");
 
-		File archiveFile = new File(workingDirectory, _getDotGitArchiveName());
+		File archiveFile = new File(
+			workingDirectory.getParent(), _getDotGitArchiveName());
 
 		sb.append(archiveFile);
 
 		sb.append(" .git");
+
+		commands.add(sb.toString());
+
+		sb.setLength(0);
+
+		sb.append("rm -rf ");
+		sb.append(clonedWorkingDirectory);
 
 		commands.add(sb.toString());
 
@@ -1060,6 +1076,8 @@ public abstract class BaseWorkspaceGitRepository
 				CloudBucketUtil.uploadS3File(
 					_getGitArchiveS3BucketPath(dotGitDirArchiveFile.getName()),
 					dotGitDirArchiveFile);
+
+				dotGitDirArchiveFile.delete();
 			}
 		}
 

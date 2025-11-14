@@ -17,6 +17,8 @@ import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -105,6 +107,59 @@ public abstract class BaseLayoutStructureItemImporter {
 			groupId, privatePage, friendlyURL);
 
 		return _getLayoutJSONObject("friendlyURL", friendlyURL, layout);
+	}
+
+	public JSONObject toDisplayPageFormSubmissionResultJSONObject(
+		Map<String, Object> formSuccessSubmissionResultMap,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
+
+		Map<String, Object> mapping =
+			(Map<String, Object>)formSuccessSubmissionResultMap.get("mapping");
+
+		if (mapping == null) {
+			return _getDefaultDisplayPageJSONObject();
+		}
+
+		Map<String, Object> itemReferenceMap = (Map<String, Object>)mapping.get(
+			"itemReference");
+
+		if (itemReferenceMap != null) {
+			String externalReferenceCode = null;
+
+			List<Map<String, String>> fields =
+				(List<Map<String, String>>)itemReferenceMap.get("fields");
+
+			for (Map<String, String> field : fields) {
+				String key = field.get("fieldName");
+
+				if (Objects.equals(key, "externalReferenceCode")) {
+					externalReferenceCode = field.get("fieldValue");
+				}
+			}
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByExternalReferenceCode(
+						externalReferenceCode,
+						layoutStructureItemImporterContext.getLayout(
+						).getGroupId());
+
+			if (layoutPageTemplateEntry != null) {
+				String layoutPageTemplateEntryId = String.valueOf(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+				return JSONUtil.put(
+					"displayPage",
+					StringBundler.concat(
+						LayoutPageTemplateEntry.class.getSimpleName(),
+						StringPool.UNDERLINE, layoutPageTemplateEntryId)
+				).put(
+					"type", "displayPage"
+				);
+			}
+		}
+
+		return _getDefaultDisplayPageJSONObject();
 	}
 
 	protected Map<String, Object> getDefinitionMap(Object definition)
@@ -470,6 +525,14 @@ public abstract class BaseLayoutStructureItemImporter {
 			"textColor", textColor
 		).put(
 			"width", styles.get("width")
+		);
+	}
+
+	private JSONObject _getDefaultDisplayPageJSONObject() {
+		return JSONUtil.put(
+			"displayPage", ObjectEntry.class.getSimpleName() + "_displayPageURL"
+		).put(
+			"type", "displayPage"
 		);
 	}
 

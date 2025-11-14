@@ -232,7 +232,7 @@ export function DefaultValueContainer({
 					<ExpressionBuilder
 						error={errors.defaultValue}
 						feedbackMessage={Liferay.Language.get(
-							'use-expressions-to-create-a-condition'
+							'click-on-the-button-to-expand-the-expression-input-area'
 						)}
 						label={Liferay.Language.get('default-value')}
 						onBlur={(event) => {

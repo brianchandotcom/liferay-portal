@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const CUSTOM_FIELD_KEY = 'customField';
-const CUSTOM_FIELD_DEFAULT_DENOMINATOR = '.';
-const CUSTOM_FIELD_NEW_DENOMINATOR = '/';
+const CUSTOM_FIELD_NAME_PREFIX = 'customField';
+const CUSTOM_FIELD_NAME_DELIMITER = '.';
+const CUSTOM_FIELD_NAME_ODATA_DELIMITER = '/';
 
 export function parseSortForCustomField(key: string) {
-	return key.startsWith(CUSTOM_FIELD_KEY)
+	return key.startsWith(CUSTOM_FIELD_NAME_PREFIX)
 		? key.replace(
-				CUSTOM_FIELD_DEFAULT_DENOMINATOR,
-				CUSTOM_FIELD_NEW_DENOMINATOR
+				CUSTOM_FIELD_NAME_DELIMITER,
+				CUSTOM_FIELD_NAME_ODATA_DELIMITER
 			)
 		: key;
 }

@@ -98,7 +98,9 @@ export async function loadData({
 				? sort.key.split(',')[0]
 				: sort.key;
 
-			if (key) {key = parseSortForCustomField(key);}
+			if (key) {
+				key = parseSortForCustomField(key);
+			}
 
 			return {
 				...sort,

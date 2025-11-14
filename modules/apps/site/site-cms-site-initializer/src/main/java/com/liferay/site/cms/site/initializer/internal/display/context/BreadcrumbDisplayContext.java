@@ -104,7 +104,6 @@ public class BreadcrumbDisplayContext {
 						).put(
 							"symbolLeft", "export"
 						));
-
 					unsafeConsumer.accept(
 						JSONUtil.put(
 							"href",

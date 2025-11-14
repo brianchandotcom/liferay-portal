@@ -62,6 +62,7 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 		try {
 			objectEntriesCount = _objectEntryLocalService.getObjectEntriesCount(
 				GetterUtil.getLong(baseModel.get("groupId")),
+				GetterUtil.getString(entryDTO.get("defaultLanguageId")),
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					objectValidationRule.getObjectDefinitionId()),
 				_getPredicate(

@@ -7234,35 +7234,9 @@ public class ObjectEntryLocalServiceImpl
 			Column<?, Object> column = (Column<?, Object>)table.getColumn(
 				objectField.getDBColumnName());
 
-			Predicate predicate = null;
-
-			if (objectField.isLocalized()) {
-				DynamicObjectDefinitionLocalizationTable
-					dynamicObjectDefinitionLocalizationTable =
-						(DynamicObjectDefinitionLocalizationTable)table;
-
-				predicate = ObjectEntryTable.INSTANCE.objectEntryId.in(
-					DSLQueryFactoryUtil.select(
-						dynamicObjectDefinitionLocalizationTable.
-							getForeignKeyColumn()
-					).from(
-						dynamicObjectDefinitionLocalizationTable
-					).where(
-						dynamicObjectDefinitionLocalizationTable.
-							getLanguageIdColumn(
-							).eq(
-								valueLanguageId
-							).and(
-								column.eq(value)
-							)
-					));
-			}
-			else {
-				predicate =
-					ObjectEntrySearchUtil.
-						getUniqueCompositeKeyObjectFieldPredicate(
-							column, objectField.getDBType(), value);
-			}
+			Predicate predicate =
+				ObjectEntrySearchUtil.getUniqueCompositeKeyObjectFieldPredicate(
+					column, objectField.getDBType(), value);
 
 			if (objectEntryId != null) {
 				predicate = predicate.and(
@@ -7270,7 +7244,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			objectEntriesCount = getObjectEntriesCount(
-				groupId, objectDefinition, predicate);
+				groupId, valueLanguageId, objectDefinition, predicate);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

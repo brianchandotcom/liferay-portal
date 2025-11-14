@@ -82,7 +82,7 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 					objectField.getDBColumnName());
 
 				long count = _objectEntryLocalService.getObjectEntriesCount(
-					0, objectDefinition, column.isNotNull());
+					0, null, objectDefinition, column.isNotNull());
 
 				if (count == 0) {
 					continue;

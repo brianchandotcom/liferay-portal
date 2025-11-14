@@ -11,7 +11,7 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
+import {ITEM_INTERACTION_ORIGINS} from '../../../../../app/config/constants/itemInteractionOrigins';
 import {useSelectItem} from '../../../../../app/contexts/ControlsContext';
 import {useSetMovementText} from '../../../../../app/contexts/KeyboardMovementContext';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
@@ -77,7 +77,7 @@ export default function VisibilityButton({
 				}
 
 				selectItem(node.id, {
-					origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+					origin: ITEM_INTERACTION_ORIGINS.itemActions,
 				});
 
 				setText(

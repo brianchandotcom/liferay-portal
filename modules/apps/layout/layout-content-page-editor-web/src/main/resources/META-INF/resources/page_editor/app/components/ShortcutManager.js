@@ -7,7 +7,7 @@ import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import {openToast} from 'frontend-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
+import {ITEM_INTERACTION_ORIGINS} from '../config/constants/itemInteractionOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {
 	BACKSPACE_KEY_CODE,
@@ -311,7 +311,7 @@ export default function ShortcutManager() {
 				if (selectableParent) {
 					selectItem(selectableParent.itemId, {
 						itemType: ITEM_TYPES.layoutDataItem,
-						origin: ITEM_ACTIVATION_ORIGINS.layout,
+						origin: ITEM_INTERACTION_ORIGINS.layout,
 					});
 				}
 			},

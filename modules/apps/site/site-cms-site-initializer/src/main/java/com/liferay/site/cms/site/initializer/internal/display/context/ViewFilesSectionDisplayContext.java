@@ -49,6 +49,15 @@ public class ViewFilesSectionDisplayContext
 	}
 
 	@Override
+	public Map<String, Object> getAdditionalProps() {
+		Map<String, Object> additionalProps = super.getAdditionalProps();
+
+		additionalProps.put("galleryViewEnabled", true);
+
+		return additionalProps;
+	}
+
+	@Override
 	public Map<String, Object> getEmptyState() {
 		return HashMapBuilder.<String, Object>put(
 			"description",

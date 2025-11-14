@@ -379,6 +379,22 @@ public class DepotEntryLocalServiceWrapper
 		return _depotEntryLocalService.getDepotEntryGroupIds(companyId, type);
 	}
 
+	@Override
+	public java.util.List<Long> getDepotEntryGroupIds(
+		long companyId, long userId, int type) {
+
+		return _depotEntryLocalService.getDepotEntryGroupIds(
+			companyId, userId, type);
+	}
+
+	@Override
+	public java.util.List<Long> getDepotEntryGroupIds(
+		long companyId, long userId, int type, boolean userGroupsOnly) {
+
+		return _depotEntryLocalService.getDepotEntryGroupIds(
+			companyId, userId, type, userGroupsOnly);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */

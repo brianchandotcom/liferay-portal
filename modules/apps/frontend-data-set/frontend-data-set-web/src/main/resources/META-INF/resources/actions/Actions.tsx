@@ -56,7 +56,7 @@ function Actions({
 	const [loading, setLoading] = useState(false);
 	const [menuActive, setMenuActive] = useState(false);
 
-	const isRowSelected =
+	const isItemSelected =
 		allItemsSelectedActive ||
 		selectedItemsValue?.some(
 			(selectedItemValue) => String(selectedItemValue) === String(itemId)
@@ -102,7 +102,7 @@ function Actions({
 			executeAsyncItemAction,
 			highlightItems,
 			infoPanelOpen,
-			isRowSelected,
+			isItemSelected,
 			itemData,
 			itemId,
 			items,
@@ -128,7 +128,7 @@ function Actions({
 		<>
 			{quickActionsEnabled &&
 				quickActions.length > 1 &&
-				!isRowSelected && (
+				!isItemSelected && (
 					<QuickActions
 						actions={quickActions}
 						itemData={itemData}

@@ -274,23 +274,34 @@ public class SettingsTestUtil {
 	}
 
 	public static ItemExternalReference getMasterPageItemExternalReference(
-			ServiceContext serviceContext)
+			boolean optionalMasterPageReference, ServiceContext serviceContext)
 		throws Exception {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
-				serviceContext, WorkflowConstants.STATUS_APPROVED);
+		String itemExternalReferenceCode;
+
+		if (optionalMasterPageReference) {
+			itemExternalReferenceCode = RandomTestUtil.randomString();
+		}
+		else {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryTestUtil.
+					getMasterLayoutPageTemplateEntry(
+						serviceContext, WorkflowConstants.STATUS_APPROVED);
+
+			itemExternalReferenceCode =
+				layoutPageTemplateEntry.getExternalReferenceCode();
+		}
 
 		return new ItemExternalReference() {
 			{
-				setExternalReferenceCode(
-					layoutPageTemplateEntry::getExternalReferenceCode);
+				setExternalReferenceCode(itemExternalReferenceCode);
 			}
 		};
 	}
 
 	public static Settings getSettings(
-		FavIcon.FavIconType favIconType, ServiceContext serviceContext) {
+		FavIcon.FavIconType favIconType, boolean optionalMasterPageReference,
+		ServiceContext serviceContext) {
 
 		return new Settings() {
 			{
@@ -314,7 +325,7 @@ public class SettingsTestUtil {
 				setJavascript(RandomTestUtil::randomString);
 				setMasterPageItemExternalReference(
 					() -> SettingsTestUtil.getMasterPageItemExternalReference(
-						serviceContext));
+						optionalMasterPageReference, serviceContext));
 				setStyleBookItemExternalReference(
 					() -> SettingsTestUtil.getStyleBookItemExternalReference(
 						serviceContext));
@@ -335,6 +346,12 @@ public class SettingsTestUtil {
 						ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
 			}
 		};
+	}
+
+	public static Settings getSettings(
+		FavIcon.FavIconType favIconType, ServiceContext serviceContext) {
+
+		return getSettings(favIconType, false, serviceContext);
 	}
 
 	public static ItemExternalReference getStyleBookItemExternalReference(

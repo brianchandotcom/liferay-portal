@@ -471,7 +471,8 @@ public class PageSpecificationResourceTest
 			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyMap(), type, _getTypeSettings(), false, false,
-			Collections.emptyMap(), _getMasterLayoutPlid(serviceContext),
+			Collections.emptyMap(),
+			_getMasterLayoutPageTemplateEntryERC(serviceContext),
 			serviceContext);
 	}
 
@@ -692,18 +693,19 @@ public class PageSpecificationResourceTest
 		return contentPageSpecification;
 	}
 
-	private long _getMasterLayoutPlid(ServiceContext serviceContext)
+	private String _getMasterLayoutPageTemplateEntryERC(
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (RandomTestUtil.randomBoolean()) {
-			return 0;
+			return null;
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
 				serviceContext, WorkflowConstants.STATUS_APPROVED);
 
-		return layoutPageTemplateEntry.getPlid();
+		return layoutPageTemplateEntry.getExternalReferenceCode();
 	}
 
 	private PageElement _getPageElement(
@@ -793,7 +795,7 @@ public class PageSpecificationResourceTest
 					setMasterPageItemExternalReference(
 						() ->
 							SettingsTestUtil.getMasterPageItemExternalReference(
-								serviceContext));
+								false, serviceContext));
 					setStyleBookItemExternalReference(
 						() ->
 							SettingsTestUtil.getStyleBookItemExternalReference(

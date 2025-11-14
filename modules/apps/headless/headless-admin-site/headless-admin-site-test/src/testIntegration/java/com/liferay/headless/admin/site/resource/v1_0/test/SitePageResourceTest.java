@@ -76,6 +76,9 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -455,7 +458,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyMap(), type, typeSettings, false, false,
-			Collections.emptyMap(), 0L, serviceContext);
+			Collections.emptyMap(), null, serviceContext);
 	}
 
 	private void _assertContentSitePage(SitePage sitePage) {
@@ -1755,11 +1758,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		FavIcon.FavIconType favIconType =
 			FavIcon.FavIconType.ITEM_EXTERNAL_REFERENCE;
 
+		boolean optionalMasterPageReference = false;
+
 		for (PageSpecification pageSpecification : pageSpecifications) {
 			pageSpecification.setSettings(
-				SettingsTestUtil.getSettings(favIconType, serviceContext));
+				SettingsTestUtil.getSettings(
+					favIconType, optionalMasterPageReference, serviceContext));
 
 			favIconType = FavIcon.FavIconType.CLIENT_EXTENSION;
+			optionalMasterPageReference = true;
 		}
 
 		sitePage.setPageSpecifications(pageSpecifications);
@@ -1767,8 +1774,31 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");
 
-		SitePage postSitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), sitePage);
+		SitePage postSitePage = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.headless.admin.site.internal.util.LogUtil",
+				LoggerTestUtil.WARN)) {
+
+			postSitePage = sitePageResource.postSiteSitePage(
+				testGroup.getExternalReferenceCode(), sitePage);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			int count = 0;
+
+			for (LogEntry logEntry : logEntries) {
+				String message = logEntry.getMessage();
+
+				if (message.contains("LayoutPageTemplateEntry")) {
+					count++;
+				}
+			}
+
+			Assert.assertEquals(
+				"Unexpected log messages: " + count,
+				(type == SitePage.Type.CONTENT_PAGE) ? 1 : 0, count);
+		}
 
 		PageSpecification[] postPageSpecifications =
 			postSitePage.getPageSpecifications();

@@ -88,31 +88,25 @@ public class ConvertEmptyLayoutMVCActionCommand
 
 			long layoutPageTemplateEntryId = ParamUtil.getLong(
 				actionRequest, "layoutPageTemplateEntryId");
-			long masterLayoutPlid = ParamUtil.getLong(
-				actionRequest, "masterLayoutPlid",
-				LayoutConstants.DEFAULT_PLID);
 
-			Layout layoutPageTemplateEntryLayout = null;
+			String masterLayoutPageTemplateEntryERC = null;
+			long masterLayoutPlid = 0;
 
 			if (layoutPageTemplateEntryId > 0) {
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
 						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
-				if (layoutPageTemplateEntry.getLayoutPrototypeId() == 0) {
+				if (masterLayoutPageTemplateEntry.getLayoutPrototypeId() == 0) {
 					type = LayoutConstants.TYPE_CONTENT;
 				}
 				else {
 					type = LayoutConstants.TYPE_PORTLET;
 				}
 
-				layoutPageTemplateEntryLayout = _layoutLocalService.fetchLayout(
-					layoutPageTemplateEntry.getPlid());
-
-				if (layoutPageTemplateEntryLayout != null) {
-					masterLayoutPlid =
-						layoutPageTemplateEntryLayout.getMasterLayoutPlid();
-				}
+				masterLayoutPageTemplateEntryERC =
+					masterLayoutPageTemplateEntry.getExternalReferenceCode();
+				masterLayoutPlid = masterLayoutPageTemplateEntry.getPlid();
 			}
 
 			Layout draftLayout = layout.fetchDraftLayout();
@@ -138,12 +132,13 @@ public class ConvertEmptyLayoutMVCActionCommand
 					layout.getKeywordsMap(), layout.getRobotsMap(), type, false,
 					layout.getFriendlyURLMap(), layout.isIconImage(), null,
 					layout.getStyleBookEntryERC(),
-					layout.getFaviconFileEntryId(), masterLayoutPlid,
-					serviceContext);
+					layout.getFaviconFileEntryId(),
+					masterLayoutPageTemplateEntryERC, serviceContext);
 
-				if (layoutPageTemplateEntryLayout != null) {
+				if (masterLayoutPlid > 0) {
 					_layoutLocalService.copyLayoutContent(
-						layoutPageTemplateEntryLayout, layout);
+						_layoutLocalService.fetchLayout(masterLayoutPlid),
+						layout);
 				}
 
 				redirect = PortletURLBuilder.createRenderURL(
@@ -171,13 +166,14 @@ public class ConvertEmptyLayoutMVCActionCommand
 						layout.getPlid(), nameMap, layout.getTitleMap(),
 						layout.getDescriptionMap(), layout.getKeywordsMap(),
 						layout.getRobotsMap(), type, layout.getTypeSettings(),
-						true, true, Collections.emptyMap(), masterLayoutPlid,
-						serviceContext);
+						true, true, Collections.emptyMap(),
+						masterLayoutPageTemplateEntryERC, serviceContext);
 				}
 
-				if (layoutPageTemplateEntryLayout != null) {
+				if (masterLayoutPlid > 0) {
 					_layoutLocalService.copyLayoutContent(
-						layoutPageTemplateEntryLayout, draftLayout);
+						_layoutLocalService.fetchLayout(masterLayoutPlid),
+						layout);
 				}
 				else {
 					String externalReferenceCode = GetterUtil.getString(
@@ -206,8 +202,8 @@ public class ConvertEmptyLayoutMVCActionCommand
 					layout.getKeywordsMap(), layout.getRobotsMap(), type, false,
 					layout.getFriendlyURLMap(), layout.isIconImage(), null,
 					layout.getStyleBookEntryERC(),
-					layout.getFaviconFileEntryId(), masterLayoutPlid,
-					serviceContext);
+					layout.getFaviconFileEntryId(),
+					masterLayoutPageTemplateEntryERC, serviceContext);
 
 				_layoutLocalService.updateStatus(
 					layout.getUserId(), layout.getPlid(),

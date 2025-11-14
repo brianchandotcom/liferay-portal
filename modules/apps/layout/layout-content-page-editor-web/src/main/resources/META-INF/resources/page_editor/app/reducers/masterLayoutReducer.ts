@@ -8,12 +8,12 @@ import changeMasterLayout from '../actions/changeMasterLayout';
 import {CHANGE_MASTER_LAYOUT} from '../actions/types';
 
 type State =
-	| {masterLayoutData: null; masterLayoutPlid: '0'}
-	| {masterLayoutData: LayoutData; masterLayoutPlid: string};
+	| {masterLayoutData: null; masterLayoutPageTemplateEntryERC: ''}
+	| {masterLayoutData: LayoutData; masterLayoutPageTemplateEntryERC: string};
 
 export const INITIAL_STATE: State = {
 	masterLayoutData: null,
-	masterLayoutPlid: '0',
+	masterLayoutPageTemplateEntryERC: '',
 };
 
 export default function languageReducer(
@@ -24,7 +24,8 @@ export default function languageReducer(
 		case CHANGE_MASTER_LAYOUT: {
 			return {
 				masterLayoutData: action.masterLayoutData,
-				masterLayoutPlid: action.masterLayoutPlid,
+				masterLayoutPageTemplateEntryERC:
+					action.masterLayoutPageTemplateEntryERC,
 			};
 		}
 

@@ -6,17 +6,17 @@
 import changeMasterLayoutAction from '../actions/changeMasterLayout';
 import LayoutService from '../services/LayoutService';
 
-export default function changeMasterLayout({masterLayoutPlid}) {
+export default function changeMasterLayout({masterLayoutPageTemplateEntryERC}) {
 	return (dispatch) => {
 		return LayoutService.changeMasterLayout({
-			masterLayoutPlid,
+			masterLayoutPageTemplateEntryERC,
 			onNetworkStatus: dispatch,
 		}).then((data = {}) => {
 			dispatch(
 				changeMasterLayoutAction({
 					fragmentEntryLinks: data.fragmentEntryLinks,
 					masterLayoutData: data.masterLayoutData,
-					masterLayoutPlid,
+					masterLayoutPageTemplateEntryERC,
 				})
 			);
 

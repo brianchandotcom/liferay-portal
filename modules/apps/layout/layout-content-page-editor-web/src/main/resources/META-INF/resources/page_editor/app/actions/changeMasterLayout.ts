@@ -9,18 +9,18 @@ import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {FragmentEntryLinkMap} from './addFragmentEntryLinks';
 
 type MasterLayoutOptions =
-	| {masterLayoutData: null; masterLayoutPlid: '0'}
-	| {masterLayoutData: LayoutData; masterLayoutPlid: string};
+	| {masterLayoutData: null; masterLayoutPageTemplateEntryERC: ''}
+	| {masterLayoutData: LayoutData; masterLayoutPageTemplateEntryERC: string};
 
 export default function changeMasterLayout({
 	fragmentEntryLinks = {},
 	masterLayoutData = null,
-	masterLayoutPlid = '0',
+	masterLayoutPageTemplateEntryERC = '',
 }: MasterLayoutOptions & {fragmentEntryLinks: FragmentEntryLinkMap}) {
 	return {
 		fragmentEntryLinks,
 		masterLayoutData,
-		masterLayoutPlid,
+		masterLayoutPageTemplateEntryERC,
 		type: CHANGE_MASTER_LAYOUT,
 	} as const;
 }

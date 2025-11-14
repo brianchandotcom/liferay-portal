@@ -219,9 +219,9 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 			long faviconFileEntryId = ParamUtil.getLong(
 				uploadPortletRequest, "faviconFileEntryId",
 				layout.getFaviconFileEntryId());
-			long masterLayoutPlid = ParamUtil.getLong(
-				uploadPortletRequest, "masterLayoutPlid",
-				layout.getMasterLayoutPlid());
+			String masterLayoutPageTemplateEntryERC = ParamUtil.getString(
+				uploadPortletRequest, "masterLayoutPageTemplateEntryERC",
+				layout.getMasterLayoutPageTemplateEntryERC());
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
@@ -256,7 +256,7 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 				layout.getKeywordsMap(), layout.getRobotsMap(),
 				layout.getType(), layout.isHidden(), layout.getFriendlyURLMap(),
 				!deleteLogo, iconBytes, styleBookEntryERC, faviconFileEntryId,
-				masterLayoutPlid, serviceContext);
+				masterLayoutPageTemplateEntryERC, serviceContext);
 
 			_updateClientExtensionEntryRels(
 				actionRequest, layout, themeDisplay.getUserId());

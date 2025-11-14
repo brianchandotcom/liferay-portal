@@ -46,6 +46,16 @@ export default function undoReducer(state, action) {
 
 			const nextRedoHistory = action.isRedo ? state.redoHistory : [];
 
+			const derivedState = getDerivedStateForUndo({
+				action,
+				state,
+				type: actionType,
+			});
+
+			if (!derivedState) {
+				return state;
+			}
+
 			return {
 				...state,
 				redoHistory: nextRedoHistory,

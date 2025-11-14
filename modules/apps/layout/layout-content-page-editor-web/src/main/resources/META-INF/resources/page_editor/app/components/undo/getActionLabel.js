@@ -53,16 +53,16 @@ export default function getActionLabel(
 						Liferay.Language.get('select-x-master-layout'),
 						config.masterLayouts.find(
 							(masterLayout) =>
-								masterLayout.masterLayoutPlid ===
-								action.nextMasterLayoutPlid
+								masterLayout.masterLayoutPageTemplateEntryERC ===
+								action.nextMasterLayoutPageTemplateEntryERC
 						).name
 					)
 				: sub(
 						Liferay.Language.get('select-x-master-layout'),
 						config.masterLayouts.find(
 							(masterLayout) =>
-								masterLayout.masterLayoutPlid ===
-								action.masterLayoutPlid
+								masterLayout.masterLayoutPageTemplateEntryERC ===
+								action.masterLayoutPageTemplateEntryERC
 						).name
 					);
 

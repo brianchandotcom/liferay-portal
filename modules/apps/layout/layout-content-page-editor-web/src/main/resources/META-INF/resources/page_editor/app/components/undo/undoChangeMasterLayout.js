@@ -4,17 +4,31 @@
  */
 
 import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
+import {config} from '../../config/index';
 
 function undoAction({action}) {
 	return changeMasterLayout({
-		masterLayoutPlid: action.masterLayoutPlid,
+		masterLayoutPageTemplateEntryERC:
+			action.masterLayoutPageTemplateEntryERC,
 	});
 }
 
 function getDerivedStateForUndo({action, state}) {
+	const masterLayoutExists = config.masterLayouts.some(
+		(masterLayout) =>
+			masterLayout.masterLayoutPageTemplateEntryERC ===
+			state.masterLayout.masterLayoutPageTemplateEntryERC
+	);
+
+	if (!masterLayoutExists) {
+		return null;
+	}
+
 	return {
-		masterLayoutPlid: state.masterLayout.masterLayoutPlid,
-		nextMasterLayoutPlid: action.masterLayoutPlid,
+		masterLayoutPageTemplateEntryERC:
+			state.masterLayout.masterLayoutPageTemplateEntryERC,
+		nextMasterLayoutPageTemplateEntryERC:
+			action.masterLayoutPageTemplateEntryERC,
 	};
 }
 

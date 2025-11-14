@@ -26,36 +26,34 @@ export default function AssetsFilesDropFDSPropsTransformer({
 	otherProps: any;
 	views: IView[];
 }) {
-	const GalleryViewRenderer: IView = {
-		component: GalleryView,
-		default: true,
-		label: Liferay.Language.get('gallery'),
-		name: 'gallery',
-		schema: {
-			description: 'description',
-			image: 'imageURL',
-			link: '',
-			sticker: '',
-			symbol: '',
-			title: 'embedded.title',
-		},
-		thumbnail: 'gallery',
-	};
+	let mergedViews = views;
 
-	const nonDefaultViews = views.map((view) => {
-		return {
-			...view,
-			default: false,
+	if (additionalProps.galleryViewEnabled) {
+		const galleryViewRenderer: IView = {
+			component: (props: any) => GalleryView({...props, additionalProps}),
+			default: true,
+			label: Liferay.Language.get('gallery'),
+			name: 'gallery',
+			schema: {
+				description: 'description',
+				image: 'imageURL',
+				link: '',
+				sticker: '',
+				symbol: '',
+				title: 'embedded.title',
+			},
+			thumbnail: 'gallery',
 		};
-	});
 
-	const mergedViews = [
-		...nonDefaultViews,
-		{
-			...GalleryViewRenderer,
-			additionalProps,
-		},
-	];
+		const nonDefaultViews = views.map((view) => {
+			return {
+				...view,
+				default: false,
+			};
+		});
+
+		mergedViews = [...nonDefaultViews, galleryViewRenderer];
+	}
 
 	const assetsData = AssetsFDSPropsTransformer({
 		additionalProps,

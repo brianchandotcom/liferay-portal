@@ -12,9 +12,9 @@ import {
 import {
 	hasErrors,
 	parseOptions,
-	regenerateOrderDetailURL,
 	summaryDataMapper,
 } from '../../../../src/main/resources/META-INF/resources/components/mini_cart/util/index';
+import {regenerateOrderDetailURL} from '../../../../src/main/resources/META-INF/resources/utilities/regenerateOrderDetailURL';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/ServiceProvider/index'

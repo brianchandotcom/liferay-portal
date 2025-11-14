@@ -150,7 +150,7 @@ export class PageEditorPage {
 		await commentButton.waitFor({state: 'hidden'});
 	}
 
-	async addRuleAction() {
+	async addRandomRuleAction() {
 		await this.page.getByLabel('Select Action').press('Enter');
 		await this.page.keyboard.press('Tab');
 		await this.page.keyboard.press('Enter');
@@ -162,7 +162,7 @@ export class PageEditorPage {
 			.press('Enter');
 	}
 
-	async addRuleCondition() {
+	async addRandomRuleCondition() {
 		await this.page
 			.getByLabel('Select Item for the Condition')
 			.press('Enter');

@@ -2605,9 +2605,9 @@ test.describe('Rules Panel', () => {
 
 		await page.getByRole('button', {name: 'New Rule'}).click();
 
-		await pageEditorPage.addRuleCondition();
+		await pageEditorPage.addRandomRuleCondition();
 
-		await pageEditorPage.addRuleAction();
+		await pageEditorPage.addRandomRuleAction();
 
 		await checkAccessibility({
 			page,

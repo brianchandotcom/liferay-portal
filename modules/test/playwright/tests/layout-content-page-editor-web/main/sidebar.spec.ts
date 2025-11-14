@@ -2132,7 +2132,7 @@ test.describe('Rules Panel', () => {
 
 			await clickAndExpectToBeVisible({
 				target: modal.getByRole('heading', {name: 'New Rule'}),
-				trigger: page.getByRole('button', {name: 'New Rule'}),
+				trigger: pageEditorPage.newRuleButton,
 			});
 
 			// Create new rule
@@ -2297,76 +2297,24 @@ test.describe('Rules Panel', () => {
 
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-			// Create a rule to hide button for Guest Users
+			// Create new rule to hide button for Guest Users
 
-			await pageEditorPage.goToSidebarTab('Page Rules');
+			const condition = [
+				{label: 'Select Item for the Condition', option: 'User'},
+				{label: 'Select Condition', option: 'Has the Role Of'},
+				{label: 'Select Role', option: 'User'},
+			];
 
-			const modal = page.locator('.modal-dialog');
+			const action = [
+				{label: 'Select Action', option: 'Hide'},
+				{label: 'Select Fragment for the Action', option: 'Button'},
+			];
 
-			await clickAndExpectToBeVisible({
-				target: modal.getByRole('heading', {name: 'New Rule'}),
-				trigger: page.getByRole('button', {name: 'New Rule'}),
+			await pageEditorPage.addRule({
+				actions: [action],
+				conditions: [condition],
+				name: getRandomString(),
 			});
-
-			// Create new rule
-
-			const ruleName = getRandomString();
-
-			await modal.getByLabel('Rule Name').fill(ruleName);
-
-			// Add condition
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'User'}),
-				trigger: page.getByLabel('Select Item for the Condition'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Has the Role Of'}),
-				trigger: page.getByLabel('Select Condition'),
-			});
-
-			await page.getByLabel('Select Role').click();
-
-			await expect(async () => {
-				await page.keyboard.press('ArrowDown');
-
-				await expect(
-					page.getByRole('option', {
-						exact: true,
-						name: 'User',
-					})
-				).toHaveClass(/focus/, {timeout: 250});
-			}).toPass();
-
-			await page.keyboard.press('Enter');
-
-			await expect(page.getByLabel('Select Role')).toHaveText('User');
-
-			// Action
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Hide'}),
-				trigger: page.getByLabel('Select Action'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Button'}),
-				trigger: page.getByLabel('Select Fragment'),
-			});
-
-			await modal
-				.getByRole('button', {exact: true, name: 'Save'})
-				.click();
-
-			await waitForAlert(
-				page,
-				'Success:The rule was created successfully.'
-			);
 
 			// Publish the page
 
@@ -2442,92 +2390,40 @@ test.describe('Rules Panel', () => {
 				pageManagementSite.friendlyUrlPath
 			);
 
-			// Create a rule
+			// Create new rule with a condition when the checkbox is checked, and actions
+			// to disable the submit button and hide the header
 
-			await pageEditorPage.goToSidebarTab('Page Rules');
+			const firstAction = [
+				{label: 'Select Action', option: 'Disable'},
+				{
+					label: 'Select Fragment for the Action',
+					option: 'Form Button',
+				},
+			];
 
-			const modal = page.locator('.modal-dialog');
+			const secondAction = [
+				{label: 'Select Action', option: 'Hide'},
+				{label: 'Select Fragment for the Action', option: 'Heading'},
+			];
 
-			await clickAndExpectToBeVisible({
-				target: modal.getByRole('heading', {name: 'New Rule'}),
-				trigger: page.getByRole('button', {name: 'New Rule'}),
+			const condition = [
+				{
+					label: 'Select Item for the Condition',
+					option: 'Form Fragment',
+				},
+				{
+					label: 'Select Fragment for the Condition',
+					option: 'Checkbox',
+				},
+				{label: 'Select Type', option: 'Is Equal To'},
+				{label: 'Select Value', option: 'True'},
+			];
+
+			await pageEditorPage.addRule({
+				actions: [firstAction, secondAction],
+				conditions: [condition],
+				name: getRandomString(),
 			});
-
-			// Create new rule
-
-			const ruleName = getRandomString();
-
-			await modal.getByLabel('Rule Name').fill(ruleName);
-
-			// Add condition when the checkbox is checked
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Form Fragment'}),
-				trigger: page.getByLabel('Select Item for the Condition'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Checkbox'}),
-				trigger: page.getByLabel('Select Fragment'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Is Equal To'}),
-				trigger: page.getByLabel('Select Type'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'True'}),
-				trigger: page.getByLabel('Select Value'),
-			});
-
-			// Add action to disable the submit button
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Disable'}),
-				trigger: page.getByLabel('Select Action'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Form Button'}),
-				trigger: page
-					.getByLabel('Actions', {exact: true})
-					.getByLabel('Select Fragment'),
-			});
-
-			// Add action to hide the heading
-
-			await page.getByRole('button', {name: 'Add Action'}).click();
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Hide'}),
-				trigger: page.getByLabel('Select Action').last(),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Heading'}),
-				trigger: page
-					.getByLabel('Actions', {exact: true})
-					.getByLabel('Select Fragment')
-					.last(),
-			});
-
-			await modal
-				.getByRole('button', {exact: true, name: 'Save'})
-				.click();
-
-			await waitForAlert(
-				page,
-				'Success:The rule was created successfully.'
-			);
 
 			// Publish the page
 
@@ -2597,7 +2493,7 @@ test.describe('Rules Panel', () => {
 
 		await pageEditorPage.goToSidebarTab('Page Rules');
 
-		await page.getByRole('button', {name: 'New Rule'}).click();
+		await pageEditorPage.newRuleButton.click();
 
 		await pageEditorPage.addRandomRuleCondition();
 
@@ -2668,76 +2564,33 @@ test.describe('Rules Panel', () => {
 				pageManagementSite.friendlyUrlPath
 			);
 
-			// Create new rule
-
-			await pageEditorPage.goToSidebarTab('Page Rules');
-
-			const modal = page.locator('.modal-dialog');
-
-			const addNewRuleButton = page.getByRole('button', {
-				name: 'New Rule',
-			});
-
-			await clickAndExpectToBeVisible({
-				target: modal.getByRole('heading', {name: 'New Rule'}),
-				trigger: addNewRuleButton,
-			});
+			// Add a rule with a condition when the checkbox is checked and an action to hide the heading
 
 			const ruleName = getRandomString();
 
-			await modal.getByLabel('Rule Name').fill(ruleName);
+			const action = [
+				{label: 'Select Action', option: 'Hide'},
+				{label: 'Select Fragment for the Action', option: 'Heading'},
+			];
 
-			// Add condition when the checkbox is checked
+			const condition = [
+				{
+					label: 'Select Item for the Condition',
+					option: 'Form Fragment',
+				},
+				{
+					label: 'Select Fragment for the Condition',
+					option: 'Checkbox',
+				},
+				{label: 'Select Type', option: 'Is Equal To'},
+				{label: 'Select Value', option: 'True'},
+			];
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Form Fragment'}),
-				trigger: page.getByLabel('Select Item for the Condition'),
+			await pageEditorPage.addRule({
+				actions: [action],
+				conditions: [condition],
+				name: ruleName,
 			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Checkbox'}),
-				trigger: page.getByLabel('Select Fragment'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Is Equal To'}),
-				trigger: page.getByLabel('Select Type'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'True'}),
-				trigger: page.getByLabel('Select Value'),
-			});
-
-			// Add action to hide the heading
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Hide'}),
-				trigger: page.getByLabel('Select Action').last(),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Heading'}),
-				trigger: page
-					.getByLabel('Actions', {exact: true})
-					.getByLabel('Select Fragment')
-					.last(),
-			});
-
-			await modal
-				.getByRole('button', {exact: true, name: 'Save'})
-				.click();
-
-			await waitForAlert(
-				page,
-				'Success:The rule was created successfully.'
-			);
 
 			// Hover the rule and check the highlighted fragments
 
@@ -2757,7 +2610,7 @@ test.describe('Rules Panel', () => {
 
 			// Unhover the rule and check that the fragments are not highlighted
 
-			await addNewRuleButton.hover();
+			await pageEditorPage.newRuleButton.hover();
 
 			await expect(checkboxFragment).not.toHaveClass(highlightedClass);
 			await expect(headingFragment).not.toHaveClass(highlightedClass);

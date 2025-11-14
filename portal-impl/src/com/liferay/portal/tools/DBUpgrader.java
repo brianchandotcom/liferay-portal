@@ -232,7 +232,7 @@ public class DBUpgrader {
 	}
 
 	public static void stopUpgradeLogAppender() {
-		if (_appender != null) {
+		if ((_appender != null) && _appender.isStarted()) {
 			_stopWatch.stop();
 
 			_appender.stop();

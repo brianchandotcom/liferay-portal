@@ -34,8 +34,8 @@ export class JSONWebServicesLayoutApiHelper {
 	 */
 	async addLayout({
 		externalReferenceCode = '',
+		masterLayoutPageTemplateEntryERC = '',
 		groupId,
-		masterLayoutPlid = '0',
 		options = {type: 'portlet'},
 		parentLayoutId = '0',
 		privateLayout = 'false',
@@ -43,7 +43,7 @@ export class JSONWebServicesLayoutApiHelper {
 	}: {
 		externalReferenceCode?: string;
 		groupId: string;
-		masterLayoutPlid?: string;
+		masterLayoutPageTemplateEntryERC?: string;
 		options?: {publish?: boolean; type?: string};
 		parentLayoutId?: string;
 		privateLayout?: string;
@@ -81,7 +81,11 @@ export class JSONWebServicesLayoutApiHelper {
 			'friendlyURLMap',
 			JSON.stringify({en_US: `/${title}`})
 		);
-		urlSearchParams.append('masterLayoutPlid', masterLayoutPlid);
+		urlSearchParams.append(
+			'masterLayoutPageTemplateEntryERC',
+			masterLayoutPageTemplateEntryERC
+		);
+
 		urlSearchParams.append('serviceContext', JSON.stringify({}));
 
 		const layout = await this.apiHelpers.post(

@@ -76,6 +76,7 @@ type Layout = {
 };
 
 type LayoutPageTemplateEntry = {
+	externalReferenceCode: string;
 	groupId: string;
 	layoutPageTemplateEntryId: string;
 	plid: string;

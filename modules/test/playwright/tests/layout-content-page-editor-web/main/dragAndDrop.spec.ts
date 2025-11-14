@@ -699,7 +699,7 @@ test(
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
-			masterLayoutPlid: masterPage.plid,
+			masterLayoutPageTemplateEntryERC: masterPage.externalReferenceCode,
 			options: {type: 'content'},
 			title: getRandomString(),
 		});

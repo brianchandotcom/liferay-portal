@@ -441,7 +441,8 @@ test('Add new page with master template', async ({
 
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
-		masterLayoutPlid: masterPageTemplate.plid,
+		masterLayoutPageTemplateEntryERC:
+			masterPageTemplate.externalReferenceCode,
 		options: {type: 'content'},
 		title: layoutTitle,
 	});

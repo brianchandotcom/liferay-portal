@@ -150,7 +150,7 @@ public class CreateLayoutPageTemplateEntryMVCActionCommandTest {
 			_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 				draftLayout.getLayoutId(),
-				masterLayoutPageTemplateEntry.getPlid());
+				masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(

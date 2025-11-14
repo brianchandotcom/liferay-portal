@@ -224,7 +224,7 @@ test(
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
-			masterLayoutPlid: masterPage1.plid,
+			masterLayoutPageTemplateEntryERC: masterPage1.externalReferenceCode,
 			options: {type: 'content'},
 			title: layoutTitle,
 		});
@@ -632,7 +632,8 @@ test.describe('Allowed fragments Configuration', () => {
 
 			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
-				masterLayoutPlid: masterPage.plid,
+				masterLayoutPageTemplateEntryERC:
+					masterPage.externalReferenceCode,
 				options: {type: 'content'},
 				title: getRandomString(),
 			});
@@ -745,7 +746,8 @@ test.describe('Allowed fragments Configuration', () => {
 
 			const layout1 = await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
-				masterLayoutPlid: masterPage1.plid,
+				masterLayoutPageTemplateEntryERC:
+					masterPage1.externalReferenceCode,
 				options: {type: 'content'},
 				title: getRandomString(),
 			});
@@ -762,7 +764,8 @@ test.describe('Allowed fragments Configuration', () => {
 
 			const layout2 = await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
-				masterLayoutPlid: masterPage2.plid,
+				masterLayoutPageTemplateEntryERC:
+					masterPage2.externalReferenceCode,
 				options: {type: 'content'},
 				title: getRandomString(),
 			});

@@ -11,10 +11,12 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
@@ -31,9 +33,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.ByteArrayInputStream;
 
 import java.util.List;
 import java.util.Map;
@@ -90,6 +95,38 @@ public class DLFileEntryCTTest {
 		for (ConflictInfo conflictInfo : conflictInfos) {
 			Assert.assertTrue(conflictInfo.isResolved());
 		}
+	}
+
+	@Test
+	public void testAddTempFileEntry() throws Exception {
+		DLFolder dlFolder = null;
+
+		TempFileEntryUtil.getTempFileNames(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			_TEMP_FOLDER_NAME);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+				_group.getGroupId(), TestPropsValues.getUserId(),
+				_TEMP_FOLDER_NAME,
+				TempFileEntryUtil.getTempFileName("image.jpg"),
+				new ByteArrayInputStream("test".getBytes()),
+				ContentTypes.IMAGE_JPEG);
+
+			dlFolder = _dlFolderService.getFolder(tempFileEntry.getFolderId());
+		}
+
+		_dlFolderService.deleteFolder(dlFolder.getFolderId());
+
+		Map<Long, List<ConflictInfo>> conflictsMap =
+			_ctCollectionLocalService.checkConflicts(_ctCollection);
+
+		Assert.assertNull(
+			conflictsMap.get(
+				_classNameLocalService.getClassNameId(DLFolder.class)));
 	}
 
 	@Test
@@ -185,6 +222,9 @@ public class DLFileEntryCTTest {
 			serviceContext);
 	}
 
+	private static final String _TEMP_FOLDER_NAME =
+		DLFileEntryCTTest.class.getName();
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -202,6 +242,9 @@ public class DLFileEntryCTTest {
 
 	@Inject
 	private DLAppService _dlAppService;
+
+	@Inject
+	private DLFolderService _dlFolderService;
 
 	@DeleteAfterTestRun
 	private Group _group;

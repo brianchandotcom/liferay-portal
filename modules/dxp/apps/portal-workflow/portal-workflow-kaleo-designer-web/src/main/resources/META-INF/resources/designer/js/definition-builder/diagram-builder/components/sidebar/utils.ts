@@ -45,6 +45,14 @@ export function getModalInfo(itemType: string) {
 			title: Liferay.Language.get('delete-actions'),
 		};
 	}
+	if (itemType === 'ai-decision') {
+		return {
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-ai-decision-node'
+			),
+			title: Liferay.Language.get('delete-ai-decision-node'),
+		};
+	}
 	if (itemType === 'assignments') {
 		return {
 			message: Liferay.Language.get(
@@ -91,6 +99,14 @@ export function getModalInfo(itemType: string) {
 				'are-you-sure-you-want-to-delete-the-selected-join-xor-node'
 			),
 			title: Liferay.Language.get('delete-join-xor-node'),
+		};
+	}
+	if (itemType === 'llm') {
+		return {
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-llm-node'
+			),
+			title: Liferay.Language.get('delete-llm-node'),
 		};
 	}
 	if (itemType === 'notifications') {

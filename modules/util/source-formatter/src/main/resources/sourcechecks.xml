@@ -1962,10 +1962,6 @@
 			<category name="Upgrade" />
 			<description name="Add Component annotation to `*LocalServiceImpl.java` file." />
 		</check>
-		<check name="UpgradeJavaMultiVMPoolUtilCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the references of the MultiVMPoolUtil class and also its methods usages." />
-		</check>
 		<check name="UpgradeJavaPortletIdMethodCheck">
 			<category name="Upgrade" />
 			<description name="Replace the 'document.get(Field.PORTLET_ID)' by the new interface 'PortletProviderUtil.getPortletId'." />

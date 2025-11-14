@@ -26,7 +26,6 @@ UpgradeJavaGetFileMethodCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Ru
 UpgradeJavaGetLayoutDisplayPageObjectProviderCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replace parameter type long by ItemInfoReference in the getLayoutDisplayPageObjectProvider method. |
 UpgradeJavaGetLayoutDisplayPageProviderCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName. |
 UpgradeJavaLocalServiceImplCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Add Component annotation to `*LocalServiceImpl.java` file. |
-UpgradeJavaMultiVMPoolUtilCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replaces the references of the MultiVMPoolUtil class and also its methods usages. |
 UpgradeJavaPortletIdMethodCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replace the 'document.get(Field.PORTLET_ID)' by the new interface 'PortletProviderUtil.getPortletId'. |
 UpgradeJavaPortletSharedSearchSettingsCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class. |
 UpgradeJavaProductDTOConverterReferenceCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Updates references of `ProductDTOConverter` to `DTOConverter` |

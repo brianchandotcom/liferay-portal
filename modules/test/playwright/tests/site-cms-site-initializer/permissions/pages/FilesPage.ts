@@ -9,14 +9,17 @@ import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
+import {DataSetPage} from '../../main/pages/DataSetPage';
 
 export class FilesPage {
 	readonly apiHelpers: ApiHelpers;
+	readonly dataSetFragmentPage: DataSetPage;
 	readonly newButton: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
+		this.dataSetFragmentPage = new DataSetPage(page);
 		this.newButton = page.getByTestId('fdsCreationActionButton').first();
 		this.page = page;
 	}
@@ -48,5 +51,11 @@ export class FilesPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForAlert(this.page, `Success:${folderName} was created`);
+	}
+
+	async changeVisualizationMode(
+		...args: Parameters<DataSetPage['changeVisualizationMode']>
+	) {
+		await this.dataSetFragmentPage.changeVisualizationMode(...args);
 	}
 }

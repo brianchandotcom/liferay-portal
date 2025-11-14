@@ -584,71 +584,21 @@ public class LearnRestController extends BaseRestController {
 	private String _htmlToReadableText(String html) {
 		Document document = Jsoup.parse(html);
 
-		for (Element table : document.select("table")) {
-			StringBundler sb = new StringBundler();
-			List<String> headers = new ArrayList<>();
-
-			Elements tableHeaders = table.select("thead th");
-
-			if (tableHeaders.isEmpty()) {
-				Element element = table.selectFirst("tr");
-
-				if (element != null) {
-					tableHeaders = element.select("td, th");
-				}
-			}
-
-			for (Element element : tableHeaders) {
-				headers.add(StringUtil.trim(element.text()));
-			}
-
-			for (Element element : table.select("tbody tr")) {
-				Elements tableColumns = element.select("td, th");
-
-				if (tableColumns.isEmpty()) {
-					continue;
-				}
-
-				for (int i = 0; i < tableColumns.size(); i++) {
-					String label =
-						(i < headers.size()) ? headers.get(i) :
-							"Column " + (i + 1);
-
-					sb.append(label);
-
-					sb.append(": ");
-					sb.append(_normalizeCell(tableColumns.get(i)));
-					sb.append(". ");
-				}
-
-				sb.append("\n");
-			}
-
-			_replaceElementWithText(table, "p", sb.toString());
-		}
-
-		for (Element list : document.select("ul, ol")) {
-			StringBundler sb = new StringBundler();
-
-			for (Element li : list.select("li")) {
-				sb.append("- ");
-				sb.append(li.text());
-				sb.append("\n ,");
-			}
-
-			_replaceElementWithText(list, "p", sb.toString());
-		}
-
-		for (Element heading : document.select("h1, h2, h3, h4, h5, h6")) {
-			Element paragraph = document.createElement("p");
-
-			heading.after(paragraph.text(". "));
-		}
+		_processHeadings(document);
+		_processLists(document);
+		_processTables(document);
 
 		String content = document.text();
 
-		for (String[] replacements : _LEARN_PATTERN_REPLACEMENTS) {
-			content = _replace(content, replacements[1], replacements[0]);
+		for (Map.Entry<Pattern, String> entry :
+				_learnPatternReplacements.entrySet()) {
+
+			content = entry.getKey(
+			).matcher(
+				content
+			).replaceAll(
+				entry.getValue()
+			);
 		}
 
 		return content;
@@ -721,14 +671,73 @@ public class LearnRestController extends BaseRestController {
 			).toUri());
 	}
 
-	private String _replace(String string, String replacement, String regex) {
-		Pattern pattern = Pattern.compile(regex);
+	private void _processHeadings(Document document) {
+		for (Element heading : document.select("h1, h2, h3, h4, h5, h6")) {
+			heading.append(". ");
+		}
+	}
 
-		return pattern.matcher(
-			string
-		).replaceAll(
-			replacement
-		);
+	private void _processLists(Document document) {
+		for (Element list : document.select("ul, ol")) {
+			StringBundler sb = new StringBundler();
+
+			for (Element li : list.select("li")) {
+				sb.append("- ");
+				sb.append(li.text());
+				sb.append(".\n");
+			}
+
+			_replaceElementWithText(list, "p", sb.toString());
+		}
+	}
+
+	private void _processTables(Document document) {
+		for (Element table : document.select("table")) {
+			StringBundler sb = new StringBundler();
+
+			List<String> headers = new ArrayList<>();
+
+			Elements tableHeaders = table.select("thead th");
+
+			if (tableHeaders.isEmpty()) {
+				Element tableRow = table.selectFirst("tr");
+
+				if (tableRow != null) {
+					tableHeaders = tableRow.select("td, th");
+				}
+			}
+
+			for (Element tableHeader : tableHeaders) {
+				headers.add(StringUtil.trim(tableHeader.text()));
+			}
+
+			for (Element element : table.select("tbody tr")) {
+				Elements tableColumns = element.select("td, th");
+
+				if (tableColumns.isEmpty()) {
+					continue;
+				}
+
+				for (int i = 0; i < tableColumns.size(); i++) {
+					String label = "Column " + (i + 1);
+
+					if (i < headers.size()) {
+						label = headers.get(i);
+					}
+
+					sb.append(label);
+					sb.append(": ");
+					sb.append(_normalizeCell(tableColumns.get(i)));
+					sb.append(". ");
+				}
+
+				sb.append("\n");
+			}
+
+			if (sb.length() > 0) {
+				_replaceElementWithText(table, "p", sb.toString());
+			}
+		}
 	}
 
 	private void _replaceElementWithText(
@@ -784,12 +793,14 @@ public class LearnRestController extends BaseRestController {
 		).build();
 	}
 
-	private static final String[][] _LEARN_PATTERN_REPLACEMENTS = {
-		{"[\\u00A0\\u200B]+", " "}, {"(?i)\\bLiferay\\b", "Life-ray"},
-		{"(?i)\\bP\\s*a\\s*a\\s*S\\b", "pass"},
-		{"(?i)\\bS\\s*a\\s*a\\s*S\\b", "saas"}, {"(?i)^<speak>|</speak>$", ""}
-	};
-
+	private static final Map<Pattern, String> _learnPatternReplacements =
+		HashMapBuilder.put(
+			Pattern.compile("[\\u00A0\\u200B]+"), " "
+		).put(
+			Pattern.compile("(?i)\\bLiferay\\b"), "Life-ray"
+		).put(
+			Pattern.compile("(?i)\\bP\\s*a\\s*a\\s*S\\b"), "pass"
+		).build();
 	private static final Set<String> _notSupportedValuesContentTable =
 		new HashSet<>(Arrays.asList("✖", "✕", "✗", ""));
 	private static final Set<String> _supportedValuesContentTable =

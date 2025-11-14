@@ -9,7 +9,6 @@ import {
 	DropdownMenu,
 	MiniCart,
 	Price,
-	RequestQuote,
 	StepTracker,
 	accountSelector,
 	compareCheckbox,
@@ -151,34 +150,6 @@ export function addToCart({
 		cpInstance,
 		productId: Number(productId),
 		skuOptions: skuOptions && JSON.parse(skuOptions),
-	});
-}
-
-export function requestQuote({
-	accountId,
-	channel,
-	cpDefinitionId,
-	cpInstance,
-	disabled,
-	namespace,
-	orderDetailURL,
-	requestQuoteElementId,
-}) {
-	if (cpInstance.skuOptions && typeof cpInstance.skuOptions === 'string') {
-		try {
-			cpInstance.skuOptions = JSON.parse(cpInstance.skuOptions);
-		}
-		catch (event) {}
-	}
-
-	RequestQuote(requestQuoteElementId, requestQuoteElementId, {
-		accountId: Number(accountId),
-		channel,
-		cpDefinitionId,
-		cpInstance,
-		disabled,
-		namespace,
-		orderDetailURL,
 	});
 }
 

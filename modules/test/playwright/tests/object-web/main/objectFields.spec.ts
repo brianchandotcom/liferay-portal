@@ -1098,6 +1098,116 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		}
 	});
 
+	test(
+		'can delete created custom fields in a System Object',
+		{tag: ['@LPD-53450']},
+		async ({apiHelpers, objectFieldsPage, page}) => {
+			const objectDefinitionField =
+				await apiHelpers.buildRestClient(ObjectFieldAPI);
+
+			const fieldName = 'Custom Field';
+
+			const {items} =
+				await apiHelpers.objectAdmin.getAllObjectDefinitions();
+
+			const systemObjectDefinition = items.find(
+				(item: ObjectDefinition) => {
+					return item.system === true;
+				}
+			);
+
+			await objectDefinitionField.postObjectDefinitionObjectField(
+				systemObjectDefinition.id,
+				{
+					DBType: 'String',
+					businessType: 'Text',
+					indexed: true,
+					label: {en_US: fieldName},
+					localized: false,
+					name: 'customField',
+					readOnly: 'false',
+					required: false,
+					state: false,
+				}
+			);
+
+			await objectFieldsPage.goto(systemObjectDefinition.label.en_US);
+
+			await page
+				.getByRole('row')
+				.filter({hasText: fieldName})
+				.getByRole('button', {name: 'Actions'})
+				.click();
+
+			await objectFieldsPage.deleteObjectFieldOption.click();
+
+			await page.getByRole('button', {name: 'Delete'}).click();
+
+			await expect(page.locator('.alert-success')).toBeVisible();
+
+			await expect(
+				page.getByRole('row').filter({hasText: fieldName})
+			).toHaveCount(0);
+		}
+	);
+
+	test('can only edit external reference code of custom fields through the UI', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.openObjectField(
+			objectDefinition.objectFields[0].label['en_US']
+		);
+
+		await expect(
+			objectFieldsPage.externalReferenceCodeField
+		).toBeDisabled();
+
+		const field = objectDefinition.objectFields.find((item) => {
+			return !item.system;
+		});
+
+		await objectFieldsPage.openObjectField(field.label['en_US']);
+
+		await objectFieldsPage.externalReferenceCodeField.click();
+
+		const ERCValue = getRandomString();
+
+		await objectFieldsPage.externalReferenceCodeField.fill(ERCValue);
+
+		await objectFieldsPage.editFieldSaveButton.click();
+
+		await waitForAlert(
+			page,
+			'Success:The object field was updated successfully.'
+		);
+
+		await objectFieldsPage.openObjectField(field.label['en_US']);
+
+		await page
+			.frameLocator('iframe')
+			.getByText('Field')
+			.first()
+			.waitFor({state: 'visible'});
+
+		expect(objectFieldsPage.externalReferenceCodeField).toHaveValue(
+			ERCValue
+		);
+	});
+
 	test('cannot create localized object fields in unmodifiable system object definition', async ({
 		objectFieldsPage,
 	}) => {
@@ -1296,116 +1406,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			).toBeHidden();
 		}
 	});
-
-	test('can only edit external reference code of custom fields through the UI', async ({
-		apiHelpers,
-		objectFieldsPage,
-		page,
-	}) => {
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await objectFieldsPage.goto(objectDefinition.label['en_US']);
-
-		await objectFieldsPage.openObjectField(
-			objectDefinition.objectFields[0].label['en_US']
-		);
-
-		await expect(
-			objectFieldsPage.externalReferenceCodeField
-		).toBeDisabled();
-
-		const field = objectDefinition.objectFields.find((item) => {
-			return !item.system;
-		});
-
-		await objectFieldsPage.openObjectField(field.label['en_US']);
-
-		await objectFieldsPage.externalReferenceCodeField.click();
-
-		const ERCValue = getRandomString();
-
-		await objectFieldsPage.externalReferenceCodeField.fill(ERCValue);
-
-		await objectFieldsPage.editFieldSaveButton.click();
-
-		await waitForAlert(
-			page,
-			'Success:The object field was updated successfully.'
-		);
-
-		await objectFieldsPage.openObjectField(field.label['en_US']);
-
-		await page
-			.frameLocator('iframe')
-			.getByText('Field')
-			.first()
-			.waitFor({state: 'visible'});
-
-		expect(objectFieldsPage.externalReferenceCodeField).toHaveValue(
-			ERCValue
-		);
-	});
-
-	test(
-		'can delete created custom fields in a System Object',
-		{tag: ['@LPD-53450']},
-		async ({apiHelpers, objectFieldsPage, page}) => {
-			const objectDefinitionField =
-				await apiHelpers.buildRestClient(ObjectFieldAPI);
-
-			const fieldName = 'Custom Field';
-
-			const {items} =
-				await apiHelpers.objectAdmin.getAllObjectDefinitions();
-
-			const systemObjectDefinition = items.find(
-				(item: ObjectDefinition) => {
-					return item.system === true;
-				}
-			);
-
-			await objectDefinitionField.postObjectDefinitionObjectField(
-				systemObjectDefinition.id,
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					label: {en_US: fieldName},
-					localized: false,
-					name: 'customField',
-					readOnly: 'false',
-					required: false,
-					state: false,
-				}
-			);
-
-			await objectFieldsPage.goto(systemObjectDefinition.label.en_US);
-
-			await page
-				.getByRole('row')
-				.filter({hasText: fieldName})
-				.getByRole('button', {name: 'Actions'})
-				.click();
-
-			await objectFieldsPage.deleteObjectFieldOption.click();
-
-			await page.getByRole('button', {name: 'Delete'}).click();
-
-			await expect(page.locator('.alert-success')).toBeVisible();
-
-			await expect(
-				page.getByRole('row').filter({hasText: fieldName})
-			).toHaveCount(0);
-		}
-	);
 
 	test('navigates to documentation from the "unsupported translations" alert link', async ({
 		apiHelpers,

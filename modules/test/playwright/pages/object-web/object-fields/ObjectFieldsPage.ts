@@ -155,19 +155,6 @@ export class ObjectFieldsPage {
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
 
-	getMaximumFileSizeErrorMessage({
-		maximumFileSizeAllowed,
-	}: {
-		maximumFileSizeAllowed: string;
-	}) {
-		return this.page
-			.frameLocator('iframe')
-			.getByText(
-				`File size is larger than the allowed overall maximum upload request size ${maximumFileSizeAllowed} MB.`,
-				{exact: true}
-			);
-	}
-
 	async goto(objectDefinitionLabel: string) {
 		await this.viewObjectDefinitionsPage.goto();
 
@@ -184,5 +171,18 @@ export class ObjectFieldsPage {
 			.getByRole('link')
 			.filter({hasText: fieldLabel})
 			.click();
+	}
+
+	getMaximumFileSizeErrorMessage({
+		maximumFileSizeAllowed,
+	}: {
+		maximumFileSizeAllowed: string;
+	}) {
+		return this.page
+			.frameLocator('iframe')
+			.getByText(
+				`File size is larger than the allowed overall maximum upload request size ${maximumFileSizeAllowed} MB.`,
+				{exact: true}
+			);
 	}
 }

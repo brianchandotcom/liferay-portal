@@ -37,7 +37,7 @@ export default function AssetsFilesDropFDSPropsTransformer({
 			link: '',
 			sticker: '',
 			symbol: '',
-			title: 'title',
+			title: 'embedded.title',
 		},
 		thumbnail: 'gallery',
 	};

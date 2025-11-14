@@ -203,7 +203,7 @@ export default function SiteLanguageConfiguration({
 						}}
 						onItemsChange={handleItemsChange}
 						right={{
-							label: Liferay.Language.get('current'),
+							label: Liferay.Language.get('in-use'),
 						}}
 						size={10}
 					/>

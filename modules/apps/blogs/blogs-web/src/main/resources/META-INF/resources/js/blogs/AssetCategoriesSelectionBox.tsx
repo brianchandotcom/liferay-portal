@@ -164,7 +164,7 @@ export default function AssetCategoriesSelectionBox({
 				onItemsChange={setCategories}
 				right={{
 					id: `${portletNamespace}current`,
-					label: Liferay.Language.get('current'),
+					label: Liferay.Language.get('in-use'),
 				}}
 				size={3}
 			/>

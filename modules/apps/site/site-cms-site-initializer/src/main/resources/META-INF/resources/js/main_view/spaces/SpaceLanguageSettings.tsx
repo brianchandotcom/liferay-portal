@@ -254,7 +254,7 @@ export default function SpaceLanguageSettings({
 								onItemsChange={handleItemsChange}
 								right={{
 									id: 'selectedLanguages',
-									label: Liferay.Language.get('selected'),
+									label: Liferay.Language.get('in-use'),
 								}}
 								size={10}
 							/>

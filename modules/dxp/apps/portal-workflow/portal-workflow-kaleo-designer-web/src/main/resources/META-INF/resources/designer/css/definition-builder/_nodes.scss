@@ -43,7 +43,9 @@
 		size: 14px;
 	}
 
+	&.ai-decision,
 	&.end-node,
+	&.llm-node,
 	&.start-node {
 		.node-icon svg {
 			fill: #4b9bff;

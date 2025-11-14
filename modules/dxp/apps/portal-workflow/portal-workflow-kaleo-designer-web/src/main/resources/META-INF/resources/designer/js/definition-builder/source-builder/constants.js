@@ -26,6 +26,12 @@ const COL_TYPES_FIELD = [
 	'state',
 	'task',
 ];
+
+if (Liferay.FeatureFlags['LPD-62272'] === true) {
+	COL_TYPES_FIELD.splice(0, 0, 'ai-decision');
+	COL_TYPES_FIELD.splice(4, 0, 'llm');
+}
+
 const DEFAULT_LANGUAGE = 'groovy';
 const STR_BLANK = '';
 const STR_CDATA_CLOSE = ']]>';

@@ -6,10 +6,13 @@
 import {v4 as uuidv4} from 'uuid';
 
 import {defaultLanguageId} from '../../../constants';
+import {insertNodeAt} from '../../util/insertNodeAt';
+import AIDecisionNode from './AIDecisionNode';
 import ConditionNode from './ConditionNode';
 import ForkNode from './ForkNode';
 import JoinNode from './JoinNode';
 import JoinXorNode from './JoinXorNode';
+import LLMNode from './LLMNode';
 import TaskNode from './TaskNode';
 import EndNode from './state/EndNode';
 import StartNode from './state/StartNode';
@@ -37,17 +40,21 @@ const defaultNodes = [
 ];
 
 const nodeDescription = {
+	'ai-decision': Liferay.Language.get(
+		'make-a-decision-using-artificial-intelligence'
+	),
 	'condition': Liferay.Language.get('execute-conditional-logic'),
 	'end': Liferay.Language.get('conclude-the-workflow'),
 	'fork': Liferay.Language.get('split-the-workflow-into-multiple-paths'),
 	'join': Liferay.Language.get('all-interactions-need-to-be-closed'),
 	'join-xor': Liferay.Language.get('only-one-interaction-needs-to-be-closed'),
+	'llm': Liferay.Language.get('acts-as-a-smart-processing-step'),
 	'start': Liferay.Language.get('begin-a-workflow'),
 	'state': Liferay.Language.get('execute-actions-in-the-workflow'),
 	'task': Liferay.Language.get('ask-a-user-to-work-on-the-item'),
 };
 
-const nodeTypes = {
+let nodeTypes = {
 	'condition': ConditionNode,
 	'end': EndNode,
 	'fork': ForkNode,
@@ -57,5 +64,10 @@ const nodeTypes = {
 	'state': StateNode,
 	'task': TaskNode,
 };
+
+if (Liferay.FeatureFlags['LPD-62272']) {
+	nodeTypes = insertNodeAt(nodeTypes, 'ai-decision', AIDecisionNode, 1);
+	nodeTypes = insertNodeAt(nodeTypes, 'llm', LLMNode, 6);
+}
 
 export {defaultNodes, nodeDescription, nodeTypes};

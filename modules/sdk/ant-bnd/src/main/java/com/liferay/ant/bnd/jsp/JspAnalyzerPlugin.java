@@ -602,6 +602,15 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			}
 		}
 
+		if (javaeePackage != null) {
+			if (javaeePackage.equals("javax")) {
+				return true;
+			}
+			else if (javaeePackage.equals("jakarta")) {
+				return false;
+			}
+		}
+
 		return false;
 	}
 

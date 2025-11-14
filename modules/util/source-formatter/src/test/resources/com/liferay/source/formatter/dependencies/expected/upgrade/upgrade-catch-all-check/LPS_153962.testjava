@@ -1,0 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+
+/**
+ * @author Nícolas Moura
+ */
+public class LPS_153962 {
+
+	public void method() {
+		PortalCache<String, Serializable> portalCache =
+			PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "TEST_GET_PORTAL_CACHE");
+
+		_calledParameterClassTest.anotherMethod(
+			PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "TEST_GET_PORTAL_CACHE"));
+	}
+
+	@Reference
+	private CalledParameterClassTest _calledParameterClassTest;
+
+}

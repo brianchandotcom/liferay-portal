@@ -558,7 +558,9 @@ inst_group=appserver
 
 				<execute dir="${app.server.weblogic.dir}-temp">
 					<![CDATA[
+						sudo chown -R appserver: ${app.server.parent.dir}/oraInventory
 						sudo chown -R appserver: ${app.server.weblogic.dir}
+						sudo chown -R appserver: ${app.server.weblogic.dir}-temp
 
 						su appserver -c "/bin/sh install_weblogic.sh"
 					]]>

@@ -105,10 +105,6 @@
 	color: var(--account-selection-dropdown-color-primary);
 }
 
-.account-selection-dropdown .empty-account-message {
-	color: #54555f;
-}
-
 .account-selection-dropdown .form-control {
 	background-color: #fff;
 	border-radius: 8px;
@@ -144,6 +140,10 @@
 	margin-top: 8px;
 	padding: 6px;
 	width: 100%;
+}
+
+.account-selection-dropdown .text-gray-secondary {
+	color: #54555f !important;
 }
 
 .account-selection-dropdown:has(.active) .dropdown-arrow svg {

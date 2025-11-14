@@ -171,13 +171,13 @@ public class LayoutLookAndFeelDisplayContext {
 		).put(
 			"masterLayoutName", getMasterLayoutName()
 		).put(
-			"masterLayoutPlid",
+			"masterLayoutPageTemplateEntryERC",
 			() -> {
 				if (hasMasterLayout()) {
 					Layout selLayout =
 						_layoutsAdminDisplayContext.getSelLayout();
 
-					return String.valueOf(selLayout.getMasterLayoutPlid());
+					return selLayout.getMasterLayoutPageTemplateEntryERC();
 				}
 
 				return StringPool.BLANK;

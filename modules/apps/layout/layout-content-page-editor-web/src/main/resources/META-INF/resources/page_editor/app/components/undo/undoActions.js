@@ -94,8 +94,14 @@ export function canUndoAction(action) {
 export function getDerivedStateForUndo({action, state, type}) {
 	const undoAction = UNDO_ACTIONS[type];
 
+	const derivedState = undoAction.getDerivedStateForUndo({action, state});
+
+	if (!derivedState) {
+		return null;
+	}
+
 	return {
-		...undoAction.getDerivedStateForUndo({action, state}),
+		...derivedState,
 		itemName: getItemNameFromAction({action, state}),
 		segmentsExperienceId: state.segmentsExperienceId,
 		type,

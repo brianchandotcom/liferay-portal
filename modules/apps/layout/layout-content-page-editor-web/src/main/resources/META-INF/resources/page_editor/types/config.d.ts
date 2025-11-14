@@ -171,7 +171,7 @@ export interface Config {
 	markItemForDeletionURL: string;
 	masterLayouts: Array<{
 		imagePreviewURL: string;
-		masterLayoutPlid: string;
+		masterLayoutPageTemplateEntryERC: string;
 		name: string;
 	}>;
 	masterUsed: boolean;

@@ -68,10 +68,10 @@ export default {
 	},
 
 	changeMasterLayout({
-		masterLayoutPlid,
+		masterLayoutPageTemplateEntryERC,
 		onNetworkStatus,
 	}: {
-		masterLayoutPlid: string;
+		masterLayoutPageTemplateEntryERC: string;
 		onNetworkStatus: OnNetworkStatus;
 	}) {
 		return draftServiceFetch<
@@ -82,7 +82,7 @@ export default {
 			| undefined
 		>(
 			config.changeMasterLayoutURL,
-			{body: {masterLayoutPlid}},
+			{body: {masterLayoutPageTemplateEntryERC}},
 			onNetworkStatus
 		);
 	},

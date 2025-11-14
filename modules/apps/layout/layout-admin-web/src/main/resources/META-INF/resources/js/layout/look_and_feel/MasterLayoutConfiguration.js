@@ -10,19 +10,17 @@ import ClayLink from '@clayui/link';
 import {openSelectionModal} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-const DEFAULT_MASTER_LAYOUT_PLID = '0';
-
 export default function MasterLayoutConfiguration({
 	changeMasterLayoutURL,
 	editMasterLayoutURL,
 	isReadOnly,
-	masterLayoutName: initialMasterLayoutName,
-	masterLayoutPlid: initialMasterLayoutPlid,
+	masterLayoutName,
+	masterLayoutPageTemplateEntryERC,
 	portletNamespace,
 }) {
 	const [masterLayout, setMasterLayout] = useState({
-		name: initialMasterLayoutName,
-		plid: initialMasterLayoutPlid || DEFAULT_MASTER_LAYOUT_PLID,
+		erc: masterLayoutPageTemplateEntryERC,
+		name: masterLayoutName,
 	});
 
 	const handleChangeMasterButtonClick = () => {
@@ -37,8 +35,8 @@ export default function MasterLayoutConfiguration({
 					const itemValue = JSON.parse(selectedItem.value);
 
 					setMasterLayout({
+						erc: itemValue.masterLayoutPageTemplateEntryERC,
 						name: itemValue.name,
-						plid: itemValue.plid,
 					});
 				}
 			},
@@ -54,7 +52,7 @@ export default function MasterLayoutConfiguration({
 		);
 
 		if (customCSS) {
-			if (masterLayout.plid === DEFAULT_MASTER_LAYOUT_PLID) {
+			if (!masterLayout.erc) {
 				customCSS.classList.remove('hide');
 			}
 			else {
@@ -69,7 +67,7 @@ export default function MasterLayoutConfiguration({
 		if (themeContainer) {
 			const sheet = themeContainer.closest('.sheet');
 
-			if (masterLayout.plid === DEFAULT_MASTER_LAYOUT_PLID) {
+			if (!masterLayout.erc) {
 				sheet.classList.remove('hide');
 
 				sheet.removeAttribute('aria-hidden');
@@ -80,23 +78,21 @@ export default function MasterLayoutConfiguration({
 				sheet.setAttribute('aria-hidden', 'true');
 			}
 		}
-	}, [masterLayout.plid, portletNamespace]);
+	}, [masterLayout.erc, portletNamespace]);
 
 	return (
 		<>
 			<input
-				name={`${portletNamespace}masterLayoutPlid`}
+				name={`${portletNamespace}masterLayoutPageTemplateEntryERC`}
 				type="hidden"
-				value={masterLayout.plid}
+				value={masterLayout.erc}
 			/>
 
 			<label htmlFor={`${portletNamespace}masterLayout`}>
 				{Liferay.Language.get('master')}
 			</label>
 
-			{editMasterLayoutURL &&
-			masterLayout.plid &&
-			masterLayout.plid !== DEFAULT_MASTER_LAYOUT_PLID ? (
+			{editMasterLayoutURL && masterLayout.erc ? (
 				<div className="d-flex">
 					<ClayForm.Group className="c-mb-0 flex-grow-1">
 						<ClayInput

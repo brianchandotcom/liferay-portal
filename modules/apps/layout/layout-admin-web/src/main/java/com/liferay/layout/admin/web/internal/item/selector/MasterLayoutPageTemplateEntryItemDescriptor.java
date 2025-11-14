@@ -42,6 +42,9 @@ public class MasterLayoutPageTemplateEntryItemDescriptor
 	@Override
 	public String getPayload() {
 		return JSONUtil.put(
+			"masterLayoutPageTemplateEntryERC",
+			_layoutPageTemplateEntry.getExternalReferenceCode()
+		).put(
 			"name", _layoutPageTemplateEntry.getName()
 		).put(
 			"plid", String.valueOf(_layoutPageTemplateEntry.getPlid())

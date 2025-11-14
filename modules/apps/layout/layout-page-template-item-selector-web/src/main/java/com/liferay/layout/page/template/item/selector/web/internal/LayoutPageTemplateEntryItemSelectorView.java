@@ -260,7 +260,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 					_httpServletRequest, "x-usages",
 					_layoutLocalService.getMasterLayoutsCount(
 						_layoutPageTemplateEntry.getGroupId(),
-						_layoutPageTemplateEntry.getPlid()));
+						_layoutPageTemplateEntry.getExternalReferenceCode()));
 			}
 
 			LayoutPageTemplateCollection layoutPageTemplateCollection =

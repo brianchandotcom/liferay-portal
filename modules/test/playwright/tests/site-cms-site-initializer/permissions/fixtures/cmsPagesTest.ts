@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {AssetsPage} from '../../main/pages/AssetsPage';
 import {ContentsPage} from '../../main/pages/ContentsPage';
 import {FolderPage} from '../../main/pages/FolderPage';
 import {SpaceSummaryPage} from '../../main/pages/SpaceSummaryPage';
@@ -13,6 +14,7 @@ import {FilesPage} from '../pages/FilesPage';
 import {PermissionsPage} from '../pages/PermissionsPage';
 
 const cmsPagesTest = test.extend<{
+	assetsPage: AssetsPage;
 	contentsPage: ContentsPage;
 	defaultPermissionsPage: DefaultPermissionsPage;
 	filesPage: FilesPage;
@@ -20,6 +22,9 @@ const cmsPagesTest = test.extend<{
 	permissionsPage: PermissionsPage;
 	spaceSummaryPage: SpaceSummaryPage;
 }>({
+	assetsPage: async ({page}, use) => {
+		await use(new AssetsPage(page));
+	},
 	contentsPage: async ({page}, use) => {
 		await use(new ContentsPage(page));
 	},

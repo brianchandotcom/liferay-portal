@@ -144,7 +144,14 @@ export type Sku = {
 	replacementSkuExternalReferenceCode: string;
 	replacementSkuId: number;
 	sku: string;
-	skuUnitOfMeasures: Array<unknown>;
+	skuUnitOfMeasures: Array<UOM>;
 	weight: number;
 	width: number;
+};
+
+export type UOM = {
+	incrementalOrderQuantity: number;
+	key: string;
+	name: string;
+	price: {priceFormatted: string};
 };

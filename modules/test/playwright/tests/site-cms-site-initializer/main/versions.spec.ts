@@ -36,9 +36,9 @@ test(
 			spaceName
 		);
 
-		assetsPage.gotoContents();
+		await assetsPage.gotoContents();
 
-		await testCanViewVersion(assetsPage, page, objectEntry.title);
+		await testCanViewVersion(assetsPage, page, objectEntry.title, 'Table');
 
 		await apiHelpers.objectEntry.deleteObjectEntry(
 			applicationName,
@@ -67,9 +67,14 @@ test(
 			spaceName
 		);
 
-		assetsPage.gotoFiles();
+		await assetsPage.gotoFiles();
 
-		await testCanViewVersion(assetsPage, page, objectEntry.title);
+		await testCanViewVersion(
+			assetsPage,
+			page,
+			objectEntry.title,
+			'Gallery'
+		);
 
 		await apiHelpers.objectEntry.deleteObjectEntry(
 			applicationName,
@@ -78,10 +83,20 @@ test(
 	}
 );
 
-async function testCanViewVersion(assetsPage, page, title: string) {
+async function testCanViewVersion(
+	assetsPage,
+	page,
+	title: string,
+	view: 'Table' | 'Gallery'
+) {
 	expect(page.getByRole('heading', {name: title})).toBeVisible();
 
-	assetsPage.execItemAction({action: 'View History', filter: title});
+	if (view === 'Table') {
+		assetsPage.execItemAction({action: 'View History', filter: title});
+	}
+	else {
+		assetsPage.execCardItemAction({action: 'View History', filter: title});
+	}
 
 	await expect(
 		page.getByRole('heading', {name: `"${title}" History`})

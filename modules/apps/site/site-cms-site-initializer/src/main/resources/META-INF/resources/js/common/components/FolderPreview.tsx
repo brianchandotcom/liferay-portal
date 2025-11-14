@@ -25,7 +25,7 @@ export default function FolderPreview(props: FolderPreviewProps) {
 			: sub(Liferay.Language.get('x-folders'), subfoldersLength);
 
 	const fileLabel =
-		subfoldersLength === 1
+		filesLength === 1
 			? sub(Liferay.Language.get('x-file'), filesLength)
 			: sub(Liferay.Language.get('x-files'), filesLength);
 

@@ -146,7 +146,7 @@ test(
 		await assetsPage.selectItems([file1Title, file2Title]);
 
 		await page
-			.getByTestId('visualization-mode-table')
+			.getByTestId(/visualization-mode/)
 			.getByLabel('Actions')
 			.click();
 
@@ -213,7 +213,7 @@ test(
 		await assetsPage.selectItems([file1Title, file2Title]);
 
 		await page
-			.getByTestId('visualization-mode-table')
+			.getByTestId(/visualization-mode/)
 			.getByLabel('Actions')
 			.click();
 

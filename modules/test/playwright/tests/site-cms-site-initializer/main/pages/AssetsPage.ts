@@ -145,7 +145,7 @@ export class AssetsPage {
 		for (const title of titles) {
 			const card = this.page
 				.locator('tr', {hasText: title})
-				.or(this.page.locator('.card-row', {hasText: title}));
+				.or(this.getCardItem(title));
 
 			await card.getByRole('checkbox').check();
 		}
@@ -157,8 +157,8 @@ export class AssetsPage {
 			.click();
 	}
 
-	async getCardItem(name: string) {
-		return this.galleryThumbnails.locator('.card', {hasText: name});
+	getCardItem(name: string) {
+		return this.page.locator('.card', {hasText: name});
 	}
 
 	async execCardItemAction({action, filter}: ExecItemActionArgs) {
@@ -168,9 +168,7 @@ export class AssetsPage {
 				exact: true,
 				name: action,
 			}),
-			trigger: (await this.getCardItem(filter)).getByLabel(
-				'More actions'
-			),
+			trigger: this.getCardItem(filter).getByLabel('More actions'),
 		});
 	}
 }

@@ -48,9 +48,6 @@
 			</#if>
 		</#list>
 	</#list>
-	${csvFileWriter.write("objectDefinition",virtualHostModel.hostname + "," +
-	  groupModel.friendlyURL + "," + friendlyURLs?join(",") + "," +
-	  dataFactory.getClassNameId(objectDefinitionModel.getClassName()) + "," +
-	  dataFactory.getDefaultListTypeEntryKey() + "," + groupId + "," +
-	  plid + "," + segmentsExperienceId + "\n")}
+
+	${csvFileWriter.write("objectDefinition",virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + friendlyURLs?join(",") + "," + dataFactory.getClassNameId(objectDefinitionModel.getClassName()) + "," + dataFactory.getDefaultListTypeEntryKey() + "," + groupId + "," + plid + "," + segmentsExperienceId + "\n")}
 </#list>

@@ -204,6 +204,8 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 				<commerce-ui:request-quote
 					CPCatalogEntry="<%= cpCatalogEntry %>"
+					createCart="<%= true %>"
+					displayType="secondary"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 				/>
 

@@ -250,6 +250,7 @@ public class JournalTransformer {
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		_addReservedEl(
+			languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_ASSET_TAG_NAMES,
 			templateNodes, themeDisplay, tokens,
 			StringUtil.merge(assetTagNames));
@@ -269,92 +270,104 @@ public class JournalTransformer {
 		}
 
 		_addReservedEl(
+			languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS,
 			templateNodes, themeDisplay, tokens, userComments);
 
 		_addReservedEl(
+			languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
 			templateNodes, themeDisplay, tokens, userEmailAddress);
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID, templateNodes,
-			themeDisplay, tokens, String.valueOf(article.getUserId()));
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID,
+			templateNodes, themeDisplay, tokens,
+			String.valueOf(article.getUserId()));
 
 		_addReservedEl(
+			languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
 			templateNodes, themeDisplay, tokens, userJobTitle);
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME,
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME,
 			templateNodes, themeDisplay, tokens, userName);
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
 			templateNodes, themeDisplay, tokens,
 			Time.getRFC822(article.getCreateDate()));
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
 			templateNodes, themeDisplay, tokens,
 			article.getDescription(languageId));
 
 		if (article.getDisplayDate() != null) {
 			_addReservedEl(
+				languageId,
 				JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
 				templateNodes, themeDisplay, tokens,
 				Time.getRFC822(article.getDisplayDate()));
 		}
 
 		_addReservedEl(
+			languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_EXTERNAL_REFERENCE_CODE,
 			templateNodes, themeDisplay, tokens,
 			article.getExternalReferenceCode());
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_ID, templateNodes,
-			themeDisplay, tokens, article.getArticleId());
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_ID,
+			templateNodes, themeDisplay, tokens, article.getArticleId());
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_ID_, templateNodes,
-			themeDisplay, tokens, String.valueOf(article.getId()));
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_ID_,
+			templateNodes, themeDisplay, tokens,
+			String.valueOf(article.getId()));
 
 		_addReservedEl(
+			languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
 			templateNodes, themeDisplay, tokens,
 			Time.getRFC822(article.getModifiedDate()));
 
 		_addReservedEl(
+			languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_RESOURCE_PRIM_KEY,
 			templateNodes, themeDisplay, tokens,
 			String.valueOf(article.getResourcePrimKey()));
 
 		_addReservedEl(
+			languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
 			templateNodes, themeDisplay, tokens,
 			GetterUtil.getString(article.getArticleImageURL(themeDisplay)));
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_TITLE, templateNodes,
-			themeDisplay, tokens, article.getTitle(languageId));
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_TITLE,
+			templateNodes, themeDisplay, tokens, article.getTitle(languageId));
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE, templateNodes,
-			themeDisplay, tokens, article.getUrlTitle());
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE,
+			templateNodes, themeDisplay, tokens, article.getUrlTitle());
 
 		_addReservedEl(
-			JournalStructureConstants.RESERVED_ARTICLE_VERSION, templateNodes,
-			themeDisplay, tokens, String.valueOf(article.getVersion()));
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_VERSION,
+			templateNodes, themeDisplay, tokens,
+			String.valueOf(article.getVersion()));
 	}
 
 	private void _addReservedEl(
-		String name, List<TemplateNode> templateNodes,
+		String languageId, String name, List<TemplateNode> templateNodes,
 		ThemeDisplay themeDisplay, Map<String, String> tokens, String value) {
 
 		// Template nodes
 
 		templateNodes.add(
 			new TemplateNode(
-				themeDisplay, name, value, StringPool.BLANK, new HashMap<>()));
+				LocaleUtil.fromLanguageId(languageId), themeDisplay, name,
+				value, StringPool.BLANK, new HashMap<>()));
 
 		// Tokens
 
@@ -498,7 +511,7 @@ public class JournalTransformer {
 		}
 
 		TemplateNode templateNode = new TemplateNode(
-			themeDisplay, ddmFormField.getFieldReference(),
+			locale, themeDisplay, ddmFormField.getFieldReference(),
 			_convertToReferenceIfNeeded(
 				StringUtil.stripCDATA(data), ddmFormField),
 			type, attributes);
@@ -768,7 +781,7 @@ public class JournalTransformer {
 
 				templateNodes.add(
 					new TemplateNode(
-						themeDisplay, name, StringUtil.stripCDATA(data),
+						locale, themeDisplay, name, StringUtil.stripCDATA(data),
 						StringPool.BLANK, new HashMap<>()));
 
 				continue;

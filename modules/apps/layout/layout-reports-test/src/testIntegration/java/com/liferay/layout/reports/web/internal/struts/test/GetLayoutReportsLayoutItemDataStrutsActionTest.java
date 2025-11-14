@@ -213,7 +213,8 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 						masterLayoutPageTemplateEntry.getPlid()),
 				layoutStructure.toString());
 
-		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
+		_layout.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 

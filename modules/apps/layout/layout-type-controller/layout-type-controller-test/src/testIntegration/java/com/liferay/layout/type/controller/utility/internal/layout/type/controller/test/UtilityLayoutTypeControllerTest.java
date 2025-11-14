@@ -184,7 +184,8 @@ public class UtilityLayoutTypeControllerTest {
 
 		_layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			_layout.getGroupId(), _layout.isPrivateLayout(),
-			_layout.getLayoutId(), layoutPageTemplateEntry.getPlid());
+			_layout.getLayoutId(),
+			layoutPageTemplateEntry.getExternalReferenceCode());
 
 		mockHttpServletRequest = new MockHttpServletRequest();
 

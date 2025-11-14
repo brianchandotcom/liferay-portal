@@ -960,7 +960,8 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		_assertPortletPreferences(2, portletId1);
 		_assertPortletPreferences(2, portletId2);
 
-		Map<Long, String> layoutPlidMap = _addContentLayouts(layout.getPlid());
+		Map<Long, String> layoutPlidMap = _addContentLayouts(
+			layoutPageTemplateEntry.getExternalReferenceCode());
 
 		for (Long plid : layoutPlidMap.keySet()) {
 			ContentLayoutTestUtil.getRenderLayoutHTML(
@@ -1135,10 +1136,11 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	}
 
 	private Map<Long, String> _addContentLayouts() throws Exception {
-		return _addContentLayouts(0);
+		return _addContentLayouts(null);
 	}
 
-	private Map<Long, String> _addContentLayouts(long masterLayoutPlid)
+	private Map<Long, String> _addContentLayouts(
+			String masterLayoutPageTemplateEntryERC)
 		throws Exception {
 
 		Map<Long, String> map = new HashMap<>();
@@ -1151,7 +1153,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		for (int i = 0; i < _NUMBER_PAGES; i++) {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(
-				_group, false, false, masterLayoutPlid);
+				_group, false, false, masterLayoutPageTemplateEntryERC);
 
 			Layout draftLayout = layout.fetchDraftLayout();
 

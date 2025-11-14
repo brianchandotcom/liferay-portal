@@ -22,6 +22,9 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -488,34 +491,41 @@ public class LayoutSetPrototypePropagationTest
 	@Test
 	@TestInfo("LPS-161955")
 	public void testLayoutPropagationWithMasterLayout() throws Exception {
-		Layout siteTemplateMasterLayout = LayoutTestUtil.addTypeContentLayout(
-			_layoutSetPrototypeGroup, true, false);
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_layoutSetPrototypeGroup.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				WorkflowConstants.STATUS_APPROVED);
 
 		LayoutTestUtil.addTypeContentLayout(
 			_layoutSetPrototypeGroup, true, false,
-			siteTemplateMasterLayout.getPlid());
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		propagateChanges(group);
 
 		LayoutTestUtil.addTypeContentLayout(
 			_layoutSetPrototypeGroup, true, false,
-			siteTemplateMasterLayout.getPlid());
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		propagateChanges(group);
 
 		Assert.assertEquals(
 			0,
 			LayoutLocalServiceUtil.getMasterLayoutsCount(
-				group.getGroupId(), siteTemplateMasterLayout.getPlid()));
+				group.getGroupId(),
+				masterLayoutPageTemplateEntry.getExternalReferenceCode()));
+
+		Layout masterLayout = LayoutLocalServiceUtil.getLayout(
+			masterLayoutPageTemplateEntry.getPlid());
 
 		Layout siteMasterLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-			group.getGroupId(), false,
-			siteTemplateMasterLayout.getFriendlyURL());
+			group.getGroupId(), false, masterLayout.getFriendlyURL());
 
 		Assert.assertEquals(
 			4,
 			LayoutLocalServiceUtil.getMasterLayoutsCount(
-				group.getGroupId(), siteMasterLayout.getPlid()));
+				group.getGroupId(),
+				siteMasterLayout.getMasterLayoutPageTemplateEntryERC()));
 	}
 
 	@Test
@@ -612,24 +622,29 @@ public class LayoutSetPrototypePropagationTest
 			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
 				_layoutSetPrototype);
 
-		Layout siteTemplateMasterLayout = LayoutTestUtil.addTypeContentLayout(
-			_layoutSetPrototypeGroup, true, false);
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_layoutSetPrototypeGroup.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				WorkflowConstants.STATUS_APPROVED);
 
 		Layout siteTemplateLayoutFromMasterLayout =
 			LayoutTestUtil.addTypeContentLayout(
 				_layoutSetPrototypeGroup, true, false,
-				siteTemplateMasterLayout.getPlid());
+				masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		propagateChanges(group);
 
+		Layout masterLayout = LayoutLocalServiceUtil.getLayout(
+			masterLayoutPageTemplateEntry.getPlid());
+
 		Layout siteMasterLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-			group.getGroupId(), false,
-			siteTemplateMasterLayout.getFriendlyURL());
+			group.getGroupId(), false, masterLayout.getFriendlyURL());
 
 		Assert.assertEquals(
 			siteMasterLayout.getTheme(
 			).getThemeId(),
-			siteTemplateMasterLayout.getTheme(
+			masterLayout.getTheme(
 			).getThemeId());
 		Assert.assertEquals(
 			siteMasterLayout.getTheme(

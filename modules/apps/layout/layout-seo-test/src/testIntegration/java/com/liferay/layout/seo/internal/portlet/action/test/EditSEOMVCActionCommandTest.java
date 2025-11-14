@@ -219,7 +219,8 @@ public class EditSEOMVCActionCommandTest {
 
 		_layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			_group.getGroupId(), _layout.isPrivateLayout(),
-			_layout.getLayoutId(), masterLayoutPageTemplateEntry.getPlid());
+			_layout.getLayoutId(),
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_setUpMockLiferayPortletActionRequest();

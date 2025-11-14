@@ -459,6 +459,8 @@ components:
                 open:
                     readOnly: true
                     type: boolean
+                restricted:
+                    type: boolean
                 workflowTaskId:
                     format: int64
                     type: integer

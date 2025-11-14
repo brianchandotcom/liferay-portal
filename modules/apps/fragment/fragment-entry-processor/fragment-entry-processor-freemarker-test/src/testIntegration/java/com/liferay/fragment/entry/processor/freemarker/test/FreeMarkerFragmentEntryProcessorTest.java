@@ -768,6 +768,11 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	public void testProcessFragmentEntryLinkHTMLWithInvalidFreeMarker()
 		throws Exception {
 
+		expectedException.expect(FragmentEntryContentException.class);
+		expectedException.expectMessage("FreeMarker syntax is invalid");
+		expectedException.expectMessage(
+			"Syntax error in template \"template_id\" in line 5, column 12");
+
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_invalid_freemarker.html", null);
 
@@ -781,11 +786,6 @@ public class FreeMarkerFragmentEntryProcessorTest {
 				new DefaultFragmentEntryProcessorContext(
 					_serviceContext.getRequest(), new MockHttpServletResponse(),
 					null, LocaleUtil.getDefault());
-
-		expectedException.expect(FragmentEntryContentException.class);
-		expectedException.expectMessage("FreeMarker syntax is invalid");
-		expectedException.expectMessage(
-			"Syntax error in template \"template_id\" in line 5, column 12");
 
 		_getProcessedHTML(
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(

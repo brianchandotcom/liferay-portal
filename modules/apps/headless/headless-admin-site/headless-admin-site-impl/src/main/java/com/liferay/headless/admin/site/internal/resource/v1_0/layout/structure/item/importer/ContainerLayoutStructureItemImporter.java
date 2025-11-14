@@ -152,11 +152,13 @@ public class ContainerLayoutStructureItemImporter
 				fragmentViewportsJSONObject);
 		}
 
-		JSONObject fragmentLinkJSONObject = FragmentLinkUtil.toJSONObject(
-			layoutStructureItemImporterContext.getCompanyId(),
-			containerPageElementDefinition.getFragmentLink(),
-			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
-			layoutStructureItemImporterContext.getGroupId());
+		JSONObject fragmentLinkJSONObject = JSONUtil.put(
+			"link",
+			FragmentLinkUtil.toJSONObject(
+				layoutStructureItemImporterContext.getCompanyId(),
+				containerPageElementDefinition.getFragmentLink(),
+				layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
+				layoutStructureItemImporterContext.getGroupId()));
 
 		if (fragmentLinkJSONObject != null) {
 			containerStyledLayoutStructureItem.updateItemConfig(

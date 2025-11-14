@@ -414,6 +414,8 @@ public class MirrorsGetTask extends Task {
 			if (process.exitValue() != 0) {
 				System.out.println(
 					"Unable to download file from " + gsURL + ".");
+
+				_deleteFile(targetFile);
 			}
 		}
 		catch (Exception exception) {
@@ -528,6 +530,8 @@ public class MirrorsGetTask extends Task {
 				}
 				catch (IOException ioException) {
 					if (i >= (urls.size() - 1)) {
+						_deleteFile(mirrorsCacheTempFile);
+
 						throw ioException;
 					}
 

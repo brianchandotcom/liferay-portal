@@ -19,6 +19,7 @@ import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.GroupKeyException;
@@ -27,10 +28,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Groups_UserGroupsTable;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Users_GroupsTable;
+import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -216,9 +220,102 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 				DepotEntryTable.INSTANCE.companyId.eq(
 					companyId
 				).and(
-					DepotEntryTable.INSTANCE.type.eq(type)
+					() -> {
+						if (type != DepotConstants.TYPE_ANY) {
+							return DepotEntryTable.INSTANCE.type.eq(type);
+						}
+
+						return null;
+					}
 				).and(
 					DepotEntryTable.INSTANCE.groupId.isNotNull()
+				)
+			));
+	}
+
+	@Override
+	public List<Long> getDepotEntryGroupIds(
+		long companyId, long userId, int type) {
+
+		return getDepotEntryGroupIds(companyId, userId, type, false);
+	}
+
+	@Override
+	public List<Long> getDepotEntryGroupIds(
+		long companyId, long userId, int type, boolean userGroupsOnly) {
+
+		if (userGroupsOnly) {
+			return dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					DepotEntryTable.INSTANCE.groupId
+				).from(
+					DepotEntryTable.INSTANCE
+				).innerJoinON(
+					Groups_UserGroupsTable.INSTANCE,
+					Groups_UserGroupsTable.INSTANCE.groupId.eq(
+						DepotEntryTable.INSTANCE.groupId)
+				).innerJoinON(
+					Users_UserGroupsTable.INSTANCE,
+					Users_UserGroupsTable.INSTANCE.userGroupId.eq(
+						Groups_UserGroupsTable.INSTANCE.userGroupId
+					).and(
+						Users_UserGroupsTable.INSTANCE.userId.eq(userId)
+					)
+				).where(
+					DepotEntryTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						() -> {
+							if (type != DepotConstants.TYPE_ANY) {
+								return DepotEntryTable.INSTANCE.type.eq(type);
+							}
+
+							return null;
+						}
+					)
+				));
+		}
+
+		return dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				DepotEntryTable.INSTANCE.groupId
+			).from(
+				DepotEntryTable.INSTANCE
+			).leftJoinOn(
+				Users_GroupsTable.INSTANCE,
+				Users_GroupsTable.INSTANCE.groupId.eq(
+					DepotEntryTable.INSTANCE.groupId
+				).and(
+					Users_GroupsTable.INSTANCE.userId.eq(userId)
+				)
+			).leftJoinOn(
+				Groups_UserGroupsTable.INSTANCE,
+				Groups_UserGroupsTable.INSTANCE.groupId.eq(
+					DepotEntryTable.INSTANCE.groupId)
+			).leftJoinOn(
+				Users_UserGroupsTable.INSTANCE,
+				Users_UserGroupsTable.INSTANCE.userGroupId.eq(
+					Groups_UserGroupsTable.INSTANCE.userGroupId
+				).and(
+					Users_UserGroupsTable.INSTANCE.userId.eq(userId)
+				)
+			).where(
+				DepotEntryTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					() -> {
+						if (type != DepotConstants.TYPE_ANY) {
+							return DepotEntryTable.INSTANCE.type.eq(type);
+						}
+
+						return null;
+					}
+				).and(
+					Predicate.withParentheses(
+						Users_GroupsTable.INSTANCE.userId.isNotNull(
+						).or(
+							Users_UserGroupsTable.INSTANCE.userId.isNotNull()
+						))
 				)
 			));
 	}

@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -175,6 +176,10 @@ public class JournalTransformerTest {
 	@Test
 	public void testCreateTemplateNode() {
 		_testCreateTemplateNodeDocumentLibraryDDMFormField();
+		_testCreateTemplateNodeNumericDDMFormFieldWithTrailingZero(
+			"2,3", LocaleUtil.SPAIN, "2,30");
+		_testCreateTemplateNodeNumericDDMFormFieldWithTrailingZero(
+			"2.3", LocaleUtil.US, "2.30");
 		_testCreateTemplateNodeMultipleSelectTypeDDMFormFieldWithOptions();
 		_testCreateTemplateNodeMultipleSelectTypeDDMFormFieldWithoutOptions();
 		_testCreateTemplateNodeSingleSelectTypeDDMFormFieldWithOptions();
@@ -840,6 +845,44 @@ public class JournalTransformerTest {
 		Assert.assertEquals("select", templateNode.getType());
 		Assert.assertTrue(ListUtil.isEmpty(templateNode.getOptions()));
 		Assert.assertTrue(MapUtil.isEmpty(templateNode.getOptionsMap()));
+	}
+
+	private void _testCreateTemplateNodeNumericDDMFormFieldWithTrailingZero(
+		String expectedValue, Locale locale, String text) {
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"numeric", DDMFormFieldTypeConstants.NUMERIC);
+
+		ddmFormField.setDataType("double");
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		Element dynamicContentElement = rootElement.addElement(
+			"dynamic-content");
+
+		dynamicContentElement.setText(text);
+
+		Locale originalThemeDisplayLocale =
+			LocaleThreadLocal.getThemeDisplayLocale();
+
+		try {
+			LocaleThreadLocal.setThemeDisplayLocale(locale);
+
+			TemplateNode templateNode = ReflectionTestUtil.invoke(
+				_journalTransformer, "_createTemplateNode",
+				new Class<?>[] {
+					DDMFormField.class, Element.class, Locale.class,
+					ThemeDisplay.class
+				},
+				ddmFormField, rootElement, locale, new ThemeDisplay());
+
+			Assert.assertEquals(expectedValue, templateNode.getData());
+		}
+		finally {
+			LocaleThreadLocal.setThemeDisplayLocale(originalThemeDisplayLocale);
+		}
 	}
 
 	private void _testCreateTemplateNodeSingleSelectTypeDDMFormFieldWithOptions() {

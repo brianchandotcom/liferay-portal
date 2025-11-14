@@ -478,9 +478,8 @@ export default function _JournalPortlet({
 		(!classNameId || classNameId === '0')
 	) {
 		eventHandlers.push(
-			attachFormChangeListener(
-				form,
-				(mutationRecord) => {
+			attachFormChangeListener({
+				acceptMutationRecord: (mutationRecord) => {
 					return [
 						mutationRecord.target,
 						...mutationRecord.addedNodes,
@@ -492,7 +491,7 @@ export default function _JournalPortlet({
 							node.name !== `${namespace}languageId`
 					);
 				},
-				() => {
+				callback: () => {
 					if (lockHolder.lock?.isLocked()) {
 						return;
 					}
@@ -508,8 +507,9 @@ export default function _JournalPortlet({
 						showErrors: false,
 					});
 				},
-				namespace
-			)
+				form,
+				namespace,
+			})
 		);
 	}
 
@@ -528,12 +528,12 @@ export default function _JournalPortlet({
 	};
 }
 
-function attachFormChangeListener(
-	form,
+function attachFormChangeListener({
 	acceptMutationRecord,
 	callback,
-	namespace
-) {
+	form,
+	namespace,
+}) {
 	const handleChange = debounce(() => {
 		callback();
 	}, AUTO_SAVE_DELAY);

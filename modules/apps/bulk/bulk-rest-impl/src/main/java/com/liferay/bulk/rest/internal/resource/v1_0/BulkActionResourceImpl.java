@@ -445,7 +445,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			KeywordBulkAction keywordBulkAction = (KeywordBulkAction)bulkAction;
 
 			return hashMapWrapper.put(
-				"append", true
+				"append", GetterUtil.getBoolean(keywordBulkAction.getAppend())
 			).put(
 				"toAddTagNames", keywordBulkAction.getKeywordsToAdd()
 			).put(
@@ -457,7 +457,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				(TaxonomyCategoryBulkAction)bulkAction;
 
 			return hashMapWrapper.put(
-				"append", true
+				"append",
+				GetterUtil.getBoolean(taxonomyCategoryBulkAction.getAppend())
 			).put(
 				"toAddCategoryIds",
 				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToAdd()

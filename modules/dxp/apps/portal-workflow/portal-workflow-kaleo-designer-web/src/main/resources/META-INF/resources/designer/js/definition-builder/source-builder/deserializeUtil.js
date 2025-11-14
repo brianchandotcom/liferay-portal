@@ -114,6 +114,17 @@ DeserializeUtil.prototype = {
 						node.scriptLanguage || DEFAULT_LANGUAGE;
 				}
 
+				if (type === 'llm' || type === 'ai-decision') {
+					data.prompt = node.prompt || '';
+					data.inputVariables = node['input-variables']
+						? JSON.parse(node['input-variables'])
+						: {};
+					data.outputVariables = node['output-variables']
+						? JSON.parse(node['output-variables'])
+						: {};
+					data.userMessage = node['user-message'] || '';
+				}
+
 				data.actions = node.actions?.length && parseActions(node);
 
 				data.notifications =

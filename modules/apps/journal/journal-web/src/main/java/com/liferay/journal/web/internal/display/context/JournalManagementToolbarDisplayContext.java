@@ -1029,6 +1029,9 @@ public class JournalManagementToolbarDisplayContext
 
 									return PortletURLBuilder.createRenderURL(
 										liferayPortletResponse
+									).setParameter(
+										"folderId",
+										_journalDisplayContext.getFolderId()
 									).buildString();
 								}
 

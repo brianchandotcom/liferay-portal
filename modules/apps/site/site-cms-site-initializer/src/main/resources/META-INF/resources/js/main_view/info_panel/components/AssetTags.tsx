@@ -130,6 +130,7 @@ const AssetTags = ({
 							onClick: createAndAddKeyword,
 						}
 					}
+					refetchOnActive
 					sizing={inputSize}
 					value={value}
 				>

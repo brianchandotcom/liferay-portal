@@ -180,7 +180,7 @@ export interface IBaseItemSelectorProps<T> {
 	onItemsChange?: InternalDispatch<T[]>;
 
 	/**
-	 * A flag to refetch the data when the component becomes active.
+	 * A flag to refetch the data when the menu is active.
 	 */
 	refetchOnActive?: boolean;
 

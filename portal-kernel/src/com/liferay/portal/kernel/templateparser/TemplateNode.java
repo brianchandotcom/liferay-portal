@@ -53,9 +53,10 @@ import java.util.Objects;
 public class TemplateNode extends LinkedHashMap<String, Object> {
 
 	public TemplateNode(
-		ThemeDisplay themeDisplay, String name, String data, String type,
-		Map<String, String> attributes) {
+		Locale locale, ThemeDisplay themeDisplay, String name, String data,
+		String type, Map<String, String> attributes) {
 
+		_locale = locale;
 		_themeDisplay = themeDisplay;
 
 		put("attributes", attributes);
@@ -64,6 +65,15 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		put("type", type);
 		put("options", new ArrayList<String>());
 		put("optionsMap", new LinkedHashMap<String, String>());
+	}
+
+	public TemplateNode(
+		ThemeDisplay themeDisplay, String name, String data, String type,
+		Map<String, String> attributes) {
+
+		this(
+			LocaleUtil.getMostRelevantLocale(), themeDisplay, name, data, type,
+			attributes);
 	}
 
 	public void appendChild(TemplateNode templateNode) {
@@ -133,7 +143,8 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	@Override
 	public Object clone() {
 		TemplateNode templateNode = new TemplateNode(
-			_themeDisplay, getName(), getData(), getType(), getAttributes());
+			_locale, _themeDisplay, getName(), getData(), getType(),
+			getAttributes());
 
 		for (Map.Entry<String, TemplateNode> entry :
 				_childTemplateNodes.entrySet()) {
@@ -524,7 +535,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		String data = _getData();
 
 		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
-			LocaleUtil.getMostRelevantLocale());
+			_locale);
 
 		DecimalFormatSymbols decimalFormatSymbols =
 			decimalFormat.getDecimalFormatSymbols();
@@ -537,7 +548,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
 		decimalFormat.setParseBigDecimal(true);
 
-		return decimalFormat.format(GetterUtil.getDouble(data));
+		return decimalFormat.format(GetterUtil.getDouble(data, _locale));
 	}
 
 	private static final String _RANDOM_ID = StringUtil.randomId();
@@ -546,6 +557,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 	private final Map<String, TemplateNode> _childTemplateNodes =
 		new LinkedHashMap<>();
+	private final Locale _locale;
 	private final List<TemplateNode> _siblingTemplateNodes = new ArrayList<>();
 	private final ThemeDisplay _themeDisplay;
 

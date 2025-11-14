@@ -79,7 +79,9 @@ export class DataSetPage {
 		await dropdownMenuActionItem.click();
 	}
 
-	async changeVisualizationMode(visualizationMode: 'Cards' | 'Table') {
+	async changeVisualizationMode(
+		visualizationMode: 'Cards' | 'Table' | 'Gallery'
+	) {
 		await this.activeViewSelector.waitFor({
 			state: 'visible',
 		});

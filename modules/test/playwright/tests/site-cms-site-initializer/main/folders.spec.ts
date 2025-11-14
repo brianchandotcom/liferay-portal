@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -36,12 +35,9 @@ test(
 
 		await assetsPage.gotoFiles();
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {exact: true, name: 'Edit'}),
-			trigger: page
-				.getByRole('row', {name: folderTitle})
-				.locator('.dropdown-toggle'),
+		await assetsPage.execCardItemAction({
+			action: 'Edit',
+			filter: folderTitle,
 		});
 
 		const newFolderTitle = getRandomString();
@@ -55,7 +51,7 @@ test(
 			`Success:${newFolderTitle} was updated successfully.`
 		);
 
-		await expect(page.getByText(newFolderTitle)).toBeVisible();
+		await expect(page.getByLabel(newFolderTitle)).toBeVisible();
 
 		await apiHelpers.objectFolder.deleteObjectEntryFolder(folderData.id);
 	}
@@ -75,9 +71,8 @@ test(
 
 		await assetsPage.gotoFiles();
 
-		await page
-			.getByRole('row', {name: folderTitle})
-			.locator('.dropdown-toggle')
+		(await assetsPage.getCardItem(folderTitle))
+			.getByLabel('More actions')
 			.click();
 
 		expect(

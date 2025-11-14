@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.osgi.util.BundleUtil;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -21,9 +22,11 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
@@ -34,7 +37,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -44,6 +49,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Luis Ortiz
@@ -212,6 +221,62 @@ public class DBUpgraderTest {
 	}
 
 	@Test
+	public void testUpgradeModuleDoesNotGenerateUpgradeReportWhenDataCleanupModuleIsAvailable()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.upgrade.internal.report.UpgradeReport",
+				LoggerTestUtil.INFO)) {
+
+			StartupHelperUtil.setUpgrading(true);
+
+			DBUpgrader.startUpgradeLogAppender();
+
+			DBUpgrader.upgradeModules();
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertTrue(messages.isEmpty());
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(false);
+
+			DBUpgrader.stopUpgradeLogAppender();
+		}
+	}
+
+	@Test
+	public void testUpgradeModuleGeneratesUpgradeReportWhenDataCleanupModuleIsNotAvailable()
+		throws Exception {
+
+		Bundle bundle = _uninstallBundle();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.upgrade.internal.report.UpgradeReport",
+				LoggerTestUtil.INFO)) {
+
+			StartupHelperUtil.setUpgrading(true);
+
+			DBUpgrader.startUpgradeLogAppender();
+
+			DBUpgrader.upgradeModules();
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertFalse(messages.isEmpty());
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(false);
+
+			DBUpgrader.stopUpgradeLogAppender();
+
+			if (bundle != null) {
+				_installBundle(bundle);
+			}
+		}
+	}
+
+	@Test
 	public void testUpgradeModuleIndexes() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
@@ -294,6 +359,46 @@ public class DBUpgraderTest {
 		}
 	}
 
+	private void _installBundle(Bundle bundle) throws Exception {
+		Bundle currentBundle = FrameworkUtil.getBundle(DBUpgraderTest.class);
+
+		BundleContext bundleContext = currentBundle.getBundleContext();
+
+		BundleUtil.installBundle(
+			bundleContext, _lpkgDeployer, bundle.getLocation(), 1);
+
+		List<Bundle> bundlesToRefresh = new ArrayList<>();
+
+		bundlesToRefresh.add(bundle);
+
+		BundleUtil.refreshBundles(bundleContext, bundlesToRefresh);
+	}
+
+	private Bundle _uninstallBundle() throws Exception {
+		Bundle currentBundle = FrameworkUtil.getBundle(DBUpgraderTest.class);
+
+		BundleContext bundleContext = currentBundle.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(), "com.liferay.data.cleanup") &&
+				(bundle.getState() == Bundle.ACTIVE)) {
+
+				bundle.uninstall();
+
+				List<Bundle> bundlesToRefresh = new ArrayList<>();
+
+				bundlesToRefresh.add(bundle);
+
+				BundleUtil.refreshBundles(bundleContext, bundlesToRefresh);
+
+				return bundle;
+			}
+		}
+
+		return null;
+	}
+
 	private void _updatePortalRelease(int buildNumber, int state)
 		throws Exception {
 
@@ -340,5 +445,8 @@ public class DBUpgraderTest {
 	private static String _moduleServiceLifecyclePortalInitialized;
 	private static String _moduleServiceLifecyclePortletsInitialized;
 	private static boolean _upgrading;
+
+	@Inject
+	private LPKGDeployer _lpkgDeployer;
 
 }

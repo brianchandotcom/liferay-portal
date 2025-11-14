@@ -35,6 +35,7 @@ import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,6 +48,9 @@ public class DBCopyTablesProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		Assume.assumeTrue(
+			System.getProperty("database.postgresql.driver") != null);
+
 		AutoBatchPreparedStatementUtil.start();
 
 		_targetDataSource = DataSourceFactoryUtil.initDataSource(

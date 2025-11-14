@@ -188,7 +188,8 @@ test.describe('General configuration', () => {
 
 			await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
-				masterLayoutPlid: masterPage.plid,
+				masterLayoutPageTemplateEntryERC:
+					masterPage.externalReferenceCode,
 				title: layoutTitle,
 			});
 
@@ -371,7 +372,8 @@ test.describe('Design configuration', () => {
 
 			await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
-				masterLayoutPlid: masterPage.plid,
+				masterLayoutPageTemplateEntryERC:
+					masterPage.externalReferenceCode,
 				title: layoutTitle,
 			});
 
@@ -566,7 +568,8 @@ test.describe('Design configuration', () => {
 
 			await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
-				masterLayoutPlid: masterPage.plid,
+				masterLayoutPageTemplateEntryERC:
+					masterPage.externalReferenceCode,
 				title: layoutTitle,
 			});
 
@@ -874,7 +877,8 @@ test.describe('Design configuration', () => {
 
 			await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
-				masterLayoutPlid: masterPage.plid,
+				masterLayoutPageTemplateEntryERC:
+					masterPage.externalReferenceCode,
 				title: layoutTitle,
 			});
 

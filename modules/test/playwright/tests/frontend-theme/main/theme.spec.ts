@@ -23,7 +23,7 @@ export const test = mergeTests(
 );
 
 test(
-	'Check accessibility of content page based on custom master page.',
+	'Check accessibility of content page based on custom master page',
 	{tag: '@LPD-41441'},
 	async ({apiHelpers, masterPagesPage, page, pageEditorPage, site}) => {
 		const layoutPageTemplateEntryName = getRandomString();
@@ -55,7 +55,7 @@ test(
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
-			masterLayoutPlid: masterPage.plid,
+			masterLayoutPageTemplateEntryERC: masterPage.externalReferenceCode,
 			options: {type: 'content'},
 			title: layoutTitle,
 		});

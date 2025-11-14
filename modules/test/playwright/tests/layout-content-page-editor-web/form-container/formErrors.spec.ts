@@ -546,7 +546,8 @@ test.describe('Edit mode form errors', () => {
 
 			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: pageManagementSite.id,
-				masterLayoutPlid: masterPage.plid,
+				masterLayoutPageTemplateEntryERC:
+					masterPage.externalReferenceCode,
 				options: {type: 'content'},
 				title: getRandomString(),
 			});

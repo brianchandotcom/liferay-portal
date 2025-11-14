@@ -279,7 +279,7 @@ public class LayoutsImporterTest {
 			_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 				draftLayout.getLayoutId(),
-				masterLayoutPageTemplateEntry.getPlid()),
+				masterLayoutPageTemplateEntry.getExternalReferenceCode()),
 			layout);
 
 		File file = _layoutsExporter.exportLayoutPageTemplateEntries(

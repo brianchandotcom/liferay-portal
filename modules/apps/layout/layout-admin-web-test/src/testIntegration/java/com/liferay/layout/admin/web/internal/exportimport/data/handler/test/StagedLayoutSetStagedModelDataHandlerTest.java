@@ -129,7 +129,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		Assert.assertEquals(masterLayout.getLayoutId(), layout3.getLayoutId());
 
 		Layout layout4 = LayoutTestUtil.addTypeContentLayout(
-			stagingGroup, false, false, masterLayout.getPlid());
+			stagingGroup, false, false,
+			layoutPageTemplateEntry.getExternalReferenceCode());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, _assertPriority(layout1.getPlid(), 1));

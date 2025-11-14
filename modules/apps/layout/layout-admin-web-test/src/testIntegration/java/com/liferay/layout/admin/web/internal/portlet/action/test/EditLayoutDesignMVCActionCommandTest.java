@@ -214,7 +214,8 @@ public class EditLayoutDesignMVCActionCommandTest {
 			draftLayout.getRobotsMap(), draftLayout.getType(),
 			draftLayout.isHidden(), draftLayout.getFriendlyURLMap(), false,
 			null, styleBookEntry.getExternalReferenceCode(),
-			fileEntry.getFileEntryId(), masterLayoutPageTemplateEntry.getPlid(),
+			fileEntry.getFileEntryId(),
+			masterLayoutPageTemplateEntry.getExternalReferenceCode(),
 			serviceContext);
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =

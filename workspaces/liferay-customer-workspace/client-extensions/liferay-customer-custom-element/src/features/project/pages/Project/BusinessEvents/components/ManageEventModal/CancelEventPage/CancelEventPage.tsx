@@ -9,7 +9,7 @@ import {Observer} from '@clayui/modal/lib/types';
 import {useState} from 'react';
 import {Badge} from '~/components';
 import {Liferay} from '~/services/liferay';
-import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
+import {patchBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent} from '~/utils/types';
 
@@ -65,13 +65,13 @@ const CancelEventPage: React.FC<IProps> = ({
 			await updateAccountBusinessEvents();
 
 			await client.mutate<{
-				updateBusinessEvent: IBusinessEvent;
+				patchBusinessEvent: IBusinessEvent;
 			}>({
 				context: {
 					displaySuccess: false,
 					type: 'liferay-rest',
 				},
-				mutation: updateBusinessEvent,
+				mutation: patchBusinessEvent,
 				variables: {
 					businessEvent: formattedBusinessEvent,
 					businessEventId,

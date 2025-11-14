@@ -753,6 +753,34 @@ export const notificationQueueEntry = gql`
 	}
 `;
 
+export const patchBusinessEvent = gql`
+	mutation patchBusinessEvent(
+		$businessEvent: InputC_BusinessEvent!
+		$businessEventId: Long!
+	) {
+		patchBusinessEvent(
+			businessEventId: $businessEventId
+			input: $businessEvent
+		)
+			@rest(
+				method: "PATCH"
+				type: "C_BusinessEvent"
+				path: "/c/businessevents/{args.businessEventId}"
+			) {
+			actualGoLiveDateTime
+			associatedTickets
+			currentLiferayVersion
+			description
+			eventType
+			lastComment
+			name
+			newLiferayVersion
+			targetGoLiveDateTime
+			timeZone
+		}
+	}
+`;
+
 export const patchOrderItemByExternalReferenceCode = gql`
 	mutation patchOrderItemByExternalReferenceCode(
 		$externalReferenceCode: String
@@ -803,34 +831,6 @@ export const updateAccountSubscriptionGroups = gql`
 			activationStatus
 			externalReferenceCode
 			name
-		}
-	}
-`;
-
-export const updateBusinessEvent = gql`
-	mutation updateBusinessEvent(
-		$businessEvent: InputC_BusinessEvent!
-		$businessEventId: Long!
-	) {
-		updateBusinessEvent(
-			businessEventId: $businessEventId
-			input: $businessEvent
-		)
-			@rest(
-				method: "PUT"
-				type: "C_BusinessEvent"
-				path: "/c/businessevents/{args.businessEventId}"
-			) {
-			actualGoLiveDateTime
-			associatedTickets
-			currentLiferayVersion
-			description
-			eventType
-			lastComment
-			name
-			newLiferayVersion
-			targetGoLiveDateTime
-			timeZone
 		}
 	}
 `;

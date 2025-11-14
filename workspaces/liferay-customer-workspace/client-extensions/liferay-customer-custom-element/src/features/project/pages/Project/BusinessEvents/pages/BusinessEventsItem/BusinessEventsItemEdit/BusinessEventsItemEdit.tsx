@@ -21,7 +21,7 @@ import useGetBusinessEventTypesList from '~/features/project/pages/Project/Busin
 import useGetLiferayVersions from '~/features/project/pages/Project/BusinessEvents/hooks/useGetLiferayVersions';
 import useGetUTCTimeZonesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetUTCTimeZonesList';
 import {Liferay} from '~/services/liferay';
-import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
+import {patchBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
 import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
@@ -219,13 +219,13 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			await updateAccountBusinessEvents();
 
 			await client.mutate<{
-				updateBusinessEvent: IBusinessEvent;
+				patchBusinessEvent: IBusinessEvent;
 			}>({
 				context: {
 					displaySuccess: false,
 					type: 'liferay-rest',
 				},
-				mutation: updateBusinessEvent,
+				mutation: patchBusinessEvent,
 				variables: {
 					businessEvent: formattedBusinessEvent,
 					businessEventId: businessEvent.id,

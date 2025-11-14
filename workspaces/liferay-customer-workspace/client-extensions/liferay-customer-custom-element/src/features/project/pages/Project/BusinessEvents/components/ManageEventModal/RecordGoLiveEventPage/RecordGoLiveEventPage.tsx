@@ -10,7 +10,7 @@ import {Badge, Select} from '~/components';
 import DatePicker from '~/components/DatePicker/DatePicker';
 import TimePicker from '~/components/TimePicker/TimePicker';
 import {Liferay} from '~/services/liferay';
-import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
+import {patchBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent, IOption} from '~/utils/types';
 
@@ -147,13 +147,13 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 			await updateAccountBusinessEvents();
 
 			await client.mutate<{
-				updateBusinessEvent: IBusinessEvent;
+				patchBusinessEvent: IBusinessEvent;
 			}>({
 				context: {
 					displaySuccess: false,
 					type: 'liferay-rest',
 				},
-				mutation: updateBusinessEvent,
+				mutation: patchBusinessEvent,
 				variables: {
 					businessEvent: formattedBusinessEvent,
 					businessEventId,

@@ -614,7 +614,13 @@ test(
 test(
 	'Display only relevant permission tabs based on the section',
 	{tag: '@LPD-67530'},
-	async ({contentsPage, defaultPermissionsPage, filesPage, page}) => {
+	async ({
+		assetsPage,
+		contentsPage,
+		defaultPermissionsPage,
+		filesPage,
+		page,
+	}) => {
 		const spaceName = 'Space' + getRandomInt();
 
 		await goToAllSpaces(page);
@@ -659,6 +665,8 @@ test(
 
 			await filesPage.createFolder(folderName3, spaceName);
 			await filesPage.createFolder(folderName4, spaceName);
+
+			await assetsPage.changeVisualizationMode('Table');
 
 			await tickCheckBoxes(page, [folderName3, folderName4]);
 

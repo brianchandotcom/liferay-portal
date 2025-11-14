@@ -521,6 +521,8 @@ test(
 			});
 
 			await test.step('Check that a space member can preview image files', async () => {
+				await assetsPage.changeVisualizationMode('Table');
+
 				await assetsPage.execItemAction({
 					action: 'View',
 					filter: objectEntry.title,

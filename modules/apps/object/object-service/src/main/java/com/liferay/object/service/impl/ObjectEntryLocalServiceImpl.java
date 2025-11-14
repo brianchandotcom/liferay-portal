@@ -5129,19 +5129,16 @@ public class ObjectEntryLocalServiceImpl
 				String[] parts = StringUtil.split(
 					columnName, StringPool.UNDERLINE);
 
-				if (parts.length == 2) {
-					ObjectField objectField =
-						_objectFieldPersistence.fetchByODI_N(
-							objectDefinitionId, parts[1]);
+				if ((parts.length == 2) &&
+					(Objects.equals(parts[0], "classNameId") ||
+					 Objects.equals(parts[0], "classPK"))) {
 
-					if (objectField != null) {
-						_putValue(
-							javaTypeClass, parts[0], object,
-							(Map<String, Serializable>)values.computeIfAbsent(
-								objectField.getName(), key -> new HashMap<>()));
+					_putValue(
+						javaTypeClass, parts[0], object,
+						(Map<String, Serializable>)values.computeIfAbsent(
+							parts[1], key -> new HashMap<>()));
 
-						continue;
-					}
+					continue;
 				}
 
 				columnName = columnName.substring(0, columnName.length() - 1);

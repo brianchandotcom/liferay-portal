@@ -980,7 +980,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 				long objectEntriesCount =
 					objectEntryLocalService.getObjectEntriesCount(
-						0, objectDefinition, column.isNotNull());
+						0, null, objectDefinition, column.isNotNull());
 
 				if (objectEntriesCount > 0) {
 					throw new ObjectValidationRuleSettingValueException.

@@ -1,39 +1,37 @@
-.mini-cart {
-	.request-quote-wrapper {
-		background-color: #fff;
-		font-size: 1rem;
-		padding: 0 1em 1em;
-	}
-}
-
-.minium-frame {
-	.mini-cart {
-		.btn.request-quote {
-			background-color: #fff;
-			border-color: transparent;
-			border-radius: 0;
-			height: 3.3rem;
-		}
-
-		.request-quote-wrapper {
-			padding: 0;
-		}
-	}
-
-	.product-detail-actions {
-		.request-quote-wrapper {
-			margin-bottom: 0;
-			margin-left: 0;
-		}
-	}
+.mini-cart-request-quote {
+	padding: 0 1em 1em;
 }
 
 .product-detail-actions {
 	.request-quote-wrapper {
-		margin: 0;
+		margin-bottom: 0.5rem;
 
 		button {
-			margin: 0 1.25rem 0 0;
+			font-size: 1.125rem;
+			margin: 0 1.25rem;
+			padding: 0.6rem 1.5rem;
+		}
+	}
+}
+
+main.minium {
+	.mini-cart-request-quote {
+		background: white;
+		padding: 0 !important;
+
+		button {
+			padding: 1rem;
+			text-transform: uppercase;
+		}
+	}
+
+	.product-detail-actions .request-quote-wrapper {
+		margin-bottom: 0;
+
+		button {
+			height: 3.75rem;
+			margin-left: 0;
+			margin-right: 1.25rem;
 		}
 	}
 }

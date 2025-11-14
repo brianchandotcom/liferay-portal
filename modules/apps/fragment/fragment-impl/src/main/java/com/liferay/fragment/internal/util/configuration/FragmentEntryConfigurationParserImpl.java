@@ -16,6 +16,7 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.pagination.InfoPage;
@@ -618,8 +619,30 @@ public class FragmentEntryConfigurationParserImpl
 				return null;
 			}
 
+			if (jsonObject.getLong("classPK") > 0) {
+				return infoItemObjectProvider.getInfoItem(
+					new ClassPKInfoItemIdentifier(
+						jsonObject.getLong("classPK")));
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext == null) {
+				return null;
+			}
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			if (themeDisplay == null) {
+				return null;
+			}
+
 			return infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(jsonObject.getLong("classPK")));
+				themeDisplay.getScopeGroupId(),
+				new ERCInfoItemIdentifier(
+					jsonObject.getString("externalReferenceCode"),
+					jsonObject.getString("scopeExternalReferenceCode")));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -654,6 +677,10 @@ public class FragmentEntryConfigurationParserImpl
 			).put(
 				"externalReferenceCode",
 				configurationValueJSONObject.getString("externalReferenceCode")
+			).put(
+				"scopeExternalReferenceCode",
+				configurationValueJSONObject.getString(
+					"scopeExternalReferenceCode")
 			).put(
 				"template", configurationValueJSONObject.get("template")
 			).put(

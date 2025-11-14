@@ -44,7 +44,7 @@ export {default as ProductOptionText} from './product_options/ProductOptionText'
 export {default as ProductOptionUpload} from './product_options/ProductOptionUpload';
 export {default as QuantitySelectorComponent} from './quantity_selector/QuantitySelector';
 export {default as QuantitySelector} from './quantity_selector/entry';
-export {default as RequestQuote} from './request_quote/entry';
+export {default as RequestQuote} from './request_quote/RequestQuote';
 export {default as StepTracker} from './step_tracker/entry';
 export {default as SummaryComponent} from './summary/Summary';
 export {default as Summary} from './summary/entry';

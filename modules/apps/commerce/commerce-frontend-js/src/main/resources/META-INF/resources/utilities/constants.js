@@ -15,6 +15,10 @@ export const ADDRESS_TYPE_SHIPPING = 3;
 export const CHANNEL_RESOURCE_ENDPOINT =
 	'/o/headless-commerce-delivery-catalog/v1.0/channels';
 
+export const DEFAULT_ORDER_DETAILS_PORTLET_ID =
+	'com_liferay_commerce_order_content_web_internal_portlet_' +
+	'CommerceOpenOrderContentPortlet';
+
 export const FIELD_TYPE = {
 	checkbox: 'checkbox',
 	checkboxMultiple: 'checkbox_multiple',
@@ -25,6 +29,8 @@ export const FIELD_TYPE = {
 	select: 'select',
 	text: 'text',
 };
+
+export const ORDER_UUID_PARAMETER = 'commerceOrderUuid';
 
 export const SITE_TYPE_B2B = 1;
 export const SITE_TYPE_B2C = 0;

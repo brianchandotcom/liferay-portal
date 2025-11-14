@@ -126,6 +126,8 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
+                        append:
+                            type: boolean
                         keywordsToAdd:
                             items:
                                 type: string
@@ -208,6 +210,8 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
+                        append:
+                            type: boolean
                         taxonomyCategoryIdsToAdd:
                             items:
                                 format: int64

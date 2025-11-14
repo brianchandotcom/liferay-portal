@@ -127,6 +127,15 @@ public class CTCollectionTemplateLocalServiceImpl
 	}
 
 	@Override
+	public CTCollectionTemplate deleteCTCollectionTemplate(
+			long ctCollectionTemplateId)
+		throws PortalException {
+
+		return deleteCTCollectionTemplate(
+			fetchCTCollectionTemplate(ctCollectionTemplateId));
+	}
+
+	@Override
 	public CTCollectionTemplate fetchCTCollectionTemplate(
 		long ctCollectionTemplateId) {
 

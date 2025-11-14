@@ -108,6 +108,16 @@ public class CartTransitionSerDes {
 			sb.append(cartTransition.getOpen());
 		}
 
+		if (cartTransition.getRestricted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"restricted\": ");
+
+			sb.append(cartTransition.getRestricted());
+		}
+
 		if (cartTransition.getWorkflowTaskId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -172,6 +182,14 @@ public class CartTransitionSerDes {
 			map.put("open", String.valueOf(cartTransition.getOpen()));
 		}
 
+		if (cartTransition.getRestricted() == null) {
+			map.put("restricted", null);
+		}
+		else {
+			map.put(
+				"restricted", String.valueOf(cartTransition.getRestricted()));
+		}
+
 		if (cartTransition.getWorkflowTaskId() == null) {
 			map.put("workflowTaskId", null);
 		}
@@ -214,6 +232,9 @@ public class CartTransitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "open")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "restricted")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "workflowTaskId")) {
 				return false;
 			}
@@ -250,6 +271,11 @@ public class CartTransitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "open")) {
 				if (jsonParserFieldValue != null) {
 					cartTransition.setOpen((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "restricted")) {
+				if (jsonParserFieldValue != null) {
+					cartTransition.setRestricted((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "workflowTaskId")) {

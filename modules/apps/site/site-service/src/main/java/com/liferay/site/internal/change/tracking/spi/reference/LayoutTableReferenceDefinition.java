@@ -8,6 +8,7 @@ package com.liferay.site.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.kernel.model.ClassNameTable;
@@ -113,8 +114,9 @@ public class LayoutTableReferenceDefinition
 			LayoutTable.INSTANCE
 		).parentColumnReference(
 			LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.parentPlid
-		).parentColumnReference(
-			LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.masterLayoutPlid
+		).singleColumnReference(
+			LayoutTable.INSTANCE.masterLayoutPageTemplateEntryERC,
+			LayoutPageTemplateEntryTable.INSTANCE.externalReferenceCode
 		).referenceInnerJoin(
 			fromStep -> {
 				LayoutTable aliasLayoutTable = LayoutTable.INSTANCE.as(

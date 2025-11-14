@@ -205,10 +205,22 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 
 		if (plid == 0) {
+			String masterLayoutPageTemplateEntryERC = null;
+
+			if (masterLayoutPlid != 0) {
+				LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+					fetchLayoutPageTemplateEntryByPlid(masterLayoutPlid);
+
+				if (masterLayoutPageTemplateEntry != null) {
+					masterLayoutPageTemplateEntryERC =
+						masterLayoutPageTemplateEntry.
+							getExternalReferenceCode();
+				}
+			}
+
 			Layout layout = _addLayout(
-				userId, groupId, name, type,
-				layoutPageTemplateEntry.getExternalReferenceCode(), status,
-				serviceContext);
+				userId, groupId, name, type, masterLayoutPageTemplateEntryERC,
+				status, serviceContext);
 
 			if (layout != null) {
 				plid = layout.getPlid();

@@ -5926,7 +5926,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 						draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 						draftLayout.getLayoutId(),
-						layoutPageTemplateEntry.getPlid());
+						layoutPageTemplateEntry.getExternalReferenceCode());
 			}
 		}
 

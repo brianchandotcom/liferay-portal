@@ -233,6 +233,10 @@ public class FragmentEditableElementUtil {
 		TextFragmentEditableElementValue textFragmentEditableElementValue =
 			new TextFragmentEditableElementValue();
 
+		textFragmentEditableElementValue.setFragmentLink(
+			() -> FragmentLinkUtil.toFragmentLink(
+				companyId, infoItemServiceRegistry,
+				jsonObject.getJSONObject("config"), scopeGroupId));
 		textFragmentEditableElementValue.setTextFragmentValue(
 			() -> _toTextFragmentValue(
 				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId));

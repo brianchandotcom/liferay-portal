@@ -180,6 +180,11 @@ export interface IBaseItemSelectorProps<T> {
 	onItemsChange?: InternalDispatch<T[]>;
 
 	/**
+	 * A flag to refetch the data when the component becomes active.
+	 */
+	refetchOnActive?: boolean;
+
+	/**
 	 * The current value of the input (controlled).
 	 */
 	value?: string;
@@ -222,6 +227,7 @@ function ItemSelector<T extends Record<string, any>>({
 	defaultValue,
 	defaultItems,
 	displaySelectedItems = true,
+	refetchOnActive = false,
 	...otherProps
 }: IItemSelectorProps<T>) {
 	useEffect(() => {
@@ -254,7 +260,11 @@ function ItemSelector<T extends Record<string, any>>({
 
 	const [networkStatus, setNetworkStatus] = useState(NETWORK_STATUS_UNUSED);
 
-	const {loadMore, resource: sourceItems = []} = useResource({
+	const {
+		loadMore,
+		refetch,
+		resource: sourceItems = [],
+	} = useResource({
 		fetch: async (link) => {
 			const result = await fetch(link);
 
@@ -408,7 +418,13 @@ function ItemSelector<T extends Record<string, any>>({
 					loading: Liferay.Language.get('loading...'),
 					notFound: Liferay.Language.get('no-results-found'),
 				}}
-				onActiveChange={setActive}
+				onActiveChange={(active: boolean) => {
+					if (active && refetchOnActive) {
+						refetch();
+					}
+
+					setActive(active);
+				}}
 				onChange={(value: string) => {
 					if (!value.length) {
 						setItems([]);

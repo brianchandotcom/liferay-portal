@@ -144,10 +144,6 @@ public class FragmentEditableElementUtil {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (textFragmentEditableElementValue == null) {
-			return jsonObject;
-		}
-
 		TextFragmentValue textFragmentValue =
 			textFragmentEditableElementValue.getTextFragmentValue();
 

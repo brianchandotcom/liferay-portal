@@ -3471,6 +3471,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.tika.jar!org.apache.tika.core.jar</file-name>
+				<version>1.28.5.LIFERAY-PATCHED-1</version>
+				<project-name>Apache Tika core</project-name>
+				<project-url>http://tika.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.tika.jar!org.gagravarr.tika.jar</file-name>
 				<version>0.8.LIFERAY-PATCHED-1</version>
 				<project-name>org.gagravarr.tika</project-name>
@@ -3513,18 +3525,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tika.jar!tika-core.jar</file-name>
-				<version>1.28.5</version>
-				<project-name>Apache Tika core</project-name>
-				<project-url>http://tika.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

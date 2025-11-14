@@ -1266,13 +1266,7 @@ test.describe('Page Contents Panel', () => {
 				) {
 					await page
 						.locator('.journal-article-button-row')
-						.getByRole('button', {name: 'Publish'})
-						.click();
-
-					await page
-						.getByRole('menuitem', {
-							name: 'Publish',
-						})
+						.getByRole('button', {exact: true, name: 'Publish'})
 						.click({timeout: 500});
 				}
 

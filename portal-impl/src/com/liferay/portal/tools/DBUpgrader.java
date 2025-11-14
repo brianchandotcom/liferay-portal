@@ -169,8 +169,6 @@ public class DBUpgrader {
 		_upgradeClient = true;
 
 		try {
-			_initUpgradeStopwatch();
-
 			PortalClassPathUtil.initializeClassPaths(null);
 
 			InitUtil.initWithSpring(

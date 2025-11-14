@@ -5,9 +5,12 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -36,60 +39,52 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment editable element of type text.",
-	value = "TextFragmentEditableElementValue"
+	description = "A fragment editable element value fragment link.",
+	value = "FragmentEditableElementValueFragmentLink"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "TextFragmentEditableElementValue")
-public class TextFragmentEditableElementValue
-	extends FragmentEditableElementValue implements Serializable {
+@XmlRootElement(name = "FragmentEditableElementValueFragmentLink")
+public class FragmentEditableElementValueFragmentLink implements Serializable {
 
-	public static TextFragmentEditableElementValue toDTO(String json) {
+	public static FragmentEditableElementValueFragmentLink toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			TextFragmentEditableElementValue.class, json);
+			FragmentEditableElementValueFragmentLink.class, json);
 	}
 
-	public static TextFragmentEditableElementValue unsafeToDTO(String json) {
+	public static FragmentEditableElementValueFragmentLink unsafeToDTO(
+		String json) {
+
 		return ObjectMapperUtil.unsafeReadValue(
-			TextFragmentEditableElementValue.class, json);
+			FragmentEditableElementValueFragmentLink.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment link of a text fragment editable element value."
+		description = "The fragment link of a fragment editable element value."
 	)
 	@Valid
-	public FragmentEditableElementValueFragmentLink
-		getFragmentEditableElementValueFragmentLink() {
+	public FragmentLink getFragmentLink() {
+		if (_fragmentLinkSupplier != null) {
+			fragmentLink = _fragmentLinkSupplier.get();
 
-		if (_fragmentEditableElementValueFragmentLinkSupplier != null) {
-			fragmentEditableElementValueFragmentLink =
-				_fragmentEditableElementValueFragmentLinkSupplier.get();
-
-			_fragmentEditableElementValueFragmentLinkSupplier = null;
+			_fragmentLinkSupplier = null;
 		}
 
-		return fragmentEditableElementValueFragmentLink;
+		return fragmentLink;
 	}
 
-	public void setFragmentEditableElementValueFragmentLink(
-		FragmentEditableElementValueFragmentLink
-			fragmentEditableElementValueFragmentLink) {
+	public void setFragmentLink(FragmentLink fragmentLink) {
+		this.fragmentLink = fragmentLink;
 
-		this.fragmentEditableElementValueFragmentLink =
-			fragmentEditableElementValueFragmentLink;
-
-		_fragmentEditableElementValueFragmentLinkSupplier = null;
+		_fragmentLinkSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFragmentEditableElementValueFragmentLink(
-		UnsafeSupplier<FragmentEditableElementValueFragmentLink, Exception>
-			fragmentEditableElementValueFragmentLinkUnsafeSupplier) {
+	public void setFragmentLink(
+		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
 
-		_fragmentEditableElementValueFragmentLinkSupplier = () -> {
+		_fragmentLinkSupplier = () -> {
 			try {
-				return fragmentEditableElementValueFragmentLinkUnsafeSupplier.
-					get();
+				return fragmentLinkUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -101,44 +96,53 @@ public class TextFragmentEditableElementValue
 	}
 
 	@GraphQLField(
-		description = "The fragment link of a text fragment editable element value."
+		description = "The fragment link of a fragment editable element value."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentEditableElementValueFragmentLink
-		fragmentEditableElementValueFragmentLink;
+	protected FragmentLink fragmentLink;
 
 	@JsonIgnore
-	private Supplier<FragmentEditableElementValueFragmentLink>
-		_fragmentEditableElementValueFragmentLinkSupplier;
+	private Supplier<FragmentLink> _fragmentLinkSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's text."
+		description = "The fragment link prefix of a fragment editable element value."
 	)
+	@JsonGetter("prefix")
 	@Valid
-	public TextFragmentValue getTextFragmentValue() {
-		if (_textFragmentValueSupplier != null) {
-			textFragmentValue = _textFragmentValueSupplier.get();
+	public Prefix getPrefix() {
+		if (_prefixSupplier != null) {
+			prefix = _prefixSupplier.get();
 
-			_textFragmentValueSupplier = null;
+			_prefixSupplier = null;
 		}
 
-		return textFragmentValue;
-	}
-
-	public void setTextFragmentValue(TextFragmentValue textFragmentValue) {
-		this.textFragmentValue = textFragmentValue;
-
-		_textFragmentValueSupplier = null;
+		return prefix;
 	}
 
 	@JsonIgnore
-	public void setTextFragmentValue(
-		UnsafeSupplier<TextFragmentValue, Exception>
-			textFragmentValueUnsafeSupplier) {
+	public String getPrefixAsString() {
+		Prefix prefix = getPrefix();
 
-		_textFragmentValueSupplier = () -> {
+		if (prefix == null) {
+			return null;
+		}
+
+		return prefix.toString();
+	}
+
+	public void setPrefix(Prefix prefix) {
+		this.prefix = prefix;
+
+		_prefixSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPrefix(
+		UnsafeSupplier<Prefix, Exception> prefixUnsafeSupplier) {
+
+		_prefixSupplier = () -> {
 			try {
-				return textFragmentValueUnsafeSupplier.get();
+				return prefixUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -149,12 +153,14 @@ public class TextFragmentEditableElementValue
 		};
 	}
 
-	@GraphQLField(description = "The fragment editable element's text.")
+	@GraphQLField(
+		description = "The fragment link prefix of a fragment editable element value."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected TextFragmentValue textFragmentValue;
+	protected Prefix prefix;
 
 	@JsonIgnore
-	private Supplier<TextFragmentValue> _textFragmentValueSupplier;
+	private Supplier<Prefix> _prefixSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -162,15 +168,16 @@ public class TextFragmentEditableElementValue
 			return true;
 		}
 
-		if (!(object instanceof TextFragmentEditableElementValue)) {
+		if (!(object instanceof FragmentEditableElementValueFragmentLink)) {
 			return false;
 		}
 
-		TextFragmentEditableElementValue textFragmentEditableElementValue =
-			(TextFragmentEditableElementValue)object;
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink =
+				(FragmentEditableElementValueFragmentLink)object;
 
 		return Objects.equals(
-			toString(), textFragmentEditableElementValue.toString());
+			toString(), fragmentEditableElementValueFragmentLink.toString());
 	}
 
 	@Override
@@ -185,43 +192,29 @@ public class TextFragmentEditableElementValue
 
 		sb.append("{");
 
-		FragmentEditableElementValueFragmentLink
-			fragmentEditableElementValueFragmentLink =
-				getFragmentEditableElementValueFragmentLink();
+		FragmentLink fragmentLink = getFragmentLink();
 
-		if (fragmentEditableElementValueFragmentLink != null) {
+		if (fragmentLink != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentEditableElementValueFragmentLink\": ");
+			sb.append("\"fragmentLink\": ");
 
-			sb.append(String.valueOf(fragmentEditableElementValueFragmentLink));
+			sb.append(String.valueOf(fragmentLink));
 		}
 
-		TextFragmentValue textFragmentValue = getTextFragmentValue();
+		Prefix prefix = getPrefix();
 
-		if (textFragmentValue != null) {
+		if (prefix != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"textFragmentValue\": ");
-
-			sb.append(String.valueOf(textFragmentValue));
-		}
-
-		Type type = getType();
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
+			sb.append("\"prefix\": ");
 
 			sb.append("\"");
-			sb.append(type);
+			sb.append(prefix);
 			sb.append("\"");
 		}
 
@@ -232,10 +225,48 @@ public class TextFragmentEditableElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.TextFragmentEditableElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValueFragmentLink",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Prefix")
+	public static enum Prefix {
+
+		NONE("None"), EMAIL("Email"), PHONE("Phone");
+
+		@JsonCreator
+		public static Prefix create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Prefix prefix : values()) {
+				if (Objects.equals(prefix.getValue(), value)) {
+					return prefix;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Prefix(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

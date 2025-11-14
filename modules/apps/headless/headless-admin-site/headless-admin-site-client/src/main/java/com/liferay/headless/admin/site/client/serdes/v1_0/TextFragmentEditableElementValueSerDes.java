@@ -50,16 +50,19 @@ public class TextFragmentEditableElementValueSerDes {
 
 		sb.append("{");
 
-		if (textFragmentEditableElementValue.getFragmentLink() != null) {
+		if (textFragmentEditableElementValue.
+				getFragmentEditableElementValueFragmentLink() != null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentLink\": ");
+			sb.append("\"fragmentEditableElementValueFragmentLink\": ");
 
 			sb.append(
 				String.valueOf(
-					textFragmentEditableElementValue.getFragmentLink()));
+					textFragmentEditableElementValue.
+						getFragmentEditableElementValueFragmentLink()));
 		}
 
 		if (textFragmentEditableElementValue.getTextFragmentValue() != null) {
@@ -108,14 +111,17 @@ public class TextFragmentEditableElementValueSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (textFragmentEditableElementValue.getFragmentLink() == null) {
-			map.put("fragmentLink", null);
+		if (textFragmentEditableElementValue.
+				getFragmentEditableElementValueFragmentLink() == null) {
+
+			map.put("fragmentEditableElementValueFragmentLink", null);
 		}
 		else {
 			map.put(
-				"fragmentLink",
+				"fragmentEditableElementValueFragmentLink",
 				String.valueOf(
-					textFragmentEditableElementValue.getFragmentLink()));
+					textFragmentEditableElementValue.
+						getFragmentEditableElementValueFragmentLink()));
 		}
 
 		if (textFragmentEditableElementValue.getTextFragmentValue() == null) {
@@ -155,7 +161,10 @@ public class TextFragmentEditableElementValueSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "fragmentLink")) {
+			if (Objects.equals(
+					jsonParserFieldName,
+					"fragmentEditableElementValueFragmentLink")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "textFragmentValue")) {
@@ -173,10 +182,15 @@ public class TextFragmentEditableElementValueSerDes {
 			TextFragmentEditableElementValue textFragmentEditableElementValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentLink")) {
+			if (Objects.equals(
+					jsonParserFieldName,
+					"fragmentEditableElementValueFragmentLink")) {
+
 				if (jsonParserFieldValue != null) {
-					textFragmentEditableElementValue.setFragmentLink(
-						FragmentLinkSerDes.toDTO((String)jsonParserFieldValue));
+					textFragmentEditableElementValue.
+						setFragmentEditableElementValueFragmentLink(
+							FragmentEditableElementValueFragmentLinkSerDes.
+								toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "textFragmentValue")) {

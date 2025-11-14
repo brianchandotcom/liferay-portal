@@ -26,26 +26,35 @@ public class TextFragmentEditableElementValue
 		return TextFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
-	public FragmentLink getFragmentLink() {
-		return fragmentLink;
+	public FragmentEditableElementValueFragmentLink
+		getFragmentEditableElementValueFragmentLink() {
+
+		return fragmentEditableElementValueFragmentLink;
 	}
 
-	public void setFragmentLink(FragmentLink fragmentLink) {
-		this.fragmentLink = fragmentLink;
+	public void setFragmentEditableElementValueFragmentLink(
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink) {
+
+		this.fragmentEditableElementValueFragmentLink =
+			fragmentEditableElementValueFragmentLink;
 	}
 
-	public void setFragmentLink(
-		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
+	public void setFragmentEditableElementValueFragmentLink(
+		UnsafeSupplier<FragmentEditableElementValueFragmentLink, Exception>
+			fragmentEditableElementValueFragmentLinkUnsafeSupplier) {
 
 		try {
-			fragmentLink = fragmentLinkUnsafeSupplier.get();
+			fragmentEditableElementValueFragmentLink =
+				fragmentEditableElementValueFragmentLinkUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentLink fragmentLink;
+	protected FragmentEditableElementValueFragmentLink
+		fragmentEditableElementValueFragmentLink;
 
 	public TextFragmentValue getTextFragmentValue() {
 		return textFragmentValue;

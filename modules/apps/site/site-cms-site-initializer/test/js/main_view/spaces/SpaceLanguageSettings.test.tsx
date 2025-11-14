@@ -207,7 +207,7 @@ describe('SpaceLanguageSettings', () => {
 
 			const selectedLanguages = screen
 				.getByRole('listbox', {
-					name: 'selected',
+					name: 'in-use',
 				})
 				.querySelectorAll('option');
 
@@ -223,7 +223,7 @@ describe('SpaceLanguageSettings', () => {
 			});
 
 			const selectedLanguagesSelect = screen.getByRole('listbox', {
-				name: 'selected',
+				name: 'in-use',
 			});
 
 			const ltrButton = screen.getByRole('button', {
@@ -250,7 +250,7 @@ describe('SpaceLanguageSettings', () => {
 			});
 
 			const selectedLanguagesSelect = screen.getByRole('listbox', {
-				name: 'selected',
+				name: 'in-use',
 			});
 
 			const ltrButton = screen.getByRole('button', {
@@ -281,7 +281,7 @@ describe('SpaceLanguageSettings', () => {
 			});
 
 			const selectedLanguagesSelect = screen.getByRole('listbox', {
-				name: 'selected',
+				name: 'in-use',
 			});
 
 			const rtlButton = screen.getByRole('button', {
@@ -309,7 +309,7 @@ describe('SpaceLanguageSettings', () => {
 			});
 
 			const selectedLanguagesSelect = screen.getByRole('listbox', {
-				name: 'selected',
+				name: 'in-use',
 			});
 
 			const rtlButton = screen.getByRole('button', {

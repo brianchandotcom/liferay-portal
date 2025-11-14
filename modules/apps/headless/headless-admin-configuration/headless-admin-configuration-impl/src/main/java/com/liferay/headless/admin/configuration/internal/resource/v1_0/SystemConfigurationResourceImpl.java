@@ -12,6 +12,7 @@ import com.liferay.headless.admin.configuration.internal.util.ConfigurationUtil;
 import com.liferay.headless.admin.configuration.resource.v1_0.SystemConfigurationResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -20,6 +21,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotAuthorizedException;
@@ -127,6 +130,60 @@ public class SystemConfigurationResourceImpl
 		return Page.of(systemConfigurations);
 	}
 
+	@Override
+	public SystemConfiguration postSystemConfiguration(
+			SystemConfiguration systemConfiguration)
+		throws Exception {
+
+		return putSystemConfiguration(
+			systemConfiguration.getExternalReferenceCode(),
+			systemConfiguration);
+	}
+
+	@Override
+	public SystemConfiguration putSystemConfiguration(
+			String systemConfigurationExternalReferenceCode,
+			SystemConfiguration systemConfiguration)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-65399")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		_checkPermission();
+
+		systemConfiguration.setExternalReferenceCode(
+			() -> systemConfigurationExternalReferenceCode);
+
+		String filterString =
+			ConfigurationFilterStringUtil.getSystemScopedFilterString(
+				systemConfiguration.getExternalReferenceCode());
+
+		try {
+			Configuration configuration =
+				ConfigurationUtil.addOrUpdateConfiguration(
+					null, _configurationAdmin,
+					systemConfiguration.getExternalReferenceCode(),
+					filterString, systemConfiguration.getProperties(),
+					ExtendedObjectClassDefinition.Scope.SYSTEM,
+					_settingsLocatorHelper);
+
+			if (configuration == null) {
+				throw new NotFoundException(
+					"Unable to find system configuration with external " +
+						"reference code " +
+							systemConfiguration.getExternalReferenceCode());
+			}
+
+			return _toSystemConfiguration(configuration);
+		}
+		catch (ValidationException validationException) {
+			throw new BadRequestException(validationException.getMessage());
+		}
+	}
+
 	private void _checkPermission() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -142,7 +199,7 @@ public class SystemConfigurationResourceImpl
 
 		Map<String, Object> properties = ConfigurationUtil.getProperties(
 			configuration, _configurationExportImportProcessor,
-			_settingsLocatorHelper);
+			ExtendedObjectClassDefinition.Scope.SYSTEM, _settingsLocatorHelper);
 
 		if (properties.isEmpty()) {
 			return null;

@@ -1275,7 +1275,7 @@ components:
                 prefix:
                     description:
                         The fragment link prefix of a fragment editable element value.
-                    enum: [None,Email, Phone]
+                    enum: [None, Email, Phone]
                     type: string
             type: object
         FragmentImage:

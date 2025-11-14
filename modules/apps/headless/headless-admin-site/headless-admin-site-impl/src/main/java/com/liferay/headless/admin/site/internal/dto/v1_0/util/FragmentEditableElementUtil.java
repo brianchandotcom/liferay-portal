@@ -10,7 +10,9 @@ import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorU
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValueFragmentLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentValue;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
@@ -154,16 +157,46 @@ public class FragmentEditableElementUtil {
 		jsonObject.put(
 			"config",
 			() -> {
+				FragmentEditableElementValueFragmentLink
+					fragmentEditableElementValueFragmentLink =
+						textFragmentEditableElementValue.
+							getFragmentEditableElementValueFragmentLink();
+
+				if (fragmentEditableElementValueFragmentLink == null) {
+					return null;
+				}
+
 				JSONObject configJSONObject = FragmentLinkUtil.toJSONObject(
 					companyId,
-					textFragmentEditableElementValue.getFragmentLink(),
+					fragmentEditableElementValueFragmentLink.getFragmentLink(),
 					infoItemServiceRegistry, scopeGroupId);
 
 				if (JSONUtil.isEmpty(configJSONObject)) {
 					return null;
 				}
 
-				return configJSONObject.put("mapperType", "link");
+				configJSONObject.put("mapperType", "link");
+
+				FragmentEditableElementValueFragmentLink.Prefix prefix =
+					fragmentEditableElementValueFragmentLink.getPrefix();
+
+				if ((prefix == null) ||
+					Objects.equals(
+						prefix,
+						FragmentEditableElementValueFragmentLink.Prefix.NONE)) {
+
+					return configJSONObject;
+				}
+
+				if (Objects.equals(
+						prefix,
+						FragmentEditableElementValueFragmentLink.Prefix.
+							EMAIL)) {
+
+					return configJSONObject.put("prefix", "mailto:");
+				}
+
+				return configJSONObject.put("prefix", "tel:");
 			}
 		);
 
@@ -237,6 +270,52 @@ public class FragmentEditableElementUtil {
 			});
 	}
 
+	private static FragmentEditableElementValueFragmentLink
+		_toFragmentEditableElementValueFragmentLink(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId) {
+
+		FragmentLink fragmentLink = FragmentLinkUtil.toFragmentLink(
+			companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+
+		if (fragmentLink == null) {
+			return null;
+		}
+
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink =
+				new FragmentEditableElementValueFragmentLink();
+
+		fragmentEditableElementValueFragmentLink.setFragmentLink(
+			() -> fragmentLink);
+		fragmentEditableElementValueFragmentLink.setPrefix(
+			() -> {
+				if (!jsonObject.has("prefix")) {
+					return null;
+				}
+
+				String prefix = jsonObject.getString("prefix");
+
+				if (Validator.isNull(prefix)) {
+					return FragmentEditableElementValueFragmentLink.Prefix.NONE;
+				}
+
+				if (prefix.equals("mailto:")) {
+					return FragmentEditableElementValueFragmentLink.Prefix.
+						EMAIL;
+				}
+
+				if (prefix.equals("tel:")) {
+					return FragmentEditableElementValueFragmentLink.Prefix.
+						PHONE;
+				}
+
+				return null;
+			});
+
+		return fragmentEditableElementValueFragmentLink;
+	}
+
 	private static TextFragmentEditableElementValue
 		_toTextFragmentEditableElementValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
@@ -249,10 +328,11 @@ public class FragmentEditableElementUtil {
 		TextFragmentEditableElementValue textFragmentEditableElementValue =
 			new TextFragmentEditableElementValue();
 
-		textFragmentEditableElementValue.setFragmentLink(
-			() -> FragmentLinkUtil.toFragmentLink(
-				companyId, infoItemServiceRegistry,
-				jsonObject.getJSONObject("config"), scopeGroupId));
+		textFragmentEditableElementValue.
+			setFragmentEditableElementValueFragmentLink(
+				() -> _toFragmentEditableElementValueFragmentLink(
+					companyId, infoItemServiceRegistry,
+					jsonObject.getJSONObject("config"), scopeGroupId));
 		textFragmentEditableElementValue.setTextFragmentValue(
 			() -> _toTextFragmentValue(
 				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId));

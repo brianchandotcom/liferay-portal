@@ -500,13 +500,13 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static long getObjectEntriesCount(
-			long groupId,
+			long groupId, String languageId,
 			com.liferay.object.model.ObjectDefinition objectDefinition,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate)
 		throws PortalException {
 
 		return getService().getObjectEntriesCount(
-			groupId, objectDefinition, predicate);
+			groupId, languageId, objectDefinition, predicate);
 	}
 
 	/**

@@ -570,13 +570,13 @@ public class ObjectEntryLocalServiceWrapper
 
 	@Override
 	public long getObjectEntriesCount(
-			long groupId,
+			long groupId, String languageId,
 			com.liferay.object.model.ObjectDefinition objectDefinition,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getObjectEntriesCount(
-			groupId, objectDefinition, predicate);
+			groupId, languageId, objectDefinition, predicate);
 	}
 
 	/**

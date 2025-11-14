@@ -385,7 +385,7 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getObjectEntriesCount(
-			long groupId, ObjectDefinition objectDefinition,
+			long groupId, String languageId, ObjectDefinition objectDefinition,
 			Predicate predicate)
 		throws PortalException;
 

@@ -5,9 +5,22 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {DEFAULT_FETCH_HEADERS} from '../constants';
-import {parseSortForCustomField} from './parseSortForCustomField';
+import {
+	CUSTOM_FIELD_NAME_DELIMITER,
+	CUSTOM_FIELD_NAME_ODATA_DELIMITER,
+	CUSTOM_FIELD_NAME_PREFIX,
+	DEFAULT_FETCH_HEADERS,
+} from '../constants';
 import {TSort} from './types';
+
+function applyCustomFieldOdataFormat(key: string) {
+	return key.startsWith(CUSTOM_FIELD_NAME_PREFIX)
+		? key.replace(
+				CUSTOM_FIELD_NAME_DELIMITER,
+				CUSTOM_FIELD_NAME_ODATA_DELIMITER
+			)
+		: key;
+}
 
 function createOdataFilter(filters: Array<string>): string {
 	return filters.map((filter: string) => `(${filter})`).join(' and ');
@@ -99,7 +112,7 @@ export async function loadData({
 				: sort.key;
 
 			if (key) {
-				key = parseSortForCustomField(key);
+				key = applyCustomFieldOdataFormat(key);
 			}
 
 			return {

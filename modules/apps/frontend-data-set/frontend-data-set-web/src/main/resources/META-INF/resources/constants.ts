@@ -15,6 +15,10 @@ export enum ETimeZoneBehaviors {
 	DO_NOT_MODIFY_DATE_VALUE = 'doNotModifyDateValue',
 }
 
+export const CUSTOM_FIELD_NAME_DELIMITER = '.';
+export const CUSTOM_FIELD_NAME_ODATA_DELIMITER = '/';
+export const CUSTOM_FIELD_NAME_PREFIX = 'customField';
+
 export const FDS_ARRAY_FIELD_NAME_DELIMITER: string = '[]';
 export const FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX: string = `${FDS_ARRAY_FIELD_NAME_DELIMITER}*`;
 export const FDS_NESTED_FIELD_NAME_DELIMITER: string = '.';

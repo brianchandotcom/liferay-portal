@@ -148,7 +148,7 @@ describe('RulesSidebar', () => {
 		renderComponent();
 
 		selectPickerOption('select-action', 'show');
-		selectPickerOption('select-fragment', 'containercillo');
+		selectPickerOption('select-fragment-for-the-action', 'containercillo');
 
 		expect(
 			screen.getByText('containercillo', {selector: '[role="combobox"]'})
@@ -163,7 +163,7 @@ describe('RulesSidebar', () => {
 		selectPickerOption('select-user', 'user1');
 
 		selectPickerOption('select-action', 'show');
-		selectPickerOption('select-fragment', 'containercillo');
+		selectPickerOption('select-fragment-for-the-action', 'containercillo');
 
 		fireEvent.click(screen.getByText('save'));
 
@@ -209,7 +209,7 @@ describe('RulesSidebar', () => {
 		renderComponent();
 
 		selectPickerOption('select-action', 'show');
-		selectPickerOption('select-fragment', 'containercillo');
+		selectPickerOption('select-fragment-for-the-action', 'containercillo');
 
 		act(() => {
 			fireEvent.click(screen.getByTitle('delete-action'));
@@ -218,6 +218,8 @@ describe('RulesSidebar', () => {
 		expect(
 			screen.queryByText('select-item-for-the-action')
 		).not.toBeInTheDocument();
-		expect(screen.queryByText('select-fragment')).not.toBeInTheDocument();
+		expect(
+			screen.queryByText('select-fragment-for-the-action')
+		).not.toBeInTheDocument();
 	});
 });

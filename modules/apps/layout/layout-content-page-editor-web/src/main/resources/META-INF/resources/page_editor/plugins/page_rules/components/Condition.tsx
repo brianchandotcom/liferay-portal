@@ -191,7 +191,7 @@ function FormFragmentTypeSelectors({
 		<>
 			<RuleSelect
 				aria-label={sub(
-					Liferay.Language.get('select-x'),
+					Liferay.Language.get('select-x-for-the-condition'),
 					Liferay.Language.get('fragment')
 				)}
 				items={inputFragmentItems}

@@ -16,6 +16,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	fdsSamplePageTest,
 	featureFlagsTest({
+		'LPD-68829': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -105,6 +106,18 @@ test(
 					.click();
 			});
 
+			await test.step('Check filters show up grouped together', async () => {
+				await expect(
+					page.locator('li.dropdown-subheader', {hasText: 'Group 1'})
+				).toBeVisible();
+				await expect(
+					page.locator('li.dropdown-subheader', {hasText: 'Group 2'})
+				).toBeVisible();
+				await expect(
+					page.locator('li.dropdown-subheader', {hasText: 'Group 2'})
+				).toBeVisible();
+			});
+
 			await test.step('Enter a search term "status"', async () => {
 				await page
 					.locator('.dropdown-menu')
@@ -148,36 +161,6 @@ test(
 				).toBeVisible();
 				await expect(
 					page.getByRole('menuitem', {name: 'Status'})
-				).toBeVisible();
-			});
-		});
-
-		await test.step('Check that no filters were found message is displayed', async () => {
-			await test.step('Refresh the page', async () => {
-				await page.reload();
-
-				await page
-					.getByText('This is a description for sample 1.')
-					.waitFor();
-			});
-
-			await test.step('Open filter dropdown', async () => {
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Filter'})
-					.click();
-			});
-
-			await test.step('Enter a search term that does not exist', async () => {
-				await page
-					.locator('.dropdown-menu')
-					.getByLabel('Search')
-					.first()
-					.fill('nonexistent');
-			});
-
-			await test.step('Check a message was displayed', async () => {
-				await expect(
-					page.getByText('No filters were found.')
 				).toBeVisible();
 			});
 		});

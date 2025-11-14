@@ -15,7 +15,6 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -111,7 +110,7 @@ public class FragmentLinkUtil {
 				"target", TargetUtil.toInternalValue(target.getValue()));
 		}
 
-		return JSONUtil.put("link", jsonObject);
+		return jsonObject;
 	}
 
 	private static FragmentLinkMappedValue _toFragmentLinkMappedValue(

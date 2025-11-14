@@ -16,6 +16,10 @@
 			).put(
 				"isOpen", open
 			).put(
+				"manageNotesPermission", manageNotesPermission
+			).put(
+				"manageRestrictedNotesPermission", manageRestrictedNotesPermission
+			).put(
 				"orderId", commerceOrderId
 			).put(
 				"orderSummaryURL", orderSummaryURL

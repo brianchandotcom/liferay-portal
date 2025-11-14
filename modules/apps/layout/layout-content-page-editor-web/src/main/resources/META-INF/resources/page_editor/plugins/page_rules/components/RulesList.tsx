@@ -14,7 +14,7 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
+import {ITEM_INTERACTION_ORIGINS} from '../../../app/config/constants/itemInteractionOrigins';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import {
@@ -177,7 +177,7 @@ function RuleItem({
 
 	const onHighlightItems = () => {
 		hoverMultipleItems(hoveredItemIds, {
-			origin: ITEM_ACTIVATION_ORIGINS.rules,
+			origin: ITEM_INTERACTION_ORIGINS.rules,
 		});
 	};
 

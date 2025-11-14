@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import React, {useRef} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
-import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
+import {ITEM_INTERACTION_ORIGINS} from '../../config/constants/itemInteractionOrigins';
 import {useClipboard} from '../../contexts/ClipboardContext';
 import {useIsDisabledCollectionItem} from '../../contexts/CollectionItemContext';
 import {
@@ -204,7 +204,7 @@ const ActivableTopperEmpty = ({
 						event.stopPropagation();
 
 						selectItem(item.itemId, {
-							origin: ITEM_ACTIVATION_ORIGINS.layout,
+							origin: ITEM_INTERACTION_ORIGINS.layout,
 						});
 					},
 					onMouseLeave: (event) => {
@@ -216,7 +216,7 @@ const ActivableTopperEmpty = ({
 
 						if (isHovered) {
 							hoverItem(null, {
-								origin: ITEM_ACTIVATION_ORIGINS.layout,
+								origin: ITEM_INTERACTION_ORIGINS.layout,
 							});
 						}
 					},
@@ -228,7 +228,7 @@ const ActivableTopperEmpty = ({
 						event.stopPropagation();
 
 						hoverItem(item.itemId, {
-							origin: ITEM_ACTIVATION_ORIGINS.layout,
+							origin: ITEM_INTERACTION_ORIGINS.layout,
 						});
 					},
 					ref: (node) => {

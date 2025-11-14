@@ -6,7 +6,7 @@
 import {openToast} from 'frontend-js-components-web';
 
 import deleteItemAction from '../actions/deleteItem';
-import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
+import {ITEM_INTERACTION_ORIGINS} from '../config/constants/itemInteractionOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
@@ -76,7 +76,7 @@ export default function deleteItem({itemIds, selectItems = () => {}}) {
 			}
 			else {
 				selectItems([nextItemId], {
-					origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+					origin: ITEM_INTERACTION_ORIGINS.itemActions,
 				});
 			}
 

@@ -9,7 +9,7 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
+import {ITEM_INTERACTION_ORIGINS} from '../../../../../app/config/constants/itemInteractionOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {
 	ARROW_DOWN_KEY_CODE,
@@ -248,11 +248,11 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 		if (item.activable) {
 			selectItem(item.id, {
 				itemType: item.itemType,
-				origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+				origin: ITEM_INTERACTION_ORIGINS.sidebar,
 			});
 
 			hoverItem(null, {
-				origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+				origin: ITEM_INTERACTION_ORIGINS.sidebar,
 			});
 		}
 	};
@@ -272,7 +272,7 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 
 				if (item) {
 					selectItem(itemId, {
-						origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+						origin: ITEM_INTERACTION_ORIGINS.sidebar,
 					});
 				}
 			}
@@ -342,14 +342,14 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 									if (item.hovered) {
 										event.stopPropagation();
 										hoverItem(null, {
-											origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+											origin: ITEM_INTERACTION_ORIGINS.sidebar,
 										});
 									}
 								}}
 								onMouseOver={(event) => {
 									event.stopPropagation();
 									hoverItem(item.id, {
-										origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+										origin: ITEM_INTERACTION_ORIGINS.sidebar,
 									});
 								}}
 							>

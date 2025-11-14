@@ -9,7 +9,7 @@ import React, {useEffect, useMemo} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
+import {ITEM_INTERACTION_ORIGINS} from '../../config/constants/itemInteractionOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {TEXT_EDITABLE_TYPES} from '../../config/constants/textEditableTypes';
 import {config} from '../../config/index';
@@ -181,7 +181,7 @@ function FragmentContentInteractionsFilter({
 						isHovered(editable.itemId));
 
 				const hoveredClass =
-					hoveringOrigin === ITEM_ACTIVATION_ORIGINS.contents
+					hoveringOrigin === ITEM_INTERACTION_ORIGINS.contents
 						? EDITABLE_CLASS_NAMES.contentHovered
 						: EDITABLE_CLASS_NAMES.hovered;
 
@@ -214,7 +214,7 @@ function FragmentContentInteractionsFilter({
 	useEffect(() => {
 		if (
 			activeItemType !== ITEM_TYPES.editable ||
-			activationOrigin !== ITEM_ACTIVATION_ORIGINS.sidebar
+			activationOrigin !== ITEM_INTERACTION_ORIGINS.sidebar
 		) {
 			return;
 		}

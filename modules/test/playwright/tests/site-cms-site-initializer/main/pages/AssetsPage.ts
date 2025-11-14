@@ -11,6 +11,19 @@ import {DataSetPage} from './DataSetPage';
 
 // Page for All, Content and Files page
 
+interface ExecItemActionArgs {
+	action:
+		| 'Delete'
+		| 'Download'
+		| 'Edit'
+		| 'Expire'
+		| 'Share'
+		| 'Show Details'
+		| 'View'
+		| 'View History';
+	filter: string;
+}
+
 export class AssetsPage {
 	readonly page: Page;
 
@@ -115,21 +128,7 @@ export class AssetsPage {
 		await this.dataSetFragmentPage.execBulkItemAction({action});
 	}
 
-	async execItemAction({
-		action,
-		filter,
-	}: {
-		action:
-			| 'Delete'
-			| 'Edit'
-			| 'Download'
-			| 'Expire'
-			| 'Share'
-			| 'Show Details'
-			| 'View'
-			| 'View History';
-		filter: string;
-	}) {
+	async execItemAction({action, filter}: ExecItemActionArgs) {
 		await this.dataSetFragmentPage.execItemAction({
 			action,
 			filter,
@@ -156,5 +155,22 @@ export class AssetsPage {
 		await this.galleryNavigation
 			.getByRole('button', {name: direction})
 			.click();
+	}
+
+	async getCardItem(name: string) {
+		return this.galleryThumbnails.locator('.card', {hasText: name});
+	}
+
+	async execCardItemAction({action, filter}: ExecItemActionArgs) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: action,
+			}),
+			trigger: (await this.getCardItem(filter)).getByLabel(
+				'More actions'
+			),
+		});
 	}
 }

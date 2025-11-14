@@ -659,6 +659,7 @@ test(
 			await defaultPermissionsPage.permissionsModalCancelButton.click();
 
 			await filesPage.goto();
+			await filesPage.changeVisualizationMode('Table');
 
 			const folderName3 = 'Folder' + getRandomInt();
 			const folderName4 = 'Folder' + getRandomInt();
@@ -687,6 +688,10 @@ test(
 			await expect(
 				page.getByTestId('tab-OBJECT_ENTRY_FOLDERS')
 			).toBeVisible();
+
+			await page.getByRole('button', {name: 'Cancel'}).click();
+			await page.getByRole('button', {name: 'Clear'}).click();
+			await filesPage.changeVisualizationMode('Gallery');
 		}
 		finally {
 			await goToAllSpaces(page);

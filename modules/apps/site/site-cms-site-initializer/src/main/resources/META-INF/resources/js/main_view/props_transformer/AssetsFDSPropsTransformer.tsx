@@ -58,6 +58,7 @@ export type AdditionalProps = {
 	defaultPermissionAdditionalProps?: any;
 	fileMimeTypeCssClasses: Record<string, string>;
 	fileMimeTypeIcons: Record<string, string>;
+	galleryViewEnabled?: boolean;
 	objectDefinitionCssClasses: Record<string, string>;
 	objectDefinitionIcons: Record<string, string>;
 	objectEntryFolderExternalReferenceCode: string;

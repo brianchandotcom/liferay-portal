@@ -75,6 +75,10 @@ export class ChangeTrackingTemplatesPage {
 
 		await this.page.getByRole('row', {name}).getByRole('button').click();
 
+		this.page.once('dialog', (dialog) => {
+			dialog.accept();
+		});
+
 		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 
 		await expect(this.page.getByText(name)).not.toBeVisible();

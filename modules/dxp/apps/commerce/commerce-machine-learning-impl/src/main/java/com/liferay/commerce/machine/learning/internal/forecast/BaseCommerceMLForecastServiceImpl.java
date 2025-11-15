@@ -221,7 +221,6 @@ public abstract class BaseCommerceMLForecastServiceImpl
 
 		document.addNumber(
 			CommerceMLForecastField.ACTUAL, commerceMLForecast.getActual());
-		document.addNumber(Field.COMPANY_ID, commerceMLForecast.getCompanyId());
 		document.addNumber(
 			CommerceMLForecastField.FORECAST, commerceMLForecast.getForecast());
 		document.addNumber(
@@ -244,6 +243,7 @@ public abstract class BaseCommerceMLForecastServiceImpl
 		document.addDate(
 			CommerceMLForecastField.TIMESTAMP,
 			commerceMLForecast.getTimestamp());
+		document.addNumber(Field.COMPANY_ID, commerceMLForecast.getCompanyId());
 
 		return document;
 	}

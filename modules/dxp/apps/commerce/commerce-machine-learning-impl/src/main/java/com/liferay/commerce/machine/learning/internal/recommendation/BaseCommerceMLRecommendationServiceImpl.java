@@ -92,19 +92,19 @@ public abstract class BaseCommerceMLRecommendationServiceImpl
 	protected Document getDocument(T commerceMLRecommend) {
 		Document document = new DocumentImpl();
 
-		document.addDate(
-			Field.CREATE_DATE, commerceMLRecommend.getCreateDate());
-		document.addNumber(
-			Field.COMPANY_ID, commerceMLRecommend.getCompanyId());
+		document.addText(
+			CommerceMLRecommendationField.JOB_ID,
+			commerceMLRecommend.getJobId());
 		document.addNumber(
 			CommerceMLRecommendationField.RECOMMENDED_ENTRY_CLASS_PK,
 			commerceMLRecommend.getRecommendedEntryClassPK());
 		document.addNumber(
 			CommerceMLRecommendationField.SCORE,
 			commerceMLRecommend.getScore());
-		document.addText(
-			CommerceMLRecommendationField.JOB_ID,
-			commerceMLRecommend.getJobId());
+		document.addNumber(
+			Field.COMPANY_ID, commerceMLRecommend.getCompanyId());
+		document.addDate(
+			Field.CREATE_DATE, commerceMLRecommend.getCreateDate());
 
 		return document;
 	}

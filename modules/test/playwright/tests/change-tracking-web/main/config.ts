@@ -4,6 +4,7 @@
  */
 
 export const config = {
+	dependencies: ['site-cms-site.main'],
 	name: 'change-tracking-web.main',
 	testDir: 'tests/change-tracking-web/main',
 	use: {

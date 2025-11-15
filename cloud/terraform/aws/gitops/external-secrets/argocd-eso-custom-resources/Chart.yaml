@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Deploys SecretStore and ExternalSecret for ArgoCD.
+name: argocd-eso-custom-resources
+version: 1.0.0

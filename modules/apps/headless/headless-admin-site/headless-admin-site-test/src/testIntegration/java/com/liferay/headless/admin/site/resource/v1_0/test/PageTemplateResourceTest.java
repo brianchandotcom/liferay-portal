@@ -80,7 +80,6 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1206,15 +1205,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 				URL url = new URL(thumbnail.getUrl());
 
-				URLConnection urlConnection = url.openConnection();
+				HttpURLConnection httpURLConnection =
+					(HttpURLConnection)url.openConnection();
 
-				if (urlConnection instanceof
-						HttpURLConnection httpURLConnection) {
-
-					Assert.assertTrue(
-						httpURLConnection.getResponseCode() !=
-							HttpURLConnection.HTTP_OK);
-				}
+				Assert.assertEquals(
+					HttpURLConnection.HTTP_OK,
+					httpURLConnection.getResponseCode());
 			}
 			else {
 				Assert.assertNull(pageTemplate.getThumbnail());

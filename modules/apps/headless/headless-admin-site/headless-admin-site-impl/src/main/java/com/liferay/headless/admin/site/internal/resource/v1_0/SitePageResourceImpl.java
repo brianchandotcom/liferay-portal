@@ -138,6 +138,11 @@ public class SitePageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getLabelLanguageKey() {
+				return "site-pages";
+			}
+
+			@Override
 			public String getModelClassName() {
 				return Layout.class.getName();
 			}

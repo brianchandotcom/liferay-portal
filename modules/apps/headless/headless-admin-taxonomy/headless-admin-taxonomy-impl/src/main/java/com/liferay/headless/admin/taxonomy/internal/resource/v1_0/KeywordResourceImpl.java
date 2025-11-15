@@ -159,6 +159,11 @@ public class KeywordResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getLabelLanguageKey() {
+				return "tags";
+			}
+
+			@Override
 			public String getModelClassName() {
 				return AssetTag.class.getName();
 			}

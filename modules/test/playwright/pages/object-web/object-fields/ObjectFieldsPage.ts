@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class ObjectFieldsPage {
+	readonly iframeLocator: FrameLocator;
 	readonly addObjectFieldButton: Locator;
+	readonly advancedTab: Locator;
 	readonly aggregationFieldDropdown: Locator;
 	readonly aggregationFunctionDropdown: Locator;
 	readonly agreggationRelationshipDropdown: Locator;
@@ -21,10 +23,16 @@ export class ObjectFieldsPage {
 	readonly objectFieldOptionsDropdown: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
+	readonly selectOptionButton: Locator;
+	readonly useDefaultValueToggle: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
+		this.iframeLocator = page.frameLocator('iframe');
 		this.addObjectFieldButton = page.getByLabel('Add Object Field');
+		this.advancedTab = this.iframeLocator.getByRole('tab', {
+			name: 'Advanced',
+		});
 		this.aggregationFieldDropdown = page.getByLabel('FieldMandatory');
 		this.aggregationFunctionDropdown = page.getByLabel('FunctionMandatory');
 		this.agreggationRelationshipDropdown = page.getByLabel(
@@ -49,6 +57,10 @@ export class ObjectFieldsPage {
 		this.objectFieldOptionsDropdown = page.getByText('Select an Option');
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.selectOptionButton = this.iframeLocator.getByRole('combobox');
+		this.useDefaultValueToggle = this.iframeLocator.getByRole('switch', {
+			name: 'Use Default Value',
+		});
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}
 
@@ -171,6 +183,39 @@ export class ObjectFieldsPage {
 			.getByRole('link')
 			.filter({hasText: fieldLabel})
 			.click();
+	}
+
+	async selectDefaultValue(value: string) {
+		await this.selectOptionButton.click();
+
+		const selectOptionLocator = this.iframeLocator.getByRole('option', {
+			exact: true,
+			name: value,
+		});
+
+		await selectOptionLocator.click();
+	}
+
+	async setDefaultValue({
+		defaultValue,
+		objectFieldName,
+		objectName,
+	}: {
+		defaultValue: string;
+		objectFieldName: string;
+		objectName: string;
+	}) {
+		await this.goto(objectName);
+
+		await this.openObjectField(objectFieldName);
+
+		await this.advancedTab.click();
+
+		await this.useDefaultValueToggle.check({timeout: 1000});
+
+		await this.selectDefaultValue(defaultValue);
+
+		await this.editFieldSaveButton.click();
 	}
 
 	getMaximumFileSizeErrorMessage({

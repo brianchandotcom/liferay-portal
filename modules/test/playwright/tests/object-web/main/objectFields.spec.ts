@@ -1099,6 +1099,108 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	});
 
 	test(
+		'can create, update, and delete default value for boolean field',
+		{tag: ['@LPD-49587']},
+		async ({apiHelpers, objectFieldsPage, page, viewObjectEntriesPage}) => {
+			const objectName = 'ObjectDefinitionName' + getRandomInt();
+
+			let booleanField: Partial<ObjectField>[];
+
+			let booleanFieldName: string;
+
+			let objectClassName: string;
+
+			await test.step('create object with boolean field', async () => {
+				booleanField = generateObjectFields({
+					objectFieldBusinessTypes: ['Boolean'],
+				});
+
+				booleanFieldName = booleanField[0].label['en_US'];
+
+				const objectDefinitionAPIClient =
+					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+				const {body: objectDefinition} =
+					await objectDefinitionAPIClient.postObjectDefinition({
+						active: true,
+						externalReferenceCode: getRandomString(),
+						label: {
+							en_US: objectName,
+						},
+						name: objectName,
+						objectFields: booleanField,
+						panelCategoryKey: 'control_panel.object',
+						pluralLabel: {
+							en_US: 'NewObject',
+						},
+						portlet: true,
+						scope: 'company',
+						status: {
+							code: 0,
+						},
+					});
+
+				objectClassName = objectDefinition.className;
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('set default value to false for boolean field and check in object entry', async () => {
+				await objectFieldsPage.setDefaultValue({
+					defaultValue: 'False',
+					objectFieldName: booleanFieldName,
+					objectName,
+				});
+
+				await viewObjectEntriesPage.goto(objectClassName);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
+
+				await expect(
+					page.getByLabel(booleanFieldName)
+				).not.toBeChecked();
+			});
+
+			await test.step('set default value to true for boolean field and check in object entry', async () => {
+				await objectFieldsPage.setDefaultValue({
+					defaultValue: 'True',
+					objectFieldName: booleanFieldName,
+					objectName,
+				});
+
+				await viewObjectEntriesPage.goto(objectClassName);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
+
+				await expect(page.getByLabel(booleanFieldName)).toBeChecked();
+			});
+
+			await test.step('untoggle default value for boolean field and check in object entry', async () => {
+				await objectFieldsPage.goto(objectName);
+
+				await objectFieldsPage.openObjectField(booleanFieldName);
+
+				await objectFieldsPage.advancedTab.click();
+
+				await objectFieldsPage.useDefaultValueToggle.uncheck();
+
+				await objectFieldsPage.editFieldSaveButton.click();
+
+				await viewObjectEntriesPage.goto(objectClassName);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
+
+				await expect(
+					page.getByLabel(booleanFieldName)
+				).not.toBeChecked();
+			});
+		}
+	);
+
+	test(
 		'can delete created custom fields in a System Object',
 		{tag: ['@LPD-53450']},
 		async ({apiHelpers, objectFieldsPage, page}) => {

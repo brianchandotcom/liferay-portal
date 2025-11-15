@@ -58,7 +58,6 @@ import com.liferay.sites.kernel.util.Sites;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -199,15 +198,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 				URL url = new URL(thumbnail.getUrl());
 
-				URLConnection urlConnection = url.openConnection();
+				HttpURLConnection httpURLConnection =
+					(HttpURLConnection)url.openConnection();
 
-				if (urlConnection instanceof
-						HttpURLConnection httpURLConnection) {
-
-					Assert.assertTrue(
-						httpURLConnection.getResponseCode() !=
-							HttpURLConnection.HTTP_OK);
-				}
+				Assert.assertEquals(
+					HttpURLConnection.HTTP_OK,
+					httpURLConnection.getResponseCode());
 			}
 			else {
 				Assert.assertNull(masterPage.getThumbnail());

@@ -86,12 +86,11 @@ public class SharedAssetDTOConverter
 			DTOConverterContext dtoConverterContext, SharingEntry sharingEntry)
 		throws PortalException {
 
+		Group group = _groupLocalService.getGroup(sharingEntry.getGroupId());
 		String mimeType = _getMimeType(sharingEntry);
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
 				sharingEntry);
-
-		Group group = _groupLocalService.getGroup(sharingEntry.getGroupId());
 
 		return new SharedAsset() {
 			{

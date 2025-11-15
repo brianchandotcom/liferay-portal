@@ -58,7 +58,7 @@ public class ExportImportAttachmentManagerImpl
 				company.getVirtualHostname(),
 				_portal.getPortalServerPort(httpsEnabled), httpsEnabled);
 
-			return baseURL + _dlurlHelper.getImagePreviewURL(fileEntry, null);
+			return baseURL + _dlurlHelper.getThumbnailSrc(fileEntry, null);
 		}
 
 		try (InputStream inputStream = dlFileEntry.getContentStream()) {

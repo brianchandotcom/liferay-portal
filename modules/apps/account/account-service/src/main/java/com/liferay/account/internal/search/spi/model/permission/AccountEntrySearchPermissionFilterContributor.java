@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -97,18 +96,9 @@ public class AccountEntrySearchPermissionFilterContributor
 						permissionChecker, organization,
 						AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS)) {
 
-					List<Organization> suborganizations =
-						_organizationLocalService.getSuborganizations(
-							organization.getCompanyId(),
-							organization.getOrganizationId());
-
-					while (!suborganizations.isEmpty()) {
-						organizations.addAll(suborganizations);
-
-						suborganizations =
-							_organizationLocalService.getSuborganizations(
-								suborganizations);
-					}
+					organizations.addAll(
+						_organizationLocalService.getOrganizations(
+							companyId, organization.getTreePath() + "%"));
 				}
 			}
 

@@ -1414,7 +1414,7 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertEquals(
 			objectEntry.getGroupId(), exportImportReportEntry.getGroupId());
 		Assert.assertEquals(
-			objectDefinition.getShortName(),
+			"model.resource." + objectDefinition.getResourceName(),
 			exportImportReportEntry.getModelNameLanguageKey());
 		Assert.assertEquals(
 			ExportImportReportEntryConstants.TYPE_ERROR,

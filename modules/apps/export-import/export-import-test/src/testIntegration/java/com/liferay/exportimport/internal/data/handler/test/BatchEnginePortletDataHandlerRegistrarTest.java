@@ -142,11 +142,11 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 						_hasPortletDataHandlerControls(
 							new PortletDataHandlerControl[] {
 								new PortletDataHandlerBoolean(
-									portletId, className1, null, true, false,
-									null, className1, null),
+									portletId, className1, className1, true,
+									false, null, className1, null),
 								new PortletDataHandlerBoolean(
-									portletId, className2, null, true, false,
-									null, className2, null)
+									portletId, className2, className2, true,
+									false, null, className2, null)
 							},
 							portletDataHandler.getExportControls()));
 

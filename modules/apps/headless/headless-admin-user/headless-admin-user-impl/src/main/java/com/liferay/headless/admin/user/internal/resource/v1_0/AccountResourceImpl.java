@@ -322,6 +322,11 @@ public class AccountResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getLabelLanguageKey() {
+				return "accounts";
+			}
+
+			@Override
 			public String getModelClassName() {
 				return AccountEntry.class.getName();
 			}

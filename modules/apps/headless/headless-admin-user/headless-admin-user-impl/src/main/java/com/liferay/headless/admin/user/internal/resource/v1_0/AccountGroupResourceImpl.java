@@ -207,6 +207,11 @@ public class AccountGroupResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getLabelLanguageKey() {
+				return "account-groups";
+			}
+
+			@Override
 			public String getModelClassName() {
 				return com.liferay.account.model.AccountGroup.class.getName();
 			}

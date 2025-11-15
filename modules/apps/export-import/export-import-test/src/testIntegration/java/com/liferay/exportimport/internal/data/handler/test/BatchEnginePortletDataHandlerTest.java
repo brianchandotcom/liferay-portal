@@ -1766,6 +1766,11 @@ public class BatchEnginePortletDataHandlerTest {
 			return new ExportImportDescriptor() {
 
 				@Override
+				public String getLabelLanguageKey() {
+					return _modelClassName;
+				}
+
+				@Override
 				public String getModelClassName() {
 					return _modelClassName;
 				}

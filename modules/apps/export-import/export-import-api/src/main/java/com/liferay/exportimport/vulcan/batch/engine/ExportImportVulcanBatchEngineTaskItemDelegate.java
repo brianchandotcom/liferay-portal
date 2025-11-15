@@ -23,9 +23,7 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public interface ExportImportDescriptor {
 
-		public default String getLabelLanguageKey() {
-			return null;
-		}
+		public String getLabelLanguageKey();
 
 		public String getModelClassName();
 

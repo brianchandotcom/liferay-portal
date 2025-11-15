@@ -35,12 +35,12 @@ public class CommerceOrderItemModelDocumentContributor
 		Document document, CommerceOrderItem commerceOrderItem) {
 
 		try {
+			document.addKeyword(CPField.SKU, commerceOrderItem.getSku(), true);
 			document.addNumber(
 				Field.ENTRY_CLASS_PK,
 				commerceOrderItem.getCommerceOrderItemId());
 			document.addLocalizedKeyword(
 				Field.NAME, commerceOrderItem.getNameMap(), false, true);
-			document.addKeyword(CPField.SKU, commerceOrderItem.getSku(), true);
 			document.addNumber(
 				"commerceOrderId", commerceOrderItem.getCommerceOrderId());
 			document.addKeyword(

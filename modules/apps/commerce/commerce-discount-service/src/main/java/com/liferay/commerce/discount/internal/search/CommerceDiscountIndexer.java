@@ -370,6 +370,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			groupIdList.add(commerceChannel.getGroupId());
 		}
 
+		document.addNumber(FIELD_GROUP_IDS, ArrayUtil.toLongArray(groupIdList));
 		document.addNumber(
 			"commerceChannelId", ArrayUtil.toLongArray(channelIdList));
 		document.addNumber(
@@ -379,7 +380,6 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 					getCommerceDiscountOrderTypeRels(
 						commerceDiscount.getCommerceDiscountId()),
 				CommerceDiscountOrderTypeRel::getCommerceOrderTypeId));
-		document.addNumber(FIELD_GROUP_IDS, ArrayUtil.toLongArray(groupIdList));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

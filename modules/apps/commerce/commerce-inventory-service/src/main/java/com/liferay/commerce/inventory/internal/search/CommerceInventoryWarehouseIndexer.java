@@ -143,10 +143,10 @@ public class CommerceInventoryWarehouseIndexer
 			Field.NAME, commerceInventoryWarehouse.getName(), true);
 		document.addKeyword(
 			FIELD_ACTIVE, commerceInventoryWarehouse.isActive());
+		document.addKeyword(FIELD_CITY, commerceInventoryWarehouse.getCity());
 		document.addKeyword(
 			FIELD_COUNTRY_TWO_LETTERS_ISO_CODE,
 			commerceInventoryWarehouse.getCountryTwoLettersISOCode());
-		document.addKeyword(FIELD_CITY, commerceInventoryWarehouse.getCity());
 		document.addKeyword(
 			FIELD_STREET_1, commerceInventoryWarehouse.getStreet1());
 		document.addKeyword(FIELD_ZIP, commerceInventoryWarehouse.getZip());

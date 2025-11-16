@@ -30,6 +30,7 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -119,6 +120,10 @@ public class ConfigurationUtil {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
+		properties.remove(ConfigurationAdmin.SERVICE_FACTORYPID);
+		properties.remove(Constants.SERVICE_PID);
+		properties.remove(FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
+
 		if (!scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
 			configurationExportImportProcessor.prepareForExport(
 				ConfigurationPidUtil.getRawPid(configuration.getPid()),
@@ -141,8 +146,6 @@ public class ConfigurationUtil {
 				properties.remove(method.getName());
 			}
 		}
-
-		properties.remove(FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 
 		return HashMapBuilder.<String, Object>putAll(
 			properties

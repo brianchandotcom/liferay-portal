@@ -275,7 +275,7 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 	private ObjectDefinition _getObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				true, ObjectDefinitionTestUtil.getRandomName(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				Arrays.asList(
 					new AttachmentObjectFieldBuilder(
 					).labelMap(

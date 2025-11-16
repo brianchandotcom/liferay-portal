@@ -117,7 +117,7 @@ public class AssetRendererSharingEntryInterpreterTest {
 	private ObjectDefinition _getObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				true, ObjectDefinitionTestUtil.getRandomName(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(

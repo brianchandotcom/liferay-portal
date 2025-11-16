@@ -16,9 +16,11 @@ import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import jakarta.validation.ValidationException;
 
@@ -130,7 +132,10 @@ public class ConfigurationUtil {
 				properties);
 		}
 
-		if (PropsValues.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES) {
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES))) {
+
 			return HashMapBuilder.<String, Object>putAll(
 				properties
 			).build();

@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alicia García
  */
-@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-32050"))
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class SiteRoleContributorTest {
 

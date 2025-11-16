@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaConfigurationCategoryCheck" files="headless-admin-configuration-test/src/testIntegration/java/com/liferay/headless/admin/configuration/sample/configuration/TestConfiguration\.java" />
+		<suppress checks="JavaConfigurationCategoryCheck" files="headless-admin-configuration-test/src/testIntegration/java/com/liferay/headless/admin/configuration/sample/configuration/TestFactoryConfiguration\.java" />
+		<suppress checks="LanguageKeysCheck" files="headless-admin-configuration-test/src/testIntegration/java/com/liferay/headless/admin/configuration/sample/configuration/TestConfiguration\.java" />
+		<suppress checks="LanguageKeysCheck" files="headless-admin-configuration-test/src/testIntegration/java/com/liferay/headless/admin/configuration/sample/configuration/TestFactoryConfiguration\.java" />
+	</source-check>
+</suppressions>

@@ -1744,21 +1744,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePage.Type type)
 		throws Exception {
 
+		FavIcon.FavIconType favIconType =
+			FavIcon.FavIconType.ITEM_EXTERNAL_REFERENCE;
+		boolean optionalMasterPageReference = false;
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
 		SitePage sitePage = _getRandomSitePage(type);
 
 		PageSpecification[] pageSpecifications =
 			PageSpecificationsTestUtil.getPageSpecifications(
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId(),
 				type);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), TestPropsValues.getUserId());
-
-		FavIcon.FavIconType favIconType =
-			FavIcon.FavIconType.ITEM_EXTERNAL_REFERENCE;
-
-		boolean optionalMasterPageReference = false;
 
 		for (PageSpecification pageSpecification : pageSpecifications) {
 			pageSpecification.setSettings(

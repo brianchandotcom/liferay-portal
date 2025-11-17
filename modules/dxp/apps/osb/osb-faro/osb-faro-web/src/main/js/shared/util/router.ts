@@ -1,5 +1,5 @@
 import Constants, {DataSourceTypes, EntityTypes} from '../util/constants';
-import pathToRegexp from 'path-to-regexp';
+import {compile} from 'shared/util/path-to-regexp';
 import {invert, isEmpty, isString, memoize} from 'lodash';
 import {matchPath} from 'react-router-dom';
 
@@ -391,7 +391,7 @@ export function buildRoutes(
 	return routes;
 }
 
-const getCompiledRoute = memoize(pathToRegexp.compile);
+const getCompiledRoute = memoize(compile);
 
 export function toRoute(route: string, options?: {[key: string]: any}) {
 	return getCompiledRoute(route)(options);

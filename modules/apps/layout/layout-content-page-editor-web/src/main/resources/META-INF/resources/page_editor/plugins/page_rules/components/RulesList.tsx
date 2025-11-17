@@ -324,6 +324,10 @@ function RuleItem({
 								{Liferay.Language.get('edit')}
 							</ClayDropDown.Item>
 
+							<ClayDropDown.Item onClick={() => setEditing(true)}>
+								{Liferay.Language.get('rename')}
+							</ClayDropDown.Item>
+
 							<ClayDropDown.Divider />
 
 							<ClayDropDown.Item

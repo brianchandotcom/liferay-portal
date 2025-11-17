@@ -6,6 +6,8 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {JournalTemplatesPage} from './JournalTemplatesPage';
+import {waitForAlert} from '../../../../utils/waitForAlert';
+
 
 export class JournalEditTemplatePage {
 	readonly page: Page;
@@ -45,6 +47,7 @@ export class JournalEditTemplatePage {
 	}
 
 	async selectTemplateToEdit(title: string) {
+		await this.page.getByRole('link', {name: title}).waitFor({state: 'visible'});
 		await this.page.getByRole('link', {name: title}).click();
 	}
 
@@ -70,7 +73,7 @@ export class JournalEditTemplatePage {
 		return this.page.getByLabel('DDM Template Key').inputValue();
 	}
 
-	async selectStructure(title?: string) {
+	async selectStructure(title: string) {
 		await this.page
 			.locator(
 				'[id="_com_liferay_journal_web_portlet_JournalPortlet_selectDDMStructure"]'
@@ -88,5 +91,7 @@ export class JournalEditTemplatePage {
 		await this.page
 			.getByRole('button', {exact: true, name: 'Save'})
 			.click();
+
+		await waitForAlert(this.page);
 	}
 }

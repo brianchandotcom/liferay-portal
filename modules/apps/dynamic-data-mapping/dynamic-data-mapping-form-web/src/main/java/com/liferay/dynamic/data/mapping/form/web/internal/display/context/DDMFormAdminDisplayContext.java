@@ -73,6 +73,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
@@ -364,8 +365,8 @@ public class DDMFormAdminDisplayContext {
 		String serializedFormFieldTypes = _serialize(
 			availableDDMFormFieldTypes);
 
-		JSONArray jsonArray = jsonFactory.createJSONArray(
-			serializedFormFieldTypes);
+		JSONArray jsonArray = filterJSONArray(
+			jsonFactory.createJSONArray(serializedFormFieldTypes));
 
 		HttpServletRequest httpServletRequest =
 			ddmFormAdminRequestHelper.getRequest();
@@ -1349,6 +1350,23 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		return ddmForm;
+	}
+
+	protected JSONArray filterJSONArray(JSONArray jsonArray) {
+		JSONArray newJSONArray = new JSONArrayImpl();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			List<String> scopes = Arrays.asList(
+				StringUtil.split(jsonObject.getString("scope")));
+
+			if (scopes.contains("forms")) {
+				newJSONArray.put(jsonObject);
+			}
+		}
+
+		return newJSONArray;
 	}
 
 	protected DDMForm getDDMForm() throws PortalException {

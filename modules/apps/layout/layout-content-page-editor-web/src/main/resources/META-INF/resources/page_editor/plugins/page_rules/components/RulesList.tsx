@@ -31,6 +31,9 @@ import useConditionValues, {
 	ConditionValues,
 } from '../../../app/utils/useConditionValues';
 import {Rule} from '../../../types/Rule';
+import {LayoutData} from '../../../types/layout_data/LayoutData';
+import {Action as ActionType} from './Action';
+import {Condition as ConditionType} from './Condition';
 import RulesModal from './RulesModal';
 
 const MAX_RULES = 20;
@@ -148,6 +151,7 @@ function RuleItem({
 	const {isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
+	const layoutData = useSelector((state) => state.layoutData);
 	const [triggerElement, setTriggerElement] =
 		useState<HTMLButtonElement | null>(null);
 
@@ -192,15 +196,13 @@ function RuleItem({
 	const conditions = useConditionValues({...rule, items});
 	const actions = useActionValues({...rule, items});
 
-	const hoveredItemIds = useMemo(() => {
-		const actionsItemIds = rule.actions.map(({itemId}) => itemId);
-		const conditionsItemIds = rule.conditions.map(({field}) => field);
-
-		return [...actionsItemIds, ...conditionsItemIds];
-	}, [rule.actions, rule.conditions]);
+	const ruleItemIds = useMemo(
+		() => getRuleItemIds(rule.actions, rule.conditions, layoutData.items),
+		[rule.actions, rule.conditions, layoutData.items]
+	);
 
 	const onHighlightItems = () => {
-		hoverMultipleItems(hoveredItemIds, {
+		hoverMultipleItems(ruleItemIds, {
 			origin: ITEM_INTERACTION_ORIGINS.rules,
 		});
 	};
@@ -425,4 +427,26 @@ function getRuleAriaLabel(
 		.join(' ');
 
 	return `${name}: ${conditionsDescription} ${actionsDescription}`;
+}
+
+function getRuleItemIds(
+	actions: ActionType[],
+	conditions: ConditionType[],
+	items: LayoutData['items']
+) {
+	const ruleItemIds = new Set<string>();
+
+	for (const {itemId} of actions) {
+		if (itemId && items[itemId]) {
+			ruleItemIds.add(itemId);
+		}
+	}
+
+	for (const {field, type} of conditions) {
+		if (field && type === 'form' && items[field]) {
+			ruleItemIds.add(field);
+		}
+	}
+
+	return [...ruleItemIds];
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
+import com.liferay.style.book.exception.StyleBookEntryThemeIdException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.base.StyleBookEntryLocalServiceBaseImpl;
 
@@ -102,7 +103,11 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-30204")) {
+			if (Validator.isNull(themeId)) {
+				throw new StyleBookEntryThemeIdException.MustNotBeNull();
+			}
+
 			styleBookEntry.setThemeId(themeId);
 		}
 		else {

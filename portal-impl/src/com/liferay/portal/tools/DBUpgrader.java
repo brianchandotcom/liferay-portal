@@ -361,6 +361,8 @@ public class DBUpgrader {
 
 					StartupHelperUtil.setUpgrading(false);
 
+					stopUpgradeLogAppender();
+
 					System.exit(1);
 				}
 			}
@@ -379,6 +381,8 @@ public class DBUpgrader {
 						exception);
 
 					StartupHelperUtil.setUpgrading(false);
+
+					stopUpgradeLogAppender();
 
 					throw exception;
 				}

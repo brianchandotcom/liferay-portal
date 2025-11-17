@@ -14,6 +14,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -90,6 +91,18 @@ public class ObjectEntryVersionServiceImpl
 
 		return objectEntryVersionLocalService.getObjectEntryVersions(
 			objectEntryId, start, end);
+	}
+
+	@Override
+	public List<ObjectEntryVersion> getObjectEntryVersions(
+			long objectEntryId, int start, int end,
+			OrderByComparator<ObjectEntryVersion> orderByComparator)
+		throws PortalException {
+
+		_checkModelResourcePermission(objectEntryId, ActionKeys.UPDATE);
+
+		return objectEntryVersionLocalService.getObjectEntryVersions(
+			objectEntryId, start, end, orderByComparator);
 	}
 
 	@Override

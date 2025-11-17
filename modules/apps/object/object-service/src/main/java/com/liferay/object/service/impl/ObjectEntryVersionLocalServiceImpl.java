@@ -257,6 +257,15 @@ public class ObjectEntryVersionLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectEntryVersion> getObjectEntryVersions(
+		long objectEntryId, int start, int end,
+		OrderByComparator<ObjectEntryVersion> orderByComparator) {
+
+		return objectEntryVersionPersistence.findByObjectEntryId(
+			objectEntryId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getObjectEntryVersionsCount(long objectEntryId) {
 		return objectEntryVersionPersistence.countByObjectEntryId(
 			objectEntryId);

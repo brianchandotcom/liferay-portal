@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {default as distributors} from './distributors';
+export { default as distributors } from './distributors';
 
 const API_KEY = 'YOUR_API_KEY';
 const API_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
@@ -17,6 +17,32 @@ const api = async (url, options = {}) => {
 		...options,
 	});
 };
+
+export async function getDistributors() {
+	try {
+		return (
+			await api('/o/c/distributorlocations/').then((response) =>
+				response.json()
+			)
+		).items;
+	}
+	catch (error) {
+		console.error(`Error fetching distributors: ${error}`);
+		return [];
+	}
+}
+
+export async function getDistributorDetails(id) {
+	try {
+		return await api('/o/c/distributorlocations/' + id).then((response) =>
+			response.json()
+		);
+	}
+	catch (error) {
+		console.error(`Error fetching distributor with id: ${id}`, error);
+		return {};
+	}
+}
 
 export async function getDistributorLatLng(address) {
 	const addressEncoded = encodeURIComponent(address);
@@ -47,33 +73,5 @@ export async function getDistributorLatLng(address) {
 	catch (error) {
 		console.error(`Could not get coordinates: ${error}`);
 		throw error;
-	}
-}
-
-export async function getDistributorDetails(id) {
-	try {
-		return await api('/o/c/distributorlocations/' + id).then((response) =>
-			response.json()
-		);
-	}
-	catch (error) {
-		console.error(`Error fetching distributor with id: ${id}`, error);
-
-		return {};
-	}
-}
-
-export async function getDistributors() {
-	try {
-		return (
-			await api('/o/c/distributorlocations/').then((response) =>
-				response.json()
-			)
-		).items;
-	}
-	catch (error) {
-		console.error(`Error fetching distributors: ${error}`);
-
-		return [];
 	}
 }

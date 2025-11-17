@@ -245,6 +245,8 @@ public abstract class BaseSectionDisplayContext {
 				"L_CMS_BASIC_WEB_CONTENT", "content-icon-basic-content"
 			).put(
 				"L_CMS_BLOG", "content-icon-blog"
+			).put(
+				"L_CMS_EXTERNAL_VIDEO", "file-icon-color-3"
 			).build()
 		).put(
 			"objectDefinitionIcons",
@@ -254,6 +256,8 @@ public abstract class BaseSectionDisplayContext {
 				"L_CMS_BASIC_WEB_CONTENT", "forms"
 			).put(
 				"L_CMS_BLOG", "blogs"
+			).put(
+				"L_CMS_EXTERNAL_VIDEO", "document-multimedia"
 			).build()
 		).put(
 			"objectEntryFolderExternalReferenceCode",

@@ -78,14 +78,14 @@ public class FragmentLayoutStructureItemImporter
 			return null;
 		}
 
+		List<String> fragmentEntryLinkPortletIds = null;
+
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.
 				fetchFragmentEntryLinkByExternalReferenceCode(
 					fragmentInstancePageElementDefinition.
 						getFragmentInstanceExternalReferenceCode(),
 					layoutStructureItemImporterContext.getGroupId());
-
-		List<String> fragmentEntryLinkPortletIds = null;
 
 		if (fragmentEntryLink == null) {
 			fragmentEntryLink = _addFragmentEntryLink(

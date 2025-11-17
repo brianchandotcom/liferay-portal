@@ -86,6 +86,7 @@ public class BulkActionBulkSelectionFactory {
 					_validate();
 
 					boolean selectAll = false;
+
 					SelectionScope selectionScope =
 						_bulkAction.getSelectionScope();
 

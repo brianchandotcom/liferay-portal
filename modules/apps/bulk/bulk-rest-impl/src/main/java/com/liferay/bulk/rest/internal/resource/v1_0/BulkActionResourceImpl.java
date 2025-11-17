@@ -203,6 +203,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 
 		boolean selectAll = false;
+
 		SelectionScope selectionScope = bulkAction.getSelectionScope();
 
 		if (selectionScope != null) {
@@ -230,7 +231,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BULK_ACTION_TASK", contextCompany.getCompanyId());
-
 		String typeString = type.toString();
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(

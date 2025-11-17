@@ -353,6 +353,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			DepotEntry depotEntry, String expectedDeletionType)
 		throws Exception {
 
+		BulkAction bulkAction = new DeleteBulkAction();
+
+		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
+
 		ObjectEntryFolder contentObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -381,10 +385,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		ObjectEntryFolder objectEntryFolder2 = _addObjectEntryFolder(
 			depotEntry.getGroupId(),
 			objectEntryFolder1.getObjectEntryFolderId());
-
-		BulkAction bulkAction = new DeleteBulkAction();
-
-		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
 
 		_testPostBulkActionItemPreviewPageWithBulkActionItems(
 			bulkAction, expectedDeletionType, 2L, objectEntry,

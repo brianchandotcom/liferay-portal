@@ -101,7 +101,6 @@ public class CommerceChannelLocalServiceImpl
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		_validateAccountEntry(0, accountEntryId);
-		_validateType(type);
 
 		long commerceChannelId = counterLocalService.increment();
 
@@ -114,6 +113,8 @@ public class CommerceChannelLocalServiceImpl
 			ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, name, null);
 
 		_validateName(name);
+
+		_validateType(type);
 
 		commerceChannel.setExternalReferenceCode(externalReferenceCode);
 		commerceChannel.setCompanyId(user.getCompanyId());
@@ -468,7 +469,6 @@ public class CommerceChannelLocalServiceImpl
 		throws PortalException {
 
 		_validateAccountEntry(commerceChannelId, accountEntryId);
-		_validateType(type);
 
 		CommerceChannel commerceChannel =
 			commerceChannelPersistence.findByPrimaryKey(commerceChannelId);
@@ -480,6 +480,8 @@ public class CommerceChannelLocalServiceImpl
 			null);
 
 		_validateName(name);
+
+		_validateType(type);
 
 		long oldSiteGroupId = commerceChannel.getSiteGroupId();
 

@@ -52,12 +52,12 @@ public class CommerceChannelLocalServiceTest {
 	public void setUp() throws Exception {
 		User user = UserTestUtil.addUser();
 
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			user.getCompanyId());
+
 		_group = GroupTestUtil.addGroup(
 			user.getCompanyId(), user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			user.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			user.getCompanyId(), _group.getGroupId(), user.getUserId());

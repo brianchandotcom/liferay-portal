@@ -94,7 +94,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 					fetchLayoutClassedModelUsage(layoutClassedModelUsageId);
 
 			if ((layoutClassedModelUsage == null) ||
-				((ctCollection != null) && ctCollection.isReadOnly())) {
+				_isCTCollectionReadOnly(ctCollection)) {
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
@@ -140,6 +140,14 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 		}
 	}
 
+	private boolean _isCTCollectionReadOnly(CTCollection ctCollection) {
+		if ((ctCollection != null) && ctCollection.isReadOnly()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _processLayoutClassedModelUsages(
 			long classNameId, String keyColumnName, String tableName,
 			UnsafeBiConsumer<Long, Long, Exception> unsafeBiConsumer)
@@ -178,19 +186,21 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 						ctCollection, ctCollectionId,
 						layoutClassedModelUsageId);
 
-					if ((ctCollection == null) || !ctCollection.isReadOnly()) {
-						long groupId = resultSet.getLong("groupId");
-						long plid = resultSet.getLong("plid");
-
-						Map<Long, Set<Long>> ctCollectionIdMap =
-							groupIdMap.computeIfAbsent(
-								groupId, key -> new HashMap<>());
-
-						Set<Long> plids = ctCollectionIdMap.computeIfAbsent(
-							ctCollectionId, key -> new HashSet<>());
-
-						plids.add(plid);
+					if (_isCTCollectionReadOnly(ctCollection)) {
+						continue;
 					}
+
+					long groupId = resultSet.getLong("groupId");
+					long plid = resultSet.getLong("plid");
+
+					Map<Long, Set<Long>> ctCollectionIdMap =
+						groupIdMap.computeIfAbsent(
+							groupId, key -> new HashMap<>());
+
+					Set<Long> plids = ctCollectionIdMap.computeIfAbsent(
+						ctCollectionId, key -> new HashSet<>());
+
+					plids.add(plid);
 				}
 			}
 		}

@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.media.constants;
 
+import com.liferay.portal.kernel.util.ContentTypes;
+
 /**
  * @author Alec Sloan
  */
@@ -37,5 +39,10 @@ public class CommerceMediaConstants {
 
 	public static final String URL_SEPARATOR_VIRTUAL_SKU_SAMPLE =
 		"/virtual-sku-sample/";
+
+	public static final String[] XML_MIME_TYPES = {
+		ContentTypes.IMAGE_SVG_XML, ContentTypes.TEXT_XML,
+		ContentTypes.TEXT_XML_UTF8
+	};
 
 }

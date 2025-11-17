@@ -231,6 +231,13 @@ public class CommerceMediaServlet extends HttpServlet {
 				_commerceMediaProvider.getDefaultImageFileEntry(
 					_portal.getCompanyId(httpServletRequest), groupId);
 
+			if (ArrayUtil.contains(
+					CommerceMediaConstants.XML_MIME_TYPES,
+					fileEntry.getMimeType())) {
+
+				contentDisposition = HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
+			}
+
 			ServletResponseUtil.sendFile(
 				httpServletRequest, httpServletResponse,
 				fileEntry.getFileName(),
@@ -492,6 +499,13 @@ public class CommerceMediaServlet extends HttpServlet {
 					contentDisposition);
 
 				return;
+			}
+
+			if (ArrayUtil.contains(
+					CommerceMediaConstants.XML_MIME_TYPES,
+					fileEntry.getMimeType())) {
+
+				contentDisposition = HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
 			}
 
 			ServletResponseUtil.sendFile(

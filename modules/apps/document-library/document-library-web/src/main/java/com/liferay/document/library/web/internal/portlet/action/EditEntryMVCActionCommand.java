@@ -69,11 +69,6 @@ import jakarta.portlet.WindowState;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.net.URI;
-import java.net.URLDecoder;
-
-import java.nio.charset.StandardCharsets;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -444,47 +439,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private long _extractFolderIdFromURL(String url) {
-		try {
-			URI uri = new URI(url);
-
-			String query = uri.getQuery();
-
-			if (query == null) {
-				return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-			}
-
-			for (String param : query.split("&")) {
-				String[] pair = param.split("=");
-
-				if (pair.length != 2) {
-					continue;
-				}
-
-				String name = URLDecoder.decode(
-					pair[0], StandardCharsets.UTF_8.name());
-
-				String value = URLDecoder.decode(
-					pair[1], StandardCharsets.UTF_8.name());
-
-				if (name.endsWith("searchFolderId") &&
-					Validator.isNotNull(value)) {
-
-					return GetterUtil.getLong(value);
-				}
-
-				if (name.endsWith("folderId") && Validator.isNotNull(value)) {
-					return GetterUtil.getLong(value);
-				}
-			}
-		}
-		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
-		}
-
-		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-	}
-
 	private Map<String, List<Long>> _getFilteredEntries(
 			ActionRequest actionRequest, String keywords)
 		throws PortalException {
@@ -502,12 +456,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				httpServletRequest, "repositoryId",
 				themeDisplay.getScopeGroupId()));
 
-		long rootFolderId = ParamUtil.getLong(
-			httpServletRequest, "rootFolderId",
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		long searchFolderId = _resolveSearchFolderId(
-			actionRequest, httpServletRequest, rootFolderId);
+		long searchFolderId = _getSearchFolderId(httpServletRequest);
 
 		SearchContext searchContext = _getSearchContext(
 			actionRequest, keywords, searchRepositoryId, searchFolderId);
@@ -572,10 +521,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				fileShortcut.getToFileEntryId(), serviceContext));
 	}
 
-	private long _resolveSearchFolderId(
-			ActionRequest actionRequest, HttpServletRequest httpServletRequest,
-			long rootFolderId)
-		throws PortalException {
+	private long _getSearchFolderId(
+			HttpServletRequest httpServletRequest) {
 
 		long searchFolderId = ParamUtil.getLong(
 			httpServletRequest, "searchFolderId",
@@ -583,18 +530,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				httpServletRequest, "folderId",
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
-		if (searchFolderId == 0) {
-			String redirect = ParamUtil.getString(
-				httpServletRequest, "redirect");
-
-			if (Validator.isNull(redirect)) {
-				redirect = ParamUtil.getString(actionRequest, "redirect");
-			}
-
-			if (Validator.isNotNull(redirect)) {
-				searchFolderId = _extractFolderIdFromURL(redirect);
-			}
-		}
+		long rootFolderId = ParamUtil.getLong(
+			httpServletRequest, "rootFolderId",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		if ((rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
 			(searchFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {

@@ -24,7 +24,6 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -179,7 +177,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private SearchContext _buildSearchContext(
+	private SearchContext _getSearchContext(
 			ActionRequest actionRequest, String keywords,
 			long searchRepositoryId, long searchFolderId)
 		throws PortalException {
@@ -187,12 +185,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			new long[0], new String[0], new HashMap<>(),
-			themeDisplay.getCompanyId(), null, themeDisplay.getLayout(),
+			themeDisplay.getCompanyId(), keywords, themeDisplay.getLayout(),
 			themeDisplay.getLocale(), themeDisplay.getScopeGroupId(),
 			themeDisplay.getTimeZone(), themeDisplay.getUserId());
 
@@ -207,15 +202,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		if ((group != null) &&
 			GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.VIEW)) {
+				themeDisplay.getPermissionChecker(), group, ActionKeys.VIEW)) {
 
 			searchContext.setGroupIds(new long[] {searchRepositoryId});
 		}
 
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setIncludeInternalAssetCategories(true);
-		searchContext.setKeywords(
-			Validator.isNotNull(keywords) ? keywords : StringPool.BLANK);
 		searchContext.setLocale(themeDisplay.getSiteDefaultLocale());
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
@@ -296,8 +289,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String keywords = ParamUtil.getString(actionRequest, "keywords");
 
-		if (!keywords.isBlank() && Validator.isNotNull(keywords)) {
-			_deleteFilteredEntries(actionRequest, keywords, moveToTrash);
+		if (Validator.isNotNull(keywords)) {
+			_deleteFileEntries(actionRequest, keywords, moveToTrash);
 		}
 		else {
 			List<TrashedModel> trashedModels = new ArrayList<>();
@@ -379,11 +372,11 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _deleteFilteredEntries(
+	private void _deleteFileEntries(
 			ActionRequest actionRequest, String keywords, boolean moveToTrash)
 		throws PortalException {
 
-		Map<String, List<Long>> selectedMap = _getFilteredentries(
+		Map<String, List<Long>> selectedMap = _getFilteredEntries(
 			actionRequest, keywords);
 
 		List<Long> folderIds = selectedMap.get("folderIds");
@@ -492,7 +485,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
-	private Map<String, List<Long>> _getFilteredentries(
+	private Map<String, List<Long>> _getFilteredEntries(
 			ActionRequest actionRequest, String keywords)
 		throws PortalException {
 
@@ -516,7 +509,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		long searchFolderId = _resolveSearchFolderId(
 			actionRequest, httpServletRequest, rootFolderId);
 
-		SearchContext searchContext = _buildSearchContext(
+		SearchContext searchContext = _getSearchContext(
 			actionRequest, keywords, searchRepositoryId, searchFolderId);
 
 		Hits hits = _dlAppService.search(searchRepositoryId, searchContext);

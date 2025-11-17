@@ -65,8 +65,10 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.Link;
+import com.liferay.object.rest.dto.v1_0.SystemProperties;
 import com.liferay.object.rest.dto.v1_0.ValidationRequest;
 import com.liferay.object.rest.dto.v1_0.ValidationResponse;
+import com.liferay.object.rest.dto.v1_0.Version;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
@@ -125,6 +127,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -5999,9 +6002,20 @@ public class ObjectEntryResourceTest {
 		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntryPage =
 			objectEntryResource1.getObjectEntriesVersionsPage(
 				objectEntry.getObjectEntryId(),
-				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
 
 		Assert.assertEquals(2, objectEntryPage.getTotalCount());
+
+		objectEntryPage = objectEntryResource1.getObjectEntriesVersionsPage(
+			objectEntry.getObjectEntryId(),
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			new Sort[] {new Sort("version", Sort.INT_TYPE, true)});
+
+		List<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntries =
+			new ArrayList<>(objectEntryPage.getItems());
+
+		_assertObjectEntryVersionNumber(objectEntries.get(0), 2);
+		_assertObjectEntryVersionNumber(objectEntries.get(1), 1);
 
 		ObjectEntryResource objectEntryResource2 = _getObjectEntryResource(
 			_objectDefinition2, TestPropsValues.getUser());
@@ -6010,7 +6024,7 @@ public class ObjectEntryResourceTest {
 			NoSuchObjectEntryException.class, null,
 			() -> objectEntryResource2.getObjectEntriesVersionsPage(
 				objectEntry.getObjectEntryId(),
-				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null));
 	}
 
 	@Test
@@ -15405,6 +15419,17 @@ public class ObjectEntryResourceTest {
 			"_assertObjectEntryField",
 			MapUtil.getString(objectEntry.getValues(), objectFieldName),
 			objectFieldValue);
+	}
+
+	private void _assertObjectEntryVersionNumber(
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry,
+		int versionNumber) {
+
+		SystemProperties systemProperties = objectEntry.getSystemProperties();
+
+		Version version = systemProperties.getVersion();
+
+		Assert.assertEquals(versionNumber, (int)version.getNumber());
 	}
 
 	private void _assertPagination(

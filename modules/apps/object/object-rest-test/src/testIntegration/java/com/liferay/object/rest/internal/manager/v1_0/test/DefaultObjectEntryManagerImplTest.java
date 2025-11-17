@@ -3749,7 +3749,7 @@ public class DefaultObjectEntryManagerImplTest
 			2,
 			_defaultObjectEntryManager.getVersionedObjectEntries(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, null, null
+				_objectDefinition1, null, null, null
 			).getItems(
 			).size());
 
@@ -3767,7 +3767,7 @@ public class DefaultObjectEntryManagerImplTest
 			1,
 			_defaultObjectEntryManager.getVersionedObjectEntries(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, null, null
+				_objectDefinition1, null, null, null
 			).getItems(
 			).size());
 
@@ -3791,7 +3791,7 @@ public class DefaultObjectEntryManagerImplTest
 			2,
 			_defaultObjectEntryManager.getVersionedObjectEntries(
 				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), null
+				_objectDefinition4, _group.getGroupKey(), null, null
 			).getItems(
 			).size());
 
@@ -3811,7 +3811,7 @@ public class DefaultObjectEntryManagerImplTest
 			1,
 			_defaultObjectEntryManager.getVersionedObjectEntries(
 				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), null
+				_objectDefinition4, _group.getGroupKey(), null, null
 			).getItems(
 			).size());
 
@@ -6866,7 +6866,7 @@ public class DefaultObjectEntryManagerImplTest
 		Page<ObjectEntry> page =
 			_defaultObjectEntryManager.getVersionedObjectEntries(
 				dtoConverterContext, _objectDefinition1, objectEntry1.getId(),
-				null);
+				null, null);
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),
@@ -6878,7 +6878,7 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition1, objectEntry1, 2);
 
 		page = _defaultObjectEntryManager.getVersionedObjectEntries(
-			dtoConverterContext, _objectDefinition1, objectEntry2.getId(),
+			dtoConverterContext, _objectDefinition1, objectEntry2.getId(), null,
 			null);
 
 		objectEntry1 = _defaultObjectEntryManager.getObjectEntryByVersion(
@@ -6892,6 +6892,20 @@ public class DefaultObjectEntryManagerImplTest
 				_defaultObjectEntryManager.getObjectEntryByVersion(
 					dtoConverterContext, objectEntry2.getId(), 2)));
 
+		Sort[] sorts = {new Sort("version", Sort.INT_TYPE, true)};
+
+		page = _defaultObjectEntryManager.getVersionedObjectEntries(
+			dtoConverterContext, _objectDefinition1, objectEntry2.getId(), null,
+			sorts);
+
+		assertEquals(
+			(List<ObjectEntry>)page.getItems(),
+			ListUtil.fromArray(
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry2.getId(), 2),
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry1.getId(), 1)));
+
 		// Site scope
 
 		objectEntry1 = _addObjectEntry(
@@ -6901,7 +6915,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		page = _defaultObjectEntryManager.getVersionedObjectEntries(
 			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-			_objectDefinition4, _group.getGroupKey(), null);
+			_objectDefinition4, _group.getGroupKey(), null, null);
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),
@@ -6914,7 +6928,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		page = _defaultObjectEntryManager.getVersionedObjectEntries(
 			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-			_objectDefinition4, _group.getGroupKey(), null);
+			_objectDefinition4, _group.getGroupKey(), null, null);
 
 		objectEntry1 = _defaultObjectEntryManager.getObjectEntryByVersion(
 			dtoConverterContext, objectEntry1.getId(), 1);
@@ -6926,6 +6940,18 @@ public class DefaultObjectEntryManagerImplTest
 					dtoConverterContext, objectEntry1.getId(), 1),
 				_defaultObjectEntryManager.getObjectEntryByVersion(
 					dtoConverterContext, objectEntry2.getId(), 2)));
+
+		page = _defaultObjectEntryManager.getVersionedObjectEntries(
+			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
+			_objectDefinition4, _group.getGroupKey(), null, sorts);
+
+		assertEquals(
+			(List<ObjectEntry>)page.getItems(),
+			ListUtil.fromArray(
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry2.getId(), 2),
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry1.getId(), 1)));
 	}
 
 	@FeatureFlags(

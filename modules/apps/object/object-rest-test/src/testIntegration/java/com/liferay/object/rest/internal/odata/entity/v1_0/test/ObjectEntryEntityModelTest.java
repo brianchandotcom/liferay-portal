@@ -158,6 +158,9 @@ public class ObjectEntryEntityModelTest {
 			).put(
 				"userId",
 				new IntegerEntityField("userId", locale -> Field.USER_ID)
+			).put(
+				"version",
+				new IntegerEntityField("version", locale -> "version")
 			).putAll(
 				_getExpectedObjectFieldsEntityFieldsMap(customObjectFields)
 			).putAll(

@@ -322,6 +322,13 @@ public class DBUpgrader {
 
 		if ((bundle == null) || (bundle.getState() == Bundle.INSTALLED)) {
 			stopUpgradeLogAppender();
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"com.liferay.data.cleanup is not available. " +
+						"PostUpgradeDataCleanupVerifyProcess will not be " +
+							"executed.");
+			}
 		}
 
 		_registerModuleServiceLifecycle(

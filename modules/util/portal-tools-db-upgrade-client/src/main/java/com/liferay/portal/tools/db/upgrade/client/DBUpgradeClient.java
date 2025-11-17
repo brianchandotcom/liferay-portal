@@ -1059,12 +1059,12 @@ public class DBUpgradeClient {
 
 			System.out.println("]");
 
-			System.out.println("Please enter your database (mysql): ");
+			System.out.println("Please enter your database (postgresql): ");
 
 			response = _consoleReader.readLine();
 
 			if (response.isEmpty()) {
-				response = "mysql";
+				response = "postgresql";
 			}
 
 			dataSource = Database.getDatabase(response);

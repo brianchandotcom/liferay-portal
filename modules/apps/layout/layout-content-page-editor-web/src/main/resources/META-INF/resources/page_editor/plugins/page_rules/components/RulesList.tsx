@@ -231,7 +231,12 @@ function RuleItem({
 			aria-description={Liferay.Language.get(
 				'press-enter-or-space-to-scroll-to-the-first-fragment-under-this-rule'
 			)}
-			aria-label={getRuleAriaLabel(rule.name, conditions, actions)}
+			aria-label={getRuleAriaLabel(
+				rule.name,
+				conditions,
+				actions,
+				isRuleDisabled
+			)}
 			className="p-2 page-editor__rule"
 			key={rule.id}
 			onBlurCapture={onUnhighlightItems}
@@ -439,7 +444,8 @@ function Action({action}: {action: ActionValues}) {
 function getRuleAriaLabel(
 	name: string,
 	conditions: ConditionValues[],
-	actions: ActionValues[]
+	actions: ActionValues[],
+	disabled: boolean
 ) {
 	const conditionsDescription = conditions
 		.map((condition) => condition.description)
@@ -449,7 +455,7 @@ function getRuleAriaLabel(
 		.map((action) => action.description)
 		.join(' ');
 
-	return `${name}: ${conditionsDescription} ${actionsDescription}`;
+	return `${name}${disabled ? ` ${Liferay.Language.get('disabled-rule')}` : ''}: ${conditionsDescription} ${actionsDescription}`;
 }
 
 function getRuleItemIds(

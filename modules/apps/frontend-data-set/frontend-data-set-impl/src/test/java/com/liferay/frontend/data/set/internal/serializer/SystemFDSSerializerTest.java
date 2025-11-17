@@ -795,9 +795,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 	@Test
 	public void testSerializeHideManagementBarInEmptyState() throws Exception {
-
-		// Different value
-
 		_registerServices(
 			_registerSystemFDSEntry(
 				SystemFDSEntryFactory.create(
@@ -815,7 +812,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		Assert.assertFalse(
 			systemFDSSerializer.serializeHideManagementBarInEmptyState(
 				FDS_NAMES[0], httpServletRequest));
-
 		Assert.assertTrue(
 			systemFDSSerializer.serializeHideManagementBarInEmptyState(
 				FDS_NAMES[1], httpServletRequest));

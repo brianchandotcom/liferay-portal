@@ -1,7 +1,11 @@
+import CompositionCard from 'segment/components/CompositionCard';
 import CriteriaCard from 'segment/components/criteria-card';
-import React from 'react';
-import SegmentProfileCard from 'segment/components/ProfileCard';
 
+import DistributionCard from 'contacts/hoc/segment/DistributionCard';
+import InterestsCard from 'contacts/hoc/segment/InterestsCard';
+import React, {useCallback, useEffect, useRef} from 'react';
+import SegmentProfileCard from 'segment/components/ProfileCard';
+import {debounce} from 'lodash';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {Segment} from 'shared/util/records';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
@@ -12,25 +16,77 @@ interface IOverviewProps {
 	segment: Segment;
 }
 
+const HEADER_MARGIN = 16;
+
 const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
-	const {criteriaString, id, includeAnonymousUsers} = segment;
+	const {
+		activeIndividualCount,
+		criteriaString,
+		id,
+		includeAnonymousUsers,
+		individualCount,
+		knownIndividualCount
+	} = segment;
 	const {timeZoneId} = useTimeZone();
 
+	const _sideColumnRef = useRef<any>();
+
+	const updateHeaderVisible = useCallback(
+		debounce(() => {
+			const node = _sideColumnRef.current;
+			if (node) {
+				const {top} = node.parentElement.getBoundingClientRect();
+				const headerSize = top > HEADER_MARGIN ? top : HEADER_MARGIN;
+				node.style.maxHeight = `calc(100vh - ${headerSize}px)`;
+			}
+		}, 250),
+		[]
+	);
+
+	useEffect(() => {
+		updateHeaderVisible();
+		window.addEventListener('scroll', updateHeaderVisible);
+		return () => window.removeEventListener('scroll', updateHeaderVisible);
+	}, []);
+
 	return (
-		<div>
-			<ReferencedObjectsProvider segment={segment}>
-				<CriteriaCard
-					criteriaString={criteriaString}
-					includeAnonymousUsers={includeAnonymousUsers}
-					timeZoneId={timeZoneId}
+		<div className='overview-layout'>
+			<div className='overview-column-main'>
+				<SegmentProfileCard
+					channelId={channelId}
+					groupId={groupId}
+					id={id}
+					segment={segment}
 				/>
-			</ReferencedObjectsProvider>
-			<SegmentProfileCard
-				channelId={channelId}
-				groupId={groupId}
-				id={id}
-				segment={segment}
-			/>
+
+				<InterestsCard
+					channelId={channelId}
+					groupId={groupId}
+					id={id}
+				/>
+
+				<DistributionCard
+					channelId={channelId}
+					groupId={groupId}
+					id={id}
+				/>
+			</div>
+
+			<div className='overview-column-side' ref={_sideColumnRef}>
+				<CompositionCard
+					activeIndividualCount={activeIndividualCount}
+					individualCount={individualCount}
+					knownIndividualCount={knownIndividualCount}
+				/>
+
+				<ReferencedObjectsProvider segment={segment}>
+					<CriteriaCard
+						criteriaString={criteriaString}
+						includeAnonymousUsers={includeAnonymousUsers}
+						timeZoneId={timeZoneId}
+					/>
+				</ReferencedObjectsProvider>
+			</div>
 		</div>
 	);
 };

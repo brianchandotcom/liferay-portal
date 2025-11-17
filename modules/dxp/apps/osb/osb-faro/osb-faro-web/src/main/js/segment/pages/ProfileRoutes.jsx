@@ -31,6 +31,9 @@ import {useRequest} from 'shared/hooks/useRequest';
 const Overview = lazy(() =>
 	import(/* webpackChunkName: "SegmentOverview" */ './Overview')
 );
+const OverviewRealTime = lazy(() =>
+	import(/* webpackChunkName: "SegmentOverview" */ './OverviewRealTime')
+);
 const Membership = lazy(() =>
 	import(/* webpackChunkName: "SegmentMembership" */ './Membership')
 );
@@ -242,7 +245,11 @@ export const SegmentProfileRoutes = () => {
 
 						<BundleRouter
 							componentProps={{segment}}
-							data={Overview}
+							data={
+								segment.segmentType === SegmentTypes.Batch
+									? Overview
+									: OverviewRealTime
+							}
 							exact
 							path={Routes.CONTACTS_SEGMENT}
 						/>

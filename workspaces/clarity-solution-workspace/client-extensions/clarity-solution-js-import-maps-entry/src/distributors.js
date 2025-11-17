@@ -14,7 +14,7 @@ export default [
 		},
 		state: 'TX',
 		street: '11700 Domain Blvd Suite 114',
-		zipCode: '78758'
+		zipCode: '78758',
 	},
 	{
 		city: 'Southlake',
@@ -26,7 +26,7 @@ export default [
 		},
 		state: 'TX',
 		street: '1980 East State Hwy 114',
-		zipCode: '76092'
+		zipCode: '76092',
 	},
 	{
 		city: 'McKinney',
@@ -38,7 +38,7 @@ export default [
 		},
 		state: 'TX',
 		street: '3620 W University Dr #400',
-		zipCode: '75071'
+		zipCode: '75071',
 	},
 	{
 		city: 'Dallas',
@@ -50,6 +50,6 @@ export default [
 		},
 		state: 'TX',
 		street: '5646 Milton St. Suite 540',
-		zipCode: '75206'
+		zipCode: '75206',
 	},
 ];

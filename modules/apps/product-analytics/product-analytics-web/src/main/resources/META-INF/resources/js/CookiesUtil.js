@@ -81,7 +81,7 @@ export function removeAllCookies(
 
 export function setProductAnalyticsConfigCookie(
 	consentRenewalPeriod,
-	modifiedDate
+	lastModified
 ) {
 	setCookie(
 		consentRenewalPeriod,
@@ -93,7 +93,7 @@ export function setProductAnalyticsConfigCookie(
 		setCookie(
 			consentRenewalPeriod,
 			productAnalyticsConfiguredDateCookieName,
-			modifiedDate
+			lastModified
 		);
 	}
 

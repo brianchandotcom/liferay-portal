@@ -16,7 +16,7 @@ import {
 
 export default function ({
 	consentRenewalPeriod,
-	modifiedDate = 0,
+	lastModified = 0,
 	namespace,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
@@ -69,7 +69,7 @@ export default function ({
 				requiredConsentCookieTypeNames
 			);
 
-			setProductAnalyticsConfigCookie(consentRenewalPeriod, modifiedDate);
+			setProductAnalyticsConfigCookie(consentRenewalPeriod, lastModified);
 
 			window.location.reload();
 		});
@@ -93,7 +93,7 @@ export default function ({
 				}
 			);
 
-			setProductAnalyticsConfigCookie(consentRenewalPeriod, modifiedDate);
+			setProductAnalyticsConfigCookie(consentRenewalPeriod, lastModified);
 
 			window.location.reload();
 		});
@@ -105,7 +105,7 @@ export default function ({
 				requiredConsentCookieTypeNames
 			);
 
-			setProductAnalyticsConfigCookie(consentRenewalPeriod, modifiedDate);
+			setProductAnalyticsConfigCookie(consentRenewalPeriod, lastModified);
 
 			window.location.reload();
 		});

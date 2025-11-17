@@ -54,7 +54,7 @@ public class ProductAnalyticsConsentPanelDisplayContext
 		return hashMapWrapper.put(
 			"consentRenewalPeriod", getConsentRenewalPeriod()
 		).put(
-			"modifiedDate", getModifiedDate()
+			"lastModified", getLastModified()
 		).build();
 	}
 

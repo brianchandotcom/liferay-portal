@@ -140,8 +140,8 @@ public abstract class BaseDisplayContext {
 		return _httpServletRequest;
 	}
 
-	protected long getModifiedDate() {
-		return productAnalyticsConfiguration.modifiedDate();
+	protected long getLastModified() {
+		return productAnalyticsConfiguration.lastModified();
 	}
 
 	protected ProductAnalyticsConfiguration productAnalyticsConfiguration;

@@ -209,11 +209,11 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 	}
 
 	private void _processLayoutClassedModelUsages(
-		Map<Long, Map<Long, Set<Long>>> plidMap,
+		Map<Long, Map<Long, Set<Long>>> groupIdMap,
 		UnsafeBiConsumer<Long, Long, Exception> unsafeBiConsumer) {
 
 		for (Map.Entry<Long, Map<Long, Set<Long>>> entry1 :
-				plidMap.entrySet()) {
+				groupIdMap.entrySet()) {
 
 			long groupId = entry1.getKey();
 			Map<Long, Set<Long>> ctCollectionIdMap = entry1.getValue();

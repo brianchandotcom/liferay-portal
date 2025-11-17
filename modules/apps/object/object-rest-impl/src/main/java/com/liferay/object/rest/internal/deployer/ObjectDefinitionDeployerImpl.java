@@ -18,6 +18,7 @@ import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQL
 import com.liferay.object.rest.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectAssetCategoryExceptionMapper;
+import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectDefinitionScopeExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryCountExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryExpirationDateExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryGroupIdExceptionMapper;
@@ -821,6 +822,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectEntryManagerHttpExceptionMapper::new,
 				() -> new ObjectAssetCategoryExceptionMapper(_language),
 				ObjectEntryScopeExceptionMapper::new,
+				ObjectDefinitionScopeExceptionMapper::new,
 				() -> new ObjectEntryCountExceptionMapper(_language),
 				() -> new ObjectEntryExpirationDateExceptionMapper(_language),
 				() -> new ObjectEntryGroupIdExceptionMapper(_language),

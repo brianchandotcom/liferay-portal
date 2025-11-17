@@ -1488,9 +1488,11 @@ public abstract class Base${schemaName}ResourceImpl
 				Permission permission = new Permission() {
 					{
 						actionIds = actionsIdsSet.toArray(new String[0]);
+
 						<#if freeMarkerTool.isVersionCompatible(configYAML, 14)>
 							roleExternalReferenceCode = role.getExternalReferenceCode();
 						</#if>
+
 						roleName = role.getName();
 					}
 				};

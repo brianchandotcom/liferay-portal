@@ -287,7 +287,7 @@ function FolderItemSelectorModalContent({
 	return (
 		<>
 			{open && (
-				<ItemSelectorModal
+				<ItemSelectorModal<Folder>
 					apiURL={url}
 					breadcrumbs={
 						objectEntryFolderExternalReferenceCode

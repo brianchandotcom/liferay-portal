@@ -170,16 +170,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 						<aui:input name="changeLog" type="hidden" />
 						<aui:input name="versionIncrease" type="hidden" />
 						<aui:input name="selectAll" type="hidden" value="<%= false %>" />
-
-						<%
-						String keywordsParam = ParamUtil.getString(request, "keywords");
-
-						if (Validator.isNull(keywordsParam)) {
-							keywordsParam = (String)request.getAttribute("keywords");
-						}
-						%>
-
-						<aui:input name="keywords" type="hidden" value="<%= HtmlUtil.escape(keywordsParam) %>" />
+						<aui:input name="keywords" type="hidden" value='<%= ParamUtil.getString(request, "keywords") %>' />
 
 						<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#errors" />
 

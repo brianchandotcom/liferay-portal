@@ -216,13 +216,13 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,
-			Pagination pagination)
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey, Pagination pagination)
+			String scopeKey, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public ObjectEntry moveObjectEntry(

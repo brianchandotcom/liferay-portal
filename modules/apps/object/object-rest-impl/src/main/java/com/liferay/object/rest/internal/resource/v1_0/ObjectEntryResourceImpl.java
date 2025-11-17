@@ -377,7 +377,7 @@ public class ObjectEntryResourceImpl
 
 	@Override
 	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
-			String externalReferenceCode, Pagination pagination)
+			String externalReferenceCode, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
@@ -392,7 +392,7 @@ public class ObjectEntryResourceImpl
 
 		return defaultObjectEntryManager.getVersionedObjectEntries(
 			_getDTOConverterContext(null), externalReferenceCode,
-			_objectDefinition, null, pagination);
+			_objectDefinition, null, pagination, sorts);
 	}
 
 	@Override
@@ -479,7 +479,7 @@ public class ObjectEntryResourceImpl
 
 	@Override
 	public Page<ObjectEntry> getObjectEntriesVersionsPage(
-			Long objectEntryId, Pagination pagination)
+			Long objectEntryId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
@@ -494,7 +494,7 @@ public class ObjectEntryResourceImpl
 
 		return defaultObjectEntryManager.getVersionedObjectEntries(
 			_getDTOConverterContext(objectEntryId), _objectDefinition,
-			objectEntryId, pagination);
+			objectEntryId, pagination, sorts);
 	}
 
 	@Override
@@ -607,7 +607,7 @@ public class ObjectEntryResourceImpl
 	public Page<ObjectEntry>
 			getScopeScopeKeyByExternalReferenceCodeVersionsPage(
 				String scopeKey, String externalReferenceCode,
-				Pagination pagination)
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
@@ -622,7 +622,7 @@ public class ObjectEntryResourceImpl
 
 		return defaultObjectEntryManager.getVersionedObjectEntries(
 			_getDTOConverterContext(null), externalReferenceCode,
-			_objectDefinition, scopeKey, pagination);
+			_objectDefinition, scopeKey, pagination, sorts);
 	}
 
 	@Override

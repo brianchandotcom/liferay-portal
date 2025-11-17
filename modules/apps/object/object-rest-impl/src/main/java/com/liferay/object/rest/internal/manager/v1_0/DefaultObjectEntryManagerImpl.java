@@ -32,6 +32,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersion;
+import com.liferay.object.model.ObjectEntryVersionTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectRelationshipModel;
@@ -109,6 +110,7 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -118,6 +120,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueUtil;
@@ -1132,7 +1136,7 @@ public class DefaultObjectEntryManagerImpl
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,
-			Pagination pagination)
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -1146,7 +1150,7 @@ public class DefaultObjectEntryManagerImpl
 			TransformUtil.transform(
 				_objectEntryVersionService.getObjectEntryVersions(
 					objectEntryId, _getStartPosition(pagination),
-					_getEndPosition(pagination)),
+					_getEndPosition(pagination), _getOrderByComparator(sorts)),
 				objectEntryVersion -> _objectEntryDTOConverter.toDTO(
 					_getObjectEntryVersionDTOConverterContext(
 						dtoConverterContext, objectEntryVersion,
@@ -1161,7 +1165,7 @@ public class DefaultObjectEntryManagerImpl
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey, Pagination pagination)
+			String scopeKey, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -1171,7 +1175,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return getVersionedObjectEntries(
 			dtoConverterContext, objectDefinition,
-			serviceBuilderObjectEntry.getObjectEntryId(), pagination);
+			serviceBuilderObjectEntry.getObjectEntryId(), pagination, sorts);
 	}
 
 	@Override
@@ -2620,6 +2624,24 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return objectRelationships;
+	}
+
+	private OrderByComparator<ObjectEntryVersion> _getOrderByComparator(
+		Sort[] sorts) {
+
+		if (ArrayUtil.isEmpty(sorts)) {
+			return null;
+		}
+
+		List<Object> columns = new ArrayList<>();
+
+		for (Sort sort : sorts) {
+			columns.add(sort.getFieldName());
+			columns.add(!sort.isReverse());
+		}
+
+		return OrderByComparatorFactoryUtil.create(
+			ObjectEntryVersionTable.INSTANCE.getTableName(), columns.toArray());
 	}
 
 	private List<? extends BaseModel<?>> _getRelatedModels(

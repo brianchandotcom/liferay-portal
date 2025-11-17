@@ -456,10 +456,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				httpServletRequest, "repositoryId",
 				themeDisplay.getScopeGroupId()));
 
-		long searchFolderId = _getSearchFolderId(httpServletRequest);
-
 		SearchContext searchContext = _getSearchContext(
-			actionRequest, keywords, searchRepositoryId, searchFolderId);
+			actionRequest, keywords, searchRepositoryId, _getSearchFolderId(httpServletRequest));
 
 		Hits hits = _dlAppService.search(searchRepositoryId, searchContext);
 

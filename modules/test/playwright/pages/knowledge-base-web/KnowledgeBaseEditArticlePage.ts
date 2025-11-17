@@ -6,6 +6,7 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {KnowledgeBasePage} from './KnowledgeBasePage';
 
 export class KnowledgeBaseEditArticlePage {
@@ -43,6 +44,22 @@ export class KnowledgeBaseEditArticlePage {
 		await this.knowledgeBasePage.goto(siteUrl);
 
 		await this.knowledgeBasePage.goToCreateNewArticle();
+	}
+
+	async editKBArticle(title: string, content: string) {
+		await this.titlePlaceholder.fill(title);
+		await this.contentTextBox.fill(content);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.publishMenuItem,
+			trigger: this.publishButton,
+		});
+
+		await waitForAlert(
+			this.page,
+			`Success:${title} was successfully published.`
+		);
 	}
 
 	async cancel() {

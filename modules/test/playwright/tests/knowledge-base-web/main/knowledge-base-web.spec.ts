@@ -216,3 +216,48 @@ test('can schedule and delete an article', async ({
 	).toBeVisible();
 	await expect(kbArticle).toBeHidden();
 });
+
+test(
+	'Can edit an article via toolbar',
+	{
+		tag: '@LPD-71884',
+	},
+	async ({
+		apiHelpers,
+		knowledgeBaseEditArticlePage,
+		knowledgeBasePage,
+		knowledgeBaseViewArticlePage,
+		page,
+		site,
+	}) => {
+		const content = getRandomString();
+		const title = getRandomString();
+
+		await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
+			articleBody: content,
+			siteId: site.id,
+			title,
+		});
+
+		await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
+
+		await page.getByLabel('Edit').click();
+
+		const titleEdited = title + ' Edit';
+
+		await knowledgeBaseEditArticlePage.editKBArticle(
+			titleEdited,
+			content + ' Edit'
+		);
+
+		await knowledgeBasePage.goto(site.friendlyUrlPath);
+
+		await expect(
+			page.getByRole('link', {exact: true, name: titleEdited})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {exact: true, name: title})
+		).not.toBeVisible();
+	}
+);

@@ -508,6 +508,7 @@ public class DBUpgradeClientTest {
 
 		Properties properties = ReflectionTestUtil.getFieldValue(
 			_dbUpgradeClient, "_portalUpgradeExtProperties");
+
 		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyPortalUpgradeExtPropertiesDatabase",
 			new Class<?>[0]);

@@ -17,21 +17,21 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = displayStyles[0];
 }
 
-// Left list
+// Right list
 
-List<KeyValuePair> leftList = new ArrayList<>();
+List<KeyValuePair> rightList = new ArrayList<>();
 
 for (int i = 0; i < types.length; i++) {
 	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
 
 	if (socialBookmark != null) {
-		leftList.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
+		rightList.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
 	}
 }
 
-// Right list
+// Left list
 
-List<KeyValuePair> rightList = new ArrayList<>();
+List<KeyValuePair> leftList = new ArrayList<>();
 
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
@@ -39,21 +39,21 @@ for (String curType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {
 	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(curType);
 
 	if (!typesSet.contains(curType)) {
-		rightList.add(new KeyValuePair(curType, socialBookmark.getName(locale)));
+		leftList.add(new KeyValuePair(curType, socialBookmark.getName(locale)));
 	}
 }
 
-rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
 %>
 
 <aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= StringUtil.merge(types) %>" />
 
 <liferay-ui:input-move-boxes
 	leftBoxName="availableTypes"
-	leftList="<%= rightList %>"
+	leftList="<%= leftList %>"
 	leftTitle="available"
 	rightBoxName="currentTypes"
-	rightList="<%= leftList %>"
+	rightList="<%= rightList %>"
 	rightReorder="<%= Boolean.TRUE.toString() %>"
 	rightTitle="in-use"
 />

@@ -37,27 +37,27 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 
 			<%
 
-			// Left list
+			// Right list
 
 			MethodKey methodKey = new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class);
 
-			List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 			for (long classNameId : classNameIdValues) {
 				String value = (String)PortalClassInvoker.invoke(methodKey, request, PortalUtil.getClassName(classNameId));
 
-				leftList.add(new KeyValuePair(String.valueOf(classNameId), value));
+				rightList.add(new KeyValuePair(String.valueOf(classNameId), value));
 			}
 
-			// Right list
+			// Left list
 
-			List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
 			for (long classNameId : AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId())) {
 				if (!ArrayUtil.contains(classNameIdValues, classNameId)) {
 					String value = (String)PortalClassInvoker.invoke(methodKey, request, PortalUtil.getClassName(classNameId));
 
-					rightList.add(new KeyValuePair(String.valueOf(classNameId), value));
+					leftList.add(new KeyValuePair(String.valueOf(classNameId), value));
 				}
 			}
 			%>
@@ -66,10 +66,10 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 
 			<liferay-ui:input-move-boxes
 				leftBoxName="availableClassNameIds"
-				leftList="<%= ListUtil.sort(rightList, new KeyValuePairComparator(false, true)) %>"
+				leftList="<%= ListUtil.sort(leftList, new KeyValuePairComparator(false, true)) %>"
 				leftTitle="available"
 				rightBoxName="currentClassNameIds"
-				rightList="<%= ListUtil.sort(leftList, new KeyValuePairComparator(false, true)) %>"
+				rightList="<%= ListUtil.sort(rightList, new KeyValuePairComparator(false, true)) %>"
 				rightTitle="in-use"
 			/>
 

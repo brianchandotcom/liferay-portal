@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -95,6 +96,12 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
+
+	public boolean isSearch(ActionRequest actionRequest) {
+		String keywords = ParamUtil.getString(actionRequest, "keywords");
+
+		return !Validator.isBlank(keywords);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -172,47 +179,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private SearchContext _getSearchContext(
-			ActionRequest actionRequest, String keywords,
-			long searchRepositoryId, long searchFolderId)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SearchContext searchContext = SearchContextFactory.getInstance(
-			new long[0], new String[0], new HashMap<>(),
-			themeDisplay.getCompanyId(), keywords, themeDisplay.getLayout(),
-			themeDisplay.getLocale(), themeDisplay.getScopeGroupId(),
-			themeDisplay.getTimeZone(), themeDisplay.getUserId());
-
-		searchContext.setAttribute("paginationType", "regular");
-		searchContext.setAttribute("searchRepositoryId", searchRepositoryId);
-		searchContext.setAttribute("status", WorkflowConstants.STATUS_APPROVED);
-		searchContext.setEnd(QueryUtil.ALL_POS);
-		searchContext.setFolderIds(new long[] {searchFolderId});
-		searchContext.setStart(QueryUtil.ALL_POS);
-
-		Group group = _groupLocalService.fetchGroup(searchRepositoryId);
-
-		if ((group != null) &&
-			GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), group, ActionKeys.VIEW)) {
-
-			searchContext.setGroupIds(new long[] {searchRepositoryId});
-		}
-
-		searchContext.setIncludeDiscussions(true);
-		searchContext.setIncludeInternalAssetCategories(true);
-		searchContext.setLocale(themeDisplay.getSiteDefaultLocale());
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setSearchSubfolders(true);
-
-		return searchContext;
-	}
-
 	private void _cancelCheckedOutEntries(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -282,43 +248,40 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws PortalException {
 
-		String keywords = ParamUtil.getString(actionRequest, "keywords");
+		Map<String, String[]> parameterMap = new HashMap<>(
+			actionRequest.getParameterMap());
 
-		if (Validator.isNotNull(keywords)) {
-			_deleteFileEntries(actionRequest, keywords, moveToTrash);
+		if (isSearch(actionRequest)) {
+			_initializeFilterSearchEntries(actionRequest, parameterMap);
 		}
-		else {
-			List<TrashedModel> trashedModels = new ArrayList<>();
-			BulkSelection<Folder> folderBulkSelection =
-				_folderBulkSelectionFactory.create(
-					actionRequest.getParameterMap());
 
-			folderBulkSelection.forEach(
-				folder -> _deleteFolder(folder, moveToTrash, trashedModels));
+		List<TrashedModel> trashedModels = new ArrayList<>();
+		BulkSelection<Folder> folderBulkSelection =
+			_folderBulkSelectionFactory.create(parameterMap);
 
-			BulkSelection<FileShortcut> fileShortcutBulkSelection =
-				_fileShortcutBulkSelectionFactory.create(
-					actionRequest.getParameterMap());
+		folderBulkSelection.forEach(
+			folder -> _deleteFolder(folder, moveToTrash, trashedModels));
 
-			fileShortcutBulkSelection.forEach(
-				fileShortcut -> _deleteFileShortcut(
-					fileShortcut, moveToTrash, trashedModels));
+		BulkSelection<FileShortcut> fileShortcutBulkSelection =
+			_fileShortcutBulkSelectionFactory.create(parameterMap);
 
-			BulkSelection<FileEntry> fileEntryBulkSelection =
-				_fileEntryBulkSelectionFactory.create(
-					actionRequest.getParameterMap());
+		fileShortcutBulkSelection.forEach(
+			fileShortcut -> _deleteFileShortcut(
+				fileShortcut, moveToTrash, trashedModels));
 
-			fileEntryBulkSelection.forEach(
-				fileEntry -> _deleteFileEntry(
-					fileEntry, moveToTrash, trashedModels));
+		BulkSelection<FileEntry> fileEntryBulkSelection =
+			_fileEntryBulkSelectionFactory.create(parameterMap);
 
-			if (moveToTrash && !trashedModels.isEmpty()) {
-				addDeleteSuccessData(
-					actionRequest,
-					HashMapBuilder.<String, Object>put(
-						"trashedModels", trashedModels
-					).build());
-			}
+		fileEntryBulkSelection.forEach(
+			fileEntry -> _deleteFileEntry(
+				fileEntry, moveToTrash, trashedModels));
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			addDeleteSuccessData(
+				actionRequest,
+				HashMapBuilder.<String, Object>put(
+					"trashedModels", trashedModels
+				).build());
 		}
 	}
 
@@ -367,53 +330,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _deleteFileEntries(
-			ActionRequest actionRequest, String keywords, boolean moveToTrash)
-		throws PortalException {
-
-		Map<String, List<Long>> selectedMap = _getFilteredEntries(
-			actionRequest, keywords);
-
-		List<Long> folderIds = selectedMap.get("folderIds");
-		List<Long> fileEntryIds = selectedMap.get("fileEntryIds");
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		if (!folderIds.isEmpty()) {
-			for (Long folderId : folderIds) {
-				try{
-					_deleteFolder(
-						_dlAppService.getFolder(folderId), moveToTrash,
-						trashedModels);
-				}
-				catch (Exception exception) {
-					continue;
-				}
-			}
-		}
-
-		if (!fileEntryIds.isEmpty()) {
-			for (Long fileEntryId : fileEntryIds) {
-				try {
-					_deleteFileEntry(
-						_dlAppService.getFileEntry(fileEntryId), moveToTrash,
-						trashedModels);
-				}
-				catch (Exception exception) {
-					continue;
-				}
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			addDeleteSuccessData(
-				actionRequest,
-				HashMapBuilder.<String, Object>put(
-					"trashedModels", trashedModels
-				).build());
-		}
-	}
-
 	private void _deleteFolder(
 		Folder folder, boolean moveToTrash, List<TrashedModel> trashedModels) {
 
@@ -439,8 +355,71 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private Map<String, List<Long>> _getFilteredEntries(
-			ActionRequest actionRequest, String keywords)
+	private SearchContext _getSearchContext(
+			ActionRequest actionRequest, long searchRepositoryId,
+			long searchFolderId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			new long[0], new String[0], new HashMap<>(),
+			themeDisplay.getCompanyId(),
+			ParamUtil.getString(actionRequest, "keywords", null),
+			themeDisplay.getLayout(), themeDisplay.getLocale(),
+			themeDisplay.getScopeGroupId(), themeDisplay.getTimeZone(),
+			themeDisplay.getUserId());
+
+		searchContext.setAttribute("paginationType", "regular");
+		searchContext.setAttribute("searchRepositoryId", searchRepositoryId);
+		searchContext.setAttribute("status", WorkflowConstants.STATUS_APPROVED);
+		searchContext.setEnd(QueryUtil.ALL_POS);
+		searchContext.setFolderIds(new long[] {searchFolderId});
+		searchContext.setStart(QueryUtil.ALL_POS);
+
+		Group group = _groupLocalService.fetchGroup(searchRepositoryId);
+
+		if ((group != null) &&
+			GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), group, ActionKeys.VIEW)) {
+
+			searchContext.setGroupIds(new long[] {searchRepositoryId});
+		}
+
+		searchContext.setIncludeDiscussions(true);
+		searchContext.setIncludeInternalAssetCategories(true);
+		searchContext.setLocale(themeDisplay.getSiteDefaultLocale());
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setSearchSubfolders(true);
+
+		return searchContext;
+	}
+
+	private long _getSearchFolderId(HttpServletRequest httpServletRequest) {
+		long searchFolderId = ParamUtil.getLong(
+			httpServletRequest, "searchFolderId",
+			ParamUtil.getLong(
+				httpServletRequest, "folderId",
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		long rootFolderId = ParamUtil.getLong(
+			httpServletRequest, "rootFolderId",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		if ((rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+			(searchFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			searchFolderId = rootFolderId;
+		}
+
+		return searchFolderId;
+	}
+
+	private void _initializeFilterSearchEntries(
+			ActionRequest actionRequest, Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -457,14 +436,15 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId()));
 
 		SearchContext searchContext = _getSearchContext(
-			actionRequest, keywords, searchRepositoryId, _getSearchFolderId(httpServletRequest));
+			actionRequest, searchRepositoryId,
+			_getSearchFolderId(httpServletRequest));
 
 		Hits hits = _dlAppService.search(searchRepositoryId, searchContext);
 
-		List<Long> fileEntryIds = new ArrayList<>();
-		List<Long> folderIds = new ArrayList<>();
-
 		if ((hits != null) && (hits.getLength() > 0)) {
+			List<Long> fileEntryIds = new ArrayList<>();
+			List<Long> folderIds = new ArrayList<>();
+
 			for (Document doc : hits.getDocs()) {
 				String className = doc.get(Field.ENTRY_CLASS_NAME);
 				long classPK = GetterUtil.getLong(
@@ -477,13 +457,12 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					folderIds.add(classPK);
 				}
 			}
-		}
 
-		return HashMapBuilder.<String, List<Long>>put(
-			"fileEntryIds", fileEntryIds
-		).put(
-			"folderIds", folderIds
-		).build();
+			parameterMap.put(
+				"rowIdsFileEntry", ArrayUtil.toStringArray(fileEntryIds));
+			parameterMap.put(
+				"rowIdsFolder", ArrayUtil.toStringArray(folderIds));
+		}
 	}
 
 	private void _moveEntries(ActionRequest actionRequest)
@@ -517,28 +496,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			fileShortcut -> _dlAppService.updateFileShortcut(
 				fileShortcut.getFileShortcutId(), newFolderId,
 				fileShortcut.getToFileEntryId(), serviceContext));
-	}
-
-	private long _getSearchFolderId(
-			HttpServletRequest httpServletRequest) {
-
-		long searchFolderId = ParamUtil.getLong(
-			httpServletRequest, "searchFolderId",
-			ParamUtil.getLong(
-				httpServletRequest, "folderId",
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
-		long rootFolderId = ParamUtil.getLong(
-			httpServletRequest, "rootFolderId",
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		if ((rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			(searchFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			searchFolderId = rootFolderId;
-		}
-
-		return searchFolderId;
 	}
 
 	private void _restoreTrashEntries(ActionRequest actionRequest)

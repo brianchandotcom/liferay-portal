@@ -8,6 +8,7 @@ package com.liferay.document.library.internal.bulk.selection.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -39,6 +40,10 @@ public class BulkSelectionFactoryUtil {
 	}
 
 	public static boolean isSelectAll(Map<String, String[]> parameterMap) {
+		if (!Validator.isBlank(MapUtil.getString(parameterMap, "keywords"))) {
+			return false;
+		}
+
 		return MapUtil.getBoolean(parameterMap, "selectAll");
 	}
 

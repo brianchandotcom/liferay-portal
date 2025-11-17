@@ -1,0 +1,718 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SalesforceOverview should render 1`] = `
+<div>
+  <div
+    class="settings-root"
+  >
+    <nav
+      class="bg-white mb-4 tbar component-tbar"
+    >
+      <ul
+        class="mx-4 tbar-nav"
+      >
+        <li
+          class="tbar-item"
+        >
+          <div
+            class="component-action"
+          >
+            <a
+              aria-label="Back"
+              class="text-secondary"
+              href="/workspace/23"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-angle-left mb-1"
+                role="presentation"
+              >
+                <use
+                  href="#angle-left"
+                />
+              </svg>
+            </a>
+          </div>
+        </li>
+        <li
+          class="pl-0 tbar-item"
+        >
+          <div
+            class="tbar-section"
+          >
+            <span
+              class="text-dark"
+            >
+              <span
+                class="text-5 font-weight-bold"
+              >
+                Settings
+              </span>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div
+      class="content-wrapper"
+    >
+      <nav
+        class="section-side settings-side-bar"
+      >
+        <div>
+          <h5
+            class="section-title"
+          >
+            Workspace Data
+          </h5>
+          <ul
+            class="nav"
+          >
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/apis/tokens"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-ac_api icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#ac_api"
+                    />
+                  </svg>
+                </span>
+                APIs
+              </a>
+            </li>
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/definitions"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-definitions icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#definitions"
+                    />
+                  </svg>
+                </span>
+                Definitions
+              </a>
+            </li>
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/data-privacy"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-data_privacy_lock icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#data_privacy_lock"
+                    />
+                  </svg>
+                </span>
+                Data Control & Privacy
+              </a>
+            </li>
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/data-source"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-faro_data_source icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#faro_data_source"
+                    />
+                  </svg>
+                </span>
+                Data Sources
+              </a>
+            </li>
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/recommendations"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-ac_star icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#ac_star"
+                    />
+                  </svg>
+                </span>
+                Recommendations
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h5
+            class="section-title"
+          >
+            Workspace Settings
+          </h5>
+          <ul
+            class="nav"
+          >
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/users"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-user_management icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#user_management"
+                    />
+                  </svg>
+                </span>
+                User Management
+              </a>
+            </li>
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/properties"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-ac_page icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#ac_page"
+                    />
+                  </svg>
+                </span>
+                Properties
+              </a>
+            </li>
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/usage"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-usage icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#usage"
+                    />
+                  </svg>
+                </span>
+                Subscription & Usage
+              </a>
+            </li>
+            <li
+              class="item"
+            >
+              <a
+                class="button-root"
+                href="/workspace/23/settings/workspace"
+              >
+                <span
+                  class="icon-wrapper"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-cog icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#cog"
+                    />
+                  </svg>
+                </span>
+                Workspace
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div
+        class="content section-main"
+      >
+        <div
+          class="settings-base-page-root"
+        >
+          <div
+            class="maintenance-alert-root"
+          />
+          <ol
+            class="breadcrumb breadcrumbs-root"
+          >
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-text-truncate breadcrumb-link"
+                href="/workspace/23/settings/data-source"
+              >
+                Data Sources
+              </a>
+            </li>
+            <li
+              class="breadcrumb-item active"
+            >
+              <span
+                class="breadcrumb-text-truncate"
+              >
+                Salesforce{seed}
+              </span>
+            </li>
+          </ol>
+          <div>
+            <div
+              class="mb-5"
+            >
+              <span
+                class="label mb-2 label-success"
+              >
+                <span
+                  class="label-item label-item-expand"
+                >
+                  Connected
+                </span>
+              </span>
+              <div
+                class="input-with-edit-toggle-root definition-item-root"
+              >
+                <div
+                  class="d-inline-flex"
+                >
+                  <span
+                    class="text-8 font-weight-bold"
+                  >
+                    Salesforce{seed}
+                  </span>
+                  <button
+                    aria-label="Edit"
+                    class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
+                    data-testid="edit"
+                    type="button"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-pencil icon-root"
+                      role="presentation"
+                    >
+                      <use
+                        href="#pencil"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mb-4 p-4 sheet"
+            >
+              <div
+                class="row justify-content-center"
+              >
+                <div
+                  class="col-12"
+                >
+                  <div
+                    class="mb-5"
+                  >
+                    <span
+                      class="text-6 font-weight-bold"
+                    >
+                      Authentication
+                    </span>
+                  </div>
+                  <div
+                    class="sheet-section"
+                  >
+                    <span
+                      class="text-3 text-secondary font-weight-semi-bold"
+                    >
+                      CONNECTION STATUS
+                    </span>
+                    <hr
+                      class="my-2"
+                    />
+                    <div
+                      class="alert alert-success"
+                    >
+                      <div
+                        class="alert-autofit-row autofit-row"
+                        role="alert"
+                      >
+                        <div
+                          class="autofit-col"
+                        >
+                          <div
+                            class="autofit-section"
+                          >
+                            <span
+                              class="alert-indicator"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-check-circle-full"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#check-circle-full"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="autofit-col autofit-col-expand"
+                        >
+                          <div
+                            class="autofit-section"
+                          >
+                            You have successfully authenticated your token with Liferay Analytics Cloud. You can now select the data to sync.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="sheet-section"
+                    >
+                      <span
+                        class="text-3 text-secondary font-weight-semi-bold"
+                      >
+                        DATA SOURCE DETAILS
+                      </span>
+                      <hr
+                        class="my-2"
+                      />
+                      <div
+                        class="input-group d-flex mt-3"
+                      >
+                        <div
+                          class="input-group-item mr-3 input-group-item-shrink"
+                        >
+                          <label
+                            for="dataSourceType"
+                          >
+                            Data Source Type
+                          </label>
+                          <input
+                            class="form-control"
+                            readonly=""
+                            type="text"
+                            value="Salesforce"
+                          />
+                        </div>
+                        <div
+                          class="input-group-item ml-0 input-group-item-shrink"
+                        >
+                          <label
+                            for="dataSourceId"
+                          >
+                            Data Source ID
+                          </label>
+                          <input
+                            class="form-control"
+                            readonly=""
+                            type="text"
+                            value="1"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      aria-label="Disconnect Data Source"
+                      class="btn btn-sm btn-outline-danger"
+                      type="button"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-logout mr-2"
+                        role="presentation"
+                      >
+                        <use
+                          href="#logout"
+                        />
+                      </svg>
+                      Disconnect Data Source
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mb-4 mt-0 p-4 sheet"
+            >
+              <div
+                class="row justify-content-center"
+              >
+                <div
+                  class="col-12"
+                >
+                  <div
+                    class="mb-5"
+                  >
+                    <span
+                      class="text-6 font-weight-bold"
+                    >
+                      Synced Data
+                    </span>
+                  </div>
+                  <div
+                    class="sheet-section"
+                  >
+                    <div
+                      class="mt-3 alert alert-warning"
+                    >
+                      <div
+                        class="alert-autofit-row autofit-row"
+                        role="alert"
+                      >
+                        <div
+                          class="autofit-col"
+                        >
+                          <div
+                            class="autofit-section"
+                          >
+                            <span
+                              class="alert-indicator"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-warning-full"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#warning-full"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="autofit-col autofit-col-expand"
+                        >
+                          <div
+                            class="autofit-section"
+                          >
+                            <strong
+                              class="lead"
+                            >
+                              Warning
+                            </strong>
+                            The data source setup is almost complete. Sync data to start seeing results as activities occur on your sites.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <span
+                      class="text-4 text-secondary"
+                    >
+                      To configure your Salesforce data source, go to your Salesforce environment to update this app connection.
+                    </span>
+                    <div
+                      class="pt-1"
+                    >
+                      <ul
+                        class="list-group mb-0 show-quick-actions-on-hover"
+                      >
+                        <li
+                          class="list-group-item list-group-item-flex"
+                        >
+                          <div
+                            class="autofit-col"
+                          >
+                            <span
+                              class="sticker sticker-unstyled"
+                            >
+                              <span
+                                class="sticker-overlay"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-briefcase text-secondary"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#briefcase"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                          </div>
+                          <div
+                            class="autofit-col autofit-col-expand"
+                          >
+                            <p
+                              class="list-group-title"
+                            >
+                              Accounts
+                            </p>
+                            <p
+                              class="list-group-text"
+                            >
+                              Represents fields from the Account object within Salesforce.
+                            </p>
+                          </div>
+                          <div
+                            class="autofit-col"
+                            style="display: flex; justify-content: center; width: 120px;"
+                          >
+                            <label
+                              class="toggle-switch simple-toggle-switch toggle-switch-sm"
+                            >
+                              <span
+                                class="toggle-switch-check-bar"
+                              >
+                                <input
+                                  class="toggle-switch-check"
+                                  id="accounts"
+                                  role="switch"
+                                  type="checkbox"
+                                  value=""
+                                />
+                                <span
+                                  aria-hidden="true"
+                                  class="toggle-switch-bar"
+                                >
+                                  <span
+                                    class="toggle-switch-handle"
+                                  />
+                                </span>
+                              </span>
+                              <span
+                                class="toggle-switch-label"
+                              >
+                                Disconnected
+                              </span>
+                            </label>
+                          </div>
+                        </li>
+                        <li
+                          class="list-group-item list-group-item-flex"
+                        >
+                          <div
+                            class="autofit-col"
+                          >
+                            <span
+                              class="sticker sticker-unstyled"
+                            >
+                              <span
+                                class="sticker-overlay"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-users text-secondary"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#users"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                          </div>
+                          <div
+                            class="d-flex justify-content-center autofit-col autofit-col-expand"
+                          >
+                            <p
+                              class="list-group-title"
+                            >
+                              Individuals
+                            </p>
+                            <p
+                              class="list-group-text"
+                            >
+                              Represents fields from the Contact or Lead object within Salesforce.
+                            </p>
+                          </div>
+                          <div
+                            class="autofit-col"
+                            style="display: flex; justify-content: center; width: 120px;"
+                          >
+                            <label
+                              class="toggle-switch simple-toggle-switch toggle-switch-sm"
+                            >
+                              <span
+                                class="toggle-switch-check-bar"
+                              >
+                                <input
+                                  class="toggle-switch-check"
+                                  id="individuals"
+                                  name="Individuals"
+                                  role="switch"
+                                  type="checkbox"
+                                  value=""
+                                />
+                                <span
+                                  aria-hidden="true"
+                                  class="toggle-switch-bar"
+                                >
+                                  <span
+                                    class="toggle-switch-handle"
+                                  />
+                                </span>
+                              </span>
+                              <span
+                                class="toggle-switch-label"
+                              >
+                                Disconnected
+                              </span>
+                            </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

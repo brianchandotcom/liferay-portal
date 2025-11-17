@@ -18,7 +18,9 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-jest.useRealTimers();
+jest.mock('shared/hooks/useRequest', () => ({
+	useRequest: jest.fn
+}));
 
 const csvProps = {
 	groupId: '23',

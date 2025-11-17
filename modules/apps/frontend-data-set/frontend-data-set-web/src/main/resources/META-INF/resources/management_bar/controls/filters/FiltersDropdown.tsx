@@ -15,10 +15,8 @@ import ViewsContext, {
 import Filter, {IFilter} from './Filter';
 
 const FiltersDropdown = () => {
-	const [{filters, filtersGroups}]: [
-		IViewsContext,
-		TViewsContextDispatch,
-	] = useContext(ViewsContext);
+	const [{filters, filtersGroups}]: [IViewsContext, TViewsContextDispatch] =
+		useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
 	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
@@ -90,7 +88,9 @@ const FiltersDropdown = () => {
 				</>
 			) : (
 				<ClayDropDown.Group header={Liferay.Language.get('filters')}>
-					<ClayDropDown.Search aria-label={Liferay.Language.get('search')} />
+					<ClayDropDown.Search
+						aria-label={Liferay.Language.get('search')}
+					/>
 
 					<ClayDropDown.Divider />
 

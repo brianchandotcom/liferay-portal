@@ -65,12 +65,12 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 			<aui:input name="userCustomAttributeNames" value='<%= ParamUtil.getString(request, "userCustomAttributeNamesValue", userCustomAttributeNames) %>' wrapperCssClass="lfr-input-text-container" />
 
 			<liferay-ui:input-move-boxes
-				leftBoxName="currentClassNameIds"
-				leftList="<%= ListUtil.sort(leftList, new KeyValuePairComparator(false, true)) %>"
-				leftTitle="current"
-				rightBoxName="availableClassNameIds"
-				rightList="<%= ListUtil.sort(rightList, new KeyValuePairComparator(false, true)) %>"
-				rightTitle="available"
+				leftBoxName="availableClassNameIds"
+				leftList="<%= ListUtil.sort(rightList, new KeyValuePairComparator(false, true)) %>"
+				leftTitle="available"
+				rightBoxName="currentClassNameIds"
+				rightList="<%= ListUtil.sort(leftList, new KeyValuePairComparator(false, true)) %>"
+				rightTitle="current"
 			/>
 
 			<aui:button-row>

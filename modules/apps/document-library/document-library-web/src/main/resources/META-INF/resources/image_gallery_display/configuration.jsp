@@ -38,13 +38,13 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 
 			<aui:field-wrapper label="show-media-type">
 				<liferay-ui:input-move-boxes
-					leftBoxName="currentMimeTypes"
-					leftList="<%= igConfigurationDisplayContext.getCurrentMimeTypes() %>"
-					leftReorder="<%= Boolean.TRUE.toString() %>"
-					leftTitle="current"
-					rightBoxName="availableMimeTypes"
-					rightList="<%= igConfigurationDisplayContext.getAvailableMimeTypes() %>"
-					rightTitle="available"
+					leftBoxName="availableMimeTypes"
+					leftList="<%= igConfigurationDisplayContext.getAvailableMimeTypes() %>"
+					leftTitle="available"
+					rightBoxName="currentMimeTypes"
+					rightList="<%= igConfigurationDisplayContext.getCurrentMimeTypes() %>"
+					rightReorder="<%= Boolean.TRUE.toString() %>"
+					rightTitle="current"
 				/>
 			</aui:field-wrapper>
 

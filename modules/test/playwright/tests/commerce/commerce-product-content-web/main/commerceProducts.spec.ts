@@ -14,6 +14,7 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
+import {liferayConfig} from '../../../../liferay.config';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../../utils/performLogin';
@@ -1252,5 +1253,87 @@ test(
 		await expect(
 			productPublisherPage.productCard(product.name.en_US)
 		).not.toBeVisible();
+	}
+);
+
+test(
+	'The uploaded svg in product media is downloaded instead of being opened',
+	{tag: '@LPD-70547'},
+	async ({apiHelpers, attachmentsPage, commerceAdminProductPage, page}) => {
+		let catalog;
+		let product;
+		let site;
+		let siteDocument;
+		let siteDocumentsPage;
+
+		await test.step('Create channel, catalog and product via API', async () => {
+			site =
+				await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+					'guest'
+				);
+
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({});
+
+			catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+			product = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
+				{
+					catalogId: catalog.id,
+				}
+			);
+		});
+
+		try {
+			await test.step('Upload the svg file to the product', async () => {
+				await attachmentsPage.goToDocumentsAndMedia();
+				await attachmentsPage.createFileEntry(
+					path.join(__dirname, '/dependencies/diagram.svg'),
+					'diagram'
+				);
+
+				siteDocumentsPage =
+					await apiHelpers.headlessDelivery.getSiteDocumentsPage(
+						site.id,
+						'id:desc'
+					);
+
+				siteDocument = siteDocumentsPage.items[0];
+
+				await apiHelpers.headlessCommerceAdminCatalog.postImage(
+					product.productId,
+					siteDocument.id,
+					siteDocument.title
+				);
+			});
+
+			await test.step('Navigate to product, get the link to src from the thumbnail, perform a get request and check the response', async () => {
+				await commerceAdminProductPage.gotoProduct(
+					product.name['en_US']
+				);
+
+				const svgURL = await page
+					.locator('.d-none > .sticker-overlay .sticker-img')
+					.getAttribute('src');
+
+				const response = await page.request.get(
+					`${liferayConfig.environment.baseUrl}${svgURL}`
+				);
+
+				expect(response.ok).toBeTruthy();
+
+				const headers = response.headers();
+
+				const contentDisposition = headers['content-disposition'];
+				const contentType = headers['content-type'];
+
+				expect(contentDisposition).toContain('attachment');
+				expect(contentDisposition).toContain('diagram.svg');
+				expect(contentType).toBe('image/svg+xml');
+			});
+		}
+		finally {
+			await apiHelpers.headlessDelivery.deleteDocument(siteDocument.id);
+		}
 	}
 );

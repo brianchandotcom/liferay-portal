@@ -43,7 +43,7 @@ export function SearchableContainer({
 		values.businessType !== 'Aggregation';
 
 	useEffect(() => {
-		if (!values.indexedLanguageId) {
+		if (isSearchableString && !values.indexedLanguageId) {
 			setValues({
 				indexedLanguageId: defaultLanguageId,
 			});

@@ -71,11 +71,10 @@ export function EditObjectFieldContent({
 	const [sidebarElements, setSidebarElements] = useState<SidebarCategory[]>(
 		[]
 	);
+	const hasDefaultValues =
+		values.businessType === 'Boolean' || values.businessType === 'Picklist';
 
-	if (
-		(isDefaultStorageType || values.businessType === 'Picklist') &&
-		TABS.length < 2
-	) {
+	if ((isDefaultStorageType || hasDefaultValues) && TABS.length < 2) {
 		TABS.push(Liferay.Language.get('advanced'));
 	}
 
@@ -136,7 +135,7 @@ export function EditObjectFieldContent({
 
 	return (
 		<>
-			{isDefaultStorageType || values.businessType === 'Picklist' ? (
+			{isDefaultStorageType || hasDefaultValues ? (
 				<>
 					<ClayTabs className="side-panel-iframe__tabs">
 						{TABS.map((label, index) => (

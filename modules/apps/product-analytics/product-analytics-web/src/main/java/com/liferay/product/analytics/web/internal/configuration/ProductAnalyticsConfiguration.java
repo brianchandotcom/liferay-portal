@@ -45,7 +45,7 @@ public interface ProductAnalyticsConfiguration {
 		featureFlagKey = "LPD-65277",
 		visibilityControllerKey = "com.liferay.product.analytics.web.internal.configuration.admin.display.ProductAnalyticsConfigurationVisibilityController"
 	)
-	@Meta.AD(deflt = "0", name = "modified-date", required = false)
-	public long modifiedDate();
+	@Meta.AD(deflt = "0", name = "last-modified", required = false)
+	public long lastModified();
 
 }

@@ -48,11 +48,11 @@ ProductAnalyticsConfiguration productAnalyticsConfiguration = (ProductAnalyticsC
 						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
 					onConfirm: (isConfirmed) => {
 						if (isConfirmed) {
-							var modifiedDate = document.querySelector(
-								'[id*="modifiedDate"]'
+							var lastModified = document.querySelector(
+								'[id*="lastModified"]'
 							);
 
-							modifiedDate.value = new Date().getTime();
+							lastModified.value = new Date().getTime();
 
 							form.submit();
 						}

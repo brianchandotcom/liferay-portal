@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.link.model.AssetLink;
 import com.liferay.asset.link.service.AssetLinkLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -68,12 +69,15 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -1045,6 +1049,38 @@ public class StructuredContentResourceImpl
 		};
 	}
 
+	private String _getFileEntryJSONObject(JSONObject jsonObject, boolean image)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(
+			jsonObject.getLong("id"));
+
+		jsonObject.put(
+			"extension", fileEntry.getExtension()
+		).put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"size", fileEntry.getSize()
+		);
+
+		if (image) {
+			jsonObject.put(
+				"url", _dlurlHelper.getImagePreviewURL(fileEntry, null));
+		}
+		else {
+			jsonObject.put(
+				"url",
+				_dlurlHelper.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), null, ""));
+		}
+
+		jsonObject.put("uuid", fileEntry.getUuid());
+
+		return jsonObject.toString();
+	}
+
 	private List<DDMFormField> _getRootDDMFormFields(
 		DDMStructure ddmStructure) {
 
@@ -1157,15 +1193,23 @@ public class StructuredContentResourceImpl
 			sorts, this::_toStructuredContent);
 	}
 
-	private String _getValue(ContentFieldValue contentFieldValue) {
+	private String _getValue(ContentFieldValue contentFieldValue)
+		throws Exception {
+
 		if (contentFieldValue.getData() != null) {
 			return contentFieldValue.getData();
 		}
 		else if (contentFieldValue.getDocument() != null) {
-			return String.valueOf(contentFieldValue.getDocument());
+			return _getFileEntryJSONObject(
+				_jsonFactory.createJSONObject(
+					String.valueOf(contentFieldValue.getDocument())),
+				false);
 		}
 		else if (contentFieldValue.getImage() != null) {
-			return String.valueOf(contentFieldValue.getImage());
+			return _getFileEntryJSONObject(
+				_jsonFactory.createJSONObject(
+					String.valueOf(contentFieldValue.getImage())),
+				true);
 		}
 
 		return null;
@@ -1190,8 +1234,9 @@ public class StructuredContentResourceImpl
 	}
 
 	private void _populateContentFieldValuesMap(
-		ContentField[] contentFields,
-		Map<String, List<ContentFieldValue>> contentFieldValuesMap) {
+			ContentField[] contentFields,
+			Map<String, List<ContentFieldValue>> contentFieldValuesMap)
+		throws Exception {
 
 		if (ArrayUtil.isEmpty(contentFields)) {
 			return;
@@ -1622,6 +1667,9 @@ public class StructuredContentResourceImpl
 	private DLAppService _dlAppService;
 
 	@Reference
+	private DLURLHelper _dlurlHelper;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
@@ -1668,6 +1716,9 @@ public class StructuredContentResourceImpl
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutDisplayPageProviderRegistry

@@ -46,8 +46,9 @@ const renderComponent = ({rules = []} = {}) => {
 			getState={() => ({
 				fragmentEntryLinks: [],
 				layoutData: {
+					deletedItems: [],
 					items: {
-						itemId: {
+						item1: {
 							config: {
 								name: 'containercillo',
 							},

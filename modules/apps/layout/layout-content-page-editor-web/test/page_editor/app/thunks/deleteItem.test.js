@@ -139,6 +139,7 @@ const STATE = {
 				type: 'row',
 			},
 		},
+		pageRules: [],
 		rootItems: {
 			dropZone: '',
 			main: 'root',

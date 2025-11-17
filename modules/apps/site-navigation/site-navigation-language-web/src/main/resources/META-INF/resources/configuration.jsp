@@ -52,7 +52,7 @@
 				rightBoxName="currentLanguageIds"
 				rightList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
 				rightReorder="<%= Boolean.TRUE.toString() %>"
-				rightTitle="current"
+				rightTitle="in-use"
 			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>

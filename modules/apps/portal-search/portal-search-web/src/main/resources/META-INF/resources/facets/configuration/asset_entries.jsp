@@ -51,7 +51,7 @@ for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getA
 	leftTitle="available"
 	rightBoxName="currentAssetTypes"
 	rightList="<%= currentAssetTypes %>"
-	rightTitle="current"
+	rightTitle="in-use"
 />
 
 <aui:script>

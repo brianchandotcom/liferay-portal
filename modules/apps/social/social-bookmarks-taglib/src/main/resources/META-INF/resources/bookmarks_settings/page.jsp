@@ -55,7 +55,7 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 	rightBoxName="currentTypes"
 	rightList="<%= leftList %>"
 	rightReorder="<%= Boolean.TRUE.toString() %>"
-	rightTitle="current"
+	rightTitle="in-use"
 />
 
 <label class="control-label" for="<portlet:namespace />typesOptions">

@@ -256,8 +256,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 	}
 
 	private <T> void _updateLayoutClassedModelUsages(
-		List<T> items, Function<T, ?> logIdExtractor, String logPrefix,
-		Consumer<T> consumer) {
+		Consumer<T> consumer, List<T> items, Function<T, ?> logIdExtractor,
+		String logPrefix) {
 
 		for (T item : items) {
 			if (item == null) {
@@ -280,11 +280,11 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 		long groupId, long plid) {
 
 		_updateLayoutClassedModelUsages(
+			_contentManager::updateLayoutClassedModelUsage,
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				groupId, plid),
 			FragmentEntryLink::getFragmentEntryLinkId,
-			"Unable to update usages for fragment entry link ",
-			_contentManager::updateLayoutClassedModelUsage);
+			"Unable to update usages for fragment entry link ");
 	}
 
 	private void _updateLayoutClassedModelUsagesForLayoutPageTemplateStructure(
@@ -299,14 +299,14 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 		}
 
 		_updateLayoutClassedModelUsages(
+			_contentManager::updateLayoutClassedModelUsage,
 			_layoutPageTemplateStructureRelLocalService.
 				getLayoutPageTemplateStructureRels(
 					layoutPageTemplateStructure.
 						getLayoutPageTemplateStructureId()),
 			LayoutPageTemplateStructureRel::getLayoutPageTemplateStructureRelId,
 			"Unable to update usages for layout page template structure " +
-				"relationship ",
-			_contentManager::updateLayoutClassedModelUsage);
+				"relationship ");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

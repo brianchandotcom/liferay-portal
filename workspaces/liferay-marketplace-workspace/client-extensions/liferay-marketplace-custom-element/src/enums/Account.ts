@@ -22,7 +22,3 @@ export enum AccountTypes {
 	PERSON = 'person',
 	SUPPLIER = 'supplier',
 }
-
-export enum UserRoleTypes {
-	LIFERAY_USER = 'Liferay Staff',
-}

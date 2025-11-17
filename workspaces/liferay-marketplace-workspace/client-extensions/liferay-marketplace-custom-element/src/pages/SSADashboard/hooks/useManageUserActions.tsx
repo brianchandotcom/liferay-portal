@@ -6,24 +6,24 @@
 import Button from '@clayui/button';
 import {useMemo} from 'react';
 
+import {Tooltip} from '../../../components/Tooltip/Tooltip';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
-import {Action} from '../../../utils/constants';
-import HeaderWithTooltip from '../components/HeaderWithTooltip';
-import ManageUserModal from '../modals/ManageUserRolesModal';
-import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
-import {ssaRoles as ssaRolesValues} from '../constants';
 import {Liferay} from '../../../liferay/liferay';
+import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
+import {Action} from '../../../utils/constants';
+import {ssaRoles as ssaRolesValues} from '../constants';
+import ManageUserModal from '../modals/ManageUserRolesModal';
 
 function mutateUser(
-	users: APIResponse<UserAccount>,
+	accountERC: string,
 	user: UserAccount,
-	accountERC: string
+	usersPage: APIResponse<UserAccount>
 ) {
 	return {
-		...users,
-		items: users.items.map((prevUser) => {
+		...usersPage,
+		items: usersPage.items.map((prevUser) => {
 			if (prevUser.id !== user.id) {
 				return prevUser;
 			}
@@ -82,12 +82,16 @@ const useManageUserActions = () => {
 								</Button>,
 							],
 							header: (
-								<HeaderWithTooltip
-									title={i18n.translate('manage-user-roles')}
-									tooltip={i18n.translate(
-										'set-the-users-role-ssa-users-can-create-trials-while-ssa-admins-can-manage-users-roles-and-trials'
-									)}
-								/>
+								<div className="align-items-center d-flex">
+									<span className="mr-2">
+										{i18n.translate('manage-user-roles')}
+									</span>
+									<Tooltip
+										tooltip={i18n.translate(
+											'set-the-users-role-ssa-users-can-create-trials-while-ssa-admins-can-manage-users-roles-and-trials'
+										)}
+									/>
+								</div>
 							),
 						});
 					},
@@ -137,15 +141,15 @@ const useManageUserActions = () => {
 										}
 
 										try {
-											Promise.all([
-												ssaRoles.forEach((role) => {
+											await Promise.all(
+												ssaRoles.map((role) =>
 													HeadlessAdminUser.deleteRoleAccountUser(
 														accountId,
 														role.id,
 														user.id
-													);
-												}),
-											]);
+													)
+												)
+											);
 										}
 										catch {
 											Liferay.Util.openToast({
@@ -164,12 +168,12 @@ const useManageUserActions = () => {
 
 										mutate(
 											(
-												users: APIResponse<UserAccount>
+												usersPage: APIResponse<UserAccount>
 											) => {
 												return mutateUser(
-													users,
+													properties.accountExternalReferenceCode,
 													user,
-													properties.accountExternalReferenceCode
+													usersPage
 												);
 											},
 											{revalidate: false}

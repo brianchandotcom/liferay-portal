@@ -11,6 +11,7 @@ export default {
 	'a-sleek-and-intuitive-admin-dashboard-for-monitoring-key-metrics':
 		'A sleek and intuitive admin dashboard for monitoring key metrics.',
 	'access-console': 'Access Console',
+	'access-required': 'Access required.',
 	'account': 'Account',
 	'account-details': 'Account Details',
 	'account-name': 'Account Name',

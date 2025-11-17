@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 
+import EmptyState from '../../../components/EmptyState';
 import Page from '../../../components/Page';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import useModalContext from '../../../hooks/useModalContext';
@@ -25,12 +26,15 @@ export default function MySaaSTrials() {
 
 	const canCreateTrial = isSSAAdmin ? true : myTrialsInProgress < 3;
 
+	const hasSSAPermission = isSSAAdmin || marketplaceUserAccount.isSSAUser;
+
 	return (
 		<Page
 			description={i18n.translate('manage-your-current-trials')}
 			pageRendererProps={{className: 'border py-2'}}
 			rightButton={
 				<ClayButton
+					disabled={!hasSSAPermission}
 					onClick={() => {
 						if (canCreateTrial) {
 							return createTrialFormModal.onOpenChange(true);
@@ -53,16 +57,35 @@ export default function MySaaSTrials() {
 			}
 			title="My SaaS Demos"
 		>
-			<TrialListView
-				actions={actions}
-				authorOnlyTrials
-				createTrialFormModal={createTrialFormModal}
-				isSortable
-				managementToolbarProps={{
-					searchVisible: true,
-					visible: isSSAAdmin,
-				}}
-			/>
+			{hasSSAPermission ? (
+				<TrialListView
+					actions={actions}
+					authorOnlyTrials
+					createTrialFormModal={createTrialFormModal}
+					isSortable
+					managementToolbarProps={{
+						searchVisible: true,
+						visible: isSSAAdmin,
+					}}
+				/>
+			) : (
+				<EmptyState
+					description={
+						<p>
+							Reach out to
+							<a
+								className="mx-1"
+								href="mailto:rafael.lluis@liferay.com"
+							>
+								rafael.lluis@liferay.com
+							</a>
+							to obtain the necessary permissions to continue.
+						</p>
+					}
+					title={i18n.translate('access-required')}
+					type="NO_ACCESS"
+				/>
+			)}
 		</Page>
 	);
 }

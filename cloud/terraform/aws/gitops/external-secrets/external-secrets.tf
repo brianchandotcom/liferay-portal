@@ -13,15 +13,16 @@ resource "helm_release" "argocd_eso_custom_resources" {
 	name="argocd-secrets"
 	namespace=local.argocd_namespace
 	values=[
-		yamlencode({
-			argocdSecretName=local.argocd_repo_credentials_secret_name
-			gitTokenProperty=var.git_token_property
-			gitUsernameProperty=var.git_username_property
-			namespace=local.argocd_namespace
-			remoteSecretKey=var.remote_secret_key
-			secretStoreName=local.secret_store_name
-			secretStoreProviderYaml=var.secret_store_provider_yaml_spec
-		})
+		yamlencode(
+			{
+				argocdSecretName=local.argocd_repo_credentials_secret_name
+				gitTokenProperty=var.git_token_property
+				gitUsernameProperty=var.git_username_property
+				namespace=local.argocd_namespace
+				remoteSecretKey=var.remote_secret_key
+				secretStoreName=local.secret_store_name
+				secretStoreProviderYaml=var.secret_store_provider_yaml_spec
+			})
 	]
 }
 resource "helm_release" "external_secrets" {
@@ -34,43 +35,44 @@ resource "helm_release" "external_secrets" {
 	namespace="external-secrets"
 	repository="https://charts.external-secrets.io"
 	values=[
-		yamlencode({
-			certController={
+		yamlencode(
+			{
+				certController={
+					resources={
+						limits={
+							cpu="20m"
+							memory="64Mi"
+						}
+						requests={
+							cpu="10m"
+							memory="32Mi"
+						}
+					}
+				}
+				installCRDs=false
 				resources={
 					limits={
-						cpu="20m"
-						memory="64Mi"
+						cpu="100m"
+						memory="128Mi"
 					}
 					requests={
-						cpu="10m"
-						memory="32Mi"
-					}
-				}
-			}
-			installCRDs=false
-			resources={
-				limits={
-					cpu="100m"
-					memory="128Mi"
-				}
-				requests={
-					cpu="50m"
-					memory="64Mi"
-				}
-			}
-			webhook={
-				resources={
-					limits={
-						cpu="20m"
+						cpu="50m"
 						memory="64Mi"
 					}
-					requests={
-						cpu="10m"
-						memory="32Mi"
+				}
+				webhook={
+					resources={
+						limits={
+							cpu="20m"
+							memory="64Mi"
+						}
+						requests={
+							cpu="10m"
+							memory="32Mi"
+						}
 					}
 				}
-			}
-		})
+			})
 	]
 	version="1.0.0"
 }
@@ -80,16 +82,17 @@ resource "helm_release" "external_secrets_crds" {
 	namespace="kube-system"
 	repository="https://charts.external-secrets.io"
 	values=[
-		yamlencode({
-			certController={
-				enabled=false
-			}
-			installController=false
-			installCRDs=true
-			webhook={
-				enabled=false
-			}
-		})
+		yamlencode(
+			{
+				certController={
+					enabled=false
+				}
+				installController=false
+				installCRDs=true
+				webhook={
+					enabled=false
+				}
+			})
 	]
 	version="1.0.0"
 }
@@ -135,6 +138,6 @@ resource "null_resource" "cleanup_eso_webhooks" {
 		helm_release.external_secrets_crds,
 	]
 	provisioner "local-exec" {
-		command="kubectl delete ValidatingWebhookConfiguration secretstore-validate externalsecret-validate || true"
+		command="kubectl delete ValidatingWebhookConfiguration externalsecret-validate secretstore-validate || true"
 	}
 }

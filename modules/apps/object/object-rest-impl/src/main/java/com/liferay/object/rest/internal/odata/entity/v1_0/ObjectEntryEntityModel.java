@@ -252,6 +252,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 			).put(
 				"userId",
 				new IntegerEntityField("userId", locale -> Field.USER_ID)
+			).put(
+				"version",
+				new IntegerEntityField("version", locale -> "version")
 			).build();
 
 		for (ObjectField objectField : objectFields) {

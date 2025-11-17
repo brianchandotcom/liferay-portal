@@ -450,7 +450,7 @@ public class MarketplaceRestController extends BaseRestController {
 				});
 		}
 
-		_setExchangeRateOrderMetadata(order);
+		_setExchangeRate(order);
 
 		orderResource.patchOrder(
 			orderId,
@@ -612,7 +612,7 @@ public class MarketplaceRestController extends BaseRestController {
 			).build());
 	}
 
-	private void _setExchangeRateOrderMetadata(Order order) throws Exception {
+	private void _setExchangeRate(Order order) throws Exception {
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 

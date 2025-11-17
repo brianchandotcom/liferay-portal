@@ -63,13 +63,6 @@ public class EditObjectTagsBulkSelectionAction
 		AtomicInteger numberOfFailedItems = new AtomicInteger(0);
 		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
 
-		Set<String> toAddTagNames = _toStringSet(inputMap, "toAddTagNames");
-		Set<String> toRemoveTagNames = _toStringSet(
-			inputMap, "toRemoveTagNames");
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
 		try {
 			values.put("executionStatus", "started");
 
@@ -88,6 +81,9 @@ public class EditObjectTagsBulkSelectionAction
 									objectObjectEntry.getModelClassName(),
 									objectObjectEntry.getObjectEntryId());
 
+							PermissionChecker permissionChecker =
+								PermissionCheckerFactoryUtil.create(user);
+
 							if ((assetEntry == null) ||
 								!_hasEditPermission(
 									assetEntry, permissionChecker)) {
@@ -97,6 +93,9 @@ public class EditObjectTagsBulkSelectionAction
 
 							String[] newTagNames = new String[0];
 
+							Set<String> toAddTagNames = _toStringSet(
+								inputMap, "toAddTagNames");
+
 							if (SetUtil.isNotEmpty(toAddTagNames)) {
 								newTagNames = (String[])inputMap.get(
 									"toAddTagNames");
@@ -105,6 +104,9 @@ public class EditObjectTagsBulkSelectionAction
 							if (MapUtil.getBoolean(inputMap, "append")) {
 								Set<String> currentTagNames = SetUtil.fromArray(
 									assetEntry.getTagNames());
+
+								Set<String> toRemoveTagNames = _toStringSet(
+									inputMap, "toRemoveTagNames");
 
 								currentTagNames.removeAll(toRemoveTagNames);
 

@@ -63,13 +63,6 @@ public class EditObjectCategoriesBulkSelectionAction
 		AtomicInteger numberOfFailedItems = new AtomicInteger(0);
 		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
 
-		Set<Long> toAddCategoryIds = _toLongSet(inputMap, "toAddCategoryIds");
-		Set<Long> toRemoveCategoryIds = _toLongSet(
-			inputMap, "toRemoveCategoryIds");
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
 		try {
 			values.put("executionStatus", "started");
 
@@ -84,6 +77,9 @@ public class EditObjectCategoriesBulkSelectionAction
 									objectObjectEntry.getModelClassName(),
 									objectObjectEntry.getObjectEntryId());
 
+							PermissionChecker permissionChecker =
+								PermissionCheckerFactoryUtil.create(user);
+
 							if ((assetEntry == null) ||
 								!ModelResourcePermissionUtil.contains(
 									permissionChecker, assetEntry.getGroupId(),
@@ -96,6 +92,9 @@ public class EditObjectCategoriesBulkSelectionAction
 
 							long[] newCategoryIds = new long[0];
 
+							Set<Long> toAddCategoryIds = _toLongSet(
+								inputMap, "toAddCategoryIds");
+
 							if (SetUtil.isNotEmpty(toAddCategoryIds)) {
 								newCategoryIds = ArrayUtil.toLongArray(
 									toAddCategoryIds);
@@ -105,6 +104,9 @@ public class EditObjectCategoriesBulkSelectionAction
 								Set<Long> currentCategoryIds =
 									SetUtil.fromArray(
 										assetEntry.getCategoryIds());
+
+								Set<Long> toRemoveCategoryIds = _toLongSet(
+									inputMap, "toRemoveCategoryIds");
 
 								currentCategoryIds.removeAll(
 									toRemoveCategoryIds);

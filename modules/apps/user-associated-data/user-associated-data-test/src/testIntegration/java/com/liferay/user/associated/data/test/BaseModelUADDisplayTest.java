@@ -292,7 +292,7 @@ public class BaseModelUADDisplayTest {
 			Collections.singletonMap(
 				_user.getLocale(), robots.concat("robots")),
 			LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false, false,
-			Collections.emptyMap(), 0,
+			Collections.emptyMap(), null,
 			ServiceContextTestUtil.getServiceContext(groupId));
 
 		_layouts.add(layout);

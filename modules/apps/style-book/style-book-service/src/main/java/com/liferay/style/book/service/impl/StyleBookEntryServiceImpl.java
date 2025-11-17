@@ -294,6 +294,25 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
+			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			long previewFileEntryId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), styleBookEntry.getGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.updateStyleBookEntry(
+			userId, styleBookEntryId, defaultStylebookEntry,
+			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, String frontendTokensValues, String name)
 		throws PortalException {
 

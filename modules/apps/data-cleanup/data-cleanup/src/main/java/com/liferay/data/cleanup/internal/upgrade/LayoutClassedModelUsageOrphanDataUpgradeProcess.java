@@ -212,17 +212,17 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 		Map<Long, Map<Long, Set<Long>>> plidMap,
 		UnsafeBiConsumer<Long, Long, Exception> unsafeBiConsumer) {
 
-		for (Map.Entry<Long, Map<Long, Set<Long>>> groupIdEntry :
+		for (Map.Entry<Long, Map<Long, Set<Long>>> entry1 :
 				plidMap.entrySet()) {
 
-			long groupId = groupIdEntry.getKey();
-			Map<Long, Set<Long>> ctCollectionIdMap = groupIdEntry.getValue();
+			long groupId = entry1.getKey();
+			Map<Long, Set<Long>> ctCollectionIdMap = entry1.getValue();
 
-			for (Map.Entry<Long, Set<Long>> ctCollectionIdEntry :
+			for (Map.Entry<Long, Set<Long>> entry2 :
 					ctCollectionIdMap.entrySet()) {
 
-				long ctCollectionId = ctCollectionIdEntry.getKey();
-				Set<Long> plids = ctCollectionIdEntry.getValue();
+				long ctCollectionId = entry2.getKey();
+				Set<Long> plids = entry2.getValue();
 
 				for (long plid : plids) {
 					try (SafeCloseable safeCloseable =

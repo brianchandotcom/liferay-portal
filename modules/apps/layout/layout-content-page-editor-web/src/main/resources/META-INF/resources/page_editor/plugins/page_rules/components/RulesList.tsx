@@ -12,7 +12,7 @@ import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {ITEM_INTERACTION_ORIGINS} from '../../../app/config/constants/itemInteractionOrigins';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
@@ -23,6 +23,7 @@ import {
 } from '../../../app/js-index';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import deleteRule from '../../../app/thunks/deleteRule';
+import updateRule from '../../../app/thunks/updateRule';
 import useActionValues, {
 	ActionValues,
 } from '../../../app/utils/useActionValues';
@@ -150,6 +151,13 @@ function RuleItem({
 	const [triggerElement, setTriggerElement] =
 		useState<HTMLButtonElement | null>(null);
 
+	const [editing, setEditing] = useState(false);
+	const [name, setName] = useState(rule.name);
+
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (savedRuleId === rule.id) {
 			triggerElement?.focus();
@@ -157,6 +165,22 @@ function RuleItem({
 			setSavedRuleId(null);
 		}
 	}, [savedRuleId, triggerElement, rule, setSavedRuleId]);
+
+	useEffect(() => {
+		if (editing && inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, [editing]);
+
+	const onSave = useCallback(() => {
+		dispatch(
+			updateRule({
+				...rule,
+				name,
+				ruleId: rule.id,
+			})
+		);
+	}, [dispatch, name, rule]);
 
 	const items = useSelector((state) =>
 		Object.values(state.layoutData.items).map((item) => ({
@@ -219,12 +243,56 @@ function RuleItem({
 		>
 			<ClayList.ItemField expand>
 				<div className="align-items-center d-flex">
-					<span
-						aria-hidden="true"
-						className="flex-grow-1 font-weight-semi-bold"
-					>
-						{rule.name}
-					</span>
+					{editing ? (
+						<input
+							onBlur={() => {
+								setEditing(false);
+
+								onSave();
+							}}
+							onChange={(event) => {
+								setName(event.target.value);
+							}}
+							onFocus={() => {
+								if (!inputRef.current) {
+									return;
+								}
+
+								inputRef.current.setSelectionRange(
+									0,
+									name.length
+								);
+							}}
+							onKeyDown={(event) => {
+								if (
+									event.key === 'Enter' ||
+									event.key === 'Escape' ||
+									event.key === 'Tab'
+								) {
+									setEditing(false);
+
+									onSave();
+								}
+
+								if (!event.key.match(/[a-z0-9-_ ]/gi)) {
+									event.preventDefault();
+								}
+
+								event.stopPropagation();
+							}}
+							ref={inputRef}
+							type="text"
+							value={name}
+						/>
+					) : (
+						<span
+							aria-hidden="true"
+							className="flex-grow-1 font-weight-semi-bold"
+							onDoubleClick={() => setEditing(true)}
+						>
+							{name}
+						</span>
+					)}
 
 					<ClayDropDown
 						onMouseOver={(event) => event.stopPropagation()}

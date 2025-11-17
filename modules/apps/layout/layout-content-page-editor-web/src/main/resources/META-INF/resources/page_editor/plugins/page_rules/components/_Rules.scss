@@ -12,6 +12,13 @@ html#{$cadmin-selector} .cadmin {
 			outline: 0;
 			z-index: 1;
 		}
+
+		input {
+			&:active,
+			&:focus {
+				outline-color: $cadmin-primary-l1;
+			}
+		}
 	}
 
 	.page-editor__rule-builder-item {

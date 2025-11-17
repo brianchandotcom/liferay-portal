@@ -76,51 +76,11 @@ public class SharingJavaScriptFactoryImplTest {
 
 	@Test
 	public void testCreateCopyLinkClickMethod() throws Exception {
-		_testCreateCopyLinkClickMethodWithoutSharePermission();
-		_testCreateCopyLinkClickMethodWithSharePermission();
-	}
-
-	@Test
-	public void testCreateManageCollaboratorsOnClickMethod() throws Exception {
-		_testCreateManageCollaboratorsOnClickMethodWithoutSharePermission();
-		_testCreateManageCollaboratorsOnClickMethodWithSharePermission();
-	}
-
-	@Test
-	public void testCreateSharingOnClickMethod() throws Exception {
-		_testCreateSharingOnClickMethodWithoutSharePermission();
-		_testCreateSharingOnClickMethodWithSharePermission();
-	}
-
-	private MockHttpServletRequest _createMockHttpServletRequest(User user) {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setUser(user);
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
-	}
-
-	private void _testCreateCopyLinkClickMethodWithoutSharePermission()
-		throws Exception {
-
 		String result = _sharingJavaScriptFactory.createCopyLinkClickMethod(
 			DLFolder.class.getName(), _dlFolder.getFolderId(),
 			_createMockHttpServletRequest(_user));
 
 		Assert.assertNull(result);
-	}
-
-	private void _testCreateCopyLinkClickMethodWithSharePermission()
-		throws Exception {
 
 		_sharingEntryLocalService.addSharingEntry(
 			null, _creatorUser.getUserId(), 0, _user.getUserId(),
@@ -139,19 +99,14 @@ public class SharingJavaScriptFactoryImplTest {
 		Assert.assertTrue(result.contains("Liferay.Sharing.copyLink"));
 	}
 
-	private void _testCreateManageCollaboratorsOnClickMethodWithoutSharePermission()
-		throws Exception {
-
+	@Test
+	public void testCreateManageCollaboratorsOnClickMethod() throws Exception {
 		String result =
 			_sharingJavaScriptFactory.createManageCollaboratorsOnClickMethod(
 				DLFolder.class.getName(), _dlFolder.getFolderId(),
 				_createMockHttpServletRequest(_user));
 
 		Assert.assertNull(result);
-	}
-
-	private void _testCreateManageCollaboratorsOnClickMethodWithSharePermission()
-		throws Exception {
 
 		_sharingEntryLocalService.addSharingEntry(
 			null, _creatorUser.getUserId(), 0, _user.getUserId(),
@@ -172,18 +127,13 @@ public class SharingJavaScriptFactoryImplTest {
 			result.contains("Liferay.Sharing.manageCollaborators"));
 	}
 
-	private void _testCreateSharingOnClickMethodWithoutSharePermission()
-		throws Exception {
-
+	@Test
+	public void testCreateSharingOnClickMethod() throws Exception {
 		String result = _sharingJavaScriptFactory.createSharingOnClickMethod(
 			DLFolder.class.getName(), _dlFolder.getFolderId(),
 			_createMockHttpServletRequest(_user));
 
 		Assert.assertNull(result);
-	}
-
-	private void _testCreateSharingOnClickMethodWithSharePermission()
-		throws Exception {
 
 		_sharingEntryLocalService.addSharingEntry(
 			null, _creatorUser.getUserId(), 0, _user.getUserId(),
@@ -200,6 +150,23 @@ public class SharingJavaScriptFactoryImplTest {
 		Assert.assertNotNull(result);
 
 		Assert.assertTrue(result.contains("Liferay.Sharing.share"));
+	}
+
+	private MockHttpServletRequest _createMockHttpServletRequest(User user) {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setUser(user);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
 	}
 
 	@Inject

@@ -217,7 +217,9 @@ if (ParamUtil.getBoolean(request, "showHeader", true)) {
 			current
 				.validate()
 				.then((result) => {
-					if (result) {
+					const validForm = result[1];
+
+					if (validForm) {
 						const fields = current.getFields();
 						let shouldSubmitForm = true;
 

@@ -5,14 +5,13 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectFolderLocalServiceUtil;
+import com.liferay.object.service.ObjectDefinitionServiceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -39,38 +38,29 @@ public class EditVocabularyDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public List<Map<String, String>> getClassNameIdOptions()
-		throws PortalException {
-
+	public List<Map<String, String>> getClassNameIdOptions() {
 		List<Map<String, String>> selectOptions = new ArrayList<>();
 
-		List<ObjectFolder> objectFolders = new ArrayList<>();
+		for (ObjectDefinition objectDefinition :
+				ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
+					CompanyThreadLocal.getCompanyId(),
+					new String[] {
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+						ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+					})) {
 
-		objectFolders.add(
-			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_CONTENT_STRUCTURES", _themeDisplay.getCompanyId()));
-		objectFolders.add(
-			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_FILE_TYPES", _themeDisplay.getCompanyId()));
-
-		for (ObjectFolder objectFolder : objectFolders) {
-			for (ObjectDefinition objectDefinition :
-					ObjectDefinitionLocalServiceUtil.
-						getObjectFolderObjectDefinitions(
-							objectFolder.getObjectFolderId())) {
-
-				selectOptions.add(
-					HashMapBuilder.put(
-						"restricted", Boolean.FALSE.toString()
-					).put(
-						"type", objectDefinition.getLabelCurrentValue()
-					).put(
-						"typeId",
-						String.valueOf(
-							PortalUtil.getClassNameId(
-								objectDefinition.getClassName()))
-					).build());
-			}
+			selectOptions.add(
+				HashMapBuilder.put(
+					"restricted", Boolean.FALSE.toString()
+				).put(
+					"type", objectDefinition.getLabelCurrentValue()
+				).put(
+					"typeId",
+					String.valueOf(
+						PortalUtil.getClassNameId(
+							objectDefinition.getClassName()))
+				).build());
 		}
 
 		return selectOptions;

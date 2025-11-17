@@ -310,6 +310,31 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 				randomUser().getId(), patchOp));
 	}
 
+	@Test
+	public void testPatchV2UserChangeScreenNameWithEmailAddressMatcher()
+		throws Exception {
+
+		User user = testDeleteV2User_addUser();
+		String email = "test_user@liferay.com";
+
+		User patchUser = _testPatchV2UserChangeScreenName("email", user, email);
+
+		Assert.assertNotEquals(email, patchUser.getUserName());
+	}
+
+	@Test
+	public void testPatchV2UserChangeScreenNameWithUserNameMatcher()
+		throws Exception {
+
+		User user = testDeleteV2User_addUser();
+		String userName = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+		User patchUser = _testPatchV2UserChangeScreenName(
+			"userName", user, userName);
+
+		Assert.assertEquals(patchUser.getUserName(), userName);
+	}
+
 	@Override
 	@Test
 	public void testPostV2User() throws Exception {
@@ -612,6 +637,32 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		Object userObject = userResource.getV2UserById(userId);
 
 		return User.toDTO(userObject.toString());
+	}
+
+	private User _testPatchV2UserChangeScreenName(
+			String field, User user, String userName)
+		throws Exception {
+
+		PatchOp patchOp = new PatchOp();
+
+		patchOp.setOperations(
+			new Operation[] {
+				new Operation() {
+					{
+						setOp("replace");
+						setPath(field);
+						setValue(userName);
+					}
+				}
+			});
+
+		patchOp.setSchemas(
+			new String[] {"\"urn:ietf:params:scim:api:messages:2.0:PatchOp\""});
+
+		HttpInvoker.HttpResponse httpResponse =
+			userResource.patchV2UserHttpResponse(user.getId(), patchOp);
+
+		return User.toDTO(httpResponse.getContent());
 	}
 
 	private static final String _PREFIX = StringUtil.toLowerCase(

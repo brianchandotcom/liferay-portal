@@ -8777,6 +8777,9 @@ public class DataFactory {
 				else if (name.equals("LPageTemplateStructureRelId")) {
 					name = "LayoutPageTemplateStructureRelId";
 				}
+				else if (name.equals("masterLPTEERC")) {
+					name = "masterLayoutPageTemplateEntryERC";
+				}
 				else if (name.equals("PaymentCTermEntryDescription")) {
 					name = "PaymentCommerceTermEntryDescription";
 				}

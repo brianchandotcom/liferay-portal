@@ -52,6 +52,8 @@ public interface Rels {
 
 	public static final String CHANNEL_CLEAR = "channel-clear";
 
+	public static final String CHANNEL_DATA_SOURCES = "channel-data-sources";
+
 	public static final String CHANNELS = "channels";
 
 	public static final String CSV_INDIVIDUALS = "csv-individuals";

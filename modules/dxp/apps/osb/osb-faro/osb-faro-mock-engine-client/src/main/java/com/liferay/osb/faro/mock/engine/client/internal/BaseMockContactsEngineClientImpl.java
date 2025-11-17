@@ -17,6 +17,7 @@ import com.liferay.osb.faro.engine.client.model.Asset;
 import com.liferay.osb.faro.engine.client.model.Author;
 import com.liferay.osb.faro.engine.client.model.BlockedKeyword;
 import com.liferay.osb.faro.engine.client.model.Channel;
+import com.liferay.osb.faro.engine.client.model.ChannelDataSource;
 import com.liferay.osb.faro.engine.client.model.Credentials;
 import com.liferay.osb.faro.engine.client.model.DXPGroup;
 import com.liferay.osb.faro.engine.client.model.DXPOrganization;
@@ -429,6 +430,16 @@ public abstract class BaseMockContactsEngineClientImpl
 		throws FaroEngineClientException {
 
 		return contactsEngineClient.getChannel(faroProject, id);
+	}
+
+	public Results<ChannelDataSource> getChannelDataSources(
+		int cur, Long dataSourceId, int delta, Boolean enabled,
+		FaroProject faroProject, String name,
+		List<OrderByField> orderByFields) {
+
+		return contactsEngineClient.getChannelDataSources(
+			cur, dataSourceId, delta, enabled, faroProject, name,
+			orderByFields);
 	}
 
 	@Override

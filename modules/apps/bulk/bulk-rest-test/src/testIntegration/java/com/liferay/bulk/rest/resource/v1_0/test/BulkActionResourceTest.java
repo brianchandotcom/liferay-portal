@@ -382,13 +382,14 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
 			_serviceContext);
 
+		_testPostBulkActionItemPreviewPageWithBulkActionItems(
+			bulkAction, expectedDeletionType, 2L, objectEntry,
+			objectEntryFolder1);
+
 		ObjectEntryFolder objectEntryFolder2 = _addObjectEntryFolder(
 			depotEntry.getGroupId(),
 			objectEntryFolder1.getObjectEntryFolderId());
 
-		_testPostBulkActionItemPreviewPageWithBulkActionItems(
-			bulkAction, expectedDeletionType, 2L, objectEntry,
-			objectEntryFolder1);
 		_testPostBulkActionItemPreviewPageWithBulkActionItems(
 			bulkAction, expectedDeletionType, 0L, objectEntry,
 			objectEntryFolder2);

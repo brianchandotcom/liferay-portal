@@ -14,13 +14,14 @@ export class Edit extends React.Component {
 	};
 
 	static propTypes = {
-		segment: PropTypes.instanceOf(Segment)
+		segment: PropTypes.instanceOf(Segment),
+		type: PropTypes.oneOf([SegmentTypes.RealTime, SegmentTypes.Batch])
 	};
 
 	render() {
-		const {segment, ...otherProps} = this.props;
+		const {segment, type, ...otherProps} = this.props;
 
-		const segmentType = get(segment, 'segmentType') || SegmentTypes.Batch;
+		const segmentType = get(segment, 'segmentType') || type;
 
 		if (segmentType) {
 			return (

@@ -49,25 +49,16 @@ export function create({
 	criteriaString = '',
 	groupId,
 	includeAnonymousUsers = false,
-	individualIds = [],
 	name,
 	segmentType
 }) {
-	const data =
-		segmentType === SegmentTypes.Batch
-			? {
-					channelId,
-					filter: criteriaString,
-					includeAnonymousUsers,
-					name,
-					segmentType
-			  }
-			: {
-					channelId,
-					individualIds,
-					name,
-					segmentType
-			  };
+	const data = {
+		channelId,
+		filter: criteriaString,
+		includeAnonymousUsers,
+		name,
+		segmentType
+	};
 
 	return sendRequest({
 		data,

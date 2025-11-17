@@ -45,7 +45,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createCopyLinkClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
-		if (!_canShareEntry(className, classPK, httpServletRequest)) {
+		if (!_containsSharePermission(className, classPK, httpServletRequest)) {
 			return null;
 		}
 
@@ -60,7 +60,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createManageCollaboratorsOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
-		if (!_canShareEntry(className, classPK, httpServletRequest)) {
+		if (!_containsSharePermission(className, classPK, httpServletRequest)) {
 			return null;
 		}
 
@@ -76,7 +76,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createSharingOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
-		if (!_canShareEntry(className, classPK, httpServletRequest)) {
+		if (!_containsSharePermission(className, classPK, httpServletRequest)) {
 			return null;
 		}
 
@@ -96,7 +96,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
 	}
 
-	private boolean _canShareEntry(
+	private boolean _containsSharePermission(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =

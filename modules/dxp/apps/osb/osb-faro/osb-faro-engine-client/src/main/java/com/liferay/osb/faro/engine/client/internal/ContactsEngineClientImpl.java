@@ -24,6 +24,7 @@ import com.liferay.osb.faro.engine.client.model.Asset;
 import com.liferay.osb.faro.engine.client.model.Author;
 import com.liferay.osb.faro.engine.client.model.BlockedKeyword;
 import com.liferay.osb.faro.engine.client.model.Channel;
+import com.liferay.osb.faro.engine.client.model.ChannelDataSource;
 import com.liferay.osb.faro.engine.client.model.Credentials;
 import com.liferay.osb.faro.engine.client.model.DXPGroup;
 import com.liferay.osb.faro.engine.client.model.DXPOrganization;
@@ -979,6 +980,28 @@ public class ContactsEngineClientImpl
 		uriVariables.put("expand", "data-sources");
 
 		return get(faroProject, Rels.CHANNEL, id, Channel.class, uriVariables);
+	}
+
+	public Results<ChannelDataSource> getChannelDataSources(
+		int cur, Long dataSourceId, int delta, Boolean enabled,
+		FaroProject faroProject, String name,
+		List<OrderByField> orderByFields) {
+
+		Map<String, Object> uriVariables = getUriVariables(
+			faroProject, cur, delta, orderByFields);
+
+		uriVariables.put("enabled", enabled);
+		uriVariables.put("id", dataSourceId);
+		uriVariables.put("name", name);
+
+		PagedModel<?, ChannelDataSource> pagedModel = get(
+			faroProject, Rels.CHANNEL_DATA_SOURCES,
+			new ParameterizedTypeReference
+				<EntityModelPagedModel<ChannelDataSource>>() {
+			},
+			uriVariables);
+
+		return pagedModel.getResults();
 	}
 
 	@Override

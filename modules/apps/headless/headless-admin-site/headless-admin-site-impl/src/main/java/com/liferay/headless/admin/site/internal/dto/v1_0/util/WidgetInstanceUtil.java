@@ -110,15 +110,15 @@ public class WidgetInstanceUtil {
 			return null;
 		}
 
-		Map<String, String[]> permissionsMap =
+		Map<String, String[]> portletPermissions =
 			portletPermissionsExporter.getPortletPermissions(plid, portletId);
 
-		if (MapUtil.isEmpty(permissionsMap)) {
+		if (MapUtil.isEmpty(portletPermissions)) {
 			return new WidgetPermission[0];
 		}
 
 		return TransformUtil.transformToArray(
-			permissionsMap.entrySet(),
+			portletPermissions.entrySet(),
 			entry -> {
 				if (ArrayUtil.isEmpty(entry.getValue())) {
 					return null;

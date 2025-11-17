@@ -16,6 +16,18 @@ int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 
 String[] assetTypes = new String[0];
 
+// Left list
+
+List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+
+for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getAssetRendererFactories(company.getCompanyId())) {
+	String className = assetRendererFactory.getClassName();
+
+	if (assetRendererFactory.isSearchable() && !ArrayUtil.contains(assetTypes, className)) {
+		leftList.add(new KeyValuePair(className, ResourceActionsUtil.getModelResource(locale, className)));
+	}
+}
+
 // Right list
 
 List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
@@ -29,18 +41,6 @@ if (dataJSONObject.has("values")) {
 		assetTypes[i] = valuesJSONArray.getString(i);
 
 		rightList.add(new KeyValuePair(assetTypes[i], ResourceActionsUtil.getModelResource(locale, assetTypes[i])));
-	}
-}
-
-// Left list
-
-List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
-
-for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getAssetRendererFactories(company.getCompanyId())) {
-	String className = assetRendererFactory.getClassName();
-
-	if (assetRendererFactory.isSearchable() && !ArrayUtil.contains(assetTypes, className)) {
-		leftList.add(new KeyValuePair(className, ResourceActionsUtil.getModelResource(locale, className)));
 	}
 }
 %>

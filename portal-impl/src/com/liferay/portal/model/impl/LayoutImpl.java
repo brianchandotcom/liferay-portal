@@ -838,11 +838,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 			getGroupId(), isPrivateLayout(), linkToLayoutId);
 	}
 
-	/**
-	 * Returns the master layout plid of this layout.
-	 *
-	 * @return the master layout plid of this layout
-	 */
 	public long getMasterLayoutPlid() {
 		if (Validator.isNull(getMasterLayoutPageTemplateEntryERC())) {
 			return 0;

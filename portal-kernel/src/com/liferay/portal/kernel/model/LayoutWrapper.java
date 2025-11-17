@@ -996,11 +996,6 @@ public class LayoutWrapper
 		return model.getMasterLayoutPageTemplateEntryERC();
 	}
 
-	/**
-	 * Returns the master layout plid of this layout.
-	 *
-	 * @return the master layout plid of this layout
-	 */
 	@Override
 	public long getMasterLayoutPlid() {
 		return model.getMasterLayoutPlid();

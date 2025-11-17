@@ -53,11 +53,11 @@ test(
 		await page.waitForTimeout(500);
 
 		await page
-			.getByLabel('Current', {exact: true})
+			.getByLabel('In Use', {exact: true})
 			.selectOption(removedLanguage);
 		await page
 			.getByRole('button', {
-				name: 'Move selected items from Current to Available',
+				name: 'Move selected items from In Use to Available',
 			})
 			.click({force: true});
 
@@ -92,7 +92,7 @@ test(
 			.selectOption(removedLanguage);
 		await page
 			.getByRole('button', {
-				name: 'Move selected items from Available to Current',
+				name: 'Move selected items from Available to In Use',
 			})
 			.click({force: true});
 
@@ -161,11 +161,11 @@ test('Cannot remove the site default language in instance settings', async ({
 
 	await page.waitForTimeout(500);
 	await page
-		.getByLabel('Current', {exact: true})
+		.getByLabel('In Use', {exact: true})
 		.selectOption('Spanish (Spain)');
 	await page
 		.getByRole('button', {
-			name: 'Move selected items from Current to Available',
+			name: 'Move selected items from In Use to Available',
 		})
 		.click({force: true});
 

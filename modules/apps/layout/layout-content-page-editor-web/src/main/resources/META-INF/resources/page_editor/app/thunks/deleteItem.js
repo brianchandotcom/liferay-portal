@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {openToast} from 'frontend-js-components-web';
 
 import deleteItemAction from '../actions/deleteItem';
@@ -54,73 +55,102 @@ export default function deleteItem({itemIds, selectItems = () => {}}) {
 		const {fragmentEntryLinks, layoutData, segmentsExperienceId} =
 			getState();
 
-		return markItemForDeletion({
-			fragmentEntryLinks,
-			itemIds,
-			layoutData,
-			onNetworkStatus: dispatch,
-			segmentsExperienceId,
-		}).then(async ({portletIds = [], layoutData: nextLayoutData}) => {
-			const nextItemId = getPreviousItemId(
-				itemIds,
-				layoutData.items,
-				nextLayoutData.items
+		const isUsedInRule = layoutData.pageRules.some((rule) => {
+			const actionHasItem = rule.actions.some(({itemId}) =>
+				itemIds.includes(itemId)
 			);
 
-			if (!nextItemId) {
-				document
-					.querySelector('button[data-panel-id="browser"]')
-					.focus();
-
-				selectItems(null);
-			}
-			else {
-				selectItems([nextItemId], {
-					origin: ITEM_INTERACTION_ORIGINS.itemActions,
-				});
-			}
-
-			const fragmentEntryLinkIds = itemIds.flatMap((itemId) =>
-				getFragmentEntryLinkIdsFromItemId({
-					itemId,
-					layoutData: nextLayoutData,
-				})
+			const conditionHasItem = rule.conditions.some(({field}) =>
+				itemIds.includes(field)
 			);
 
-			dispatch(
-				deleteItemAction({
-					fragmentEntryLinkIds,
-					itemIds,
-					layoutData: nextLayoutData,
-					portletIds,
-				})
-			);
-
-			clearPageContents();
-
-			// Show warning if deleting some required form input
-
-			for (const itemId of itemIds) {
-				if (
-					await isRequiredFormField(
-						layoutData,
-						itemId,
-						fragmentEntryLinks
-					)
-				) {
-					const {message} = getFormErrorDescription({
-						type: FORM_ERROR_TYPES.deletedFragment,
-					});
-
-					openToast({
-						message,
-						type: 'warning',
-					});
-
-					break;
-				}
-			}
+			return actionHasItem || conditionHasItem;
 		});
+
+		const handleDeleteItems = async () => {
+			return markItemForDeletion({
+				fragmentEntryLinks,
+				itemIds,
+				layoutData,
+				onNetworkStatus: dispatch,
+				segmentsExperienceId,
+			}).then(async ({portletIds = [], layoutData: nextLayoutData}) => {
+				const nextItemId = getPreviousItemId(
+					itemIds,
+					layoutData.items,
+					nextLayoutData.items
+				);
+
+				if (!nextItemId) {
+					document
+						.querySelector('button[data-panel-id="browser"]')
+						.focus();
+
+					selectItems(null);
+				}
+				else {
+					selectItems([nextItemId], {
+						origin: ITEM_INTERACTION_ORIGINS.itemActions,
+					});
+				}
+
+				const fragmentEntryLinkIds = itemIds.flatMap((itemId) =>
+					getFragmentEntryLinkIdsFromItemId({
+						itemId,
+						layoutData: nextLayoutData,
+					})
+				);
+
+				dispatch(
+					deleteItemAction({
+						fragmentEntryLinkIds,
+						itemIds,
+						layoutData: nextLayoutData,
+						portletIds,
+					})
+				);
+
+				clearPageContents();
+
+				// Show warning if deleting some required form input
+
+				for (const itemId of itemIds) {
+					if (
+						await isRequiredFormField(
+							layoutData,
+							itemId,
+							fragmentEntryLinks
+						)
+					) {
+						const {message} = getFormErrorDescription({
+							type: FORM_ERROR_TYPES.deletedFragment,
+						});
+
+						openToast({
+							message,
+							type: 'warning',
+						});
+
+						break;
+					}
+				}
+			});
+		};
+
+		if (isUsedInRule) {
+			openConfirmModal({
+				buttonLabel: Liferay.Language.get('delete'),
+				onConfirm: handleDeleteItems,
+				status: 'warning',
+				text: Liferay.Language.get(
+					'one-or-more-of-the-selected-fragments-are-referenced-in-one-or-more-rules'
+				),
+				title: Liferay.Language.get('delete-referenced-fragments'),
+			});
+		}
+		else {
+			return handleDeleteItems();
+		}
 	};
 }
 

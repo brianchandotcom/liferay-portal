@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export { default as distributors } from './distributors';
+export {default as distributors} from './distributors';
 
 const API_KEY = 'YOUR_API_KEY';
 const API_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
@@ -28,6 +28,7 @@ export async function getDistributors() {
 	}
 	catch (error) {
 		console.error(`Error fetching distributors: ${error}`);
+
 		return [];
 	}
 }
@@ -40,6 +41,7 @@ export async function getDistributorDetails(id) {
 	}
 	catch (error) {
 		console.error(`Error fetching distributor with id: ${id}`, error);
+
 		return {};
 	}
 }

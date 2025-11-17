@@ -44,7 +44,7 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 					rightBoxName="currentMimeTypes"
 					rightList="<%= igConfigurationDisplayContext.getCurrentMimeTypes() %>"
 					rightReorder="<%= Boolean.TRUE.toString() %>"
-					rightTitle="current"
+					rightTitle="in-use"
 				/>
 			</aui:field-wrapper>
 

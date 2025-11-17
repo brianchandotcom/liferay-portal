@@ -42,5 +42,5 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 	leftTitle="available"
 	rightBoxName="currentMetadataFields"
 	rightList="<%= leftList %>"
-	rightTitle="current"
+	rightTitle="in-use"
 />

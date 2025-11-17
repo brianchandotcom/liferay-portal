@@ -96,7 +96,7 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 				leftTitle="available"
 				rightBoxName="currentAssetTypes"
 				rightList="<%= typeFacetPortletPreferences.getCurrentAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
-				rightTitle="current"
+				rightTitle="in-use"
 			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>

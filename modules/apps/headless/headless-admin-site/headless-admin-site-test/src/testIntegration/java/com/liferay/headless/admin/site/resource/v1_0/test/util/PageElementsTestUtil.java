@@ -62,11 +62,11 @@ public class PageElementsTestUtil {
 	public static FragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
-			FragmentEditableElement[] curFragmentEditableElements,
+			FragmentEditableElement[] fragmentEditableElements,
 			FragmentEntry fragmentEntry, long scopeGroupId) {
 
 		return getFragmentInstancePageElementDefinition(
-			configurationValuesMap, curFragmentEditableElements, fragmentEntry,
+			configurationValuesMap, fragmentEditableElements, fragmentEntry,
 			RandomTestUtil.randomString(), scopeGroupId,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
 	}
@@ -74,7 +74,7 @@ public class PageElementsTestUtil {
 	public static FragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
-			FragmentEditableElement[] curFragmentEditableElements,
+			FragmentEditableElement[] fragmentEditableElements,
 			FragmentEntry fragmentEntry,
 			String fragmentInstanceExternalReferenceCode, long scopeGroupId,
 			String namespace, String uuid, WidgetInstance[] widgetInstances) {
@@ -94,7 +94,7 @@ public class PageElementsTestUtil {
 								fragmentEntry.getConfiguration()),
 							configurationValuesMap, scopeGroupId));
 		fragmentInstancePageElementDefinition.setFragmentEditableElements(
-			() -> curFragmentEditableElements);
+			() -> fragmentEditableElements);
 		fragmentInstancePageElementDefinition.setCss(fragmentEntry::getCss);
 		fragmentInstancePageElementDefinition.setCssClasses(
 			() -> new String[] {RandomTestUtil.randomString()});

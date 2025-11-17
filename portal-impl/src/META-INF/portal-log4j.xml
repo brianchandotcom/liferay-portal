@@ -163,7 +163,7 @@
 		<Logger level="ERROR" name="com.liferay.portal.struts.StrutsUtil" />
 		<Logger level="INFO" name="com.liferay.portal.template.URLResourceParser" />
 		<Logger level="INFO" name="com.liferay.portal.theme.ThemeLoader" />
-		<Logger level="ERROR" name="com.liferay.portal.tools.DBUpgrader" />
+		<Logger level="WARN" name="com.liferay.portal.tools.DBUpgrader" />
 		<Logger level="INFO" name="com.liferay.portal.tools.sql" />
 		<Logger level="INFO" name="com.liferay.portal.upgrade" />
 		<Logger level="ERROR" name="com.liferay.portal.upgrade.v6_1_1.UpgradeJournal" />

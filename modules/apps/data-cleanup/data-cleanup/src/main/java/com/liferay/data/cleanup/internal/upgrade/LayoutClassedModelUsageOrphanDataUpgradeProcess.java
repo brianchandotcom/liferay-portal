@@ -284,7 +284,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				groupId, plid),
 			FragmentEntryLink::getFragmentEntryLinkId,
-			"Unable to update usages for fragment entry link ");
+			"Unable to update layout classed model usages for fragment entry " +
+				"link ");
 	}
 
 	private void _updateLayoutClassedModelUsagesForLayoutPageTemplateStructure(
@@ -305,8 +306,8 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 					layoutPageTemplateStructure.
 						getLayoutPageTemplateStructureId()),
 			LayoutPageTemplateStructureRel::getLayoutPageTemplateStructureRelId,
-			"Unable to update usages for layout page template structure " +
-				"relationship ");
+			"Unable to update layout classed model usages for layout page " +
+				"template structure relationship ");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

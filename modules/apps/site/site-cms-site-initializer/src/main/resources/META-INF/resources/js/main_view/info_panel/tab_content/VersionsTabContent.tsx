@@ -44,7 +44,7 @@ const VersionsTabContent = () => {
 
 		try {
 			const response = await fetch(
-				`${href}?page=1&pageSize=${MAX_LIST_SIZE}&sort=dateCreated:desc`
+				`${href}?page=1&pageSize=${MAX_LIST_SIZE}&sort=version:desc`
 			);
 
 			if (response.ok) {

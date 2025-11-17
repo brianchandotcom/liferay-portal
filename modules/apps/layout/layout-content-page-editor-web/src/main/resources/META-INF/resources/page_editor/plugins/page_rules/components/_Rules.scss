@@ -19,6 +19,10 @@ html#{$cadmin-selector} .cadmin {
 				outline-color: $cadmin-primary-l1;
 			}
 		}
+
+		.text-muted .label {
+			color: $cadmin-secondary-l1;
+		}
 	}
 
 	.page-editor__rule-builder-item {

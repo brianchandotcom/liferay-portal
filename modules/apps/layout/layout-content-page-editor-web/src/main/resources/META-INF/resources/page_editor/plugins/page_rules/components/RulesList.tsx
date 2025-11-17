@@ -24,6 +24,7 @@ import {
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import deleteRule from '../../../app/thunks/deleteRule';
 import updateRule from '../../../app/thunks/updateRule';
+import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
 import useActionValues, {
 	ActionValues,
 } from '../../../app/utils/useActionValues';
@@ -221,6 +222,10 @@ function RuleItem({
 		});
 	};
 
+	const isRuleDisabled = itemIdsToHighlight.some((id) =>
+		isLayoutDataItemDeleted(layoutData, id)
+	);
+
 	return (
 		<ClayList.Item
 			aria-description={Liferay.Language.get(
@@ -293,6 +298,16 @@ function RuleItem({
 							onDoubleClick={() => setEditing(true)}
 						>
 							{name}
+
+							{isRuleDisabled ? (
+								<ClayIcon
+									className="lfr-tooltip-scope ml-2 text-warning"
+									data-title={Liferay.Language.get(
+										'disabled-rule'
+									)}
+									symbol="warning-full"
+								/>
+							) : null}
 						</span>
 					)}
 
@@ -343,7 +358,11 @@ function RuleItem({
 				</div>
 			</ClayList.ItemField>
 
-			<ClayList.ItemField className="mt-3" expand>
+			<ClayList.ItemField
+				aria-disabled={isRuleDisabled || undefined}
+				className={classNames('mt-3', {'text-muted': isRuleDisabled})}
+				expand
+			>
 				<p
 					aria-hidden="true"
 					className="align-items-center c-gap-2 d-flex flex-wrap"
@@ -382,9 +401,11 @@ function Condition({
 				{condition.prefix}
 			</span>
 
-			<ClayLabel className="m-0" displayType="secondary">
-				{condition.type}
-			</ClayLabel>
+			{condition.type ? (
+				<ClayLabel className="m-0" displayType="secondary">
+					{condition.type}
+				</ClayLabel>
+			) : null}
 
 			{condition.condition}
 
@@ -406,9 +427,11 @@ function Action({action}: {action: ActionValues}) {
 
 			<span className="font-weight-semi-bold">{action.type}</span>
 
-			<ClayLabel className="m-0" displayType="secondary">
-				{action.item}
-			</ClayLabel>
+			{action.item ? (
+				<ClayLabel className="m-0" displayType="secondary">
+					{action.item}
+				</ClayLabel>
+			) : null}
 		</>
 	);
 }

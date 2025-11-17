@@ -28,13 +28,13 @@ import {
 import i18n from '~/utils/I18n';
 import {Button, Input, Select} from '~/components';
 import SetupHighPriorityContactForm from '~/features/project/containers/HighPriorityContacts/SetupHighPriorityContact';
+import {patchAccountSubscriptionGroups} from '~/services/liferay/graphql/account-subscription-groups/queries/patchAccountSubscriptionGroups';
 import {
 	addAdminDXPCloud,
 	addDXPCloudEnvironment,
 	getDXPCloudEnvironment,
 	getDXPCloudPageInfo,
 	getListTypeDefinitions,
-	updateAccountSubscriptionGroups,
 } from '~/services/liferay/graphql/queries';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
 import getInitialDXPAdmin from '~/utils/getInitialDXPAdmin';
@@ -238,7 +238,7 @@ const SetupDXPCloudPage = ({
 				context: {
 					type: 'liferay-rest',
 				},
-				mutation: updateAccountSubscriptionGroups,
+				mutation: patchAccountSubscriptionGroups,
 				variables: {
 					accountSubscriptionGroup: {
 						accountKey: project.accountKey,

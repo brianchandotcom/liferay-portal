@@ -76,7 +76,7 @@ exports[`List should render 1`] = `
               class="toolbar-root segment-list-root"
             >
               <nav
-                class="navbar navbar-root my-2 management-bar management-bar-light navbar-expand"
+                class="navbar navbar-root management-bar management-bar-light navbar-expand"
               >
                 <div
                   class="container-fluid"

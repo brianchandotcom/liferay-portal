@@ -120,3 +120,7 @@ export const fetchSitesById = jest.fn(() => Promise.resolve([]));
 export const fetchCompanies = jest.fn(() =>
 	Promise.resolve([data.mockCompany()])
 );
+
+export const fetchAccountsCount = jest.fn(() => Promise.resolve(0));
+
+export const fetchUserCount = jest.fn(() => Promise.resolve(0));

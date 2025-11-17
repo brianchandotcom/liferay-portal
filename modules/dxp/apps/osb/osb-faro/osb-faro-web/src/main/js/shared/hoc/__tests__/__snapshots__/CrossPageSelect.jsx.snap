@@ -6,7 +6,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
     class="toolbar-root"
   >
     <nav
-      class="navbar navbar-root my-2 items-selected management-bar management-bar-primary navbar-expand"
+      class="navbar navbar-root items-selected management-bar management-bar-primary navbar-expand"
     >
       <div
         class="container-fluid"
@@ -274,7 +274,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
     class="toolbar-root"
   >
     <nav
-      class="navbar navbar-root my-2 management-bar management-bar-light navbar-expand"
+      class="navbar navbar-root management-bar management-bar-light navbar-expand"
     >
       <div
         class="container-fluid"

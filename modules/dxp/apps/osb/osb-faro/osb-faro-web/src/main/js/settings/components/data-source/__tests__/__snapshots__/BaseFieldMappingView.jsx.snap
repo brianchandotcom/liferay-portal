@@ -467,12 +467,12 @@ exports[`BaseFieldMappingView should render 1`] = `
                       class="panel-title-label"
                     >
                       <div
-                        class="label label-root label-info label-lg label-uppercase"
+                        class="label label-root label-success label-lg label-uppercase"
                       >
                         <span
                           class="label-item"
                         >
-                          Authenticated
+                          Connected
                         </span>
                       </div>
                     </div>
@@ -480,7 +480,7 @@ exports[`BaseFieldMappingView should render 1`] = `
                   <div
                     class="panel-body"
                   >
-                    You have successfully authenticated your client id and secret with you data source. You can now configure your data.
+                    You have successfully authenticated your token with your data source. You can now configure your data in DXP.
                   </div>
                 </div>
               </div>

@@ -38,7 +38,7 @@ const test = mergeTests(
 test(
 	'Add, edit and delete page rule',
 	{
-		tag: ['@LPS-196461', '@LPS-196462', '@LPS-200349'],
+		tag: ['@LPS-196461', '@LPS-196462', '@LPS-200349', '@LPD-9500'],
 	},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 
@@ -148,12 +148,32 @@ test(
 			page.getByText('IfUserIs the UsertestHideButton')
 		).toBeVisible();
 
+		// Rename rule inline
+
+		const nextRuleName = getRandomString();
+
+		const name = page.locator('.page-editor__rule').getByText(ruleName);
+
+		const input = page.locator('.page-editor__rule input');
+
+		await expect(async () => {
+			await name.dblclick({timeout: 1000});
+
+			await expect(input).toBeVisible({timeout: 1000});
+
+			await input.fill(nextRuleName);
+
+			await input.press('Enter');
+
+			await pageEditorPage.waitForChangesSaved({timeout: 2000});
+		}).toPass();
+
 		// Edit rule
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Edit'}),
-			trigger: page.getByLabel(`View ${ruleName} Options`),
+			trigger: page.getByLabel(`View ${nextRuleName} Options`),
 		});
 
 		await clickAndExpectToBeVisible({
@@ -183,7 +203,7 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Delete'}),
-			trigger: page.getByLabel(`View ${ruleName} Options`),
+			trigger: page.getByLabel(`View ${nextRuleName} Options`),
 		});
 
 		// Assert rule was deleted

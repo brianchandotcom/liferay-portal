@@ -152,12 +152,12 @@ public class DBUpgradeClientTest {
 			DBUpgradeClient.class, "_addDefaultJVMOpts",
 			new Class<?>[] {List.class}, jvmOpts);
 
-		Assert.assertEquals(5, jvmOpts.size());
 		Assert.assertTrue(jvmOpts.contains("-Dfile.encoding=UTF8"));
 		Assert.assertTrue(jvmOpts.contains("-Duser.country=US"));
 		Assert.assertTrue(jvmOpts.contains("-Duser.language=en"));
 		Assert.assertTrue(jvmOpts.contains("-Duser.timezone=GMT"));
 		Assert.assertTrue(jvmOpts.contains("-Xmx4096m"));
+		Assert.assertEquals(5, jvmOpts.size());
 	}
 
 	@Test

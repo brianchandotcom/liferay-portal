@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -67,7 +66,6 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 import jakarta.portlet.WindowState;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
@@ -398,15 +396,15 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		return searchContext;
 	}
 
-	private long _getSearchFolderId(HttpServletRequest httpServletRequest) {
+	private long _getSearchFolderId(ActionRequest actionRequest) {
 		long searchFolderId = ParamUtil.getLong(
-			httpServletRequest, "searchFolderId",
+			actionRequest, "searchFolderId",
 			ParamUtil.getLong(
-				httpServletRequest, "folderId",
+				actionRequest, "folderId",
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
 		long rootFolderId = ParamUtil.getLong(
-			httpServletRequest, "rootFolderId",
+			actionRequest, "rootFolderId",
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		if ((rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
@@ -425,19 +423,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getOriginalServletRequest(
-				PortalUtil.getHttpServletRequest(actionRequest));
-
 		long searchRepositoryId = ParamUtil.getLong(
-			httpServletRequest, "searchRepositoryId",
+			actionRequest, "searchRepositoryId",
 			ParamUtil.getLong(
-				httpServletRequest, "repositoryId",
-				themeDisplay.getScopeGroupId()));
+				actionRequest, "repositoryId", themeDisplay.getScopeGroupId()));
 
 		SearchContext searchContext = _getSearchContext(
 			actionRequest, searchRepositoryId,
-			_getSearchFolderId(httpServletRequest));
+			_getSearchFolderId(actionRequest));
 
 		Hits hits = _dlAppService.search(searchRepositoryId, searchContext);
 

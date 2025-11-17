@@ -8,6 +8,7 @@ import {
 	TaxonomyVocabularyAPI,
 } from '@liferay/headless-admin-taxonomy-client-js';
 import {expect, mergeTests} from '@playwright/test';
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {createReadStream, readdirSync} from 'fs';
 import path from 'path';
 
@@ -15,13 +16,11 @@ import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest
 import {assetPublisherWidgetPagesTest} from '../../../fixtures/assetPublisherWidgetPagesTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {dataRemoteApiHelpersTest} from '../../../fixtures/dataRemoteApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
-import {remotePageTest} from '../../../fixtures/remotePageTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
@@ -31,9 +30,7 @@ import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {enableLocalStaging} from '../../../utils/staging';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
-import {remoteStagingPagesTest} from '../../export-import-service/main/fixtures/remoteStagingPagesTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
-import getDataStructureDefinition from '../../journal-web/main/utils/getDataStructureDefinition';
 import {exportImportConfig} from './export_import.config';
 import {exportPageTest} from './fixtures/exportPageTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
@@ -41,12 +38,8 @@ import {stagingPageTest} from './fixtures/stagingPageTest';
 import {StageableEntities} from './utils/stagingConstants';
 import {unzipAndCheckFolder} from './utils/stagingUtil';
 
-const remotePort = '9080';
-const remotePage = remotePageTest(remotePort);
-
 const test = mergeTests(
 	dataApiHelpersTest,
-	dataRemoteApiHelpersTest(remotePage, remotePort),
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
 		'LPD-39304': {enabled: true},
@@ -60,279 +53,12 @@ const test = mergeTests(
 	journalPagesTest,
 	pageEditorPagesTest,
 	pageViewModePagesTest,
+	stagingConfigurationPageTest,
 	stagingPageTest,
 	systemSettingsPageTest,
 	webContentDisplayPageTest,
-	uiElementsPageTest,
-	stagingConfigurationPageTest,
-	remoteStagingPagesTest,
-	webContentDisplayPageTest,
-	workflowPagesTest
-);
-
-test(
-	'Can publish web content with URL references to live via remote staging',
-	{tag: '@LPS-159626'},
-	async ({
-		apiHelpers,
-		journalEditTemplatePage,
-		journalStructuresPage,
-		page,
-		pageEditorPage,
-		remoteApiHelpers,
-		remotePage,
-		remoteStagingPage,
-		webContentDisplayPage,
-		widgetPagePage,
-	}) => {
-		test.slow();
-		const site = await apiHelpers.headlessSite.createSite({
-			name: `site-${getRandomString()}`,
-		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
-
-		const remoteSite = await remoteApiHelpers.headlessSite.createSite({
-			name: site.name,
-		});
-
-		remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
-
-		const remoteUrl = remoteApiHelpers.baseUrl.substring(
-			0,
-			remoteApiHelpers.baseUrl.length - 3
-		);
-
-		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
-			groupId: site.id,
-			remoteGroupId: remoteSite.id,
-			remotePort,
-		});
-
-		const layouts: Array<Layout> = [];
-
-		for (const i of [1, 2, 3]) {
-			let layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: `Page ${i}`,
-			});
-
-			layouts.push(layout);
-
-			for (const j of [1, 2]) {
-				layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-					groupId: site.id,
-					parentLayoutId: layout.layoutId,
-					title: `Page ${i}${j}`,
-				});
-
-				layouts.push(layout);
-
-				if (i === 1 && j === 1) {
-					layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-						groupId: site.id,
-						parentLayoutId: layout.layoutId,
-						title: 'Page 111',
-					});
-					layouts.push(layout);
-				}
-			}
-		}
-
-		for (const layout of layouts) {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			await widgetPagePage.addPortlet('Web Content Display');
-			await widgetPagePage.addPortlet('Web Content Display');
-		}
-
-		const fields: Array<any> = [];
-		const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
-
-		for (const num of pageNumbers) {
-			fields.push({name: `Openpage${num}`, repeatable: false});
-			fields.push({name: `URL${num}`, repeatable: false});
-		}
-
-		const structureName = getRandomString();
-		const dataDefinition = getDataStructureDefinition({
-			defaultLanguageId: 'en_US',
-
-			fields,
-			name: structureName,
-		});
-		const structure = await apiHelpers.dataEngine.createStructure(
-			site.id,
-			dataDefinition
-		);
-
-		let i = 0;
-		const contentFields: Array<any> = [];
-		for (const layout of layouts) {
-			contentFields.push({
-				name: `Openpage${pageNumbers[i]}`,
-				value: layout.nameCurrentValue,
-			});
-			contentFields.push({
-				name: `URL${pageNumbers[i]}`,
-				value: `/web${site.friendlyUrlPath}` + layout.friendlyURL,
-			});
-			i++;
-		}
-
-		await journalStructuresPage.goto(site.friendlyUrlPath);
-		const templateName = 'template1';
-
-		const templateScript = pageNumbers
-			.map((number) => {
-				return `<p><a href="\${URL${number}.getData()}">\${Openpage${number}.getData()}</a></p>`;
-			})
-			.join('\n');
-
-		await journalEditTemplatePage.goto(site.friendlyUrlPath);
-		await journalEditTemplatePage.selectStructure(structureName);
-		await journalEditTemplatePage.editTemplate(
-			templateName,
-			templateScript
-		);
-		await journalEditTemplatePage.saveTemplate();
-		await journalEditTemplatePage.selectTemplateToEdit(templateName);
-
-		const templateKey = await journalEditTemplatePage.getDDMTemplateKey();
-		const webContentTitle = getRandomString();
-
-		await apiHelpers.jsonWebServicesJournal.addWebContent({
-			contentFields,
-			ddmStructureId: structure.id,
-			ddmTemplateKey: templateKey,
-			groupId: site.id,
-			titleMap: {en_US: webContentTitle},
-		});
-
-		const structureName2 = getRandomString();
-		const dataDefinition2 = getDataStructureDefinition({
-			defaultLanguageId: 'en_US',
-			fields: [
-				{name: 'Content1', repeatable: false},
-				{name: 'Content2', repeatable: false},
-			],
-			name: structureName2,
-		});
-
-		const structure2 = await apiHelpers.dataEngine.createStructure(
-			site.id,
-			dataDefinition2
-		);
-
-		const templateName2 = 'template2';
-		const templateScript2 =
-			'<h1>${Content1.getData()}</h1>\n' + '<p>${Content2.getData()}</p>';
-
-		await journalEditTemplatePage.goto(site.friendlyUrlPath);
-		await journalEditTemplatePage.selectStructure(structureName2);
-		await journalEditTemplatePage.editTemplate(
-			templateName2,
-			templateScript2
-		);
-		await journalEditTemplatePage.saveTemplate();
-		await journalEditTemplatePage.selectTemplateToEdit(templateName2);
-
-		const templateKey2 = await journalEditTemplatePage.getDDMTemplateKey();
-
-		await webContentDisplayPage.gotoWebContentAdmin(site.name);
-
-		for (const num of pageNumbers) {
-			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				contentFields: [
-					{name: `Content1`, value: `Title-${num}`},
-					{
-						name: `Content2`,
-						value: `Text Content-${num}`,
-					},
-				],
-				ddmStructureId: structure2.id,
-				ddmTemplateKey: templateKey2,
-				groupId: site.id,
-				titleMap: {en_US: `Title-${num}`},
-			});
-
-			await reloadUntilVisible({
-				myLocator: page.getByRole('link', {name: `Title-${num}`}),
-				page,
-			});
-		}
-
-		i = 0;
-		for (const layout of layouts) {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-			let attempt = 0;
-			do {
-				attempt++;
-				await page.reload({waitUntil: 'domcontentloaded'});
-
-				if (
-					await page
-						.getByText(webContentTitle, {exact: true})
-						.isVisible()
-				) {
-					break;
-				}
-				await webContentDisplayPage.addWebContentWithDisplay({
-					pageType: 'content',
-					waitAfterAddingWebcontent: true,
-					webContentName: webContentTitle,
-				});
-				await page.waitForTimeout(500);
-			} while (attempt <= 100);
-			attempt = 0;
-			do {
-				attempt++;
-				await page.reload({waitUntil: 'domcontentloaded'});
-				if (
-					await page
-						.getByText(`Title-${pageNumbers[i]}`, {exact: true})
-						.first()
-						.isVisible()
-				) {
-					break;
-				}
-				await webContentDisplayPage.addWebContentWithDisplay({
-					pageType: 'content',
-					waitAfterAddingWebcontent: true,
-					webContentName: `Title-${pageNumbers[i]}`,
-				});
-
-				await page.waitForTimeout(500);
-			} while (attempt <= 100);
-
-			i++;
-		}
-
-		await remoteStagingPage.publishToLive({
-			layoutFriendlyURL: layouts[0].friendlyURL,
-			siteFriendlyUrl: site.friendlyUrlPath,
-		});
-		await page.waitForTimeout(500);
-
-		await remotePage.goto(
-			`${remoteUrl}/web${remoteSite.friendlyUrlPath}${layouts[0].friendlyURL}`
-		);
-
-		for (const num of [111, 21, 3]) {
-			await remotePage
-				.getByRole('link', {exact: true, name: `Page ${num}`})
-				.click();
-			await remotePage.waitForLoadState('domcontentloaded');
-
-			await expect(
-				remotePage.locator('h1').filter({hasText: `Title-${num}`})
-			).toBeVisible();
-
-			await expect(remotePage.url()).toContain(
-				`/web/${site.name}/page-${num}`
-			);
-		}
-	}
+	workflowPagesTest,
+	uiElementsPageTest
 );
 
 test(

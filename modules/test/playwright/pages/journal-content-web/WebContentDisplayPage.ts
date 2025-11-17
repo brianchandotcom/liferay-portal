@@ -136,10 +136,12 @@ export class WebContentDisplayPage {
 
 	async addWebContentWithDisplay(
 		options: {
+			customLocator?: Locator;
 			pageType?: 'content' | 'widget';
 			waitAfterAddingWebcontent?: boolean;
 			webContentName?: string;
 		} = {
+			customLocator: null,
 			pageType: 'content',
 			waitAfterAddingWebcontent: false,
 			webContentName: '',
@@ -149,33 +151,25 @@ export class WebContentDisplayPage {
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayContent.click();
 
-		const {pageType, waitAfterAddingWebcontent, webContentName} = options;
+		const {customLocator, pageType, waitAfterAddingWebcontent, webContentName} = options;
 
-		if (pageType === 'widget') {
+		if(customLocator){
+			await customLocator.click();
+		}
+		else if (pageType === 'widget') {
 			await this.page
 				.locator('[id*="JournalContentPortlet"]')
 				.getByRole('button', {name: 'Options'})
 				.click();
 		}
 		else {
-			for (const topper of await this.page
+			await this.page
 				.locator('#wrapper')
 				.getByText('Web Content Display')
-				.all()) {
-				try {
-					await topper
-						.locator('..')
-						.locator('..')
-						.locator('..')
-						.filter({
-							hasText: 'Select web content to make it visible.',
-						})
-						.getByRole('button', {name: 'Options'})
-						.click({timeout: 1000});
-					break;
-				}
-				catch {}
-			}
+				.last()
+				.locator('..')
+				.getByRole('button', {name: 'Options'})
+				.click();	
 		}
 
 		await this.configurationOption.click();

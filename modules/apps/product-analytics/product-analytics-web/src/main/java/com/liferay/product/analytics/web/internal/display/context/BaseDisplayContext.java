@@ -160,14 +160,14 @@ public abstract class BaseDisplayContext {
 	private ProductAnalyticsConfiguration _getProductAnalyticsConfiguration(
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			themeDisplay.getServerName());
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+				themeDisplay.getServerName());
+
 			if (layoutSet != null) {
 				Group group = layoutSet.getGroup();
 
@@ -181,9 +181,9 @@ public abstract class BaseDisplayContext {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
-		}
 
-		return null;
+			return null;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

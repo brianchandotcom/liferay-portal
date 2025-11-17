@@ -2286,18 +2286,15 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						null, testGroup.getGroupId(), serviceContext),
 					testGroup.getGroupId())));
 
+		externalReferenceCode = RandomTestUtil.randomString();
+
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			null, testGroup.getGroupId(),
 			"<lfr-widget-web-content></lfr-widget-web-content>",
 			serviceContext);
-
-		externalReferenceCode = RandomTestUtil.randomString();
-
 		String fragmentInstanceExternalReferenceCode =
 			RandomTestUtil.randomString();
-
 		String namespace = RandomTestUtil.randomString();
-
 		String uuid = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
@@ -2313,7 +2310,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							JournalContentPortletKeys.JOURNAL_CONTENT,
 							_getWidgetPermissions())
 					})));
-
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
@@ -2327,7 +2323,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							JournalContentPortletKeys.JOURNAL_CONTENT,
 							new WidgetPermission[0])
 					})));
-
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration();
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements();
 

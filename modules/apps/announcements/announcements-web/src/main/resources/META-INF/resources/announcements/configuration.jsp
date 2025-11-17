@@ -131,20 +131,16 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<%
 							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
-
-							for (Organization organization : organizations) {
-								if (!announcementsDisplayContext.isScopeOrganizationSelected(organization)) {
-									leftList.add(new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName()));
-								}
-							}
-
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (Organization organization : organizations) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName());
+								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName());
 
-								if (!leftList.contains(tempKeyValuePair)) {
-									rightList.add(tempKeyValuePair);
+								if (!announcementsDisplayContext.isScopeOrganizationSelected(organization)) {
+									leftList.add(keyValuePair);
+								}
+								else {
+									rightList.add(keyValuePair);
 								}
 							}
 							%>
@@ -170,20 +166,16 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<%
 							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
-
-							for (UserGroup userGroup : userGroups) {
-								if (!announcementsDisplayContext.isScopeUserGroupSelected(userGroup)) {
-									leftList.add(new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName()));
-								}
-							}
-
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (UserGroup userGroup : userGroups) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName());
+								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName());
 
-								if (!leftList.contains(tempKeyValuePair)) {
-									rightList.add(tempKeyValuePair);
+								if (!announcementsDisplayContext.isScopeUserGroupSelected(userGroup)) {
+									leftList.add(keyValuePair);
+								}
+								else {
+									rightList.add(keyValuePair);
 								}
 							}
 							%>
@@ -209,20 +201,16 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<%
 							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
-
-							for (Role role : roles) {
-								if (!announcementsDisplayContext.isScopeRoleSelected(role)) {
-									leftList.add(new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale)));
-								}
-							}
-
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (Role role : roles) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale));
+								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale));
 
-								if (!leftList.contains(tempKeyValuePair)) {
-									rightList.add(tempKeyValuePair);
+								if (!announcementsDisplayContext.isScopeRoleSelected(role)) {
+									leftList.add(keyValuePair);
+								}
+								else {
+									rightList.add(keyValuePair);
 								}
 							}
 							%>

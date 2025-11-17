@@ -79,12 +79,12 @@ public class WidgetInstanceLayoutStructureItemImporter
 			widgetInstance.getWidgetName(),
 			widgetInstance.getWidgetInstanceId());
 
-		PortletUtil.importPortletPreferences(
-			layout, portletId, widgetInstance.getWidgetConfig());
-
 		PortletUtil.importPortletPermissions(
 			layout, portletId, widgetInstance.getWidgetName(),
 			widgetInstance.getWidgetPermissions());
+
+		PortletUtil.importPortletPreferences(
+			layout, portletId, widgetInstance.getWidgetConfig());
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.

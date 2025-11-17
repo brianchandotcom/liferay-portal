@@ -8777,6 +8777,9 @@ public class DataFactory {
 				else if (name.equals("LPageTemplateStructureRelId")) {
 					name = "LayoutPageTemplateStructureRelId";
 				}
+				else if (name.equals("MasterLPTEERC")) {
+					name = "MasterLayoutPageTemplateEntryERC";
+				}
 				else if (name.equals("PaymentCTermEntryDescription")) {
 					name = "PaymentCommerceTermEntryDescription";
 				}
@@ -8848,9 +8851,6 @@ public class DataFactory {
 				}
 				else if (name.equals("UOMIncrementalOrderQuantity")) {
 					name = "UnitOfMeasureIncrementalOrderQuantity";
-				}
-				else if (name.equals("masterLPTEERC")) {
-					name = "masterLayoutPageTemplateEntryERC";
 				}
 
 				int type = (int)tableColumn[1];

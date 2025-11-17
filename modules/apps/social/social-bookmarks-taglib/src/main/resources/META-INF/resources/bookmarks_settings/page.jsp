@@ -49,13 +49,13 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 <aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= StringUtil.merge(types) %>" />
 
 <liferay-ui:input-move-boxes
-	leftBoxName="currentTypes"
-	leftList="<%= leftList %>"
-	leftReorder="<%= Boolean.TRUE.toString() %>"
-	leftTitle="current"
-	rightBoxName="availableTypes"
-	rightList="<%= rightList %>"
-	rightTitle="available"
+	leftBoxName="availableTypes"
+	leftList="<%= rightList %>"
+	leftTitle="available"
+	rightBoxName="currentTypes"
+	rightList="<%= leftList %>"
+	rightReorder="<%= Boolean.TRUE.toString() %>"
+	rightTitle="current"
 />
 
 <label class="control-label" for="<portlet:namespace />typesOptions">

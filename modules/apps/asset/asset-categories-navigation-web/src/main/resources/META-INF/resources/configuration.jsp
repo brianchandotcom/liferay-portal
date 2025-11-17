@@ -41,13 +41,13 @@
 
 			<div class="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
 				<liferay-ui:input-move-boxes
-					leftBoxName="currentAssetVocabularyIds"
-					leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
-					leftReorder="<%= Boolean.TRUE.toString() %>"
-					leftTitle="current"
-					rightBoxName="availableAssetVocabularyIds"
-					rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
-					rightTitle="available"
+					leftBoxName="availableAssetVocabularyIds"
+					leftList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
+					leftTitle="available"
+					rightBoxName="currentAssetVocabularyIds"
+					rightList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
+					rightReorder="<%= Boolean.TRUE.toString() %>"
+					rightTitle="current"
 				/>
 			</div>
 		</liferay-frontend:fieldset>

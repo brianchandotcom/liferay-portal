@@ -72,13 +72,13 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 	<div class="<%= editAssetListDisplayContext.isAnyAssetType() ? "hide" : "" %>" id="<portlet:namespace />classNamesBoxes">
 		<liferay-ui:input-move-boxes
-			leftBoxName="currentClassNameIds"
-			leftList="<%= typesLeftList %>"
-			leftReorder="<%= Boolean.TRUE.toString() %>"
-			leftTitle="selected"
-			rightBoxName="availableClassNameIds"
-			rightList="<%= typesRightList %>"
-			rightTitle="available"
+			leftBoxName="availableClassNameIds"
+			leftList="<%= typesRightList %>"
+			leftTitle="available"
+			rightBoxName="currentClassNameIds"
+			rightList="<%= typesLeftList %>"
+			rightReorder="<%= Boolean.TRUE.toString() %>"
+			rightTitle="selected"
 		/>
 	</div>
 
@@ -217,13 +217,13 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 			<div class="<%= (assetSelectedClassTypeIds.length > 1) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
 				<liferay-ui:input-move-boxes
-					leftBoxName='<%= className + "currentClassTypeIds" %>'
-					leftList="<%= subtypesLeftList %>"
-					leftReorder="<%= Boolean.TRUE.toString() %>"
-					leftTitle="selected"
-					rightBoxName='<%= className + "availableClassTypeIds" %>'
-					rightList="<%= subtypesRightList %>"
-					rightTitle="available"
+					leftBoxName='<%= className + "availableClassTypeIds" %>'
+					leftList="<%= subtypesRightList %>"
+					leftTitle="available"
+					rightBoxName='<%= className + "currentClassTypeIds" %>'
+					rightList="<%= subtypesLeftList %>"
+					rightReorder="<%= Boolean.TRUE.toString() %>"
+					rightTitle="selected"
 				/>
 			</div>
 		</div>

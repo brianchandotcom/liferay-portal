@@ -1,0 +1,163 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.oauth2.provider.shortcut.internal.instance.lifecycle;
+
+import com.liferay.oauth2.provider.constants.ClientProfile;
+import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.osgi.util.configuration.ConfigurationPersistenceUtil;
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jorge García Jiménez
+ */
+@Component(
+	property = {
+		"applicationName=Dynamic Registrator", "clientId=DynamicRegistrator"
+	},
+	service = PortalInstanceLifecycleListener.class
+)
+public class DynamicRegistrationPortalInstanceLifecycleListener
+	extends BasePortalInstanceLifecycleListener {
+
+	@Override
+	public long getLastModifiedTime() {
+		return _lastModifiedTime;
+	}
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		DynamicQuery dynamicQuery =
+			_oAuth2ApplicationLocalService.dynamicQuery();
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(company.getCompanyId()));
+
+		Property nameProperty = PropertyFactoryUtil.forName("name");
+
+		dynamicQuery.add(nameProperty.eq(_applicationName));
+
+		List<OAuth2Application> oAuth2Applications =
+			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
+
+		if (!oAuth2Applications.isEmpty()) {
+			return;
+		}
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.fetchOAuth2Application(
+				company.getCompanyId(), _clientId);
+
+		if (oAuth2Application != null) {
+			return;
+		}
+
+		User user = _userLocalService.getUserByScreenName(
+			company.getCompanyId(), "default-service-account");
+
+		oAuth2Application = _oAuth2ApplicationLocalService.addOAuth2Application(
+			company.getCompanyId(), user.getUserId(), user.getScreenName(),
+			Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
+			"client_secret_post", user.getUserId(),
+			OAuth2SecureRandomGenerator.generateClientId(),
+			ClientProfile.HEADLESS_SERVER.id(),
+			OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
+			null, 0, null, _applicationName, null, Collections.emptyList(),
+			false, false, null, new ServiceContext());
+
+		_addResourcePermissions(oAuth2Application);
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) throws Exception {
+		_lastModifiedTime = ConfigurationPersistenceUtil.update(
+			this, properties);
+
+		_applicationName = GetterUtil.getString(
+			properties.get("applicationName"));
+		_clientId = GetterUtil.getString(properties.get("clientId"));
+	}
+
+	private void _addResourcePermissions(OAuth2Application oAuth2Application)
+		throws Exception {
+
+		Role role = _roleLocalService.fetchRole(
+			oAuth2Application.getCompanyId(), RoleConstants.OWNER);
+
+		if (role == null) {
+			return;
+		}
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				oAuth2Application.getCompanyId(),
+				OAuth2Application.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(oAuth2Application.getPrimaryKey()),
+				role.getRoleId());
+
+		if (resourcePermission != null) {
+			return;
+		}
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			oAuth2Application.getCompanyId(), OAuth2Application.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(oAuth2Application.getPrimaryKey()), role.getRoleId(),
+			new String[] {
+				ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE,
+				ActionKeys.PERMISSIONS,
+				OAuth2ProviderActionKeys.ACTION_CREATE_TOKEN,
+				OAuth2ProviderActionKeys.ACTION_REGISTER_APPLICATION,
+				OAuth2ProviderActionKeys.ACTION_REVOKE_TOKEN
+			});
+	}
+
+	private String _applicationName = "Dynamic Registrator";
+	private String _clientId = "DynamicRegistrator";
+	private long _lastModifiedTime;
+
+	@Reference
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+}

@@ -993,6 +993,8 @@ public class DBUpgradeClient {
 			return;
 		}
 
+		String response = null;
+
 		File portalExtPropertiesFile = new File(
 			_portalUpgradeExtProperties.getProperty("liferay.home"),
 			"portal-ext.properties");
@@ -1012,8 +1014,6 @@ public class DBUpgradeClient {
 			url = portalExtProperties.getProperty("jdbc.default.url");
 			userName = portalExtProperties.getProperty("jdbc.default.username");
 		}
-
-		String response = null;
 
 		if (!_isEmpty(driverClassName) && !_isEmpty(password) &&
 			!_isEmpty(url) && !_isEmpty(userName)) {

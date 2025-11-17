@@ -6,16 +6,16 @@
 import {OperationVariables, gql, useMutation} from '@apollo/client';
 
 export const UPDATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT = gql`
-	mutation updateLiferayExperienceCloudEnvironment(
+	mutation patchLiferayExperienceCloudEnvironment(
 		$liferayExperienceCloudEnvironmentId: Long!
 		$LiferayExperienceCloudEnvironment: InputC_LiferayExperienceCloudEnvironment!
 	) {
-		updateLiferayExperienceCloudEnvironment(
+		patchLiferayExperienceCloudEnvironment(
 			liferayExperienceCloudEnvironmentId: $liferayExperienceCloudEnvironmentId
 			input: $LiferayExperienceCloudEnvironment
 		)
 			@rest(
-				method: "PUT"
+				method: "PATCH"
 				type: "C_LiferayExperienceCloudEnvironment"
 				path: "/c/liferayexperiencecloudenvironments/{args.liferayExperienceCloudEnvironmentId}"
 			) {

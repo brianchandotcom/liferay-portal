@@ -19,14 +19,12 @@ import {
 } from '~/features/project/utils/getHighPriorityContacts';
 import SearchBuilder from '~/lib/SearchBuilder';
 import NotificationQueueService from '~/services/actions/notificationAction';
+import {patchAccountSubscriptionGroups} from '~/services/liferay/graphql/account-subscription-groups/queries/patchAccountSubscriptionGroups';
 import {
 	useCreateAdminLiferayExperienceCloud,
 	useCreateLiferayExperienceCloudEnvironment,
 } from '~/services/liferay/graphql/liferay-experience-cloud-environments';
-import {
-	getLiferayExperienceCloudEnvironments,
-	updateAccountSubscriptionGroups,
-} from '~/services/liferay/graphql/queries';
+import {getLiferayExperienceCloudEnvironments} from '~/services/liferay/graphql/queries';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
 
 export default function useSubmitLXCEnvironment(
@@ -46,8 +44,8 @@ export default function useSubmitLXCEnvironment(
 	const [createLiferayExperienceCloudEnvironment] =
 		useCreateLiferayExperienceCloudEnvironment();
 
-	const [updateAccountSubscriptionGroupsInfo] = useMutation(
-		updateAccountSubscriptionGroups
+	const [patchAccountSubscriptionGroupsInfo] = useMutation(
+		patchAccountSubscriptionGroups
 	);
 
 	const [createAdminLiferayExperienceCloud] =
@@ -107,7 +105,7 @@ export default function useSubmitLXCEnvironment(
 					const liferayExperienceCloudEnvironmentId =
 						data.createLiferayExperienceCloudEnvironment?.id;
 
-					await updateAccountSubscriptionGroupsInfo({
+					await patchAccountSubscriptionGroupsInfo({
 						context: {
 							displaySuccess: false,
 							type: 'liferay-rest',

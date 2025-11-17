@@ -295,6 +295,7 @@ function RuleItem({
 					)}
 
 					<ClayDropDown
+						hasLeftSymbols={true}
 						onMouseOver={(event) => event.stopPropagation()}
 						trigger={
 							<ClayButtonWithIcon
@@ -316,17 +317,19 @@ function RuleItem({
 						}
 					>
 						<ClayDropDown.ItemList>
-							<ClayDropDown.Item onClick={() => onEdit(rule)}>
-								<ClayIcon className="mr-2" symbol="pencil" />
-
+							<ClayDropDown.Item
+								onClick={() => onEdit(rule)}
+								symbolLeft="pencil"
+							>
 								{Liferay.Language.get('edit')}
 							</ClayDropDown.Item>
 
 							<ClayDropDown.Divider />
 
-							<ClayDropDown.Item onClick={() => onDelete(rule)}>
-								<ClayIcon className="mr-2" symbol="trash" />
-
+							<ClayDropDown.Item
+								onClick={() => onDelete(rule)}
+								symbolLeft="trash"
+							>
 								{Liferay.Language.get('delete')}
 							</ClayDropDown.Item>
 						</ClayDropDown.ItemList>

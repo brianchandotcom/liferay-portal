@@ -141,7 +141,7 @@ public class DBUpgradeClientTest {
 		Assert.assertTrue(jvmOpts.contains("-Dfile.encoding=ISO-8859-1"));
 		Assert.assertFalse(jvmOpts.contains("-Xmx4096m"));
 		Assert.assertTrue(jvmOpts.contains("-Xmx8192m"));
-		Assert.assertEquals(5, jvmOpts.size());
+		Assert.assertEquals(jvmOpts.toString(), 5, jvmOpts.size());
 	}
 
 	@Test
@@ -157,7 +157,7 @@ public class DBUpgradeClientTest {
 		Assert.assertTrue(jvmOpts.contains("-Duser.language=en"));
 		Assert.assertTrue(jvmOpts.contains("-Duser.timezone=GMT"));
 		Assert.assertTrue(jvmOpts.contains("-Xmx4096m"));
-		Assert.assertEquals(5, jvmOpts.size());
+		Assert.assertEquals(jvmOpts.toString(), 5, jvmOpts.size());
 	}
 
 	@Test
@@ -229,15 +229,12 @@ public class DBUpgradeClientTest {
 
 		_createPortalUpgradeExtPropertiesFile(true);
 
-		File appServerPropertiesFile = new File(
-			_rootDir, "app-server.properties");
-
 		Properties appServerProperties = new Properties();
 
 		appServerProperties.setProperty(
 			"server.detector.server.id", "invalidAppServer");
 
-		appServerProperties.store(appServerPropertiesFile);
+		appServerProperties.store(new File(_rootDir, "app-server.properties"));
 
 		_dbUpgradeClient = _createDBUpgradeClient(new String[0]);
 
@@ -266,9 +263,6 @@ public class DBUpgradeClientTest {
 
 		_createPortalUpgradeExtPropertiesFile(true);
 
-		File appServerPropertiesFile = new File(
-			_rootDir, "app-server.properties");
-
 		Properties appServerProperties = new Properties();
 
 		appServerProperties.setProperty("dir", "invalidDir");
@@ -277,7 +271,7 @@ public class DBUpgradeClientTest {
 		appServerProperties.setProperty("portal.dir", "webapps/ROOT");
 		appServerProperties.setProperty("server.detector.server.id", "tomcat");
 
-		appServerProperties.store(appServerPropertiesFile);
+		appServerProperties.store(new File(_rootDir, "app-server.properties"));
 
 		_dbUpgradeClient = _createDBUpgradeClient(new String[0]);
 
@@ -511,6 +505,7 @@ public class DBUpgradeClientTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_dbUpgradeClient, "_appServer", _appServer);
+
 		Properties properties = ReflectionTestUtil.getFieldValue(
 			_dbUpgradeClient, "_portalUpgradeExtProperties");
 		ReflectionTestUtil.invoke(
@@ -614,14 +609,12 @@ public class DBUpgradeClientTest {
 	public void testVerifyPortalUpgradeExtPropertiesLiferayHomeWithInvalidPropertiesFile()
 		throws Exception {
 
-		File portalUpgradeExtPropertiesFile = new File(
-			_rootDir, "portal-upgrade-ext.properties");
-
 		Properties portalUpgradeExtProperties = new Properties();
 
 		portalUpgradeExtProperties.setProperty("liferay.home", "invalidDir");
 
-		portalUpgradeExtProperties.store(portalUpgradeExtPropertiesFile);
+		portalUpgradeExtProperties.store(
+			new File(_rootDir, "portal-upgrade-ext.properties"));
 
 		_dbUpgradeClient = _createDBUpgradeClient(new String[0]);
 
@@ -672,9 +665,6 @@ public class DBUpgradeClientTest {
 	}
 
 	private void _createAppServerPropertiesFile() throws Exception {
-		File appServerPropertiesFile = new File(
-			_rootDir, "app-server.properties");
-
 		Properties appServerProperties = new Properties();
 
 		appServerProperties.setProperty("dir", _tomcatDir.getAbsolutePath());
@@ -683,7 +673,7 @@ public class DBUpgradeClientTest {
 		appServerProperties.setProperty("portal.dir", "webapps/ROOT");
 		appServerProperties.setProperty("server.detector.server.id", "tomcat");
 
-		appServerProperties.store(appServerPropertiesFile);
+		appServerProperties.store(new File(_rootDir, "app-server.properties"));
 	}
 
 	private DBUpgradeClient _createDBUpgradeClient(String[] answers)
@@ -733,9 +723,6 @@ public class DBUpgradeClientTest {
 			boolean includeDatabaseProperties)
 		throws Exception {
 
-		File portalUpgradeExtPropertiesFile = new File(
-			_rootDir, "portal-upgrade-ext.properties");
-
 		Properties portalUpgradeExtProperties = new Properties();
 
 		if (includeDatabaseProperties) {
@@ -758,7 +745,8 @@ public class DBUpgradeClientTest {
 		portalUpgradeExtProperties.setProperty(
 			"liferay.home", _liferayHomeDir.getCanonicalPath());
 
-		portalUpgradeExtProperties.store(portalUpgradeExtPropertiesFile);
+		portalUpgradeExtProperties.store(
+			new File(_rootDir, "portal-upgrade-ext.properties"));
 	}
 
 	private static final AppServer _appServer = Mockito.mock(AppServer.class);

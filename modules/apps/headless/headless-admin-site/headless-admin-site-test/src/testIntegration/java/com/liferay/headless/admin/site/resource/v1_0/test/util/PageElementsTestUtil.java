@@ -65,64 +65,91 @@ public class PageElementsTestUtil {
 			FragmentEditableElement[] curFragmentEditableElements,
 			FragmentEntry fragmentEntry, long scopeGroupId) {
 
-		return new FragmentInstancePageElementDefinition() {
-			{
-				setConfiguration(fragmentEntry::getConfiguration);
-				setCss(fragmentEntry::getCss);
-				setCssClasses(
-					() -> new String[] {RandomTestUtil.randomString()});
-				setCustomCSS(RandomTestUtil::randomString);
-				setDatePropagated(RandomTestUtil::nextDate);
-				setFragmentConfigurationFieldValues(
-					() ->
-						FragmentConfigurationFieldValueTestUtil.
-							getFragmentConfigurationFieldValuesMap(
-								JSONFactoryUtil.createJSONObject(
-									fragmentEntry.getConfiguration()),
-								configurationValuesMap, scopeGroupId));
-				setFragmentEditableElements(() -> curFragmentEditableElements);
-				setFragmentInstanceExternalReferenceCode(
-					RandomTestUtil::randomString);
-				setFragmentReference(
-					() -> {
-						if (fragmentEntry.getFragmentEntryId() == 0) {
-							return new DefaultFragmentReference() {
-								{
-									setDefaultFragmentKey(
-										fragmentEntry::getFragmentEntryKey);
-									setFragmentReferenceType(
-										() ->
-											FragmentReferenceType.
-												DEFAULT_FRAGMENT_REFERENCE);
-								}
-							};
-						}
+		return getFragmentInstancePageElementDefinition(
+			configurationValuesMap, curFragmentEditableElements, fragmentEntry,
+			RandomTestUtil.randomString(), scopeGroupId,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
+	}
 
-						return new FragmentItemExternalReference() {
-							{
-								setExternalReferenceCode(
-									fragmentEntry::getExternalReferenceCode);
-								setFragmentReferenceType(
-									() ->
-										FragmentReferenceType.
-											FRAGMENT_ITEM_EXTERNAL_REFERENCE);
-								setScope(
-									() -> ScopeTestUtil.getItemScope(
-										fragmentEntry.getGroupId(),
-										scopeGroupId));
-							}
-						};
-					});
-				setFragmentType(FragmentType.BASIC);
-				setHtml(fragmentEntry::getHtml);
-				setIndexed(RandomTestUtil::randomBoolean);
-				setJs(fragmentEntry::getJs);
-				setName(RandomTestUtil::randomString);
-				setNamespace(RandomTestUtil::randomString);
-				setType(Type.FRAGMENT);
-				setUuid(RandomTestUtil::randomString);
-			}
-		};
+	public static FragmentInstancePageElementDefinition
+		getFragmentInstancePageElementDefinition(
+			Map<String, Object> configurationValuesMap,
+			FragmentEditableElement[] curFragmentEditableElements,
+			FragmentEntry fragmentEntry,
+			String fragmentInstanceExternalReferenceCode, long scopeGroupId,
+			String namespace, String uuid, WidgetInstance[] widgetInstances) {
+
+		FragmentInstancePageElementDefinition
+			fragmentInstancePageElementDefinition =
+				new FragmentInstancePageElementDefinition();
+
+		fragmentInstancePageElementDefinition.setConfiguration(
+			fragmentEntry::getConfiguration);
+		fragmentInstancePageElementDefinition.
+			setFragmentConfigurationFieldValues(
+				() ->
+					FragmentConfigurationFieldValueTestUtil.
+						getFragmentConfigurationFieldValuesMap(
+							JSONFactoryUtil.createJSONObject(
+								fragmentEntry.getConfiguration()),
+							configurationValuesMap, scopeGroupId));
+		fragmentInstancePageElementDefinition.setFragmentEditableElements(
+			() -> curFragmentEditableElements);
+		fragmentInstancePageElementDefinition.setCss(fragmentEntry::getCss);
+		fragmentInstancePageElementDefinition.setCssClasses(
+			() -> new String[] {RandomTestUtil.randomString()});
+		fragmentInstancePageElementDefinition.setCustomCSS(
+			RandomTestUtil::randomString);
+		fragmentInstancePageElementDefinition.setDatePropagated(
+			RandomTestUtil::nextDate);
+		fragmentInstancePageElementDefinition.
+			setFragmentInstanceExternalReferenceCode(
+				fragmentInstanceExternalReferenceCode);
+		fragmentInstancePageElementDefinition.setFragmentReference(
+			() -> {
+				if (fragmentEntry.getFragmentEntryId() == 0) {
+					return new DefaultFragmentReference() {
+						{
+							setDefaultFragmentKey(
+								fragmentEntry::getFragmentEntryKey);
+							setFragmentReferenceType(
+								() ->
+									FragmentReferenceType.
+										DEFAULT_FRAGMENT_REFERENCE);
+						}
+					};
+				}
+
+				return new FragmentItemExternalReference() {
+					{
+						setExternalReferenceCode(
+							fragmentEntry::getExternalReferenceCode);
+						setFragmentReferenceType(
+							() ->
+								FragmentReferenceType.
+									FRAGMENT_ITEM_EXTERNAL_REFERENCE);
+						setScope(
+							() -> ScopeTestUtil.getItemScope(
+								fragmentEntry.getGroupId(), scopeGroupId));
+					}
+				};
+			});
+		fragmentInstancePageElementDefinition.setFragmentType(
+			FragmentInstancePageElementDefinition.FragmentType.BASIC);
+		fragmentInstancePageElementDefinition.setHtml(fragmentEntry::getHtml);
+		fragmentInstancePageElementDefinition.setIndexed(
+			RandomTestUtil::randomBoolean);
+		fragmentInstancePageElementDefinition.setJs(fragmentEntry::getJs);
+		fragmentInstancePageElementDefinition.setName(
+			RandomTestUtil::randomString);
+		fragmentInstancePageElementDefinition.setNamespace(namespace);
+		fragmentInstancePageElementDefinition.setType(
+			PageElementDefinition.Type.FRAGMENT);
+		fragmentInstancePageElementDefinition.setUuid(uuid);
+		fragmentInstancePageElementDefinition.setWidgetInstances(
+			() -> widgetInstances);
+
+		return fragmentInstancePageElementDefinition;
 	}
 
 	public static FragmentInstancePageElementDefinition

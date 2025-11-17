@@ -615,7 +615,7 @@
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
 		<column name="faviconFileEntryId" type="long" />
-		<column db-name="MLayoutPageTemplateEntryERC" name="masterLayoutPageTemplateEntryERC" type="String" />
+		<column db-name="masterLPTEERC" name="masterLayoutPageTemplateEntryERC" type="String" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="layoutSetPrototypeLayoutERC" type="String" />

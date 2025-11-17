@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <#include init />
+
 <html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 	<head>
 		<title>${the_title} - ${company_name}</title>
 
 		<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-		<script ${nonceAttribute} type="text/javascript" src="${javascript_folder}/SpeedwellSlider.js" defer></script>
 		<@liferay_util["include"] page=top_head_include />
 	</head>
 
@@ -25,9 +26,9 @@
 				</div>
 
 				<#if speedwell_content_css_class?contains("wide")>
-				<div class="speedwell-frame speedwell-frame__content--wide">
+					<div class="speedwell-frame speedwell-frame__content--wide">
 				<#else>
-				<div class="speedwell-frame speedwell-frame__content">
+					<div class="speedwell-frame speedwell-frame__content">
 				</#if>
 					<a name="speedwell-top"></a>
 
@@ -60,14 +61,8 @@
 		</div>
 
 		<div class="liferay-bottom">
-				<@liferay_util["include"] page=body_bottom_include />
-				<@liferay_util["include"] page=bottom_include />
+			<@liferay_util["include"] page=body_bottom_include />
+			<@liferay_util["include"] page=bottom_include />
 		</div>
-
-		<script ${nonceAttribute} src="${javascript_folder}/accessibility.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/categoryMenu.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/mobile.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/scrollHandler.js" type="text/javascript"></script>
-		<script ${nonceAttribute} src="${javascript_folder}/topbar.js" type="text/javascript"></script>
 	</body>
 </html>

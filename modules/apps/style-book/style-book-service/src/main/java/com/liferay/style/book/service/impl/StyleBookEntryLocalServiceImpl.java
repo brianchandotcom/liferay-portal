@@ -98,7 +98,6 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setUserId(user.getUserId());
 		styleBookEntry.setUserName(user.getFullName());
 		styleBookEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
-		styleBookEntry.setDefaultStyleBookEntry(defaultStyleBookEntry);
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
@@ -126,7 +125,14 @@ public class StyleBookEntryLocalServiceImpl
 			}
 		}
 
-		return publishDraft(styleBookEntry);
+		styleBookEntry = publishDraft(styleBookEntry);
+
+		if (defaultStyleBookEntry) {
+			return updateDefaultStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId(), true);
+		}
+
+		return styleBookEntry;
 	}
 
 	@Override

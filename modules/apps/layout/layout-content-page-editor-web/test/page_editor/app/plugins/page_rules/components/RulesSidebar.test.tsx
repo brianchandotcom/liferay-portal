@@ -61,6 +61,7 @@ const renderComponent = ({rules = []}: {rules?: Rule[]} = {}) =>
 						},
 					},
 					layoutData: {
+						deletedItems: [],
 						items: {
 							formItem1: {
 								config: {

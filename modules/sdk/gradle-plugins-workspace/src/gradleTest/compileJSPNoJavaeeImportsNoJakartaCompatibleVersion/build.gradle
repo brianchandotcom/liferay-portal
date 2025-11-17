@@ -1,0 +1,29 @@
+import java.util.jar.Attributes
+import java.util.jar.JarFile
+
+task runGradleTest
+
+gradle.liferayWorkspace {
+	homeDir = new File(buildDir, "bundles")
+	product = "dxp-2025.q2.12"
+}
+
+runGradleTest {
+	dependsOn ":modules:foo-web:jar"
+
+	doLast {
+		Project project = project(":modules:foo-web")
+
+		File file = project.file("build/libs/com.liferay.foo.web-1.0.0.jar")
+
+		assert file.exists()
+
+		JarFile jarFile = new JarFile(file)
+	
+		jarFile.withCloseable {
+		  	Attributes attributes = jarFile.manifest.mainAttributes
+
+		  	assert attributes.getValue("Import-Package") == "javax.servlet,javax.servlet.http"
+		}
+	}
+}

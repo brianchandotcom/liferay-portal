@@ -158,27 +158,23 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			List<PathElement> remainingPathElements)
 		throws PortalException {
 
-		String transitionName = executionContext.getTransitionName();
-
 		KaleoTransition kaleoTransition = null;
 
-		if (Validator.isNull(transitionName)) {
+		if (Validator.isNull(executionContext.getTransitionName())) {
 			kaleoTransition = currentKaleoNode.getDefaultKaleoTransition();
 		}
 		else {
 			kaleoTransition = currentKaleoNode.getKaleoTransition(
-				transitionName);
+				executionContext.getTransitionName());
 		}
 
-		ExecutionContext newExecutionContext = new ExecutionContext(
-			executionContext.getKaleoInstanceToken(),
-			executionContext.getWorkflowContext(),
-			executionContext.getServiceContext());
-
-		PathElement pathElement = new PathElement(
-			null, kaleoTransition.getTargetKaleoNode(), newExecutionContext);
-
-		remainingPathElements.add(pathElement);
+		remainingPathElements.add(
+			new PathElement(
+				null, kaleoTransition.getTargetKaleoNode(),
+				new ExecutionContext(
+					executionContext.getKaleoInstanceToken(),
+					executionContext.getWorkflowContext(),
+					executionContext.getServiceContext())));
 	}
 
 	@Reference

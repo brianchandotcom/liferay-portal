@@ -13,6 +13,7 @@ import com.liferay.bulk.rest.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkAction;
+import com.liferay.bulk.rest.internal.odata.entity.v1_0.BulkActionEntityModel;
 import com.liferay.bulk.rest.internal.selection.v1_0.BulkActionBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.BulkActionResource;
 import com.liferay.bulk.selection.BulkSelection;
@@ -761,8 +762,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		BulkActionItem bulkActionItem = new BulkActionItem();
 
-		bulkActionItem.setClassPK(objectEntryFolder::getObjectEntryFolderId);
-
 		bulkActionItem.setAttributes(
 			() -> HashMapBuilder.<String, Object>put(
 				"deletionType",
@@ -791,6 +790,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		bulkActionItem.setClassExternalReferenceCode(
 			objectEntryFolder::getExternalReferenceCode);
 		bulkActionItem.setClassName(objectEntryFolder::getModelClassName);
+		bulkActionItem.setClassPK(objectEntryFolder::getObjectEntryFolderId);
 		bulkActionItem.setName(objectEntryFolder::getName);
 
 		return bulkActionItem;

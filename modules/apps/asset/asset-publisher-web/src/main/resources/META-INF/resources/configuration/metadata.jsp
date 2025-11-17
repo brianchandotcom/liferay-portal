@@ -11,21 +11,12 @@
 
 <%
 
-// Right list
-
-List<KeyValuePair> rightList = new ArrayList<>();
-
-String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-
-for (String metadataField : metadataFields) {
-	rightList.add(new KeyValuePair(metadataField, LanguageUtil.get(request, metadataField)));
-}
-
 // Left list
 
 List<KeyValuePair> leftList = new ArrayList<>();
 
 String[] allMetadataFields = {"author", "categories", "create-date", "expiration-date", "modified-date", "priority", "publish-date", "tags", "view-count"};
+String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 
 for (String metadataField : allMetadataFields) {
 	if (!ArrayUtil.contains(metadataFields, metadataField)) {
@@ -34,6 +25,14 @@ for (String metadataField : allMetadataFields) {
 }
 
 leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
+
+// Right list
+
+List<KeyValuePair> rightList = new ArrayList<>();
+
+for (String metadataField : metadataFields) {
+	rightList.add(new KeyValuePair(metadataField, LanguageUtil.get(request, metadataField)));
+}
 %>
 
 <liferay-ui:input-move-boxes

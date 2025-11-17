@@ -37,19 +37,9 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 
 			<%
 
-			// Right list
+			// Left list
 
 			MethodKey methodKey = new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class);
-
-			List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
-
-			for (long classNameId : classNameIdValues) {
-				String value = (String)PortalClassInvoker.invoke(methodKey, request, PortalUtil.getClassName(classNameId));
-
-				rightList.add(new KeyValuePair(String.valueOf(classNameId), value));
-			}
-
-			// Left list
 
 			List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
@@ -59,6 +49,16 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 
 					leftList.add(new KeyValuePair(String.valueOf(classNameId), value));
 				}
+			}
+
+			// Right list
+
+			List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+
+			for (long classNameId : classNameIdValues) {
+				String value = (String)PortalClassInvoker.invoke(methodKey, request, PortalUtil.getClassName(classNameId));
+
+				rightList.add(new KeyValuePair(String.valueOf(classNameId), value));
 			}
 			%>
 

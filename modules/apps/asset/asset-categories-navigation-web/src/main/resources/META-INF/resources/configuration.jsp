@@ -47,7 +47,7 @@
 					rightBoxName="currentAssetVocabularyIds"
 					rightList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
 					rightReorder="<%= Boolean.TRUE.toString() %>"
-					rightTitle="current"
+					rightTitle="in-use"
 				/>
 			</div>
 		</liferay-frontend:fieldset>

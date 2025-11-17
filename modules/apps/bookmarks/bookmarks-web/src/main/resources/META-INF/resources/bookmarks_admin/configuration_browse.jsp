@@ -146,7 +146,7 @@ portletDisplay.setURLBackTitle("bookmarks");
 										rightBoxName="currentFolderColumns"
 										rightList="<%= leftList %>"
 										rightReorder="<%= Boolean.TRUE.toString() %>"
-										rightTitle="current"
+										rightTitle="in-use"
 									/>
 								</aui:field-wrapper>
 							</div>
@@ -245,7 +245,7 @@ portletDisplay.setURLBackTitle("bookmarks");
 									rightBoxName="currentEntryColumns"
 									rightList="<%= leftList %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
-									rightTitle="current"
+									rightTitle="in-use"
 								/>
 							</aui:field-wrapper>
 						</div>

@@ -97,7 +97,7 @@
 			leftTitle="available"
 			rightBoxName="currentLanguageIds"
 			rightList="<%= rightList %>"
-			rightTitle="current"
+			rightTitle="in-use"
 		/>
 	</aui:fieldset>
 </aui:fieldset>

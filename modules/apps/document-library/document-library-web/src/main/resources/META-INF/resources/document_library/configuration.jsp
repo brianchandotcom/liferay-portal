@@ -69,7 +69,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					rightBoxName="currentDisplayViews"
 					rightList="<%= dlPortletInstanceSettingsHelper.getCurrentDisplayViews() %>"
 					rightReorder="<%= Boolean.TRUE.toString() %>"
-					rightTitle="current"
+					rightTitle="in-use"
 				/>
 			</aui:field-wrapper>
 		</liferay-frontend:fieldset>
@@ -118,7 +118,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						rightBoxName="currentEntryColumns"
 						rightList="<%= dlPortletInstanceSettingsHelper.getCurrentEntryColumns() %>"
 						rightReorder="<%= Boolean.TRUE.toString() %>"
-						rightTitle="current"
+						rightTitle="in-use"
 					/>
 				</aui:field-wrapper>
 			</liferay-frontend:fieldset>

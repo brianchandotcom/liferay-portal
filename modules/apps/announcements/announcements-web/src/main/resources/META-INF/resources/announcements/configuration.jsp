@@ -120,7 +120,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 									rightBoxName="currentScopeGroupExternalReferenceCodes"
 									rightList="<%= leftList %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
-									rightTitle="current"
+									rightTitle="in-use"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -159,7 +159,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 									rightBoxName="currentScopeOrganizationExternalReferenceCodes"
 									rightList="<%= leftList %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
-									rightTitle="current"
+									rightTitle="in-use"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -198,7 +198,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 									rightBoxName="currentScopeUserGroupExternalReferenceCodes"
 									rightList="<%= leftList %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
-									rightTitle="current"
+									rightTitle="in-use"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -237,7 +237,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 									rightBoxName="currentScopeRoleExternalReferenceCodes"
 									rightList="<%= leftList %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
-									rightTitle="current"
+									rightTitle="in-use"
 								/>
 							</div>
 						</liferay-ui:section>

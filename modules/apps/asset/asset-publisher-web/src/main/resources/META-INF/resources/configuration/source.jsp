@@ -74,7 +74,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 			rightBoxName="currentClassNameIds"
 			rightList="<%= typesLeftList %>"
 			rightReorder="<%= Boolean.TRUE.toString() %>"
-			rightTitle="selected"
+			rightTitle="in-use"
 		/>
 	</div>
 
@@ -198,7 +198,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 					rightBoxName='<%= className + "currentClassTypeIds" %>'
 					rightList="<%= subtypesLeftList %>"
 					rightReorder="<%= Boolean.TRUE.toString() %>"
-					rightTitle="selected"
+					rightTitle="in-use"
 				/>
 			</div>
 		</div>

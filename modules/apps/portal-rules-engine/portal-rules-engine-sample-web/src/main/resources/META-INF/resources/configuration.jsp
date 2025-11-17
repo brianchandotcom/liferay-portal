@@ -70,7 +70,7 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 				leftTitle="available"
 				rightBoxName="currentClassNameIds"
 				rightList="<%= ListUtil.sort(leftList, new KeyValuePairComparator(false, true)) %>"
-				rightTitle="current"
+				rightTitle="in-use"
 			/>
 
 			<aui:button-row>

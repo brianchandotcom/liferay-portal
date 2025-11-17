@@ -104,6 +104,8 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 				"ddm.form.field.type.js.class.name", "myJavaScriptClass"
 			).put(
 				"ddm.form.field.type.js.module", "myJavaScriptModule"
+			).put(
+				"ddm.form.field.type.scope", "forms,journal"
 			).build()
 		);
 
@@ -132,6 +134,8 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 				"javaScriptModule", "myJavaScriptModule"
 			).put(
 				"name", "Text"
+			).put(
+				"scope", "forms,journal"
 			));
 
 		return jsonArray.toString();

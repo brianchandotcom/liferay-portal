@@ -1,13 +1,13 @@
-liferay-customer-site-initializer-quickstart:
-    name: Liferay Customer Site Initializer Quickstart
-    oAuthApplicationHeadlessServer: liferay-customer-site-initializer-quickstart-oahs
+liferay-customer-site-initializer:
+    name: Liferay Customer Site Initializer
+    oAuthApplicationHeadlessServer: liferay-customer-site-initializer-oahs
     siteExternalReferenceCode: CUSTOMER_PORTAL
     siteName: Customer Portal
     type: siteInitializer
-liferay-customer-site-initializer-quickstart-oahs:
+liferay-customer-site-initializer-oahs:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Customer Site Initializer Quickstart OAuth Application Headless Server
+    name: Liferay Customer Site Initializer OAuth Application Headless Server
     scopes:
         -   c_accountflag.everything
         -   c_accountsubscription.everything

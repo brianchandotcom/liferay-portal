@@ -82,8 +82,7 @@ public class SystemConfigurationResourceImpl
 			throw new BadRequestException(
 				StringBundler.concat(
 					systemConfigurationExternalReferenceCode,
-					" is a factory configuration. Specify one of the entries ",
-					"pid ",
+					" is a factory configuration. Specify one of these PIDs: ",
 					ListUtil.toString(pids, StringPool.BLANK, StringPool.COMMA),
 					"."));
 		}

@@ -33,6 +33,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author Georgel Pop
@@ -243,31 +245,36 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 		}
 	}
 
-	private void _updateLayoutClassedModelUsagesForFragmentEntryLinks(
-		long groupId, long plid) {
+	private <T> void _updateLayoutClassedModelUsages(
+		List<T> items, Function<T, ?> logIdExtractor, String logPrefix,
+		Consumer<T> consumer) {
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				groupId, plid);
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			if (fragmentEntryLink == null) {
+		for (T item : items) {
+			if (item == null) {
 				continue;
 			}
 
 			try {
-				_contentManager.updateLayoutClassedModelUsage(
-					fragmentEntryLink);
+				consumer.accept(item);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to update usages for fragment entry link " +
-							fragmentEntryLink.getFragmentEntryLinkId(),
-						exception);
+						logPrefix + logIdExtractor.apply(item), exception);
 				}
 			}
 		}
+	}
+
+	private void _updateLayoutClassedModelUsagesForFragmentEntryLinks(
+		long groupId, long plid) {
+
+		_updateLayoutClassedModelUsages(
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				groupId, plid),
+			FragmentEntryLink::getFragmentEntryLinkId,
+			"Unable to update usages for fragment entry link ",
+			_contentManager::updateLayoutClassedModelUsage);
 	}
 
 	private void _updateLayoutClassedModelUsagesForLayoutPageTemplateStructure(
@@ -281,35 +288,15 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			return;
 		}
 
-		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels =
+		_updateLayoutClassedModelUsages(
 			_layoutPageTemplateStructureRelLocalService.
 				getLayoutPageTemplateStructureRels(
 					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId());
-
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				layoutPageTemplateStructureRels) {
-
-			if (layoutPageTemplateStructureRel == null) {
-				continue;
-			}
-
-			try {
-				_contentManager.updateLayoutClassedModelUsage(
-					layoutPageTemplateStructureRel);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to update usages for layout page template ",
-							"structure relationship ",
-							layoutPageTemplateStructureRel.
-								getLayoutPageTemplateStructureRelId()),
-						exception);
-				}
-			}
-		}
+						getLayoutPageTemplateStructureId()),
+			LayoutPageTemplateStructureRel::getLayoutPageTemplateStructureRelId,
+			"Unable to update usages for layout page template structure " +
+				"relationship ",
+			_contentManager::updateLayoutClassedModelUsage);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

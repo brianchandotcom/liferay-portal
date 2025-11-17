@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.osb.faro.contacts.model.constants.ContactsConstants;
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
+import com.liferay.osb.faro.engine.client.model.ChannelDataSource;
 import com.liferay.osb.faro.engine.client.model.Credentials;
 import com.liferay.osb.faro.engine.client.model.DXPGroup;
 import com.liferay.osb.faro.engine.client.model.DXPOrganization;
@@ -44,6 +45,7 @@ import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.exception.FaroException;
 import com.liferay.osb.faro.web.internal.exception.FaroValidationException;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
+import com.liferay.osb.faro.web.internal.model.display.contacts.ChannelDataSourceDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.DXPGroupDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.DXPOrganizationDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.DXPUserGroupDisplay;
@@ -354,6 +356,32 @@ public class DataSourceController extends BaseFaroController {
 		faroProject.setDataSourceConnected(false);
 
 		faroProjectLocalService.updateFaroProject(faroProject);
+	}
+
+	@GET
+	@Path("/{id}/channel-data-sources")
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public FaroResultsDisplay getChannelDataSourceDisplay(
+			@QueryParam("cur") int cur,
+			@DefaultValue("20") @QueryParam("delta") int delta,
+			@QueryParam("enabled") Boolean enabled,
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@QueryParam("name") String name,
+			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
+				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
+		throws Exception {
+
+		Results<ChannelDataSource> results =
+			contactsEngineClient.getChannelDataSources(
+				cur, Long.valueOf(id), delta, enabled,
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), name,
+				orderByFieldsFaroParam.getValue());
+
+		Function<ChannelDataSource, ChannelDataSourceDisplay> function =
+			channelDataSource -> new ChannelDataSourceDisplay(
+				channelDataSource);
+
+		return new FaroResultsDisplay(results, function);
 	}
 
 	@GET

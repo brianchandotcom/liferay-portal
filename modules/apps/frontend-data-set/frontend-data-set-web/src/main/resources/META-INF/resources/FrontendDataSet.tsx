@@ -117,7 +117,6 @@ const FrontendDataSetContent = ({
 	formName,
 	header,
 	hideManagementBarInEmptyState = false,
-
 	id,
 	infoPanelComponent,
 	inlineAddingSettings,

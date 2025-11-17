@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -15,19 +16,25 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.WidgetInstanceUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -160,6 +167,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 				setNamespace(fragmentEntryLink::getNamespace);
 				setType(PageElementDefinition.Type.FRAGMENT);
 				setUuid(fragmentEntryLink::getUuid);
+				setWidgetInstances(
+					() -> _getWidgetInstances(fragmentEntryLink));
 			}
 		};
 	}
@@ -252,6 +261,28 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 		return map;
 	}
 
+	private WidgetInstance[] _getWidgetInstances(
+		FragmentEntryLink fragmentEntryLink) {
+
+		List<String> fragmentEntryLinkPortletIds =
+			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
+
+		if (ListUtil.isEmpty(fragmentEntryLinkPortletIds)) {
+			return null;
+		}
+
+		List<WidgetInstance> widgetInstances = new ArrayList<>();
+
+		for (String fragmentEntryLinkPortletId : fragmentEntryLinkPortletIds) {
+			widgetInstances.add(
+				WidgetInstanceUtil.getWidgetInstance(
+					PortletIdCodec.decodeInstanceId(fragmentEntryLinkPortletId),
+					fragmentEntryLink.getPlid(), fragmentEntryLinkPortletId));
+		}
+
+		return widgetInstances.toArray(new WidgetInstance[0]);
+	}
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FragmentConfigurationFieldValueDTOConverter)"
 	)
@@ -267,5 +298,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 }

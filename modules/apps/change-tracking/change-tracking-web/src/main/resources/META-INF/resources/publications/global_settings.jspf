@@ -71,7 +71,7 @@
 		<div class="sheet-text" id="<portlet:namespace />sandboxOnlyHelp"><liferay-ui:message key="sandbox-only-help" /></div>
 
 		<div class="form-group">
-			<aui:input aria-describedby="sandboxOnlyHelp" aria-labelledby="sandboxOnlyHeader" inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableSandboxOnly" onChange='<%= liferayPortletResponse.getNamespace() + "autoSave();" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isSandboxOnlyEnabled() %>" />
+			<aui:input aria-describedby="sandboxOnlyHelp" aria-labelledby="sandboxOnlyHeader" inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableSandboxOnlyMode" onChange='<%= liferayPortletResponse.getNamespace() + "autoSave();" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isSandboxOnlyEnabled() %>" />
 		</div>
 	</clay:sheet-section>
 </div>

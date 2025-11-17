@@ -353,10 +353,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			DepotEntry depotEntry, String expectedDeletionType)
 		throws Exception {
 
-		BulkAction bulkAction = new DeleteBulkAction();
-
-		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
-
 		ObjectEntryFolder contentObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -385,6 +381,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		ObjectEntryFolder objectEntryFolder2 = _addObjectEntryFolder(
 			depotEntry.getGroupId(),
 			objectEntryFolder1.getObjectEntryFolderId());
+
+		BulkAction bulkAction = new DeleteBulkAction();
+
+		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
 
 		_testPostBulkActionItemPreviewPageWithBulkActionItems(
 			bulkAction, expectedDeletionType, 2L, objectEntry,
@@ -914,30 +914,30 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private BulkActionItem _toBulkActionItem(
 		ObjectEntryFolder objectEntryFolder) {
 
-		BulkActionItem bulkActionItem = new BulkActionItem();
-
-		bulkActionItem.setClassPK(objectEntryFolder.getObjectEntryFolderId());
-		bulkActionItem.setClassName(objectEntryFolder.getModelClassName());
-		bulkActionItem.setClassExternalReferenceCode(
-			objectEntryFolder.getExternalReferenceCode());
-		bulkActionItem.setName(objectEntryFolder.getName());
-
-		return bulkActionItem;
+		return new BulkActionItem() {
+			{
+				setClassExternalReferenceCode(
+					objectEntryFolder.getExternalReferenceCode());
+				setClassName(objectEntryFolder.getModelClassName());
+				setClassPK(objectEntryFolder.getObjectEntryFolderId());
+				setName(objectEntryFolder.getName());
+			}
+		};
 	}
 
 	private BulkActionItem _toBulkActionItem(
-			String className, ObjectEntry objectEntry)
+			String clazzName, ObjectEntry objectEntry)
 		throws Exception {
 
-		BulkActionItem bulkActionItem = new BulkActionItem();
-
-		bulkActionItem.setClassPK(objectEntry.getObjectEntryId());
-		bulkActionItem.setClassName(className);
-		bulkActionItem.setClassExternalReferenceCode(
-			objectEntry.getExternalReferenceCode());
-		bulkActionItem.setName(objectEntry.getTitleValue(_LANGUAGE_ID));
-
-		return bulkActionItem;
+		return new BulkActionItem() {
+			{
+				setClassExternalReferenceCode(
+					objectEntry.getExternalReferenceCode());
+				setClassName(clazzName);
+				setClassPK(objectEntry.getObjectEntryId());
+				setName(objectEntry.getTitleValue(_LANGUAGE_ID));
+			}
+		};
 	}
 
 	private BulkActionItem[] _toBulkActionItems(ObjectEntry objectEntry)

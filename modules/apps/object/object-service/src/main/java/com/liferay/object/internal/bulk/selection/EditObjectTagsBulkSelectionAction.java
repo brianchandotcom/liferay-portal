@@ -88,7 +88,8 @@ public class EditObjectTagsBulkSelectionAction
 									objectObjectEntry.getModelClassName(),
 									objectObjectEntry.getObjectEntryId());
 
-							if (!_hasEditPermission(
+							if ((assetEntry == null) ||
+								!_hasEditPermission(
 									assetEntry, permissionChecker)) {
 
 								return;

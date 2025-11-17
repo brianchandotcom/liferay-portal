@@ -84,7 +84,8 @@ public class EditObjectCategoriesBulkSelectionAction
 									objectObjectEntry.getModelClassName(),
 									objectObjectEntry.getObjectEntryId());
 
-							if (!ModelResourcePermissionUtil.contains(
+							if ((assetEntry == null) ||
+								!ModelResourcePermissionUtil.contains(
 									permissionChecker, assetEntry.getGroupId(),
 									assetEntry.getClassName(),
 									assetEntry.getClassPK(),

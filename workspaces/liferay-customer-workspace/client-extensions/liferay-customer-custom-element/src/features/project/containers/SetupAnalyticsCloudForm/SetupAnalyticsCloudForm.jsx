@@ -25,12 +25,12 @@ import {
 import useBannedDomains from '~/hooks/useBannedDomains';
 import SearchBuilder from '~/lib/SearchBuilder';
 import NotificationQueueService from '~/services/actions/notificationAction';
+import {patchAccountSubscriptionGroups} from '~/services/liferay/graphql/account-subscription-groups/queries/patchAccountSubscriptionGroups';
 import {
 	addAnalyticsCloudWorkspace,
 	addIncidentReportAnalyticsCloud,
 	getAnalyticsCloudPageInfo,
 	getAnalyticsCloudWorkspace,
-	updateAccountSubscriptionGroups,
 } from '~/services/liferay/graphql/queries';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
 import i18n from '~/utils/I18n';
@@ -207,7 +207,7 @@ const SetupAnalyticsCloudPage = ({
 						displaySuccess: false,
 						type: 'liferay-rest',
 					},
-					mutation: updateAccountSubscriptionGroups,
+					mutation: patchAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {
 							accountKey: project.accountKey,

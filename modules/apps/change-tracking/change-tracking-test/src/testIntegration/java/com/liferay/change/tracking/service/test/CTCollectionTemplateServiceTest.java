@@ -117,7 +117,6 @@ public class CTCollectionTemplateServiceTest {
 			_ctCollectionTemplateLocalService.getCTCollectionTemplatesCount(),
 			_ctCollectionTemplateService.getCTCollectionTemplatesCount(
 				StringPool.BLANK));
-
 		Assert.assertEquals(
 			1,
 			_ctCollectionTemplateService.getCTCollectionTemplatesCount(name));
@@ -149,11 +148,11 @@ public class CTCollectionTemplateServiceTest {
 			_ctCollectionTemplateService.getCTCollectionTemplates(
 				keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
+		Assert.assertTrue(
+			ctCollectionTemplates.containsAll(expectedCTCollectionTemplates));
 		Assert.assertEquals(
 			ctCollectionTemplates.toString(),
 			expectedCTCollectionTemplates.size(), ctCollectionTemplates.size());
-		Assert.assertTrue(
-			ctCollectionTemplates.containsAll(expectedCTCollectionTemplates));
 	}
 
 	@Inject

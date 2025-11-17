@@ -42,6 +42,13 @@ public class ModelPermissionsUtil {
 		for (Permission permission : permissions) {
 			String[] actionIds = permission.getActionIds();
 
+			if (actionIds.length > 0) {
+				modelPermissions.addRolePermissions(
+					permission.getRoleName(), permission.getActionIds());
+
+				continue;
+			}
+
 			Role role = null;
 
 			if (permission.getRoleExternalReferenceCode() != null) {
@@ -54,13 +61,6 @@ public class ModelPermissionsUtil {
 			else {
 				role = roleLocalService.getRole(
 					companyId, permission.getRoleName());
-			}
-
-			if (actionIds.length > 0) {
-				modelPermissions.addRolePermissions(
-					permission.getRoleName(), permission.getActionIds());
-
-				continue;
 			}
 
 			List<ResourceAction> resourceActions =

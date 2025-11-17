@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
@@ -434,27 +435,45 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		Hits hits = _dlAppService.search(searchRepositoryId, searchContext);
 
-		if ((hits != null) && (hits.getLength() > 0)) {
-			List<Long> fileEntryIds = new ArrayList<>();
-			List<Long> folderIds = new ArrayList<>();
+		if ((hits == null) || (hits.getLength() == 0)) {
+			return;
+		}
 
-			for (Document doc : hits.getDocs()) {
-				String className = doc.get(Field.ENTRY_CLASS_NAME);
-				long classPK = GetterUtil.getLong(
-					doc.get(Field.ENTRY_CLASS_PK));
+		List<Long> folderIds = new ArrayList<>();
+		List<Long> fileShortcutIds = new ArrayList<>();
+		List<Long> fileEntryIds = new ArrayList<>();
 
-				if (Objects.equals(DLFileEntry.class.getName(), className)) {
-					fileEntryIds.add(classPK);
-				}
-				else if (Objects.equals(DLFolder.class.getName(), className)) {
-					folderIds.add(classPK);
-				}
+		for (Document doc : hits.getDocs()) {
+			String className = doc.get(Field.ENTRY_CLASS_NAME);
+			long classPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+			if (Objects.equals(className, DLFolder.class.getName())) {
+				folderIds.add(classPK);
 			}
+			else if (Objects.equals(
+						className, DLFileShortcut.class.getName())) {
 
-			parameterMap.put(
-				"rowIdsFileEntry", ArrayUtil.toStringArray(fileEntryIds));
+				fileShortcutIds.add(classPK);
+			}
+			else if (Objects.equals(className, DLFileEntry.class.getName())) {
+				fileEntryIds.add(classPK);
+			}
+		}
+
+		if (!folderIds.isEmpty()) {
 			parameterMap.put(
 				"rowIdsFolder", ArrayUtil.toStringArray(folderIds));
+		}
+
+		if (!fileShortcutIds.isEmpty()) {
+			parameterMap.put(
+				"rowIdsDLFileShortcut",
+				ArrayUtil.toStringArray(fileShortcutIds));
+		}
+
+		if (!fileEntryIds.isEmpty()) {
+			parameterMap.put(
+				"rowIdsFileEntry", ArrayUtil.toStringArray(fileEntryIds));
 		}
 	}
 

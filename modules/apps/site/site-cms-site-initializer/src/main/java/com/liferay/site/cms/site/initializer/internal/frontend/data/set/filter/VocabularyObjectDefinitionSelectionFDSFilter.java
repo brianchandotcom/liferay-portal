@@ -5,35 +5,22 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter;
 
-import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
-import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionServiceUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Noor Najjar
  */
-@Component(service = FDSFilter.class)
-public class VocabularyAssetTypesSelectionFDSFilter
+public class VocabularyObjectDefinitionSelectionFDSFilter
 	extends BaseSelectionFDSFilter {
-
-	public VocabularyAssetTypesSelectionFDSFilter(
-		List<Map<String, String>> assetTypes) {
-
-		_assetTypes = assetTypes;
-	}
-
-	@Override
-	public String getEntityFieldType() {
-		return FDSEntityFieldTypes.INTEGER;
-	}
 
 	@Override
 	public String getId() {
@@ -57,16 +44,27 @@ public class VocabularyAssetTypesSelectionFDSFilter
 		List<SelectionFDSFilterItem> selectionFDSFilterItems =
 			new ArrayList<>();
 
-		for (Map<String, String> assetType : _assetTypes) {
+		List<ObjectDefinition> objectDefinitions =
+			ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
+				CompanyThreadLocal.getCompanyId(),
+				new String[] {
+					ObjectFolderConstants.
+						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+				});
+
+		if (objectDefinitions.isEmpty()) {
+			return selectionFDSFilterItems;
+		}
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			selectionFDSFilterItems.add(
 				new SelectionFDSFilterItem(
-					assetType.get("label"),
-					String.valueOf(assetType.get("value"))));
+					objectDefinition.getLabel(locale),
+					objectDefinition.getObjectDefinitionId()));
 		}
 
 		return selectionFDSFilterItems;
 	}
-
-	private final List<Map<String, String>> _assetTypes;
 
 }

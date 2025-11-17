@@ -5,8 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
@@ -19,19 +17,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter.VocabularyAssetTypesSelectionFDSFilter;
+import com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter.VocabularyObjectDefinitionSelectionFDSFilter;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,42 +46,6 @@ public class ViewVocabulariesDisplayContext {
 	public String getAPIURL() {
 		return "/o/headless-admin-taxonomy/v1.0/sites/" +
 			_themeDisplay.getScopeGroupId() + "/taxonomy-vocabularies";
-	}
-
-	public List<AssetRendererFactory<?>> getAvailableAssetRendererFactories() {
-		return ListUtil.filter(
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				_themeDisplay.getCompanyId()),
-			AssetRendererFactory::isCategorizable);
-	}
-
-	public List<Map<String, String>> getClassNameIdOptions() {
-		List<Map<String, String>> selectOptions = new ArrayList<>();
-
-		List<AssetRendererFactory<?>> availableAssetRendererFactories =
-			getAvailableAssetRendererFactories();
-
-		for (AssetRendererFactory<?> availableAssetRendererFactory :
-				availableAssetRendererFactories) {
-
-			selectOptions.add(
-				HashMapBuilder.put(
-					"icon", availableAssetRendererFactory.getIconCssClass()
-				).put(
-					"label",
-					ResourceActionsUtil.getModelResource(
-						_themeDisplay.getLocale(),
-						availableAssetRendererFactory.getClassName())
-				).put(
-					"restricted", Boolean.FALSE.toString()
-				).put(
-					"value",
-					String.valueOf(
-						availableAssetRendererFactory.getClassNameId())
-				).build());
-		}
-
-		return selectOptions;
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -154,8 +114,7 @@ public class ViewVocabulariesDisplayContext {
 
 	public List<FDSFilter> getFDSFilters() {
 		return ListUtil.fromArray(
-			new VocabularyAssetTypesSelectionFDSFilter(
-				getClassNameIdOptions()));
+			new VocabularyObjectDefinitionSelectionFDSFilter());
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {

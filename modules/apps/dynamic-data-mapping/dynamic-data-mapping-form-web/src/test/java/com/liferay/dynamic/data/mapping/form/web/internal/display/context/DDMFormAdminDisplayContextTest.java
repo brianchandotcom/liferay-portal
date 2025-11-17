@@ -33,7 +33,9 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
@@ -66,6 +68,8 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+
 /**
  * @author Adam Brandizzi
  */
@@ -84,6 +88,28 @@ public class DDMFormAdminDisplayContextTest {
 		_setUpResourceBundleLoaderUtil();
 
 		_setUpDDMFormDisplayContext();
+	}
+
+	@Test
+	public void testFilterJSONArray() throws Exception {
+		JSONArray expectedJSONArray = JSONUtil.putAll(
+			JSONUtil.put("scope", "document-library,forms"),
+			JSONUtil.put("scope", "forms"),
+			JSONUtil.put("scope", "forms,journal"));
+
+		JSONArray actualJSONArray = JSONUtil.putAll(
+			JSONUtil.put("scope", ""),
+			JSONUtil.put("scope", "document-library,forms"),
+			JSONUtil.put("scope", "document-library,journal"),
+			JSONUtil.put("scope", "forms"),
+			JSONUtil.put("scope", "forms,journal"),
+			JSONUtil.put("scope", "journal"));
+
+		actualJSONArray = _ddmFormAdminDisplayContext.filterJSONArray(
+			actualJSONArray);
+
+		JSONAssert.assertEquals(
+			expectedJSONArray.toString(), actualJSONArray.toString(), false);
 	}
 
 	@Test

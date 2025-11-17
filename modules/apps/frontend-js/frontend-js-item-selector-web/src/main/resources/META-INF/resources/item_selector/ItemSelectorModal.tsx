@@ -56,7 +56,7 @@ export interface IItemSelectorModalProps<T> {
 	 * The displayed label for the type of item being selected. Used in the
 	 * modal title.
 	 */
-	itemTypeLabel: string;
+	itemTypeLabel?: string;
 
 	/**
 	 * Items that are currently selected (controlled).
@@ -103,6 +103,11 @@ export interface IItemSelectorModalProps<T> {
 	 * Expects the 'open' property from the Clay useModal hook.
 	 */
 	open: boolean;
+
+	/**
+	 * Represents the title of a modal. takes precedence over itemTypeLabel.
+	 */
+	title?: string;
 }
 
 const EMPTY_STATE_PROPS = {
@@ -130,6 +135,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	onItemsChange,
 	onOpenChange,
 	open,
+	title,
 }: IItemSelectorModalProps<T>) {
 	const [selectedItems, setSelectedItems] = useState(externalItems);
 
@@ -153,7 +159,9 @@ function ItemSelectorModal<T extends Record<string, any>>({
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
-				{sub(Liferay.Language.get('select-x'), itemTypeLabel)}
+				{title
+					? title
+					: sub(Liferay.Language.get('select-x'), itemTypeLabel)}
 			</ClayModal.Header>
 
 			<ClayModal.Body className="p-0">

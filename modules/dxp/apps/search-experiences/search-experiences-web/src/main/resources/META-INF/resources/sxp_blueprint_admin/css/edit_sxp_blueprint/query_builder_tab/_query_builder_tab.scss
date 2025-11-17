@@ -51,6 +51,12 @@
 	.vertical-nav-content-wrapper {
 		max-width: 680px;
 	}
+
+	&.unified-query-builder-tab {
+		.vertical-nav-content-wrapper {
+			max-width: unset;
+		}
+	}
 }
 
 // Fix for vertical nav on small screens where the dropdown isn't aligned

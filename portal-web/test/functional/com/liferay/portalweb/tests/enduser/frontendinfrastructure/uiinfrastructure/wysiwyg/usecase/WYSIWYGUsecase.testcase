@@ -112,45 +112,6 @@ definition {
 			locator1 = "CKEditor#BODY_TEXT_HREF");
 	}
 
-	@description = "LRQA-67229. Verify if add web content article with image via URL is possible"
-	@priority = 4
-	@refactordone
-	test CanAddWebContentArticleWithImageViaURL {
-		JSONWebcontent.addWebContent(
-			content = "",
-			groupName = "WYSIWYG Site Name",
-			title = "Web Content Title");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		ItemSelector.gotoItemSelectorViaCKEditor();
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		ItemSelector.addImageFromURL(
-			imageSourceURL = "${portalURL}/webdav/guest/document_library/Document_1.jpg",
-			navTab = "URL");
-
-		PortletEntry.publish();
-
-		Click(locator1 = "//button[contains(@class, 'dropdown-item') and contains(., 'Publish')]");
-
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Title");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
-	}
-
 	@description = "Verify content can display content from left to right"
 	@priority = 4
 	@refactordone

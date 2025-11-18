@@ -148,6 +148,41 @@ test(
 );
 
 test(
+	'Select image by modal URL input',
+	{tag: '@LPD-11235'},
+	async ({classicPage}) => {
+		await classicPage.toolbar.container
+			.getByRole('button', {name: 'Image'})
+			.click();
+
+		const itemSelectorFrame = classicPage.itemSelectorFrame;
+
+		itemSelectorFrame.getByRole('link', { name: 'URL' }).click();
+
+		const imageURLInput = itemSelectorFrame.getByLabel('URL', {exact: true});
+
+		await expect(imageURLInput).toBeEnabled();
+
+		const addButton = itemSelectorFrame.getByRole('button', {
+			exact: true,
+			name: 'Add',
+		});
+
+		await expect(addButton).toBeDisabled();
+
+		await imageURLInput.fill('/documents/d/guest/tree-png');
+
+		await expect(addButton).toBeEnabled();
+
+		await addButton.click();
+
+		await expect(
+			classicPage.editable.locator('img[src*="tree-png"]')
+		).toBeVisible();
+	}
+);
+
+test(
 	'Select video by modal URL input',
 	{tag: '@LPD-11235'},
 	async ({classicPage}) => {

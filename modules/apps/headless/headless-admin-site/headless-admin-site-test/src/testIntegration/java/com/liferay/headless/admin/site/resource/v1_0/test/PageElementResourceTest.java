@@ -2323,6 +2323,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							JournalContentPortletKeys.JOURNAL_CONTENT,
 							new WidgetPermission[0])
 					})));
+
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration();
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements();
 

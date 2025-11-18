@@ -67,7 +67,7 @@ function ManagementBar({
 		<>
 			<div
 				className={classNames(
-					'container-fluid ml-2 d-flex align-items-center management-bar',
+					'container-fluid d-flex align-items-center management-bar',
 					{'management-bar-primary': showBulkActions},
 					!fluid && 'px-0'
 				)}

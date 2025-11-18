@@ -7,7 +7,6 @@ import {mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {claySamplePageTest} from './fixtures/claySamplePageTest';
@@ -19,7 +18,6 @@ const test = mergeTests(
 		'LPS-178052': {enabled: true},
 	}),
 	claySamplePageTest,
-	isolatedSiteTest,
 	loginTest()
 );
 

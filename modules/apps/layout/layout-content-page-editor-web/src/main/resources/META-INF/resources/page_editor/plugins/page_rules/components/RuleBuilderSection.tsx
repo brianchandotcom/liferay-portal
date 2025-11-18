@@ -15,6 +15,7 @@ import {v4 as uuidv4} from 'uuid';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
+import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
 import ActionComponent, {Action} from './Action';
 import ConditionComponent, {Condition} from './Condition';
 
@@ -57,7 +58,8 @@ export function RuleBuilderActionSection({
 				item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
 				item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
 				item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
-				item.type !== LAYOUT_DATA_ITEM_TYPES.root
+				item.type !== LAYOUT_DATA_ITEM_TYPES.root &&
+				!isLayoutDataItemDeleted(layoutData, item.itemId)
 			) {
 				layoutItems.push({
 					label: selectLayoutDataItemLabel(
@@ -225,7 +227,10 @@ export function RuleBuilderConditionSection({
 		const inputFragments: {label: string; value: string}[] = [];
 
 		Object.values(layoutData.items).forEach((item) => {
-			if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+			if (
+				item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
+				!isLayoutDataItemDeleted(layoutData, item.itemId)
+			) {
 				const fragment =
 					fragmentEntryLinks[item.config.fragmentEntryLinkId];
 

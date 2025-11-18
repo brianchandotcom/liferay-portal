@@ -251,9 +251,11 @@ public class DBUpgraderTest {
 
 		Bundle bundle = _uninstallBundle();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.upgrade.internal.report.UpgradeReport",
-				LoggerTestUtil.INFO)) {
+				LoggerTestUtil.INFO);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				DBUpgrader.class.getName(), LoggerTestUtil.WARN)) {
 
 			StartupHelperUtil.setUpgrading(true);
 
@@ -261,9 +263,18 @@ public class DBUpgraderTest {
 
 			DBUpgrader.upgradeModules();
 
-			List<String> messages = logCapture.getMessages();
+			List<String> messages = logCapture1.getMessages();
 
 			Assert.assertFalse(messages.isEmpty());
+
+			messages = logCapture2.getMessages();
+
+			Assert.assertTrue(
+				messages.toString(),
+				messages.contains(
+					"com.liferay.data.cleanup.internal.verify." +
+						"PostUpgradeDataCleanupVerifyProcess will not be " +
+							"executed"));
 		}
 		finally {
 			StartupHelperUtil.setUpgrading(false);

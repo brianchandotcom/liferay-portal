@@ -120,13 +120,11 @@ export default function propsTransformer({
 		};
 	});
 
-	if (Liferay.FeatureFlags['LPD-68829']) {
-		otherProps.filtersGroups = [
-			{filters: ['date', 'color'], label: 'Group 1'},
-			{filters: ['invalid', 'size'], label: 'Group 2'},
-			{filters: ['status', 'title'], label: 'Group 3'},
-		];
-	}
+	const filtersGroups = [
+		{filters: ['date', 'color'], label: 'Group 1'},
+		{filters: ['invalid', 'size'], label: 'Group 2'},
+		{filters: ['status', 'title'], label: 'Group 3'},
+	];
 
 	return {
 		...otherProps,
@@ -134,6 +132,7 @@ export default function propsTransformer({
 			tableCell: [customAuthorTableCellRenderer],
 		},
 		fileDropSettings,
+		filtersGroups,
 		infoPanelComponent: SampleInfoPanel,
 		itemsActions: enableItemsActionsGroups
 			? [

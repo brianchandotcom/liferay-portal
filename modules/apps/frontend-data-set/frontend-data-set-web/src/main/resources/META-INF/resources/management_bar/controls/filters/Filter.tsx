@@ -42,18 +42,14 @@ interface FilterConfiguration {
 	id: string;
 }
 
-export interface FilterComponentArgs {
-	id: string;
-	moduleURL: string;
-	onClose: () => void;
-	type: 'clientExtension' | 'dateRange' | 'selection';
-}
-
-export interface IFilter extends FilterComponentArgs {
+export interface IFilter {
 	clientExtensionResolutionError: any;
 	id: string;
 	label: string;
+	moduleURL: string;
+	onClose: () => void;
 	selectedItemsLabel: string;
+	type: 'clientExtension' | 'dateRange' | 'selection';
 }
 
 const FILTER_IMPLEMENTATIONS = {
@@ -62,13 +58,7 @@ const FILTER_IMPLEMENTATIONS = {
 	selection: selectionFilterImplementation,
 };
 
-const Filter = ({
-	id,
-	moduleURL,
-	onClose,
-	type,
-	...otherProps
-}: FilterComponentArgs) => {
+const Filter = ({id, moduleURL, onClose, type, ...otherProps}: IFilter) => {
 	const {setSearching, updateFilters} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 

@@ -6,7 +6,7 @@
 import Button, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import ViewsContext, {
 	IViewsContext,
@@ -21,20 +21,27 @@ const FiltersDropdown = () => {
 	const [active, setActive] = useState(false);
 	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
 
-	const validFilters = filters.filter(
-		(filter) => !filter.clientExtensionResolutionError
+	const validFilters = useMemo(
+		() =>
+			filters.filter((filter) => !filter.clientExtensionResolutionError),
+		[filters]
 	);
 
-	const groupedFilters = filtersGroups?.map((group) => ({
-		children: group.filters
-			.map((filterId: string) =>
-				validFilters.find((f) => f.id === filterId)
-			)
-			.filter(Boolean),
-		label: group.label,
-	}));
+	const groupedFilters = useMemo(() => {
+		return filtersGroups?.map((group) => ({
+			children: group.filters
+				.map((filterId: string) =>
+					validFilters.find((f) => f.id === filterId)
+				)
+				.filter(Boolean),
+			label: group.label,
+		}));
+	}, [filtersGroups, validFilters]);
 
-	const filtersList = filtersGroups ? groupedFilters : validFilters;
+	const filtersList =
+		Liferay.FeatureFlags['LPD-68829'] && filtersGroups
+			? groupedFilters
+			: validFilters;
 
 	return (
 		<ClayDropDown
@@ -94,9 +101,9 @@ const FiltersDropdown = () => {
 
 					<ClayDropDown.Divider />
 
-					{filtersList.length ? (
+					{filtersList?.length ? (
 						<ClayDropDown.ItemList items={filtersList}>
-							{filtersGroups
+							{Liferay.FeatureFlags['LPD-68829'] && filtersGroups
 								? (group: any) => (
 										<ClayDropDown.Group
 											header={group.label}

@@ -3692,13 +3692,23 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
+							<if>
+								<contains string="${env.JOB_NAME}" substring="test-portal-release" />
+								<then>
+									<property name="temp.app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat/bin" />
+								</then>
+								<else>
+									<property name="temp.app.server.tomcat.bin.dir" value="${app.server.bin.dir}" />
+								</else>
+							</if>
+
 							<parallel>
 								<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second">
 									<http url="http://localhost:8080/web/guest" />
 								</waitfor>
 
 								<daemons>
-									<exec dir="${app.server.bin.dir}" executable="sh">
+									<exec dir="${temp.app.server.tomcat.bin.dir}" executable="sh">
 										<arg value="catalina.sh" />
 										<arg value="run" />
 										<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
@@ -3708,12 +3718,25 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<antcall inheritAll="false" target="stop-app-server" />
 
-							<var name="app.server.tomcat.dir.custom" value="${app.server.parent.dir}/tomcat" />
+							<if>
+								<contains string="${env.JOB_NAME}" substring="test-portal-release" />
+								<then>
+									<var name="app.server.tomcat.dir.custom" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}" />
 
-							<move
-								file="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}"
-								tofile="${app.server.tomcat.dir.custom}"
-							/>
+									<move
+										file="${app.server.parent.dir}/tomcat"
+										tofile="${app.server.tomcat.dir.custom}"
+									/>
+								</then>
+								<else>
+									<var name="app.server.tomcat.dir.custom" value="${app.server.parent.dir}/tomcat" />
+
+									<move
+										file="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}"
+										tofile="${app.server.tomcat.dir.custom}"
+									/>
+								</else>
+							</if>
 
 							<trycatch>
 								<try>
@@ -4022,7 +4045,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							<then>
 								<sequential>
 									<propertyfile file="app.server.${env.HOSTNAME}.properties">
-										<entry key="app.server.parent.dir" value="${project.dir}/bundles" />
+										<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
 									</propertyfile>
 
 									<propertyfile file="build.${env.HOSTNAME}.properties">

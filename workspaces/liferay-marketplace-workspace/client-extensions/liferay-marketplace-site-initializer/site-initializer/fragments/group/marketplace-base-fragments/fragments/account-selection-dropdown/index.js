@@ -140,11 +140,10 @@ function renderAccounts(accounts, currentAccountId, search) {
 		const accountImage = document.createElement('img');
 
 		const accountName = document.createElement('span');
-		const accountType = document.createElement('span');	
+		const accountType = document.createElement('span');
 
 		accountName.textContent = account.name;
-		const typeCapitalized = account.type.charAt(0).toUpperCase() + account.type.slice(1);
-		accountType.textContent = Liferay.Language.get(typeCapitalized) || typeCapitalized;
+		accountType.textContent = account.type;
 
 		const profileContainer = document.createElement('div');
 		const row = document.createElement('li');
@@ -170,7 +169,12 @@ function renderAccounts(accounts, currentAccountId, search) {
 		accountImage.setAttribute('class', 'avatar mr-2');
 		accountImage.setAttribute('src', account.logoURL);
 
-		accountType.classList.add('account-selection-dropdown', 'text-gray-secondary', 'small');
+		accountType.classList.add(
+			'account-selection-dropdown',
+			'text-capitalize',
+			'text-gray-secondary',
+			'small'
+		);
 
 		const textWrapper = document.createElement('div');
 		textWrapper.classList.add('d-flex', 'flex-column');
@@ -189,7 +193,7 @@ async function loadDropdownAccounts() {
 	try {
 		const response = await getAccounts(
 			new URLSearchParams({
-				fields: 'id,name,logoURL,type',
+				fields: 'id,logoURL,name,type',
 				page: 2,
 				pageSize: PAGE_SIZE.toString(),
 				sort: 'name:asc',

@@ -54,7 +54,10 @@ export default {
 	'annual-target': 'Annual Target',
 	'app': 'App',
 	'app-build': 'App Build',
+	'app-documentation': 'App Documentation',
 	'app-documentation-url': 'App Documentation URL',
+	'app-installation-and-uninstallation-guide':
+		'App Installation and Uninstallation Guide',
 	'app-installation-and-uninstallation-guide-url':
 		'App Installation and Uninstallation Guide URL',
 	'app-installation-guide-url': 'App Installation Guide URL',
@@ -65,6 +68,7 @@ export default {
 	'app-submission': 'App Submission',
 	'app-support-and-help': 'App Support and Help',
 	'app-type': 'App Type',
+	'app-usage-terms-eula': 'App Usage Terms (EULA)',
 	'app-usage-terms-url': 'App Usage Terms URL',
 	'app-version': 'App Version',
 	'app-x-submitted': 'App <b>{0}</b> submitted.',
@@ -150,6 +154,7 @@ export default {
 	'contact-us': 'Contact Us',
 	'contact-your-administrator-to-become-part-of-an-account':
 		'Contact your administrator to become part of an account.',
+	'contacts': 'Contacts',
 	'content-media-type': 'Content Media Type',
 	'content-policy': 'Content Policy',
 	'continue': 'Continue',
@@ -511,6 +516,7 @@ export default {
 	'publisher-payout': 'Publisher Payout',
 	'publisher-requests': 'Publisher Requests',
 	'publisher-type': 'Publisher Type',
+	'publisher-website': 'Publisher Website',
 	'publisher-website-url': 'Publisher Website URL',
 	'publishers': 'Publishers',
 	'purchase-and-install-new-apps-and-they-will-show-up-here':
@@ -608,7 +614,9 @@ export default {
 	'subtotal-discount': 'Subtotal Discount',
 	'success': 'Success',
 	'summary': 'Summary',
+	'support': 'Support',
 	'support-and-help': 'Support & Help',
+	'support-email': 'Support Email',
 	'support-email-address': 'Support Email Address',
 	'support-phone-number': 'Support Phone Number',
 	'support-url': 'Support URL',

@@ -20,6 +20,7 @@ import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 import AppDropdownActions from './AppDropdownActions/AppDropdownActions';
 
 import './App.scss';
+import {ProductSupportSpecificationKey} from '../../../../../enums/Product';
 
 type ProductAndOrderPayload = NonNullable<
 	ReturnType<typeof useGetProductByOrderId>['data']
@@ -120,6 +121,13 @@ const AppOutlet = () => (
 					(item: PlacedOrderItems) => item.virtualItems?.length
 				);
 
+			const hasSupportDetails = product.productSpecifications.some(
+				(specification: DeliveryProductSpecification) =>
+					Object?.values(ProductSupportSpecificationKey).includes(
+						specification.specificationKey as ProductSupportSpecificationKey
+					)
+			);
+
 			const tabs = [
 				{
 					name: i18n.translate('details'),
@@ -147,6 +155,11 @@ const AppOutlet = () => (
 					visible:
 						placedOrder.orderTypeExternalReferenceCode ===
 							OrderTypes.DXPAPP && isPaidApp,
+				},
+				{
+					name: i18n.translate('support'),
+					path: 'support',
+					visible: hasSupportDetails,
 				},
 			];
 

@@ -10,7 +10,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {claySamplePageTest} from './fixtures/claySamplePageTest';
-import {TabName as ClayTabs} from './pages/ClaySamplePage';
+import {TabName as ClaySamplePageTabs} from './pages/ClaySamplePage';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -25,7 +25,7 @@ test('When accessing all clay sample portlet tabs, then verifies that the compon
 	claySamplePage,
 	page,
 }) => {
-	const tabNames = Object.values(ClayTabs);
+	const tabNames = Object.values(ClaySamplePageTabs);
 	for (const tabName of tabNames) {
 		await test.step(`Verifying ${tabName} accessibility`, async () => {
 			await claySamplePage.selectTab(tabName);

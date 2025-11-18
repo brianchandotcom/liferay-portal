@@ -204,6 +204,6 @@ test('Item Selector Modal with Spaces filter for when selecting CMS Files', asyn
 
 		await expect(
 			page.getByText(secondSpaceObjectEntry.title, {exact: true})
-		).not.toBeVisible();
+		).toBeHidden();
 	});
 });

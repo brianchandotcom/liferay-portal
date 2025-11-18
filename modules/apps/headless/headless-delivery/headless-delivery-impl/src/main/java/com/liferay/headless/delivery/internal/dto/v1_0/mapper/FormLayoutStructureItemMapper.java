@@ -5,6 +5,7 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
+import com.liferay.headless.delivery.dto.v1_0.ClassFieldsReference;
 import com.liferay.headless.delivery.dto.v1_0.ClassTypeReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.DisplayPageFormSubmissionResult;
@@ -264,14 +265,20 @@ public class FormLayoutStructureItemMapper
 				String displayPage = successMessageJSONObject.getString(
 					"displayPage");
 
+				ClassFieldsReference displayPageClassFieldsReference =
+					FragmentMappedValueUtil.toDisplayPageClassFieldsReference(
+						displayPage);
+
+				if (displayPageClassFieldsReference == null) {
+					displayPageFormSubmissionResult.setDefaultDisplayPage(
+						() -> Boolean.TRUE);
+				}
+
 				displayPageFormSubmissionResult.setMapping(
 					() -> new Mapping() {
 						{
 							setItemReference(
-								() ->
-									FragmentMappedValueUtil.
-										toDisplayPageClassFieldsReference(
-											displayPage));
+								() -> displayPageClassFieldsReference);
 						}
 					});
 

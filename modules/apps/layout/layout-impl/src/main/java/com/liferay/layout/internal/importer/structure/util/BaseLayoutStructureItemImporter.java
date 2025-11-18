@@ -113,12 +113,14 @@ public abstract class BaseLayoutStructureItemImporter {
 		Map<String, Object> formSuccessSubmissionResultMap,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
-		Map<String, Object> mapping =
-			(Map<String, Object>)formSuccessSubmissionResultMap.get("mapping");
+		if (GetterUtil.getBoolean(
+				formSuccessSubmissionResultMap.get("defaultDisplayPage"))) {
 
-		if (mapping == null) {
 			return _getDefaultDisplayPageJSONObject();
 		}
+
+		Map<String, Object> mapping =
+			(Map<String, Object>)formSuccessSubmissionResultMap.get("mapping");
 
 		Map<String, Object> itemReferenceMap = (Map<String, Object>)mapping.get(
 			"itemReference");

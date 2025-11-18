@@ -78,14 +78,28 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 
 		<aui:input name="subject" value='<%= BeanPropertiesUtil.getString(calendarNotificationTemplate, "subject", NotificationUtil.getDefaultTemplate(notificationType, notificationTemplateType, NotificationField.SUBJECT)) %>' />
 
-		<aui:field-wrapper label="body">
-			<liferay-editor:editor
-				contents="<%= body %>"
-				editorName="ckeditor"
-			/>
+		<c:choose>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+				<label for="<portlet:namespace />body">
+					<liferay-ui:message key="body" />
+				</label>
 
-			<aui:input name="body" type="hidden" value="<%= body %>" />
-		</aui:field-wrapper>
+				<liferay-editor:editor
+					contents="<%= body %>"
+					editorName="ckeditor5_classic"
+				/>
+			</c:when>
+			<c:otherwise>
+				<aui:field-wrapper label="body">
+					<liferay-editor:editor
+						contents="<%= body %>"
+						editorName="ckeditor"
+					/>
+				</aui:field-wrapper>
+			</c:otherwise>
+		</c:choose>
+
+		<aui:input name="body" type="hidden" value="<%= body %>" />
 	</aui:fieldset>
 
 	<div class="definition-of-terms">
@@ -194,7 +208,9 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 
 		if (notificationTemplateContentBody) {
 			notificationTemplateContentBody.value =
-				window.<portlet:namespace />editor.getHTML();
+				Liferay.FeatureFlags['LPD-11235'] ?
+					window.<portlet:namespace />editor.getData()
+					: window.<portlet:namespace />editor.getHTML();
 		}
 
 		submitForm(document.<portlet:namespace />fm);

@@ -727,6 +727,15 @@ public class ObjectRelationshipLocalServiceImpl
 				ObjectRelationship objectRelationship)
 		throws NoSuchObjectDefinitionException {
 
+		return getDynamicObjectRelationshipMappingTable(
+			objectRelationship, false);
+	}
+
+	public DynamicObjectRelationshipMappingTable
+			getDynamicObjectRelationshipMappingTable(
+				ObjectRelationship objectRelationship, boolean reverse)
+		throws NoSuchObjectDefinitionException {
+
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1());
@@ -736,7 +745,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		Map<String, String> pkObjectFieldDBColumnNames =
 			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
-				objectDefinition1, objectDefinition2, false);
+				objectDefinition1, objectDefinition2, reverse);
 
 		String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
 			"pkObjectFieldDBColumnName1");

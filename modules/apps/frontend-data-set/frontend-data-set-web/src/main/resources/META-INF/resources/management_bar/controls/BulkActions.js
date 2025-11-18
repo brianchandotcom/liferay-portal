@@ -210,7 +210,8 @@ function BulkActions({
 
 							{pageSelectedItemsValue.length === items.length &&
 								showSelectAll &&
-								!allItemsSelectedActive && (
+								!allItemsSelectedActive &&
+								selectedItemsValue.length !== total && (
 									<ClayButton
 										className="c-ml-1"
 										displayType="link"

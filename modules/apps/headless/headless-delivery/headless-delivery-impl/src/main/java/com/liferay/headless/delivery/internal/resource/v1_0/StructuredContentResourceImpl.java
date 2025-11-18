@@ -784,7 +784,10 @@ public class StructuredContentResourceImpl
 				StructuredContentUtil.getJournalArticleContent(
 					_ddm,
 					DDMFormValuesUtil.toDDMFormValues(
-						titleMap.keySet(), structuredContent.getContentFields(),
+						_populateTitleMap(
+							ddmStructure.getDefaultLanguageId(),
+							ddmStructure.getAvailableLanguageIds(), titleMap),
+						structuredContent.getContentFields(),
 						ddmStructure.getDDMForm(), _dlAppService, groupId,
 						_journalArticleService, _layoutLocalService,
 						contextAcceptLanguage.getPreferredLocale(),
@@ -1257,6 +1260,26 @@ public class StructuredContentResourceImpl
 			_populateContentFieldValuesMap(
 				contentField.getNestedContentFields(), contentFieldValuesMap);
 		}
+	}
+
+	private Set<Locale> _populateTitleMap(
+		String defaultLocale, String[] languageIds,
+		Map<Locale, String> titleMap) {
+
+		if ((titleMap == null) || titleMap.isEmpty()) {
+			return titleMap.keySet();
+		}
+
+		String defaultValue = titleMap.get(
+			LocaleUtil.fromLanguageId(defaultLocale));
+
+		Locale[] locales = LocaleUtil.fromLanguageIds(languageIds);
+
+		for (Locale locale : locales) {
+			titleMap.putIfAbsent(locale, defaultValue);
+		}
+
+		return titleMap.keySet();
 	}
 
 	private Fields _toFields(

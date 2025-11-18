@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
@@ -78,44 +79,52 @@ public class FragmentMappedValueUtil {
 	public static ClassFieldsReference toDisplayPageClassFieldsReference(
 		String displayPageTemplateId) {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry;
+		if (StringUtil.startsWith(
+				displayPageTemplateId,
+				LayoutPageTemplateEntry.class.getSimpleName())) {
 
-		try {
-			Matcher matcher = _pattern.matcher(displayPageTemplateId);
+			try {
+				Matcher matcher = _pattern.matcher(displayPageTemplateId);
 
-			layoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					getLayoutPageTemplateEntry(
-						GetterUtil.getLong(matcher.group(1)));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Item reference could not be set since no display page " +
-						"template could be obtained",
-					exception);
-			}
+				if (matcher.find()) {
+					LayoutPageTemplateEntry layoutPageTemplateEntry =
+						LayoutPageTemplateEntryLocalServiceUtil.
+							getLayoutPageTemplateEntry(
+								GetterUtil.getLong(matcher.group(1)));
 
-			return null;
-		}
-
-		return new ClassFieldsReference() {
-			{
-				setClassName(() -> LayoutPageTemplateEntry.class.getName());
-				setFields(
-					() -> new Field[] {
-						new Field() {
-							{
-								setFieldName(() -> "externalReferenceCode");
-								setFieldValue(
-									() ->
-										layoutPageTemplateEntry.
-											getExternalReferenceCode());
-							}
+					return new ClassFieldsReference() {
+						{
+							setClassName(
+								() -> LayoutPageTemplateEntry.class.getName());
+							setFields(
+								() -> new Field[] {
+									new Field() {
+										{
+											setFieldName(
+												() -> "externalReferenceCode");
+											setFieldValue(
+												layoutPageTemplateEntry::
+													getExternalReferenceCode);
+										}
+									}
+								});
 						}
-					});
+					};
+				}
 			}
-		};
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Item reference could not be set since no display " +
+							"page template could be obtained",
+						exception);
+				}
+
+				return null;
+			}
+		}
+
+		return null;
 	}
 
 	public static Object toItemReference(JSONObject jsonObject) {

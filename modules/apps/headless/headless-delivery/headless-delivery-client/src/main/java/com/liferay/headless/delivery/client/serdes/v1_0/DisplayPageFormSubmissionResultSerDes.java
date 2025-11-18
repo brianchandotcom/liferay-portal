@@ -50,6 +50,16 @@ public class DisplayPageFormSubmissionResultSerDes {
 
 		sb.append("{");
 
+		if (displayPageFormSubmissionResult.getDefaultDisplayPage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultDisplayPage\": ");
+
+			sb.append(displayPageFormSubmissionResult.getDefaultDisplayPage());
+		}
+
 		if (displayPageFormSubmissionResult.getMapping() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -105,6 +115,16 @@ public class DisplayPageFormSubmissionResultSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (displayPageFormSubmissionResult.getDefaultDisplayPage() == null) {
+			map.put("defaultDisplayPage", null);
+		}
+		else {
+			map.put(
+				"defaultDisplayPage",
+				String.valueOf(
+					displayPageFormSubmissionResult.getDefaultDisplayPage()));
+		}
+
 		if (displayPageFormSubmissionResult.getMapping() == null) {
 			map.put("mapping", null);
 		}
@@ -152,7 +172,10 @@ public class DisplayPageFormSubmissionResultSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "mapping")) {
+			if (Objects.equals(jsonParserFieldName, "defaultDisplayPage")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "mapping")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "notificationText")) {
@@ -170,7 +193,13 @@ public class DisplayPageFormSubmissionResultSerDes {
 			DisplayPageFormSubmissionResult displayPageFormSubmissionResult,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "mapping")) {
+			if (Objects.equals(jsonParserFieldName, "defaultDisplayPage")) {
+				if (jsonParserFieldValue != null) {
+					displayPageFormSubmissionResult.setDefaultDisplayPage(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "mapping")) {
 				if (jsonParserFieldValue != null) {
 					displayPageFormSubmissionResult.setMapping(
 						MappingSerDes.toDTO((String)jsonParserFieldValue));

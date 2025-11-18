@@ -54,6 +54,51 @@ public class DisplayPageFormSubmissionResult implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Default display page when a form container submission is successful."
+	)
+	public Boolean getDefaultDisplayPage() {
+		if (_defaultDisplayPageSupplier != null) {
+			defaultDisplayPage = _defaultDisplayPageSupplier.get();
+
+			_defaultDisplayPageSupplier = null;
+		}
+
+		return defaultDisplayPage;
+	}
+
+	public void setDefaultDisplayPage(Boolean defaultDisplayPage) {
+		this.defaultDisplayPage = defaultDisplayPage;
+
+		_defaultDisplayPageSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDefaultDisplayPage(
+		UnsafeSupplier<Boolean, Exception> defaultDisplayPageUnsafeSupplier) {
+
+		_defaultDisplayPageSupplier = () -> {
+			try {
+				return defaultDisplayPageUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Default display page when a form container submission is successful."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean defaultDisplayPage;
+
+	@JsonIgnore
+	private Supplier<Boolean> _defaultDisplayPageSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The mapping of the display page template submission result."
 	)
 	@Valid
@@ -215,6 +260,18 @@ public class DisplayPageFormSubmissionResult implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Boolean defaultDisplayPage = getDefaultDisplayPage();
+
+		if (defaultDisplayPage != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultDisplayPage\": ");
+
+			sb.append(defaultDisplayPage);
+		}
 
 		Mapping mapping = getMapping();
 

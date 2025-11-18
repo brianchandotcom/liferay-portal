@@ -13,7 +13,6 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableFactory;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
-import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
@@ -31,7 +30,6 @@ import java.sql.Connection;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -99,24 +97,11 @@ public class ObjectSQLProvider implements SQLProvider {
 				continue;
 			}
 
-			Map<String, String> pkObjectFieldDBColumnNames =
-				ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
-					ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId1()),
-					ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId2()),
-					false);
-
-			String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
-				"pkObjectFieldDBColumnName1");
-			String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
-				"pkObjectFieldDBColumnName2");
-
 			DynamicObjectRelationshipMappingTable
 				dynamicObjectRelationshipMappingTable =
-					new DynamicObjectRelationshipMappingTable(
-						pkObjectFieldDBColumnName1, pkObjectFieldDBColumnName2,
-						objectRelationship.getDBTableName());
+					ObjectRelationshipLocalServiceUtil.
+						getDynamicObjectRelationshipMappingTable(
+							objectRelationship);
 
 			_appendTableSQL(
 				dbInspector,

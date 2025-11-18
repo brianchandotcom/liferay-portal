@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.client.dto.v1_0.Chat;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.pagination.Page;
-import com.liferay.ai.hub.rest.client.resource.v1_0.TaskResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes;
+import com.liferay.ai.hub.rest.client.resource.v1_0.ChatResource;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.ChatSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -72,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseTaskResourceTestCase {
+public abstract class BaseChatResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -93,12 +93,12 @@ public abstract class BaseTaskResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_taskResource.setContextCompany(testCompany);
+		_chatResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		taskResource = TaskResource.builder(
+		chatResource = ChatResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -119,23 +119,23 @@ public abstract class BaseTaskResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Task task1 = randomTask();
+		Chat chat1 = randomChat();
 
-		String json = objectMapper.writeValueAsString(task1);
+		String json = objectMapper.writeValueAsString(chat1);
 
-		Task task2 = TaskSerDes.toDTO(json);
+		Chat chat2 = ChatSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(task1, task2));
+		Assert.assertTrue(equals(chat1, chat2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Task task = randomTask();
+		Chat chat = randomChat();
 
-		String json1 = objectMapper.writeValueAsString(task);
-		String json2 = TaskSerDes.toJSON(task);
+		String json1 = objectMapper.writeValueAsString(chat);
+		String json2 = ChatSerDes.toJSON(chat);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -163,67 +163,48 @@ public abstract class BaseTaskResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Task task = randomTask();
+		Chat chat = randomChat();
 
-		task.setExternalReferenceCode(regex);
-		task.setType(regex);
+		chat.setExternalReferenceCode(regex);
 
-		String json = TaskSerDes.toJSON(task);
+		String json = ChatSerDes.toJSON(chat);
 
 		Assert.assertFalse(json.contains(regex));
 
-		task = TaskSerDes.toDTO(json);
+		chat = ChatSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, task.getExternalReferenceCode());
-		Assert.assertEquals(regex, task.getType());
+		Assert.assertEquals(regex, chat.getExternalReferenceCode());
 	}
 
 	@Test
-	public void testGetTaskSubscribe() throws Exception {
+	public void testGetChatSubscribe() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Task task = testGetTaskSubscribe_addTask();
+		Chat chat = testGetChatSubscribe_addChat();
 
 		assertHttpResponseStatusCode(
-			204, taskResource.getTaskSubscribeHttpResponse(null));
+			204, chatResource.getChatSubscribeHttpResponse(null));
 
 		assertHttpResponseStatusCode(
-			404, taskResource.getTaskSubscribeHttpResponse(null));
+			404, chatResource.getChatSubscribeHttpResponse(null));
 	}
 
-	protected Task testGetTaskSubscribe_addTask() throws Exception {
+	protected Chat testGetChatSubscribe_addChat() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	@Test
-	public void testPostByExternalReferenceCodeTask() throws Exception {
-		Task randomTask = randomTask();
-
-		Task postTask = testPostByExternalReferenceCodeTask_addTask(randomTask);
-
-		assertEquals(randomTask, postTask);
-		assertValid(postTask);
-	}
-
-	protected Task testPostByExternalReferenceCodeTask_addTask(Task task)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void assertContains(Task task, List<Task> tasks) {
+	protected void assertContains(Chat chat, List<Chat> chats) {
 		boolean contains = false;
 
-		for (Task item : tasks) {
-			if (equals(task, item)) {
+		for (Chat item : chats) {
+			if (equals(chat, item)) {
 				contains = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(tasks + " does not contain " + task, contains);
+		Assert.assertTrue(chats + " does not contain " + chat, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -234,76 +215,52 @@ public abstract class BaseTaskResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Task task1, Task task2) {
+	protected void assertEquals(Chat chat1, Chat chat2) {
 		Assert.assertTrue(
-			task1 + " does not equal " + task2, equals(task1, task2));
+			chat1 + " does not equal " + chat2, equals(chat1, chat2));
 	}
 
-	protected void assertEquals(List<Task> tasks1, List<Task> tasks2) {
-		Assert.assertEquals(tasks1.size(), tasks2.size());
+	protected void assertEquals(List<Chat> chats1, List<Chat> chats2) {
+		Assert.assertEquals(chats1.size(), chats2.size());
 
-		for (int i = 0; i < tasks1.size(); i++) {
-			Task task1 = tasks1.get(i);
-			Task task2 = tasks2.get(i);
+		for (int i = 0; i < chats1.size(); i++) {
+			Chat chat1 = chats1.get(i);
+			Chat chat2 = chats2.get(i);
 
-			assertEquals(task1, task2);
+			assertEquals(chat1, chat2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Task> tasks1, List<Task> tasks2) {
+		List<Chat> chats1, List<Chat> chats2) {
 
-		Assert.assertEquals(tasks1.size(), tasks2.size());
+		Assert.assertEquals(chats1.size(), chats2.size());
 
-		for (Task task1 : tasks1) {
+		for (Chat chat1 : chats1) {
 			boolean contains = false;
 
-			for (Task task2 : tasks2) {
-				if (equals(task1, task2)) {
+			for (Chat chat2 : chats2) {
+				if (equals(chat1, chat2)) {
 					contains = true;
 
 					break;
 				}
 			}
 
-			Assert.assertTrue(tasks2 + " does not contain " + task1, contains);
+			Assert.assertTrue(chats2 + " does not contain " + chat1, contains);
 		}
 	}
 
-	protected void assertValid(Task task) throws Exception {
+	protected void assertValid(Chat chat) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("context", additionalAssertFieldName)) {
-				if (task.getContext() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
-				if (task.getExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("scope", additionalAssertFieldName)) {
-				if (task.getScope() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (task.getType() == null) {
+				if (chat.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -318,18 +275,18 @@ public abstract class BaseTaskResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Task> page) {
+	protected void assertValid(Page<Chat> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<Task> page, Map<String, Map<String, String>> expectedActions) {
+		Page<Chat> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<Task> tasks = page.getItems();
+		java.util.Collection<Chat> chats = page.getItems();
 
-		int size = tasks.size();
+		int size = chats.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -371,7 +328,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.Task.class)) {
+					com.liferay.ai.hub.rest.dto.v1_0.Chat.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -419,45 +376,21 @@ public abstract class BaseTaskResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Task task1, Task task2) {
-		if (task1 == task2) {
+	protected boolean equals(Chat chat1, Chat chat2) {
+		if (chat1 == chat2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("context", additionalAssertFieldName)) {
-				if (!equals((Map)task1.getContext(), (Map)task2.getContext())) {
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						task1.getExternalReferenceCode(),
-						task2.getExternalReferenceCode())) {
+						chat1.getExternalReferenceCode(),
+						chat2.getExternalReferenceCode())) {
 
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("scope", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(task1.getScope(), task2.getScope())) {
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(task1.getType(), task2.getType())) {
 					return false;
 				}
 
@@ -520,13 +453,13 @@ public abstract class BaseTaskResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_taskResource instanceof EntityModelResource)) {
+		if (!(_chatResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_taskResource;
+			(EntityModelResource)_chatResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -559,7 +492,7 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Task task) {
+		EntityField entityField, String operator, Chat chat) {
 
 		StringBundler sb = new StringBundler();
 
@@ -571,64 +504,8 @@ public abstract class BaseTaskResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("context")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("externalReferenceCode")) {
-			Object object = task.getExternalReferenceCode();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("scope")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("type")) {
-			Object object = task.getType();
+			Object object = chat.getExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -715,27 +592,26 @@ public abstract class BaseTaskResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected Task randomTask() throws Exception {
-		return new Task() {
+	protected Chat randomChat() throws Exception {
+		return new Chat() {
 			{
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected Task randomIrrelevantTask() throws Exception {
-		Task randomIrrelevantTask = randomTask();
+	protected Chat randomIrrelevantChat() throws Exception {
+		Chat randomIrrelevantChat = randomChat();
 
-		return randomIrrelevantTask;
+		return randomIrrelevantChat;
 	}
 
-	protected Task randomPatchTask() throws Exception {
-		return randomTask();
+	protected Chat randomPatchChat() throws Exception {
+		return randomChat();
 	}
 
-	protected TaskResource taskResource;
+	protected ChatResource chatResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -934,13 +810,13 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTaskResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseChatResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.TaskResource _taskResource;
+	private com.liferay.ai.hub.rest.resource.v1_0.ChatResource _chatResource;
 
 }

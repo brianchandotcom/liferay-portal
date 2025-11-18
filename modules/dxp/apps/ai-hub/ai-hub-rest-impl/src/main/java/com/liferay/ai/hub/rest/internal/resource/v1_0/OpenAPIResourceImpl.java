@@ -85,6 +85,10 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(ChatResourceImpl.class);
+
+			add(MessageResourceImpl.class);
+
 			add(TaskResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

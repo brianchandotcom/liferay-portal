@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.Task;
-import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
+import com.liferay.ai.hub.rest.dto.v1_0.Message;
+import com.liferay.ai.hub.rest.resource.v1_0.MessageResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,30 +39,12 @@ import java.util.Map;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseTaskResourceImpl implements TaskResource {
+public abstract class BaseMessageResourceImpl implements MessageResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub/v1.0/tasks/subscribe'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Task")}
-	)
-	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/tasks/subscribe")
-	@jakarta.ws.rs.Produces("text/event-stream")
-	@Override
-	public void getTaskSubscribe(
-			@jakarta.ws.rs.core.Context jakarta.ws.rs.sse.SseEventSink
-				sseEventSink)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/by-external-reference-code/{externalReferenceCode}/tasks' -d $'{"context": ___, "scope": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/chats/by-external-reference-code/{externalReferenceCode}/messages' -d $'{"context": ___, "scope": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -73,24 +55,24 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Task")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Message")}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/by-external-reference-code/{externalReferenceCode}/tasks"
+		"/chats/by-external-reference-code/{externalReferenceCode}/messages"
 	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Task postByExternalReferenceCodeTask(
+	public Message postChatByExternalReferenceCodeMessage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			Task task)
+			Message message)
 		throws Exception {
 
-		return new Task();
+		return new Message();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -535,6 +517,6 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 	protected SortParserProvider sortParserProvider;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTaskResourceImpl.class);
+		LogFactoryUtil.getLog(BaseMessageResourceImpl.class);
 
 }

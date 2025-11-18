@@ -5,7 +5,6 @@
 
 package com.liferay.ai.hub.rest.client.resource.v1_0;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.Task;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.problem.Problem;
 
@@ -25,25 +24,17 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface TaskResource {
+public interface ChatResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public void getTaskSubscribe(jakarta.ws.rs.sse.SseEventSink sseEventSink)
+	public void getChatSubscribe(jakarta.ws.rs.sse.SseEventSink sseEventSink)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getTaskSubscribeHttpResponse(
+	public HttpInvoker.HttpResponse getChatSubscribeHttpResponse(
 			jakarta.ws.rs.sse.SseEventSink sseEventSink)
-		throws Exception;
-
-	public Task postByExternalReferenceCodeTask(
-			String externalReferenceCode, Task task)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postByExternalReferenceCodeTaskHttpResponse(
-			String externalReferenceCode, Task task)
 		throws Exception;
 
 	public static class Builder {
@@ -59,8 +50,8 @@ public interface TaskResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public TaskResource build() {
-			return new TaskResourceImpl(this);
+		public ChatResource build() {
+			return new ChatResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -152,14 +143,14 @@ public interface TaskResource {
 
 	}
 
-	public static class TaskResourceImpl implements TaskResource {
+	public static class ChatResourceImpl implements ChatResource {
 
-		public void getTaskSubscribe(
+		public void getChatSubscribe(
 				jakarta.ws.rs.sse.SseEventSink sseEventSink)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getTaskSubscribeHttpResponse(sseEventSink);
+				getChatSubscribeHttpResponse(sseEventSink);
 
 			String content = httpResponse.getContent();
 
@@ -220,7 +211,7 @@ public interface TaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTaskSubscribeHttpResponse(
+		public HttpInvoker.HttpResponse getChatSubscribeHttpResponse(
 				jakarta.ws.rs.sse.SseEventSink sseEventSink)
 			throws Exception {
 
@@ -248,7 +239,7 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/tasks/subscribe");
+						"/o/ai-hub/v1.0/chats/subscribe");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -258,123 +249,12 @@ public interface TaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public Task postByExternalReferenceCodeTask(
-				String externalReferenceCode, Task task)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postByExternalReferenceCodeTaskHttpResponse(
-					externalReferenceCode, task);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes.
-					toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postByExternalReferenceCodeTaskHttpResponse(
-					String externalReferenceCode, Task task)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(task.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/by-external-reference-code/{externalReferenceCode}/tasks");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		private TaskResourceImpl(Builder builder) {
+		private ChatResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			TaskResource.class.getName());
+			ChatResource.class.getName());
 
 		private Builder _builder;
 

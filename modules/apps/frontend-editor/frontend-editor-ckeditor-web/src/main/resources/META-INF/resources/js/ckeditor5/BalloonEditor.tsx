@@ -20,12 +20,14 @@ const BalloonEditor = ({
 	className,
 	config,
 	data,
+	name,
 	onChange,
 	onReady,
 }: {
 	className?: string;
 	config?: LiferayEditorConfig;
 	data?: string;
+	name?: string;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
 	onReady?: (editor: TEditor) => void;
 }) => {
@@ -41,6 +43,7 @@ const BalloonEditor = ({
 			}}
 			data={data}
 			editor={BaseCKEditor5BalloonEditor}
+			name={name}
 			onChange={onChange}
 			onReady={onReady}
 		/>

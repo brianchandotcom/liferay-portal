@@ -13,6 +13,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.CompanyScoped;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -93,6 +94,13 @@ public class ObjectEntryManagerRegistryImplTest {
 
 		_unregister(objectEntryManagerServiceRegistration1);
 		_unregister(objectEntryManagerServiceRegistration2);
+	}
+
+	@Test
+	public void testGetObjectEntryManagerWhenThereIsNoObjectEntryManager() {
+		Assert.assertNull(
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				1, RandomTestUtil.randomString()));
 	}
 
 	private ServiceRegistration<ObjectEntryManager> _register(

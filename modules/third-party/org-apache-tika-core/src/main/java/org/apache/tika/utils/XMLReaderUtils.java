@@ -327,6 +327,8 @@ public class XMLReaderUtils implements Serializable {
 
         tryToSetStaxProperty(factory, XMLInputFactory.IS_NAMESPACE_AWARE, true);
         tryToSetStaxProperty(factory, XMLInputFactory.IS_VALIDATING, false);
+        tryToSetStaxProperty(factory, XMLInputFactory.SUPPORT_DTD, false);
+        tryToSetStaxProperty(factory, XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
 
         factory.setXMLResolver(IGNORING_STAX_ENTITY_RESOLVER);
         trySetStaxSecurityManager(factory);
@@ -1011,3 +1013,4 @@ public class XMLReaderUtils implements Serializable {
         reader.setErrorHandler(IGNORING_ERROR_HANDLER);
     }
 }
+/* @generated */

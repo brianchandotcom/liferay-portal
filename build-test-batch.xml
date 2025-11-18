@@ -3871,9 +3871,29 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 												<entry key="liferay.home" value="${project.dir}/bun dles" />
 											</propertyfile>
 
-											<antcall inheritAll="false" target="start-app-server">
-												<param name="delete.liferay.home" value="false" />
-											</antcall>
+											<if>
+												<and>
+													<equals arg1="${app.server.type}" arg2="tomcat" />
+													<contains string="${env.JOB_NAME}" substring="test-portal-release" />
+												</and>
+												<then>
+													<var name="app.server.bundles.dir" value="${project.dir}/bun dles" />
+
+													<antcall inheritAll="false" target="start-app-server">
+														<param name="delete.liferay.home" value="false" />
+														<param name="app.server.bin.dir" value="${app.server.bundles.dir}/tomcat/bin" />
+														<param name="app.server.classes.portal.dir" value="${app.server.bundles.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />
+														<param name="app.server.deploy.dir" value="${app.server.bundles.dir}/tomcat/webapps" />
+														<param name="app.server.dir" value="${app.server.bundles.dir}/tomcat" />
+														<param name="app.server.parent.dir" value="${app.server.bundles.dir}" />
+													</antcall>
+												</then>
+												<else>
+													<antcall inheritAll="false" target="start-app-server">
+														<param name="delete.liferay.home" value="false" />
+													</antcall>
+												</else>
+											</if>
 										</sequential>
 									</try>
 									<finally>
@@ -3887,7 +3907,29 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 									</finally>
 								</trycatch>
 
-								<antcall inheritall="false" target="stop-app-server" />
+								<if>
+									<and>
+										<equals arg1="${app.server.type}" arg2="tomcat" />
+										<contains string="${env.JOB_NAME}" substring="test-portal-release" />
+									</and>
+									<then>
+										<var name="app.server.bundles.dir" value="${project.dir}/bun dles" />
+
+										<antcall inheritAll="false" target="stop-app-server">
+											<param name="delete.liferay.home" value="false" />
+											<param name="app.server.bin.dir" value="${app.server.bundles.dir}/tomcat/bin" />
+											<param name="app.server.classes.portal.dir" value="${app.server.bundles.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />
+											<param name="app.server.deploy.dir" value="${app.server.bundles.dir}/tomcat/webapps" />
+											<param name="app.server.dir" value="${app.server.bundles.dir}/tomcat" />
+											<param name="app.server.parent.dir" value="${app.server.bundles.dir}" />
+										</antcall>
+									</then>
+									<else>
+										<antcall inheritAll="false" target="stop-app-server">
+											<param name="delete.liferay.home" value="false" />
+										</antcall>
+									</else>
+								</if>
 							</sequential>
 						</test-action>
 					</database-test-run-test>
@@ -3968,7 +4010,29 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 										<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-										<antcall inheritAll="false" target="start-app-server" />
+										<if>
+											<and>
+												<equals arg1="${app.server.type}" arg2="tomcat" />
+												<contains string="${env.JOB_NAME}" substring="test-portal-release" />
+											</and>
+											<then>
+												<var name="app.server.bundles.dir" value="${project.dir}/bun dles" />
+
+												<antcall inheritAll="false" target="start-app-server">
+													<param name="delete.liferay.home" value="false" />
+													<param name="app.server.bin.dir" value="${app.server.bundles.dir}/tomcat/bin" />
+													<param name="app.server.classes.portal.dir" value="${app.server.bundles.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />
+													<param name="app.server.deploy.dir" value="${app.server.bundles.dir}/tomcat/webapps" />
+													<param name="app.server.dir" value="${app.server.bundles.dir}/tomcat" />
+													<param name="app.server.parent.dir" value="${app.server.bundles.dir}" />
+												</antcall>
+											</then>
+											<else>
+												<antcall inheritAll="false" target="start-app-server">
+													<param name="delete.liferay.home" value="false" />
+												</antcall>
+											</else>
+										</if>
 									</sequential>
 								</try>
 								<finally>
@@ -3987,7 +4051,29 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								</finally>
 							</trycatch>
 
-							<antcall inheritall="false" target="stop-app-server" />
+							<if>
+								<and>
+									<equals arg1="${app.server.type}" arg2="tomcat" />
+									<contains string="${env.JOB_NAME}" substring="test-portal-release" />
+								</and>
+								<then>
+									<var name="app.server.bundles.dir" value="${project.dir}/bun dles" />
+
+									<antcall inheritAll="false" target="stop-app-server">
+										<param name="delete.liferay.home" value="false" />
+										<param name="app.server.bin.dir" value="${app.server.bundles.dir}/tomcat/bin" />
+										<param name="app.server.classes.portal.dir" value="${app.server.bundles.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />
+										<param name="app.server.deploy.dir" value="${app.server.bundles.dir}/tomcat/webapps" />
+										<param name="app.server.dir" value="${app.server.bundles.dir}/tomcat" />
+										<param name="app.server.parent.dir" value="${app.server.bundles.dir}" />
+									</antcall>
+								</then>
+								<else>
+									<antcall inheritAll="false" target="stop-app-server">
+										<param name="delete.liferay.home" value="false" />
+									</antcall>
+								</else>
+							</if>
 						</test-action>
 					</database-test-run-test>
 				</test-action>

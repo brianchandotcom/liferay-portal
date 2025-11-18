@@ -5,6 +5,8 @@
 
 package com.liferay.document.library.internal.service;
 
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
+import com.liferay.document.library.kernel.exception.InvalidFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -43,6 +45,8 @@ public class FileEntryTypeDLAppServiceWrapper extends DLAppServiceWrapper {
 			long destinationRepositoryId, long fileEntryTypeId, long[] groupIds,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		_validateFileEntryType(fileEntryTypeId, groupIds[0]);
 
 		_populateServiceContext(serviceContext, fileEntryId);
 
@@ -106,6 +110,40 @@ public class FileEntryTypeDLAppServiceWrapper extends DLAppServiceWrapper {
 		}
 	}
 
+	private void _validateFileEntryType(long fileEntryTypeId, long groupId)
+		throws PortalException {
+
+		if (fileEntryTypeId ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			return;
+		}
+
+		long[] groupIds =
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId);
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
+
+		DLFileEntryType destinationDLFileEntryType = null;
+
+		for (long connectedGroupId : groupIds) {
+			destinationDLFileEntryType =
+				_dlFileEntryTypeLocalService.fetchFileEntryType(
+					connectedGroupId, dlFileEntryType.getFileEntryTypeKey());
+
+			if (destinationDLFileEntryType != null) {
+				break;
+			}
+		}
+
+		if (destinationDLFileEntryType == null) {
+			throw new InvalidFileEntryTypeException(
+				"the-document-type-does-not-exist-in-the-destination-site");
+		}
+	}
+
 	@Reference
 	private DDMBeanTranslator _ddmBeanTranslator;
 
@@ -123,5 +161,8 @@ public class FileEntryTypeDLAppServiceWrapper extends DLAppServiceWrapper {
 
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

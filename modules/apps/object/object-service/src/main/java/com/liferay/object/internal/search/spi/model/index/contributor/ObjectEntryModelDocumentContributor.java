@@ -332,9 +332,18 @@ public class ObjectEntryModelDocumentContributor
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
+		List<ObjectField> objectFields;
+
+		if (objectDefinition.isModifiableAndSystem()) {
+			objectFields = ListUtil.filter(
+				_objectFieldLocalService.getObjectFields(
+					objectEntry.getObjectDefinitionId()),
+				objectField -> !objectField.isMetadata());
+		}
+		else {
+			objectFields = _objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId(), false);
+		}
 
 		ObjectContentHelper objectContentHelper = new ObjectContentHelper(
 			objectDefinition.isEnableLocalization(), objectEntry, objectFields,

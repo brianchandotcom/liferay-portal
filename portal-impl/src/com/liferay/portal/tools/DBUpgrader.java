@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -52,6 +51,7 @@ import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.verify.PreupgradeVerifyProcessSuite;
 import com.liferay.portal.verify.VerifyException;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyProcessSuite;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -65,8 +65,9 @@ import java.util.Collection;
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.logging.log4j.core.Appender;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -317,22 +318,41 @@ public class DBUpgrader {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Bundle bundle = BundleUtil.getBundle(
-			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
-
-		if ((bundle == null) || (bundle.getState() == Bundle.INSTALLED)) {
-			stopUpgradeLogAppender();
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"com.liferay.data.cleanup is not available. " +
-						"PostUpgradeDataCleanupVerifyProcess will not be " +
-							"executed.");
-			}
-		}
-
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortletsInitialized);
+
+		try {
+			ServiceTracker<VerifyProcess, VerifyProcess> serviceTracker =
+				new ServiceTracker<>(
+					SystemBundleUtil.getBundleContext(),
+					FrameworkUtil.createFilter(
+						StringBundler.concat(
+							"(&(objectClass=", VerifyProcess.class.getName(),
+							")(component.name=",
+							_POST_UPGRADE_DATA_CLEANUP_CLASS_NAME, "))")),
+					null);
+
+			serviceTracker.open();
+
+			VerifyProcess verifyProcess = serviceTracker.waitForService(5000L);
+
+			if (verifyProcess == null) {
+				stopUpgradeLogAppender();
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						_POST_UPGRADE_DATA_CLEANUP_CLASS_NAME +
+							" will not be executed");
+				}
+			}
+
+			serviceTracker.close();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			throw new RuntimeException(exception);
+		}
 	}
 
 	public static void upgradePortal() throws Exception {
@@ -573,6 +593,10 @@ public class DBUpgrader {
 
 		db.runSQL("update CompanyInfo set key_ = null");
 	}
+
+	private static final String _POST_UPGRADE_DATA_CLEANUP_CLASS_NAME =
+		"com.liferay.data.cleanup.internal.verify." +
+			"PostUpgradeDataCleanupVerifyProcess";
 
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);
 

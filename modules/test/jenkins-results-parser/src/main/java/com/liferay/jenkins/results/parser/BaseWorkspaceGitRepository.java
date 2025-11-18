@@ -1042,7 +1042,7 @@ public abstract class BaseWorkspaceGitRepository
 				if (executionResult.getExitValue() != 0) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
-							"Unable to reset git directory: " + directory,
+							"Unable to reset Git directory: " + directory,
 							executionResult.getStandardError()));
 				}
 

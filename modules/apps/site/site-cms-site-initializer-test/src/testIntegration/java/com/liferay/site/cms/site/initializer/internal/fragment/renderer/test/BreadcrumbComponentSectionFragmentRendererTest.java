@@ -93,17 +93,22 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 
 	@Test
 	public void testGetProps() throws Exception {
-		_testGetProps(ActionKeys.VIEW, Assert::assertNull);
+		_testGetProps(
+			ActionKeys.VIEW,
+			jsonArray -> _assertLabelsEquals(jsonArray, "export", "import"));
 		_testGetProps(
 			ActionKeys.DELETE,
-			jsonArray -> _assertLabelsEquals(jsonArray, "delete"));
+			jsonArray -> _assertLabelsEquals(
+				jsonArray, "export", "import", "delete"));
 		_testGetProps(
 			ActionKeys.PERMISSIONS,
 			jsonArray -> _assertLabelsEquals(
-				jsonArray, "permissions", "default-permissions"));
+				jsonArray, "export", "import", "permissions",
+				"default-permissions"));
 		_testGetProps(
 			ActionKeys.UPDATE,
-			jsonArray -> _assertLabelsEquals(jsonArray, "space-settings"));
+			jsonArray -> _assertLabelsEquals(
+				jsonArray, "space-settings", "export", "import"));
 	}
 
 	private void _assertLabelsEquals(
@@ -180,6 +185,7 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 				}
 
 			});
+		themeDisplay.setSiteGroupId(_depotEntry.getGroupId());
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

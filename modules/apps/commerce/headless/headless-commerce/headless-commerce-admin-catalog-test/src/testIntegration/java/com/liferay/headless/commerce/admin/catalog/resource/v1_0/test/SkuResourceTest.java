@@ -6,6 +6,8 @@
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -305,6 +307,14 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 			_cProduct.getExternalReferenceCode(), randomSku());
 	}
 
+	private CommercePriceEntry _getCommercePriceEntry(
+		CPInstance cpInstance, String priceListType, String uomKey) {
+
+		return _commercePriceEntryLocalService.
+			getInstanceBaseCommercePriceEntry(
+				cpInstance.getCPInstanceUuid(), priceListType, uomKey);
+	}
+
 	private Sku _randomSkuWithSkuOptions(
 			String optionKey, Long optionKeyId, Long optionValueKeyId,
 			String optionValue)
@@ -361,6 +371,14 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		Assert.assertEquals(patchSku.getPrice(), randomSku.getPrice());
 		Assert.assertEquals(
 			patchSku.getPromoPrice(), randomSku.getPromoPrice());
+
+		CommercePriceEntry commerceBasePriceListPriceEntry =
+			_getCommercePriceEntry(
+				_cpInstanceLocalService.fetchCPInstance(sku.getId()),
+				CommercePriceListConstants.TYPE_PRICE_LIST, null);
+
+		Assert.assertEquals(
+			BigDecimal.ZERO, commerceBasePriceListPriceEntry.getPrice());
 
 		assertValid(patchSku);
 	}

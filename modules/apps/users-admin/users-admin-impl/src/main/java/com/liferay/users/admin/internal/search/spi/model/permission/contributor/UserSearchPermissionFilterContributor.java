@@ -64,11 +64,11 @@ public class UserSearchPermissionFilterContributor
 		try {
 			TermsFilter termsFilter = new TermsFilter("organizationIds");
 
+			Set<Long> organizationIds = new HashSet<>();
+
 			UserBag userBag = permissionChecker.getUserBag();
 
 			long[] userOrgIds = userBag.getUserOrgIds();
-
-			Set<Long> organizationIds = new HashSet<>();
 
 			for (long userOrgId : userOrgIds) {
 				if (OrganizationPermissionUtil.contains(

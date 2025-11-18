@@ -10,6 +10,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {ApiHelpers, DataApiHelpers} from '../../../helpers/ApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 import {EFDSVisualizationMode, waitForFDS} from '../../../utils/waitFor';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -57,7 +58,7 @@ let secondSpace: SpaceTest = {
 let firstSpaceObjectEntry: FileObjectTest = {file: {id: 0}, id: 0, title: ''};
 let secondSpaceObjectEntry: FileObjectTest = {file: {id: 0}, id: 0, title: ''};
 
-const createObjectEntryData = ({title}: {title: string}) => {
+function createObjectEntryData({title}: {title: string}) {
 	const newTitle = `${title} ${getRandomString()}`;
 
 	return {
@@ -69,49 +70,71 @@ const createObjectEntryData = ({title}: {title: string}) => {
 		objectEntryFolderExternalReferenceCode: 'L_FILES',
 		title: newTitle,
 	};
-};
+}
+
+async function createSpace(
+	apiHelpers: ApiHelpers & DataApiHelpers,
+	name: string
+): Promise<SpaceTest> {
+	return await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+		name,
+		settings: {},
+		type: 'Space',
+	});
+}
+
+async function uploadSampleFile(
+	apiHelpers: ApiHelpers & DataApiHelpers,
+	title: string,
+	space: SpaceTest
+): Promise<FileObjectTest> {
+	const applicationName = 'cms/basic-documents';
+
+	const newEntry = (await apiHelpers.objectEntry.postObjectEntry(
+		createObjectEntryData({title}),
+		applicationName,
+		space.assetLibraryKey
+	)) as unknown as FileObjectTest;
+
+	apiHelpers.data.push({
+		id: newEntry.id,
+		type: 'document',
+	});
+
+	return newEntry;
+}
+
+async function deleteSampleFile(
+	apiHelpers: ApiHelpers & DataApiHelpers,
+	id?: string
+): Promise<void> {
+	const applicationName = 'cms/basic-documents';
+
+	if (id) {
+		await apiHelpers.objectEntry.deleteObjectEntry(
+			applicationName,
+			String(id)
+		);
+	}
+}
 
 test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 	await test.step('Create Spaces', async () => {
-		firstSpace = (await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-			name: firstSpaceName,
-			settings: {},
-			type: 'Space',
-		})) as SpaceTest;
-
-		secondSpace = (await apiHelpers.headlessAssetLibrary.createAssetLibrary(
-			{
-				name: secondSpaceName,
-				settings: {},
-				type: 'Space',
-			}
-		)) as SpaceTest;
+		[firstSpace, secondSpace] = await Promise.all([
+			createSpace(apiHelpers, firstSpaceName),
+			createSpace(apiHelpers, secondSpaceName),
+		]);
 	});
 
 	await test.step('Upload sample files', async () => {
-		const applicationName = 'cms/basic-documents';
-
-		firstSpaceObjectEntry = (await apiHelpers.objectEntry.postObjectEntry(
-			createObjectEntryData({title: 'first space file title'}),
-			applicationName,
-			firstSpace.assetLibraryKey
-		)) as unknown as FileObjectTest;
-
-		secondSpaceObjectEntry = (await apiHelpers.objectEntry.postObjectEntry(
-			createObjectEntryData({title: 'second space file title'}),
-			applicationName,
-			secondSpace.assetLibraryKey
-		)) as unknown as FileObjectTest;
-
-		apiHelpers.data.push({
-			id: firstSpaceObjectEntry.id,
-			type: 'document',
-		});
-
-		apiHelpers.data.push({
-			id: secondSpaceObjectEntry.id,
-			type: 'document',
-		});
+		[firstSpaceObjectEntry, secondSpaceObjectEntry] = await Promise.all([
+			uploadSampleFile(apiHelpers, 'first space file title', firstSpace),
+			uploadSampleFile(
+				apiHelpers,
+				'second space file title',
+				secondSpace
+			),
+		]);
 	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -130,21 +153,10 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	const applicationName = 'cms/basic-documents';
-
-	if (firstSpaceObjectEntry.id) {
-		await apiHelpers.objectEntry.deleteObjectEntry(
-			applicationName,
-			String(firstSpaceObjectEntry.id)
-		);
-	}
-
-	if (secondSpaceObjectEntry.id) {
-		await apiHelpers.objectEntry.deleteObjectEntry(
-			applicationName,
-			String(secondSpaceObjectEntry.id)
-		);
-	}
+	await Promise.all([
+		deleteSampleFile(apiHelpers, String(firstSpaceObjectEntry.id)),
+		deleteSampleFile(apiHelpers, String(secondSpaceObjectEntry.id)),
+	]);
 });
 
 test('Item Selector Modal with Spaces filter for when selecting CMS Files', async ({

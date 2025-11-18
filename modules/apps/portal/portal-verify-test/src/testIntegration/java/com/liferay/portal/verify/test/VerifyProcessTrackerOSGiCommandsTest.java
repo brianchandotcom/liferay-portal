@@ -23,6 +23,7 @@ import com.liferay.portal.verify.VerifyProcess;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -56,7 +57,11 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			StartupHelperUtil.isRunOnPortalUpgradeVerifiers();
 		_symbolicName = bundle.getSymbolicName();
 		_upgrading = StartupHelperUtil.isUpgrading();
+	}
 
+	@Before
+	public void setUp() {
+		StartupHelperUtil.setRunOnPortalUpgradeVerifiers(false);
 		StartupHelperUtil.setUpgrading(false);
 	}
 

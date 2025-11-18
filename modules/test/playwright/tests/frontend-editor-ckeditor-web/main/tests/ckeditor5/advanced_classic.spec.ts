@@ -157,9 +157,11 @@ test(
 
 		const itemSelectorFrame = classicPage.itemSelectorFrame;
 
-		itemSelectorFrame.getByRole('link', { name: 'URL' }).click();
+		itemSelectorFrame.getByRole('link', {name: 'URL'}).click();
 
-		const imageURLInput = itemSelectorFrame.getByLabel('URL', {exact: true});
+		const imageURLInput = itemSelectorFrame.getByLabel('URL', {
+			exact: true,
+		});
 
 		await expect(imageURLInput).toBeEnabled();
 

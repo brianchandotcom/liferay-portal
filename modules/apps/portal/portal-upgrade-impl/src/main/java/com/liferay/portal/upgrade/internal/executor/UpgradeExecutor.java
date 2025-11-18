@@ -195,9 +195,12 @@ public class UpgradeExecutor {
 		String bundleSymbolicName = bundle.getSymbolicName();
 
 		try {
-			_updateReleaseState(bundleSymbolicName, _STATE_IN_PROGRESS);
+			Release release = _updateReleaseState(
+				bundleSymbolicName, _STATE_IN_PROGRESS);
 
-			StartupHelperUtil.setRunOnPortalUpgradeVerifiers(true);
+			if (release != null) {
+				StartupHelperUtil.setRunOnPortalUpgradeVerifiers(true);
+			}
 
 			for (UpgradeInfo upgradeInfo : upgradeInfos) {
 				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
@@ -262,14 +265,16 @@ public class UpgradeExecutor {
 		return !_isInitialRelease(upgradeInfos);
 	}
 
-	private void _updateReleaseState(String bundleSymbolicName, int state) {
+	private Release _updateReleaseState(String bundleSymbolicName, int state) {
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
 		if (release != null) {
 			release.setState(state);
 
-			_releaseLocalService.updateRelease(release);
+			release = _releaseLocalService.updateRelease(release);
 		}
+
+		return release;
 	}
 
 	private static final int _STATE_IN_PROGRESS = -1;

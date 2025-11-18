@@ -87,6 +87,7 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 				<liferay-editor:editor
 					contents="<%= body %>"
 					editorName="ckeditor5_classic"
+					name="body"
 				/>
 			</c:when>
 			<c:otherwise>
@@ -95,11 +96,11 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 						contents="<%= body %>"
 						editorName="ckeditor"
 					/>
+
+					<aui:input name="body" type="hidden" value="<%= body %>" />
 				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>
-
-		<aui:input name="body" type="hidden" value="<%= body %>" />
 	</aui:fieldset>
 
 	<div class="definition-of-terms">
@@ -202,15 +203,15 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 
 <aui:script>
 	function <portlet:namespace />updateCalendarNotificationTemplate() {
-		var notificationTemplateContentBody = document.getElementById(
-			'<portlet:namespace />body'
-		);
+		if (!Liferay.FeatureFlags['LPD-11235']) {
+			var notificationTemplateContentBody = document.getElementById(
+				'<portlet:namespace />body'
+			);
 
-		if (notificationTemplateContentBody) {
-			notificationTemplateContentBody.value =
-				Liferay.FeatureFlags['LPD-11235'] ?
-					window.<portlet:namespace />editor.getData()
-					: window.<portlet:namespace />editor.getHTML();
+			if (notificationTemplateContentBody) {
+				notificationTemplateContentBody.value =
+					window.<portlet:namespace />editor.getHTML();
+			}
 		}
 
 		submitForm(document.<portlet:namespace />fm);

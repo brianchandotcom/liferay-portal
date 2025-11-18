@@ -53,6 +53,9 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
+import org.osgi.util.promise.Promise;
 
 /**
  * @author Luis Ortiz
@@ -288,6 +291,58 @@ public class DBUpgraderTest {
 	}
 
 	@Test
+	public void testUpgradeModuleGeneratesUpgradeReportWhenPostUpgradeDataCleanupVerifyProcessServiceIsNotAvailable()
+		throws Exception {
+
+		ComponentDescriptionDTO componentDescriptionDTO =
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				_getBundle("com.liferay.data.cleanup"),
+				"com.liferay.data.cleanup.internal.verify." +
+					"PostUpgradeDataCleanupVerifyProcess");
+
+		Promise<Void> voidPromise = _serviceComponentRuntime.disableComponent(
+			componentDescriptionDTO);
+
+		voidPromise.getValue();
+
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.upgrade.internal.report.UpgradeReport",
+				LoggerTestUtil.INFO);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				DBUpgrader.class.getName(), LoggerTestUtil.WARN)) {
+
+			StartupHelperUtil.setUpgrading(true);
+
+			DBUpgrader.startUpgradeLogAppender();
+
+			DBUpgrader.upgradeModules();
+
+			List<String> messages = logCapture1.getMessages();
+
+			Assert.assertFalse(messages.isEmpty());
+
+			messages = logCapture2.getMessages();
+
+			Assert.assertTrue(
+				messages.toString(),
+				messages.contains(
+					"com.liferay.data.cleanup.internal.verify." +
+						"PostUpgradeDataCleanupVerifyProcess will not be " +
+							"executed"));
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(false);
+
+			DBUpgrader.stopUpgradeLogAppender();
+
+			voidPromise = _serviceComponentRuntime.enableComponent(
+				componentDescriptionDTO);
+
+			voidPromise.getValue();
+		}
+	}
+
+	@Test
 	public void testUpgradeModuleIndexes() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
@@ -370,6 +425,20 @@ public class DBUpgraderTest {
 		}
 	}
 
+	private Bundle _getBundle(String symbolicName) throws Exception {
+		Bundle currentBundle = FrameworkUtil.getBundle(DBUpgraderTest.class);
+
+		BundleContext bundleContext = currentBundle.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(bundle.getSymbolicName(), symbolicName)) {
+				return bundle;
+			}
+		}
+
+		return null;
+	}
+
 	private void _installBundle(Bundle bundle) throws Exception {
 		Bundle currentBundle = FrameworkUtil.getBundle(DBUpgraderTest.class);
 
@@ -386,28 +455,23 @@ public class DBUpgraderTest {
 	}
 
 	private Bundle _uninstallBundle() throws Exception {
-		Bundle currentBundle = FrameworkUtil.getBundle(DBUpgraderTest.class);
+		Bundle bundle = _getBundle("com.liferay.data.cleanup");
 
-		BundleContext bundleContext = currentBundle.getBundleContext();
+		if ((bundle != null) && (bundle.getState() == Bundle.ACTIVE)) {
+			bundle.uninstall();
 
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(), "com.liferay.data.cleanup") &&
-				(bundle.getState() == Bundle.ACTIVE)) {
+			List<Bundle> bundlesToRefresh = new ArrayList<>();
 
-				bundle.uninstall();
+			bundlesToRefresh.add(bundle);
 
-				List<Bundle> bundlesToRefresh = new ArrayList<>();
+			Bundle currentBundle = FrameworkUtil.getBundle(
+				DBUpgraderTest.class);
 
-				bundlesToRefresh.add(bundle);
-
-				BundleUtil.refreshBundles(bundleContext, bundlesToRefresh);
-
-				return bundle;
-			}
+			BundleUtil.refreshBundles(
+				currentBundle.getBundleContext(), bundlesToRefresh);
 		}
 
-		return null;
+		return bundle;
 	}
 
 	private void _updatePortalRelease(int buildNumber, int state)
@@ -455,6 +519,10 @@ public class DBUpgraderTest {
 	private static int _currentState;
 	private static String _moduleServiceLifecyclePortalInitialized;
 	private static String _moduleServiceLifecyclePortletsInitialized;
+
+	@Inject
+	private static ServiceComponentRuntime _serviceComponentRuntime;
+
 	private static boolean _upgrading;
 
 	@Inject

@@ -5,7 +5,6 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.Task;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -39,13 +38,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface TaskResource {
+public interface ChatResource {
 
-	public void getTaskSubscribe(jakarta.ws.rs.sse.SseEventSink sseEventSink)
-		throws Exception;
-
-	public Task postByExternalReferenceCodeTask(
-			String externalReferenceCode, Task task)
+	public void getChatSubscribe(jakarta.ws.rs.sse.SseEventSink sseEventSink)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -110,7 +105,7 @@ public interface TaskResource {
 	@ProviderType
 	public interface Builder {
 
-		public TaskResource build();
+		public ChatResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

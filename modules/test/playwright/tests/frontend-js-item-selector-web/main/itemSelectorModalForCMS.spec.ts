@@ -83,6 +83,20 @@ async function createSpace(
 	});
 }
 
+async function deleteSampleFile(
+	apiHelpers: DataApiHelpers,
+	id?: string
+): Promise<void> {
+	const applicationName = 'cms/basic-documents';
+
+	if (id) {
+		await apiHelpers.objectEntry.deleteObjectEntry(
+			applicationName,
+			String(id)
+		);
+	}
+}
+
 async function uploadSampleFile(
 	apiHelpers: DataApiHelpers,
 	title: string,
@@ -102,20 +116,6 @@ async function uploadSampleFile(
 	});
 
 	return newEntry;
-}
-
-async function deleteSampleFile(
-	apiHelpers: DataApiHelpers,
-	id?: string
-): Promise<void> {
-	const applicationName = 'cms/basic-documents';
-
-	if (id) {
-		await apiHelpers.objectEntry.deleteObjectEntry(
-			applicationName,
-			String(id)
-		);
-	}
 }
 
 test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {

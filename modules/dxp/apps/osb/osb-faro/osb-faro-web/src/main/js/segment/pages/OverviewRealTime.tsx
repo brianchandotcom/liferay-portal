@@ -12,7 +12,11 @@ interface IOverviewProps {
 	segment: Segment;
 }
 
-const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
+const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
+	channelId,
+	groupId,
+	segment
+}) => {
 	const {criteriaString, id, includeAnonymousUsers} = segment;
 	const {timeZoneId} = useTimeZone();
 
@@ -35,4 +39,4 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 	);
 };
 
-export default Overview;
+export default RealTimeSegmentOverview;

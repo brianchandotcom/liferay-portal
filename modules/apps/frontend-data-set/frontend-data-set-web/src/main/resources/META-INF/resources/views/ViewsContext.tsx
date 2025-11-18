@@ -13,11 +13,11 @@ export interface IViewsContext {
 	customViews: any;
 	customViewsEnabled: boolean;
 	filters: IFilter[];
-	filtersGroups: any[];
+	filtersGroups: Array<any>;
 	modifiedFields: any;
 	paginationDelta: any;
-	sorts: any[];
-	views: any[];
+	sorts: Array<any>;
+	views: Array<any>;
 	visibleFieldNames: any;
 }
 

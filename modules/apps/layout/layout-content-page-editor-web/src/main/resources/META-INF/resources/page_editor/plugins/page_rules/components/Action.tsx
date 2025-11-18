@@ -132,6 +132,10 @@ function FragmentSelector({
 	layoutDataItems: {label: string; value: string}[];
 	onItemIdChanged: (itemId: string) => void;
 }) {
+	const selectedKey = layoutDataItems.some((item) => item.value === itemId)
+		? itemId
+		: undefined;
+
 	return (
 		<RuleSelect
 			aria-label={sub(
@@ -140,7 +144,7 @@ function FragmentSelector({
 			)}
 			items={layoutDataItems}
 			onSelectionChange={onItemIdChanged}
-			selectedKey={itemId}
+			selectedKey={selectedKey}
 		/>
 	);
 }

@@ -187,6 +187,12 @@ function FormFragmentTypeSelectors({
 	onConditionChange: (condition: Condition) => void;
 	sendMessage: (message: string) => void;
 }) {
+	const selectedKey = inputFragmentItems.some(
+		(item) => item.value === condition.field
+	)
+		? condition.field
+		: undefined;
+
 	return (
 		<>
 			<RuleSelect
@@ -202,7 +208,7 @@ function FormFragmentTypeSelectors({
 						options: undefined,
 					});
 				}}
-				selectedKey={condition.field}
+				selectedKey={selectedKey}
 			/>
 
 			{condition.field ? (

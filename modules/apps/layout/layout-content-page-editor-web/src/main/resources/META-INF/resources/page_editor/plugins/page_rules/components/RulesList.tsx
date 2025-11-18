@@ -188,10 +188,15 @@ function RuleItem({
 	}, [dispatch, name, rule]);
 
 	const items = useSelector((state) =>
-		Object.values(state.layoutData.items).map((item) => ({
-			label: selectLayoutDataItemLabel(state, item),
-			value: item.itemId,
-		}))
+		Object.values(state.layoutData.items)
+			.filter(
+				(item) =>
+					!isLayoutDataItemDeleted(state.layoutData, item.itemId)
+			)
+			.map((item) => ({
+				label: selectLayoutDataItemLabel(state, item),
+				value: item.itemId,
+			}))
 	);
 
 	const conditions = useConditionValues({...rule, items});

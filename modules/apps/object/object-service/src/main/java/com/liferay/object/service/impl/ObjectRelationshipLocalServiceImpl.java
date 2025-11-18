@@ -14,6 +14,7 @@ import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.DuplicateObjectRelationshipExternalReferenceCodeException;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
@@ -306,20 +307,9 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationshipLocalService.updateObjectRelationship(
 			reverseObjectRelationship);
 
-		Map<String, String> pkObjectFieldDBColumnNames =
-			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
-				objectDefinition1, objectDefinition2, false);
-
-		String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
-			"pkObjectFieldDBColumnName1");
-		String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
-			"pkObjectFieldDBColumnName2");
-
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =
-				new DynamicObjectRelationshipMappingTable(
-					pkObjectFieldDBColumnName1, pkObjectFieldDBColumnName2,
-					objectRelationship.getDBTableName());
+				getDynamicObjectRelationshipMappingTable(objectRelationship);
 
 		runSQL(dynamicObjectRelationshipMappingTable.getCreateTableSQL());
 
@@ -328,10 +318,12 @@ public class ObjectRelationshipLocalServiceImpl
 
 		ObjectDBManagerUtil.createIndexMetadata(
 			connection, objectRelationship.getDBTableName(), false,
-			pkObjectFieldDBColumnName1);
+			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn1(
+			).getName());
 		ObjectDBManagerUtil.createIndexMetadata(
 			connection, objectRelationship.getDBTableName(), false,
-			pkObjectFieldDBColumnName2);
+			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn2(
+			).getName());
 
 		return objectRelationship;
 	}
@@ -725,6 +717,32 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		return objectRelationships;
+	}
+
+	public DynamicObjectRelationshipMappingTable
+			getDynamicObjectRelationshipMappingTable(
+				ObjectRelationship objectRelationship)
+		throws NoSuchObjectDefinitionException {
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
+		Map<String, String> pkObjectFieldDBColumnNames =
+			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
+				objectDefinition1, objectDefinition2, false);
+
+		String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
+			"pkObjectFieldDBColumnName1");
+		String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
+			"pkObjectFieldDBColumnName2");
+
+		return new DynamicObjectRelationshipMappingTable(
+			pkObjectFieldDBColumnName1, pkObjectFieldDBColumnName2,
+			objectRelationship.getDBTableName());
 	}
 
 	@Override

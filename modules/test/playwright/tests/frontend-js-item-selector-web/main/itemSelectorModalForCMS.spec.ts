@@ -30,7 +30,8 @@ const test = mergeTests(
 	loginTest()
 );
 
-const spaceName = `Space ${getRandomString()}`;
+const firstSpaceName = `Space ${getRandomString()}`;
+const secondSpaceName = `Space ${getRandomString()}`;
 
 interface SpaceTest {
 	assetLibraryKey: string;
@@ -43,13 +44,18 @@ interface FileObjectTest {
 	title: string;
 }
 
-let newSpace: SpaceTest = {
+let firstSpace: SpaceTest = {
 	assetLibraryKey: '',
 	name: '',
 };
 
-let newSpaceObjectEntry: FileObjectTest = {file: {id: 0}, id: 0, title: ''};
-let defaultSpaceObjectEntry: FileObjectTest = {file: {id: 0}, id: 0, title: ''};
+let secondSpace: SpaceTest = {
+	assetLibraryKey: '',
+	name: '',
+};
+
+let firstSpaceObjectEntry: FileObjectTest = {file: {id: 0}, id: 0, title: ''};
+let secondSpaceObjectEntry: FileObjectTest = {file: {id: 0}, id: 0, title: ''};
 
 const createObjectEntryData = ({title}: {title: string}) => {
 	const newTitle = `${title} ${getRandomString()}`;
@@ -66,36 +72,44 @@ const createObjectEntryData = ({title}: {title: string}) => {
 };
 
 test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
-	await test.step('Create Space', async () => {
-		newSpace = (await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-			name: spaceName,
+	await test.step('Create Spaces', async () => {
+		firstSpace = (await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: firstSpaceName,
 			settings: {},
 			type: 'Space',
 		})) as SpaceTest;
+
+		secondSpace = (await apiHelpers.headlessAssetLibrary.createAssetLibrary(
+			{
+				name: secondSpaceName,
+				settings: {},
+				type: 'Space',
+			}
+		)) as SpaceTest;
 	});
 
 	await test.step('Upload sample files', async () => {
 		const applicationName = 'cms/basic-documents';
 
-		newSpaceObjectEntry = (await apiHelpers.objectEntry.postObjectEntry(
-			createObjectEntryData({title: 'new space file title'}),
+		firstSpaceObjectEntry = (await apiHelpers.objectEntry.postObjectEntry(
+			createObjectEntryData({title: 'first space file title'}),
 			applicationName,
-			newSpace.assetLibraryKey
+			firstSpace.assetLibraryKey
 		)) as unknown as FileObjectTest;
 
-		defaultSpaceObjectEntry = (await apiHelpers.objectEntry.postObjectEntry(
-			createObjectEntryData({title: 'default space file title'}),
+		secondSpaceObjectEntry = (await apiHelpers.objectEntry.postObjectEntry(
+			createObjectEntryData({title: 'second space file title'}),
 			applicationName,
-			'Default'
+			secondSpace.assetLibraryKey
 		)) as unknown as FileObjectTest;
 
 		apiHelpers.data.push({
-			id: newSpaceObjectEntry.id,
+			id: firstSpaceObjectEntry.id,
 			type: 'document',
 		});
 
 		apiHelpers.data.push({
-			id: defaultSpaceObjectEntry.id,
+			id: secondSpaceObjectEntry.id,
 			type: 'document',
 		});
 	});
@@ -118,17 +132,17 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 test.afterEach(async ({apiHelpers}) => {
 	const applicationName = 'cms/basic-documents';
 
-	if (newSpaceObjectEntry.id) {
+	if (firstSpaceObjectEntry.id) {
 		await apiHelpers.objectEntry.deleteObjectEntry(
 			applicationName,
-			String(newSpaceObjectEntry.id)
+			String(firstSpaceObjectEntry.id)
 		);
 	}
 
-	if (defaultSpaceObjectEntry.id) {
+	if (secondSpaceObjectEntry.id) {
 		await apiHelpers.objectEntry.deleteObjectEntry(
 			applicationName,
-			String(defaultSpaceObjectEntry.id)
+			String(secondSpaceObjectEntry.id)
 		);
 	}
 });
@@ -151,33 +165,33 @@ test('Item Selector Modal with Spaces filter for when selecting CMS Files', asyn
 		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
 
 		await expect(
-			page.getByText(newSpaceObjectEntry.title, {exact: true})
+			page.getByText(firstSpaceObjectEntry.title, {exact: true})
 		).toBeVisible();
 
 		await expect(
-			page.getByText(defaultSpaceObjectEntry.title, {exact: true})
+			page.getByText(secondSpaceObjectEntry.title, {exact: true})
 		).toBeVisible();
 
 		await expect(itemSelectorSamplePage.filtersButton).toBeVisible();
 	});
 
-	await test.step(`Filter CMS Files by ${newSpace.name}`, async () => {
+	await test.step(`Filter CMS Files by ${firstSpace.name}`, async () => {
 		await itemSelectorSamplePage.filtersButton.click();
 
 		await page.getByRole('menuitem', {name: 'Space'}).click();
 
-		await page.getByLabel(newSpace.name).click();
+		await page.getByLabel(firstSpace.name).click();
 
 		await page.getByRole('button', {name: 'Add Filter'}).click();
 
 		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
 
 		await expect(
-			page.getByText(newSpaceObjectEntry.title, {exact: true})
+			page.getByText(firstSpaceObjectEntry.title, {exact: true})
 		).toBeVisible();
 
 		await expect(
-			page.getByText(defaultSpaceObjectEntry.title, {exact: true})
+			page.getByText(secondSpaceObjectEntry.title, {exact: true})
 		).not.toBeVisible();
 	});
 });

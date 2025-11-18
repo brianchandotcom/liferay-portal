@@ -5,11 +5,21 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {
-	OptionalProductAnalyticsCookieTypes,
-	ProductAnalyticsCookie,
-	RequiredProductAnalyticsCookieTypes,
-} from '../productAnalyticsConsentPanel.spec';
+export enum OptionalProductAnalyticsCookieTypes {
+	Functional = 'PRODUCT_ANALYTICS_CONSENT_TYPE_FUNCTIONAL',
+	Performance = 'PRODUCT_ANALYTICS_CONSENT_TYPE_PERFORMANCE',
+	Personalization = 'PRODUCT_ANALYTICS_CONSENT_TYPE_PERSONALIZATION',
+	ProductAnalytics = 'PRODUCT_ANALYTICS_CONSENT_TYPE_PRODUCT_ANALYTICS',
+}
+
+export type ProductAnalyticsCookie = {
+	name: string;
+	value: boolean;
+};
+
+export enum RequiredProductAnalyticsCookieTypes {
+	Necessary = 'PRODUCT_ANALYTICS_CONSENT_TYPE_NECESSARY',
+}
 
 async function checkCookies(
 	expectedCookies: ProductAnalyticsCookie[],

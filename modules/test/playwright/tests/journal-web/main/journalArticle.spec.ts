@@ -2287,3 +2287,47 @@ baseTest(
 		);
 	}
 );
+
+baseTest(
+	'Web content with "pending" status has the submission button disabled',
+	{tag: '@LPD-70782'},
+	async ({journalEditArticlePage, journalPage, page, site, workflowPage}) => {
+		await baseTest.step('Update workflow to require approval', async () => {
+			await workflowPage.goto(site.friendlyUrlPath);
+
+			await workflowPage.changeWorkflow(
+				'Web Content Article',
+				'Single Approver'
+			);
+		});
+
+		const articleTitle = getRandomString();
+
+		await baseTest.step('Create web content article', async () => {
+			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+			await journalEditArticlePage.fillTitle(articleTitle);
+
+			await journalEditArticlePage.submitArticleForWorkflow(articleTitle);
+
+			await expect(page.getByTitle(articleTitle)).toBeVisible();
+		});
+
+		await baseTest.step(
+			'Assert that the submission buttons are disabled',
+			async () => {
+				await journalPage.goToJournalArticleAction(
+					'Edit',
+					articleTitle
+				);
+
+				await expect(
+					journalEditArticlePage.publishDropdown
+				).toBeDisabled();
+				await expect(
+					journalEditArticlePage.publishButton
+				).toBeDisabled();
+			}
+		);
+	}
+);

@@ -87,7 +87,7 @@ async function createSpace(
 
 async function deleteSampleFile(
 	apiHelpers: DataApiHelpers,
-	id?: string
+	id?: number
 ): Promise<void> {
 	if (id) {
 		await apiHelpers.objectEntry.deleteObjectEntry(
@@ -152,8 +152,8 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 
 test.afterEach(async ({apiHelpers}) => {
 	await Promise.all([
-		deleteSampleFile(apiHelpers, String(firstSpaceObjectEntry.id)),
-		deleteSampleFile(apiHelpers, String(secondSpaceObjectEntry.id)),
+		deleteSampleFile(apiHelpers, firstSpaceObjectEntry.id),
+		deleteSampleFile(apiHelpers, secondSpaceObjectEntry.id),
 	]);
 });
 

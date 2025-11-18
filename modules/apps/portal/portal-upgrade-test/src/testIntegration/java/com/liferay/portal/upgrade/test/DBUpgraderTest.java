@@ -37,7 +37,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -447,11 +447,8 @@ public class DBUpgraderTest {
 		BundleUtil.installBundle(
 			bundleContext, _lpkgDeployer, bundle.getLocation(), 1);
 
-		List<Bundle> bundlesToRefresh = new ArrayList<>();
-
-		bundlesToRefresh.add(bundle);
-
-		BundleUtil.refreshBundles(bundleContext, bundlesToRefresh);
+		BundleUtil.refreshBundles(
+			bundleContext, Collections.singletonList(bundle));
 	}
 
 	private Bundle _uninstallBundle() throws Exception {
@@ -460,15 +457,12 @@ public class DBUpgraderTest {
 		if ((bundle != null) && (bundle.getState() == Bundle.ACTIVE)) {
 			bundle.uninstall();
 
-			List<Bundle> bundlesToRefresh = new ArrayList<>();
-
-			bundlesToRefresh.add(bundle);
-
 			Bundle currentBundle = FrameworkUtil.getBundle(
 				DBUpgraderTest.class);
 
 			BundleUtil.refreshBundles(
-				currentBundle.getBundleContext(), bundlesToRefresh);
+				currentBundle.getBundleContext(),
+				Collections.singletonList(bundle));
 		}
 
 		return bundle;

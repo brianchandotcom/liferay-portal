@@ -10,7 +10,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {ApiHelpers, DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 import {EFDSVisualizationMode, waitForFDS} from '../../../utils/waitFor';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -73,7 +73,7 @@ function createObjectEntryData({title}: {title: string}) {
 }
 
 async function createSpace(
-	apiHelpers: ApiHelpers & DataApiHelpers,
+	apiHelpers: DataApiHelpers,
 	name: string
 ): Promise<SpaceTest> {
 	return await apiHelpers.headlessAssetLibrary.createAssetLibrary({
@@ -84,7 +84,7 @@ async function createSpace(
 }
 
 async function uploadSampleFile(
-	apiHelpers: ApiHelpers & DataApiHelpers,
+	apiHelpers: DataApiHelpers,
 	title: string,
 	space: SpaceTest
 ): Promise<FileObjectTest> {
@@ -105,7 +105,7 @@ async function uploadSampleFile(
 }
 
 async function deleteSampleFile(
-	apiHelpers: ApiHelpers & DataApiHelpers,
+	apiHelpers: DataApiHelpers,
 	id?: string
 ): Promise<void> {
 	const applicationName = 'cms/basic-documents';

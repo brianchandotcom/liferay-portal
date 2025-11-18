@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
@@ -288,21 +289,24 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 	public OrderItem putOrderItem(Long id, OrderItem orderItem)
 		throws Exception {
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			orderItem.getOrderId());
-
 		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.updateCommerceOrderItem(
-				null, id, GetterUtil.getString(orderItem.getOptions(), "[]"),
-				BigDecimal.valueOf(
-					GetterUtil.getInteger(orderItem.getQuantity())),
-				_commerceContextFactory.create(
-					commerceOrder.getCommerceAccountId(),
-					commerceOrder.getGroupId(), null,
-					commerceOrder.getCommerceOrderId(),
-					contextCompany.getCompanyId()),
-				_serviceContextHelper.getServiceContext(
-					commerceOrder.getScopeGroupId()));
+			_commerceOrderItemService.getCommerceOrderItem(id);
+
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
+			GetterUtil.getString(
+				orderItem.getExternalReferenceCode(),
+				commerceOrderItem.getExternalReferenceCode()),
+			id, GetterUtil.getString(orderItem.getOptions(), "[]"),
+			BigDecimal.valueOf(GetterUtil.getInteger(orderItem.getQuantity())),
+			_commerceContextFactory.create(
+				commerceOrder.getCommerceAccountId(),
+				commerceOrder.getGroupId(), null,
+				commerceOrder.getCommerceOrderId(),
+				contextCompany.getCompanyId()),
+			_serviceContextHelper.getServiceContext(
+				commerceOrder.getScopeGroupId()));
 
 		// Pricing
 
@@ -381,123 +385,22 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			String externalReferenceCode, OrderItem orderItem)
 		throws Exception {
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			GetterUtil.getLong(orderItem.getOrderId()));
-
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.
 				fetchCommerceOrderItemByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
-		if (commerceOrderItem == null) {
-			commerceOrderItem = OrderItemUtil.addCommerceOrderItem(
-				_cpInstanceService, _commerceAddressService,
-				_commerceOrderItemService,
-				_commerceOrderModelResourcePermission, orderItem, commerceOrder,
-				_commerceContextFactory.create(
-					commerceOrder.getCommerceAccountId(),
-					commerceOrder.getGroupId(), null,
-					commerceOrder.getCommerceOrderId(),
-					contextCompany.getCompanyId()),
-				_serviceContextHelper.getServiceContext(
-					commerceOrder.getGroupId()));
-
-			commerceOrderItem =
-				_commerceOrderItemService.updateExternalReferenceCode(
-					commerceOrderItem.getCommerceOrderItemId(),
-					externalReferenceCode);
-		}
-		else {
-			commerceOrderItem =
-				_commerceOrderItemService.updateCommerceOrderItem(
-					null, commerceOrderItem.getCommerceOrderItemId(),
-					GetterUtil.getString(orderItem.getOptions(), "[]"),
-					BigDecimal.valueOf(
-						GetterUtil.getInteger(orderItem.getQuantity())),
-					_commerceContextFactory.create(
-						commerceOrder.getCommerceAccountId(),
-						commerceOrder.getGroupId(), null,
-						commerceOrder.getCommerceOrderId(),
-						contextCompany.getCompanyId()),
-					_serviceContextHelper.getServiceContext(
-						commerceOrder.getGroupId()));
-
-			// Pricing
-
-			PortletResourcePermission portletResourcePermission =
-				_commerceOrderModelResourcePermission.
-					getPortletResourcePermission();
-
-			if (portletResourcePermission.contains(
-					PermissionThreadLocal.getPermissionChecker(),
-					commerceOrder.getGroupId(),
-					CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES)) {
-
-				commerceOrderItem =
-					_commerceOrderItemService.updateCommerceOrderItemPrices(
-						commerceOrderItem.getCommerceOrderItemId(),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountAmount(), BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountWithTaxAmount(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountPercentageLevel1(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.
-								getDiscountPercentageLevel1WithTaxAmount(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountPercentageLevel2(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.
-								getDiscountPercentageLevel2WithTaxAmount(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountPercentageLevel3(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.
-								getDiscountPercentageLevel3WithTaxAmount(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountPercentageLevel4(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.
-								getDiscountPercentageLevel4WithTaxAmount(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getFinalPrice(), BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getFinalPriceWithTaxAmount(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getPromoPrice(), BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getPromoPriceWithTaxAmount(),
-							BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getUnitPrice(), BigDecimal.ZERO),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getUnitPriceWithTaxAmount(),
-							BigDecimal.ZERO));
-			}
+		if (commerceOrderItem != null) {
+			return putOrderItem(
+				commerceOrderItem.getCommerceOrderItemId(), orderItem);
 		}
 
-		// Expando
+		orderItem.setExternalReferenceCode(() -> externalReferenceCode);
 
-		Map<String, ?> customFields = _getExpandoBridgeAttributes(orderItem);
-
-		if ((customFields != null) && !customFields.isEmpty()) {
-			ExpandoUtil.updateExpando(
-				contextCompany.getCompanyId(), CommerceOrderItem.class,
-				commerceOrderItem.getPrimaryKey(), customFields);
-		}
-
-		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
+		return _addOrderItem(
+			_commerceOrderService.getCommerceOrder(
+				GetterUtil.getLong(orderItem.getOrderId())),
+			orderItem);
 	}
 
 	private OrderItem _addOrderItem(
@@ -516,6 +419,13 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 					contextCompany.getCompanyId()),
 				_serviceContextHelper.getServiceContext(
 					commerceOrder.getGroupId()));
+
+		if (Validator.isNotNull(orderItem.getExternalReferenceCode())) {
+			commerceOrderItem =
+				_commerceOrderItemService.updateExternalReferenceCode(
+					commerceOrderItem.getCommerceOrderItemId(),
+					orderItem.getExternalReferenceCode());
+		}
 
 		// Pricing
 

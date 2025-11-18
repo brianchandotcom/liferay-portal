@@ -31,6 +31,8 @@ const test = mergeTests(
 	loginTest()
 );
 
+const APPLICATION_NAME = 'cms/basic-documents';
+
 const firstSpaceName = `Space ${getRandomString()}`;
 const secondSpaceName = `Space ${getRandomString()}`;
 
@@ -87,11 +89,9 @@ async function deleteSampleFile(
 	apiHelpers: DataApiHelpers,
 	id?: string
 ): Promise<void> {
-	const applicationName = 'cms/basic-documents';
-
 	if (id) {
 		await apiHelpers.objectEntry.deleteObjectEntry(
-			applicationName,
+			APPLICATION_NAME,
 			String(id)
 		);
 	}
@@ -102,11 +102,9 @@ async function uploadSampleFile(
 	title: string,
 	space: SpaceTest
 ): Promise<FileObjectTest> {
-	const applicationName = 'cms/basic-documents';
-
 	const newEntry = (await apiHelpers.objectEntry.postObjectEntry(
 		createObjectEntryData({title}),
-		applicationName,
+		APPLICATION_NAME,
 		space.assetLibraryKey
 	)) as unknown as FileObjectTest;
 

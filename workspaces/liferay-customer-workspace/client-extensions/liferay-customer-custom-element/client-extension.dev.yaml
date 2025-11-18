@@ -1,4 +1,4 @@
-liferay-customer-custom-element:
+liferay-customer-custom-element-testing:
     urls:
         -   http://localhost:3000/@vite/client
         -   http://localhost:3000/@vite/refresh.ts

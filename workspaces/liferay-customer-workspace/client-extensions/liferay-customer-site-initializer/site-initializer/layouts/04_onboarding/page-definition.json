@@ -18,7 +18,7 @@
 									"portletSetupPortletDecoratorId": "barebone",
 									"properties": "route=onboarding"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:LXC:liferay-customer-custom-element$]"
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:LXC:liferay-customer-custom-element-testing$]"
 							}
 						},
 						"type": "Widget"

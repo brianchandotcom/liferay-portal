@@ -23,8 +23,6 @@ import swrCacheProvider from './utils/swrCacheProvider';
 
 import './main.css';
 
-const ELEMENT_ID = 'liferay-customer-custom-element';
-
 const AppRoutes = {
 	attachments: Attachments,
 	onboarding: Onboarding,
@@ -169,6 +167,18 @@ class CustomerPortalWebComponent extends HTMLElement {
 	}
 }
 
-if (!customElements.get(ELEMENT_ID)) {
-	customElements.define(ELEMENT_ID, CustomerPortalWebComponent);
+if (!customElements.get('liferay-customer-custom-element')) {
+	customElements.define(
+		'liferay-customer-custom-element',
+		CustomerPortalWebComponent
+	);
+}
+
+class CustomerPortalWebComponentTesting extends CustomerPortalWebComponent {}
+
+if (!customElements.get('liferay-customer-custom-element-testing')) {
+	customElements.define(
+		'liferay-customer-custom-element-testing',
+		CustomerPortalWebComponentTesting
+	);
 }

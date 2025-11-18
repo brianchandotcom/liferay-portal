@@ -1593,18 +1593,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public void unlockKBArticle(
 		long userId, long resourcePrimKey, boolean force) {
 
-		long companyId = 0;
+		if (!FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-11003")) {
 
-		try {
-			companyId = _companyLocalService.getCompanyIdByUserId(userId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-11003")) {
 			return;
 		}
 

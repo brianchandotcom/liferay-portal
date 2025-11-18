@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.
 import com.liferay.headless.admin.site.dto.v1_0.DropZonePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReference;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReferenceUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -67,8 +68,8 @@ public class DropZoneLayoutStructureItemImporter
 		dropZoneLayoutStructureItem.setAllowNewFragmentEntries(
 			dropZonePageElementDefinition.getAddNewFragmentEntries());
 
-		List<FragmentEntryReferenceUtil.FragmentEntryReference>
-			fragmentEntryReferences = _getFragmentEntryReference(
+		List<FragmentEntryReference> fragmentEntryReferences =
+			_getFragmentEntryReference(
 				dropZonePageElementDefinition,
 				layoutStructureItemImporterContext);
 
@@ -86,19 +87,18 @@ public class DropZoneLayoutStructureItemImporter
 		return dropZoneLayoutStructureItem;
 	}
 
-	private List<FragmentEntryReferenceUtil.FragmentEntryReference>
-			_getFragmentEntryReference(
-				DropZonePageElementDefinition dropZonePageElementDefinition,
-				LayoutStructureItemImporterContext
-					layoutStructureItemImporterContext)
+	private List<FragmentEntryReference> _getFragmentEntryReference(
+			DropZonePageElementDefinition dropZonePageElementDefinition,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
 		throws Exception {
 
 		if (dropZonePageElementDefinition.getAllowedFragments() == null) {
 			return null;
 		}
 
-		List<FragmentEntryReferenceUtil.FragmentEntryReference>
-			fragmentEntryReferences = new ArrayList<>();
+		List<FragmentEntryReference> fragmentEntryReferences =
+			new ArrayList<>();
 
 		for (FragmentReference fragmentReference :
 				dropZonePageElementDefinition.getAllowedFragments()) {
@@ -114,13 +114,12 @@ public class DropZoneLayoutStructureItemImporter
 	}
 
 	private JSONArray _toFragmentEntriesJSONArray(
-		List<FragmentEntryReferenceUtil.FragmentEntryReference>
-			fragmentEntryReferences) {
+		List<FragmentEntryReference> fragmentEntryReferences) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (FragmentEntryReferenceUtil.FragmentEntryReference
-				fragmentEntryReference : fragmentEntryReferences) {
+		for (FragmentEntryReference fragmentEntryReference :
+				fragmentEntryReferences) {
 
 			if (Validator.isNotNull(fragmentEntryReference.getRendererKey())) {
 				jsonArray.put(
@@ -149,13 +148,12 @@ public class DropZoneLayoutStructureItemImporter
 	}
 
 	private List<String> _toFragmentEntryKeys(
-		List<FragmentEntryReferenceUtil.FragmentEntryReference>
-			fragmentEntryReferences) {
+		List<FragmentEntryReference> fragmentEntryReferences) {
 
 		List<String> fragmentKeys = new ArrayList<>();
 
-		for (FragmentEntryReferenceUtil.FragmentEntryReference
-				fragmentEntryReference : fragmentEntryReferences) {
+		for (FragmentEntryReference fragmentEntryReference :
+				fragmentEntryReferences) {
 
 			if (Validator.isNotNull(fragmentEntryReference.getRendererKey())) {
 				fragmentKeys.add(fragmentEntryReference.getRendererKey());

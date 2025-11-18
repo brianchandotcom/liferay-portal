@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefin
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReference;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReferenceUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.util.FragmentConfigurationFieldValuesUtil;
@@ -179,13 +180,11 @@ public class FragmentLayoutStructureItemImporter
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();
 
-		FragmentEntryReferenceUtil.FragmentEntryReference
-			fragmentEntryReference =
-				FragmentEntryReferenceUtil.getFragmentEntryReference(
-					layoutStructureItemImporterContext.getCompanyId(),
-					fragmentInstancePageElementDefinition.
-						getFragmentReference(),
-					layoutStructureItemImporterContext.getGroupId());
+		FragmentEntryReference fragmentEntryReference =
+			FragmentEntryReferenceUtil.getFragmentEntryReference(
+				layoutStructureItemImporterContext.getCompanyId(),
+				fragmentInstancePageElementDefinition.getFragmentReference(),
+				layoutStructureItemImporterContext.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -334,13 +333,11 @@ public class FragmentLayoutStructureItemImporter
 			throw new UnsupportedOperationException();
 		}
 
-		FragmentEntryReferenceUtil.FragmentEntryReference
-			fragmentEntryReference =
-				FragmentEntryReferenceUtil.getFragmentEntryReference(
-					layoutStructureItemImporterContext.getCompanyId(),
-					fragmentInstancePageElementDefinition.
-						getFragmentReference(),
-					layoutStructureItemImporterContext.getGroupId());
+		FragmentEntryReference fragmentEntryReference =
+			FragmentEntryReferenceUtil.getFragmentEntryReference(
+				layoutStructureItemImporterContext.getCompanyId(),
+				fragmentInstancePageElementDefinition.getFragmentReference(),
+				layoutStructureItemImporterContext.getGroupId());
 
 		fragmentEntryLink.setOriginalFragmentEntryLinkERC(
 			_getOriginalFragmentEntryLinkERC(

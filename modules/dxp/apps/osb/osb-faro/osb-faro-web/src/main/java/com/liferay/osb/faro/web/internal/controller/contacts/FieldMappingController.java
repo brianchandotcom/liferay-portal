@@ -38,6 +38,8 @@ import jakarta.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -135,6 +137,30 @@ public class FieldMappingController extends BaseFaroController {
 		if (Validator.isNotNull(orderByType)) {
 			orderByFields = Collections.singletonList(
 				new OrderByField("displayName", orderByType, true));
+		}
+		if (Objects.equals(context, "account")){
+			Map<String, String> salesforceFieldMapping =
+				FieldMappingConstants.getsalesforceAccountAttributesFieldMappingLanguageKeys();
+
+			List<FieldMapping> fieldMappings = new ArrayList<>();
+			for (Map.Entry<String, String> entry : salesforceFieldMapping.entrySet()) {
+				FieldMapping fieldMapping = new FieldMapping();
+				fieldMapping.setContext(context);
+				fieldMapping.setOwnerType(ownerType);
+				fieldMapping.setFieldName(entry.getKey());
+				fieldMapping.setDisplayName(entry.getValue());
+				fieldMapping.setDisplayType("input-field");
+				Map<String, String> SalesforceFieldMappingTypes = FieldMappingConstants.getSalesforceAccountAttributesFieldMappingTypes();
+				fieldMapping.setFieldType(SalesforceFieldMappingTypes.get(entry.getKey()));
+
+				fieldMappings.add(fieldMapping);
+			}
+			Results<FieldMapping> results = new Results<>(fieldMappings,fieldMappings.size());
+
+			Function<FieldMapping, FieldMappingDisplay> function =
+				FieldMappingDisplay::new;
+
+			return new FaroResultsDisplay(results, function);
 		}
 
 		Results<FieldMapping> results = contactsEngineClient.getFieldMappings(

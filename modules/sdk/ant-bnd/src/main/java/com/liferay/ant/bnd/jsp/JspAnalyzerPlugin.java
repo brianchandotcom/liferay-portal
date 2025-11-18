@@ -565,7 +565,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	private boolean _isUseJavaxImports(
-		String javaeePackage, Set<String> taglibURIs) {
+			String javaeePackage, Set<String> taglibURIs)
+		throws Exception {
 
 		if (taglibURIs.isEmpty()) {
 			if (javaeePackage != null) {
@@ -609,6 +610,10 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			else if (javaeePackage.equals("jakarta")) {
 				return false;
 			}
+
+			throw new RuntimeException(
+				"Value for -javaee-package is invalid; valid values are " +
+					"jakarta or javax");
 		}
 
 		return false;

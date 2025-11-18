@@ -517,12 +517,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				commercePriceList.getCommercePriceListId(), price,
 				priceOnApplication, null, null, serviceContext);
 		}
-		else {
-			_commercePriceEntryLocalService.updatePricingInfo(
-				commercePriceEntry.getCommercePriceEntryId(),
-				commercePriceEntry.isBulkPricing(), price, priceOnApplication,
-				null, null, serviceContext);
-		}
 	}
 
 	private static final TransactionConfig _transactionConfig =

@@ -75,7 +75,7 @@ public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 
 		matcher.appendTail(sb);
 
-		return replace(sb.toString());
+		return sb.toString();
 	}
 
 	@Override

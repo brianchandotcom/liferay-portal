@@ -419,13 +419,6 @@ public class SkuUtil {
 				commercePriceList.getCommercePriceListId(), price, false, null,
 				unitOfMeasureKey, serviceContext);
 		}
-		else {
-			commercePriceEntryLocalService.updatePricingInfo(
-				commercePriceEntry.getCommercePriceEntryId(),
-				commercePriceEntry.isBulkPricing(), price,
-				commercePriceEntry.isPriceOnApplication(), null,
-				unitOfMeasureKey, serviceContext);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SkuUtil.class);

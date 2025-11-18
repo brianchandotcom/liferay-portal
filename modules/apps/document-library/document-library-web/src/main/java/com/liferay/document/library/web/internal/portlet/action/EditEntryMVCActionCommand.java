@@ -480,29 +480,34 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _moveEntries(ActionRequest actionRequest)
 		throws PortalException {
 
+		Map<String, String[]> parameterMap = new HashMap<>(
+			actionRequest.getParameterMap());
+
+		if (isSearch(actionRequest)) {
+			_initializeFilterSearchEntries(actionRequest, parameterMap);
+		}
+
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
 		BulkSelection<Folder> folderBulkSelection =
-			_folderBulkSelectionFactory.create(actionRequest.getParameterMap());
+			_folderBulkSelectionFactory.create(parameterMap);
 
 		folderBulkSelection.forEach(
 			folder -> _dlAppService.moveFolder(
 				folder.getFolderId(), newFolderId, serviceContext));
 
 		BulkSelection<FileEntry> fileEntryBulkSelection =
-			_fileEntryBulkSelectionFactory.create(
-				actionRequest.getParameterMap());
+			_fileEntryBulkSelectionFactory.create(parameterMap);
 
 		fileEntryBulkSelection.forEach(
 			fileEntry -> _dlAppService.moveFileEntry(
 				fileEntry.getFileEntryId(), newFolderId, serviceContext));
 
 		BulkSelection<FileShortcut> fileShortcutBulkSelection =
-			_fileShortcutBulkSelectionFactory.create(
-				actionRequest.getParameterMap());
+			_fileShortcutBulkSelectionFactory.create(parameterMap);
 
 		fileShortcutBulkSelection.forEach(
 			fileShortcut -> _dlAppService.updateFileShortcut(

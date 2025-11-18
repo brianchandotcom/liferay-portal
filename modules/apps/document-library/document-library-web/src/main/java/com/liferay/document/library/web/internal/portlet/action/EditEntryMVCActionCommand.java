@@ -439,30 +439,30 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		List<Long> folderIds = new ArrayList<>();
-		List<Long> fileShortcutIds = new ArrayList<>();
 		List<Long> fileEntryIds = new ArrayList<>();
+		List<Long> fileShortcutIds = new ArrayList<>();
+		List<Long> folderIds = new ArrayList<>();
 
 		for (Document doc : hits.getDocs()) {
 			String className = doc.get(Field.ENTRY_CLASS_NAME);
 			long classPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-			if (Objects.equals(className, DLFolder.class.getName())) {
-				folderIds.add(classPK);
+			if (Objects.equals(className, DLFileEntry.class.getName())) {
+				fileEntryIds.add(classPK);
 			}
 			else if (Objects.equals(
 						className, DLFileShortcut.class.getName())) {
 
 				fileShortcutIds.add(classPK);
 			}
-			else if (Objects.equals(className, DLFileEntry.class.getName())) {
-				fileEntryIds.add(classPK);
+			else if (Objects.equals(className, DLFolder.class.getName())) {
+				folderIds.add(classPK);
 			}
 		}
 
-		if (!folderIds.isEmpty()) {
+		if (!fileEntryIds.isEmpty()) {
 			parameterMap.put(
-				"rowIdsFolder", ArrayUtil.toStringArray(folderIds));
+				"rowIdsFileEntry", ArrayUtil.toStringArray(fileEntryIds));
 		}
 
 		if (!fileShortcutIds.isEmpty()) {
@@ -471,9 +471,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				ArrayUtil.toStringArray(fileShortcutIds));
 		}
 
-		if (!fileEntryIds.isEmpty()) {
+		if (!folderIds.isEmpty()) {
 			parameterMap.put(
-				"rowIdsFileEntry", ArrayUtil.toStringArray(fileEntryIds));
+				"rowIdsFolder", ArrayUtil.toStringArray(folderIds));
 		}
 	}
 

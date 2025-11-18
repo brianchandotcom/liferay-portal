@@ -128,7 +128,6 @@ export default function PublicationsPermissions({
 				aria-label={Liferay.Language.get('edit-permissions')}
 				displayType="secondary"
 				onClick={() => setShowModal(true)}
-				title={Liferay.Language.get('edit-permissions')}
 			>
 				{Liferay.Language.get('edit-permissions')}
 			</ClayButton>

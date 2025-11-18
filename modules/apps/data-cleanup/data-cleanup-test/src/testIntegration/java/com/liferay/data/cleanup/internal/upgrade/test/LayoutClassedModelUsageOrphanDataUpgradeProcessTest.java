@@ -27,6 +27,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -85,11 +86,17 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 		_updateLayoutClassedModelUsages(
 			0, _draftLayout.getPlid(), _layout.getPlid());
 
-		_runUpgrade(0);
+		_runUpgrade(
+			() -> _assertLayoutClassedModelUsages(
+				0, _journalArticle.getResourcePrimKey(), _draftLayout.getPlid(),
+				_layout.getPlid()));
 
 		_updateLayoutClassedModelUsages(0);
 
-		_runUpgrade(0);
+		_runUpgrade(
+			() -> _assertLayoutClassedModelUsages(
+				0, _journalArticle.getResourcePrimKey(), _draftLayout.getPlid(),
+				_layout.getPlid()));
 	}
 
 	@Test
@@ -123,7 +130,11 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 				_updateLayoutClassedModelUsages(
 					ctCollection.getCtCollectionId());
 
-				_runUpgrade(ctCollection.getCtCollectionId());
+				_runUpgrade(
+					() -> _assertLayoutClassedModelUsages(
+						ctCollection.getCtCollectionId(),
+						_journalArticle.getResourcePrimKey(),
+						_draftLayout.getPlid(), _layout.getPlid()));
 			}
 
 			_ctCollectionService.publishCTCollection(
@@ -131,7 +142,10 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 
 			_updateLayoutClassedModelUsages(ctCollection.getCtCollectionId());
 
-			_runUpgrade(0);
+			_runUpgrade(
+				() -> _assertLayoutClassedModelUsages(
+					0, _journalArticle.getResourcePrimKey(),
+					_draftLayout.getPlid(), _layout.getPlid()));
 		}
 	}
 
@@ -187,7 +201,9 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 		}
 	}
 
-	private void _runUpgrade(long ctCollectionId) throws Exception {
+	private void _runUpgrade(UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.data.cleanup.internal.configuration." +
@@ -196,9 +212,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 						"removeLayoutClassedModelUsageOrphanData", true
 					).build())) {
 
-			_assertLayoutClassedModelUsages(
-				ctCollectionId, _journalArticle.getResourcePrimKey(),
-				_draftLayout.getPlid(), _layout.getPlid());
+			unsafeRunnable.run();
 		}
 	}
 

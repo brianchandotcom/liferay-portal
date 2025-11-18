@@ -293,7 +293,10 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.updateCommerceOrderItem(
-				null, id, GetterUtil.getString(orderItem.getOptions(), "[]"),
+				GetterUtil.getString(
+					orderItem.getExternalReferenceCode(),
+					commerceOrder.getExternalReferenceCode()),
+				id, GetterUtil.getString(orderItem.getOptions(), "[]"),
 				BigDecimal.valueOf(
 					GetterUtil.getInteger(orderItem.getQuantity())),
 				_commerceContextFactory.create(
@@ -410,7 +413,8 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		else {
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItem(
-					null, commerceOrderItem.getCommerceOrderItemId(),
+					externalReferenceCode,
+					commerceOrderItem.getCommerceOrderItemId(),
 					GetterUtil.getString(orderItem.getOptions(), "[]"),
 					BigDecimal.valueOf(
 						GetterUtil.getInteger(orderItem.getQuantity())),

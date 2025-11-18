@@ -1046,12 +1046,6 @@ public class FragmentLinkUtilTest {
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
-			group.isDepot()
-		).thenReturn(
-			GroupConstants.TYPE_DEPOT == type
-		);
-
-		Mockito.when(
 			group.getExternalReferenceCode()
 		).thenReturn(
 			externalReferenceCode
@@ -1067,6 +1061,12 @@ public class FragmentLinkUtilTest {
 			group.getType()
 		).thenReturn(
 			type
+		);
+
+		Mockito.when(
+			group.isDepot()
+		).thenReturn(
+			GroupConstants.TYPE_DEPOT == type
 		);
 
 		_groupLocalServiceUtilMockedStatic.when(

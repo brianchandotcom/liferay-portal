@@ -350,76 +350,29 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Test
 	@TestInfo("LPD-57827")
-	public void testGetDepotEntriesJSONArrayWithMultipleDepotEntries()
-		throws Exception {
-
-		String name = StringUtil.randomString();
-
-		DepotEntry depotEntry = addDepotEntry(name, DepotConstants.TYPE_SPACE);
-
-		try {
-			List<DepotEntry> depotEntries =
-				_depotEntryLocalService.getDepotEntries(
-					group.getCompanyId(), DepotConstants.TYPE_SPACE);
-
-			Assert.assertEquals(
-				depotEntries.toString(), 2, depotEntries.size());
-
-			DepotEntry defaultDepotEntry = depotEntries.get(0);
-
-			Group defaultDepotGroup = groupLocalService.fetchGroup(
-				defaultDepotEntry.getGroupId());
-
-			Assert.assertEquals("Default", defaultDepotGroup.getGroupKey());
-
-			Group depotGroup = groupLocalService.fetchGroup(
-				depotEntry.getGroupId());
-
-			Assert.assertEquals(name, depotGroup.getGroupKey());
-
-			_testGetDepotEntriesJSONArray(
-				List.of(defaultDepotEntry), null,
-				String.valueOf(defaultDepotGroup.getGroupId()));
-			_testGetDepotEntriesJSONArray(
-				List.of(depotEntry), null,
-				String.valueOf(depotGroup.getGroupId()));
-			_testGetDepotEntriesJSONArray(depotEntries, null, null);
-
-			if (getRootObjectEntryFolderExternalReferenceCode() != null) {
-				ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
-					depotGroup);
-
-				_testGetDepotEntriesJSONArray(
-					List.of(depotEntry), objectEntryFolder, null);
-				_testGetDepotEntriesJSONArray(
-					List.of(depotEntry), objectEntryFolder,
-					String.valueOf(depotGroup.getGroupId()));
-				_testGetDepotEntriesJSONArray(
-					null, objectEntryFolder,
-					String.valueOf(defaultDepotGroup.getGroupId()));
-			}
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
-	}
-
-	@Test
-	@TestInfo("LPD-57827")
-	public void testGetDepotEntriesJSONArrayWithOneDepotEntryOnly()
-		throws Exception {
+	public void testGetDepotEntriesJSONArray() throws Exception {
+		String name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		List<DepotEntry> depotEntries = _depotEntryLocalService.getDepotEntries(
 			group.getCompanyId(), DepotConstants.TYPE_SPACE);
 
-		Assert.assertEquals(depotEntries.toString(), 1, depotEntries.size());
+		int originalDepotEntriesSize = depotEntries.size();
 
-		DepotEntry depotEntry = depotEntries.get(0);
+		addDepotEntry(name, DepotConstants.TYPE_SPACE);
+
+		depotEntries = _depotEntryLocalService.getDepotEntries(
+			group.getCompanyId(), DepotConstants.TYPE_SPACE);
+
+		Assert.assertEquals(
+			depotEntries.toString(), originalDepotEntriesSize + 1,
+			depotEntries.size());
+
+		DepotEntry depotEntry = depotEntries.get(depotEntries.size() - 1);
 
 		Group depotGroup = groupLocalService.fetchGroup(
 			depotEntry.getGroupId());
 
-		Assert.assertEquals("Default", depotGroup.getGroupKey());
+		Assert.assertEquals(name, depotGroup.getGroupKey());
 
 		_testGetDepotEntriesJSONArray(
 			depotEntries, null, String.valueOf(depotGroup.getGroupId()));

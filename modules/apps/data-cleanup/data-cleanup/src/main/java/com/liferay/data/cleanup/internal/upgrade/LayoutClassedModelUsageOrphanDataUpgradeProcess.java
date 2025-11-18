@@ -153,7 +153,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			UnsafeBiConsumer<Long, Long, Exception> unsafeBiConsumer)
 		throws Exception {
 
-		Map<Long, Map<Long, Set<Long>>> groupIdMap = new HashMap<>();
+		Map<Long, Map<Long, Set<Long>>> ctCollectionIdsMaps = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
@@ -193,11 +193,11 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 					long groupId = resultSet.getLong("groupId");
 					long plid = resultSet.getLong("plid");
 
-					Map<Long, Set<Long>> ctCollectionIdMap =
-						groupIdMap.computeIfAbsent(
+					Map<Long, Set<Long>> ctCollectionIdsMap =
+						ctCollectionIdsMaps.computeIfAbsent(
 							groupId, key -> new HashMap<>());
 
-					Set<Long> plids = ctCollectionIdMap.computeIfAbsent(
+					Set<Long> plids = ctCollectionIdsMap.computeIfAbsent(
 						ctCollectionId, key -> new HashSet<>());
 
 					plids.add(plid);
@@ -205,21 +205,21 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 			}
 		}
 
-		_processLayoutClassedModelUsages(groupIdMap, unsafeBiConsumer);
+		_processLayoutClassedModelUsages(ctCollectionIdsMaps, unsafeBiConsumer);
 	}
 
 	private void _processLayoutClassedModelUsages(
-		Map<Long, Map<Long, Set<Long>>> groupIdMap,
+		Map<Long, Map<Long, Set<Long>>> ctCollectionIdsMaps,
 		UnsafeBiConsumer<Long, Long, Exception> unsafeBiConsumer) {
 
 		for (Map.Entry<Long, Map<Long, Set<Long>>> entry1 :
-				groupIdMap.entrySet()) {
+				ctCollectionIdsMaps.entrySet()) {
 
 			long groupId = entry1.getKey();
-			Map<Long, Set<Long>> ctCollectionIdMap = entry1.getValue();
+			Map<Long, Set<Long>> ctCollectionIdsMap = entry1.getValue();
 
 			for (Map.Entry<Long, Set<Long>> entry2 :
-					ctCollectionIdMap.entrySet()) {
+					ctCollectionIdsMap.entrySet()) {
 
 				long ctCollectionId = entry2.getKey();
 				Set<Long> plids = entry2.getValue();

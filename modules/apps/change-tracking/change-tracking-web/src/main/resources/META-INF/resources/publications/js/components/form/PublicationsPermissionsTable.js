@@ -179,7 +179,9 @@ function PublicationsPermissionsTable({
 										>
 											<ClayCheckbox
 												aria-label={Liferay.Util.sub(
-													'give-x-permission-to-users-with-the-x-role',
+													Liferay.Language.get(
+														'give-x-permission-to-users-with-the-x-role'
+													),
 													[actionId, roleName]
 												)}
 												checked={_isActionChecked(

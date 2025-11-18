@@ -98,6 +98,8 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setUserId(user.getUserId());
 		styleBookEntry.setUserName(user.getFullName());
 		styleBookEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
+		styleBookEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
@@ -490,6 +492,7 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		styleBookEntry.setUserId(userId);
+		styleBookEntry.setModifiedDate(new Date());
 		styleBookEntry.setDefaultStyleBookEntry(defaultStylebookEntry);
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);

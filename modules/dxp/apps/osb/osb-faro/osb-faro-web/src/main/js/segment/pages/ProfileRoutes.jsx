@@ -5,6 +5,7 @@ import BundleRouter from 'route-middleware/BundleRouter';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
 import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
 import ErrorPage from 'shared/pages/ErrorPage';
 import getCN from 'classnames';
@@ -21,8 +22,10 @@ import React, {
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
+import {CSVType} from 'shared/components/download-report/utils';
+import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
 import {formatUTCDate} from 'shared/util/date';
-import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
+import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {Segment} from 'shared/util/records';
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 import {Switch, useParams} from 'react-router-dom';
@@ -46,6 +49,29 @@ const InterestDetails = lazy(() =>
 const Distribution = lazy(() =>
 	import(/* webpackChunkName: "SegmentDistribution" */ './Distribution')
 );
+
+const NAV_ITEMS = [
+	{
+		exact: true,
+		label: Liferay.Language.get('overview'),
+		route: Routes.CONTACTS_SEGMENT
+	},
+	{
+		exact: true,
+		label: Liferay.Language.get('membership'),
+		route: Routes.CONTACTS_SEGMENT_MEMBERSHIP
+	},
+	{
+		exact: false,
+		label: Liferay.Language.get('interests'),
+		route: Routes.CONTACTS_SEGMENT_INTERESTS
+	},
+	{
+		exact: true,
+		label: Liferay.Language.get('distribution'),
+		route: Routes.CONTACTS_SEGMENT_DISTRIBUTION
+	}
+];
 
 const SEGMENTS_LANGUAGE_MAP = {
 	[SegmentTypes.Batch]: Liferay.Language.get('batch-segment'),
@@ -159,104 +185,176 @@ export const SegmentProfileRoutes = () => {
 				<BasePage.Row>
 					<BasePage.Header.TitleSection
 						className='mb-3'
-						subtitle={`Last update: ${formatUTCDate(
-							segmentDetails.dateModified,
-							'MMM DD, YYYY hh:mm a'
-						)
-							.replace('am', 'a.m.')
-							.replace('pm', 'p.m.')}`}
+						subtitle={
+							segmentDetails.segmentType ===
+								SegmentTypes.RealTime &&
+							`Last update: ${formatUTCDate(
+								segmentDetails.dateModified,
+								'MMM DD, YYYY hh:mm a'
+							)
+								.replace('am', 'a.m.')
+								.replace('pm', 'p.m.')}`
+						}
 						title={title}
 					>
 						<Label display='secondary' size='lg' uppercase>
 							{SEGMENTS_LANGUAGE_MAP[segmentDetails.segmentType]}
 						</Label>
 					</BasePage.Header.TitleSection>
+					{segmentDetails.segmentType === SegmentTypes.Batch && (
+						<BasePage.Header.Section>
+							<BasePage.Header.PageActions
+								actions={[
+									{
+										button: true,
+										displayType: 'secondary',
+										href: toRoute(
+											Routes.CONTACTS_SEGMENT_EDIT,
+											{
+												channelId,
+												groupId,
+												id,
+												type: SEGMENTS
+											}
+										),
+										label: Liferay.Language.get(
+											'edit-segment'
+										)
+									}
+								]}
+							/>
+						</BasePage.Header.Section>
+					)}
 				</BasePage.Row>
+				{segmentDetails.segmentType === SegmentTypes.Batch && (
+					<BasePage.Header.NavBar
+						items={NAV_ITEMS}
+						routeParams={{channelId, groupId, id}}
+					/>
+				)}
 			</BasePage.Header>
 
-			<BasePage.SubHeader>
-				<div className='d-flex justify-content-end w-100'>
-					<ClayButton
-						borderless
-						button
-						className='button-root'
-						disabled={loading}
-						displayType='secondary'
-						key={Liferay.Language.get('refresh-data')}
-						onClick={refetch}
-					>
-						{loading ? (
-							<Loading align='false' className='mr-2 mt-n1' />
-						) : (
-							<ClayIcon className='mr-2' symbol='reload' />
-						)}
-						{Liferay.Language.get('refresh-data')}
-					</ClayButton>
-					<ClayLink
-						borderless
-						button
-						className='button-root'
-						displayType='secondary'
-						href={toRoute(Routes.CONTACTS_SEGMENT_EDIT, {
-							channelId,
-							groupId,
-							id
-						})}
-					>
-						<ClayIcon className='mr-2' symbol='pencil' />
-						{Liferay.Language.get('edit-segment')}
-					</ClayLink>
-				</div>
-			</BasePage.SubHeader>
+			{segmentDetails.segmentType === SegmentTypes.Batch &&
+				getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_SEGMENT && (
+					<BasePage.SubHeader>
+						<div className='d-flex justify-content-end w-100'>
+							<DownloadPDFReport
+								disabled={false}
+								showDateRange={false}
+								subtitle={selectedChannel?.name}
+								title={title}
+							/>
+						</div>
+					</BasePage.SubHeader>
+				)}
+
+			{segmentDetails.segmentType === SegmentTypes.Batch &&
+				getMatchedRoute(NAV_ITEMS) ===
+					Routes.CONTACTS_SEGMENT_MEMBERSHIP && (
+					<BasePage.SubHeader>
+						<div className='d-flex justify-content-end w-100'>
+							<DownloadStaticCSVReport
+								disabled={checkDisabled()}
+								segmentId={segment.id}
+								type={CSVType.Membership}
+								typeLang={Liferay.Language.get(
+									'segment-membership'
+								)}
+							/>
+						</div>
+					</BasePage.SubHeader>
+				)}
+
+			{segmentDetails.segmentType === SegmentTypes.RealTime && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<ClayButton
+							borderless
+							button
+							className='button-root'
+							disabled={loading}
+							displayType='secondary'
+							key={Liferay.Language.get('refresh-data')}
+							onClick={refetch}
+						>
+							{loading ? (
+								<Loading align='false' className='mr-2 mt-n1' />
+							) : (
+								<ClayIcon className='mr-2' symbol='reload' />
+							)}
+							{Liferay.Language.get('refresh-data')}
+						</ClayButton>
+						<ClayLink
+							borderless
+							button
+							className='button-root'
+							displayType='secondary'
+							href={toRoute(Routes.CONTACTS_SEGMENT_EDIT, {
+								channelId,
+								groupId,
+								id
+							})}
+						>
+							<ClayIcon className='mr-2' symbol='pencil' />
+							{Liferay.Language.get('edit-segment')}
+						</ClayLink>
+					</div>
+				</BasePage.SubHeader>
+			)}
 
 			<EmbeddedAlertList alerts={getAlerts()} />
 
 			<BasePage.Body disabled={checkDisabled()}>
-				<Suspense fallback={<Loading />}>
-					<Switch>
-						<BundleRouter
-							componentProps={{segment}}
-							data={Membership}
-							exact
-							path={Routes.CONTACTS_SEGMENT_MEMBERSHIP}
-						/>
+				{segment.id ? (
+					<Suspense fallback={<Loading />}>
+						<Switch>
+							<BundleRouter
+								componentProps={{segment}}
+								data={Membership}
+								exact
+								path={Routes.CONTACTS_SEGMENT_MEMBERSHIP}
+							/>
 
-						<BundleRouter
-							componentProps={{segment}}
-							data={InterestDetails}
-							exact
-							path={Routes.CONTACTS_SEGMENT_INTEREST_DETAILS}
-						/>
+							<BundleRouter
+								componentProps={{segment}}
+								data={InterestDetails}
+								exact
+								path={Routes.CONTACTS_SEGMENT_INTEREST_DETAILS}
+							/>
 
-						<BundleRouter
-							componentProps={{segment}}
-							data={Interests}
-							destructured={false}
-							exact
-							path={Routes.CONTACTS_SEGMENT_INTERESTS}
-						/>
+							<BundleRouter
+								componentProps={{segment}}
+								data={Interests}
+								destructured={false}
+								exact
+								path={Routes.CONTACTS_SEGMENT_INTERESTS}
+							/>
 
-						<BundleRouter
-							componentProps={{segment}}
-							data={Distribution}
-							exact
-							path={Routes.CONTACTS_SEGMENT_DISTRIBUTION}
-						/>
+							<BundleRouter
+								componentProps={{segment}}
+								data={Distribution}
+								exact
+								path={Routes.CONTACTS_SEGMENT_DISTRIBUTION}
+							/>
 
-						<BundleRouter
-							componentProps={{segment}}
-							data={
-								segment.segmentType === SegmentTypes.Batch
-									? Overview
-									: OverviewRealTime
-							}
-							exact
-							path={Routes.CONTACTS_SEGMENT}
-						/>
+							<BundleRouter
+								componentProps={{segment}}
+								data={
+									segmentDetails.segmentType ===
+									SegmentTypes.Batch
+										? Overview
+										: OverviewRealTime
+								}
+								exact
+								path={Routes.CONTACTS_SEGMENT}
+							/>
 
-						<RouteNotFound />
-					</Switch>
-				</Suspense>
+							<RouteNotFound />
+						</Switch>
+					</Suspense>
+				) : (
+					<Loading />
+				)}
 			</BasePage.Body>
 		</BasePage>
 	);

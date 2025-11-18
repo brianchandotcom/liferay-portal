@@ -21,6 +21,7 @@ const ClassicEditor = ({
 	config,
 	data,
 	disabled,
+	name,
 	onBlur,
 	onChange,
 	onFocus,
@@ -30,6 +31,7 @@ const ClassicEditor = ({
 	config?: LiferayEditorConfig;
 	data?: string;
 	disabled?: boolean;
+	name?: string;
 	onBlur?: (event: EventInfo, editor: TEditor) => void;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
 	onFocus?: (event: EventInfo, editor: TEditor) => void;
@@ -48,6 +50,7 @@ const ClassicEditor = ({
 			data={data}
 			disabled={disabled}
 			editor={BaseCKEditor5ClassicEditor}
+			name={name}
 			onBlur={onBlur}
 			onChange={onChange}
 			onFocus={onFocus}

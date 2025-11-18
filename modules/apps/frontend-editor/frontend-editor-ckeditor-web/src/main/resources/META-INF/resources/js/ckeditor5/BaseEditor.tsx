@@ -20,6 +20,7 @@ const BaseEditor = ({
 	data,
 	disabled,
 	editor,
+	name,
 	onBlur,
 	onChange,
 	onFocus,
@@ -30,12 +31,15 @@ const BaseEditor = ({
 	data?: string;
 	disabled?: boolean;
 	editor: any;
+	name?: string;
 	onBlur?: (event: EventInfo, editor: TEditor) => void;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
 	onFocus?: (event: EventInfo, editor: TEditor) => void;
 	onReady?: (editor: TEditor) => void;
 }) => {
 	const [loading, setLoading] = useState(true);
+	const [value, setValue] = useState(data ?? config?.initialData);
+
 	const firstRenderRef = useRef(true);
 
 	const [editorConfig, setEditorConfig] = useState(config);
@@ -83,10 +87,26 @@ const BaseEditor = ({
 				disabled={disabled}
 				editor={editor}
 				onBlur={onBlur}
-				onChange={onChange}
+				onChange={(event, editor) => {
+					const data = editor.getData();
+
+					setValue(data);
+
+					if (onChange) {
+						onChange(event, editor);
+					}
+				}}
 				onFocus={onFocus}
 				onReady={onReady}
 			/>
+
+			{name && (
+				<input
+					name={name}
+					type="hidden"
+					value={typeof value === 'string' ? value : ''}
+				/>
+			)}
 		</div>
 	);
 };

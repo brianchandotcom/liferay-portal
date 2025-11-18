@@ -11,6 +11,7 @@
 String contents = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":contents");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":disabled"));
+String name = namespace + GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
 JSONObject editorConfigJSONObject = null;
 
@@ -31,6 +32,8 @@ if (contents != null) {
 				"config", editorConfigJSONObject
 			).put(
 				"disabled", disabled
+			).put(
+				"name", HtmlUtil.escapeAttribute(name)
 			).build()
 		%>'
 	/>

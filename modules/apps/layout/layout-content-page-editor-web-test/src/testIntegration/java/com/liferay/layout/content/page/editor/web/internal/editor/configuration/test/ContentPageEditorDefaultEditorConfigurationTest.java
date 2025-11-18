@@ -260,7 +260,7 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 		"b code em h1 h2 h3 h4 h5 h6 hr i p pre strong u [*](*){*}; a[*](*); ",
 		"div[*](*){text-align}; img[*](*){*}; p[*](*); li ol ul ",
 		"[*](*){*};table[border, cellpadding, cellspacing]",
-		"{table-layout,width}; tbody td th[scope, colspan, rowspan]; ",
+		"{table-layout,width}; tbody td{width}; th[scope, colspan, rowspan]; ",
 		"td[colspan, rowspan]; thead tr[scope]; span[*](*){*}; ");
 
 	private static final String _EXTRA_PLUGINS = StringBundler.concat(

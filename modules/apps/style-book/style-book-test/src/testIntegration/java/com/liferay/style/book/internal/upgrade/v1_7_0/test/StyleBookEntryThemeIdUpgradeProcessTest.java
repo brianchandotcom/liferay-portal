@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -65,19 +64,30 @@ public class StyleBookEntryThemeIdUpgradeProcessTest {
 		StyleBookEntry orphanedStyleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				groupId, false, null, RandomTestUtil.randomString(), null, null,
-				_serviceContext);
+				groupId, false, null, RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), _serviceContext);
 
-		Assert.assertTrue(
-			Validator.isNull(orphanedStyleBookEntry.getThemeId()));
+		StyleBookEntry draftStyleBookEntry =
+			_styleBookEntryLocalService.getDraft(orphanedStyleBookEntry);
+
+		draftStyleBookEntry.setThemeId(null);
+
+		orphanedStyleBookEntry = _styleBookEntryLocalService.publishDraft(
+			draftStyleBookEntry);
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-				null, null, _serviceContext);
+				null, RandomTestUtil.randomString(), _serviceContext);
 
-		Assert.assertTrue(Validator.isNull(styleBookEntry.getThemeId()));
+		draftStyleBookEntry = _styleBookEntryLocalService.getDraft(
+			styleBookEntry);
+
+		draftStyleBookEntry.setThemeId(null);
+
+		styleBookEntry = _styleBookEntryLocalService.publishDraft(
+			draftStyleBookEntry);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.style.book.internal.upgrade.v1_7_0." +

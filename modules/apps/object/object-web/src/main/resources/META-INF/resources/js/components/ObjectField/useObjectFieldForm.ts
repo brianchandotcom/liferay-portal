@@ -207,8 +207,14 @@ export function useObjectFieldForm({
 				errors.maxLength = constantsUtils.REQUIRED_MSG;
 			}
 		}
-		else if (field.businessType === 'Picklist') {
-			if (!field.listTypeDefinitionId) {
+		else if (
+			field.businessType === 'Boolean' ||
+			field.businessType === 'Picklist'
+		) {
+			if (
+				field.businessType === 'Picklist' &&
+				!field.listTypeDefinitionId
+			) {
 				errors.listTypeDefinitionId = constantsUtils.REQUIRED_MSG;
 			}
 

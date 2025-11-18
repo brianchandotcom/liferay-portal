@@ -8,6 +8,7 @@ package com.liferay.search.experiences.web.internal.display.context;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -83,6 +84,23 @@ public class EditSXPBlueprintDisplayContext {
 			"namespace", _renderResponse.getNamespace()
 		).put(
 			"redirectURL", getRedirect()
+		).put(
+			"selectScopeURL",
+			() -> {
+				ItemSelectorCriterion itemSelectorCriterion =
+					new GroupItemSelectorCriterion();
+
+				itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new GroupItemSelectorReturnType());
+
+				return PortletURLBuilder.create(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_renderRequest),
+						_renderResponse.getNamespace() + "selectSite",
+						itemSelectorCriterion)
+				).buildString();
+			}
 		).put(
 			"selectSitesURL",
 			() -> {

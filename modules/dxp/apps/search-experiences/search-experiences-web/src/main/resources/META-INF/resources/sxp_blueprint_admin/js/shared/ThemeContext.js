@@ -13,6 +13,7 @@ export default React.createContext({
 	locale: 'en_US',
 	namespace: '',
 	redirectURL: '',
+	selectScopeURL: '',
 	selectSitesURL: '',
 	sxpType: '',
 });

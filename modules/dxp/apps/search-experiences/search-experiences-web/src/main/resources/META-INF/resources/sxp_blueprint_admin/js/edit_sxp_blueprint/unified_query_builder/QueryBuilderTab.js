@@ -5,7 +5,7 @@
 
 import ClayLayout from '@clayui/layout';
 import {PropTypes} from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import {
 	SIDEBAR_STATE,
@@ -14,6 +14,7 @@ import {
 import {SIDEBAR_TYPES} from '../../utils/types/sidebarTypes';
 import QuerySettings from '../query_builder_tab/QuerySettings';
 import QuerySXPElements from './QuerySXPElements';
+import ScopeSelector from './ScopeSelector';
 
 function QueryBuilderTab({
 	applyIndexerClauses,
@@ -77,6 +78,8 @@ function QueryBuilderTab({
 		>
 			<div className="layout-section-main-shift">
 				<div className="vertical-nav-content-wrapper">
+					<ScopeSelector />
+
 					<QuerySXPElements
 						elementInstances={elementInstances}
 						entityJSON={entityJSON}

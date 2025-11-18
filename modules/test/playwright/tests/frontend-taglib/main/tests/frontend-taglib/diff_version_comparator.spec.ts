@@ -77,13 +77,8 @@ test(
 				.getByRole('textbox')
 				.fill('test');
 
-			await page.getByLabel('Select and Confirm Submit').click();
-
 			await page
-				.getByRole('menuitem', {
-					exact: true,
-					name: 'Submit for Workflow',
-				})
+				.getByRole('button', {name: 'Submit for Workflow'})
 				.click();
 
 			await waitForAlert(page, 'Success:');

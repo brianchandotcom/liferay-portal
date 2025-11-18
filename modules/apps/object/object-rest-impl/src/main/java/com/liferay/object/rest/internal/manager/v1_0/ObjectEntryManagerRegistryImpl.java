@@ -43,10 +43,12 @@ public class ObjectEntryManagerRegistryImpl
 		}
 
 		if (objectEntryManager == null) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"No object entry manager found with company ID ", companyId,
-					" and storage type ", storageType));
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"No object entry manager found with company ID ",
+						companyId, " and storage type ", storageType));
+			}
 		}
 
 		return objectEntryManager;

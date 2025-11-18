@@ -26,6 +26,27 @@ public class DisplayPageFormSubmissionResult
 		return DisplayPageFormSubmissionResultSerDes.toDTO(json);
 	}
 
+	public Boolean getDefaultDisplayPage() {
+		return defaultDisplayPage;
+	}
+
+	public void setDefaultDisplayPage(Boolean defaultDisplayPage) {
+		this.defaultDisplayPage = defaultDisplayPage;
+	}
+
+	public void setDefaultDisplayPage(
+		UnsafeSupplier<Boolean, Exception> defaultDisplayPageUnsafeSupplier) {
+
+		try {
+			defaultDisplayPage = defaultDisplayPageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean defaultDisplayPage;
+
 	public Mapping getMapping() {
 		return mapping;
 	}

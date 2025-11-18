@@ -256,7 +256,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 	}
 
 	private <T> void _updateLayoutClassedModelUsages(
-		Consumer<T> consumer, List<T> items, Function<T, ?> function,
+		Consumer<T> consumer, Function<T, ?> function, List<T> items,
 		String logPrefix) {
 
 		for (T item : items) {
@@ -280,9 +280,9 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 
 		_updateLayoutClassedModelUsages(
 			_contentManager::updateLayoutClassedModelUsage,
+			FragmentEntryLink::getFragmentEntryLinkId,
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				groupId, plid),
-			FragmentEntryLink::getFragmentEntryLinkId,
 			"Unable to update layout classed model usages for fragment entry " +
 				"link ");
 	}
@@ -300,11 +300,11 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 
 		_updateLayoutClassedModelUsages(
 			_contentManager::updateLayoutClassedModelUsage,
+			LayoutPageTemplateStructureRel::getLayoutPageTemplateStructureRelId,
 			_layoutPageTemplateStructureRelLocalService.
 				getLayoutPageTemplateStructureRels(
 					layoutPageTemplateStructure.
 						getLayoutPageTemplateStructureId()),
-			LayoutPageTemplateStructureRel::getLayoutPageTemplateStructureRelId,
 			"Unable to update layout classed model usages for layout page " +
 				"template structure relationship ");
 	}

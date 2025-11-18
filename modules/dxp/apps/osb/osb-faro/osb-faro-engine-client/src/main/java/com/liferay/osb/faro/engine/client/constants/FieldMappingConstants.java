@@ -92,6 +92,18 @@ public class FieldMappingConstants {
 		return _ownerTypes;
 	}
 
+	public static Map<String, String>
+		getsalesforceAccountAttributesFieldMappingLanguageKeys() {
+
+		return _salesforceAccountAttributesFieldMappingLanguageKeys;
+	}
+
+	public static Map<String, String>
+		getSalesforceAccountAttributesFieldMappingTypes() {
+
+		return _salesforceAccountAttributesFieldMappingTypes;
+	}
+
 	public static List<FieldMappingMap> getSalesforceAccountFieldMappingMaps() {
 		return _salesforceAccountFieldMappingMaps;
 	}
@@ -172,6 +184,55 @@ public class FieldMappingConstants {
 	).put(
 		OWNER_TYPE_ORGANIZATION, OWNER_TYPE_ORGANIZATION
 	).build();
+	private static final Map<String, String>
+		_salesforceAccountAttributesFieldMappingLanguageKeys =
+			HashMapBuilder.put(
+				"AnnualRevenue", "annual-revenue"
+			).put(
+				"BillingCountry", "country"
+			).put(
+				"BillingState", "state"
+			).put(
+				"CurrencyIsoCode", "currency-code"
+			).put(
+				"Id", "id"
+			).put(
+				"Industry", "industry"
+			).put(
+				"LastActivityDate", "last-activity-date"
+			).put(
+				"Name", "accountName"
+			).put(
+				"NumberOfEmployees", "number-of-employees"
+			).put(
+				"Type", "account-type"
+			).put(
+				"YearStarted", "year-started"
+			).build();
+	private static final Map<String, String>
+		_salesforceAccountAttributesFieldMappingTypes = HashMapBuilder.put(
+			"AnnualRevenue", "int"
+		).put(
+			"BillingCountry", "String"
+		).put(
+			"BillingState", "String"
+		).put(
+			"CurrencyIsoCode", "String"
+		).put(
+			"Id", "String"
+		).put(
+			"Industry", "String"
+		).put(
+			"LastActivityDate", "Date"
+		).put(
+			"Name", "String"
+		).put(
+			"NumberOfEmployees", "int"
+		).put(
+			"Type", "String"
+		).put(
+			"YearStarted", "String"
+		).build();
 	private static final List<FieldMappingMap>
 		_salesforceAccountFieldMappingMaps = Arrays.asList(
 			new FieldMappingMap("id", "accountId", TYPE_TEXT),

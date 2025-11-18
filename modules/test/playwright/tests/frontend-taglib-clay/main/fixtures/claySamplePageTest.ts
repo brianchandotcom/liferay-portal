@@ -6,21 +6,30 @@
 import {mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {ClaySamplePage} from '../pages/ClaySamplePage';
 
-export const test = mergeTests(apiHelpersTest, isolatedSiteTest, loginTest());
+export const test = mergeTests(
+	apiHelpersTest,
+	isolatedSiteTest,
+	loginTest(),
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	})
+);
 
 const claySamplePageTest = test.extend<{
 	claySamplePage: ClaySamplePage;
 }>({
 	claySamplePage: async ({apiHelpers, page, site}, use) => {
-		const url = await setupClaySampleWidget(apiHelpers, page, site);
+		const url = await setupClaySampleWidget(apiHelpers, site);
 
 		const claySamplePage = new ClaySamplePage(page, url);
 
@@ -30,7 +39,7 @@ const claySamplePageTest = test.extend<{
 	},
 });
 
-async function setupClaySampleWidget(apiHelpers, page, site) {
+async function setupClaySampleWidget(apiHelpers: ApiHelpers, site: Site) {
 	const widgetDefinition = getWidgetDefinition({
 		id: getRandomString(),
 		widgetName: 'com_liferay_clay_sample_web_portlet_ClaySamplePortlet',

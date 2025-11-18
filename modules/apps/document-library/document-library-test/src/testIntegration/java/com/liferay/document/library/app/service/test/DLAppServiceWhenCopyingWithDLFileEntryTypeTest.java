@@ -203,7 +203,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 		DLFileEntry dlFileEntry2 = (DLFileEntry)fileEntry2.getModel();
 
 		Assert.assertEquals(
-			_dlFileEntryType.getFileEntryTypeId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			dlFileEntry2.getFileEntryTypeId());
 	}
 

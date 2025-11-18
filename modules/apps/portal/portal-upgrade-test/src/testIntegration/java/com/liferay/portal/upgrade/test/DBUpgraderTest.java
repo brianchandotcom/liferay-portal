@@ -275,9 +275,8 @@ public class DBUpgraderTest {
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
-					"com.liferay.data.cleanup.internal.verify." +
-						"PostUpgradeDataCleanupVerifyProcess will not be " +
-							"executed"));
+					_DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME +
+						" will not be executed"));
 		}
 		finally {
 			StartupHelperUtil.setUpgrading(false);
@@ -296,9 +295,8 @@ public class DBUpgraderTest {
 
 		ComponentDescriptionDTO componentDescriptionDTO =
 			_serviceComponentRuntime.getComponentDescriptionDTO(
-				_getBundle("com.liferay.data.cleanup"),
-				"com.liferay.data.cleanup.internal.verify." +
-					"PostUpgradeDataCleanupVerifyProcess");
+				_getBundle(_DATA_CLEANUP_BUNDLE_NAME),
+				_DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME);
 
 		Promise<Void> voidPromise = _serviceComponentRuntime.disableComponent(
 			componentDescriptionDTO);
@@ -326,9 +324,8 @@ public class DBUpgraderTest {
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
-					"com.liferay.data.cleanup.internal.verify." +
-						"PostUpgradeDataCleanupVerifyProcess will not be " +
-							"executed"));
+					_DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME +
+						" will not be executed"));
 		}
 		finally {
 			StartupHelperUtil.setUpgrading(false);
@@ -452,7 +449,7 @@ public class DBUpgraderTest {
 	}
 
 	private Bundle _uninstallBundle() throws Exception {
-		Bundle bundle = _getBundle("com.liferay.data.cleanup");
+		Bundle bundle = _getBundle(_DATA_CLEANUP_BUNDLE_NAME);
 
 		if ((bundle != null) && (bundle.getState() == Bundle.ACTIVE)) {
 			bundle.uninstall();
@@ -507,6 +504,13 @@ public class DBUpgraderTest {
 
 		dclSingleton.destroy(null);
 	}
+
+	private static final String _DATA_CLEANUP_BUNDLE_NAME =
+		"com.liferay.data.cleanup";
+
+	private static final String _DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME =
+		"com.liferay.data.cleanup.internal.verify." +
+			"PostUpgradeDataCleanupVerifyProcess";
 
 	private static Connection _connection;
 	private static int _currentBuildNumber;

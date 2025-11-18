@@ -87,8 +87,8 @@ resource "helm_release" "external_secrets_crds" {
 				certController={
 					enabled=false
 				}
-				installController=false
 				installCRDs=true
+				installController=false
 				webhook={
 					enabled=false
 				}

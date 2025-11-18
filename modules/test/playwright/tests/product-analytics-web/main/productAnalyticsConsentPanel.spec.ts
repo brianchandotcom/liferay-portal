@@ -16,6 +16,7 @@ import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {AccountSettingsPage} from '../../../pages/users-admin-web/AccountSettingsPage';
 import performLogin, {userData} from '../../../utils/performLogin';
 import {
+	OptionalProductAnalyticsCookieTypes,
 	clearProductAnalyticsCookies,
 	expectAllCookiesAccepted,
 	expectAllCookiesDeclined,
@@ -32,22 +33,6 @@ export const test = mergeTests(
 	siteSettingsPagesTest,
 	systemSettingsPageTest
 );
-
-export enum OptionalProductAnalyticsCookieTypes {
-	Functional = 'PRODUCT_ANALYTICS_CONSENT_TYPE_FUNCTIONAL',
-	Performance = 'PRODUCT_ANALYTICS_CONSENT_TYPE_PERFORMANCE',
-	Personalization = 'PRODUCT_ANALYTICS_CONSENT_TYPE_PERSONALIZATION',
-	ProductAnalytics = 'PRODUCT_ANALYTICS_CONSENT_TYPE_PRODUCT_ANALYTICS',
-}
-
-export type ProductAnalyticsCookie = {
-	name: string;
-	value: boolean;
-};
-
-export enum RequiredProductAnalyticsCookieTypes {
-	Necessary = 'PRODUCT_ANALYTICS_CONSENT_TYPE_NECESSARY',
-}
 
 test.afterEach(async ({page}) => {
 	await test.step('Clear Product Analytics cookies if present', async () => {

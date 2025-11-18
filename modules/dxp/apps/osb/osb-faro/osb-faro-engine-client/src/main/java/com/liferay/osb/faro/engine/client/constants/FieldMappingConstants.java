@@ -93,9 +93,16 @@ public class FieldMappingConstants {
 	}
 
 	public static Map<String, String>
-		getsalesforceAccountAttributesFieldMappingLanguageKeys() {
+		getSalesforceAccountAttributesFieldMapping() {
 
 		return _salesforceAccountAttributesFieldMappingLanguageKeys;
+	}
+
+	public static String getSalesforceAccountAttributesFieldMappingLanguageKeys(
+		String fieldName) {
+
+		return _salesforceAccountAttributesFieldMappingLanguageKeys.get(
+			fieldName);
 	}
 
 	public static Map<String, String>
@@ -187,51 +194,55 @@ public class FieldMappingConstants {
 	private static final Map<String, String>
 		_salesforceAccountAttributesFieldMappingLanguageKeys =
 			HashMapBuilder.put(
-				"AnnualRevenue", "annual-revenue"
+				"annualRevenue", "annual-revenue"
 			).put(
-				"BillingCountry", "country"
+				"billingCountry", "country"
 			).put(
-				"BillingState", "state"
+				"billingState", "state"
 			).put(
-				"CurrencyIsoCode", "currency-code"
+				"createdDate", "created-date"
 			).put(
-				"Id", "id"
+				"currencyIsoCode", "currency-code"
 			).put(
-				"Industry", "industry"
+				"customerSince", "customer-since"
 			).put(
-				"LastActivityDate", "last-activity-date"
+				"id", "id"
 			).put(
-				"Name", "accountName"
+				"industry", "industry"
 			).put(
-				"NumberOfEmployees", "number-of-employees"
+				"lastActivityDate", "last-activity-date"
 			).put(
-				"Type", "account-type"
+				"name", "account-name"
 			).put(
-				"YearStarted", "year-started"
+				"numberOfEmployees", "number-of-employees"
+			).put(
+				"type", "account-type"
 			).build();
 	private static final Map<String, String>
 		_salesforceAccountAttributesFieldMappingTypes = HashMapBuilder.put(
-			"AnnualRevenue", "int"
+			"annualRevenue", "int"
 		).put(
-			"BillingCountry", "String"
+			"billingCountry", "String"
 		).put(
-			"BillingState", "String"
+			"billingState", "String"
 		).put(
-			"CurrencyIsoCode", "String"
+			"createdDate", "Date"
 		).put(
-			"Id", "String"
+			"currencyIsoCode", "String"
 		).put(
-			"Industry", "String"
+			"customerSince", "Date"
 		).put(
-			"LastActivityDate", "Date"
+			"id", "String"
 		).put(
-			"Name", "String"
+			"industry", "String"
 		).put(
-			"NumberOfEmployees", "int"
+			"lastActivityDate", "Date"
 		).put(
-			"Type", "String"
+			"name", "String"
 		).put(
-			"YearStarted", "String"
+			"numberOfEmployees", "int"
+		).put(
+			"type", "String"
 		).build();
 	private static final List<FieldMappingMap>
 		_salesforceAccountFieldMappingMaps = Arrays.asList(

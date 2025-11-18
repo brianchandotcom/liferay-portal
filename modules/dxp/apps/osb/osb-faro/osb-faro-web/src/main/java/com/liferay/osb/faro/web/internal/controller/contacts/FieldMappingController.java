@@ -138,24 +138,37 @@ public class FieldMappingController extends BaseFaroController {
 			orderByFields = Collections.singletonList(
 				new OrderByField("displayName", orderByType, true));
 		}
-		if (Objects.equals(context, "account")){
+
+		if (Objects.equals(context, "account")) {
 			Map<String, String> salesforceFieldMapping =
-				FieldMappingConstants.getsalesforceAccountAttributesFieldMappingLanguageKeys();
+				FieldMappingConstants.
+					getSalesforceAccountAttributesFieldMapping();
 
 			List<FieldMapping> fieldMappings = new ArrayList<>();
-			for (Map.Entry<String, String> entry : salesforceFieldMapping.entrySet()) {
+
+			for (Map.Entry<String, String> entry :
+					salesforceFieldMapping.entrySet()) {
+
 				FieldMapping fieldMapping = new FieldMapping();
+
 				fieldMapping.setContext(context);
 				fieldMapping.setOwnerType(ownerType);
 				fieldMapping.setFieldName(entry.getKey());
 				fieldMapping.setDisplayName(entry.getValue());
 				fieldMapping.setDisplayType("input-field");
-				Map<String, String> SalesforceFieldMappingTypes = FieldMappingConstants.getSalesforceAccountAttributesFieldMappingTypes();
-				fieldMapping.setFieldType(SalesforceFieldMappingTypes.get(entry.getKey()));
+
+				Map<String, String> salesforceFieldMappingTypes =
+					FieldMappingConstants.
+						getSalesforceAccountAttributesFieldMappingTypes();
+
+				fieldMapping.setFieldType(
+					salesforceFieldMappingTypes.get(entry.getKey()));
 
 				fieldMappings.add(fieldMapping);
 			}
-			Results<FieldMapping> results = new Results<>(fieldMappings,fieldMappings.size());
+
+			Results<FieldMapping> results = new Results<>(
+				fieldMappings, fieldMappings.size());
 
 			Function<FieldMapping, FieldMappingDisplay> function =
 				FieldMappingDisplay::new;

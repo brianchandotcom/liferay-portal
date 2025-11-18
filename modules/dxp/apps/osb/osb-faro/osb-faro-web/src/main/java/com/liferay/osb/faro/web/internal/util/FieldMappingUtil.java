@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -28,9 +29,20 @@ import java.util.Set;
 public class FieldMappingUtil {
 
 	public static String getDisplayName(FieldMapping fieldMapping) {
-		String languageKey =
-			FieldMappingConstants.getDemographicsFieldMappingLanguageKey(
-				fieldMapping.getFieldName());
+		String languageKey = null;
+
+		if (Objects.equals(fieldMapping.getContext(), "demographics")) {
+			languageKey =
+				FieldMappingConstants.getDemographicsFieldMappingLanguageKey(
+					fieldMapping.getFieldName());
+		}
+
+		if (Objects.equals(fieldMapping.getContext(), "account")) {
+			languageKey =
+				FieldMappingConstants.
+					getSalesforceAccountAttributesFieldMappingLanguageKeys(
+						fieldMapping.getFieldName());
+		}
 
 		if (languageKey != null) {
 			PermissionChecker permissionChecker =

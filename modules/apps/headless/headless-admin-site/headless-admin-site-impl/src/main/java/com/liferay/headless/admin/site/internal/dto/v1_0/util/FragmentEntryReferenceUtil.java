@@ -112,39 +112,4 @@ public class FragmentEntryReferenceUtil {
 			null, null, null, defaultFragmentReference.getDefaultFragmentKey());
 	}
 
-	public static class FragmentEntryReference {
-
-		public FragmentEntryReference(
-			String fragmentEntryERC, String fragmentEntryKey,
-			String fragmentEntryScopeERC, String rendererKey) {
-
-			_fragmentEntryERC = fragmentEntryERC;
-			_fragmentEntryKey = fragmentEntryKey;
-			_fragmentEntryScopeERC = fragmentEntryScopeERC;
-			_rendererKey = rendererKey;
-		}
-
-		public String getFragmentEntryERC() {
-			return _fragmentEntryERC;
-		}
-
-		public String getFragmentEntryKey() {
-			return _fragmentEntryKey;
-		}
-
-		public String getFragmentEntryScopeERC() {
-			return _fragmentEntryScopeERC;
-		}
-
-		public String getRendererKey() {
-			return _rendererKey;
-		}
-
-		private final String _fragmentEntryERC;
-		private final String _fragmentEntryKey;
-		private final String _fragmentEntryScopeERC;
-		private final String _rendererKey;
-
-	}
-
 }

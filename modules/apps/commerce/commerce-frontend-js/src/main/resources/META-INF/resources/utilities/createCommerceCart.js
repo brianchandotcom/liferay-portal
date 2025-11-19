@@ -19,12 +19,14 @@ const DeliveryCartAPI = ServiceProvider.DeliveryCartAPI('v1');
 
 export function createCommerceCart({
 	accountId = null,
+	cartItems = [],
 	commerceChannelId = null,
 	currencyCode = null,
 	onCancel = () => {},
 	onCreate = () => {},
 	orderDetailURL = null,
 	orderTypes: externalOrderTypes = [],
+	skipRedirect = false,
 }) {
 	const orderTypes = externalOrderTypes.length
 		? externalOrderTypes
@@ -41,32 +43,33 @@ export function createCommerceCart({
 			return DeliveryCartAPI.createCartByChannelId(channelId, {
 				accountId:
 					accountId ?? Liferay?.CommerceContext?.account?.accountId,
+				cartItems,
 				currencyCode:
 					currencyCode ??
 					Liferay?.CommerceContext?.currency?.currencyCode,
 				...(orderTypeId ? {orderTypeId} : {}),
 			});
 		})
-		.then(({id: cartId = null}) => {
-			if (cartId) {
+		.then((cart) => {
+			if (cart.id) {
 				resetCommerceCurrency();
 
 				onCreate();
 
-				if (orderDetailURL) {
+				if (orderDetailURL && !skipRedirect) {
 					const redirectURL = orderDetailURL.includes(
 						DEFAULT_ORDER_DETAILS_PORTLET_ID
 					)
 						? createPortletURL(orderDetailURL, {
-								[ORDER_ID_PARAMETER]: cartId,
+								[ORDER_ID_PARAMETER]: cart.id,
 							})
-						: `${orderDetailURL}${cartId}`;
+						: `${orderDetailURL}${cart.id}`;
 
 					return liferayNavigate(redirectURL);
 				}
 			}
 
-			return Promise.resolve();
+			return Promise.resolve(cart);
 		})
 		.catch(({message, title}) => {
 			onCancel();

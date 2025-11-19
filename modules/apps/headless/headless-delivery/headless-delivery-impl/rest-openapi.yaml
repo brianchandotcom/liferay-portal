@@ -571,6 +571,12 @@ components:
                         The field type (e.g., image, text, etc.).
                     readOnly: true
                     type: string
+                fieldReference:
+                    # @review
+                    description:
+                        The field's friendly reference name. This is used by developers when referencing the field in
+                        custom implementations.
+                    type: string
                 inputControl:
                     description:
                         The field's control type (e.g., text, text area, etc.).
@@ -791,6 +797,13 @@ components:
                 dataType:
                     description:
                         The form field's type (e.g., date, geolocation, text, etc.).
+                    readOnly: true
+                    type: string
+                fieldReference:
+                    # @review
+                    description:
+                        The field's friendly reference name. This is used by developers when referencing the field in
+                        custom implementations.
                     readOnly: true
                     type: string
                 inputControl:

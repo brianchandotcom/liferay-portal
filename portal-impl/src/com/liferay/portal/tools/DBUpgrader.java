@@ -342,7 +342,8 @@ public class DBUpgrader {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						_POST_UPGRADE_DATA_CLEANUP_CLASS_NAME +
-							" will not be executed");
+							" did not activate successfully. The verify " +
+								"process will not be executed.");
 				}
 			}
 

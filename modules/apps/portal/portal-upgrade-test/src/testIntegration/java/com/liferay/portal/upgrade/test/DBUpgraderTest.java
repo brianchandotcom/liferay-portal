@@ -276,7 +276,8 @@ public class DBUpgraderTest {
 				messages.toString(),
 				messages.contains(
 					_DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME +
-						" will not be executed"));
+						" did not activate successfully. The verify process " +
+							"will not be executed."));
 		}
 		finally {
 			StartupHelperUtil.setUpgrading(false);
@@ -325,7 +326,8 @@ public class DBUpgraderTest {
 				messages.toString(),
 				messages.contains(
 					_DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME +
-						" will not be executed"));
+						" did not activate successfully. The verify process " +
+							"will not be executed."));
 		}
 		finally {
 			StartupHelperUtil.setUpgrading(false);

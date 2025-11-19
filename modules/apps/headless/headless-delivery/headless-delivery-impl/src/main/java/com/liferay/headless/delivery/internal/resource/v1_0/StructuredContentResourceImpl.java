@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -102,7 +101,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1352,33 +1350,8 @@ public class StructuredContentResourceImpl
 			}
 		}
 
-		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-			SetUtil.fromArray(
-				LocaleUtil.fromLanguageIds(
-					journalArticle.getAvailableLanguageIds())),
-			contentFields, ddmStructure.getDDMForm(), _dlAppService,
-			journalArticle.getGroupId(), _journalArticleService,
-			_layoutLocalService, contextAcceptLanguage.getPreferredLocale(),
-			_getRootDDMFormFields(ddmStructure));
-
-		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap = new HashMap<>();
-
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmFormValues.getDDMFormFieldValues()) {
-
-			ddmFormFieldValuesMap.put(
-				ddmFormFieldValue.getFieldReference(), ddmFormFieldValue);
-		}
-
 		for (ContentField contentField : contentFields) {
-			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValuesMap.get(
-				contentField.getName());
-
-			if (ddmFormFieldValue == null) {
-				continue;
-			}
-
-			Field field = fields.get(ddmFormFieldValue.getName());
+			Field field = fields.get(contentField.getName());
 
 			Value value = DDMValueUtil.toDDMValue(
 				contentField,
@@ -1400,7 +1373,7 @@ public class StructuredContentResourceImpl
 			}
 		}
 
-		ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
 		_ddmFormValuesValidator.validate(ddmFormValues);

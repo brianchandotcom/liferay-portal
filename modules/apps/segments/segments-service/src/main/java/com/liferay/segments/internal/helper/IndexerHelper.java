@@ -1,0 +1,146 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.segments.internal.helper;
+
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsEntryRelTable;
+import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
+import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsEntryRelLocalService;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * @author Marcos Martins
+ */
+public class IndexerHelper {
+
+	public IndexerHelper(
+		Indexer<User> indexer, Portal portal,
+		SegmentsEntryLocalService segmentsEntryLocalService,
+		SegmentsEntryProviderRegistry segmentsEntryProviderRegistry,
+		SegmentsEntryRelLocalService segmentsEntryRelLocalService) {
+
+		_indexer = indexer;
+		_portal = portal;
+		_segmentsEntryLocalService = segmentsEntryLocalService;
+		_segmentsEntryProviderRegistry = segmentsEntryProviderRegistry;
+		_segmentsEntryRelLocalService = segmentsEntryRelLocalService;
+	}
+
+	public Set<Long> getIndexableClassPKs(
+			long companyId, Set<Long> newClassPKs, long segmentEntryId)
+		throws Exception {
+
+		return SetUtil.symmetricDifference(
+			_getOldIndexClassPKs(companyId, segmentEntryId), newClassPKs);
+	}
+
+	public Set<Long> getNewClassPKs(long segmentsEntryId)
+		throws PortalException {
+
+		return SetUtil.fromArray(
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+				segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+	}
+
+	public void updateDatabase(long segmentsEntryId, Set<Long> newClassPKs)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
+
+		if ((segmentsEntry == null) ||
+			(segmentsEntry.getCriteriaObj() == null) || (newClassPKs == null) ||
+			newClassPKs.isEmpty()) {
+
+			return;
+		}
+
+		Set<Long> oldClassPKs = _getOldDatabaseClassPKs(segmentsEntryId);
+
+		Set<Long> addClassPKs = new HashSet<>(newClassPKs);
+		Set<Long> deleteClassPKs = new HashSet<>();
+
+		for (Long oldClassPK : oldClassPKs) {
+			if (!addClassPKs.remove(oldClassPK)) {
+				deleteClassPKs.add(oldClassPK);
+			}
+		}
+
+		long classNameId = _portal.getClassNameId(User.class);
+
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+			segmentsEntryId, classNameId,
+			ArrayUtil.toLongArray(deleteClassPKs));
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(segmentsEntry.getGroupId());
+		serviceContext.setUserId(segmentsEntry.getUserId());
+
+		_segmentsEntryRelLocalService.addSegmentsEntryRels(
+			segmentsEntryId, classNameId, ArrayUtil.toLongArray(addClassPKs),
+			serviceContext);
+	}
+
+	private Set<Long> _getOldDatabaseClassPKs(long segmentsEntryId) {
+		Iterable<Long> iterable = _segmentsEntryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				SegmentsEntryRelTable.INSTANCE.classPK
+			).from(
+				SegmentsEntryRelTable.INSTANCE
+			).where(
+				SegmentsEntryRelTable.INSTANCE.segmentsEntryId.eq(
+					segmentsEntryId)
+			));
+
+		return SetUtil.fromIterator(iterable.iterator());
+	}
+
+	private Set<Long> _getOldIndexClassPKs(long companyId, long segmentsEntryId)
+		throws Exception {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute(
+			"segmentsEntryIds", new long[] {segmentsEntryId});
+		searchContext.setCompanyId(companyId);
+
+		Hits hits = _indexer.search(searchContext);
+
+		Set<Long> classPKsSet = new HashSet<>();
+
+		for (Document document : hits.getDocs()) {
+			classPKsSet.add(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+		}
+
+		return classPKsSet;
+	}
+
+	private final Indexer<User> _indexer;
+	private final Portal _portal;
+	private final SegmentsEntryLocalService _segmentsEntryLocalService;
+	private final SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
+	private final SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+
+}

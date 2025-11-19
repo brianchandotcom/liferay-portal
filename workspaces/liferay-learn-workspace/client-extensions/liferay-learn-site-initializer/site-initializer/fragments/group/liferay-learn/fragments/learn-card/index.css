@@ -64,7 +64,7 @@
 
 	&:hover {
 		background-color: var(--color-action-primary-hover-10, #edf3fe) !important;
-		border: 1px solid var(--color-brand-primary-darken-1, #0053f0) !important;
+		border-color: var(--color-brand-primary-darken-1, #0053f0) !important;
 	}
 
 	&.learn-card-icon-left { flex-direction: row; }
@@ -132,6 +132,7 @@
 }
 
 .learn-card-link {
+	box-sizing: border-box;
 	display: block;
 	height: 100%;
 }

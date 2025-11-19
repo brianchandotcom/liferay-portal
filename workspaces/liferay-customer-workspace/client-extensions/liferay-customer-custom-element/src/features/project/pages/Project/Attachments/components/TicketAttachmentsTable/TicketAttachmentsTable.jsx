@@ -4,23 +4,22 @@
  */
 
 import {useModal} from '@clayui/core';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import i18n from '~/utils/I18n';
 import ActionTable from '~/components/ActionTable';
 import useJiraTicketURL from '~/hooks/useJiraTicketURL';
-import {getTicketAttachments} from '~/services/liferay/api';
 import useMyUserAccountByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 import DeleteTicketAttachmentModal from './components/DeleteTicketAttachmentModal/DeleteTicketAttachmentModal';
 import TicketAttachmentsTableEmpty from './components/TicketAttachmentsTableEmpty';
 import OptionsColumn from './components/columns/OptionsColumn';
 import useDelete from './hooks/useDeleteTicketAttachment';
 import useDownload from './hooks/useDownloadTicketAttachment';
-import usePagination from './hooks/usePaginationTicketAttachments';
-import useSort from './hooks/useSortTicketAttachments';
 import getAttachmentFormattedDateTime from './utils/getAttachmentFormattedDateTime';
 import {getColumns} from './utils/getColumns';
 
 import './TicketAttachmentsTable.css';
+import useGetTicketAttachments from './hooks/useGetTicketAttachments';
+import useFilters from './hooks/useFilters';
 
 const TicketAttachmentsTable = ({
 	koroneikiAccount,
@@ -28,58 +27,21 @@ const TicketAttachmentsTable = ({
 }) => {
 	const {
 		data: myUserAccountData,
-		loading,
+		loading: myUserAccountLoading,
 	} = useMyUserAccountByAccountExternalReferenceCode(
 		koroneikiAccount?.accountKey,
 		koroneikiAccountLoading
 	);
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
-	const [ticketAttachments, setTicketAttachments] = useState([]);
+	const {filterQuery, handleSortChange, paginationConfig} = useFilters(koroneikiAccount);
+	const {fetchTicketAttachments, loading, ticketAttachments, totalCount} = useGetTicketAttachments(filterQuery, myUserAccountLoading);
+
 	const [selectedTicketAttachment, setSelectedTicketAttachment] = useState();
 
-	const {handleSortChange, sortConfig} = useSort();
-	const {
-		paginationConfig,
-		sortedTicketAttachmentsFilteredPerPage,
-	} = usePagination(sortConfig, ticketAttachments);
 	const {onDownload} = useDownload();
-	const {isDeleting, onDelete} = useDelete();
+	const {isDeleting, onDelete} = useDelete(fetchTicketAttachments);
 	const {observer, onOpenChange, open} = useModal();
 	const siteURL = Liferay.ThemeDisplay.getLayoutURL().split('/project')[0];
-
-	useEffect(() => {
-		const fetchTicketAttachments = async () => {
-			const ticketAttachmentsResponse = await getTicketAttachments(
-				`accountKey eq '${koroneikiAccount?.accountKey}' and (state eq 0 or state eq null) and status/any(s:s eq 0)`
-			);
-
-			const ticketAttachments = ticketAttachmentsResponse.items.map(
-				(ticketAttachment) => {
-					return {
-						accountKey: ticketAttachment.accountKey,
-						creatorId: ticketAttachment.creator.id,
-						creatorName: ticketAttachment.creator.name,
-						dateCreated: ticketAttachment.dateCreated,
-						downloadUrl: `${siteURL}/ticket-attachments/#/id/${ticketAttachment.id}`,
-						fileName: ticketAttachment.fileName,
-						fileSize: ticketAttachment.fileSize,
-						storageBucket: ticketAttachment.storageBucket,
-						ticketAttachmentId: ticketAttachment.id,
-						ticketId: ticketAttachment.jiraIssueKey,
-					};
-				}
-			);
-
-			setTicketAttachments(ticketAttachments);
-		};
-		fetchTicketAttachments();
-	}, [
-		koroneikiAccount?.accountKey,
-		loggedUserAccount?.id,
-		paginationConfig.activePage,
-		paginationConfig.itemsPerPage,
-		isDeleting,
-	]);
 
 	return (
 		<>
@@ -89,7 +51,7 @@ const TicketAttachmentsTable = ({
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onDelete={() => {
-						onDelete(selectedTicketAttachment?.ticketAttachmentId);
+						onDelete(selectedTicketAttachment?.id);
 						onOpenChange(false);
 						Liferay.Util.openToast({
 							message: i18n.translate('was-deleted-successfully'),
@@ -111,8 +73,8 @@ const TicketAttachmentsTable = ({
 				</DeleteTicketAttachmentModal>
 			)}
 
-			{sortedTicketAttachmentsFilteredPerPage &&
-			paginationConfig.totalCount > 0 &&
+			{ticketAttachments &&
+			totalCount > 0 &&
 			!loading ? (
 				<div className="cp-ticket-attachments-table-wrapper">
 					<ActionTable
@@ -122,8 +84,8 @@ const TicketAttachmentsTable = ({
 						hasPagination
 						hasSorting
 						isLoading={loading}
-						paginationConfig={paginationConfig}
-						rows={sortedTicketAttachmentsFilteredPerPage?.map(
+						paginationConfig={{...paginationConfig, totalCount}}
+						rows={ticketAttachments?.map(
 							(ticketAttachment) => ({
 								attached: (
 									<div className="d-flex flex-column">
@@ -135,7 +97,7 @@ const TicketAttachmentsTable = ({
 
 										<div className="m-0 text-neutral-7 text-paragraph-sm text-truncate">
 											{`${i18n.translate('by')} ${
-												ticketAttachment?.creatorName
+												ticketAttachment?.creator.name
 											}`}
 										</div>
 									</div>
@@ -143,7 +105,7 @@ const TicketAttachmentsTable = ({
 								fileName: (
 									<a
 										className="m-0 text-truncate"
-										href={ticketAttachment?.downloadUrl}
+										href={`${siteURL}/ticket-attachments/#/id/${ticketAttachment.id}`}
 									>
 										{ticketAttachment?.fileName}
 									</a>
@@ -160,7 +122,7 @@ const TicketAttachmentsTable = ({
 												?.selectedAccountSummary
 												.hasAdministratorRole ||
 											loggedUserAccount?.id ===
-												ticketAttachment.creatorId
+												ticketAttachment.creator.id
 										}
 										onDelete={onDelete}
 										onDownload={onDownload}
@@ -168,15 +130,15 @@ const TicketAttachmentsTable = ({
 										setSelectedTicketAttachment={
 											setSelectedTicketAttachment
 										}
-										ticketAttachment={ticketAttachment}
+										ticketAttachment={{...ticketAttachment, downloadUrl: `${siteURL}/ticket-attachments/#/id/${ticketAttachment.id}`}}
 									/>
 								),
 								ticket: (
 									<a
 										className="m-0 text-truncate"
-										href={`${useJiraTicketURL(ticketAttachment?.ticketId)}`}
+										href={`${useJiraTicketURL(ticketAttachment?.jiraIssueKey)}`}
 									>
-										{'#' + ticketAttachment?.ticketId}
+										{'#' + ticketAttachment?.jiraIssueKey}
 									</a>
 								),
 							})
@@ -184,8 +146,8 @@ const TicketAttachmentsTable = ({
 					/>
 				</div>
 			) : (
-				!sortedTicketAttachmentsFilteredPerPage ||
-				(paginationConfig.totalCount === 0 && !loading && (
+				!ticketAttachments ||
+				(totalCount === 0 && !loading && (
 					<TicketAttachmentsTableEmpty
 						description={i18n.translate(
 							'there-are-no-items-to-display'

@@ -5,7 +5,7 @@
 
 import {useState} from 'react';
 
-export default function useDelete() {
+export default function useDelete(fetchTicketAttachments) {
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const onDelete = async (ticketAttachmentId) => {
@@ -19,6 +19,7 @@ export default function useDelete() {
 			})
 			.finally(() => {
 				setIsDeleting(false);
+				fetchTicketAttachments();
 			});
 	};
 

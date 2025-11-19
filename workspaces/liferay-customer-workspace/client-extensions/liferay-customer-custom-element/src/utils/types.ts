@@ -138,6 +138,19 @@ export interface ITicket {
 	ticketId: string | number;
 }
 
+export interface ITicketAttachment {
+	accountKey: string;
+	creator: {
+		id: string;
+		name: string;
+	};
+	dateCreated: string;
+	fileName: string;
+	fileSize: string;
+	id: number;
+	jiraIssueKey: string;
+}
+
 export interface ITimeInput {
 	hours: string;
 	minutes: string;

@@ -84,6 +84,7 @@ JavaAnnotationDefaultAttributeCheck | .java | Finds cases where the default valu
 JavaAssertEqualsCheck | .java | Validates `Assert.assertEquals` calls. |
 [JavaConstructorParametersCheck](check/java_constructor_parameters_check.md#javaconstructorparameterscheck) | .java | Checks that the order of variable assignments matches the order of the parameters in the constructor signature. |
 JavaConstructorSuperCallCheck | .java | Finds unnecessary call to no-argument constructor of the superclass. |
+JavaDocumentAddCallsOrderCheck | .java | Sorts `add*` calls for type `Document`. |
 JavaEmptyLinesCheck | .java | Finds missing and unnecessary empty lines. |
 JavaEntityFieldsMapOrderCheck | .java | Sorts entity fields when calling `EntityFieldsMapFactory.create` and `EntityModel.toEntityFieldsMap`. |
 JavaFeatureFlagsAndTestInfoAnnotationCheck | .java | Sorts the values in `@FeatureFlags` and `@TestInfo` annotation. |

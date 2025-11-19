@@ -164,6 +164,8 @@ function ItemSelectorModal<T extends Record<string, any>>({
 					: sub(Liferay.Language.get('select-x'), itemTypeLabel)}
 			</ClayModal.Header>
 
+			{message}
+
 			<ClayModal.Body className="p-0">
 				{breadcrumbs && (
 					<ClayLayout.Container fluid>
@@ -179,8 +181,6 @@ function ItemSelectorModal<T extends Record<string, any>>({
 						/>
 					</ClayLayout.Container>
 				)}
-
-				{message}
 
 				<FrontendDataSet
 					{...fdsProps}

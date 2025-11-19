@@ -217,6 +217,11 @@ public interface OpenIdConnectUserLocalService
 	public OpenIdConnectUser getOpenIdConnectUser(long openIdConnectUserId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OpenIdConnectUser getOpenIdConnectUser(
+			long companyId, String issuer, String subject)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the open ID connect users.
 	 *

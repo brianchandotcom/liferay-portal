@@ -69,7 +69,7 @@ public class OpenIdConnectSessionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,10 +91,12 @@ public class OpenIdConnectSessionCacheModel
 		sb.append(clientId);
 		sb.append(", idToken=");
 		sb.append(idToken);
+		sb.append(", issuer=");
+		sb.append(issuer);
 		sb.append(", refreshToken=");
 		sb.append(refreshToken);
-		sb.append(", sid=");
-		sb.append(sid);
+		sb.append(", sessionId=");
+		sb.append(sessionId);
 		sb.append("}");
 
 		return sb.toString();
@@ -155,6 +157,13 @@ public class OpenIdConnectSessionCacheModel
 			openIdConnectSessionImpl.setIdToken(idToken);
 		}
 
+		if (issuer == null) {
+			openIdConnectSessionImpl.setIssuer("");
+		}
+		else {
+			openIdConnectSessionImpl.setIssuer(issuer);
+		}
+
 		if (refreshToken == null) {
 			openIdConnectSessionImpl.setRefreshToken("");
 		}
@@ -162,11 +171,11 @@ public class OpenIdConnectSessionCacheModel
 			openIdConnectSessionImpl.setRefreshToken(refreshToken);
 		}
 
-		if (sid == null) {
-			openIdConnectSessionImpl.setSid("");
+		if (sessionId == null) {
+			openIdConnectSessionImpl.setSessionId("");
 		}
 		else {
-			openIdConnectSessionImpl.setSid(sid);
+			openIdConnectSessionImpl.setSessionId(sessionId);
 		}
 
 		openIdConnectSessionImpl.resetOriginalValues();
@@ -191,8 +200,9 @@ public class OpenIdConnectSessionCacheModel
 		authServerWellKnownURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
 		idToken = (String)objectInput.readObject();
+		issuer = objectInput.readUTF();
 		refreshToken = objectInput.readUTF();
-		sid = objectInput.readUTF();
+		sessionId = objectInput.readUTF();
 	}
 
 	@Override
@@ -236,6 +246,13 @@ public class OpenIdConnectSessionCacheModel
 			objectOutput.writeObject(idToken);
 		}
 
+		if (issuer == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(issuer);
+		}
+
 		if (refreshToken == null) {
 			objectOutput.writeUTF("");
 		}
@@ -243,11 +260,11 @@ public class OpenIdConnectSessionCacheModel
 			objectOutput.writeUTF(refreshToken);
 		}
 
-		if (sid == null) {
+		if (sessionId == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(sid);
+			objectOutput.writeUTF(sessionId);
 		}
 	}
 
@@ -261,7 +278,8 @@ public class OpenIdConnectSessionCacheModel
 	public String authServerWellKnownURI;
 	public String clientId;
 	public String idToken;
+	public String issuer;
 	public String refreshToken;
-	public String sid;
+	public String sessionId;
 
 }

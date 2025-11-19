@@ -232,6 +232,16 @@ public interface OpenIdConnectSessionLocalService
 			long openIdConnectSessionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OpenIdConnectSession getOpenIdConnectSession(
+			long userId, String issuer)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OpenIdConnectSession getOpenIdConnectSession(
+			String issuer, String sessionId)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the open ID connect sessions.
 	 *

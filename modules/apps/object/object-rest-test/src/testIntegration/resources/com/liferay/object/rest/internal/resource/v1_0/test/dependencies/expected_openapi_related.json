@@ -635,6 +635,9 @@
 					"relationship1/userId": {
 						"type": "integer"
 					},
+					"relationship1/version": {
+						"type": "integer"
+					},
 					"relationship2/creator": {
 						"type": "string"
 					},
@@ -714,6 +717,9 @@
 					"relationship2/relationship1/userId": {
 						"type": "integer"
 					},
+					"relationship2/relationship1/version": {
+						"type": "integer"
+					},
 					"relationship2/relationship2/creator": {
 						"type": "string"
 					},
@@ -750,6 +756,9 @@
 						"type": "array"
 					},
 					"relationship2/relationship2/userId": {
+						"type": "integer"
+					},
+					"relationship2/relationship2/version": {
 						"type": "integer"
 					},
 					"relationship2/relationship3/creator": {
@@ -844,6 +853,9 @@
 					"relationship2/relationship3/relationship3/userId": {
 						"type": "integer"
 					},
+					"relationship2/relationship3/relationship3/version": {
+						"type": "integer"
+					},
 					"relationship2/relationship3/relationship4/creator": {
 						"type": "string"
 					},
@@ -893,6 +905,9 @@
 						"type": "array"
 					},
 					"relationship2/relationship3/relationship4/userId": {
+						"type": "integer"
+					},
+					"relationship2/relationship3/relationship4/version": {
 						"type": "integer"
 					},
 					"relationship2/relationship3/relationship5/creator": {
@@ -974,6 +989,9 @@
 					"relationship2/relationship3/relationship5/relationship5/userId": {
 						"type": "integer"
 					},
+					"relationship2/relationship3/relationship5/relationship5/version": {
+						"type": "integer"
+					},
 					"relationship2/relationship3/relationship5/relationship6/creator": {
 						"type": "string"
 					},
@@ -1012,6 +1030,9 @@
 					"relationship2/relationship3/relationship5/relationship6/userId": {
 						"type": "integer"
 					},
+					"relationship2/relationship3/relationship5/relationship6/version": {
+						"type": "integer"
+					},
 					"relationship2/relationship3/relationship5/status": {
 						"type": "integer"
 					},
@@ -1022,6 +1043,9 @@
 					"relationship2/relationship3/relationship5/userId": {
 						"type": "integer"
 					},
+					"relationship2/relationship3/relationship5/version": {
+						"type": "integer"
+					},
 					"relationship2/relationship3/status": {
 						"type": "integer"
 					},
@@ -1030,6 +1054,9 @@
 						"type": "array"
 					},
 					"relationship2/relationship3/userId": {
+						"type": "integer"
+					},
+					"relationship2/relationship3/version": {
 						"type": "integer"
 					},
 					"relationship2/relationship4/creator": {
@@ -1083,6 +1110,9 @@
 					"relationship2/relationship4/userId": {
 						"type": "integer"
 					},
+					"relationship2/relationship4/version": {
+						"type": "integer"
+					},
 					"relationship2/status": {
 						"type": "integer"
 					},
@@ -1093,6 +1123,9 @@
 					"relationship2/userId": {
 						"type": "integer"
 					},
+					"relationship2/version": {
+						"type": "integer"
+					},
 					"status": {
 						"type": "integer"
 					},
@@ -1101,6 +1134,9 @@
 						"type": "array"
 					},
 					"userId": {
+						"type": "integer"
+					},
+					"version": {
 						"type": "integer"
 					}
 				},
@@ -1400,6 +1436,9 @@
 					"relationship1/userId": {
 						"type": "integer"
 					},
+					"relationship1/version": {
+						"type": "integer"
+					},
 					"relationship2/creator": {
 						"type": "string"
 					},
@@ -1479,6 +1518,9 @@
 					"relationship2/relationship1/userId": {
 						"type": "integer"
 					},
+					"relationship2/relationship1/version": {
+						"type": "integer"
+					},
 					"relationship2/relationship2/creator": {
 						"type": "string"
 					},
@@ -1530,6 +1572,9 @@
 					"relationship2/relationship2/userId": {
 						"type": "integer"
 					},
+					"relationship2/relationship2/version": {
+						"type": "integer"
+					},
 					"relationship2/status": {
 						"type": "integer"
 					},
@@ -1538,6 +1583,9 @@
 						"type": "array"
 					},
 					"relationship2/userId": {
+						"type": "integer"
+					},
+					"relationship2/version": {
 						"type": "integer"
 					},
 					"relationship3/creator": {
@@ -1632,6 +1680,9 @@
 					"relationship3/relationship3/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship3/version": {
+						"type": "integer"
+					},
 					"relationship3/relationship4/creator": {
 						"type": "string"
 					},
@@ -1681,6 +1732,9 @@
 						"type": "array"
 					},
 					"relationship3/relationship4/userId": {
+						"type": "integer"
+					},
+					"relationship3/relationship4/version": {
 						"type": "integer"
 					},
 					"relationship3/relationship5/creator": {
@@ -1762,6 +1816,9 @@
 					"relationship3/relationship5/relationship5/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship5/relationship5/version": {
+						"type": "integer"
+					},
 					"relationship3/relationship5/relationship6/creator": {
 						"type": "string"
 					},
@@ -1828,6 +1885,9 @@
 					"relationship3/relationship5/relationship6/relationship6/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship5/relationship6/relationship6/version": {
+						"type": "integer"
+					},
 					"relationship3/relationship5/relationship6/relationship7/creator": {
 						"type": "string"
 					},
@@ -1866,6 +1926,9 @@
 					"relationship3/relationship5/relationship6/relationship7/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship5/relationship6/relationship7/version": {
+						"type": "integer"
+					},
 					"relationship3/relationship5/relationship6/status": {
 						"type": "integer"
 					},
@@ -1874,6 +1937,9 @@
 						"type": "array"
 					},
 					"relationship3/relationship5/relationship6/userId": {
+						"type": "integer"
+					},
+					"relationship3/relationship5/relationship6/version": {
 						"type": "integer"
 					},
 					"relationship3/relationship5/status": {
@@ -1886,6 +1952,9 @@
 					"relationship3/relationship5/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship5/version": {
+						"type": "integer"
+					},
 					"relationship3/status": {
 						"type": "integer"
 					},
@@ -1894,6 +1963,9 @@
 						"type": "array"
 					},
 					"relationship3/userId": {
+						"type": "integer"
+					},
+					"relationship3/version": {
 						"type": "integer"
 					},
 					"relationship4/creator": {
@@ -1947,6 +2019,9 @@
 					"relationship4/userId": {
 						"type": "integer"
 					},
+					"relationship4/version": {
+						"type": "integer"
+					},
 					"status": {
 						"type": "integer"
 					},
@@ -1955,6 +2030,9 @@
 						"type": "array"
 					},
 					"userId": {
+						"type": "integer"
+					},
+					"version": {
 						"type": "integer"
 					}
 				},
@@ -2289,6 +2367,9 @@
 					"relationship3/relationship1/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship1/version": {
+						"type": "integer"
+					},
 					"relationship3/relationship2/creator": {
 						"type": "string"
 					},
@@ -2368,6 +2449,9 @@
 					"relationship3/relationship2/relationship1/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship2/relationship1/version": {
+						"type": "integer"
+					},
 					"relationship3/relationship2/relationship2/creator": {
 						"type": "string"
 					},
@@ -2419,6 +2503,9 @@
 					"relationship3/relationship2/relationship2/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship2/relationship2/version": {
+						"type": "integer"
+					},
 					"relationship3/relationship2/status": {
 						"type": "integer"
 					},
@@ -2427,6 +2514,9 @@
 						"type": "array"
 					},
 					"relationship3/relationship2/userId": {
+						"type": "integer"
+					},
+					"relationship3/relationship2/version": {
 						"type": "integer"
 					},
 					"relationship3/relationship3/creator": {
@@ -2480,6 +2570,9 @@
 					"relationship3/relationship3/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship3/version": {
+						"type": "integer"
+					},
 					"relationship3/relationship4/creator": {
 						"type": "string"
 					},
@@ -2531,6 +2624,9 @@
 					"relationship3/relationship4/userId": {
 						"type": "integer"
 					},
+					"relationship3/relationship4/version": {
+						"type": "integer"
+					},
 					"relationship3/status": {
 						"type": "integer"
 					},
@@ -2539,6 +2635,9 @@
 						"type": "array"
 					},
 					"relationship3/userId": {
+						"type": "integer"
+					},
+					"relationship3/version": {
 						"type": "integer"
 					},
 					"relationship4/creator": {
@@ -2590,6 +2689,9 @@
 						"type": "array"
 					},
 					"relationship4/userId": {
+						"type": "integer"
+					},
+					"relationship4/version": {
 						"type": "integer"
 					},
 					"relationship5/creator": {
@@ -2671,6 +2773,9 @@
 					"relationship5/relationship5/userId": {
 						"type": "integer"
 					},
+					"relationship5/relationship5/version": {
+						"type": "integer"
+					},
 					"relationship5/relationship6/creator": {
 						"type": "string"
 					},
@@ -2735,6 +2840,9 @@
 						"type": "array"
 					},
 					"relationship5/relationship6/relationship6/userId": {
+						"type": "integer"
+					},
+					"relationship5/relationship6/relationship6/version": {
 						"type": "integer"
 					},
 					"relationship5/relationship6/relationship7/creator": {
@@ -2803,6 +2911,9 @@
 					"relationship5/relationship6/relationship7/relationship7/userId": {
 						"type": "integer"
 					},
+					"relationship5/relationship6/relationship7/relationship7/version": {
+						"type": "integer"
+					},
 					"relationship5/relationship6/relationship7/relationship8/creator": {
 						"type": "string"
 					},
@@ -2841,6 +2952,9 @@
 					"relationship5/relationship6/relationship7/relationship8/userId": {
 						"type": "integer"
 					},
+					"relationship5/relationship6/relationship7/relationship8/version": {
+						"type": "integer"
+					},
 					"relationship5/relationship6/relationship7/status": {
 						"type": "integer"
 					},
@@ -2849,6 +2963,9 @@
 						"type": "array"
 					},
 					"relationship5/relationship6/relationship7/userId": {
+						"type": "integer"
+					},
+					"relationship5/relationship6/relationship7/version": {
 						"type": "integer"
 					},
 					"relationship5/relationship6/status": {
@@ -2861,6 +2978,9 @@
 					"relationship5/relationship6/userId": {
 						"type": "integer"
 					},
+					"relationship5/relationship6/version": {
+						"type": "integer"
+					},
 					"relationship5/status": {
 						"type": "integer"
 					},
@@ -2871,6 +2991,9 @@
 					"relationship5/userId": {
 						"type": "integer"
 					},
+					"relationship5/version": {
+						"type": "integer"
+					},
 					"status": {
 						"type": "integer"
 					},
@@ -2879,6 +3002,9 @@
 						"type": "array"
 					},
 					"userId": {
+						"type": "integer"
+					},
+					"version": {
 						"type": "integer"
 					}
 				},
@@ -5293,6 +5419,13 @@
 					{
 						"in": "query",
 						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
 						"schema": {
 							"type": "string"
 						}
@@ -8875,6 +9008,13 @@
 					{
 						"in": "query",
 						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
 						"schema": {
 							"type": "string"
 						}

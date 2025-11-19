@@ -435,6 +435,9 @@
 					},
 					"userId": {
 						"type": "integer"
+					},
+					"version": {
+						"type": "integer"
 					}
 				},
 				"xml": {
@@ -2249,6 +2252,13 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {
@@ -3412,6 +3422,13 @@
 					{
 						"in": "query",
 						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
 						"schema": {
 							"type": "string"
 						}

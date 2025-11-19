@@ -234,7 +234,7 @@ public class ViewChangesDisplayContext {
 		List<DropdownItem> bulkActionDropdownItems = new ArrayList<>();
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-20183")) {
-			if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+			if (_ctCollection.isInProgress() ||
 				(_ctCollection.getStatus() ==
 					WorkflowConstants.STATUS_EXPIRED)) {
 
@@ -254,7 +254,7 @@ public class ViewChangesDisplayContext {
 						"post", "move-changes", null));
 			}
 
-			if (_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			if (_ctCollection.isInProgress()) {
 				bulkActionDropdownItems.add(
 					new FDSActionDropdownItem(
 						PortletURLBuilder.createRenderURL(
@@ -300,7 +300,7 @@ public class ViewChangesDisplayContext {
 				_language.get(_httpServletRequest, "review-change"), "get",
 				"get", null));
 
-		if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+		if (_ctCollection.isInProgress() ||
 			(_ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED)) {
 
 			fdsActionDropdownItems.add(
@@ -323,7 +323,7 @@ public class ViewChangesDisplayContext {
 					"move-changes", null));
 		}
 
-		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+		if (_ctCollection.isInProgress()) {
 			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					PortletURLBuilder.createRenderURL(
@@ -637,8 +637,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"discardURL",
 			() -> {
-				if ((_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) ||
+				if (!_ctCollection.isInProgress() ||
 					!CTCollectionPermission.contains(
 						_themeDisplay.getPermissionChecker(), _ctCollection,
 						ActionKeys.DELETE)) {
@@ -685,8 +684,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"moveChangesURL",
 			() -> {
-				if ((_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) ||
+				if (!_ctCollection.isInProgress() ||
 					!CTCollectionPermission.contains(
 						_themeDisplay.getPermissionChecker(), _ctCollection,
 						ActionKeys.UPDATE)) {
@@ -973,8 +971,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"publishURL",
 			() -> {
-				if ((_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) ||
+				if (!_ctCollection.isInProgress() ||
 					!CTCollectionPermission.contains(
 						_themeDisplay.getPermissionChecker(), _ctCollection,
 						CTActionKeys.PUBLISH)) {
@@ -1035,8 +1032,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"scheduleURL",
 			() -> {
-				if ((_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) ||
+				if (!_ctCollection.isInProgress() ||
 					!PropsValues.SCHEDULER_ENABLED ||
 					!CTCollectionPermission.contains(
 						_themeDisplay.getPermissionChecker(), _ctCollection,
@@ -1244,7 +1240,7 @@ public class ViewChangesDisplayContext {
 			PermissionChecker permissionChecker)
 		throws Exception {
 
-		if ((_ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+		if (!_ctCollection.isInProgress() &&
 			(_ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED)) {
 
 			return null;

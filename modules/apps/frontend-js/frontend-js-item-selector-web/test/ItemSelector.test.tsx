@@ -155,4 +155,43 @@ describe('ItemSelector component', () => {
 			name: mockSecondItemName,
 		});
 	});
+
+	it('fetches when the menu opens', async () => {
+		const {findByRole, queryByRole} = render(
+			<ItemSelector<TestItem>
+				apiURL={`${location.origin}/o/headless-delivery/v1.0/test-api-url`}
+				refetchOnActive
+			>
+				{(item) => (
+					<ItemSelector.Item key={item.id} textValue={item.name}>
+						{item.name}
+					</ItemSelector.Item>
+				)}
+			</ItemSelector>
+		);
+
+		expect(mockedFetch).toHaveBeenCalledTimes(1);
+
+		const input = await findByRole('combobox');
+
+		await userEvent.click(input);
+
+		const menu = await findByRole('listbox');
+
+		expect(menu).toBeVisible();
+
+		const listItem = await findByRole('option', {
+			name: mockFirstItemName,
+		});
+
+		expect(listItem).toBeTruthy();
+
+		expect(mockedFetch).toHaveBeenCalledTimes(2);
+
+		await userEvent.click(listItem);
+
+		await waitFor(() => {
+			expect(queryByRole('listbox')).not.toBeInTheDocument();
+		});
+	});
 });

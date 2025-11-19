@@ -116,14 +116,14 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				"gemini-2.5-flash-lite"
 			).build();
 
-		Map<String, String> kaleoNodeSettingsMap = new HashMap<>();
+		Map<String, String> kaleoNodeSettingValues = new HashMap<>();
 
 		List<KaleoNodeSetting> kaleoNodeSettings =
 			_kaleoNodeSettingLocalService.getKaleoNodeSettings(
 				currentKaleoNode.getKaleoNodeId());
 
 		for (KaleoNodeSetting kaleoNodeSetting : kaleoNodeSettings) {
-			kaleoNodeSettingsMap.put(
+			kaleoNodeSettingValues.put(
 				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
 		}
 
@@ -131,7 +131,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			DecisionAssistant.class
 		).systemMessageProvider(
 			object -> InputVariablesUtil.applyInputVariables(
-				executionContext, "prompt", kaleoNodeSettingsMap)
+				executionContext, "prompt", kaleoNodeSettingValues)
 		).streamingChatModel(
 			vertexAiGeminiStreamingChatModel
 		).tools(
@@ -140,7 +140,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		decisionAssistant.decide(
 			InputVariablesUtil.applyInputVariables(
-				executionContext, "userMessage", kaleoNodeSettingsMap),
+				executionContext, "userMessage", kaleoNodeSettingValues),
 			InvocationParameters.from(
 				Map.of(
 					"executionContext", executionContext, "permissionChecker",

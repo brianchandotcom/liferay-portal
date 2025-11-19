@@ -26,12 +26,12 @@ public class InputVariablesUtil {
 
 	public static String applyInputVariables(
 		ExecutionContext executionContext,
-		String kaleoNodeSettingName, Map<String, String> kaleoNodeSettingsMap) {
+		String kaleoNodeSettingName, Map<String, String> kaleoNodeSettingValues) {
 
 		Map<String, String> inputVariables = _getInputVariables(
-			kaleoNodeSettingsMap, executionContext.getWorkflowContext());
+			kaleoNodeSettingValues, executionContext.getWorkflowContext());
 
-		String message = kaleoNodeSettingsMap.get(kaleoNodeSettingName);
+		String message = kaleoNodeSettingValues.get(kaleoNodeSettingName);
 
 		for (Map.Entry<String, String> entry : inputVariables.entrySet()) {
 			message = StringUtil.replace(
@@ -42,10 +42,10 @@ public class InputVariablesUtil {
 	}
 
 	private static Map<String, String> _getInputVariables(
-		Map<String, String> kaleoNodeSettingsMap,
+		Map<String, String> kaleoNodeSettingValues,
 		Map<String, Serializable> workflowContext) {
 
-		String inputVariablesString = kaleoNodeSettingsMap.get(
+		String inputVariablesString = kaleoNodeSettingValues.get(
 			"inputVariables");
 
 		if (inputVariablesString == null) {

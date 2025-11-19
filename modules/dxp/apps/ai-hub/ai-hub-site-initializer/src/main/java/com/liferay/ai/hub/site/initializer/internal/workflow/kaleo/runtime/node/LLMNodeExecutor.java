@@ -77,14 +77,14 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				"gemini-2.5-flash-lite"
 			).build();
 
-		Map<String, String> kaleoNodeSettingsMap = new HashMap<>();
+		Map<String, String> kaleoNodeSettingValues = new HashMap<>();
 
 		List<KaleoNodeSetting> kaleoNodeSettings =
 			_kaleoNodeSettingLocalService.getKaleoNodeSettings(
 				currentKaleoNode.getKaleoNodeId());
 
 		for (KaleoNodeSetting kaleoNodeSetting : kaleoNodeSettings) {
-			kaleoNodeSettingsMap.put(
+			kaleoNodeSettingValues.put(
 				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
 		}
 
@@ -92,14 +92,14 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			WritingAssistant.class
 		).systemMessageProvider(
 			object -> InputVariablesUtil.applyInputVariables(
-				executionContext, "prompt", kaleoNodeSettingsMap)
+				executionContext, "prompt", kaleoNodeSettingValues)
 		).streamingChatModel(
 			vertexAiGeminiStreamingChatModel
 		).build();
 
 		writingAssistant.rewrite(
 			InputVariablesUtil.applyInputVariables(
-				executionContext, "userMessage", kaleoNodeSettingsMap)
+				executionContext, "userMessage", kaleoNodeSettingValues)
 		).onCompleteResponse(
 			response -> _completeResponse(
 				response, executionContext, vertexAiGeminiStreamingChatModel)

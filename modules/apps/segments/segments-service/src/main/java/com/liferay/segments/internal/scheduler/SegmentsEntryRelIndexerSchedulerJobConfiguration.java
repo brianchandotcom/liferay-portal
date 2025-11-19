@@ -6,21 +6,31 @@
 package com.liferay.segments.internal.scheduler;
 
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.search.spi.reindexer.BulkReindexer;
 import com.liferay.segments.configuration.SegmentsConfiguration;
-import com.liferay.segments.internal.constants.SegmentsDestinationNames;
+import com.liferay.segments.internal.helper.IndexerHelper;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,11 +59,25 @@ public class SegmentsEntryRelIndexerSchedulerJobConfiguration
 
 					dynamicQuery.add(activeProperty.eq(true));
 				});
+
+			Set<Long> classPKs = new HashSet<>();
+
 			actionableDynamicQuery.setPerformActionMethod(
-				(ActionableDynamicQuery.PerformActionMethod<SegmentsEntry>)
-					this::_reindex);
+				(SegmentsEntry segmentsEntry) -> _reindex(
+					classPKs, segmentsEntry));
 
 			actionableDynamicQuery.performActions();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Start indexing " + classPKs.size() + " users");
+			}
+
+			_bulkReindexer.reindex(CompanyThreadLocal.getCompanyId(), classPKs);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					classPKs.size() + " users were indexed successfully");
+			}
 		};
 	}
 
@@ -71,23 +95,68 @@ public class SegmentsEntryRelIndexerSchedulerJobConfiguration
 		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
 			segmentsConfiguration.segmentsPreviewCheckInterval(),
 			TimeUnit.MINUTE);
+
+		_indexerHelper = new IndexerHelper(
+			_indexer, _portal, _segmentsEntryLocalService,
+			_segmentsEntryProviderRegistry, _segmentsEntryRelLocalService);
 	}
 
-	private void _reindex(SegmentsEntry segmentsEntry) {
-		Message message = new Message();
+	private void _reindex(Set<Long> classPKs, SegmentsEntry segmentsEntry) {
+		try {
+			Set<Long> newClassPKs = _indexerHelper.getNewClassPKs(
+				segmentsEntry.getSegmentsEntryId());
 
-		message.put("companyId", segmentsEntry.getCompanyId());
-		message.put("segmentsEntryId", segmentsEntry.getSegmentsEntryId());
+			_indexerHelper.updateDatabase(
+				segmentsEntry.getSegmentsEntryId(), newClassPKs);
 
-		_messageBus.sendMessage(
-			SegmentsDestinationNames.SEGMENTS_ENTRY_REINDEX, message);
+			Set<Long> indexableClassPKs = _indexerHelper.getIndexableClassPKs(
+				segmentsEntry.getCompanyId(), newClassPKs,
+				segmentsEntry.getSegmentsEntryId());
+
+			classPKs.addAll(indexableClassPKs);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Adding ", indexableClassPKs.size(),
+						" class PKs of segment entry ",
+						segmentsEntry.getSegmentsEntryId(), " to be indexed"));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to reindex segments entry " +
+					segmentsEntry.getSegmentsEntryId(),
+				exception);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentsEntryRelIndexerSchedulerJobConfiguration.class);
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private BulkReindexer _bulkReindexer;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private Indexer<User> _indexer;
+
+	private IndexerHelper _indexerHelper;
 
 	@Reference
-	private MessageBus _messageBus;
+	private Portal _portal;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Reference
+	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
+
+	@Reference
+	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
 
 	private TriggerConfiguration _triggerConfiguration;
 

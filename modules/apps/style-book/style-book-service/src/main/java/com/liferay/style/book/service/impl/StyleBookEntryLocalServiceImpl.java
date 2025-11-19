@@ -493,13 +493,19 @@ public class StyleBookEntryLocalServiceImpl
 
 		styleBookEntry.setUserId(userId);
 		styleBookEntry.setModifiedDate(new Date());
-		styleBookEntry.setDefaultStyleBookEntry(defaultStylebookEntry);
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);
 		styleBookEntry.setPreviewFileEntryId(previewFileEntryId);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
 
-		return styleBookEntryPersistence.update(styleBookEntry);
+		styleBookEntry = styleBookEntryPersistence.update(styleBookEntry);
+
+		if (defaultStylebookEntry) {
+			return updateDefaultStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId(), true);
+		}
+
+		return styleBookEntry;
 	}
 
 	@Override

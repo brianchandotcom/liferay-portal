@@ -30,7 +30,7 @@ module.exports = {
 		filename: '[name]-[hash].js',
 		globalObject: 'this',
 		library: {
-			name: 'navigation',
+			name: 'globalJS',
 			type: 'umd',
 		},
 		path: path.resolve(__dirname, 'build/'),

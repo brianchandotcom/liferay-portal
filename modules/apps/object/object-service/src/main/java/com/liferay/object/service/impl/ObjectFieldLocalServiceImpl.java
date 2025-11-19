@@ -34,6 +34,7 @@ import com.liferay.object.exception.ObjectFieldSystemException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.field.setting.contributor.DefaultObjectFieldSettingContributor;
 import com.liferay.object.internal.field.setting.contributor.FiltersObjectFieldSettingsContributor;
@@ -1052,6 +1053,19 @@ public class ObjectFieldLocalServiceImpl
 			}
 
 			_addObjectFieldColumn(dbTableName, objectField);
+
+			Object defaultValue = ObjectFieldSettingUtil.getDefaultValue(
+				null, objectField, null);
+
+			if ((defaultValue != null) &&
+				objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
+				objectField.isState()) {
+
+				runSQL(
+					DynamicObjectDefinitionTableUtil.getUpdateDefaultValueSQL(
+						dbColumnName, dbType, defaultValue, dbTableName));
+			}
 		}
 
 		return objectField;

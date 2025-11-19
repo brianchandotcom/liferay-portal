@@ -27,6 +27,7 @@ export interface IAssetObjectEntry {
 	creator: any;
 	dateCreated: string;
 	dateModified: string;
+	displayDate: string;
 	expirationDate: string;
 	externalReferenceCode: string;
 	file?: IAssetFile;

@@ -171,6 +171,18 @@ const AssetMetadata = () => {
 
 				{type !== ASSET_TYPE.FOLDER && (
 					<>
+						{objectEntry?.displayDate && (
+							<div className="asset-metadata-section mt-3">
+								<p className="d-block font-weight-bold mb-0">
+									{Liferay.Language.get('display-date')}
+								</p>
+
+								<p className="d-block">
+									{formatDate(objectEntry?.displayDate)}
+								</p>
+							</div>
+						)}
+
 						<div className="asset-metadata-section mt-3">
 							<p className="d-block font-weight-bold mb-0">
 								{Liferay.Language.get('expiration-date')}

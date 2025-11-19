@@ -12,11 +12,10 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.language.LanguageResources;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,10 +64,9 @@ public class DLFolderNameConstraintResolver
 		DLFolder sourceDLFolder = constraintResolverContext.getSourceCTModel();
 		DLFolder targetDLFolder = constraintResolverContext.getTargetCTModel();
 
-		if (StringUtil.equals(
-				sourceDLFolder.getName(), TempFileEntryUtil.class.getName()) &&
-			StringUtil.equals(
-				targetDLFolder.getName(), TempFileEntryUtil.class.getName())) {
+		if (Objects.equals(
+				sourceDLFolder.getName(), targetDLFolder.getName()) &&
+			(sourceDLFolder.isInHiddenFolder() || sourceDLFolder.isHidden())) {
 
 			try {
 				_dlFolderLocalService.deleteFolder(sourceDLFolder);

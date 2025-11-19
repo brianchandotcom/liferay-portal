@@ -141,7 +141,7 @@ public class WelcomeSiteInitializerTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT, 0,
+				LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT, null,
 				_serviceContext);
 
 		Layout layout1 = _layoutLocalService.fetchLayout(
@@ -181,7 +181,7 @@ public class WelcomeSiteInitializerTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD, 0,
+				LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD, null,
 				_serviceContext);
 
 		Layout layout1 = _layoutLocalService.fetchLayout(
@@ -251,7 +251,8 @@ public class WelcomeSiteInitializerTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0, _serviceContext);
+				LayoutUtilityPageEntryConstants.TYPE_LOGIN, null,
+				_serviceContext);
 
 		Layout layout1 = _layoutLocalService.fetchLayout(
 			layoutUtilityPageEntry.getPlid());

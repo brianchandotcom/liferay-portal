@@ -59,7 +59,7 @@ public class LayoutUtilityPageEntryIndexerReindexTest {
 				RandomTestUtil.randomString(), serviceContext.getUserId(),
 				TestPropsValues.getGroupId(), 0, 0, false,
 				RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_COOKIE_POLICY, 0L,
+				LayoutUtilityPageEntryConstants.TYPE_COOKIE_POLICY, null,
 				serviceContext);
 
 		String name = layoutUtilityPageEntry.getName();

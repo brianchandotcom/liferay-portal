@@ -85,7 +85,8 @@ public class FacebookConnectNavigationPreJSPDynamicIncludeTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0, _serviceContext);
+				LayoutUtilityPageEntryConstants.TYPE_LOGIN, null,
+				_serviceContext);
 
 			Layout layout =
 				_layoutUtilityPageEntryLayoutProvider.

@@ -234,7 +234,8 @@ public class LoginActionTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0, _serviceContext);
+				LayoutUtilityPageEntryConstants.TYPE_LOGIN, null,
+				_serviceContext);
 
 		UserTestUtil.setUser(
 			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));

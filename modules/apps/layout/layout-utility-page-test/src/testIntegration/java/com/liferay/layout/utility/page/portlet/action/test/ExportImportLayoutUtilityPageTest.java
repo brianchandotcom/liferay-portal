@@ -101,7 +101,7 @@ public class ExportImportLayoutUtilityPageTest {
 				externalReferenceCode, _serviceContext.getUserId(),
 				_serviceContext.getScopeGroupId(), 0, 0, false,
 				StringUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
 				_serviceContext);
 
 		_addItemsToLayout(
@@ -198,7 +198,7 @@ public class ExportImportLayoutUtilityPageTest {
 				externalReferenceCode, _serviceContext.getUserId(),
 				_serviceContext.getScopeGroupId(), 0, 0, false,
 				StringUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
 				_serviceContext);
 
 		_addItemsToLayout(

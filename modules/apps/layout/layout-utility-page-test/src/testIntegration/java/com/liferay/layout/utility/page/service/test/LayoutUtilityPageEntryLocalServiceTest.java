@@ -85,7 +85,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 0, _serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext);
 
 		Assert.assertTrue(
 			Validator.isNotNull(
@@ -102,7 +102,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 0, _serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext);
 
 		Assert.assertTrue(
 			Validator.isNotNull(
@@ -118,8 +118,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				layoutUtilityPageEntry.getExternalReferenceCode(),
 				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, _serviceContext);
 
 			Assert.fail();
 		}
@@ -142,7 +142,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 0, _serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext);
 
 		_layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
 			layoutUtilityPageEntry.getExternalReferenceCode(),
@@ -169,7 +169,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				null, _group.getGroupId(), 0, 0, true,
-				"Test Layout Utility Page", RandomTestUtil.randomString(), 0,
+				"Test Layout Utility Page", RandomTestUtil.randomString(), null,
 				_serviceContext);
 
 		Assert.assertEquals(
@@ -183,8 +183,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				"ERC", _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, _serviceContext);
 
 		Assert.assertEquals(
 			"ERC", layoutUtilityPageEntry.getExternalReferenceCode());
@@ -200,7 +200,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
 				_serviceContext);
 
 		Assert.assertTrue(
@@ -210,7 +210,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
 				_serviceContext);
 
 		Assert.assertFalse(
@@ -261,7 +261,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
 				_serviceContext);
 
 		Layout layout = _layoutLocalService.getLayout(

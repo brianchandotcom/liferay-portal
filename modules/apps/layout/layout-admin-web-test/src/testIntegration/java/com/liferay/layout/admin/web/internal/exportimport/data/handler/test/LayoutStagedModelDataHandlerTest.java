@@ -320,7 +320,7 @@ public class LayoutStagedModelDataHandlerTest
 				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
 				0, false, RandomTestUtil.randomString(),
 				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
-				0,
+				null,
 				ServiceContextTestUtil.getServiceContext(
 					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 

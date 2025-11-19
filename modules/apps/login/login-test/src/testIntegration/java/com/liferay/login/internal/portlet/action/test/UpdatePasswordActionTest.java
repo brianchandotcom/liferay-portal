@@ -115,7 +115,7 @@ public class UpdatePasswordActionTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, serviceContext.getUserId(), group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD, 0,
+				LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD, null,
 				serviceContext);
 
 		Layout layout = _layoutLocalService.fetchLayout(

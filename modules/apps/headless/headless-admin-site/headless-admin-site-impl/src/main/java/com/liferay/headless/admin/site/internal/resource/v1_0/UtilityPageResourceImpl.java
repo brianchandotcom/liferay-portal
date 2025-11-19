@@ -373,7 +373,7 @@ public class UtilityPageResourceImpl
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, utilityPage.getThumbnail()),
 				utilityPage.getMarkedAsDefault(), utilityPage.getName(),
-				_getType(utilityPage.getType()), 0L, serviceContext));
+				_getType(utilityPage.getType()), null, serviceContext));
 	}
 
 	private long _getLayoutPlid(

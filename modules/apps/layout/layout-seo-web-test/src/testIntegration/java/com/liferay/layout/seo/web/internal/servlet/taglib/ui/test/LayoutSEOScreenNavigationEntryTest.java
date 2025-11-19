@@ -77,7 +77,7 @@ public class LayoutSEOScreenNavigationEntryTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
 				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
-				0, ServiceContextTestUtil.getServiceContext());
+				null, ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertTrue(
 			_screenNavigationEntry.isVisible(

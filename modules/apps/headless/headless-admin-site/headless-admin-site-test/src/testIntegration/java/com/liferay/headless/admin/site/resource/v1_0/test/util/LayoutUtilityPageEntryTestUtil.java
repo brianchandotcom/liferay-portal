@@ -26,7 +26,7 @@ public class LayoutUtilityPageEntryTestUtil {
 		return LayoutUtilityPageEntryLocalServiceUtil.addLayoutUtilityPageEntry(
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			0, 0, false, RandomTestUtil.randomString(),
-			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, 0,
+			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, null,
 			serviceContext);
 	}
 

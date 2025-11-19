@@ -73,13 +73,13 @@ public class LayoutUtilityPageEntryDisplayContextTest {
 		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomLong(), 0, false, "custom 404",
-			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomLong(), 0, false, "custom 500",
-			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, 0,
+			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -106,7 +106,7 @@ public class LayoutUtilityPageEntryDisplayContextTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomLong(), 0, false, "custom 404",
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -126,7 +126,7 @@ public class LayoutUtilityPageEntryDisplayContextTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomLong(), 0, false, "custom 500",
 				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
-				0,
+				null,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 

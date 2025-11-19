@@ -1780,7 +1780,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutUtilityPageEntry =
 					_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 						externalReferenceCode, groupId, 0, 0, false, name, type,
-						0, ServiceContextThreadLocal.getServiceContext());
+						null, ServiceContextThreadLocal.getServiceContext());
 
 				added = true;
 			}

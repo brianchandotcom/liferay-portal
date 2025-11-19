@@ -360,6 +360,7 @@ function ItemSelector<T extends Record<string, any>>({
 		itemSelectorComponent = (
 			<ClayMultiSelect
 				{...(otherProps as any)}
+				active={active}
 				items={items}
 				locator={{
 					id: (item: T) => {

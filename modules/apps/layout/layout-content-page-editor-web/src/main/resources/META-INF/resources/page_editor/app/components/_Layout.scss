@@ -354,6 +354,15 @@ html#{$cadmin-selector} {
 	}
 
 	.page-editor__editable {
+		&.ck-content,
+		.lfr-ck .ck.ck-content {
+			color: unset;
+			font-family: unset;
+			font-size: unset;
+			line-height: unset;
+			word-break: unset;
+		}
+
 		.lfr-ck {
 			outline: $cadmin-primary-d2 auto 1px;
 

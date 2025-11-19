@@ -227,9 +227,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			HashMapBuilder.put(
 				"checkout",
 				() -> {
-					if (ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) {
-
+					if (!ctCollection.isInProgress()) {
 						return null;
 					}
 
@@ -240,9 +238,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			).put(
 				"delete",
 				() -> {
-					if (ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) {
-
+					if (!ctCollection.isInProgress()) {
 						return null;
 					}
 
@@ -258,8 +254,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			).put(
 				"move-changes",
 				() -> {
-					if ((ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) &&
+					if (!ctCollection.isInProgress() &&
 						(ctCollection.getStatus() !=
 							WorkflowConstants.STATUS_EXPIRED)) {
 
@@ -273,9 +268,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			).put(
 				"update",
 				() -> {
-					if (ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) {
-
+					if (!ctCollection.isInProgress()) {
 						return null;
 					}
 
@@ -286,9 +279,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			).put(
 				"view-discard",
 				() -> {
-					if (ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) {
-
+					if (!ctCollection.isInProgress()) {
 						return null;
 					}
 

@@ -31,16 +31,15 @@ public class FieldMappingUtil {
 	public static String getDisplayName(FieldMapping fieldMapping) {
 		String languageKey = null;
 
-		if (Objects.equals(fieldMapping.getContext(), "demographics")) {
+		if (Objects.equals(fieldMapping.getContext(), "account")) {
+			languageKey =
+				FieldMappingConstants.getAccountFieldMappingLanguageKey(
+					fieldMapping.getFieldName());
+		}
+		else if (Objects.equals(fieldMapping.getContext(), "demographics")) {
 			languageKey =
 				FieldMappingConstants.getDemographicsFieldMappingLanguageKey(
 					fieldMapping.getFieldName());
-		}
-		else if (Objects.equals(fieldMapping.getContext(), "account")) {
-			languageKey =
-				FieldMappingConstants.
-					getSalesforceAccountAttributesFieldMappingLanguageKeys(
-						fieldMapping.getFieldName());
 		}
 
 		if (languageKey != null) {

@@ -5,11 +5,15 @@
 
 package com.liferay.headless.digital.sales.room.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.digital.sales.room.dto.v1_0.DigitalSalesRoom;
+import com.liferay.headless.digital.sales.room.resource.v1_0.DigitalSalesRoomResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import jakarta.annotation.Generated;
 
@@ -28,6 +32,27 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Mutation {
+
+	public static void setDigitalSalesRoomResourceComponentServiceObjects(
+		ComponentServiceObjects<DigitalSalesRoomResource>
+			digitalSalesRoomResourceComponentServiceObjects) {
+
+		_digitalSalesRoomResourceComponentServiceObjects =
+			digitalSalesRoomResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public DigitalSalesRoom createDigitalSalesRoom(
+			@GraphQLName("digitalSalesRoom") DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_digitalSalesRoomResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			digitalSalesRoomResource ->
+				digitalSalesRoomResource.postDigitalSalesRoom(
+					digitalSalesRoom));
+	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
@@ -66,6 +91,25 @@ public class Mutation {
 			componentServiceObjects.ungetService(resource);
 		}
 	}
+
+	private void _populateResourceContext(
+			DigitalSalesRoomResource digitalSalesRoomResource)
+		throws Exception {
+
+		digitalSalesRoomResource.setContextAcceptLanguage(_acceptLanguage);
+		digitalSalesRoomResource.setContextCompany(_company);
+		digitalSalesRoomResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		digitalSalesRoomResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		digitalSalesRoomResource.setContextUriInfo(_uriInfo);
+		digitalSalesRoomResource.setContextUser(_user);
+		digitalSalesRoomResource.setGroupLocalService(_groupLocalService);
+		digitalSalesRoomResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private static ComponentServiceObjects<DigitalSalesRoomResource>
+		_digitalSalesRoomResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

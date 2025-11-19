@@ -49,15 +49,31 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {digitalSalesRooms(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {digitalSalesRoom(digitalSalesRoomId: ___){accountId, accountName, banner, channelId, clientLogo, clientName, createDate, description, externalReferenceCode, friendlyUrlPath, id, modifiedDate, name, ownerId, ownerName, primaryColor, secondaryColor}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public DigitalSalesRoom digitalSalesRoom(
+			@GraphQLName("digitalSalesRoomId") Long digitalSalesRoomId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_digitalSalesRoomResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			digitalSalesRoomResource ->
+				digitalSalesRoomResource.getDigitalSalesRoom(
+					digitalSalesRoomId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {digitalSalesRooms(page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DigitalSalesRoomPage digitalSalesRooms(
 			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -65,12 +81,7 @@ public class Query {
 			this::_populateResourceContext,
 			digitalSalesRoomResource -> new DigitalSalesRoomPage(
 				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					search,
-					_filterBiFunction.apply(
-						digitalSalesRoomResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(
-						digitalSalesRoomResource, sortsString))));
+					search, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLName("DigitalSalesRoomPage")

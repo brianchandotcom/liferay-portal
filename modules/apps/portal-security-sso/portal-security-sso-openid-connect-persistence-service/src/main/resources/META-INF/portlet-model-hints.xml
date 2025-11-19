@@ -20,10 +20,11 @@
 		<field name="idToken" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="issuer" type="String" />
 		<field name="refreshToken" type="String">
 			<hint name="max-length">2000</hint>
 		</field>
-		<field name="sid" type="String" />
+		<field name="sessionId" type="String" />
 	</model>
 	<model name="com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectUser">
 		<field name="mvccVersion" type="long" />

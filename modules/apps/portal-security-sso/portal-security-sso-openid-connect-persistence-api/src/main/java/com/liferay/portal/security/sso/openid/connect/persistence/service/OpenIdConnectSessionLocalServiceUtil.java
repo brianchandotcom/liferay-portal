@@ -267,6 +267,20 @@ public class OpenIdConnectSessionLocalServiceUtil {
 		return getService().getOpenIdConnectSession(openIdConnectSessionId);
 	}
 
+	public static OpenIdConnectSession getOpenIdConnectSession(
+			long userId, String issuer)
+		throws PortalException {
+
+		return getService().getOpenIdConnectSession(userId, issuer);
+	}
+
+	public static OpenIdConnectSession getOpenIdConnectSession(
+			String issuer, String sessionId)
+		throws PortalException {
+
+		return getService().getOpenIdConnectSession(issuer, sessionId);
+	}
+
 	/**
 	 * Returns a range of all the open ID connect sessions.
 	 *

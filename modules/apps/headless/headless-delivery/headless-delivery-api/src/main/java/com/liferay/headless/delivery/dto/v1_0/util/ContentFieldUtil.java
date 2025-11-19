@@ -148,7 +148,7 @@ public class ContentFieldUtil {
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						localizedValue.getValues()));
-				setName(ddmFormField::getFieldReference);
+				setName(ddmFormField::getName);
 				setNestedContentFields(
 					() -> TransformUtil.transformToArray(
 						ddmFormFieldValue.getNestedDDMFormFieldValues(),

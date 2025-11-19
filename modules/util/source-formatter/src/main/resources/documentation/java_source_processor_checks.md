@@ -90,6 +90,7 @@ JavaDefaultAdminScreenNameCheck | [Bug Prevention](bug_prevention_checks.md#bug-
 JavaDeprecatedJavadocCheck | [Javadoc](javadoc_checks.md#javadoc-checks) | Checks if the `@deprecated` javadoc is pointing to the correct version. |
 JavaDeserializationSecurityCheck | [Security](security_checks.md#security-checks) | Finds Java serialization vulnerabilities. |
 JavaDiamondOperatorCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | Finds cases where Diamond Operator is not used. |
+JavaDocumentAddCallsOrderCheck | [Styling](styling_checks.md#styling-checks) | Sorts `add*` calls for type `Document`. |
 JavaDuplicateVariableCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | Finds variables where a variable with the same name already exists in an extended class. |
 [JavaElseStatementCheck](check/java_else_statement_check.md#javaelsestatementcheck) | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | Finds unnecessary `else` statements (when the `if` statement ends with a `return` statement). |
 JavaEmptyLineAfterSuperCallCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | Finds missing empty line after a `super` call. |

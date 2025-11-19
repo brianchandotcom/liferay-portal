@@ -132,6 +132,7 @@ public class ContentStructureUtil {
 		return new ContentStructureField() {
 			{
 				setDataType(() -> toDataType(ddmFormField));
+				setFieldReference(ddmFormField::getFieldReference);
 				setInputControl(() -> toInputControl(ddmFormField));
 				setLabel(() -> _toString(labelLocalizedValue, locale));
 				setLabel_i18n(

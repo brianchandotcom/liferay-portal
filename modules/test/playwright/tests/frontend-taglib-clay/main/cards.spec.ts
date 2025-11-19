@@ -47,18 +47,18 @@ test('Asserts selectable image cards behavior', async ({page}) => {
 	});
 
 	await test.step('Click on card title navigates to href URL', async () => {
-		expect(page.url()).not.toContain('#image-card-href');
+		await expect(page).not.toHaveURL(/#image-card-href$/);
 
 		await selectableImageCards
 			.first()
 			.getByRole('link', {name: 'Beetle'})
 			.click();
 
-		expect(page.url()).toContain('#image-card-href');
+		await expect(page).toHaveURL(/#image-card-href$/);
 	});
 
 	await test.step('Click on card option navigates to href URL', async () => {
-		expect(page.url()).not.toContain('#1');
+		await expect(page).not.toHaveURL(/#1$/);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -70,6 +70,6 @@ test('Asserts selectable image cards behavior', async ({page}) => {
 				.getByRole('button', {name: 'More actions'}),
 		});
 
-		expect(page.url()).toContain('#1');
+		await expect(page).toHaveURL(/#1$/);
 	});
 });

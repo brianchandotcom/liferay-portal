@@ -1187,24 +1187,26 @@ public class UserManagerImpl implements UserManager {
 
 		Contact contact = portalUser.getContact();
 
+		String emailAddress;
 		String screenName;
 
 		if (Objects.equals(
 				scimClientOAuth2ApplicationConfiguration.matcherField(),
 				"userName")) {
 
+			emailAddress = scimUser.getEmailAddresses()[0];
 			screenName = portalUser.getScreenName();
 		}
 		else {
+			emailAddress = portalUser.getEmailAddress();
 			screenName = scimUser.getScreenName();
 		}
 
 		portalUser = _userService.updateUser(
 			portalUser.getUserId(), scimUser.getPassword(), StringPool.BLANK,
 			StringPool.BLANK, false, portalUser.getReminderQueryQuestion(),
-			portalUser.getReminderQueryAnswer(), screenName,
-			scimUser.getEmailAddresses()[0], false, null,
-			portalUser.getLanguageId(), scimUser.getTimeZoneId(),
+			portalUser.getReminderQueryAnswer(), screenName, emailAddress,
+			false, null, portalUser.getLanguageId(), scimUser.getTimeZoneId(),
 			portalUser.getGreeting(), portalUser.getComments(),
 			scimUser.getFirstName(), scimUser.getMiddleName(),
 			scimUser.getLastName(), scimUser.getPrefix(), scimUser.getSuffix(),

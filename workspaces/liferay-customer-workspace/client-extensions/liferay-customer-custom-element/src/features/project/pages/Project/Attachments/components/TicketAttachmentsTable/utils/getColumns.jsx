@@ -9,7 +9,7 @@ const getInitialColumns = () => [
 	{
 		accessor: 'ticket',
 		bodyClass: 'border-0',
-		filterIdentifier: 'ticketId',
+		filterIdentifier: 'jiraIssueKey',
 		header: {
 			name: (
 				<div className="align-items-center d-flex">

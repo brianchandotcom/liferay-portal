@@ -42,10 +42,6 @@
 	@media (max-width: 1287px) {
 		display: flex !important;
 		flex-direction: column !important;
-
-		.learn-welcome-container {
-			margin: 0 !important;
-		}
 	}
 }
 
@@ -70,10 +66,6 @@
 	@media (max-width: 1287px) {
 		display: flex !important;
 		flex-direction: column !important;
-
-		.learn-welcome-container {
-			margin: 0 !important;
-		}
 	}
 }
 

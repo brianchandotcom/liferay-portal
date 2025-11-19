@@ -102,6 +102,9 @@ public class RenderPortletAction implements Action {
 		PortletContainerUtil.processPublicRenderParameters(
 			httpServletRequest, themeDisplay.getLayout());
 
+		PortletContainerUtil.renderHeaders(
+			httpServletRequest, httpServletResponse, portlet);
+
 		PortletContainerUtil.render(
 			httpServletRequest, httpServletResponse, portlet);
 

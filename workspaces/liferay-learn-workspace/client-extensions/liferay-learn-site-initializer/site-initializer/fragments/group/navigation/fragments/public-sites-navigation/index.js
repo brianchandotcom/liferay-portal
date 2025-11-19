@@ -253,7 +253,7 @@ function updateSearch() {
 }
 
 window.addEventListener('load', () => {
-	if (!navigation?.default?.DropdownProvider) {
+	if (!globalJS?.DropdownProvider) {
 		return;
 	}
 
@@ -268,7 +268,7 @@ window.addEventListener('load', () => {
 		['.language', '.language-selector', 'list-open', true],
 		['.language', '.language-dropdown-list-container', 'list-open', true],
 		['.search-icon, .close-search', '.search-wrapper', 'search-open', true],
-	].forEach((args) => new navigation.default.DropdownProvider(...args));
+	].forEach((args) => new globalJS.DropdownProvider(...args));
 });
 
 menuElements.menuButton.addEventListener('click', () => {

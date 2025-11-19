@@ -43,11 +43,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DigitalSalesRoomResource {
 
+	public DigitalSalesRoom getDigitalSalesRoom(Long digitalSalesRoomId)
+		throws Exception;
+
 	public Page<DigitalSalesRoom> getDigitalSalesRoomsPage(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
+			String search, Pagination pagination)
+		throws Exception;
+
+	public DigitalSalesRoom postDigitalSalesRoom(
+			DigitalSalesRoom digitalSalesRoom)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

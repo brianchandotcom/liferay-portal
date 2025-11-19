@@ -10,6 +10,9 @@ import com.liferay.headless.digital.sales.room.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -46,6 +49,161 @@ public class DigitalSalesRoomSerDes {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (digitalSalesRoom.getAccountId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountId\": ");
+
+			sb.append(digitalSalesRoom.getAccountId());
+		}
+
+		if (digitalSalesRoom.getAccountName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getAccountName()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getBanner() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"banner\": ");
+
+			sb.append(String.valueOf(digitalSalesRoom.getBanner()));
+		}
+
+		if (digitalSalesRoom.getChannelId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"channelId\": ");
+
+			sb.append(digitalSalesRoom.getChannelId());
+		}
+
+		if (digitalSalesRoom.getClientLogo() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientLogo\": ");
+
+			sb.append(String.valueOf(digitalSalesRoom.getClientLogo()));
+		}
+
+		if (digitalSalesRoom.getClientName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getClientName()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getCreateDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"createDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					digitalSalesRoom.getCreateDate()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getDescription()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getFriendlyUrlPath() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getFriendlyUrlPath()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(digitalSalesRoom.getId());
+		}
+
+		if (digitalSalesRoom.getModifiedDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					digitalSalesRoom.getModifiedDate()));
+
+			sb.append("\"");
+		}
+
 		if (digitalSalesRoom.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -56,6 +214,58 @@ public class DigitalSalesRoomSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(digitalSalesRoom.getName()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getOwnerId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerId\": ");
+
+			sb.append(digitalSalesRoom.getOwnerId());
+		}
+
+		if (digitalSalesRoom.getOwnerName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getOwnerName()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getPrimaryColor() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"primaryColor\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getPrimaryColor()));
+
+			sb.append("\"");
+		}
+
+		if (digitalSalesRoom.getSecondaryColor() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"secondaryColor\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getSecondaryColor()));
 
 			sb.append("\"");
 		}
@@ -79,11 +289,149 @@ public class DigitalSalesRoomSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (digitalSalesRoom.getAccountId() == null) {
+			map.put("accountId", null);
+		}
+		else {
+			map.put(
+				"accountId", String.valueOf(digitalSalesRoom.getAccountId()));
+		}
+
+		if (digitalSalesRoom.getAccountName() == null) {
+			map.put("accountName", null);
+		}
+		else {
+			map.put(
+				"accountName",
+				String.valueOf(digitalSalesRoom.getAccountName()));
+		}
+
+		if (digitalSalesRoom.getBanner() == null) {
+			map.put("banner", null);
+		}
+		else {
+			map.put("banner", String.valueOf(digitalSalesRoom.getBanner()));
+		}
+
+		if (digitalSalesRoom.getChannelId() == null) {
+			map.put("channelId", null);
+		}
+		else {
+			map.put(
+				"channelId", String.valueOf(digitalSalesRoom.getChannelId()));
+		}
+
+		if (digitalSalesRoom.getClientLogo() == null) {
+			map.put("clientLogo", null);
+		}
+		else {
+			map.put(
+				"clientLogo", String.valueOf(digitalSalesRoom.getClientLogo()));
+		}
+
+		if (digitalSalesRoom.getClientName() == null) {
+			map.put("clientName", null);
+		}
+		else {
+			map.put(
+				"clientName", String.valueOf(digitalSalesRoom.getClientName()));
+		}
+
+		if (digitalSalesRoom.getCreateDate() == null) {
+			map.put("createDate", null);
+		}
+		else {
+			map.put(
+				"createDate",
+				liferayToJSONDateFormat.format(
+					digitalSalesRoom.getCreateDate()));
+		}
+
+		if (digitalSalesRoom.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(digitalSalesRoom.getDescription()));
+		}
+
+		if (digitalSalesRoom.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(digitalSalesRoom.getExternalReferenceCode()));
+		}
+
+		if (digitalSalesRoom.getFriendlyUrlPath() == null) {
+			map.put("friendlyUrlPath", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlPath",
+				String.valueOf(digitalSalesRoom.getFriendlyUrlPath()));
+		}
+
+		if (digitalSalesRoom.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(digitalSalesRoom.getId()));
+		}
+
+		if (digitalSalesRoom.getModifiedDate() == null) {
+			map.put("modifiedDate", null);
+		}
+		else {
+			map.put(
+				"modifiedDate",
+				liferayToJSONDateFormat.format(
+					digitalSalesRoom.getModifiedDate()));
+		}
+
 		if (digitalSalesRoom.getName() == null) {
 			map.put("name", null);
 		}
 		else {
 			map.put("name", String.valueOf(digitalSalesRoom.getName()));
+		}
+
+		if (digitalSalesRoom.getOwnerId() == null) {
+			map.put("ownerId", null);
+		}
+		else {
+			map.put("ownerId", String.valueOf(digitalSalesRoom.getOwnerId()));
+		}
+
+		if (digitalSalesRoom.getOwnerName() == null) {
+			map.put("ownerName", null);
+		}
+		else {
+			map.put(
+				"ownerName", String.valueOf(digitalSalesRoom.getOwnerName()));
+		}
+
+		if (digitalSalesRoom.getPrimaryColor() == null) {
+			map.put("primaryColor", null);
+		}
+		else {
+			map.put(
+				"primaryColor",
+				String.valueOf(digitalSalesRoom.getPrimaryColor()));
+		}
+
+		if (digitalSalesRoom.getSecondaryColor() == null) {
+			map.put("secondaryColor", null);
+		}
+		else {
+			map.put(
+				"secondaryColor",
+				String.valueOf(digitalSalesRoom.getSecondaryColor()));
 		}
 
 		return map;
@@ -104,7 +452,57 @@ public class DigitalSalesRoomSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "name")) {
+			if (Objects.equals(jsonParserFieldName, "accountId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountName")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "banner")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "channelId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "clientLogo")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "clientName")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "createDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "ownerName")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "primaryColor")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "secondaryColor")) {
 				return false;
 			}
 
@@ -116,9 +514,106 @@ public class DigitalSalesRoomSerDes {
 			DigitalSalesRoom digitalSalesRoom, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "name")) {
+			if (Objects.equals(jsonParserFieldName, "accountId")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setAccountId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountName")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setAccountName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "banner")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setBanner(
+						FileEntrySerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "channelId")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setChannelId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "clientLogo")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setClientLogo(
+						FileEntrySerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "clientName")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setClientName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "createDate")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setCreateDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setFriendlyUrlPath(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setModifiedDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					digitalSalesRoom.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setOwnerId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ownerName")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setOwnerName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "primaryColor")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setPrimaryColor(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "secondaryColor")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setSecondaryColor(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

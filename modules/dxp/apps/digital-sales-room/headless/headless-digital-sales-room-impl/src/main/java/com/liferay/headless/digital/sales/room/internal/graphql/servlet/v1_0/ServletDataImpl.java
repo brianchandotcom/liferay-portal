@@ -34,6 +34,9 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setDigitalSalesRoomResourceComponentServiceObjects(
+			_digitalSalesRoomResourceComponentServiceObjects);
+
 		Query.setDigitalSalesRoomResourceComponentServiceObjects(
 			_digitalSalesRoomResourceComponentServiceObjects);
 	}
@@ -72,6 +75,17 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"mutation#createDigitalSalesRoom",
+						new ObjectValuePair<>(
+							DigitalSalesRoomResourceImpl.class,
+							"postDigitalSalesRoom"));
+
+					put(
+						"query#digitalSalesRoom",
+						new ObjectValuePair<>(
+							DigitalSalesRoomResourceImpl.class,
+							"getDigitalSalesRoom"));
 					put(
 						"query#digitalSalesRooms",
 						new ObjectValuePair<>(

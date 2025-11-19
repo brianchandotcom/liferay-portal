@@ -19,19 +19,27 @@ import com.liferay.headless.digital.sales.room.client.pagination.Page;
 import com.liferay.headless.digital.sales.room.client.pagination.Pagination;
 import com.liferay.headless.digital.sales.room.client.resource.v1_0.DigitalSalesRoomResource;
 import com.liferay.headless.digital.sales.room.client.serdes.v1_0.DigitalSalesRoomSerDes;
-import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -40,16 +48,27 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import jakarta.annotation.Generated;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.PathSegment;
+import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriInfo;
 
 import java.lang.reflect.Method;
+
+import java.net.URI;
 
 import java.text.Format;
 
@@ -60,9 +79,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -71,6 +92,9 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Stefano Motta
@@ -81,8 +105,10 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -170,7 +196,15 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 
 		DigitalSalesRoom digitalSalesRoom = randomDigitalSalesRoom();
 
+		digitalSalesRoom.setAccountName(regex);
+		digitalSalesRoom.setClientName(regex);
+		digitalSalesRoom.setDescription(regex);
+		digitalSalesRoom.setExternalReferenceCode(regex);
+		digitalSalesRoom.setFriendlyUrlPath(regex);
 		digitalSalesRoom.setName(regex);
+		digitalSalesRoom.setOwnerName(regex);
+		digitalSalesRoom.setPrimaryColor(regex);
+		digitalSalesRoom.setSecondaryColor(regex);
 
 		String json = DigitalSalesRoomSerDes.toJSON(digitalSalesRoom);
 
@@ -178,14 +212,336 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 
 		digitalSalesRoom = DigitalSalesRoomSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, digitalSalesRoom.getAccountName());
+		Assert.assertEquals(regex, digitalSalesRoom.getClientName());
+		Assert.assertEquals(regex, digitalSalesRoom.getDescription());
+		Assert.assertEquals(regex, digitalSalesRoom.getExternalReferenceCode());
+		Assert.assertEquals(regex, digitalSalesRoom.getFriendlyUrlPath());
 		Assert.assertEquals(regex, digitalSalesRoom.getName());
+		Assert.assertEquals(regex, digitalSalesRoom.getOwnerName());
+		Assert.assertEquals(regex, digitalSalesRoom.getPrimaryColor());
+		Assert.assertEquals(regex, digitalSalesRoom.getSecondaryColor());
+	}
+
+	@Test
+	public void testGetDigitalSalesRoom() throws Exception {
+		DigitalSalesRoom postDigitalSalesRoom =
+			testGetDigitalSalesRoom_addDigitalSalesRoom();
+
+		DigitalSalesRoom getDigitalSalesRoom =
+			digitalSalesRoomResource.getDigitalSalesRoom(
+				postDigitalSalesRoom.getId());
+
+		assertEquals(postDigitalSalesRoom, getDigitalSalesRoom);
+		assertValid(getDigitalSalesRoom);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		DigitalSalesRoom postDigitalSalesRoom =
+			testGetDigitalSalesRoom_addDigitalSalesRoom();
+
+		DigitalSalesRoom getDigitalSalesRoom =
+			digitalSalesRoomResource.getDigitalSalesRoom(
+				postDigitalSalesRoom.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.digital.sales.room.dto.v1_0.DigitalSalesRoom"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(
+			postDigitalSalesRoom.getId());
+
+		assertEquals(
+			getDigitalSalesRoom, DigitalSalesRoomSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected DigitalSalesRoom testGetDigitalSalesRoom_addDigitalSalesRoom()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDigitalSalesRoom() throws Exception {
+		DigitalSalesRoom digitalSalesRoom =
+			testGraphQLGetDigitalSalesRoom_addDigitalSalesRoom();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				digitalSalesRoom,
+				DigitalSalesRoomSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"digitalSalesRoom",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"digitalSalesRoomId",
+											digitalSalesRoom.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/digitalSalesRoom"))));
+
+		// Using the namespace headlessDigitalSalesRoom_v1_0
+
+		Assert.assertTrue(
+			equals(
+				digitalSalesRoom,
+				DigitalSalesRoomSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDigitalSalesRoom_v1_0",
+								new GraphQLField(
+									"digitalSalesRoom",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"digitalSalesRoomId",
+												digitalSalesRoom.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessDigitalSalesRoom_v1_0",
+						"Object/digitalSalesRoom"))));
+	}
+
+	@Test
+	public void testGraphQLGetDigitalSalesRoomNotFound() throws Exception {
+		Long irrelevantDigitalSalesRoomId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"digitalSalesRoom",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"digitalSalesRoomId",
+									irrelevantDigitalSalesRoomId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDigitalSalesRoom_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDigitalSalesRoom_v1_0",
+						new GraphQLField(
+							"digitalSalesRoom",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"digitalSalesRoomId",
+										irrelevantDigitalSalesRoomId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected DigitalSalesRoom
+			testGraphQLGetDigitalSalesRoom_addDigitalSalesRoom()
+		throws Exception {
+
+		return testGraphQLDigitalSalesRoom_addDigitalSalesRoom();
 	}
 
 	@Test
 	public void testGetDigitalSalesRoomsPage() throws Exception {
 		Page<DigitalSalesRoom> page =
 			digitalSalesRoomResource.getDigitalSalesRoomsPage(
-				null, null, Pagination.of(1, 10), null);
+				null, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -198,7 +554,7 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				randomDigitalSalesRoom());
 
 		page = digitalSalesRoomResource.getDigitalSalesRoomsPage(
-			null, null, Pagination.of(1, 10), null);
+			null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -219,101 +575,9 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 	}
 
 	@Test
-	public void testGetDigitalSalesRoomsPageWithFilterDateTimeEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		DigitalSalesRoom digitalSalesRoom1 = randomDigitalSalesRoom();
-
-		digitalSalesRoom1 = testGetDigitalSalesRoomsPage_addDigitalSalesRoom(
-			digitalSalesRoom1);
-
-		for (EntityField entityField : entityFields) {
-			Page<DigitalSalesRoom> page =
-				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null,
-					getFilterString(entityField, "between", digitalSalesRoom1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(digitalSalesRoom1),
-				(List<DigitalSalesRoom>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetDigitalSalesRoomsPageWithFilterDoubleEquals()
-		throws Exception {
-
-		testGetDigitalSalesRoomsPageWithFilter("eq", EntityField.Type.DOUBLE);
-	}
-
-	@Test
-	public void testGetDigitalSalesRoomsPageWithFilterStringContains()
-		throws Exception {
-
-		testGetDigitalSalesRoomsPageWithFilter(
-			"contains", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetDigitalSalesRoomsPageWithFilterStringEquals()
-		throws Exception {
-
-		testGetDigitalSalesRoomsPageWithFilter("eq", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetDigitalSalesRoomsPageWithFilterStringStartsWith()
-		throws Exception {
-
-		testGetDigitalSalesRoomsPageWithFilter(
-			"startswith", EntityField.Type.STRING);
-	}
-
-	protected void testGetDigitalSalesRoomsPageWithFilter(
-			String operator, EntityField.Type type)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		DigitalSalesRoom digitalSalesRoom1 =
-			testGetDigitalSalesRoomsPage_addDigitalSalesRoom(
-				randomDigitalSalesRoom());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DigitalSalesRoom digitalSalesRoom2 =
-			testGetDigitalSalesRoomsPage_addDigitalSalesRoom(
-				randomDigitalSalesRoom());
-
-		for (EntityField entityField : entityFields) {
-			Page<DigitalSalesRoom> page =
-				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null,
-					getFilterString(entityField, operator, digitalSalesRoom1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(digitalSalesRoom1),
-				(List<DigitalSalesRoom>)page.getItems());
-		}
-	}
-
-	@Test
 	public void testGetDigitalSalesRoomsPageWithPagination() throws Exception {
 		Page<DigitalSalesRoom> digitalSalesRoomsPage =
-			digitalSalesRoomResource.getDigitalSalesRoomsPage(
-				null, null, null, null);
+			digitalSalesRoomResource.getDigitalSalesRoomsPage(null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			digitalSalesRoomsPage.getTotalCount());
@@ -337,11 +601,10 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<DigitalSalesRoom> page1 =
 				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null, null,
+					null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -350,22 +613,20 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 
 			Page<DigitalSalesRoom> page2 =
 				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null, null,
+					null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+						pageSizeLimit));
 
 			assertContains(
 				digitalSalesRoom2, (List<DigitalSalesRoom>)page2.getItems());
 
 			Page<DigitalSalesRoom> page3 =
 				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null, null,
+					null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+						pageSizeLimit));
 
 			assertContains(
 				digitalSalesRoom3, (List<DigitalSalesRoom>)page3.getItems());
@@ -373,7 +634,7 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 		else {
 			Page<DigitalSalesRoom> page1 =
 				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null, null, Pagination.of(1, totalCount + 2), null);
+					null, Pagination.of(1, totalCount + 2));
 
 			List<DigitalSalesRoom> digitalSalesRooms1 =
 				(List<DigitalSalesRoom>)page1.getItems();
@@ -384,7 +645,7 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 
 			Page<DigitalSalesRoom> page2 =
 				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null, null, Pagination.of(2, totalCount + 2), null);
+					null, Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -396,7 +657,7 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 
 			Page<DigitalSalesRoom> page3 =
 				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null, null, Pagination.of(1, (int)totalCount + 3), null);
+					null, Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(
 				digitalSalesRoom1, (List<DigitalSalesRoom>)page3.getItems());
@@ -404,148 +665,6 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				digitalSalesRoom2, (List<DigitalSalesRoom>)page3.getItems());
 			assertContains(
 				digitalSalesRoom3, (List<DigitalSalesRoom>)page3.getItems());
-		}
-	}
-
-	@Test
-	public void testGetDigitalSalesRoomsPageWithSortDateTime()
-		throws Exception {
-
-		testGetDigitalSalesRoomsPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, digitalSalesRoom1, digitalSalesRoom2) -> {
-				BeanTestUtil.setProperty(
-					digitalSalesRoom1, entityField.getName(),
-					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
-			});
-	}
-
-	@Test
-	public void testGetDigitalSalesRoomsPageWithSortDouble() throws Exception {
-		testGetDigitalSalesRoomsPageWithSort(
-			EntityField.Type.DOUBLE,
-			(entityField, digitalSalesRoom1, digitalSalesRoom2) -> {
-				BeanTestUtil.setProperty(
-					digitalSalesRoom1, entityField.getName(), 0.1);
-				BeanTestUtil.setProperty(
-					digitalSalesRoom2, entityField.getName(), 0.5);
-			});
-	}
-
-	@Test
-	public void testGetDigitalSalesRoomsPageWithSortInteger() throws Exception {
-		testGetDigitalSalesRoomsPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, digitalSalesRoom1, digitalSalesRoom2) -> {
-				BeanTestUtil.setProperty(
-					digitalSalesRoom1, entityField.getName(), 0);
-				BeanTestUtil.setProperty(
-					digitalSalesRoom2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetDigitalSalesRoomsPageWithSortString() throws Exception {
-		testGetDigitalSalesRoomsPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, digitalSalesRoom1, digitalSalesRoom2) -> {
-				Class<?> clazz = digitalSalesRoom1.getClass();
-
-				String entityFieldName = entityField.getName();
-
-				Method method = clazz.getMethod(
-					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						digitalSalesRoom1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						digitalSalesRoom2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						digitalSalesRoom1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-					BeanTestUtil.setProperty(
-						digitalSalesRoom2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-				}
-				else {
-					BeanTestUtil.setProperty(
-						digitalSalesRoom1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-					BeanTestUtil.setProperty(
-						digitalSalesRoom2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-				}
-			});
-	}
-
-	protected void testGetDigitalSalesRoomsPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer
-				<EntityField, DigitalSalesRoom, DigitalSalesRoom, Exception>
-					unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		DigitalSalesRoom digitalSalesRoom1 = randomDigitalSalesRoom();
-		DigitalSalesRoom digitalSalesRoom2 = randomDigitalSalesRoom();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(
-				entityField, digitalSalesRoom1, digitalSalesRoom2);
-		}
-
-		digitalSalesRoom1 = testGetDigitalSalesRoomsPage_addDigitalSalesRoom(
-			digitalSalesRoom1);
-
-		digitalSalesRoom2 = testGetDigitalSalesRoomsPage_addDigitalSalesRoom(
-			digitalSalesRoom2);
-
-		Page<DigitalSalesRoom> page =
-			digitalSalesRoomResource.getDigitalSalesRoomsPage(
-				null, null, null, null);
-
-		for (EntityField entityField : entityFields) {
-			Page<DigitalSalesRoom> ascPage =
-				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":asc");
-
-			assertContains(
-				digitalSalesRoom1, (List<DigitalSalesRoom>)ascPage.getItems());
-			assertContains(
-				digitalSalesRoom2, (List<DigitalSalesRoom>)ascPage.getItems());
-
-			Page<DigitalSalesRoom> descPage =
-				digitalSalesRoomResource.getDigitalSalesRoomsPage(
-					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":desc");
-
-			assertContains(
-				digitalSalesRoom2, (List<DigitalSalesRoom>)descPage.getItems());
-			assertContains(
-				digitalSalesRoom1, (List<DigitalSalesRoom>)descPage.getItems());
 		}
 	}
 
@@ -557,8 +676,224 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
+	@Test
+	public void testGraphQLGetDigitalSalesRoomsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"digitalSalesRooms",
+			new HashMap<String, Object>() {
+				{
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject digitalSalesRoomsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/digitalSalesRooms");
+
+		long totalCount = digitalSalesRoomsJSONObject.getLong("totalCount");
+
+		DigitalSalesRoom digitalSalesRoom1 =
+			testGraphQLDigitalSalesRoom_addDigitalSalesRoom(
+				randomDigitalSalesRoom());
+
+		DigitalSalesRoom digitalSalesRoom2 =
+			testGraphQLDigitalSalesRoom_addDigitalSalesRoom(
+				randomDigitalSalesRoom());
+
+		digitalSalesRoomsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/digitalSalesRooms");
+
+		Assert.assertEquals(
+			totalCount + 2, digitalSalesRoomsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			digitalSalesRoom1,
+			Arrays.asList(
+				DigitalSalesRoomSerDes.toDTOs(
+					digitalSalesRoomsJSONObject.getString("items"))));
+		assertContains(
+			digitalSalesRoom2,
+			Arrays.asList(
+				DigitalSalesRoomSerDes.toDTOs(
+					digitalSalesRoomsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDigitalSalesRoom_v1_0
+
+		digitalSalesRoomsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDigitalSalesRoom_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDigitalSalesRoom_v1_0",
+			"JSONObject/digitalSalesRooms");
+
+		Assert.assertEquals(
+			totalCount + 2, digitalSalesRoomsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			digitalSalesRoom1,
+			Arrays.asList(
+				DigitalSalesRoomSerDes.toDTOs(
+					digitalSalesRoomsJSONObject.getString("items"))));
+		assertContains(
+			digitalSalesRoom2,
+			Arrays.asList(
+				DigitalSalesRoomSerDes.toDTOs(
+					digitalSalesRoomsJSONObject.getString("items"))));
+	}
+
+	@Test
+	public void testPostDigitalSalesRoom() throws Exception {
+		DigitalSalesRoom randomDigitalSalesRoom = randomDigitalSalesRoom();
+
+		DigitalSalesRoom postDigitalSalesRoom =
+			testPostDigitalSalesRoom_addDigitalSalesRoom(
+				randomDigitalSalesRoom);
+
+		assertEquals(randomDigitalSalesRoom, postDigitalSalesRoom);
+		assertValid(postDigitalSalesRoom);
+	}
+
+	protected DigitalSalesRoom testPostDigitalSalesRoom_addDigitalSalesRoom(
+			DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostDigitalSalesRoom() throws Exception {
+		DigitalSalesRoom randomDigitalSalesRoom = randomDigitalSalesRoom();
+
+		DigitalSalesRoom digitalSalesRoom =
+			testGraphQLDigitalSalesRoom_addDigitalSalesRoom(
+				randomDigitalSalesRoom);
+
+		Assert.assertTrue(equals(randomDigitalSalesRoom, digitalSalesRoom));
+	}
+
+	protected DigitalSalesRoom testGraphQLDigitalSalesRoom_addDigitalSalesRoom()
+		throws Exception {
+
+		return testGraphQLDigitalSalesRoom_addDigitalSalesRoom(
+			randomDigitalSalesRoom());
+	}
+
+	protected DigitalSalesRoom testGraphQLDigitalSalesRoom_addDigitalSalesRoom(
+			DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		JSONDeserializer<DigitalSalesRoom> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DigitalSalesRoom.class)) {
+
+			if (getGraphQLValue(field.get(digitalSalesRoom)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(digitalSalesRoom)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createDigitalSalesRoom",
+						new HashMap<String, Object>() {
+							{
+								put("digitalSalesRoom", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createDigitalSalesRoom"),
+			DigitalSalesRoom.class);
+	}
+
+	protected String getGraphQLValue(Object value) throws Exception {
+		if (value == null) {
+			return null;
+		}
+		else if (value instanceof Boolean || value instanceof Number) {
+			return value.toString();
+		}
+		else if (value instanceof Date date) {
+			return "\"" +
+				DateUtil.getDate(
+					date, "yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.getDefault(),
+					TimeZone.getTimeZone("UTC")) + "\"";
+		}
+		else if (value instanceof Enum<?> enm) {
+			return enm.name();
+		}
+		else if (value instanceof Map<?, ?> map) {
+			List<String> entries = new ArrayList<>();
+
+			for (Map.Entry<?, ?> entry : map.entrySet()) {
+				String graphQLValue = getGraphQLValue(entry.getValue());
+
+				if (graphQLValue != null) {
+					entries.add(entry.getKey() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
+		else if (value instanceof Object[] array) {
+			List<String> entries = new ArrayList<>();
+
+			for (Object entry : array) {
+				String graphQLValue = getGraphQLValue(entry);
+
+				if (graphQLValue != null) {
+					entries.add(graphQLValue);
+				}
+			}
+
+			return "[" + String.join(", ", entries) + "]";
+		}
+		else if (value instanceof String) {
+			return "\"" + value + "\"";
+		}
+		else {
+			List<String> entries = new ArrayList<>();
+
+			Class<?> clazz = value.getClass();
+			java.lang.reflect.Field[] declaredFields = getDeclaredFields(clazz);
+
+			if (declaredFields.length == 0) {
+				declaredFields = getDeclaredFields(clazz.getSuperclass());
+			}
+
+			for (java.lang.reflect.Field field : declaredFields) {
+				String graphQLValue = getGraphQLValue(field.get(value));
+
+				if (graphQLValue != null) {
+					entries.add(field.getName() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
+	}
 
 	protected void assertContains(
 		DigitalSalesRoom digitalSalesRoom,
@@ -640,11 +975,137 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 
 		boolean valid = true;
 
+		if (digitalSalesRoom.getId() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("accountId", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getAccountId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("accountName", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getAccountName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("banner", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getBanner() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channelId", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getChannelId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("clientLogo", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getClientLogo() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("clientName", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getClientName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("createDate", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getCreateDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (digitalSalesRoom.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getFriendlyUrlPath() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getModifiedDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (digitalSalesRoom.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ownerId", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getOwnerId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ownerName", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getOwnerName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("primaryColor", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getPrimaryColor() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("secondaryColor", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getSecondaryColor() == null) {
 					valid = false;
 				}
 
@@ -710,6 +1171,10 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
+		graphQLFields.add(new GraphQLField("id"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.headless.digital.sales.room.dto.v1_0.
@@ -772,10 +1237,187 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("accountId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getAccountId(),
+						digitalSalesRoom2.getAccountId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("accountName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getAccountName(),
+						digitalSalesRoom2.getAccountName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("banner", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getBanner(),
+						digitalSalesRoom2.getBanner())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channelId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getChannelId(),
+						digitalSalesRoom2.getChannelId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("clientLogo", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getClientLogo(),
+						digitalSalesRoom2.getClientLogo())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("clientName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getClientName(),
+						digitalSalesRoom2.getClientName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("createDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getCreateDate(),
+						digitalSalesRoom2.getCreateDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getDescription(),
+						digitalSalesRoom2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getExternalReferenceCode(),
+						digitalSalesRoom2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getFriendlyUrlPath(),
+						digitalSalesRoom2.getFriendlyUrlPath())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getId(), digitalSalesRoom2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getModifiedDate(),
+						digitalSalesRoom2.getModifiedDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						digitalSalesRoom1.getName(),
 						digitalSalesRoom2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ownerId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getOwnerId(),
+						digitalSalesRoom2.getOwnerId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ownerName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getOwnerName(),
+						digitalSalesRoom2.getOwnerName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("primaryColor", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getPrimaryColor(),
+						digitalSalesRoom2.getPrimaryColor())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("secondaryColor", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getSecondaryColor(),
+						digitalSalesRoom2.getSecondaryColor())) {
 
 					return false;
 				}
@@ -891,8 +1533,464 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("accountId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("accountName")) {
+			Object object = digitalSalesRoom.getAccountName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("banner")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("channelId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("clientLogo")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("clientName")) {
+			Object object = digitalSalesRoom.getClientName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("createDate")) {
+			if (operator.equals("between")) {
+				Date date = digitalSalesRoom.getCreateDate();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(digitalSalesRoom.getCreateDate()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("description")) {
+			Object object = digitalSalesRoom.getDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = digitalSalesRoom.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("friendlyUrlPath")) {
+			Object object = digitalSalesRoom.getFriendlyUrlPath();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("modifiedDate")) {
+			if (operator.equals("between")) {
+				Date date = digitalSalesRoom.getModifiedDate();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(digitalSalesRoom.getModifiedDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("name")) {
 			Object object = digitalSalesRoom.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("ownerId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("ownerName")) {
+			Object object = digitalSalesRoom.getOwnerName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("primaryColor")) {
+			Object object = digitalSalesRoom.getPrimaryColor();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("secondaryColor")) {
+			Object object = digitalSalesRoom.getSecondaryColor();
 
 			String value = String.valueOf(object);
 
@@ -982,7 +2080,29 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 	protected DigitalSalesRoom randomDigitalSalesRoom() throws Exception {
 		return new DigitalSalesRoom() {
 			{
+				accountId = RandomTestUtil.randomLong();
+				accountName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				channelId = RandomTestUtil.randomLong();
+				clientName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				createDate = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				friendlyUrlPath = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				modifiedDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				ownerId = RandomTestUtil.randomLong();
+				ownerName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				primaryColor = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				secondaryColor = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -1208,5 +2328,27 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 	@Inject
 	private com.liferay.headless.digital.sales.room.resource.v1_0.
 		DigitalSalesRoomResource _digitalSalesRoomResource;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private ScopeChecker _scopeChecker;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	@Inject
+	private VulcanCRUDItemDelegateBuilderRegistry
+		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }

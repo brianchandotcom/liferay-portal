@@ -78,6 +78,17 @@ public class CTCollectionImpl extends CTCollectionBaseImpl {
 	}
 
 	@Override
+	public boolean isInProgress() {
+		if ((getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+			(getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isProduction() {
 		if (CTConstants.CT_COLLECTION_ID_PRODUCTION == getCtCollectionId()) {
 			return true;

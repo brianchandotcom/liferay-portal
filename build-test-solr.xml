@@ -91,7 +91,7 @@ trustStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"</echo>
 				<os family="unix" />
 				<then>
 					<echo append="true" file="${solr.dir}/bin/solr.in.sh">${line.separator}SOLR_SSL_KEY_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
-SOLR_JAVA_HOME=/opt/java/jdk11
+SOLR_JAVA_HOME=/opt/java/jdk21
 SOLR_SSL_KEY_STORE_PASSWORD=secret
 SOLR_SSL_KEY_STORE_TYPE=JKS
 SOLR_SSL_TRUST_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
@@ -102,7 +102,7 @@ SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 					<os family="windows" />
 					<then>
 						<echo append="true" file="${solr.dir}/bin/solr.in.cmd">${line.separator}SOLR_SSL_KEY_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
-SOLR_JAVA_HOME=/opt/java/jdk11
+SOLR_JAVA_HOME=/opt/java/jdk21
 SOLR_SSL_KEY_STORE_PASSWORD=secret
 SOLR_SSL_KEY_STORE_TYPE=JKS
 SOLR_SSL_TRUST_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks

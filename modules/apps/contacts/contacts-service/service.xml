@@ -38,7 +38,7 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-		<finder name="U_EA" return-type="Entry">
+		<finder name="U_EA" return-type="Entry" unique="true">
 			<finder-column name="userId" />
 			<finder-column name="emailAddress" />
 		</finder>

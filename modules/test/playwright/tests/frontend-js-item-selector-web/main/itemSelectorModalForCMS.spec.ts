@@ -30,12 +30,6 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest()
 );
-
-const APPLICATION_NAME = 'cms/basic-documents';
-
-const firstSpaceName = `Space ${getRandomString()}`;
-const secondSpaceName = `Space ${getRandomString()}`;
-
 interface SpaceTest {
 	assetLibraryKey: string;
 	name: string;
@@ -46,6 +40,11 @@ interface FileObjectTest {
 	id: number;
 	title: string;
 }
+
+const APPLICATION_NAME = 'cms/basic-documents';
+
+const firstSpaceName = `Space-1-${getRandomString()}`;
+const secondSpaceName = `Space-2-${getRandomString()}`;
 
 let firstSpace: SpaceTest = {
 	assetLibraryKey: '',

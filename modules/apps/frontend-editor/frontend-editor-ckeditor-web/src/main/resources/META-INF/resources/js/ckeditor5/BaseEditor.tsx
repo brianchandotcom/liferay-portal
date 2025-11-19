@@ -38,7 +38,11 @@ const BaseEditor = ({
 	onReady?: (editor: TEditor) => void;
 }) => {
 	const [loading, setLoading] = useState(true);
-	const [value, setValue] = useState(data ?? config?.initialData);
+	const [value, setValue] = useState(() => {
+		const initialValue = data ?? config?.initialData;
+
+		return typeof initialValue === 'string' ? initialValue : '';
+	});
 
 	const firstRenderRef = useRef(true);
 
@@ -77,20 +81,22 @@ const BaseEditor = ({
 		});
 	}, [editorConfig]);
 
+	useEffect(() => {
+		setValue(data ?? '');
+	}, [data]);
+
 	return loading ? (
 		<ClayLoadingIndicator />
 	) : (
 		<div className={`lfr-ck ${className ? className : ''}`}>
 			<CKEditor
 				config={editorConfig}
-				data={data}
+				data={value}
 				disabled={disabled}
 				editor={editor}
 				onBlur={onBlur}
 				onChange={(event, editor) => {
-					const data = editor.getData();
-
-					setValue(data);
+					setValue(editor.getData());
 
 					if (onChange) {
 						onChange(event, editor);
@@ -100,13 +106,7 @@ const BaseEditor = ({
 				onReady={onReady}
 			/>
 
-			{name && (
-				<input
-					name={name}
-					type="hidden"
-					value={typeof value === 'string' ? value : ''}
-				/>
-			)}
+			{name && <input name={name} type="hidden" value={value} />}
 		</div>
 	);
 };

@@ -52,8 +52,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 	public interface DecisionAssistant {
 
 		public TokenStream decide(
-			@UserMessage String userMessage,
-			InvocationParameters invocationParameters);
+			InvocationParameters invocationParameters,
+			@UserMessage String userMessage);
 
 	}
 
@@ -139,12 +139,12 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		).build();
 
 		decisionAssistant.decide(
-			InputVariablesUtil.applyInputVariables(
-				executionContext, "userMessage", kaleoNodeSettingValues),
 			InvocationParameters.from(
 				Map.of(
 					"executionContext", executionContext, "permissionChecker",
-					PermissionThreadLocal.getPermissionChecker()))
+					PermissionThreadLocal.getPermissionChecker())),
+			InputVariablesUtil.applyInputVariables(
+				executionContext, "userMessage", kaleoNodeSettingValues)
 		).onCompleteResponse(
 			response -> vertexAiGeminiStreamingChatModel.close()
 		).onError(

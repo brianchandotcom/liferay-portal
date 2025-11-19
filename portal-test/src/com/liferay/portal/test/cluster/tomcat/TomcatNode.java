@@ -252,6 +252,11 @@ public class TomcatNode {
 
 				return "Done";
 			});
+
+		NoticeableFuture<?> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
+
+		noticeableFuture.get();
 	}
 
 	public <V extends Serializable> V syncExecute(

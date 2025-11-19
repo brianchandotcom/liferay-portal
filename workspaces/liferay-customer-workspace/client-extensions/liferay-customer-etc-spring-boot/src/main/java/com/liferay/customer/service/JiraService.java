@@ -221,6 +221,20 @@ public class JiraService extends BaseService {
 		return null;
 	}
 
+	public String getSupportAccountObjectKey(String externalKey)
+		throws Exception {
+
+		JSONObject accountResponseJSONObject = _searchAccountByExternalKey(
+			externalKey);
+
+		JSONArray valuesJSONArray = accountResponseJSONObject.getJSONArray(
+			"values");
+
+		JSONObject accountJSONObject = valuesJSONArray.getJSONObject(0);
+
+		return accountJSONObject.getString("objectKey");
+	}
+
 	@CacheEvict(allEntries = true, value = "affectedVersions")
 	@Scheduled(
 		cron = "${liferay.customer.jira.service.affected.versions.cache.eviction.cron}"

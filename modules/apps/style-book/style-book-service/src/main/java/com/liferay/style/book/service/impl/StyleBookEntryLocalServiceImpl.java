@@ -612,7 +612,8 @@ public class StyleBookEntryLocalServiceImpl
 			groupId, styleBookEntryKey);
 
 		if (styleBookEntry != null) {
-			throw new DuplicateStyleBookEntryKeyException();
+			throw new DuplicateStyleBookEntryKeyException(
+				"Duplicate style book entry key '" + styleBookEntryKey + "'");
 		}
 	}
 

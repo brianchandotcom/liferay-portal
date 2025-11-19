@@ -16,6 +16,9 @@ export class CalendarWidgetPage {
 	readonly addEventMenuItem: Locator;
 	readonly allDayCheckbox: Locator;
 	readonly calendarColumns: Locator;
+	readonly calendarSettingsNotificationTemplates: {
+		bodyEditor: Locator;
+	};
 	readonly calendarOptions: Locator;
 	readonly calendarWidget: Locator;
 	readonly closeConfigurationButton: Locator;
@@ -70,6 +73,15 @@ export class CalendarWidgetPage {
 		this.calendarOptions = page
 			.locator('#wrapper')
 			.getByRole('button', {name: 'Options'});
+
+		const bodyEditorContainer = page
+			.frameLocator('iframe')
+			.getByTestId('bodyEditorContainer');
+
+		this.calendarSettingsNotificationTemplates = {
+			bodyEditor: bodyEditorContainer.locator('.ck-editor__editable'),
+		};
+
 		this.calendarWidget = page.locator(
 			'.lfr-layout-structure-item-com-liferay-calendar-web-portlet-calendarportlet'
 		);

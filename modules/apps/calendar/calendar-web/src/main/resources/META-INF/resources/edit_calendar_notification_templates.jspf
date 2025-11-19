@@ -80,15 +80,17 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 
 		<c:choose>
 			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
-				<label for="<portlet:namespace />body">
-					<liferay-ui:message key="body" />
-				</label>
+				<div data-testid="bodyEditorContainer">
+					<label for="<portlet:namespace />body">
+						<liferay-ui:message key="body" />
+					</label>
 
-				<liferay-editor:editor
-					contents="<%= body %>"
-					editorName="ckeditor5_classic"
-					name="body"
-				/>
+					<liferay-editor:editor
+						contents="<%= body %>"
+						editorName="ckeditor5_classic"
+						name="body"
+					/>
+				</div>
 			</c:when>
 			<c:otherwise>
 				<aui:field-wrapper label="body">

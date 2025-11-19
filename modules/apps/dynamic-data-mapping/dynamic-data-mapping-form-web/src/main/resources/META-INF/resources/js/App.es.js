@@ -92,18 +92,17 @@ export default function App({autosaveInterval, autosaveURL, ...otherProps}) {
 										>
 											<Switch>
 												<Route
-													component={FormBuilder}
-													exact
+													element={<FormBuilder />}
 													path="/"
 												/>
 
 												<Route
-													component={RuleBuilder}
-													path="/rules"
+													element={<RuleBuilder />}
+													path="/rules/*"
 												/>
 
 												<Route
-													component={Report}
+													element={<Report />}
 													path="/report"
 												/>
 											</Switch>

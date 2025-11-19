@@ -157,6 +157,10 @@ components:
                 parameterRequired:
                     readOnly: true
                     type: boolean
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 pluralLabel:
                     additionalProperties:
                         type: string

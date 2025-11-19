@@ -25,11 +25,11 @@ test('Asserts selectable image cards behavior', async ({page}) => {
 		selectableImageCardsSection.locator('.form-check-card');
 
 	await test.step('Asserts the default state of selectable image cards', async () => {
-		const checkbox = selectableImageCardsSection
-			.locator('[data-qa-id="image-card-icon-block"]')
-			.getByRole('checkbox');
-
-		await expect(checkbox).not.toBeChecked();
+		await expect(
+			selectableImageCardsSection
+				.locator('[data-qa-id="image-card-icon-block"]')
+				.getByRole('checkbox')
+		).not.toBeChecked();
 	});
 
 	await test.step('Card becomes active when checkbox is checked', async () => {

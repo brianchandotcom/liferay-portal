@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
@@ -106,6 +107,8 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 			fragmentStyledLayoutStructureItem::isIndexed);
 		widgetInstancePageElementDefinition.setName(
 			fragmentStyledLayoutStructureItem::getName);
+		widgetInstancePageElementDefinition.setType(
+			PageElementDefinition.Type.WIDGET);
 		widgetInstancePageElementDefinition.setWidgetInstance(
 			() -> _getWidgetInstance(fragmentEntryLink));
 		widgetInstancePageElementDefinition.

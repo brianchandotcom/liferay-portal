@@ -77,53 +77,26 @@ public class ObjectEntryFolderModelListener
 		}
 	}
 
-	private JSONObject _getCMSDefaultPermissionJSONObject(
+	@Override
+	public void onAfterUpdate(
+			ObjectEntryFolder originalObjectEntryFolder,
 			ObjectEntryFolder objectEntryFolder)
-		throws Exception {
+		throws ModelListenerException {
 
-		ObjectDefinition cmsDefaultPermissionObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMS_DEFAULT_PERMISSION",
-					objectEntryFolder.getCompanyId());
+		try {
+			if (originalObjectEntryFolder.getParentObjectEntryFolderId() !=
+					objectEntryFolder.getParentObjectEntryFolderId()) {
 
-		if (cmsDefaultPermissionObjectDefinition == null) {
-			return null;
-		}
-
-		if (objectEntryFolder.getParentObjectEntryFolderId() != 0) {
-			ObjectEntryFolder parentObjectEntryFolder =
-				_objectEntryFolderLocalService.getObjectEntryFolder(
-					objectEntryFolder.getParentObjectEntryFolderId());
-
-			JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
-				parentObjectEntryFolder.getCompanyId(),
-				parentObjectEntryFolder.getUserId(),
-				parentObjectEntryFolder.getExternalReferenceCode(),
-				parentObjectEntryFolder.getModelClassName(), _filterFactory);
-
-			if ((jsonObject != null) && !JSONUtil.isEmpty(jsonObject)) {
-				return jsonObject;
+				_updateCMSDefaultPermissions(objectEntryFolder);
 			}
 		}
-
-		Group group = _groupLocalService.getGroup(
-			objectEntryFolder.getGroupId());
-
-		return CMSDefaultPermissionUtil.getJSONObject(
-			group.getCompanyId(), group.getCreatorUserId(),
-			group.getExternalReferenceCode(), DepotEntry.class.getName(),
-			_filterFactory);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
 	}
 
-	private void _onAfterCreate(ObjectEntryFolder objectEntryFolder)
+	private void _addCMSDefaultPermissions(ObjectEntryFolder objectEntryFolder)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntryFolder.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
 
 		JSONObject defaultPermissionsJSONObject =
 			_getCMSDefaultPermissionJSONObject(objectEntryFolder);
@@ -181,6 +154,57 @@ public class ObjectEntryFolderModelListener
 		}
 	}
 
+	private JSONObject _getCMSDefaultPermissionJSONObject(
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		ObjectDefinition cmsDefaultPermissionObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION",
+					objectEntryFolder.getCompanyId());
+
+		if (cmsDefaultPermissionObjectDefinition == null) {
+			return null;
+		}
+
+		if (objectEntryFolder.getParentObjectEntryFolderId() != 0) {
+			ObjectEntryFolder parentObjectEntryFolder =
+				_objectEntryFolderLocalService.getObjectEntryFolder(
+					objectEntryFolder.getParentObjectEntryFolderId());
+
+			JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+				parentObjectEntryFolder.getCompanyId(),
+				parentObjectEntryFolder.getUserId(),
+				parentObjectEntryFolder.getExternalReferenceCode(),
+				parentObjectEntryFolder.getModelClassName(), _filterFactory);
+
+			if ((jsonObject != null) && !JSONUtil.isEmpty(jsonObject)) {
+				return jsonObject;
+			}
+		}
+
+		Group group = _groupLocalService.getGroup(
+			objectEntryFolder.getGroupId());
+
+		return CMSDefaultPermissionUtil.getJSONObject(
+			group.getCompanyId(), group.getCreatorUserId(),
+			group.getExternalReferenceCode(), DepotEntry.class.getName(),
+			_filterFactory);
+	}
+
+	private void _onAfterCreate(ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		_addCMSDefaultPermissions(objectEntryFolder);
+	}
+
 	private void _onAfterRemove(ObjectEntryFolder objectEntryFolder)
 		throws PortalException {
 
@@ -215,6 +239,38 @@ public class ObjectEntryFolderModelListener
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
+	}
+
+	private void _updateCMSDefaultPermissions(
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		JSONObject defaultPermissionsJSONObject =
+			_getCMSDefaultPermissionJSONObject(objectEntryFolder);
+
+		if ((defaultPermissionsJSONObject == null) ||
+			JSONUtil.isEmpty(defaultPermissionsJSONObject)) {
+
+			return;
+		}
+
+		ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
+			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
+			objectEntryFolder.getExternalReferenceCode(),
+			objectEntryFolder.getModelClassName(), _filterFactory);
+
+		if (objectEntry != null) {
+			_objectEntryLocalService.deleteObjectEntry(
+				objectEntry.getObjectEntryId());
+		}
+
+		_addCMSDefaultPermissions(objectEntryFolder);
 	}
 
 	@Reference(

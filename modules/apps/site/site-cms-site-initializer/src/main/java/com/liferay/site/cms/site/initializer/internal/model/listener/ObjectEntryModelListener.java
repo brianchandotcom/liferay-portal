@@ -66,6 +66,23 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
+	@Override
+	public void onAfterUpdate(
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		try {
+			if (originalObjectEntry.getObjectEntryFolderId() !=
+					objectEntry.getObjectEntryFolderId()) {
+
+				_setResourcePermissions(objectEntry);
+			}
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
 	private JSONObject _getCMSDefaultPermissionJSONObject(
 			ObjectEntry objectEntry)
 		throws Exception {
@@ -142,6 +159,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			return;
 		}
+
+		_setResourcePermissions(objectEntry);
+	}
+
+	private void _setResourcePermissions(ObjectEntry objectEntry)
+		throws Exception {
 
 		Group group = _groupLocalService.fetchGroup(objectEntry.getGroupId());
 

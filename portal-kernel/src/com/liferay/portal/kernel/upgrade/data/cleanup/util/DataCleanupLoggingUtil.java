@@ -27,6 +27,14 @@ public class DataCleanupLoggingUtil {
 				(count > 1) ? "s " : " ", "deleted because ", cause));
 	}
 
+	public static void logDrop(Log log, String tableName, String cause) {
+		if (log.isInfoEnabled()) {
+			log.info(
+				StringBundler.concat(
+					"Table ", tableName, ", dropped because ", cause));
+		}
+	}
+
 	public static void logTruncate(Log log, String tableName) {
 		if (log.isInfoEnabled()) {
 			log.info(

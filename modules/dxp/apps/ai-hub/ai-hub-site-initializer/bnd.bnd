@@ -1,6 +1,6 @@
 Bundle-Name: Liferay AI Hub Site Initializer
 Bundle-SymbolicName: com.liferay.ai.hub.site.initializer
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Web-ContextPath: /ai-hub-site-initializer
 -dsannotations-options: inherit
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore

@@ -87,7 +87,7 @@ public class UserSearchPermissionFilterContributor
 
 					for (Organization suborganization :
 							_organizationLocalService.getOrganizations(
-								companyId, organization.getTreePath() + "%")) {
+								companyId, organization.getTreePath() + "%/")) {
 
 						organizationIds.add(
 							suborganization.getOrganizationId());

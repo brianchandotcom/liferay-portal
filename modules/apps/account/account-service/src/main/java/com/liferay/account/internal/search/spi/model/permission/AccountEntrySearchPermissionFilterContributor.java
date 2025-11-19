@@ -98,7 +98,7 @@ public class AccountEntrySearchPermissionFilterContributor
 
 					organizations.addAll(
 						_organizationLocalService.getOrganizations(
-							companyId, organization.getTreePath() + "%"));
+							companyId, organization.getTreePath() + "%/"));
 				}
 			}
 

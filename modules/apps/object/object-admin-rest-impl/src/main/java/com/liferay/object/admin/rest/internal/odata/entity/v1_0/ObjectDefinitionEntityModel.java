@@ -25,6 +25,7 @@ public class ObjectDefinitionEntityModel implements EntityModel {
 	public ObjectDefinitionEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new BooleanEntityField("hidden", locale -> Field.HIDDEN),
+			new BooleanEntityField("modifiable", locale -> "modifiable"),
 			new CollectionEntityField(
 				new IntegerEntityField("status", locale -> Field.STATUS)),
 			new DateTimeEntityField(

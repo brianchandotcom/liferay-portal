@@ -156,7 +156,7 @@ export default function RuleBuilder() {
 						/>
 					}
 					path="/"
-				></Route>
+				/>
 
 				<Route
 					element={
@@ -200,7 +200,7 @@ export default function RuleBuilder() {
 						/>
 					}
 					path="editor"
-				></Route>
+				/>
 			</Routes>
 		</ClayLayout.Container>
 	);

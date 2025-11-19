@@ -15,11 +15,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -127,7 +129,14 @@ public class SiteConfigurationResourceImpl
 			siteConfigurations.add(siteConfiguration);
 		}
 
-		return Page.of(siteConfigurations);
+		return Page.of(
+			HashMapBuilder.put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postSiteSiteConfigurationBatch",
+					Group.class.getName(), group.getGroupId())
+			).build(),
+			siteConfigurations);
 	}
 
 	@Override

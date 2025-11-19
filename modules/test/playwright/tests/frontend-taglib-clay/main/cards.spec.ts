@@ -6,51 +6,73 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {claySamplePageTest} from './fixtures/claySamplePageTest';
 import {TabName} from './pages/ClaySamplePage';
 
 const test = mergeTests(claySamplePageTest, loginTest());
 
+function getCardsInSection(page: Page, title: string) {
+	return getSectionByTitle(page, title).locator('.form-check-card');
+}
+
+function getSectionByTitle(page: Page, title: string) {
+	return page.locator(`div.h4:has-text("${title}") + div.row`);
+}
+
 test.beforeEach(async ({claySamplePage}) => {
 	await claySamplePage.selectTab(TabName.CARDS);
 });
 
-function getSectionByTitle(page: Page, title: string) {
-	return page.locator(`div.row:has(+ div.h4:has-text("${title}"))`);
-}
+test('Asserts selectable image cards behavior', async ({page}) => {
+	await test.step('Asserts the default state of selectable image cards', async () => {
+		const checkbox = getSectionByTitle(page, 'Selectable Image Card')
+			.locator('[data-qa-id="image-card-icon-block"]')
+			.getByRole('checkbox');
 
-test('Card becomes active when checkbox is checked', async ({page}) => {
-	const cards = getSectionByTitle(page, 'Selectable Image Card').locator(
-		'.form-check-card'
-	);
+		await expect(checkbox).not.toBeChecked();
+	});
 
-	for (const card of await cards.all()) {
-		const checkbox = card.getByRole('checkbox');
+	await test.step('Card becomes active when checkbox is checked', async () => {
+		const cards = getCardsInSection(page, 'Selectable Image Card');
 
-		await checkbox.check();
+		for (const card of await cards.all()) {
+			const checkbox = card.getByRole('checkbox');
 
-		await expect(card).toHaveClass(/active/);
+			await checkbox.check();
 
-		await checkbox.uncheck();
+			await expect(card).toHaveClass(/active/);
 
-		await expect(card).not.toHaveClass(/active/);
-	}
-});
+			await checkbox.uncheck();
 
-test('Click on card title navigates to href URL', async ({page}) => {
-	const section = getSectionByTitle(page, 'Selectable Image Card');
+			await expect(card).not.toHaveClass(/active/);
+		}
+	});
 
-	const titleLink = section.getByRole('link', {name: 'Beetle'});
+	await test.step('Click on card title navigates to href URL', async () => {
+		expect(page.url()).not.toContain('#image-card-href');
 
-	const titleLinkHref = await titleLink.getAttribute('href');
+		await getCardsInSection(page, 'Selectable Image Card')
+			.first()
+			.getByRole('link', {name: 'Beetle'})
+			.click();
 
-	const initialUrl = page.url();
+		expect(page.url()).toContain('#image-card-href');
+	});
 
-	const finalUrl = `${initialUrl}${titleLinkHref}`;
+	await test.step('Click on card option navigates to href URL', async () => {
+		expect(page.url()).not.toContain('#1');
 
-	await titleLink.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Group 1 - Option 1',
+			}),
+			trigger: getCardsInSection(page, 'Selectable Image Card')
+				.first()
+				.getByRole('button', {name: 'More actions'}),
+		});
 
-	expect(initialUrl).not.toBe(finalUrl);
-	expect(initialUrl).not.toContain(titleLinkHref);
-	await expect(page).toHaveURL(finalUrl);
+		expect(page.url()).toContain('#1');
+	});
 });

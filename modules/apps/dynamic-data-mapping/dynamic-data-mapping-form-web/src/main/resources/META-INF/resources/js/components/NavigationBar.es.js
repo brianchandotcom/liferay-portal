@@ -5,6 +5,7 @@
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import {useCallback, useLayoutEffect} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import {useBack} from '../hooks/useBack.es';
 
@@ -25,8 +26,11 @@ const NAV_ITEMS_REVERSE = {
  * change the React Router route, currently the component is rendered via JSP
  * and it is necessary to control the interaction via JavaScript.
  */
-export function NavigationBar({history, location}) {
+export function NavigationBar() {
 	useBack();
+
+	const location = useLocation();
+	const navigate = useNavigate();
 
 	const onClick = useCallback(
 		(event) => {
@@ -54,13 +58,12 @@ export function NavigationBar({history, location}) {
 
 				target.classList.add('active');
 
-				const method =
-					path === location.pathname ? history.replace : history.push;
+				const isReplacing = path === location.pathname;
 
-				method(path);
+				navigate(path, {replace: isReplacing});
 			}
 		},
-		[history, location.pathname]
+		[navigate, location.pathname]
 	);
 
 	useEventListener(

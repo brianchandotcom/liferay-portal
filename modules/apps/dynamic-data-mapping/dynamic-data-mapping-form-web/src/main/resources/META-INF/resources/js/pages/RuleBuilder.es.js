@@ -13,14 +13,14 @@ import {
 } from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
 import {EVENT_TYPES} from '../eventTypes.es';
 import {RuleEditor} from './RuleEditor.es';
 import {RuleList} from './RuleList.es';
 
-export default function RuleBuilder({history, location}) {
+export default function RuleBuilder() {
 	const {
 		cache,
 		dataProviderInstanceParameterSettingsURL,
@@ -32,6 +32,8 @@ export default function RuleBuilder({history, location}) {
 	} = useConfig();
 	const {currentRuleLoc, pages, rules} = useFormState();
 	const dispatch = useForm();
+	const location = useLocation();
+	const navigate = useNavigate();
 
 	const {resource: resourceDataProvider} = useResource({
 		fetch,
@@ -94,16 +96,13 @@ export default function RuleBuilder({history, location}) {
 		value: role.name,
 	}));
 
-	const navigate = useCallback(
+	const customNavigate = useCallback(
 		(path) => {
-			const method =
-				path === history.location.pathname
-					? history.replace
-					: history.push;
+			const isReplacing = path === location.pathname;
 
-			method(path);
+			navigate(path, {replace: isReplacing});
 		},
-		[history]
+		[navigate, location.pathname]
 	);
 
 	useEffect(() => {
@@ -114,15 +113,15 @@ export default function RuleBuilder({history, location}) {
 		// - `null` indicates that no rules are in progress
 
 		if (currentRuleLoc !== null) {
-			navigate('/rules/editor');
+			customNavigate('/rules/editor');
 		}
-	}, [currentRuleLoc, navigate]);
+	}, [currentRuleLoc, customNavigate]);
 
 	const onAddRule = useCallback(() => {
 		dispatch({payload: {loc: undefined}, type: EVENT_TYPES.RULE.EDIT});
 
-		navigate('/rules/editor');
-	}, [dispatch, navigate]);
+		customNavigate('/rules/editor');
+	}, [dispatch, customNavigate]);
 
 	return (
 		<ClayLayout.Container>

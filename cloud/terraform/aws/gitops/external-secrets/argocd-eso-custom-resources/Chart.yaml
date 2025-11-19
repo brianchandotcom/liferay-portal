@@ -1,4 +1,4 @@
 apiVersion: v2
-name: liferay-argocd-eso-custom-resources
+name: liferay-aws-argocd-eso-custom-resources
 type: application
 version: 0.1.0

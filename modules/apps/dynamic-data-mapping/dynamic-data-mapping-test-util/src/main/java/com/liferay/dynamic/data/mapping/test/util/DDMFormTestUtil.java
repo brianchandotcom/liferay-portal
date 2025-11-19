@@ -28,10 +28,8 @@ public class DDMFormTestUtil {
 	public static void addDDMFormFields(
 		DDMForm ddmForm, DDMFormField... ddmFormFieldsArray) {
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
 		for (DDMFormField ddmFormField : ddmFormFieldsArray) {
-			ddmFormFields.add(ddmFormField);
+			ddmForm.addDDMFormField(ddmFormField);
 		}
 	}
 

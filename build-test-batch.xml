@@ -2139,7 +2139,7 @@ app.server.type=@{app.server.type}]]></echo>
 											<property name="database.type" value="@{database.type}" />
 											<property name="startup.testing.warm" value="@{startup.testing.warm}" />
 											<property name="functional.test.type" value="@{functional.test.type}" />
-											<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
+											<property name="liferay.portal.bundle" value="${test.portal.bundle.version}" />
 											<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
 											<property name="test.class" value="${test.class}" />
 											<property name="test.portal.log.assert" value="@{test.portal.log.assert}" />
@@ -3774,7 +3774,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 				</then>
 			</if>
 
-			<setup-testable-tomcat-gc test.portal.bundle.version="@{test.portal.bundle.version}" />
+			<setup-testable-tomcat-gc test.portal.bundle.version="${test.portal.bundle.version}" />
 
 			<setup-testable-tomcat-heap-dump-on-oom />
 
@@ -3906,7 +3906,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 			<if>
 				<not>
-					<equals arg1="@{test.portal.bundle.version}" arg2="" />
+					<equals arg1="${test.portal.bundle.version}" arg2="" />
 				</not>
 				<then>
 					<copy

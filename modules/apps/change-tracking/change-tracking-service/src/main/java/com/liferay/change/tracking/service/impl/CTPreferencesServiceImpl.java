@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -55,9 +54,7 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 			CTCollection ctCollection =
 				_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
 
-			if ((ctCollection == null) ||
-				(ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
-
+			if ((ctCollection == null) || !ctCollection.isInProgress()) {
 				return null;
 			}
 

@@ -162,9 +162,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				combinedTableReferenceInfos.get(childClassNameId);
 
 			if (childTableReferenceInfo == null) {
-				if ((ctCollection != null) &&
-					(ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) &&
+				if ((ctCollection != null) && !ctCollection.isInProgress() &&
 					(ctCollection.getStatus() !=
 						WorkflowConstants.STATUS_PENDING)) {
 

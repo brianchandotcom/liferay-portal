@@ -99,7 +99,7 @@ public class CTCollectionImpl extends CTCollectionBaseImpl {
 
 	@Override
 	public boolean isReadOnly() {
-		if ((getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+		if (!isInProgress() &&
 			(getStatus() != WorkflowConstants.STATUS_PENDING)) {
 
 			return true;

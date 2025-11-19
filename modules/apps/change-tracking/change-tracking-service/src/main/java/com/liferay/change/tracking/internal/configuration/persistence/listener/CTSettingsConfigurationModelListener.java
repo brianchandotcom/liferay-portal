@@ -77,7 +77,11 @@ public class CTSettingsConfigurationModelListener
 
 			List<CTCollection> ctCollections =
 				_ctCollectionLocalService.getCTCollections(
-					companyId, WorkflowConstants.STATUS_DRAFT,
+					companyId,
+					new int[] {
+						WorkflowConstants.STATUS_DRAFT,
+						WorkflowConstants.STATUS_INCOMPLETE
+					},
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			for (CTCollection ctCollection : ctCollections) {

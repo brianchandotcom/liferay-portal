@@ -91,6 +91,8 @@ public class CTCollectionPreviewFilter extends BasePortalFilter {
 				(ctCollection.getStatus() !=
 					WorkflowConstants.STATUS_EXPIRED) &&
 				(ctCollection.getStatus() !=
+					WorkflowConstants.STATUS_INCOMPLETE) &&
+				(ctCollection.getStatus() !=
 					WorkflowConstants.STATUS_PENDING) &&
 				(ctCollection.getStatus() !=
 					WorkflowConstants.STATUS_SCHEDULED)) {

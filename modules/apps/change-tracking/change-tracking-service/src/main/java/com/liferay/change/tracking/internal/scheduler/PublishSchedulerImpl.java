@@ -122,7 +122,7 @@ public class PublishSchedulerImpl implements PublishScheduler {
 	}
 
 	@Override
-	public void unschedulePublish(long ctCollectionId) throws PortalException {
+	public void unschedulePublish(long ctCollectionId) throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
@@ -147,7 +147,13 @@ public class PublishSchedulerImpl implements PublishScheduler {
 			PermissionThreadLocal.getPermissionChecker(), ctCollection,
 			CTActionKeys.PUBLISH);
 
-		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
+		if (_ctCollectionLocalService.hasUnapprovedChanges(ctCollectionId)) {
+			ctCollection.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		}
+		else {
+			ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+
 		ctCollection.setStatusByUserId(UserConstants.USER_ID_DEFAULT);
 
 		_ctCollectionLocalService.updateCTCollection(ctCollection);

@@ -394,11 +394,12 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					"select distinct ctEntry1.modelClassPK from CTEntry ",
 					"ctEntry1 inner join CTCollection on ctEntry1.",
 					"ctCollectionId = CTCollection.ctCollectionId and ",
-					"CTCollection.status = ? inner join (select CTCollection.",
-					"ctCollectionId, modelClassNameId, modelClassPK, ",
-					"changeType from CTEntry inner join CTCollection on ",
-					"CTEntry.ctCollectionId = CTCollection.ctCollectionId and ",
-					"CTCollection.status = ?) ctEntry2 on ctEntry1.",
+					"(CTCollection.status = ? or CTCollection.status = ?) ",
+					"inner join (select CTCollection.ctCollectionId, ",
+					"modelClassNameId, modelClassPK, changeType from CTEntry ",
+					"inner join CTCollection on CTEntry.ctCollectionId = ",
+					"CTCollection.ctCollectionId and (CTCollection.status = ? ",
+					"or CTCollection.status = ?)) ctEntry2 on ctEntry1.",
 					"modelClassNameId = ctEntry2.modelClassNameId and ",
 					"ctEntry1.modelClassPK = ctEntry2.modelClassPK where ",
 					"ctEntry1.modelClassNameId = ? and ctEntry1.changeType = ",
@@ -406,13 +407,15 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					"changeType = ? and ctEntry2.ctCollectionId != ?"))) {
 
 			preparedStatement.setInt(1, WorkflowConstants.STATUS_DRAFT);
-			preparedStatement.setInt(2, WorkflowConstants.STATUS_DRAFT);
-			preparedStatement.setLong(3, _modelClassNameId);
-			preparedStatement.setInt(4, CTConstants.CT_CHANGE_TYPE_DELETION);
-			preparedStatement.setLong(5, _sourceCTCollectionId);
-			preparedStatement.setInt(
-				6, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
+			preparedStatement.setInt(2, WorkflowConstants.STATUS_INCOMPLETE);
+			preparedStatement.setInt(3, WorkflowConstants.STATUS_DRAFT);
+			preparedStatement.setInt(4, WorkflowConstants.STATUS_INCOMPLETE);
+			preparedStatement.setLong(5, _modelClassNameId);
+			preparedStatement.setInt(6, CTConstants.CT_CHANGE_TYPE_DELETION);
 			preparedStatement.setLong(7, _sourceCTCollectionId);
+			preparedStatement.setInt(
+				8, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
+			preparedStatement.setLong(9, _sourceCTCollectionId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

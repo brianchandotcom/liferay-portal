@@ -215,7 +215,9 @@ public class DBUpgrader {
 	}
 
 	public static void startUpgradeLogAppender() {
-		_initUpgradeStopwatch();
+		_stopWatch = new StopWatch();
+
+		_stopWatch.start();
 
 		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
@@ -563,12 +565,6 @@ public class DBUpgrader {
 		}
 
 		return buildNumber;
-	}
-
-	private static void _initUpgradeStopwatch() {
-		_stopWatch = new StopWatch();
-
-		_stopWatch.start();
 	}
 
 	private static void _registerModuleServiceLifecycle(

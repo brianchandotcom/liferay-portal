@@ -148,30 +148,34 @@ public class DisplayPageFormSubmissionResult implements Serializable {
 		description = "The localized display page template form submission result's notification text."
 	)
 	@Valid
-	public FragmentInlineValue getNotificationText() {
-		if (_notificationTextSupplier != null) {
-			notificationText = _notificationTextSupplier.get();
+	public FragmentInlineValue getNotificationTextFragmentInlineValue() {
+		if (_notificationTextFragmentInlineValueSupplier != null) {
+			notificationTextFragmentInlineValue =
+				_notificationTextFragmentInlineValueSupplier.get();
 
-			_notificationTextSupplier = null;
+			_notificationTextFragmentInlineValueSupplier = null;
 		}
 
-		return notificationText;
+		return notificationTextFragmentInlineValue;
 	}
 
-	public void setNotificationText(FragmentInlineValue notificationText) {
-		this.notificationText = notificationText;
+	public void setNotificationTextFragmentInlineValue(
+		FragmentInlineValue notificationTextFragmentInlineValue) {
 
-		_notificationTextSupplier = null;
+		this.notificationTextFragmentInlineValue =
+			notificationTextFragmentInlineValue;
+
+		_notificationTextFragmentInlineValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setNotificationText(
+	public void setNotificationTextFragmentInlineValue(
 		UnsafeSupplier<FragmentInlineValue, Exception>
-			notificationTextUnsafeSupplier) {
+			notificationTextFragmentInlineValueUnsafeSupplier) {
 
-		_notificationTextSupplier = () -> {
+		_notificationTextFragmentInlineValueSupplier = () -> {
 			try {
-				return notificationTextUnsafeSupplier.get();
+				return notificationTextFragmentInlineValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -186,10 +190,11 @@ public class DisplayPageFormSubmissionResult implements Serializable {
 		description = "The localized display page template form submission result's notification text."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentInlineValue notificationText;
+	protected FragmentInlineValue notificationTextFragmentInlineValue;
 
 	@JsonIgnore
-	private Supplier<FragmentInlineValue> _notificationTextSupplier;
+	private Supplier<FragmentInlineValue>
+		_notificationTextFragmentInlineValueSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getShowNotification() {
@@ -285,16 +290,17 @@ public class DisplayPageFormSubmissionResult implements Serializable {
 			sb.append(String.valueOf(mapping));
 		}
 
-		FragmentInlineValue notificationText = getNotificationText();
+		FragmentInlineValue notificationTextFragmentInlineValue =
+			getNotificationTextFragmentInlineValue();
 
-		if (notificationText != null) {
+		if (notificationTextFragmentInlineValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"notificationText\": ");
+			sb.append("\"notificationTextFragmentInlineValue\": ");
 
-			sb.append(String.valueOf(notificationText));
+			sb.append(String.valueOf(notificationTextFragmentInlineValue));
 		}
 
 		Boolean showNotification = getShowNotification();

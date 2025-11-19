@@ -1181,7 +1181,7 @@ components:
                                 The mapping's field key.
                             type: string
                     type: object
-                notificationText:
+                notificationTextFragmentInlineValue:
                     $ref: "#/components/schemas/FragmentInlineValue"
                     description:
                         The localized display page template form submission result's notification text.
@@ -3441,7 +3441,7 @@ components:
                         The message form submission type (embedded, none).
                     enum: [Embedded, None]
                     type: string
-                notificationText:
+                notificationTextFragmentInlineValue:
                     $ref: "#/components/schemas/FragmentInlineValue"
                     description:
                         The localized message form submission result's notification text.
@@ -5448,7 +5448,7 @@ components:
                     # @review
                     description:
                         The localized submission of page type.
-                notificationText:
+                notificationTextFragmentInlineValue:
                     $ref: "#/components/schemas/FragmentInlineValue"
                     description:
                         The localized site page form submission result's notification text.

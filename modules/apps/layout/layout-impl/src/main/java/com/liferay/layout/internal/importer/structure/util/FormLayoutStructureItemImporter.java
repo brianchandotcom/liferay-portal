@@ -427,7 +427,8 @@ public class FormLayoutStructureItemImporter
 			() -> {
 				JSONObject notificationTextJSONObject =
 					_getLocalizedValuesJSONObject(
-						"notificationText", formSuccessSubmissionResultMap);
+						"notificationTextFragmentInlineValue",
+						formSuccessSubmissionResultMap);
 
 				if (notificationTextJSONObject.length() > 0) {
 					return notificationTextJSONObject;

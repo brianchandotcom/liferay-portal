@@ -179,7 +179,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			dlFileEntry2.getFileEntryTypeId());
 	}
 
-	@Test
+	@Test(expected = InvalidFileEntryTypeException.class)
 	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeUnlessDLFileEntryTypeAvailable()
 		throws Exception {
 
@@ -192,19 +192,13 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			_dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntry1.getFileEntryTypeId());
 
-		FileEntry fileEntry2 = dlAppService.copyFileEntry(
-			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
-			_newParentFolder.getGroupId(),
+		dlAppService.copyFileEntry(
+			fileEntry1.getFileEntryId(), _targetParentFolder.getFolderId(),
+			_targetParentFolder.getGroupId(),
 			_dlFileEntryType.getFileEntryTypeId(),
 			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(
-				_newParentFolder.getGroupId()));
-
-		DLFileEntry dlFileEntry2 = (DLFileEntry)fileEntry2.getModel();
-
-		Assert.assertEquals(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			dlFileEntry2.getFileEntryTypeId());
+				_targetParentFolder.getGroupId()));
 	}
 
 	@Test(expected = InvalidFileEntryTypeException.class)

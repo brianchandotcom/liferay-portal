@@ -83,9 +83,9 @@ public class CTSettingsConfigurationModelListener
 
 			_cleanUpScheduledCTCollections(companyId);
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
-				portalException, CTSettingsConfiguration.class, getClass(),
+				exception, CTSettingsConfiguration.class, getClass(),
 				properties);
 		}
 	}
@@ -198,7 +198,7 @@ public class CTSettingsConfigurationModelListener
 	}
 
 	private void _cleanUpScheduledCTCollections(long companyId)
-		throws PortalException {
+		throws Exception {
 
 		if (PropsValues.SCHEDULER_ENABLED) {
 			for (CTCollection ctCollection :

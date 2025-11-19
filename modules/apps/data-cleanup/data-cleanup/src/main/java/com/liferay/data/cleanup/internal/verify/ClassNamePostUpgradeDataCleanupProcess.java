@@ -5,6 +5,7 @@
 
 package com.liferay.data.cleanup.internal.verify;
 
+import com.liferay.data.cleanup.internal.verify.util.PostUpgradeDataCleanupProcessUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -43,29 +44,20 @@ public class ClassNamePostUpgradeDataCleanupProcess
 
 	@Override
 	public void cleanUp() throws Exception {
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			String bundleSymbolicName = bundle.getSymbolicName();
-
-			if (!bundleSymbolicName.startsWith("com.liferay.")) {
-				continue;
+		if (!PostUpgradeDataCleanupProcessUtil.allLiferayBundlesStarted()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						ClassNamePostUpgradeDataCleanupProcess.class.
+							getSimpleName(),
+						" cannot be executed because there are modules with ",
+						"unsatisfied references"));
 			}
 
-			if (bundle.getState() == Bundle.INSTALLED) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							ClassNamePostUpgradeDataCleanupProcess.class.
-								getSimpleName(),
-							" cannot be executed because there are modules ",
-							"with unsatisfied references"));
-				}
-
-				return;
-			}
+			return;
 		}
 
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 		List<ClassName> classNames = _classNameLocalService.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		DBInspector dbInspector = new DBInspector(_connection);

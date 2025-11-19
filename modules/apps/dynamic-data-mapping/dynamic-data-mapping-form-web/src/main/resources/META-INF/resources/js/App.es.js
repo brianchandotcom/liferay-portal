@@ -82,10 +82,7 @@ export default function App({autosaveInterval, autosaveURL, ...otherProps}) {
 										interval={autosaveInterval}
 										url={autosaveURL}
 									>
-										<Route
-											component={NavigationBar}
-											path="/"
-										/>
+										<NavigationBar />
 
 										<Suspense
 											fallback={<ClayLoadingIndicator />}

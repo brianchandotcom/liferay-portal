@@ -139,4 +139,26 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 		});
 		expect(trendIcon).toBeInTheDocument();
 	});
+
+	it('formats percentage to two decimal places correctly', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
+				...mockedResponse,
+				trend: {
+					classification: TrendClassification.Positive,
+					percentage: 3.14159265,
+				},
+			},
+			error: null,
+		});
+
+		render(<WrappedComponent />);
+
+		await waitForElementToBeRemoved(
+			screen.getByTestId('loading-animation')
+		);
+
+		const percentageText = screen.getByText('3.14%');
+		expect(percentageText).toBeInTheDocument();
+	});
 });

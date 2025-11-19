@@ -43,6 +43,11 @@ export interface IItemSelectorModalProps<T> {
 	breadcrumbs?: React.ComponentProps<typeof ClayBreadcrumb>['items'];
 
 	/**
+	 * If the @clayui/breadcrumb items label should be visible or not
+	 */
+	breadcrumbsLabel?: boolean;
+
+	/**
 	 * URL for item creation used to open a new tab.
 	 */
 	createItemURL?: string;
@@ -120,6 +125,7 @@ const EMPTY_STATE_PROPS = {
 function ItemSelectorModal<T extends Record<string, any>>({
 	apiURL,
 	breadcrumbs,
+	breadcrumbsLabel = true,
 	createItemURL,
 	fdsProps,
 	itemTypeLabel,
@@ -169,9 +175,11 @@ function ItemSelectorModal<T extends Record<string, any>>({
 			<ClayModal.Body className="p-0">
 				{breadcrumbs && (
 					<ClayLayout.Container fluid>
-						<h2 className="mb-0 mt-2">
-							{breadcrumbs[breadcrumbs.length - 1].label}
-						</h2>
+						{breadcrumbsLabel && (
+							<h2 className="mb-0 mt-2">
+								{breadcrumbs[breadcrumbs.length - 1].label}
+							</h2>
+						)}
 
 						<ClayBreadcrumb
 							items={breadcrumbs.map((breadcrumb, index) => ({

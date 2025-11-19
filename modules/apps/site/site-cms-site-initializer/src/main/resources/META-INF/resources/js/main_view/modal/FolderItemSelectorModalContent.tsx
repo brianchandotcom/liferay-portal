@@ -303,6 +303,7 @@ function FolderItemSelectorModalContent({
 									},
 								]
 					}
+					breadcrumbsLabel={false}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-users-${itemData.id}`,

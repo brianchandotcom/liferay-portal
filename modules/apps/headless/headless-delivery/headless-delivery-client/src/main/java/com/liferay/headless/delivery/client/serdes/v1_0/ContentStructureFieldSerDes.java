@@ -61,6 +61,20 @@ public class ContentStructureFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (contentStructureField.getFieldReference() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fieldReference\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentStructureField.getFieldReference()));
+
+			sb.append("\"");
+		}
+
 		if (contentStructureField.getInputControl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -269,6 +283,15 @@ public class ContentStructureFieldSerDes {
 				String.valueOf(contentStructureField.getDataType()));
 		}
 
+		if (contentStructureField.getFieldReference() == null) {
+			map.put("fieldReference", null);
+		}
+		else {
+			map.put(
+				"fieldReference",
+				String.valueOf(contentStructureField.getFieldReference()));
+		}
+
 		if (contentStructureField.getInputControl() == null) {
 			map.put("inputControl", null);
 		}
@@ -404,6 +427,9 @@ public class ContentStructureFieldSerDes {
 			if (Objects.equals(jsonParserFieldName, "dataType")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "fieldReference")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "inputControl")) {
 				return false;
 			}
@@ -459,6 +485,12 @@ public class ContentStructureFieldSerDes {
 			if (Objects.equals(jsonParserFieldName, "dataType")) {
 				if (jsonParserFieldValue != null) {
 					contentStructureField.setDataType(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fieldReference")) {
+				if (jsonParserFieldValue != null) {
+					contentStructureField.setFieldReference(
 						(String)jsonParserFieldValue);
 				}
 			}

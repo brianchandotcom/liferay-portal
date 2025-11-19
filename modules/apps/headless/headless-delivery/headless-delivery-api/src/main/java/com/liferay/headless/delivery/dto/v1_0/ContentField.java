@@ -188,6 +188,51 @@ public class ContentField implements Serializable {
 	private Supplier<String> _dataTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The field's friendly reference name. This is used by developers when referencing the field in custom implementations."
+	)
+	public String getFieldReference() {
+		if (_fieldReferenceSupplier != null) {
+			fieldReference = _fieldReferenceSupplier.get();
+
+			_fieldReferenceSupplier = null;
+		}
+
+		return fieldReference;
+	}
+
+	public void setFieldReference(String fieldReference) {
+		this.fieldReference = fieldReference;
+
+		_fieldReferenceSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFieldReference(
+		UnsafeSupplier<String, Exception> fieldReferenceUnsafeSupplier) {
+
+		_fieldReferenceSupplier = () -> {
+			try {
+				return fieldReferenceUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The field's friendly reference name. This is used by developers when referencing the field in custom implementations."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fieldReference;
+
+	@JsonIgnore
+	private Supplier<String> _fieldReferenceSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The field's control type (e.g., text, text area, etc.)."
 	)
 	public String getInputControl() {
@@ -519,6 +564,22 @@ public class ContentField implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(dataType));
+
+			sb.append("\"");
+		}
+
+		String fieldReference = getFieldReference();
+
+		if (fieldReference != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fieldReference\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fieldReference));
 
 			sb.append("\"");
 		}

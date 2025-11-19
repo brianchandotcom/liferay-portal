@@ -139,7 +139,7 @@ public class ContentStructureUtil {
 						acceptAllLanguage, labelLocalizedValue.getValues()));
 				setLocalizable(ddmFormField::isLocalizable);
 				setMultiple(ddmFormField::isMultiple);
-				setName(ddmFormField::getFieldReference);
+				setName(ddmFormField::getName);
 				setNestedContentStructureFields(
 					() -> TransformUtil.transformToArray(
 						ddmFormField.getNestedDDMFormFields(),

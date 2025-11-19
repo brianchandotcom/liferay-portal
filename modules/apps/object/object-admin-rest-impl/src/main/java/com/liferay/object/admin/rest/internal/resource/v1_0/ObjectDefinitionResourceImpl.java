@@ -1429,7 +1429,7 @@ public class ObjectDefinitionResourceImpl
 						serviceBuilderObjectDefinition.getObjectDefinitionId())
 				).build(),
 				null, null, contextAcceptLanguage.getPreferredLocale(), null,
-				null),
+				contextUser),
 			serviceBuilderObjectDefinition);
 	}
 

@@ -139,6 +139,7 @@ public class ContentFieldUtil {
 					});
 				setDataType(
 					() -> ContentStructureUtil.toDataType(ddmFormField));
+				setFieldReference(ddmFormField::getFieldReference);
 				setInputControl(
 					() -> ContentStructureUtil.toInputControl(ddmFormField));
 				setLabel(

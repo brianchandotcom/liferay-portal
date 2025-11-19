@@ -29,6 +29,9 @@ public class BackgroundTaskConstants {
 
 	public static final String LABEL_CANCELLED = "cancelled";
 
+	public static final String LABEL_COMPLETED_WITH_ERRORS =
+		"completed-with-errors";
+
 	public static final String LABEL_FAILED = "failed";
 
 	public static final String LABEL_IN_PROGRESS = "in-progress";
@@ -63,7 +66,9 @@ public class BackgroundTaskConstants {
 		else if (status == STATUS_FAILED) {
 			return "text-danger";
 		}
-		else if (status == STATUS_IN_PROGRESS) {
+		else if ((status == STATUS_IN_PROGRESS) ||
+				 (status == STATUS_COMPLETED_WITH_ERRORS)) {
+
 			return "text-warning";
 		}
 		else if ((status == BackgroundTaskConstants.STATUS_NEW) ||
@@ -96,6 +101,9 @@ public class BackgroundTaskConstants {
 		}
 		else if (status == STATUS_SUCCESSFUL) {
 			return LABEL_SUCCESSFUL;
+		}
+		else if (status == STATUS_COMPLETED_WITH_ERRORS) {
+			return LABEL_COMPLETED_WITH_ERRORS;
 		}
 
 		return StringPool.BLANK;

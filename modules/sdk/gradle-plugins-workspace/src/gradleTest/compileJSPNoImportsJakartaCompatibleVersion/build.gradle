@@ -19,7 +19,7 @@ runGradleTest {
 		assert file.exists()
 
 		JarFile jarFile = new JarFile(file)
-	
+
 		jarFile.withCloseable {
 			Attributes attributes = jarFile.manifest.mainAttributes
 

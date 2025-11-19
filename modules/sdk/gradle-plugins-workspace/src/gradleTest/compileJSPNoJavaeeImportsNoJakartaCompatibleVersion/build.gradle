@@ -19,11 +19,11 @@ runGradleTest {
 		assert file.exists()
 
 		JarFile jarFile = new JarFile(file)
-	
-		jarFile.withCloseable {
-		  	Attributes attributes = jarFile.manifest.mainAttributes
 
-		  	assert attributes.getValue("Import-Package") == "javax.servlet,javax.servlet.http"
+		jarFile.withCloseable {
+			Attributes attributes = jarFile.manifest.mainAttributes
+
+			assert attributes.getValue("Import-Package") == "javax.servlet,javax.servlet.http"
 		}
 	}
 }

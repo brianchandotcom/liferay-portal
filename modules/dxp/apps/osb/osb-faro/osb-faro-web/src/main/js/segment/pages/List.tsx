@@ -412,7 +412,8 @@ export const List: React.FC<IListProps> = ({
 					groupId
 				})
 			),
-			label: Liferay.Language.get('batch-segment')
+			label: Liferay.Language.get('batch'),
+			symbol: 'diagram'
 		},
 		{
 			href: setUriQueryValues(
@@ -422,7 +423,8 @@ export const List: React.FC<IListProps> = ({
 					groupId
 				})
 			),
-			label: Liferay.Language.get('real-time-segment')
+			label: Liferay.Language.get('real-time'),
+			symbol: 'bolt'
 		}
 	];
 
@@ -441,7 +443,7 @@ export const List: React.FC<IListProps> = ({
 										pageActionsLabel &&
 										Liferay.Language.get('menu')
 									}
-									className='button-root nav-btn p-2'
+									className='button-root nav-btn p-2 rounded-lg'
 									disabled={error || loading}
 									displayType='primary'
 								>
@@ -455,9 +457,12 @@ export const List: React.FC<IListProps> = ({
 								</ClayButton>
 							}
 						>
-							{pageActions.map(({label, ...props}) => (
+							{pageActions.map(({label, symbol, ...props}) => (
 								<ClayDropDown.Item key={label} {...props}>
-									{label}
+									<ClayIcon symbol={symbol} />
+									<span className='text-secondary ml-2'>
+										{label}
+									</span>
 								</ClayDropDown.Item>
 							))}
 						</ClayDropDown>

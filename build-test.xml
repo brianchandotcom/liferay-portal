@@ -15289,8 +15289,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					dest="${liferay.home}"
 					src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
 				/>
-
-				<delete file="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip" />
 			</else>
 		</if>
 

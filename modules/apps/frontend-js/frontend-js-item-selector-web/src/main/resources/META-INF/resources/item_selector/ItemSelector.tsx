@@ -344,6 +344,14 @@ function ItemSelector<T extends Record<string, any>>({
 
 	let itemSelectorComponent;
 
+	const handleActiveChange = (newActive: boolean) => {
+		if (newActive && refetchOnActive) {
+			refetch();
+		}
+
+		setActive(newActive);
+	};
+
 	if (multiSelect && displaySelectedItems) {
 		itemSelectorComponent = (
 			<ClayMultiSelect
@@ -388,6 +396,7 @@ function ItemSelector<T extends Record<string, any>>({
 					loading: Liferay.Language.get('loading...'),
 					notFound: Liferay.Language.get('no-results-found'),
 				}}
+				onActiveChange={handleActiveChange}
 				onChange={setValue}
 				onItemsChange={setItems}
 				onLoadMore={async () => loadMore()}
@@ -418,13 +427,7 @@ function ItemSelector<T extends Record<string, any>>({
 					loading: Liferay.Language.get('loading...'),
 					notFound: Liferay.Language.get('no-results-found'),
 				}}
-				onActiveChange={(active: boolean) => {
-					if (active && refetchOnActive) {
-						refetch();
-					}
-
-					setActive(active);
-				}}
+				onActiveChange={handleActiveChange}
 				onChange={(value: string) => {
 					if (!value.length) {
 						setItems([]);

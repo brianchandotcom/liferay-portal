@@ -80,7 +80,7 @@
 		<finder name="OrganizationId" return-type="Collection">
 			<finder-column name="organizationId" />
 		</finder>
-		<finder name="A_O" return-type="AccountEntryOrganizationRel">
+		<finder name="A_O" return-type="AccountEntryOrganizationRel" unique="true">
 			<finder-column name="accountEntryId" />
 			<finder-column name="organizationId" />
 		</finder>
@@ -108,7 +108,7 @@
 		<finder name="AccountUserId" return-type="Collection">
 			<finder-column name="accountUserId" />
 		</finder>
-		<finder name="AEI_AUI" return-type="AccountEntryUserRel">
+		<finder name="AEI_AUI" return-type="AccountEntryUserRel" unique="true">
 			<finder-column name="accountEntryId" />
 			<finder-column name="accountUserId" />
 		</finder>
@@ -189,7 +189,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="A_C_C" return-type="AccountGroupRel">
+		<finder name="A_C_C" return-type="AccountGroupRel" unique="true">
 			<finder-column name="accountGroupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -218,7 +218,7 @@
 		<finder name="AccountEntryId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="accountEntryId" />
 		</finder>
-		<finder name="RoleId" return-type="AccountRole">
+		<finder name="RoleId" return-type="AccountRole" unique="true">
 			<finder-column name="roleId" />
 		</finder>
 		<finder name="C_A" return-type="Collection">

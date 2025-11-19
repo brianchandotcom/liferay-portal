@@ -397,6 +397,11 @@ public class CTCollectionWrapper
 	}
 
 	@Override
+	public boolean isInProgress() {
+		return model.isInProgress();
+	}
+
+	@Override
 	public boolean isProduction() {
 		return model.isProduction();
 	}

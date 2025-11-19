@@ -57,6 +57,8 @@ public interface CTCollection extends CTCollectionModel, PersistedModel {
 
 	public boolean isEmpty();
 
+	public boolean isInProgress();
+
 	public boolean isProduction();
 
 	public boolean isReadOnly();

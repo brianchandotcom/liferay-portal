@@ -91,6 +91,23 @@ describe('WithPropertyGroups', () => {
 			Promise.resolve({
 				items: [
 					{
+						context: 'account',
+						displayName: 'Account Custom Field',
+						id: '123',
+						name: 'Account Custom',
+						ownerType: 'account',
+						rawType: 'Text',
+						type: 'Text'
+					}
+				],
+				total: 1
+			})
+		);
+
+		API.fieldMappings.search.mockReturnValueOnce(
+			Promise.resolve({
+				items: [
+					{
 						context: 'custom',
 						displayName: 'Organization Custom',
 						id: '123',

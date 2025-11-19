@@ -84,13 +84,29 @@ const displaySuccessToast = (message: string, ...args: string[]) => {
 };
 
 const displayToast = (
+	action: Action,
 	error: any,
 	folder: Folder,
 	itemData: ItemData,
 	message: string
 ) => {
 	if (error) {
-		displayErrorToast(error);
+		let errorMessage = error?.error;
+
+		if (error?.status === 'BAD_REQUEST') {
+			errorMessage = sub(
+				action === 'copy'
+					? Liferay.Language.get(
+							'x-could-not-be-copied.-please-ensure-the-structure-it-is-using-exists-in-the-destination-space'
+						)
+					: Liferay.Language.get(
+							'x-could-not-be-moved.-please-ensure-the-structure-it-is-using-exists-in-the-destination-space'
+						),
+				itemData.title
+			);
+		}
+
+		displayErrorToast(errorMessage);
 	}
 	else {
 		displaySuccessToast(
@@ -123,12 +139,12 @@ function executeFolderAction(
 			: FolderService.moveFolder(itemData.embedded.id, folder.id);
 	}
 
-	promise.then(({error}: {error: any}) => {
+	promise.then((error: any) => {
 		if (!error) {
 			loadData();
 		}
 
-		displayToast(error, folder, itemData, SUCCESS_MESSAGES[action]);
+		displayToast(action, error, folder, itemData, SUCCESS_MESSAGES[action]);
 	});
 }
 
@@ -146,12 +162,12 @@ function executeAssetAction(
 			'{objectEntryFolderId}',
 			String(folder.id)
 		)
-	).then(({error}: {error: any}) => {
+	).then((error: any) => {
 		if (!error) {
 			loadData();
 		}
 
-		displayToast(error, folder, itemData, SUCCESS_MESSAGES[action]);
+		displayToast(action, error, folder, itemData, SUCCESS_MESSAGES[action]);
 	});
 }
 

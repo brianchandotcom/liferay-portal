@@ -423,158 +423,162 @@ public class ObjectEntryVersionLocalServiceTest {
 				_workflowDefinition.getName(),
 				_workflowDefinition.getVersion());
 
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			0, _objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue1"
-			).build());
+		try {
+			ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue1"
+				).build());
 
-		Assert.assertTrue(objectEntry.isPending());
-		Assert.assertEquals(1, objectEntry.getVersion());
+			Assert.assertTrue(objectEntry.isPending());
+			Assert.assertEquals(1, objectEntry.getVersion());
 
-		_assertEquals(
-			Arrays.asList(
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue1"),
-					WorkflowConstants.STATUS_PENDING, 1)),
-			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue1"),
+						WorkflowConstants.STATUS_PENDING, 1)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
 
-		// Change pending object entry values
+			// Change pending object entry values
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue2"
-			).build(),
-			serviceContext);
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue2"
+				).build(),
+				serviceContext);
 
-		Assert.assertTrue(objectEntry.isPending());
-		Assert.assertEquals(1, objectEntry.getVersion());
+			Assert.assertTrue(objectEntry.isPending());
+			Assert.assertEquals(1, objectEntry.getVersion());
 
-		_assertEquals(
-			Arrays.asList(
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue2"),
-					WorkflowConstants.STATUS_PENDING, 1)),
-			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue2"),
+						WorkflowConstants.STATUS_PENDING, 1)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
 
-		// Complete pending object entry's workflow instance
+			// Complete pending object entry's workflow instance
 
-		List<WorkflowTask> workflowTasks =
-			_workflowTaskManager.getWorkflowTasksByUserRoles(
+			List<WorkflowTask> workflowTasks =
+				_workflowTaskManager.getWorkflowTasksByUserRoles(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			WorkflowTask workflowTask = workflowTasks.get(0);
+
+			_workflowTaskManager.assignWorkflowTaskToUser(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, null, null);
 
-		WorkflowTask workflowTask = workflowTasks.get(0);
+			_workflowTaskManager.completeWorkflowTask(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), Constants.APPROVE,
+				StringPool.BLANK, null);
 
-		_workflowTaskManager.assignWorkflowTaskToUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
-			StringPool.BLANK, null, null);
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue2"),
+						WorkflowConstants.STATUS_APPROVED, 1)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
 
-		_workflowTaskManager.completeWorkflowTask(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask.getWorkflowTaskId(), Constants.APPROVE,
-			StringPool.BLANK, null);
+			objectEntry = _objectEntryLocalService.getObjectEntry(
+				objectEntry.getObjectEntryId());
 
-		_assertEquals(
-			Arrays.asList(
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue2"),
-					WorkflowConstants.STATUS_APPROVED, 1)),
-			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+			Assert.assertTrue(objectEntry.isApproved());
+			Assert.assertEquals(1, objectEntry.getVersion());
 
-		objectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntry.getObjectEntryId());
+			// Update approved object entry starting a new workflow instance
 
-		Assert.assertTrue(objectEntry.isApproved());
-		Assert.assertEquals(1, objectEntry.getVersion());
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue3"
+				).build(),
+				serviceContext);
 
-		// Update approved object entry starting a new workflow instance
+			Assert.assertTrue(objectEntry.isPending());
+			Assert.assertEquals(2, objectEntry.getVersion());
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue3"
-			).build(),
-			serviceContext);
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue2"),
+						WorkflowConstants.STATUS_APPROVED, 1),
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue3"),
+						WorkflowConstants.STATUS_PENDING, 2)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
 
-		Assert.assertTrue(objectEntry.isPending());
-		Assert.assertEquals(2, objectEntry.getVersion());
+			_objectDefinition.setEnableObjectEntryDraft(true);
 
-		_assertEquals(
-			Arrays.asList(
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue2"),
-					WorkflowConstants.STATUS_APPROVED, 1),
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue3"),
-					WorkflowConstants.STATUS_PENDING, 2)),
-			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
 
-		_objectDefinition.setEnableObjectEntryDraft(true);
+			// Update pending object entry as draft
 
-		_objectDefinition =
-			_objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition);
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		// Update pending object entry as draft
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue4"
+				).build(),
+				serviceContext);
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+			Assert.assertTrue(objectEntry.isPending());
+			Assert.assertEquals(2, objectEntry.getVersion());
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue4"
-			).build(),
-			serviceContext);
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue2"),
+						WorkflowConstants.STATUS_APPROVED, 1),
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue4"),
+						WorkflowConstants.STATUS_PENDING, 2)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
 
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			workflowDefinitionLink);
+			_objectDefinition.setEnableObjectEntryDraft(false);
 
-		Assert.assertTrue(objectEntry.isPending());
-		Assert.assertEquals(2, objectEntry.getVersion());
-
-		_assertEquals(
-			Arrays.asList(
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue2"),
-					WorkflowConstants.STATUS_APPROVED, 1),
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue4"),
-					WorkflowConstants.STATUS_PENDING, 2)),
-			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
-
-		_objectDefinition.setEnableObjectEntryDraft(false);
-
-		_objectDefinition =
-			_objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition);
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+		}
+		finally {
+			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				workflowDefinitionLink);
+		}
 	}
 
 	@Test

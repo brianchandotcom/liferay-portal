@@ -20,6 +20,7 @@ const BaseEditor = ({
 	data,
 	disabled,
 	editor,
+	enableHiddenInput = true,
 	name,
 	onBlur,
 	onChange,
@@ -31,6 +32,7 @@ const BaseEditor = ({
 	data?: string;
 	disabled?: boolean;
 	editor: any;
+	enableHiddenInput?: boolean;
 	name?: string;
 	onBlur?: (event: EventInfo, editor: TEditor) => void;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
@@ -106,7 +108,9 @@ const BaseEditor = ({
 				onReady={onReady}
 			/>
 
-			{name && <input name={name} type="hidden" value={value} />}
+			{enableHiddenInput && name && (
+				<input name={name} type="hidden" value={value} />
+			)}
 		</div>
 	);
 };

@@ -1318,7 +1318,8 @@ public class StructuredContentResourceTest
 							data = RandomTestUtil.randomString(10);
 						}
 					};
-					name = "Text";
+					fieldReference = "Text";
+					name = "Text91610572";
 				}
 			},
 			new ContentField() {
@@ -1339,7 +1340,8 @@ public class StructuredContentResourceTest
 								});
 						}
 					};
-					name = "SelectFromList";
+					fieldReference = "SelectFromList";
+					name = "SelectFromList43392010";
 				}
 			},
 			new ContentField() {
@@ -1360,7 +1362,8 @@ public class StructuredContentResourceTest
 								});
 						}
 					};
-					name = "SingleSelection";
+					fieldReference = "SingleSelection";
+					name = "SingleSelection90775749";
 				}
 			},
 			new ContentField() {
@@ -1385,7 +1388,8 @@ public class StructuredContentResourceTest
 								});
 						}
 					};
-					name = "MultipleSelection";
+					fieldReference = "MultipleSelection";
+					name = "MultipleSelection91429516";
 				}
 			},
 			new ContentField() {
@@ -1395,7 +1399,8 @@ public class StructuredContentResourceTest
 							data = _randomGrid();
 						}
 					};
-					name = "Grid";
+					fieldReference = "Grid";
+					name = "Grid61505317";
 				}
 			},
 			new ContentField() {
@@ -1405,12 +1410,14 @@ public class StructuredContentResourceTest
 							data = _randomDate();
 						}
 					};
-					name = "Date";
+					fieldReference = "Date";
+					name = "Date13994235";
 				}
 			},
 			new ContentField() {
 				{
-					name = "Fieldset";
+					fieldReference = "FieldSet";
+					name = "Fieldset39810423";
 				}
 			},
 			new ContentField() {
@@ -1420,7 +1427,8 @@ public class StructuredContentResourceTest
 							data = String.valueOf(RandomTestUtil.randomInt());
 						}
 					};
-					name = "Numeric";
+					fieldReference = "Numeric";
+					name = "Numeric90681086";
 				}
 			},
 			new ContentField() {
@@ -1434,7 +1442,8 @@ public class StructuredContentResourceTest
 							};
 						}
 					};
-					name = "Image";
+					fieldReference = "Image";
+					name = "Image09552700";
 				}
 			},
 			new ContentField() {
@@ -1444,7 +1453,8 @@ public class StructuredContentResourceTest
 							data = RandomTestUtil.randomString(500);
 						}
 					};
-					name = "RichText";
+					fieldReference = "RichText";
+					name = "RichText26302729";
 				}
 			},
 			new ContentField() {
@@ -1458,7 +1468,8 @@ public class StructuredContentResourceTest
 							};
 						}
 					};
-					name = "Upload";
+					fieldReference = "Upload";
+					name = "Upload59174863";
 				}
 			},
 			new ContentField() {
@@ -1468,7 +1479,8 @@ public class StructuredContentResourceTest
 							data = _randomColor();
 						}
 					};
-					name = "Color";
+					fieldReference = "Color";
+					name = "Color08878017";
 				}
 			},
 			new ContentField() {
@@ -1484,7 +1496,8 @@ public class StructuredContentResourceTest
 								};
 						}
 					};
-					name = "WebContent";
+					fieldReference = "WebContent";
+					name = "WebContent62525280";
 				}
 			},
 			new ContentField() {
@@ -1499,7 +1512,8 @@ public class StructuredContentResourceTest
 							};
 						}
 					};
-					name = "Geolocation";
+					fieldReference = "Geolocation";
+					name = "Geolocation12799577";
 				}
 			},
 			new ContentField() {
@@ -1509,7 +1523,8 @@ public class StructuredContentResourceTest
 							link = _layout.getFriendlyURL();
 						}
 					};
-					name = "LinkToPage";
+					fieldReference = "LinkToPage";
+					name = "LinkToPage24223121";
 				}
 			}
 		};
@@ -1585,6 +1600,7 @@ public class StructuredContentResourceTest
 						contentFieldValue = contentFieldValues.get(
 							w3cLanguageId);
 						contentFieldValue_i18n = contentFieldValues;
+						fieldReference = "MyText";
 						name = "MyText";
 					}
 				},
@@ -1608,6 +1624,7 @@ public class StructuredContentResourceTest
 							}
 						).build();
 						dataType = "document";
+						fieldReference = "MyDocument";
 						name = "MyDocument";
 					}
 				},
@@ -1631,6 +1648,7 @@ public class StructuredContentResourceTest
 							}
 						).build();
 						dataType = "image";
+						fieldReference = "MyImage";
 						name = "MyImage";
 					}
 				}
@@ -1697,7 +1715,8 @@ public class StructuredContentResourceTest
 								data = contentFieldValueData;
 							}
 						};
-						name = "Foo";
+						fieldReference = "Foo";
+						name = "MyText";
 					}
 				}
 			});
@@ -2163,7 +2182,7 @@ public class StructuredContentResourceTest
 		for (ContentField contentField :
 				getStructuredContent.getContentFields()) {
 
-			if (fieldName.equals(contentField.getName())) {
+			if (fieldName.equals(contentField.getFieldReference())) {
 				articleSelector = contentField;
 
 				break;
@@ -2853,6 +2872,7 @@ public class StructuredContentResourceTest
 								};
 							}
 						};
+						fieldReference = "image";
 						name = "image";
 					}
 				}

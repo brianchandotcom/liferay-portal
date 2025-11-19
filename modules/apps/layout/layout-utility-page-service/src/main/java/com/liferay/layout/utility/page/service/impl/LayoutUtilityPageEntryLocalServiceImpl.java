@@ -73,7 +73,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long userId, long groupId, long plid,
 			long previewFileEntryId, boolean defaultLayoutUtilityPageEntry,
-			String name, String type, long masterLayoutPlid,
+			String name, String type, String masterLayoutPageTemplateEntryERC,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -104,8 +104,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		if (plid == 0) {
 			Layout layout = _addLayout(
-				userId, groupId, name,
-				layoutUtilityPageEntry.getExternalReferenceCode(),
+				userId, groupId, name, masterLayoutPageTemplateEntryERC,
 				defaultLayoutUtilityPageEntry, serviceContext);
 
 			if (layout != null) {
@@ -164,20 +163,21 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			},
 			sourceLayoutUtilityPageEntry.getName());
 
-		long masterLayoutPlid = 0;
+		String masterLayoutPageTemplateEntryERC = null;
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			sourceLayoutUtilityPageEntry.getPlid());
 
 		if (layout != null) {
-			masterLayoutPlid = layout.getMasterLayoutPlid();
+			masterLayoutPageTemplateEntryERC =
+				layout.getMasterLayoutPageTemplateEntryERC();
 		}
 
 		LayoutUtilityPageEntry targetLayoutUtilityPageEntry =
 			addLayoutUtilityPageEntry(
 				null, userId, serviceContext.getScopeGroupId(), 0, 0, false,
-				name, sourceLayoutUtilityPageEntry.getType(), masterLayoutPlid,
-				serviceContext);
+				name, sourceLayoutUtilityPageEntry.getType(),
+				masterLayoutPageTemplateEntryERC, serviceContext);
 
 		long previewFileEntryId = _copyPreviewFileEntryId(
 			targetLayoutUtilityPageEntry.getLayoutUtilityPageEntryId(),

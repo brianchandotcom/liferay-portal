@@ -40,7 +40,7 @@ public class LayoutUtilityPageEntryServiceImpl
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long groupId, long plid,
 			long previewFileEntryId, boolean defaultLayoutUtilityPageEntry,
-			String name, String type, long masterLayoutPlid,
+			String name, String type, String masterLayoutPageTemplateEntryERC,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -51,7 +51,7 @@ public class LayoutUtilityPageEntryServiceImpl
 		return layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			externalReferenceCode, getUserId(), groupId, plid,
 			previewFileEntryId, defaultLayoutUtilityPageEntry, name, type,
-			masterLayoutPlid, serviceContext);
+			masterLayoutPageTemplateEntryERC, serviceContext);
 	}
 
 	@Override

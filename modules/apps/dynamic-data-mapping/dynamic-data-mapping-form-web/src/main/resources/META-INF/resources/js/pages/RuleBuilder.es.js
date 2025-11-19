@@ -132,71 +132,75 @@ export default function RuleBuilder({history, location}) {
 				variant="rules"
 			/>
 
-			<Switch>
-				<Route exact path="/rules">
-					<RuleList
-						dataProvider={dataProvider}
-						fields={fields}
-						onDelete={(ruleId) =>
-							dispatch({
-								payload: ruleId,
-								type: EVENT_TYPES.RULE.DELETE,
-							})
-						}
-						onEdit={(index) => {
-							dispatch({
-								payload: {loc: index},
-								type: EVENT_TYPES.RULE.EDIT,
-							});
-							navigate('/rules/editor');
-						}}
-						operatorsByType={functionsMetadata}
-						pages={pageOptions}
-						rules={rules}
-					/>
-				</Route>
-
-				<Route path="/rules/editor">
-					<RuleEditor
-						dataProvider={dataProvider}
-						dataProviderInstanceParameterSettingsURL={
-							dataProviderInstanceParameterSettingsURL
-						}
-						fields={fields}
-						functionsURL={functionsURL}
-						onCancel={() => {
-							navigate('/rules');
-							dispatch({
-								payload: {loc: null},
-								type: EVENT_TYPES.RULE.EDIT,
-							});
-						}}
-						onSave={(event) => {
-							if (currentRuleLoc === undefined) {
+				<Route
+					element={
+						<RuleList
+							dataProvider={dataProvider}
+							fields={fields}
+							onDelete={(ruleId) =>
 								dispatch({
-									payload: event,
-									type: EVENT_TYPES.RULE.ADD,
-								});
+									payload: ruleId,
+									type: EVENT_TYPES.RULE.DELETE,
+								})
 							}
-							else {
+							onEdit={(index) => {
 								dispatch({
-									payload: {
-										loc: currentRuleLoc,
-										rule: event,
-									},
-									type: EVENT_TYPES.RULE.CHANGE,
+									payload: {loc: index},
+									type: EVENT_TYPES.RULE.EDIT,
 								});
-							}
+								customNavigate('/rules/editor');
+							}}
+							operatorsByType={functionsMetadata}
+							pages={pageOptions}
+							rules={rules}
+						/>
+					}
+					path="/"
+				></Route>
 
-							navigate('/rules');
-						}}
-						operatorsByType={functionsMetadata}
-						pages={pageOptions}
-						roles={roles}
-						rule={rules[currentRuleLoc]}
-					/>
-				</Route>
-			</Switch>
+				<Route
+					element={
+						<RuleEditor
+							dataProvider={dataProvider}
+							dataProviderInstanceParameterSettingsURL={
+								dataProviderInstanceParameterSettingsURL
+							}
+							fields={fields}
+							functionsURL={functionsURL}
+							onCancel={() => {
+								customNavigate('/rules');
+								dispatch({
+									payload: {loc: null},
+									type: EVENT_TYPES.RULE.EDIT,
+								});
+							}}
+							onSave={(event) => {
+								if (currentRuleLoc === undefined) {
+									dispatch({
+										payload: event,
+										type: EVENT_TYPES.RULE.ADD,
+									});
+								}
+								else {
+									dispatch({
+										payload: {
+											loc: currentRuleLoc,
+											rule: event,
+										},
+										type: EVENT_TYPES.RULE.CHANGE,
+									});
+								}
+
+								customNavigate('/rules');
+							}}
+							operatorsByType={functionsMetadata}
+							pages={pageOptions}
+							roles={roles}
+							rule={rules[currentRuleLoc]}
+						/>
+					}
+					path="editor"
+				></Route>
 		</ClayLayout.Container>
 	);
 }

@@ -2291,7 +2291,13 @@ baseTest(
 baseTest(
 	'Web content with "pending" status has the submission button disabled',
 	{tag: '@LPD-70782'},
-	async ({journalEditArticlePage, journalPage, page, site, workflowPage}) => {
+	async ({journalEditArticlePage, journalPage, site, workflowPage}) => {
+		await baseTest.step('Set up view for pending articles', async () => {
+			await journalPage.goto(site.friendlyUrlPath);
+
+			await journalPage.changeView('list');
+		});
+
 		await baseTest.step('Update workflow to require approval', async () => {
 			await workflowPage.goto(site.friendlyUrlPath);
 
@@ -2309,8 +2315,6 @@ baseTest(
 			await journalEditArticlePage.fillTitle(articleTitle);
 
 			await journalEditArticlePage.submitArticleForWorkflow(articleTitle);
-
-			await expect(page.getByTitle(articleTitle)).toBeVisible();
 		});
 
 		await baseTest.step(

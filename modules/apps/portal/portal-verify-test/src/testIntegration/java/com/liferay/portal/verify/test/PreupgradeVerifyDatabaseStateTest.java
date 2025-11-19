@@ -93,28 +93,6 @@ public class PreupgradeVerifyDatabaseStateTest
 	}
 
 	@Test
-	public void testMissingColumnName() throws Exception {
-		_renameColumn("UserTracker", "companyId", "companyId_backup LONG");
-
-		try {
-			testVerify();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Column ", _getNormalizedName("companyId"),
-					" is missing for ", _getNormalizedName("UserTracker"),
-					_getPartitionSuffix(), StringPool.NEW_LINE),
-				exception.getMessage());
-		}
-		finally {
-			_renameColumn("UserTracker", "companyId_backup", "companyId LONG");
-		}
-	}
-
-	@Test
 	public void testVerifyPreupgradeIsCaseInsensitive() throws Exception {
 		ServiceComponent serviceComponent =
 			_serviceComponentLocalService.createServiceComponent(
@@ -149,6 +127,28 @@ public class PreupgradeVerifyDatabaseStateTest
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> db.runSQL(
 					"DROP_TABLE_IF_EXISTS(" + lowerCaseTestTable + ")"));
+		}
+	}
+
+	@Test
+	public void testVerifyPreupgradeMissingColumnName() throws Exception {
+		_renameColumn("UserTracker", "companyId", "companyId_backup LONG");
+
+		try {
+			testVerify();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Column ", _getNormalizedName("companyId"),
+					" is missing for ", _getNormalizedName("UserTracker"),
+					_getPartitionSuffix(), StringPool.NEW_LINE),
+				exception.getMessage());
+		}
+		finally {
+			_renameColumn("UserTracker", "companyId_backup", "companyId LONG");
 		}
 	}
 
@@ -247,7 +247,7 @@ public class PreupgradeVerifyDatabaseStateTest
 	}
 
 	@Test
-	public void testWrongColumnType() throws Exception {
+	public void testVerifyPreupgradeWrongColumnType() throws Exception {
 		_alterColumnType("Address", "city", "VARCHAR(100)");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

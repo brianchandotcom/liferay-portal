@@ -396,6 +396,7 @@ class CriteriaRow extends React.Component<
 		const inputComponentsMap = {
 			[PropertyTypes.Behavior]: BehaviorInput,
 			[PropertyTypes.Boolean]: BooleanInput,
+			[PropertyTypes.AccountDate]: AccountInput,
 			[PropertyTypes.AccountNumber]: AccountInput,
 			[PropertyTypes.AccountText]: AccountInput,
 			[PropertyTypes.Date]: DateInput,

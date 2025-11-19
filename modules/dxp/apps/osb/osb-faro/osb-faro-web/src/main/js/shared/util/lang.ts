@@ -83,6 +83,7 @@ export const COMPOSITION_LABEL_MAP = {
 };
 
 export const DETAILS_LABEL_MAP = {
+	accountDate: Liferay.Language.get('account-date'),
 	accountNumber: Liferay.Language.get('account-number'),
 	accountType: Liferay.Language.get('account-type'),
 	annualRevenue: Liferay.Language.get('annual-revenue'),

@@ -19,6 +19,7 @@ export function getOperatorLabel(
 	let supportedOperators;
 
 	switch (type) {
+		case PropertyTypes.AccountDate:
 		case PropertyTypes.AccountNumber:
 		case PropertyTypes.AccountText:
 			supportedOperators =
@@ -101,6 +102,7 @@ export function maybeFormatValue(
 			);
 		case PropertyTypes.Duration:
 			return formatTime(value);
+		case PropertyTypes.AccountDate:
 		case PropertyTypes.AccountNumber:
 		case PropertyTypes.Number:
 		case PropertyTypes.SessionNumber:

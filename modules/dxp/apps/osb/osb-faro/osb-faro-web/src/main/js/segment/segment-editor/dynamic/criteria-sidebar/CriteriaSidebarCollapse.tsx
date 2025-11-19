@@ -80,6 +80,7 @@ const getDefaultValue = (property: Property): any => {
 					]
 				}
 			]);
+		case PropertyTypes.AccountDate:
 		case PropertyTypes.AccountNumber:
 		case PropertyTypes.AccountText:
 		case PropertyTypes.OrganizationSelectText:

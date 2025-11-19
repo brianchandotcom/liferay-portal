@@ -71,6 +71,7 @@ export enum RelationalOperators {
  */
 
 export enum PropertyTypes {
+	AccountDate = 'account-date',
 	AccountNumber = 'account-number',
 	AccountText = 'account-text',
 	Behavior = 'behavior',
@@ -125,6 +126,13 @@ export const SUPPORTED_CONJUNCTION_OPTIONS = [
 ];
 
 export const SUPPORTED_OPERATORS_MAP = {
+	[PropertyTypes.AccountDate]: [
+		{
+			key: CustomFunctionOperators.AccountsFilter,
+			label: Liferay.Language.get('is-fragment'),
+			name: CustomFunctionOperators.AccountsFilter
+		}
+	],
 	[PropertyTypes.AccountNumber]: [
 		{
 			key: CustomFunctionOperators.AccountsFilter,
@@ -377,6 +385,7 @@ export const SUPPORTED_OPERATORS_MAP = {
 };
 
 export const SUPPORTED_PROPERTY_TYPES_MAP = {
+	[PropertyTypes.AccountDate]: [CustomFunctionOperators.AccountsFilter],
 	[PropertyTypes.AccountNumber]: [CustomFunctionOperators.AccountsFilter],
 	[PropertyTypes.AccountText]: [CustomFunctionOperators.AccountsFilter],
 	[PropertyTypes.Behavior]: [

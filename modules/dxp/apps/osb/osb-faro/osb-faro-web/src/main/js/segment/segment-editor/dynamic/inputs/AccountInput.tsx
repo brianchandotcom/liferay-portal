@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
+import CustomDateInput from './CustomDateInput';
 import CustomNumberInput from './CustomNumberInput';
 import CustomStringInput from './CustomStringInput';
 import React from 'react';
@@ -34,6 +35,10 @@ export default class AccountInput extends React.Component<IAccountInputProps> {
 		const {
 			property: {type}
 		} = this.props;
+
+		if (type === PropertyTypes.AccountDate) {
+			return <CustomDateInput {...this.props} />;
+		}
 
 		if (type === PropertyTypes.AccountNumber) {
 			return <CustomNumberInput {...this.props} />;

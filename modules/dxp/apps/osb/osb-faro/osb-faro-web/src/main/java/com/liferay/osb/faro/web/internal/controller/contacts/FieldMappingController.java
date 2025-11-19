@@ -38,7 +38,6 @@ import jakarta.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -69,7 +68,7 @@ public class FieldMappingController extends BaseFaroController {
 			FieldMappingUtil.getNewFieldMappingMaps(
 				contactsEngineClient, faroProject,
 				FieldMappingConstants.CONTEXT_ORGANIZATION,
-				FieldMappingConstants.getSalesforceAccountFieldMappingMaps()));
+				FieldMappingConstants.getAccountFieldMappingMaps()));
 
 		List<FieldMappingMap> fieldMappingMaps = new ArrayList<>();
 
@@ -140,29 +139,21 @@ public class FieldMappingController extends BaseFaroController {
 		}
 
 		if (Objects.equals(context, "account")) {
-			Map<String, String> salesforceFieldMapping =
-				FieldMappingConstants.
-					getSalesforceAccountAttributesFieldMappingLanguageKey();
-
 			List<FieldMapping> fieldMappings = new ArrayList<>();
 
-			for (Map.Entry<String, String> entry :
-					salesforceFieldMapping.entrySet()) {
+			for (FieldMappingMap fieldMappingMap :
+					FieldMappingConstants.getAccountFieldMappingMaps()) {
 
 				FieldMapping fieldMapping = new FieldMapping();
 
 				fieldMapping.setContext(context);
-				fieldMapping.setDisplayName(entry.getValue());
+				fieldMapping.setDisplayName(
+					FieldMappingConstants.getAccountFieldMappingLanguageKey(
+						fieldMappingMap.getName()));
 				fieldMapping.setDisplayType("input-field");
+				fieldMapping.setFieldName(fieldMappingMap.getName());
+				fieldMapping.setFieldType(fieldMappingMap.getType());
 				fieldMapping.setOwnerType(ownerType);
-				fieldMapping.setFieldName(entry.getKey());
-
-				Map<String, String> salesforceFieldMappingTypes =
-					FieldMappingConstants.
-						getSalesforceAccountAttributesFieldMappingTypes();
-
-				fieldMapping.setFieldType(
-					salesforceFieldMappingTypes.get(entry.getKey()));
 
 				fieldMappings.add(fieldMapping);
 			}

@@ -125,7 +125,7 @@ public class CTCollectionDTOConverter
 					HtmlUtil.escape(ctCollection.getUserName())
 				});
 		}
-		else if (ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+		else if (ctCollection.isInProgress()) {
 			Date modifiedDate = ctCollection.getModifiedDate();
 
 			return _language.format(
@@ -190,6 +190,9 @@ public class CTCollectionDTOConverter
 		}
 		else if (status == WorkflowConstants.STATUS_DENIED) {
 			statusLabel = "failed";
+		}
+		else if (status == WorkflowConstants.STATUS_INCOMPLETE) {
+			statusLabel = "pending-approval";
 		}
 		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
 			statusLabel = "scheduled";

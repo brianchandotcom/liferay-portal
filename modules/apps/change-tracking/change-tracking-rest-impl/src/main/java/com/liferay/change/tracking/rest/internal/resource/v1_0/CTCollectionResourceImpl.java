@@ -260,8 +260,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			HashMapBuilder.put(
 				"checkout",
 				() -> {
-					if ((ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) ||
+					if (!ctCollection.isInProgress() ||
 						(ctCollection.getCtCollectionId() ==
 							CTCollectionThreadLocal.getCTCollectionId())) {
 
@@ -286,9 +285,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			).put(
 				"permissions",
 				() -> {
-					if (ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) {
-
+					if (!ctCollection.isInProgress()) {
 						return null;
 					}
 
@@ -340,9 +337,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			).put(
 				"update",
 				() -> {
-					if (ctCollection.getStatus() !=
-							WorkflowConstants.STATUS_DRAFT) {
-
+					if (!ctCollection.isInProgress()) {
 						return null;
 					}
 
@@ -392,7 +387,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		com.liferay.change.tracking.model.CTCollection ctCollection =
 			_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
 
-		if (ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+		if (ctCollection.isInProgress()) {
 			return true;
 		}
 

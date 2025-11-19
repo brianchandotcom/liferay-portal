@@ -132,6 +132,7 @@ export default function RuleBuilder({history, location}) {
 				variant="rules"
 			/>
 
+			<Routes>
 				<Route
 					element={
 						<RuleList
@@ -201,6 +202,7 @@ export default function RuleBuilder({history, location}) {
 					}
 					path="editor"
 				></Route>
+			</Routes>
 		</ClayLayout.Container>
 	);
 }

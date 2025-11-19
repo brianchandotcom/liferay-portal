@@ -236,9 +236,7 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassPK());
 
 			if (rightModel != null) {
-				if (ctCollection.getStatus() ==
-						WorkflowConstants.STATUS_DRAFT) {
-
+				if (ctCollection.isInProgress()) {
 					String editURL = _ctDisplayRendererRegistry.getEditURL(
 						ctCollectionId, ctSQLMode, httpServletRequest,
 						rightModel, ctEntry.getModelClassNameId());
@@ -641,7 +639,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		if (_ctDisplayRendererRegistry.isWorkflowEnabled(ctEntry, rightModel) &&
 			(ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION)) {
 
-			if (ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			if (ctCollection.isInProgress()) {
 				JSONArray workflowActionsJSONArray =
 					_getWorkflowActionsJSONArray(
 						ctEntry, rightModel, themeDisplay, resourceResponse);
@@ -1199,7 +1197,7 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		long safeCloseableCTCollectionId = ctEntry.getCtCollectionId();
 
-		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+		if (!ctCollection.isInProgress() &&
 			(ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) &&
 			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING) &&
 			(ctCollection.getStatus() != WorkflowConstants.STATUS_SCHEDULED)) {

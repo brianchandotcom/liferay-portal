@@ -162,7 +162,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		CTCollection ctCollection = _ctCollectionPersistence.findByPrimaryKey(
 			ctEntry.getCtCollectionId());
 
-		if ((ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+		if (ctCollection.isInProgress() ||
 			(ctCollection.getStatus() == WorkflowConstants.STATUS_PENDING)) {
 
 			return ctCollection.getCtCollectionId();
@@ -269,14 +269,19 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 				CTCollectionTable.INSTANCE.ctCollectionId.eq(
 					CTEntryTable.INSTANCE.ctCollectionId)
 			).where(
-				CTCollectionTable.INSTANCE.status.eq(
-					WorkflowConstants.STATUS_DRAFT
-				).and(
-					CTEntryTable.INSTANCE.modelClassNameId.eq(modelClassNameId)
+				CTEntryTable.INSTANCE.modelClassNameId.eq(
+					modelClassNameId
 				).and(
 					CTEntryTable.INSTANCE.modelClassPK.eq(modelClassPK)
 				).and(
 					CTEntryTable.INSTANCE.changeType.eq(changeType)
+				).and(
+					CTCollectionTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_DRAFT
+					).or(
+						CTCollectionTable.INSTANCE.status.eq(
+							WorkflowConstants.STATUS_INCOMPLETE)
+					).withParentheses()
 				)
 			));
 
@@ -299,7 +304,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		int status = ctCollection.getStatus();
 
-		if ((status != WorkflowConstants.STATUS_DRAFT) &&
+		if (!ctCollection.isInProgress() &&
 			(status != WorkflowConstants.STATUS_PENDING)) {
 
 			throw new SystemException(

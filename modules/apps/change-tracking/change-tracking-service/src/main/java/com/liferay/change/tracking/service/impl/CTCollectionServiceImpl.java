@@ -220,7 +220,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 				"Change tracking collection is already published");
 		}
 
-		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+		if (!ctCollection.isInProgress()) {
 			throw new CTCollectionStatusException(
 				"Change tracking collection is not a draft");
 		}

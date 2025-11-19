@@ -45,32 +45,44 @@ public class BackgroundTaskModelListener
 			return;
 		}
 
-		if ((backgroundTask.getStatus() ==
-				BackgroundTaskConstants.STATUS_CANCELLED) ||
-			(backgroundTask.getStatus() ==
-				BackgroundTaskConstants.STATUS_FAILED)) {
+		try {
+			if ((backgroundTask.getStatus() ==
+					BackgroundTaskConstants.STATUS_CANCELLED) ||
+				(backgroundTask.getStatus() ==
+					BackgroundTaskConstants.STATUS_FAILED)) {
 
-			CTCollection ctCollection =
-				_ctCollectionLocalService.fetchCTCollection(
-					Long.valueOf(backgroundTask.getName()));
+				CTCollection ctCollection =
+					_ctCollectionLocalService.fetchCTCollection(
+						Long.valueOf(backgroundTask.getName()));
 
-			if (ctCollection != null) {
-				int status = WorkflowConstants.STATUS_DRAFT;
+				if (ctCollection != null) {
+					int status = WorkflowConstants.STATUS_DRAFT;
 
-				if (!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
-						ctCollection.getSchemaVersionId())) {
+					if (!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+							ctCollection.getSchemaVersionId())) {
 
-					status = WorkflowConstants.STATUS_EXPIRED;
+						status = WorkflowConstants.STATUS_EXPIRED;
+					}
+					else if (_ctCollectionLocalService.hasUnapprovedChanges(
+								ctCollection.getCtCollectionId())) {
+
+						status = WorkflowConstants.STATUS_INCOMPLETE;
+					}
+
+					ctCollection.setStatus(status);
+
+					_ctCollectionLocalService.updateCTCollection(ctCollection);
 				}
+			}
 
-				ctCollection.setStatus(status);
+			if (backgroundTask.getStatus() !=
+					originalBackgroundTask.getStatus()) {
 
-				_ctCollectionLocalService.updateCTCollection(ctCollection);
+				_reindexCTProcess(backgroundTask);
 			}
 		}
-
-		if (backgroundTask.getStatus() != originalBackgroundTask.getStatus()) {
-			_reindexCTProcess(backgroundTask);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

@@ -25,7 +25,8 @@ public class CTSchemaVersionUpgradeProcess extends UpgradeProcess {
 			StringBundler.concat(
 				"update CTCollection set status = ",
 				WorkflowConstants.STATUS_EXPIRED, " where status = ",
-				WorkflowConstants.STATUS_DRAFT));
+				WorkflowConstants.STATUS_DRAFT, " or status = ",
+				WorkflowConstants.STATUS_INCOMPLETE));
 
 		runSQL(
 			"update CTPreferences set ctCollectionId = 0, " +

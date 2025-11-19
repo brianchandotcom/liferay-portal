@@ -918,7 +918,7 @@ public class CTCollectionLocalServiceImpl
 		CTCollection fromCTCollection =
 			ctCollectionPersistence.findByPrimaryKey(fromCTCollectionId);
 
-		if ((fromCTCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+		if (!fromCTCollection.isInProgress() &&
 			(fromCTCollection.getStatus() !=
 				WorkflowConstants.STATUS_EXPIRED) &&
 			(fromCTCollection.getStatus() !=

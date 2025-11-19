@@ -92,7 +92,11 @@ public class CTSchemaVersionHelper {
 						CTCollectionTable.INSTANCE
 					).where(
 						CTCollectionTable.INSTANCE.status.eq(
-							WorkflowConstants.STATUS_DRAFT)
+							WorkflowConstants.STATUS_DRAFT
+						).or(
+							CTCollectionTable.INSTANCE.status.eq(
+								WorkflowConstants.STATUS_INCOMPLETE)
+						)
 					))) {
 
 			expireCTCollection(ctCollection);

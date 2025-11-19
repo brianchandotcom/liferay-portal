@@ -62,16 +62,19 @@ public class SitePageFormSubmissionResultSerDes {
 					sitePageFormSubmissionResult.getItemReference()));
 		}
 
-		if (sitePageFormSubmissionResult.getNotificationText() != null) {
+		if (sitePageFormSubmissionResult.
+				getNotificationTextFragmentInlineValue() != null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"notificationText\": ");
+			sb.append("\"notificationTextFragmentInlineValue\": ");
 
 			sb.append(
 				String.valueOf(
-					sitePageFormSubmissionResult.getNotificationText()));
+					sitePageFormSubmissionResult.
+						getNotificationTextFragmentInlineValue()));
 		}
 
 		if (sitePageFormSubmissionResult.getShowNotification() != null) {
@@ -116,14 +119,17 @@ public class SitePageFormSubmissionResultSerDes {
 					sitePageFormSubmissionResult.getItemReference()));
 		}
 
-		if (sitePageFormSubmissionResult.getNotificationText() == null) {
-			map.put("notificationText", null);
+		if (sitePageFormSubmissionResult.
+				getNotificationTextFragmentInlineValue() == null) {
+
+			map.put("notificationTextFragmentInlineValue", null);
 		}
 		else {
 			map.put(
-				"notificationText",
+				"notificationTextFragmentInlineValue",
 				String.valueOf(
-					sitePageFormSubmissionResult.getNotificationText()));
+					sitePageFormSubmissionResult.
+						getNotificationTextFragmentInlineValue()));
 		}
 
 		if (sitePageFormSubmissionResult.getShowNotification() == null) {
@@ -157,7 +163,10 @@ public class SitePageFormSubmissionResultSerDes {
 			if (Objects.equals(jsonParserFieldName, "itemReference")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "notificationText")) {
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"notificationTextFragmentInlineValue")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "showNotification")) {
@@ -179,11 +188,15 @@ public class SitePageFormSubmissionResultSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "notificationText")) {
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"notificationTextFragmentInlineValue")) {
+
 				if (jsonParserFieldValue != null) {
-					sitePageFormSubmissionResult.setNotificationText(
-						FragmentInlineValueSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					sitePageFormSubmissionResult.
+						setNotificationTextFragmentInlineValue(
+							FragmentInlineValueSerDes.toDTO(
+								(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "showNotification")) {

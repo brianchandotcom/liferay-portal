@@ -190,7 +190,7 @@ public class DBResourceUtil {
 
 			while (resultSet.next()) {
 				tableColumnDefinitions.putAll(
-					_parseTableColumnDefinitionsSQL(resultSet.getString(1)));
+					_parseTableColumnDefinitions(resultSet.getString(1)));
 			}
 		}
 
@@ -245,7 +245,7 @@ public class DBResourceUtil {
 		).build();
 	}
 
-	private static Map<String, List<String>> _parseTableColumnDefinitionsSQL(
+	private static Map<String, List<String>> _parseTableColumnDefinitions(
 		String sql) {
 
 		Map<String, List<String>> tableColumnDefinitions = new TreeMap<>();

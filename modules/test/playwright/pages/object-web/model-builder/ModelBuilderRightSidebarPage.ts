@@ -6,6 +6,7 @@
 import type {Locator, Page} from '@playwright/test';
 
 export class ModelBuilderRightSidebarPage {
+	readonly advancedTab: Locator;
 	readonly deleteButton: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly deleteTrashButton: Locator;
@@ -25,10 +26,15 @@ export class ModelBuilderRightSidebarPage {
 	readonly objectRelationshipOneRecordOf: Locator;
 	readonly objectRelationshipType: Locator;
 	readonly page: Page;
+	readonly selectOptionButton: Locator;
 	readonly sidebarLabelInput: Locator;
 	readonly sidebarName: Locator;
+	readonly useDefaultValueToggle: Locator;
 
 	constructor(page: Page) {
+		this.advancedTab = page.getByRole('tab', {
+			name: 'Advanced',
+		});
 		this.deleteButton = page.getByRole('button', {
 			exact: true,
 			name: 'Delete',
@@ -74,6 +80,10 @@ export class ModelBuilderRightSidebarPage {
 		this.objectRelationshipOneRecordOf = page.getByLabel('One Record Of');
 		this.objectRelationshipType = page.getByLabel('Type');
 		this.page = page;
+		this.selectOptionButton = page.getByRole('combobox');
+		this.useDefaultValueToggle = page.getByRole('switch', {
+			name: 'Use Default Value',
+		});
 	}
 
 	async deleteObjectRelationship(objectRelationshipName: string) {
@@ -83,6 +93,25 @@ export class ModelBuilderRightSidebarPage {
 			objectRelationshipName
 		);
 		await this.deleteButton.click();
+	}
+
+	async selectDefaultValue(value: string) {
+		await this.selectOptionButton.click();
+
+		const selectOptionLocator = this.page.getByRole('option', {
+			exact: true,
+			name: value,
+		});
+
+		await selectOptionLocator.click();
+	}
+
+	async setDefaultValue(value: string) {
+		await this.advancedTab.click();
+
+		await this.useDefaultValueToggle.check({timeout: 1000});
+
+		await this.selectDefaultValue(value);
 	}
 
 	getRightSidebarLocator(createNewObjectDefinitionButton: Locator) {

@@ -298,7 +298,7 @@ function ItemSelector<T extends Record<string, any>>({
 			return {cursor, items};
 		},
 		fetchDelay: 500,
-		fetchPolicy: 'cache-first' as FetchPolicy.CacheFirst,
+		fetchPolicy: FetchPolicy.CacheAndNetwork,
 		link: getNextPageURL({apiURL, page: 1}),
 		onNetworkStatusChange: setNetworkStatus,
 		variables: {search: value},

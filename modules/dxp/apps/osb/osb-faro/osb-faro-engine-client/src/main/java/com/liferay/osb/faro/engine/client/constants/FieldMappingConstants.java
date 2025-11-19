@@ -220,29 +220,29 @@ public class FieldMappingConstants {
 			).build();
 	private static final Map<String, String>
 		_salesforceAccountAttributesFieldMappingTypes = HashMapBuilder.put(
-			"annualRevenue", "int"
+			"annualRevenue", TYPE_NUMBER
 		).put(
-			"billingCountry", "String"
+			"billingCountry", TYPE_TEXT
 		).put(
-			"billingState", "String"
+			"billingState", TYPE_TEXT
 		).put(
-			"createdDate", "Date"
+			"createdDate", TYPE_DATE
 		).put(
-			"currencyIsoCode", "String"
+			"currencyIsoCode", TYPE_TEXT
 		).put(
-			"customerSince", "Date"
+			"customerSince", TYPE_DATE
 		).put(
-			"id", "String"
+			"id", TYPE_TEXT
 		).put(
-			"industry", "String"
+			"industry", TYPE_TEXT
 		).put(
-			"lastActivityDate", "Date"
+			"lastActivityDate", TYPE_DATE
 		).put(
-			"name", "String"
+			"name", TYPE_TEXT
 		).put(
-			"numberOfEmployees", "int"
+			"numberOfEmployees", TYPE_NUMBER
 		).put(
-			"type", "String"
+			"type", TYPE_TEXT
 		).build();
 	private static final List<FieldMappingMap>
 		_salesforceAccountFieldMappingMaps = Arrays.asList(

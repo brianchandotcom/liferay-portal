@@ -238,6 +238,63 @@ public class ObjectEntryFolderModelListenerTest {
 		Assert.assertNull(_fetchObjectEntry(objectEntryFolder));
 	}
 
+	@Test
+	public void testUpdateObjectEntryFolder() throws Exception {
+		ObjectEntryFolder objectEntryFolder1 =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					_group.getGroupId(), _group.getCompanyId());
+
+		ObjectEntryFolder objectEntryFolder2 = _addObjectEntryFolder(
+			objectEntryFolder1.getObjectEntryFolderId());
+
+		JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
+			objectEntryFolder2.getExternalReferenceCode(),
+			objectEntryFolder2.getModelClassName(), _filterFactory);
+
+		_assertResourcePermissions(jsonObject, objectEntryFolder2, null);
+
+		ObjectEntryFolder objectEntryFolder3 = _addObjectEntryFolder(
+			objectEntryFolder1.getObjectEntryFolderId());
+
+		_assertResourcePermissions(jsonObject, objectEntryFolder3, null);
+
+		ObjectEntry objectEntry = _fetchObjectEntry(objectEntryFolder2);
+
+		Assert.assertNotNull(objectEntry);
+
+		String randomActionId = RandomTestUtil.randomString();
+
+		jsonObject.put(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+			JSONUtil.put(
+				RoleConstants.CMS_ADMINISTRATOR,
+				JSONUtil.putAll(
+					ActionKeys.UPDATE, ActionKeys.VIEW, randomActionId)
+			).put(
+				RoleConstants.USER, JSONUtil.putAll(ActionKeys.VIEW)
+			));
+
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			objectEntry.getExternalReferenceCode(),
+			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
+			objectEntryFolder2.getExternalReferenceCode(),
+			objectEntryFolder2.getModelClassName(), jsonObject,
+			objectEntryFolder2.getGroupId(), objectEntryFolder2.getTreePath());
+
+		objectEntryFolder3 =
+			_objectEntryFolderLocalService.moveObjectEntryFolder(
+				objectEntryFolder3.getUserId(),
+				objectEntryFolder3.getObjectEntryFolderId(),
+				objectEntryFolder2.getObjectEntryFolderId(), false,
+				ServiceContextTestUtil.getServiceContext());
+
+		_assertResourcePermissions(
+			jsonObject, objectEntryFolder3, randomActionId);
+	}
+
 	private ObjectEntryFolder _addObjectEntryFolder(
 			long parentObjectEntryFolderId)
 		throws Exception {

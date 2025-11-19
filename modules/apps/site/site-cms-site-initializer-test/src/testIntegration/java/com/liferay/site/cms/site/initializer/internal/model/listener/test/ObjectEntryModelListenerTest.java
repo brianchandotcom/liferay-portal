@@ -363,6 +363,200 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 
+	@Test
+	public void testUpdateObjectEntry() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		Group group = depotEntry.getGroup();
+
+		ObjectEntryFolder objectEntryFolder1 =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					group.getGroupId(), depotEntry.getCompanyId());
+
+		ObjectEntryFolder objectEntryFolder2 =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), group.getGroupId(),
+				group.getCreatorUserId(),
+				objectEntryFolder1.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
+			objectEntryFolder2.getExternalReferenceCode(),
+			objectEntryFolder2.getModelClassName(), _filterFactory);
+
+		String randomString = RandomTestUtil.randomString();
+
+		jsonObject.put(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+			JSONUtil.put(
+				RoleConstants.CMS_ADMINISTRATOR,
+				JSONUtil.putAll(
+					ActionKeys.UPDATE, ActionKeys.VIEW, randomString)
+			).put(
+				RoleConstants.USER, JSONUtil.putAll(ActionKeys.VIEW)
+			));
+
+		ObjectEntry objectEntry1 = CMSDefaultPermissionUtil.fetchObjectEntry(
+			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
+			objectEntryFolder2.getExternalReferenceCode(),
+			objectEntryFolder2.getModelClassName(), _filterFactory);
+
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			objectEntry1.getExternalReferenceCode(),
+			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
+			objectEntryFolder2.getExternalReferenceCode(),
+			objectEntryFolder2.getModelClassName(), jsonObject,
+			objectEntryFolder2.getGroupId(), objectEntryFolder2.getTreePath());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_WEB_CONTENT",
+					objectEntryFolder2.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			"friendlyUrlMap", new HashMap<String, String>());
+
+		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
+			depotEntry.getGroupId(), depotEntry.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			objectEntryFolder2.getObjectEntryFolderId(), "en_US",
+			HashMapBuilder.<String, Serializable>put(
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
+			).build(),
+			serviceContext);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				_cmsAdministratorRole.getRoleId());
+
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		Assert.assertFalse(resourcePermission.hasActionId(randomString));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				_ownerRole.getRoleId());
+
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				_userRole.getRoleId());
+
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		ObjectEntryFolder objectEntryFolder3 =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), group.getGroupId(),
+				group.getCreatorUserId(),
+				objectEntryFolder1.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+			objectEntryFolder3.getCompanyId(), objectEntryFolder3.getUserId(),
+			objectEntryFolder3.getExternalReferenceCode(),
+			objectEntryFolder3.getModelClassName(), _filterFactory);
+
+		jsonObject.put(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+			JSONUtil.put(
+				RoleConstants.CMS_ADMINISTRATOR,
+				JSONUtil.putAll(ActionKeys.DELETE)
+			).put(
+				RoleConstants.USER, JSONUtil.putAll(ActionKeys.DELETE)
+			));
+
+		ObjectEntry objectEntry3 = CMSDefaultPermissionUtil.fetchObjectEntry(
+			objectEntryFolder3.getCompanyId(), objectEntryFolder3.getUserId(),
+			objectEntryFolder3.getExternalReferenceCode(),
+			objectEntryFolder3.getModelClassName(), _filterFactory);
+
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			objectEntry3.getExternalReferenceCode(),
+			objectEntryFolder3.getCompanyId(), objectEntryFolder3.getUserId(),
+			objectEntryFolder3.getExternalReferenceCode(),
+			objectEntryFolder3.getModelClassName(), jsonObject,
+			objectEntryFolder3.getGroupId(), objectEntryFolder3.getTreePath());
+
+		objectEntry2 = _objectEntryLocalService.moveObjectEntry(
+			objectEntry2.getUserId(), objectEntry2.getObjectEntryId(),
+			objectEntryFolder3.getObjectEntryFolderId(),
+			objectEntry2.getValues(), serviceContext);
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				_cmsAdministratorRole.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				_ownerRole.getRoleId());
+
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				_userRole.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+	}
+
 	private void _deleteFile(Bundle bundle, String fileName) {
 		File file = bundle.getDataFile(
 			".com.liferay.site.initializer.cms.internal.batch." + fileName +

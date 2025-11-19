@@ -2,8 +2,65 @@ components:
     schemas:
         DigitalSalesRoom:
             properties:
+                accountId:
+                    format: int64
+                    type: integer
+                accountName:
+                    readOnly: true
+                    type: string
+                banner:
+                    $ref: "#/components/schemas/FileEntry"
+                channelId:
+                    format: int64
+                    type: integer
+                clientLogo:
+                    $ref: "#/components/schemas/FileEntry"
+                clientName:
+                    type: string
+                createDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                description:
+                    type: string
+                externalReferenceCode:
+                    type: string
+                friendlyUrlPath:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                modifiedDate:
+                    format: date
+                    readOnly: true
+                    type: string
                 name:
                     type: string
+                ownerId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                ownerName:
+                    readOnly: true
+                    type: string
+                primaryColor:
+                    type: string
+                secondaryColor:
+                    type: string
+        FileEntry:
+            properties:
+                fileBase64:
+                    type: string
+                fileName:
+                    type: string
+                fileURL:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
 info:
     license:
         name: Apache 2.0
@@ -17,10 +74,6 @@ paths:
             operationId: getDigitalSalesRoomsPage
             parameters:
                 -   in: query
-                    name: filter
-                    schema:
-                        type: string
-                -   in: query
                     name: page
                     schema:
                         type: integer
@@ -30,10 +83,6 @@ paths:
                         type: integer
                 -   in: query
                     name: search
-                    schema:
-                        type: string
-                -   in: query
-                    name: sort
                     schema:
                         type: string
             responses:
@@ -49,4 +98,44 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DigitalSalesRoom"
                                 type: array
+            tags: ["DigitalSalesRoom"]
+        post:
+            operationId: postDigitalSalesRoom
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoom"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoom"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoom"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoom"
+            tags: ["DigitalSalesRoom"]
+    "/digital-sales-rooms/{digitalSalesRoomId}":
+        get:
+            operationId: getDigitalSalesRoom
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoom"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoom"
             tags: ["DigitalSalesRoom"]

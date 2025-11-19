@@ -227,7 +227,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	@Override
 	public void postCTCollectionSchedulePublish(
 			Long ctCollectionId, Date publishDate)
-		throws PortalException {
+		throws Exception {
 
 		_schedulePublish(ctCollectionId, publishDate);
 	}
@@ -395,7 +395,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	}
 
 	private void _schedulePublish(long ctCollectionId, Date publishDate)
-		throws PortalException {
+		throws Exception {
 
 		if (publishDate == null) {
 			_ctCollectionService.publishCTCollection(

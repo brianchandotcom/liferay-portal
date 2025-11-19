@@ -22,6 +22,6 @@ public interface PublishScheduler {
 	public void schedulePublish(long ctCollectionId, long userId, Date date)
 		throws PortalException;
 
-	public void unschedulePublish(long ctCollectionId) throws PortalException;
+	public void unschedulePublish(long ctCollectionId) throws Exception;
 
 }

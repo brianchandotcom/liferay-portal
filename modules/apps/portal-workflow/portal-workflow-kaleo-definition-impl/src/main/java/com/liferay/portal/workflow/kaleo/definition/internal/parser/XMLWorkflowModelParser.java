@@ -246,7 +246,6 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		aiDecision.setLabelMap(
 			_parseLabels(aiDecisionElement.element("labels")));
-
 		aiDecision.setMetadata(aiDecisionElement.elementTextTrim("metadata"));
 
 		Set<Setting> settings = new HashSet<>();

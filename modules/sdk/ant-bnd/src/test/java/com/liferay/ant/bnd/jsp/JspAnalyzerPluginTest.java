@@ -114,6 +114,12 @@ public class JspAnalyzerPluginTest {
 		_testImplicitImports(
 			"dependencies/imports_without_javaee_packages.jsp", "jakarta",
 			jakartaFQNs, javaxFQNs);
+
+		_testImplicitImports(
+			"dependencies/imports_without_packages.jsp", "test", null, null);
+		_testImplicitImports(
+			"dependencies/imports_without_javaee_packages.jsp", "test", null,
+			null);
 	}
 
 	@Test
@@ -272,6 +278,16 @@ public class JspAnalyzerPluginTest {
 			}
 
 			JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+			if ((javaeePackage != null) && !javaeePackage.equals("jakarta") &&
+				!javaeePackage.equals("javax")) {
+
+				Assert.assertThrows(
+					RuntimeException.class,
+					() -> jspAnalyzerPlugin.analyzeJar(builder));
+
+				return;
+			}
 
 			jspAnalyzerPlugin.analyzeJar(builder);
 

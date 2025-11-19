@@ -91,30 +91,30 @@ public class BreadcrumbDisplayContext {
 							).put(
 								"symbolLeft", "cog"
 							));
-					}
 
-					unsafeConsumer.accept(
-						JSONUtil.put(
-							"href",
-							_getControlPanelPortletURL(
-								ExportImportPortletKeys.EXPORT)
-						).put(
-							"label",
-							LanguageUtil.get(_httpServletRequest, "export")
-						).put(
-							"symbolLeft", "export"
-						));
-					unsafeConsumer.accept(
-						JSONUtil.put(
-							"href",
-							_getControlPanelPortletURL(
-								ExportImportPortletKeys.IMPORT)
-						).put(
-							"label",
-							LanguageUtil.get(_httpServletRequest, "import")
-						).put(
-							"symbolLeft", "import"
-						));
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"href",
+								_getControlPanelPortletURL(
+									ExportImportPortletKeys.EXPORT)
+							).put(
+								"label",
+								LanguageUtil.get(_httpServletRequest, "export")
+							).put(
+								"symbolLeft", "export"
+							));
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"href",
+								_getControlPanelPortletURL(
+									ExportImportPortletKeys.IMPORT)
+							).put(
+								"label",
+								LanguageUtil.get(_httpServletRequest, "import")
+							).put(
+								"symbolLeft", "import"
+							));
+					}
 
 					if (permissionChecker.hasPermission(
 							group, DepotEntry.class.getName(),

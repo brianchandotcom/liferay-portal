@@ -576,6 +576,10 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				else if (javaeePackage.equals("jakarta")) {
 					return false;
 				}
+
+				throw new RuntimeException(
+					"Value for -javaee-package is invalid; valid values are " +
+						"jakarta or javax");
 			}
 
 			return false;

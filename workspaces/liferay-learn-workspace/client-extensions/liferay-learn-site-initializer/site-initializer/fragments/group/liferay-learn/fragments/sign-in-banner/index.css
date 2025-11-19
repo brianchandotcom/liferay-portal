@@ -9,7 +9,6 @@
 	font-size: 1rem;
 	font-weight: 600;
 	gap: 0.5rem;
-	height: 3.75rem;
 	justify-content: center;
 	padding: 0.5rem 1.75rem;
 	position: relative; 
@@ -23,9 +22,10 @@
 	.banner-content {
 		align-items: center;
 		display: flex;
-		gap: 1.5rem;
+		gap: 1rem;
 		justify-content: center;
-		width: 100%;
+		text-align: center;
+		width: 90%;
 	}
 	
 	.banner-icon-x {
@@ -36,26 +36,22 @@
 		right: 3%;
 	}
 	
-	.login-button {
+	.banner-login-button {
 		align-items: center;
 		background-color: var(--color-neutral-0, #ffffff);
 		border: 1px solid var(--color-brand-primary, #0B5FFF);
 		border-radius: 0.5rem;
 		color: #0B5FFF;
 		display: flex;
+		flex-wrap: wrap;
 		height: 50%;
 		justify-content: center;
 		padding: 0.5rem;
-		white-space: nowrap;
 	}
 }
 
 
 @media (max-width: 768px) {
-	.banner-content {
-		gap: 0.5rem !important;
-	}
-
 	.login-button {
 		width: unset !important;
 	}
@@ -65,8 +61,8 @@
 	.banner-sign-in {
 		bottom: 0.5rem;
 		box-shadow: 0 1.25px 4px 0 rgba(39, 40, 51, 0.25);
-		height: auto;
 		left: 0.5rem;
+		padding: 1rem;
 		position: fixed;
 		right: 0.5rem;
 		width: unset;

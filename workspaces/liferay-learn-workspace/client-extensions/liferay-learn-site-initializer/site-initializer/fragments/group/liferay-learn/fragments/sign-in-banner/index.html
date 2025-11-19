@@ -1,11 +1,11 @@
 [#if !themeDisplay.isSignedIn() || layoutMode == "edit"]
 	<div class="banner-sign-in" id="banner-sign-in">
 		<div class="banner-content">
-			<span data-lfr-editable-id="sign-in-banner-text" data-lfr-editable-type="text">
+			<div data-lfr-editable-id="sign-in-banner-text" data-lfr-editable-type="text">
 				${languageUtil.get(locale, 'save-your-learning-progress', 'Save your learning progress and start earning Course Badges!')}
-			</span>
+			</div>
 
-			<a class="login-button" data-lfr-editable-id="sign-in-banner-button-text" data-lfr-editable-type="link" href="${htmlUtil.escape(themeDisplay.getURLSignIn())}">
+			<a class="banner-login-button" data-lfr-editable-id="sign-in-banner-button-text" data-lfr-editable-type="link" href="${htmlUtil.escape(themeDisplay.getURLSignIn())}">
 				${languageUtil.get(locale, 'login-in-to-liferay-learn', 'Log In to Liferay Learn')}
 			</a>
 		</div>

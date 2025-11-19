@@ -106,16 +106,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		KaleoNode currentKaleoNode, ExecutionContext executionContext,
 		List<PathElement> remainingPathElements) {
 
-		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
-			VertexAiGeminiStreamingChatModel.builder(
-			).project(
-				"ai-hub-liferay"
-			).location(
-				"us-central1"
-			).modelName(
-				"gemini-2.5-flash-lite"
-			).build();
-
 		Map<String, String> kaleoNodeSettingValues = new HashMap<>();
 
 		List<KaleoNodeSetting> kaleoNodeSettings =
@@ -126,6 +116,16 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			kaleoNodeSettingValues.put(
 				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
 		}
+
+		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
+			VertexAiGeminiStreamingChatModel.builder(
+			).project(
+				"ai-hub-liferay"
+			).location(
+				"us-central1"
+			).modelName(
+				"gemini-2.5-flash-lite"
+			).build();
 
 		DecisionAssistant decisionAssistant = AiServices.builder(
 			DecisionAssistant.class

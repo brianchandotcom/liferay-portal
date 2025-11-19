@@ -14,7 +14,7 @@ import {
 } from 'data-engine-js-components-web';
 import objectHash from 'object-hash';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
-import {useLocation, withRouter} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
 import {useStateSync} from './useStateSync.es';
 import {useValidateFormWithObjects} from './useValidateFormWithObjects';
@@ -237,7 +237,7 @@ function AutoSaveProvider({children, interval, url}) {
 	);
 }
 
-export default withRouter(AutoSaveProvider);
+export default AutoSaveProvider;
 
 export function useAutoSave() {
 	return useContext(AutoSaveContext);

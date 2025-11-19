@@ -10,8 +10,11 @@ import path from 'node:path';
 import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
@@ -22,14 +25,21 @@ import performLogin, {
 } from '../../../../utils/performLogin';
 import {getTempDir} from '../../../../utils/temp';
 import {waitForAlert} from '../../../../utils/waitForAlert';
-import {miniumSetUp} from '../../utils/commerce';
+import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import {configureBuyerUserForSite, miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageEditorPagesTest,
 	pageViewModePagesTest
 );
 
@@ -1195,5 +1205,158 @@ test(
 		await expect(
 			await productDetailsPage.priceField('$ 50.00')
 		).toBeVisible();
+	}
+);
+
+test(
+	'The Request Quote action in the Product Details page automatically creates a new cart and requests the quote',
+	{tag: ['@COMMERCE-11507', '@LPD-70003']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		page,
+		productDetailsPage,
+		site,
+	}) => {
+		let account;
+		let buyerUser;
+		let product;
+
+		await test.step('Create an account, channel and catalog', async () => {
+			account = await apiHelpers.headlessAdminUser.postAccount({
+				name: getRandomString(),
+				type: 'business',
+			});
+
+			buyerUser = await configureBuyerUserForSite(
+				account,
+				apiHelpers,
+				site,
+				'demo.unprivileged@liferay.com'
+			);
+
+			const channel =
+				await apiHelpers.headlessCommerceAdminChannel.postChannel({
+					siteGroupId: site.id,
+				});
+
+			await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+				channel.name,
+				'B2B'
+			);
+
+			await commerceAdminChannelDetailsPage.allowRequestAQuote.click();
+
+			await commerceAdminChannelDetailsPage.saveButton.click();
+
+			const catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+					name: 'Catalog_' + getRandomString(),
+				});
+
+			product = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
+				{
+					catalogId: catalog.id,
+					name: {en_US: 'Product1'},
+				}
+			);
+
+			const basePriceListId =
+				await apiHelpers.headlessCommerceAdminPricing.getBasePriceListId(
+					catalog.id
+				);
+
+			await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+				price: 15,
+				priceListId: basePriceListId.items[0].id,
+				priceOnApplication: true,
+				skuId: product.skus[0].id,
+			});
+		});
+
+		await test.step('Setup Product and Order Details pages', async () => {
+			await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getWidgetDefinition({
+						id: getRandomString(),
+						widgetName:
+							'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getWidgetDefinition({
+						id: getRandomString(),
+						widgetName:
+							'com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getWidgetDefinition({
+						id: getRandomString(),
+						widgetName:
+							'com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+		});
+
+		try {
+			await test.step('As a Buyer, request a quote from Product Details page', async () => {
+				await performLogout(page);
+				await performLoginViaApi({
+					page,
+					screenName: buyerUser.alternateName,
+				});
+
+				await page.goto(
+					`/web/${site.name}/p/${product.name['en_US']}`,
+					{
+						waitUntil: 'networkidle',
+					}
+				);
+
+				await productDetailsPage.requestAQuoteButton.click();
+				await productDetailsPage.requestAQuoteModal.isVisible();
+
+				await expect(
+					page.getByPlaceholder('Email Address')
+				).toHaveValue(buyerUser.emailAddress);
+
+				await productDetailsPage.requestAQuoteModalSubmit.click();
+
+				await expect(
+					page.getByText('Quote Requested', {exact: true})
+				).toBeVisible();
+			});
+		}
+		finally {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const orders =
+				await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+			if (orders && orders.items) {
+				for (const order of orders.items) {
+					apiHelpers.data.push({
+						id: order.id,
+						type: 'order',
+					});
+				}
+			}
+		}
 	}
 );

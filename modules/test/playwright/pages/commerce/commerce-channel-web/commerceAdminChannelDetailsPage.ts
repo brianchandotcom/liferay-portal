@@ -16,6 +16,7 @@ export class CommerceAdminChannelDetailsPage {
 	readonly addTaxRateFrame: FrameLocator;
 	readonly addTaxRateSettingsFrame: FrameLocator;
 	readonly allowMultishippingToggle: Locator;
+	readonly allowRequestAQuote: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly byAddressCountryChoiceBox: Locator;
 	readonly byAddressRegionChoiceBox: Locator;
@@ -141,6 +142,9 @@ export class CommerceAdminChannelDetailsPage {
 			.locator('div.fds-modal-body.modal-body-iframe')
 			.frameLocator('iframe');
 		this.allowMultishippingToggle = page.getByLabel('Allow Multishipping');
+		this.allowRequestAQuote = page.getByLabel(
+			'Allow Request a Quote on a Fully Priced Cart'
+		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.byAddressTaxCategoryChoiceBox =
 			this.addTaxRateSettingsFrame.getByText('Tax Category');

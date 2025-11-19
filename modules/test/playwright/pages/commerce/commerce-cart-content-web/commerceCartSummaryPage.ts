@@ -16,6 +16,10 @@ export class CommerceCartSummaryPage {
 	readonly pageLabel: Locator;
 	readonly pageTitle: Locator;
 	readonly panelList: Locator;
+	readonly processQuoteButton: Locator;
+	readonly requestAQuoteButton: Locator;
+	readonly requestAQuoteModal: Locator;
+	readonly requestAQuoteModalSubmit: Locator;
 	readonly viewButton: Locator;
 
 	constructor(page: Page) {
@@ -37,6 +41,19 @@ export class CommerceCartSummaryPage {
 		this.panelList = page
 			.getByTestId('specificationFacetPanel')
 			.getByRole('button');
+		this.processQuoteButton = page.getByRole('button', {
+			name: 'Process Quote',
+		});
+		this.requestAQuoteButton = page.getByRole('button', {
+			name: 'Request a Quote',
+		});
+		this.requestAQuoteModal = page.locator('.modal-content');
+		this.requestAQuoteModalSubmit = this.requestAQuoteModal.getByRole(
+			'button',
+			{
+				name: 'Submit',
+			}
+		);
 		this.viewButton = page.getByLabel('View');
 	}
 

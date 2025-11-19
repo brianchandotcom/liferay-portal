@@ -73,6 +73,7 @@ export default function MultipleFileUploader({
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		multiple: true,
+		noKeyboard: true,
 		onDropAccepted: (acceptedFiles) => {
 			const newFilesToUpload = acceptedFiles.map((file) => ({
 				errorMessage: '',

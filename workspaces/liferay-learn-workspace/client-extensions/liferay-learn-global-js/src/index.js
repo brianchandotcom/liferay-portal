@@ -14,8 +14,4 @@ import 'prismjs';
 
 import './article';
 
-export {
-	DropdownProvider,
-	SpatialNavigationProvider,
-	Swiper
-};
+export {DropdownProvider, SpatialNavigationProvider, Swiper};

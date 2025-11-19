@@ -5,10 +5,10 @@
 	<div class="swiper">
 		<div class="swiper-wrapper">
 			[#list 1..numberOfSlides as slideIndex]
-			<div class="swiper-slide">
-			<lfr-drop-zone data-lfr-drop-zone-id="${slideIndex}" data-lfr-priority="${slideIndex}">
-				</lfr-drop-zone>
-			</div>
+				<div class="swiper-slide">
+				<lfr-drop-zone data-lfr-drop-zone-id="${slideIndex}" data-lfr-priority="${slideIndex}">
+					</lfr-drop-zone>
+				</div>
 			[/#list]
 		</div>
 	</div>
@@ -42,6 +42,3 @@
 		</div>
 	[/#if]
 </div>
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

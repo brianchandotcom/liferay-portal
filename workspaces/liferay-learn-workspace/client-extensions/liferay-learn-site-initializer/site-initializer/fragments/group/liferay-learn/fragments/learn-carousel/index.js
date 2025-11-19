@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+/* eslint-disable no-undef */
 Liferay.on('allPortletsReady', () => {
 	const carouselContainer = document.querySelector(
 		'.carousel-main-container'
@@ -58,7 +59,7 @@ Liferay.on('allPortletsReady', () => {
 	const initialSlide = slides.length > 2 ? 1 : 0;
 	const isLoop = qtyOriginalSlides > 1;
 
-	const swiper = new Swiper('.swiper', {
+	const swiper = new globalJS.Swiper('.swiper', {
 		allowTouchMove: true,
 		autoplay: {
 			delay: 6000,

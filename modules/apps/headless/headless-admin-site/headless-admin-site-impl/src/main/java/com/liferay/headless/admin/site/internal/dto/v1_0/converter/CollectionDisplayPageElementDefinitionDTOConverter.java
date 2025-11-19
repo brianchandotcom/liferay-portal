@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.admin.site.dto.v1_0.ListStyle;
 import com.liferay.headless.admin.site.dto.v1_0.ListStyleDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.TemplateListStyle;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionDisplayListStyleUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionUtil;
@@ -123,6 +124,8 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 
 				return _internalToExternalValuesMap.get(paginationType);
 			});
+		collectionDisplayPageElementDefinition.setType(
+			PageElementDefinition.Type.COLLECTION_DISPLAY);
 
 		return collectionDisplayPageElementDefinition;
 	}

@@ -36,8 +36,7 @@ public class FieldMappingUtil {
 				FieldMappingConstants.getDemographicsFieldMappingLanguageKey(
 					fieldMapping.getFieldName());
 		}
-
-		if (Objects.equals(fieldMapping.getContext(), "account")) {
+		else if (Objects.equals(fieldMapping.getContext(), "account")) {
 			languageKey =
 				FieldMappingConstants.
 					getSalesforceAccountAttributesFieldMappingLanguageKeys(

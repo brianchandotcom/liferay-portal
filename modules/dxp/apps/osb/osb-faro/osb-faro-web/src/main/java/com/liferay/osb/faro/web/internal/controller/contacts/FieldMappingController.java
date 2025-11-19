@@ -142,7 +142,7 @@ public class FieldMappingController extends BaseFaroController {
 		if (Objects.equals(context, "account")) {
 			Map<String, String> salesforceFieldMapping =
 				FieldMappingConstants.
-					getSalesforceAccountAttributesFieldMapping();
+					getSalesforceAccountAttributesFieldMappingLanguageKey();
 
 			List<FieldMapping> fieldMappings = new ArrayList<>();
 
@@ -152,10 +152,10 @@ public class FieldMappingController extends BaseFaroController {
 				FieldMapping fieldMapping = new FieldMapping();
 
 				fieldMapping.setContext(context);
-				fieldMapping.setOwnerType(ownerType);
-				fieldMapping.setFieldName(entry.getKey());
 				fieldMapping.setDisplayName(entry.getValue());
 				fieldMapping.setDisplayType("input-field");
+				fieldMapping.setOwnerType(ownerType);
+				fieldMapping.setFieldName(entry.getKey());
 
 				Map<String, String> salesforceFieldMappingTypes =
 					FieldMappingConstants.

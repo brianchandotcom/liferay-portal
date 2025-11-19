@@ -1,0 +1,4 @@
+packageRunGenerateTokens {
+	inputs.file "exported-design-tokens.json"
+	outputs.file "build/generateTokens/frontend-token-definition.json"
+}

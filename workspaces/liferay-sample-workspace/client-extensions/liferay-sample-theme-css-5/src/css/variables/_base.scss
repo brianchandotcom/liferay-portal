@@ -1,0 +1,28 @@
+// Border Radius
+
+$border-radius-xl: $rounded-full;
+$border-radius-lg: $rounded-lg;
+$border-radius: $rounded-md;
+$border-radius-sm: $rounded-sm;
+
+$rounded-border-radius: $border-radius;
+
+$panel-border-radius: $border-radius;
+
+// Forms
+
+$form-input-focus-color: $primary;
+$form-white-color: $white;
+
+// Colors
+
+$white: $white;
+$gray-100: $light-l1;
+$gray-200: $light;
+$gray-300: $light-d1;
+$gray-400: $light-d2;
+$gray-500: $dark-l2;
+$gray-600: $dark-l1;
+$gray-700: $dark;
+$gray-800: $dark-d1;
+$gray-900: $dark-d2;

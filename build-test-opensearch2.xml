@@ -56,7 +56,7 @@ plugins.security.disabled: true</echo>
 				<isset property="opensearch.java.home" />
 			</or>
 			<then>
-				<property name="opensearch.java.home" unless:set="opensearch.java.home" value="/opt/java/jdk11" />
+				<property name="opensearch.java.home" unless:set="opensearch.java.home" value="/opt/java/jdk21" />
 
 				<replace
 					file="${opensearch.dir}/bin/opensearch-env"

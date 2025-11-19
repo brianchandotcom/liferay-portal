@@ -6,6 +6,8 @@
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
@@ -33,6 +35,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.definition.util.ObjectDefinitionValidationThreadLocal;
@@ -96,6 +99,8 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -114,10 +119,12 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-definition.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = ObjectDefinitionResource.class
 )
 public class ObjectDefinitionResourceImpl
-	extends BaseObjectDefinitionResourceImpl {
+	extends BaseObjectDefinitionResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<ObjectDefinition> {
 
 	@Override
 	public void deleteObjectDefinition(Long objectDefinitionId)
@@ -159,6 +166,48 @@ public class ObjectDefinitionResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "object-definitions";
+			}
+
+			@Override
+			public String getModelClassName() {
+				return com.liferay.object.model.ObjectDefinition.class.
+					getName();
+			}
+
+			@Override
+			public Map<String, Serializable> getParameters(
+				PortletDataContext portletDataContext) {
+
+				return HashMapBuilder.<String, Serializable>put(
+					"filter", "modifiable eq true"
+				).build();
+			}
+
+			@Override
+			public String getPortletId() {
+				return ObjectPortletKeys.OBJECT_DEFINITIONS;
+			}
+
+			@Override
+			public String getResourceClassName() {
+				return ObjectDefinitionResourceImpl.class.getName();
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+		};
 	}
 
 	@Override

@@ -15,6 +15,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:account:account-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:headless:headless-delivery:headless-delivery-api")
 	compileOnly project(":apps:list-type:list-type-api")
 	compileOnly project(":apps:notification:notification-api")

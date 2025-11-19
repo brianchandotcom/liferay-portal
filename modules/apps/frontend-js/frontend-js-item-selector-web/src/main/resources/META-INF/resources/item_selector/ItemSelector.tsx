@@ -345,6 +345,10 @@ function ItemSelector<T extends Record<string, any>>({
 	let itemSelectorComponent;
 
 	const handleActiveChange = (newActive: boolean) => {
+		if (newActive === active) {
+			return;
+		}
+
 		if (newActive && refetchOnActive) {
 			refetch();
 		}

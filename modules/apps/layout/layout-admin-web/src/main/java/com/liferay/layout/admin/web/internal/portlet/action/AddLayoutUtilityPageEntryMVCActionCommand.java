@@ -7,6 +7,8 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutUtilityPageEntryPortalExceptionRequestHandlerUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -90,9 +92,21 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(masterLayoutPlid);
+
+		String masterLayoutPageTemplateEntryERC = null;
+
+		if (masterLayoutPageTemplateEntry != null) {
+			masterLayoutPageTemplateEntryERC =
+				masterLayoutPageTemplateEntry.getExternalReferenceCode();
+		}
+
 		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			0, 0, false, name, type, masterLayoutPlid, serviceContext);
+			0, 0, false, name, type, masterLayoutPageTemplateEntryERC,
+			serviceContext);
 	}
 
 	private String _getRedirectURL(
@@ -125,6 +139,10 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutUtilityPageEntryLocalService

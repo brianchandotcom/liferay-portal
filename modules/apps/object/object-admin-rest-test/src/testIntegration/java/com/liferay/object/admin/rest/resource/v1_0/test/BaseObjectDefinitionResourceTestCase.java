@@ -2093,6 +2093,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (objectDefinition.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pluralLabel", additionalAssertFieldName)) {
 				if (objectDefinition.getPluralLabel() == null) {
 					valid = false;
@@ -2756,6 +2764,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getParameterRequired(),
 						objectDefinition2.getParameterRequired())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getPermissions(),
+						objectDefinition2.getPermissions())) {
 
 					return false;
 				}
@@ -3590,6 +3609,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("parameterRequired")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("permissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -841,6 +841,35 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Boolean parameterRequired;
 
+	public com.liferay.object.admin.rest.client.permission.Permission[]
+		getPermissions() {
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.object.admin.rest.client.permission.Permission[]
+			permissions) {
+
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.object.admin.rest.client.permission.Permission[],
+			 Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected com.liferay.object.admin.rest.client.permission.Permission[]
+		permissions;
+
 	public Map<String, String> getPluralLabel() {
 		return pluralLabel;
 	}

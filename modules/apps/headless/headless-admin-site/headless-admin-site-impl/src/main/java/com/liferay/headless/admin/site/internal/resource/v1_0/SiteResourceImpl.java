@@ -606,9 +606,10 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	private int _getType(Site.MembershipType membershipType) {
-		if ((membershipType == null) ||
-			membershipType.equals(Site.MembershipType.OPEN)) {
-
+		if (membershipType == null) {
+			return GroupConstants.TYPE_SITE_RESTRICTED;
+		}
+		else if (membershipType.equals(Site.MembershipType.OPEN)) {
 			return GroupConstants.TYPE_SITE_OPEN;
 		}
 		else if (membershipType.equals(Site.MembershipType.PRIVATE)) {

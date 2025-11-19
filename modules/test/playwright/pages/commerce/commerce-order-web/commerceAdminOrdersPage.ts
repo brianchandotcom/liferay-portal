@@ -42,6 +42,7 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 	readonly orderActionsButton: Locator;
 	readonly orderStatusLink: (orderStatus: string) => Locator;
 	readonly page: Page;
+	readonly quoteProcessedButton: Locator;
 
 	constructor(page: Page) {
 		super(
@@ -129,6 +130,9 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 		this.orderStatusLink = (orderStatus: string) =>
 			page.getByRole('link', {exact: true, name: orderStatus});
 		this.page = page;
+		this.quoteProcessedButton = page.getByRole('link', {
+			name: 'Quote Processed',
+		});
 	}
 
 	async goto() {

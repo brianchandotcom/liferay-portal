@@ -6,10 +6,11 @@
 import {Page, expect} from '@playwright/test';
 
 import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {TPermission} from '../../../helpers/HeadlessAdminUserApiHelper';
 import {CommerceAdminChannelDetailsPage} from '../../../pages/commerce/commerce-channel-web/commerceAdminChannelDetailsPage';
 import {CommerceAdminChannelsPage} from '../../../pages/commerce/commerce-channel-web/commerceAdminChannelsPage';
 import getRandomString from '../../../utils/getRandomString';
-import {performLogout} from '../../../utils/performLogin';
+import {performLogout, userData} from '../../../utils/performLogin';
 import {openProductMenu} from '../../../utils/productMenu';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {TAccount} from '../../workspaces/liferay-partner-workspace/main/types/account';
@@ -175,6 +176,145 @@ export async function configureBuyerUserForSite(
 	);
 
 	return user;
+}
+
+export async function configureOperationsManagerUserForSite(
+	account: TAccount,
+	apiHelpers: DataApiHelpers,
+	companyId: string,
+	site: Site,
+	additionalPermissions?: TPermission[]
+) {
+	const operationsManagerUser =
+		await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[operationsManagerUser.alternateName] = {
+		name: operationsManagerUser.givenName,
+		password: 'test',
+		surname: operationsManagerUser.familyName,
+	};
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'Test Role ' + getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionEntryPortlet',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.account.model.AccountEntry',
+				scope: 1,
+			},
+			{
+				actionIds: ['MANAGE_INVENTORY'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.inventory',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com.liferay.commerce.inventory.model.CommerceInventoryWarehouse',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrder',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'MANAGE_COMMERCE_ORDER_PAYMENT_TERMS',
+					'MANAGE_COMMERCE_ORDERS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES',
+					'MANAGE_COMMERCE_ORDER_DELIVERY_TERMS',
+				],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.order',
+				scope: 1,
+			},
+			{
+				actionIds: ['MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.product',
+				scope: 1,
+			},
+			{
+				actionIds: ['MANAGE_ALL_ACCOUNTS', 'MANAGE_COMMERCE_SHIPMENTS'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.shipment',
+				scope: 1,
+			},
+			{
+				actionIds: ['MANAGE_COMMERCE_SUBSCRIPTIONS'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.subscription',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com.liferay.commerce.product.model.CommerceChannel',
+				scope: 1,
+			},
+			...additionalPermissions,
+		],
+	});
+
+	await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+		role.externalReferenceCode,
+		operationsManagerUser.id
+	);
+
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		operationsManagerUser.id
+	);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[operationsManagerUser.emailAddress]
+	);
+
+	return operationsManagerUser;
 }
 
 export async function completedVirtualOrderItemSetUp(

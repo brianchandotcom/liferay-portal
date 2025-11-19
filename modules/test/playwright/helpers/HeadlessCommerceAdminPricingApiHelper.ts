@@ -62,6 +62,7 @@ class TPriceEntry {
 	priceEntryId?: number;
 	priceFormatted?: string;
 	priceListId: number;
+	priceOnApplication?: boolean;
 }
 
 class TPriceList {

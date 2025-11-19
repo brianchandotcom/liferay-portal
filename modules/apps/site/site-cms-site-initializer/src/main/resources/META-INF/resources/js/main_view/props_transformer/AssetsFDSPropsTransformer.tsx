@@ -40,6 +40,7 @@ import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 import transformViewsItemsProps from './utils/transformViewsItemProps';
+import GalleryView from './views/GalleryView';
 
 const ACTIONS = {
 	createAsset: createAssetAction,
@@ -80,6 +81,35 @@ export default function AssetsFDSPropsTransformer({
 	itemsActions?: any[];
 	views: IView[];
 }) {
+	let mergedViews = views;
+
+	if (additionalProps.galleryViewEnabled) {
+		const galleryViewRenderer: IView = {
+			component: (props: any) => GalleryView({...props, additionalProps}),
+			default: true,
+			label: Liferay.Language.get('gallery'),
+			name: 'gallery',
+			schema: {
+				description: 'description',
+				image: 'imageURL',
+				link: '',
+				sticker: '',
+				symbol: '',
+				title: 'embedded.title',
+			},
+			thumbnail: 'gallery',
+		};
+
+		const nonDefaultViews = views.map((view) => {
+			return {
+				...view,
+				default: false,
+			};
+		});
+
+		mergedViews = [...nonDefaultViews, galleryViewRenderer];
+	}
+
 	return {
 		...otherProps,
 		creationMenu: {
@@ -429,7 +459,7 @@ export default function AssetsFDSPropsTransformer({
 			objectDefinitionCssClasses:
 				additionalProps.objectDefinitionCssClasses,
 			objectDefinitionIcons: additionalProps.objectDefinitionIcons,
-			views,
+			views: mergedViews,
 		}),
 	};
 }

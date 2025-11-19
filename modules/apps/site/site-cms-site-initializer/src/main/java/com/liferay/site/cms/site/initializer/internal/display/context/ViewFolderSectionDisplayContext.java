@@ -72,6 +72,8 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		return new HashMapBuilder<>().putAll(
 			super.getAdditionalProps()
 		).put(
+			"galleryViewEnabled", true
+		).put(
 			"rootObjectEntryFolderExternalReferenceCode",
 			getRootObjectEntryFolderExternalReferenceCode()
 		).build();

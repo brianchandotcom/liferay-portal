@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FormContainerReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.LocalizationConfig;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.SitePageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.dto.v1_0.StayInPageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.dto.v1_0.SuccessFormContainerSubmissionResult;
@@ -112,6 +113,8 @@ public class FormContainerPageElementDefinitionDTOConverter
 				formStyledLayoutStructureItem.getItemConfigJSONObject()));
 		formContainerPageElementDefinition.setName(
 			formStyledLayoutStructureItem::getName);
+		formContainerPageElementDefinition.setType(
+			PageElementDefinition.Type.FORM_CONTAINER);
 
 		return formContainerPageElementDefinition;
 	}

@@ -93,7 +93,7 @@ public class FieldMappingConstants {
 	}
 
 	public static Map<String, String>
-		getSalesforceAccountAttributesFieldMapping() {
+		getSalesforceAccountAttributesFieldMappingLanguageKey() {
 
 		return _salesforceAccountAttributesFieldMappingLanguageKeys;
 	}

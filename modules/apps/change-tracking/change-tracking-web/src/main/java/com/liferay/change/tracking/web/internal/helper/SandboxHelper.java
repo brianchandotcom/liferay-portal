@@ -56,9 +56,7 @@ public class SandboxHelper {
 				_ctCollectionLocalService.fetchCTCollection(
 					ctPreferences.getCtCollectionId());
 
-			if ((ctCollection != null) &&
-				(ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
-
+			if ((ctCollection != null) && ctCollection.isInProgress()) {
 				return;
 			}
 		}
@@ -89,9 +87,7 @@ public class SandboxHelper {
 				ctPreferences.getPreviousCtCollectionId());
 		}
 
-		if ((ctCollection == null) ||
-			(ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
-
+		if ((ctCollection == null) || !ctCollection.isInProgress()) {
 			ctCollection = _findUserCTCollection(ctPreferences);
 		}
 
@@ -166,7 +162,11 @@ public class SandboxHelper {
 						ctPreferences.getUserId())
 				).and(
 					CTCollectionTable.INSTANCE.status.eq(
-						WorkflowConstants.STATUS_DRAFT)
+						WorkflowConstants.STATUS_DRAFT
+					).or(
+						CTCollectionTable.INSTANCE.status.eq(
+							WorkflowConstants.STATUS_INCOMPLETE)
+					).withParentheses()
 				)
 			).orderBy(
 				CTCollectionTable.INSTANCE.modifiedDate.descending()

@@ -90,7 +90,8 @@ public class PublicationsDisplayContext {
 		return StringBundler.concat(
 			"/o/change-tracking-rest/v1.0/ct-collections?status=",
 			WorkflowConstants.STATUS_DRAFT, "&status=",
-			WorkflowConstants.STATUS_EXPIRED);
+			WorkflowConstants.STATUS_EXPIRED, "&status=",
+			WorkflowConstants.STATUS_INCOMPLETE);
 	}
 
 	public Map<String, Object> getCollaboratorsReactData(
@@ -498,6 +499,9 @@ public class PublicationsDisplayContext {
 		}
 		else if (status == WorkflowConstants.STATUS_DENIED) {
 			return "failed";
+		}
+		else if (status == WorkflowConstants.STATUS_INCOMPLETE) {
+			return "pending-approval";
 		}
 		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
 			return "scheduled";

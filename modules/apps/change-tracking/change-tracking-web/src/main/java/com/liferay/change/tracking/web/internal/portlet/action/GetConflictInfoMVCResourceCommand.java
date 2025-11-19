@@ -144,12 +144,12 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 
 		for (CTCollection ctCollection : ctCollections) {
 			if ((currentCTCollection != null) &&
-				((ctCollection.getStatus() ==
-					WorkflowConstants.STATUS_PENDING) ||
-				 ((ctCollection.getStatus() ==
-					 WorkflowConstants.STATUS_DRAFT) &&
-				  (ctCollection.getCtCollectionId() !=
-					  currentCTCollection.getCtCollectionId())))) {
+				(ctCollection.getStatus() !=
+					WorkflowConstants.STATUS_APPROVED) &&
+				(ctCollection.getStatus() !=
+					WorkflowConstants.STATUS_EXPIRED) &&
+				(ctCollection.getCtCollectionId() !=
+					currentCTCollection.getCtCollectionId())) {
 
 				possibleConflictCollection = ctCollection;
 

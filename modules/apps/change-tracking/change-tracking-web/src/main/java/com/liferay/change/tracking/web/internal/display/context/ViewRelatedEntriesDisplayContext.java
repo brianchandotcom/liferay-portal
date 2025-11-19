@@ -221,7 +221,11 @@ public class ViewRelatedEntriesDisplayContext {
 
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
-				_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
+				_themeDisplay.getCompanyId(),
+				new int[] {
+					WorkflowConstants.STATUS_DRAFT,
+					WorkflowConstants.STATUS_INCOMPLETE
+				},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		selectOptions.add(

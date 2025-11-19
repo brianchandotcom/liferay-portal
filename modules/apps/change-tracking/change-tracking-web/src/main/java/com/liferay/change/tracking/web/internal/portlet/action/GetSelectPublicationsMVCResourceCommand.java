@@ -80,7 +80,10 @@ public class GetSelectPublicationsMVCResourceCommand
 		List<CTCollection> ctCollections =
 			_ctCollectionService.getCTCollections(
 				themeDisplay.getCompanyId(),
-				new int[] {WorkflowConstants.STATUS_DRAFT},
+				new int[] {
+					WorkflowConstants.STATUS_DRAFT,
+					WorkflowConstants.STATUS_INCOMPLETE
+				},
 				ParamUtil.getString(resourceRequest, "keywords"),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 

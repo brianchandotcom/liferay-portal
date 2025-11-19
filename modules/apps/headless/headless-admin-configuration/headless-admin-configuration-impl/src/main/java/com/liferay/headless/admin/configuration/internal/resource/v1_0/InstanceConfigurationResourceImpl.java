@@ -55,11 +55,7 @@ public class InstanceConfigurationResourceImpl
 			String instanceConfigurationExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-65399")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		_checkPermission();
 
@@ -98,11 +94,7 @@ public class InstanceConfigurationResourceImpl
 	public Page<InstanceConfiguration> getInstanceConfigurationsPage()
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-65399")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		_checkPermission();
 
@@ -147,11 +139,7 @@ public class InstanceConfigurationResourceImpl
 			InstanceConfiguration instanceConfiguration)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-65399")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		_checkPermission();
 
@@ -186,6 +174,14 @@ public class InstanceConfigurationResourceImpl
 		}
 		catch (ValidationException validationException) {
 			throw new BadRequestException(validationException.getMessage());
+		}
+	}
+
+	private void _checkFeatureFlag() {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-65399")) {
+
+			throw new UnsupportedOperationException();
 		}
 	}
 

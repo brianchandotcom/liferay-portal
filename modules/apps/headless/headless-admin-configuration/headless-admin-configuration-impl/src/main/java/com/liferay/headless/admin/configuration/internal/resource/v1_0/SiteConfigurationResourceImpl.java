@@ -57,11 +57,7 @@ public class SiteConfigurationResourceImpl
 			String siteConfigurationExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-65399")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
@@ -103,11 +99,7 @@ public class SiteConfigurationResourceImpl
 			String siteExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-65399")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
@@ -156,11 +148,7 @@ public class SiteConfigurationResourceImpl
 			SiteConfiguration siteConfiguration)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-65399")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
@@ -198,6 +186,14 @@ public class SiteConfigurationResourceImpl
 		}
 		catch (ValidationException validationException) {
 			throw new BadRequestException(validationException.getMessage());
+		}
+	}
+
+	private void _checkFeatureFlag() {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-65399")) {
+
+			throw new UnsupportedOperationException();
 		}
 	}
 

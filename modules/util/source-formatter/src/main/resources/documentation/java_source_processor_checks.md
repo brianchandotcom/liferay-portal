@@ -189,6 +189,7 @@ JavaUpgradeAlterColumnCallsOrderCheck | [Styling](styling_checks.md#styling-chec
 [JavaUpgradeClassCheck](check/java_upgrade_class_check.md#javaupgradeclasscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on Upgrade classes. |
 JavaUpgradeCompanyThreadLocalCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that we do not use `CompanyThreadLocal.setCompanyId*` in upgrade classes. |
 JavaUpgradeConnectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases where `DataAccess.getConnection` is used (instead of using the available global variable `connection`). |
+JavaUpgradeCreateTableCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that we do not use `create table` statement in upgrade classes. |
 [JavaUpgradeDropTableCheck](check/java_upgrade_drop_table_check.md#javaupgradedroptablecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases where `DROP_TABLE_IF_EXISTS` should be used (instead of `drop table if exists`). |
 JavaUpgradeEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary empty lines in upgrade classes. |
 [JavaUpgradeIndexCheck](check/java_upgrade_index_check.md#javaupgradeindexcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases where the service builder indexes are updated manually in Upgrade classes. This is not needed because Liferay takes care of it. |

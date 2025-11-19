@@ -21,15 +21,19 @@ export default function ({namespace}) {
 
 			if (event.delegateTarget.id === `${namespace}enabled`) {
 				if (event.delegateTarget.checked) {
-					consentRenewalPeriod.removeAttribute('disabled');
-					consentRenewalPeriod.required = true;
+					if (Liferay.FeatureFlags['LPD-65277']) {
+						consentRenewalPeriod.removeAttribute('disabled');
+						consentRenewalPeriod.required = true;
+					}
 
 					explicitConsentMode.removeAttribute('disabled');
 				}
 				else {
-					consentRenewalPeriod.required = false;
-					consentRenewalPeriod.setAttribute('disabled', '');
-					consentRenewalPeriod.value = 12;
+					if (Liferay.FeatureFlags['LPD-65277']) {
+						consentRenewalPeriod.required = false;
+						consentRenewalPeriod.setAttribute('disabled', '');
+						consentRenewalPeriod.value = 12;
+					}
 
 					explicitConsentMode.checked = true;
 					explicitConsentMode.setAttribute('disabled', '');

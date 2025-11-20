@@ -317,7 +317,6 @@ public class ClusterGeneralTest {
 
 		@Override
 		public void masterTokenReleased() {
-			_stoppedLatch.countDown();
 		}
 
 		private final CountDownLatch _stoppedLatch;

@@ -62,7 +62,7 @@ public class DropZonePageElementDefinitionDTOConverter
 
 		dropZonePageElementDefinition.setAddNewFragmentEntries(
 			dropZoneLayoutStructureItem::isAllowNewFragmentEntries);
-		dropZonePageElementDefinition.setAllowedFragments(
+		dropZonePageElementDefinition.setAllowedFragmentReferences(
 			() -> _getFragmentReferences(
 				companyId, dropZoneLayoutStructureItem, scopeGroupId));
 		dropZonePageElementDefinition.setType(

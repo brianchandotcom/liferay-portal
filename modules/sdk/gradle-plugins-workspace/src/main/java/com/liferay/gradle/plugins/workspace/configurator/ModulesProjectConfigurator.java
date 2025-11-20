@@ -13,6 +13,7 @@ import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGener
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.rest.builder.BuildRESTTask;
 import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
@@ -128,6 +129,12 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			if (FileUtil.exists(project, "rest-config.yaml")) {
 				GradleUtil.applyPlugin(project, RESTBuilderPlugin.class);
+
+				BuildRESTTask buildRESTTask = (BuildRESTTask)GradleUtil.getTask(
+					project, RESTBuilderPlugin.BUILD_REST_TASK_NAME);
+
+				buildRESTTask.setJakartaEnabled(
+					JakartaCompatibilityUtil.isUseJakarta(project));
 			}
 
 			if (FileUtil.exists(project, "service.xml")) {

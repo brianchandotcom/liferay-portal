@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_HISTORY,
 	service = FDSFilter.class
 )
-public class StatusSelectionFDSFilter extends BaseSelectionFDSFilter {
+public class HistoryStatusSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getId() {

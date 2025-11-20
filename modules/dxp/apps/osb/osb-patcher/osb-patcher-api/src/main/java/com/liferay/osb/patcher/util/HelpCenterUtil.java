@@ -11,22 +11,24 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.osb.patcher.configuration.PatcherConfiguration;
-import com.liferay.osb.patcher.constants.PatcherConstants;
 import com.liferay.osb.patcher.model.PatcherAccount;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.service.PatcherAccountLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
@@ -34,9 +36,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.nio.channels.Channels;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 
@@ -132,37 +131,55 @@ public class HelpCenterUtil {
 
 		Http.Options options = new Http.Options();
 
+		options.addHeader(HttpHeaders.ACCEPT, "application/json");
+
 		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
+
+		options.addHeader(
+			"Authorization", "Bearer " + getAuthenticationToken(companyId));
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				PatcherConfiguration.class, companyId);
 
-		String login =
-			patcherConfiguration.helpCenterApiUserName() + ":" +
-				patcherConfiguration.helpCenterApiPassword();
-
-		options.addHeader(
-			"Authorization", "Basic " + Base64.encode(login.getBytes()));
-
-		options.addPart("code", accountEntryCode);
-
 		options.setLocation(
-			patcherConfiguration.helpCenterJsonwsURL() +
-				StringPool.FORWARD_SLASH +
-					patcherConfiguration.helpCenterGetAccountApiEndpoint());
-		options.setPost(true);
+			StringBundler.concat(
+				patcherConfiguration.supportLiferayURL(),
+				StringPool.FORWARD_SLASH,
+				patcherConfiguration.supportLiferayAccountSearchApiEndpoint(),
+				accountEntryCode));
 
-		String response = StringUtil.removeSubstring(
-			HttpUtil.URLtoString(options), StringPool.QUOTE);
+		options.setPost(false);
 
-		Pattern pattern = Pattern.compile(
-			PatcherConstants.HELP_CENTER_ACCOUNT_ID_REGEX);
+		String responseBody = HttpUtil.URLtoString(options);
 
-		Matcher matcher = pattern.matcher(response);
+		Http.Response response = options.getResponse();
 
-		if (matcher.find()) {
-			return GetterUtil.getLong(matcher.group(1));
+		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			throw new Exception(
+				StringBundler.concat(
+					"Response code ", response.getResponseCode(), ": ",
+					responseBody));
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(responseBody);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		if (itemsJSONArray.length() == 0) {
+			return 0;
+		}
+
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+			if (itemJSONObject.has("code")) {
+				String code = itemJSONObject.getString("code");
+
+				if (code.equals(accountEntryCode)) {
+					return itemJSONObject.getLong("id");
+				}
+			}
 		}
 
 		return 0;
@@ -191,6 +208,49 @@ public class HelpCenterUtil {
 		options.setLocation(uploadTokenURL);
 
 		return HttpUtil.URLtoString(options);
+	}
+
+	protected static String getAuthenticationToken(long companyId)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
+
+		options.addHeader(
+			"Content-Type", ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
+
+		PatcherConfiguration patcherConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				PatcherConfiguration.class, companyId);
+
+		options.addPart(
+			"client_id", patcherConfiguration.supportLiferayApiClientId());
+		options.addPart(
+			"client_secret",
+			patcherConfiguration.supportLiferayApiClientSecret());
+
+		options.addPart("grant_type", "client_credentials");
+
+		options.setLocation(
+			patcherConfiguration.supportLiferayURL() + "/o/oauth2/token");
+
+		options.setPost(true);
+
+		String responseBody = HttpUtil.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			throw new Exception(
+				StringBundler.concat(
+					"Response code ", response.getResponseCode(), ": ",
+					responseBody));
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(responseBody);
+
+		return jsonObject.getString("access_token");
 	}
 
 	protected static void uploadAttachment(

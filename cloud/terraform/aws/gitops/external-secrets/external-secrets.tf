@@ -1,5 +1,5 @@
 locals {
-	argocd_eso_custom_resources_chart="argocd-eso-custom-resources"
+	argocd_eso_custom_resources_chart="liferay-aws-gitops-external-secrets-custom-resources"
 	argocd_namespace="argocd"
 	argocd_repo_credentials_secret_name="argocd-repo-credentials"
 	secret_store_name="eso-default-store"

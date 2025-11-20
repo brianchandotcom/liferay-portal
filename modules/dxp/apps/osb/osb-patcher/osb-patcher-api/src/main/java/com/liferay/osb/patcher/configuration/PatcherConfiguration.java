@@ -145,6 +145,21 @@ public interface PatcherConfiguration {
 	public boolean patcherTestsEnabled();
 
 	@Meta.AD(deflt = "", required = false)
+	public String supportLiferayAccountSearchApiEndpoint();
+
+	@Meta.AD(deflt = "", required = false)
+	public String supportLiferayApiClientId();
+
+	@Meta.AD(deflt = "", required = false)
+	public String supportLiferayApiClientSecret();
+
+	@Meta.AD(deflt = "", required = false)
+	public String supportLiferayLfuURL();
+
+	@Meta.AD(deflt = "", required = false)
+	public String supportLiferayURL();
+
+	@Meta.AD(deflt = "", required = false)
 	public String troubleshootingURL();
 
 }

@@ -38,37 +38,37 @@ public class EditVocabularyDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public List<Map<String, String>> getClassNameIdOptions() {
-		List<Map<String, String>> selectOptions = new ArrayList<>();
-
-		for (ObjectDefinition objectDefinition :
-				ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
-					CompanyThreadLocal.getCompanyId(),
-					new String[] {
-						ObjectFolderConstants.
-							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-						ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
-					})) {
-
-			selectOptions.add(
-				HashMapBuilder.put(
-					"restricted", Boolean.FALSE.toString()
-				).put(
-					"type", objectDefinition.getLabelCurrentValue()
-				).put(
-					"typeId",
-					String.valueOf(
-						PortalUtil.getClassNameId(
-							objectDefinition.getClassName()))
-				).build());
-		}
-
-		return selectOptions;
-	}
-
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"availableAssetTypes", getClassNameIdOptions()
+			"availableAssetTypes",
+			() -> {
+				List<Map<String, String>> assetTypes = new ArrayList<>();
+
+				for (ObjectDefinition objectDefinition :
+						ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
+							CompanyThreadLocal.getCompanyId(),
+							new String[] {
+								ObjectFolderConstants.
+									EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+								ObjectFolderConstants.
+									EXTERNAL_REFERENCE_CODE_FILE_TYPES
+							})) {
+
+					assetTypes.add(
+						HashMapBuilder.put(
+							"required", Boolean.FALSE.toString()
+						).put(
+							"type", objectDefinition.getLabelCurrentValue()
+						).put(
+							"typeId",
+							String.valueOf(
+								PortalUtil.getClassNameId(
+									objectDefinition.getClassName()))
+						).build());
+				}
+
+				return assetTypes;
+			}
 		).put(
 			"backURL",
 			PortalUtil.getLayoutFullURL(

@@ -226,20 +226,14 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		}
 
 		if (_log.isWarnEnabled()) {
-			for (Map.Entry<String, List<String>>
-					mismatchedTableColumnDefinitionsEntry :
-						new TreeMap<>(mismatchedTableColumnDefinitions).
-							entrySet()) {
+			for (Map.Entry<String, List<String>> entry :
+					new TreeMap<>(mismatchedTableColumnDefinitions).entrySet()) {
 
-				if (dbInspector.hasView(
-						mismatchedTableColumnDefinitionsEntry.getKey())) {
-
+				if (dbInspector.hasView(entry.getKey())) {
 					continue;
 				}
 
-				for (String columnDefinition :
-						mismatchedTableColumnDefinitionsEntry.getValue()) {
-
+				for (String columnDefinition : entry.getValue()) {
 					int indexOf = columnDefinition.indexOf(StringPool.SPACE);
 
 					String columnName = columnDefinition.substring(0, indexOf);
@@ -249,8 +243,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 						StringBundler.concat(
 							"Column ", dbInspector.normalizeName(columnName),
 							" is not defined as ", columnType, " for ",
-							dbInspector.normalizeName(
-								mismatchedTableColumnDefinitionsEntry.getKey()),
+							dbInspector.normalizeName(entry.getKey()),
 							partitionSuffix));
 				}
 			}

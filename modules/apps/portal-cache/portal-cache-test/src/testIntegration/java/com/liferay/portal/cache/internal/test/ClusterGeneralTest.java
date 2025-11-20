@@ -219,6 +219,20 @@ public class ClusterGeneralTest {
 			boolean updateTomcatNodeIsMasterNode)
 		throws Exception {
 
+		// Assert updateTomcatNode is master node
+		// when updateTomcatNodeIsMasterNode is true
+
+		Assert.assertEquals(
+			updateTomcatNodeIsMasterNode,
+			updateTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
+
+		// Assert listenTomcatNode is master node
+		// when updateTomcatNodeIsMasterNode is false
+
+		Assert.assertEquals(
+			!updateTomcatNodeIsMasterNode,
+			listenTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
+
 		String defaultValue = null;
 
 		try {
@@ -234,21 +248,9 @@ public class ClusterGeneralTest {
 							"AutoLoginFilter");
 				});
 
-			// Assert updateTomcatNode is master node
-			// when updateTomcatNodeIsMasterNode is true
+			// Assert the default value of updateTomcatNode
 
-			Assert.assertEquals(
-				updateTomcatNodeIsMasterNode,
-				updateTomcatNode.syncExecute(
-					ClusterMasterExecutorUtil::isMaster));
-
-			// Assert listenTomcatNode is master node
-			// when updateTomcatNodeIsMasterNode is false
-
-			Assert.assertEquals(
-				!updateTomcatNodeIsMasterNode,
-				listenTomcatNode.syncExecute(
-					ClusterMasterExecutorUtil::isMaster));
+			Assert.assertEquals("ERROR", defaultValue);
 
 			// Register listener for listenTomcatNode
 
@@ -280,10 +282,6 @@ public class ClusterGeneralTest {
 
 					return null;
 				});
-
-			// Assert the default value of updateTomcatNode
-
-			Assert.assertEquals("ERROR", defaultValue);
 
 			// Update properties in updateTomcatNode
 

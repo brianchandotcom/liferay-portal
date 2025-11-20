@@ -258,27 +258,8 @@ public class ClusterGeneralTest {
 				() -> {
 					LoggerContext loggerContext = LoggerContext.getContext();
 
-					int size;
-
-					if (updateTomcatNodeIsMasterNode) {
-
-						// CountDown Log4JUtil.getPriorities().size() times
-						// because when master node update,
-						// all the properties in slave node need to update
-
-						size = Log4JUtil.getPriorities(
-						).size();
-					}
-					else {
-
-						// CountDown only once because when slave node update,
-						// only one property need to update in master node
-
-						size = 1;
-					}
-
 					loggerContext.addPropertyChangeListener(
-						new TestPropertyChangeListener(size));
+						new TestPropertyChangeListener());
 
 					return null;
 				});
@@ -394,10 +375,6 @@ public class ClusterGeneralTest {
 	private static class TestPropertyChangeListener
 		implements PropertyChangeListener {
 
-		public TestPropertyChangeListener(int countDown) {
-			_countDownLatch = new CountDownLatch(countDown);
-		}
-
 		public CountDownLatch getCountDownLatch() {
 			return _countDownLatch;
 		}
@@ -407,7 +384,7 @@ public class ClusterGeneralTest {
 			_countDownLatch.countDown();
 		}
 
-		private final CountDownLatch _countDownLatch;
+		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 
 	}
 

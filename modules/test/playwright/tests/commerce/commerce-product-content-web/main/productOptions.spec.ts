@@ -4,13 +4,16 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import path from 'node:path';
 
 import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import {
@@ -19,6 +22,9 @@ import {
 	userData,
 } from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
+import getFragmentDefinition from '../../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {
 	classicCommerceSetUp,
 	configureBuyerUserForSite,
@@ -28,13 +34,15 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-20379': {enabled: true},
 		'LPD-58472': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	pageEditorPagesTest
 );
 
 test(
@@ -43,36 +51,93 @@ test(
 	async ({
 		apiHelpers,
 		checkoutPage,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
 		commerceMiniCartPage,
 		commerceThemeClassicOrdersPage,
+		displayPageTemplatesPage,
 		page,
+		pageEditorPage,
 		productDetailsPage,
+		site,
 	}) => {
 		let catalog;
 		let fileName;
 		let productWithUploadOption;
-		let site;
 
-		await test.step('Initialize Commerce Classic Site', async () => {
-			const {catalog: catalogSetup, site: siteSetup} =
-				await classicCommerceSetUp(apiHelpers, getRandomString());
+		await test.step('Create a channel and a catalog via API', async () => {
+			const channel =
+				await apiHelpers.headlessCommerceAdminChannel.postChannel({
+					siteGroupId: site.id,
+				});
 
-			catalog = catalogSetup;
-			site = siteSetup;
+			await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+				channel.name,
+				'B2B'
+			);
+
+			catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog(
+				{
+					name: 'Catalog_' + getRandomString(),
+				}
+			);
 		});
 
-		await test.step('Create an Account and a Buyer user', async () => {
-			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: getRandomString(),
-				type: 'business',
+		await test.step('Setup Classic Site Pages', async () => {
+			await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getWidgetDefinition({
+						id: getRandomString(),
+						widgetName:
+							'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet',
+					}),
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'COMMERCE_CART_FRAGMENTS-mini-cart',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
 			});
 
-			await configureBuyerUserForSite(
-				account,
-				apiHelpers,
-				site,
-				'demo.unprivileged@liferay.com'
+			await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getWidgetDefinition({
+						id: getRandomString(),
+						widgetName:
+							'com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Order',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
 			);
+
+			await pageEditorPage.addFragment('Order', 'Order Items Data Set');
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await displayPageTemplatesPage.publishTemplate();
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName,
+				'Mark as Default'
+			);
+
+			await expect(
+				commerceLayoutsPage.defaultDisplayPageTemplateIcon
+			).toBeVisible();
 		});
 
 		await test.step('Create a product with upload option', async () => {
@@ -98,6 +163,7 @@ test(
 							optionId: uploadOption.id,
 							priceType: '',
 							priority: 1,
+							required: true,
 						},
 					],
 					skus: [
@@ -112,7 +178,38 @@ test(
 				});
 		});
 
-		await test.step('Upload a document to the product', async () => {
+		await test.step('Upload option is disabled when there is no account', async () => {
+			await page.goto(
+				`/web/${site.name}/p/${productWithUploadOption.name['en_US']}`,
+				{waitUntil: 'networkidle'}
+			);
+
+			await expect(page.getByText('UploadSelect')).toBeVisible();
+
+			await expect(
+				productDetailsPage.optionSelector('Upload')
+			).toBeDisabled();
+
+			await expect(
+				productDetailsPage.productOptionUploadFormFeedback
+			).toHaveClass(/\bhas-error\b/);
+		});
+
+		await test.step('Create an Account and a Buyer user', async () => {
+			const account = await apiHelpers.headlessAdminUser.postAccount({
+				name: getRandomString(),
+				type: 'business',
+			});
+
+			await configureBuyerUserForSite(
+				account,
+				apiHelpers,
+				site,
+				'demo.unprivileged@liferay.com'
+			);
+		});
+
+		await test.step('As a buyer go to product detail page and upload a document to the product', async () => {
 			await performLogout(page);
 			await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
@@ -129,14 +226,26 @@ test(
 				page.getByRole('heading', {name: 'Select Document'})
 			).toBeVisible();
 
-			await productDetailsPage.selectDocumentFrame
-				.getByRole('link', {name: 'Commerce'})
-				.click();
+			const dropZoneArea =
+				productDetailsPage.selectDocumentFrame.getByText(
+					'Drag & Drop Your Files or Browse to Upload',
+					{exact: true}
+				);
 
-			fileName = '400_color.svg';
+			fileName = 'diagram.svg';
+
+			const [fileChooser] = await Promise.all([
+				page.waitForEvent('filechooser'),
+
+				dropZoneArea.click(),
+			]);
+
+			await fileChooser.setFiles(
+				path.join(__dirname, `/dependencies/${fileName}`)
+			);
 
 			await productDetailsPage.selectDocumentFrame
-				.getByText(fileName)
+				.getByRole('button', {name: 'Add'})
 				.click();
 
 			await expect(productDetailsPage.selectedDocumentLabel).toHaveValue(
@@ -144,9 +253,19 @@ test(
 			);
 		});
 
+		await test.step('Check that the required label is not visible', async () => {
+			await expect(
+				productDetailsPage.productOptionUploadFormFeedback
+			).not.toHaveClass(/\bhas-error\b/);
+		});
+
 		try {
 			await test.step('Add the product to the cart and check-out', async () => {
 				await productDetailsPage.addToCartButton.click();
+
+				await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+					'has-badge mini-cart-opener'
+				);
 
 				await commerceMiniCartPage.miniCartButton.click();
 
@@ -180,7 +299,7 @@ test(
 				await expect(
 					(
 						await commerceThemeClassicOrdersPage.orderItemsTableRow(
-							2,
+							3,
 							productWithUploadOption.productOptions[0].name[
 								'en_US'
 							]
@@ -192,7 +311,7 @@ test(
 				await expect(
 					(
 						await commerceThemeClassicOrdersPage.orderItemsTableRow(
-							2,
+							3,
 							fileName
 						)
 					).column.getByText(fileName)
@@ -200,7 +319,7 @@ test(
 				await expect(
 					(
 						await commerceThemeClassicOrdersPage.orderItemsTableRow(
-							9,
+							10,
 							'$ 10.00',
 							true
 						)

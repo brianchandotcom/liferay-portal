@@ -1284,56 +1284,51 @@ test(
 			);
 		});
 
-		try {
-			await test.step('Upload the svg file to the product', async () => {
-				await attachmentsPage.goToDocumentsAndMedia();
-				await attachmentsPage.createFileEntry(
-					path.join(__dirname, '/dependencies/diagram.svg'),
-					'diagram'
+		await test.step('Upload the svg file to the product', async () => {
+			await attachmentsPage.goToDocumentsAndMedia();
+			await attachmentsPage.createFileEntry(
+				path.join(__dirname, '/dependencies/diagram.svg'),
+				'diagram'
+			);
+
+			siteDocumentsPage =
+				await apiHelpers.headlessDelivery.getSiteDocumentsPage(
+					site.id,
+					'id:desc'
 				);
 
-				siteDocumentsPage =
-					await apiHelpers.headlessDelivery.getSiteDocumentsPage(
-						site.id,
-						'id:desc'
-					);
+			siteDocument = siteDocumentsPage.items[0];
 
-				siteDocument = siteDocumentsPage.items[0];
+			await apiHelpers.headlessCommerceAdminCatalog.postImage(
+				product.productId,
+				siteDocument.id,
+				siteDocument.title
+			);
 
-				await apiHelpers.headlessCommerceAdminCatalog.postImage(
-					product.productId,
-					siteDocument.id,
-					siteDocument.title
-				);
-			});
+			apiHelpers.data.push({id: siteDocument.id, type: 'document'});
+		});
 
-			await test.step('Navigate to product, get the link to src from the thumbnail, perform a get request and check the response', async () => {
-				await commerceAdminProductPage.gotoProduct(
-					product.name['en_US']
-				);
+		await test.step('Navigate to product, get the link to src from the thumbnail, perform a get request and check the response', async () => {
+			await commerceAdminProductPage.gotoProduct(product.name['en_US']);
 
-				const svgURL = await page
-					.locator('.d-none > .sticker-overlay .sticker-img')
-					.getAttribute('src');
+			const svgURL = await page
+				.locator('.d-none > .sticker-overlay .sticker-img')
+				.getAttribute('src');
 
-				const response = await page.request.get(
-					`${liferayConfig.environment.baseUrl}${svgURL}`
-				);
+			const response = await page.request.get(
+				`${liferayConfig.environment.baseUrl}${svgURL}`
+			);
 
-				expect(response.ok).toBeTruthy();
+			expect(response.ok).toBeTruthy();
 
-				const headers = response.headers();
+			const headers = response.headers();
 
-				const contentDisposition = headers['content-disposition'];
-				const contentType = headers['content-type'];
+			const contentDisposition = headers['content-disposition'];
+			const contentType = headers['content-type'];
 
-				expect(contentDisposition).toContain('attachment');
-				expect(contentDisposition).toContain('diagram.svg');
-				expect(contentType).toBe('image/svg+xml');
-			});
-		}
-		finally {
-			await apiHelpers.headlessDelivery.deleteDocument(siteDocument.id);
-		}
+			expect(contentDisposition).toContain('attachment');
+			expect(contentDisposition).toContain('diagram.svg');
+			expect(contentType).toBe('image/svg+xml');
+		});
 	}
 );

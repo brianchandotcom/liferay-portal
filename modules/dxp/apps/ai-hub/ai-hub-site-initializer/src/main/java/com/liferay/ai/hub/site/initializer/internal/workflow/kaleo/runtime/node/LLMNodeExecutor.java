@@ -60,16 +60,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		KaleoNode currentKaleoNode, ExecutionContext executionContext,
 		List<PathElement> remainingPathElements) {
 
-		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
-			VertexAiGeminiStreamingChatModel.builder(
-			).project(
-				"ai-hub-liferay"
-			).location(
-				"us-central1"
-			).modelName(
-				"gemini-2.5-flash-lite"
-			).build();
-
 		Map<String, String> kaleoNodeSettingValues = new HashMap<>();
 
 		List<KaleoNodeSetting> kaleoNodeSettings =
@@ -80,6 +70,16 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			kaleoNodeSettingValues.put(
 				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
 		}
+
+		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
+			VertexAiGeminiStreamingChatModel.builder(
+			).project(
+				"ai-hub-liferay"
+			).location(
+				"us-central1"
+			).modelName(
+				"gemini-2.5-flash-lite"
+			).build();
 
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();

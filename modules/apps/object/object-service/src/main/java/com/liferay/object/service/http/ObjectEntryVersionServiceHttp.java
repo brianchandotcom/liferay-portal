@@ -246,6 +246,52 @@ public class ObjectEntryVersionServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.object.model.ObjectEntryVersion>
+			getObjectEntryVersions(
+				HttpPrincipal httpPrincipal, long objectEntryId, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.object.model.ObjectEntryVersion>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryVersionServiceUtil.class, "getObjectEntryVersions",
+				_getObjectEntryVersionsParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectEntryId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.object.model.ObjectEntryVersion>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static int getObjectEntryVersionsCount(
 			HttpPrincipal httpPrincipal, long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -254,7 +300,7 @@ public class ObjectEntryVersionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryVersionServiceUtil.class,
 				"getObjectEntryVersionsCount",
-				_getObjectEntryVersionsCountParameterTypes5);
+				_getObjectEntryVersionsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId);
@@ -306,7 +352,12 @@ public class ObjectEntryVersionServiceHttp {
 		new Class[] {long.class, int.class};
 	private static final Class<?>[] _getObjectEntryVersionsParameterTypes4 =
 		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _getObjectEntryVersionsParameterTypes5 =
+		new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
 	private static final Class<?>[]
-		_getObjectEntryVersionsCountParameterTypes5 = new Class[] {long.class};
+		_getObjectEntryVersionsCountParameterTypes6 = new Class[] {long.class};
 
 }

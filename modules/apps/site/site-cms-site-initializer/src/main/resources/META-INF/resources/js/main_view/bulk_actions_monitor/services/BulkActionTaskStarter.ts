@@ -52,13 +52,13 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 		selectedData,
 		type,
 	}: IBulkActionTaskStarterDTO<keyof IBulkActionTaskType> & {
-		classNameId: number;
+		classNameId?: number;
 	}) {
 		if (!apiURL) {
 			throw new Error('Cannot POST bulk action task.');
 		}
 
-		this.bulkActionClassNameId = classNameId;
+		this.bulkActionClassNameId = classNameId || 0;
 		this.onCreateTaskError = onCreateError;
 		this.onCreateTaskSuccess = onCreateSuccess;
 		this.overrideDefaultErrorToast = overrideDefaultErrorToast;

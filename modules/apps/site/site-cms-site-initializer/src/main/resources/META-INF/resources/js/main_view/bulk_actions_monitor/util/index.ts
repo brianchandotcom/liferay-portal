@@ -61,19 +61,27 @@ export function composeCreateTaskDTO(
 			({
 				embedded: {
 					externalReferenceCode: embeddedExternalReferenceCode,
+					file,
 					id: classPK,
 					title: name,
 				} = {} as any,
 				entryClassName,
 				externalReferenceCode,
-			}: any) =>
-				({
+			}: any) => {
+				const itemsTransformed = {
 					classExternalReferenceCode:
 						externalReferenceCode || embeddedExternalReferenceCode,
 					className: entryClassName || OBJECT_ENTRY_FOLDER_CLASS_NAME,
 					classPK,
 					name,
-				}) as IBulkActionFDSDataItemTransformed
+				} as IBulkActionFDSDataItemTransformed;
+
+				if (actionKey === 'DownloadBulkAction') {
+					itemsTransformed.file = file;
+				}
+
+				return itemsTransformed;
+			}
 		),
 		selectionScope: {selectAll: selectAll ? true : null},
 		type: actionKey,

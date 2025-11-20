@@ -12446,6 +12446,7 @@ ${update.properties}</echo>
 		<Logger level="${dialect.detector.log.level}" name="com.liferay.portal.spring.hibernate.DialectDetector" />
 		<Logger level="ERROR" name="com.zaxxer.hikari.pool.PoolBase" />
 		<Logger level="ERROR" name="org.apache.http.client.protocol.ResponseProcessCookies" />
+		<Logger level="OFF" name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" />
 		${log4j.logggers.root}
 	</Loggers>
 </Configuration>]]></echo>

@@ -267,10 +267,10 @@ public class DBResourceUtil {
 				continue;
 			}
 
-			if (line.isEmpty() || line.startsWith("primary key") ||
-				line.startsWith(")") || line.startsWith(";") ||
-				line.startsWith("<") || line.startsWith("]]>") ||
-				line.startsWith("create ")) {
+			if (line.isEmpty() || line.startsWith(")") ||
+				line.startsWith(";") || line.startsWith("<") ||
+				line.startsWith("]]>") || line.startsWith("create ") ||
+				line.startsWith("primary key")) {
 
 				continue;
 			}

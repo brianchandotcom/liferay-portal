@@ -253,10 +253,8 @@ public class ClusterGeneralTest {
 						Collections.singletonMap(
 							ClusterGeneralTest.class.getName(), "DEBUG"));
 
-					return Log4JUtil.getPriorities(
-					).get(
-						ClusterGeneralTest.class.getName()
-					);
+					return Log4JUtil.getPriority(
+						ClusterGeneralTest.class.getName());
 				}));
 
 		// Assert the change in listenTomcatNode
@@ -267,10 +265,8 @@ public class ClusterGeneralTest {
 				() -> {
 					_await();
 
-					return Log4JUtil.getPriorities(
-					).get(
-						ClusterGeneralTest.class.getName()
-					);
+					return Log4JUtil.getPriority(
+						ClusterGeneralTest.class.getName());
 				}));
 
 		// Register listener for listenTomcatNode
@@ -297,10 +293,8 @@ public class ClusterGeneralTest {
 						Collections.singletonMap(
 							ClusterGeneralTest.class.getName(), "ERROR"));
 
-					return Log4JUtil.getPriorities(
-					).get(
-						ClusterGeneralTest.class.getName()
-					);
+					return Log4JUtil.getPriority(
+						ClusterGeneralTest.class.getName());
 				}));
 
 		// Assert the change in listenTomcatNode
@@ -311,10 +305,8 @@ public class ClusterGeneralTest {
 				() -> {
 					_await();
 
-					return Log4JUtil.getPriorities(
-					).get(
-						ClusterGeneralTest.class.getName()
-					);
+					return Log4JUtil.getPriority(
+						ClusterGeneralTest.class.getName());
 				}));
 	}
 

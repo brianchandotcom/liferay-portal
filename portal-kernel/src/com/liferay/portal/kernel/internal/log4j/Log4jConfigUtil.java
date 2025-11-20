@@ -142,6 +142,16 @@ public class Log4jConfigUtil {
 		return priorities;
 	}
 
+	public static String getPriority(String name) {
+		LoggerConfig loggerConfig = _centralizedConfiguration.getLogger(name);
+
+		if (loggerConfig == null) {
+			return null;
+		}
+
+		return String.valueOf(loggerConfig.getLevel());
+	}
+
 	public static void setLevel(String name, String priority) {
 		Level level = Level.toLevel(priority);
 

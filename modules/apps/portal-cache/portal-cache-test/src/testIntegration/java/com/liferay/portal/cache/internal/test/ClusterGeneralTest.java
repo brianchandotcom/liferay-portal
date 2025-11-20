@@ -21,7 +21,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -193,15 +195,16 @@ public class ClusterGeneralTest {
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		List<ServiceReference<MVCActionCommand>> serviceReferences =
-			new ArrayList<>(
-				bundleContext.getServiceReferences(
-					MVCActionCommand.class,
-					"(mvc.command.name=/server_admin/edit_server)"));
+		Collection<ServiceReference<MVCActionCommand>> serviceReferences =
+			bundleContext.getServiceReferences(
+				MVCActionCommand.class,
+				"(mvc.command.name=/server_admin/edit_server)");
+
+		Iterator<ServiceReference<MVCActionCommand>> iterator =
+			serviceReferences.iterator();
 
 		ServiceReference<MVCActionCommand>
-			editServerMVCActionCommandServiceReference = serviceReferences.get(
-				0);
+			editServerMVCActionCommandServiceReference = iterator.next();
 
 		return bundleContext.getService(
 			editServerMVCActionCommandServiceReference);

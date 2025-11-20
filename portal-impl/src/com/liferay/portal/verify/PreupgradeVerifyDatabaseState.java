@@ -26,9 +26,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author Jorge Avalos
@@ -176,9 +175,9 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 				connection));
 
 		Map<String, List<String>> mismatchedTableColumnDefinitions =
-			new ConcurrentHashMap<>();
+			new ConcurrentSkipListMap<>();
 		Map<String, List<String>> missingTableColumnNames =
-			new ConcurrentHashMap<>();
+			new ConcurrentSkipListMap<>();
 
 		processConcurrently(
 			tableColumnDefinitions,
@@ -227,7 +226,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		if (_log.isWarnEnabled()) {
 			for (Map.Entry<String, List<String>> entry :
-					new TreeMap<>(mismatchedTableColumnDefinitions).entrySet()) {
+					mismatchedTableColumnDefinitions.entrySet()) {
 
 				if (dbInspector.hasView(entry.getKey())) {
 					continue;
@@ -252,7 +251,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		StringBundler sb = new StringBundler();
 
 		for (Map.Entry<String, List<String>> missingTableColumnNamesEntry :
-				new TreeMap<>(missingTableColumnNames).entrySet()) {
+				missingTableColumnNames.entrySet()) {
 
 			for (String columnName : missingTableColumnNamesEntry.getValue()) {
 				sb.append(

@@ -301,7 +301,8 @@ public class NavigationMenuResourceImpl
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				null, groupId, siteNavigationMenuId, parentNavigationMenuId,
+				navigationMenuItem.getExternalReferenceCode(), groupId,
+				siteNavigationMenuId, parentNavigationMenuId,
 				navigationMenuItem.getType(), unicodeProperties.toString(),
 				ServiceContextBuilder.create(
 					groupId, contextHttpServletRequest, null

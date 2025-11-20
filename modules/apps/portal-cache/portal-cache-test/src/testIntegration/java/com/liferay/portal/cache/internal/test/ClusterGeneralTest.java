@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
 import com.liferay.portal.test.cluster.tomcat.TomcatNode;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -22,6 +21,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -233,108 +233,111 @@ public class ClusterGeneralTest {
 			!updateTomcatNodeIsMasterNode,
 			listenTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		String defaultValue = null;
+		// Register listener for listenTomcatNode
 
-		try {
+		listenTomcatNode.syncExecute(
+			() -> {
+				LoggerContext loggerContext = LoggerContext.getContext();
 
-			// Get the default value of the property
+				loggerContext.addPropertyChangeListener(
+					new TestPropertyChangeListener());
 
-			defaultValue = updateTomcatNode.syncExecute(
-				() -> {
-					Map<String, String> priorities = Log4JUtil.getPriorities();
+				return null;
+			});
 
-					return priorities.get(
-						"com.liferay.portal.servlet.filters.autologin." +
-							"AutoLoginFilter");
-				});
+		// Update properties in updateTomcatNode and assert change
 
-			// Assert the default value of updateTomcatNode
-
-			Assert.assertEquals("ERROR", defaultValue);
-
-			// Register listener for listenTomcatNode
-
-			listenTomcatNode.syncExecute(
-				() -> {
-					LoggerContext loggerContext = LoggerContext.getContext();
-
-					loggerContext.addPropertyChangeListener(
-						new TestPropertyChangeListener());
-
-					return null;
-				});
-
-			// Update properties in updateTomcatNode and assert change
-
-			Assert.assertEquals(
-				"DEBUG",
-				updateTomcatNode.syncExecute(
-					() -> {
-						ReflectionTestUtil.invoke(
-							_getEditServerMVCActionCommand(),
-							"_updateLogLevels", new Class<?>[] {Map.class},
-							HashMapBuilder.put(
-								"com.liferay.portal.servlet.filters." +
-									"autologin.AutoLoginFilter",
-								"DEBUG"
-							).build());
-
-						return Log4JUtil.getPriorities(
-						).get(
-							"com.liferay.portal.servlet.filters.autologin." +
-								"AutoLoginFilter"
-						);
-					}));
-
-			// Assert the change in listenTomcatNode
-
-			Assert.assertEquals(
-				"DEBUG",
-				listenTomcatNode.syncExecute(
-					() -> {
-						_getCountDownLatch().await();
-
-						LoggerContext loggerContext =
-							LoggerContext.getContext();
-
-						loggerContext.removePropertyChangeListener(
-							_getTestPropertyChangeListener());
-
-						return Log4JUtil.getPriorities(
-						).get(
-							"com.liferay.portal.servlet.filters.autologin." +
-								"AutoLoginFilter"
-						);
-					}));
-		}
-		finally {
-			Map<String, String> restoreMap = HashMapBuilder.put(
-				"com.liferay.portal.servlet.filters.autologin.AutoLoginFilter",
-				defaultValue
-			).build();
-
-			// Restore the property for updateTomcatNode
-
+		Assert.assertEquals(
+			"DEBUG",
 			updateTomcatNode.syncExecute(
 				() -> {
 					ReflectionTestUtil.invoke(
 						_getEditServerMVCActionCommand(), "_updateLogLevels",
-						new Class<?>[] {Map.class}, restoreMap);
+						new Class<?>[] {Map.class},
+						Collections.singletonMap(
+							"com.liferay.portal.servlet.filters.autologin." +
+								"AutoLoginFilter",
+							"DEBUG"));
 
-					return null;
-				});
+					return Log4JUtil.getPriorities(
+					).get(
+						"com.liferay.portal.servlet.filters.autologin." +
+							"AutoLoginFilter"
+					);
+				}));
 
-			// Restore the property for listenTomcatNode
+		// Assert the change in listenTomcatNode
 
+		Assert.assertEquals(
+			"DEBUG",
 			listenTomcatNode.syncExecute(
+				() -> {
+					_getCountDownLatch().await();
+
+					LoggerContext loggerContext = LoggerContext.getContext();
+
+					loggerContext.removePropertyChangeListener(
+						_getTestPropertyChangeListener());
+
+					return Log4JUtil.getPriorities(
+					).get(
+						"com.liferay.portal.servlet.filters.autologin." +
+							"AutoLoginFilter"
+					);
+				}));
+
+		// Register listener for listenTomcatNode
+
+		listenTomcatNode.syncExecute(
+			() -> {
+				LoggerContext loggerContext = LoggerContext.getContext();
+
+				loggerContext.addPropertyChangeListener(
+					new TestPropertyChangeListener());
+
+				return null;
+			});
+
+		// Update properties in updateTomcatNode and assert change
+
+		Assert.assertEquals(
+			"ERROR",
+			updateTomcatNode.syncExecute(
 				() -> {
 					ReflectionTestUtil.invoke(
 						_getEditServerMVCActionCommand(), "_updateLogLevels",
-						new Class<?>[] {Map.class}, restoreMap);
+						new Class<?>[] {Map.class},
+						Collections.singletonMap(
+							"com.liferay.portal.servlet.filters.autologin." +
+								"AutoLoginFilter",
+							"ERROR"));
 
-					return null;
-				});
-		}
+					return Log4JUtil.getPriorities(
+					).get(
+						"com.liferay.portal.servlet.filters.autologin." +
+							"AutoLoginFilter"
+					);
+				}));
+
+		// Assert the change in listenTomcatNode
+
+		Assert.assertEquals(
+			"ERROR",
+			listenTomcatNode.syncExecute(
+				() -> {
+					_getCountDownLatch().await();
+
+					LoggerContext loggerContext = LoggerContext.getContext();
+
+					loggerContext.removePropertyChangeListener(
+						_getTestPropertyChangeListener());
+
+					return Log4JUtil.getPriorities(
+					).get(
+						"com.liferay.portal.servlet.filters.autologin." +
+							"AutoLoginFilter"
+					);
+				}));
 	}
 
 	private static TomcatNode _tomcatNode1;

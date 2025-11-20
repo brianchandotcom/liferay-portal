@@ -277,7 +277,6 @@ public class DBResourceUtil {
 
 			line = StringUtil.replaceLast(
 				line, CharPool.COMMA, StringPool.BLANK);
-
 			line = StringUtil.removeSubstring(line, "primary key");
 
 			tableColumnDefinitions.get(

@@ -800,14 +800,14 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	private void _testPostSiteMasterPageWithDropZonePageElement()
 		throws Exception {
 
+		MasterPageResource masterPageResource = _getMasterPageResource();
+
 		PageElement[] pageElements = {
 			PageElementsTestUtil.getDropZonePageElement(
 				testGroup.getGroupId(), RandomTestUtil.randomString())
 		};
 
 		MasterPage masterPage = _getMasterPage(pageElements);
-
-		MasterPageResource masterPageResource = _getMasterPageResource();
 
 		_assertPageElements(
 			pageElements,

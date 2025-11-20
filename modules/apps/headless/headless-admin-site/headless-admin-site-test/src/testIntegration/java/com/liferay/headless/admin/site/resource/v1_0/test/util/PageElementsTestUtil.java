@@ -77,7 +77,7 @@ public class PageElementsTestUtil {
 			new DropZonePageElementDefinition();
 
 		dropZonePageElementDefinition.setAddNewFragmentEntries(true);
-		dropZonePageElementDefinition.setAllowedFragments(
+		dropZonePageElementDefinition.setAllowedFragmentReferences(
 			_getFragmentReferences(groupId));
 		dropZonePageElementDefinition.setType(
 			PageElementDefinition.Type.DROP_ZONE);

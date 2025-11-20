@@ -458,6 +458,26 @@ public class PageElementsTestUtil {
 		return pageElements.toArray(new PageElement[0]);
 	}
 
+	private static DefaultFragmentReference _addDefaultFragmentReference(
+		String fragmentKey) {
+
+		DefaultFragmentReference defaultFragmentReference =
+			new DefaultFragmentReference();
+
+		defaultFragmentReference.setDefaultFragmentKey(
+			() -> {
+				FragmentEntry fragmentEntry =
+					FragmentCollectionContributorRegistryUtil.getFragmentEntry(
+						fragmentKey);
+
+				return fragmentEntry.getFragmentEntryKey();
+			});
+		defaultFragmentReference.setFragmentReferenceType(
+			FragmentReference.FragmentReferenceType.DEFAULT_FRAGMENT_REFERENCE);
+
+		return defaultFragmentReference;
+	}
+
 	private static FragmentEntry _addFragmentEntry(
 			long fragmentCollectionId, long groupId)
 		throws PortalException {
@@ -469,6 +489,27 @@ public class PageElementsTestUtil {
 			false, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	private static FragmentItemExternalReference
+		_addFragmentItemExternalReference(long collectionId, long groupId) {
+
+		FragmentItemExternalReference fragmentItemExternalReference =
+			new FragmentItemExternalReference();
+
+		fragmentItemExternalReference.setExternalReferenceCode(
+			() -> {
+				FragmentEntry fragmentEntry = _addFragmentEntry(
+					collectionId, groupId);
+
+				return fragmentEntry.getExternalReferenceCode();
+			});
+
+		fragmentItemExternalReference.setFragmentReferenceType(
+			FragmentReference.FragmentReferenceType.
+				FRAGMENT_ITEM_EXTERNAL_REFERENCE);
+
+		return fragmentItemExternalReference;
 	}
 
 	private static CollectionDisplayListStyle _getCollectionDisplayListStyle() {
@@ -512,51 +553,26 @@ public class PageElementsTestUtil {
 
 		List<FragmentReference> fragmentReferences = new ArrayList<>();
 
+		fragmentReferences.add(
+			_addDefaultFragmentReference("BASIC_COMPONENT-button"));
+		fragmentReferences.add(
+			_addDefaultFragmentReference("INPUTS-date-input"));
+
 		FragmentCollection fragmentCollection =
 			FragmentCollectionLocalServiceUtil.addFragmentCollection(
 				null, TestPropsValues.getUserId(), groupId,
 				StringUtil.randomString(), StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(groupId));
 
-		for (FragmentEntry fragmentEntry :
-				Arrays.asList(
-					FragmentCollectionContributorRegistryUtil.getFragmentEntry(
-						"BASIC_COMPONENT-button"),
-					FragmentCollectionContributorRegistryUtil.getFragmentEntry(
-						"INPUTS-date-input"))) {
-
-			fragmentReferences.add(
-				new DefaultFragmentReference() {
-					{
-						setDefaultFragmentKey(
-							fragmentEntry::getFragmentEntryKey);
-						setFragmentReferenceType(
-							FragmentReferenceType.DEFAULT_FRAGMENT_REFERENCE);
-					}
-				});
-		}
-
-		for (FragmentEntry fragmentEntry :
-				Arrays.asList(
-					_addFragmentEntry(
-						fragmentCollection.getFragmentCollectionId(), groupId),
-					_addFragmentEntry(
-						fragmentCollection.getFragmentCollectionId(), groupId),
-					_addFragmentEntry(
-						fragmentCollection.getFragmentCollectionId(),
-						groupId))) {
-
-			fragmentReferences.add(
-				new FragmentItemExternalReference() {
-					{
-						setExternalReferenceCode(
-							fragmentEntry::getExternalReferenceCode);
-						setFragmentReferenceType(
-							FragmentReferenceType.
-								FRAGMENT_ITEM_EXTERNAL_REFERENCE);
-					}
-				});
-		}
+		fragmentReferences.add(
+			_addFragmentItemExternalReference(
+				fragmentCollection.getFragmentCollectionId(), groupId));
+		fragmentReferences.add(
+			_addFragmentItemExternalReference(
+				fragmentCollection.getFragmentCollectionId(), groupId));
+		fragmentReferences.add(
+			_addFragmentItemExternalReference(
+				fragmentCollection.getFragmentCollectionId(), groupId));
 
 		return fragmentReferences.toArray(new FragmentReference[0]);
 	}

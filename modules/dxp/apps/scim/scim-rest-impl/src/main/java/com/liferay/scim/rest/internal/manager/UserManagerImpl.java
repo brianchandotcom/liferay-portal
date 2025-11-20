@@ -1185,8 +1185,6 @@ public class UserManagerImpl implements UserManager {
 				"User was provisioned by another SCIM client");
 		}
 
-		Contact contact = portalUser.getContact();
-
 		String emailAddress = portalUser.getEmailAddress();
 		String screenName = scimUser.getScreenName();
 
@@ -1197,6 +1195,8 @@ public class UserManagerImpl implements UserManager {
 			emailAddress = scimUser.getEmailAddresses()[0];
 			screenName = portalUser.getScreenName();
 		}
+
+		Contact contact = portalUser.getContact();
 
 		portalUser = _userService.updateUser(
 			portalUser.getUserId(), scimUser.getPassword(), StringPool.BLANK,

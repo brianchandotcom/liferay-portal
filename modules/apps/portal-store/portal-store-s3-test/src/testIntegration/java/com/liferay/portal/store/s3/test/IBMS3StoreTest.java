@@ -91,7 +91,7 @@ public class IBMS3StoreTest extends BaseStoreTestCase {
 
 		_store.addFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(DATA_VERSION_1));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		for (int i = 0; i <= httpClientMaxConnections; i++) {
 			StreamUtil.transfer(
@@ -102,7 +102,7 @@ public class IBMS3StoreTest extends BaseStoreTestCase {
 
 		_store.addFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(DATA_VERSION_1));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		Assert.assertTrue(
 			_store.hasFile(

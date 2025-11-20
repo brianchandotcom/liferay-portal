@@ -93,7 +93,9 @@ public class DropZoneLayoutStructureItemImporter
 				layoutStructureItemImporterContext)
 		throws Exception {
 
-		if (dropZonePageElementDefinition.getAllowedFragments() == null) {
+		if (dropZonePageElementDefinition.getAllowedFragmentReferences() ==
+				null) {
+
 			return null;
 		}
 
@@ -101,7 +103,7 @@ public class DropZoneLayoutStructureItemImporter
 			new ArrayList<>();
 
 		for (FragmentReference fragmentReference :
-				dropZonePageElementDefinition.getAllowedFragments()) {
+				dropZonePageElementDefinition.getAllowedFragmentReferences()) {
 
 			fragmentEntryReferences.add(
 				FragmentEntryReferenceUtil.getFragmentEntryReference(

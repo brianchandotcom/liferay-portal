@@ -76,23 +76,28 @@ public class FieldMappingDisplayTest {
 			permissionChecker
 		);
 
-		_testGetDisplayName("field.birth-date", "birthday");
-		_testGetDisplayName("field.email-address", "emailAddress");
-		_testGetDisplayName("field.first-name", "firstName");
-		_testGetDisplayName("field.job-title", "jobTitle");
-		_testGetDisplayName("selected-language", "languageId");
-		_testGetDisplayName("field.last-name", "lastName");
-		_testGetDisplayName("middle-name", "middleName");
-		_testGetDisplayName("field.date-modified", "modifiedDate");
-		_testGetDisplayName("randomFieldName", "randomFieldName");
-		_testGetDisplayName("field.screen-name", "screenName");
+		_testGetDisplayName("account", "customer-since", "yearStarted");
+		_testGetDisplayName("demographics", "field.birth-date", "birthday");
+		_testGetDisplayName(
+			"demographics", "field.email-address", "emailAddress");
+		_testGetDisplayName("demographics", "field.first-name", "firstName");
+		_testGetDisplayName("demographics", "field.job-title", "jobTitle");
+		_testGetDisplayName("demographics", "selected-language", "languageId");
+		_testGetDisplayName("demographics", "field.last-name", "lastName");
+		_testGetDisplayName("demographics", "middle-name", "middleName");
+		_testGetDisplayName(
+			"demographics", "field.date-modified", "modifiedDate");
+		_testGetDisplayName(
+			"demographics", "randomFieldName", "randomFieldName");
+		_testGetDisplayName("demographics", "field.screen-name", "screenName");
 	}
 
 	private void _testGetDisplayName(
-		String expectedDisplayName, String fieldName) {
+		String context, String expectedDisplayName, String fieldName) {
 
 		FieldMapping fieldMapping = new FieldMapping();
 
+		fieldMapping.setContext(context);
 		fieldMapping.setDisplayName(fieldName);
 		fieldMapping.setDisplayType(FieldMappingConstants.TYPE_TEXT);
 		fieldMapping.setFieldName(fieldName);

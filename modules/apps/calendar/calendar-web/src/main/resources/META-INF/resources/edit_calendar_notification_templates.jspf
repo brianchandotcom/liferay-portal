@@ -88,7 +88,8 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 					<liferay-editor:editor
 						contents="<%= body %>"
 						editorName="ckeditor5_classic"
-						name="body"
+						formInputEnabled="<%= true %>"
+						formInputName="body"
 					/>
 				</div>
 			</c:when>

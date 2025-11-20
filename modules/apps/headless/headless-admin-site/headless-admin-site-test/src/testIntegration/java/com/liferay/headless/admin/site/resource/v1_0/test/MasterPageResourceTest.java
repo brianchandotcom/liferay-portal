@@ -560,21 +560,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		return masterPage;
 	}
 
-	private MasterPageResource _getMasterPageResource() throws Exception {
-		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
-
-		return MasterPageResource.builder(
-		).authentication(
-			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).parameters(
-			"nestedFields", "pageSpecifications"
-		).build();
-	}
-
 	private MasterPage _getMasterPage(PageElement[] pageElements)
 		throws Exception {
 
@@ -611,6 +596,21 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			});
 
 		return masterPage;
+	}
+
+	private MasterPageResource _getMasterPageResource() throws Exception {
+		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		return MasterPageResource.builder(
+		).authentication(
+			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "pageSpecifications"
+		).build();
 	}
 
 	private MasterPage _postMasterPageWithPageSpecificationsWithCustomFields()

@@ -308,12 +308,11 @@ public class DBResourceUtil {
 		}
 	}
 
-	private static final String _SQL_SERVICE_COMPONENT =
-		StringBundler.concat(
-			"select data_ from ServiceComponent where buildNumber = (select ",
-			"max(buildNumber) from ServiceComponent ServiceComponent2 where ",
-			"ServiceComponent.buildNamespace = ",
-			"ServiceComponent2.buildNamespace) and ");
+	private static final String _SQL_SERVICE_COMPONENT = StringBundler.concat(
+		"select data_ from ServiceComponent where buildNumber = (select ",
+		"max(buildNumber) from ServiceComponent ServiceComponent2 where ",
+		"ServiceComponent.buildNamespace = ServiceComponent2.buildNamespace) ",
+		"and ");
 
 	private static final Log _log = LogFactoryUtil.getLog(DBResourceUtil.class);
 

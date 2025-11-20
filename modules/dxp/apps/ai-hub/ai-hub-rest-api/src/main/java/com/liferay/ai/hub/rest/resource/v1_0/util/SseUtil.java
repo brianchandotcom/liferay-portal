@@ -6,73 +6,57 @@
 package com.liferay.ai.hub.rest.resource.v1_0.util;
 
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import jakarta.ws.rs.sse.Sse;
-import jakarta.ws.rs.sse.SseBroadcaster;
 import jakarta.ws.rs.sse.SseEventSink;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Feliphe Marinho
  */
 public class SseUtil {
 
-	public static void broadcast(String data, String id, String name, Sse sse) {
-		if (_sseBroadcaster == null) {
+	public static void closeAll() {
+		if (_sseEventSinks.isEmpty() || !PortalRunMode.isTestMode()) {
 			return;
 		}
 
-		try {
-			_sseBroadcaster.broadcast(
-				sse.newEventBuilder(
-				).data(
-					String.class, data
-				).id(
-					id
-				).name(
-					name
-				).build());
-		}
-		catch (Exception exception) {
-			_sseBroadcaster.close();
+		_sseEventSinks.forEach((__, sseEventSink) -> sseEventSink.close());
 
-			throw exception;
-		}
+		_sseEventSinks = new ConcurrentHashMap<>();
 	}
 
-	public static void close() {
-		if ((_sseBroadcaster == null) || !PortalRunMode.isTestMode()) {
-			return;
+	public static SseEventSink getSSEEventSink(String key) {
+		return _sseEventSinks.get(key);
+	}
+
+	public static Set<String> getSSEEventSinksKeys() {
+		if (!PortalRunMode.isTestMode()) {
+			return null;
 		}
 
-		_sseBroadcaster.close();
-
-		_sseBroadcaster = null;
+		return _sseEventSinks.keySet();
 	}
 
 	public static void initialize(Sse sse, SseEventSink sseEventSink) {
-		SseBroadcaster sseBroadcaster = _getSseBroadcaster(sse);
+		String key = PortalUUIDUtil.generate();
 
-		sseBroadcaster.register(sseEventSink);
+		_sseEventSinks.put(key, sseEventSink);
 
-		sseBroadcaster.broadcast(
+		sseEventSink.send(
 			sse.newEventBuilder(
+			).data(
+				String.class, key
 			).name(
 				"Subscribe"
-			).data(
-				String.class, "Successfully Subscribed"
 			).build());
 	}
 
-	private static SseBroadcaster _getSseBroadcaster(Sse sse) {
-		if (_sseBroadcaster != null) {
-			return _sseBroadcaster;
-		}
-
-		_sseBroadcaster = sse.newBroadcaster();
-
-		return _sseBroadcaster;
-	}
-
-	private static SseBroadcaster _sseBroadcaster;
+	private static Map<String, SseEventSink> _sseEventSinks =
+		new ConcurrentHashMap<>();
 
 }

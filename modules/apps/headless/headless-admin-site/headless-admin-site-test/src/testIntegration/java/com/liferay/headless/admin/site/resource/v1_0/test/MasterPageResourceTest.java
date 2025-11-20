@@ -575,8 +575,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).build();
 	}
 
-	private MasterPage _getMasterPageWithPageElements(
-			PageElement[] pageElements)
+	private MasterPage _getMasterPage(PageElement[] pageElements)
 		throws Exception {
 
 		MasterPage masterPage = randomMasterPage();
@@ -811,7 +810,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				testGroup.getGroupId(), RandomTestUtil.randomString())
 		};
 
-		MasterPage masterPage = _getMasterPageWithPageElements(pageElements);
+		MasterPage masterPage = _getMasterPage(pageElements);
 
 		MasterPageResource masterPageResource = _getMasterPageResource();
 
@@ -1078,7 +1077,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				testGroup.getGroupId(), RandomTestUtil.randomString())
 		};
 
-		MasterPage masterPage = _getMasterPageWithPageElements(pageElements);
+		MasterPage masterPage = _getMasterPage(pageElements);
 
 		MasterPageResource masterPageResource = _getMasterPageResource();
 

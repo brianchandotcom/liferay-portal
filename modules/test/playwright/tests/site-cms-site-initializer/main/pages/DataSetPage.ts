@@ -44,7 +44,10 @@ export class DataSetPage {
 	}
 
 	async execBulkItemAction({action}) {
-		await this.page.getByLabel('Actions').click();
+		await this.page
+			.getByTestId('visualization-mode-table')
+			.getByLabel('Actions')
+			.click();
 
 		const dropdownMenuItemDelete = this.page.getByRole('menuitem', {
 			name: action,

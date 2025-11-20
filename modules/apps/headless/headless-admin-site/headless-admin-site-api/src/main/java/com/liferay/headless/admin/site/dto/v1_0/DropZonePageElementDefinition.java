@@ -101,33 +101,36 @@ public class DropZonePageElementDefinition
 	private Supplier<Boolean> _addNewFragmentEntriesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of allowed fragments."
+		description = "A list of allowed fragment references."
 	)
 	@Valid
-	public FragmentReference[] getAllowedFragments() {
-		if (_allowedFragmentsSupplier != null) {
-			allowedFragments = _allowedFragmentsSupplier.get();
+	public FragmentReference[] getAllowedFragmentReferences() {
+		if (_allowedFragmentReferencesSupplier != null) {
+			allowedFragmentReferences =
+				_allowedFragmentReferencesSupplier.get();
 
-			_allowedFragmentsSupplier = null;
+			_allowedFragmentReferencesSupplier = null;
 		}
 
-		return allowedFragments;
+		return allowedFragmentReferences;
 	}
 
-	public void setAllowedFragments(FragmentReference[] allowedFragments) {
-		this.allowedFragments = allowedFragments;
+	public void setAllowedFragmentReferences(
+		FragmentReference[] allowedFragmentReferences) {
 
-		_allowedFragmentsSupplier = null;
+		this.allowedFragmentReferences = allowedFragmentReferences;
+
+		_allowedFragmentReferencesSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setAllowedFragments(
+	public void setAllowedFragmentReferences(
 		UnsafeSupplier<FragmentReference[], Exception>
-			allowedFragmentsUnsafeSupplier) {
+			allowedFragmentReferencesUnsafeSupplier) {
 
-		_allowedFragmentsSupplier = () -> {
+		_allowedFragmentReferencesSupplier = () -> {
 			try {
-				return allowedFragmentsUnsafeSupplier.get();
+				return allowedFragmentReferencesUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -138,12 +141,12 @@ public class DropZonePageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "A list of allowed fragments.")
+	@GraphQLField(description = "A list of allowed fragment references.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentReference[] allowedFragments;
+	protected FragmentReference[] allowedFragmentReferences;
 
 	@JsonIgnore
-	private Supplier<FragmentReference[]> _allowedFragmentsSupplier;
+	private Supplier<FragmentReference[]> _allowedFragmentReferencesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -186,21 +189,22 @@ public class DropZonePageElementDefinition
 			sb.append(addNewFragmentEntries);
 		}
 
-		FragmentReference[] allowedFragments = getAllowedFragments();
+		FragmentReference[] allowedFragmentReferences =
+			getAllowedFragmentReferences();
 
-		if (allowedFragments != null) {
+		if (allowedFragmentReferences != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"allowedFragments\": ");
+			sb.append("\"allowedFragmentReferences\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < allowedFragments.length; i++) {
-				sb.append(String.valueOf(allowedFragments[i]));
+			for (int i = 0; i < allowedFragmentReferences.length; i++) {
+				sb.append(String.valueOf(allowedFragmentReferences[i]));
 
-				if ((i + 1) < allowedFragments.length) {
+				if ((i + 1) < allowedFragmentReferences.length) {
 					sb.append(", ");
 				}
 			}

@@ -45,6 +45,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.TemplateListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
+import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -135,31 +136,14 @@ public class PageElementsTestUtil {
 		fragmentInstancePageElementDefinition.setFragmentReference(
 			() -> {
 				if (fragmentEntry.getFragmentEntryId() == 0) {
-					return new DefaultFragmentReference() {
-						{
-							setDefaultFragmentKey(
-								fragmentEntry::getFragmentEntryKey);
-							setFragmentReferenceType(
-								() ->
-									FragmentReferenceType.
-										DEFAULT_FRAGMENT_REFERENCE);
-						}
-					};
+					return _addDefaultFragmentReference(
+						fragmentEntry.getFragmentEntryKey());
 				}
 
-				return new FragmentItemExternalReference() {
-					{
-						setExternalReferenceCode(
-							fragmentEntry::getExternalReferenceCode);
-						setFragmentReferenceType(
-							() ->
-								FragmentReferenceType.
-									FRAGMENT_ITEM_EXTERNAL_REFERENCE);
-						setScope(
-							() -> ScopeTestUtil.getItemScope(
-								fragmentEntry.getGroupId(), scopeGroupId));
-					}
-				};
+				return _addFragmentItemExternalReference(
+					fragmentEntry,
+					ScopeTestUtil.getItemScope(
+						fragmentEntry.getGroupId(), scopeGroupId));
 			});
 		fragmentInstancePageElementDefinition.setFragmentType(
 			FragmentInstancePageElementDefinition.FragmentType.BASIC);
@@ -492,24 +476,29 @@ public class PageElementsTestUtil {
 	}
 
 	private static FragmentItemExternalReference
-		_addFragmentItemExternalReference(long collectionId, long groupId) {
+		_addFragmentItemExternalReference(
+			FragmentEntry fragmentEntry, Scope scope) {
 
 		FragmentItemExternalReference fragmentItemExternalReference =
 			new FragmentItemExternalReference();
 
 		fragmentItemExternalReference.setExternalReferenceCode(
-			() -> {
-				FragmentEntry fragmentEntry = _addFragmentEntry(
-					collectionId, groupId);
-
-				return fragmentEntry.getExternalReferenceCode();
-			});
+			fragmentEntry.getExternalReferenceCode());
 
 		fragmentItemExternalReference.setFragmentReferenceType(
 			FragmentReference.FragmentReferenceType.
 				FRAGMENT_ITEM_EXTERNAL_REFERENCE);
+		fragmentItemExternalReference.setScope(scope);
 
 		return fragmentItemExternalReference;
+	}
+
+	private static FragmentItemExternalReference
+			_addFragmentItemExternalReference(long collectionId, long groupId)
+		throws PortalException {
+
+		return _addFragmentItemExternalReference(
+			_addFragmentEntry(collectionId, groupId), null);
 	}
 
 	private static CollectionDisplayListStyle _getCollectionDisplayListStyle() {

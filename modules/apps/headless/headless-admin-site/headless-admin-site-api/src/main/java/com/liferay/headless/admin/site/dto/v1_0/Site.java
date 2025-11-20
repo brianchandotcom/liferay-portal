@@ -698,47 +698,6 @@ public class Site implements Serializable {
 	private Supplier<String> _parentSiteExternalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getParentSiteKey() {
-		if (_parentSiteKeySupplier != null) {
-			parentSiteKey = _parentSiteKeySupplier.get();
-
-			_parentSiteKeySupplier = null;
-		}
-
-		return parentSiteKey;
-	}
-
-	public void setParentSiteKey(String parentSiteKey) {
-		this.parentSiteKey = parentSiteKey;
-
-		_parentSiteKeySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setParentSiteKey(
-		UnsafeSupplier<String, Exception> parentSiteKeyUnsafeSupplier) {
-
-		_parentSiteKeySupplier = () -> {
-			try {
-				return parentSiteKeyUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected String parentSiteKey;
-
-	@JsonIgnore
-	private Supplier<String> _parentSiteKeySupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTemplateKey() {
 		if (_templateKeySupplier != null) {
 			templateKey = _templateKeySupplier.get();
@@ -1110,22 +1069,6 @@ public class Site implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(parentSiteExternalReferenceCode));
-
-			sb.append("\"");
-		}
-
-		String parentSiteKey = getParentSiteKey();
-
-		if (parentSiteKey != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"parentSiteKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(parentSiteKey));
 
 			sb.append("\"");
 		}

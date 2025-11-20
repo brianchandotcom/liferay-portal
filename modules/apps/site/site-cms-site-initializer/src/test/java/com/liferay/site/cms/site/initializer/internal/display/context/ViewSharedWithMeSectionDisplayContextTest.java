@@ -42,6 +42,6 @@ public class ViewSharedWithMeSectionDisplayContextTest {
 	private final ViewStructureUsagesDisplayContext
 		_viewStructureUsagesDisplayContext =
 			new ViewStructureUsagesDisplayContext(
-				new MockHttpServletRequest(), null);
+				new MockHttpServletRequest(), null, null);
 
 }

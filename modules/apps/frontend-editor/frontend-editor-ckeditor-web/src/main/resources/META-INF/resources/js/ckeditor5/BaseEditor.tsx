@@ -39,16 +39,15 @@ const BaseEditor = ({
 	onFocus?: (event: EventInfo, editor: TEditor) => void;
 	onReady?: (editor: TEditor) => void;
 }) => {
-	const [loading, setLoading] = useState(true);
+	const [editorConfig, setEditorConfig] = useState(config);
 	const [formInputValue, setFormInputValue] = useState(() => {
 		const initialValue = data ?? config?.initialData;
 
 		return typeof initialValue === 'string' ? initialValue : '';
 	});
+	const [loading, setLoading] = useState(true);
 
 	const firstRenderRef = useRef(true);
-
-	const [editorConfig, setEditorConfig] = useState(config);
 
 	useEffect(() => {
 		if (firstRenderRef.current) {

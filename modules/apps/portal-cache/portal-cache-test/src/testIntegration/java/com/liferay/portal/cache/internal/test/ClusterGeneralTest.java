@@ -147,14 +147,7 @@ public class ClusterGeneralTest {
 									TestClusterMasterTokenTransitionListener.
 										class.getName());
 
-					testClusterMasterTokenTransitionListener.getCountDownLatch(
-					).await();
-
-					ServiceRegistration<?> serviceRegistration =
-						testClusterMasterTokenTransitionListener.
-							_serviceRegistration;
-
-					serviceRegistration.unregister();
+					testClusterMasterTokenTransitionListener.await();
 
 					return ClusterMasterExecutorUtil.isMaster();
 				}));
@@ -315,17 +308,15 @@ public class ClusterGeneralTest {
 	private static class TestClusterMasterTokenTransitionListener
 		implements ClusterMasterTokenTransitionListener {
 
-		public TestClusterMasterTokenTransitionListener() {
-			_stoppedLatch = new CountDownLatch(1);
-		}
+		public void await() throws Exception {
+			_countDownLatch.await();
 
-		public CountDownLatch getCountDownLatch() {
-			return _stoppedLatch;
+			_serviceRegistration.unregister();
 		}
 
 		@Override
 		public void masterTokenAcquired() {
-			_stoppedLatch.countDown();
+			_countDownLatch.countDown();
 		}
 
 		@Override
@@ -338,8 +329,8 @@ public class ClusterGeneralTest {
 			_serviceRegistration = serviceRegistration;
 		}
 
+		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 		private ServiceRegistration<?> _serviceRegistration;
-		private final CountDownLatch _stoppedLatch;
 
 	}
 

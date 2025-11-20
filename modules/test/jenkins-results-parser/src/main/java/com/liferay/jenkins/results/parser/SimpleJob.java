@@ -16,7 +16,7 @@ import org.json.JSONObject;
 public class SimpleJob extends BaseJob {
 
 	@Override
-	public Set<String> getDistTypes() {
+	public Set<String> getAppServerTypes() {
 		return Collections.emptySet();
 	}
 

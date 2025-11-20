@@ -79,6 +79,23 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public Set<String> getAppServerTypes() {
+		JobProperty jobProperty = getJobProperty("test.batch.dist.app.servers");
+
+		return getSetFromString(jobProperty.getValue());
+	}
+
+	@Override
+	public Set<String> getAppServerTypesExcludingTomcat() {
+		Set<String> appServerTypesExcludingTomcat = new TreeSet<>(
+			getAppServerTypes());
+
+		appServerTypesExcludingTomcat.remove("tomcat");
+
+		return appServerTypesExcludingTomcat;
+	}
+
+	@Override
 	public int getAxisCount() {
 		List<AxisTestClassGroup> axisTestClassGroups = getAxisTestClassGroups();
 
@@ -442,22 +459,6 @@ public abstract class BaseJob implements Job {
 	@Override
 	public DistType getDistType() {
 		return DistType.CI;
-	}
-
-	@Override
-	public Set<String> getDistTypes() {
-		JobProperty jobProperty = getJobProperty("test.batch.dist.app.servers");
-
-		return getSetFromString(jobProperty.getValue());
-	}
-
-	@Override
-	public Set<String> getDistTypesExcludingTomcat() {
-		Set<String> distTypesExcludingTomcat = new TreeSet<>(getDistTypes());
-
-		distTypesExcludingTomcat.remove("tomcat");
-
-		return distTypesExcludingTomcat;
 	}
 
 	@Override

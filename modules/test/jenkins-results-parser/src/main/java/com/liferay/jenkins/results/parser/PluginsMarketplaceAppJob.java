@@ -19,7 +19,7 @@ public class PluginsMarketplaceAppJob
 	extends BaseJob implements PortalTestClassJob, TestSuiteJob {
 
 	@Override
-	public Set<String> getDistTypes() {
+	public Set<String> getAppServerTypes() {
 		return Collections.emptySet();
 	}
 

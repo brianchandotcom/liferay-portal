@@ -22,7 +22,7 @@ public abstract class BasePortalReleaseJob
 	extends BaseJob implements PortalTestClassJob, TestSuiteJob {
 
 	@Override
-	public Set<String> getDistTypes() {
+	public Set<String> getAppServerTypes() {
 		return Collections.emptySet();
 	}
 

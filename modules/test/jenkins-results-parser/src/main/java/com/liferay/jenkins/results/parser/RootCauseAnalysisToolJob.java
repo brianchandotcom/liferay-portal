@@ -20,7 +20,7 @@ public class RootCauseAnalysisToolJob
 	extends BaseJob implements PortalTestClassJob {
 
 	@Override
-	public Set<String> getDistTypes() {
+	public Set<String> getAppServerTypes() {
 		return Collections.emptySet();
 	}
 

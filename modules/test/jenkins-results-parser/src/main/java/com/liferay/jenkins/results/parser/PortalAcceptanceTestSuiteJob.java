@@ -23,6 +23,22 @@ public abstract class PortalAcceptanceTestSuiteJob
 	extends PortalGitRepositoryJob implements TestSuiteJob {
 
 	@Override
+	public Set<String> getAppServerTypes() {
+		Set<String> appServerTypes = super.getAppServerTypes();
+
+		if (!_testSuiteName.equals("relevant")) {
+			return appServerTypes;
+		}
+
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.dist.app.servers[stable]");
+
+		appServerTypes.addAll(getSetFromString(jobProperty.getValue()));
+
+		return appServerTypes;
+	}
+
+	@Override
 	public DistType getDistType() {
 		JobProperty jobProperty = getJobProperty("dist.type");
 
@@ -39,22 +55,6 @@ public abstract class PortalAcceptanceTestSuiteJob
 		}
 
 		return DistType.CI;
-	}
-
-	@Override
-	public Set<String> getDistTypes() {
-		Set<String> distTypes = super.getDistTypes();
-
-		if (!_testSuiteName.equals("relevant")) {
-			return distTypes;
-		}
-
-		JobProperty jobProperty = getJobProperty(
-			"test.batch.dist.app.servers[stable]");
-
-		distTypes.addAll(getSetFromString(jobProperty.getValue()));
-
-		return distTypes;
 	}
 
 	@Override

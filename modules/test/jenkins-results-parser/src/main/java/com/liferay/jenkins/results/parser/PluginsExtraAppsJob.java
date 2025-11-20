@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class PluginsExtraAppsJob extends BaseJob implements PortalTestClassJob {
 
 	@Override
-	public Set<String> getDistTypes() {
+	public Set<String> getAppServerTypes() {
 		return Collections.emptySet();
 	}
 

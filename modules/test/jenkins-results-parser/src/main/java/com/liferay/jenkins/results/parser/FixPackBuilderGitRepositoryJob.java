@@ -21,7 +21,7 @@ public class FixPackBuilderGitRepositoryJob
 	extends GitRepositoryJob implements TestSuiteJob {
 
 	@Override
-	public Set<String> getDistTypes() {
+	public Set<String> getAppServerTypes() {
 		return new HashSet<>();
 	}
 

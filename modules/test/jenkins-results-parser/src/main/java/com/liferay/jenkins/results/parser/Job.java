@@ -27,6 +27,10 @@ public interface Job {
 
 	public Set<String> getAnalyticsCloudSegmentNames();
 
+	public Set<String> getAppServerTypes();
+
+	public Set<String> getAppServerTypesExcludingTomcat();
+
 	public int getAxisCount();
 
 	public AxisTestClassGroup getAxisTestClassGroup(String axisName);
@@ -62,10 +66,6 @@ public interface Job {
 	public Set<String> getDistRequiredSegmentNames();
 
 	public DistType getDistType();
-
-	public Set<String> getDistTypes();
-
-	public Set<String> getDistTypesExcludingTomcat();
 
 	public Set<JenkinsCohort> getJenkinsCohorts();
 

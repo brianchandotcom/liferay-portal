@@ -6,6 +6,7 @@
 package com.liferay.portal.cache.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
@@ -20,7 +21,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -116,6 +116,13 @@ public class ClusterGeneralTest {
 				testClusterMasterTokenTransitionListener.setServiceRegistration(
 					serviceRegistration);
 
+				Map<String, Object> attributes =
+					LocalProcessLauncher.ProcessContext.getAttributes();
+
+				attributes.put(
+					TestClusterMasterTokenTransitionListener.class.getName(),
+					testClusterMasterTokenTransitionListener);
+
 				return null;
 			});
 
@@ -130,24 +137,15 @@ public class ClusterGeneralTest {
 		Assert.assertTrue(
 			_tomcatNode2.syncExecute(
 				() -> {
-					BundleContext bundleContext =
-						SystemBundleUtil.getBundleContext();
-
-					List<ServiceReference<ClusterMasterTokenTransitionListener>>
-						serviceReferences = new ArrayList<>(
-							bundleContext.getServiceReferences(
-								ClusterMasterTokenTransitionListener.class,
-								null));
-
-					ServiceReference<ClusterMasterTokenTransitionListener>
-						editServerMVCActionCommandServiceReference =
-							serviceReferences.get(serviceReferences.size() - 1);
+					Map<String, Object> attributes =
+						LocalProcessLauncher.ProcessContext.getAttributes();
 
 					TestClusterMasterTokenTransitionListener
 						testClusterMasterTokenTransitionListener =
 							(TestClusterMasterTokenTransitionListener)
-								bundleContext.getService(
-									editServerMVCActionCommandServiceReference);
+								attributes.remove(
+									TestClusterMasterTokenTransitionListener.
+										class.getName());
 
 					testClusterMasterTokenTransitionListener.getCountDownLatch(
 					).await();

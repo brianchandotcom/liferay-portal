@@ -1468,7 +1468,7 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "home"
+			"key": "main"
 		},
 		"themeName": "Dialect"
 	},

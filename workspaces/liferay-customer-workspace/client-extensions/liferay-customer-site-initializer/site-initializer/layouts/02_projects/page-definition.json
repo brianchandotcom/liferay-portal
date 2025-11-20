@@ -66,7 +66,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "home"
+			"key": "main"
 		}
 	},
 	"version": 1.1

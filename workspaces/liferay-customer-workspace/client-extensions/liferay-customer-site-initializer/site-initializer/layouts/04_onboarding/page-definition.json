@@ -31,7 +31,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "home"
+			"key": "main"
 		}
 	}
 }

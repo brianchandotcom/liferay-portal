@@ -98,6 +98,10 @@ public class Log4JUtil {
 		return Log4jConfigUtil.getPriorities();
 	}
 
+	public static String getPriority(String name) {
+		return Log4jConfigUtil.getPriority(name);
+	}
+
 	public static void setLevel(String name, String priority, boolean custom) {
 		Log4jConfigUtil.setLevel(name, priority);
 

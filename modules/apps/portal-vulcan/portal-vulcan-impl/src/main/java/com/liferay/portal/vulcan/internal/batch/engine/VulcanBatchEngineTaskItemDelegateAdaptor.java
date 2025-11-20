@@ -63,10 +63,6 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 		vulcanBatchEngineTaskItemDelegate.setResourcePermissionLocalService(
 			resourcePermissionLocalService);
 		vulcanBatchEngineTaskItemDelegate.setRoleLocalService(roleLocalService);
-
-		NestedFieldsContextThreadLocal.setNestedFieldsContext(
-			vulcanBatchEngineTaskItemDelegate.customizeNestedFieldsContext(
-				NestedFieldsContextThreadLocal.getNestedFieldsContext()));
 	}
 
 	@Override
@@ -146,6 +142,10 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			_vulcanBatchEngineTaskItemDelegate.customizeNestedFieldsContext(
+				NestedFieldsContextThreadLocal.getNestedFieldsContext()));
 
 		com.liferay.portal.vulcan.pagination.Page<T> page =
 			_vulcanBatchEngineTaskItemDelegate.read(

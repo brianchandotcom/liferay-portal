@@ -132,7 +132,7 @@ public class PreupgradeVerifyDatabaseStateTest
 
 	@Test
 	public void testVerifyPreupgradeMissingColumnName() throws Exception {
-		_renameColumn("UserTracker", "companyId", "companyId_backup LONG");
+		_alterColumnName("UserTracker", "companyId", "companyId_backup LONG");
 
 		try {
 			testVerify();
@@ -148,7 +148,7 @@ public class PreupgradeVerifyDatabaseStateTest
 				exception.getMessage());
 		}
 		finally {
-			_renameColumn("UserTracker", "companyId_backup", "companyId LONG");
+			_alterColumnName("UserTracker", "companyId_backup", "companyId LONG");
 		}
 	}
 
@@ -325,7 +325,7 @@ public class PreupgradeVerifyDatabaseStateTest
 		return null;
 	}
 
-	private void _renameColumn(
+	private void _alterColumnName(
 			String tableName, String oldColumnName, String newColumnDefinition)
 		throws Exception {
 

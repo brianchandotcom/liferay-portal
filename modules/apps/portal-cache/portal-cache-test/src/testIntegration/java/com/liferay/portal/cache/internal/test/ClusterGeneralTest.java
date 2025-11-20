@@ -157,27 +157,28 @@ public class ClusterGeneralTest {
 	}
 
 	private void _updateLogLevelsForAllNodes(
-			TomcatNode updateTomcatNode, TomcatNode listenTomcatNode,
-			boolean updateTomcatNodeIsMasterNode)
+			TomcatNode senderTomcatNode, TomcatNode receiverTomcatNode,
+			boolean senderTomcatNodeIsMaster)
 		throws Exception {
 
 		// Assert updateTomcatNode is master node
 		// when updateTomcatNodeIsMasterNode is true
 
 		Assert.assertEquals(
-			updateTomcatNodeIsMasterNode,
-			updateTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
+			senderTomcatNodeIsMaster,
+			senderTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
 		// Assert listenTomcatNode is master node
 		// when updateTomcatNodeIsMasterNode is false
 
 		Assert.assertEquals(
-			!updateTomcatNodeIsMasterNode,
-			listenTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
+			!senderTomcatNodeIsMaster,
+			receiverTomcatNode.syncExecute(
+				ClusterMasterExecutorUtil::isMaster));
 
 		// Register listener for listenTomcatNode
 
-		listenTomcatNode.syncExecute(
+		receiverTomcatNode.syncExecute(
 			() -> {
 				TestPropertyChangeListener.register();
 
@@ -188,7 +189,7 @@ public class ClusterGeneralTest {
 
 		Assert.assertEquals(
 			"DEBUG",
-			updateTomcatNode.syncExecute(
+			senderTomcatNode.syncExecute(
 				() -> {
 					ReflectionTestUtil.invoke(
 						_getEditServerMVCActionCommand(), "_updateLogLevels",
@@ -204,7 +205,7 @@ public class ClusterGeneralTest {
 
 		Assert.assertEquals(
 			"DEBUG",
-			listenTomcatNode.syncExecute(
+			receiverTomcatNode.syncExecute(
 				() -> {
 					TestPropertyChangeListener.await();
 
@@ -214,7 +215,7 @@ public class ClusterGeneralTest {
 
 		// Register listener for listenTomcatNode
 
-		listenTomcatNode.syncExecute(
+		receiverTomcatNode.syncExecute(
 			() -> {
 				TestPropertyChangeListener.register();
 
@@ -225,7 +226,7 @@ public class ClusterGeneralTest {
 
 		Assert.assertEquals(
 			"ERROR",
-			updateTomcatNode.syncExecute(
+			senderTomcatNode.syncExecute(
 				() -> {
 					ReflectionTestUtil.invoke(
 						_getEditServerMVCActionCommand(), "_updateLogLevels",
@@ -241,7 +242,7 @@ public class ClusterGeneralTest {
 
 		Assert.assertEquals(
 			"ERROR",
-			listenTomcatNode.syncExecute(
+			receiverTomcatNode.syncExecute(
 				() -> {
 					TestPropertyChangeListener.await();
 

@@ -40,7 +40,7 @@ const BaseEditor = ({
 	onReady?: (editor: TEditor) => void;
 }) => {
 	const [loading, setLoading] = useState(true);
-	const [value, setValue] = useState(() => {
+	const [formInputValue, setFormInputValue] = useState(() => {
 		const initialValue = data ?? config?.initialData;
 
 		return typeof initialValue === 'string' ? initialValue : '';
@@ -84,7 +84,7 @@ const BaseEditor = ({
 	}, [editorConfig]);
 
 	useEffect(() => {
-		setValue(data ?? '');
+		setFormInputValue(data ?? '');
 	}, [data]);
 
 	return loading ? (
@@ -93,12 +93,12 @@ const BaseEditor = ({
 		<div className={`lfr-ck ${className ? className : ''}`}>
 			<CKEditor
 				config={editorConfig}
-				data={value}
+				data={data}
 				disabled={disabled}
 				editor={editor}
 				onBlur={onBlur}
 				onChange={(event, editor) => {
-					setValue(editor.getData());
+					setFormInputValue(editor.getData());
 
 					if (onChange) {
 						onChange(event, editor);
@@ -109,7 +109,11 @@ const BaseEditor = ({
 			/>
 
 			{formInputEnabled && formInputName && (
-				<input name={formInputName} type="hidden" value={value} />
+				<input
+					name={formInputName}
+					type="hidden"
+					value={formInputValue}
+				/>
 			)}
 		</div>
 	);

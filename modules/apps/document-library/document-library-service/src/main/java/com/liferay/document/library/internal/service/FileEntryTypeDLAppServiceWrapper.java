@@ -46,7 +46,7 @@ public class FileEntryTypeDLAppServiceWrapper extends DLAppServiceWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateFileEntryType(fileEntryTypeId, groupIds[0]);
+		_validateFileEntryType(fileEntryTypeId, destinationRepositoryId);
 
 		_populateServiceContext(serviceContext, fileEntryId);
 

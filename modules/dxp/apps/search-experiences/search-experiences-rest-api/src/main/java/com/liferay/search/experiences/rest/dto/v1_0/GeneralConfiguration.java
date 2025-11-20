@@ -472,6 +472,47 @@ public class GeneralConfiguration implements Serializable {
 	private Supplier<String> _queryStringSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String[] getScope() {
+		if (_scopeSupplier != null) {
+			scope = _scopeSupplier.get();
+
+			_scopeSupplier = null;
+		}
+
+		return scope;
+	}
+
+	public void setScope(String[] scope) {
+		this.scope = scope;
+
+		_scopeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setScope(
+		UnsafeSupplier<String[], Exception> scopeUnsafeSupplier) {
+
+		_scopeSupplier = () -> {
+			try {
+				return scopeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] scope;
+
+	@JsonIgnore
+	private Supplier<String[]> _scopeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getSearchableAssetTypes() {
 		if (_searchableAssetTypesSupplier != null) {
 			searchableAssetTypes = _searchableAssetTypesSupplier.get();
@@ -741,6 +782,32 @@ public class GeneralConfiguration implements Serializable {
 			sb.append(_escape(queryString));
 
 			sb.append("\"");
+		}
+
+		String[] scope = getScope();
+
+		if (scope != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scope\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < scope.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(scope[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < scope.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		String[] searchableAssetTypes = getSearchableAssetTypes();

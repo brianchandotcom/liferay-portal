@@ -243,16 +243,15 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		StringBundler sb = new StringBundler();
 
-		for (Map.Entry<String, List<String>> missingColumnNamesEntry :
+		for (Map.Entry<String, List<String>> entry :
 				missingColumnNames.entrySet()) {
 
-			for (String columnName : missingColumnNamesEntry.getValue()) {
+			for (String columnName : entry.getValue()) {
 				sb.append(
 					StringBundler.concat(
 						"Column ", dbInspector.normalizeName(columnName),
 						" is missing for ",
-						dbInspector.normalizeName(
-							missingColumnNamesEntry.getKey()),
+						dbInspector.normalizeName(entry.getKey()),
 						messageSuffix));
 				sb.append(StringPool.NEW_LINE);
 			}

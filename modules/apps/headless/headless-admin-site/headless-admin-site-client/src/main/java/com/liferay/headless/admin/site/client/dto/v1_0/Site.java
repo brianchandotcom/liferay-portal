@@ -354,27 +354,6 @@ public class Site implements Cloneable, Serializable {
 
 	protected String parentSiteExternalReferenceCode;
 
-	public String getParentSiteKey() {
-		return parentSiteKey;
-	}
-
-	public void setParentSiteKey(String parentSiteKey) {
-		this.parentSiteKey = parentSiteKey;
-	}
-
-	public void setParentSiteKey(
-		UnsafeSupplier<String, Exception> parentSiteKeyUnsafeSupplier) {
-
-		try {
-			parentSiteKey = parentSiteKeyUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String parentSiteKey;
-
 	public String getTemplateKey() {
 		return templateKey;
 	}

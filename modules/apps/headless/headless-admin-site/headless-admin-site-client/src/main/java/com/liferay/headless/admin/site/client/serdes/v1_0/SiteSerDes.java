@@ -224,20 +224,6 @@ public class SiteSerDes {
 			sb.append("\"");
 		}
 
-		if (site.getParentSiteKey() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"parentSiteKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(site.getParentSiteKey()));
-
-			sb.append("\"");
-		}
-
 		if (site.getTemplateKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -409,13 +395,6 @@ public class SiteSerDes {
 				String.valueOf(site.getParentSiteExternalReferenceCode()));
 		}
 
-		if (site.getParentSiteKey() == null) {
-			map.put("parentSiteKey", null);
-		}
-		else {
-			map.put("parentSiteKey", String.valueOf(site.getParentSiteKey()));
-		}
-
 		if (site.getTemplateKey() == null) {
 			map.put("templateKey", null);
 		}
@@ -506,9 +485,6 @@ public class SiteSerDes {
 						jsonParserFieldName,
 						"parentSiteExternalReferenceCode")) {
 
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "parentSiteKey")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "templateKey")) {
@@ -618,11 +594,6 @@ public class SiteSerDes {
 				if (jsonParserFieldValue != null) {
 					site.setParentSiteExternalReferenceCode(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "parentSiteKey")) {
-				if (jsonParserFieldValue != null) {
-					site.setParentSiteKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "templateKey")) {

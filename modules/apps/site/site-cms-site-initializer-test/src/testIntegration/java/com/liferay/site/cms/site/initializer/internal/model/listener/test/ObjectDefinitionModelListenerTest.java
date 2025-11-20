@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -59,9 +58,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Víctor Galán
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-)
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectDefinitionModelListenerTest {
 
@@ -102,7 +99,7 @@ public class ObjectDefinitionModelListenerTest {
 				_company.getCompanyId());
 
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			true, "A" + RandomTestUtil.randomString(),
+			"A" + RandomTestUtil.randomString(),
 			ListUtil.fromArray(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,

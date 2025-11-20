@@ -10,7 +10,8 @@
 <%
 String contents = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":contents");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
-String name = namespace + GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
+boolean formInputEnabled =  GetterUtil.getBoolean((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":formInputEnabled"));
+String formInputName =  GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":formInputName"));
 
 JSONObject editorConfigJSONObject = null;
 
@@ -30,7 +31,9 @@ if (contents != null) {
 			HashMapBuilder.<String, Object>put(
 				"config", editorConfigJSONObject
 			).put(
-				"formInputName", HtmlUtil.escapeAttribute(name)
+				"formInputEnabled", formInputEnabled
+			).put(
+				"formInputName", HtmlUtil.escapeAttribute(namespace + formInputName)
 			).build()
 		%>'
 	/>

@@ -77,6 +77,18 @@
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
+			<description>Adds a hidden input for form submission with the editor's value.</description>
+			<name>formInputEnabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A name for the hidden input used for form submission. Must have <![CDATA[<code>formInputEnabled</code>]]> set to <![CDATA[<code>true</code>]]> as well.</description>
+			<name>formInputName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>height</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

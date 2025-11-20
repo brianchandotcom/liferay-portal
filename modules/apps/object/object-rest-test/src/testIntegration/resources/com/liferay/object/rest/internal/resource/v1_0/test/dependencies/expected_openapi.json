@@ -631,6 +631,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship1/title": {
+						"type": "string"
+					},
 					"relationship1/userId": {
 						"type": "integer"
 					},
@@ -710,6 +713,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/relationship1/title": {
+						"type": "string"
+					},
 					"relationship2/relationship1/userId": {
 						"type": "integer"
 					},
@@ -747,6 +753,9 @@
 					"relationship2/relationship2/taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"relationship2/relationship2/title": {
+						"type": "string"
 					},
 					"relationship2/relationship2/userId": {
 						"type": "integer"
@@ -840,6 +849,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/relationship3/relationship3/title": {
+						"type": "string"
+					},
 					"relationship2/relationship3/relationship3/userId": {
 						"type": "integer"
 					},
@@ -890,6 +902,9 @@
 					"relationship2/relationship3/relationship4/taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"relationship2/relationship3/relationship4/title": {
+						"type": "string"
 					},
 					"relationship2/relationship3/relationship4/userId": {
 						"type": "integer"
@@ -970,6 +985,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/relationship3/relationship5/relationship5/title": {
+						"type": "string"
+					},
 					"relationship2/relationship3/relationship5/relationship5/userId": {
 						"type": "integer"
 					},
@@ -1008,6 +1026,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/relationship3/relationship5/relationship6/title": {
+						"type": "string"
+					},
 					"relationship2/relationship3/relationship5/relationship6/userId": {
 						"type": "integer"
 					},
@@ -1018,6 +1039,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/relationship3/relationship5/title": {
+						"type": "string"
+					},
 					"relationship2/relationship3/relationship5/userId": {
 						"type": "integer"
 					},
@@ -1027,6 +1051,9 @@
 					"relationship2/relationship3/taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"relationship2/relationship3/title": {
+						"type": "string"
 					},
 					"relationship2/relationship3/userId": {
 						"type": "integer"
@@ -1079,6 +1106,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/relationship4/title": {
+						"type": "string"
+					},
 					"relationship2/relationship4/userId": {
 						"type": "integer"
 					},
@@ -1089,6 +1119,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/title": {
+						"type": "string"
+					},
 					"relationship2/userId": {
 						"type": "integer"
 					},
@@ -1098,6 +1131,9 @@
 					"taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"title": {
+						"type": "string"
 					},
 					"userId": {
 						"type": "integer"
@@ -1397,6 +1433,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship1/title": {
+						"type": "string"
+					},
 					"relationship1/userId": {
 						"type": "integer"
 					},
@@ -1476,6 +1515,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/relationship1/title": {
+						"type": "string"
+					},
 					"relationship2/relationship1/userId": {
 						"type": "integer"
 					},
@@ -1527,6 +1569,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship2/relationship2/title": {
+						"type": "string"
+					},
 					"relationship2/relationship2/userId": {
 						"type": "integer"
 					},
@@ -1536,6 +1581,9 @@
 					"relationship2/taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"relationship2/title": {
+						"type": "string"
 					},
 					"relationship2/userId": {
 						"type": "integer"
@@ -1629,6 +1677,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship3/relationship3/title": {
+						"type": "string"
+					},
 					"relationship3/relationship3/userId": {
 						"type": "integer"
 					},
@@ -1679,6 +1730,9 @@
 					"relationship3/relationship4/taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"relationship3/relationship4/title": {
+						"type": "string"
 					},
 					"relationship3/relationship4/userId": {
 						"type": "integer"
@@ -1759,6 +1813,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship3/relationship5/relationship5/title": {
+						"type": "string"
+					},
 					"relationship3/relationship5/relationship5/userId": {
 						"type": "integer"
 					},
@@ -1825,6 +1882,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship3/relationship5/relationship6/relationship6/title": {
+						"type": "string"
+					},
 					"relationship3/relationship5/relationship6/relationship6/userId": {
 						"type": "integer"
 					},
@@ -1863,6 +1923,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship3/relationship5/relationship6/relationship7/title": {
+						"type": "string"
+					},
 					"relationship3/relationship5/relationship6/relationship7/userId": {
 						"type": "integer"
 					},
@@ -1872,6 +1935,9 @@
 					"relationship3/relationship5/relationship6/taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"relationship3/relationship5/relationship6/title": {
+						"type": "string"
 					},
 					"relationship3/relationship5/relationship6/userId": {
 						"type": "integer"
@@ -1883,6 +1949,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship3/relationship5/title": {
+						"type": "string"
+					},
 					"relationship3/relationship5/userId": {
 						"type": "integer"
 					},
@@ -1892,6 +1961,9 @@
 					"relationship3/taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"relationship3/title": {
+						"type": "string"
 					},
 					"relationship3/userId": {
 						"type": "integer"
@@ -1944,6 +2016,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"relationship4/title": {
+						"type": "string"
+					},
 					"relationship4/userId": {
 						"type": "integer"
 					},
@@ -1953,6 +2028,9 @@
 					"taxonomyCategoryIds": {
 						"items": "integer",
 						"type": "array"
+					},
+					"title": {
+						"type": "string"
 					},
 					"userId": {
 						"type": "integer"

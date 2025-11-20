@@ -604,6 +604,9 @@
 						"items": "integer",
 						"type": "array"
 					},
+					"title": {
+						"type": "string"
+					},
 					"userId": {
 						"type": "integer"
 					}

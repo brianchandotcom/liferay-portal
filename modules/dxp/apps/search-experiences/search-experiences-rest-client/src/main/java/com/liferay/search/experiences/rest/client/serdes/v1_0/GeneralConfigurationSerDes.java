@@ -199,6 +199,26 @@ public class GeneralConfigurationSerDes {
 			sb.append("\"");
 		}
 
+		if (generalConfiguration.getScope() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scope\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < generalConfiguration.getScope().length; i++) {
+				sb.append(_toJSON(generalConfiguration.getScope()[i]));
+
+				if ((i + 1) < generalConfiguration.getScope().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (generalConfiguration.getSearchableAssetTypes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -354,6 +374,13 @@ public class GeneralConfigurationSerDes {
 				String.valueOf(generalConfiguration.getQueryString()));
 		}
 
+		if (generalConfiguration.getScope() == null) {
+			map.put("scope", null);
+		}
+		else {
+			map.put("scope", String.valueOf(generalConfiguration.getScope()));
+		}
+
 		if (generalConfiguration.getSearchableAssetTypes() == null) {
 			map.put("searchableAssetTypes", null);
 		}
@@ -432,6 +459,9 @@ public class GeneralConfigurationSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "queryString")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -523,6 +553,12 @@ public class GeneralConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					generalConfiguration.setQueryString(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "scope")) {
+				if (jsonParserFieldValue != null) {
+					generalConfiguration.setScope(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

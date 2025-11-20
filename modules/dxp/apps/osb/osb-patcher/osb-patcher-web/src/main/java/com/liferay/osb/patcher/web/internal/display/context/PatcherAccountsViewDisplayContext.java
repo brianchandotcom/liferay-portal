@@ -365,7 +365,8 @@ public class PatcherAccountsViewDisplayContext {
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						_httpServletRequest, "release-to-help-center"));
+						_httpServletRequest,
+						"release-to-jira-service-management"));
 			}
 		).add(
 			() ->

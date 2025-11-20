@@ -62,8 +62,12 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 
 				<aui:input label="account-code" name="accountEntryCode" required="<%= true %>" type="text" />
 
-				<aui:input helpMessage="the-support-ticket-must-contain-only-the-help-center-ticket-id" name="supportTicket" type="text">
-					<aui:validator name="number" />
+				<aui:input helpMessage="the-support-ticket-must-contain-only-the-jira-service-management-ticket-id" name="supportTicket" type="text">
+					<aui:validator errorMessage="the-jira-service-management-ticket-format-is-invalid" name="custom">
+						function(val) {
+							return val.match('^[A-Za-z]+-[0-9]+$');
+						}
+					</aui:validator>
 				</aui:input>
 
 				<aui:select name="type">

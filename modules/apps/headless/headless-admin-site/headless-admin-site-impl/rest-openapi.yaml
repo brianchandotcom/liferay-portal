@@ -840,10 +840,10 @@ components:
                             description:
                                 Whether to add new fragment entries automatically in the allowed fragments list.
                             type: boolean
-                        allowedFragments:
+                        allowedFragmentReferences:
                             # @review
                             description:
-                                A list of allowed fragments.
+                                A list of allowed fragment references.
                             items:
                                 $ref: "#/components/schemas/FragmentReference"
                             type: array

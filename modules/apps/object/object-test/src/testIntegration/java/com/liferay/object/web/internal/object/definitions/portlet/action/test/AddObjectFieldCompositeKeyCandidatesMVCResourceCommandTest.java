@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
@@ -36,7 +35,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommandTest
 	extends BaseMVCResourceCommandTestCase {
 
-	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddObjectFieldCompositeKeyCandidates() throws Exception {
 		ObjectDefinition objectDefinition =

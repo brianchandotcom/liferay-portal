@@ -20,7 +20,7 @@ const BaseEditor = ({
 	data,
 	disabled,
 	editor,
-	formInputEnabled = true,
+	formInputEnabled = false,
 	formInputName,
 	onBlur,
 	onChange,

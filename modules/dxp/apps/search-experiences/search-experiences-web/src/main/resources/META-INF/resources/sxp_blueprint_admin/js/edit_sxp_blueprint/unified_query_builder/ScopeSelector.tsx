@@ -9,7 +9,8 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import {openSelectionModal} from 'frontend-js-components-web';
-import React, {useContext, useMemo, useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
 
@@ -28,32 +29,14 @@ type Sorting = {
 	direction: 'ascending' | 'descending';
 };
 
-export default function ScopeSelector({}) {
+export default function ScopeSelector({
+	initialScopeERCs = ['L_GUEST', 'd1bf5865-247d-4072-789c-f80dacb0b916'],
+}: {
+	initialScopeERCs?: string[];
+}) {
 	const [collapseSection, setCollapseSection] = useState(false);
 	const [sort, setSort] = useState<Sorting>();
-	const [scope, setScope] = useState<Scope[]>([
-		{
-			erc: '1',
-			id: '1',
-			name: 'Default',
-			scopelabel: 'Site',
-			status: 'inactive',
-		},
-		{
-			erc: '2',
-			id: '2',
-			name: 'Space A',
-			scopelabel: 'Space',
-			status: 'active',
-		},
-		{
-			erc: '3',
-			id: '3',
-			name: 'Space B',
-			scopelabel: 'Space',
-			status: 'active',
-		},
-	]);
+	const [scope, setScope] = useState<Scope[]>([]);
 
 	const {
 		namespace,
@@ -130,6 +113,74 @@ export default function ScopeSelector({}) {
 		setScope(newScope);
 	};
 
+	useEffect(() => {
+		const fetchAllScope = async () => {
+			const fetchScope = async (erc: string) => {
+				try {
+
+					// Enable Feature Flag LPD-41306 to use the new Headless API
+
+					const response = await fetch(
+						`/o/headless-admin-site/v1.0/sites/by-external-reference-code/${erc}`,
+						{
+							headers: new Headers({
+								'Accept-Language':
+									Liferay.ThemeDisplay.getBCP47LanguageId(),
+								'Content-Type': 'application/json',
+							}),
+							method: 'GET',
+						}
+					);
+
+					if (!response.ok) {
+						return null;
+					}
+
+					const data = await response.json();
+
+					return data;
+				}
+				catch (error) {
+					console.error(
+						`Error fetching site with ERC ${erc}:`,
+						error
+					);
+
+					return null;
+				}
+			};
+
+			const responses = await Promise.all(
+				initialScopeERCs.map(fetchScope)
+			);
+
+			setScope(
+				responses.map((item: any) => {
+					if (item) {
+						return {
+							erc: item.externalReferenceCode,
+							id: item.groupId,
+							name: item.descriptiveName,
+							scopelabel: '', // TODO get proper label
+							status: item.active ? 'active' : 'inactive',
+						};
+					}
+					else {
+						return {
+							erc: item.externalReferenceCode,
+							id: '',
+							name: item.externalReferenceCode,
+							scopelabel: '',
+							status: 'inactive',
+						};
+					}
+				})
+			);
+		};
+
+		fetchAllScope();
+	}, []);
+
 	return (
 		<div className="sheet">
 			<ClayLayout.Row justify="between">
@@ -174,90 +225,94 @@ export default function ScopeSelector({}) {
 						</ClayButton>
 					</div>
 
-					<Table
-						className="c-mt-4"
-						columnsVisibility={false}
-						onSortChange={
-							setSort as (sorting: Sorting | null) => void
-						}
-						sort={sort}
-					>
-						<Head
-							items={[
-								{
-									id: 'name',
-									name: Liferay.Language.get('name'),
-									sortable: true,
-								},
-								{
-									id: 'scopelabel',
-									name: Liferay.Language.get('type'),
-									sortable: true,
-								},
-								{
-									id: 'status',
-									name: Liferay.Language.get('status'),
-									sortable: true,
-									width: '20%',
-								},
-								{
-									id: 'options',
-									name: Liferay.Language.get('options'),
-									sortable: false,
-									width: '100px',
-								},
-							]}
+					{!!scope.length && (
+						<Table
+							className="c-mt-4"
+							columnsVisibility={false}
+							onSortChange={
+								setSort as (sorting: Sorting | null) => void
+							}
+							sort={sort}
 						>
-							{(column) => (
-								<Cell
-									key={column.id}
-									sortable={column.sortable}
-									width={column.width}
-								>
-									{column.name}
-								</Cell>
-							)}
-						</Head>
-
-						<Body>
-							{filteredItems.map((scopeItem, index) => (
-								<Row key={index}>
-									<Cell>{scopeItem.name}</Cell>
-
-									<Cell>{scopeItem.scopelabel}</Cell>
-
-									<Cell>
-										{scopeItem.status === 'active' ? (
-											<ClayLabel displayType="success">
-												{Liferay.Language.get('active')}
-											</ClayLabel>
-										) : (
-											<ClayLabel displayType="secondary">
-												{Liferay.Language.get(
-													'inactive'
-												)}
-											</ClayLabel>
-										)}
+							<Head
+								items={[
+									{
+										id: 'name',
+										name: Liferay.Language.get('name'),
+										sortable: true,
+									},
+									{
+										id: 'scopelabel',
+										name: Liferay.Language.get('type'),
+										sortable: true,
+									},
+									{
+										id: 'status',
+										name: Liferay.Language.get('status'),
+										sortable: true,
+										width: '20%',
+									},
+									{
+										id: 'options',
+										name: Liferay.Language.get('options'),
+										sortable: false,
+										width: '100px',
+									},
+								]}
+							>
+								{(column) => (
+									<Cell
+										key={column.id}
+										sortable={column.sortable}
+										width={column.width}
+									>
+										{column.name}
 									</Cell>
+								)}
+							</Head>
 
-									<Cell align="center">
-										<ClayButton
-											aria-label={Liferay.Language.get(
-												'remove'
+							<Body>
+								{filteredItems.map((scopeItem, index) => (
+									<Row key={index}>
+										<Cell>{scopeItem.name}</Cell>
+
+										<Cell>{scopeItem.scopelabel}</Cell>
+
+										<Cell>
+											{scopeItem.status === 'active' ? (
+												<ClayLabel displayType="success">
+													{Liferay.Language.get(
+														'active'
+													)}
+												</ClayLabel>
+											) : (
+												<ClayLabel displayType="secondary">
+													{Liferay.Language.get(
+														'inactive'
+													)}
+												</ClayLabel>
 											)}
-											className="component-action"
-											displayType="unstyled"
-											onClick={() =>
-												_handleRemoveScope(index)
-											}
-										>
-											<ClayIcon symbol="times-circle" />
-										</ClayButton>
-									</Cell>
-								</Row>
-							))}
-						</Body>
-					</Table>
+										</Cell>
+
+										<Cell align="center">
+											<ClayButton
+												aria-label={Liferay.Language.get(
+													'remove'
+												)}
+												className="component-action"
+												displayType="unstyled"
+												onClick={() =>
+													_handleRemoveScope(index)
+												}
+											>
+												<ClayIcon symbol="times-circle" />
+											</ClayButton>
+										</Cell>
+									</Row>
+								))}
+							</Body>
+						</Table>
+					)}
 				</>
 			)}
 		</div>

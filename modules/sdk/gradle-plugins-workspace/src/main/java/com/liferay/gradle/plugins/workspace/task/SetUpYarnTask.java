@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -119,8 +120,9 @@ public class SetUpYarnTask extends DefaultTask {
 		Files.write(path, packageJSON.getBytes(StandardCharsets.UTF_8));
 	}
 
-	private final List<Object> _excludes = Arrays.asList(
-		".gradle", "build", "build_gradle", "dist", "gradle", "node_modules",
-		"node_modules_cache", "src");
+	private final List<Object> _excludes = new ArrayList<>(
+		Arrays.asList(
+			".gradle", "build", "build_gradle", "dist", "gradle",
+			"node_modules", "node_modules_cache", "src"));
 
 }

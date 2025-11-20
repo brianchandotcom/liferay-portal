@@ -460,11 +460,7 @@ public class PatcherBuildValidator {
 				"the-build-cannot-be-released-before-completion");
 		}
 
-		if (!Validator.isNumber(patcherBuild.getSupportTicket())) {
-			throw new PortalException(
-				"the-build-cannot-be-released-because-the-support-ticket-" +
-					"does-not-point-to-zendesk");
-		}
+		validateSupportTicket(patcherBuild.getSupportTicket());
 	}
 
 	public void validateSmokeTest(PatcherBuild patcherBuild) throws Exception {
@@ -500,6 +496,16 @@ public class PatcherBuildValidator {
 				throw new PortalException(
 					"the-support-ticket-contains-non-ascii-characters");
 			}
+		}
+	}
+
+	public void validateSupportTicket(String supportTicket) throws Exception {
+		Matcher matcher = _jsmSupportTicketNamePattern.matcher(supportTicket);
+
+		if (!matcher.find()) {
+			throw new PortalException(
+				"the-build-cannot-be-released-because-the-support-ticket-" +
+					"does-not-point-to-jira");
 		}
 	}
 
@@ -587,6 +593,8 @@ public class PatcherBuildValidator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PatcherBuildValidator.class);
 
+	private static final Pattern _jsmSupportTicketNamePattern = Pattern.compile(
+		PatcherConstants.JSM_SUPPORT_TICKET_NAME_REGEX);
 	private static final Pattern _patcherFixPackNamePattern = Pattern.compile(
 		PatcherConstants.FIX_PACKS_REGEX);
 	private static final Pattern _patcherTicketName6xPattern = Pattern.compile(

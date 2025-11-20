@@ -662,7 +662,7 @@ public class PatcherBuildUtil {
 				StringPool.FORWARD_SLASH + supportTicket;
 		}
 
-		return patcherConfiguration.lesaURL() + StringPool.FORWARD_SLASH +
+		return patcherConfiguration.jiraURL() + StringPool.FORWARD_SLASH +
 			supportTicket;
 	}
 

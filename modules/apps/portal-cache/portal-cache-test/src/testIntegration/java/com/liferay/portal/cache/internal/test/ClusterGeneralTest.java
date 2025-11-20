@@ -40,6 +40,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Jiefeng Wu
@@ -103,9 +104,17 @@ public class ClusterGeneralTest {
 				BundleContext bundleContext =
 					SystemBundleUtil.getBundleContext();
 
-				bundleContext.registerService(
-					ClusterMasterTokenTransitionListener.class,
-					new TestClusterMasterTokenTransitionListener(), null);
+				TestClusterMasterTokenTransitionListener
+					testClusterMasterTokenTransitionListener =
+						new TestClusterMasterTokenTransitionListener();
+
+				ServiceRegistration<?> serviceRegistration =
+					bundleContext.registerService(
+						ClusterMasterTokenTransitionListener.class,
+						testClusterMasterTokenTransitionListener, null);
+
+				testClusterMasterTokenTransitionListener.setServiceRegistration(
+					serviceRegistration);
 
 				return null;
 			});
@@ -142,6 +151,12 @@ public class ClusterGeneralTest {
 
 					testClusterMasterTokenTransitionListener.getCountDownLatch(
 					).await();
+
+					ServiceRegistration<?> serviceRegistration =
+						testClusterMasterTokenTransitionListener.
+							_serviceRegistration;
+
+					serviceRegistration.unregister();
 
 					return ClusterMasterExecutorUtil.isMaster();
 				}));
@@ -319,6 +334,13 @@ public class ClusterGeneralTest {
 		public void masterTokenReleased() {
 		}
 
+		public void setServiceRegistration(
+			ServiceRegistration<?> serviceRegistration) {
+
+			_serviceRegistration = serviceRegistration;
+		}
+
+		private ServiceRegistration<?> _serviceRegistration;
 		private final CountDownLatch _stoppedLatch;
 
 	}

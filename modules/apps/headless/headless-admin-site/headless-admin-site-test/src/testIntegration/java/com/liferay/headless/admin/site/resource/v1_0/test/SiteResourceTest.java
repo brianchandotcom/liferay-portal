@@ -814,7 +814,8 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Site randomSite = randomSite();
 
-		randomSite.setParentSiteKey(parentSite.getKey());
+		randomSite.setParentSiteExternalReferenceCode(
+			parentSite.getExternalReferenceCode());
 
 		Site postSite = _testPostSiteSuccess(randomSite);
 
@@ -823,23 +824,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			TestPropsValues.getCompanyId());
 
 		Group parentGroup = group.getParentGroup();
-
-		Assert.assertEquals(parentSite.getKey(), parentGroup.getGroupKey());
-
-		parentSite = _testPostSite_addSite(randomSite());
-
-		randomSite = randomSite();
-
-		randomSite.setParentSiteExternalReferenceCode(
-			parentSite.getExternalReferenceCode());
-
-		postSite = _testPostSiteSuccess(randomSite);
-
-		group = _groupLocalService.fetchGroupByExternalReferenceCode(
-			postSite.getExternalReferenceCode(),
-			TestPropsValues.getCompanyId());
-
-		parentGroup = group.getParentGroup();
 
 		Assert.assertEquals(
 			parentSite.getExternalReferenceCode(),

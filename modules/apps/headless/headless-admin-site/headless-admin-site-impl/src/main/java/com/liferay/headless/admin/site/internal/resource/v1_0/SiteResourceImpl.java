@@ -459,9 +459,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		Group group = _groupService.addGroup(
 			externalReferenceCode,
-			_getParentGroupId(
-				null, site.getParentSiteExternalReferenceCode(),
-				site.getParentSiteKey()),
+			_getParentGroupId(null, site.getParentSiteExternalReferenceCode()),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, _getNameMap(site),
 			_getDescriptionMap(site), _getType(site.getMembershipType()),
 			_getTypeSettings(site.getTypeSettings(), null),
@@ -542,25 +540,18 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	private long _getParentGroupId(
-		Group group, String parentSiteExternalReferenceCode,
-		String parentSiteKey) {
+		Group group, String parentSiteExternalReferenceCode) {
 
-		if (Validator.isNull(parentSiteExternalReferenceCode) &&
-			Validator.isNull(parentSiteKey)) {
-
+		if (Validator.isNull(parentSiteExternalReferenceCode)) {
 			return GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		}
 
-		Group parentGroup = _groupLocalService.loadFetchGroup(
-			contextCompany.getCompanyId(), parentSiteKey);
-
-		if (parentGroup == null) {
-			parentGroup = _groupLocalService.fetchGroupByExternalReferenceCode(
+		Group parentGroup =
+			_groupLocalService.fetchGroupByExternalReferenceCode(
 				parentSiteExternalReferenceCode, contextCompany.getCompanyId());
 
-			if (parentGroup == null) {
-				return GroupConstants.DEFAULT_PARENT_GROUP_ID;
-			}
+		if (parentGroup == null) {
+			return GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		}
 
 		if (!LazyReferencingThreadLocal.isEnabled()) {
@@ -773,8 +764,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			Group updatedGroup = _groupLocalService.updateGroup(
 				group.getGroupId(),
 				_getParentGroupId(
-					group, site.getParentSiteExternalReferenceCode(),
-					site.getParentSiteKey()),
+					group, site.getParentSiteExternalReferenceCode()),
 				_getNameMap(site), _getDescriptionMap(site),
 				_getType(site.getMembershipType()),
 				_getTypeSettings(

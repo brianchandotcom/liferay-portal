@@ -283,32 +283,27 @@ public class ClusterGeneralTest {
 					return null;
 				});
 
-			// Update properties in updateTomcatNode
-
-			updateTomcatNode.syncExecute(
-				() -> {
-					ReflectionTestUtil.invoke(
-						_getEditServerMVCActionCommand(), "_updateLogLevels",
-						new Class<?>[] {Map.class},
-						HashMapBuilder.put(
-							"com.liferay.portal.servlet.filters.autologin." +
-								"AutoLoginFilter",
-							"DEBUG"
-						).build());
-
-					return null;
-				});
-
-			// Assert the change in updateTomcatNode
+			// Update properties in updateTomcatNode and assert change
 
 			Assert.assertEquals(
 				"DEBUG",
 				updateTomcatNode.syncExecute(
-					() -> Log4JUtil.getPriorities(
-					).get(
-						"com.liferay.portal.servlet.filters.autologin." +
-							"AutoLoginFilter"
-					)));
+					() -> {
+						ReflectionTestUtil.invoke(
+							_getEditServerMVCActionCommand(),
+							"_updateLogLevels", new Class<?>[] {Map.class},
+							HashMapBuilder.put(
+								"com.liferay.portal.servlet.filters." +
+									"autologin.AutoLoginFilter",
+								"DEBUG"
+							).build());
+
+						return Log4JUtil.getPriorities(
+						).get(
+							"com.liferay.portal.servlet.filters.autologin." +
+								"AutoLoginFilter"
+						);
+					}));
 
 			// Assert the change in listenTomcatNode
 

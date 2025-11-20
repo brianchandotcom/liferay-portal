@@ -9,7 +9,9 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowNodeManager;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
@@ -35,18 +37,24 @@ public class WorkflowNodeManagerImpl implements WorkflowNodeManager {
 			boolean waitForCompletion)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(companyId);
-		serviceContext.setUserId(userId);
-
 		try {
+			KaleoInstanceToken kaleoInstanceToken =
+				_kaleoInstanceTokenLocalService.getKaleoInstanceToken(
+					workflowInstanceId);
+
+			_workflowInstanceManager.updateWorkflowContext(
+				kaleoInstanceToken.getCompanyId(),
+				kaleoInstanceToken.getKaleoInstanceId(), workflowContext);
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+			serviceContext.setUserId(userId);
+
 			_kaleoSignaler.signalExit(
 				transitionName,
 				new ExecutionContext(
-					_kaleoInstanceTokenLocalService.getKaleoInstanceToken(
-						workflowInstanceId),
-					workflowContext, serviceContext),
+					kaleoInstanceToken, workflowContext, serviceContext),
 				waitForCompletion);
 		}
 		catch (Exception exception) {
@@ -60,5 +68,8 @@ public class WorkflowNodeManagerImpl implements WorkflowNodeManager {
 
 	@Reference
 	private KaleoSignaler _kaleoSignaler;
+
+	@Reference
+	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

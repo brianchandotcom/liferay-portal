@@ -3247,9 +3247,6 @@ components:
                     type: object
                 parentSiteExternalReferenceCode:
                     type: string
-                parentSiteKey:
-                    type: string
-                    writeOnly: true
                 templateKey:
                     type: string
                     writeOnly: true

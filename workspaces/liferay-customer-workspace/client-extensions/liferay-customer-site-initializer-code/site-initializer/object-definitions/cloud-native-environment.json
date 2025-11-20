@@ -1,0 +1,57 @@
+{
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToCloudNativeEnvironment_accountEntryId",
+	"label": {
+		"en_US": "Cloud Native Environment"
+	},
+	"name": "CloudNativeEnvironment",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Account Key"
+			},
+			"name": "accountKey",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Max Cluster Nodes"
+			},
+			"name": "maxClusterNodes",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Non-Production Subscription Uuid"
+			},
+			"name": "nonProductionSubscriptionUuid",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Production Subscription Uuid"
+			},
+			"name": "productionSubscriptionUuid",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "applications_menu.applications.content",
+	"pluralLabel": {
+		"en_US": "Cloud Native Environments"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

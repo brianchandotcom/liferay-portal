@@ -105,3 +105,49 @@ test('Check only allowed actions can be executed in Content Editing mode', async
 		page.locator('.page-editor__fragment-comment').getByLabel('Options')
 	).toBeVisible();
 });
+
+test('Hidden fragment remains hidden after switching to Content Editing mode', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	pageManagementSite,
+}) => {
+
+	// Create a page with a Heading fragment and go to edit mode
+
+	const headingId = getRandomString();
+
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: pageManagementSite.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+	// Hide fragment in General configuration
+
+	await pageEditorPage.selectFragment(headingId);
+	await pageEditorPage.goToConfigurationTab('General');
+
+	// Hide the fragment
+
+	await pageEditorPage.hideFragment(headingId);
+
+	// Ensure the fragment is hidden
+
+	await expect(page.getByText('Heading Example')).not.toBeVisible();
+
+	// Change edit mode to Content Editing
+
+	await pageEditorPage.changeEditMode('Content Editing');
+
+	// Check the fragment is hidden in content editing
+
+	await expect(page.getByText('Heading Example')).not.toBeVisible();
+});

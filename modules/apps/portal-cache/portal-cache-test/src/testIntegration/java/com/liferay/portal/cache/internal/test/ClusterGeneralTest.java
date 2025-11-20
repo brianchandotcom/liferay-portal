@@ -24,7 +24,6 @@ import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -101,27 +100,7 @@ public class ClusterGeneralTest {
 
 		_tomcatNode2.syncExecute(
 			() -> {
-				BundleContext bundleContext =
-					SystemBundleUtil.getBundleContext();
-
-				TestClusterMasterTokenTransitionListener
-					testClusterMasterTokenTransitionListener =
-						new TestClusterMasterTokenTransitionListener();
-
-				ServiceRegistration<?> serviceRegistration =
-					bundleContext.registerService(
-						ClusterMasterTokenTransitionListener.class,
-						testClusterMasterTokenTransitionListener, null);
-
-				testClusterMasterTokenTransitionListener.setServiceRegistration(
-					serviceRegistration);
-
-				Map<String, Object> attributes =
-					LocalProcessLauncher.ProcessContext.getAttributes();
-
-				attributes.put(
-					TestClusterMasterTokenTransitionListener.class.getName(),
-					testClusterMasterTokenTransitionListener);
+				TestClusterMasterTokenTransitionListener.register();
 
 				return null;
 			});
@@ -137,17 +116,7 @@ public class ClusterGeneralTest {
 		Assert.assertTrue(
 			_tomcatNode2.syncExecute(
 				() -> {
-					Map<String, Object> attributes =
-						LocalProcessLauncher.ProcessContext.getAttributes();
-
-					TestClusterMasterTokenTransitionListener
-						testClusterMasterTokenTransitionListener =
-							(TestClusterMasterTokenTransitionListener)
-								attributes.remove(
-									TestClusterMasterTokenTransitionListener.
-										class.getName());
-
-					testClusterMasterTokenTransitionListener.await();
+					TestClusterMasterTokenTransitionListener.await();
 
 					return ClusterMasterExecutorUtil.isMaster();
 				}));
@@ -165,21 +134,6 @@ public class ClusterGeneralTest {
 
 		Assert.assertFalse(
 			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
-	}
-
-	private static void _await() throws Exception {
-		LoggerContext loggerContext = LoggerContext.getContext();
-
-		List<TestPropertyChangeListener> listeners =
-			ReflectionTestUtil.getFieldValue(
-				loggerContext, "propertyChangeListeners");
-
-		TestPropertyChangeListener testPropertyChangeListener = listeners.get(
-			0);
-
-		testPropertyChangeListener.await();
-
-		loggerContext.removePropertyChangeListener(testPropertyChangeListener);
 	}
 
 	private static MVCActionCommand _getEditServerMVCActionCommand()
@@ -225,10 +179,7 @@ public class ClusterGeneralTest {
 
 		listenTomcatNode.syncExecute(
 			() -> {
-				LoggerContext loggerContext = LoggerContext.getContext();
-
-				loggerContext.addPropertyChangeListener(
-					new TestPropertyChangeListener());
+				TestPropertyChangeListener.register();
 
 				return null;
 			});
@@ -255,7 +206,7 @@ public class ClusterGeneralTest {
 			"DEBUG",
 			listenTomcatNode.syncExecute(
 				() -> {
-					_await();
+					TestPropertyChangeListener.await();
 
 					return Log4JUtil.getPriority(
 						ClusterGeneralTest.class.getName());
@@ -265,10 +216,7 @@ public class ClusterGeneralTest {
 
 		listenTomcatNode.syncExecute(
 			() -> {
-				LoggerContext loggerContext = LoggerContext.getContext();
-
-				loggerContext.addPropertyChangeListener(
-					new TestPropertyChangeListener());
+				TestPropertyChangeListener.register();
 
 				return null;
 			});
@@ -295,7 +243,7 @@ public class ClusterGeneralTest {
 			"ERROR",
 			listenTomcatNode.syncExecute(
 				() -> {
-					_await();
+					TestPropertyChangeListener.await();
 
 					return Log4JUtil.getPriority(
 						ClusterGeneralTest.class.getName());
@@ -308,10 +256,45 @@ public class ClusterGeneralTest {
 	private static class TestClusterMasterTokenTransitionListener
 		implements ClusterMasterTokenTransitionListener {
 
-		public void await() throws Exception {
-			_countDownLatch.await();
+		public static void await() throws Exception {
+			Map<String, Object> attributes =
+				LocalProcessLauncher.ProcessContext.getAttributes();
 
-			_serviceRegistration.unregister();
+			TestClusterMasterTokenTransitionListener
+				testClusterMasterTokenTransitionListener =
+					(TestClusterMasterTokenTransitionListener)attributes.remove(
+						TestClusterMasterTokenTransitionListener.class.
+							getName());
+
+			CountDownLatch countDownLatch =
+				testClusterMasterTokenTransitionListener._countDownLatch;
+
+			countDownLatch.await();
+
+			ServiceRegistration<?> serviceRegistration =
+				testClusterMasterTokenTransitionListener._serviceRegistration;
+
+			serviceRegistration.unregister();
+		}
+
+		public static void register() {
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			TestClusterMasterTokenTransitionListener
+				testClusterMasterTokenTransitionListener =
+					new TestClusterMasterTokenTransitionListener();
+
+			testClusterMasterTokenTransitionListener._serviceRegistration =
+				bundleContext.registerService(
+					ClusterMasterTokenTransitionListener.class,
+					testClusterMasterTokenTransitionListener, null);
+
+			Map<String, Object> attributes =
+				LocalProcessLauncher.ProcessContext.getAttributes();
+
+			attributes.put(
+				TestClusterMasterTokenTransitionListener.class.getName(),
+				testClusterMasterTokenTransitionListener);
 		}
 
 		@Override
@@ -323,12 +306,6 @@ public class ClusterGeneralTest {
 		public void masterTokenReleased() {
 		}
 
-		public void setServiceRegistration(
-			ServiceRegistration<?> serviceRegistration) {
-
-			_serviceRegistration = serviceRegistration;
-		}
-
 		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 		private ServiceRegistration<?> _serviceRegistration;
 
@@ -337,8 +314,39 @@ public class ClusterGeneralTest {
 	private static class TestPropertyChangeListener
 		implements PropertyChangeListener {
 
-		public void await() throws Exception {
-			_countDownLatch.await();
+		public static void await() throws Exception {
+			Map<String, Object> attributes =
+				LocalProcessLauncher.ProcessContext.getAttributes();
+
+			TestPropertyChangeListener testPropertyChangeListener =
+				(TestPropertyChangeListener)attributes.remove(
+					TestPropertyChangeListener.class.getName());
+
+			CountDownLatch countDownLatch =
+				testPropertyChangeListener._countDownLatch;
+
+			countDownLatch.await();
+
+			LoggerContext loggerContext = LoggerContext.getContext();
+
+			loggerContext.removePropertyChangeListener(
+				testPropertyChangeListener);
+		}
+
+		public static void register() {
+			LoggerContext loggerContext = LoggerContext.getContext();
+
+			TestPropertyChangeListener testPropertyChangeListener =
+				new TestPropertyChangeListener();
+
+			loggerContext.addPropertyChangeListener(testPropertyChangeListener);
+
+			Map<String, Object> attributes =
+				LocalProcessLauncher.ProcessContext.getAttributes();
+
+			attributes.put(
+				TestPropertyChangeListener.class.getName(),
+				testPropertyChangeListener);
 		}
 
 		@Override

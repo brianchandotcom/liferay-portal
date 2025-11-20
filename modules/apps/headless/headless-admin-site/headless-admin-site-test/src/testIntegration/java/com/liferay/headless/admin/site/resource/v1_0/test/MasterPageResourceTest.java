@@ -565,9 +565,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage masterPage = randomMasterPage();
 
-		String draftContentPageSpecificationExternalReferenceCode =
-			RandomTestUtil.randomString();
-
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				null, testGroup.getGroupId(),
@@ -575,8 +572,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		draftContentPageSpecification.setPageExperiences(
 			PageExperiencesTestUtil.getPageExperiences(
-				draftContentPageSpecificationExternalReferenceCode,
-				pageElements));
+				RandomTestUtil.randomString(), pageElements));
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
@@ -585,7 +581,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		publishedContentPageSpecification.setExternalReferenceCode(
 			masterPage.getExternalReferenceCode());
-
 		publishedContentPageSpecification.setPageExperiences(
 			PageExperiencesTestUtil.getPageExperiences(
 				masterPage.getExternalReferenceCode(), pageElements));

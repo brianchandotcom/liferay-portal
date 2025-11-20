@@ -45,10 +45,11 @@ export function getDefaultFieldsShape(formInstance) {
 		const fields = options.map((option) => option.columns[0].fields[0]);
 
 		return fields.map((field) => {
-			const {fieldName: key, predefinedValue, required} = field;
+			const {fieldName: key, predefinedValue, readOnly, required} = field;
 
 			return {
 				key,
+				readOnly,
 				required,
 				value: toArray(predefinedValue),
 			};
@@ -68,6 +69,7 @@ export function updateFields(currentFields, nextField) {
 		if (fieldName === key) {
 			nextFields.push({
 				key: fieldName,
+				readOnly: currentField['readOnly'],
 				required: currentField['required'],
 				value: toArray(nextValue),
 			});

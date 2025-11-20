@@ -5,6 +5,9 @@
 
 package com.liferay.commerce.product.definitions.web.internal.option;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.option.CommerceOptionType;
@@ -111,8 +114,6 @@ public class DocumentLibraryCommerceOptionTypeImpl
 			return;
 		}
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
 		DDMForm ddmForm = new DDMForm();
 
 		Locale locale = _portal.getLocale(httpServletRequest);
@@ -132,6 +133,7 @@ public class DocumentLibraryCommerceOptionTypeImpl
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
 		ddmFormField.setName(cpDefinitionOptionRel.getKey());
+		ddmFormField.setReadOnly(_isReadOnly(httpServletRequest));
 		ddmFormField.setRequired(cpDefinitionOptionRel.isRequired());
 
 		ddmForm.addDDMFormField(ddmFormField);
@@ -157,6 +159,8 @@ public class DocumentLibraryCommerceOptionTypeImpl
 			portletDisplay.getNamespace());
 
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.write(
 			_ddmFormRenderer.render(ddmForm, ddmFormRenderingContext));
@@ -186,6 +190,26 @@ public class DocumentLibraryCommerceOptionTypeImpl
 			httpServletRequest, printWriter);
 
 		printWriter.write("</div>");
+	}
+
+	private boolean _isReadOnly(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		AccountEntry accountEntry = null;
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		if (commerceContext != null) {
+			accountEntry = commerceContext.getAccountEntry();
+		}
+
+		if (accountEntry == null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

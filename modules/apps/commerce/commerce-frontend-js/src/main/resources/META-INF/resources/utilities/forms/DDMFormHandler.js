@@ -17,7 +17,7 @@ class DDMFormHandler {
 		quantity,
 	}) {
 		const {
-			account: {accountId: contextAccountId},
+			account: {accountId: contextAccountId} = {},
 			commerceChannelId: contextCommerceChannelId,
 			currency: {currencyCode},
 		} = Liferay.CommerceContext;

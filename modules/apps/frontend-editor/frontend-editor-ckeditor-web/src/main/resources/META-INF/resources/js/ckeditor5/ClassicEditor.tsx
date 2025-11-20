@@ -21,8 +21,8 @@ const ClassicEditor = ({
 	config,
 	data,
 	disabled,
-	enableHiddenInput,
-	name,
+	formInputEnabled,
+	formInputName,
 	onBlur,
 	onChange,
 	onFocus,
@@ -32,8 +32,8 @@ const ClassicEditor = ({
 	config?: LiferayEditorConfig;
 	data?: string;
 	disabled?: boolean;
-	enableHiddenInput?: boolean;
-	name?: string;
+	formInputEnabled?: boolean;
+	formInputName?: string;
 	onBlur?: (event: EventInfo, editor: TEditor) => void;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
 	onFocus?: (event: EventInfo, editor: TEditor) => void;
@@ -52,8 +52,8 @@ const ClassicEditor = ({
 			data={data}
 			disabled={disabled}
 			editor={BaseCKEditor5ClassicEditor}
-			enableHiddenInput={enableHiddenInput}
-			name={name}
+			formInputEnabled={formInputEnabled}
+			formInputName={formInputName}
 			onBlur={onBlur}
 			onChange={onChange}
 			onFocus={onFocus}

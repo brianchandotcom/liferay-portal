@@ -20,16 +20,16 @@ const BalloonEditor = ({
 	className,
 	config,
 	data,
-	enableHiddenInput,
-	name,
+	formInputEnabled,
+	formInputName,
 	onChange,
 	onReady,
 }: {
 	className?: string;
 	config?: LiferayEditorConfig;
 	data?: string;
-	enableHiddenInput?: boolean;
-	name?: string;
+	formInputEnabled?: boolean;
+	formInputName?: string;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
 	onReady?: (editor: TEditor) => void;
 }) => {
@@ -45,8 +45,8 @@ const BalloonEditor = ({
 			}}
 			data={data}
 			editor={BaseCKEditor5BalloonEditor}
-			enableHiddenInput={enableHiddenInput}
-			name={name}
+			formInputEnabled={formInputEnabled}
+			formInputName={formInputName}
 			onChange={onChange}
 			onReady={onReady}
 		/>

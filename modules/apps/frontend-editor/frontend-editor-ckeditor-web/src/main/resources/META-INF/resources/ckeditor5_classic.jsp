@@ -33,7 +33,7 @@ if (contents != null) {
 			).put(
 				"disabled", disabled
 			).put(
-				"name", HtmlUtil.escapeAttribute(name)
+				"formInputName", HtmlUtil.escapeAttribute(name)
 			).build()
 		%>'
 	/>

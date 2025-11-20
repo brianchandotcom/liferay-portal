@@ -30,7 +30,7 @@ if (contents != null) {
 			HashMapBuilder.<String, Object>put(
 				"config", editorConfigJSONObject
 			).put(
-				"name", HtmlUtil.escapeAttribute(name)
+				"formInputName", HtmlUtil.escapeAttribute(name)
 			).build()
 		%>'
 	/>

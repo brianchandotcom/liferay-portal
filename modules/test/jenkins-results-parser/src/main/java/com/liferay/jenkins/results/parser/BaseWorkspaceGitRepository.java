@@ -985,12 +985,29 @@ public abstract class BaseWorkspaceGitRepository
 			}
 		}
 
-		if (directoryName.equals("liferay-release-tool-ee") &&
-			(!_snapshot ||
-			 (!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-			  jobVariant.startsWith("portal-license")))) {
+		if (directoryName.equals("liferay-release-tool-ee")) {
+			if (!_snapshot ||
+				(!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
+				 jobVariant.startsWith("portal-license"))) {
 
-			return true;
+				return true;
+			}
+
+			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+			for (Job job : buildDatabase.getJobs()) {
+				if (job instanceof PortalAcceptanceTestSuiteJob) {
+					PortalAcceptanceTestSuiteJob portalAcceptanceTestSuiteJob =
+						(PortalAcceptanceTestSuiteJob)job;
+
+					Job.DistType distType =
+						portalAcceptanceTestSuiteJob.getDistType();
+
+					if (distType.equals(Job.DistType.RELEASE)) {
+						return true;
+					}
+				}
+			}
 		}
 
 		return false;

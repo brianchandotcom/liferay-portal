@@ -25,6 +25,7 @@ export interface IBulkActionFDSDataItemTransformed {
 	classExternalReferenceCode: string;
 	className: string;
 	classPK: number;
+	file?: any;
 	name: string;
 }
 

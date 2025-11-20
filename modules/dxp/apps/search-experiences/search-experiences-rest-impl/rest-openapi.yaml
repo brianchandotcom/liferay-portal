@@ -150,6 +150,10 @@ components:
                             type: boolean
                         queryString:
                             type: string
+                        scope:
+                            items:
+                                type: string
+                            type: array
                         searchableAssetTypes:
                             items:
                                 type: string

@@ -93,6 +93,14 @@ public class EditorTag extends BaseValidatorTagSupport {
 		return _fileBrowserParams;
 	}
 
+	public boolean getFormInputEnabled() {
+		return _formInputEnabled;
+	}
+
+	public String getFormInputName() {
+		return _formInputName;
+	}
+
 	public String getHeight() {
 		return _height;
 	}
@@ -218,6 +226,14 @@ public class EditorTag extends BaseValidatorTagSupport {
 		_fileBrowserParams = fileBrowserParams;
 	}
 
+	public void setFormInputEnabled(boolean formInputEnabled) {
+		_formInputEnabled = formInputEnabled;
+	}
+
+	public void setFormInputName(String formInputName) {
+		_formInputName = formInputName;
+	}
+
 	public void setHeight(String height) {
 		_height = height;
 	}
@@ -297,6 +313,8 @@ public class EditorTag extends BaseValidatorTagSupport {
 		_disabled = false;
 		_editorName = null;
 		_fileBrowserParams = null;
+		_formInputEnabled = false;
+		_formInputName = null;
 		_height = null;
 		_inlineEdit = false;
 		_inlineEditSaveURL = null;
@@ -352,6 +370,10 @@ public class EditorTag extends BaseValidatorTagSupport {
 			httpServletRequest, "editorName", _getResolvedEditorName());
 		setNamespacedAttribute(
 			httpServletRequest, "fileBrowserParams", _fileBrowserParams);
+		setNamespacedAttribute(
+			httpServletRequest, "formInputEnabled", _formInputEnabled);
+		setNamespacedAttribute(
+			httpServletRequest, "formInputName", _formInputName);
 		setNamespacedAttribute(httpServletRequest, "height", _height);
 		setNamespacedAttribute(httpServletRequest, "initMethod", "initEditor");
 		setNamespacedAttribute(
@@ -564,6 +586,8 @@ public class EditorTag extends BaseValidatorTagSupport {
 	private boolean _disabled;
 	private String _editorName;
 	private Map<String, String> _fileBrowserParams;
+	private boolean _formInputEnabled;
+	private String _formInputName;
 	private String _height;
 	private boolean _inlineEdit;
 	private String _inlineEditSaveURL;

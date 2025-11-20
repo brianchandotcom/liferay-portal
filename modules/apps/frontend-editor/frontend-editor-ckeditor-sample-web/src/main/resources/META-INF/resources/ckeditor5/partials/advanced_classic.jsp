@@ -22,6 +22,8 @@
 <liferay-editor:editor
 	contents="<%= contents %>"
 	editorName="ckeditor5_classic"
+	formInputEnabled="<%= true %>"
+	formInputName="advancedClassicEditor"
 	name="advancedClassicCKEditor5Editor"
 	placeholder="content"
 />

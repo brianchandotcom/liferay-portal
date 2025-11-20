@@ -20,6 +20,10 @@ export default function PreviewButton({
 		if (Liferay.FeatureFlags['LPD-11228']) {
 			const updateArticleId = ({articleId}) => {
 				setArticleId(articleId);
+
+				document.getElementById(
+					`${namespace}jakarta-portlet-action`
+				).value = '/journal/update_article';
 			};
 
 			Liferay.on('asyncFormSubmission', updateArticleId);

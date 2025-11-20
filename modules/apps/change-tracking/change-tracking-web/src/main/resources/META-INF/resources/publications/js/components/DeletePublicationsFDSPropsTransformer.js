@@ -5,6 +5,9 @@
 
 import {openConfirmModal, openToast} from 'frontend-js-components-web';
 import {fetch, sessionStorage} from 'frontend-js-web';
+import React from 'react';
+
+import StatusRenderer from './StatusRenderer';
 
 export default function propsTransformer({...otherProps}) {
 	const handleDelete = (isConfirmed, itemData) => {
@@ -44,8 +47,21 @@ export default function propsTransformer({...otherProps}) {
 		}
 	};
 
+	const PublicationStatusRenderer = (props) => {
+		return <StatusRenderer value={props.value} />;
+	};
+
 	return {
 		...otherProps,
+		customRenderers: {
+			tableCell: [
+				{
+					component: PublicationStatusRenderer,
+					name: 'customPublicationStatusRenderer',
+					type: 'internal',
+				},
+			],
+		},
 		onActionDropdownItemClick({action, itemData}) {
 			if (action.data.id === 'delete') {
 				openConfirmModal({

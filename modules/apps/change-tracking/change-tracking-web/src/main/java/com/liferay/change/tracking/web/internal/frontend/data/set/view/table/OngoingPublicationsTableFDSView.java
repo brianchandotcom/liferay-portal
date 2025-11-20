@@ -49,7 +49,7 @@ public class OngoingPublicationsTableFDSView
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
+				"customPublicationStatusRenderer")
 		).add(
 			"ownerName", "owner"
 		).build();

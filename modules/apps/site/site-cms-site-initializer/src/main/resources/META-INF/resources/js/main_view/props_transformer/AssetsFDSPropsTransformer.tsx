@@ -33,7 +33,7 @@ import deleteItemAction from './actions/deleteItemAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
-import {triggerAssetBulkAction} from './actions/triggerAssetBulkAction';
+import {triggerAssetDownloadBulkAction} from './actions/triggerAssetDownloadBulkAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
@@ -404,7 +404,7 @@ export default function AssetsFDSPropsTransformer({
 				}
 			}
 			else if (action?.data?.id === 'download') {
-				triggerAssetBulkAction({
+				triggerAssetDownloadBulkAction({
 					apiURL: otherProps.apiURL,
 					selectedData,
 					type: 'DownloadBulkAction',

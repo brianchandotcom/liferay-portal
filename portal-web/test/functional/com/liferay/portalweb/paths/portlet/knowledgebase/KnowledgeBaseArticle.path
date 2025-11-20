@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER</td>
-	<td>//div[contains(@id,'AttachmentsContainer')]</td>
+	<td>//div[contains(@id,'AttachmentsContainer')]//span</td>
 	<td></td>
 </tr>
 <tr>

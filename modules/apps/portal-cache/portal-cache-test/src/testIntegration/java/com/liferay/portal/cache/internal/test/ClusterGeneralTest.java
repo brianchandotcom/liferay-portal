@@ -255,14 +255,11 @@ public class ClusterGeneralTest {
 						_getEditServerMVCActionCommand(), "_updateLogLevels",
 						new Class<?>[] {Map.class},
 						Collections.singletonMap(
-							"com.liferay.portal.servlet.filters.autologin." +
-								"AutoLoginFilter",
-							"DEBUG"));
+							ClusterGeneralTest.class.getName(), "DEBUG"));
 
 					return Log4JUtil.getPriorities(
 					).get(
-						"com.liferay.portal.servlet.filters.autologin." +
-							"AutoLoginFilter"
+						ClusterGeneralTest.class.getName()
 					);
 				}));
 
@@ -281,8 +278,7 @@ public class ClusterGeneralTest {
 
 					return Log4JUtil.getPriorities(
 					).get(
-						"com.liferay.portal.servlet.filters.autologin." +
-							"AutoLoginFilter"
+						ClusterGeneralTest.class.getName()
 					);
 				}));
 
@@ -308,14 +304,11 @@ public class ClusterGeneralTest {
 						_getEditServerMVCActionCommand(), "_updateLogLevels",
 						new Class<?>[] {Map.class},
 						Collections.singletonMap(
-							"com.liferay.portal.servlet.filters.autologin." +
-								"AutoLoginFilter",
-							"ERROR"));
+							ClusterGeneralTest.class.getName(), "ERROR"));
 
 					return Log4JUtil.getPriorities(
 					).get(
-						"com.liferay.portal.servlet.filters.autologin." +
-							"AutoLoginFilter"
+						ClusterGeneralTest.class.getName()
 					);
 				}));
 
@@ -334,8 +327,7 @@ public class ClusterGeneralTest {
 
 					return Log4JUtil.getPriorities(
 					).get(
-						"com.liferay.portal.servlet.filters.autologin." +
-							"AutoLoginFilter"
+						ClusterGeneralTest.class.getName()
 					);
 				}));
 	}

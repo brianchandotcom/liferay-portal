@@ -1,0 +1,11 @@
+configurations.all {
+	resolutionStrategy {
+		force group: "com.liferay.portal", name: "com.liferay.portal.test", version: "7.1.0"
+	}
+}
+
+dependencies {
+	testIntegrationImplementation group: "com.liferay.portal", name: "release.dxp.api"
+	testIntegrationImplementation project(":modules:rest-builder:rest-builder-api")
+	testIntegrationImplementation project(":modules:rest-builder:rest-builder-client")
+}

@@ -510,13 +510,13 @@ public class PageElementsTestUtil {
 	private static FragmentReference[] _getFragmentReferences(long groupId)
 		throws PortalException {
 
+		List<FragmentReference> fragmentReferences = new ArrayList<>();
+
 		FragmentCollection fragmentCollection =
 			FragmentCollectionLocalServiceUtil.addFragmentCollection(
 				null, TestPropsValues.getUserId(), groupId,
 				StringUtil.randomString(), StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(groupId));
-
-		List<FragmentReference> fragmentReferences = new ArrayList<>();
 
 		for (FragmentEntry fragmentEntry :
 				Arrays.asList(

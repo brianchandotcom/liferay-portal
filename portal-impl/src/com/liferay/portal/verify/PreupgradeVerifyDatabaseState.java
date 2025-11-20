@@ -135,7 +135,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 					new TreeSet<>(previousUpgradeStaleTableNames));
 		}
 
-		_verifyTableColumns(dbInspector);
+		_verifyColumns(dbInspector);
 	}
 
 	private Set<String> _removeViewNames(
@@ -161,26 +161,26 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		return viewNames;
 	}
 
-	private void _verifyTableColumns(DBInspector dbInspector) throws Exception {
-		Map<String, List<String>> tableColumnDefinitionsMap =
-			DBResourceUtil.getServiceComponentPortalTableColumnDefinitionsMap(
+	private void _verifyColumns(DBInspector dbInspector) throws Exception {
+		Map<String, List<String>> columnDefinitionsMap =
+			DBResourceUtil.getServiceComponentPortalColumnDefinitionsMap(
 				connection);
 
-		if (tableColumnDefinitionsMap.isEmpty()) {
+		if (columnDefinitionsMap.isEmpty()) {
 			return;
 		}
 
-		tableColumnDefinitionsMap.putAll(
-			DBResourceUtil.getServiceComponentModuleTableColumnDefinitionsMap(
+		columnDefinitionsMap.putAll(
+			DBResourceUtil.getServiceComponentModuleColumnDefinitionsMap(
 				connection));
 
-		Map<String, List<String>> mismatchedTableColumnDefinitionsMap =
+		Map<String, List<String>> mismatchedColumnDefinitionsMap =
 			new ConcurrentSkipListMap<>();
-		Map<String, List<String>> missingTableColumnNames =
+		Map<String, List<String>> missingColumnNames =
 			new ConcurrentSkipListMap<>();
 
 		processConcurrently(
-			tableColumnDefinitionsMap,
+			columnDefinitionsMap,
 			entry -> {
 				for (String columnDefinition : entry.getValue()) {
 					int index = columnDefinition.indexOf(StringPool.SPACE);
@@ -189,7 +189,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 					String columnType = columnDefinition.substring(index + 1);
 
 					if (!dbInspector.hasColumn(entry.getKey(), columnName)) {
-						missingTableColumnNames.computeIfAbsent(
+						missingColumnNames.computeIfAbsent(
 							entry.getKey(), tableName -> new ArrayList<>()
 						).add(
 							columnName
@@ -198,7 +198,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 					else if (!dbInspector.hasColumnType(
 								entry.getKey(), columnName, columnType)) {
 
-						mismatchedTableColumnDefinitionsMap.computeIfAbsent(
+						mismatchedColumnDefinitionsMap.computeIfAbsent(
 							entry.getKey(), tableName -> new ArrayList<>()
 						).add(
 							columnDefinition
@@ -219,7 +219,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		if (_log.isWarnEnabled()) {
 			for (Map.Entry<String, List<String>> entry :
-					mismatchedTableColumnDefinitionsMap.entrySet()) {
+					mismatchedColumnDefinitionsMap.entrySet()) {
 
 				if (dbInspector.hasView(entry.getKey())) {
 					continue;
@@ -243,16 +243,16 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		StringBundler sb = new StringBundler();
 
-		for (Map.Entry<String, List<String>> missingTableColumnNamesEntry :
-				missingTableColumnNames.entrySet()) {
+		for (Map.Entry<String, List<String>> missingColumnNamesEntry :
+				missingColumnNames.entrySet()) {
 
-			for (String columnName : missingTableColumnNamesEntry.getValue()) {
+			for (String columnName : missingColumnNamesEntry.getValue()) {
 				sb.append(
 					StringBundler.concat(
 						"Column ", dbInspector.normalizeName(columnName),
 						" is missing for ",
 						dbInspector.normalizeName(
-							missingTableColumnNamesEntry.getKey()),
+							missingColumnNamesEntry.getKey()),
 						partitionSuffix));
 				sb.append(StringPool.NEW_LINE);
 			}

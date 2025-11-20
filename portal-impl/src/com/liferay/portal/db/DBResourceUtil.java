@@ -125,11 +125,11 @@ public class DBResourceUtil {
 	}
 
 	public static Map<String, List<String>>
-			getServiceComponentModuleTableColumnDefinitionsMap(
+			getServiceComponentModuleColumnDefinitionsMap(
 				Connection connection)
 		throws Exception {
 
-		return _getServiceComponentTableColumnDefinitionsMap(
+		return _getServiceComponentColumnDefinitionsMap(
 			connection, "buildNamespace like 'com.liferay%'");
 	}
 
@@ -142,11 +142,11 @@ public class DBResourceUtil {
 	}
 
 	public static Map<String, List<String>>
-			getServiceComponentPortalTableColumnDefinitionsMap(
+			getServiceComponentPortalColumnDefinitionsMap(
 				Connection connection)
 		throws Exception {
 
-		return _getServiceComponentTableColumnDefinitionsMap(
+		return _getServiceComponentColumnDefinitionsMap(
 			connection,
 			"buildNamespace = '" +
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME + "'");
@@ -178,23 +178,23 @@ public class DBResourceUtil {
 	}
 
 	private static Map<String, List<String>>
-			_getServiceComponentTableColumnDefinitionsMap(
+			_getServiceComponentColumnDefinitionsMap(
 				Connection connection, String sqlCondition)
 		throws Exception {
 
-		Map<String, List<String>> tableColumnDefinitionsMap = new HashMap<>();
+		Map<String, List<String>> columnDefinitionsMap = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				_SERVICE_COMPONENT_DATA_SQL + sqlCondition);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				tableColumnDefinitionsMap.putAll(
-					_parseTableColumnDefinitionsMap(resultSet.getString(1)));
+				columnDefinitionsMap.putAll(
+					_parseColumnDefinitionsMap(resultSet.getString(1)));
 			}
 		}
 
-		return tableColumnDefinitionsMap;
+		return columnDefinitionsMap;
 	}
 
 	private static Set<String> _getServiceComponentTableNames(
@@ -245,10 +245,10 @@ public class DBResourceUtil {
 		).build();
 	}
 
-	private static Map<String, List<String>> _parseTableColumnDefinitionsMap(
+	private static Map<String, List<String>> _parseColumnDefinitionsMap(
 		String sql) {
 
-		Map<String, List<String>> tableColumnDefinitionsMap = new TreeMap<>();
+		Map<String, List<String>> columnDefinitionsMap = new TreeMap<>();
 
 		String tableName = null;
 
@@ -262,7 +262,7 @@ public class DBResourceUtil {
 				tableName =
 					StringUtil.split(createTableSQL, StringPool.SPACE)[2];
 
-				tableColumnDefinitionsMap.put(tableName, new ArrayList<>());
+				columnDefinitionsMap.put(tableName, new ArrayList<>());
 
 				continue;
 			}
@@ -279,14 +279,14 @@ public class DBResourceUtil {
 				line, CharPool.COMMA, StringPool.BLANK);
 			line = StringUtil.removeSubstring(line, "primary key");
 
-			tableColumnDefinitionsMap.get(
+			columnDefinitionsMap.get(
 				tableName
 			).add(
 				line.trim()
 			);
 		}
 
-		return tableColumnDefinitionsMap;
+		return columnDefinitionsMap;
 	}
 
 	private static String _read(Bundle bundle, String path) {

@@ -61,26 +61,29 @@ public class DropZonePageElementDefinitionSerDes {
 			sb.append(dropZonePageElementDefinition.getAddNewFragmentEntries());
 		}
 
-		if (dropZonePageElementDefinition.getAllowedFragments() != null) {
+		if (dropZonePageElementDefinition.getAllowedFragmentReferences() !=
+				null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"allowedFragments\": ");
+			sb.append("\"allowedFragmentReferences\": ");
 
 			sb.append("[");
 
 			for (int i = 0;
-				 i < dropZonePageElementDefinition.getAllowedFragments().length;
+				 i < dropZonePageElementDefinition.
+					 getAllowedFragmentReferences().length;
 				 i++) {
 
 				sb.append(
 					String.valueOf(
-						dropZonePageElementDefinition.getAllowedFragments()
-							[i]));
+						dropZonePageElementDefinition.
+							getAllowedFragmentReferences()[i]));
 
 				if ((i + 1) < dropZonePageElementDefinition.
-						getAllowedFragments().length) {
+						getAllowedFragmentReferences().length) {
 
 					sb.append(", ");
 				}
@@ -133,14 +136,17 @@ public class DropZonePageElementDefinitionSerDes {
 					dropZonePageElementDefinition.getAddNewFragmentEntries()));
 		}
 
-		if (dropZonePageElementDefinition.getAllowedFragments() == null) {
-			map.put("allowedFragments", null);
+		if (dropZonePageElementDefinition.getAllowedFragmentReferences() ==
+				null) {
+
+			map.put("allowedFragmentReferences", null);
 		}
 		else {
 			map.put(
-				"allowedFragments",
+				"allowedFragmentReferences",
 				String.valueOf(
-					dropZonePageElementDefinition.getAllowedFragments()));
+					dropZonePageElementDefinition.
+						getAllowedFragmentReferences()));
 		}
 
 		if (dropZonePageElementDefinition.getType() == null) {
@@ -173,7 +179,9 @@ public class DropZonePageElementDefinitionSerDes {
 			if (Objects.equals(jsonParserFieldName, "addNewFragmentEntries")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "allowedFragments")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "allowedFragmentReferences")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -194,22 +202,26 @@ public class DropZonePageElementDefinitionSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "allowedFragments")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "allowedFragmentReferences")) {
+
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					FragmentReference[] allowedFragmentsArray =
+					FragmentReference[] allowedFragmentReferencesArray =
 						new FragmentReference[jsonParserFieldValues.length];
 
-					for (int i = 0; i < allowedFragmentsArray.length; i++) {
-						allowedFragmentsArray[i] =
+					for (int i = 0; i < allowedFragmentReferencesArray.length;
+						 i++) {
+
+						allowedFragmentReferencesArray[i] =
 							FragmentReferenceSerDes.toDTO(
 								(String)jsonParserFieldValues[i]);
 					}
 
-					dropZonePageElementDefinition.setAllowedFragments(
-						allowedFragmentsArray);
+					dropZonePageElementDefinition.setAllowedFragmentReferences(
+						allowedFragmentReferencesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

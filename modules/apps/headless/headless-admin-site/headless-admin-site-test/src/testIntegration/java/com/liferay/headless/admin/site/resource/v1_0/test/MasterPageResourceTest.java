@@ -1067,14 +1067,14 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	private void _testPutSiteSitePageWithDropZonePageElement()
 		throws Exception {
 
+		MasterPageResource masterPageResource = _getMasterPageResource();
+
 		PageElement[] pageElements = {
 			PageElementsTestUtil.getDropZonePageElement(
 				testGroup.getGroupId(), RandomTestUtil.randomString())
 		};
 
 		MasterPage masterPage = _getMasterPage(pageElements);
-
-		MasterPageResource masterPageResource = _getMasterPageResource();
 
 		MasterPage postMasterPage = masterPageResource.postSiteMasterPage(
 			testGroup.getExternalReferenceCode(), masterPage);

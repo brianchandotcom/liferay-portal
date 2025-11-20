@@ -27,7 +27,6 @@ com.liferay:org.mitre.dsmiley.http.proxy.servlet=org.mitre.dsmiley.httpproxy:smi
 com.liferay:org.opensaml.messaging=com.liferay:org.opensaml.messaging:3.3.0.LIFERAY-PATCHED-1.JAKARTA-LIFERAY-PATCHED-1
 com.liferay:org.osgi.service.http=com.liferay:org.osgi.service.http:1.2.2.LIFERAY-PATCHED-1.JAKARTA-LIFERAY-PATCHED-1
 com.liferay:org.quartz=com.liferay:org.quartz:2.1.7.LIFERAY-PATCHED-2
-com.liferay:org.springframework.orm=com.liferay:org.springframework.orm:5.3.39.LIFERAY-PATCHED-1.JAKARTA-LIFERAY-PATCHED-1
 com.liferay.alloy-taglibs:alloy-taglib=com.liferay:com.liferay.alloy.taglib:1.1.14.JAKARTA-LIFERAY-PATCHED-1
 com.liferay.faces:com.liferay.faces.bridge.api=com.liferay:com.liferay.faces.bridge.api:4.3.0.JAKARTA-LIFERAY-PATCHED-1
 com.liferay.faces:com.liferay.faces.bridge.ext=com.liferay:com.liferay.faces.bridge.ext:6.1.1.JAKARTA-LIFERAY-PATCHED-1

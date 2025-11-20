@@ -151,7 +151,6 @@
 	<classpathentry kind="lib" path="lib/portal/spring-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-expression.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-jdbc.jar"/>
-	<classpathentry kind="lib" path="lib/portal/spring-orm.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-tx.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-web.jar"/>
 	<classpathentry kind="lib" path="lib/portal/stax-ex.jar"/>

@@ -125,7 +125,6 @@
 /portal/spring-core.jar
 /portal/spring-expression.jar
 /portal/spring-jdbc.jar
-/portal/spring-orm.jar
 /portal/spring-tx.jar
 /portal/spring-web.jar
 /portal/stax-ex.jar

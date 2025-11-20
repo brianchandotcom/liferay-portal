@@ -164,6 +164,38 @@
 					"#tag-name": "labels"
 				},
 				{
+					"#cdata-value": [
+						"[",
+						"    {",
+						"        \"name\": \"content\",",
+						"        \"type\": \"string\"",
+						"    }",
+						"]"
+					],
+					"#tag-name": "input-variables"
+				},
+				{
+					"#cdata-value": [
+						"[",
+						"    {",
+						"        \"name\": \"reason\",",
+						"        \"type\": \"string\"",
+						"    }",
+						"]"
+					],
+					"#tag-name": "output-variables"
+				},
+				{
+					"#cdata-value": [
+						"You are a decision maker. Based on a given content, ",
+						"you must approve the content if it contains ",
+						"information about bananas, otherwise it should be ",
+						"rejected. The transition names are: approve and ",
+						"reject"
+					],
+					"#tag-name": "prompt"
+				},
+				{
 					"#child-nodes": [
 						{
 							"#child-nodes": [
@@ -221,37 +253,6 @@
 						}
 					],
 					"#tag-name": "transitions"
-				},
-				{
-					"#cdata-value": [
-						"[",
-						"    {",
-						"        \"name\": \"content\",",
-						"        \"type\": \"string\"",
-						"    }",
-						"]"
-					],
-					"#tag-name": "input-variables"
-				},
-				{
-					"#cdata-value": [
-						"[",
-						"    {",
-						"        \"name\": \"reason\",",
-						"        \"type\": \"string\"",
-						"    }",
-						"]"
-					],
-					"#tag-name": "output-variables"
-				},
-				{
-					"#cdata-value": [
-						"You are a decision maker. Based on a given content, ",
-						"you must approve the content if it contains ",
-						"information about bananas, otherwise it should be ",
-						"rejected."
-					],
-					"#tag-name": "prompt"
 				},
 				{
 					"#cdata-value": [

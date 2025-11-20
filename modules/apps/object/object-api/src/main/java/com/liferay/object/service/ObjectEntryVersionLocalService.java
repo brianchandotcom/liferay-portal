@@ -306,6 +306,11 @@ public interface ObjectEntryVersionLocalService
 	public List<ObjectEntryVersion> getObjectEntryVersions(
 		long objectEntryId, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectEntryVersion> getObjectEntryVersions(
+		long objectEntryId, int start, int end,
+		OrderByComparator<ObjectEntryVersion> orderByComparator);
+
 	/**
 	 * Returns the number of object entry versions.
 	 *

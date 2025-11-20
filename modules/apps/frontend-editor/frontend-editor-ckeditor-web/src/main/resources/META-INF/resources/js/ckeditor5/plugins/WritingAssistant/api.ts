@@ -8,8 +8,8 @@ import {fetch} from 'frontend-js-web';
 
 import {EActionType} from './types';
 
-export function createEventSourceConnection() {
-	const eventSource = new EventSource('/o/ai-hub/v1.0/tasks/subscribe', {
+export function createEventSource() {
+	return new EventSource('/o/ai-hub/v1.0/tasks/subscribe', {
 		fetch: (input, init) =>
 			fetch(input as RequestInfo, {
 				...init,
@@ -20,22 +20,30 @@ export function createEventSourceConnection() {
 			}),
 		withCredentials: true,
 	});
-
-	return eventSource;
 }
 
-export async function postTasks(content: string, type: EActionType) {
-	await fetch(`/o/ai-hub/v1.0/tasks`, {
-		body: JSON.stringify({
-			context: {
-				text: content,
-			},
-			type,
-		}),
-		headers: new Headers({
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-		}),
-		method: 'POST',
-	});
+export async function postByExternalReferenceCodeTask(
+	content: string,
+	eventSourceReference: string,
+	type: EActionType
+) {
+	await fetch(
+		`/o/ai-hub/v1.0/by-external-reference-code/${eventSourceReference}/tasks`,
+		{
+			body: JSON.stringify({
+				context: {
+					text: content,
+				},
+				scope: {
+					externalReferenceCode: 'L_CMS',
+				},
+				type,
+			}),
+			headers: new Headers({
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			}),
+			method: 'POST',
+		}
+	);
 }

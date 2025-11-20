@@ -7,12 +7,11 @@ import {Command, Editor, Plugin} from '@ckeditor/ckeditor5-core/dist/index.js';
 import {Model} from '@ckeditor/ckeditor5-engine/dist/index.js';
 import {ContextualBalloon, View} from '@ckeditor/ckeditor5-ui/dist/index.js';
 import {ModelText, ModelTextProxy, ModelWriter} from 'ckeditor5';
-import {EventSource} from 'eventsource';
 import {cancelDebounce, debounce} from 'frontend-js-web';
 import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 
-import {createEventSourceConnection, postTasks} from './api';
+import {createEventSource, postByExternalReferenceCodeTask} from './api';
 import WritingAssistantActions from './components/WritingAssistantActions';
 import WritingAssistantConfirmationAction from './components/WritingAssistantConfimationAction';
 import {EActionType} from './types';
@@ -20,7 +19,7 @@ import {EActionType} from './types';
 export default class WritingAssistant extends Plugin {
 	public balloonView: View | null = null;
 	public contentSelection: string = '';
-	public connection: EventSource | null = null;
+	public eventSourceReference: string = '';
 	public reactRoot: Root | null = null;
 
 	static get requires() {
@@ -32,9 +31,8 @@ export default class WritingAssistant extends Plugin {
 
 		const balloon = editor.plugins.get(ContextualBalloon);
 
-		const commandName = 'writingAssistant';
+		editor.commands.add('writingAssistant', new Command(editor));
 
-		editor.commands.add(commandName, new Command(editor));
 		const model = editor.model;
 
 		this._addEventListeners();
@@ -43,12 +41,14 @@ export default class WritingAssistant extends Plugin {
 	}
 
 	_addEventListeners() {
-		const connection = createEventSourceConnection();
+		const eventSource = createEventSource();
 
-		this.connection = connection;
+		eventSource.addEventListener('Subscribe', (event) => {
+			this.eventSourceReference = event.data;
+		});
 
 		Object.values(EActionType).forEach((type) => {
-			connection.addEventListener(type, (event) => {
+			eventSource.addEventListener(type, (event) => {
 				this._changeContent(event.data);
 			});
 		});
@@ -217,7 +217,11 @@ export default class WritingAssistant extends Plugin {
 				<WritingAssistantActions
 					containerRef={reactView.element}
 					handleActionClick={async (type: EActionType) => {
-						await postTasks(this.contentSelection, type);
+						await postByExternalReferenceCodeTask(
+							this.contentSelection,
+							this.eventSourceReference,
+							type
+						);
 					}}
 				/>
 			);

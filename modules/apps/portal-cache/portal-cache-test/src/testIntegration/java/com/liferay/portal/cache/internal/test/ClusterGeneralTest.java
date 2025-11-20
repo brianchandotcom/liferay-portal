@@ -96,20 +96,6 @@ public class ClusterGeneralTest {
 		Assert.assertFalse(
 			_tomcatNode2.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		// register a listener for node 1
-
-		_tomcatNode1.syncExecute(
-			() -> {
-				BundleContext bundleContext =
-					SystemBundleUtil.getBundleContext();
-
-				bundleContext.registerService(
-					ClusterMasterTokenTransitionListener.class,
-					new TestClusterMasterTokenTransitionListener(), null);
-
-				return null;
-			});
-
 		// register a listener for node 2
 
 		_tomcatNode2.syncExecute(

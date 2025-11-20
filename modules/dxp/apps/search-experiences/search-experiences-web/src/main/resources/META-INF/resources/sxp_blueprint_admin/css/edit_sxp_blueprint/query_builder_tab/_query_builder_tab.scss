@@ -53,6 +53,14 @@
 	}
 
 	&.unified-query-builder-tab {
+		.scope-selector {
+			.table-responsive {
+				margin-top: 24px;
+				max-height: 580px;
+				overflow: auto;
+			}
+		}
+
 		.vertical-nav-content-wrapper {
 			max-width: unset;
 		}

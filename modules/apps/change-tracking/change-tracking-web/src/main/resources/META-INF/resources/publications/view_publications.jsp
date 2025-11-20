@@ -23,7 +23,7 @@
 		creationMenu="<%= publicationsDisplayContext.getCreationMenu() %>"
 		fdsActionDropdownItems="<%= publicationsDisplayContext.getFDSActionDropdownItems() %>"
 		id="<%= PublicationsFDSNames.PUBLICATIONS_ONGOING %>"
-		propsTransformer="{DeletePublicationsFDSPropsTransformer} from change-tracking-web"
+		propsTransformer="{OngoingPublicationsFDSPropsTransformer} from change-tracking-web"
 	/>
 </div>
 

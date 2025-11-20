@@ -75,6 +75,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -417,10 +418,13 @@ public class NavigationMenuResourceTest
 	}
 
 	private void _assertNavigationMenuItem(
-		String name, Map<String, String> nameI18nMap,
-		NavigationMenuItem navigationMenuItem, String type,
-		boolean useCustomName) {
+		String externalReferenceCode, String name,
+		Map<String, String> nameI18nMap, NavigationMenuItem navigationMenuItem,
+		String type, boolean useCustomName) {
 
+		Assert.assertEquals(
+			externalReferenceCode,
+			navigationMenuItem.getExternalReferenceCode());
 		Assert.assertEquals(name, navigationMenuItem.getName());
 		Assert.assertEquals(nameI18nMap, navigationMenuItem.getName_i18n());
 		Assert.assertEquals(type, navigationMenuItem.getType());
@@ -718,6 +722,7 @@ public class NavigationMenuResourceTest
 		return new NavigationMenuItem[] {
 			new NavigationMenuItem() {
 				{
+					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap1;
 					type = "node";
 					typeSettings = _getTypeSettings(
@@ -727,6 +732,7 @@ public class NavigationMenuResourceTest
 			},
 			new NavigationMenuItem() {
 				{
+					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap1;
 					type = "layout";
 					typeSettings = _getTypeSettings(
@@ -736,6 +742,7 @@ public class NavigationMenuResourceTest
 			},
 			new NavigationMenuItem() {
 				{
+					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap2;
 					type = "layout";
 					typeSettings = _getTypeSettings(
@@ -745,6 +752,7 @@ public class NavigationMenuResourceTest
 			},
 			new NavigationMenuItem() {
 				{
+					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap1;
 					type = "layout";
 					typeSettings = _getTypeSettings(
@@ -754,6 +762,7 @@ public class NavigationMenuResourceTest
 			},
 			new NavigationMenuItem() {
 				{
+					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap1;
 					type = "layout";
 					typeSettings = _getTypeSettings(
@@ -868,11 +877,16 @@ public class NavigationMenuResourceTest
 			LocaleUtil.US.toLanguageTag(), RandomTestUtil.randomString()
 		).build();
 
+		NavigationMenu randomNavigationMenu = _randomNavigationMenu(
+			layout1, layout2, nameI18nMap1, nameI18nMap2);
+
+		String[] externalReferenceCodes = TransformUtil.transformToArray(
+			Arrays.asList(randomNavigationMenu.getNavigationMenuItems()),
+			NavigationMenuItem::getExternalReferenceCode, String.class);
+
 		NavigationMenu postNavigationMenu =
 			navigationMenuResource.postSiteNavigationMenu(
-				testGroup.getExternalReferenceCode(),
-				_randomNavigationMenu(
-					layout1, layout2, nameI18nMap1, nameI18nMap2));
+				testGroup.getExternalReferenceCode(), randomNavigationMenu);
 
 		NavigationMenuResource navigationMenuResource =
 			_buildNavigationMenuResource(LocaleUtil.SPAIN);
@@ -883,16 +897,19 @@ public class NavigationMenuResourceTest
 				postNavigationMenu.getExternalReferenceCode());
 
 		_assertNavigationMenuItem(
+			externalReferenceCodes[0],
 			nameI18nMap1.get(LocaleUtil.SPAIN.toLanguageTag()), nameI18nMap1,
 			getNavigationMenu.getNavigationMenuItems()[0], "node", false);
 		_assertNavigationMenuItem(
+			externalReferenceCodes[1],
 			nameI18nMap1.get(LocaleUtil.SPAIN.toLanguageTag()), nameI18nMap1,
 			getNavigationMenu.getNavigationMenuItems()[1], "layout", true);
 		_assertNavigationMenuItem(
+			externalReferenceCodes[2],
 			nameI18nMap2.get(LocaleUtil.US.toLanguageTag()), nameI18nMap2,
 			getNavigationMenu.getNavigationMenuItems()[2], "layout", true);
 		_assertNavigationMenuItem(
-			layoutNameMap1.get(LocaleUtil.SPAIN),
+			externalReferenceCodes[3], layoutNameMap1.get(LocaleUtil.SPAIN),
 			HashMapBuilder.put(
 				LocaleUtil.US.toLanguageTag(), layoutNameMap1.get(LocaleUtil.US)
 			).put(
@@ -901,7 +918,7 @@ public class NavigationMenuResourceTest
 			).build(),
 			getNavigationMenu.getNavigationMenuItems()[3], "layout", false);
 		_assertNavigationMenuItem(
-			layoutNameMap2.get(LocaleUtil.US),
+			externalReferenceCodes[4], layoutNameMap2.get(LocaleUtil.US),
 			HashMapBuilder.put(
 				LocaleUtil.US.toLanguageTag(), layoutNameMap2.get(LocaleUtil.US)
 			).build(),

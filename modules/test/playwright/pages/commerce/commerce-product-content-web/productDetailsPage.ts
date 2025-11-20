@@ -38,6 +38,7 @@ export class ProductDetailsPage {
 		container?: Locator | Page
 	) => Promise<Locator>;
 	readonly productNameHeading: (productName: string) => Promise<Locator>;
+	readonly productOptionUploadFormFeedback: Locator;
 	readonly promoPriceField: (
 		promoPrice: string,
 		container?: Locator | Page
@@ -118,6 +119,9 @@ export class ProductDetailsPage {
 		this.productNameHeading = async (productName) => {
 			return page.getByRole('heading', {name: productName});
 		};
+		this.productOptionUploadFormFeedback = page.locator(
+			'.product-option-upload'
+		);
 		this.promoPriceField = async (
 			promoPrice: string,
 			container = this.page

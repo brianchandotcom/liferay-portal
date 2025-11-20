@@ -1,0 +1,19 @@
+task runGradleTest
+
+gradle.liferayWorkspace {
+	product = "dxp-2025.q2.12"
+}
+
+runGradleTest {
+	dependsOn ":modules:rest-builder:buildRest"
+
+	doLast {
+		Project project = project(":modules:rest-builder")
+
+		fileTree(dir: project.projectDir, include: '**/*.java').each {
+			file ->
+			assert file.text.contains("javax")
+			assert !file.text.contains("jakarta")
+		}
+	}
+}

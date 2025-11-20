@@ -345,8 +345,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				null, masterPage.getExternalReferenceCode(),
 				fileEntry.getExternalReferenceCode()));
 
-		_testPutSiteSitePageWithDropZonePageElement();
 		_testPutSiteMasterPageWithPageSpecifications();
+		_testPutSiteSitePageWithDropZonePageElement();
 
 		_enableLocalStaging();
 

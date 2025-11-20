@@ -35,6 +35,11 @@ type Folder = {
 	title: string;
 };
 
+type Space = {
+	name: string;
+	scopeId: number;
+};
+
 const SPACES_URL = `${window.location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`;
 
 const SUCCESS_MESSAGES = {
@@ -183,13 +188,15 @@ function FolderItemSelectorModalContent({
 			: SPACES_URL
 	);
 	const [schemaKey, setSchemaKey] = useState(0);
+	const [currentSpace, setCurrentSpace] = useState<Space | undefined>();
 
 	const {observer, onOpenChange, open} = useModal();
 
-	function onSpaceClick({scopeId}: {scopeId: number}) {
+	function handleSpaceClick(space: Space) {
+		setCurrentSpace(space);
 		setSchemaKey((prev) => prev + 1);
 		setSelectedItemType('folder');
-		setURL(getSpaceFoldersURL(scopeId));
+		setURL(getSpaceFoldersURL(space.scopeId));
 	}
 
 	const setItemComponentProps = ({item, props}: {item: any; props: any}) => {
@@ -203,7 +210,8 @@ function FolderItemSelectorModalContent({
 			return {
 				...props,
 				onClick: () => {
-					onSpaceClick({
+					handleSpaceClick({
+						name: assetLibrary!.name,
 						scopeId: assetLibrary!.groupId,
 					});
 				},
@@ -296,11 +304,24 @@ function FolderItemSelectorModalContent({
 									{
 										label: Liferay.Language.get('spaces'),
 										onClick: () => {
+											setCurrentSpace(undefined);
 											setSchemaKey((prev) => prev + 1);
 											setSelectedItemType('space');
 											setURL(SPACES_URL);
 										},
 									},
+									...(currentSpace
+										? [
+												{
+													label: currentSpace.name,
+													onClick: () => {
+														handleSpaceClick(
+															currentSpace
+														);
+													},
+												},
+											]
+										: []),
 								]
 					}
 					breadcrumbsLabel={false}

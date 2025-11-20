@@ -183,28 +183,22 @@ export default function ScopeSelector({
 
 	return (
 		<div className="sheet">
-			<ClayLayout.Row justify="between">
-				<ClayLayout.Col size={6}>
-					<span className="text-6 text-weight-bold">
-						{Liferay.Language.get('scope')}
-					</span>
-				</ClayLayout.Col>
+			<ClayLayout.SheetHeader className="mb-3">
+				<span className="text-6 text-weight-bold">
+					{Liferay.Language.get('scope')}
+				</span>
 
-				<ClayLayout.Col size={6}>
-					<ClayButton
-						aria-label={Liferay.Language.get('collapse')}
-						className="c-ml-2 component-action float-right"
-						displayType="unstyled"
-						onClick={() => setCollapseSection(!collapseSection)}
-					>
-						<ClayIcon
-							symbol={
-								collapseSection ? 'angle-right' : 'angle-down'
-							}
-						/>
-					</ClayButton>
-				</ClayLayout.Col>
-			</ClayLayout.Row>
+				<ClayButton
+					aria-label={Liferay.Language.get('collapse')}
+					className="c-ml-2 component-action float-right"
+					displayType="unstyled"
+					onClick={() => setCollapseSection(!collapseSection)}
+				>
+					<ClayIcon
+						symbol={collapseSection ? 'angle-right' : 'angle-down'}
+					/>
+				</ClayButton>
+			</ClayLayout.SheetHeader>
 
 			{!collapseSection && (
 				<>

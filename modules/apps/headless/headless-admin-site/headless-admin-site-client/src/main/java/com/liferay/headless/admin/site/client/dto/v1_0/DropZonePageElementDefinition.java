@@ -48,27 +48,30 @@ public class DropZonePageElementDefinition
 
 	protected Boolean addNewFragmentEntries;
 
-	public FragmentReference[] getAllowedFragments() {
-		return allowedFragments;
+	public FragmentReference[] getAllowedFragmentReferences() {
+		return allowedFragmentReferences;
 	}
 
-	public void setAllowedFragments(FragmentReference[] allowedFragments) {
-		this.allowedFragments = allowedFragments;
+	public void setAllowedFragmentReferences(
+		FragmentReference[] allowedFragmentReferences) {
+
+		this.allowedFragmentReferences = allowedFragmentReferences;
 	}
 
-	public void setAllowedFragments(
+	public void setAllowedFragmentReferences(
 		UnsafeSupplier<FragmentReference[], Exception>
-			allowedFragmentsUnsafeSupplier) {
+			allowedFragmentReferencesUnsafeSupplier) {
 
 		try {
-			allowedFragments = allowedFragmentsUnsafeSupplier.get();
+			allowedFragmentReferences =
+				allowedFragmentReferencesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentReference[] allowedFragments;
+	protected FragmentReference[] allowedFragmentReferences;
 
 	@Override
 	public DropZonePageElementDefinition clone()

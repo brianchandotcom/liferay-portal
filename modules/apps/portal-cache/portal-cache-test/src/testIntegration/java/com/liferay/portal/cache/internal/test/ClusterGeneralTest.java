@@ -173,16 +173,19 @@ public class ClusterGeneralTest {
 			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
 	}
 
-	private static CountDownLatch _getCountDownLatch() {
+	private static void _await() throws Exception {
 		LoggerContext loggerContext = LoggerContext.getContext();
 
 		List<TestPropertyChangeListener> listeners =
 			ReflectionTestUtil.getFieldValue(
 				loggerContext, "propertyChangeListeners");
 
-		TestPropertyChangeListener listener = listeners.get(0);
+		TestPropertyChangeListener testPropertyChangeListener = listeners.get(
+			0);
 
-		return listener.getCountDownLatch();
+		testPropertyChangeListener.await();
+
+		loggerContext.removePropertyChangeListener(testPropertyChangeListener);
 	}
 
 	private static MVCActionCommand _getEditServerMVCActionCommand()
@@ -202,16 +205,6 @@ public class ClusterGeneralTest {
 
 		return bundleContext.getService(
 			editServerMVCActionCommandServiceReference);
-	}
-
-	private static TestPropertyChangeListener _getTestPropertyChangeListener() {
-		LoggerContext loggerContext = LoggerContext.getContext();
-
-		List<TestPropertyChangeListener> listeners =
-			ReflectionTestUtil.getFieldValue(
-				loggerContext, "propertyChangeListeners");
-
-		return listeners.get(0);
 	}
 
 	private void _updateLogLevelsForAllNodes(
@@ -269,12 +262,7 @@ public class ClusterGeneralTest {
 			"DEBUG",
 			listenTomcatNode.syncExecute(
 				() -> {
-					_getCountDownLatch().await();
-
-					LoggerContext loggerContext = LoggerContext.getContext();
-
-					loggerContext.removePropertyChangeListener(
-						_getTestPropertyChangeListener());
+					_await();
 
 					return Log4JUtil.getPriorities(
 					).get(
@@ -318,12 +306,7 @@ public class ClusterGeneralTest {
 			"ERROR",
 			listenTomcatNode.syncExecute(
 				() -> {
-					_getCountDownLatch().await();
-
-					LoggerContext loggerContext = LoggerContext.getContext();
-
-					loggerContext.removePropertyChangeListener(
-						_getTestPropertyChangeListener());
+					_await();
 
 					return Log4JUtil.getPriorities(
 					).get(
@@ -363,8 +346,8 @@ public class ClusterGeneralTest {
 	private static class TestPropertyChangeListener
 		implements PropertyChangeListener {
 
-		public CountDownLatch getCountDownLatch() {
-			return _countDownLatch;
+		public void await() throws Exception {
+			_countDownLatch.await();
 		}
 
 		@Override

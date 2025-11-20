@@ -294,6 +294,12 @@ public class ClusterGeneralTest {
 					() -> {
 						_getCountDownLatch().await();
 
+						LoggerContext loggerContext =
+							LoggerContext.getContext();
+
+						loggerContext.removePropertyChangeListener(
+							_getTestPropertyChangeListener());
+
 						return Log4JUtil.getPriorities(
 						).get(
 							"com.liferay.portal.servlet.filters.autologin." +
@@ -302,19 +308,6 @@ public class ClusterGeneralTest {
 					}));
 		}
 		finally {
-
-			// Remove the listener in listenTomcatNode
-
-			listenTomcatNode.syncExecute(
-				() -> {
-					LoggerContext loggerContext = LoggerContext.getContext();
-
-					loggerContext.removePropertyChangeListener(
-						_getTestPropertyChangeListener());
-
-					return null;
-				});
-
 			Map<String, String> restoreMap = HashMapBuilder.put(
 				"com.liferay.portal.servlet.filters.autologin.AutoLoginFilter",
 				defaultValue

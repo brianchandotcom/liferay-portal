@@ -372,13 +372,11 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		Assert.assertEquals(
 			patchSku.getPromoPrice(), randomSku.getPromoPrice());
 
-		CommercePriceEntry commerceBasePriceListPriceEntry =
-			_getCommercePriceEntry(
-				_cpInstanceLocalService.fetchCPInstance(sku.getId()),
-				CommercePriceListConstants.TYPE_PRICE_LIST, null);
+		CommercePriceEntry commercePriceEntry = _getCommercePriceEntry(
+			_cpInstanceLocalService.fetchCPInstance(sku.getId()),
+			CommercePriceListConstants.TYPE_PRICE_LIST, null);
 
-		Assert.assertEquals(
-			BigDecimal.ZERO, commerceBasePriceListPriceEntry.getPrice());
+		Assert.assertEquals(BigDecimal.ZERO, commercePriceEntry.getPrice());
 
 		assertValid(patchSku);
 	}

@@ -36,11 +36,7 @@ test('LPD-53979 Assert warning alert appears when sandbox mode is enabled and Ow
 
 	await page.getByRole('menuitem', {name: 'Settings'}).click();
 
-	const sandboxOnlyCheckbox = page.getByRole('checkbox', {
-		name: 'enable-sandbox-only',
-	});
-
-	await expect(sandboxOnlyCheckbox).toBeChecked();
+	await expect(changeTrackingPage.sandboxOnlyCheckbox).toBeChecked();
 
 	const warningAlert = page.getByText(
 		'Currently, any publication owner can publish the publication'

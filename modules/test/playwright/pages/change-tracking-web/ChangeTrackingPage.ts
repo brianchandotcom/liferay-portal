@@ -22,6 +22,7 @@ export class ChangeTrackingPage {
 	readonly page: Page;
 	readonly reviewChangesButton: Locator;
 	readonly tabsContainer: Locator;
+	readonly sandboxOnlyCheckbox: Locator;
 
 	constructor(page: Page) {
 		this.frontendDataSetEntries = page.locator(
@@ -36,6 +37,9 @@ export class ChangeTrackingPage {
 			name: 'Review Changes',
 		});
 		this.tabsContainer = page.locator('nav.navbar');
+		this.sandboxOnlyCheckbox = page.getByRole('checkbox', {
+			name: 'Enable Sandbox Only Mode',
+		});
 	}
 
 	async addComment(comment?: string) {
@@ -483,27 +487,23 @@ export class ChangeTrackingPage {
 
 		await expect(this.page.getByText('Enable Publications')).toBeVisible();
 
-		const checkBox = this.page.getByRole('checkbox', {
-			name: 'enable-sandbox-only',
-		});
-
 		const publicationsEnabled = this.page.getByRole('checkbox', {
 			name: 'Enable Publications',
 		});
 
 		if (check) {
-			await checkBox.setChecked(true);
+			await this.sandboxOnlyCheckbox.setChecked(true);
 
 			await expect(publicationsEnabled).toBeChecked();
 
-			await expect(checkBox).toBeChecked();
+			await expect(this.sandboxOnlyCheckbox).toBeChecked();
 		}
 		else {
-			await checkBox.setChecked(false);
+			await this.sandboxOnlyCheckbox.setChecked(false);
 
 			await expect(publicationsEnabled).toBeChecked();
 
-			await expect(checkBox).not.toBeChecked();
+			await expect(this.sandboxOnlyCheckbox).not.toBeChecked();
 		}
 	}
 

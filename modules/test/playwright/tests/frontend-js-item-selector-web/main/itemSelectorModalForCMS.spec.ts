@@ -117,21 +117,21 @@ async function uploadSampleFile(
 
 test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 	await test.step('Create Spaces', async () => {
-		[firstSpace, secondSpace] = await Promise.all([
-			createSpace(apiHelpers, firstSpaceName),
-			createSpace(apiHelpers, secondSpaceName),
-		]);
+		firstSpace = await createSpace(apiHelpers, firstSpaceName);
+		secondSpace = await createSpace(apiHelpers, secondSpaceName);
 	});
 
 	await test.step('Upload sample files', async () => {
-		[firstSpaceObjectEntry, secondSpaceObjectEntry] = await Promise.all([
-			uploadSampleFile(apiHelpers, 'first space file title', firstSpace),
-			uploadSampleFile(
-				apiHelpers,
-				'second space file title',
-				secondSpace
-			),
-		]);
+		firstSpaceObjectEntry = await uploadSampleFile(
+			apiHelpers,
+			'first space file title',
+			firstSpace
+		);
+		secondSpaceObjectEntry = await uploadSampleFile(
+			apiHelpers,
+			'second space file title',
+			secondSpace
+		);
 	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -150,10 +150,8 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	await Promise.all([
-		deleteSampleFile(apiHelpers, firstSpaceObjectEntry.id),
-		deleteSampleFile(apiHelpers, secondSpaceObjectEntry.id),
-	]);
+	await deleteSampleFile(apiHelpers, firstSpaceObjectEntry.id);
+	await deleteSampleFile(apiHelpers, secondSpaceObjectEntry.id);
 });
 
 test('Item Selector Modal with Spaces filter for when selecting CMS Files', async ({

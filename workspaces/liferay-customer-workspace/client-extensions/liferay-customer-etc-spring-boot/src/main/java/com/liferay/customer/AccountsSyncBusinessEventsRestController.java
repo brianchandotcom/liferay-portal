@@ -7,25 +7,15 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
-import com.liferay.customer.constants.ExternalLinkConstants;
 import com.liferay.customer.constants.HeatTagConstants;
 import com.liferay.customer.constants.JiraIssueConstants;
-import com.liferay.customer.constants.ZendeskHeatTagConstants;
 import com.liferay.customer.model.JiraSupportIssue;
 import com.liferay.customer.permission.BusinessEventPermission;
 import com.liferay.customer.service.JiraService;
-import com.liferay.customer.service.KoroneikiService;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
-import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
-import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
-import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
-import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -86,25 +76,16 @@ public class AccountsSyncBusinessEventsRestController
 			JSONArray businessEventsJSONArray = jsonObject.getJSONArray(
 				"businessEvents");
 
-			if (_jiraSupportEnabled) {
-				_updateJSM(
-					externalReferenceCode,
-					_getBusinessEventsSummary(businessEventsJSONArray),
-					_getJSMAssociatedTicketsHeatTags(businessEventsJSONArray));
-			}
-			else {
-				_updateZendesk(
-					_fetchZendeskOrganizationId(externalReferenceCode),
-					_getBusinessEventsSummary(businessEventsJSONArray),
-					_getZendeskAssociatedTicketsHeatTags(
-						businessEventsJSONArray));
-			}
+			_updateJSM(
+				externalReferenceCode,
+				_getBusinessEventsSummary(businessEventsJSONArray),
+				_getJSMAssociatedTicketsHeatTags(businessEventsJSONArray));
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to update Zendesk business events for " +
+				"Unable to update JSM business events for " +
 					externalReferenceCode,
 				exception);
 
@@ -153,27 +134,6 @@ public class AccountsSyncBusinessEventsRestController
 				page += 1;
 			}
 		}
-	}
-
-	private long _fetchZendeskOrganizationId(String externalReferenceCode)
-		throws Exception {
-
-		List<ExternalLink> externalLinks = _koroneikiService.fetchExternalLinks(
-			externalReferenceCode, 1, 1000);
-
-		for (ExternalLink externalLink : externalLinks) {
-			String domain = externalLink.getDomain();
-			String entityName = externalLink.getEntityName();
-
-			if (domain.equals(ExternalLinkConstants.DOMAIN_ZENDESK) &&
-				entityName.equals(
-					ExternalLinkConstants.ENTITY_NAME_ZENDESK_ORGANIZATION)) {
-
-				return GetterUtil.getLong(externalLink.getEntityId());
-			}
-		}
-
-		return 0;
 	}
 
 	private String _getAuthorization() {
@@ -311,59 +271,6 @@ public class AccountsSyncBusinessEventsRestController
 		return StringPool.BLANK;
 	}
 
-	private Map<Long, String> _getZendeskAssociatedTicketsHeatTags(
-		JSONArray businessEventsJSONArray) {
-
-		Map<Long, String> associatedTicketsHeatTags = new HashMap<>();
-
-		for (int i = 0; i < businessEventsJSONArray.length(); i++) {
-			JSONObject businessEventsJSONObject =
-				businessEventsJSONArray.getJSONObject(i);
-
-			String heatTag = _getZendeskHeatTag(businessEventsJSONObject);
-
-			JSONArray associatedTicketIdsJSONArray = new JSONArray(
-				businessEventsJSONObject.getString("associatedTickets"));
-
-			for (int j = 0; j < associatedTicketIdsJSONArray.length(); j++) {
-				long associatedTicketId = associatedTicketIdsJSONArray.getLong(
-					j);
-
-				String highestHeatTag = associatedTicketsHeatTags.get(
-					associatedTicketId);
-
-				if (Validator.isNull(highestHeatTag) ||
-					(ZendeskHeatTagConstants.getScore(highestHeatTag) <=
-						ZendeskHeatTagConstants.getScore(heatTag))) {
-
-					associatedTicketsHeatTags.put(associatedTicketId, heatTag);
-				}
-			}
-		}
-
-		return associatedTicketsHeatTags;
-	}
-
-	private String _getZendeskHeatTag(JSONObject businessEventsJSONObject) {
-		JSONArray associatedTicketIdsJSONArray = new JSONArray(
-			businessEventsJSONObject.getString("associatedTickets"));
-
-		if (associatedTicketIdsJSONArray.length() == 0) {
-			return StringPool.BLANK;
-		}
-
-		JSONObject eventTypeJSONObject = businessEventsJSONObject.getJSONObject(
-			"eventType");
-		String targetGoLiveDateTime = businessEventsJSONObject.getString(
-			"targetGoLiveDateTime");
-
-		return ZendeskHeatTagConstants.getHeatTag(
-			eventTypeJSONObject.getString("key"),
-			ChronoUnit.DAYS.between(
-				LocalDate.now(),
-				LocalDate.parse(targetGoLiveDateTime.substring(0, 10))));
-	}
-
 	private void _updateAccountHeatTags(
 			Long accountId, String externalReferenceCode)
 		throws Exception {
@@ -378,18 +285,10 @@ public class AccountsSyncBusinessEventsRestController
 					accountId, "'"),
 				page, 500, "targetGoLiveDateTime:asc");
 
-			if (_jiraSupportEnabled) {
-				_updateJSMTickets(
-					externalReferenceCode,
-					_getJSMAssociatedTicketsHeatTags(
-						jsonObject.getJSONArray("items")));
-			}
-			else {
-				_updateZendeskTickets(
-					_fetchZendeskOrganizationId(externalReferenceCode),
-					_getZendeskAssociatedTicketsHeatTags(
-						jsonObject.getJSONArray("items")));
-			}
+			_updateJSMTickets(
+				externalReferenceCode,
+				_getJSMAssociatedTicketsHeatTags(
+					jsonObject.getJSONArray("items")));
 
 			if (jsonObject.getInt("lastPage") == page) {
 				page = 0;
@@ -501,124 +400,6 @@ public class AccountsSyncBusinessEventsRestController
 		}
 	}
 
-	private void _updateZendesk(
-			long zendeskOrganizationId, String businessEvents,
-			Map<Long, String> associatedTicketsHeatTags)
-		throws Exception {
-
-		_zendeskService.updateZendeskOrganization(
-			zendeskOrganizationId, businessEvents);
-
-		ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
-
-		zendeskTicketQuery.addCriterion(
-			"organization:" + zendeskOrganizationId);
-		zendeskTicketQuery.addCriterion("status<closed");
-
-		int page = 1;
-
-		while (page > 0) {
-			zendeskTicketQuery.setPage(page);
-
-			SearchHits<ZendeskTicket> searchHits = _zendeskService.search(
-				zendeskTicketQuery);
-
-			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-				Map<Long, String> customFields =
-					zendeskTicket.getCustomFields();
-
-				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
-
-				Set<String> tags = zendeskTicket.getTags();
-
-				if (associatedTicketsHeatTags.containsKey(
-						zendeskTicket.getZendeskTicketId())) {
-
-					String highestHeatTag = associatedTicketsHeatTags.get(
-						zendeskTicket.getZendeskTicketId());
-
-					if ((ZendeskHeatTagConstants.getScore(heatTag) <=
-							ZendeskHeatTagConstants.getScore(highestHeatTag)) &&
-						!heatTag.equals(highestHeatTag)) {
-
-						heatTag = highestHeatTag;
-					}
-
-					tags.add("impacting_business_event");
-				}
-				else {
-					tags.remove("impacting_business_event");
-				}
-
-				_zendeskService.updateZendeskTicket(
-					zendeskTicket.getZendeskTicketId(), zendeskOrganizationId,
-					zendeskTicket.getRequesterId(), zendeskTicket.getStatus(),
-					HashMapBuilder.put(
-						_zendeskBusinessEventTicketFieldId, businessEvents
-					).put(
-						_zendeskHeatTagTicketFieldId, heatTag
-					).build(),
-					tags);
-			}
-
-			page = searchHits.getNextPage();
-		}
-	}
-
-	private void _updateZendeskTickets(
-			long zendeskOrganizationId,
-			Map<Long, String> associatedTicketsHeatTags)
-		throws Exception {
-
-		ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
-
-		zendeskTicketQuery.addCriterion(
-			"organization:" + zendeskOrganizationId);
-		zendeskTicketQuery.addCriterion("status<solved");
-
-		int page = 1;
-
-		while (page > 0) {
-			zendeskTicketQuery.setPage(page);
-
-			SearchHits<ZendeskTicket> searchHits = _zendeskService.search(
-				zendeskTicketQuery);
-
-			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-				if (!associatedTicketsHeatTags.containsKey(
-						zendeskTicket.getZendeskTicketId())) {
-
-					continue;
-				}
-
-				Map<Long, String> customFields =
-					zendeskTicket.getCustomFields();
-
-				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
-
-				String highestHeatTag = associatedTicketsHeatTags.get(
-					zendeskTicket.getZendeskTicketId());
-
-				if ((ZendeskHeatTagConstants.getScore(heatTag) >
-						ZendeskHeatTagConstants.getScore(highestHeatTag)) ||
-					heatTag.equals(highestHeatTag)) {
-
-					continue;
-				}
-
-				_zendeskService.updateZendeskTicket(
-					zendeskTicket.getZendeskTicketId(), zendeskOrganizationId,
-					zendeskTicket.getRequesterId(), zendeskTicket.getStatus(),
-					HashMapBuilder.put(
-						_zendeskHeatTagTicketFieldId, highestHeatTag
-					).build(),
-					zendeskTicket.getTags());
-			}
-
-			page = searchHits.getNextPage();
-		}
-	}
-
 	private static final String _JSM_AUTOMATION_HEAT_TAG_SUFFIX = "_be";
 
 	private static final Log _log = LogFactory.getLog(
@@ -630,25 +411,10 @@ public class AccountsSyncBusinessEventsRestController
 	@Autowired
 	private JiraService _jiraService;
 
-	@Value("${liferay.customer.jira.support.enabled}")
-	private boolean _jiraSupportEnabled;
-
 	@Value("${liferay.customer.jira.support.hc.field.request.type}")
 	private String _jiraSupportHCFieldRequestType;
 
 	@Autowired
-	private KoroneikiService _koroneikiService;
-
-	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	@Value("${liferay.customer.zendesk.business.event.ticket.field.id}")
-	private long _zendeskBusinessEventTicketFieldId;
-
-	@Value("${liferay.customer.zendesk.heat.tag.ticket.field.id}")
-	private long _zendeskHeatTagTicketFieldId;
-
-	@Autowired
-	private ZendeskService _zendeskService;
 
 }

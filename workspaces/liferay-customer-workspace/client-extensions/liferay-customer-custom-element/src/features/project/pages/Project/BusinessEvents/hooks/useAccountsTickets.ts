@@ -4,7 +4,6 @@
  */
 
 import {useCallback, useEffect, useState} from 'react';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
 import {IBusinessEvent, ITicket} from '~/utils/types';
 
@@ -13,7 +12,6 @@ const useAccountsTickets = (
 	externalReferenceCode?: string,
 	skip?: boolean
 ) => {
-	const {featureFlags} = useAppPropertiesContext();
 	const [loading, setLoading] = useState(true);
 	const [tickets, setTickets] = useState<ITicket[] | undefined>(undefined);
 
@@ -27,7 +25,7 @@ const useAccountsTickets = (
 		try {
 			let ticketsParam = '';
 
-			if (businessEvent && featureFlags.includes('LRSD-8280')) {
+			if (businessEvent) {
 				const associatedTickets = JSON.parse(
 					businessEvent.associatedTickets!
 				);
@@ -55,7 +53,7 @@ const useAccountsTickets = (
 
 			setLoading(false);
 		}
-	}, [businessEvent, externalReferenceCode, featureFlags, skip]);
+	}, [businessEvent, externalReferenceCode, skip]);
 
 	useEffect(() => {
 		setLoading(true);

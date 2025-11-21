@@ -137,7 +137,7 @@ public class TicketAttachmentsCompleteUploadRestController
 					"Customer Portal Error Notification",
 					StringBundler.concat(
 						"<p>There was an error posting a large file uploader ",
-						"comment to Zendesk.</p>",
+						"comment to JSM.</p>",
 						StackTraceUtil.getStackTrace(exception)));
 			}
 		}

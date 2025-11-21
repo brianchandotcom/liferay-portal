@@ -6,21 +6,13 @@
 package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.customer.constants.ExternalLinkConstants;
 import com.liferay.customer.constants.JiraIssueConstants;
 import com.liferay.customer.model.JiraSupportIssue;
 import com.liferay.customer.permission.BusinessEventPermission;
 import com.liferay.customer.service.JiraService;
-import com.liferay.customer.service.KoroneikiService;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
-import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
-import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
-import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
-import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
@@ -60,32 +52,7 @@ public class AccountsTicketsRestController extends BaseRestController {
 				ticketIds)
 		throws Exception {
 
-		if (_jiraSupportEnabled) {
-			return _getJSMTickets(jwt, externalReferenceCode, ticketIds);
-		}
-
-		return _getZendeskTickets(jwt, externalReferenceCode);
-	}
-
-	private long _fetchZendeskOrganizationId(String externalReferenceCode)
-		throws Exception {
-
-		List<ExternalLink> externalLinks = _koroneikiService.fetchExternalLinks(
-			externalReferenceCode, 1, 1000);
-
-		for (ExternalLink externalLink : externalLinks) {
-			String domain = externalLink.getDomain();
-			String entityName = externalLink.getEntityName();
-
-			if (domain.equals(ExternalLinkConstants.DOMAIN_ZENDESK) &&
-				entityName.equals(
-					ExternalLinkConstants.ENTITY_NAME_ZENDESK_ORGANIZATION)) {
-
-				return GetterUtil.getLong(externalLink.getEntityId());
-			}
-		}
-
-		return 0;
+		return _getJSMTickets(jwt, externalReferenceCode, ticketIds);
 	}
 
 	private ResponseEntity<String> _getJSMTickets(
@@ -138,47 +105,6 @@ public class AccountsTicketsRestController extends BaseRestController {
 		}
 	}
 
-	private ResponseEntity<String> _getZendeskTickets(
-			Jwt jwt, String externalReferenceCode)
-		throws Exception {
-
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
-
-			ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
-
-			zendeskTicketQuery.addCriterion(
-				"organization:" +
-					_fetchZendeskOrganizationId(externalReferenceCode));
-
-			int page = 1;
-
-			JSONArray jsonArray = new JSONArray();
-
-			while (page > 0) {
-				zendeskTicketQuery.setPage(page);
-
-				SearchHits<ZendeskTicket> searchHits = _zendeskService.search(
-					zendeskTicketQuery);
-
-				for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-					jsonArray.put(zendeskTicket.toJSONObject());
-				}
-
-				page = searchHits.getNextPage();
-			}
-
-			return new ResponseEntity<>(jsonArray.toString(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
 	private JSONObject _toJSONObject(JiraSupportIssue jiraSupportIssue) {
 		return new JSONObject(
 		).put(
@@ -201,16 +127,7 @@ public class AccountsTicketsRestController extends BaseRestController {
 	@Autowired
 	private JiraService _jiraService;
 
-	@Value("${liferay.customer.jira.support.enabled}")
-	private boolean _jiraSupportEnabled;
-
 	@Value("${liferay.customer.jira.support.hc.field.request.type}")
 	private String _jiraSupportHCFieldRequestType;
-
-	@Autowired
-	private KoroneikiService _koroneikiService;
-
-	@Autowired
-	private ZendeskService _zendeskService;
 
 }

@@ -58,7 +58,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	setFieldValue,
 	values,
 }) => {
-	const {client, featureFlags} = useAppPropertiesContext();
+	const {client} = useAppPropertiesContext();
 
 	const [{project, subscriptionGroups}] = useAppContext();
 
@@ -259,10 +259,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		if (hasImpactingEvents === 'yes') {
-			const selectedTickets = selectedTicketOptions.map((ticket) =>
-				featureFlags.includes('LRSD-8280')
-					? `"${ticket.ticketId}"`
-					: ticket.ticketId
+			const selectedTickets = selectedTicketOptions.map(
+				(ticket) => `"${ticket.ticketId}"`
 			);
 
 			setFieldValue(
@@ -273,12 +271,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		else {
 			setFieldValue('businessEvent.associatedTickets', '[]');
 		}
-	}, [
-		featureFlags,
-		hasImpactingEvents,
-		selectedTicketOptions,
-		setFieldValue,
-	]);
+	}, [hasImpactingEvents, selectedTicketOptions, setFieldValue]);
 
 	useEffect(() => {
 		setFieldValue(
@@ -393,18 +386,11 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			);
 
 			setTicketOptions([
-				...tickets
-					?.filter((ticket) => {
-						return featureFlags.includes('LRSD-8280')
-							? true
-							: ticket.status !== 'closed' &&
-									ticket.status !== 'solved';
-					})
-					.map((ticket) =>
-						associatedTickets.includes(ticket.ticketId)
-							? {...ticket, selected: true}
-							: {...ticket, selected: false}
-					),
+				...tickets?.map((ticket) =>
+					associatedTickets.includes(ticket.ticketId)
+						? {...ticket, selected: true}
+						: {...ticket, selected: false}
+				),
 			]);
 
 			setSelectedTicketOptions([
@@ -417,7 +403,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 				handleRadioChange('yes');
 			}
 		}
-	}, [featureFlags, originalBusinessEvent, tickets]);
+	}, [originalBusinessEvent, tickets]);
 
 	useEffect(() => {
 		const hasCurrentLiferayVersion =

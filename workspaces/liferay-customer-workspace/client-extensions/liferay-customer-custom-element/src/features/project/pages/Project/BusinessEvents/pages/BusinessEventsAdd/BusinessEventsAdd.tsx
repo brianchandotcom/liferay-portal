@@ -53,7 +53,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	touched,
 	values,
 }) => {
-	const {client, featureFlags} = useAppPropertiesContext();
+	const {client} = useAppPropertiesContext();
 
 	const [{project, subscriptionGroups}] = useAppContext();
 
@@ -226,10 +226,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		if (hasImpactingEvents === 'yes') {
-			const selectedTicketsMap = selectedTickets.map((ticket) =>
-				featureFlags.includes('LRSD-8280')
-					? `"${ticket.ticketId}"`
-					: ticket.ticketId
+			const selectedTicketsMap = selectedTickets.map(
+				(ticket) => `"${ticket.ticketId}"`
 			);
 
 			setFieldValue(
@@ -240,7 +238,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		else {
 			setFieldValue('businessEvent.associatedTickets', '[]');
 		}
-	}, [featureFlags, hasImpactingEvents, selectedTickets, setFieldValue]);
+	}, [hasImpactingEvents, selectedTickets, setFieldValue]);
 
 	useEffect(() => {
 		setFieldValue(
@@ -365,18 +363,11 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		setTicketOptions([
-			...(tickets
-				?.filter((ticket) => {
-					return featureFlags.includes('LRSD-8280')
-						? true
-						: ticket.status !== 'closed' &&
-								ticket.status !== 'solved';
-				})
-				.map((ticket) => {
-					return {...ticket, selected: false};
-				}) || []),
+			...(tickets?.map((ticket) => {
+				return {...ticket, selected: false};
+			}) || []),
 		]);
-	}, [featureFlags, tickets]);
+	}, [tickets]);
 
 	return !loading ? (
 		hasAllEventsPermissions ? (

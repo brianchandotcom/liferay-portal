@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Button as ClayButton} from '@clayui/core';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import Button from '~/components/Button';
@@ -73,6 +72,7 @@ const BusinessEventsModal = ({
 							appendIcon="times"
 							aria-label="close"
 							className="align-self-start edit-modal-close"
+							disabled={isLoadingSubmitButton}
 							displayType="unstyled"
 							onClick={onClose}
 						/>
@@ -87,21 +87,23 @@ const BusinessEventsModal = ({
 							'cancel-event-modal': isCancelModal,
 						})}
 					>
-						<ClayButton
+						<Button
 							className="mr-3"
+							disabled={isLoadingSubmitButton}
 							displayType="secondary"
 							onClick={onClose}
 						>
 							{i18n.translate('cancel')}
-						</ClayButton>
+						</Button>
 
-						<ClayButton
+						<Button
 							disabled={handleDisabled()}
 							displayType="primary"
+							isLoading={isLoadingSubmitButton}
 							onClick={handleSubmit}
 						>
 							{submitButton}
-						</ClayButton>
+						</Button>
 					</div>
 				</div>
 			</div>

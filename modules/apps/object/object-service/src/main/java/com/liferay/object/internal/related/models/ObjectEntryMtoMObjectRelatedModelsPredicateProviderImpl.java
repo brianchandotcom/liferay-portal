@@ -11,14 +11,12 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
-import com.liferay.object.relationship.util.ObjectRelationshipUtil;
+import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTableFactory;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
-
-import java.util.Map;
 
 /**
  * @author Luis Miguel Barcos
@@ -49,27 +47,15 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 				getDynamicObjectDefinitionTable(objectDefinition),
 				objectDefinition.getPKObjectFieldDBColumnName());
 
-		Map<String, String> pkObjectFieldDBColumnNames =
-			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
-				objectDefinition, relatedObjectDefinition,
-				objectRelationship.isReverse());
-
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =
-				new DynamicObjectRelationshipMappingTable(
-					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName1"),
-					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName2"),
-					objectRelationship.getDBTableName());
+				DynamicObjectRelationshipMappingTableFactory.create(
+					objectRelationship.getDBTableName(), objectDefinition,
+					relatedObjectDefinition, objectRelationship.isReverse());
 
 		Column<DynamicObjectRelationshipMappingTable, ?>
 			dynamicObjectRelationshipMappingTableColumn =
-				(Column<DynamicObjectRelationshipMappingTable, ?>)
-					getPKObjectFieldColumn(
-						dynamicObjectRelationshipMappingTable,
-						pkObjectFieldDBColumnNames.get(
-							"pkObjectFieldDBColumnName2"));
+				dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn2();
 
 		DynamicObjectDefinitionTable relatedDynamicObjectDefinitionTable =
 			getDynamicObjectDefinitionTable(relatedObjectDefinition);
@@ -78,10 +64,7 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 
 		return dynamicObjectDefinitionTableColumn.in(
 			DSLQueryFactoryUtil.select(
-				getPKObjectFieldColumn(
-					dynamicObjectRelationshipMappingTable,
-					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName1"))
+				dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn1()
 			).from(
 				dynamicObjectRelationshipMappingTable
 			).where(

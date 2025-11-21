@@ -6,7 +6,7 @@
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import {useContext, useEffect, useRef, useState} from 'react';
 
-import {ITEM_INTERACTION_ORIGINS} from '../../config/constants/itemInteractionOrigins';
+import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {MULTI_SELECT_TYPES} from '../../config/constants/multiSelectTypes';
 import {
@@ -36,7 +36,7 @@ export function useLayoutKeyboardNavigation(item) {
 
 			if (multiSelectTypeRef.current === MULTI_SELECT_TYPES.range) {
 				selectItem(item.itemId, {
-					origin: ITEM_INTERACTION_ORIGINS.keyboard,
+					origin: ITEM_ACTIVATION_ORIGINS.keyboard,
 				});
 			}
 			else {
@@ -125,13 +125,13 @@ export function useLayoutKeyboardNavigation(item) {
 						`${item.config.fragmentEntryLinkId}-${editableId}`,
 						{
 							itemType: ITEM_TYPES.editable,
-							origin: ITEM_INTERACTION_ORIGINS.keyboard,
+							origin: ITEM_ACTIVATION_ORIGINS.keyboard,
 						}
 					);
 				}
 				else {
 					selectItem(item.itemId, {
-						origin: ITEM_INTERACTION_ORIGINS.keyboard,
+						origin: ITEM_ACTIVATION_ORIGINS.keyboard,
 					});
 				}
 			}

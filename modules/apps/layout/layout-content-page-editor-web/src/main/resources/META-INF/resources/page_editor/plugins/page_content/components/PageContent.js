@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
-import {ITEM_INTERACTION_ORIGINS} from '../../../app/config/constants/itemInteractionOrigins';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {
 	useHoverItem,
@@ -150,7 +150,7 @@ export default function PageContent({
 		if (editableId) {
 			hoverItem(editableId, {
 				itemType: ITEM_TYPES.inlineContent,
-				origin: ITEM_INTERACTION_ORIGINS.contents,
+				origin: ITEM_ACTIVATION_ORIGINS.contents,
 			});
 		}
 
@@ -159,7 +159,7 @@ export default function PageContent({
 				getEditableId({classNameId, classPK, externalReferenceCode}),
 				{
 					itemType: ITEM_TYPES.mappedContent,
-					origin: ITEM_INTERACTION_ORIGINS.contents,
+					origin: ITEM_ACTIVATION_ORIGINS.contents,
 				}
 			);
 		}
@@ -191,7 +191,7 @@ export default function PageContent({
 
 		selectItem(itemId, {
 			itemType: ITEM_TYPES.editable,
-			origin: ITEM_INTERACTION_ORIGINS.sidebar,
+			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 		});
 	};
 

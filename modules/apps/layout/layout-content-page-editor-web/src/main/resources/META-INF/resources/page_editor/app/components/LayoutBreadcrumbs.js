@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDragLayer} from 'react-dnd';
 
-import {ITEM_INTERACTION_ORIGINS} from '../config/constants/itemInteractionOrigins';
+import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {
@@ -137,7 +137,7 @@ function useBreadcrumbItems() {
 						onClick: () =>
 							selectItem(layoutDataItem.itemId, {
 								itemType: ITEM_TYPES.layoutDataItem,
-								origin: ITEM_INTERACTION_ORIGINS.breadcrumbs,
+								origin: ITEM_ACTIVATION_ORIGINS.breadcrumbs,
 							}),
 					});
 				}
@@ -159,7 +159,7 @@ function useBreadcrumbItems() {
 					onClick: () =>
 						selectItem(activeItemId, {
 							itemType: ITEM_TYPES.editable,
-							origin: ITEM_INTERACTION_ORIGINS.breadcrumbs,
+							origin: ITEM_ACTIVATION_ORIGINS.breadcrumbs,
 						}),
 				});
 

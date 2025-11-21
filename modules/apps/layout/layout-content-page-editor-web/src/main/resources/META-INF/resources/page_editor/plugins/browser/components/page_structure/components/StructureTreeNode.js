@@ -12,7 +12,7 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef} from 'react';
 
-import {ITEM_INTERACTION_ORIGINS} from '../../../../../app/config/constants/itemInteractionOrigins';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {
 	ARROW_DOWN_KEY_CODE,
@@ -174,7 +174,7 @@ function NodeContentWithoutDND({isActive, isMapped, node}) {
 			icon: node.icon,
 			itemId: node.id,
 			name: node.name,
-			origin: ITEM_INTERACTION_ORIGINS.sidebar,
+			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 			parentId: node.parentItemId,
 			type: node.type || node.itemType,
 		}),
@@ -197,7 +197,7 @@ function NodeContentWithoutDND({isActive, isMapped, node}) {
 					if (node.activable) {
 						selectItem(node.id, {
 							itemType: node.itemType,
-							origin: ITEM_INTERACTION_ORIGINS.sidebar,
+							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 							parentId: node.parentId,
 						});
 					}
@@ -257,7 +257,7 @@ function NodeContent({
 			icon: node.icon,
 			itemId: node.id,
 			name: node.name,
-			origin: ITEM_INTERACTION_ORIGINS.sidebar,
+			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 			parentId: node.parentItemId,
 			type: node.type || node.itemType,
 		}),
@@ -294,7 +294,7 @@ function NodeContent({
 				state.layoutData,
 				state.fragmentEntryLinks
 			),
-			origin: ITEM_INTERACTION_ORIGINS.sidebar,
+			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 		}),
 		[item],
 		deepEqual
@@ -319,7 +319,7 @@ function NodeContent({
 	const onDragBegin = () => {
 		if (!isActive) {
 			selectItem(item.itemId, {
-				origin: ITEM_INTERACTION_ORIGINS.layout,
+				origin: ITEM_ACTIVATION_ORIGINS.layout,
 			});
 		}
 	};
@@ -384,7 +384,7 @@ function NodeContent({
 	useEffect(() => {
 		if (
 			item.itemId === keyboardMovementTargetId ||
-			(activationOrigin === ITEM_INTERACTION_ORIGINS.layout &&
+			(activationOrigin === ITEM_ACTIVATION_ORIGINS.layout &&
 				nodeRef.current &&
 				isActive)
 		) {
@@ -413,7 +413,7 @@ function NodeContent({
 	useEffect(() => {
 		if (
 			isActive &&
-			activationOrigin === ITEM_INTERACTION_ORIGINS.itemActions
+			activationOrigin === ITEM_ACTIVATION_ORIGINS.itemActions
 		) {
 			document.querySelector(`[data-id*="${node.id}"]`).focus();
 		}
@@ -446,7 +446,7 @@ function NodeContent({
 					if (node.activable) {
 						selectItem(node.id, {
 							itemType: node.itemType,
-							origin: ITEM_INTERACTION_ORIGINS.sidebar,
+							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 						});
 					}
 				}}

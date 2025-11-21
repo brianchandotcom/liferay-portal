@@ -14,7 +14,7 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import {ITEM_INTERACTION_ORIGINS} from '../../../app/config/constants/itemInteractionOrigins';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import {
@@ -209,7 +209,7 @@ function RuleItem({
 
 	const onHighlightItems = () => {
 		hoverMultipleItems(ruleItemIds, {
-			origin: ITEM_INTERACTION_ORIGINS.rules,
+			origin: ITEM_ACTIVATION_ORIGINS.rules,
 		});
 	};
 
@@ -227,7 +227,7 @@ function RuleItem({
 		});
 	};
 
-	const isRuleDisabled = itemIdsToHighlight.some((id) =>
+	const isRuleDisabled = ruleItemIds.some((id) =>
 		isLayoutDataItemDeleted(layoutData, id)
 	);
 

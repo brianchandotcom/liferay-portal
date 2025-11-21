@@ -4,7 +4,7 @@
  */
 
 import duplicateItemAction from '../actions/duplicateItem';
-import {ITEM_INTERACTION_ORIGINS} from '../config/constants/itemInteractionOrigins';
+import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import FragmentService from '../services/FragmentService';
 import filterSelectedItems from './filterSelectedItems';
 
@@ -34,7 +34,7 @@ export default function duplicateItem({itemIds, selectItems = () => {}}) {
 
 				if (duplicatedItemIds) {
 					selectItems(duplicatedItemIds, {
-						origin: ITEM_INTERACTION_ORIGINS.itemActions,
+						origin: ITEM_ACTIVATION_ORIGINS.itemActions,
 					});
 				}
 			}

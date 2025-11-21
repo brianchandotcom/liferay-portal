@@ -14,7 +14,7 @@ import {flushSync} from 'react-dom';
 
 import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
-import {ITEM_INTERACTION_ORIGINS} from '../../../../../app/config/constants/itemInteractionOrigins';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {
 	useClipboard,
@@ -200,7 +200,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					}
 
 					selectItem(item.id, {
-						origin: ITEM_INTERACTION_ORIGINS.itemActions,
+						origin: ITEM_ACTIVATION_ORIGINS.itemActions,
 					});
 
 					setText(

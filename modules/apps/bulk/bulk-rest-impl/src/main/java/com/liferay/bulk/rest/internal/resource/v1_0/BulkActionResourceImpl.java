@@ -405,6 +405,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
 			return _permissionObjectBulkSelectionAction;
 		}
+		else if (BulkAction.Type.RESET_PERMISSION_BULK_ACTION.equals(type)) {
+			return _resetPermissionObjectBulkSelectionAction;
+		}
 		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
 			return _editObjectCategoriesBulkSelectionAction;
 		}
@@ -453,21 +456,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"toRemoveTagNames", keywordBulkAction.getKeywordsToRemove()
 			).build();
 		}
-		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
-			TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
-				(TaxonomyCategoryBulkAction)bulkAction;
-
-			return hashMapWrapper.put(
-				"append",
-				GetterUtil.getBoolean(taxonomyCategoryBulkAction.getAppend())
-			).put(
-				"toAddCategoryIds",
-				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToAdd()
-			).put(
-				"toRemoveCategoryIds",
-				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToRemove()
-			).build();
-		}
 		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
 			return hashMapWrapper.put(
 				"permissions",
@@ -481,6 +469,24 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 								permissionBulkAction.getConfiguration(), "{}")),
 						permissionBulkAction.getPermissions());
 				}
+			).build();
+		}
+		else if (BulkAction.Type.RESET_PERMISSION_BULK_ACTION.equals(type)) {
+			return hashMapWrapper.build();
+		}
+		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
+			TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
+				(TaxonomyCategoryBulkAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"append",
+				GetterUtil.getBoolean(taxonomyCategoryBulkAction.getAppend())
+			).put(
+				"toAddCategoryIds",
+				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToAdd()
+			).put(
+				"toRemoveCategoryIds",
+				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToRemove()
 			).build();
 		}
 
@@ -863,6 +869,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(bulk.selection.action.key=reset.permission.object)")
+	private BulkSelectionAction<Object>
+		_resetPermissionObjectBulkSelectionAction;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

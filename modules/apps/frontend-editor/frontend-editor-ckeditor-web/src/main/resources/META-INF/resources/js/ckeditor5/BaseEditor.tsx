@@ -4,6 +4,7 @@
  */
 
 import {EventInfo} from '@ckeditor/ckeditor5-utils/dist/index.js';
+import {useControlledState} from '@clayui/shared';
 import {loadEditorClientExtensions} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -40,10 +41,12 @@ const BaseEditor = ({
 	onReady?: (editor: TEditor) => void;
 }) => {
 	const [editorConfig, setEditorConfig] = useState(config);
-	const [formInputValue, setFormInputValue] = useState(() => {
-		const initialValue = data ?? config?.initialData;
-
-		return typeof initialValue === 'string' ? initialValue : '';
+	const [formInputValue, setFormInputValue] = useControlledState({
+		defaultName: 'data',
+		defaultValue: config?.initialData ?? '',
+		handleName: '',
+		name: 'data',
+		value: data,
 	});
 	const [loading, setLoading] = useState(true);
 
@@ -82,12 +85,6 @@ const BaseEditor = ({
 		});
 	}, [editorConfig]);
 
-	useEffect(() => {
-		if (data !== undefined) {
-			setFormInputValue(data ?? '');
-		}
-	}, [data]);
-
 	return loading ? (
 		<ClayLoadingIndicator />
 	) : (
@@ -113,7 +110,7 @@ const BaseEditor = ({
 				<input
 					name={formInputName}
 					type="hidden"
-					value={formInputValue}
+					value={formInputValue ? String(formInputValue) : ''}
 				/>
 			)}
 		</div>

@@ -851,7 +851,7 @@ public class StyleBookEntryServiceHttp {
 
 	public static com.liferay.style.book.model.StyleBookEntry
 			updateStyleBookEntry(
-				HttpPrincipal httpPrincipal, long userId, long styleBookEntryId,
+				HttpPrincipal httpPrincipal, long styleBookEntryId,
 				boolean defaultStylebookEntry, String frontendTokensValues,
 				String name, String styleBookEntryKey, long previewFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -862,7 +862,7 @@ public class StyleBookEntryServiceHttp {
 				_updateStyleBookEntryParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, styleBookEntryId, defaultStylebookEntry,
+				methodKey, styleBookEntryId, defaultStylebookEntry,
 				frontendTokensValues, name, styleBookEntryKey,
 				previewFileEntryId);
 
@@ -1005,8 +1005,8 @@ public class StyleBookEntryServiceHttp {
 		new Class[] {long.class, long.class};
 	private static final Class<?>[] _updateStyleBookEntryParameterTypes19 =
 		new Class[] {
-			long.class, long.class, boolean.class, String.class, String.class,
-			String.class, long.class
+			long.class, boolean.class, String.class, String.class, String.class,
+			long.class
 		};
 	private static final Class<?>[] _updateStyleBookEntryParameterTypes20 =
 		new Class[] {long.class, String.class, String.class};

@@ -216,14 +216,14 @@ public class StyleBookEntryServiceWrapper
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
-			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			long styleBookEntryId, boolean defaultStylebookEntry,
 			String frontendTokensValues, String name, String styleBookEntryKey,
 			long previewFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryService.updateStyleBookEntry(
-			userId, styleBookEntryId, defaultStylebookEntry,
-			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId);
+			styleBookEntryId, defaultStylebookEntry, frontendTokensValues, name,
+			styleBookEntryKey, previewFileEntryId);
 	}
 
 	@Override

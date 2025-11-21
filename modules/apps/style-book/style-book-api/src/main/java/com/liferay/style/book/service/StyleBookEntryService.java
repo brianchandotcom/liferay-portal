@@ -139,7 +139,7 @@ public interface StyleBookEntryService extends BaseService {
 		throws PortalException;
 
 	public StyleBookEntry updateStyleBookEntry(
-			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			long styleBookEntryId, boolean defaultStylebookEntry,
 			String frontendTokensValues, String name, String styleBookEntryKey,
 			long previewFileEntryId)
 		throws PortalException;

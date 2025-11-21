@@ -196,14 +196,14 @@ public class StyleBookEntryServiceUtil {
 	}
 
 	public static StyleBookEntry updateStyleBookEntry(
-			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			long styleBookEntryId, boolean defaultStylebookEntry,
 			String frontendTokensValues, String name, String styleBookEntryKey,
 			long previewFileEntryId)
 		throws PortalException {
 
 		return getService().updateStyleBookEntry(
-			userId, styleBookEntryId, defaultStylebookEntry,
-			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId);
+			styleBookEntryId, defaultStylebookEntry, frontendTokensValues, name,
+			styleBookEntryKey, previewFileEntryId);
 	}
 
 	public static StyleBookEntry updateStyleBookEntry(

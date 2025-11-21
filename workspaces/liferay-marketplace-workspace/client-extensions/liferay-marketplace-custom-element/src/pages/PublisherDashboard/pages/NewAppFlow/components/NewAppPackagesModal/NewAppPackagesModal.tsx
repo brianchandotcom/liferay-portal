@@ -40,8 +40,7 @@ export function NewAppPackageVersionModal({
 		onClose: handleClose,
 	});
 
-	const [checkboxVersions, setCheckboxVersions] =
-		useState<string[]>([]);
+	const [checkboxVersions, setCheckboxVersions] = useState<string[]>([]);
 
 	const [selectedVersion, setSelectedVersion] = useState('');
 
@@ -107,7 +106,8 @@ export function NewAppPackageVersionModal({
 								const isChecked =
 									checkboxVersions.includes(version);
 
-									const isAlreadySelected = currentVersions.includes(version)
+								const isAlreadySelected =
+									currentVersions.includes(version);
 
 								const handleCheckboxChange = () => {
 									setCheckboxVersions((prevVersions) =>

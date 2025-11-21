@@ -84,10 +84,7 @@ const Build = ({
 										</div>
 										<div className="d-flex flex-column">
 											{liferayPackage.file.map(
-												(
-													packageFile: any,
-													index: number
-												) => {
+												(packageFile: any) => {
 													return (
 														<>
 															<FileContent

@@ -7,19 +7,19 @@ import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
 export default class HeadlessAppPackage {
-    static async createAppPackage(body: unknown) {
-        const response = await axios.post('o/c/apppackages', body);
+	static async createAppPackage(body: unknown) {
+		const response = await axios.post('o/c/apppackages', body);
 
-        return response.data;
-    }
+		return response.data;
+	}
 
-    static async deleteAppPackage(id: number | string) {
-        return fetcher.delete(`o/c/apppackages/${id}`);
-    }
+	static async deleteAppPackage(id: number | string) {
+		return fetcher.delete(`o/c/apppackages/${id}`);
+	}
 
-    static getAppPackages(searchParams: URLSearchParams) {
-        return fetcher<APIResponse>(
-            `o/c/apppackages?${searchParams.toString()}`
-        );
-    }
+	static getAppPackages(searchParams: URLSearchParams) {
+		return fetcher<APIResponse>(
+			`o/c/apppackages?${searchParams.toString()}`
+		);
+	}
 }

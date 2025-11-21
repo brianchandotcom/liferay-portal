@@ -705,9 +705,9 @@ export default class AppPublish extends BaseAppPublish {
 		const liferayVersions = [];
 
 		for (const liferayPackage of liferayPackages) {
-			const {file, id, versions, uploaded} = liferayPackage;
+			const {file, id, uploaded, versions} = liferayPackage;
 
-			if (file.length > 0 && !uploaded) {
+			if (!!file.length && !uploaded) {
 				const publisherAsset = new PublisherAsset(
 					file,
 					id,

@@ -8,6 +8,7 @@ import {useModal} from '@clayui/modal';
 import {useNavigate} from 'react-router-dom';
 
 import Modal from '../../../../components/Modal';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {NewAppTypes, useNewAppContext} from '../../../../context/NewAppContext';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
@@ -17,7 +18,6 @@ import AppPublish, {
 import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import BasePublishAppOutlet from '../../BasePublishAppOutlet';
 import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 
 const NewAppBuildOutlet = () => {
 	const navigate = useNavigate();

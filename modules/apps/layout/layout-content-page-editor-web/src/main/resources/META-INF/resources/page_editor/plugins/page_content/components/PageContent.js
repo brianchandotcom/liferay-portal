@@ -17,7 +17,7 @@ import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivat
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {
 	useHoverItem,
-	useHoveredItemIds,
+	useHoveredItemId,
 	useSelectItem,
 } from '../../../app/contexts/ControlsContext';
 import {
@@ -44,7 +44,7 @@ export default function PageContent({
 	const [activeActions, setActiveActions] = useState(false);
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();
-	const [hoveredItemId] = useHoveredItemIds();
+	const hoveredItemId = useHoveredItemId();
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);

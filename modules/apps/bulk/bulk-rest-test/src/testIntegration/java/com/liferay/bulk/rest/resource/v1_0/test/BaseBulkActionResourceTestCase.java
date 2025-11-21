@@ -20,6 +20,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.MoveBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.PermissionBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.StatusBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkAction;
 import com.liferay.bulk.rest.client.http.HttpInvoker;
@@ -1296,6 +1297,15 @@ public abstract class BaseBulkActionResourceTestCase {
 
 				bulkAction.setType(
 					BulkAction.Type.create("PermissionBulkAction"));
+
+				return bulkAction;
+			},
+			() -> {
+				ResetPermissionBulkAction bulkAction =
+					new ResetPermissionBulkAction();
+
+				bulkAction.setType(
+					BulkAction.Type.create("ResetPermissionBulkAction"));
 
 				return bulkAction;
 			},

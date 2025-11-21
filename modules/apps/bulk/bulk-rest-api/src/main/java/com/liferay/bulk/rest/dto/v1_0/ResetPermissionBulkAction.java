@@ -28,20 +28,20 @@ import java.util.Set;
  * @generated
  */
 @Generated("")
-@GraphQLName("ResetAssetPermissionAction")
+@GraphQLName("ResetPermissionBulkAction")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ResetAssetPermissionAction")
-public class ResetAssetPermissionAction
-	extends AssetPermissionAction implements Serializable {
+@XmlRootElement(name = "ResetPermissionBulkAction")
+public class ResetPermissionBulkAction
+	extends BulkAction implements Serializable {
 
-	public static ResetAssetPermissionAction toDTO(String json) {
+	public static ResetPermissionBulkAction toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			ResetAssetPermissionAction.class, json);
+			ResetPermissionBulkAction.class, json);
 	}
 
-	public static ResetAssetPermissionAction unsafeToDTO(String json) {
+	public static ResetPermissionBulkAction unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			ResetAssetPermissionAction.class, json);
+			ResetPermissionBulkAction.class, json);
 	}
 
 	@Override
@@ -50,15 +50,14 @@ public class ResetAssetPermissionAction
 			return true;
 		}
 
-		if (!(object instanceof ResetAssetPermissionAction)) {
+		if (!(object instanceof ResetPermissionBulkAction)) {
 			return false;
 		}
 
-		ResetAssetPermissionAction resetAssetPermissionAction =
-			(ResetAssetPermissionAction)object;
+		ResetPermissionBulkAction resetPermissionBulkAction =
+			(ResetPermissionBulkAction)object;
 
-		return Objects.equals(
-			toString(), resetAssetPermissionAction.toString());
+		return Objects.equals(toString(), resetPermissionBulkAction.toString());
 	}
 
 	@Override
@@ -73,32 +72,38 @@ public class ResetAssetPermissionAction
 
 		sb.append("{");
 
-		String className = getClassName();
+		BulkActionItem[] bulkActionItems = getBulkActionItems();
 
-		if (className != null) {
+		if (bulkActionItems != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"className\": ");
+			sb.append("\"bulkActionItems\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(className));
+			for (int i = 0; i < bulkActionItems.length; i++) {
+				sb.append(String.valueOf(bulkActionItems[i]));
 
-			sb.append("\"");
+				if ((i + 1) < bulkActionItems.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		Long classPK = getClassPK();
+		SelectionScope selectionScope = getSelectionScope();
 
-		if (classPK != null) {
+		if (selectionScope != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"classPK\": ");
+			sb.append("\"selectionScope\": ");
 
-			sb.append(classPK);
+			sb.append(String.valueOf(selectionScope));
 		}
 
 		Type type = getType();
@@ -122,7 +127,7 @@ public class ResetAssetPermissionAction
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.bulk.rest.dto.v1_0.ResetAssetPermissionAction",
+		defaultValue = "com.liferay.bulk.rest.dto.v1_0.ResetPermissionBulkAction",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -240,6 +240,7 @@ public class Mutation {
 	public Response createCTCollectionsPageExportBatch(
 			@GraphQLName("search") String search,
 			@GraphQLName("status") Integer[] status,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
@@ -252,6 +253,7 @@ public class Mutation {
 			ctCollectionResource ->
 				ctCollectionResource.postCTCollectionsPageExportBatch(
 					search, status,
+					_filterBiFunction.apply(ctCollectionResource, filterString),
 					_sortsBiFunction.apply(ctCollectionResource, sortsString),
 					callbackURL, contentType, fieldNames));
 	}

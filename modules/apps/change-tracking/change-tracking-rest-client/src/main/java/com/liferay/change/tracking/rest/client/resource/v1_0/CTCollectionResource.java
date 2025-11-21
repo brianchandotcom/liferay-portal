@@ -91,13 +91,13 @@ public interface CTCollectionResource {
 		throws Exception;
 
 	public Page<CTCollection> getCTCollectionsPage(
-			String search, Integer[] status, Pagination pagination,
-			String sortString)
+			String search, Integer[] status, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCTCollectionsPageHttpResponse(
-			String search, Integer[] status, Pagination pagination,
-			String sortString)
+			String search, Integer[] status, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public CTCollection patchCTCollection(
@@ -170,14 +170,16 @@ public interface CTCollectionResource {
 		throws Exception;
 
 	public void postCTCollectionsPageExportBatch(
-			String search, Integer[] status, String sortString,
-			String callbackURL, String contentType, String fieldNames)
+			String search, Integer[] status, String filterString,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postCTCollectionsPageExportBatchHttpResponse(
-				String search, Integer[] status, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+				String search, Integer[] status, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 		throws Exception;
 
 	public CTCollection putCTCollection(
@@ -1041,13 +1043,13 @@ public interface CTCollectionResource {
 		}
 
 		public Page<CTCollection> getCTCollectionsPage(
-				String search, Integer[] status, Pagination pagination,
-				String sortString)
+				String search, Integer[] status, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getCTCollectionsPageHttpResponse(
-					search, status, pagination, sortString);
+					search, status, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1109,8 +1111,8 @@ public interface CTCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse getCTCollectionsPageHttpResponse(
-				String search, Integer[] status, Pagination pagination,
-				String sortString)
+				String search, Integer[] status, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1142,6 +1144,10 @@ public interface CTCollectionResource {
 				for (int i = 0; i < status.length; i++) {
 					httpInvoker.parameter("status", String.valueOf(status[i]));
 				}
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (pagination != null) {
@@ -2151,14 +2157,15 @@ public interface CTCollectionResource {
 		}
 
 		public void postCTCollectionsPageExportBatch(
-				String search, Integer[] status, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+				String search, Integer[] status, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postCTCollectionsPageExportBatchHttpResponse(
-					search, status, sortString, callbackURL, contentType,
-					fieldNames);
+					search, status, filterString, sortString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -2210,8 +2217,9 @@ public interface CTCollectionResource {
 
 		public HttpInvoker.HttpResponse
 				postCTCollectionsPageExportBatchHttpResponse(
-					String search, Integer[] status, String sortString,
-					String callbackURL, String contentType, String fieldNames)
+					String search, Integer[] status, String filterString,
+					String sortString, String callbackURL, String contentType,
+					String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -2245,6 +2253,10 @@ public interface CTCollectionResource {
 				for (int i = 0; i < status.length; i++) {
 					httpInvoker.parameter("status", String.valueOf(status[i]));
 				}
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (sortString != null) {

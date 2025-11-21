@@ -615,7 +615,7 @@ public class StyleBookEntryLocalServiceImpl
 
 		if (styleBookEntry != null) {
 			throw new DuplicateStyleBookEntryKeyException(
-				"Duplicate style book entry key '" + styleBookEntryKey + "'");
+				"Duplicate style book entry key " + styleBookEntryKey);
 		}
 	}
 

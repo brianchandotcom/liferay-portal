@@ -42,7 +42,7 @@
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
 }
 
-.app-type-badge.object-action {
+.app-type-badge.object-definition {
 	--badge-color: #5fc8ff;
 	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);

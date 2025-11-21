@@ -81,7 +81,7 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 					"remoteEnabled", enableManageRemotely
 				).put(
 					"sandboxEnabled",
-					ParamUtil.getBoolean(actionRequest, "enableSandboxOnly")
+					ParamUtil.getBoolean(actionRequest, "enableSandboxOnlyMode")
 				).put(
 					"unapprovedChangesAllowed", enableUnapprovedChanges
 				).build());

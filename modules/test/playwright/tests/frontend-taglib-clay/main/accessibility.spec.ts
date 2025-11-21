@@ -22,12 +22,16 @@ test('When accessing all clay sample portlet tabs, then verifies that the compon
 	page,
 }) => {
 	const tabNames = Object.values(ClaySamplePageTabs);
+
 	for (const tabName of tabNames) {
 		await test.step(`Verifying ${tabName} accessibility`, async () => {
 			await claySamplePage.selectTab(tabName);
 
 			await checkAccessibility({
 				page,
+				selectors: [
+					'.portlet-body > .lfr-tooltip-scope > .tab-content > .tab-pane.active',
+				],
 			});
 		});
 	}

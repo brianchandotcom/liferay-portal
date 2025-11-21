@@ -69,10 +69,14 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public Map<String, Object> getAdditionalProps() {
+		Boolean contentsFolder = Objects.equals(
+			getRootObjectEntryFolderExternalReferenceCode(),
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
+
 		return new HashMapBuilder<>().putAll(
 			super.getAdditionalProps()
 		).put(
-			"galleryViewEnabled", true
+			"galleryViewEnabled", !contentsFolder
 		).put(
 			"rootObjectEntryFolderExternalReferenceCode",
 			getRootObjectEntryFolderExternalReferenceCode()

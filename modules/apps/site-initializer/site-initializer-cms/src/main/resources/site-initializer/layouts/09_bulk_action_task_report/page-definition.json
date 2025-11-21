@@ -71,7 +71,7 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "cms-basic-master"
+			"key": "cms-master"
 		},
 		"themeName": "CMS"
 	},

@@ -71,7 +71,7 @@ import java.util.Objects;
 public class PageElementsTestUtil {
 
 	public static PageElement getDropZonePageElement(
-			long groupId, String pageElementExternalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		DropZonePageElementDefinition dropZonePageElementDefinition =
@@ -84,7 +84,7 @@ public class PageElementsTestUtil {
 			PageElementDefinition.Type.DROP_ZONE);
 
 		return _getPageElement(
-			dropZonePageElementDefinition, pageElementExternalReferenceCode);
+			externalReferenceCode, dropZonePageElementDefinition);
 	}
 
 	public static FragmentInstancePageElementDefinition
@@ -647,12 +647,12 @@ public class PageElementsTestUtil {
 	}
 
 	private static PageElement _getPageElement(
-		PageElementDefinition pageElementDefinition,
-		String pageElementExternalReferenceCode) {
+		String externalReferenceCode,
+		PageElementDefinition pageElementDefinition) {
 
 		PageElement pageElement = new PageElement();
 
-		pageElement.setExternalReferenceCode(pageElementExternalReferenceCode);
+		pageElement.setExternalReferenceCode(externalReferenceCode);
 		pageElement.setPageElementDefinition(pageElementDefinition);
 		pageElement.setPageElements(new PageElement[0]);
 		pageElement.setParentExternalReferenceCode(StringPool.BLANK);

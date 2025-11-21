@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -93,20 +92,6 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public Comment addComment(
-			String externalReferenceCode, long groupId, long parentCommentId,
-			String className, long classPK, String body)
-		throws Exception {
-
-		long commentId = addComment(
-			externalReferenceCode, PrincipalThreadLocal.getUserId(), className,
-			classPK, StringPool.BLANK, parentCommentId, StringPool.BLANK, body,
-			_createServiceContextFunction());
-
-		return fetchComment(commentId);
-	}
-
-	@Override
 	public long addComment(
 			String externalReferenceCode, long userId, long groupId,
 			String className, long classPK, String userName, String subject,
@@ -130,20 +115,6 @@ public class MBCommentManagerImpl implements CommentManager {
 			subject, body, serviceContext);
 
 		return mbMessage.getMessageId();
-	}
-
-	@Override
-	public Comment addComment(
-			String externalReferenceCode, long groupId, String className,
-			long classPK, String body)
-		throws Exception {
-
-		long commentId = addComment(
-			externalReferenceCode, PrincipalThreadLocal.getUserId(), groupId,
-			className, classPK, StringPool.BLANK, StringPool.BLANK, body,
-			_createServiceContextFunction());
-
-		return fetchComment(commentId);
 	}
 
 	@Override
@@ -454,16 +425,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		rootMBMessage.setModifiedDate(rootDiscussionComment.getModifiedDate());
 
 		return _mbMessageLocalService.updateMBMessage(rootMBMessage);
-	}
-
-	private Function<String, ServiceContext> _createServiceContextFunction() {
-		return className -> {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-			return serviceContext;
-		};
 	}
 
 	private void _duplicateComment(

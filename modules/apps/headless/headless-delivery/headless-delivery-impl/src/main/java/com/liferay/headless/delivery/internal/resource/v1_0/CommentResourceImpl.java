@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -699,6 +700,13 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				_commentManager, _portal));
 	}
 
+	private long _getUserId() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.getUserId();
+	}
+
 	private boolean _isAssociated(
 		String className, long classPK,
 		com.liferay.portal.kernel.comment.Comment comment) {
@@ -723,16 +731,22 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (parentCommentId != null) {
 			return CommentUtil.toComment(
-				() -> _commentManager.addComment(
-					externalReferenceCode, groupId, parentCommentId, className,
-					classPK, StringBundler.concat("<p>", text, "</p>")),
+				() -> _commentManager.fetchComment(
+					_commentManager.addComment(
+						externalReferenceCode, _getUserId(), className, classPK,
+						StringPool.BLANK, parentCommentId, StringPool.BLANK,
+						StringBundler.concat("<p>", text, "</p>"),
+						_createServiceContextFunction())),
 				_commentManager, _portal);
 		}
 
 		return CommentUtil.toComment(
-			() -> _commentManager.addComment(
-				externalReferenceCode, groupId, className, classPK,
-				StringBundler.concat("<p>", text, "</p>")),
+			() -> _commentManager.fetchComment(
+				_commentManager.addComment(
+					externalReferenceCode, _getUserId(), groupId, className,
+					classPK, StringPool.BLANK, StringPool.BLANK,
+					StringBundler.concat("<p>", text, "</p>"),
+					_createServiceContextFunction())),
 			_commentManager, _portal);
 	}
 

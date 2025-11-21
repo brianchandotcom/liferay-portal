@@ -4,33 +4,19 @@
  */
 
 /* eslint-disable no-undef */
-Liferay.on('allPortletsReady', () => {
-	const carouselContainer = document.querySelector(
-		'.carousel-main-container'
-	);
-
-	if (!carouselContainer) {
-		return;
-	}
-
-	const swiperWrapper = carouselContainer.querySelector('.swiper-wrapper');
-	const nextButton = document.querySelector('.carousel-nav-button-next');
-	const prevButton = document.querySelector('.carousel-nav-button-prev');
-	const liveRegion = document.querySelector('.carousel-live-region');
-	let slides = Array.from(
-		carouselContainer.querySelectorAll('.swiper-slide')
-	);
-
-	const qtyOriginalSlides = slides.length;
+(function () {
 	const MIN_SLIDES_FOR_LOOP = 5;
 
-	if (qtyOriginalSlides > 1 && qtyOriginalSlides < MIN_SLIDES_FOR_LOOP) {
-		const frag = document.createDocumentFragment();
-
+	function cloneSlidesForLoop(
+		swiperWrapper,
+		originalSlides,
+		qtyOriginalSlides
+	) {
+		const fragment = document.createDocumentFragment();
 		let currentCount = qtyOriginalSlides;
 
 		while (currentCount < MIN_SLIDES_FOR_LOOP) {
-			slides.forEach((slide, index) => {
+			originalSlides.forEach((slide, index) => {
 				const clone = slide.cloneNode(true);
 
 				clone.classList.add('is-manual-clone');
@@ -40,159 +26,219 @@ Liferay.on('allPortletsReady', () => {
 					.querySelectorAll('[id]')
 					.forEach((element) => element.removeAttribute('id'));
 
-				frag.appendChild(clone);
+				fragment.appendChild(clone);
 			});
 			currentCount += qtyOriginalSlides;
 		}
-		swiperWrapper.appendChild(frag);
+		swiperWrapper.appendChild(fragment);
+	}
 
-		slides = Array.from(
+	function prepareSlides(carouselContainer, swiperWrapper) {
+		let slides = Array.from(
 			carouselContainer.querySelectorAll('.swiper-slide')
 		);
-	}
-	else {
-		slides.forEach((slide, index) => {
-			slide.dataset.originalIndex = index;
-		});
+		const qtyOriginalSlides = slides.length;
+		const isLoopCandidate =
+			qtyOriginalSlides > 1 && qtyOriginalSlides < MIN_SLIDES_FOR_LOOP;
+
+		if (isLoopCandidate) {
+			cloneSlidesForLoop(swiperWrapper, slides, qtyOriginalSlides);
+
+			slides = Array.from(
+				carouselContainer.querySelectorAll('.swiper-slide')
+			);
+		}
+		else {
+			slides.forEach((slide, index) => {
+				slide.dataset.originalIndex = index;
+			});
+		}
+
+		return slides;
 	}
 
-	const initialSlide = slides.length > 2 ? 1 : 0;
-	const isLoop = qtyOriginalSlides > 1;
-
-	const swiper = new globalJS.Swiper('.swiper', {
-		allowTouchMove: true,
-		autoplay: {
-			delay: 6000,
-			disableOnInteraction: false,
-		},
-		breakpoints: {
-			0: {
-				slidesPerView: 1,
-			},
-			1024: {
-				slidesPerView: 1.15,
-			},
-			1440: {
-				slidesPerView: 1.15,
-			},
-		},
-		centeredSlides: true,
-		initialSlide,
-		loop: isLoop,
-		mousewheel: {
-			invert: true,
-		},
-		navigation: {
-			nextEl: '.carousel-nav-button-next',
-			prevEl: '.carousel-nav-button-prev',
-		},
-		pagination: {
+	function getPaginationConfig(qtyOriginalSlides) {
+		return {
 			clickable: true,
 			el: '.carousel-nav-container-indicators',
 			renderBullet(index, className) {
 				if (index < qtyOriginalSlides) {
-					return (
-						'<span class="' +
-						className +
-						'" role="button" aria-label="Go to slide ' +
-						(index + 1) +
-						'"></span>'
-					);
+					return `<span class="${className}" role="button" aria-label="Go to slide ${
+						index + 1
+					}"></span>`;
 				}
 
 				return '';
 			},
 			type: 'bullets',
-		},
-		spaceBetween: 16,
-	});
-
-	function updateActiveBullet() {
-		const bullets = document.querySelectorAll(
-			'.carousel-nav-container-indicators .swiper-pagination-bullet'
-		);
-
-		bullets.forEach((bullet) =>
-			bullet.classList.remove('swiper-pagination-bullet-active')
-		);
-
-		const activeIndex = swiper.realIndex % qtyOriginalSlides;
-
-		if (bullets[activeIndex]) {
-			bullets[activeIndex].classList.add(
-				'swiper-pagination-bullet-active'
-			);
-			bullets[activeIndex].setAttribute('aria-current', 'true');
-		}
+		};
 	}
 
-	if (qtyOriginalSlides <= 1) {
-		swiper.autoplay.stop();
+	function initializeSwiper(qtyOriginalSlides, slides) {
+		const isLoop = qtyOriginalSlides > 1;
+		const initialSlide = slides.length > 2 ? 1 : 0;
 
-		if (nextButton) {
-			nextButton.style.display = 'none';
-		}
-		if (prevButton) {
-			prevButton.style.display = 'none';
-		}
-
-		const pagination = document.querySelector(
-			'.carousel-nav-container-indicators'
-		);
-		if (pagination) {
-			pagination.style.display = 'none';
-		}
-	}
-
-	function updateSlideARIA() {
-		const realIndex = (swiper.realIndex % qtyOriginalSlides) + 1;
-
-		if (liveRegion) {
-			liveRegion.textContent = `Slide ${realIndex} of ${qtyOriginalSlides}.`;
-		}
-
-		slides.forEach((slide) => {
-			slide.setAttribute('role', 'group');
-			slide.setAttribute('aria-roledescription', 'slide');
-			const originalIndex = slide.dataset.originalIndex
-				? Number.parseInt(slide.dataset.originalIndex, 10) + 1
-				: realIndex;
-
-			slide.setAttribute(
-				'aria-label',
-				`Slide ${originalIndex} of ${qtyOriginalSlides}`
-			);
+		return new globalJS.Swiper('.swiper', {
+			allowTouchMove: true,
+			autoplay: {
+				delay: 6000,
+				disableOnInteraction: false,
+			},
+			breakpoints: {
+				0: {slidesPerView: 1},
+				1024: {slidesPerView: 1.15},
+				1440: {slidesPerView: 1.15},
+			},
+			centeredSlides: true,
+			initialSlide,
+			loop: isLoop,
+			mousewheel: {
+				invert: true,
+			},
+			navigation: {
+				nextEl: '.carousel-nav-button-next',
+				prevEl: '.carousel-nav-button-prev',
+			},
+			pagination: getPaginationConfig(qtyOriginalSlides),
+			spaceBetween: 16,
 		});
 	}
 
-	swiper.on('slideChange', () => {
+	function attachEventListeners(carouselContainer, swiper) {
+		carouselContainer.addEventListener('keydown', (event) => {
+			switch (event.key) {
+				case 'ArrowLeft':
+					event.preventDefault();
+					swiper.slidePrev();
+					break;
+				case 'ArrowRight':
+					event.preventDefault();
+					swiper.slideNext();
+					break;
+				default:
+					break;
+			}
+		});
+
+		carouselContainer.addEventListener('mouseenter', () =>
+			swiper.autoplay.stop()
+		);
+		carouselContainer.addEventListener('mouseleave', () =>
+			swiper.autoplay.start()
+		);
+		carouselContainer.addEventListener('focusin', () =>
+			swiper.autoplay.stop()
+		);
+		carouselContainer.addEventListener('focusout', () =>
+			swiper.autoplay.start()
+		);
+	}
+
+	function adjustUIForSingleSlide(
+		qtyOriginalSlides,
+		nextButton,
+		prevButton,
+		swiper
+	) {
+		if (qtyOriginalSlides > 1) {
+			return;
+		}
+
+		swiper.autoplay.stop();
+
+		const elementsToHide = [
+			nextButton,
+			prevButton,
+			document.querySelector('.carousel-nav-container-indicators'),
+		];
+
+		elementsToHide.forEach((element) => {
+			if (element) {
+				element.style.display = 'none';
+			}
+		});
+	}
+
+	function setupCarousel() {
+		const carouselContainer = document.querySelector(
+			'.carousel-main-container'
+		);
+
+		if (!carouselContainer) {
+			return;
+		}
+
+		const swiperWrapper =
+			carouselContainer.querySelector('.swiper-wrapper');
+		const nextButton = document.querySelector('.carousel-nav-button-next');
+		const prevButton = document.querySelector('.carousel-nav-button-prev');
+		const liveRegion = document.querySelector('.carousel-live-region');
+
+		const initialSlides = Array.from(
+			carouselContainer.querySelectorAll('.swiper-slide')
+		);
+		const qtyOriginalSlides = initialSlides.length;
+
+		const slides = prepareSlides(carouselContainer, swiperWrapper);
+		const swiper = initializeSwiper(qtyOriginalSlides, slides);
+
+		function updateActiveBullet() {
+			const bullets = document.querySelectorAll(
+				'.carousel-nav-container-indicators .swiper-pagination-bullet'
+			);
+
+			bullets.forEach((bullet) =>
+				bullet.classList.remove('swiper-pagination-bullet-active')
+			);
+
+			const activeIndex = swiper.realIndex % qtyOriginalSlides;
+
+			if (bullets[activeIndex]) {
+				bullets[activeIndex].classList.add(
+					'swiper-pagination-bullet-active'
+				);
+				bullets[activeIndex].setAttribute('aria-current', 'true');
+			}
+		}
+
+		function updateSlideARIA() {
+			const realIndex = (swiper.realIndex % qtyOriginalSlides) + 1;
+
+			if (liveRegion) {
+				liveRegion.textContent = `Slide ${realIndex} of ${qtyOriginalSlides}.`;
+			}
+
+			slides.forEach((slide) => {
+				slide.setAttribute('role', 'group');
+				slide.setAttribute('aria-roledescription', 'slide');
+
+				const originalIndex = slide.dataset.originalIndex
+					? Number.parseInt(slide.dataset.originalIndex, 10) + 1
+					: realIndex;
+
+				slide.setAttribute(
+					'aria-label',
+					`Slide ${originalIndex} of ${qtyOriginalSlides}`
+				);
+			});
+		}
+
 		updateSlideARIA();
 		updateActiveBullet();
-	});
 
-	carouselContainer.addEventListener('keydown', (event) => {
-		switch (event.key) {
-			case 'ArrowLeft':
-				event.preventDefault();
-				swiper.slidePrev();
-				break;
-			case 'ArrowRight':
-				event.preventDefault();
-				swiper.slideNext();
-				break;
-			default:
-				break;
-		}
-	});
+		swiper.on('slideChange', () => {
+			updateSlideARIA();
+			updateActiveBullet();
+		});
 
-	carouselContainer.addEventListener('mouseenter', () =>
-		swiper.autoplay.stop()
-	);
-	carouselContainer.addEventListener('mouseleave', () =>
-		swiper.autoplay.start()
-	);
-	carouselContainer.addEventListener('focusin', () => swiper.autoplay.stop());
-	carouselContainer.addEventListener('focusout', () =>
-		swiper.autoplay.start()
-	);
-});
+		attachEventListeners(carouselContainer, swiper);
+		adjustUIForSingleSlide(
+			qtyOriginalSlides,
+			nextButton,
+			prevButton,
+			swiper
+		);
+	}
+
+	Liferay.on('allPortletsReady', setupCarousel);
+})();

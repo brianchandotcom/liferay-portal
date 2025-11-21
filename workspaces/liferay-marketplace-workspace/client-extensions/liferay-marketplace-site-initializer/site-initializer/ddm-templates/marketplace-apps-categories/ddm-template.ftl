@@ -16,7 +16,7 @@
 		background-color: #e6ebf5;
 		color: #1c3667;
 		font-weight: 600;
-		height: 20px;
+		height:20px;
 		padding: 3px 8px;
 	}
 
@@ -30,41 +30,16 @@
 		white-space: nowrap;
 	}
 
-	.app-details-category-badge .app-type-badge {
-	  	position: relative !important;
+	.app-details-category-badge .app-type-badge{
 		right: 2px !important;
 		top: 0px !important;
-	}
-
-	.client-extension-product-type {
-		background-color: #FFE6C6;
-		color: #9D4C00;
-	}
-
-	.cloud-product-type {
-		background-color: #D1EEDC;
-		color: #0E7835;
-	}
-
-	.composite-app-product-type {
-		background-color: #FBE0FF;
-		color: #720086;
+		position: relative !important;
 	}
 
 	.diamond-icon-container {
 		color: #C9C9CF;
 		height: 4px;
 		width: 4px;
-	}
-
-	.dxp-product-type {
-		background-color: #D1ECFA;
-		color: #166E9E;
-	}
-
-	.low-code-configuration-product-type {
-		background-color: #DCD7E9;
-		color: #503690;
 	}
 
 	@media screen and (max-width: 768px) {
@@ -85,17 +60,9 @@
 	}
 </style>
 
-<#assign
-	productTypeValues =
-		{
-			"client-extension": "Client Extension",
-			"cloud": "Cloud App",
-			"composite-app": "Composite App",
-			"dxp": "DXP App",
-			"low-code-configuration": "Low-Code"
-		}
-
-	vocabularyProductCategory = "MARKETPLACE APP CATEGORY"
+<#assign 
+	marketpalceAppCategory = "MARKETPLACE-APP-CATEGORY" 
+	marketplaceCategory = "MARKETPLACE-CATEGORY"
 />
 
 <#if themeDisplay?has_content>
@@ -123,46 +90,38 @@
 </#if>
 
 <#assign
-	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications,categories")
+	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=categories")
 	categories = product.categories![]
-	productSpecifications = product.productSpecifications![]
+	marketplaceAppCategories = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == marketpalceAppCategory)
+	marketplaceThemes = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == marketplaceCategory)?first!""
 />
 
 <div class="app-container color-neutral-3 d-flex flex-wrap font-size-paragraph-small justify-content-between w-100">
-	<div class="d-flex">
-		<#if productSpecifications?has_content>
-			<#assign productTypes = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-") == "MARKETPLACE CATEGORY")![] />
-			<#list categories as category>
-				<#if category.vocabulary?upper_case == "MARKETPLACE CATEGORY">
-				<#assign badgeType = category.name?lower_case?replace(" ", "-", "r") />
-					<#if category.name == 'Other'>
-						<div></div>
-					<#else>
-						<span class="app-type-badge ${badgeType} d-flex align-items-center bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${category.name}">
-							${category.name}
-						</span>
-					</#if>
-				</#if>
-			</#list>
+	<div class="app-details-category-badge d-flex">
+		<#if marketplaceThemes?has_content>
+			<#assign badgeType = marketplaceThemes.name?lower_case?replace(" ", "-", "r")?replace("/", "-", "r") />
+			<#if marketplaceThemes.name == "Other">
+				<div></div>
+			<#else>
+				<span class="app-type-badge ${badgeType} d-flex align-items-center bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${marketplaceThemes.name}">
+					${marketplaceThemes.name}
+				</span>
+			</#if>
 		</#if>
 
-		<#if categories?has_content>
-			<#assign filteredCategories = categories?filter(category -> category.vocabulary?upper_case == vocabularyProductCategory) />
-
-			<#if filteredCategories?has_content && appType?has_content>
+		<#if marketplaceAppCategories?has_content>
+			<#if marketplaceThemes?has_content> 
 				<span class="align-items-center d-flex justify-content-between">
 					<span class="align-items-center d-flex diamond-icon-container justify-content-between mr-3">
 						<@clay["icon"] symbol="diamond" />
 					</span>
-				</span>
+				</span>			
 			</#if>
 
-			<#list categories as category>
-				<#if category.vocabulary?upper_case == vocabularyProductCategory>
-					<span class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${category.name}">
-						${category.name}
-					</span>
-				</#if>
+			<#list marketplaceAppCategories as marketplaceAppCategory>
+				<span class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${marketplaceAppCategory.name}">
+					${marketplaceAppCategory.name}
+				</span>
 			</#list>
 		</#if>
 	</div>

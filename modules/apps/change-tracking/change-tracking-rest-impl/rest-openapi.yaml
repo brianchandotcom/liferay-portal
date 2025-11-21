@@ -242,6 +242,10 @@ paths:
             operationId: getCTCollectionsPage
             parameters:
                 -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
                     name: page
                     schema:
                         type: integer

@@ -12,10 +12,10 @@ import com.liferay.exportimport.constants.ExportImportPortletKeys;
  */
 public class ExportImportFDSNames {
 
-	public static final String COMPANY_IMPORT_ERRORS =
-		ExportImportPortletKeys.COMPANY_IMPORT + "-importErrors";
+	public static final String COMPANY_IMPORT_REPORT_ENTRIES =
+		ExportImportPortletKeys.COMPANY_IMPORT + "-importReportEntries";
 
-	public static final String IMPORT_ERRORS =
-		ExportImportPortletKeys.IMPORT + "-importErrors";
+	public static final String IMPORT_REPORT_ENTRIES =
+		ExportImportPortletKeys.IMPORT + "-importReportEntries";
 
 }

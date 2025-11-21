@@ -21,9 +21,9 @@ import java.util.List;
 /**
  * @author Jorge González
  */
-public class ImportErrorsDisplayContext {
+public class ImportReportEntriesDisplayContext {
 
-	public ImportErrorsDisplayContext(
+	public ImportReportEntriesDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
@@ -39,16 +39,16 @@ public class ImportErrorsDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				getImportErrorDetailsURL(), "view", "view",
+				getImportReportEntryDetailsURL(), "view", "view",
 				LanguageUtil.get(_httpServletRequest, "view"), "get", null,
 				"link"));
 	}
 
-	public String getImportErrorDetailsURL() {
+	public String getImportReportEntryDetailsURL() {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
-			"/export_import/view_import_error_detail"
+			"/export_import/view_import_report_entry_detail"
 		).setBackURL(
 			ParamUtil.getString(_httpServletRequest, "redirect")
 		).setParameter(

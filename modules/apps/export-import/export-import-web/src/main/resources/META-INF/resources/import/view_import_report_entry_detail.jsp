@@ -20,10 +20,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
 	<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 
 	<react:component
-		module="{ViewImportErrorDetail} from exportimport-web"
+		module="{ViewImportReportEntryDetail} from exportimport-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"apiURL", importErrorsDisplayContext.getReportEntryAPIURL(ParamUtil.getString(request, "errorId"))
+				"apiURL", importReportEntriesDisplayContext.getReportEntryAPIURL(ParamUtil.getString(request, "errorId"))
 			).put(
 				"backURL", portletDisplay.getURLBack()
 			).build()

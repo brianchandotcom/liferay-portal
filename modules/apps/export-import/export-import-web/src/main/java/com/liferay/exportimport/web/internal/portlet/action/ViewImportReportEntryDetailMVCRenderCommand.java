@@ -11,22 +11,22 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge González
+ * @author Jaime León Rosado
  */
 @Component(
 	property = {
 		"jakarta.portlet.name=" + ExportImportPortletKeys.COMPANY_IMPORT,
 		"jakarta.portlet.name=" + ExportImportPortletKeys.IMPORT,
-		"mvc.command.name=/export_import/view_import_errors"
+		"mvc.command.name=/export_import/view_import_report_entry_detail"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewImportErrorsMVCRenderCommand
+public class ViewImportReportEntryDetailMVCRenderCommand
 	extends BaseGroupMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/import/view_import_errors.jsp";
+		return "/import/view_import_report_entry_detail.jsp";
 	}
 
 }

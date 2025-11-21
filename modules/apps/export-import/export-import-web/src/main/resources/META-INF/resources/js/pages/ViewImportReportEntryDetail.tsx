@@ -34,7 +34,7 @@ function DetailViewDefinitionCol({
 	);
 }
 
-interface ErrorDetail {
+interface ReportEntryDetail {
 	classExternalReferenceCode: string;
 	classPK: number;
 	creator: {
@@ -58,7 +58,7 @@ interface ErrorDetail {
 	};
 }
 
-export function ViewImportErrorDetail({
+export function ViewImportReportEntryDetail({
 	apiURL,
 	backURL,
 }: {
@@ -66,14 +66,14 @@ export function ViewImportErrorDetail({
 	backURL: string;
 }) {
 	const [isLoading, setIsLoading] = useState(true);
-	const [errorDetail, setErrorDetail] = useState<ErrorDetail>(
-		{} as ErrorDetail
+	const [reportEntryDetail, setReportEntryDetail] = useState<ReportEntryDetail>(
+		{} as ReportEntryDetail
 	);
 
 	useEffect(() => {
 		fetch(apiURL).then((response) => {
-			response.json().then((data: ErrorDetail) => {
-				setErrorDetail({
+			response.json().then((data: ReportEntryDetail) => {
+				setReportEntryDetail({
 					...data,
 					dateCreated:
 						data.dateCreated && formatDate(data.dateCreated),
@@ -121,7 +121,7 @@ export function ViewImportErrorDetail({
 		modelName,
 		scope,
 		type,
-	} = errorDetail;
+	} = reportEntryDetail;
 
 	return (
 		<ClayLayout.ContainerFluid>

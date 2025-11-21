@@ -402,6 +402,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-70061")
 	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelectorFileEntry()
 		throws Exception {
 
@@ -547,6 +548,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-70061")
 	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelectorJournalArticle()
 		throws Exception {
 

@@ -51,9 +51,6 @@ public class BulkActionTaskReportCMSTableFDSView extends BaseCMSTableFDSView {
 			"creator.name", "author-name",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"type", "type",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
 			"numberOfItems", "number-of-items",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(

@@ -114,6 +114,8 @@ public class DocumentLibraryCommerceOptionTypeImpl
 			return;
 		}
 
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
 		DDMForm ddmForm = new DDMForm();
 
 		Locale locale = _portal.getLocale(httpServletRequest);
@@ -159,8 +161,6 @@ public class DocumentLibraryCommerceOptionTypeImpl
 			portletDisplay.getNamespace());
 
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.write(
 			_ddmFormRenderer.render(ddmForm, ddmFormRenderingContext));

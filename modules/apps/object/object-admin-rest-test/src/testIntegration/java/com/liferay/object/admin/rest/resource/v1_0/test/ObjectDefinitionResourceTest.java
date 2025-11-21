@@ -57,8 +57,14 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -67,6 +73,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -105,6 +112,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Javier Gamarra
@@ -557,6 +567,65 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(postObjectDefinition, randomObjectDefinition);
 		assertValid(postObjectDefinition);
+
+		// Permissions
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			postObjectDefinition);
+
+		String permissionName =
+			com.liferay.object.model.ObjectDefinition.class.getName();
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), permissionName,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(postObjectDefinition.getId()), role1.getRoleId(),
+			new String[] {ActionKeys.DELETE});
+
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), permissionName,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(postObjectDefinition.getId()), role2.getRoleId(),
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
+
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(
+				_getOwnerPermissionsJSONObject(),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE}, role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					role2.getName())),
+			postObjectDefinition);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(), permissionName,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(postObjectDefinition.getId()), role1.getRoleId(),
+			ActionKeys.DELETE);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(), permissionName,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(postObjectDefinition.getId()), role2.getRoleId(),
+			ActionKeys.VIEW);
+
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(
+				_getOwnerPermissionsJSONObject(),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.UPDATE}, role2.getName())),
+			postObjectDefinition);
 
 		// Status
 
@@ -1798,6 +1867,28 @@ public class ObjectDefinitionResourceTest
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
 	}
 
+	private void _assertObjectDefinitionWithPermissions(
+			JSONArray expectedPermissionsJSONArray,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"object-admin/v1.0/object-definitions",
+				"/by-external-reference-code/",
+				objectDefinition.getExternalReferenceCode(),
+				"?nestedFields=permissions"),
+			Http.Method.GET);
+
+		JSONArray actualPermissionsJSONArray = jsonObject.getJSONArray(
+			"permissions");
+
+		JSONAssert.assertEquals(
+			expectedPermissionsJSONArray.toString(),
+			actualPermissionsJSONArray.toString(), JSONCompareMode.LENIENT);
+	}
+
 	private void _assertObjectValidationRule(
 			String expectedAllowActiveStatusUpdate,
 			String expectedObjectFieldExternalReferenceCode,
@@ -1906,6 +1997,25 @@ public class ObjectDefinitionResourceTest
 		objectRelationship.setType(type);
 
 		return objectRelationship;
+	}
+
+	private JSONObject _getOwnerPermissionsJSONObject() {
+		return _getPermissionsJSONObject(
+			new String[] {
+				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.VIEW
+			},
+			RoleConstants.OWNER);
+	}
+
+	private JSONObject _getPermissionsJSONObject(
+		String[] actionIds, String roleName) {
+
+		return JSONUtil.put(
+			"actionIds", actionIds
+		).put(
+			"roleName", roleName
+		);
 	}
 
 	private ObjectDefinition _randomModifiableSystemObjectDefinition(
@@ -2530,6 +2640,12 @@ public class ObjectDefinitionResourceTest
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private WorkflowDefinitionLinkLocalService

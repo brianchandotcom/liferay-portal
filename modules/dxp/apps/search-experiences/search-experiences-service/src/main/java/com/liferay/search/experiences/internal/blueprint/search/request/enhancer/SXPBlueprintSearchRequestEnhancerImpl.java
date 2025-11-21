@@ -129,7 +129,8 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 				_aggregations, _geoBuilders, highlightConverter, queryConverter,
 				scriptConverter, _significanceHeuristics, _sorts),
 			new GeneralSXPSearchRequestBodyContributor(
-				_assetSubtypeIdentifierBuilder),
+				_assetSubtypeIdentifierBuilder, _complexQueryPartBuilderFactory,
+				_queries),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(
 				_complexQueryPartBuilderFactory, queryConverter,

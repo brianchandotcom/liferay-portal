@@ -6,12 +6,14 @@
 package com.liferay.portal.search.web.internal.portlet.shared.search;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -46,6 +48,12 @@ public class PortletSharedSearchRequestImplTest {
 		ReflectionTestUtil.setFieldValue(
 			portletSharedSearchRequestImpl, "_fragmentEntryLinkLocalService",
 			fragmentEntryLinkLocalService);
+
+		PortletRegistry portletRegistry = Mockito.mock(PortletRegistry.class);
+
+		ReflectionTestUtil.setFieldValue(
+			portletSharedSearchRequestImpl, "_portletRegistry",
+			portletRegistry);
 
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -94,6 +102,22 @@ public class PortletSharedSearchRequestImplTest {
 			fragmentEntryLink1.isTypePortlet()
 		).thenReturn(
 			true
+		);
+
+		Mockito.doReturn(
+			ListUtil.toList("portletA_INSTANCE_rdna")
+		).when(
+			portletRegistry
+		).getFragmentEntryLinkPortletIds(
+			fragmentEntryLink1
+		);
+
+		Mockito.doReturn(
+			ListUtil.toList("portletB_INSTANCE_rdna")
+		).when(
+			portletRegistry
+		).getFragmentEntryLinkPortletIds(
+			fragmentEntryLink2
 		);
 
 		Set<String> result = ReflectionTestUtil.invoke(

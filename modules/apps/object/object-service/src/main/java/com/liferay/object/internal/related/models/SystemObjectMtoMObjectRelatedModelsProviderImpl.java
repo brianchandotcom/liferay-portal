@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
+import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTableFactory;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -251,9 +252,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =
-				new DynamicObjectRelationshipMappingTable(
-					objectDefinition1.getPKObjectFieldDBColumnName(),
-					objectDefinition2.getPKObjectFieldDBColumnName(),
+				DynamicObjectRelationshipMappingTableFactory.create(
+					objectDefinition1, objectDefinition2,
 					objectRelationship.getDBTableName());
 
 		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn1 =
@@ -356,9 +356,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =
-				new DynamicObjectRelationshipMappingTable(
-					objectDefinition1.getPKObjectFieldDBColumnName(),
-					objectDefinition2.getPKObjectFieldDBColumnName(),
+				DynamicObjectRelationshipMappingTableFactory.create(
+					objectDefinition1, objectDefinition2,
 					objectRelationship.getDBTableName());
 
 		return fromStep.from(

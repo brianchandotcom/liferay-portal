@@ -332,7 +332,7 @@ public class ObjectEntryModelDocumentContributor
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		List<ObjectField> objectFields;
+		List<ObjectField> objectFields = null;
 
 		if (objectDefinition.isModifiableAndSystem()) {
 			objectFields = ListUtil.filter(

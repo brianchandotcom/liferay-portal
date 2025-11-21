@@ -442,7 +442,7 @@ test('Checks the accessibility of the rule modal by filling out a condition and 
 });
 
 test(
-	'Highlights fragments when a rule is hovered or focused, and scrolls to the fragment when the rule is clicked',
+	'Highlight and scroll to the fragments when the rule is clicked',
 	{
 		tag: '@LPD-70720',
 	},
@@ -469,8 +469,10 @@ test(
 			key: 'INPUTS-checkbox',
 		});
 
+		const submitButtonId = getRandomString();
+
 		const submitFragmentDefinition = getFragmentDefinition({
-			id: getRandomString(),
+			id: submitButtonId,
 			key: 'INPUTS-submit-button',
 		});
 
@@ -525,7 +527,7 @@ test(
 			name: ruleName,
 		});
 
-		// Hover the rule and check the highlighted fragments
+		// Click the rule and check the highlighted fragments
 
 		const rule = page.getByRole('menuitem').filter({hasText: ruleName});
 
@@ -535,43 +537,51 @@ test(
 
 		const highlightedClass = /highlighted-from-rule/;
 
-		await rule.hover();
+		await rule.click();
 
 		await expect(checkboxFragment).toHaveClass(highlightedClass);
 		await expect(headingFragment).toHaveClass(highlightedClass);
 		await expect(buttonFragment).not.toHaveClass(highlightedClass);
 
-		// Unhover the rule and check that the fragments are not highlighted
+		// Click in other part of the page and check that the fragments are not highlighted
 
-		await pageEditorPage.newRuleButton.hover();
+		await page.locator('body').click();
 
 		await expect(checkboxFragment).not.toHaveClass(highlightedClass);
 		await expect(headingFragment).not.toHaveClass(highlightedClass);
 		await expect(buttonFragment).not.toHaveClass(highlightedClass);
 
-		// Focus the rule and check the highlighted fragments
+		// Press the rule by keyboard and check the highlighted fragments
 
 		await rule.focus();
+		await page.keyboard.press('Enter');
 
 		await expect(checkboxFragment).toHaveClass(highlightedClass);
 		await expect(headingFragment).toHaveClass(highlightedClass);
 		await expect(buttonFragment).not.toHaveClass(highlightedClass);
 
-		await rule.focus();
+		await page.keyboard.press('Tab');
+		await page.keyboard.press('Tab');
+		await page.keyboard.press('Enter');
 
 		// Scroll when the rule is clicked
 
-		const beforeScroll = await page.evaluate(() => ({
-			y: window.scrollY,
-		}));
+		await page.evaluate(() => window.scrollTo(0, 0));
+
+		const beforeScrollY = await page.evaluate(() => window.scrollY);
 
 		await rule.click();
 
-		const afterScroll = await page.evaluate(() => ({
-			y: window.scrollY,
-		}));
+		const afterScrollY = await page.evaluate(() => window.scrollY);
 
-		expect(beforeScroll.y !== afterScroll.y).toBe(true);
+		expect(afterScrollY).not.toBe(beforeScrollY);
+
+		// Unhighlight the fragments when another fragment is selected
+
+		await pageEditorPage.selectFragment(submitButtonId);
+
+		await expect(checkboxFragment).not.toHaveClass(highlightedClass);
+		await expect(headingFragment).not.toHaveClass(highlightedClass);
 	}
 );
 

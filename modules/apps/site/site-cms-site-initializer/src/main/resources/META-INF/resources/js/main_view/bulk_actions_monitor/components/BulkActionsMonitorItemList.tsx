@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Button from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import Label from '@clayui/label';
 import ClayPanel from '@clayui/panel';
@@ -12,19 +11,9 @@ import moment from 'moment';
 import React from 'react';
 
 import {IBulkActionTask} from '../../../common/types/BulkActionTask';
-import {
-	LABELS_BULK_ACTIONS,
-	TASK_STATUS_PROPS,
-	URL_TASKS_REPORT_DETAIL,
-} from '../util/constants';
+import {LABELS_BULK_ACTIONS, TASK_STATUS_PROPS} from '../util/constants';
 
-function BulkActionsMonitorItemList({
-	classNameId,
-	items,
-}: {
-	classNameId: number;
-	items: IBulkActionTask[];
-}) {
+function BulkActionsMonitorItemList({items}: {items: IBulkActionTask[]}) {
 	return (
 		<DropDown.ItemList className="task-status" items={items}>
 			{(bulkActionTask: unknown) => {
@@ -89,20 +78,7 @@ function BulkActionsMonitorItemList({
 						}
 						key={id}
 						showCollapseIcon={false}
-					>
-						<ClayPanel.Body className="d-flex">
-							<a
-								href={`${URL_TASKS_REPORT_DETAIL}${classNameId}/${id}`}
-							>
-								<Button
-									className={`border-${displayType} btn-xs`}
-									displayType={displayType}
-								>
-									{Liferay.Language.get('view')}
-								</Button>
-							</a>
-						</ClayPanel.Body>
-					</ClayPanel>
+					></ClayPanel>
 				);
 			}}
 		</DropDown.ItemList>

@@ -202,10 +202,7 @@ function BulkActionsMonitor({
 			}
 		>
 			<>
-				<BulkActionsMonitorItemList
-					classNameId={classNameId}
-					items={tasks}
-				/>
+				<BulkActionsMonitorItemList items={tasks} />
 
 				{tasksLoading ? (
 					<div className="task-status-loading">

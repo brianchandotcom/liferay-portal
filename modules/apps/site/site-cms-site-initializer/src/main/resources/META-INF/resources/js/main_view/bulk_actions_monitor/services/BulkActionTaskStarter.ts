@@ -82,31 +82,12 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 			this.onCreateTaskSuccess(response);
 		}
 		else {
-			const message = getBulkActionTaskMessage(
+
+			displayCreateTaskSuccessToast(getBulkActionTaskMessage(
 				this.type,
 				'info',
 				this.selectedData
-			);
-
-			displayCreateTaskSuccessToast(
-				sub(
-					message,
-					this.selectedData.selectAll
-						? [
-								getTaskReportLink(
-									this.bulkActionClassNameId,
-									response?.data?.id
-								),
-							]
-						: [
-								this.selectedData?.items?.length || 0,
-								getTaskReportLink(
-									this.bulkActionClassNameId,
-									response?.data?.id
-								),
-							]
-				)
-			);
+			));
 
 			if (this.onCreateTaskSuccess) {
 				this.onCreateTaskSuccess(response);

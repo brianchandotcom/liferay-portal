@@ -732,9 +732,9 @@ public class DDMFormField implements Serializable {
 	@Property
 	private String _name = StringPool.BLANK;
 
+	private List<DDMFormField> _nestedDDMFormFields;
 	private final Map<String, DDMFormField> _nestedDDMFormFieldsMap =
 		new HashMap<>();
-	private List<DDMFormField> _nestedDDMFormFields;
 
 	@Property
 	private LocalizedValue _predefinedValue;

@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
@@ -14,6 +13,7 @@ import SXPElement from '../../shared/sxp_element/index';
 import {SXP_ELEMENT_PREFIX} from '../../utils/constants';
 import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
 import isCustomJSONSXPElement from '../../utils/sxp_element/is_custom_json_sxp_element';
+import CustomPanel from './shared/CustomPanel';
 
 function QuerySXPElements({
 	elementInstances,
@@ -32,7 +32,6 @@ function QuerySXPElements({
 	touched = [],
 }) {
 	const [collapseAll, setCollapseAll] = useState(false);
-	const [collapseSection, setCollapseSection] = useState(false);
 
 	const _handleClickAddQueryElement = () => {
 		setStorageAddSXPElementSidebar();
@@ -41,16 +40,13 @@ function QuerySXPElements({
 	};
 
 	return (
-		<div className="query-sxp-elements sheet">
-			<ClayLayout.SheetHeader className="mb-3" justify="between">
-				<span className="text-6 text-weight-bold">
-					{Liferay.Language.get('query-elements')}
-				</span>
-
-				<div className="float-right">
+		<CustomPanel
+			className="query-sxp-elements"
+			headerContent={
+				<>
 					<ClayButton
 						aria-label={Liferay.Language.get('collapse-all')}
-						className="text-3 text-secondary text-weight-bold"
+						className="c-mr-3 text-3 text-secondary text-weight-bold"
 						displayType="unstyled"
 						onClick={() => setCollapseAll(!collapseAll)}
 					>
@@ -64,7 +60,7 @@ function QuerySXPElements({
 							aria-label={Liferay.Language.get(
 								'add-query-element'
 							)}
-							className="c-ml-3"
+							className="c-mr-2"
 							displayType="primary"
 							monospaced
 							onClick={_handleClickAddQueryElement}
@@ -74,24 +70,12 @@ function QuerySXPElements({
 							<ClayIcon symbol="plus" />
 						</ClayButton>
 					</ClayTooltipProvider>
-
-					<ClayButton
-						aria-label={Liferay.Language.get('collapse')}
-						className="c-ml-2 component-action"
-						displayType="unstyled"
-						onClick={() => setCollapseSection(!collapseSection)}
-					>
-						<ClayIcon
-							symbol={
-								collapseSection ? 'angle-down' : 'angle-right'
-							}
-						/>
-					</ClayButton>
-				</div>
-			</ClayLayout.SheetHeader>
-
-			{collapseSection &&
-				(!elementInstances.length ? (
+				</>
+			}
+			title={Liferay.Language.get('query-elements')}
+		>
+			<>
+				{!elementInstances.length ? (
 					<span className="text-4 text-secondary">
 						{Liferay.Language.get(
 							'add-elements-to-optimize-search-results-for-your-use-cases'
@@ -147,8 +131,9 @@ function QuerySXPElements({
 							);
 						}
 					)
-				))}
-		</div>
+				)}
+			</>
+		</CustomPanel>
 	);
 }
 

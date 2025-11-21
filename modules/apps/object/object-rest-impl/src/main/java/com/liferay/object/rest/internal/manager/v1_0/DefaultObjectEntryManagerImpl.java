@@ -1783,7 +1783,38 @@ public class DefaultObjectEntryManagerImpl
 						}
 					}
 
-					if (LazyReferencingThreadLocal.isEnabled()) {
+					if ((objectDefinition.isRootNode() ||
+						 objectDefinition.isRootDescendantNode()) &&
+						objectRelationship.isEdge()) {
+
+						com.liferay.object.model.ObjectEntry
+							nestedServiceBuilderObjectEntry =
+								_objectEntryService.fetchObjectEntry(
+									nestedObjectEntry.
+										getExternalReferenceCode(),
+									groupId,
+									relatedObjectDefinition.
+										getObjectDefinitionId());
+
+						if (nestedServiceBuilderObjectEntry == null) {
+							nestedObjectEntry = addRelatedObjectEntry(
+								dtoConverterContext,
+								serviceBuilderObjectEntry.
+									getExternalReferenceCode(),
+								nestedObjectEntry, objectRelationship,
+								nestedScopeKey);
+						}
+						else {
+							nestedObjectEntry = updateRelatedObjectEntry(
+								dtoConverterContext,
+								nestedObjectEntry.getExternalReferenceCode(),
+								nestedObjectEntry, objectRelationship,
+								serviceBuilderObjectEntry.
+									getExternalReferenceCode(),
+								nestedScopeKey);
+						}
+					}
+					else if (LazyReferencingThreadLocal.isEnabled()) {
 						nestedObjectEntry = _toObjectEntry(
 							dtoConverterContext, relatedObjectDefinition,
 							_objectEntryService.getOrAddEmptyObjectEntry(

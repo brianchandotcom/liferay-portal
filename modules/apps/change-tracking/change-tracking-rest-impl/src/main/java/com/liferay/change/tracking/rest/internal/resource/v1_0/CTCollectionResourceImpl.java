@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -121,8 +122,8 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Override
 	public Page<CTCollection> getCTCollectionsPage(
-			String search, Integer[] statuses, Pagination pagination,
-			Sort[] sorts)
+			String search, Integer[] statuses, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (ArrayUtil.isEmpty(sorts)) {
@@ -133,7 +134,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 		return SearchUtil.search(
 			Collections.emptyMap(),
-			booleanQuery -> booleanQuery.getPreBooleanFilter(), null,
+			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
 			com.liferay.change.tracking.model.CTCollection.class.getName(),
 			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -234,8 +235,8 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Override
 	public Response postCTCollectionsPageExportBatch(
-		String search, Integer[] status, Sort[] sorts, String callbackURL,
-		String contentType, String fieldNames) {
+		String search, Integer[] status, Filter filter, Sort[] sorts,
+		String callbackURL, String contentType, String fieldNames) {
 
 		return null;
 	}
@@ -387,11 +388,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		com.liferay.change.tracking.model.CTCollection ctCollection =
 			_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
 
-		if (ctCollection.isInProgress()) {
-			return true;
-		}
-
-		return false;
+		return ctCollection.isInProgress();
 	}
 
 	private void _schedulePublish(long ctCollectionId, Date publishDate)

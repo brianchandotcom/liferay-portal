@@ -493,11 +493,12 @@ public class PageElementsTestUtil {
 	}
 
 	private static FragmentItemExternalReference
-			_addFragmentItemExternalReference(long collectionId, long groupId)
+			_addFragmentItemExternalReference(
+				long fragmentCollectionId, long groupId)
 		throws PortalException {
 
 		return _addFragmentItemExternalReference(
-			_addFragmentEntry(collectionId, groupId), null);
+			_addFragmentEntry(fragmentCollectionId, groupId), null);
 	}
 
 	private static CollectionDisplayListStyle _getCollectionDisplayListStyle() {

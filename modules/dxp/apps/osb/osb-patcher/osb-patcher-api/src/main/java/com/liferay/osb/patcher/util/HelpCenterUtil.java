@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -257,31 +256,6 @@ public class HelpCenterUtil {
 					"Response code ", response.getResponseCode(), ": ",
 					responseString));
 		}
-	}
-
-	protected static String getAttachmentToken(
-			long companyId, String supportTicket)
-		throws Exception {
-
-		Http.Options options = new Http.Options();
-
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, companyId);
-
-		String uploadTokenURL =
-			patcherConfiguration.helpCenterFileRepoURL() + "/token";
-
-		String dirPath =
-			patcherConfiguration.helpCenterTokenTicketDir() +
-				StringPool.FORWARD_SLASH + supportTicket;
-
-		uploadTokenURL = HttpComponentsUtil.addParameter(
-			uploadTokenURL, "dirPath", dirPath);
-
-		options.setLocation(uploadTokenURL);
-
-		return HttpUtil.URLtoString(options);
 	}
 
 	protected static String getAuthenticationToken(long companyId)

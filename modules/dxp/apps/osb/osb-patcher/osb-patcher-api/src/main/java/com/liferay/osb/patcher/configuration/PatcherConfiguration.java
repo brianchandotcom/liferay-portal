@@ -28,31 +28,7 @@ public interface PatcherConfiguration {
 	public String googleCloudHotfixBucket();
 
 	@Meta.AD(deflt = "", required = false)
-	public String helpCenterGetAccountApiEndpoint();
-
-	@Meta.AD(deflt = "", required = false)
-	public String helpCenterTicketAttachmentApiEndpoint();
-
-	@Meta.AD(deflt = "", required = false)
-	public String helpCenterTokenTicketDir();
-
-	@Meta.AD(deflt = "", required = false)
 	public String helpCenterURL();
-
-	@Meta.AD(deflt = "", required = false)
-	public String helpCenterFileRepoId();
-
-	@Meta.AD(deflt = "", required = false)
-	public String helpCenterFileRepoURL();
-
-	@Meta.AD(deflt = "", required = false)
-	public String helpCenterJsonwsURL();
-
-	@Meta.AD(deflt = "", required = false)
-	public String helpCenterApiPassword();
-
-	@Meta.AD(deflt = "", required = false)
-	public String helpCenterApiUserName();
 
 	@Meta.AD(deflt = "", required = false)
 	public String hotfixMountPath();

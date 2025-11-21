@@ -9,16 +9,17 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import {
-	useHoverMultipleItems,
+	useHighlightItems,
+	useHighlightedItemIds,
 	useKeyboardNavigation,
 } from '../../../app/js-index';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
@@ -148,8 +149,9 @@ function RuleItem({
 	savedRuleId: string | null;
 	setSavedRuleId: (id: string | null) => void;
 }) {
-	const hoverMultipleItems = useHoverMultipleItems();
-	const {isTarget, setElement} = useKeyboardNavigation({
+	const highlightItems = useHighlightItems();
+	const highlightedItemIds = useHighlightedItemIds();
+	const {element, isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
 	const layoutData = useSelector((state) => state.layoutData);
@@ -207,15 +209,29 @@ function RuleItem({
 		[rule.actions, rule.conditions, layoutData.items]
 	);
 
-	const onHighlightItems = () => {
-		hoverMultipleItems(ruleItemIds, {
-			origin: ITEM_ACTIVATION_ORIGINS.rules,
-		});
+	const onHighlightItems = async () => {
+		highlightItems(ruleItemIds);
 	};
 
-	const onUnhighlightItems = () => {
-		hoverMultipleItems([]);
+	const onUnhighlightItems = (event: Event) => {
+		if (highlightedItemIds.length && !element.contains(event.target)) {
+			highlightItems([]);
+		}
 	};
+
+	useEventListener('click', onUnhighlightItems, false, document);
+	useEventListener(
+		'keydown',
+		(event) => {
+			const {key} = event as KeyboardEvent;
+
+			if (key === 'Enter') {
+				onUnhighlightItems(event);
+			}
+		},
+		false,
+		document
+	);
 
 	const onScroll = () => {
 		const fragment = document.querySelector('.highlighted-from-rule');
@@ -244,16 +260,18 @@ function RuleItem({
 			)}
 			className="p-2 page-editor__rule"
 			key={rule.id}
-			onBlurCapture={onUnhighlightItems}
-			onClick={onScroll}
-			onFocusCapture={onHighlightItems}
-			onKeyDown={({key}) => {
+			onClick={async () => {
+				await onHighlightItems();
+
+				onScroll();
+			}}
+			onKeyDown={async ({key}) => {
 				if (key === 'Enter' || key === ' ') {
+					await onHighlightItems();
+
 					onScroll();
 				}
 			}}
-			onMouseLeave={onUnhighlightItems}
-			onMouseOver={onHighlightItems}
 			ref={setElement}
 			role="menuitem"
 			tabIndex={isTarget ? 0 : -1}

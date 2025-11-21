@@ -16,7 +16,7 @@
 		background-color: #e6ebf5;
 		color: #1c3667;
 		font-weight: 600;
-		height:20px;
+		height: 20px;
 		padding: 3px 8px;
 	}
 
@@ -30,7 +30,7 @@
 		white-space: nowrap;
 	}
 
-	.app-details-category-badge .app-type-badge{
+	.app-details-category-badge .app-type-badge {
 		right: 2px !important;
 		top: 0px !important;
 		position: relative !important;
@@ -60,8 +60,8 @@
 	}
 </style>
 
-<#assign 
-	marketpalceAppCategory = "MARKETPLACE-APP-CATEGORY" 
+<#assign
+	marketplaceAppCategory = "MARKETPLACE-APP-CATEGORY"
 	marketplaceCategory = "MARKETPLACE-CATEGORY"
 />
 
@@ -92,7 +92,7 @@
 <#assign
 	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=categories")
 	categories = product.categories![]
-	marketplaceAppCategories = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == marketpalceAppCategory)
+	marketplaceAppCategories = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == marketplaceAppCategory)
 	marketplaceThemes = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == marketplaceCategory)?first!""
 />
 
@@ -100,7 +100,8 @@
 	<div class="app-details-category-badge d-flex">
 		<#if marketplaceThemes?has_content>
 			<#assign badgeType = marketplaceThemes.name?lower_case?replace(" ", "-", "r")?replace("/", "-", "r") />
-			<#if marketplaceThemes.name == "Other">
+
+			<#if stringUtil.equals(marketplaceThemes.name, "Other")>
 				<div></div>
 			<#else>
 				<span class="app-type-badge ${badgeType} d-flex align-items-center bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${marketplaceThemes.name}">
@@ -110,12 +111,12 @@
 		</#if>
 
 		<#if marketplaceAppCategories?has_content>
-			<#if marketplaceThemes?has_content> 
+			<#if marketplaceThemes?has_content>
 				<span class="align-items-center d-flex justify-content-between">
 					<span class="align-items-center d-flex diamond-icon-container justify-content-between mr-3">
 						<@clay["icon"] symbol="diamond" />
 					</span>
-				</span>			
+				</span>
 			</#if>
 
 			<#list marketplaceAppCategories as marketplaceAppCategory>

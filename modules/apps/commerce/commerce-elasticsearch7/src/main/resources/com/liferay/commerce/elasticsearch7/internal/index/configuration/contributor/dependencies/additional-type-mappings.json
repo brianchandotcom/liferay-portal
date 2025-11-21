@@ -57,7 +57,21 @@
 			"type": "keyword"
 		},
 		"accountName": {
-			"type": "keyword"
+			"analyzer": "keyword_lowercase",
+			"fields": {
+				"1_10_ngram": {
+					"analyzer": "1_10_ngram",
+					"type": "text"
+				},
+				"raw": {
+					"type": "keyword"
+				},
+				"reverse": {
+					"analyzer": "reverse_keyword_lowercase",
+					"type": "text"
+				}
+			},
+			"type": "text"
 		},
 		"advanceStatus": {
 			"type": "keyword"

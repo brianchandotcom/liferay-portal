@@ -609,20 +609,29 @@ public class FragmentEntryConfigurationParserImpl
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(value);
 
+			String className = jsonObject.getString("className");
+			long classPK = jsonObject.getLong("classPK");
+			String externalReferenceCode = jsonObject.getString(
+				"externalReferenceCode");
+
+			if (Validator.isNull(className) ||
+				((classPK <= 0) && Validator.isNull(externalReferenceCode))) {
+
+				return null;
+			}
+
 			InfoItemObjectProvider<?> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					jsonObject.getString("className"),
+					InfoItemObjectProvider.class, className,
 					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 			if (infoItemObjectProvider == null) {
 				return null;
 			}
 
-			if (jsonObject.getLong("classPK") > 0) {
+			if (classPK > 0) {
 				return infoItemObjectProvider.getInfoItem(
-					new ClassPKInfoItemIdentifier(
-						jsonObject.getLong("classPK")));
+					new ClassPKInfoItemIdentifier(classPK));
 			}
 
 			ServiceContext serviceContext =
@@ -641,7 +650,7 @@ public class FragmentEntryConfigurationParserImpl
 			return infoItemObjectProvider.getInfoItem(
 				themeDisplay.getScopeGroupId(),
 				new ERCInfoItemIdentifier(
-					jsonObject.getString("externalReferenceCode"),
+					externalReferenceCode,
 					jsonObject.getString("scopeExternalReferenceCode")));
 		}
 		catch (Exception exception) {

@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import {openModal, openToast} from 'frontend-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 export default function PreviewButton({
 	disabled,
@@ -15,6 +15,8 @@ export default function PreviewButton({
 	saveAsDraftURL,
 }) {
 	const [articleId, setArticleId] = useState(null);
+
+	const lockRef = useRef(null);
 
 	useEffect(() => {
 		if (Liferay.FeatureFlags['LPD-11228']) {
@@ -27,6 +29,12 @@ export default function PreviewButton({
 			};
 
 			Liferay.on('asyncFormSubmission', updateArticleId);
+
+			Liferay.componentReady(`${namespace}publishing`).then(
+				(publishLock) => {
+					lockRef.current = publishLock;
+				}
+			);
 
 			return () => {
 				Liferay.detach('asyncFormSubmission', updateArticleId);
@@ -46,6 +54,14 @@ export default function PreviewButton({
 			disabled={disabled || disableInAutosave}
 			displayType="secondary"
 			onClick={() => {
+				if (Liferay.FeatureFlags['LPD-11228']) {
+					if (lockRef.current?.isLocked()) {
+						return;
+					}
+
+					lockRef.current?.lock();
+				}
+
 				const futureDate = new Date(new Date().getTime() + 1000);
 
 				updateJournalInput({
@@ -126,6 +142,11 @@ export default function PreviewButton({
 							title: Liferay.Language.get('error'),
 							type: 'danger',
 						});
+					})
+					.finally(() => {
+						if (Liferay.FeatureFlags['LPD-11228']) {
+							lockRef.current?.unlock();
+						}
 					});
 			}}
 			title={

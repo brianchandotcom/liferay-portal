@@ -33,11 +33,13 @@ function QueryBuilderTab({
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	onAssetSubtypesMapChange,
+	scope,
 	searchableTypes = [],
 	setFieldTouched,
 	setFieldValue,
 	openSidebar,
 	setOpenSidebar,
+	setScope,
 	assetSubtypesMap,
 	touched = [],
 }) {
@@ -78,7 +80,7 @@ function QueryBuilderTab({
 		>
 			<div className="layout-section-main-shift">
 				<div className="vertical-nav-content-wrapper">
-					<ScopeSelector />
+					<ScopeSelector scope={scope} setScope={setScope} />
 
 					<QuerySXPElements
 						elementInstances={elementInstances}
@@ -148,10 +150,12 @@ QueryBuilderTab.propTypes = {
 	onFetchSearchableTypes: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
 	openSidebar: PropTypes.string,
+	scope: PropTypes.object,
 	searchableTypes: PropTypes.arrayOf(PropTypes.object),
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
 	setOpenSidebar: PropTypes.func,
+	setScope: PropTypes.func,
 	touched: PropTypes.arrayOf(PropTypes.object),
 };
 

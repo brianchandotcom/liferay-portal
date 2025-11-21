@@ -9,19 +9,18 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import {openSelectionModal} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
+import {STATUS} from '../UQBEditSXPBlueprintForm';
 
-type Status = 'active' | 'inactive';
+type Status = STATUS.ACTIVE | STATUS.INACTIVE;
 
 type Scope = {
-	erc: string;
-	id: string;
+	externalReferenceCode: string;
 	name: string;
-	scopelabel: string;
 	status: Status;
+	type: string;
 };
 
 type Sorting = {
@@ -30,20 +29,21 @@ type Sorting = {
 };
 
 export default function ScopeSelector({
-	initialScopeERCs = ['L_GUEST', 'd1bf5865-247d-4072-789c-f80dacb0b916'],
+	scope,
+	setScope,
 }: {
-	initialScopeERCs?: string[];
+	scope: Scope[];
+	setScope: (scope: Scope[]) => void;
 }) {
 	const [collapseSection, setCollapseSection] = useState(false);
 	const [sort, setSort] = useState<Sorting>();
-	const [scope, setScope] = useState<Scope[]>([]);
 
 	const {
 		namespace,
 		selectScopeURL,
 	}: {namespace: string; selectScopeURL: string} = useContext(ThemeContext);
 
-	const filteredItems = useMemo(() => {
+	const filteredScope = useMemo(() => {
 		if (!sort) {
 			return scope;
 		}
@@ -70,7 +70,6 @@ export default function ScopeSelector({
 				groupexternalreferencecode: string;
 				groupid: string;
 				groupscopelabel: string;
-				type?: string;
 			}) => {
 				if (!selectedItem) {
 					return;
@@ -91,11 +90,11 @@ export default function ScopeSelector({
 				setScope([
 					...scope,
 					{
-						erc: selectedItem.groupexternalreferencecode,
-						id: selectedItem.groupid,
+						externalReferenceCode:
+							selectedItem.groupexternalreferencecode,
 						name: selectedItem.groupdescriptivename,
-						scopelabel: selectedItem.groupscopelabel,
 						status: 'active',
+						type: selectedItem.groupscopelabel,
 					},
 				]);
 			},
@@ -113,76 +112,8 @@ export default function ScopeSelector({
 		setScope(newScope);
 	};
 
-	useEffect(() => {
-		const fetchAllScope = async () => {
-			const fetchScope = async (erc: string) => {
-				try {
-
-					// Enable Feature Flag LPD-41306 to use the new Headless API
-
-					const response = await fetch(
-						`/o/headless-admin-site/v1.0/sites/by-external-reference-code/${erc}`,
-						{
-							headers: new Headers({
-								'Accept-Language':
-									Liferay.ThemeDisplay.getBCP47LanguageId(),
-								'Content-Type': 'application/json',
-							}),
-							method: 'GET',
-						}
-					);
-
-					if (!response.ok) {
-						return null;
-					}
-
-					const data = await response.json();
-
-					return data;
-				}
-				catch (error) {
-					console.error(
-						`Error fetching site with ERC ${erc}:`,
-						error
-					);
-
-					return null;
-				}
-			};
-
-			const responses = await Promise.all(
-				initialScopeERCs.map(fetchScope)
-			);
-
-			setScope(
-				responses.map((item: any) => {
-					if (item) {
-						return {
-							erc: item.externalReferenceCode,
-							id: item.groupId,
-							name: item.descriptiveName,
-							scopelabel: '', // TODO get proper label
-							status: item.active ? 'active' : 'inactive',
-						};
-					}
-					else {
-						return {
-							erc: item.externalReferenceCode,
-							id: '',
-							name: item.externalReferenceCode,
-							scopelabel: '',
-							status: 'inactive',
-						};
-					}
-				})
-			);
-		};
-
-		fetchAllScope();
-	}, []);
-
 	return (
-		<div className="sheet">
+		<div className="scope-selector sheet">
 			<ClayLayout.SheetHeader className="mb-3">
 				<span className="text-6 text-weight-bold">
 					{Liferay.Language.get('scope')}
@@ -221,7 +152,6 @@ export default function ScopeSelector({
 
 					{!!scope.length && (
 						<Table
-							className="c-mt-4"
 							columnsVisibility={false}
 							onSortChange={
 								setSort as (sorting: Sorting | null) => void
@@ -236,7 +166,7 @@ export default function ScopeSelector({
 										sortable: true,
 									},
 									{
-										id: 'scopelabel',
+										id: 'type',
 										name: Liferay.Language.get('type'),
 										sortable: true,
 									},
@@ -266,11 +196,11 @@ export default function ScopeSelector({
 							</Head>
 
 							<Body>
-								{filteredItems.map((scopeItem, index) => (
+								{filteredScope.map((scopeItem, index) => (
 									<Row key={index}>
 										<Cell>{scopeItem.name}</Cell>
 
-										<Cell>{scopeItem.scopelabel}</Cell>
+										<Cell>{scopeItem.type}</Cell>
 
 										<Cell>
 											{scopeItem.status === 'active' ? (

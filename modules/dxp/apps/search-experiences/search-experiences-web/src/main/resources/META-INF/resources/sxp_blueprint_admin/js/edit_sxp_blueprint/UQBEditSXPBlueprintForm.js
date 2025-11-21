@@ -73,6 +73,11 @@ const TABS = {
 	'configuration': Liferay.Language.get('configuration'),
 };
 
+export const STATUS = {
+	ACTIVE: 'active',
+	INACTIVE: 'inactive',
+};
+
 /* eslint-enable sort-keys */
 
 function UQBEditSXPBlueprintForm({
@@ -116,6 +121,7 @@ function UQBEditSXPBlueprintForm({
 
 	const [indexFields, setIndexFields] = useState(null);
 	const [searchIndexes, setSearchIndexes] = useState(null);
+	const [scope, setScope] = useState([]);
 
 	const {data: searchableTypes, refetch: refetchSearchableTypes} =
 		useFetchData({
@@ -169,7 +175,7 @@ function UQBEditSXPBlueprintForm({
 		let elementInstances;
 
 		try {
-			configuration = _getConfiguration(values);
+			configuration = _getConfiguration(values, scope);
 			elementInstances = _getElementInstances(values);
 		}
 		catch (error) {
@@ -468,6 +474,65 @@ function UQBEditSXPBlueprintForm({
 		}
 
 		setStorageAddSXPElementSidebar(SIDEBAR_STATE.OPEN);
+
+		const fetchAllScope = async () => {
+			const fetchScope = async (externalReferenceCode) => {
+				try {
+
+					// Enable Feature Flag LPD-41306 to use the new Headless API
+
+					const response = await fetch(
+						`/o/headless-admin-site/v1.0/sites/by-external-reference-code/${externalReferenceCode}`,
+						{
+							headers: new Headers({
+								'Accept-Language':
+									Liferay.ThemeDisplay.getBCP47LanguageId(),
+								'Content-Type': 'application/json',
+							}),
+							method: 'GET',
+						}
+					);
+
+					if (!response.ok) {
+						throw `Error fetching site with ERC ${externalReferenceCode}`;
+					}
+
+					const data = await response.json();
+
+					return data;
+				}
+				catch (error) {
+					console.error(error);
+
+					return {
+						descriptiveName: externalReferenceCode,
+						externalReferenceCode,
+						status: false,
+					};
+				}
+			};
+
+			const responses = await Promise.all(
+				initialConfiguration.generalConfiguration.scope.map(fetchScope)
+			);
+
+			setScope(
+				responses.map((item) => {
+					return {
+						externalReferenceCode: item.externalReferenceCode,
+						name: item.descriptiveName,
+						status: item.active ? STATUS.ACTIVE : STATUS.INACTIVE,
+						type: item.typeSettings?.depotEntryType
+							? item.typeSettings?.depotEntryType === '0'
+								? Liferay.Language.get('asset-library')
+								: Liferay.Language.get('space')
+							: Liferay.Language.get('site'),
+					};
+				})
+			);
+		};
+
+		fetchAllScope();
 	}, []); //eslint-disable-line
 
 	/**
@@ -511,16 +576,19 @@ function UQBEditSXPBlueprintForm({
 	 * @param {Object} values Form values
 	 * @return {Object}
 	 */
-	const _getConfiguration = ({
-		advancedConfig,
-		aggregationConfig,
-		applyIndexerClauses,
-		frameworkConfig,
-		highlightConfig,
-		indexConfig,
-		parameterConfig,
-		sortConfig,
-	}) => {
+	const _getConfiguration = (
+		{
+			advancedConfig,
+			aggregationConfig,
+			applyIndexerClauses,
+			frameworkConfig,
+			highlightConfig,
+			indexConfig,
+			parameterConfig,
+			sortConfig,
+		},
+		scope
+	) => {
 		const configuration = {
 			advancedConfiguration: advancedConfig
 				? JSON.parse(advancedConfig)
@@ -528,7 +596,10 @@ function UQBEditSXPBlueprintForm({
 			aggregationConfiguration: aggregationConfig
 				? JSON.parse(aggregationConfig)
 				: {},
-			generalConfiguration: frameworkConfig,
+			generalConfiguration: {
+				...frameworkConfig,
+				scope: scope.map((item) => item.externalReferenceCode),
+			},
 			highlightConfiguration: highlightConfig
 				? JSON.parse(highlightConfig)
 				: {},
@@ -671,7 +742,7 @@ function UQBEditSXPBlueprintForm({
 		let elementInstances;
 
 		try {
-			configuration = _getConfiguration(formik.values);
+			configuration = _getConfiguration(formik.values, scope);
 			elementInstances = _getElementInstances(formik.values);
 
 			// Touch inputs with errors to show validation errors.
@@ -1052,10 +1123,12 @@ function UQBEditSXPBlueprintForm({
 									_handleFrameworkConfigChange
 								}
 								openSidebar={openSidebar}
+								scope={scope}
 								searchableTypes={searchableTypes?.items}
 								setFieldTouched={formik.setFieldTouched}
 								setFieldValue={formik.setFieldValue}
 								setOpenSidebar={setOpenSidebar}
+								setScope={setScope}
 								touched={formik.touched.elementInstances}
 							/>
 						</div>

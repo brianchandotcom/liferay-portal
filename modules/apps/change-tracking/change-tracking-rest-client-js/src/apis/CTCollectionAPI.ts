@@ -347,6 +347,7 @@ export class CTCollectionAPI {
 
 		/**
 		 * 
+				 * @param filter
 				 * @param page
 				 * @param pageSize
 				 * @param search
@@ -355,6 +356,7 @@ export class CTCollectionAPI {
 		 * @param headers Optional custom request headers
 		 */
 		public async getCTCollectionsPage(
+						filter?: string,
 						page?: number,
 						pageSize?: number,
 						search?: string,
@@ -367,9 +369,13 @@ export class CTCollectionAPI {
 		}> {
 
 			const path = this._basePath + "/change-tracking-rest/v1.0/ct-collections"
-																				;
+																								;
 
 			const queryParameters: any = {};
+
+						if (filter !== undefined) {
+							queryParameters["filter"] = ObjectSerializer.serialize(filter, "string");
+						}
 
 						if (page !== undefined) {
 							queryParameters["page"] = ObjectSerializer.serialize(page, "number");

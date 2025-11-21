@@ -494,11 +494,13 @@ public class PageElementsTestUtil {
 
 	private static FragmentItemExternalReference
 			_addFragmentItemExternalReference(
-				long fragmentCollectionId, long groupId)
+				FragmentCollection fragmentCollection)
 		throws PortalException {
 
 		return _addFragmentItemExternalReference(
-			_addFragmentEntry(fragmentCollectionId, groupId), null);
+			_addFragmentEntry(
+				fragmentCollection.getFragmentCollectionId(),
+				fragmentCollection.getGroupId()), null);
 	}
 
 	private static CollectionDisplayListStyle _getCollectionDisplayListStyle() {
@@ -554,14 +556,11 @@ public class PageElementsTestUtil {
 				ServiceContextTestUtil.getServiceContext(groupId));
 
 		fragmentReferences.add(
-			_addFragmentItemExternalReference(
-				fragmentCollection.getFragmentCollectionId(), groupId));
+			_addFragmentItemExternalReference(fragmentCollection));
 		fragmentReferences.add(
-			_addFragmentItemExternalReference(
-				fragmentCollection.getFragmentCollectionId(), groupId));
+			_addFragmentItemExternalReference(fragmentCollection));
 		fragmentReferences.add(
-			_addFragmentItemExternalReference(
-				fragmentCollection.getFragmentCollectionId(), groupId));
+			_addFragmentItemExternalReference(fragmentCollection));
 
 		return fragmentReferences.toArray(new FragmentReference[0]);
 	}

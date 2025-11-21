@@ -25,22 +25,12 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
-	public Comment addComment(
-			String externalReferenceCode, long groupId, long parentCommentId,
-			String className, long classPK, String body)
-		throws Exception;
-
 	public long addComment(
 			String externalReferenceCode, long userId, long groupId,
 			String className, long classPK, String userName, String subject,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
-
-	public Comment addComment(
-			String externalReferenceCode, long groupId, String className,
-			long classPK, String body)
-		throws Exception;
 
 	public long addComment(
 			String externalReferenceCode, long userId, String className,

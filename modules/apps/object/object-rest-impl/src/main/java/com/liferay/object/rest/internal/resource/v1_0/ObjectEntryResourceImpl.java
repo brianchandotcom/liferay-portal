@@ -32,6 +32,7 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -40,7 +41,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -48,6 +51,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -65,6 +69,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Javier Gamarra
@@ -1383,11 +1388,25 @@ public class ObjectEntryResourceImpl
 			objectEntryId);
 
 		return CommentUtil.toComment(
-			() -> _commentManager.addComment(
-				comment.getExternalReferenceCode(), groupId,
-				ObjectEntry.class.getName(), objectEntryId,
-				StringBundler.concat("<p>", comment.getText(), "</p>")),
+			() -> _commentManager.fetchComment(
+				_commentManager.addComment(
+					comment.getExternalReferenceCode(),
+					PrincipalThreadLocal.getUserId(), groupId,
+					ObjectEntry.class.getName(), objectEntryId,
+					StringPool.BLANK, StringPool.BLANK,
+					StringBundler.concat("<p>", comment.getText(), "</p>"),
+					_createServiceContextFunction())),
 			_commentManager, PortalUtil.getPortal());
+	}
+
+	private Function<String, ServiceContext> _createServiceContextFunction() {
+		return className -> {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			return serviceContext;
+		};
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(

@@ -102,6 +102,7 @@ export default {
 	'billing-address': 'Billing Address',
 	'billing-email': 'Billing Email',
 	'blank-site': 'Blank Site',
+	'browse-catalog': 'Browse Catalog',
 	'build': 'Build',
 	'business': 'Business',
 	'business-account': 'Business Account',
@@ -119,7 +120,7 @@ export default {
 	'choose-the-marketplace-category-that-most-accurately-describes-what-your-solution-does-users-looking-for-specific-types-of-solutions-will-often-browse-categories-by-searching-for-a-specific-category-name-on-the-main-marketplace-home-page-having-your-solution-listed-under-the-appropriate-category-will-help-them-find-it':
 		'Choose the Marketplace category that most accurately describes what your solution does. Users looking for specific types of solutions will often browse categories by searching for a specific category name on the main Marketplace home page. Having your solution listed under the appropriate category will help them find it.',
 	'clear': 'Clear',
-	'click-on-add-apps-to-start': "Click on 'Add Apps' to start.",
+	'click-on-browse-catalog-to-start': "Click on 'Browse Catalog' to start.",
 	'client-extension': 'Client Extension',
 	'client-extensions': 'Client Extensions',
 	'close': 'Close',
@@ -505,6 +506,7 @@ export default {
 		'Publish apps and they will show up here.',
 	'publish-apps-to-the-liferay-marketplace':
 		'Publish apps to the Liferay Marketplace',
+	'publish-new-app': 'Publish New App',
 	'published-apps': 'Published Apps',
 	'published-at': 'Published At',
 	'publisher': 'Publisher',

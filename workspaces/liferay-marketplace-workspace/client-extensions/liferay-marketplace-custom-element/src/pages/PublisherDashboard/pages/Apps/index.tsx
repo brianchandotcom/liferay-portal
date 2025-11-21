@@ -53,7 +53,7 @@ const Apps = () => {
 					disabled={!catalogId}
 					onClick={() => navigate('/newapp/publisher')}
 				>
-					{i18n.translate('new-app')}
+					{i18n.translate('publish-new-app')}
 				</ClayButton>
 			}
 			title={i18n.translate('apps')}
@@ -72,7 +72,7 @@ const Apps = () => {
 					className:
 						'border px-4 py-6 d-flex align-items-center flex-column justify-content-center',
 					description:
-						"Publish apps and they will show up hereClick on 'Add Apps' to start.",
+						"Publish apps and they will show up here. Click on 'Publish New App' to start.",
 					title: i18n.translate('no-apps-yet'),
 					type: 'BLANK',
 				}}

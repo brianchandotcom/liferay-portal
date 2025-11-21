@@ -292,7 +292,7 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 							'purchase-and-install-new-apps-and-they-will-show-up-here'
 						)}
 						description2={i18n.translate(
-							'click-on-add-apps-to-start'
+							'click-on-browse-catalog-to-start'
 						)}
 						icon="grid"
 						title={i18n.translate('no-orders-yet')}

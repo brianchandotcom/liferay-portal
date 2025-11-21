@@ -901,7 +901,14 @@ test.describe('Schedule Publication', () => {
 					.locator('.cell-embedded-status')
 			).toHaveText('scheduled');
 
+			await contentsPage.viewShowDetails(title);
+
+			expect(page.getByText('Display Date')).toBeVisible();
+			expect(page.getByText(`10/31/${nextYear}`)).toBeVisible();
+
 			// Delete content
+
+			await contentsPage.goto();
 
 			await contentsPage.deleteContent(title);
 		}

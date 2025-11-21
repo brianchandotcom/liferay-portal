@@ -7,12 +7,12 @@ import ClayButton from '@clayui/button';
 import {Body, Cell, Head, Row, Table} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayLayout from '@clayui/layout';
 import {openSelectionModal} from 'frontend-js-components-web';
 import React, {useContext, useMemo, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
 import {STATUS} from '../UQBEditSXPBlueprintForm';
+import CustomPanel from './shared/CustomPanel';
 
 type Status = STATUS.ACTIVE | STATUS.INACTIVE;
 
@@ -35,7 +35,6 @@ export default function ScopeSelector({
 	scope: Scope[];
 	setScope: (scope: Scope[]) => void;
 }) {
-	const [collapseSection, setCollapseSection] = useState(false);
 	const [sort, setSort] = useState<Sorting>();
 
 	const {
@@ -111,132 +110,114 @@ export default function ScopeSelector({
 	};
 
 	return (
-		<div className="scope-selector sheet">
-			<ClayLayout.SheetHeader className="mb-3">
-				<span className="text-6 text-weight-bold">
-					{Liferay.Language.get('scope')}
+		<CustomPanel
+			classNames="scope-selector"
+			title={Liferay.Language.get('scope')}
+		>
+			<>
+				<span className="text-4 text-secondary">
+					{Liferay.Language.get('scope-selector-description')}
 				</span>
 
-				<ClayButton
-					aria-label={Liferay.Language.get('collapse')}
-					className="c-ml-2 component-action float-right"
-					displayType="unstyled"
-					onClick={() => setCollapseSection(!collapseSection)}
-				>
-					<ClayIcon
-						symbol={collapseSection ? 'angle-right' : 'angle-down'}
-					/>
-				</ClayButton>
-			</ClayLayout.SheetHeader>
+				<div className="c-mt-4">
+					<ClayButton
+						displayType="secondary"
+						onClick={_handleSelectScope}
+					>
+						<span className="inline-item inline-item-before">
+							<ClayIcon symbol="plus" />
+						</span>
 
-			{!collapseSection && (
-				<>
-					<span className="text-4 text-secondary">
-						{Liferay.Language.get('scope-selector-description')}
-					</span>
+						{Liferay.Language.get('select-scope')}
+					</ClayButton>
+				</div>
 
-					<div className="c-mt-4">
-						<ClayButton
-							displayType="secondary"
-							onClick={_handleSelectScope}
+				{!!scope.length && (
+					<Table
+						columnsVisibility={false}
+						onSortChange={
+							setSort as (sorting: Sorting | null) => void
+						}
+						sort={sort}
+					>
+						<Head
+							items={[
+								{
+									id: 'name',
+									name: Liferay.Language.get('name'),
+									sortable: true,
+								},
+								{
+									id: 'type',
+									name: Liferay.Language.get('type'),
+									sortable: true,
+								},
+								{
+									id: 'status',
+									name: Liferay.Language.get('status'),
+									sortable: true,
+									width: '20%',
+								},
+								{
+									id: 'options',
+									name: Liferay.Language.get('options'),
+									sortable: false,
+									width: '100px',
+								},
+							]}
 						>
-							<span className="inline-item inline-item-before">
-								<ClayIcon symbol="plus" />
-							</span>
+							{(column) => (
+								<Cell
+									key={column.id}
+									sortable={column.sortable}
+									width={column.width}
+								>
+									{column.name}
+								</Cell>
+							)}
+						</Head>
 
-							{Liferay.Language.get('select-scope')}
-						</ClayButton>
-					</div>
+						<Body>
+							{filteredScope.map((scopeItem, index) => (
+								<Row key={index}>
+									<Cell>{scopeItem.name}</Cell>
 
-					{!!scope.length && (
-						<Table
-							columnsVisibility={false}
-							onSortChange={
-								setSort as (sorting: Sorting | null) => void
-							}
-							sort={sort}
-						>
-							<Head
-								items={[
-									{
-										id: 'name',
-										name: Liferay.Language.get('name'),
-										sortable: true,
-									},
-									{
-										id: 'type',
-										name: Liferay.Language.get('type'),
-										sortable: true,
-									},
-									{
-										id: 'status',
-										name: Liferay.Language.get('status'),
-										sortable: true,
-										width: '20%',
-									},
-									{
-										id: 'options',
-										name: Liferay.Language.get('options'),
-										sortable: false,
-										width: '100px',
-									},
-								]}
-							>
-								{(column) => (
-									<Cell
-										key={column.id}
-										sortable={column.sortable}
-										width={column.width}
-									>
-										{column.name}
-									</Cell>
-								)}
-							</Head>
+									<Cell>{scopeItem.type}</Cell>
 
-							<Body>
-								{filteredScope.map((scopeItem, index) => (
-									<Row key={index}>
-										<Cell>{scopeItem.name}</Cell>
-
-										<Cell>{scopeItem.type}</Cell>
-
-										<Cell>
-											{scopeItem.status === 'active' ? (
-												<ClayLabel displayType="success">
-													{Liferay.Language.get(
-														'active'
-													)}
-												</ClayLabel>
-											) : (
-												<ClayLabel displayType="secondary">
-													{Liferay.Language.get(
-														'inactive'
-													)}
-												</ClayLabel>
-											)}
-										</Cell>
-
-										<Cell align="center">
-											<ClayButton
-												aria-label={Liferay.Language.get(
-													'remove'
+									<Cell>
+										{scopeItem.status === 'active' ? (
+											<ClayLabel displayType="success">
+												{Liferay.Language.get('active')}
+											</ClayLabel>
+										) : (
+											<ClayLabel displayType="secondary">
+												{Liferay.Language.get(
+													'inactive'
 												)}
-												className="component-action"
-												displayType="unstyled"
-												onClick={() =>
-													_handleRemoveScope(index)
-												}
-											>
-												<ClayIcon symbol="times-circle" />
-											</ClayButton>
-										</Cell>
-									</Row>
-								))}
-							</Body>
-						</Table>
-					)}
-				</>
-			)}
-		</div>
+											</ClayLabel>
+										)}
+									</Cell>
+
+									<Cell align="center">
+										<ClayButton
+											aria-label={Liferay.Language.get(
+												'remove'
+											)}
+											className="component-action"
+											displayType="unstyled"
+											onClick={() =>
+												_handleRemoveScope(index)
+											}
+										>
+											<ClayIcon symbol="times-circle" />
+										</ClayButton>
+									</Cell>
+								</Row>
+							))}
+						</Body>
+					</Table>
+				)}
+			</>
+		</CustomPanel>
 	);
 }

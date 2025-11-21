@@ -15,6 +15,7 @@ import {SIDEBAR_TYPES} from '../../utils/types/sidebarTypes';
 import QuerySettings from '../query_builder_tab/QuerySettings';
 import QuerySXPElements from './QuerySXPElements';
 import ScopeSelector from './ScopeSelector';
+import CustomPanel from './shared/CustomPanel';
 
 function QueryBuilderTab({
 	applyIndexerClauses,
@@ -101,7 +102,10 @@ function QueryBuilderTab({
 						touched={touched}
 					/>
 
-					<div className="sheet">
+					<CustomPanel
+						initialCollapse={true}
+						title={Liferay.Language.get('query-settings')}
+					>
 						<QuerySettings
 							applyIndexerClauses={applyIndexerClauses}
 							assetSubtypesMap={assetSubtypesMap}
@@ -124,7 +128,7 @@ function QueryBuilderTab({
 							onFrameworkConfigChange={onFrameworkConfigChange}
 							searchableTypes={searchableTypes}
 						/>
-					</div>
+					</CustomPanel>
 				</div>
 			</div>
 		</ClayLayout.ContainerFluid>

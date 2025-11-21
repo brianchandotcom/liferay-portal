@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -117,7 +118,8 @@ public class GeneralSXPSearchRequestBodyContributor
 
 				if ((assetSubtypeIdentifier.getSubtypeExternalReferenceCode() ==
 						null) ||
-					!FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
+					!FeatureFlagManagerUtil.isEnabled(
+						CompanyThreadLocal.getCompanyId(), "LPS-129412")) {
 
 					continue;
 				}
@@ -140,7 +142,9 @@ public class GeneralSXPSearchRequestBodyContributor
 			searchRequestBuilder.entryClassNames(classNames);
 			searchRequestBuilder.modelIndexerClassNames(classNames);
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
+			if (FeatureFlagManagerUtil.isEnabled(
+					CompanyThreadLocal.getCompanyId(), "LPS-129412")) {
+
 				searchRequestBuilder.withSearchContext(
 					searchContext -> searchContext.setAttribute(
 						"assetSubtypeIdentifiersMap",
@@ -149,7 +153,8 @@ public class GeneralSXPSearchRequestBodyContributor
 		}
 
 		if (ArrayUtil.isNotEmpty(generalConfiguration.getScope()) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-37320")) {
+			FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-37320")) {
 
 			TermsQuery termsQuery = _queries.terms(
 				"scopeGroupExternalReferenceCode");

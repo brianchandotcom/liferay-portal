@@ -409,6 +409,11 @@ public class HtmlUtilTest {
 		Assert.assertEquals("\u2019", HtmlUtil.unescape("&rsquo;"));
 	}
 
+	@Test
+	public void testUnescapeHtmlEncodingEmDash() {
+		Assert.assertEquals("\u2014", HtmlUtil.unescape("&#8212;"));
+	}
+
 	protected void assertUnchangedEscape(String input) {
 		Assert.assertEquals(input, HtmlUtil.escape(input));
 	}

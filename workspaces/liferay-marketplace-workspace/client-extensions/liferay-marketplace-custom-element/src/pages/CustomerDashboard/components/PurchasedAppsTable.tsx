@@ -29,7 +29,9 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 				description1={i18n.translate(
 					'purchase-and-install-new-apps-and-they-will-show-up-here'
 				)}
-				description2={i18n.translate('click-on-add-apps-to-start')}
+				description2={i18n.translate(
+					'click-on-browse-catalog-to-start'
+				)}
 				icon="grid"
 				title={i18n.translate('no-apps-yet')}
 			/>

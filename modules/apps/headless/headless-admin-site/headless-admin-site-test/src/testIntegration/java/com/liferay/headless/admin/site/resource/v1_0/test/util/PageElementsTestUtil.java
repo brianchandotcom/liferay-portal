@@ -492,17 +492,6 @@ public class PageElementsTestUtil {
 		return fragmentItemExternalReference;
 	}
 
-	private static FragmentItemExternalReference
-			_addFragmentItemExternalReference(
-				FragmentCollection fragmentCollection)
-		throws PortalException {
-
-		return _addFragmentItemExternalReference(
-			_addFragmentEntry(
-				fragmentCollection.getFragmentCollectionId(),
-				fragmentCollection.getGroupId()), null);
-	}
-
 	private static CollectionDisplayListStyle _getCollectionDisplayListStyle() {
 		TemplateListStyle templateListStyle = new TemplateListStyle();
 
@@ -555,12 +544,14 @@ public class PageElementsTestUtil {
 				StringUtil.randomString(), StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(groupId));
 
-		fragmentReferences.add(
-			_addFragmentItemExternalReference(fragmentCollection));
-		fragmentReferences.add(
-			_addFragmentItemExternalReference(fragmentCollection));
-		fragmentReferences.add(
-			_addFragmentItemExternalReference(fragmentCollection));
+		for (int i = 0; i < 3; i++) {
+			fragmentReferences.add(
+				_addFragmentItemExternalReference(
+					_addFragmentEntry(
+						fragmentCollection.getFragmentCollectionId(),
+						fragmentCollection.getGroupId()),
+					null));
+		}
 
 		return fragmentReferences.toArray(new FragmentReference[0]);
 	}

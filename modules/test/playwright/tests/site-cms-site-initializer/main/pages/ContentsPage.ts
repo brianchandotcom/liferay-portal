@@ -281,4 +281,19 @@ export class ContentsPage {
 			this.page.getByRole('dialog', {name: title})
 		).toBeVisible();
 	}
+
+	async viewShowDetails(title: string) {
+		const card = this.page
+			.locator('tr', {hasText: title})
+			.or(this.page.locator('.card-row', {hasText: title}));
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Show Details',
+			}),
+			trigger: card.locator('button'),
+		});
+	}
 }

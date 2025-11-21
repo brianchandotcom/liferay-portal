@@ -302,6 +302,25 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		Assert.assertEquals(patchUser.getActive(), false);
 
+		String email = "test_user@liferay.com";
+
+		patchUser = _testPatchV2UserChangeScreenName(
+			"emails[type eq \"work\" and primary eq \"true\"].value", email);
+
+		String patchUserEmail = String.valueOf(patchUser.getEmails()[0]);
+
+		JSONObject patchUserEmailJSONObject = _jsonFactory.createJSONObject(
+			patchUserEmail);
+
+		Assert.assertNotEquals(
+			email, patchUserEmailJSONObject.getString("value"));
+
+		String userName = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+		patchUser = _testPatchV2UserChangeScreenName("userName", userName);
+
+		Assert.assertEquals(patchUser.getUserName(), userName);
+
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(
@@ -612,6 +631,33 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		Object userObject = userResource.getV2UserById(userId);
 
 		return User.toDTO(userObject.toString());
+	}
+
+	private User _testPatchV2UserChangeScreenName(String field, String userName)
+		throws Exception {
+
+		PatchOp patchOp = new PatchOp();
+
+		patchOp.setOperations(
+			new Operation[] {
+				new Operation() {
+					{
+						setOp("replace");
+						setPath(field);
+						setValue(userName);
+					}
+				}
+			});
+
+		patchOp.setSchemas(
+			new String[] {"\"urn:ietf:params:scim:api:messages:2.0:PatchOp\""});
+
+		User user = testDeleteV2User_addUser();
+
+		HttpInvoker.HttpResponse httpResponse =
+			userResource.patchV2UserHttpResponse(user.getId(), patchOp);
+
+		return User.toDTO(httpResponse.getContent());
 	}
 
 	private static final String _PREFIX = StringUtil.toLowerCase(

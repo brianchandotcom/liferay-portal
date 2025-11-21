@@ -11,7 +11,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -52,8 +56,11 @@ public class EditObjectTagsBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
+		long bulkActionTaskId = GetterUtil.getLong(
+			inputMap.get("bulkActionTaskId"));
+
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
+			bulkActionTaskId);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -70,6 +77,8 @@ public class EditObjectTagsBulkSelectionAction
 
 			values = objectEntry.getValues();
 
+			long companyId = objectEntry.getCompanyId();
+
 			bulkSelection.forEach(
 				object -> {
 					try {
@@ -79,6 +88,26 @@ public class EditObjectTagsBulkSelectionAction
 						}
 
 						numberOfSuccessfulItems.getAndIncrement();
+
+						_objectEntryLocalService.addObjectEntry(
+							0, user.getUserId(),
+							_getCMSBulkActionTaskItemObjectDefinitionId(
+								companyId),
+							ObjectEntryFolderConstants.
+								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+							null,
+							HashMapBuilder.<String, Serializable>put(
+								"bulkActionTaskId", bulkActionTaskId
+							).put(
+								"executionStatus", "completed"
+							).put(
+								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
+									"askId",
+								bulkActionTaskId
+							).put(
+								"type", "ObjectEntryFolder"
+							).build(),
+							new ServiceContext());
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
@@ -86,6 +115,26 @@ public class EditObjectTagsBulkSelectionAction
 						}
 
 						numberOfFailedItems.getAndIncrement();
+
+						_objectEntryLocalService.addObjectEntry(
+							0, user.getUserId(),
+							_getCMSBulkActionTaskItemObjectDefinitionId(
+								companyId),
+							ObjectEntryFolderConstants.
+								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+							null,
+							HashMapBuilder.<String, Serializable>put(
+								"bulkActionTaskId", bulkActionTaskId
+							).put(
+								"executionStatus", "failed"
+							).put(
+								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
+									"askId",
+								bulkActionTaskId
+							).put(
+								"type", "ObjectEntryFolder"
+							).build(),
+							new ServiceContext());
 					}
 				});
 		}
@@ -105,6 +154,17 @@ public class EditObjectTagsBulkSelectionAction
 
 			_partialUpdateObjectEntry(objectEntry, values);
 		}
+	}
+
+	private long _getCMSBulkActionTaskItemObjectDefinitionId(long companyId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BULK_ACTION_TASK_ITEM", companyId);
+
+		return objectDefinition.getObjectDefinitionId();
 	}
 
 	private boolean _hasEditPermission(
@@ -204,6 +264,9 @@ public class EditObjectTagsBulkSelectionAction
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

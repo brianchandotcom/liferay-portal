@@ -76,8 +76,14 @@
 					cssClass="table-cell-expand-smaller table-cell-minw-100 table-cell-ws-nowrap"
 					href="<%= rowURL %>"
 					name="status"
-					value=""
-				/>
+				>
+					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
+						<clay:label
+							displayType="<%= WorkflowConstants.getStatusStyle(curOrganization.getStatus()) %>"
+							label="<%= WorkflowConstants.getStatusLabel(curOrganization.getStatus()) %>"
+						/>
+					</c:if>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions

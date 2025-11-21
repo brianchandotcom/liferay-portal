@@ -17,6 +17,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -297,17 +298,10 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	public void testProcessFragmentEntryLinkHTMLWithConfiguration()
 		throws Exception {
 
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration.html", "configuration.json");
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-		fragmentEntryLink.setEditableValues(
-			_readJSONFileToString(
-				"fragment_entry_link_editable_values_with_configuration.json"));
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+			"configuration.json",
+			"fragment_entry_link_editable_values_with_configuration.json",
+			"fragment_entry_with_configuration.html", new HashMap<>());
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
@@ -350,35 +344,26 @@ public class FreeMarkerFragmentEntryProcessorTest {
 					_group.getGroupId(), journalArticle.getClassNameId()),
 				_serviceContext);
 
-		Map<String, String> editableValuesValues = HashMapBuilder.put(
-			"classNameId",
-			String.valueOf(
-				_portal.getClassNameId(AssetListEntry.class.getName()))
-		).put(
-			"classPK", String.valueOf(assetListEntry.getAssetListEntryId())
-		).put(
-			"itemType", assetListEntry.getAssetEntryType()
-		).put(
-			"title", assetListEntry.getTitle()
-		).put(
-			"type", InfoListItemSelectorReturnType.class.getName()
-		).build();
-
-		FragmentEntry fragmentEntry = _addFragmentEntry(
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+			"configuration_collectionselector.json",
+			"fragment_entry_link_editable_values_with_configuration_" +
+				"collectionselector_dynamic_collection.json",
+			HashMapBuilder.put(
+				"classNameId",
+				String.valueOf(
+					_portal.getClassNameId(AssetListEntry.class.getName()))
+			).put(
+				"classPK", String.valueOf(assetListEntry.getAssetListEntryId())
+			).put(
+				"itemType", assetListEntry.getAssetEntryType()
+			).put(
+				"title", assetListEntry.getTitle()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			).build(),
 			"fragment_entry_with_configuration_collectionselector_dynamic_" +
 				"collection.html",
-			"configuration_collectionselector.json", new HashMap<>());
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-		fragmentEntryLink.setEditableValues(
-			_readJSONFileToString(
-				"fragment_entry_link_editable_values_with_configuration_" +
-					"collectionselector_dynamic_collection.json",
-				editableValuesValues));
+			new HashMap<>());
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
@@ -417,9 +402,11 @@ public class FreeMarkerFragmentEntryProcessorTest {
 				"dependencies/image.jpg"),
 			null, null, null, new ServiceContext());
 
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_itemselector_file_entry.html",
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			"configuration_itemselector.json",
+			"fragment_entry_link_editable_values_with_configuration_" +
+				"itemselector.json",
+			"fragment_entry_with_configuration_itemselector_file_entry.html",
 			HashMapBuilder.put(
 				"className", FileEntry.class.getName()
 			).put(
@@ -430,16 +417,6 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			).put(
 				"classPK", String.valueOf(fileEntry.getPrimaryKey())
 			).build());
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-		fragmentEntryLink.setEditableValues(
-			_readJSONFileToString(
-				"fragment_entry_link_editable_values_with_configuration_" +
-					"itemselector.json"));
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
@@ -473,42 +450,31 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		fragmentEntryLink.setHtml(
 			"<div class=\"fragment_name\">[#if itemSelector1Object??]" +
 				"${itemSelector1Object}[/#if]</div>");
-		fragmentEntryLink.setEditableValues(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"itemSelector1",
-					JSONUtil.put(
-						"className", FileEntry.class.getName()
-					).put(
-						"classPK", fileEntry.getFileEntryId()
-					))
-			).toString());
 
 		actualProcessedHTML = _getProcessedHTML(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+			fragmentEntryLink,
+			JSONUtil.put(
+				"itemSelector1",
+				JSONUtil.put(
+					"className", FileEntry.class.getName()
+				).put(
+					"classPK", fileEntry.getFileEntryId()
+				)),
+			defaultFragmentEntryProcessorContext);
 
 		_assertContainsFileEntryInfo(actualProcessedHTML, fileEntry);
 
-		fragmentEntryLink.setEditableValues(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"itemSelector1",
-					JSONUtil.put(
-						"className", FileEntry.class.getName()
-					).put(
-						"externalReferenceCode",
-						fileEntry.getExternalReferenceCode()
-					))
-			).toString());
-
 		actualProcessedHTML = _getProcessedHTML(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+			fragmentEntryLink,
+			JSONUtil.put(
+				"itemSelector1",
+				JSONUtil.put(
+					"className", FileEntry.class.getName()
+				).put(
+					"externalReferenceCode",
+					fileEntry.getExternalReferenceCode()
+				)),
+			defaultFragmentEntryProcessorContext);
 
 		_assertContainsFileEntryInfo(actualProcessedHTML, fileEntry);
 
@@ -523,26 +489,20 @@ public class FreeMarkerFragmentEntryProcessorTest {
 				"dependencies/image.jpg"),
 			null, null, null, new ServiceContext());
 
-		fragmentEntryLink.setEditableValues(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"itemSelector1",
-					JSONUtil.put(
-						"className", FileEntry.class.getName()
-					).put(
-						"externalReferenceCode",
-						fileEntry.getExternalReferenceCode()
-					).put(
-						"scopeExternalReferenceCode",
-						group.getExternalReferenceCode()
-					))
-			).toString());
-
 		actualProcessedHTML = _getProcessedHTML(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+			fragmentEntryLink,
+			JSONUtil.put(
+				"itemSelector1",
+				JSONUtil.put(
+					"className", FileEntry.class.getName()
+				).put(
+					"externalReferenceCode",
+					fileEntry.getExternalReferenceCode()
+				).put(
+					"scopeExternalReferenceCode",
+					group.getExternalReferenceCode()
+				)),
+			defaultFragmentEntryProcessorContext);
 
 		_assertContainsFileEntryInfo(actualProcessedHTML, fileEntry);
 	}
@@ -568,10 +528,12 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
 
-		FragmentEntry fragmentEntry = _addFragmentEntry(
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+			"configuration_itemselector.json",
+			"fragment_entry_link_editable_values_with_configuration_" +
+				"itemselector.json",
 			"fragment_entry_with_configuration_itemselector_journal_article." +
 				"html",
-			"configuration_itemselector.json",
 			HashMapBuilder.put(
 				"className", journalArticle.getModelClassName()
 			).put(
@@ -579,16 +541,6 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			).put(
 				"classPK", String.valueOf(journalArticle.getResourcePrimKey())
 			).build());
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-		fragmentEntryLink.setEditableValues(
-			_readJSONFileToString(
-				"fragment_entry_link_editable_values_with_configuration_" +
-					"itemselector.json"));
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
@@ -628,43 +580,32 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		fragmentEntryLink.setHtml(
 			"<div class=\"fragment_name\">[#if itemSelector1Object??]" +
 				"${itemSelector1Object}[/#if]</div>");
-		fragmentEntryLink.setEditableValues(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"itemSelector1",
-					JSONUtil.put(
-						"className", JournalArticle.class.getName()
-					).put(
-						"classPK",
-						String.valueOf(journalArticle.getResourcePrimKey())
-					))
-			).toString());
 
 		actualProcessedHTML = _getProcessedHTML(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+			fragmentEntryLink,
+			JSONUtil.put(
+				"itemSelector1",
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classPK",
+					String.valueOf(journalArticle.getResourcePrimKey())
+				)),
+			defaultFragmentEntryProcessorContext);
 
 		_assertContainsJournalArticleInfo(actualProcessedHTML, journalArticle);
 
-		fragmentEntryLink.setEditableValues(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"itemSelector1",
-					JSONUtil.put(
-						"className", JournalArticle.class.getName()
-					).put(
-						"externalReferenceCode",
-						journalArticle.getExternalReferenceCode()
-					))
-			).toString());
-
 		actualProcessedHTML = _getProcessedHTML(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+			fragmentEntryLink,
+			JSONUtil.put(
+				"itemSelector1",
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"externalReferenceCode",
+					journalArticle.getExternalReferenceCode()
+				)),
+			defaultFragmentEntryProcessorContext);
 
 		_assertContainsJournalArticleInfo(actualProcessedHTML, journalArticle);
 
@@ -686,26 +627,20 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
 
-		fragmentEntryLink.setEditableValues(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"itemSelector1",
-					JSONUtil.put(
-						"className", JournalArticle.class.getName()
-					).put(
-						"externalReferenceCode",
-						journalArticle.getExternalReferenceCode()
-					).put(
-						"scopeExternalReferenceCode",
-						group.getExternalReferenceCode()
-					))
-			).toString());
-
 		actualProcessedHTML = _getProcessedHTML(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+			fragmentEntryLink,
+			JSONUtil.put(
+				"itemSelector1",
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"externalReferenceCode",
+					journalArticle.getExternalReferenceCode()
+				).put(
+					"scopeExternalReferenceCode",
+					group.getExternalReferenceCode()
+				)),
+			defaultFragmentEntryProcessorContext);
 
 		_assertContainsJournalArticleInfo(actualProcessedHTML, journalArticle);
 	}
@@ -714,19 +649,11 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	public void testProcessFragmentEntryLinkHTMLWithConfigurationLocalizable()
 		throws Exception {
 
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_localizable.html",
-			"configuration_localizable.json");
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-		fragmentEntryLink.setEditableValues(
-			_readJSONFileToString(
-				"fragment_entry_link_editable_values_with_configuration_" +
-					"localizable.json"));
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+			"configuration_localizable.json",
+			"fragment_entry_link_editable_values_with_configuration_" +
+				"localizable.json",
+			"fragment_entry_with_configuration_localizable.html", null);
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
@@ -860,6 +787,35 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			html.contains("\"urlTitle\": \"" + journalArticle.getUrlTitle()));
 	}
 
+	private FragmentEntryLink _getFragmentEntryLink(
+			String configurationFile, String editableValuesFile,
+			Map<String, String> editableValuesMap, String htmlFile,
+			Map<String, String> values)
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			htmlFile, configurationFile, values);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
+		fragmentEntryLink.setEditableValues(
+			_readJSONFileToString(editableValuesFile, editableValuesMap));
+
+		return fragmentEntryLink;
+	}
+
+	private FragmentEntryLink _getFragmentEntryLink(
+			String configurationFile, String editableValuesFile,
+			String htmlFile, Map<String, String> values)
+		throws Exception {
+
+		return _getFragmentEntryLink(
+			configurationFile, editableValuesFile, null, htmlFile, values);
+	}
+
 	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
@@ -870,6 +826,23 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 
 		return mockHttpServletRequest;
+	}
+
+	private String _getProcessedHTML(
+			FragmentEntryLink fragmentEntryLink, JSONObject jsonObject,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws Exception {
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				jsonObject
+			).toString());
+
+		return _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, fragmentEntryProcessorContext));
 	}
 
 	private String _getProcessedHTML(String bodyHtml) {
@@ -963,10 +936,6 @@ public class FreeMarkerFragmentEntryProcessorTest {
 				"/dependencies/" + fileName);
 
 		return StringUtil.replace(template, "${", "}", values);
-	}
-
-	private String _readJSONFileToString(String jsonFileName) throws Exception {
-		return _readJSONFileToString(jsonFileName, null);
 	}
 
 	private String _readJSONFileToString(

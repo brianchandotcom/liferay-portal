@@ -139,20 +139,6 @@ public class ClassNamePostUpgradeDataCleanupProcess
 				}
 			}
 
-			try (PreparedStatement preparedStatement =
-					_connection.prepareStatement(
-						"select 1 from ResourcePermission where name = ?")) {
-
-				preparedStatement.setString(1, value);
-
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					if (resultSet.next()) {
-						usedTableNames.add(
-							dbInspector.normalizeName("ResourcePermission"));
-					}
-				}
-			}
-
 			if (usedTableNames.isEmpty()) {
 				_classNameLocalService.deleteClassName(className);
 

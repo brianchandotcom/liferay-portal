@@ -484,7 +484,6 @@ public class PageElementsTestUtil {
 
 		fragmentItemExternalReference.setExternalReferenceCode(
 			fragmentEntry.getExternalReferenceCode());
-
 		fragmentItemExternalReference.setFragmentReferenceType(
 			FragmentReference.FragmentReferenceType.
 				FRAGMENT_ITEM_EXTERNAL_REFERENCE);

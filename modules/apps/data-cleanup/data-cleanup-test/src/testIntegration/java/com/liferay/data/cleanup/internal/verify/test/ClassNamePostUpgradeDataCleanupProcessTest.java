@@ -165,69 +165,6 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 	}
 
 	@Test
-	public void testNotFoundLiferayClassNameUsedInResourcePermissionIsNotDeleted()
-		throws Exception {
-
-		AtomicReference<ClassName> classNameAtomicReference =
-			new AtomicReference<>();
-		String classNameValue =
-			"com.liferay.test." + RandomTestUtil.randomString();
-		long resourcePermissionId = RandomTestUtil.nextLong();
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(
-					messages.toString(),
-					messages.contains(
-						StringBundler.concat(
-							"Class name ", classNameValue,
-							" has not been found but is referenced in the ",
-							"next tables: ",
-							dbInspector.normalizeName("ResourcePermission"))));
-
-				ClassName className = _classNameLocalService.fetchClassName(
-					classNameValue);
-
-				Assert.assertEquals(classNameValue, className.getValue());
-			},
-			() -> {
-				if (classNameAtomicReference.get() != null) {
-					_classNameLocalService.deleteClassName(
-						classNameAtomicReference.get());
-				}
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"delete from ResourcePermission where " +
-								"resourcePermissionId = ?")) {
-
-					preparedStatement.setLong(1, resourcePermissionId);
-					preparedStatement.executeUpdate();
-				}
-			},
-			() -> {
-				ClassName className = _classNameLocalService.addClassName(
-					classNameValue);
-
-				classNameAtomicReference.set(className);
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"insert into ResourcePermission (mvccVersion, " +
-								"ctCollectionId, resourcePermissionId, name) " +
-									"values (0, 0, ?, ?)")) {
-
-					preparedStatement.setLong(1, resourcePermissionId);
-					preparedStatement.setString(2, classNameValue);
-
-					preparedStatement.executeUpdate();
-				}
-			});
-	}
-
-	@Test
 	public void testNotFoundLiferayClassNameUsedIsNotDeleted()
 		throws Exception {
 

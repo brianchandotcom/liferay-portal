@@ -48,7 +48,7 @@ export default function ScopeSelector({
 			return scope;
 		}
 
-		return scope.sort((a, b) => {
+		return scope.slice().sort((a, b) => {
 			let cmp = new Intl.Collator('en', {numeric: true}).compare(
 				a[sort.column as keyof Scope],
 				b[sort.column as keyof Scope]
@@ -74,8 +74,6 @@ export default function ScopeSelector({
 				if (!selectedItem) {
 					return;
 				}
-
-				console.log(selectedItem);
 
 				if (
 					scope.find(

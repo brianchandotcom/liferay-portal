@@ -18,7 +18,6 @@ module.exports = {
 		'uuid',
 		'react-flow-renderer',
 		'react-helmet',
-		'react-router-dom',
 		'graphiql',
 		'graphiql/graphiql.css',
 		'axe-core',

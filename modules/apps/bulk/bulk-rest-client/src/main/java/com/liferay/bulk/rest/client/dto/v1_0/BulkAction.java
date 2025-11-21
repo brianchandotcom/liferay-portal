@@ -134,6 +134,7 @@ public abstract class BulkAction implements Cloneable, Serializable {
 		KEYWORD_BULK_ACTION("KeywordBulkAction"),
 		MOVE_BULK_ACTION("MoveBulkAction"),
 		PERMISSION_BULK_ACTION("PermissionBulkAction"),
+		RESET_PERMISSION_BULK_ACTION("ResetPermissionBulkAction"),
 		STATUS_BULK_ACTION("StatusBulkAction"),
 		TAXONOMY_CATEGORY_BULK_ACTION("TaxonomyCategoryBulkAction");
 

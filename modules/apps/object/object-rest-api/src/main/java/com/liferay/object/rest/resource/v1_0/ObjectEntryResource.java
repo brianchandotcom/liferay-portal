@@ -51,6 +51,12 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public void
+			deleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+				String objectEntryExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;
 
 	public Response deleteObjectEntryBatch(String callbackURL, Object object)
@@ -65,6 +71,12 @@ public interface ObjectEntryResource {
 
 	public void deleteScopeScopeKeyByExternalReferenceCodeByVersion(
 			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public void
+			deleteScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+				String scopeKey, String objectEntryExternalReferenceCode,
+				String externalReferenceCode)
 		throws Exception;
 
 	public ObjectEntry getApprovedByExternalReferenceCode(

@@ -72,7 +72,9 @@ export function EditObjectFieldContent({
 		[]
 	);
 	const hasDefaultValues =
-		values.businessType === 'Boolean' || values.businessType === 'Picklist';
+		(Liferay.FeatureFlags['LPD-46451'] &&
+			values.businessType === 'Boolean') ||
+		values.businessType === 'Picklist';
 
 	if ((isDefaultStorageType || hasDefaultValues) && TABS.length < 2) {
 		TABS.push(Liferay.Language.get('advanced'));

@@ -58,7 +58,9 @@ type InputAsValueFieldComponents = {
 };
 
 const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
-	Boolean: BooleanDefaultValueSelect,
+	...(Liferay.FeatureFlags['LPD-46451'] && {
+		Boolean: BooleanDefaultValueSelect,
+	}),
 	Picklist: ListTypeDefaultValueSelect,
 };
 

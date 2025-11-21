@@ -10,11 +10,14 @@
 <%
 String displayType = "info";
 
-if (backgroundTaskStatus == BackgroundTaskConstants.STATUS_FAILED) {
+if (backgroundTaskStatus == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS) {
+	displayType = "warning";
+}
+else if (backgroundTaskStatus == BackgroundTaskConstants.STATUS_FAILED) {
 	displayType = "danger";
 }
-else if ((backgroundTaskStatus == BackgroundTaskConstants.STATUS_IN_PROGRESS) || (backgroundTaskStatus == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS)) {
-	displayType = "warning";
+else if (backgroundTaskStatus == BackgroundTaskConstants.STATUS_IN_PROGRESS) {
+	displayType = "info";
 }
 else if (backgroundTaskStatus == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 	displayType = "success";

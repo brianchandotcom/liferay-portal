@@ -7,6 +7,7 @@ package com.liferay.data.cleanup.internal.verify;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.verify.VerifyProcess;
@@ -40,7 +41,9 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 			new ClassNamePostUpgradeDataCleanupProcess(
 				_classNameLocalService, connection),
 			new ServiceComponentPostUpgradeDataCleanupProcess(
-				connection, _serviceComponentLocalService));
+				connection, _serviceComponentLocalService),
+			new ResourceActionPostUpgradeDataCleanupProcess(
+				connection, _resourceActionLocalService));
 	}
 
 	@Reference
@@ -48,6 +51,9 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ServiceComponentLocalService _serviceComponentLocalService;

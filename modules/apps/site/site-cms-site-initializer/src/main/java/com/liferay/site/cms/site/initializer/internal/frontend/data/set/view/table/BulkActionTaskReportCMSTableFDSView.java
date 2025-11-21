@@ -46,7 +46,7 @@ public class BulkActionTaskReportCMSTableFDSView extends BaseCMSTableFDSView {
 		).add(
 			addDateFDSTableSchemaField("dateCreated", "create-date")
 		).add(
-			addDateFDSTableSchemaField("completionDate", "completed-date")
+			addDateFDSTableSchemaField("completionDate", "completion-date")
 		).add(
 			"creator.name", "author-name",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

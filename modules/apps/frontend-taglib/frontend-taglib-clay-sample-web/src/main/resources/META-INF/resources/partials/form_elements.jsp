@@ -23,32 +23,32 @@
 
 	<tbody>
 		<tr>
-			<td><clay:checkbox checked="<%= true %>" name="name" /></td>
-			<td>On</td>
+			<td><clay:checkbox aria-labelledby="checkboxOnLabel" checked="<%= true %>" name="checkboxOn" /></td>
+			<td id="checkboxOnLabel">On</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox name="name" /></td>
-			<td>Off</td>
+			<td><clay:checkbox aria-labelledby="checkboxOffLabel" name="checkboxOff" /></td>
+			<td id="checkboxOffLabel">Off</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox checked="<%= true %>" cssClass="custom-css-class" data-qa-id="clayCustomCheckbox01" name="name" /></td>
-			<td>With custom class and id</td>
+			<td><clay:checkbox aria-labelledby="checkboxCustomClassLabel" checked="<%= true %>" cssClass="custom-css-class" data-qa-id="clayCustomCheckbox01" name="checkboxCustomClass" /></td>
+			<td id="checkboxCustomClassLabel">With custom class and id</td>
 		</tr>
 		<tr>
 			<td><clay:checkbox label="Checkbox with Label" name="checkboxWithLabel" /></td>
 			<td>With Label</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox checked="<%= true %>" disabled="<%= true %>" name="name" /></td>
-			<td>On disabled</td>
+			<td><clay:checkbox aria-labelledby="checkboxOnDisabledLabel" checked="<%= true %>" disabled="<%= true %>" name="checkboxOnDisabled" /></td>
+			<td id="checkboxOnDisabledLabel">On disabled</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox disabled="<%= true %>" name="name" /></td>
-			<td>Off disabled</td>
+			<td><clay:checkbox aria-labelledby="checkboxOffDisabledLabel" disabled="<%= true %>" name="checkboxOffDisabled" /></td>
+			<td id="checkboxOffDisabledLabel">Off disabled</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox indeterminate="<%= true %>" name="name" /></td>
-			<td>Indeterminate</td>
+			<td><clay:checkbox aria-labelledby="checkboxIndeterminateLabel" indeterminate="<%= true %>" name="checkboxIndeterminate" /></td>
+			<td id="checkboxIndeterminateLabel">Indeterminate</td>
 		</tr>
 	</tbody>
 </table>

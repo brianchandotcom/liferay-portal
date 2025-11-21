@@ -53,10 +53,6 @@ public class VocabularyObjectDefinitionSelectionFDSFilter
 					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
 				});
 
-		if (objectDefinitions.isEmpty()) {
-			return selectionFDSFilterItems;
-		}
-
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			selectionFDSFilterItems.add(
 				new SelectionFDSFilterItem(

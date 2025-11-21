@@ -83,7 +83,9 @@ const BaseEditor = ({
 	}, [editorConfig]);
 
 	useEffect(() => {
-		setFormInputValue(data ?? '');
+		if (data !== undefined) {
+			setFormInputValue(data ?? '');
+		}
 	}, [data]);
 
 	return loading ? (

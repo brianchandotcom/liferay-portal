@@ -169,7 +169,7 @@ public class ConfigurationUtil {
 
 			if (ad.required() && (value == null)) {
 				throw new ValidationException(
-					"The property '" + method.getName() + "' is required");
+					"The property \"" + method.getName() + "\" is required");
 			}
 			else if (value == null) {
 				continue;
@@ -183,8 +183,8 @@ public class ConfigurationUtil {
 
 				throw new ValidationException(
 					StringBundler.concat(
-						"The attribute '", method.getName(), "' expects '",
-						returnType, "' not '", clazz, "'"));
+						"The attribute \"", method.getName(), "\" expects \"",
+						returnType, " and \" not \"", clazz, "\""));
 			}
 
 			if (value instanceof List<?>) {

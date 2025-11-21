@@ -3,9 +3,9 @@ $color: $white;
 $dragOverWidth: 6px;
 $showDuration: 0.15s;
 
-@mixin highlighted($color) {
+@mixin highlighted($color, $width) {
 	&:after {
-		box-shadow: inset 0 0 0 $borderWidth $color;
+		box-shadow: inset 0 0 0 $width $color;
 		z-index: 1;
 	}
 }
@@ -139,14 +139,14 @@ html#{$cadmin-selector} {
 		&.active:not(.page-editor__col),
 		&.active > .page-editor__col__border,
 		&.highlighted {
-			@include highlighted($cadmin-primary);
+			@include highlighted($cadmin-primary, $borderWidth);
 		}
 
 		&.highlighted-from-rule {
-			@include highlighted(rgba($cadmin-primary, 0.5));
+			@include highlighted(rgba($cadmin-primary, 0.5), 4px);
 
 			&:after {
-				background-color: rgba($cadmin-primary-l1, 0.1);
+				background-color: rgba($cadmin-primary-l1, 0.2);
 			}
 		}
 

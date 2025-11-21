@@ -208,7 +208,8 @@ export function useObjectFieldForm({
 			}
 		}
 		else if (
-			field.businessType === 'Boolean' ||
+			(Liferay.FeatureFlags['LPD-46451'] &&
+				field.businessType === 'Boolean') ||
 			field.businessType === 'Picklist'
 		) {
 			if (

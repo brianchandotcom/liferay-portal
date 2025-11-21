@@ -11,7 +11,8 @@ export function getRightSidebarWidth(
 	selectedObjectRelationship?: ObjectRelationshipEdgeData | null
 ) {
 	const hasDefaultValues =
-		selectedObjectField?.businessType === 'Boolean' ||
+		(Liferay.FeatureFlags['LPD-46451'] &&
+			selectedObjectField?.businessType === 'Boolean') ||
 		selectedObjectField?.businessType === 'Picklist';
 
 	if (rightSidebarType === 'objectDefinitionDetails') {

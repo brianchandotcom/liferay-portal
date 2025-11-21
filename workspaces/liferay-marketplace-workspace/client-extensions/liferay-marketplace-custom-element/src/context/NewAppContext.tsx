@@ -726,27 +726,36 @@ export default function NewAppContextProvider({
 							: 'r_productEntryToPublisherAssets_CPDefinitionId',
 						productId as string
 					),
+					nestedFields: 'publisherAssetsToAppPackage',
 				})
 			).then((response) => response.items),
 		{
 			onSuccess: async (publisherAssetses) => {
 				const liferayPackages = await Promise.all(
 					publisherAssetses.map(async (publisherAsset) => {
-						const sourceFileDocument =
-							await HeadlessDelivery.getDocument(
-								publisherAsset.sourceCode.id
-							);
+						const packageFiles = await Promise.all(
+							publisherAsset.publisherAssetsToAppPackage.map(
+								async (file: any) => {
+									const sourceFileDocument =
+										await HeadlessDelivery.getDocument(
+											file.sourceCode.id
+										);
+
+									return {
+										error: false,
+										fileName: file.sourceCode.name,
+										id: file.sourceCode.id,
+										readableSize: filesize(
+											sourceFileDocument.sizeInBytes
+										),
+										src: file.sourceCode.link.href,
+									};
+								}
+							)
+						);
 
 						return {
-							file: {
-								error: false,
-								fileName: publisherAsset.sourceCode.name,
-								id: publisherAsset.sourceCode.id,
-								readableSize: filesize(
-									sourceFileDocument.sizeInBytes
-								),
-								src: publisherAsset.sourceCode.link.href,
-							},
+							file: packageFiles,
 							id: publisherAsset.id,
 							uploaded: true,
 							versions: publisherAsset.version.split(','),

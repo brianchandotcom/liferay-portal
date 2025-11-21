@@ -41,7 +41,7 @@ export function NewAppPackageVersionModal({
 	});
 
 	const [checkboxVersions, setCheckboxVersions] =
-		useState<string[]>(currentVersions);
+		useState<string[]>([]);
 
 	const [selectedVersion, setSelectedVersion] = useState('');
 
@@ -107,6 +107,8 @@ export function NewAppPackageVersionModal({
 								const isChecked =
 									checkboxVersions.includes(version);
 
+									const isAlreadySelected = currentVersions.includes(version)
+
 								const handleCheckboxChange = () => {
 									setCheckboxVersions((prevVersions) =>
 										isChecked
@@ -122,6 +124,7 @@ export function NewAppPackageVersionModal({
 								return (
 									<ClayCheckbox
 										checked={isChecked}
+										disabled={isAlreadySelected}
 										key={index}
 										label={version}
 										name={`version-${index}`}

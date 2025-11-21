@@ -693,7 +693,11 @@ export default class AppPublish extends BaseAppPublish {
 		);
 	}
 
-	async processLiferayPackages(product: Product) {
+	async processLiferayPackages(product: Product, config?: ProductConfig) {
+		if (config) {
+			this.config = config;
+		}
+
 		const {
 			build: {liferayPackages},
 		} = this.context;
@@ -701,19 +705,21 @@ export default class AppPublish extends BaseAppPublish {
 		const liferayVersions = [];
 
 		for (const liferayPackage of liferayPackages) {
-			const {file, versions} = liferayPackage;
+			const {file, id, versions, uploaded} = liferayPackage;
 
-			if (file && file.file) {
+			if (file.length > 0 && !uploaded) {
 				const publisherAsset = new PublisherAsset(
 					file,
+					id,
 					product,
 					this.config?.properties ?? {},
 					versions.toString()
 				);
 
 				await publisherAsset.process();
+
+				liferayVersions.push(...versions);
 			}
-			liferayVersions.push(...versions);
 		}
 
 		const liferayVersionSpecifications = Array.from(

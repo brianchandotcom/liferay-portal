@@ -11,14 +11,18 @@ import Modal from '../../../../components/Modal';
 import {NewAppTypes, useNewAppContext} from '../../../../context/NewAppContext';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
-import AppPublish from '../../../../services/actions/AppPublish';
+import AppPublish, {
+	ProductConfig,
+} from '../../../../services/actions/AppPublish';
 import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import BasePublishAppOutlet from '../../BasePublishAppOutlet';
 import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 
 const NewAppBuildOutlet = () => {
 	const navigate = useNavigate();
 
+	const {properties} = useMarketplaceContext();
 	const [context, dispatch] = useNewAppContext();
 
 	const onSave = async () => {
@@ -30,7 +34,9 @@ const NewAppBuildOutlet = () => {
 
 		if (product) {
 			try {
-				await appPublish.processLiferayPackages(product);
+				await appPublish.processLiferayPackages(product, {
+					properties,
+				} as ProductConfig);
 
 				await HeadlessCommerceAdminCatalog.updateProduct(
 					context._product?.productId as number,

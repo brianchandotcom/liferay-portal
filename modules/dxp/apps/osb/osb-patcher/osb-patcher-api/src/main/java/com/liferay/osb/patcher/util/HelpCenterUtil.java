@@ -11,9 +11,8 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.osb.patcher.configuration.PatcherConfiguration;
-import com.liferay.osb.patcher.model.PatcherAccount;
+import com.liferay.osb.patcher.constants.HelpCenterConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
-import com.liferay.osb.patcher.service.PatcherAccountLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
@@ -21,10 +20,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -72,57 +72,87 @@ public class HelpCenterUtil {
 					}));
 		}
 
-		long fileSize = blob.getSize();
+		String fileSize = String.valueOf(blob.getSize());
+
+		String md5Checksum = StringPool.BLANK;
 
 		try (InputStream fileInputStream = Channels.newInputStream(
 				blob.reader())) {
 
-			uploadAttachment(
-				patcherBuild.getCompanyId(), fileInputStream, fileName,
-				fileSize, patcherBuild.getSupportTicket());
+			md5Checksum = getMD5Checksum(fileInputStream);
 		}
 		catch (Exception exception) {
-			throw exception;
+			throw new Exception(
+				"Error processing GCS file for MD5 calculation", exception);
 		}
+
+		String body = JSONUtil.put(
+			"fileName", fileName
+		).put(
+			"fileSize", fileSize
+		).put(
+			"md5Checksum", md5Checksum
+		).put(
+			"ticketId", patcherBuild.getSupportTicket()
+		).put(
+			"type", "hotfix"
+		).toString();
 
 		Http.Options options = new Http.Options();
 
 		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
 
-		String login =
-			patcherConfiguration.helpCenterApiUserName() + ":" +
-				patcherConfiguration.helpCenterApiPassword();
+		options.addHeader(
+			"Authorization",
+			"Bearer " + getAuthenticationToken(patcherBuild.getCompanyId()));
+
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 
 		options.addHeader(
-			"Authorization", "Basic " + Base64.encode(login.getBytes()));
+			"Origin", patcherConfiguration.supportLiferayLfuURL());
 
-		PatcherAccount patcherAccount =
-			PatcherAccountLocalServiceUtil.getPatcherAccount(
-				patcherBuild.getPatcherAccountId());
-
-		options.addPart(
-			"accountEntryId",
-			String.valueOf(patcherAccount.getAccountEntryId()));
-
-		options.addPart("fileName", fileName);
-		options.addPart(
-			"fileRepositoryId", patcherConfiguration.helpCenterFileRepoId());
-		options.addPart("fileSize", String.valueOf(fileSize));
-		options.addPart("regionRestricted", "false");
-		options.addPart("type", "1");
-		options.addPart("zendeskTicketId", patcherBuild.getSupportTicket());
-
-		String helpCenterTicketAttachmentApiEndpoint =
-			patcherConfiguration.helpCenterTicketAttachmentApiEndpoint();
+		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		options.setLocation(
-			patcherConfiguration.helpCenterJsonwsURL() +
-				StringPool.FORWARD_SLASH +
-					helpCenterTicketAttachmentApiEndpoint);
-
+			StringBundler.concat(
+				patcherConfiguration.supportLiferayLfuURL(),
+				StringPool.FORWARD_SLASH,
+				patcherConfiguration.
+					supportLiferayTicketAttachmentApiEndpoint()));
 		options.setPost(true);
 
-		return HttpUtil.URLtoString(options);
+		String responseString = HttpUtil.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			throw new Exception(
+				StringBundler.concat(
+					"Response code ", response.getResponseCode(), ": ",
+					responseString));
+		}
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			responseString);
+
+		String gcsSessionURL = responseJSONObject.getString(
+			"gcsSessionURL", StringPool.BLANK);
+
+		try (InputStream fileInputStream = Channels.newInputStream(
+				blob.reader())) {
+
+			uploadAttachment(fileInputStream, fileSize, gcsSessionURL);
+		}
+		catch (Exception exception) {
+			throw new Exception("Error processing GCS file", exception);
+		}
+
+		long ticketAttachmentId = responseJSONObject.getLong(
+			"ticketAttachmentId", 0);
+
+		completeUpload(ticketAttachmentId, patcherBuild.getCompanyId());
+
+		return responseString;
 	}
 
 	public static long fetchAccountEntryId(
@@ -131,7 +161,7 @@ public class HelpCenterUtil {
 
 		Http.Options options = new Http.Options();
 
-		options.addHeader(HttpHeaders.ACCEPT, "application/json");
+		options.addHeader(HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
 
 		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
 
@@ -151,7 +181,7 @@ public class HelpCenterUtil {
 
 		options.setPost(false);
 
-		String responseBody = HttpUtil.URLtoString(options);
+		String responseString = HttpUtil.URLtoString(options);
 
 		Http.Response response = options.getResponse();
 
@@ -159,10 +189,11 @@ public class HelpCenterUtil {
 			throw new Exception(
 				StringBundler.concat(
 					"Response code ", response.getResponseCode(), ": ",
-					responseBody));
+					responseString));
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(responseBody);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			responseString);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -183,6 +214,49 @@ public class HelpCenterUtil {
 		}
 
 		return 0;
+	}
+
+	protected static void completeUpload(
+			long ticketAttachmentId, long companyId)
+		throws Exception {
+
+		String body = JSONUtil.put(
+			"commentBody", HelpCenterConstants.HELP_CENTER_UPLOAD_COMMENT
+		).toString();
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
+
+		options.addHeader(
+			"Authorization", "Bearer " + getAuthenticationToken(companyId));
+
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+
+		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		PatcherConfiguration patcherConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				PatcherConfiguration.class, companyId);
+
+		options.setLocation(
+			String.format(
+				"%s/ticket-attachments/%d/complete-upload",
+				patcherConfiguration.supportLiferayLfuURL(),
+				ticketAttachmentId));
+
+		options.setPost(true);
+
+		String responseString = HttpUtil.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			throw new Exception(
+				StringBundler.concat(
+					"Response code ", response.getResponseCode(), ": ",
+					responseString));
+		}
 	}
 
 	protected static String getAttachmentToken(
@@ -237,7 +311,7 @@ public class HelpCenterUtil {
 
 		options.setPost(true);
 
-		String responseBody = HttpUtil.URLtoString(options);
+		String responseString = HttpUtil.URLtoString(options);
 
 		Http.Response response = options.getResponse();
 
@@ -245,52 +319,51 @@ public class HelpCenterUtil {
 			throw new Exception(
 				StringBundler.concat(
 					"Response code ", response.getResponseCode(), ": ",
-					responseBody));
+					responseString));
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(responseBody);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			responseString);
 
-		return jsonObject.getString("access_token");
+		return jsonObject.getString("access_token", StringPool.BLANK);
+	}
+
+	protected static String getMD5Checksum(InputStream fileInputStream) {
+		return DigesterUtil.digestHex(DigesterUtil.MD5, fileInputStream);
 	}
 
 	protected static void uploadAttachment(
-			long companyId, InputStream fileInputStream, String fileName,
-			long fileSize, String supportTicket)
+			InputStream fileInputStream, String fileSize, String gcsSessionURL)
 		throws Exception {
 
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, companyId);
-
-		String uploadURL =
-			patcherConfiguration.helpCenterFileRepoURL() + "/upload";
-
-		uploadURL = HttpComponentsUtil.addParameter(
-			uploadURL, "resumableChunkNumber", 1);
-		uploadURL = HttpComponentsUtil.addParameter(
-			uploadURL, "resumableChunkSize", 26214400);
-		uploadURL = HttpComponentsUtil.addParameter(
-			uploadURL, "resumableFilename", fileName);
-		uploadURL = HttpComponentsUtil.addParameter(
-			uploadURL, "resumableTotalChunks", 1);
-		uploadURL = HttpComponentsUtil.addParameter(
-			uploadURL, "resumableTotalSize", fileSize);
-		uploadURL = HttpComponentsUtil.addParameter(
-			uploadURL, "token", getAttachmentToken(companyId, supportTicket));
-
-		URL url = new URL(uploadURL);
+		URL url = new URL(gcsSessionURL);
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();
 
+		httpURLConnection.setDoInput(true);
 		httpURLConnection.setDoOutput(true);
-		httpURLConnection.setRequestMethod("POST");
+		httpURLConnection.setRequestMethod("PUT");
+		httpURLConnection.setRequestProperty("User-Agent", _PATCHER_USER_AGENT);
+		httpURLConnection.setRequestProperty("Content-Length", fileSize);
 		httpURLConnection.setRequestProperty(
 			"Content-Type", "application/octet-stream");
 
 		IOUtils.copy(fileInputStream, httpURLConnection.getOutputStream());
 
-		IOUtils.toString(httpURLConnection.getInputStream());
+		int responseCode = httpURLConnection.getResponseCode();
+
+		InputStream responseInputStream = httpURLConnection.getInputStream();
+
+		String responseBody = IOUtils.toString(
+			responseInputStream, StringPool.UTF8);
+
+		if (responseCode != HttpURLConnection.HTTP_OK) {
+			throw new Exception(
+				StringBundler.concat(
+					"File upload failed. Response code ", responseCode, ": ",
+					responseBody));
+		}
 
 		httpURLConnection.disconnect();
 	}

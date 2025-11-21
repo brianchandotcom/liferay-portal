@@ -157,6 +157,9 @@ public interface PatcherConfiguration {
 	public String supportLiferayLfuURL();
 
 	@Meta.AD(deflt = "", required = false)
+	public String supportLiferayTicketAttachmentApiEndpoint();
+
+	@Meta.AD(deflt = "", required = false)
 	public String supportLiferayURL();
 
 	@Meta.AD(deflt = "", required = false)

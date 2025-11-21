@@ -33,10 +33,9 @@ public class ChatResourceTest extends BaseChatResourceTestCase {
 	@Override
 	@Test
 	public void testGetChatSubscribe() throws Exception {
-		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(), new ArrayList<>(), "chats/subscribe");
-
-		Assert.assertNotNull(sseEventSinkKey);
+		Assert.assertNotNull(
+			SseEventSourceTestUtil.open(
+				List.of(), new ArrayList<>(), "chats/subscribe"));
 	}
 
 }

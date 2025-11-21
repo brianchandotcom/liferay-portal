@@ -27,7 +27,7 @@ export function DocumentFileItem({
 	uploadedFile,
 	versionName,
 }: DocumentFileItemProps) {
-	const uploadedError = (uploadedFile.error as AxiosError).message;
+	const uploadedError = (uploadedFile.error as AxiosError)?.message;
 
 	const showProgress =
 		isProcessing && !uploadedFile.uploaded && uploadedFile.progress > 0;

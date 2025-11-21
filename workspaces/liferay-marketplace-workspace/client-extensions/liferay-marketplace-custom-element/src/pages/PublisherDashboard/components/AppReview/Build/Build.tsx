@@ -5,27 +5,29 @@
 
 import ClayIcon from '@clayui/icon';
 
-import {LiferayPackage} from '../../../../../context/NewAppContext';
 import i18n from '../../../../../i18n';
 import {ProductTypeOptions} from '../../../pages/NewAppFlow/constants/productTypes';
 import {AppReviewProps} from '../AppReview';
 import AppReviewSection from '../AppReviewSection';
 
-const FileContent = ({liferayPackage}: {liferayPackage: LiferayPackage}) => {
-	if (liferayPackage.uploaded) {
+const FileContent = ({
+	liferayPackage,
+	uploaded,
+}: {
+	liferayPackage: any;
+	uploaded: boolean;
+}) => {
+	if (uploaded) {
 		return (
-			<a
-				className="app-review-file-name ml-3"
-				href={liferayPackage?.file?.src}
-			>
-				{liferayPackage?.file?.fileName}
+			<a className="app-review-file-name ml-3" href={liferayPackage?.src}>
+				{liferayPackage?.fileName}
 			</a>
 		);
 	}
 
 	return (
 		<span className="app-review-file-name ml-3">
-			{liferayPackage?.file?.fileName}
+			{liferayPackage?.fileName}
 		</span>
 	);
 };
@@ -62,47 +64,72 @@ const Build = ({
 							</span>
 						</div>
 					</div>
-					{context.build.liferayPackages.map((liferayPackage) => {
-						return (
-							<div
-								className="d-flex flex-column pt-4"
-								key={liferayPackage.id}
-							>
-								<div className="align-items-center d-flex">
-									<div className="app-review-file-container">
-										<ClayIcon
-											aria-label="Folder Icon"
-											className="app-review-file-container-icon"
-											symbol="document-text"
-										/>
+					{context.build.liferayPackages.map(
+						(liferayPackage, index) => {
+							return (
+								<div
+									className="border d-flex flex-column my-4 p-4"
+									key={liferayPackage.id}
+								>
+									<span className="font-weight-bold">
+										{i18n.translate('package')} {index + 1}
+									</span>
+									<div className="align-items-center d-flex">
+										<div className="app-review-file-container">
+											<ClayIcon
+												aria-label="Folder Icon"
+												className="app-review-file-container-icon"
+												symbol="document-text"
+											/>
+										</div>
+										<div className="d-flex flex-column">
+											{liferayPackage.file.map(
+												(
+													packageFile: any,
+													index: number
+												) => {
+													return (
+														<>
+															<FileContent
+																liferayPackage={
+																	packageFile
+																}
+																uploaded={
+																	liferayPackage.uploaded
+																}
+															/>
+															<small className="document-file-list-item-left-content-text-file-size ml-3">
+																{
+																	packageFile?.readableSize
+																}
+															</small>
+														</>
+													);
+												}
+											)}
+										</div>
 									</div>
-									<div className="d-flex flex-column">
-										<FileContent
-											liferayPackage={liferayPackage}
-										/>
-										<small className="document-file-list-item-left-content-text-file-size ml-3">
-											{liferayPackage.file?.readableSize}
-										</small>
+									<div className="py-4">
+										<p className="font-weight-bold mb-0">
+											{i18n.translate(
+												'compatible-versions'
+											)}
+										</p>
+										{liferayPackage.versions.map(
+											(version, index) => (
+												<small key={index}>
+													{version}
+													{index + 1 <
+														liferayPackage.versions
+															.length && ','}{' '}
+												</small>
+											)
+										)}
 									</div>
 								</div>
-								<div className="p-4">
-									<p className="font-weight-bold mb-0">
-										{i18n.translate('compatible-versions')}
-									</p>
-									{liferayPackage.versions.map(
-										(version, index) => (
-											<small key={index}>
-												{version}
-												{index + 1 <
-													liferayPackage.versions
-														.length && ','}{' '}
-											</small>
-										)
-									)}
-								</div>
-							</div>
-						);
-					})}
+							);
+						}
+					)}
 				</>
 			)}
 		</AppReviewSection>

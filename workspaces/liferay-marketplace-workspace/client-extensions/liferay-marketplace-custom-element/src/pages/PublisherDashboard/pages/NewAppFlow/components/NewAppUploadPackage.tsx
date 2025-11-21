@@ -26,7 +26,7 @@ import {getRandomID} from '../../../../../utils/string';
 type NewAppUploadAppPackagesComponentProps = {
 	isProcessing: boolean;
 	liferayPackage: {
-		file: UploadedFile | null;
+		file: UploadedFile[] | null;
 		id: string;
 		uploaded: boolean;
 		versions: string[];
@@ -56,23 +56,25 @@ export function NewAppUploadAppPackagesComponent({
 		dispatch,
 	] = useNewAppContext();
 
-	const enableUploadFiles = !isProcessing && !liferayPackage.file?.id;
+	const enableUploadFiles = !isProcessing && !liferayPackage.uploaded;
 
 	const handleRemoveAppPackages = (liferayPackageId: string) => {
 		const _liferayPackage = liferayPackages.find(
-			(liferayPackage) => liferayPackage.file.id === liferayPackageId
+			(_liferayPackage) => _liferayPackage.id === liferayPackage.id
 		);
 
 		if (_liferayPackage) {
-			_liferayPackage.file = null;
-		}
+			_liferayPackage.file = _liferayPackage.file.filter(
+				(file: UploadedFile) => file.id !== liferayPackageId
+			);
 
-		dispatch({
-			payload: {
-				liferayPackages,
-			},
-			type: NewAppTypes.SET_BUILD,
-		});
+			dispatch({
+				payload: {
+					liferayPackages,
+				},
+				type: NewAppTypes.SET_BUILD,
+			});
+		}
 	};
 
 	const handleUploadAppPackages = (files: File[]) => {
@@ -88,28 +90,32 @@ export function NewAppUploadAppPackagesComponent({
 			uploaded: false,
 		}));
 
-		if (
-			liferayPackages.some(
-				(liferayPackage) =>
-					liferayPackage.file?.fileName ===
-					newUploadedPackage[0].fileName
-			)
-		) {
-			Liferay.Util.openToast({
-				message: i18n.translate(
-					'could-not-upload-the-file-a-package-with-this-filename-already-exists'
-				),
-				type: 'danger',
-			});
-
-			return;
-		}
-
 		const _liferayPackages = liferayPackages.map((_liferayPackage) => {
 			if (liferayPackage.id === _liferayPackage.id) {
+				if (
+					_liferayPackage.file &&
+					_liferayPackage.file.some((liferayPackage: UploadedFile) =>
+						newUploadedPackage.some(
+							(newPackage) =>
+								newPackage.fileName === liferayPackage.fileName
+						)
+					)
+				) {
+					Liferay.Util.openToast({
+						message: i18n.translate(
+							'could-not-upload-the-file-a-package-with-this-filename-already-exists'
+						),
+						type: 'danger',
+					});
+
+					return _liferayPackage;
+				}
+
 				return {
 					..._liferayPackage,
-					file: newUploadedPackage[0],
+					file: _liferayPackage.file
+						? [..._liferayPackage.file, ...newUploadedPackage]
+						: [...newUploadedPackage],
 				};
 			}
 
@@ -131,7 +137,7 @@ export function NewAppUploadAppPackagesComponent({
 				onDelete={handleRemoveAppPackages}
 				removable={!liferayPackage.uploaded}
 				type="document"
-				uploadedFiles={liferayPackage.file ? [liferayPackage.file] : []}
+				uploadedFiles={liferayPackage.file ? liferayPackage.file : []}
 			/>
 
 			{enableUploadFiles && (
@@ -149,9 +155,9 @@ export function NewAppUploadAppPackagesComponent({
 									'only-zip-files-are-allowed-max-file-size-is-500mb'
 								)
 					}
-					maxFiles={1}
+					maxFiles={0}
 					maxSize={PUBLISH_APP_UPLOAD_MAX_SIZE}
-					multiple={false}
+					multiple
 					onHandleUpload={handleUploadAppPackages}
 					title={i18n.translate('drag-and-drop-to-upload-or')}
 				/>

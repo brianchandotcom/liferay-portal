@@ -154,7 +154,7 @@ const zodSchema = {
 			liferayPackages: z
 				.array(
 					z.object({
-						file: z.object({}),
+						file: z.array(z.any()).nonempty(),
 						versions: z.array(z.string()).min(1),
 					})
 				)

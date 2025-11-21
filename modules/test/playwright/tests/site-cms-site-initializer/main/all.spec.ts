@@ -1325,6 +1325,8 @@ test(
 					infoPanelPage.dropdownVersionActionMenuItem('View')
 				).toBeVisible();
 
+				await infoPanelPage.dropdownVersionAction('Version 2').click();
+
 				await infoPanelPage.dropdownVersionAction('Version 1').click();
 
 				await expect(
@@ -1473,6 +1475,8 @@ test(
 				await expect(
 					infoPanelPage.dropdownVersionActionMenuItem('View')
 				).toBeVisible();
+
+				await infoPanelPage.dropdownVersionAction('Version 2').click();
 
 				await infoPanelPage.dropdownVersionAction('Version 1').click();
 

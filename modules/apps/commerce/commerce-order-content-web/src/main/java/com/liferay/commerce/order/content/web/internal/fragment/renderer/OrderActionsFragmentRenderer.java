@@ -198,12 +198,6 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:open", commerceOrder.isOpen());
 			httpServletRequest.setAttribute(
-				"liferay-commerce:order-actions:restrictedNotesPermission",
-				_hasModelPermission(
-					commerceOrder,
-					CommerceOrderActionKeys.
-						MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES));
-			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:orderSummaryURL",
 				PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
@@ -230,6 +224,12 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
 					_friendlyURLSeparatorProviderSnapshot.get(),
 					httpServletRequest));
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-actions:restrictedNotesPermission",
+				_hasModelPermission(
+					commerceOrder,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES));
 
 			if (FeatureFlagManagerUtil.isEnabled(
 					_portal.getCompanyId(httpServletRequest), "LPD-10562") &&

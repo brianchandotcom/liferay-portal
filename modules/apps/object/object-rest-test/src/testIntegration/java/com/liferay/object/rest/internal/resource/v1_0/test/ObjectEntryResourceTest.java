@@ -9150,6 +9150,20 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlag("LPD-69419")
 	@Test
+	public void testPostByExternalReferenceCodeChildComment() throws Exception {
+
+		// Company scope
+
+		_testPostChildComment(_ERC_VALUE_1, 0L, _objectDefinition1);
+
+		// Site scope
+
+		_testPostChildComment(
+			_ERC_VALUE_2, _testGroupId, _siteScopedObjectDefinition1);
+	}
+
+	@FeatureFlag("LPD-69419")
+	@Test
 	public void testPostByExternalReferenceCodeComment() throws Exception {
 
 		// Company scope
@@ -18077,6 +18091,56 @@ public class ObjectEntryResourceTest {
 					"externalReferenceCode", externalReferenceCode2
 				).toString(),
 				endpoint2 + externalReferenceCode1, httpMethod));
+	}
+
+	private void _testPostChildComment(
+			String childCommentERC, long groupId,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		objectDefinition.setEnableComments(true);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"text", RandomTestUtil.randomString()
+			).toString(),
+			StringBundler.concat(
+				_getEndpoint(objectDefinition, groupId),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(), "/comments"),
+			Http.Method.POST);
+
+		long parentCommentId = jsonObject.getLong("id");
+
+		String comment = RandomTestUtil.randomString();
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"externalReferenceCode", childCommentERC
+			).put(
+				"text", comment
+			).toString(),
+			StringBundler.concat(
+				_getEndpoint(objectDefinition, groupId),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"/comments/by-external-reference-code/",
+				jsonObject.getString("externalReferenceCode"), "/comments"),
+			Http.Method.POST);
+
+		Assert.assertEquals(
+			childCommentERC, jsonObject.get("externalReferenceCode"));
+		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
+		Assert.assertEquals(
+			parentCommentId, jsonObject.getLong("parentCommentId"));
 	}
 
 	private void _testPostCustomObjectEntryWithAssigneeObjectField(

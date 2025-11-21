@@ -26,7 +26,7 @@ import {config} from '../../../../../app/config/index';
 import {
 	useActiveItemIds,
 	useHoverItem,
-	useHoveredItemIds,
+	useHoveredItemId,
 	useMultiSelectType,
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
@@ -57,7 +57,7 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 	const multiSelectType = useMultiSelectType();
 	const pageContents = usePageContents();
 	const hoverItem = useHoverItem();
-	const [hoveredItemId] = useHoveredItemIds();
+	const hoveredItemId = useHoveredItemId();
 	const selectItem = useSelectItem();
 	const treeRef = useRef(null);
 
@@ -174,7 +174,7 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 		const activeItemIds = useActiveItemIds();
 		const editedNodeId = useEditedNodeId();
 		const dispatch = useDispatch();
-		const [hoveredItemId] = useHoveredItemIds();
+		const hoveredItemId = useHoveredItemId();
 		const isMultiSelect = activeItemIds.length > 1;
 		const isSelected = activeItemIds.includes(item.id);
 		const isHovered = item.id === hoveredItemId;

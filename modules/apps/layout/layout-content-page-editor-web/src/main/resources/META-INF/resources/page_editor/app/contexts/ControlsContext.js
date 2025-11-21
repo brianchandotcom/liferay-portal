@@ -25,7 +25,7 @@ const ACTIVE_INITIAL_STATE = {
 };
 
 const HOVER_INITIAL_STATE = {
-	hoveredItemIds: [],
+	hoveredItemId: null,
 };
 
 const HOVER_ITEM = 'HOVER_ITEM';
@@ -133,11 +133,11 @@ const reducer = (state, action) => {
 
 	let nextState = state;
 
-	if (type === HOVER_ITEM && !nextState.hoveredItemIds.includes(itemId)) {
+	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
 		nextState = {
 			...nextState,
 			activationOrigin: origin,
-			hoveredItemIds: itemId ? [itemId] : [],
+			hoveredItemId: itemId,
 			hoveredItemType: itemType,
 		};
 	}
@@ -317,7 +317,7 @@ const useActiveItemIds = () => useContext(ActiveStateContext).activeItemIds;
 
 const useActiveItemType = () => useContext(ActiveStateContext).activeItemType;
 
-const useHoveredItemIds = () => useContext(HoverStateContext).hoveredItemIds;
+const useHoveredItemId = () => useContext(HoverStateContext).hoveredItemId;
 
 const useHoveredItemType = () => useContext(HoverStateContext).hoveredItemType;
 
@@ -353,12 +353,9 @@ const useIsActive = () => {
 };
 
 const useIsHovered = () => {
-	const {hoveredItemIds} = useContext(HoverStateContext);
+	const {hoveredItemId} = useContext(HoverStateContext);
 
-	return useCallback(
-		(itemId) => hoveredItemIds.includes(itemId),
-		[hoveredItemIds]
-	);
+	return useCallback((itemId) => hoveredItemId === itemId, [hoveredItemId]);
 };
 
 const useSelectItem = () => {
@@ -428,7 +425,7 @@ export {
 	useActivationOrigin,
 	useActiveItemIds,
 	useActiveItemType,
-	useHoveredItemIds,
+	useHoveredItemId,
 	useHoveredItemType,
 	useHoveringOrigin,
 	useHoverItem,

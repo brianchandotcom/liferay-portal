@@ -10,7 +10,7 @@ import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
 import {
-	useHoveredItemIds,
+	useHoveredItemId,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
 import {useSelectorCallback} from '../../contexts/StoreContext';
@@ -71,7 +71,7 @@ export default FragmentWithControls;
 
 const HoverHandler = ({fragmentEntryLink, hovered, setHovered}) => {
 	const hoveredItemType = useHoveredItemType();
-	const [hoveredItemId] = useHoveredItemIds();
+	const hoveredItemId = useHoveredItemId();
 
 	const mappedEditableValues = useMemo(() => {
 		const fieldNames = [];

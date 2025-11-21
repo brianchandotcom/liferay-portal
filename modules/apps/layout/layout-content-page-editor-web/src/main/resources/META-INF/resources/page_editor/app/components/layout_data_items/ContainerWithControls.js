@@ -10,7 +10,7 @@ import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
 import {
-	useHoveredItemIds,
+	useHoveredItemId,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
@@ -86,7 +86,7 @@ export default ContainerWithControls;
 
 const HoverHandler = ({hovered, item, setHovered}) => {
 	const hoveredItemType = useHoveredItemType();
-	const [hoveredItemId] = useHoveredItemIds();
+	const hoveredItemId = useHoveredItemId();
 
 	useEffect(() => {
 		const backgroundImage = item.config?.styles?.backgroundImage;

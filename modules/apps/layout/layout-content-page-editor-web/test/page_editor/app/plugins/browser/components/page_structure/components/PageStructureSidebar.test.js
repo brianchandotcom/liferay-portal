@@ -80,7 +80,7 @@ const renderComponent = ({
 					activeItemType: null,
 				}}
 				hoverInitialState={{
-					hoveredItemIds: [],
+					hoveredItemId: null,
 				}}
 			>
 				<StoreAPIContextProvider

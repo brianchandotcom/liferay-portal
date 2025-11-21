@@ -60,16 +60,14 @@ public class BackgroundTaskConstants {
 	public static final int STATUS_SUCCESSFUL = 3;
 
 	public static String getStatusCssClass(int status) {
-		if (status == STATUS_CANCELLED) {
+		if ((status == STATUS_CANCELLED) || (status == STATUS_IN_PROGRESS)) {
 			return "text-info";
+		}
+		else if (status == STATUS_COMPLETED_WITH_ERRORS) {
+			return "text-warning";
 		}
 		else if (status == STATUS_FAILED) {
 			return "text-danger";
-		}
-		else if ((status == STATUS_IN_PROGRESS) ||
-				 (status == STATUS_COMPLETED_WITH_ERRORS)) {
-
-			return "text-warning";
 		}
 		else if ((status == BackgroundTaskConstants.STATUS_NEW) ||
 				 (status == BackgroundTaskConstants.STATUS_QUEUED)) {

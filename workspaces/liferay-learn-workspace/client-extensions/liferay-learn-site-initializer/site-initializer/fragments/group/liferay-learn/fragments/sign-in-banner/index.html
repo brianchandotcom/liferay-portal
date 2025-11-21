@@ -1,5 +1,5 @@
 [#if !themeDisplay.isSignedIn() || layoutMode == "edit"]
-	<div class="banner-sign-in" id="banner-sign-in">
+	<div class="sign-in-banner" id="sign-in-banner">
 		<div class="banner-content">
 			<div data-lfr-editable-id="sign-in-banner-text" data-lfr-editable-type="text">
 				${languageUtil.get(locale, 'save-your-learning-progress', 'Save your learning progress and start earning Course Badges!')}
@@ -10,7 +10,7 @@
 			</a>
 		</div>
 
-		<button class="banner-icon-x" id="banner-icon-x" type="button">
+		<button class="banner-icon-close" id="banner-icon-close" type="button">
 			<svg fill="none" height="18" viewBox="0 0 18 18" width="18" xmlns="http://www.w3.org/2000/svg">
 				<mask height="10" id="mask0_1558_12810" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="10" x="4" y="4">
 					<path d="M13.725 4.28155C13.5849 4.14111 13.3947 4.06219 13.1963 4.06219C12.9979 4.06219 12.8077 4.14111 12.6675 4.28155L9.00004 7.94155L5.33254 4.27405C5.19242 4.13361 5.00218 4.05469 4.80379 4.05469C4.6054 4.05469 4.41516 4.13361 4.27504 4.27405C3.98254 4.56655 3.98254 5.03905 4.27504 5.33155L7.94254 8.99905L4.27504 12.6666C3.98254 12.9591 3.98254 13.4316 4.27504 13.7241C4.56754 14.0166 5.04004 14.0166 5.33254 13.7241L9.00004 10.0566L12.6675 13.7241C12.96 14.0166 13.4325 14.0166 13.725 13.7241C14.0175 13.4316 14.0175 12.9591 13.725 12.6666L10.0575 8.99905L13.725 5.33155C14.01 5.04655 14.01 4.56655 13.725 4.28155Z" fill="black" />

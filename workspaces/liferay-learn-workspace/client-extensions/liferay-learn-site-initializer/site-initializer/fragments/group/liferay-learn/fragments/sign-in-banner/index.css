@@ -1,4 +1,4 @@
-.banner-sign-in {
+.sign-in-banner {
 	align-items: center;
 	background:
 		radial-gradient(52.24% 284.19% at 100% 100%, #FF6DA3 16.34%, rgba(202, 0, 250, 0.8) 55.85%, rgba(202, 0, 250, 0) 100%),
@@ -28,7 +28,7 @@
 		width: 90%;
 	}
 	
-	.banner-icon-x {
+	.banner-icon-close {
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -52,13 +52,13 @@
 
 
 @media (max-width: 768px) {
-	.login-button {
+	.banner-login-button {
 		width: unset !important;
 	}
 }
 
 @media (max-width: 1229px) {
-	.banner-sign-in {
+	.sign-in-banner {
 		bottom: 0.5rem;
 		box-shadow: 0 1.25px 4px 0 rgba(39, 40, 51, 0.25);
 		left: 0.5rem;
@@ -68,7 +68,7 @@
 		width: unset;
 		z-index: 9999;
 
-		.banner-icon-x {
+		.banner-icon-close {
 			position: static;
 		}
 	}

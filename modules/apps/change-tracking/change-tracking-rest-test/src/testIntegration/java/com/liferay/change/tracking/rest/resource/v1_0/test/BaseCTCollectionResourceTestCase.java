@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -995,7 +996,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 	@Test
 	public void testGetCTCollectionsPage() throws Exception {
 		Page<CTCollection> page = ctCollectionResource.getCTCollectionsPage(
-			null, null, Pagination.of(1, 10), null);
+			null, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -1006,7 +1007,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 			randomCTCollection());
 
 		page = ctCollectionResource.getCTCollectionsPage(
-			null, null, Pagination.of(1, 10), null);
+			null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -1029,9 +1030,95 @@ public abstract class BaseCTCollectionResourceTestCase {
 	}
 
 	@Test
+	public void testGetCTCollectionsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		CTCollection ctCollection1 = randomCTCollection();
+
+		ctCollection1 = testGetCTCollectionsPage_addCTCollection(ctCollection1);
+
+		for (EntityField entityField : entityFields) {
+			Page<CTCollection> page = ctCollectionResource.getCTCollectionsPage(
+				null, null,
+				getFilterString(entityField, "between", ctCollection1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(ctCollection1),
+				(List<CTCollection>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCTCollectionsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetCTCollectionsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetCTCollectionsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetCTCollectionsPageWithFilter("contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetCTCollectionsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetCTCollectionsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetCTCollectionsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetCTCollectionsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetCTCollectionsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		CTCollection ctCollection1 = testGetCTCollectionsPage_addCTCollection(
+			randomCTCollection());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CTCollection ctCollection2 = testGetCTCollectionsPage_addCTCollection(
+			randomCTCollection());
+
+		for (EntityField entityField : entityFields) {
+			Page<CTCollection> page = ctCollectionResource.getCTCollectionsPage(
+				null, null,
+				getFilterString(entityField, operator, ctCollection1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(ctCollection1),
+				(List<CTCollection>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetCTCollectionsPageWithPagination() throws Exception {
 		Page<CTCollection> ctCollectionsPage =
-			ctCollectionResource.getCTCollectionsPage(null, null, null, null);
+			ctCollectionResource.getCTCollectionsPage(
+				null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			ctCollectionsPage.getTotalCount());
@@ -1052,7 +1139,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<CTCollection> page1 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null,
+					null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -1064,7 +1151,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 			Page<CTCollection> page2 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null,
+					null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -1074,7 +1161,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 			Page<CTCollection> page3 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null,
+					null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -1085,7 +1172,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		else {
 			Page<CTCollection> page1 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(1, totalCount + 2), null);
+					null, null, null, Pagination.of(1, totalCount + 2), null);
 
 			List<CTCollection> ctCollections1 =
 				(List<CTCollection>)page1.getItems();
@@ -1096,7 +1183,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 			Page<CTCollection> page2 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(2, totalCount + 2), null);
+					null, null, null, Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -1108,7 +1195,8 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 			Page<CTCollection> page3 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(1, (int)totalCount + 3), null);
+					null, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
 
 			assertContains(ctCollection1, (List<CTCollection>)page3.getItems());
 			assertContains(ctCollection2, (List<CTCollection>)page3.getItems());
@@ -1227,12 +1315,13 @@ public abstract class BaseCTCollectionResourceTestCase {
 		ctCollection2 = testGetCTCollectionsPage_addCTCollection(ctCollection2);
 
 		Page<CTCollection> page = ctCollectionResource.getCTCollectionsPage(
-			null, null, null, null);
+			null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<CTCollection> ascPage =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
 			assertContains(
@@ -1242,7 +1331,8 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 			Page<CTCollection> descPage =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
 			assertContains(
@@ -1665,6 +1755,9 @@ public abstract class BaseCTCollectionResourceTestCase {
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected CTCollection testGraphQLCTCollection_addCTCollection()
 		throws Exception {

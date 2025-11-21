@@ -26,7 +26,7 @@ export const test = mergeTests(
 
 test(
 	'Add multiple suborganizations to parent organization',
-	{tag: '@LPD-57824'},
+	{tag: ['@LPD-57824', '@LPD-70012']},
 	async ({apiHelpers, usersAndOrganizationsPage}) => {
 		const parentOrganization =
 			await apiHelpers.headlessAdminUser.postOrganization({
@@ -61,6 +61,10 @@ test(
 				)
 			).toBeVisible();
 		}
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell('Approved')
+		).toBeVisible();
 
 		await usersAndOrganizationsPage.goToOrganizations();
 

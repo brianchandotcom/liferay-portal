@@ -14,6 +14,7 @@ export class SpaceSummaryPage {
 	readonly page: Page;
 
 	readonly closeButton: Locator;
+	readonly galleryPreview: Locator;
 	readonly userGroupsTab: Locator;
 	readonly usersTab: Locator;
 	readonly viewAllContentLink: Locator;
@@ -27,6 +28,8 @@ export class SpaceSummaryPage {
 		this.closeButton = this.page
 			.locator('.modal-header')
 			.getByLabel('Close', {exact: true});
+
+		this.galleryPreview = page.locator('.fds-gallery-view__preview');
 
 		this.userGroupsTab = page.getByRole('tab', {name: 'User Groups'});
 

@@ -23,7 +23,7 @@ export default function PublicationsPermissions({
 
 	const {observer, onOpenChange, open} = useModal({});
 
-	const saveRolePermissions = () => {
+	const saveRolePermissions = async () => {
 		const permissionsMap = new Map(
 			permissions.map(({actionIds, roleId}) => [roleId, actionIds])
 		);
@@ -44,6 +44,10 @@ export default function PublicationsPermissions({
 
 					return;
 				}
+
+				onOpenChange(false);
+
+				Liferay.Portlet.refresh(`#p_p_id${namespace}`);
 
 				showNotification(
 					Liferay.Language.get('your-request-completed-successfully'),
@@ -102,7 +106,6 @@ export default function PublicationsPermissions({
 								<ClayButton
 									aria-label={Liferay.Language.get('save')}
 									onClick={() => {
-										onOpenChange(false);
 										saveRolePermissions();
 									}}
 								>

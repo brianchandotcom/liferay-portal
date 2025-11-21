@@ -153,6 +153,9 @@ const renderCommonStylesManager = ({
 						},
 					},
 				},
+				permissions: {
+					UPDATE: true,
+				},
 				selectedViewportSize,
 			})}
 		>

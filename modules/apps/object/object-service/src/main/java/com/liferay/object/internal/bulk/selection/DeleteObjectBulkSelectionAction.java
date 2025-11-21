@@ -7,13 +7,14 @@ package com.liferay.object.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -50,8 +52,11 @@ public class DeleteObjectBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
+		long bulkActionTaskId = GetterUtil.getLong(
+			inputMap.get("bulkActionTaskId"));
+
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			GetterUtil.getLong(inputMap.get("bulkActionTaskId")));
+			bulkActionTaskId);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -68,6 +73,8 @@ public class DeleteObjectBulkSelectionAction
 				user.getUserId(), objectEntry, values);
 
 			values = objectEntry.getValues();
+
+			long companyId = objectEntry.getCompanyId();
 
 			bulkSelection.forEach(
 				object -> {
@@ -103,6 +110,26 @@ public class DeleteObjectBulkSelectionAction
 						}
 
 						numberOfSuccessfulItems.getAndIncrement();
+
+						_objectEntryLocalService.addObjectEntry(
+							0, user.getUserId(),
+							_getCMSBulkActionTaskItemObjectDefinitionId(
+								companyId),
+							ObjectEntryFolderConstants.
+								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+							null,
+							HashMapBuilder.<String, Serializable>put(
+								"bulkActionTaskId", bulkActionTaskId
+							).put(
+								"executionStatus", "completed"
+							).put(
+								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
+									"askId",
+								bulkActionTaskId
+							).put(
+								"type", "ObjectEntryFolder"
+							).build(),
+							new ServiceContext());
 					}
 					catch (Exception exception) {
 						if (_log.isWarnEnabled()) {
@@ -110,6 +137,26 @@ public class DeleteObjectBulkSelectionAction
 						}
 
 						numberOfFailedItems.getAndIncrement();
+
+						_objectEntryLocalService.addObjectEntry(
+							0, user.getUserId(),
+							_getCMSBulkActionTaskItemObjectDefinitionId(
+								companyId),
+							ObjectEntryFolderConstants.
+								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+							null,
+							HashMapBuilder.<String, Serializable>put(
+								"bulkActionTaskId", bulkActionTaskId
+							).put(
+								"executionStatus", "failed"
+							).put(
+								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
+									"askId",
+								bulkActionTaskId
+							).put(
+								"type", "ObjectEntryFolder"
+							).build(),
+							new ServiceContext());
 					}
 				});
 		}
@@ -146,6 +193,17 @@ public class DeleteObjectBulkSelectionAction
 			_objectEntryFolderLocalService.deleteObjectEntryFolder(
 				objectEntryFolder.getObjectEntryFolderId());
 		}
+	}
+
+	private long _getCMSBulkActionTaskItemObjectDefinitionId(long companyId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BULK_ACTION_TASK_ITEM", companyId);
+
+		return objectDefinition.getObjectDefinitionId();
 	}
 
 	private ObjectEntry _partialUpdateObjectEntry(

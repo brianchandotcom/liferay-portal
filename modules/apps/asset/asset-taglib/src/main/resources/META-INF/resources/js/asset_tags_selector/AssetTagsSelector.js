@@ -250,6 +250,7 @@ function AssetTagsSelector({
 									? `${inputName}_MultiSelectHelpText`
 									: undefined
 							}
+							clearAllTitle={Liferay.Language.get('clear-all')}
 							id={inputName + '_MultiSelect'}
 							inputName={inputName}
 							items={selectedItems}

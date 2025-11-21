@@ -214,12 +214,12 @@ public class DBUpgraderTest {
 			ReleaseConstants.STATE_GOOD);
 
 		try {
-			StartupHelperUtil.setUpgrading(true);
+			_startUpgrade();
 
 			DBUpgrader.upgradePortal();
 		}
 		finally {
-			StartupHelperUtil.setUpgrading(false);
+			_stopUpgrade();
 		}
 	}
 
@@ -231,9 +231,7 @@ public class DBUpgraderTest {
 				"com.liferay.portal.upgrade.internal.report.UpgradeReport",
 				LoggerTestUtil.INFO)) {
 
-			StartupHelperUtil.setUpgrading(true);
-
-			DBUpgrader.startUpgradeLogAppender();
+			_startUpgrade();
 
 			DBUpgrader.upgradeModules();
 
@@ -242,9 +240,7 @@ public class DBUpgraderTest {
 			Assert.assertTrue(messages.isEmpty());
 		}
 		finally {
-			StartupHelperUtil.setUpgrading(false);
-
-			DBUpgrader.stopUpgradeLogAppender();
+			_stopUpgrade();
 		}
 	}
 
@@ -260,9 +256,7 @@ public class DBUpgraderTest {
 			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
 				DBUpgrader.class.getName(), LoggerTestUtil.WARN)) {
 
-			StartupHelperUtil.setUpgrading(true);
-
-			DBUpgrader.startUpgradeLogAppender();
+			_startUpgrade();
 
 			DBUpgrader.upgradeModules();
 
@@ -280,9 +274,7 @@ public class DBUpgraderTest {
 							"will not be executed."));
 		}
 		finally {
-			StartupHelperUtil.setUpgrading(false);
-
-			DBUpgrader.stopUpgradeLogAppender();
+			_stopUpgrade();
 
 			if (bundle != null) {
 				_installBundle(bundle);
@@ -310,9 +302,7 @@ public class DBUpgraderTest {
 			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
 				DBUpgrader.class.getName(), LoggerTestUtil.WARN)) {
 
-			StartupHelperUtil.setUpgrading(true);
-
-			DBUpgrader.startUpgradeLogAppender();
+			_startUpgrade();
 
 			DBUpgrader.upgradeModules();
 
@@ -330,9 +320,7 @@ public class DBUpgraderTest {
 							"will not be executed."));
 		}
 		finally {
-			StartupHelperUtil.setUpgrading(false);
-
-			DBUpgrader.stopUpgradeLogAppender();
+			_stopUpgrade();
 
 			voidPromise = _serviceComponentRuntime.enableComponent(
 				componentDescriptionDTO);
@@ -356,9 +344,7 @@ public class DBUpgraderTest {
 		try {
 			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
-			StartupHelperUtil.setUpgrading(true);
-
-			DBUpgrader.upgradeModules();
+			_startUpgrade();
 
 			DBInspector dbInspector = new DBInspector(_connection);
 
@@ -384,7 +370,7 @@ public class DBUpgraderTest {
 			ReflectionTestUtil.setFieldValue(
 				StartupHelperUtil.class, "_newRelease", newRelease);
 
-			StartupHelperUtil.setUpgrading(false);
+			_stopUpgrade();
 		}
 	}
 
@@ -395,7 +381,7 @@ public class DBUpgraderTest {
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
 		try {
-			StartupHelperUtil.setUpgrading(true);
+			_startUpgrade();
 
 			DBUpgrader.upgradePortal();
 
@@ -404,7 +390,7 @@ public class DBUpgraderTest {
 		catch (IllegalStateException illegalStateException) {
 		}
 		finally {
-			StartupHelperUtil.setUpgrading(false);
+			_stopUpgrade();
 		}
 	}
 
@@ -415,12 +401,12 @@ public class DBUpgraderTest {
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
 		try {
-			StartupHelperUtil.setUpgrading(true);
+			_startUpgrade();
 
 			DBUpgrader.upgradePortal();
 		}
 		finally {
-			StartupHelperUtil.setUpgrading(false);
+			_stopUpgrade();
 		}
 	}
 
@@ -448,6 +434,18 @@ public class DBUpgraderTest {
 
 		BundleUtil.refreshBundles(
 			bundleContext, Collections.singletonList(bundle));
+	}
+
+	private void _startUpgrade() {
+		StartupHelperUtil.setUpgrading(true);
+
+		DBUpgrader.startUpgradeLogAppender();
+	}
+
+	private void _stopUpgrade() {
+		StartupHelperUtil.setUpgrading(false);
+
+		DBUpgrader.stopUpgradeLogAppender();
 	}
 
 	private Bundle _uninstallBundle() throws Exception {

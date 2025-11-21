@@ -24,16 +24,24 @@ const ACTIVE_INITIAL_STATE = {
 	rangeLimitIds: [],
 };
 
+const HIGHLIGHT_INITIAL_STATE = {
+	highlightedItems: [],
+};
+
 const HOVER_INITIAL_STATE = {
 	hoveredItemId: null,
 };
 
+const HIGHLIGHT_ITEMS = 'HIGHLIGHT_ITEM';
 const HOVER_ITEM = 'HOVER_ITEM';
 const MULTI_SELECT = 'MULTI_SELECT';
 const SELECT_ITEM = 'SELECT_ITEM';
 
 const ActiveStateContext = React.createContext(ACTIVE_INITIAL_STATE);
 const ActiveDispatchContext = React.createContext(() => {});
+
+const HighlightDispatchContext = React.createContext(() => {});
+const HighlightStateContext = React.createContext(HIGHLIGHT_INITIAL_STATE);
 
 const HoverStateContext = React.createContext(HOVER_INITIAL_STATE);
 const HoverDispatchContext = React.createContext(() => {});
@@ -123,6 +131,7 @@ const reducer = (state, action) => {
 	const {
 		activeItemIds,
 		itemId,
+		itemIds,
 		itemType,
 		layoutData,
 		multiSelect,
@@ -133,7 +142,10 @@ const reducer = (state, action) => {
 
 	let nextState = state;
 
-	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
+	if (type === HIGHLIGHT_ITEMS) {
+		nextState = {highlightedItems: itemIds};
+	}
+	else if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
 		nextState = {
 			...nextState,
 			activationOrigin: origin,
@@ -265,6 +277,18 @@ const ActiveProvider = ({children, initialState}) => {
 	);
 };
 
+const HighlightProvider = ({children, initialState}) => {
+	const [state, dispatch] = useReducer(reducer, initialState);
+
+	return (
+		<HighlightDispatchContext.Provider value={dispatch}>
+			<HighlightStateContext.Provider value={state}>
+				{children}
+			</HighlightStateContext.Provider>
+		</HighlightDispatchContext.Provider>
+	);
+};
+
 const HoverProvider = ({children, initialState}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -298,13 +322,16 @@ const MultiSelectProvider = ({children}) => {
 
 const ControlsProvider = ({
 	activeInitialState = ACTIVE_INITIAL_STATE,
+	highlightInitialState = HIGHLIGHT_INITIAL_STATE,
 	hoverInitialState = HOVER_INITIAL_STATE,
 	children,
 }) => {
 	return (
 		<ActiveProvider initialState={activeInitialState}>
 			<HoverProvider initialState={hoverInitialState}>
-				<MultiSelectProvider>{children}</MultiSelectProvider>
+				<HighlightProvider initialState={highlightInitialState}>
+					<MultiSelectProvider>{children}</MultiSelectProvider>
+				</HighlightProvider>
 			</HoverProvider>
 		</ActiveProvider>
 	);
@@ -316,6 +343,22 @@ const useActivationOrigin = () =>
 const useActiveItemIds = () => useContext(ActiveStateContext).activeItemIds;
 
 const useActiveItemType = () => useContext(ActiveStateContext).activeItemType;
+
+const useHighlightedItemIds = () =>
+	useContext(HighlightStateContext).highlightedItems;
+
+const useHighlightItems = () => {
+	const dispatch = useContext(HighlightDispatchContext);
+
+	return useCallback(
+		(itemIds) =>
+			dispatch({
+				itemIds,
+				type: HIGHLIGHT_ITEMS,
+			}),
+		[dispatch]
+	);
+};
 
 const useHoveredItemId = () => useContext(HoverStateContext).hoveredItemId;
 
@@ -425,6 +468,8 @@ export {
 	useActivationOrigin,
 	useActiveItemIds,
 	useActiveItemType,
+	useHighlightedItemIds,
+	useHighlightItems,
 	useHoveredItemId,
 	useHoveredItemType,
 	useHoveringOrigin,

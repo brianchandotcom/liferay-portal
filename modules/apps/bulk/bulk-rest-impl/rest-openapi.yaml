@@ -1,20 +1,5 @@
 components:
     schemas:
-        AssetPermissionAction:
-            discriminator:
-                mapping:
-                    ResetAssetPermissionAction: "#/components/schemas/ResetAssetPermissionAction"
-                propertyName: type
-            properties:
-                className:
-                    type: string
-                classPK:
-                    format: int64
-                    type: integer
-                type:
-                    enum:
-                        -   ResetAssetPermissionAction
-                    type: string
         AssetUsage:
             properties:
                 name:
@@ -31,6 +16,7 @@ components:
                     KeywordBulkAction: "#/components/schemas/KeywordBulkAction"
                     MoveBulkAction: "#/components/schemas/MoveBulkAction"
                     PermissionBulkAction: "#/components/schemas/PermissionBulkAction"
+                    ResetPermissionBulkAction: "#/components/schemas/ResetPermissionBulkAction"
                     StatusBulkAction: "#/components/schemas/StatusBulkAction"
                     TaxonomyCategoryBulkAction: "#/components/schemas/TaxonomyCategoryBulkAction"
                 propertyName: type
@@ -48,6 +34,7 @@ components:
                         -   KeywordBulkAction
                         -   MoveBulkAction
                         -   PermissionBulkAction
+                        -   ResetPermissionBulkAction
                         -   StatusBulkAction
                         -   TaxonomyCategoryBulkAction
                     type: string
@@ -168,9 +155,9 @@ components:
                             items:
                                 type: permission
                             type: array
-        ResetAssetPermissionAction:
+        ResetPermissionBulkAction:
             allOf:
-                -   $ref: "#/components/schemas/AssetPermissionAction"
+                -   $ref: "#/components/schemas/BulkAction"
         Selection:
             properties:
                 size:

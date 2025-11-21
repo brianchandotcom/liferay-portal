@@ -235,6 +235,9 @@ const Sharing = ({
 							</label>
 
 							<ClayMultiSelect
+								clearAllTitle={Liferay.Language.get(
+									'clear-all'
+								)}
 								inputName={`${portletNamespace}userEmailAddress`}
 								items={selectedItems}
 								loadingState={networkStatus}

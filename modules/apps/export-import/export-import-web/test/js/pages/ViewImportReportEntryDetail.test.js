@@ -9,10 +9,10 @@ import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 import {openModal} from 'frontend-js-components-web';
 
-import {ViewImportErrorDetail} from '../../../src/main/resources/META-INF/resources/js/pages/ViewImportErrorDetail';
+import {ViewImportReportEntryDetail} from '../../../src/main/resources/META-INF/resources/revamp/js/pages/import/import_report/pages/ViewImportReportEntryDetail';
 
 const renderComponent = (props) => {
-	return <ViewImportErrorDetail {...props} />;
+	return <ViewImportReportEntryDetail {...props} />;
 };
 
 const mockData = (data) => {
@@ -29,7 +29,7 @@ jest.mock('frontend-js-components-web', () => ({
 	openModal: jest.fn(),
 }));
 
-describe('ViewImportErrorDetail', () => {
+describe('ViewImportReportEntryDetail', () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
 		jest.clearAllMocks();

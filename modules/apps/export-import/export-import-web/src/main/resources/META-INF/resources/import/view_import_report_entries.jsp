@@ -40,9 +40,9 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 <aui:form method="post" name="fm">
 	<frontend-data-set:headless-display
-		apiURL="<%= importErrorsDisplayContext.getAPIURL(String.valueOf(backgroundTaskId)) %>"
-		fdsActionDropdownItems="<%= importErrorsDisplayContext.getFDSActionDropdownItems() %>"
-		id="<%= stagingGroupHelper.isCompanyGroup(groupDisplayContextHelper.getGroup()) ? ExportImportFDSNames.COMPANY_IMPORT_ERRORS : ExportImportFDSNames.IMPORT_ERRORS %>"
+		apiURL="<%= importReportEntriesDisplayContext.getAPIURL(String.valueOf(backgroundTaskId)) %>"
+		fdsActionDropdownItems="<%= importReportEntriesDisplayContext.getFDSActionDropdownItems() %>"
+		id="<%= stagingGroupHelper.isCompanyGroup(groupDisplayContextHelper.getGroup()) ? ExportImportFDSNames.COMPANY_IMPORT_REPORT_ENTRIES : ExportImportFDSNames.IMPORT_REPORT_ENTRIES %>"
 		style="fluid"
 	/>
 </aui:form>

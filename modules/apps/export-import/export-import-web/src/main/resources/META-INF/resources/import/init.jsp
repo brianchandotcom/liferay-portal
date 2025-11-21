@@ -8,5 +8,5 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request, renderResponse);
+ImportReportEntriesDisplayContext importReportEntriesDisplayContext = new ImportReportEntriesDisplayContext(request, renderResponse);
 %>

@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "AnalyticsCloudWorkspace"
+		"en_US": "Account Entry to Analytics Cloud Workspace"
 	},
 	"name": "accountEntryToAnalyticsCloudWorkspace",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

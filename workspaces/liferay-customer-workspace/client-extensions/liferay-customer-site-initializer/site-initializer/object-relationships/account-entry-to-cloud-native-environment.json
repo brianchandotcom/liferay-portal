@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Account Entry to Cloud Native Environment"
+	},
+	"name": "accountEntryToCloudNativeEnvironment",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CloudNativeEnvironment$]",
+	"objectDefinitionName2": "CloudNativeEnvironment",
+	"type": "oneToMany"
+}

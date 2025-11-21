@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Incident Report Contact Analytics Cloud"
+		"en_US": "Account Entry to Incident Report Contact Analytics Cloud"
 	},
 	"name": "accountEntryToIncidentReportContactAC",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

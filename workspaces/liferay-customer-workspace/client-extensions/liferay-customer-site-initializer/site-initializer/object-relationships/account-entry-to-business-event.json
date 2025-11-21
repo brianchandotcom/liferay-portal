@@ -1,9 +1,9 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Account Entry to Business Events"
+		"en_US": "Account Entry to Business Event"
 	},
-	"name": "accountEntryToBusinessEvents",
+	"name": "accountEntryToBusinessEvent",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:BusinessEvent$]",
 	"objectDefinitionName2": "BusinessEvent",

@@ -1,21 +1,21 @@
 {
-	"externalReferenceCode": "C_HIGH_PRIORITY_CONTACTS",
+	"externalReferenceCode": "C_HIGH_PRIORITY_CONTACT",
 	"label": {
-		"en_US": "High Priority Contacts"
+		"en_US": "High Priority Contact"
 	},
-	"name": "HighPriorityContacts",
+	"name": "HighPriorityContact",
 	"objectFields": [
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"externalReferenceCode": "C_HIGH_PRIORITY_CONTACTS_contactsCategory",
+			"externalReferenceCode": "C_HIGH_PRIORITY_CONTACT_contactCategory",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Contacts Category"
+				"en_US": "Contact Category"
 			},
-			"listTypeDefinitionExternalReferenceCode": "HIGH_PRIORITY_CONTACTS_CATEGORY",
-			"name": "contactsCategory",
+			"listTypeDefinitionExternalReferenceCode": "HIGH_PRIORITY_CONTACT_CATEGORY",
+			"name": "contactCategory",
 			"required": true,
 			"type": "String"
 		}

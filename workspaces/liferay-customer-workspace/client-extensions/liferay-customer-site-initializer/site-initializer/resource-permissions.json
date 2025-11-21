@@ -225,7 +225,7 @@
 			"UPDATE",
 			"VIEW"
 		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:HighPriorityContacts$]",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:HighPriorityContact$]",
 		"roleName": "Provisioning Member",
 		"scope": "1"
 	},
@@ -1132,7 +1132,7 @@
 			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:HighPriorityContacts$]",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:HighPriorityContact$]",
 		"roleName": "Provisioning Member",
 		"scope": "1"
 	},

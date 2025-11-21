@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Ticket Attachment"
+		"en_US": "Account Entry to Ticket Attachment"
 	},
 	"name": "accountEntryToTicketAttachment",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

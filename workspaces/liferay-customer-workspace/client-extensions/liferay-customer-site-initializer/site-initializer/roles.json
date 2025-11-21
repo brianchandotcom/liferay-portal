@@ -1,69 +1,86 @@
 [
 	{
+		"externalReferenceCode": "ROLE_ARTICLE_ADMIN",
 		"name": "Article Admin",
 		"type": 2
 	},
 	{
+		"externalReferenceCode": "ROLE_CRITICAL_INCIDENT_CONTACT",
 		"name": "Critical Incident Contact",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_CUSTOMER",
 		"name": "Customer",
 		"type": 1
 	},
 	{
+		"externalReferenceCode": "ROLE_DATA_BREACH_CONTACT",
 		"name": "Data Breach Contact",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_DOCUMENTATION_ADMIN",
 		"name": "Documentation Admin",
 		"type": 2
 	},
 	{
+		"externalReferenceCode": "ROLE_LIFERAY_STAFF",
 		"name": "Liferay Staff",
 		"type": 1
 	},
 	{
+		"externalReferenceCode": "ROLE_PARTNER",
 		"name": "Partner",
 		"type": 1
 	},
 	{
+		"externalReferenceCode": "ROLE_PARTNER_MANAGER",
 		"name": "Partner Manager",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_PARTNER_MARKETING_USER",
 		"name": "Partner Marketing User",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_PARTNER_MEMBER",
 		"name": "Partner Member",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_PARTNER_SALES_USER",
 		"name": "Partner Sales User",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_PARTNER_TECHNICAL_USER",
 		"name": "Partner Technical User",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_PROVISIONING",
 		"name": "Provisioning",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_PROVISIONING_ADMIN",
 		"name": "Provisioning Admin",
 		"type": 1
 	},
 	{
+		"externalReferenceCode": "ROLE_PROVISIONING_MEMBER",
 		"name": "Provisioning Member",
 		"type": 1
 	},
 	{
+		"externalReferenceCode": "ROLE_REQUESTER",
 		"name": "Requester",
 		"type": 6
 	},
 	{
+		"externalReferenceCode": "ROLE_SECURITY_INCIDENT_CONTACT",
 		"name": "Security Incident Contact",
 		"type": 6
 	}

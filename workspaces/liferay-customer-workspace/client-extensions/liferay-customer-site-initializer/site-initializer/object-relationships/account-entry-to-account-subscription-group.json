@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Account Subscription Group"
+		"en_US": "Account Entry to Account Subscription Group"
 	},
 	"name": "accountEntryToAccountSubscriptionGroup",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

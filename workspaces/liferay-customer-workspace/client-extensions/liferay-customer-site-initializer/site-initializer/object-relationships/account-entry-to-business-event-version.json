@@ -1,9 +1,9 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Account Entry to Business Event Versions"
+		"en_US": "Account Entry to Business Event Version"
 	},
-	"name": "accountEntryToBusinessEventVersions",
+	"name": "accountEntryToBusinessEventVersion",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:BusinessEventVersion$]",
 	"objectDefinitionName2": "BusinessEventVersion",

@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Liferay Experience Cloud Environment"
+		"en_US": "Account Entry to Liferay Experience Cloud Environment"
 	},
 	"name": "liferayExperienceCloudEnvironment",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

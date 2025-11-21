@@ -9,7 +9,7 @@
 	"objectFields": [
 		{
 			"DBType": "String",
-			"externalReferenceCode": "C_CN_ENVIRONMENT-accountKey",
+			"externalReferenceCode": "C_CN_ENVIRONMENT_accountKey",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -20,7 +20,7 @@
 		},
 		{
 			"DBType": "Integer",
-			"externalReferenceCode": "C_CN_ENVIRONMENT-maxClusterNodes",
+			"externalReferenceCode": "C_CN_ENVIRONMENT_maxClusterNodes",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -31,7 +31,7 @@
 		},
 		{
 			"DBType": "String",
-			"externalReferenceCode": "C_CN_ENVIRONMENT-nonProductionSubscriptionUuid",
+			"externalReferenceCode": "C_CN_ENVIRONMENT_nonProductionSubscriptionUuid",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -42,7 +42,7 @@
 		},
 		{
 			"DBType": "String",
-			"externalReferenceCode": "C_CN_ENVIRONMENT-productionSubscriptionUuid",
+			"externalReferenceCode": "C_CN_ENVIRONMENT_productionSubscriptionUuid",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

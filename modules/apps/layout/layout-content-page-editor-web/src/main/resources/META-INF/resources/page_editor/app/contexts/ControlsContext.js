@@ -403,6 +403,10 @@ const useIsHovered = () => {
 
 const useSelectItem = () => {
 	const activeDispatch = useContext(ActiveDispatchContext);
+	const highlightDispatch = useContext(HighlightDispatchContext);
+	const highlightedItemIds = useContext(
+		HighlightStateContext
+	).highlightedItems;
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 	const multiSelectTypeRef = useContext(MultiSelectStateRefContext);
 
@@ -426,8 +430,21 @@ const useSelectItem = () => {
 				parentId,
 				type: SELECT_ITEM,
 			});
+
+			if (highlightedItemIds.length) {
+				highlightDispatch({
+					itemIds: [],
+					type: HIGHLIGHT_ITEMS,
+				});
+			}
 		},
-		[activeDispatch, layoutDataRef, multiSelectTypeRef]
+		[
+			activeDispatch,
+			highlightDispatch,
+			highlightedItemIds,
+			layoutDataRef,
+			multiSelectTypeRef,
+		]
 	);
 };
 

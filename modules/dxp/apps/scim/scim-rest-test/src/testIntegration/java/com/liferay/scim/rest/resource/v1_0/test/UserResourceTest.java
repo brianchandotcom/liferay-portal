@@ -307,10 +307,8 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		patchUser = _testPatchV2UserChangeScreenName(
 			"emails[type eq \"work\" and primary eq \"true\"].value", email);
 
-		String patchUserEmail = String.valueOf(patchUser.getEmails()[0]);
-
 		JSONObject patchUserEmailJSONObject = _jsonFactory.createJSONObject(
-			patchUserEmail);
+			String.valueOf(patchUser.getEmails()[0]));
 
 		Assert.assertNotEquals(
 			email, patchUserEmailJSONObject.getString("value"));

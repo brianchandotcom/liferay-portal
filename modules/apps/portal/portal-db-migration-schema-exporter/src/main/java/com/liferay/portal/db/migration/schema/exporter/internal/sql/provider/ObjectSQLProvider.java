@@ -13,6 +13,7 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableFactory;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
+import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTableFactory;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
@@ -99,9 +100,8 @@ public class ObjectSQLProvider implements SQLProvider {
 
 			DynamicObjectRelationshipMappingTable
 				dynamicObjectRelationshipMappingTable =
-					ObjectRelationshipLocalServiceUtil.
-						getDynamicObjectRelationshipMappingTable(
-							objectRelationship);
+					DynamicObjectRelationshipMappingTableFactory.create(
+						objectRelationship);
 
 			_appendTableSQL(
 				dbInspector,

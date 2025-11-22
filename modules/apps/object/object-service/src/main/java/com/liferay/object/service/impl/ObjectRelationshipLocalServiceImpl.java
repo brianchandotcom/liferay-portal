@@ -14,7 +14,6 @@ import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.DuplicateObjectRelationshipExternalReferenceCodeException;
-import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
@@ -37,6 +36,7 @@ import com.liferay.object.model.ObjectRelationshipTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
+import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTableFactory;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -194,8 +194,10 @@ public class ObjectRelationshipLocalServiceImpl
 
 			DynamicObjectRelationshipMappingTable
 				dynamicObjectRelationshipMappingTable =
-					getDynamicObjectRelationshipMappingTable(
-						objectRelationship, objectRelationship.isReverse());
+					DynamicObjectRelationshipMappingTableFactory.create(
+						objectDefinition1, objectDefinition2,
+						objectRelationship.getDBTableName(),
+						objectRelationship.isReverse());
 
 			if (_hasManyToManyObjectRelationshipMappingTableValues(
 					dynamicObjectRelationshipMappingTable, primaryKey1,
@@ -309,7 +311,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =
-				getDynamicObjectRelationshipMappingTable(objectRelationship);
+				DynamicObjectRelationshipMappingTableFactory.create(
+					objectDefinition1, objectDefinition2,
+					objectRelationship.getDBTableName());
 
 		runSQL(dynamicObjectRelationshipMappingTable.getCreateTableSQL());
 
@@ -717,41 +721,6 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		return objectRelationships;
-	}
-
-	public DynamicObjectRelationshipMappingTable
-			getDynamicObjectRelationshipMappingTable(
-				ObjectRelationship objectRelationship)
-		throws NoSuchObjectDefinitionException {
-
-		return getDynamicObjectRelationshipMappingTable(
-			objectRelationship, false);
-	}
-
-	public DynamicObjectRelationshipMappingTable
-			getDynamicObjectRelationshipMappingTable(
-				ObjectRelationship objectRelationship, boolean reverse)
-		throws NoSuchObjectDefinitionException {
-
-		ObjectDefinition objectDefinition1 =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectRelationship.getObjectDefinitionId1());
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectRelationship.getObjectDefinitionId2());
-
-		Map<String, String> pkObjectFieldDBColumnNames =
-			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
-				objectDefinition1, objectDefinition2, reverse);
-
-		String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
-			"pkObjectFieldDBColumnName1");
-		String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
-			"pkObjectFieldDBColumnName2");
-
-		return new DynamicObjectRelationshipMappingTable(
-			pkObjectFieldDBColumnName1, pkObjectFieldDBColumnName2,
-			objectRelationship.getDBTableName());
 	}
 
 	@Override

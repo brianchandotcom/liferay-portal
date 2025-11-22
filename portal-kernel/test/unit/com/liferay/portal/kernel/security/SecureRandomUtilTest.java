@@ -92,6 +92,8 @@ public class SecureRandomUtilTest {
 
 	@Test
 	public void testHighConcurrency() throws Exception {
+		AtomicInteger duplicateCounter = new AtomicInteger();
+		List<Future<Void>> list = new ArrayList<>();
 		Set<String> values = ConcurrentHashMap.newKeySet();
 
 		Runtime runtime = Runtime.getRuntime();
@@ -100,10 +102,6 @@ public class SecureRandomUtilTest {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			processors);
-
-		List<Future<Void>> list = new ArrayList<>();
-
-		AtomicInteger duplicateCounter = new AtomicInteger();
 
 		for (int i = 0; i < (processors * 10000); i++) {
 			list.add(

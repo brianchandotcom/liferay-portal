@@ -1348,6 +1348,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryId = ParamUtil.getLong(
 			uploadPortletRequest, "fileEntryId");
 
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
 		long repositoryId = ParamUtil.getLong(
 			uploadPortletRequest, "repositoryId");
 
@@ -1446,9 +1448,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			Date reviewDate = _getReviewDate(
 				uploadPortletRequest, addDynamic, user.getTimeZone());
-
-			String externalReferenceCode = ParamUtil.getString(
-				actionRequest, "externalReferenceCode");
 
 			FileEntry fileEntry = null;
 

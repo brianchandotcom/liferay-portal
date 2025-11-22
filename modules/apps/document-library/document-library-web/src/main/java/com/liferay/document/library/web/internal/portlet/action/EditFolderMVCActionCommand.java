@@ -222,7 +222,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			String externalReferenceCode = ParamUtil.getString(
 				actionRequest, "externalReferenceCode");
-
 			long repositoryId = ParamUtil.getLong(
 				actionRequest, "repositoryId");
 			long parentFolderId = ParamUtil.getLong(

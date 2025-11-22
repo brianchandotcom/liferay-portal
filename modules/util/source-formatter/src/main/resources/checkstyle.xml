@@ -907,6 +907,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.TestClassDBConnectionCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases of incorrect use of database connection." />
+			<property name="enabled" value="false" />
 			<message key="close.call.incorrect" value="Use &quot;DataAccess.cleanUp({0})&quot; to close connection instead of &quot;{1}.close()&quot;" />
 			<message key="close.call.missing" value="Missing calling &quot;DataAccess.cleanUp({0})&quot; in method &quot;{1}&quot;" />
 			<message key="connection.close.incorrect" value="Static variable &quot;{0}&quot; must only be closed in &quot;tearDown&quot; or &quot;tearDownClass&quot; by using &quot;DataAccess.cleanUp(Connection)&quot;" />

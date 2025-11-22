@@ -753,14 +753,15 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			Map<String, String> values)
 		throws Exception {
 
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			htmlFile, configurationFile, values);
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			htmlFile, configurationFile, values);
+
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
+
 		fragmentEntryLink.setEditableValues(
 			_readJSONFileToString(editableValuesFile, editableValuesMap));
 

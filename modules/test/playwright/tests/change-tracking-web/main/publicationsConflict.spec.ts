@@ -10,7 +10,6 @@ import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest
 import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -197,16 +196,7 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await journalEditArticlePage.editArticle(title);
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {
-			exact: true,
-			name: 'Publish',
-		}),
-		trigger: page.getByRole('button', {
-			name: 'Select and Confirm Publish Settings',
-		}),
-	});
+	await journalEditArticlePage.publishArticle(true);
 
 	await waitForAlert(page, `Success:${title} was updated successfully.`);
 
@@ -294,16 +284,7 @@ test('Resolve deletion modification conflict publications by restoring from recy
 
 	await journalEditArticlePage.editArticle(title);
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {
-			exact: true,
-			name: 'Publish',
-		}),
-		trigger: page.getByRole('button', {
-			name: 'Select and Confirm Publish Settings',
-		}),
-	});
+	await journalEditArticlePage.publishArticle(true);
 
 	await waitForAlert(page, `Success:${title} was updated successfully.`);
 

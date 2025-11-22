@@ -136,6 +136,10 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 		boolean closedInTearDownClass = false;
 
 		for (DetailAST detailAST : detailASTs) {
+			if (detailAST.getPreviousSibling() != null) {
+				continue;
+			}
+
 			DetailAST parentDetailAST = getParentWithTokenType(
 				detailAST, TokenTypes.METHOD_DEF);
 

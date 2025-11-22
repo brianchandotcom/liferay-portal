@@ -724,15 +724,12 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		String html, FileEntry fileEntry) {
 
 		Assert.assertTrue(
-			"Missing externalReferenceCode. Value: " + html,
 			html.contains(
 				"\"externalReferenceCode\": \"" +
 					fileEntry.getExternalReferenceCode()));
 		Assert.assertTrue(
-			"Missing fileEntryId. Value: " + html,
 			html.contains("\"fileEntryId\": " + fileEntry.getFileEntryId()));
 		Assert.assertTrue(
-			"Missing title. Value: " + html,
 			html.contains("\"title\": \"" + fileEntry.getFileName()));
 	}
 
@@ -740,16 +737,13 @@ public class FreeMarkerFragmentEntryProcessorTest {
 		String html, JournalArticle journalArticle) {
 
 		Assert.assertTrue(
-			"Missing externalReferenceCode. Value: " + html,
 			html.contains(
 				"\"externalReferenceCode\": \"" +
 					journalArticle.getExternalReferenceCode()));
 		Assert.assertTrue(
-			"Missing resourcePrimKey. Value: " + html,
 			html.contains(
 				"\"resourcePrimKey\": " + journalArticle.getResourcePrimKey()));
 		Assert.assertTrue(
-			"Missing title. Value: " + html,
 			html.contains("\"urlTitle\": \"" + journalArticle.getUrlTitle()));
 	}
 

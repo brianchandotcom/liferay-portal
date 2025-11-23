@@ -29,7 +29,7 @@ public class ChatAssistantHandler implements AssistantHandler {
 			).chatMemoryStore(
 				_inMemoryChatMemoryStore
 			).maxMessages(
-				10
+				30
 			).id(
 				id
 			).build()

@@ -292,6 +292,7 @@ SubstringCheck | [Performance](performance_checks.md#performance-checks) | Finds
 SystemEventCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds missing or redundant usage of @SystemEvent for delete events. |
 TernaryOperatorCheck | [Styling](styling_checks.md#styling-checks) | Finds use of ternary operator in `java` files (use if statement instead). |
 TestClassCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | Checks that names of test classes follow naming conventions. |
+TestClassDBConnectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases of incorrect use of database connection. |
 TestClassMissingLiferayUnitTestRuleCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds missing LiferayUnitTestRule. |
 TextBlockCheck | [Styling](styling_checks.md#styling-checks) | Finds usage of text block. |
 [ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.md#threadcontextclassloadercheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks usage of `Thread.setContextClassLoader`. |

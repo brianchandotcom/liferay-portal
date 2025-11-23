@@ -150,12 +150,14 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			"chatMessageHandler",
 			StringBundler.concat(
 				"You are a highly helpful and context-aware chat assistant. ",
-				"The context you are aware is the content: ",
-				"\\\"{{content}}\\\" and the title: \\\"{{title}}\\\" they ",
-				"can be present or not. Maintain a friendly and professional ",
-				"conversational tone, and use the chat history to maintain ",
-				"flow."),
-			"{{userMessage}}");
+				"The context you are aware is the content and the title, they ",
+				"can be present or not and they will be passed during the ",
+				"conversation because they are dynamically updated. Maintain ",
+				"a friendly and professional conversational tone, and use the ",
+				"chat history to maintain flow."),
+			"This is the content: \\\"{{content}}\\\" and title: " +
+				"\\\"{{title}}\\\", respond this message: " +
+					"\\\"{{userMessage}}\\\"");
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.

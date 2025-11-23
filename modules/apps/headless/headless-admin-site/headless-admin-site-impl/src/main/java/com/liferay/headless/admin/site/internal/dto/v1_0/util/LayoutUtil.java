@@ -19,36 +19,37 @@ import com.liferay.portal.vulcan.scope.Scope;
  */
 public class LayoutUtil {
 
-	public static JSONObject getMappedLayoutJSONObject(
-			long companyId, String externalReferenceCode, Scope scope,
-			long scopeGroupId)
-		throws PortalException {
+	public static Layout fetchLayoutByExternalReferenceCode(
+		long companyId, String externalReferenceCode, Scope scope,
+		long scopeGroupId) {
+
+		Layout layout = null;
 
 		Long groupId = ItemScopeUtil.getGroupId(companyId, scope, scopeGroupId);
 
-		if (groupId == null) {
-			LogUtil.logOptionalReference(
-				Layout.class.getName(), externalReferenceCode, scope,
-				scopeGroupId);
-
-			return JSONUtil.put(
-				"externalReferenceCode", externalReferenceCode
-			).put(
-				"scopeExternalReferenceCode",
-				ItemScopeUtil.getItemScopeExternalReferenceCode(
-					scope, scopeGroupId)
-			);
-		}
-
-		Layout layout =
-			LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+		if (groupId != null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
 				externalReferenceCode, groupId);
+		}
 
 		if (layout == null) {
 			LogUtil.logOptionalReference(
 				Layout.class.getName(), externalReferenceCode, scope,
 				scopeGroupId);
+		}
 
+		return layout;
+	}
+
+	public static JSONObject getMappedLayoutJSONObject(
+			long companyId, String externalReferenceCode, Scope scope,
+			long scopeGroupId)
+		throws PortalException {
+
+		Layout layout = fetchLayoutByExternalReferenceCode(
+			companyId, externalReferenceCode, scope, scopeGroupId);
+
+		if (layout == null) {
 			return JSONUtil.put(
 				"externalReferenceCode", externalReferenceCode
 			).put(

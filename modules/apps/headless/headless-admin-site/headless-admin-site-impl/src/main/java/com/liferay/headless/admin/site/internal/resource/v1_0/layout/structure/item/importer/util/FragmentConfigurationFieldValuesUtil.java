@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -324,7 +325,8 @@ public class FragmentConfigurationFieldValuesUtil {
 				).put(
 					"categoryTreeNodeType", "Vocabulary"
 				).put(
-					"title", assetVocabulary.getName()
+					"title", assetVocabulary.getTitle(
+						LocaleUtil.getMostRelevantLocale())
 				);
 			}
 

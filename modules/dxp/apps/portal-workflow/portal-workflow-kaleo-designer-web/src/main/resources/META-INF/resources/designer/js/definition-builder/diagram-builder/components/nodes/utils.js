@@ -40,15 +40,15 @@ const defaultNodes = [
 ];
 
 const nodeDescription = {
-	'ai-decision': Liferay.Language.get(
-		'make-a-decision-using-artificial-intelligence'
-	),
+	'ai-decision': Liferay.Language.get('make-a-decision-using-llm-models'),
 	'condition': Liferay.Language.get('execute-conditional-logic'),
 	'end': Liferay.Language.get('conclude-the-workflow'),
 	'fork': Liferay.Language.get('split-the-workflow-into-multiple-paths'),
 	'join': Liferay.Language.get('all-interactions-need-to-be-closed'),
 	'join-xor': Liferay.Language.get('only-one-interaction-needs-to-be-closed'),
-	'llm': Liferay.Language.get('acts-as-a-smart-processing-step'),
+	'llm': Liferay.Language.get(
+		'generate-content-summarize-and-classify-data-using-llm-models'
+	),
 	'start': Liferay.Language.get('begin-a-workflow'),
 	'state': Liferay.Language.get('execute-actions-in-the-workflow'),
 	'task': Liferay.Language.get('ask-a-user-to-work-on-the-item'),

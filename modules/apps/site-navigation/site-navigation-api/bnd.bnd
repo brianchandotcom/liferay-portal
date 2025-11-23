@@ -9,4 +9,5 @@ Export-Package:\
 	com.liferay.site.navigation.service.persistence,\
 	com.liferay.site.navigation.theme,\
 	com.liferay.site.navigation.type,\
+	com.liferay.site.navigation.type.util,\
 	com.liferay.site.navigation.util.comparator

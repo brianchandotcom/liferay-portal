@@ -40,11 +40,11 @@ public class ExportImportReportEntryModelDocumentContributor
 			Field.MODIFIED_DATE, exportImportReportEntry.getModifiedDate());
 		document.addText(
 			"errorMessage", exportImportReportEntry.getErrorMessage());
+		document.addText(
+			"errorStacktrace", exportImportReportEntry.getErrorStacktrace());
 		document.addNumber(
 			"exportImportConfigurationId_long",
 			exportImportReportEntry.getExportImportConfigurationId());
-		document.addText(
-			"errorStacktrace", exportImportReportEntry.getErrorStacktrace());
 		document.addLocalizedText(
 			"modelName", _getModelNameMap(exportImportReportEntry), true);
 		document.addNumber(

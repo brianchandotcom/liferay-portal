@@ -65,7 +65,11 @@ test('Can see error report and details', async ({
 		}
 	);
 
-	await companyExportImportPage.import(exportFilePath, true);
+	await companyExportImportPage.import({
+		filePath: exportFilePath,
+		includePermissions: true,
+		taskStatus: 'completedWithErrors',
+	});
 
 	const exportName = exportFilePath.slice(
 		exportFilePath.lastIndexOf('/') + 1

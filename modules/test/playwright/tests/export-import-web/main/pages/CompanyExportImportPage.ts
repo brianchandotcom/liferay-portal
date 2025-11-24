@@ -121,12 +121,19 @@ export class CompanyExportImportPage {
 		await this.exportImportPage.continueButton.click();
 	}
 
-	async import(
-		filePath: string,
-		includePermissions: boolean = false,
-		expectedUploadErrorMessage?: string,
-		useCurrentUser: boolean = false
-	): Promise<void> {
+	async import({
+		expectedUploadErrorMessage,
+		filePath,
+		includePermissions = false,
+		taskStatus = 'success',
+		useCurrentUser = false,
+	}: {
+		expectedUploadErrorMessage?: string;
+		filePath: string;
+		includePermissions?: boolean;
+		taskStatus?: 'success' | 'completedWithErrors';
+		useCurrentUser?: boolean;
+	}): Promise<void> {
 		await this.applicationsMenuPage.goToImport();
 
 		await this.exportImportPage.newImportButton.click();
@@ -156,6 +163,14 @@ export class CompanyExportImportPage {
 		await this.exportImportPage.importButton.click();
 
 		const fileName = path.basename(filePath);
-		await this.exportImportPage.taskSuccessLabel(fileName).waitFor();
+
+		if (taskStatus === 'completedWithErrors') {
+			await this.exportImportPage
+				.taskCompleteWithErrorsLabel(fileName)
+				.waitFor();
+		}
+		else {
+			await this.exportImportPage.taskSuccessLabel(fileName).waitFor();
+		}
 	}
 }

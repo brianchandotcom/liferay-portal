@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useMemo} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useSearchParams} from 'react-router-dom';
 
 import BackLink from '../../../../components/BackLink';
 import {PageRenderer} from '../../../../components/Page';
@@ -81,6 +81,9 @@ export default function TrialDetails() {
 	const product = data?.product as DeliveryProduct;
 	const placedOrder = data?.placedOrder as PlacedOrder;
 
+	const [params] = useSearchParams();
+	const parentPath = params.get('from') ?? '/';
+
 	const marketplaceProduct = useMemo(
 		() => new MarketplaceDeliveryProduct(product || {}),
 		[product]
@@ -104,7 +107,9 @@ export default function TrialDetails() {
 			error={error}
 			isLoading={isLoading || !placedOrder || !marketplaceProduct}
 		>
-			<BackLink>{i18n.translate('back-to-the-list')}</BackLink>
+			<BackLink path={parentPath}>
+				{i18n.translate('back-to-the-list')}
+			</BackLink>
 
 			<div className="d-flex justify-content-between">
 				<OrderDetailsHeader

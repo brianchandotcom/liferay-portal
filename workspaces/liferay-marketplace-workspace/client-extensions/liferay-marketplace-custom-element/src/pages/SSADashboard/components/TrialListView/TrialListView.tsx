@@ -42,6 +42,7 @@ type TrialsListViewProps = {
 		| 'tableProps'
 		| 'totalItems'
 	>;
+	parentPath?: string;
 };
 
 // Refresh the table every 60 seconds
@@ -62,6 +63,7 @@ export default function TrialListView({
 	createTrialFormModal,
 	listViewProps,
 	managementToolbarProps,
+	parentPath,
 }: TrialsListViewProps) {
 	const {ssaAccount, ssaTrialExtend} = useSSADashboardOutlet();
 	const {myUserAccount} = useMarketplaceContext();
@@ -118,7 +120,11 @@ export default function TrialListView({
 							render: (_, {customFields, id}) => (
 								<Link
 									className="font-weight-semi-bold ml-2"
-									to={`/details/${id}`}
+									to={
+										parentPath
+											? `/details/${id}?from=${parentPath}`
+											: `/details/${id}`
+									}
 								>
 									{customFields &&
 										safeJSONParse(

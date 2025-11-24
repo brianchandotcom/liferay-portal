@@ -70,7 +70,6 @@ const SSADashboardOutlet = () => {
 					currentAccount={ssaAccount}
 					dashboardNavigationItems={[
 						{
-							active: true,
 							itemTitle: 'My SaaS Demos',
 							path: '/',
 							symbol: 'nodes',

@@ -36,6 +36,7 @@ export default function SaaSTrials() {
 					searchVisible: true,
 					visible: true,
 				}}
+				parentPath="/saas-trials"
 			/>
 		</Page>
 	);

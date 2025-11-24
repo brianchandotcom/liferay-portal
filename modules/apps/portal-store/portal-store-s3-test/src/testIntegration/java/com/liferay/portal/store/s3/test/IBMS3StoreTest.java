@@ -11,14 +11,21 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.test.util.DLAppTestUtil;
+import com.liferay.petra.io.DummyOutputStream;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.store.test.util.BaseStoreTestCase;
@@ -27,12 +34,17 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.annotation.Generated;
 
+import java.util.Dictionary;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Preston Crary
@@ -57,6 +69,54 @@ public class IBMS3StoreTest extends BaseStoreTestCase {
 				"Property \"", PropsKeys.DL_STORE_IMPL, "\" is not set to \"",
 				s3StoreClassName, "\""),
 			dlStoreImpl.equals(s3StoreClassName));
+	}
+
+	@Test
+	@TestInfo("LPS-127589")
+	public void testS3ConnectionDoesNotLeakWhenServingFileAsStream()
+		throws Exception {
+
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			"com.liferay.portal.store.s3.configuration.S3StoreConfiguration",
+			StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		int httpClientMaxConnections = GetterUtil.getInteger(
+			properties.get("httpClientMaxConnections"));
+
+		Assert.assertTrue(httpClientMaxConnections > 0);
+
+		long companyId = RandomTestUtil.randomLong();
+
+		String fileName = RandomTestUtil.randomString();
+
+		long repositoryId = RandomTestUtil.randomLong();
+
+		_store.addFile(
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION));
+
+		try {
+			for (int i = 0; i <= httpClientMaxConnections; i++) {
+				StreamUtil.transfer(
+					_store.getFileAsStream(
+						companyId, repositoryId, fileName,
+						Store.VERSION_DEFAULT),
+					new DummyOutputStream());
+			}
+
+			_store.addFile(
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+
+			Assert.assertTrue(
+				_store.hasFile(
+					companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
+		}
+		finally {
+			_store.deleteDirectory(companyId, repositoryId, StringPool.SLASH);
+		}
 	}
 
 	@Test
@@ -100,6 +160,9 @@ public class IBMS3StoreTest extends BaseStoreTestCase {
 	protected Store getStore() {
 		return _store;
 	}
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject(
 		filter = "store.type=com.liferay.portal.store.s3.IBMS3Store",

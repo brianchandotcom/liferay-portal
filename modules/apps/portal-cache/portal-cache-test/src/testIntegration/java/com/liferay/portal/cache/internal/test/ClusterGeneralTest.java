@@ -109,9 +109,8 @@ public class ClusterGeneralTest {
 
 		_tomcatNode1.stop();
 
-		// As node 1 stop, expect node 2 will become new master
-		// wait till node 2 finish swapping from slave to master,
-		// confirm it is master now
+		// As node 1 stop, expect node 2 will become new master. Wait till node
+		// 2 finish swapping from slave to master. Confirm it is master now
 
 		Assert.assertTrue(
 			_tomcatNode2.syncExecute(

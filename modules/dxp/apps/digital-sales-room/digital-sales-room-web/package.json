@@ -1,0 +1,35 @@
+{
+	"dependencies": {
+		"@clayui/button": "3.144.1",
+		"@clayui/color-picker": "3.151.0",
+		"@clayui/form": "3.151.0",
+		"@clayui/icon": "3.144.1",
+		"@clayui/link": "3.144.1",
+		"@clayui/modal": "3.151.0",
+		"@clayui/sticker": "3.147.0",
+		"@liferay/frontend-js-react-web": "*",
+		"@liferay/layout-js-components-web": "*",
+		"@liferay/object-js-components-web": "*",
+		"classnames": "2.3.1",
+		"formik": "2.1.4",
+		"frontend-js-components-web": "*",
+		"frontend-js-web": "*",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-dropzone": "11.4.2"
+	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.ts"
+		]
+	},
+	"main": "js/index.ts",
+	"name": "@liferay/digital-sales-room-web",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
+		"test": "node-scripts test"
+	},
+	"version": "1.0.0"
+}

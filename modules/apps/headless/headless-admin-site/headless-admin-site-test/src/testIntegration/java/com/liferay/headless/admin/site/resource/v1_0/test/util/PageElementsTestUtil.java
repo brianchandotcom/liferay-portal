@@ -443,7 +443,7 @@ public class PageElementsTestUtil {
 	}
 
 	private static DefaultFragmentReference _addDefaultFragmentReference(
-		String fragmentKey) {
+		String fragmentEntryKey) {
 
 		DefaultFragmentReference defaultFragmentReference =
 			new DefaultFragmentReference();
@@ -452,7 +452,7 @@ public class PageElementsTestUtil {
 			() -> {
 				FragmentEntry fragmentEntry =
 					FragmentCollectionContributorRegistryUtil.getFragmentEntry(
-						fragmentKey);
+						fragmentEntryKey);
 
 				return fragmentEntry.getFragmentEntryKey();
 			});

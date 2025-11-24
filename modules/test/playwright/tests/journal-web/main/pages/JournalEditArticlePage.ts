@@ -28,6 +28,7 @@ export class JournalEditArticlePage {
 	readonly historyButton: Locator;
 	readonly inputPermissionsViewRole: Locator;
 	readonly journalPage: JournalPage;
+	readonly previewButton: Locator;
 	readonly propertiesTab: Locator;
 	readonly publishDropdown: Locator;
 	readonly publishButton: Locator;
@@ -64,6 +65,7 @@ export class JournalEditArticlePage {
 			'#_com_liferay_journal_web_portlet_JournalPortlet_inputPermissionsViewRole'
 		);
 		this.journalPage = new JournalPage(page);
+		this.previewButton = page.getByLabel('A draft will be saved before');
 		this.propertiesTab = page.getByRole('tab', {
 			name: /properties|propriétés/i,
 		});

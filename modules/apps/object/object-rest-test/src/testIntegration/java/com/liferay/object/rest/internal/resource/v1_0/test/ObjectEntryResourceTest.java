@@ -10844,11 +10844,11 @@ public class ObjectEntryResourceTest {
 				companyObjectEntry.getExternalReferenceCode(), "/comments"),
 			Http.Method.POST);
 
-		String comment1 = RandomTestUtil.randomString();
+		String comment = RandomTestUtil.randomString();
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"text", comment1
+				"text", comment
 			).toString(),
 			StringBundler.concat(
 				_getEndpoint(_objectDefinition1, 0),
@@ -10858,7 +10858,7 @@ public class ObjectEntryResourceTest {
 				jsonObject.getString("externalReferenceCode")),
 			Http.Method.PUT);
 
-		Assert.assertEquals("<p>" + comment1 + "</p>", jsonObject.get("text"));
+		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
 
 		// Site scope
 
@@ -10866,8 +10866,6 @@ public class ObjectEntryResourceTest {
 
 		_objectDefinitionLocalService.updateObjectDefinition(
 			_siteScopedObjectDefinition1);
-
-		Group group = _groupLocalService.fetchGroup(_testGroupId);
 
 		ObjectEntry siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
@@ -10880,26 +10878,26 @@ public class ObjectEntryResourceTest {
 				"text", RandomTestUtil.randomString()
 			).toString(),
 			StringBundler.concat(
-				_getEndpoint(_siteScopedObjectDefinition1, group.getGroupId()),
+				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
 				"/by-external-reference-code/",
 				siteObjectEntry.getExternalReferenceCode(), "/comments"),
 			Http.Method.POST);
 
-		String comment2 = RandomTestUtil.randomString();
+		comment = RandomTestUtil.randomString();
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"text", comment2
+				"text", comment
 			).toString(),
 			StringBundler.concat(
-				_getEndpoint(_siteScopedObjectDefinition1, group.getGroupId()),
+				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
 				"/by-external-reference-code/",
 				siteObjectEntry.getExternalReferenceCode(), "/comments",
 				"/by-external-reference-code/",
 				jsonObject.getString("externalReferenceCode")),
 			Http.Method.PUT);
 
-		Assert.assertEquals("<p>" + comment2 + "</p>", jsonObject.get("text"));
+		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
 	}
 
 	@Test

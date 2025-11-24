@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Shuyang Zhou
  */
 @RunWith(Arquillian.class)
-public class ClusterCacheReplicationTest {
+public class ClusterCacheReplicationTest implements Serializable {
 
 	@ClassRule
 	@Rule
@@ -822,7 +822,7 @@ public class ClusterCacheReplicationTest {
 		throw new IllegalStateException(className + " does not exist");
 	}
 
-	private static void _setFieldValue(
+	private void _setFieldValue(
 		PortalCache<?, ?> portalCache, String fieldName, boolean fieldValue) {
 
 		ReflectionTestUtil.setFieldValue(
@@ -837,7 +837,7 @@ public class ClusterCacheReplicationTest {
 		"com.liferay.portal.cache.ehcache.internal.events." +
 			"EhcachePortalCacheReplicatorUtil$EhcachePortalCacheReplicator";
 
-	private static TomcatNode _tomcatNode1;
-	private static TomcatNode _tomcatNode2;
+	private static transient TomcatNode _tomcatNode1;
+	private static transient TomcatNode _tomcatNode2;
 
 }

@@ -21,6 +21,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -45,7 +47,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Jiefeng Wu
  */
 @RunWith(Arquillian.class)
-public class ClusterGeneralTest {
+public class ClusterGeneralTest implements Serializable {
 
 	@ClassRule
 	@Rule
@@ -135,7 +137,7 @@ public class ClusterGeneralTest {
 			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
 	}
 
-	private static MVCActionCommand _getEditServerMVCActionCommand()
+	private MVCActionCommand _getEditServerMVCActionCommand()
 		throws InvalidSyntaxException {
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
@@ -250,8 +252,8 @@ public class ClusterGeneralTest {
 				}));
 	}
 
-	private static TomcatNode _tomcatNode1;
-	private static TomcatNode _tomcatNode2;
+	private static transient TomcatNode _tomcatNode1;
+	private static transient TomcatNode _tomcatNode2;
 
 	private static class TestClusterMasterTokenTransitionListener
 		implements ClusterMasterTokenTransitionListener {

@@ -67,7 +67,5 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaReferenceAnnotationsCheck" files="feature-flag/feature-flag-web/src/main/java/com/liferay/feature/flag/web/internal/feature/flag/FeatureFlagManagerImpl\.java" />
-		<suppress checks="JavaStaticMethodCheck" files="portal-cache/portal-cache-test/src/testIntegration/java/com/liferay/portal/cache/internal/test/ClusterCacheReplicationTest\.java" />
-		<suppress checks="JavaStaticMethodCheck" files="portal-cache/portal-cache-test/src/testIntegration/java/com/liferay/portal/cache/internal/test/ClusterGeneralTest\.java" />
 	</source-check>
 </suppressions>

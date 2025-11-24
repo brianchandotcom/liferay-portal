@@ -84,7 +84,7 @@ public class FragmentEditableElementUtil {
 		}
 
 		fragmentEditableElements.addAll(
-			_getTextFragmentEditableElements(
+			_getFragmentEditableElements(
 				companyId,
 				EditableFragmentEntryProcessorUtil.getEditableTypes(
 					fragmentEntryLink.getHtml()),
@@ -328,20 +328,19 @@ public class FragmentEditableElementUtil {
 			jsonObject);
 	}
 
-	private static List<FragmentEditableElement>
-		_getTextFragmentEditableElements(
+	private static List<FragmentEditableElement> _getFragmentEditableElements(
 			long companyId, Map<String, String> editableTypes,
 			InfoItemServiceRegistry infoItemServiceRegistry,
 			JSONObject jsonObject, long scopeGroupId) {
 
 		return TransformUtil.transform(
 			jsonObject.keySet(),
-			textId -> {
+			fieldId -> {
 				FragmentEditableElementValue fragmentEditableElementValue =
 					_getFragmentEditableElementValue(
 						companyId, infoItemServiceRegistry,
-						jsonObject.getJSONObject(textId), scopeGroupId,
-						editableTypes.getOrDefault(textId, "text"));
+						jsonObject.getJSONObject(fieldId), scopeGroupId,
+						editableTypes.getOrDefault(fieldId, "text"));
 
 				if (fragmentEditableElementValue == null) {
 					return null;
@@ -352,7 +351,7 @@ public class FragmentEditableElementUtil {
 
 				fragmentEditableElement.setFragmentEditableElementValue(
 					() -> fragmentEditableElementValue);
-				fragmentEditableElement.setId(() -> textId);
+				fragmentEditableElement.setId(() -> fieldId);
 
 				return fragmentEditableElement;
 			});

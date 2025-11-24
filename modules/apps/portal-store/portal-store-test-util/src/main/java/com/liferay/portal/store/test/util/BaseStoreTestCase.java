@@ -372,12 +372,9 @@ public abstract class BaseStoreTestCase {
 
 	private static final byte[] _DATA_VERSION_1 = new byte[_DATA_SIZE];
 
-	private static final byte[] _DATA_VERSION_2 = new byte[_DATA_SIZE];
-
 	static {
 		for (int i = 0; i < _DATA_SIZE; i++) {
 			_DATA_VERSION_1[i] = (byte)i;
-			_DATA_VERSION_2[i] = (byte)(i + 1);
 		}
 	}
 

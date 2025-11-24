@@ -13,17 +13,17 @@ import com.liferay.portal.configuration.settings.internal.constants.SettingsLoca
 /**
  * @author Tina Tian
  */
-@ExtendedObjectClassDefinition(category = "other")
+@ExtendedObjectClassDefinition
 @Meta.OCD(id = SettingsLocatorTestConstants.TEST_REQUIRED_CONFIGURATION_PID)
 public interface TestRequiredConfiguration {
 
 	@Meta.AD(
 		deflt = SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
-		name = "settings-locator-test-key", required = false
+		required = false
 	)
 	public String settingsLocatorTestKey();
 
-	@Meta.AD(name = "settings-locator-test-required-key")
+	@Meta.AD
 	public String settingsLocatorTestRequiredKey();
 
 }

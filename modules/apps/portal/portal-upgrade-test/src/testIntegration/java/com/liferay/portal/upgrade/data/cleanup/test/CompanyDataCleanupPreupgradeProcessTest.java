@@ -96,7 +96,7 @@ public class CompanyDataCleanupPreupgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Set<String> originalTableNames = SetUtil.fromList(
+		Set<String> tableNames = SetUtil.fromList(
 			_dbInspector.getTableNames(null));
 
 		String webId = RandomTestUtil.randomString() + "test.com";
@@ -107,13 +107,13 @@ public class CompanyDataCleanupPreupgradeProcessTest
 
 		long companyId = company.getCompanyId();
 
-		List<String> tableNames = Arrays.asList(
+		List<String> objectTableNames = Arrays.asList(
 			"l_" + companyId + "_test", "o_" + companyId + "_test",
 			"test_x_" + companyId);
 
-		for (String tableName : tableNames) {
+		for (String objectTableName : objectTableNames) {
 			runSQL(
-				"create table " + tableName +
+				"create table " + objectTableName +
 					" (id_ LONG not null primary key)");
 		}
 
@@ -135,24 +135,23 @@ public class CompanyDataCleanupPreupgradeProcessTest
 
 			List<String> messages = logCapture.getMessages();
 
-			for (String tableName : tableNames) {
-				Assert.assertFalse(_dbInspector.hasTable(tableName));
+			for (String objectTableName : objectTableNames) {
+				Assert.assertFalse(_dbInspector.hasTable(objectTableName));
 				Assert.assertTrue(
 					messages.contains(
 						StringBundler.concat(
-							"Table ", _dbInspector.normalizeName(tableName),
+							"Table ",
+							_dbInspector.normalizeName(objectTableName),
 							", dropped because it belonged to a nonexistent ",
 							"company: ", companyId)));
 			}
 
-			Set<String> restoredTableNames = SetUtil.fromList(
-				_dbInspector.getTableNames(null));
-
-			Assert.assertEquals(originalTableNames, restoredTableNames);
+			Assert.assertEquals(
+				tableNames, SetUtil.fromList(_dbInspector.getTableNames(null)));
 		}
 		finally {
-			for (String tableName : tableNames) {
-				dropTable(_dbInspector.normalizeName(tableName));
+			for (String objectTableName : objectTableNames) {
+				dropTable(_dbInspector.normalizeName(objectTableName));
 			}
 
 			runSQL("delete from SystemEvent where companyId = " + companyId);

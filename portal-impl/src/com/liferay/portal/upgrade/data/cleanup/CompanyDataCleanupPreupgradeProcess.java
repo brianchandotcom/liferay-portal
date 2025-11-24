@@ -56,17 +56,14 @@ public class CompanyDataCleanupPreupgradeProcess
 		List<String> tableNames = dbInspector.getTableNames(null);
 
 		for (String tableName : tableNames) {
-			long tableNameCompanyId = _getCompanyIdFromTableName(tableName);
+			long companyId = _getCompanyIdFromTableName(tableName);
 
-			if ((tableNameCompanyId > 0) &&
-				!companyIds.contains(tableNameCompanyId)) {
-
+			if ((companyId > 0) && !companyIds.contains(companyId)) {
 				dropTable(tableName);
 
 				DataCleanupLoggingUtil.logDrop(
 					_log, tableName,
-					"it belonged to a nonexistent company: " +
-						tableNameCompanyId);
+					"it belonged to a nonexistent company: " + companyId);
 			}
 		}
 	}

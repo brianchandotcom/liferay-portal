@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParserUtil;
 import com.liferay.headless.admin.site.dto.v1_0.CategoryFragmentConfigurationFieldValue;
@@ -72,23 +71,6 @@ import java.util.Objects;
  * @author Lourdes Fernández Besada
  */
 public class FragmentConfigurationFieldValuesUtil {
-
-	public static JSONObject
-			getFragmentConfigurationFieldValuesEditableValuesJSONObject(
-				String configuration,
-				Map<String, FragmentConfigurationFieldValue>
-					fragmentConfigurationFieldValuesMap,
-				LayoutStructureItemImporterContext
-					layoutStructureItemImporterContext)
-		throws Exception {
-
-		return JSONUtil.put(
-			FragmentEntryProcessorConstants.
-				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-			getFreeMarkerFragmentEntryProcessorJSONObject(
-				configuration, fragmentConfigurationFieldValuesMap,
-				layoutStructureItemImporterContext));
-	}
 
 	public static JSONObject getFreeMarkerFragmentEntryProcessorJSONObject(
 			String configuration,

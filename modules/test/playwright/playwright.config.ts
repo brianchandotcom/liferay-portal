@@ -120,6 +120,7 @@ import {config as portalSecurityScriptManagementWebConfig} from './tests/portal-
 import {config as portalSecurityServiceAccessPolicyService} from './tests/portal-security-service-access-policy-service/main/config';
 import {config as portalToolsRestBuilderTestImpl} from './tests/portal-tools-rest-builder-test-impl/main/config';
 import {config as portalUserLocaleOptionsConfig} from './tests/portal-user-locale-options-web/main/config';
+import {config as portalWebCDNConfig} from './tests/portal-web/cdn/config';
 import {config as portalWebConfig} from './tests/portal-web/main/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/main/config';
 import {config as portalWorkflowKaleoFormsWebConfig} from './tests/portal-workflow-kaleo-forms-web/main/config';
@@ -303,6 +304,7 @@ export default defineConfig({
 		portalSecurityServiceAccessPolicyService,
 		portalToolsRestBuilderTestImpl,
 		portalUserLocaleOptionsConfig,
+		portalWebCDNConfig,
 		portalWebConfig,
 		portalWorkflowKaleoDesignerWebConfig,
 		portalWorkflowKaleoFormsWebConfig,

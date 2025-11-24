@@ -160,9 +160,9 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 						UpgradeResourceBlockTest.class.getName() + "'");
 
 				dropTable(getTableName());
-
-				_connection.close();
 			});
+
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Test

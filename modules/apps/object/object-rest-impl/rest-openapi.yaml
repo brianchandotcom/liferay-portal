@@ -1705,6 +1705,7 @@ paths:
             tags: ["ObjectEntry"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/translations":
         get:
+            operationId: getScopeScopeKeyByExternalReferenceCodeTranslation
             parameters:
                 -   in: path
                     name: scopeKey
@@ -1749,6 +1750,7 @@ paths:
             tags: ["ObjectEntry"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/translations/{languageId}":
         get:
+            operationId: getScopeScopeKeyByExternalReferenceCodeTranslationLanguage
             parameters:
                 -   in: path
                     name: scopeKey
@@ -2523,6 +2525,7 @@ paths:
             tags: ["ObjectEntry"]
     "/{objectEntryId}/translations":
         get:
+            operationId: getObjectEntryTranslation
             parameters:
                 -   in: path
                     name: objectEntryId
@@ -2563,6 +2566,7 @@ paths:
             tags: ["ObjectEntry"]
     "/{objectEntryId}/translations/{languageId}":
         get:
+            operationId: getObjectEntryTranslationLanguage
             parameters:
                 -   in: path
                     name: objectEntryId

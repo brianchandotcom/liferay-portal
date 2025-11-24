@@ -10,6 +10,8 @@ package com.liferay.oauth2.provider.constants;
  */
 public class OAuth2ProviderConstants {
 
+	public static final String DYNAMIC_REGISTRATOR = "Dynamic Registrator";
+
 	public static final String EXPIRED_TOKEN = "EXPIRED_TOKEN";
 
 	public static final String RESOURCE_NAME = "com.liferay.oauth2.provider";

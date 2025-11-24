@@ -123,14 +123,8 @@ public class DropZoneLayoutStructureItemImporter
 		for (FragmentEntryReference fragmentEntryReference :
 				fragmentEntryReferences) {
 
-			if (Validator.isNotNull(fragmentEntryReference.getRendererKey())) {
-				jsonArray.put(
-					JSONUtil.put(
-						"fragmentEntryRendererKey",
-						fragmentEntryReference.getRendererKey()));
-			}
-			else if (Validator.isNotNull(
-						fragmentEntryReference.getFragmentEntryKey())) {
+			if (Validator.isNotNull(
+					fragmentEntryReference.getFragmentEntryKey())) {
 
 				jsonArray.put(
 					JSONUtil.put(
@@ -143,6 +137,14 @@ public class DropZoneLayoutStructureItemImporter
 						"fragmentEntryScopeERC",
 						fragmentEntryReference.getFragmentEntryScopeERC()
 					));
+			}
+			else if (Validator.isNotNull(
+						fragmentEntryReference.getRendererKey())) {
+
+				jsonArray.put(
+					JSONUtil.put(
+						"fragmentEntryRendererKey",
+						fragmentEntryReference.getRendererKey()));
 			}
 		}
 

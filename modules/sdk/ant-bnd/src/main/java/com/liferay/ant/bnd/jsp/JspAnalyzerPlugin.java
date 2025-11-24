@@ -96,9 +96,17 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		}
 
 		if (matches) {
-			String[] requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAKARTA;
-
 			String javaeePackage = analyzer.getProperty("-javaee-package");
+
+			if ((javaeePackage != null) && !javaeePackage.equals("jakarta") &&
+				!javaeePackage.equals("javax")) {
+
+				throw new RuntimeException(
+					"Invalid value was provided for -javaee-package property;" +
+						"valid values are either javax or jakarta");
+			}
+
+			String[] requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAKARTA;
 
 			if (_isUseJavaxImports(javaeePackage, taglibURIs)) {
 				requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAVAX;
@@ -569,17 +577,11 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		throws Exception {
 
 		if (taglibURIs.isEmpty()) {
-			if (javaeePackage != null) {
-				if (javaeePackage.equals("javax")) {
-					return true;
-				}
-				else if (javaeePackage.equals("jakarta")) {
-					return false;
-				}
-
-				throw new RuntimeException(
-					"Value for -javaee-package is invalid; valid values are " +
-						"jakarta or javax");
+			if (javaeePackage.equals("javax")) {
+				return true;
+			}
+			else if (javaeePackage.equals("jakarta")) {
+				return false;
 			}
 
 			return false;
@@ -607,17 +609,11 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			}
 		}
 
-		if (javaeePackage != null) {
-			if (javaeePackage.equals("javax")) {
-				return true;
-			}
-			else if (javaeePackage.equals("jakarta")) {
-				return false;
-			}
-
-			throw new RuntimeException(
-				"Value for -javaee-package is invalid; valid values are " +
-					"jakarta or javax");
+		if (javaeePackage.equals("javax")) {
+			return true;
+		}
+		else if (javaeePackage.equals("jakarta")) {
+			return false;
 		}
 
 		return false;

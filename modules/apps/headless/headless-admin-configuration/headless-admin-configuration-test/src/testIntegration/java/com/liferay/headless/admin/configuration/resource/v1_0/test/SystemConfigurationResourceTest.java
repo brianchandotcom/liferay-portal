@@ -58,8 +58,11 @@ public class SystemConfigurationResourceTest
 		}
 	}
 
+	@Override
 	@Test
-	public void testGetSystemConfigurationWithPasswordField() throws Exception {
+	public void testGetSystemConfiguration() throws Exception {
+		super.testGetSystemConfiguration();
+
 		PropsUtil.set(
 			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");
 

@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -161,45 +160,40 @@ public class SitePageResourceImpl
 							return null;
 						}
 
-						Set<String> layoutExternalReferenceCodes =
-							new HashSet<>();
+						Set<String> externalReferenceCodes = new HashSet<>();
+
+						externalReferenceCodes.add("");
 
 						for (long layoutId :
 								portletDataContext.getLayoutIds()) {
 
-							Layout layout = null;
-
 							try {
-								layout = _layoutService.fetchLayout(
+								Layout layout = _layoutService.fetchLayout(
 									portletDataContext.getScopeGroupId(),
 									portletDataContext.isPrivateLayout(),
 									layoutId);
+
+								if (layout != null) {
+									externalReferenceCodes.add(
+										layout.getExternalReferenceCode());
+								}
 							}
 							catch (PortalException portalException) {
 								if (_log.isWarnEnabled()) {
 									_log.warn(portalException);
 								}
 							}
-
-							if (layout != null) {
-								layoutExternalReferenceCodes.add(
-									layout.getExternalReferenceCode());
-							}
 						}
 
-						StringBundler sb = new StringBundler(3);
+						String quotedExternalReferenceCodes = String.join(
+							", ",
+							transform(
+								externalReferenceCodes,
+								layoutExternalReferenceCode ->
+									"'" + layoutExternalReferenceCode + "'"));
 
-						sb.append("externalReferenceCode in ('', '");
-
-						sb.append(
-							ListUtil.toString(
-								ListUtil.fromCollection(
-									layoutExternalReferenceCodes),
-								StringPool.BLANK, "', '"));
-
-						sb.append("')");
-
-						return sb.toString();
+						return "externalReferenceCode in (" +
+							quotedExternalReferenceCodes + ")";
 					}
 				).build();
 			}

@@ -2033,16 +2033,59 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
                 -   properties:
-                        html:
+                        htmlFragmentValue:
+                            $ref: "#/components/schemas/HTMLFragmentValue"
                             # @review
                             description:
                                 The fragment editable element's HTML. Can be inline or mapped to an external value.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentInlineValue"
-                                -   $ref: "#/components/schemas/FragmentMappedValue"
             # @review
             description:
                 A fragment editable element value of type HTML.
+            type: object
+        HTMLFragmentValue:
+            # @review
+            description:
+                The value of a fragment HTML element.
+            discriminator:
+                mapping:
+                    Inline: "#/components/schemas/HTMLInlineFragmentValue"
+                    Mapped: "#/components/schemas/HTMLMappedFragmentValue"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        Whether the value is set inline or mapped.
+                    enum: [Inline, Mapped]
+                    type: string
+            type: object
+        HTMLInlineFragmentValue:
+            # @review
+            allOf:
+                -   properties:
+                        fragmentInlineValue:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The fragment inline value.
+                -   $ref: "#/components/schemas/HTMLFragmentValue"
+            # @review
+            description:
+                An inline value of a fragment HTML element.
+            type: object
+        HTMLMappedFragmentValue:
+            # @review
+            allOf:
+                -   properties:
+                        fragmentMappedValue:
+                            $ref: "#/components/schemas/FragmentMappedValue"
+                            # @review
+                            description:
+                                The fragment mapped value.
+                -   $ref: "#/components/schemas/HTMLFragmentValue"
+            # @review
+            description:
+                A mapped value of a fragment HTML element.
             type: object
         HrefURLValue:
             allOf:

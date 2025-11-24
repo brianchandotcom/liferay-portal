@@ -4,6 +4,7 @@
  */
 
 import {Locator, Page, expect} from '@playwright/test';
+import path from 'path';
 
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
@@ -37,6 +38,7 @@ export class ExportImportPage {
 	readonly productMenuPage: ProductMenuPage;
 	readonly taskActionsMenu: (taskName: string) => Locator;
 	readonly taskRow: (taskName: string) => Locator;
+	readonly taskCompleteWithErrorsLabel: (taskName: string) => Locator;
 	readonly taskSuccessLabel: (taskName: string) => Locator;
 	readonly title: Locator;
 	readonly updateDataAlert: Locator;
@@ -96,6 +98,8 @@ export class ExportImportPage {
 			this.page.locator('[data-qa-id="row"]', {
 				hasText: taskName,
 			});
+		this.taskCompleteWithErrorsLabel = (taskName: string) =>
+			this.taskRow(taskName).getByText('Completed with errors');
 		this.taskSuccessLabel = (taskName: string) =>
 			this.taskRow(taskName).getByText('Successful');
 		this.title = page.getByPlaceholder('Enter the name of the process');
@@ -188,7 +192,15 @@ export class ExportImportPage {
 		expect(wikiLabelCount).toBe(0);
 	}
 
-	async import(filePath: string, expectedUploadErrorMessage?: string) {
+	async import({
+		expectedUploadErrorMessage,
+		filePath,
+		taskStatus = 'success',
+	}: {
+		expectedUploadErrorMessage?: string;
+		filePath: string;
+		taskStatus?: 'success' | 'completedWithErrors';
+	}) {
 		await this.newImportButton.click();
 
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
@@ -245,6 +257,16 @@ export class ExportImportPage {
 			.click();
 
 		await this.importButton.click();
+
+		const fileName = path.basename(filePath);
+		if (taskStatus === 'completedWithErrors') {
+			await expect(
+				this.taskCompleteWithErrorsLabel(fileName)
+			).toBeVisible();
+		}
+		else {
+			await expect(this.taskSuccessLabel(fileName)).toBeVisible();
+		}
 	}
 
 	async getExportableItems() {
@@ -311,8 +333,6 @@ export class ExportImportPage {
 	}
 
 	async goToImportDetails(exportName: string) {
-		await expect(this.taskSuccessLabel(exportName)).toBeVisible();
-
 		await this.clickTaskAction(exportName, 'View Details');
 	}
 
@@ -355,8 +375,6 @@ export class ExportImportPage {
 	}
 
 	async openExportReportEntriesModal(exportName) {
-		await this.taskSuccessLabel(exportName).waitFor();
-
 		await this.clickTaskAction(exportName, 'Export Report Entries');
 
 		await this.exportReportEntriesModal.waitFor();

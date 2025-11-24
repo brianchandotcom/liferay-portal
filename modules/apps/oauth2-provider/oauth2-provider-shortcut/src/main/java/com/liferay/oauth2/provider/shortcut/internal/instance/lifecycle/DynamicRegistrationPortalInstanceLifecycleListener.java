@@ -8,6 +8,7 @@ package com.liferay.oauth2.provider.shortcut.internal.instance.lifecycle;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
+import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
@@ -66,7 +67,8 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
-		dynamicQuery.add(nameProperty.eq(_applicationName));
+		dynamicQuery.add(
+			nameProperty.eq(OAuth2ProviderConstants.DYNAMIC_REGISTRATOR));
 
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
@@ -105,7 +107,8 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			this, properties);
 
 		_applicationName = GetterUtil.getString(
-			properties.get("applicationName"));
+			properties.get("applicationName"),
+			OAuth2ProviderConstants.DYNAMIC_REGISTRATOR);
 		_clientId = GetterUtil.getString(properties.get("clientId"));
 	}
 
@@ -144,7 +147,7 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			});
 	}
 
-	private String _applicationName = "Dynamic Registrator";
+	private String _applicationName;
 	private String _clientId = "DynamicRegistrator";
 	private long _lastModifiedTime;
 

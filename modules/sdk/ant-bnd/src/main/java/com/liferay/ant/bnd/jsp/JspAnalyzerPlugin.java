@@ -581,8 +581,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		}
 
 		throw new RuntimeException(
-			"Could not infer required javaee package; possible values are " +
-				"jakarta or javax");
+			"Could not infer required javaee package; no fallback value was " +
+				"provided");
 	}
 
 	private boolean _isUseJavaxImports(

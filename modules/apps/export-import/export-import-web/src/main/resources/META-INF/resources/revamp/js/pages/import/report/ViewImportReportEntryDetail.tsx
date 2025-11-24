@@ -11,7 +11,7 @@ import {openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import formatDate from '../utils/formatDate';
+import formatDate from '../../../utils/formatDate';
 
 function DetailViewDefinitionCol({
 	body,
@@ -66,9 +66,8 @@ export function ViewImportReportEntryDetail({
 	backURL: string;
 }) {
 	const [isLoading, setIsLoading] = useState(true);
-	const [reportEntryDetail, setReportEntryDetail] = useState<ReportEntryDetail>(
-		{} as ReportEntryDetail
-	);
+	const [reportEntryDetail, setReportEntryDetail] =
+		useState<ReportEntryDetail>({} as ReportEntryDetail);
 
 	useEffect(() => {
 		fetch(apiURL).then((response) => {

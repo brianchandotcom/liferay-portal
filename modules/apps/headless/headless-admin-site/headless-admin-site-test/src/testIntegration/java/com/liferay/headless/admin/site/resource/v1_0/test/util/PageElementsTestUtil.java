@@ -647,6 +647,15 @@ public class PageElementsTestUtil {
 	}
 
 	private static PageElement _getPageElement(
+		PageElementDefinition pageElementDefinition,
+		String parentExternalReferenceCode, int position) {
+
+		return _getPageElement(
+			RandomTestUtil.randomString(), pageElementDefinition,
+			new PageElement[0], parentExternalReferenceCode, position);
+	}
+
+	private static PageElement _getPageElement(
 		String externalReferenceCode,
 		PageElementDefinition pageElementDefinition) {
 
@@ -659,15 +668,6 @@ public class PageElementsTestUtil {
 		pageElement.setPosition(0);
 
 		return pageElement;
-	}
-
-	private static PageElement _getPageElement(
-		PageElementDefinition pageElementDefinition,
-		String parentExternalReferenceCode, int position) {
-
-		return _getPageElement(
-			RandomTestUtil.randomString(), pageElementDefinition,
-			new PageElement[0], parentExternalReferenceCode, position);
 	}
 
 	private static PageElement _getPageElement(

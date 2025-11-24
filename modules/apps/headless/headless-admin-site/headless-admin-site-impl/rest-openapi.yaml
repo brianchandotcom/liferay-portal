@@ -442,7 +442,7 @@ components:
                             $ref: "#/components/schemas/Layout"
                             # @review
                             description:
-                                the container page element's layout.
+                                The container page element's layout.
                         name:
                             # @review
                             description:
@@ -2695,7 +2695,7 @@ components:
                 priority:
                     # @review
                     description:
-                        the experience's priority. It must be a unique value within the page specification. The default
+                        The experience's priority. It must be a unique value within the page specification. The default
                         experience will always be assigned priority 0. A priority higher than 0 will result in an
                         experience being active and a priority lower than 0 will result in an experience being inactive.
                     type: integer

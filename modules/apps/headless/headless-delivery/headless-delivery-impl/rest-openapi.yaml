@@ -450,7 +450,7 @@ components:
                 parentCommentId:
                     # @review
                     description:
-                        the ID of the comment's parent, if it exists.
+                        The ID of the comment's parent, if it exists.
                     format: int64
                     type: integer
                 text:
@@ -943,14 +943,14 @@ components:
                 description:
                     # @review
                     description:
-                        the content template's description.
+                        The content template's description.
                     type: string
                 description_i18n:
                     # @review
                     additionalProperties:
                         type: string
                     description:
-                        the localized content template's descriptions.
+                        The localized content template's descriptions.
                     type: object
                 id:
                     # @review
@@ -961,19 +961,19 @@ components:
                 name:
                     # @review
                     description:
-                        the content template's name.
+                        The content template's name.
                     type: string
                 name_i18n:
                     additionalProperties:
                         type: string
                     # @review
                     description:
-                        the localized content template's name.
+                        The localized content template's name.
                     type: object
                 programmingLanguage:
                     # @review
                     description:
-                        the content template's programming language.
+                        The content template's programming language.
                     type: string
                 siteId:
                     # @review
@@ -1760,7 +1760,7 @@ components:
                         type: string
                     # @review
                     description:
-                        the localized Document Metadata Set's names.
+                        The localized Document Metadata Set's names.
                     type: object
                 siteId:
                     description:
@@ -1852,19 +1852,19 @@ components:
                 key:
                     # @review
                     description:
-                        the experience's key.
+                        The experience's key.
                     type: string
                 name:
                     # @review
                     description:
-                        the experience's name.
+                        The experience's name.
                     type: string
                 name_i18n:
                     additionalProperties:
                         type: string
                     # @review
                     description:
-                        the localized experience's names.
+                        The localized experience's names.
                     type: object
                 segments:
                     # @review
@@ -3718,7 +3718,7 @@ components:
                 layout:
                     # @review
                     description:
-                        the page section's layout.
+                        The page section's layout.
                     properties:
                         align:
                             enum: [Baseline, Center, End, None, Start, Stretch]
@@ -4024,7 +4024,7 @@ components:
                 layout:
                     # @review
                     description:
-                        the page section's layout.
+                        The page section's layout.
                     properties:
                         align:
                             enum: [Baseline, Center, End, None, Start, Stretch]
@@ -4532,7 +4532,7 @@ components:
                 layout:
                     # @review
                     description:
-                        the page section's layout.
+                        The page section's layout.
                     properties:
                         align:
                             deprecated: true

@@ -125,40 +125,42 @@ public abstract class BaseLayoutStructureItemImporter {
 		Map<String, Object> itemReferenceMap = (Map<String, Object>)mapping.get(
 			"itemReference");
 
-		if (itemReferenceMap != null) {
-			String externalReferenceCode = null;
+		if (MapUtil.isEmpty(itemReferenceMap)) {
+			return _getDefaultDisplayPageJSONObject();
+		}
 
-			List<Map<String, String>> fields =
-				(List<Map<String, String>>)itemReferenceMap.get("fields");
+		List<Map<String, String>> fields =
+			(List<Map<String, String>>)itemReferenceMap.get("fields");
 
-			for (Map<String, String> field : fields) {
-				String key = field.get("fieldName");
+		String externalReferenceCode = null;
 
-				if (Objects.equals(key, "externalReferenceCode")) {
-					externalReferenceCode = field.get("fieldValue");
-				}
+		for (Map<String, String> field : fields) {
+			if (Objects.equals(
+					field.get("fieldName"), "externalReferenceCode")) {
+
+				externalReferenceCode = field.get("fieldValue");
+
+				break;
 			}
+		}
 
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					fetchLayoutPageTemplateEntryByExternalReferenceCode(
-						externalReferenceCode,
-						layoutStructureItemImporterContext.getLayout(
-						).getGroupId());
+		Layout layout = layoutStructureItemImporterContext.getLayout();
 
-			if (layoutPageTemplateEntry != null) {
-				String layoutPageTemplateEntryId = String.valueOf(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					externalReferenceCode, layout.getGroupId());
 
-				return JSONUtil.put(
-					"displayPage",
-					StringBundler.concat(
-						LayoutPageTemplateEntry.class.getSimpleName(),
-						StringPool.UNDERLINE, layoutPageTemplateEntryId)
-				).put(
-					"type", "displayPage"
-				);
-			}
+		if (layoutPageTemplateEntry != null) {
+			return JSONUtil.put(
+				"displayPage",
+				StringBundler.concat(
+					LayoutPageTemplateEntry.class.getSimpleName(),
+					StringPool.UNDERLINE,
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			).put(
+				"type", "displayPage"
+			);
 		}
 
 		return _getDefaultDisplayPageJSONObject();

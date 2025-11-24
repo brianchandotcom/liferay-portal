@@ -268,12 +268,9 @@ public class FormLayoutStructureItemMapper
 					displayPageFormSubmissionResult =
 						new DisplayPageFormSubmissionResult();
 
-				String displayPage = successMessageJSONObject.getString(
-					"displayPage");
-
 				ClassFieldsReference displayPageClassFieldsReference =
 					FragmentMappedValueUtil.toDisplayPageClassFieldsReference(
-						displayPage);
+						successMessageJSONObject.getString("displayPage"));
 
 				if (displayPageClassFieldsReference == null) {
 					displayPageFormSubmissionResult.setDefaultDisplayPage(

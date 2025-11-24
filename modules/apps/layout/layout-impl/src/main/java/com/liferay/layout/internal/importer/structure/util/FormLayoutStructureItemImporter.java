@@ -365,21 +365,16 @@ public class FormLayoutStructureItemImporter
 						"message", formSuccessSubmissionResultMap)),
 				formSuccessSubmissionResultMap);
 
-			String messageType = String.valueOf(
-				formSuccessSubmissionResultMap.get("messageType"));
-
 			if (Objects.equals(
-					messageType,
+					String.valueOf(
+						formSuccessSubmissionResultMap.get("messageType")),
 					MessageFormSubmissionResult.MessageType.EMBEDDED.
 						getValue())) {
 
-				messageJSONObject.put("type", "embedded");
-			}
-			else {
-				messageJSONObject.put("type", "none");
+				return messageJSONObject.put("type", "embedded");
 			}
 
-			return messageJSONObject;
+			return messageJSONObject.put("type", "none");
 		}
 		else if (formSuccessSubmissionResultMap.containsKey("itemReference")) {
 			Map<String, Object> itemReference =
@@ -430,7 +425,7 @@ public class FormLayoutStructureItemImporter
 						"notificationTextFragmentInlineValue",
 						formSuccessSubmissionResultMap);
 
-				if (notificationTextJSONObject.length() > 0) {
+				if (!JSONUtil.isEmpty(notificationTextJSONObject)) {
 					return notificationTextJSONObject;
 				}
 

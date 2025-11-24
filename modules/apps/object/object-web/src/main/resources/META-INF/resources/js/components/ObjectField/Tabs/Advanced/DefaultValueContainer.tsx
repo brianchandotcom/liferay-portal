@@ -29,6 +29,8 @@ import {
 import {removeFieldSettings} from '../../../../utils/fieldSettings';
 import BooleanDefaultValueSelect from '../../DefaultValueFields/BooleanDefaultValueSelect';
 import ListTypeDefaultValueSelect from '../../DefaultValueFields/ListTypeDefaultValueSelect';
+import RichTextDefaultValue from '../../DefaultValueFields/RichTextDefaultValue';
+import TextDefaultValueInput from '../../DefaultValueFields/TextDefaultValueInput';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 interface DefaultValueContainerProps {
 	ckEditor5Config?: object;
@@ -62,6 +64,9 @@ type InputAsValueFieldComponents = {
 const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
 	...(Liferay.FeatureFlags['LPD-46451'] && {
 		Boolean: BooleanDefaultValueSelect,
+		LongText: TextDefaultValueInput,
+		RichText: RichTextDefaultValue,
+		Text: TextDefaultValueInput,
 	}),
 	Picklist: ListTypeDefaultValueSelect,
 };

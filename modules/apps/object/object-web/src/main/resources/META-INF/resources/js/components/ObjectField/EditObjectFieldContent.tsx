@@ -73,12 +73,15 @@ export function EditObjectFieldContent({
 	const [sidebarElements, setSidebarElements] = useState<SidebarCategory[]>(
 		[]
 	);
-	const hasDefaultValues =
+	const hasDefaultValue =
 		(Liferay.FeatureFlags['LPD-46451'] &&
-			values.businessType === 'Boolean') ||
+			(values.businessType === 'Boolean' ||
+				values.businessType === 'LongText' ||
+				values.businessType === 'RichText' ||
+				values.businessType === 'Text')) ||
 		values.businessType === 'Picklist';
 
-	if ((isDefaultStorageType || hasDefaultValues) && TABS.length < 2) {
+	if ((isDefaultStorageType || hasDefaultValue) && TABS.length < 2) {
 		TABS.push(Liferay.Language.get('advanced'));
 	}
 
@@ -139,7 +142,7 @@ export function EditObjectFieldContent({
 
 	return (
 		<>
-			{isDefaultStorageType || hasDefaultValues ? (
+			{isDefaultStorageType || hasDefaultValue ? (
 				<>
 					<ClayTabs className="side-panel-iframe__tabs">
 						{TABS.map((label, index) => (

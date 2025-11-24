@@ -100,16 +100,16 @@ export const addDXPCloudEnvironment = gql`
 
 export const addHighPriorityContact = gql`
 	mutation addHighPriorityContact(
-		$HighPriorityContacts: InputC_HighPriorityContacts!
+		$HighPriorityContact: InputC_HighPriorityContact!
 	) {
-		createHighPriorityContacts(input: $HighPriorityContacts)
+		createHighPriorityContact(input: $HighPriorityContact)
 			@rest(
 				method: "POST"
-				type: "C_HighPriorityContactsPage"
-				path: "/c/highprioritycontactses/"
+				type: "C_HighPriorityContactPage"
+				path: "/c/highprioritycontacts/"
 			) {
-			contactsCategory
-			r_userToHighPriorityContacts_userId
+			contactCategory
+			r_userToHighPriorityContact_userId
 		}
 	}
 `;
@@ -240,14 +240,14 @@ export const deleteAccountUserRoles = gql`
 	}
 `;
 
-export const deleteHighPriorityContacts = gql`
-	mutation deleteHighPriorityContacts($highPriorityContactsId: Long!) {
-		deleteHighPriorityContacts(
-			highPriorityContactsId: $highPriorityContactsId
+export const deleteHighPriorityContact = gql`
+	mutation deleteHighPriorityContact($highPriorityContactId: Long!) {
+		deleteHighPriorityContact(
+			highPriorityContactId: $highPriorityContactId
 		)
 			@rest(
 				type: "Boolean"
-				path: "/c/highprioritycontactses/{args.highPriorityContactsId}"
+				path: "/c/highprioritycontacts/{args.highPriorityContactId}"
 				method: "DELETE"
 			) {
 			NoResponse
@@ -475,7 +475,7 @@ export const getBusinessEvent = gql`
 				path: "/c/businessevents/{args.businessEventId}"
 			) {
 			id
-			r_accountEntryToBusinessEvents_accountEntryId
+			r_accountEntryToBusinessEvent_accountEntryId
 		}
 	}
 `;

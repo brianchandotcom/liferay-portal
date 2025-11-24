@@ -356,7 +356,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		setFieldValue(
-			'businessEvent.r_accountEntryToBusinessEvents_accountEntryId',
+			'businessEvent.r_accountEntryToBusinessEvent_accountEntryId',
 			project?.id
 		);
 	}, [project?.id, setFieldValue]);

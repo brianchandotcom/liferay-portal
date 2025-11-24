@@ -16,7 +16,7 @@ type CICType = {
 };
 
 type CICCategoryType = {
-	contactsCategory: {[key: string]: string};
+	contactCategory: {[key: string]: string};
 };
 
 type roleIDType = {
@@ -29,13 +29,13 @@ type roleIDType = {
 const useHighPriorityContacts = ({
 	addContactList,
 	currentHighPriorityContacts,
-	highPriorityContactsCategory,
+	highPriorityContactCategory,
 	removedContactList,
 	rolesId,
 }: {
 	addContactList: (newValue: CICType[]) => void;
 	currentHighPriorityContacts: CICType[];
-	highPriorityContactsCategory: CICCategoryType;
+	highPriorityContactCategory: CICCategoryType;
 	removedContactList: (newValue: CICType[]) => void;
 	rolesId: roleIDType[];
 }) => {
@@ -49,11 +49,11 @@ const useHighPriorityContacts = ({
 
 		return contactsWithoutCategory.map((newContact) => ({
 			...newContact,
-			category: highPriorityContactsCategory.contactsCategory,
+			category: highPriorityContactCategory.contactCategory,
 			filterId: rolesId?.filter(
 				(role) =>
 					role.displayName ===
-					highPriorityContactsCategory.contactsCategory.role
+					highPriorityContactCategory.contactCategory.role
 			)[0]?.id,
 		}));
 	};

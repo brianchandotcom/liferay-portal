@@ -19,8 +19,8 @@ import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import HighPriorityContactsInput from './HighPriorityContactsInput';
 import {useHighPriorityContacts} from './hooks/useHighPriorityContacts';
 
-const mapFilterToContactsCategory = (filter) => ({
-	contactsCategory: {
+const mapFilterToContactCategory = (filter) => ({
+	contactCategory: {
 		key: (filter.charAt(0).toLowerCase() + filter.slice(1)).replace(
 			/\s/g,
 			''
@@ -31,7 +31,7 @@ const mapFilterToContactsCategory = (filter) => ({
 });
 
 const getHighPriorityContactsByFilterRaysource = (
-	highPriorityContactsCategory,
+	highPriorityContactCategory,
 	userAccounts,
 	filter
 ) =>
@@ -55,7 +55,7 @@ const getHighPriorityContactsByFilterRaysource = (
 					) ?? [],
 				email,
 				id,
-				labelRole: highPriorityContactsCategory?.contactsCategory.name,
+				labelRole: highPriorityContactCategory?.contactCategory.name,
 				name,
 				role: selectedAccountSummary?.roleBriefs.filter(
 					({name}) => name === filter
@@ -86,8 +86,8 @@ const SetupHighPriorityContact = ({
 	const projectOnboarding = useOnboarding();
 	const projectPortal = useAppContext();
 
-	const highPriorityContactsCategory = useMemo(
-		() => mapFilterToContactsCategory(filter),
+	const highPriorityContactCategory = useMemo(
+		() => mapFilterToContactCategory(filter),
 		[filter]
 	);
 
@@ -104,7 +104,7 @@ const SetupHighPriorityContact = ({
 	const {updateContacts} = useHighPriorityContacts({
 		addContactList,
 		currentHighPriorityContacts,
-		highPriorityContactsCategory,
+		highPriorityContactCategory,
 		removedContactList,
 		rolesId,
 	});
@@ -123,10 +123,10 @@ const SetupHighPriorityContact = ({
 	useEffect(() => {
 		const highPriorityContacts =
 			getHighPriorityContactsByFilterRaysource(
-				highPriorityContactsCategory,
+				highPriorityContactCategory,
 				userAccountsData?.accountUserAccountsByExternalReferenceCode
 					?.items ?? [],
-				highPriorityContactsCategory?.contactsCategory?.role
+				highPriorityContactCategory?.contactCategory?.role
 			) ?? [];
 
 		const currentCriticalIncidentContacts = highPriorityContacts.map(
@@ -147,10 +147,10 @@ const SetupHighPriorityContact = ({
 			setCurrentContact(currentCriticalIncidentContacts);
 		}
 	}, [
-		highPriorityContactsCategory?.contactsCategory?.role,
+		highPriorityContactCategory?.contactCategory?.role,
 		project,
 		userAccountsData,
-		highPriorityContactsCategory,
+		highPriorityContactCategory,
 		setCurrentContact,
 	]);
 

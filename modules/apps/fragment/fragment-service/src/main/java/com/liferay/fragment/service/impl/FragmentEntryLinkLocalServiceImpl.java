@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -944,6 +945,15 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 		HttpServletResponse httpServletResponse = serviceContext.getResponse();
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if ((httpServletRequest == null) && (themeDisplay != null)) {
+			httpServletRequest = themeDisplay.getRequest();
+		}
+
+		if ((httpServletResponse == null) && (themeDisplay != null)) {
+			httpServletResponse = themeDisplay.getResponse();
+		}
 
 		if ((httpServletRequest == null) || (httpServletResponse == null)) {
 			return fragmentEntryLink.getHtml();

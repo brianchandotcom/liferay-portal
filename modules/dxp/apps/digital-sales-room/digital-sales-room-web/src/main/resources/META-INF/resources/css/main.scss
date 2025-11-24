@@ -1,0 +1,13 @@
+@import 'atlas-variables';
+
+.dsr-drag-zone {
+	align-items: center;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	border: 1px dashed $gray-300;
+	border-radius: 0.25rem;
+	display: flex;
+	height: 8rem;
+	justify-content: center;
+}

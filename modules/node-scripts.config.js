@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '3376d42d13d8630667f9513e698ede6a03d258f50f3cfb83ca1e537b8103db57',
+	hash: '0c7357e07b5a45b40709068862305aa755809f87a2a556477b138792fb52303b',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -62,6 +62,7 @@ module.exports = {
 		'@liferay/cookies-banner-web': [],
 		'@liferay/cookies-sample-web': [],
 		'@liferay/dialect-theme': [],
+		'@liferay/digital-sales-room-web': [],
 		'@liferay/digital-signature-web': [],
 		'@liferay/dispatch-web': [],
 		'@liferay/document-library-opener-google-drive-web': [],

@@ -1,0 +1,153 @@
+.sidebar {
+	@include clay-css($sidebar);
+
+	&:focus,
+	&.focus {
+		@include clay-css(map-get($sidebar, focus));
+	}
+
+	.container-fluid {
+		padding-left: $sidebar-padding-left;
+		padding-right: $sidebar-padding-right;
+	}
+}
+
+// Sidebar Header / Footer
+
+.sidebar-header {
+	$sidebar-header: setter(map-get($sidebar, sidebar-header), ());
+
+	@include clay-css($sidebar-header);
+
+	.component-title {
+		@include clay-text-typography(
+			map-get($sidebar-header, component-title)
+		);
+	}
+
+	.component-subtitle {
+		@include clay-text-typography(
+			map-get($sidebar-header, component-subtitle)
+		);
+	}
+
+	$_autofit-row: map-get($sidebar-header, autofit-row);
+
+	@if ($_autofit-row) {
+		.autofit-row {
+			@include clay-css($_autofit-row);
+
+			$_autofit-col: map-get($_autofit-row, autofit-col);
+
+			@if ($_autofit-col) {
+				> .autofit-col {
+					@include clay-css($_autofit-col);
+				}
+			}
+
+			$_autofit-col-expand: map-get($_autofit-row, autofit-col-expand);
+
+			@if ($_autofit-col-expand) {
+				> .autofit-col-expand {
+					@include clay-css($_autofit-col-expand);
+				}
+			}
+		}
+	}
+}
+
+.sidebar-footer {
+	@include clay-css(map-get($sidebar, sidebar-footer));
+}
+
+// Sidebar Body
+
+.sidebar-body {
+	@include clay-css(map-get($sidebar, sidebar-body));
+
+	> .sidebar-section {
+		margin-bottom: 2rem;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+// Sidebar Section
+
+.sidebar-section {
+	position: relative;
+	word-wrap: break-word;
+}
+
+// Sidebar List Group
+
+.sidebar-list-group {
+	$sidebar-list-group: setter(map-get($sidebar, sidebar-list-group));
+
+	@include clay-css($sidebar-list-group);
+
+	@extend %#{$sidebar-list-group-type} !optional;
+
+	.autofit-col {
+		padding-bottom: $sidebar-list-group-autofit-col-padding-y;
+		padding-left: $sidebar-list-group-autofit-col-padding-x;
+		padding-right: $sidebar-list-group-autofit-col-padding-x;
+		padding-top: $sidebar-list-group-autofit-col-padding-y;
+
+		.list-group-title:only-child {
+			min-height: map-get($sidebar-list-group-sticker-size, size);
+		}
+	}
+
+	.list-group-item {
+		@include clay-css(map-get($sidebar-list-group, list-group-item));
+	}
+
+	.sticker {
+		@include clay-sticker-variant(map-get($sidebar-list-group, sticker));
+	}
+}
+
+// Sidebar Panel
+
+.sidebar-panel {
+	@include clay-css(map-get($sidebar, sidebar-panel));
+}
+
+// Sidebar Definition List (dl dt dd)
+
+.sidebar-dt {
+	@include clay-text-typography(map-get($sidebar, sidebar-dt));
+}
+
+.sidebar-dd {
+	@include clay-text-typography(map-get($sidebar, sidebar-dd));
+}
+
+// Sidebar Variants
+
+@each $color, $value in $sidebar-palette {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			str-insert($color, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-sidebar-variant($value);
+		}
+	}
+}
+
+.c-slideout-start {
+	@include clay-map-to-css($sidebar-c-slideout-start);
+}
+
+.c-slideout-end {
+	@include clay-map-to-css($sidebar-c-slideout-end);
+}

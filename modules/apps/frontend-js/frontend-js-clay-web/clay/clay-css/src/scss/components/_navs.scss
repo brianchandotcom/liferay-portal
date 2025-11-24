@@ -1,0 +1,207 @@
+.nav {
+	@include clay-css($nav);
+}
+
+// Nav Link
+
+.nav-link {
+	@include clay-link($nav-link);
+}
+
+.nav-link.btn-unstyled {
+	@include clay-button-variant($nav-link-btn-unstyled);
+}
+
+// Nav Btn
+
+.nav-btn {
+	@include clay-button-variant($nav-btn);
+
+	&.btn-link {
+		@include clay-button-variant(map-get($nav-btn, btn-link));
+	}
+}
+
+// Nav Btn Monospaced
+
+.nav-btn-monospaced {
+	@include clay-button-variant($nav-btn-monospaced);
+}
+
+// Nav Link Monospaced
+
+.nav-link-monospaced {
+	@include clay-link($nav-link-monospaced);
+}
+
+// Nav Item
+
+.nav-item {
+	@include clay-css($nav-item);
+}
+
+.nav-item[class*='col-'] {
+	padding-left: 0;
+	padding-right: 0;
+	text-align: center;
+}
+
+// Nav Divider
+
+.nav-divider {
+	@include clay-css($nav-divider);
+
+	&::before {
+		@include clay-css(map-get($nav-divider, before));
+	}
+
+	&::after {
+		@include clay-css(map-get($nav-divider, after));
+	}
+}
+
+.nav-divider-end {
+	@include clay-css($nav-divider-end);
+
+	&::before {
+		@include clay-css(map-get($nav-divider-end, before));
+	}
+
+	&::after {
+		@include clay-css(map-get($nav-divider-end, after));
+	}
+}
+
+// Nav Text Truncate
+
+.nav-text-truncate {
+	@include clay-css($nav-text-truncate);
+}
+
+.dropdown-toggle .nav-text-truncate {
+	max-width: calc(100% - 24px);
+}
+
+// Nav Form
+
+.nav .nav-form {
+	@include clay-css(map-get($nav, nav-form));
+}
+
+// Nav Fill
+
+.nav-fill {
+	@include clay-nav-variant($nav-fill);
+}
+
+// Nav Justified
+
+.nav-justified {
+	@include clay-nav-variant($nav-justified);
+}
+
+// Nav Stacked
+
+.nav-stacked {
+	@include clay-nav-variant($nav-stacked);
+}
+
+// Nav Unstyled
+
+.nav-unstyled {
+	@include clay-nav-variant($nav-unstyled);
+}
+
+// Nav Nested
+
+.nav-nested {
+	flex-direction: column;
+	flex-wrap: nowrap;
+
+	@include clay-nav-nested(
+		$nav-nested-spacer-x,
+		$nav-nested-nest-level,
+		$nav-nested-nav-class
+	);
+}
+
+.nav-nested-margins {
+	flex-direction: column;
+	flex-wrap: nowrap;
+
+	> li .nav > li {
+		margin-left: $nav-nested-margins-spacer-x;
+	}
+}
+
+// Nav Tabs
+
+.nav-tabs {
+	@include clay-nav-variant($nav-tabs);
+
+	+ .tab-content {
+		.tab-pane {
+			&.active:first-child {
+				border-top-left-radius: 0;
+			}
+		}
+	}
+}
+
+.tab-content {
+	> .tab-pane {
+		display: none;
+	}
+
+	> .active {
+		display: block;
+	}
+}
+
+.dropdown-item[data-toggle='tab'] {
+	.dropdown-item-indicator,
+	.dropdown-item-indicator-start,
+	.dropdown-item-indicator-end {
+		display: none;
+	}
+
+	&.active {
+		.dropdown-item-indicator,
+		.dropdown-item-indicator-start,
+		.dropdown-item-indicator-end {
+			display: block;
+		}
+	}
+}
+
+@if ($enable-bs4-deprecated) {
+	// Bootstrap 4 Nav Pills
+
+	.nav-pills {
+		.nav-link {
+			@include border-radius($nav-pills-border-radius);
+		}
+
+		.nav-link.active,
+		.show > .nav-link {
+			background-color: $nav-pills-link-active-bg;
+			color: $nav-pills-link-active-color;
+		}
+	}
+}
+
+// Nav Variants
+
+@each $key, $value in $nav-palette {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($key, '.') or starts-with($key, '#'),
+			$key,
+			str-insert($key, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-nav-variant($value);
+		}
+	}
+}

@@ -1,0 +1,102 @@
+////
+/// @group tooltip
+////
+
+/// A mixin to help create `.tooltip` variants.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .tooltip
+/// 	show: (
+/// 		// .tooltip.show
+/// 	),
+/// 	arrow: (
+/// 		// .tooltip .arrow
+/// 		before: (
+/// 			// .tooltip .arrow::before
+/// 		),
+/// 		after: (
+/// 			// .tooltip .arrow::after
+/// 		),
+/// 	),
+/// 	tooltip-inner: (
+/// 		// .tooltip .tooltip-inner
+/// 	),
+/// )
+
+@mixin clay-tooltip-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		@if ($enabled) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			$_show: map-get($map, show);
+
+			@if ($_show) {
+				&.show {
+					@include clay-css($_show);
+				}
+			}
+
+			$_arrow: map-get($map, arrow);
+
+			@if ($_arrow) {
+				.arrow {
+					@include clay-css($_arrow);
+
+					$_before: map-get($_arrow, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_arrow, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+				}
+			}
+
+			$_tooltip-arrow: map-get($map, tooltip-arrow);
+
+			@if ($_tooltip-arrow) {
+				.tooltip-arrow {
+					@include clay-css($_tooltip-arrow);
+
+					$_before: map-get($_tooltip-arrow, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_tooltip-arrow, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+				}
+			}
+
+			$_tooltip-inner: map-get($map, tooltip-inner);
+
+			@if ($_tooltip-inner) {
+				.tooltip-inner {
+					@include clay-css($_tooltip-inner);
+				}
+			}
+		}
+	}
+}

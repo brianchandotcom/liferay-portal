@@ -1,0 +1,69 @@
+.pagination {
+	@include clay-pagination-variant($pagination);
+}
+
+.pagination-bar {
+	@include clay-pagination-variant($pagination-bar);
+}
+
+// Pagination Link
+
+.page-link {
+	@include clay-link($pagination-link);
+}
+
+// Pagination Item
+
+.page-item {
+	@include clay-css($pagination-item);
+
+	&.active {
+		.page-link {
+			@include clay-link(map-get($pagination-link, active-class));
+		}
+	}
+
+	&.disabled {
+		.page-link {
+			@include clay-link(map-get($pagination-link, disabled));
+		}
+	}
+}
+
+.page-item:first-child .page-link,
+.page-link-first {
+	@include clay-css($pagination-link-first);
+}
+
+.page-item:last-child .page-link,
+.page-link-last {
+	@include clay-css($pagination-link-last);
+}
+
+// Pagination Items Per Page
+
+.pagination-items-per-page {
+	@include clay-pagination-items-per-page-variant($pagination-items-per-page);
+}
+
+.page-item .dropdown-menu,
+.pagination-items-per-page .dropdown-menu {
+	margin-bottom: $pagination-dropdown-menu-spacer-y;
+	margin-top: $pagination-dropdown-menu-spacer-y;
+}
+
+.pagination-results {
+	@include clay-css($pagination-results);
+}
+
+/// @deprecated Pagination Sizes as of v3.146.0
+
+@if ($enable-pagination-sizes) {
+	.pagination-sm {
+		@include clay-pagination-variant($pagination-sm);
+	}
+
+	.pagination-lg {
+		@include clay-pagination-variant($pagination-lg);
+	}
+}

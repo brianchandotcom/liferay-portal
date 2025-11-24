@@ -1,0 +1,193 @@
+$card-border-radius: $border-radius !default;
+$card-border-width: 0px !default;
+$card-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.6) !default;
+
+$card-body-padding-bottom: 1rem !default;
+$card-body-padding-left: 1rem !default;
+$card-body-padding-right: 1rem !default;
+$card-body-padding-top: 1rem !default;
+
+$card-inner-border-radius: calc(
+	#{$card-border-radius} - #{$card-border-width}
+) !default;
+
+// min-width, see https://github.com/twbs/bootstrap/pull/22740#issuecomment-305868106
+
+$card: () !default;
+$card: map-deep-merge(
+	(
+		border-radius: clay-enable-rounded($card-border-radius),
+		border-width: $card-border-width,
+		box-shadow: clay-enable-shadows($card-box-shadow),
+	),
+	$card
+);
+
+// Card Title
+
+$card-title: () !default;
+$card-title: map-deep-merge(
+	(
+		color: $gray-900,
+		font-size: 0.875rem,
+	),
+	$card-title
+);
+
+$card-title-link: () !default;
+$card-title-link: map-deep-merge(
+	(
+		hover: (
+			color: map-get($card-title, color),
+		),
+	),
+	$card-title-link
+);
+
+// Card Subtitle
+
+$card-subtitle: () !default;
+$card-subtitle: map-deep-merge(
+	(
+		font-weight: $font-weight-normal,
+	),
+	$card-subtitle
+);
+
+$card-subtitle-link: () !default;
+$card-subtitle-link: map-deep-merge(
+	(
+		hover: (
+			color: $gray-600,
+		),
+	),
+	$card-subtitle-link
+);
+
+// Card Link
+
+$card-link: () !default;
+$card-link: map-deep-merge(
+	(
+		color: $gray-600,
+		font-size: 0.875rem,
+		hover: (
+			color: $gray-600,
+			text-decoration: underline,
+		),
+	),
+	$card-link
+);
+
+$checkbox-left-card-padding: 50px !default;
+
+$form-check-card-checked-box-shadow: 0 0 0 2px
+	clay-lighten($component-active-bg, 22.94) !default;
+
+// Card Interactive
+
+$card-interactive: () !default;
+$card-interactive: map-deep-merge(
+	(
+		hover: (
+			background-color: #f7f8f9,
+		),
+		focus: (
+			border-color: null,
+			box-shadow: $component-focus-box-shadow,
+		),
+		active: (
+			background-color: #f1f2f5,
+		),
+	),
+	$card-interactive
+);
+
+// Card Interactive Secondary
+
+$card-interactive-secondary: () !default;
+$card-interactive-secondary: map-deep-merge(
+	(
+		hover: (
+			border-color: transparent,
+			box-shadow: 0 0 0 2px $primary-l0,
+		),
+		focus: (
+			border-color: transparent,
+			box-shadow: 0 0 0 2px $primary-l0,
+		),
+	),
+	$card-interactive-secondary
+);
+
+// Card Type Asset
+
+$card-type-asset: () !default;
+$card-type-asset: map-deep-merge(
+	(
+		aspect-ratio: (
+			border-color: $gray-300,
+		),
+		card-body: (
+			padding-top: 0.75rem,
+		),
+	),
+	$card-type-asset
+);
+
+$image-card: () !default;
+$image-card: map-deep-merge(
+	(
+		aspect-ratio: (
+			checkered-foreground-color: $gray-300,
+		),
+	),
+	$image-card
+);
+
+$file-card: () !default;
+$file-card: map-deep-merge(
+	(
+		card-type-asset-icon: (
+			color: $gray-400,
+		),
+	),
+	$file-card
+);
+
+// Card Type Template
+
+$card-type-template-after-highlight: () !default;
+$card-type-template-after-highlight: map-deep-merge(
+	(
+		bottom: -1px,
+		left: -1px,
+		right: -1px,
+	),
+	$card-type-template-after-highlight
+);
+
+$card-type-template-aspect-ratio: () !default;
+$card-type-template-aspect-ratio: map-deep-merge(
+	(
+		background-image: none,
+	),
+	$card-type-template-aspect-ratio
+);
+
+$card-type-template-aspect-ratio-item: () !default;
+$card-type-template-aspect-ratio-item: map-deep-merge(
+	(
+		color: $gray-600,
+	),
+	$card-type-template-aspect-ratio-item
+);
+
+$card-type-template: () !default;
+$card-type-template: map-deep-merge(
+	(
+		border-width: 1px,
+		box-shadow: none,
+	),
+	$card-type-template
+);

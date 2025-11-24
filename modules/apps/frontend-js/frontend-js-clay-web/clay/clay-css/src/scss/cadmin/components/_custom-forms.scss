@@ -1,0 +1,163 @@
+.form-file {
+	@include clay-form-control-variant($cadmin-form-file);
+}
+
+.form-file-input {
+	cursor: $cadmin-input-file-cursor;
+	height: 100%;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
+	z-index: 10;
+
+	&::-webkit-file-upload-button {
+		cursor: $cadmin-input-file-cursor;
+	}
+
+	&:focus {
+		+ .btn-primary {
+			@extend %btn-primary-focus !optional;
+		}
+
+		+ .btn-secondary {
+			@extend %btn-secondary-focus !optional;
+		}
+
+		+ .btn-success {
+			@extend %btn-success-focus !optional;
+		}
+
+		+ .btn-warning {
+			@extend %btn-warning-focus !optional;
+		}
+
+		+ .btn-danger {
+			@extend %btn-danger-focus !optional;
+		}
+
+		+ .btn-light {
+			@extend %btn-light-focus !optional;
+		}
+
+		+ .btn-dark {
+			@extend %btn-dark-focus !optional;
+		}
+
+		+ .input-group {
+			border-radius: 1px;
+			box-shadow: $cadmin-component-focus-box-shadow;
+		}
+	}
+
+	&:disabled {
+		cursor: $cadmin-input-disabled-cursor;
+
+		&::-webkit-file-upload-button {
+			cursor: $cadmin-input-disabled-cursor;
+		}
+	}
+}
+
+// Custom Checkbox and Radio
+
+.custom-control {
+	@include clay-css($cadmin-custom-control);
+
+	&:only-child {
+		$only-child: setter(map-get($cadmin-custom-control, only-child), ());
+
+		@include clay-css($only-child);
+	}
+
+	label {
+		$label: setter(map-get($cadmin-custom-control, label), ());
+
+		@include clay-css($label);
+	}
+}
+
+.custom-control-label {
+	@include clay-css($cadmin-custom-control-label);
+
+	&::before {
+		@include clay-css(map-get($cadmin-custom-control-label, before));
+	}
+
+	&::after {
+		@include clay-css(map-get($cadmin-custom-control-label, after));
+	}
+}
+
+label.custom-control-label {
+	@include clay-css($cadmin-label-custom-control-label);
+}
+
+.custom-control-label-text {
+	@include clay-css($cadmin-custom-control-label-text);
+
+	&::before {
+		@include clay-css(map-get($cadmin-custom-control-label-text, before));
+	}
+
+	&::after {
+		@include clay-css(map-get($cadmin-custom-control-label-text, after));
+	}
+
+	small,
+	.small {
+		@include clay-css($cadmin-custom-control-label-text-small);
+	}
+}
+
+// Custom Control Primary
+
+.custom-control-primary {
+	.custom-control-label-text {
+		@include clay-css($cadmin-custom-control-primary-label-text);
+
+		&::before {
+			@include clay-css(
+				map-get($cadmin-custom-control-primary-label-text, before)
+			);
+		}
+
+		&::after {
+			@include clay-css(
+				map-get($cadmin-custom-control-primary-label-text, after)
+			);
+		}
+	}
+}
+
+// Custom Control Indicator
+
+.custom-control-input {
+	@include clay-custom-control-input-variant($cadmin-custom-control-input);
+}
+
+// Custom Checkbox
+
+.custom-checkbox {
+	@include clay-custom-control-variant($cadmin-custom-checkbox);
+}
+
+// Custom Radio
+
+.custom-radio {
+	@include clay-custom-control-variant($cadmin-custom-radio);
+}
+
+.custom-control-outside {
+	@include clay-custom-control-variant($cadmin-custom-control-outside);
+}
+
+// Custom Control Inline
+
+.custom-control-inline {
+	display: inline-flex;
+
+	+ .custom-control-inline {
+		margin-left: $cadmin-custom-control-spacer-x;
+	}
+}

@@ -1,0 +1,431 @@
+////
+/// @group panels
+////
+
+/// A mixin to create Panel variants. You can base your variant off `.panel` or create your own base class (e.g., `<div class="panel my-custom-panel-variant"></div>` or `<div class="my-custom-panel"></div>`).
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// See Mixin `clay-css` for available keys to pass into the base selector
+/// header: {Map | Null}, // See Mixin `clay-css` for available keys
+/// header-collapsed: {Map | Null}, // See Mixin `clay-css` for available keys
+/// header-c-inner: {Map | Null}, // See Mixin `clay-css` for available keys
+/// header-link: {Map | Null}, // See Mixin `clay-link` for available keys
+/// title: {Map | Null}, // See Mixin `clay-css` for available keys
+/// collapse-icon: {Map | Null}, // See Mixin `clay-css` for available keys
+/// body: {Map | Null}, // See Mixin `clay-css` for available keys
+/// footer: {Map | Null}, // See Mixin `clay-css` for available keys
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+/// header-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// header-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// header-border-style: {String | List | Null}, // deprecated after 3.9.0
+/// header-border-width: {Number | String | List | Null}, // deprecated after 3.9.0
+/// header-color: {Color | String | Null}, // deprecated after 3.9.0
+/// header-margin-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// header-margin-left: {Number | String | Null}, // deprecated after 3.9.0
+/// header-margin-right: {Number | String | Null}, // deprecated after 3.9.0
+/// header-margin-top: {Number | String | Null}, // deprecated after 3.9.0
+/// header-padding-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// header-padding-left: {Number | String | Null}, // deprecated after 3.9.0
+/// header-padding-right: {Number | String | Null}, // deprecated after 3.9.0
+/// header-padding-top: {Number | String | Null}, // deprecated after 3.9.0
+/// header-transition: {String | List | Null}, // deprecated after 3.9.0
+/// header-collapsed-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// title-font-size: {Number | String | Null}, // deprecated after 3.9.0
+/// title-font-weight: {Number | String | Null}, // deprecated after 3.9.0
+/// title-text-transform: {String | List | Null}, // deprecated after 3.9.0
+/// collapse-icon-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// collapse-icon-font-size: {Number | String | Null}, // deprecated after 3.9.0
+/// collapse-icon-left: {Number | String | Null}, // deprecated after 3.9.0
+/// collapse-icon-right: {Number | String | Null}, // deprecated after 3.9.0
+/// collapse-icon-top: {Number | String | Null}, // deprecated after 3.9.0
+/// body-margin-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// body-margin-left: {Number | String | Null}, // deprecated after 3.9.0
+/// body-margin-right: {Number | String | Null}, // deprecated after 3.9.0
+/// body-margin-top: {Number | String | Null}, // deprecated after 3.9.0
+/// body-padding-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// body-padding-left: {Number | String | Null}, // deprecated after 3.9.0
+/// body-padding-right: {Number | String | Null}, // deprecated after 3.9.0
+/// body-padding-top: {Number | String | Null}, // deprecated after 3.9.0
+/// footer-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// footer-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// footer-color: {Color | String | Null}, // deprecated after 3.9.0
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-panel-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		$header: setter(map-get($map, panel-header), map-get($map, header), ());
+		$header: map-merge(
+			$header,
+			(
+				background-color:
+					setter(
+						map-get($map, header-bg),
+						map-get($header, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, header-border-color),
+						map-get($header, border-color)
+					),
+				border-style:
+					setter(
+						map-get($map, header-border-style),
+						map-get($header, border-style)
+					),
+				border-width:
+					setter(
+						map-get($map, header-border-width),
+						map-get($header, border-width)
+					),
+				color:
+					setter(
+						map-get($map, header-color),
+						map-get($header, color)
+					),
+				margin-bottom:
+					setter(
+						map-get($map, header-margin-bottom),
+						map-get($header, margin-bottom)
+					),
+				margin-left:
+					setter(
+						map-get($map, header-margin-left),
+						map-get($header, margin-left)
+					),
+				margin-right:
+					setter(
+						map-get($map, header-margin-right),
+						map-get($header, margin-right)
+					),
+				margin-top:
+					setter(
+						map-get($map, header-margin-top),
+						map-get($header, margin-top)
+					),
+				padding-bottom:
+					setter(
+						map-get($map, header-padding-bottom),
+						map-get($header, padding-bottom)
+					),
+				padding-left:
+					setter(
+						map-get($map, header-padding-left),
+						map-get($header, padding-left)
+					),
+				padding-right:
+					setter(
+						map-get($map, header-padding-right),
+						map-get($header, padding-right)
+					),
+				padding-top:
+					setter(
+						map-get($map, header-padding-top),
+						map-get($header, padding-top)
+					),
+				transition:
+					setter(
+						map-get($map, header-transition),
+						map-get($header, transition)
+					),
+			)
+		);
+
+		$old-header-collapsed: setter(map-get($map, header-collapsed), ());
+		$header-collapsed: setter(map-get($header, collapsed), ());
+		$header-collapsed: map-merge($header-collapsed, $old-header-collapsed);
+		$header-collapsed: map-merge(
+			$header-collapsed,
+			(
+				border-color:
+					setter(
+						map-get($map, header-collapsed-border-color),
+						map-get($header-collapsed, border-color)
+					),
+			)
+		);
+
+		$old-header-c-inner: setter(map-get($map, header-c-inner), ());
+		$header-c-inner: setter(map-get($header, c-inner), ());
+		$header-c-inner: map-merge(
+			(
+				enabled:
+					if(
+						variable-exists(enable-c-inner),
+						$enable-c-inner,
+						if(
+							variable-exists(cadmin-enable-c-inner),
+							$cadmin-enable-c-inner,
+							null
+						)
+					),
+				margin-bottom: math-sign(map-get($header, padding-bottom)),
+				margin-left: math-sign(map-get($header, padding-left)),
+				margin-right: math-sign(map-get($header, padding-right)),
+				margin-top: math-sign(map-get($header, padding-top)),
+			),
+			$header-c-inner
+		);
+
+		$old-header-link: setter(map-get($map, header-link), ());
+		$header-link: setter(map-get($header, link), ());
+		$header-link: map-deep-merge($header-link, $old-header-link);
+
+		$title: setter(map-get($map, panel-title), map-get($map, title), ());
+		$title: map-merge(
+			$title,
+			(
+				font-size:
+					setter(
+						map-get($map, title-font-size),
+						map-get($title, font-size)
+					),
+				font-weight:
+					setter(
+						map-get($map, title-font-weight),
+						map-get($title, font-weight)
+					),
+				text-transform:
+					setter(
+						map-get($map, title-text-transform),
+						map-get($title, text-transform)
+					),
+			)
+		);
+
+		$collapse-icon: setter(map-get($map, collapse-icon), ());
+		$collapse-icon: map-merge(
+			$collapse-icon,
+			(
+				bottom:
+					setter(
+						map-get($map, collapse-icon-bottom),
+						map-get($collapse-icon, bottom)
+					),
+				font-size:
+					setter(
+						map-get($map, collapse-icon-font-size),
+						map-get($collapse-icon, font-size)
+					),
+				left:
+					setter(
+						map-get($map, collapse-icon-left),
+						map-get($collapse-icon, left)
+					),
+				right:
+					setter(
+						map-get($map, collapse-icon-right),
+						map-get($collapse-icon, right)
+					),
+				top:
+					setter(
+						map-get($map, collapse-icon-top),
+						map-get($collapse-icon, top)
+					),
+			)
+		);
+
+		$body: setter(map-get($map, panel-body), map-get($map, body), ());
+		$body: map-merge(
+			$body,
+			(
+				margin-bottom:
+					setter(
+						map-get($map, body-margin-bottom),
+						map-get($body, margin-bottom)
+					),
+				margin-left:
+					setter(
+						map-get($map, body-margin-left),
+						map-get($body, margin-left)
+					),
+				margin-right:
+					setter(
+						map-get($map, body-margin-right),
+						map-get($body, margin-right)
+					),
+				margin-top:
+					setter(
+						map-get($map, body-margin-top),
+						map-get($body, margin-top)
+					),
+				padding-bottom:
+					setter(
+						map-get($map, body-padding-bottom),
+						map-get($body, padding-bottom)
+					),
+				padding-left:
+					setter(
+						map-get($map, body-padding-left),
+						map-get($body, padding-left)
+					),
+				padding-right:
+					setter(
+						map-get($map, body-padding-right),
+						map-get($body, padding-right)
+					),
+				padding-top:
+					setter(
+						map-get($map, body-padding-top),
+						map-get($body, padding-top)
+					),
+			)
+		);
+
+		$footer: setter(map-get($map, panel-footer), map-get($map, footer), ());
+		$footer: map-merge(
+			$footer,
+			(
+				background-color:
+					setter(
+						map-get($map, footer-bg),
+						map-get($footer, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, footer-border-color),
+						map-get($footer, border-color)
+					),
+				color:
+					setter(
+						map-get($map, footer-color),
+						map-get($footer, color)
+					),
+			)
+		);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			@if (length($header) != 0) {
+				.panel-header {
+					@include clay-css($header);
+
+					@if (map-get($header-c-inner, enabled)) {
+						.c-inner {
+							@include clay-css($header-c-inner);
+						}
+					}
+
+					@if (length($header-collapsed) != 0) {
+						&.collapsed {
+							@include clay-css($header-collapsed);
+						}
+					}
+
+					@if (length($header-link) != 0) {
+						&.panel-header-link {
+							@include clay-link($header-link);
+						}
+					}
+
+					$_panel-header: map-get($map, panel-header);
+
+					@if ($_panel-header) {
+						$_collapse-icon: map-get(
+							$_panel-header,
+							'&.collapse-icon'
+						);
+
+						@if ($_collapse-icon) {
+							&.collapse-icon {
+								@include clay-css($_collapse-icon);
+							}
+						}
+					}
+
+					@if (length($collapse-icon) != 0) {
+						&:not(.collapse-icon-middle) {
+							.collapse-icon-closed,
+							.collapse-icon-open {
+								@include clay-css($collapse-icon);
+							}
+						}
+					}
+
+					$_collapse-icon-middle: map-get($map, collapse-icon-middle);
+
+					@if ($_collapse-icon-middle) {
+						&.collapse-icon-middle {
+							@include clay-css($_collapse-icon-middle);
+
+							$_collapse-icon: map-get(
+								$_collapse-icon-middle,
+								collapse-icon
+							);
+
+							@if ($_collapse-icon) {
+								.collapse-icon-closed,
+								.collapse-icon-open {
+									@include clay-css($_collapse-icon);
+								}
+							}
+						}
+					}
+
+					$_border-color: map-get($base, border-color);
+
+					@if ($_border-color) {
+						.panel-group & {
+							+ .panel-collapse > .panel-body {
+								border-color: $_border-color;
+							}
+						}
+					}
+				}
+			}
+
+			@if (length($title) != 0) {
+				.panel-title {
+					@include clay-css($title);
+				}
+			}
+
+			@if (length($body) != 0) {
+				.panel-body {
+					@include clay-css($body);
+				}
+			}
+
+			@if (length($footer) != 0) {
+				.panel-footer {
+					@include clay-css($footer);
+				}
+			}
+
+			// For Focus Box Shadow
+
+			$_border-radius: map-get($header-link, border-radius);
+
+			@if ($_border-radius) {
+				@at-root {
+					.panel-group.panel-group-flush & {
+						.panel-header-link {
+							&,
+							&.collapsed {
+								border-radius: $_border-radius;
+							}
+						}
+					}
+				}
+			}
+
+			@content;
+		}
+	}
+}

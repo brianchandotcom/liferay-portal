@@ -1,0 +1,85 @@
+// Toggle Switch
+
+.toggle-switch {
+	@include clay-toggle-switch-variant($cadmin-toggle-switch);
+}
+
+.toggle-switch-check-bar {
+	@include clay-css($cadmin-toggle-switch-check-bar);
+}
+
+.toggle-switch-bar {
+	@include clay-toggle-switch-bar-variant($cadmin-toggle-switch-bar);
+}
+
+.toggle-switch-check {
+	@include clay-toggle-switch-check-variant($cadmin-toggle-switch-check);
+}
+
+.toggle-switch-label {
+	@include clay-css($cadmin-toggle-switch-label);
+}
+
+.toggle-switch-text {
+	@include clay-css($cadmin-toggle-switch-text);
+}
+
+.toggle-switch-text-left {
+	@include clay-css($cadmin-toggle-switch-text-left);
+}
+
+.toggle-switch-text-right {
+	@include clay-css($cadmin-toggle-switch-text-right);
+}
+
+// Simple Toggle Switch
+
+.simple-toggle-switch {
+	@include clay-toggle-switch-variant($cadmin-simple-toggle-switch);
+
+	// deprecated
+
+	.toggle-switch-check + .toggle-switch-label {
+		margin-right: $cadmin-simple-toggle-switch-label-spacer-x;
+	}
+
+	.toggle-switch-label + .toggle-switch-check-bar {
+		margin-left: $cadmin-simple-toggle-switch-label-spacer-x;
+	}
+}
+
+.simple-toggle-switch-reverse {
+	@include clay-toggle-switch-variant($cadmin-simple-toggle-switch-reverse);
+}
+
+// Toggle Switch Sizes
+
+@each $size, $value in $cadmin-toggle-switch-sizes {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($size, 'toggle-switch-'),
+			clay-str-replace($size, 'toggle-switch-', '.toggle-switch-'),
+			$size
+		);
+
+		@if (starts-with($size, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-toggle-switch-variant($value);
+			}
+		} @else if (starts-with($size, 'toggle-switch-')) {
+			$placeholder: '%clay-#{$size}';
+
+			#{$placeholder} {
+				@include clay-toggle-switch-variant($value);
+			}
+
+			#{$selector} {
+				@extend #{$placeholder} !optional;
+			}
+		} @else {
+			#{$selector} {
+				@include clay-toggle-switch-variant($value);
+			}
+		}
+	}
+}

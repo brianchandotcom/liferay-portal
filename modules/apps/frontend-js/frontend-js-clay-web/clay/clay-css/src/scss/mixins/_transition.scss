@@ -1,0 +1,51 @@
+/// A Bootstrap 4 mixin that outputs a transition if `$enable-transition` is `true`. This also outputs the `prefers-reduced-motion` media query if `$enable-prefers-reduced-motion-media-query` is `true`.
+/// @param {Arglist} $transition...
+
+@mixin transition($transition...) {
+	$enable: setter(
+		if(
+			variable-exists(enable-shadows),
+			$enable-transitions,
+			$cadmin-enable-transitions
+		),
+		true
+	);
+
+	@if ($enable) {
+		@if length($transition) == 0 {
+			transition: $transition-base;
+		} @else {
+			transition: $transition;
+		}
+	}
+
+	@if (
+		setter(
+			if(
+				variable-exists(enable-shadows),
+				$enable-prefers-reduced-motion-media-query,
+				$cadmin-enable-prefers-reduced-motion-media-query
+			),
+			true
+		)
+	) {
+		@media (prefers-reduced-motion: reduce) {
+			transition: none;
+		}
+
+		@at-root {
+			$selector: '.c-prefers-reduced-motion &';
+
+			@if (variable-exists(cadmin-selector)) {
+				$selector: clay-insert-before(
+					'.cadmin',
+					'.c-prefers-reduced-motion '
+				);
+			}
+
+			#{$selector} {
+				transition: none;
+			}
+		}
+	}
+}

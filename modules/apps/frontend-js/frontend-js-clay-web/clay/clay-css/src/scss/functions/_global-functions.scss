@@ -1,0 +1,998 @@
+////
+/// @group globals
+////
+
+@import '_polyfills.scss';
+
+@import '_color-functions.scss';
+@import '_lx-icons-generated.scss';
+@import '_type-conversion-functions.scss';
+
+/// A function that checks if the value contains the key word `c-unset` or `clay-unset`
+/// @param {Any} $value The value to check
+
+@function clay-is-map-unset($value) {
+	@return if(($value == c-unset) or ($value == clay-unset), true, false);
+}
+
+/// A helper function that calculates text-indent of data-label-on and data-label-off in a `.toggle-switch`.
+/// @param {Number} $toggle-switch-width - Width of switch bar
+/// @param {Number} $toggle-switch-padding - Space between button and bar
+/// @param {Number} $label-spacer-x[8px] - Space between toggle-switch-bar and data-label
+
+@function clay-data-label-text-position(
+	$toggle-switch-width,
+	$toggle-switch-padding,
+	$label-spacer-x: 8px
+) {
+	@if ($toggle-switch-padding < 0) {
+		$toggle-switch-width: $toggle-switch-width +
+			abs($toggle-switch-padding);
+	}
+
+	@return $toggle-switch-width + $label-spacer-x;
+}
+
+/// A function that combines two maps. It adds new key value pairs to the end of the map.
+
+@function clay-map-merge($map1, $map2) {
+	@if (length($map2) < 1) {
+		@return $map1;
+	}
+
+	@each $key, $value in $map1 {
+		@if not(map-has-key($map2, $key)) {
+			$map2: map-merge(
+				$map2,
+				(
+					$key: $value,
+				)
+			);
+		}
+	}
+
+	@return $map2;
+}
+
+/// A function that returns a new map with all the keys and values including nested keys and values from both `$map1` and `$map2`. If both `$map1` and `$map2` have the same key, `$map2`’s value takes precedence. The key value pair `merge: false,` will skip merging maps. This allows component properties to be reset to a blank state.
+/// @param {Map, Null} $map1[()]
+/// @param {Map, Null} $map2[()]
+
+@function map-deep-merge($map1: (), $map2: ()) {
+	// @if ($map1 == c-unset or $map2 == c-unset) or ($map1 == clay-unset or $map2 == clay-unset) {
+	// 	@return null;
+	// }
+
+	@if (type-of($map1) == 'list' and length($map1) == 0) or
+		(type-of($map1) == 'null')
+	{
+		$map1: map-new();
+	}
+
+	@if (type-of($map1) != map) {
+		@error ('argument `$map1` of `map-deep-merge($map1, $map2)` must be a map');
+	}
+
+	@if (type-of($map2) == 'list' and length($map2) == 0) or
+		(type-of($map2) == 'null')
+	{
+		$map2: map-new();
+	}
+
+	@if (type-of($map2) != map) {
+		@error ('argument `$map2` of `map-deep-merge($map1, $map2)` must be a map');
+	}
+
+	$newMap: $map1;
+
+	@if (map-get($map2, merge) != false) {
+		@each $key, $value in $map2 {
+			@if (type-of($value) == map) {
+				$newMap: map-merge(
+					$newMap,
+					(
+						$key: map-deep-merge(map-get($newMap, $key), $value),
+					)
+				);
+			} @else {
+				$newMap: map-merge(
+					$newMap,
+					(
+						$key: $value,
+					)
+				);
+			}
+		}
+
+		@return $newMap;
+	}
+
+	@return $map2;
+}
+
+/// A helper function for setting default values in variables inside mixins if no value is declared. If the value of a variable is `clay-unset`, `setter` returns a value of `null` which prevents Sass from outputting the CSS property. If all the values in the arglist `$vars...` is `null`, `setter` returns `null`.
+/// @param {Arglist} $vars - A list of comma-delimited variables (e.g., $var1, $var2, $var3).
+
+@function setter($vars...) {
+	@each $var in $vars {
+		@if ($var == clay-unset) {
+			@return null;
+		}
+
+		@if ($var != null) {
+			@return $var;
+		}
+	}
+
+	@return null;
+}
+
+/// A helper function that returns the opposite of a number, generally used for `null` values so Sass doesn't output a value `-null`. Returns `null` if `$num` is not a number.
+/// @param {Any} $num - The variable
+
+@function math-sign($num) {
+	@if (type-of($num) == 'number') {
+		@return -($num);
+	} @else if (type-of($num) == 'string') {
+		@if (starts-with($num, 'var(--')) {
+			@return calc(#{$num} * -1);
+		}
+	}
+
+	@return null;
+}
+
+/// A function that returns the direct parent selector (e.g., clay-parent('#wrapper .container .row')) will return `.row`.
+/// @param {String} $selector - The full selector
+
+@function clay-parent($selector) {
+	$selector-list: simple-selectors(clay-str-replace('#{$selector}', ' ', ''));
+
+	@return nth($selector-list, length($selector-list));
+}
+
+/// A function that appends to a specific place in a CSS selector (e.g., clay-insert-after('.container ', '.myselector ', '.container .row .col-md-12')) will return `.container .myselector .row .col-md-12`.
+/// @param {String} $location - The string to target
+/// @param {String} $insert - The string to insert after the location
+/// @param {String} $selector - The full selector
+
+@function clay-insert-after($location, $insert, $selector: &) {
+	@return clay-str-replace(
+		'#{$selector}',
+		'#{$location}',
+		'#{$location}#{$insert}'
+	);
+}
+
+/// A function that prepends to a specific place in a CSS selector (e.g., clay-insert-before('.container ', '.myselector ', '.container .row .col-md-12')) will return `.myselector .container .row .col-md-12`.
+/// @param {String} $location - The string to target
+/// @param {String} $insert - The string to insert before the location
+/// @param {String} $selector - The full selector
+
+@function clay-insert-before($location, $insert, $selector: &) {
+	$newSelector: clay-str-replace(
+		'#{&}',
+		'#{$location}',
+		'#{$insert}#{$location}'
+	);
+
+	@if ($selector == '&:focus') {
+		@return '#{$newSelector}:focus';
+	}
+
+	@return $newSelector;
+}
+
+/// A helper function for displaying warning messages for required variables.
+/// @param {Any} $var - The variable to check
+/// @param {String} $msg['This value is required!'] - The error message to display
+
+@function required($var, $msg: 'This value is required!') {
+	@if not($var) {
+		@warn ($msg);
+	}
+
+	@return $var;
+}
+
+// Builds the calc string used in the CSS top property for
+// `.collapse-icon-closed` and `.collapse-icon-open`
+// @param $container-padding-top - Padding-top of containing element (e.g.,
+// $nav-link-padding-y)
+// @param $offset - Additional offset to add to $container-padding-top
+// @param $font-size - Font-size of containing element (e.g. font-size of
+// `.nav-link`)
+// @param $line-height - Line-height of containing element (e.g., line-height of
+// `.nav-link`)
+
+@function clay-collapse-icon-align(
+	$container-padding-top: 0,
+	$offset: 0,
+	$font-size: 1rem,
+	$line-height: 1.5
+) {
+	$str1: '';
+	$str2: '';
+
+	@if ($container-padding-top != 0) {
+		$str1: '#{$container-padding-top} + ';
+	}
+
+	@if ($offset != 0) {
+		$str1: '#{$str1}#{$offset} + ';
+	}
+
+	$str2: '(((#{$font-size} * #{$line-height}) - 1em) * 0.5)';
+
+	@return (calc(#{$str1}#{$str2}));
+}
+
+// Converts a pixel value to rem based on the `$base` font size. If the return
+// value will be used inside a Sass arithmetic operation don't set `$add-unit`
+// to true
+// @param $number - pixel value to convert
+// @param $add-unit - boolean value that adds rem unit at the end
+// @param $base - base font size to calculate rem value against
+
+@function clay-px-to-rem($number, $add-unit: false, $base: 16) {
+	@if type-of($number) == 'number' {
+		@if unit($number) == 'px' {
+			$number: clay-div($number, 1px);
+			$number: clay-div($number, $base);
+		} @else if unitless($number) {
+			$number: clay-div($number, $base);
+		} @else {
+			@debug 'Unable to convert: #{$number} should be a `px` value.';
+		}
+	}
+
+	@if $add-unit {
+		$number: #{$number}rem;
+	}
+
+	@return $number;
+}
+
+/// A function that returns a CSS gradient for use with the `background-image` property. This function returns `null` if `$enable-gradients` is set to `false`. This is a workaround for complying with Bootstrap's `$enable-gradients` setting.
+/// @param {String} $gradient - The CSS gradient or HEX color to generate the default gradient.
+/// @param {Bool} $custom-gradient[false] - Pass in `true` as the second parameter to this function if using a custom gradient.
+
+@function clay-enable-gradients($gradient, $custom-gradient: false) {
+	$enable: if(
+		variable-exists(enable-gradients),
+		$enable-gradients,
+		if(
+			variable-exists(cadmin-enable-gradients),
+			$cadmin-enable-gradients,
+			false
+		)
+	);
+
+	@if ($enable and $gradient) {
+		@if ($custom-gradient or $gradient == none) {
+			@return $gradient;
+		} @else {
+			@return linear-gradient(
+				180deg,
+				clay-mix($body-bg, $gradient, 15%),
+				$gradient
+			);
+		}
+	}
+
+	@return null;
+}
+
+/// A function that returns a number for use with the `border-radius` property. This function returns `null` if `$enable-rounded` is set to `false`. This is a workaround for complying with Bootstrap's `$enable-rounded` setting.
+/// @param {Number} $radius - The border radius.
+
+@function clay-enable-rounded($radius, $enable: null) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		@return $radius;
+	}
+
+	@return null;
+}
+
+/// A function that returns a shadow for use with the `box-shadow` property. This function returns `null` if `$enable-shadows` is set to `false`. This is a workaround for complying with Bootstrap's `$enable-shadows` setting.
+/// @param {List} $shadows - The box shadow. Pass in a single shadow or two shadows using `[$shadow1, $shadow2]` if you need a default shadow even if `$enable-shadows` is `false`. A focus shadow for example.
+
+@function clay-enable-shadows($shadows, $enable: null) {
+	$ret-val: null;
+
+	$length: length($shadows);
+	$separator: list-separator($shadows);
+
+	$enable: if(
+		variable-exists(enable-shadows),
+		$enable-shadows,
+		if(variable-exists(cadmin-enable-shadows), $cadmin-enable-shadows, true)
+	);
+
+	@if ($length == 2 and $separator == 'comma') {
+		@if ($enable) {
+			$ret-val: nth($shadows, 1);
+		} @else {
+			$ret-val: nth($shadows, 2);
+		}
+	} @else if ($separator == 'space') {
+		@if ($enable) {
+			$ret-val: $shadows;
+		}
+	}
+
+	@return $ret-val;
+}
+
+/// A function that returns a transition for use with the `transition` property. This function returns `null` if `$enable-transitions` is set to `false`. This is a workaround for complying with Bootstrap's `$enable-transitions` setting.
+/// @param {List} $transitions - The transitions.
+
+@function clay-enable-transitions($transitions) {
+	$enable: if(
+		variable-exists(enable-transitions),
+		$enable-transitions,
+		if(
+			variable-exists(cadmin-enable-transitions),
+			$cadmin-enable-transitions,
+			true
+		)
+	);
+
+	@if ($enable) {
+		@return $transitions;
+	}
+
+	@return null;
+}
+
+/// A function that returns the fallback value of a CSS Custom Property (CSS variable).
+/// @param {String} $var - The CSS Custom Property to evaluate.
+
+@function clay-get-fallback($var) {
+	@if (is-css-var($var) and str-index($var, ',')) {
+		$fallback-value: str-slice(
+			$var,
+			str-index($var, ',') + 2,
+			str-length($var) - 1
+		);
+
+		@if (is-css-var($fallback-value)) {
+			$fallback-value: clay-get-fallback($fallback-value);
+		}
+
+		$units: 'px'
+			'cm'
+			'mm'
+			'%'
+			'ch'
+			'pc'
+			'in'
+			'em'
+			'rem'
+			'pt'
+			'ex'
+			'vw'
+			'vh'
+			'vmin'
+			'vmax';
+
+		@each $unit in $units {
+			@if (str-index('#{$fallback-value}', $unit)) {
+				@return to-number($fallback-value);
+			}
+		}
+
+		@return to-color($fallback-value);
+	}
+
+	@return $var;
+}
+
+/// A Bootstrap 4 function that warns the user if values in key value pairs are not in ascending order. Used to evaluate Sass maps `$grid-breakpoints` and `$container-max-widths`.
+/// @param {Map} $map - The map to evaluate
+/// @param {String} $map-name - The name of the map
+
+@mixin _assert-ascending($map, $map-name) {
+	$prev-key: null;
+	$prev-num: null;
+
+	@each $key, $num in $map {
+		$num: clay-get-fallback($num);
+
+		@if $prev-num == null or unit($num) == '%' or unit($prev-num) == '%' {
+			// Do nothing
+		} @else if not comparable($prev-num, $num) {
+			@warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+		} @else if $prev-num >= $num {
+			@warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+		}
+
+		$prev-key: $key;
+		$prev-num: $num;
+	}
+}
+
+/// A Bootstrap 4 function that warns the user if the first value in a Sass map is not 0. Used to evalute the Sass map `$grid-breakpoints`.
+/// @param {Map} $map - The map to evaluate
+/// @param {String} $map-name['$grid-breakpoints'] - The name of the map
+
+@mixin _assert-starts-at-zero($map, $map-name: '$grid-breakpoints') {
+	$values: map-values($map);
+
+	$first-value: nth($values, 1);
+
+	@if $first-value != 0 {
+		@warn "First breakpoint in #{$map-name} must start at 0, but starts at #{$first-value}.";
+	}
+}
+
+/// A Bootstrap 4 function that returns the name of the next breakpoint relative to the breakpoint passed in through `$name` in the Sass map `$grid-breakpoints`. If the breakpoint does not exist in the Sass map, it returns the first breakpoint key.
+/// @param {Key} $name - The breakpoint name or keys in `$grid-breakpoints` (e.g., `xs`, `sm`, `md`, `lg`, `xl`)
+/// @param {Map} $breakpoints[$grid-breakpoints] - A map that defines the breakpoints
+/// @param {List} $breakpoint-names[map-keys($breakpoints)] - A list of all the keys in $breakpoints
+
+@function breakpoint-next($name, $breakpoints: null, $breakpoint-names: null) {
+	$breakpoints: setter(
+		$breakpoints,
+		if(
+			variable-exists(grid-breakpoints),
+			$grid-breakpoints,
+			if(
+				variable-exists(cadmin-grid-breakpoints),
+				$cadmin-grid-breakpoints,
+				(
+					xs: 0,
+					sm: 576px,
+					md: 768px,
+					lg: 992px,
+					xl: 1280px,
+				)
+			)
+		)
+	);
+
+	$breakpoint-names: setter($breakpoint-names, map-keys($breakpoints));
+
+	$n: index($breakpoint-names, $name);
+
+	@return if(
+		$n != null and $n < length($breakpoint-names),
+		nth($breakpoint-names, $n + 1),
+		null
+	);
+}
+
+/// A function that returns the name of the previous breakpoint relative to the breakpoint passed in through `$name` in the Sass map `$grid-breakpoints`. If the breakpoint does not exist in the Sass map, it returns the first breakpoint key.
+/// @param {Key} $name - The breakpoint name or keys in `$grid-breakpoints` (e.g., `xs`, `sm`, `md`, `lg`, `xl`)
+/// @param {Map} $breakpoints[$grid-breakpoints] - A map that defines the breakpoints
+/// @param {List} $breakpoint-names[map-keys($breakpoints)] - A list of all the keys in $breakpoints
+
+@function clay-breakpoint-prev(
+	$name,
+	$breakpoints: null,
+	$breakpoint-names: null
+) {
+	$breakpoints: setter(
+		$breakpoints,
+		if(
+			variable-exists(grid-breakpoints),
+			$grid-breakpoints,
+			if(
+				variable-exists(cadmin-grid-breakpoints),
+				$cadmin-grid-breakpoints,
+				(
+					xs: 0,
+					sm: 576px,
+					md: 768px,
+					lg: 992px,
+					xl: 1280px,
+				)
+			)
+		)
+	);
+
+	$breakpoint-names: setter($breakpoint-names, map-keys($breakpoints));
+
+	@each $value in $breakpoint-names {
+		@if (breakpoint-next($value) == $name) {
+			@return $value;
+		}
+	}
+
+	@return nth($breakpoint-names, 1);
+}
+
+/// A Bootstrap 4 function that returns the minimum breakpoint width; returns `null` for the first breakpoint.
+/// >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)) => 576px
+/// @param {Key} $name - The breakpoint name or keys in `$grid-breakpoints` (e.g., `xs`, `sm`, `md`, `lg`, `xl`)
+/// @param {Map} $breakpoints[$grid-breakpoints] - A map that defines the breakpoints
+
+@function breakpoint-min($name, $breakpoints: null) {
+	$breakpoints: setter(
+		$breakpoints,
+		if(
+			variable-exists(grid-breakpoints),
+			$grid-breakpoints,
+			if(
+				variable-exists(cadmin-grid-breakpoints),
+				$cadmin-grid-breakpoints,
+				(
+					xs: 0,
+					sm: 576px,
+					md: 768px,
+					lg: 992px,
+					xl: 1280px,
+				)
+			)
+		)
+	);
+
+	$min: map-get($breakpoints, $name);
+
+	@return if($min != 0, $min, null);
+}
+
+/// A Bootstrap 4 function that returns the maximum breakpoint width; returns `null` for the last breakpoint. Maximum breakpoint width. Null for the largest (last) breakpoint. The maximum value is calculated as the minimum of the next one less 0.02px to work around the limitations of `min-` and `max-` prefixes and viewports with fractional widths.
+/// See https://www.w3.org/TR/mediaqueries-4/#mq-min-max
+/// Uses 0.02px rather than 0.01px to work around a current rounding bug in Safari.
+/// See https://bugs.webkit.org/show_bug.cgi?id=178261
+/// >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)) => 767.98px
+/// @param {Key} $name - The breakpoint name or keys in `$grid-breakpoints` (e.g., `xs`, `sm`, `md`, `lg`, `xl`)
+/// @param {Map} $breakpoints[$grid-breakpoints] - A map that defines the breakpoints
+
+@function breakpoint-max($name, $breakpoints: null) {
+	$breakpoints: setter(
+		$breakpoints,
+		if(
+			variable-exists(grid-breakpoints),
+			$grid-breakpoints,
+			if(
+				variable-exists(cadmin-grid-breakpoints),
+				$cadmin-grid-breakpoints,
+				(
+					xs: 0,
+					sm: 576px,
+					md: 768px,
+					lg: 992px,
+					xl: 1280px,
+				)
+			)
+		)
+	);
+	$next: breakpoint-next($name, $breakpoints);
+
+	@return if($next, breakpoint-min($next, $breakpoints) - 0.02, null);
+}
+
+/// A Bootstrap 4 function that returns a blank string if smallest breakpoint,
+/// otherwise returns the name with a dash in front.
+/// >> breakpoint-infix(xs, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)) => ''  (Returns a blank string)
+/// >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)) => '-sm'
+/// @param {Key} $name - The breakpoint name or keys in `$grid-breakpoints` (e.g., `xs`, `sm`, `md`, `lg`, `xl`)
+/// @param {Map} $breakpoints[$grid-breakpoints] - A map that defines the breakpoints
+
+@function breakpoint-infix($name, $breakpoints: null) {
+	$breakpoints: setter(
+		$breakpoints,
+		if(
+			variable-exists(grid-breakpoints),
+			$grid-breakpoints,
+			if(
+				variable-exists(cadmin-grid-breakpoints),
+				$cadmin-grid-breakpoints,
+				(
+					xs: 0,
+					sm: 576px,
+					md: 768px,
+					lg: 992px,
+					xl: 1280px,
+				)
+			)
+		)
+	);
+
+	@return if(breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
+}
+
+/// A Bootstrap 4 function that converts a color into the YIQ color space and returns 1 of 2 colors depending on `$yiq-contrasted-threshold`. This is a quick way to meet WCAG 2.0 contrast requirements.
+/// @param {Color} $color - The color to convert
+/// @param {Color} $dark[$yiq-text-dark] - The color to return if `$color` >= `$yiq-contrasted-threshold`
+/// @param {Color} $light[$yiq-text-light] - The color to return if `$color` < `$yiq-contrasted-threshold`
+/// @param {Bool} $fallback[$enable-clay-color-functions-process-fallback] - Force Sass to process the CSS Custom Property fallback colors
+
+@function color-yiq(
+	$color,
+	$dark: null,
+	$light: null,
+	$threshold: null,
+	$fallback: clay-color-functions-process-fallback()
+) {
+	@if (is-css-var($color) and not $fallback) {
+		@return $color;
+	}
+
+	$r: clay-red($color);
+	$g: clay-green($color);
+	$b: clay-blue($color);
+
+	$yiq: (($r * 299) + ($g * 587) + ($b * 114)) * 0.001;
+
+	$dark: setter(
+		$dark,
+		if(
+			variable-exists(yiq-text-dark),
+			$yiq-text-dark,
+			if(
+				variable-exists(cadmin-yiq-text-dark),
+				$cadmin-yiq-text-dark,
+				#000
+			)
+		)
+	);
+
+	$light: setter(
+		$light,
+		if(
+			variable-exists(yiq-text-light),
+			$yiq-text-light,
+			if(
+				variable-exists(cadmin-yiq-text-light),
+				$cadmin-yiq-text-light,
+				#fff
+			)
+		)
+	);
+
+	$threshold: setter(
+		$threshold,
+		if(
+			variable-exists(yiq-contrasted-threshold),
+			$yiq-contrasted-threshold,
+			if(
+				variable-exists(cadmin-yiq-contrasted-threshold),
+				$cadmin-yiq-contrasted-threshold,
+				150
+			)
+		)
+	);
+
+	@if ($yiq >= $threshold) {
+		@return $dark;
+	} @else {
+		@return $light;
+	}
+}
+
+/// A Bootstrap 4 function that returns a value inside the `$colors` Sass map.
+/// @deprecated just use `map-get($colors, 'blue')`
+/// @param {String} $key['blue'] - The name of the color
+
+@function color($key: 'blue') {
+	@return map-get($colors, $key);
+}
+
+/// A Bootstrap 4 function that returns a value inside the `$theme-colors` Sass map.
+/// @deprecated just use `map-get($theme-colors, 'primary')`
+/// @param {String} $key['primary'] - The name of the color
+
+@function theme-color($key: 'primary', $colors: null) {
+	@if ($colors == null) {
+		$colors: if(
+			variable-exists(theme-colors),
+			$theme-colors,
+			if(variable-exists(cadmin-theme-colors), $cadmin-theme-colors, ())
+		);
+	}
+
+	@return map-get($colors, $key);
+}
+
+/// A Bootstrap 4 function that returns a value inside the `$grays` Sass map.
+/// @deprecated just use `map-get($grays, '100')`
+/// @param {String} $key['100'] - The name of the color
+
+@function gray($key: '100') {
+	@return map-get($grays, $key);
+}
+
+/// A Bootstrap 4 function that returns a lighter or darker color based on `$theme-colors` and an arbitrary scale `$level`.
+/// @deprecated not useful unless you don't care about colors and just want something lighter or darker
+/// @param {String} $color-name['primary'] - A key in the Sass map `$theme-colors`
+/// @param {Number} $level[0]
+
+@function theme-color-level(
+	$color-name: 'primary',
+	$level: 0,
+	$color-interval: null
+) {
+	$black: if(
+		variable-exists('black'),
+		$black,
+		if(variable-exists(cadmin-black), $cadmin-black, #000)
+	);
+
+	$white: if(
+		variable-exists('white'),
+		$white,
+		if(variable-exists(cadmin-white), $cadmin-white, #fff)
+	);
+
+	$color: theme-color($color-name);
+	$color-base: if($level > 0, $black, $white);
+	$level: abs($level);
+
+	$color-interval: setter(
+		$color-interval,
+		if(
+			variable-exists(theme-color-interval),
+			$theme-color-interval,
+			if(
+				variable-exists(cadmin-theme-color-interval),
+				$cadmin-theme-color-interval,
+				8%
+			)
+		)
+	);
+
+	@return clay-mix($color-base, $color, $level * $color-interval);
+}
+
+/// A Bootstrap 4 function that returns a CSS `calc` addition expression. This is their workaround for returning a valid calc value with `null` variables.
+/// @deprecated Clay CSS allows customizing of any CSS property. If the output isn't a valid `calc` value, just replace the property with a `calc` value that works.
+/// @param {Number} $value1 - The first value
+/// @param {Number} $value2 - The second value
+/// @param {Bool} $return-calc[true] - Use `false` to return without the `calc()` wrapper
+
+@function add($value1, $value2, $return-calc: true) {
+	@if $value1 == null {
+		@return $value2;
+	}
+
+	@if $value2 == null {
+		@return $value1;
+	}
+
+	@if type-of($value1) ==
+		number and
+		type-of($value2) ==
+		number and
+		comparable($value1, $value2)
+	{
+		@return $value1 + $value2;
+	}
+
+	@return if(
+		$return-calc == true,
+		calc(#{$value1} + #{$value2}),
+		$value1 + unquote(' + ') + $value2
+	);
+}
+
+/// A Bootstrap 4 function that returns a CSS `calc` subtraction expression. This is their workaround for returning a valid calc value with `null` variables.
+/// @deprecated Clay CSS allows customizing of any CSS property. If the output isn't a valid `calc` value, just replace the property with a `calc` value that works.
+/// @param {Number} $value1 - The first value
+/// @param {Number} $value2 - The second value
+/// @param {Bool} $return-calc[true] - Use `false` to return without the `calc()` wrapper
+
+@function subtract($value1, $value2, $return-calc: true) {
+	@if $value1 == null and $value2 == null {
+		@return null;
+	}
+
+	@if $value1 == null {
+		@return -$value2;
+	}
+
+	@if $value2 == null {
+		@return $value1;
+	}
+
+	@if type-of($value1) ==
+		number and
+		type-of($value2) ==
+		number and
+		comparable($value1, $value2)
+	{
+		@return $value1 - $value2;
+	}
+
+	@return if(
+		$return-calc == true,
+		calc(#{$value1} - #{$value2}),
+		$value1 + unquote(' - ') + $value2
+	);
+}
+
+/// A function that returns the largest of two numbers. This returns `null` if either number is `null`.
+/// @param {Number} $val1 - The first number.
+/// @param {Number} $val2 - The second number.
+
+@function clay-max($val1, $val2) {
+	@if ($val1 == null or $val2 == null) {
+		@return null;
+	}
+
+	@return max($val1, $val2);
+}
+
+/// A function that determines whether the string `$str1` begins with the characters of the specified string `$str2`. This returns `true` if `$str1` begins with `$str2`.
+/// @param {String} $str1 - The string to search.
+/// @param {String} $str2 - The search parameter.
+
+@function starts-with($str1, $str2) {
+	$returnVal: false;
+
+	@if (str-index($str1, $str2) == 1) {
+		$returnVal: true;
+	}
+
+	@return $returnVal;
+}
+
+// * SPDX-SnippetBegin
+// * SPDX-License-Identifier: MIT
+// * SPDX-SnippetCopyrightText: © 2016 Hugo Giraudel <https://hugogiraudel.com/>
+// *
+
+/// A function that fetches deeply nested values from a Sass map.
+/// @author Hugo Giraudel
+/// @link https://css-tricks.com/snippets/sass/deep-getset-maps/
+/// @param {Map} $map - The Sass map to fetch from
+/// @param {Arglist} $keys - The keys to loop through
+
+@function map-deep-get($map, $keys...) {
+	$newMap: $map;
+
+	@each $key in $keys {
+		@if (type-of($newMap) != 'map') {
+			@return null;
+		}
+
+		$newMap: map-get($newMap, $key);
+	}
+
+	@return $newMap;
+}
+
+/// A function to replace all instances of a specific character in a string.
+/// @author Hugo Giraudel
+/// @link https://www.sassmeister.com/gist/1b4f2da5527830088e4d
+/// @link http://codepen.io/jakob-e/pen/doMoML
+/// @param {String} $string - The string to operate on
+/// @param {String} $search - The character to replace
+/// @param {String} $replace[''] - The character to replace `$search` with
+
+@function clay-str-replace($string, $search, $replace: '') {
+	$index: str-index($string, $search);
+
+	@if $index {
+		$string: str-slice($string, 1, $index - 1) +
+			$replace +
+			clay-str-replace(
+				str-slice($string, $index + str-length($search)),
+				$search,
+				$replace
+			);
+	}
+
+	@return $string;
+}
+
+/// Bootstrap 4's `str-replace` function that is mapped to `clay-str-replace`, use that instead.
+/// @author Hugo Giraudel
+/// @link https://www.sassmeister.com/gist/1b4f2da5527830088e4d
+/// @param {String} $string - The string to operate on
+/// @param {String} $search - The character to replace
+/// @param {String} $replace[''] - The character to replace `$search` with
+
+@function str-replace($string, $search, $replace: '') {
+	@return clay-str-replace($string, $search, $replace);
+}
+
+// * SPDX-SnippetEnd
+
+// * SPDX-SnippetBegin
+// * SPDX-License-Identifier: MIT
+// * SPDX-SnippetCopyrightText: © 2018 Jakob Eriksen <http://codepen.io/jakob-e/pen/doMoML>
+// *
+
+/// A function to encode an SVG and provide back a data URI to be used in `background-image`. If the SVG uses double quotes to delimit attribute names and values, wrap the SVG in single quotes or vice versa.
+/// @param {String} $svg - The SVG markup to encode
+/// @link http://codepen.io/jakob-e/pen/doMoML
+
+@function clay-svg-url($svg) {
+	$encoded: '';
+	$index: 0;
+	$slice: 2000;
+
+	$loops: ceil(clay-div(str-length($svg), $slice));
+
+	@for $i from 1 through $loops {
+		$chunk: str-slice($svg, $index, $index + $slice - 1);
+
+		$chunk: clay-str-replace($chunk, '"', "'");
+		$chunk: clay-str-replace($chunk, ' ', '%20');
+		$chunk: clay-str-replace($chunk, '{', '%7B');
+		$chunk: clay-str-replace($chunk, '}', '%7D');
+		$chunk: clay-str-replace($chunk, '<', '%3C');
+		$chunk: clay-str-replace($chunk, '>', '%3E');
+		$chunk: clay-str-replace($chunk, '&', '%26');
+		$chunk: clay-str-replace($chunk, '#', '%23');
+
+		$encoded: #{$encoded}#{$chunk};
+
+		$index: $index + $slice;
+	}
+
+	@return url('data:image/svg+xml;charset=utf8,#{$encoded}');
+}
+
+// * SPDX-SnippetEnd
+
+// * SPDX-SnippetBegin
+// * SPDX-License-Identifier: MIT
+// * SPDX-SnippetCopyrightText: © 2018 Kevin Weber <https://codepen.io/kevinweber/pen/dXWoRw>
+// *
+
+/// A Bootstrap 4 function that converts ASCII characters in SVG's to URL encoded characters.
+/// @deprecated use clay-svg-url($svg) instead.
+/// @param {String} $string - The SVG to URL encode
+/// @param {Map} $escaped - The characters to escape
+
+@function escape-svg($string, $escaped: null) {
+	@if ($escaped == null) {
+		$escaped: if(
+			variable-exists(escaped-characters),
+			$escaped-characters,
+			if(
+				variable-exists(cadmin-escaped-characters),
+				$cadmin-escaped-characters,
+				(('<', '%3c'), ('>', '%3e'), ('#', '%23'))
+			)
+		);
+	}
+
+	@if str-index($string, 'data:image/svg+xml') {
+		@each $char, $encoded in $escaped {
+			$string: str-replace($string, $char, $encoded);
+		}
+	}
+
+	@return $string;
+}
+
+// * SPDX-SnippetEnd
+
+/// A function that returns a specific Lexicon Icon with a specific color as a data URI to be used in `background-image`.
+/// @param {String} $name - The Lexicon Icon name (e.g., angle-right)
+/// @param {Color} $color - The color of the Lexicon Icon
+
+@function clay-icon($name, $color) {
+	$lx-icons: clay-get-icons($color);
+
+	@return clay-svg-url(map-get($lx-icons, $name));
+}
+
+/// A function that returns the inner border radius based on the outer border radius minus the border width.
+/// @param {Number | String} $radius - The outer border-radius
+/// @param {Number | String} $width - The outer border-width
+
+@function clay-border-radius-inner(
+	$radius: $border-radius,
+	$width: $border-width
+) {
+	@if not(type-of($radius) == 'number' or type-of($radius) == 'string') {
+		@error 'The parameter `$radius` in the function `clay-border-radius-inner` cannot be a `#{type-of($radius)}`. It must be a number or a string.';
+	} @else if not (type-of($width) == 'number' or type-of($width) == 'string')
+	{
+		@error 'The parameter `$width` in the function `clay-border-radius-inner` cannot be a `#{type-of($width)}`. It must be a number or a string.';
+	}
+
+	@return calc(#{$radius} - #{$width});
+}

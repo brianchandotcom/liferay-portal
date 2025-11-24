@@ -1,0 +1,197 @@
+$component-link: () !default;
+$component-link: map-deep-merge(
+	(
+		border-radius: 1px,
+		transition: box-shadow 0.15s ease-in-out,
+		focus: (
+			color: clay-darken($gray-600, 15%),
+			box-shadow: $component-focus-box-shadow,
+			outline: 0,
+		),
+	),
+	$component-link
+);
+
+$link-primary: () !default;
+$link-primary: map-deep-merge(
+	(
+		border-radius: 1px,
+		transition: box-shadow 0.15s ease-in-out,
+		hover: (
+			background-color: $primary-l3,
+			color: clay-darken($primary, 15%),
+		),
+		focus: (
+			color: clay-darken($primary, 15%),
+			box-shadow: $component-focus-box-shadow,
+			outline: 0,
+		),
+	),
+	$link-primary
+);
+
+$link-secondary: () !default;
+$link-secondary: map-deep-merge(
+	(
+		border-radius: 1px,
+		transition: box-shadow 0.15s ease-in-out,
+		hover: (
+			background-color: $gray-200,
+			color: $gray-900,
+		),
+		focus: (
+			color: $gray-900,
+			box-shadow: $component-focus-box-shadow,
+			outline: 0,
+		),
+	),
+	$link-secondary
+);
+
+// Component Title
+
+$component-title: () !default;
+$component-title: map-deep-merge(
+	(
+		font-size: 1rem,
+		line-height: 1.25,
+		margin-bottom:
+			calc(
+				(
+						#{if(
+								variable-exists(dropdown-action-toggle-size),
+								$dropdown-action-toggle-size,
+								2rem
+							)} - (1em * 1.25)
+					) / 2
+			),
+		margin-top:
+			calc(
+				(
+						#{if(
+								variable-exists(dropdown-action-toggle-size),
+								$dropdown-action-toggle-size,
+								2rem
+							)} - (1em * 1.25)
+					) / 2
+			),
+	),
+	$component-title
+);
+
+$component-title-link: () !default;
+$component-title-link: map-deep-merge(
+	(
+		border-radius: 1px,
+		transition: box-shadow 0.15s ease-in-out,
+		focus: (
+			color: clay-darken($gray-900, 15%),
+			box-shadow: $component-focus-box-shadow,
+			outline: 0,
+		),
+	),
+	$component-title-link
+);
+
+// Component Subtitle
+
+$component-subtitle: () !default;
+$component-subtitle: map-deep-merge(
+	(
+		font-weight: $font-weight-semi-bold,
+		line-height: 1.45,
+	),
+	$component-subtitle
+);
+
+$component-subtitle-link: () !default;
+$component-subtitle-link: map-deep-merge(
+	(
+		border-radius: 1px,
+		transition: box-shadow 0.15s ease-in-out,
+		hover: (
+			color: $gray-900,
+		),
+		focus: (
+			color: $gray-900,
+			box-shadow: $component-focus-box-shadow,
+			outline: 0,
+		),
+	),
+	$component-subtitle-link
+);
+
+// Component Action
+
+$component-action: () !default;
+$component-action: map-deep-merge(
+	(
+		font-size: 1rem,
+		hover: (
+			background-color: rgba($gray-900, 0.03),
+			color: $gray-900,
+		),
+		focus: (
+			background-color: rgba($gray-900, 0.03),
+			box-shadow: $component-focus-box-shadow,
+			color: $gray-900,
+			outline: 0,
+		),
+		active: (
+			background-color: rgba($gray-900, 0.06),
+			color: $gray-900,
+		),
+		disabled: (
+			background-color: transparent,
+			box-shadow: none,
+		),
+	),
+	$component-action
+);
+
+// Link Outline
+
+$link-outline-primary: () !default;
+$link-outline-primary: map-deep-merge(
+	(
+		hover: (
+			background-color: $primary-l3,
+			color: $primary,
+		),
+		focus: (
+			background-color: $primary-l3,
+			box-shadow: $component-focus-box-shadow,
+			color: $primary,
+		),
+		active: (
+			background-color:
+				clay-lighten(clay-desaturate($primary, 42.05), 41.76),
+			color: $primary,
+		),
+		disabled: (
+			box-shadow: none,
+		),
+	),
+	$link-outline-primary
+);
+
+$link-outline-secondary: () !default;
+$link-outline-secondary: map-deep-merge(
+	(
+		border-color: $secondary-l2,
+		hover: (
+			background-color: rgba($gray-900, 0.03),
+			color: $gray-900,
+		),
+		focus: (
+			background-color: rgba($gray-900, 0.03),
+			box-shadow: $component-focus-box-shadow,
+			color: $gray-900,
+		),
+		active: (
+			background-color: rgba($gray-900, 0.06),
+			color: $gray-900,
+		),
+	),
+	$link-outline-secondary
+);

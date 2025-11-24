@@ -1,0 +1,901 @@
+.align-baseline {
+	vertical-align: baseline !important;
+}
+
+.align-top {
+	vertical-align: top !important;
+}
+
+.align-middle {
+	vertical-align: middle !important;
+}
+
+.align-bottom {
+	vertical-align: bottom !important;
+}
+
+.align-text-bottom {
+	vertical-align: text-bottom !important;
+}
+
+.align-text-top {
+	vertical-align: text-top !important;
+}
+
+// Background
+
+@each $color, $value in $cadmin-bg-theme-colors {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			str-insert($color, '.bg-', 1)
+		);
+
+		#{$selector} {
+			@include clay-css($value);
+		}
+
+		a#{$selector},
+		button#{$selector} {
+			&:hover,
+			&:focus {
+				@include clay-css(map-get($value, hover));
+			}
+		}
+	}
+}
+
+@if $cadmin-enable-gradients {
+	@each $color, $value in $cadmin-bg-gradient-theme-colors {
+		@if not clay-is-map-unset($value) {
+			.bg-gradient-#{$color} {
+				@include clay-css($value);
+			}
+		}
+	}
+}
+
+// Border
+
+.border {
+	border: $cadmin-border-width solid $cadmin-border-color !important;
+}
+
+.border-top {
+	border-top: $cadmin-border-width solid $cadmin-border-color !important;
+}
+
+.border-right {
+	border-right: $cadmin-border-width solid $cadmin-border-color !important;
+}
+
+.border-bottom {
+	border-bottom: $cadmin-border-width solid $cadmin-border-color !important;
+}
+
+.border-left {
+	border-left: $cadmin-border-width solid $cadmin-border-color !important;
+}
+
+.border-0 {
+	border: 0 !important;
+}
+
+.border-top-0 {
+	border-top: 0 !important;
+}
+
+.border-right-0 {
+	border-right: 0 !important;
+}
+
+.border-bottom-0 {
+	border-bottom: 0 !important;
+}
+
+.border-left-0 {
+	border-left: 0 !important;
+}
+
+@each $color, $value in $cadmin-border-theme-colors {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			str-insert($color, '.border-', 1)
+		);
+
+		#{$selector} {
+			@include clay-css($value);
+		}
+	}
+}
+
+// Border-radius
+
+.rounded-sm {
+	border-radius: $cadmin-border-radius-sm !important;
+}
+
+.rounded {
+	border-radius: $cadmin-rounded-border-radius !important;
+}
+
+.rounded-top {
+	border-top-left-radius: $cadmin-rounded-border-radius !important;
+	border-top-right-radius: $cadmin-rounded-border-radius !important;
+}
+
+.rounded-right {
+	border-bottom-right-radius: $cadmin-rounded-border-radius !important;
+	border-top-right-radius: $cadmin-rounded-border-radius !important;
+}
+
+.rounded-bottom {
+	border-bottom-left-radius: $cadmin-rounded-border-radius !important;
+	border-bottom-right-radius: $cadmin-rounded-border-radius !important;
+}
+
+.rounded-left {
+	border-bottom-left-radius: $cadmin-rounded-border-radius !important;
+	border-top-left-radius: $cadmin-rounded-border-radius !important;
+}
+
+.rounded-lg {
+	border-radius: $cadmin-border-radius-lg !important;
+}
+
+.rounded-circle {
+	border-radius: $cadmin-rounded-circle-border-radius !important;
+}
+
+.rounded-pill {
+	border-radius: $cadmin-rounded-pill !important;
+}
+
+.rounded-0 {
+	border-radius: $cadmin-rounded-0-border-radius !important;
+}
+
+// Clearfix
+
+.clearfix {
+	&::after {
+		clear: both;
+		content: '';
+		display: block;
+	}
+}
+
+// Display
+
+@each $cadmin-breakpoint in map-keys($cadmin-grid-breakpoints) {
+	@include media-breakpoint-up($cadmin-breakpoint) {
+		$cadmin-infix: breakpoint-infix(
+			$cadmin-breakpoint,
+			$cadmin-grid-breakpoints
+		);
+
+		@each $cadmin-value in $cadmin-displays {
+			.d#{$cadmin-infix}-#{$cadmin-value},
+			&.d#{$cadmin-infix}-#{$cadmin-value} {
+				display: $cadmin-value !important;
+			}
+		}
+	}
+}
+
+.hide {
+	display: none !important;
+}
+
+// Display Print
+
+@media print {
+	@each $cadmin-value in $cadmin-displays {
+		.d-print-#{$cadmin-value} {
+			display: $cadmin-value !important;
+		}
+	}
+}
+
+/* SPDX-SnippetBegin
+ * SPDX-License-Identifier: MIT
+ * SPDX-SnippetCopyrightText: © 2012 Nicolas Gallagher <https://github.com/suitcss/components-flex-embed>
+ */
+
+.embed-responsive {
+	display: block;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	width: 100%;
+
+	&::before {
+		content: '';
+		display: block;
+	}
+
+	.embed-responsive-item,
+	iframe,
+	embed,
+	object,
+	video {
+		border-width: 0;
+		bottom: 0;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+}
+
+@each $cadmin-embed-responsive-aspect-ratio
+	in $cadmin-embed-responsive-aspect-ratios
+{
+	$cadmin-embed-responsive-aspect-ratio-x: nth(
+		$cadmin-embed-responsive-aspect-ratio,
+		1
+	);
+	$cadmin-embed-responsive-aspect-ratio-y: nth(
+		$cadmin-embed-responsive-aspect-ratio,
+		2
+	);
+
+	.embed-responsive-#{$cadmin-embed-responsive-aspect-ratio-x}by#{$cadmin-embed-responsive-aspect-ratio-y} {
+		&::before {
+			padding-top: calc(
+				#{$cadmin-embed-responsive-aspect-ratio-y} /
+					#{$cadmin-embed-responsive-aspect-ratio-x} *
+					100%
+			);
+		}
+	}
+}
+
+/* SPDX-SnippetEnd */
+
+// Flex
+
+@each $cadmin-breakpoint in map-keys($cadmin-grid-breakpoints) {
+	@include media-breakpoint-up($cadmin-breakpoint) {
+		$cadmin-infix: breakpoint-infix(
+			$cadmin-breakpoint,
+			$cadmin-grid-breakpoints
+		);
+
+		.flex#{$cadmin-infix}-row {
+			flex-direction: row !important;
+		}
+
+		.flex#{$cadmin-infix}-column {
+			flex-direction: column !important;
+		}
+
+		.flex#{$cadmin-infix}-row-reverse {
+			flex-direction: row-reverse !important;
+		}
+
+		.flex#{$cadmin-infix}-column-reverse {
+			flex-direction: column-reverse !important;
+		}
+
+		.flex#{$cadmin-infix}-wrap {
+			flex-wrap: wrap !important;
+		}
+
+		.flex#{$cadmin-infix}-nowrap {
+			flex-wrap: nowrap !important;
+		}
+
+		.flex#{$cadmin-infix}-wrap-reverse {
+			flex-wrap: wrap-reverse !important;
+		}
+
+		.flex#{$cadmin-infix}-fill {
+			flex: 1 1 auto !important;
+		}
+
+		.flex#{$cadmin-infix}-grow-0 {
+			flex-grow: 0 !important;
+		}
+
+		.flex#{$cadmin-infix}-grow-1 {
+			flex-grow: 1 !important;
+		}
+
+		.flex#{$cadmin-infix}-shrink-0 {
+			flex-shrink: 0 !important;
+		}
+
+		.flex#{$cadmin-infix}-shrink-1 {
+			flex-shrink: 1 !important;
+		}
+
+		.justify-content#{$cadmin-infix}-start {
+			justify-content: flex-start !important;
+		}
+
+		.justify-content#{$cadmin-infix}-end {
+			justify-content: flex-end !important;
+		}
+
+		.justify-content#{$cadmin-infix}-center {
+			justify-content: center !important;
+		}
+
+		.justify-content#{$cadmin-infix}-between {
+			justify-content: space-between !important;
+		}
+
+		.justify-content#{$cadmin-infix}-around {
+			justify-content: space-around !important;
+		}
+
+		.align-items#{$cadmin-infix}-start {
+			align-items: flex-start !important;
+		}
+
+		.align-items#{$cadmin-infix}-end {
+			align-items: flex-end !important;
+		}
+
+		.align-items#{$cadmin-infix}-center {
+			align-items: center !important;
+		}
+
+		.align-items#{$cadmin-infix}-baseline {
+			align-items: baseline !important;
+		}
+
+		.align-items#{$cadmin-infix}-stretch {
+			align-items: stretch !important;
+		}
+
+		.align-content#{$cadmin-infix}-start {
+			align-content: flex-start !important;
+		}
+
+		.align-content#{$cadmin-infix}-end {
+			align-content: flex-end !important;
+		}
+
+		.align-content#{$cadmin-infix}-center {
+			align-content: center !important;
+		}
+
+		.align-content#{$cadmin-infix}-between {
+			align-content: space-between !important;
+		}
+
+		.align-content#{$cadmin-infix}-around {
+			align-content: space-around !important;
+		}
+
+		.align-content#{$cadmin-infix}-stretch {
+			align-content: stretch !important;
+		}
+
+		.align-self#{$cadmin-infix}-auto {
+			align-self: auto !important;
+		}
+
+		.align-self#{$cadmin-infix}-start {
+			align-self: flex-start !important;
+		}
+
+		.align-self#{$cadmin-infix}-end {
+			align-self: flex-end !important;
+		}
+
+		.align-self#{$cadmin-infix}-center {
+			align-self: center !important;
+		}
+
+		.align-self#{$cadmin-infix}-baseline {
+			align-self: baseline !important;
+		}
+
+		.align-self#{$cadmin-infix}-stretch {
+			align-self: stretch !important;
+		}
+	}
+}
+
+// Float
+
+@each $cadmin-breakpoint in map-keys($cadmin-grid-breakpoints) {
+	@include media-breakpoint-up($cadmin-breakpoint) {
+		$cadmin-infix: breakpoint-infix(
+			$cadmin-breakpoint,
+			$cadmin-grid-breakpoints
+		);
+
+		.float#{$cadmin-infix}-left {
+			float: left !important;
+		}
+
+		.float#{$cadmin-infix}-right {
+			float: right !important;
+		}
+
+		.float#{$cadmin-infix}-none {
+			float: none !important;
+		}
+	}
+}
+
+// Overflow
+
+@each $cadmin-value in $cadmin-overflows {
+	.overflow-#{$cadmin-value} {
+		overflow: $cadmin-value !important;
+	}
+}
+
+// Position
+
+@each $cadmin-position in $cadmin-positions {
+	.position-#{$cadmin-position} {
+		position: $cadmin-position !important;
+	}
+}
+
+.fixed-top {
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: $cadmin-zindex-fixed;
+}
+
+.fixed-bottom {
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	z-index: $cadmin-zindex-fixed;
+}
+
+.sticky-bottom {
+	@supports (position: sticky) {
+		bottom: 0;
+		position: sticky;
+		z-index: $cadmin-zindex-sticky;
+	}
+}
+
+.sticky-top {
+	@supports (position: sticky) {
+		position: sticky;
+		top: 0;
+		z-index: $cadmin-zindex-sticky;
+	}
+}
+
+// Screenreaders
+
+.sr-only {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+
+	// Fix for https://github.com/twbs/bootstrap/issues/25686
+
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.sr-only-focusable {
+	&:active,
+	&:focus {
+		clip: auto;
+		height: auto;
+		overflow: visible;
+		position: static;
+		white-space: normal;
+		width: auto;
+	}
+}
+
+// Shadows
+
+.shadow-sm {
+	box-shadow: $cadmin-box-shadow-sm !important;
+}
+
+.shadow {
+	box-shadow: $cadmin-box-shadow !important;
+}
+
+.shadow-lg {
+	box-shadow: $cadmin-box-shadow-lg !important;
+}
+
+.shadow-none {
+	box-shadow: none !important;
+}
+
+// Width and Height
+
+@each $cadmin-prop, $cadmin-abbrev in (width: w, height: h) {
+	@each $cadmin-size, $cadmin-length in $cadmin-sizes {
+		.#{$cadmin-abbrev}-#{$cadmin-size} {
+			#{$cadmin-prop}: $cadmin-length !important;
+		}
+	}
+}
+
+.mw-100 {
+	max-width: 100% !important;
+}
+
+.mh-100 {
+	max-height: 100% !important;
+}
+
+.min-vw-100 {
+	min-width: 100vw !important;
+}
+
+.min-vh-100 {
+	min-height: 100vh !important;
+}
+
+.vw-100 {
+	width: 100vw !important;
+}
+
+.vh-100 {
+	height: 100vh !important;
+}
+
+// Margin and Padding
+
+@each $cadmin-breakpoint in map-keys($cadmin-grid-breakpoints) {
+	@include media-breakpoint-up($cadmin-breakpoint) {
+		$cadmin-infix: breakpoint-infix(
+			$cadmin-breakpoint,
+			$cadmin-grid-breakpoints
+		);
+
+		@each $cadmin-prop, $cadmin-abbrev in (margin: m, padding: p) {
+			@each $cadmin-size, $cadmin-length in $cadmin-spacers {
+				.#{$cadmin-abbrev}#{$cadmin-infix}-#{$cadmin-size} {
+					#{$cadmin-prop}: $cadmin-length !important;
+				}
+
+				.#{$cadmin-abbrev}t#{$cadmin-infix}-#{$cadmin-size},
+				.#{$cadmin-abbrev}y#{$cadmin-infix}-#{$cadmin-size} {
+					#{$cadmin-prop}-top: $cadmin-length !important;
+				}
+
+				.#{$cadmin-abbrev}r#{$cadmin-infix}-#{$cadmin-size},
+				.#{$cadmin-abbrev}x#{$cadmin-infix}-#{$cadmin-size} {
+					#{$cadmin-prop}-right: $cadmin-length !important;
+				}
+
+				.#{$cadmin-abbrev}b#{$cadmin-infix}-#{$cadmin-size},
+				.#{$cadmin-abbrev}y#{$cadmin-infix}-#{$cadmin-size} {
+					#{$cadmin-prop}-bottom: $cadmin-length !important;
+				}
+
+				.#{$cadmin-abbrev}l#{$cadmin-infix}-#{$cadmin-size},
+				.#{$cadmin-abbrev}x#{$cadmin-infix}-#{$cadmin-size} {
+					#{$cadmin-prop}-left: $cadmin-length !important;
+				}
+			}
+		}
+
+		// Negative margins (e.g., where `.mb-n1` is negative version of `.mb-1`)
+
+		@each $cadmin-size, $cadmin-length in $cadmin-spacers {
+			@if $cadmin-size != 0 {
+				.m#{$cadmin-infix}-n#{$cadmin-size} {
+					margin: math-sign($cadmin-length) !important;
+				}
+
+				.mt#{$cadmin-infix}-n#{$cadmin-size},
+				.my#{$cadmin-infix}-n#{$cadmin-size} {
+					margin-top: math-sign($cadmin-length) !important;
+				}
+
+				.mr#{$cadmin-infix}-n#{$cadmin-size},
+				.mx#{$cadmin-infix}-n#{$cadmin-size} {
+					margin-right: math-sign($cadmin-length) !important;
+				}
+
+				.mb#{$cadmin-infix}-n#{$cadmin-size},
+				.my#{$cadmin-infix}-n#{$cadmin-size} {
+					margin-bottom: math-sign($cadmin-length) !important;
+				}
+
+				.ml#{$cadmin-infix}-n#{$cadmin-size},
+				.mx#{$cadmin-infix}-n#{$cadmin-size} {
+					margin-left: math-sign($cadmin-length) !important;
+				}
+			}
+		}
+
+		.m#{$cadmin-infix}-auto {
+			margin: auto !important;
+		}
+
+		.mt#{$cadmin-infix}-auto,
+		.my#{$cadmin-infix}-auto {
+			margin-top: auto !important;
+		}
+
+		.mr#{$cadmin-infix}-auto,
+		.mx#{$cadmin-infix}-auto {
+			margin-right: auto !important;
+		}
+
+		.mb#{$cadmin-infix}-auto,
+		.my#{$cadmin-infix}-auto {
+			margin-bottom: auto !important;
+		}
+
+		.ml#{$cadmin-infix}-auto,
+		.mx#{$cadmin-infix}-auto {
+			margin-left: auto !important;
+		}
+	}
+}
+
+// Stretched link
+
+.stretched-link {
+	&::after {
+		bottom: 0;
+		content: '';
+		left: 0;
+		pointer-events: auto;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 1;
+	}
+}
+
+// Text Alignment
+
+.text-justify {
+	text-align: justify !important;
+}
+
+.text-wrap {
+	white-space: normal !important;
+}
+
+.text-nowrap {
+	white-space: nowrap !important;
+}
+
+// Text Truncate
+
+.text-truncate {
+	@include clay-css($cadmin-text-truncate);
+}
+
+.text-truncate-inline {
+	@include clay-map-to-css($cadmin-text-truncate-inline);
+}
+
+// Responsive Text Alignment
+
+@each $cadmin-breakpoint in map-keys($cadmin-grid-breakpoints) {
+	@include media-breakpoint-up($cadmin-breakpoint) {
+		$cadmin-infix: breakpoint-infix(
+			$cadmin-breakpoint,
+			$cadmin-grid-breakpoints
+		);
+
+		.text#{$cadmin-infix}-left {
+			text-align: left !important;
+		}
+
+		.text#{$cadmin-infix}-right {
+			text-align: right !important;
+		}
+
+		.text#{$cadmin-infix}-center {
+			text-align: center !important;
+		}
+	}
+}
+
+// Text Transform
+
+.text-lowercase {
+	text-transform: lowercase !important;
+}
+
+.text-uppercase {
+	text-transform: uppercase !important;
+}
+
+.text-capitalize {
+	text-transform: capitalize !important;
+}
+
+// Font Weight and Italics
+
+.font-weight-lighter,
+.text-weight-lighter {
+	font-weight: $cadmin-font-weight-lighter !important;
+}
+
+.font-weight-light,
+.text-weight-light {
+	font-weight: $cadmin-font-weight-light !important;
+}
+
+.font-weight-normal,
+.text-weight-normal {
+	font-weight: $cadmin-font-weight-normal !important;
+}
+
+.font-weight-semi-bold,
+.text-weight-semi-bold {
+	font-weight: $cadmin-font-weight-semi-bold !important;
+}
+
+.font-weight-bold,
+.text-weight-bold {
+	font-weight: $cadmin-font-weight-bold !important;
+}
+
+.font-weight-bolder,
+.text-weight-bolder {
+	font-weight: $cadmin-font-weight-bolder !important;
+}
+
+.font-italic,
+.text-italic {
+	font-style: italic !important;
+}
+
+.font-monospace,
+.text-monospace {
+	font-family: $cadmin-font-family-monospace !important;
+}
+
+// Font Sizes
+
+@each $selector, $value in $cadmin-font-sizes {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($selector, '.') or
+				starts-with($selector, '#') or
+				starts-with($selector, '%'),
+			$selector,
+			str-insert($selector, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-css($value);
+		}
+	}
+}
+
+// Contextual Colors
+
+.text-white {
+	color: $cadmin-white !important;
+}
+
+@each $color, $value in $cadmin-text-theme-colors {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			str-insert($color, '.text-', 1)
+		);
+
+		#{$selector} {
+			@include clay-css($value);
+		}
+
+		a#{$selector} {
+			&:hover,
+			&:focus {
+				@include clay-css(map-get($value, hover));
+			}
+		}
+	}
+}
+
+// Misc
+
+.text-hide {
+	background-color: transparent;
+	border: 0;
+	color: transparent;
+	font: 0/0 a;
+	text-shadow: none;
+}
+
+@each $key, $value in $cadmin-text-decorations {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($key, '.') or
+				starts-with($key, '#') or
+				starts-with($key, '%'),
+			$key,
+			str-insert($key, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-link($value);
+		}
+	}
+}
+
+.text-break {
+	overflow-wrap: break-word !important;
+	word-wrap: break-word !important;
+}
+
+// Reset
+
+.text-reset {
+	color: inherit !important;
+}
+
+// Visibility
+
+.visible {
+	visibility: visible !important;
+}
+
+.invisible {
+	visibility: hidden !important;
+}
+
+@at-root {
+	// C Prefers Link Underline
+
+	html#{$cadmin-selector} {
+		@include clay-map-to-css($cadmin-c-prefers-link-underline);
+	}
+
+	// C Prefers Letter Spacing
+
+	html#{$cadmin-selector} {
+		@include clay-map-to-css($cadmin-c-prefers-letter-spacing);
+	}
+
+	// Display C Reduced Motion
+
+	html#{$cadmin-selector} {
+		@include clay-map-to-css($cadmin-displays-c-prefers-reduced-motion);
+	}
+
+	// C Prefers Reduced Motion
+
+	html#{$cadmin-selector} .c-prefers-reduced-motion .cadmin {
+		@include clay-css($cadmin-c-prefers-reduced-motion);
+
+		.loading-animation-squares {
+			@include clay-map-to-css(
+				map-deep-get(
+					$cadmin-loading-animation-squares,
+					'prefers-reduced-motion'
+				)
+			);
+		}
+	}
+}

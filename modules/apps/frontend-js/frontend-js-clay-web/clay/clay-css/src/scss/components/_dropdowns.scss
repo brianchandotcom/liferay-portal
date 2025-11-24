@@ -1,0 +1,494 @@
+.dropup,
+.dropright,
+.dropdown,
+.dropleft {
+	position: relative;
+}
+
+.dropdown-toggle {
+	@include clay-button-variant($dropdown-toggle);
+
+	@include caret();
+}
+
+.dropdown-header {
+	@include clay-css($dropdown-header);
+
+	@include media-breakpoint-down(map-get($dropdown-header, breakpoint-down)) {
+		@include clay-css(map-get($dropdown-header, mobile));
+	}
+
+	&:first-child {
+		@include clay-css(map-get($dropdown-header, first-child));
+	}
+}
+
+.dropdown-subheader {
+	@include clay-css($dropdown-subheader);
+
+	&:first-child {
+		@include clay-css(map-get($dropdown-subheader, first-child));
+	}
+}
+
+.dropdown-caption {
+	@include clay-css($dropdown-caption);
+}
+
+.dropdown-item {
+	@include clay-dropdown-item-variant($dropdown-item-base);
+
+	.form-check {
+		margin-bottom: 0;
+	}
+
+	.custom-control {
+		margin-bottom: 0;
+		margin-right: 0;
+		min-height: if(
+			variable-exists(custom-control-indicator-size),
+			$custom-control-indicator-size,
+			null
+		);
+	}
+}
+
+// Dropdown Item Text
+
+.dropdown-item-text {
+	@include clay-css($dropdown-item-text);
+}
+
+.dropdown-section {
+	@include clay-css($dropdown-section);
+
+	.form-group + .form-group {
+		@include clay-css(
+			map-deep-get($dropdown-section, form-group, form-group)
+		);
+	}
+
+	.custom-control {
+		@include clay-css(map-get($dropdown-section, custom-control));
+	}
+
+	.custom-control-label {
+		@include clay-css(map-get($dropdown-section, custom-control-label));
+	}
+
+	.custom-control-label-text {
+		@include clay-css(
+			map-get($dropdown-section, custom-control-label-text)
+		);
+	}
+
+	.custom-control-outside {
+		@include clay-custom-control-variant(
+			map-get($dropdown-section, custom-control-outside)
+		);
+	}
+
+	&.active {
+		@include clay-css(map-get($dropdown-section, active));
+
+		.custom-control-label {
+			@include clay-css(
+				map-deep-get($dropdown-section, active, custom-control-label)
+			);
+		}
+	}
+}
+
+.dropdown-section-grid {
+	@extend %list-unstyled !optional;
+
+	display: grid;
+	gap: 0.5rem 0.75rem;
+	grid-template-columns: repeat(9, 1fr);
+	margin-bottom: 0;
+	padding: map-get($dropdown-section, padding);
+}
+
+// Dropdown Footer
+
+.dropdown-footer {
+	@include clay-css($dropdown-footer);
+}
+
+// Dropdown Menu
+
+.dropdown-menu {
+	@include clay-dropdown-menu-variant($dropdown-menu);
+
+	.form-group {
+		margin-bottom: 0;
+	}
+
+	.inline-scroller {
+		max-height: $dropdown-inline-scroller-max-height;
+
+		@include media-breakpoint-down(md) {
+			max-height: $dropdown-inline-scroller-max-height-mobile;
+		}
+	}
+
+	> .list-unstyled {
+		margin-bottom: 0;
+	}
+}
+
+// Dropdown Menu Variants
+
+@each $key, $value in $dropdown-menu-palette {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($key, '.') or starts-with($key, '#'),
+			$key,
+			str-insert($key, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-dropdown-menu-variant($value);
+		}
+	}
+}
+
+// Dropdown Menu Alignment
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($breakpoint) {
+		$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+		.dropdown-menu#{$infix}-left {
+			left: 0;
+			right: auto;
+		}
+
+		.dropdown-menu#{$infix}-right {
+			left: auto;
+			right: 0;
+		}
+	}
+}
+
+// Allow for dropdowns to go bottom up (aka, dropup-menu)
+// Just add .dropup after the standard .dropdown class and you're set.
+
+.dropup {
+	.dropdown-menu {
+		bottom: 100%;
+		margin-bottom: $dropdown-spacer;
+		margin-top: 0;
+		top: auto;
+	}
+
+	.dropdown-toggle {
+		@include caret(up);
+	}
+}
+
+.dropright {
+	.dropdown-menu {
+		left: 100%;
+		margin-left: $dropdown-spacer;
+		margin-top: 0;
+		right: auto;
+		top: 0;
+	}
+
+	.dropdown-toggle {
+		@include caret(right);
+
+		&::after {
+			vertical-align: 0;
+		}
+	}
+}
+
+.dropleft {
+	.dropdown-menu {
+		left: auto;
+		margin-right: $dropdown-spacer;
+		margin-top: 0;
+		right: 100%;
+		top: 0;
+	}
+
+	.dropdown-toggle {
+		@include caret(left);
+
+		&::before {
+			vertical-align: 0;
+		}
+	}
+}
+
+// When enabled Popper.js, reset basic dropdown position
+
+.dropdown-menu {
+	&[x-placement^='top'],
+	&[x-placement^='right'],
+	&[x-placement^='bottom'],
+	&[x-placement^='left'] {
+		bottom: auto;
+		right: auto;
+	}
+}
+
+// Dropdown Divider
+
+.dropdown-divider {
+	@include clay-css($dropdown-divider);
+}
+
+// Dropdown Action
+
+.dropdown-action {
+	@include clay-css($dropdown-action);
+
+	> .dropdown-toggle {
+		@include clay-button-variant(
+			map-get($dropdown-action, dropdown-toggle)
+		);
+	}
+}
+
+// Dropdown Menu Indicator Start
+
+.dropdown-menu-indicator-start {
+	// `.dropdown-item-indicator` is deprecated in v2.3.5 use
+	// `.dropdown-item-indicator-start` instead
+	.dropdown-item-indicator {
+		height: $dropdown-item-indicator-size;
+		left: $dropdown-item-padding-x;
+		position: absolute;
+		top: $dropdown-item-padding-y;
+		width: $dropdown-item-indicator-size;
+	}
+
+	.dropdown-item-indicator-text-start {
+		padding-left: 0;
+	}
+
+	.dropdown-header,
+	.dropdown-subheader,
+	.dropdown-caption,
+	.dropdown-item {
+		padding-left: calc(
+			#{$dropdown-item-padding-x} + #{$dropdown-item-indicator-size} + #{$dropdown-item-indicator-spacer-x}
+		);
+	}
+
+	@if ($enable-c-inner) {
+		.dropdown-item {
+			.c-inner {
+				margin-left: calc(
+					(
+							#{$dropdown-item-padding-x} +
+								#{$dropdown-item-indicator-size} +
+								#{$dropdown-item-indicator-spacer-x}
+						) *
+						-1
+				);
+			}
+		}
+	}
+}
+
+.dropdown-item-indicator-start {
+	@include clay-link($dropdown-item-indicator-start);
+}
+
+.dropdown-item-indicator-text-start {
+	@include clay-link($dropdown-item-indicator-text-start);
+}
+
+// Dropdown Menu Indicator End
+
+.dropdown-menu-indicator-end {
+	// `.dropdown-item-indicator` is deprecated in v2.3.5 use
+	// `.dropdown-item-indicator-end` instead
+	.dropdown-item-indicator {
+		position: absolute;
+		right: $dropdown-item-padding-x;
+		top: $dropdown-item-padding-y;
+	}
+
+	.dropdown-item-indicator-text-end {
+		padding-right: 0;
+	}
+
+	.dropdown-item {
+		padding-right: calc(
+			#{$dropdown-item-padding-x} + #{$dropdown-item-indicator-size} + #{$dropdown-item-indicator-spacer-x}
+		);
+
+		@if ($enable-c-inner) {
+			.c-inner {
+				margin-right: calc(
+					(
+							#{$dropdown-item-padding-x} +
+								#{$dropdown-item-indicator-size} +
+								#{$dropdown-item-indicator-spacer-x}
+						) *
+						-1
+				);
+			}
+		}
+	}
+}
+
+.dropdown-item-indicator-end {
+	@include clay-link($dropdown-item-indicator-end);
+}
+
+.dropdown-item-indicator-text-end {
+	@include clay-link($dropdown-item-indicator-text-end);
+}
+
+// Dropdown Menu Positions
+
+.dropdown-menu-top {
+	@include clay-dropdown-menu-variant($dropdown-menu-top);
+}
+
+.dropdown-menu-top-right {
+	@include clay-dropdown-menu-variant($dropdown-menu-top-right);
+}
+
+.dropdown-menu-top-center {
+	@include clay-dropdown-menu-variant($dropdown-menu-top-center);
+}
+
+.dropdown-menu-center {
+	@include clay-dropdown-menu-variant($dropdown-menu-center);
+}
+
+.dropdown-menu-left-side {
+	@include clay-dropdown-menu-variant($dropdown-menu-left-side);
+}
+
+.dropdown-menu-left-side-bottom {
+	@include clay-dropdown-menu-variant($dropdown-menu-left-side-bottom);
+}
+
+.dropdown-menu-left-side-middle {
+	@include clay-dropdown-menu-variant($dropdown-menu-left-side-middle);
+}
+
+.dropdown-menu-right-side {
+	@include clay-dropdown-menu-variant($dropdown-menu-right-side);
+}
+
+.dropdown-menu-right-side-bottom {
+	@include clay-dropdown-menu-variant($dropdown-menu-right-side-bottom);
+}
+
+.dropdown-menu-right-side-middle {
+	@include clay-dropdown-menu-variant($dropdown-menu-right-side-middle);
+}
+
+// Dropdown wide / full
+
+%dropdown-full-wide-dropdown-menu {
+	max-width: none;
+	width: 100%;
+
+	@include media-breakpoint-up(md) {
+		max-height: none;
+		width: 100%;
+	}
+}
+
+.dropdown-full,
+.dropdown-wide {
+	.dropdown-header ~ .dropdown-header {
+		margin-top: $dropdown-full-wide-header-spacer-y;
+	}
+
+	.dropdown-menu {
+		@extend %dropdown-full-wide-dropdown-menu;
+
+		> .row {
+			margin-left: 0;
+			margin-right: 0;
+			min-width: $dropdown-wide-width;
+		}
+	}
+}
+
+.dropdown-wide .dropdown-menu {
+	// min-width 992px
+
+	@include media-breakpoint-up(lg) {
+		min-width: $dropdown-wide-width;
+	}
+}
+
+// Dropdown Menu Width
+
+.dropdown-menu-width-shrink {
+	@include clay-dropdown-menu-variant($dropdown-menu-width-shrink);
+}
+
+.dropdown-menu-width-full {
+	@include clay-css($dropdown-menu-width-full);
+}
+
+.dropdown-menu-width-sm {
+	@include clay-css($dropdown-menu-width-sm);
+
+	@include media-breakpoint-down(sm) {
+		@include clay-css($dropdown-menu-width-sm-sm-down);
+	}
+}
+
+// Dropdown Menu Height
+
+.dropdown-menu-height-auto {
+	@include clay-css($dropdown-menu-height-auto);
+}
+
+// Dropdown Menu Autocomplete
+
+.dropdown-full .autocomplete-dropdown-menu,
+.dropdown-full .dropdown-menu-autocomplete {
+	max-height: map-get($autocomplete-dropdown-menu, max-height-mobile);
+
+	@include media-breakpoint-up(md) {
+		max-height: map-get($autocomplete-dropdown-menu, max-height);
+	}
+}
+
+.autocomplete-dropdown-menu,
+.dropdown-menu-autocomplete {
+	@include clay-dropdown-menu-variant($autocomplete-dropdown-menu);
+}
+
+// Navbar Component Dropdowns
+
+.nav-item.dropdown-full {
+	position: static;
+}
+
+.nav-item.dropdown-wide {
+	// max-width 991px
+
+	@include media-breakpoint-down(md) {
+		position: static;
+	}
+}
+
+.navbar-nav .dropdown-menu-center {
+	// max-width 767px
+
+	@include media-breakpoint-down(sm) {
+		-ms-transform: none;
+		transform: none;
+	}
+}
+
+.navbar-right .dropdown-menu-center {
+	left: 50%;
+	right: auto;
+}

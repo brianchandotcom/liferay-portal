@@ -1,0 +1,51 @@
+$navbar-font-size: 0.875rem !default; // 14px
+
+// Navbar Underline
+
+$navbar-underline-active-bg: clay-lighten($component-active-bg, 22.94) !default;
+
+$navbar-underline: () !default;
+$navbar-underline: map-deep-merge(
+	(
+		navbar-toggler-link: (
+			after: (
+				background-color: $navbar-underline-active-bg,
+				height: 0.125rem,
+			),
+		),
+		media-breakpoint-up: (
+			md: (
+				navbar-expand-md: (
+					navbar-underline: (
+						navbar-nav: (
+							nav-link: (
+								active-class: (
+									after: (
+										background-color:
+											$navbar-underline-active-bg,
+										height: 0.125rem,
+									),
+								),
+							),
+						),
+					),
+				),
+			),
+		),
+	),
+	$navbar-underline
+);
+
+// Navbar Light
+
+$navbar-light-color: $gray-600 !default;
+$navbar-light-hover-color: $navbar-light-color !default;
+$navbar-light-active-color: $gray-900 !default;
+$navbar-light-disabled-color: $nav-link-disabled-color !default;
+
+// Navbar Dark
+
+$navbar-dark-color: $white !default;
+$navbar-dark-hover-color: $navbar-dark-color !default;
+$navbar-dark-active-color: $navbar-dark-color !default;
+$navbar-dark-disabled-color: $nav-link-disabled-color !default;

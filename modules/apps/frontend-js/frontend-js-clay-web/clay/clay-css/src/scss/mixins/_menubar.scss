@@ -1,0 +1,1038 @@
+////
+/// @group menubar
+////
+
+/// A mixin for creating alternate breakpoints for `.menubar-vertical-expand-{breakpoint}`.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// breakpoint-up: {String}, // This uses Bootstrap 4's breakpoint up to calculate breakpoint down. Use `breakpoint-down` instead
+/// breakpoint-down: {String}, // The Bootstrap 4 Breakpoint {xs | sm | md | lg | xl}
+/// border-color: {Color | String | List | Null},
+/// border-style: {String | List | Null},
+/// border-width: {Number | String | List | Null},
+/// max-width: {String | Number}, // Default: 15.625rem
+/// border-color-mobile: {Color | String | List}, // Default: transparent
+/// border-style-mobile: {String | List}, // Default: solid
+/// border-width-mobile: {Number | String | List}, // Default: 0.0625rem
+/// margin-bottom-mobile: {Number | String | Null},
+/// margin-left-mobile: {Number | String | Null},
+/// margin-right-mobile: {Number | String | Null},
+/// margin-top-mobile: {Number | String | Null},
+/// max-width-mobile: {Number | String}, // Default: none
+/// min-height-mobile: {Number | String}, // Default: 3rem
+/// padding-x-mobile: {Number | String}, // Default: 0.5rem
+/// padding-y-mobile: {Number | String | Null},
+/// collapse-border-color-mobile: {Color | String}, // Default: transparent
+/// collapse-border-style-mobile: {String | List}, // Default: solid
+/// collapse-border-width-mobile: {Number | String | List}, // Default: 0.0625rem
+/// collapse-inner-spacer-y-mobile: {Number | String}, // Default: 0.5rem
+/// collapse-margin-top-mobile: {Number | String | Null},
+/// collapse-max-width-mobile: {Number | String | Null},
+/// collapse-left-mobile: {Number | String}, // Default: -0.0625rem
+/// collapse-right-mobile: {Number | String}, // Default: -0.0625rem
+/// collapse-z-index-mobile: {Number | String | Null},
+/// toggler-border-color-mobile: {Color | String | List}, // Default: transparent
+/// toggler-border-style-mobile: {String | List}, // Default: solid
+/// toggler-border-width-mobile: {Number | String | List}, // Default: 0.0625rem
+/// toggler-height-mobile: {Number | String}, // Default: 2rem
+/// toggler-padding-x-mobile: {Number | String}, // Default: 0.5rem
+/// toggler-padding-y-mobile: {Number | String | Null},
+/// toggler-c-inner: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-menubar-vertical-expand($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+		$breakpoint-up: map-get($map, breakpoint-up);
+		$breakpoint-down: setter(map-get($map, breakpoint-down), c-unset);
+
+		@if ($breakpoint-up) and ($breakpoint-up != c-unset) {
+			@warn "`breakpoint-up` is deprecated in the mixin `clay-menubar-vertical-expand`, use the key `media-breakpoint-down: (sm: ())` instead.";
+		}
+
+		@if ($breakpoint-down) and ($breakpoint-down != c-unset) {
+			@warn "`breakpoint-down` is deprecated in the mixin `clay-menubar-vertical-expand`, use the key `media-breakpoint-down: (sm: ())` instead.";
+		}
+
+		// .menubar-vertical-expand-{md}
+
+		$mobile: setter(map-get($map, mobile), ());
+		$mobile: map-merge(
+			$mobile,
+			(
+				border-color:
+					setter(
+						map-get($map, border-color-mobile),
+						map-get($mobile, border-color)
+					),
+				border-style:
+					setter(
+						map-get($map, border-style-mobile),
+						map-get($mobile, border-style)
+					),
+				border-width:
+					setter(
+						map-get($map, border-width-mobile),
+						map-get($mobile, border-width)
+					),
+				margin-bottom:
+					setter(
+						map-get($map, margin-bottom-mobile),
+						map-get($mobile, margin-bottom)
+					),
+				margin-left:
+					setter(
+						map-get($map, margin-left-mobile),
+						map-get($mobile, margin-left)
+					),
+				margin-right:
+					setter(
+						map-get($map, margin-right-mobile),
+						map-get($mobile, margin-right)
+					),
+				margin-top:
+					setter(
+						map-get($map, margin-top-mobile),
+						map-get($mobile, margin-top)
+					),
+				max-width:
+					setter(
+						map-get($map, max-width-mobile),
+						map-get($mobile, max-width)
+					),
+				min-height:
+					setter(
+						map-get($map, min-height-mobile),
+						map-get($mobile, min-height)
+					),
+				padding-bottom:
+					setter(
+						map-get($map, padding-y-mobile),
+						map-get($mobile, padding-bottom)
+					),
+				padding-left:
+					setter(
+						map-get($map, padding-x-mobile),
+						map-get($mobile, padding-left)
+					),
+				padding-right:
+					setter(
+						map-get($map, padding-x-mobile),
+						map-get($mobile, padding-right)
+					),
+				padding-top:
+					setter(
+						map-get($map, padding-y-mobile),
+						map-get($mobile, padding-top)
+					),
+			)
+		);
+
+		// .menubar-collapse
+
+		$collapse-mobile: setter(map-get($map, collapse-mobile), ());
+		$collapse-mobile: map-merge(
+			$collapse-mobile,
+			(
+				border-color:
+					setter(
+						map-get($map, collapse-border-color-mobile),
+						map-get($collapse-mobile, border-color)
+					),
+				border-style:
+					setter(
+						map-get($map, collapse-border-style-mobile),
+						map-get($collapse-mobile, border-style)
+					),
+				border-width:
+					setter(
+						map-get($map, collapse-border-width-mobile),
+						map-get($collapse-mobile, border-width)
+					),
+				margin-top:
+					setter(
+						map-get($map, collapse-margin-top-mobile),
+						map-get($collapse-mobile, margin-top)
+					),
+				max-width:
+					setter(
+						map-get($map, collapse-max-width-mobile),
+						map-get($collapse-mobile, max-width)
+					),
+				left:
+					setter(
+						map-get($map, collapse-left-mobile),
+						map-get($collapse-mobile, left)
+					),
+				right:
+					setter(
+						map-get($map, collapse-right-mobile),
+						map-get($collapse-mobile, right)
+					),
+				z-index:
+					setter(
+						map-get($map, collapse-z-index-mobile),
+						map-get($collapse-mobile, z-index)
+					),
+			)
+		);
+
+		$nav-nested-mobile: setter(map-get($map, nav-nested-mobile), ());
+		$nav-nested-mobile: map-merge(
+			$nav-nested-mobile,
+			(
+				margin-bottom:
+					setter(
+						map-get($map, collapse-inner-spacer-y-mobile),
+						map-get($nav-nested-mobile, margin-bottom)
+					),
+				margin-top:
+					setter(
+						map-get($map, collapse-inner-spacer-y-mobile),
+						map-get($nav-nested-mobile, margin-top)
+					),
+			)
+		);
+
+		$nav-nested-margins-mobile: setter(
+			map-get($map, nav-nested-margins-mobile),
+			()
+		);
+		$nav-nested-margins-mobile: map-merge(
+			$nav-nested-margins-mobile,
+			(
+				margin-bottom:
+					setter(
+						map-get($map, collapse-inner-spacer-y-mobile),
+						map-get($nav-nested-margins-mobile, margin-bottom)
+					),
+				margin-top:
+					setter(
+						map-get($map, collapse-inner-spacer-y-mobile),
+						map-get($nav-nested-margins-mobile, margin-top)
+					),
+			)
+		);
+
+		// .menubar-toggler
+
+		$toggler-mobile: setter(map-get($map, toggler-mobile), ());
+		$toggler-mobile: map-deep-merge(
+			$toggler-mobile,
+			(
+				border-color:
+					setter(
+						map-get($map, toggler-border-color-mobile),
+						map-get($toggler-mobile, border-color)
+					),
+				border-style:
+					setter(
+						map-get($map, toggler-border-style-mobile),
+						map-get($toggler-mobile, border-style)
+					),
+				border-width:
+					setter(
+						map-get($map, toggler-border-width-mobile),
+						map-get($toggler-mobile, border-width)
+					),
+				height:
+					setter(
+						map-get($map, toggler-height-mobile),
+						map-get($toggler-mobile, height)
+					),
+				padding-bottom:
+					setter(
+						map-get($map, toggler-padding-y-mobile),
+						map-get($toggler-mobile, padding-bottom)
+					),
+				padding-left:
+					setter(
+						map-get($map, toggler-padding-x-mobile),
+						map-get($toggler-mobile, padding-left)
+					),
+				padding-right:
+					setter(
+						map-get($map, toggler-padding-x-mobile),
+						map-get($toggler-mobile, padding-right)
+					),
+				padding-top:
+					setter(
+						map-get($map, toggler-padding-y-mobile),
+						map-get($toggler-mobile, padding-top)
+					),
+			)
+		);
+
+		$_toggler-mobile-c-inner: setter(map-get($toggler-mobile, c-inner), ());
+		$_toggler-mobile-c-inner: map-merge(
+			$_toggler-mobile-c-inner,
+			(
+				enabled:
+					if(
+						variable-exists(enable-c-inner),
+						$enable-c-inner,
+						if(
+							variable-exists(cadmin-enable-c-inner),
+							$cadmin-enable-c-inner,
+							true
+						)
+					),
+				margin-bottom:
+					setter(
+						math-sign(map-get($toggler-mobile, padding-bottom)),
+						map-get($_toggler-mobile-c-inner, margin-bottom)
+					),
+				margin-left:
+					setter(
+						math-sign(map-get($toggler-mobile, padding-left)),
+						map-get($_toggler-mobile-c-inner, margin-left)
+					),
+				margin-right:
+					setter(
+						math-sign(map-get($toggler-mobile, padding-right)),
+						map-get($_toggler-mobile-c-inner, margin-right)
+					),
+				margin-top:
+					setter(
+						math-sign(map-get($toggler-mobile, padding-top)),
+						map-get($_toggler-mobile-c-inner, margin-top)
+					),
+			)
+		);
+
+		$_old-toggler-c-inner: setter(map-get($map, toggler-c-inner), ());
+		$_toggler-mobile-c-inner: map-merge(
+			$_toggler-mobile-c-inner,
+			$_old-toggler-c-inner
+		);
+
+		@if ($enabled) {
+			@include clay-css($map);
+
+			@if (length($breakpoint-down) != 0) {
+				@include media-breakpoint-down($breakpoint-down) {
+					@include clay-css($mobile);
+				}
+			}
+
+			.menubar-collapse {
+				$_menubar-collapse: setter(map-get($map, collapse), ());
+				$_menubar-collapse: map-deep-merge(
+					setter(map-get($map, menubar-collapse), ()),
+					$_menubar-collapse
+				);
+
+				@include clay-css($_menubar-collapse);
+
+				@include media-breakpoint-down($breakpoint-down) {
+					@include clay-css($collapse-mobile);
+				}
+
+				&.collapsing,
+				&.show {
+					display: block;
+				}
+			}
+
+			.menubar-toggler {
+				@include media-breakpoint-down($breakpoint-down) {
+					@include clay-css($toggler-mobile);
+
+					@if (map-get($_toggler-mobile-c-inner, enabled)) {
+						.c-inner {
+							@include clay-css($_toggler-mobile-c-inner);
+						}
+					}
+
+					.lexicon-icon {
+						@include clay-css(
+							map-get($toggler-mobile, lexicon-icon)
+						);
+					}
+				}
+			}
+
+			$_nav-nested: map-get($map, nav-nested);
+
+			@if ($_nav-nested) {
+				.nav-nested {
+					@include clay-css($_nav-nested);
+
+					@include media-breakpoint-down($breakpoint-down) {
+						@include clay-css($nav-nested-mobile);
+					}
+				}
+			}
+
+			$_nav-nested-margins: map-get($map, nav-nested-margins);
+
+			@if ($_nav-nested-margins) {
+				.nav-nested-margins {
+					@include clay-css($_nav-nested-margins);
+
+					@include media-breakpoint-down($breakpoint-down) {
+						@include clay-css($nav-nested-margins-mobile);
+					}
+
+					$_nav-nested-margins-item: map-get(
+						$map,
+						nav-nested-margins-item
+					);
+
+					@if ($_nav-nested-margins-item) {
+						> li .nav > li {
+							@include clay-css($_nav-nested-margins-item);
+
+							$_nav-nested-margins-item-mobile: $map,
+								nav-nested-margins-item-mobile;
+
+							@if ($_nav-nested-margins-item-mobile) {
+								@include media-breakpoint-down(
+									$breakpoint-down
+								) {
+									@include clay-css(
+										$_nav-nested-margins-item-mobile
+									);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			$_media-breakpoint-down: map-get($map, media-breakpoint-down);
+			$_media-breakpoint-up: map-get($map, media-breakpoint-up);
+
+			@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+				@include clay-generate-media-breakpoints(
+					$map,
+					'clay-menubar-vertical-variant'
+				);
+			}
+		} @else {
+			.menubar-collapse {
+				display: block;
+			}
+		}
+	}
+}
+
+/// A mixin that creates a `menubar-vertical-expand-{breakpoint}` variant.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// breakpoint-up: {String}, // This uses Bootstrap 4's breakpoint up to calculate breakpoint down. Use `breakpoint-down` instead
+/// breakpoint-down: {String}, // The Bootstrap 4 Breakpoint {xs | sm | md | lg | xl}
+/// // `bg` is deprecated use `background-color` instead
+/// bg: {Color | String | Null},
+/// border-color: {Color | String | List | Null},
+/// border-style: {String | List | Null},
+/// // `bg-mobile` is deprecated use Sass map `mobile` instead
+/// bg-mobile: {Color | String | Null},
+/// // `border-color-mobile` is deprecated use Sass map `mobile` instead
+/// border-color-mobile: {Color | String | List | Null},
+/// // `border-style-mobile` is deprecated use Sass map `mobile` instead
+/// border-style-mobile: {String | List | Null},
+/// // `link-bg` is deprecated use Sass map `link` instead
+/// link-bg: {Color | String | Null},
+/// // `link-border-radius` is deprecated use Sass map `link` instead
+/// link-border-radius: {Number | String | List | Null},
+/// // `link-color` is deprecated use Sass map `link` instead
+/// link-color: {Color | String},
+/// // `link-hover-bg` is deprecated use Sass map `link` instead
+/// link-hover-bg: {Color | String | Null},
+/// // `link-hover-color` is deprecated use Sass map `link` instead
+/// link-hover-color: {Color | String},
+/// // `link-active-bg` is deprecated use Sass map `link` instead
+/// link-active-bg: {Color | String | Null},
+/// // `link-active-color` is deprecated use Sass map `link` instead
+/// link-active-color: {Color | String},
+/// // `link-active-font-weight` is deprecated use Sass map `link` instead
+/// link-active-font-weight: {Number | String | Null},
+/// // `link-disabled-bg` is deprecated use Sass map `link` instead
+/// link-disabled-bg: {Color | String | Null},
+/// // `link-disabled-color` is deprecated use Sass map `link` instead
+/// link-disabled-color: {Color | String},
+/// link: {Map | Null}, // Pass parameters to `clay-link` mixin
+/// // `link-border-radius-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-border-radius-mobile: {Number | String | List | Null},
+/// // `link-color-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-color-mobile: {Color | String},
+/// // `link-hover-bg-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-hover-bg-mobile: {Color | String},
+/// // `link-hover-color-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-hover-color-mobile: {Color | String},
+/// // `link-active-bg-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-active-bg-mobile: {Color | String},
+/// // `link-active-font-weight-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-active-font-weight-mobile: {Number | String},
+/// // `link-active-color-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-active-color-mobile: {Color | String},
+/// // `link-disabled-bg-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-disabled-bg-mobile: {Color | String},
+/// // `link-disabled-color-mobile` is deprecated use Sass map `link-mobile` instead
+/// link-disabled-color-mobile: {Color | String},
+/// link-mobile: {Map | Null}, // Pass parameters to `clay-link` mixin
+/// collapse: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// // `collapse-bg-mobile` is deprecated use Sass map `collapse-mobile` instead
+/// collapse-bg-mobile: {Color | String},
+/// // `collapse-border-color-mobile` is deprecated use Sass map `collapse-mobile` instead
+/// collapse-border-color-mobile: {Color | String},
+/// // `collapse-border-radius-mobile` is deprecated use Sass map `collapse-mobile` instead
+/// collapse-border-radius-mobile: {Number | String | List},
+/// // `collapse-border-style-mobile` is deprecated use Sass map `collapse-mobile` instead
+/// collapse-border-style-mobile: {String | List | Null},
+/// // `collapse-box-shadow-mobile` is deprecated use Sass map `collapse-mobile` instead
+/// collapse-box-shadow-mobile: {String | List},
+/// collapse-mobile: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// nav-nested-margins-item: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// nav-nested-margins-item-mobile: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// // `toggler-border-color-mobile` is deprecated use Sass map `toggler-mobile` instead
+/// toggler-border-color-mobile: {Color | String | Null},
+/// // `toggler-border-style-mobile` is deprecated use Sass map `toggler-mobile` instead
+/// toggler-border-style-mobile: {String | List | Null},
+/// // `toggler-color-mobile` is deprecated use Sass map `toggler-mobile` instead
+/// toggler-color-mobile: {Color | String},
+/// // `toggler-font-size-mobile` is deprecated use Sass map `toggler-mobile` instead
+/// toggler-font-size-mobile: {Number | String | Null},
+/// // `toggler-font-weight-mobile` is deprecated use Sass map `toggler-mobile` instead
+/// toggler-font-weight-mobile: {Number | String | Null},
+/// toggler-mobile: {Map | Null}, // Pass parameters to `clay-button-variant` mixin
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-menubar-vertical-variant($map) {
+	$enable: setter(map-get($map, enable), true);
+	$breakpoint-up: map-get($map, breakpoint-up);
+	$breakpoint-down: setter(map-get($map, breakpoint-down), c-unset);
+
+	@if ($breakpoint-up) and ($breakpoint-up != c-unset) {
+		@warn "`breakpoint-up` is deprecated in the mixin `clay-menubar-vertical-variant`, use the key `media-breakpoint-down: (sm: ())` instead.";
+	}
+
+	@if ($breakpoint-down) and ($breakpoint-down != c-unset) {
+		@warn "`breakpoint-down` is deprecated in the mixin `clay-menubar-vertical-variant`, use the key `media-breakpoint-down: (sm: ())` instead.";
+	}
+
+	// .menubar-vertical-expand-{md}.menubar-{variant}
+
+	$base: map-merge(
+		$map,
+		(
+			background-color:
+				setter(map-get($map, bg), map-get($map, background-color)),
+		)
+	);
+
+	$mobile: setter(map-get($map, mobile), ());
+	$mobile: map-merge(
+		$mobile,
+		(
+			background-color:
+				setter(
+					map-get($map, bg-mobile),
+					map-get($mobile, background-color)
+				),
+			border-color:
+				setter(
+					map-get($map, border-color-mobile),
+					map-get($mobile, border-color)
+				),
+			border-style:
+				setter(
+					map-get($map, border-style-mobile),
+					map-get($mobile, border-style)
+				),
+		)
+	);
+
+	// .nav-link
+
+	$link: setter(map-get($map, link), ());
+	$link-hover: setter(map-get($link, hover), ());
+	$link-active: setter(map-get($link, active), ());
+	$link-active-class: setter(map-get($link, active-class), ());
+	$link-disabled: setter(map-get($link, disabled), ());
+	$link: map-deep-merge(
+		$link,
+		(
+			background-color:
+				setter(map-get($map, link-bg), map-get($link, background-color)),
+			border-radius:
+				setter(
+					map-get($map, link-border-radius),
+					map-get($link, border-radius)
+				),
+			color:
+				setter(
+					map-get($map, link-color),
+					map-get($link, color),
+					if(
+						variable-exists(navbar-light-color),
+						$navbar-light-color,
+						if(
+							variable-exists(cadmin-navbar-light-color),
+							$cadmin-navbar-light-color,
+							null
+						)
+					)
+				),
+			hover: (
+				background-color:
+					setter(
+						map-get($map, link-hover-bg),
+						map-get($link-hover, background-color)
+					),
+				color:
+					setter(
+						map-get($map, link-hover-color),
+						map-get($link-hover, color),
+						if(
+							variable-exists(navbar-light-hover-color),
+							$navbar-light-hover-color,
+							if(
+								variable-exists(
+									cadmin-navbar-light-hover-color
+								),
+								$cadmin-navbar-light-hover-color,
+								null
+							)
+						)
+					),
+			),
+			active: (
+				background-color:
+					setter(
+						map-get($map, link-active-bg),
+						map-get($link-active, background-color)
+					),
+				color:
+					setter(
+						map-get($map, link-active-color),
+						map-get($link-active, color),
+						if(
+							variable-exists(navbar-light-active-color),
+							$navbar-light-active-color,
+							if(
+								variable-exists(
+									cadmin-navbar-light-active-color
+								),
+								$cadmin-navbar-light-active-color,
+								null
+							)
+						)
+					),
+			),
+			active-class: (
+				font-weight:
+					setter(
+						map-get($map, link-active-class-font-weight),
+						map-get($link-active-class, font-weight)
+					),
+			),
+			disabled: (
+				background-color:
+					setter(
+						map-get($map, link-disabled-bg),
+						map-get($link-disabled, background-color)
+					),
+				color:
+					setter(
+						map-get($map, link-disabled-color),
+						map-get($link-disabled, color),
+						if(
+							variable-exists(navbar-light-disabled-color),
+							$navbar-light-disabled-color,
+							if(
+								variable-exists(
+									cadmin-navbar-light-disabled-color
+								),
+								$cadmin-navbar-light-disabled-color,
+								null
+							)
+						)
+					),
+			),
+		)
+	);
+
+	$link-mobile: setter(map-get($map, link-mobile), ());
+	$link-mobile-hover: setter(map-get($link-mobile, hover), ());
+	$link-mobile-active: setter(map-get($link-mobile, active), ());
+	$link-mobile-active-class: setter(map-get($link-mobile, active-class), ());
+	$link-mobile-disabled: setter(map-get($link-mobile, disabled), ());
+	$link-mobile: map-deep-merge(
+		$link-mobile,
+		(
+			border-radius:
+				setter(
+					map-get($map, link-border-radius-mobile),
+					map-get($link-mobile, border-radius)
+				),
+			color:
+				setter(
+					map-get($map, link-color-mobile),
+					map-get($link-mobile, color),
+					if(
+						variable-exists(dropdown-link-color),
+						$dropdown-link-color,
+						if(
+							variable-exists(cadmin-dropdown-link-color),
+							$cadmin-dropdown-link-color,
+							null
+						)
+					)
+				),
+			hover: (
+				background-color:
+					setter(
+						map-get($map, link-hover-bg-mobile),
+						map-get($link-mobile-hover, background-color),
+						if(
+							variable-exists(dropdown-link-hover-bg),
+							$dropdown-link-hover-bg,
+							if(
+								variable-exists(cadmin-dropdown-link-hover-bg),
+								$cadmin-dropdown-link-hover-bg,
+								null
+							)
+						)
+					),
+				color:
+					setter(
+						map-get($map, link-hover-color-mobile),
+						map-get($link-mobile-hover, color),
+						if(
+							variable-exists(dropdown-link-hover-color),
+							$dropdown-link-hover-color,
+							if(
+								variable-exists(
+									cadmin-dropdown-link-hover-color
+								),
+								$cadmin-dropdown-link-hover-color,
+								null
+							)
+						)
+					),
+			),
+			active: (
+				background-color:
+					setter(
+						map-get($map, link-active-bg-mobile),
+						map-get($link-mobile-active, background-color),
+						if(
+							variable-exists(dropdown-link-active-bg),
+							$dropdown-link-active-bg,
+							if(
+								variable-exists(cadmin-dropdown-link-active-bg),
+								$cadmin-dropdown-link-active-bg,
+								null
+							)
+						)
+					),
+				color:
+					setter(
+						map-get($map, link-active-color-mobile),
+						map-get($link-mobile-active, color),
+						if(
+							variable-exists(dropdown-link-active-color),
+							$dropdown-link-active-color,
+							if(
+								variable-exists(
+									cadmin-dropdown-link-active-color
+								),
+								$cadmin-dropdown-link-active-color,
+								null
+							)
+						)
+					),
+			),
+			active-class: (
+				font-weight:
+					setter(
+						map-get($map, link-active-font-weight-mobile),
+						map-get($link-mobile-active-class, font-weight),
+						if(
+							variable-exists(dropdown-link-active-font-weight),
+							$dropdown-link-active-font-weight,
+							if(
+								variable-exists(
+									cadmin-dropdown-link-active-font-weight
+								),
+								$cadmin-dropdown-link-active-font-weight,
+								null
+							)
+						)
+					),
+			),
+			disabled: (
+				background-color:
+					setter(
+						map-get($map, link-disabled-bg-mobile),
+						map-get($link-mobile-disabled, background-color),
+						transparent
+					),
+				color:
+					setter(
+						map-get($map, link-disabled-color-mobile),
+						map-get($link-mobile-disabled, color),
+						if(
+							variable-exists(dropdown-link-disabled-color),
+							$dropdown-link-disabled-color,
+							if(
+								variable-exists(
+									cadmin-dropdown-link-disabled-color
+								),
+								$cadmin-dropdown-link-disabled-color,
+								null
+							)
+						)
+					),
+			),
+		)
+	);
+
+	// .menubar-collapse
+
+	$collapse-mobile: setter(map-get($map, collapse-mobile), ());
+	$collapse-mobile: map-deep-merge(
+		$collapse-mobile,
+		(
+			background-color:
+				setter(
+					map-get($map, collapse-bg-mobile),
+					map-get($collapse-mobile, background-color),
+					if(
+						variable-exists(dropdown-bg),
+						$dropdown-bg,
+						if(
+							variable-exists(cadmin-dropdown-bg),
+							$cadmin-dropdown-bg,
+							null
+						)
+					)
+				),
+			border-color:
+				setter(
+					map-get($map, collapse-border-color-mobile),
+					map-get($collapse-mobile, border-color),
+					if(
+						variable-exists(dropdown-border-color),
+						$dropdown-border-color,
+						if(
+							variable-exists(cadmin-dropdown-border-color),
+							$cadmin-dropdown-border-color,
+							null
+						)
+					)
+				),
+			border-radius:
+				setter(
+					map-get($map, collapse-border-radius-mobile),
+					map-get($collapse-mobile, border-radius),
+					if(
+						variable-exists(border-radius),
+						$border-radius,
+						if(
+							variable-exists(cadmin-border-radius),
+							$cadmin-border-radius,
+							null
+						)
+					)
+				),
+			border-style:
+				setter(
+					map-get($map, collapse-border-style-mobile),
+					map-get($collapse-mobile, border-style)
+				),
+			box-shadow:
+				setter(
+					map-get($map, collapse-box-shadow-mobile),
+					map-get($collapse-mobile, box-shadow),
+					if(
+						variable-exists(dropdown-box-shadow),
+						$dropdown-box-shadow,
+						if(
+							variable-exists(cadmin-dropdown-box-shadow),
+							$cadmin-dropdown-box-shadow,
+							null
+						)
+					)
+				),
+		)
+	);
+
+	// .menubar-toggler
+
+	$toggler-mobile: setter(map-get($map, toggler-mobile), ());
+	$toggler-mobile: map-deep-merge(
+		$toggler-mobile,
+		(
+			border-color:
+				setter(
+					map-get($map, toggler-border-color-mobile),
+					map-get($toggler-mobile, border-color)
+				),
+			border-style:
+				setter(
+					map-get($map, toggler-border-style-mobile),
+					map-get($toggler-mobile, border-style)
+				),
+			color:
+				setter(
+					map-get($map, toggler-color-mobile),
+					map-get($toggler-mobile, color)
+				),
+			font-size:
+				setter(
+					map-get($map, toggler-font-size-mobile),
+					map-get($toggler-mobile, font-size)
+				),
+			font-weight:
+				setter(
+					map-get($map, toggler-font-weight-mobile),
+					map-get($toggler-mobile, font-weight)
+				),
+		)
+	);
+
+	@if ($enable) {
+		@if (length($map) != 0) {
+			@include clay-css($map);
+		}
+
+		@if (length($mobile) != 0) {
+			@include media-breakpoint-down($breakpoint-down) {
+				@include clay-css($mobile);
+			}
+		}
+
+		$_menubar-collapse: setter(map-get($map, collapse), ());
+		$_menubar-collapse: map-merge(
+			setter(map-get($map, menubar-collapse), ()),
+			$_menubar-collapse
+		);
+
+		@if (length($_menubar-collapse) != 0) {
+			.menubar-collapse {
+				@include clay-css($_menubar-collapse);
+
+				@include media-breakpoint-down($breakpoint-down) {
+					@include clay-css($collapse-mobile);
+				}
+			}
+		}
+
+		$_menubar-toggler: map-get($map, menubar-toggler);
+
+		@if ($_menubar-toggler) {
+			.menubar-toggler {
+				@include clay-css($_menubar-toggler);
+
+				$_c-inner: map-get($_menubar-toggler, c-inner);
+
+				@if ($_c-inner) {
+					.c-inner {
+						@include clay-css($_c-inner);
+					}
+				}
+
+				$_lexicon-icon: map-get($_menubar-toggler, lexicon-icon);
+
+				@if ($_lexicon-icon) {
+					.lexicon-icon {
+						@include clay-css($_lexicon-icon);
+					}
+				}
+
+				@if (length($toggler-mobile) != 0) {
+					@include media-breakpoint-down($breakpoint-down) {
+						@include clay-button-variant($toggler-mobile);
+					}
+				}
+			}
+		}
+
+		$_nav-nested: map-get($map, nav-nested);
+
+		@if ($_nav-nested) {
+			.nav-nested {
+				@include clay-css($_nav-nested);
+			}
+		}
+
+		$_nav-nested-margins: map-get($map, nav-nested-margins-item);
+
+		@if ($_nav-nested-margins) {
+			.nav-nested-margins {
+				> li .nav > li {
+					@include clay-css($_nav-nested-margins);
+
+					$_nav-nested-margins-item-mobile: map-get(
+						$map,
+						nav-nested-margins-item-mobile
+					);
+
+					@if ($_nav-nested-margins-item-mobile) {
+						@include media-breakpoint-down($breakpoint-down) {
+							@include clay-css($_nav-nested-margins-item-mobile);
+						}
+					}
+				}
+			}
+		}
+
+		$_nav-item: map-get($map, nav-item);
+
+		@if ($_nav-item) {
+			.nav-item {
+				@include clay-css($_nav-item);
+			}
+		}
+
+		$_nav-link: setter(map-get($map, nav-link), ());
+		$_nav-link: map-deep-merge($link, $_nav-link);
+
+		@if (length($_nav-link) != 0) {
+			.nav-link {
+				@include clay-link($_nav-link);
+
+				@include media-breakpoint-down($breakpoint-down) {
+					@if (length($link-mobile) != 0) {
+						@include clay-link($link-mobile);
+					}
+				}
+			}
+		}
+
+		$_menubar-actions-1: map-get($map, menubar-actions-1);
+
+		@if ($_menubar-actions-1) {
+			.menubar-actions-1 {
+				@include clay-css($_menubar-actions-1);
+			}
+		}
+
+		$_menubar-action: map-get($map, menubar-action);
+
+		@if ($_menubar-action) {
+			.menubar-action {
+				@include clay-css($_menubar-action);
+			}
+		}
+
+		$_media-breakpoint-down: map-get($map, media-breakpoint-down);
+		$_media-breakpoint-up: map-get($map, media-breakpoint-up);
+
+		@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+			@include clay-generate-media-breakpoints(
+				$map,
+				'clay-menubar-vertical-variant'
+			);
+		}
+	}
+}

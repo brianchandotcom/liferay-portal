@@ -1,0 +1,71 @@
+.breadcrumb-bar {
+	@include clay-css($breadcrumb-bar);
+}
+
+.breadcrumb {
+	@include clay-css($breadcrumb);
+}
+
+.breadcrumb-link {
+	@include clay-link($breadcrumb-link);
+}
+
+.breadcrumb-toggle {
+	@include clay-link($breadcrumb-toggle);
+}
+
+.breadcrumb-item {
+	@include clay-css($breadcrumb-item);
+
+	&.active,
+	.active {
+		@include clay-css(map-get($breadcrumb-item, active));
+
+		.breadcrumb-link {
+			color: inherit;
+		}
+	}
+
+	> span {
+		text-transform: inherit;
+	}
+
+	+ .breadcrumb-item {
+		@include clay-css(map-get($breadcrumb-item, breadcrumb-item));
+
+		&::before {
+			@include clay-css(
+				map-deep-get($breadcrumb-item, breadcrumb-item, before)
+			);
+		}
+	}
+
+	// IE9-11 hack to properly handle hyperlink underlines for breadcrumbs built
+	// without `<ul>`s. The `::before` pseudo-element generates an element
+	// *within* the .breadcrumb-item and thereby inherits the `text-decoration`.
+	//
+	// To trick IE into suppressing the underline, we give the pseudo-element an
+	// underline and then immediately remove it.
+
+	+ .breadcrumb-item:hover::before {
+		text-decoration: underline;
+	}
+
+	+ .breadcrumb-item:hover::before {
+		text-decoration: none;
+	}
+
+	.dropdown-toggle {
+		@include clay-button-variant(
+			map-get($breadcrumb-item, dropdown-toggle)
+		);
+	}
+}
+
+.breadcrumb-text-truncate {
+	@include clay-css($breadcrumb-text-truncate);
+
+	@include clay-scale-component {
+		max-width: $breadcrumb-text-truncate-max-width-mobile;
+	}
+}

@@ -1,0 +1,564 @@
+////
+/// @group sidebar
+////
+
+/// A mixin to create Sidebar color variants (e.g., `<div class="sidebar my-custom-sidebar-variant"></div>`).
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .sidebar
+/// 	component-link: (
+/// 		// .sidebar .component-link
+/// 	),
+/// 	close: (
+/// 		// .sidebar .close
+/// 	),
+/// 	sidenav-start: (
+/// 		// .sidenav-start .sidebar, .sidenav-left .sidebar
+/// 	),
+/// 	sidenav-end: (
+/// 		// .sidenav-end .sidebar, .sidenav-right .sidebar
+/// 	),
+/// 	sidebar-header: (
+/// 		// .sidebar .sidebar-header
+/// 		component-title: (
+/// 			// .sidebar .sidebar-header .component-title
+/// 		),
+/// 		component-subtitle: (
+/// 			// .sidebar .sidebar-header .component-subtitle
+/// 		),
+/// 	),
+/// 	sidebar-body: (
+/// 		// .sidebar .sidebar-body
+/// 	),
+/// 	sidebar-footer: (
+/// 		// .sidebar .sidebar-footer
+/// 	),
+/// 	nav-nested: (
+/// 		// .sidebar .nav-nested
+/// 		nav-link: (
+/// 			// .sidebar .nav-nested .nav-link
+/// 		),
+/// 	),
+/// 	sidebar-list-group: (
+/// 		// .sidebar .sidebar-list-group
+/// 		list-group-item: (
+/// 			// .sidebar .sidebar-list-group .list-group-item
+/// 		),
+/// 		list-group-title: (
+/// 			// .sidebar .sidebar-list-group .list-group-title
+/// 		),
+/// 		list-group-subtitle: (
+/// 			// .sidebar .sidebar-list-group .list-group-subtitle
+/// 		),
+/// 		list-group-text: (
+/// 			// .sidebar .sidebar-list-group .list-group-text
+/// 		),
+/// 		list-group-subtext: (
+/// 			// .sidebar .sidebar-list-group .list-group-subtext
+/// 		),
+/// 		sticker: (
+/// 			// .sidebar .sidebar-list-group .sticker
+/// 		),
+/// 		sticker-secondary: (
+/// 			// .sidebar .sidebar-list-group .sticker-secondary
+/// 		),
+/// 	),
+/// 	sidebar-panel: (
+/// 		// .sidebar .sidebar-panel
+/// 	),
+/// 	sidebar-dt: (
+/// 		// .sidebar .sidebar-dt
+/// 	),
+/// 	sidebar-dd: (
+/// 		// .sidebar .sidebar-dd
+/// 	),
+/// 	panel-unstyled: (
+/// 		// .sidebar .panel-unstyled
+/// 	),
+/// 	component-navigation-bar: (
+/// 		// .sidebar .component-navigation-bar
+/// 	),
+/// )
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null},
+/// panel-bg: {Color | String | Null},
+/// component-header-title: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// component-header-subtitle: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// component-link: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// dt: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// dd: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// sidebar-list-group-item-bg: {Color | String | Null},
+/// sidebar-list-group-item-border-color: {Color | String | List | Null},
+/// sidebar-list-group-title: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// sidebar-list-group-subtitle: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// sidebar-list-group-text: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// sidebar-list-group-subtext: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// panel-unstyled: {Map | Null}, // Pass parameters to `clay-panel-variant` mixin
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-sidebar-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		@each $key, $value in $base {
+			@if (type-of($value) != 'map') {
+				$map: map-remove($map, $key);
+			}
+		}
+
+		$panel: map-merge(
+			setter(map-get($map, sidebar-panel), ()),
+			setter(map-get($map, panel), ())
+		);
+
+		$panel: map-merge(
+			$panel,
+			(
+				background-color:
+					setter(
+						map-get($map, panel-bg),
+						map-deep-get($map, sidebar-panel, background-color)
+					),
+			)
+		);
+
+		$map: map-remove($map, sidebar-panel, panel);
+
+		$header: map-merge(
+			setter(map-get($map, sidebar-header), ()),
+			setter(map-get($map, header), ())
+		);
+
+		$map: map-remove($map, sidebar-header, header);
+
+		$header-component-title: map-merge(
+			setter(map-get($header, component-title), ()),
+			setter(map-get($map, component-header-title), ())
+		);
+
+		$map: map-remove($map, component-title, component-header-title);
+
+		$header-component-subtitle: map-merge(
+			setter(map-get($header, component-subtitle), ()),
+			setter(map-get($map, component-header-subtitle), ())
+		);
+
+		$map: map-remove($map, component-subtitle, component-header-subtitle);
+
+		$body: map-merge(
+			setter(map-get($map, sidebar-body), ()),
+			setter(map-get($map, body), ())
+		);
+
+		$map: map-remove($map, sidebar-body, body);
+
+		$footer: map-merge(
+			setter(map-get($map, sidebar-footer), ()),
+			setter(map-get($map, footer), ())
+		);
+
+		$map: map-remove($map, sidebar-footer, footer);
+
+		$dt: map-merge(
+			setter(map-get($map, sidebar-dt), ()),
+			setter(map-get($map, dt), ())
+		);
+
+		$map: map-remove($map, sidebar-dt, dt);
+
+		$dd: map-merge(
+			setter(map-get($map, sidebar-dd), ()),
+			setter(map-get($map, dd), ())
+		);
+
+		$map: map-remove($map, sidebar-dd, dd);
+
+		$nav-nested: setter(map-get($map, nav-nested), ());
+
+		$nav-nested-nav-link: map-merge(
+			setter(map-get($nav-nested, nav-link), ()),
+			setter(map-get($map, nav-nested-link), ())
+		);
+
+		$map: map-remove($map, nav-link, nav-nested, nav-nested-link);
+
+		$sidebar-list-group: setter(map-get($map, sidebar-list-group), ());
+
+		$map: map-remove($map, sidebar-list-group);
+
+		$sidebar-list-group-item: setter(
+			map-get($sidebar-list-group, list-group-item),
+			()
+		);
+		$sidebar-list-group-item: map-merge(
+			$sidebar-list-group-item,
+			(
+				background-color:
+					setter(
+						map-get($map, sidebar-list-group-item-bg),
+						map-deep-get(
+							$sidebar-list-group,
+							list-group-item,
+							background-color
+						)
+					),
+				border-color:
+					setter(
+						map-get($map, sidebar-list-group-item-border-color),
+						map-deep-get(
+							$sidebar-list-group,
+							list-group-item,
+							border-color
+						)
+					),
+			)
+		);
+
+		$map: map-remove(
+			$map,
+			list-group-item,
+			sidebar-list-group-item-bg,
+			sidebar-list-group-item-border-color
+		);
+
+		$sidebar-list-group-title: map-merge(
+			setter(map-get($sidebar-list-group, list-group-title), ()),
+			setter(map-get($map, sidebar-list-group-title), ())
+		);
+
+		$map: map-remove($map, list-group-title, sidebar-list-group-title);
+
+		$sidebar-list-group-subtitle: map-merge(
+			setter(map-get($sidebar-list-group, list-group-subtitle), ()),
+			setter(map-get($map, sidebar-list-group-subtitle), ())
+		);
+
+		$map: map-remove(
+			$map,
+			list-group-subtitle,
+			sidebar-list-group-subtitle
+		);
+
+		$sidebar-list-group-text: map-merge(
+			setter(map-get($sidebar-list-group, list-group-text), ()),
+			setter(map-get($map, sidebar-list-group-text), ())
+		);
+
+		$map: map-remove($map, list-group-text, sidebar-list-group-text);
+
+		$sidebar-list-group-subtext: map-merge(
+			setter(map-get($sidebar-list-group, list-group-subtext), ()),
+			setter(map-get($map, sidebar-list-group-subtext), ())
+		);
+
+		$map: map-remove($map, list-group-subtext, sidebar-list-group-subtext);
+
+		$sidebar-list-group-sticker: map-deep-merge(
+			map-get($sidebar-list-group, sticker),
+			map-get($map, sidebar-list-group-sticker)
+		);
+
+		$map: map-remove($map, sticker, sidebar-list-group-sticker);
+
+		$sidebar-list-group-sticker-secondary: map-deep-merge(
+			map-get($sidebar-list-group, sticker-secondary),
+			map-get($map, sidebar-list-group-sticker-secondary)
+		);
+
+		$map: map-remove(
+			$map,
+			sticker-secondary,
+			sidebar-list-group-sticker-secondary
+		);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			@at-root {
+				$_sidenav-start: map-get($map, sidenav-start);
+				$map: map-remove($map, sidenav-start);
+
+				@if ($_sidenav-start) {
+					#{clay-insert-before(clay-parent(&), '.sidenav-start ')},
+					#{clay-insert-before(clay-parent(&), '.sidenav-left ')} {
+						@include clay-css($_sidenav-start);
+
+						$_focus: map-get($_sidenav-start, focus);
+
+						@if ($_focus) {
+							&.focus,
+							#{$focus-visible-selector},
+							#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+								@include clay-css($_focus);
+							}
+						}
+					}
+				}
+
+				$_sidenav-end: map-get($map, sidenav-right);
+				$map: map-remove($map, sidenav-right);
+
+				@if ($_sidenav-end) {
+					#{clay-insert-before(clay-parent(&), '.sidenav-end ')},
+					#{clay-insert-before(clay-parent(&), '.sidenav-right ')} {
+						@include clay-css($_sidenav-end);
+
+						$_focus: map-get($sidenav-end, focus);
+
+						@if ($_focus) {
+							&.focus,
+							#{$focus-visible-selector},
+							#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+								@include clay-css($_focus);
+							}
+						}
+					}
+				}
+			}
+
+			$_focus: map-get($map, focus);
+			$map: map-remove($map, focus);
+
+			@if ($_focus) {
+				@at-root {
+					&.focus,
+					#{$focus-visible-selector},
+					#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+						@include clay-css($_focus);
+					}
+				}
+			}
+
+			$_component-link: map-get($map, component-link);
+			$map: map-remove($map, component-link);
+
+			@if ($_component-link) {
+				.component-link {
+					@include clay-text-typography($_component-link);
+				}
+			}
+
+			$_close: map-get($map, close);
+			$map: map-remove($map, close);
+
+			@if ($_close) {
+				.close {
+					@include clay-close($_close);
+				}
+			}
+
+			@if (length($header) != 0) {
+				.sidebar-header {
+					@include clay-css($header);
+
+					@if (length($header-component-title) != 0) {
+						.component-title {
+							@include clay-text-typography(
+								$header-component-title
+							);
+						}
+					}
+
+					@if (length($header-component-subtitle) != 0) {
+						.component-subtitle {
+							@include clay-text-typography(
+								$header-component-subtitle
+							);
+						}
+					}
+				}
+			}
+
+			@if (length($body) != 0) {
+				.sidebar-body {
+					@include clay-css($body);
+				}
+			}
+
+			@if (length($footer) != 0) {
+				.sidebar-footer {
+					@include clay-css($footer);
+				}
+			}
+
+			@if (length($nav-nested) != 0) {
+				.nav-nested {
+					@include clay-css($nav-nested);
+
+					@if (length($nav-nested-nav-link) != 0) {
+						.nav-link {
+							@include clay-link($nav-nested-nav-link);
+						}
+					}
+				}
+			}
+
+			@if (length($sidebar-list-group) != 0) {
+				.sidebar-list-group {
+					@include clay-css($sidebar-list-group);
+
+					@if (length($sidebar-list-group-item) != 0) {
+						.list-group-item {
+							@include clay-css($sidebar-list-group-item);
+						}
+					}
+
+					@if (length($sidebar-list-group-title) != 0) {
+						.list-group-title {
+							@include clay-text-typography(
+								$sidebar-list-group-title
+							);
+						}
+					}
+
+					@if (length($sidebar-list-group-subtitle) != 0) {
+						.list-group-subtitle {
+							@include clay-text-typography(
+								$sidebar-list-group-subtitle
+							);
+						}
+					}
+
+					@if (length($sidebar-list-group-text) != 0) {
+						.list-group-text {
+							@include clay-text-typography(
+								$sidebar-list-group-text
+							);
+						}
+					}
+
+					@if (length($sidebar-list-group-subtext) != 0) {
+						.list-group-subtext {
+							@include clay-text-typography(
+								$sidebar-list-group-subtext
+							);
+						}
+					}
+
+					@if (length($sidebar-list-group-sticker) != 0) {
+						.sticker {
+							@include clay-sticker-variant(
+								$sidebar-list-group-sticker
+							);
+						}
+					}
+
+					@if (length($sidebar-list-group-sticker-secondary) != 0) {
+						.sticker-secondary {
+							@include clay-sticker-variant(
+								$sidebar-list-group-sticker-secondary
+							);
+						}
+					}
+				}
+			}
+
+			@if (length($panel) != 0) {
+				.sidebar-panel {
+					@include clay-css($panel);
+				}
+			}
+
+			@if (length($dt) != 0) {
+				.sidebar-dt {
+					@include clay-text-typography($dt);
+				}
+			}
+
+			@if (length($dd) != 0) {
+				.sidebar-dd {
+					@include clay-text-typography($dd);
+				}
+			}
+
+			$_panel-unstyled: map-get($map, panel-unstyled);
+			$map: map-remove($map, panel-unstyled);
+
+			@if ($_panel-unstyled) {
+				.panel-unstyled {
+					@include clay-panel-variant($_panel-unstyled);
+				}
+			}
+
+			$_component-navigation-bar: map-get($map, component-navigation-bar);
+			$map: map-remove($map, component-navigation-bar);
+
+			@if ($_component-navigation-bar) {
+				.component-navigation-bar {
+					@include clay-navbar-variant($_component-navigation-bar);
+				}
+			}
+
+			$_panel-group: map-get($map, panel-group);
+			$map: map-remove($map, panel-group);
+
+			@if ($_panel-group) {
+				.panel-group {
+					@include clay-map-to-css($_panel-group);
+				}
+			}
+
+			$_btn: map-get($map, btn);
+			$map: map-remove($map, btn);
+
+			@if ($_btn) {
+				.btn {
+					@include clay-map-to-css($_btn);
+				}
+			}
+
+			$_form-control: map-get($map, form-control);
+			$map: map-remove($map, form-control);
+
+			@if ($_form-control) {
+				.form-control {
+					@include clay-map-to-css($_form-control);
+				}
+			}
+
+			$_form-control-select: map-get($map, form-control-select);
+			$map: map-remove($map, form-control-select);
+
+			@if ($_form-control-select) {
+				select.form-control,
+				.form-control-select {
+					@include clay-map-to-css($_form-control-select);
+				}
+			}
+
+			$_form-control-tag-group: map-get($map, form-control-tag-group);
+			$map: map-remove($map, form-control-tag-group);
+
+			@if ($_form-control-tag-group) {
+				.form-control-tag-group {
+					@include clay-map-to-css($_form-control-tag-group);
+				}
+			}
+
+			$_input-group: map-get($map, input-group);
+			$map: map-remove($map, input-group);
+
+			@if ($_input-group) {
+				.input-group {
+					@include clay-map-to-css($_input-group);
+				}
+			}
+
+			@include clay-map-to-css($map);
+		}
+	}
+}

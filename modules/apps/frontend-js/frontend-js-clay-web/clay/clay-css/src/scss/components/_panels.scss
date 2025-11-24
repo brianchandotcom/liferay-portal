@@ -1,0 +1,390 @@
+.panel {
+	@include clay-css($panel);
+}
+
+.panel-header {
+	$_header: setter(map-get($panel, panel-header), ());
+
+	@include clay-css($_header);
+
+	@if ($enable-c-inner) {
+		.c-inner {
+			margin: math-sign($panel-header-padding-y)
+				math-sign($panel-header-padding-x);
+			width: auto;
+		}
+	}
+
+	&.collapsed {
+		@include clay-css(map-get($_header, collapsed));
+	}
+
+	&.collapse-icon {
+		@include clay-css(map-get($_header, collapse-icon));
+
+		@if ($enable-c-inner) {
+			.c-inner {
+				margin-left: #{math-sign(
+						$panel-header-collapse-icon-padding-left
+					)};
+				margin-right: #{math-sign(
+						$panel-header-collapse-icon-padding-right
+					)};
+			}
+		}
+	}
+
+	&.collapse-icon-middle {
+		$_collapse-icon-middle: setter(
+			map-get($panel, collapse-icon-middle),
+			()
+		);
+
+		@include clay-css($_collapse-icon-middle);
+
+		.collapse-icon-closed,
+		.collapse-icon-open {
+			@include clay-css(map-get($_collapse-icon-middle, collapse-icon));
+		}
+	}
+
+	.collapse-icon-closed,
+	.collapse-icon-open {
+		bottom: $panel-header-collapse-icon-bottom;
+		font-size: $panel-header-collapse-icon-font-size;
+		left: $panel-header-collapse-icon-left;
+		right: $panel-header-collapse-icon-right;
+		top: $panel-header-collapse-icon-top;
+	}
+}
+
+.panel-header-link {
+	$_header-link: setter(map-get($panel, panel-header), ());
+
+	@include clay-link(map-get($_header-link, link));
+
+	&.panel-header.collapsed {
+		$_header-collapsed: setter(map-get($_header-link, collapsed), ());
+
+		@include clay-link(map-get($_header-collapsed, link));
+	}
+
+	.collapse-icon {
+		padding-left: if(
+			variable-exists(collapse-icon-padding-left),
+			$collapse-icon-padding-left,
+			null
+		);
+		padding-right: if(
+			variable-exists(collapse-icon-padding-right),
+			$collapse-icon-padding-right,
+			2.28125rem
+		);
+	}
+}
+
+.panel-body {
+	@include clay-css(map-get($panel, panel-body));
+}
+
+.panel-footer {
+	@include clay-css(map-get($panel, panel-footer));
+}
+
+.panel-title {
+	$_title: setter(map-get($panel, panel-title), ());
+
+	@include clay-css($_title);
+
+	small,
+	.small {
+		@include clay-css(map-get($_title, small));
+	}
+}
+
+// Panel Group
+
+.panel-group {
+	@include border-radius($panel-border-radius);
+
+	.panel {
+		margin-bottom: $panel-group-panel-margin-bottom;
+
+		&:first-child,
+		&:first-child .panel-header {
+			@include border-bottom-radius(0);
+		}
+
+		&:not(:first-child) {
+			@include border-radius(0);
+
+			margin-top: math-sign($panel-border-bottom-width);
+
+			.panel-header {
+				@include border-radius(0);
+			}
+		}
+
+		&:last-child {
+			@include border-bottom-radius($panel-border-radius);
+
+			.panel-header.collapsed {
+				@include border-bottom-radius(
+					$panel-header-offset-border-radius
+				);
+			}
+		}
+	}
+
+	.panel-header {
+		border-bottom-width: 0;
+
+		+ .panel-collapse > .panel-body {
+			border-top: $panel-header-border-bottom-width solid transparent;
+		}
+	}
+
+	.panel-unstyled {
+		@include clay-panel-variant($panel-group-panel-unstyled);
+	}
+}
+
+// Panel Group Fluid
+
+.panel-group-fluid,
+.panel-group-flush {
+	.panel {
+		border-left-width: 0;
+		border-right-width: 0;
+
+		&:first-child,
+		&:last-child {
+			border-radius: 0;
+
+			.panel-header {
+				&,
+				&.collapsed {
+					border-radius: 0;
+				}
+			}
+		}
+	}
+}
+
+.panel-group-fluid-first {
+	.panel {
+		border-left-width: 0;
+		border-right-width: 0;
+
+		&:first-child {
+			border-top-width: 0;
+		}
+
+		&:last-child {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+	}
+}
+
+.panel-group-fluid-last {
+	.panel {
+		border-left-width: 0;
+		border-right-width: 0;
+
+		&:first-child {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		&:last-child {
+			border-bottom-width: 0;
+		}
+	}
+}
+
+.card-body {
+	> .panel-group-fluid,
+	> .panel-group-fluid-first,
+	> .panel-group-fluid-last {
+		margin-left: math-sign(
+			if(variable-exists(card-spacer-x), $card-spacer-x, 1.25rem)
+		);
+		margin-right: math-sign(
+			if(variable-exists(card-spacer-x), $card-spacer-x, 1.25rem)
+		);
+	}
+}
+
+.sheet {
+	> .panel-group-fluid {
+		margin-left: math-sign(
+			if(variable-exists(sheet-padding-left), $sheet-padding-left, 1.5rem)
+		);
+		margin-right: math-sign(
+			if(
+				variable-exists(sheet-padding-right),
+				$sheet-padding-right,
+				1.5rem
+			)
+		);
+	}
+
+	> .panel-group-fluid-first {
+		margin-left: math-sign(
+			if(variable-exists(sheet-padding-left), $sheet-padding-left, 1.5rem)
+		);
+		margin-right: math-sign(
+			if(
+				variable-exists(sheet-padding-right),
+				$sheet-padding-right,
+				1.5rem
+			)
+		);
+		margin-top: math-sign(
+			if(variable-exists(sheet-padding-top), $sheet-padding-top, 1.5rem)
+		);
+	}
+
+	> .panel-group-fluid-last {
+		margin-bottom: math-sign(
+			if(
+				variable-exists(sheet-padding-bottom),
+				$sheet-padding-bottom,
+				0.0625rem
+			)
+		);
+		margin-left: math-sign(
+			if(variable-exists(sheet-padding-left), $sheet-padding-left, 1.5rem)
+		);
+		margin-right: math-sign(
+			if(
+				variable-exists(sheet-padding-right),
+				$sheet-padding-right,
+				1.5rem
+			)
+		);
+	}
+}
+
+// Panel Group Flush
+
+.panel-group-flush {
+	.panel-header,
+	.panel-header-link {
+		padding-left: 0;
+		padding-right: 0;
+
+		@if ($enable-c-inner) {
+			.c-inner {
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+	}
+
+	.panel-body {
+		margin-bottom: $panel-group-flush-body-margin-bottom;
+		padding: $panel-group-flush-body-padding;
+	}
+
+	.collapse-icon {
+		padding-left: $panel-group-flush-collapse-icon-padding-left;
+		padding-right: $panel-group-flush-collapse-icon-padding-right;
+
+		@if ($enable-c-inner) {
+			.c-inner {
+				margin-left: #{math-sign(
+						$panel-group-flush-collapse-icon-padding-left
+					)};
+				margin-right: #{math-sign(
+						$panel-group-flush-collapse-icon-padding-right
+					)};
+			}
+		}
+	}
+
+	.collapse-icon-closed,
+	.collapse-icon-open {
+		left: $panel-group-flush-collapse-icon-left;
+		right: $panel-group-flush-collapse-icon-right;
+	}
+
+	.panel-unstyled {
+		@include clay-panel-variant($panel-group-flush-panel-unstyled);
+	}
+}
+
+// Panel Group Sizes
+
+%clay-panel-group-sm {
+	.panel {
+		@include clay-panel-variant($panel-group-sm);
+	}
+
+	.panel-unstyled {
+		@include clay-panel-variant($panel-group-sm-panel-unstyled);
+	}
+}
+
+.panel-group-sm {
+	@extend %clay-panel-group-sm;
+}
+
+// Panel Variants
+
+@each $color, $value in $panel-palette {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			if(starts-with($color, 'panel'), str-insert($color, '.', 1), $color)
+		);
+
+		@if (starts-with($color, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-panel-variant($value);
+			}
+		} @else {
+			#{$selector} {
+				@include clay-panel-variant($value);
+			}
+		}
+	}
+}
+
+.panel-secondary {
+	@include clay-panel-variant($panel-secondary);
+}
+
+// Panel Unstyled
+
+.panel-unstyled {
+	@include clay-panel-variant($panel-unstyled);
+}
+
+// Panel Sizes
+
+@each $color, $value in $panel-sizes {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			if(starts-with($color, 'panel'), str-insert($color, '.', 1), $color)
+		);
+
+		@if (starts-with($color, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-panel-variant($value);
+			}
+		} @else {
+			#{$selector} {
+				@include clay-panel-variant($value);
+			}
+		}
+	}
+}

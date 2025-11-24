@@ -1,0 +1,640 @@
+.card,
+.card-horizontal {
+	@include clay-card-variant($card);
+
+	.autofit-col {
+		&:first-child {
+			border-bottom-left-radius: clay-enable-rounded(
+				$card-inner-border-radius
+			);
+			border-top-left-radius: clay-enable-rounded(
+				$card-inner-border-radius
+			);
+		}
+
+		&:last-child {
+			border-bottom-right-radius: clay-enable-rounded(
+				$card-inner-border-radius
+			);
+			border-top-right-radius: clay-enable-rounded(
+				$card-inner-border-radius
+			);
+		}
+	}
+
+	> .list-group:first-child {
+		.list-group-item:first-child {
+			border-top-left-radius: clay-enable-rounded($card-border-radius);
+			border-top-right-radius: clay-enable-rounded($card-border-radius);
+		}
+	}
+
+	> .list-group:last-child {
+		.list-group-item:last-child {
+			border-bottom-left-radius: clay-enable-rounded($card-border-radius);
+			border-bottom-right-radius: clay-enable-rounded(
+				$card-border-radius
+			);
+		}
+	}
+}
+
+.card-body {
+	@include clay-css($card-body);
+}
+
+.card-section-header {
+	@include clay-css($card-section-header);
+}
+
+// Card Title
+
+.card-title {
+	@include clay-text-typography($card-title);
+}
+
+// Card Subtitle
+
+.card-subtitle {
+	@include clay-text-typography($card-subtitle);
+}
+
+// Card Text
+
+.card-text {
+	@include clay-text-typography($card-text);
+}
+
+// Card Link
+
+.card-link {
+	@include clay-link($card-link);
+
+	&.btn-unstyled {
+		white-space: normal;
+	}
+
+	+ .card-link {
+		margin-left: 0;
+	}
+}
+
+// Card Divider
+
+.card-divider {
+	@include clay-css($card-divider);
+}
+
+// Card Header
+
+.card-header {
+	@include clay-card-section-variant($card-header);
+
+	+ .list-group {
+		.list-group-item:first-child {
+			border-top: 0;
+		}
+	}
+}
+
+@if ($enable-bs4-deprecated) {
+	.card-header-tabs {
+		border-bottom: 0;
+		margin-bottom: math-sign($card-spacer-y);
+		margin-left: calc(#{math-sign($card-spacer-x)} / 2);
+		margin-right: calc(#{math-sign($card-spacer-x)} / 2);
+	}
+
+	.card-header-pills {
+		margin-left: calc(#{math-sign($card-spacer-x)} / 2);
+		margin-right: calc(#{math-sign($card-spacer-x)} / 2);
+	}
+}
+
+// Card Footer
+
+.card-footer {
+	@include clay-card-section-variant($card-footer);
+}
+
+@if ($enable-bs4-deprecated) {
+	// Card Img
+
+	.card-img-overlay {
+		bottom: 0;
+		left: 0;
+		padding: $card-img-overlay-padding;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.card-img,
+	.card-img-top,
+	.card-img-bottom {
+		// For IE: https://github.com/twbs/bootstrap/issues/29396
+
+		flex-shrink: 0;
+
+		// Required because we use flexbox and this inherently applies align-self: stretch
+
+		width: 100%;
+	}
+
+	.card-img,
+	.card-img-top {
+		@include border-top-radius($card-inner-border-radius);
+	}
+
+	.card-img,
+	.card-img-bottom {
+		@include border-bottom-radius($card-inner-border-radius);
+	}
+}
+
+// Card Row
+
+.card-row {
+	display: flex;
+	width: 100%;
+
+	.autofit-col {
+		justify-content: center;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.autofit-col-expand {
+		min-width: 25px;
+	}
+}
+
+.card-row .autofit-col-gutters {
+	padding-left: 10px;
+	padding-right: 10px;
+
+	.card-divider {
+		margin-left: -10px;
+		margin-right: -10px;
+	}
+}
+
+// Card Row Content Alignment
+
+.autofit-col {
+	.justify-content-center & {
+		justify-content: center;
+	}
+
+	.justify-content-start & {
+		justify-content: flex-start;
+	}
+
+	.justify-content-end & {
+		justify-content: flex-end;
+	}
+
+	.text-center & {
+		text-align: center;
+	}
+
+	.text-left & {
+		text-align: left;
+	}
+
+	.text-right & {
+		text-align: right;
+	}
+}
+
+// Card Helpers
+
+.card-item-first {
+	@include border-top-radius($card-inner-border-radius);
+
+	width: 100%;
+}
+
+.autofit-col:first-child .card-item-first {
+	@include border-radius(
+		$card-inner-border-radius 0 0 $card-inner-border-radius
+	);
+}
+
+.card-item-last {
+	@include border-bottom-radius($card-inner-border-radius);
+
+	width: 100%;
+}
+
+.autofit-col:last-child .card-item-last {
+	@include border-radius(
+		0 $card-inner-border-radius $card-inner-border-radius 0
+	);
+}
+
+.rounded {
+	.card-header,
+	.card-item-first {
+		border-top-left-radius: $card-rounded-inner-border-radius;
+		border-top-right-radius: $card-rounded-inner-border-radius;
+	}
+
+	.card-footer,
+	.card-item-last {
+		border-bottom-left-radius: $card-rounded-inner-border-radius;
+		border-bottom-right-radius: $card-rounded-inner-border-radius;
+	}
+
+	.autofit-col:first-child {
+		border-bottom-left-radius: $card-rounded-inner-border-radius;
+		border-top-left-radius: $card-rounded-inner-border-radius;
+
+		.card-item-first {
+			border-radius: $card-rounded-inner-border-radius 0 0
+				$card-rounded-inner-border-radius;
+		}
+	}
+
+	.autofit-col:last-child {
+		border-bottom-right-radius: $card-rounded-inner-border-radius;
+		border-top-right-radius: $card-rounded-inner-border-radius;
+
+		.card-item-last {
+			border-radius: 0 $card-rounded-inner-border-radius
+				$card-rounded-inner-border-radius 0;
+		}
+	}
+}
+
+.rounded-0 {
+	.card-header,
+	.card-item-first {
+		border-top-left-radius: $card-rounded-0-inner-border-radius;
+		border-top-right-radius: $card-rounded-0-inner-border-radius;
+	}
+
+	.card-footer,
+	.card-item-last {
+		border-bottom-left-radius: $card-rounded-0-inner-border-radius;
+		border-bottom-right-radius: $card-rounded-0-inner-border-radius;
+	}
+
+	.autofit-col:first-child {
+		border-bottom-left-radius: $card-rounded-0-inner-border-radius;
+		border-top-left-radius: $card-rounded-0-inner-border-radius;
+
+		.card-item-first {
+			border-radius: $card-rounded-0-inner-border-radius 0 0
+				$card-rounded-0-inner-border-radius;
+		}
+	}
+
+	.autofit-col:last-child {
+		border-bottom-right-radius: $card-rounded-0-inner-border-radius;
+		border-top-right-radius: $card-rounded-0-inner-border-radius;
+
+		.card-item-last {
+			border-radius: 0 $card-rounded-0-inner-border-radius
+				$card-rounded-0-inner-border-radius 0;
+		}
+	}
+}
+
+.rounded-circle {
+	.card-header,
+	.card-item-first {
+		border-top-left-radius: $card-rounded-circle-inner-border-radius;
+		border-top-right-radius: $card-rounded-circle-inner-border-radius;
+	}
+
+	.card-footer,
+	.card-item-last {
+		border-bottom-left-radius: $card-rounded-circle-inner-border-radius;
+		border-bottom-right-radius: $card-rounded-circle-inner-border-radius;
+	}
+
+	.autofit-col:first-child {
+		border-bottom-left-radius: $card-rounded-circle-inner-border-radius;
+		border-top-left-radius: $card-rounded-circle-inner-border-radius;
+
+		.card-item-first {
+			border-radius: $card-rounded-circle-inner-border-radius 0 0
+				$card-rounded-circle-inner-border-radius;
+		}
+	}
+
+	.autofit-col:last-child {
+		border-bottom-right-radius: $card-rounded-circle-inner-border-radius;
+		border-top-right-radius: $card-rounded-circle-inner-border-radius;
+
+		.card-item-last {
+			border-radius: 0 $card-rounded-circle-inner-border-radius
+				$card-rounded-circle-inner-border-radius 0;
+		}
+	}
+}
+
+@if ($enable-bs4-deprecated) {
+	// Card Deck
+
+	.card-deck {
+		.card {
+			margin-bottom: $card-deck-margin;
+		}
+
+		@include media-breakpoint-up(sm) {
+			display: flex;
+			flex-flow: row wrap;
+			margin-left: math-sign($card-deck-margin);
+			margin-right: math-sign($card-deck-margin);
+
+			.card {
+				// Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+
+				flex: 1 0 0%;
+				margin-bottom: 0;
+				margin-left: $card-deck-margin;
+				margin-right: $card-deck-margin;
+			}
+		}
+	}
+
+	// Card Group
+
+	.card-group {
+		// The child selector allows nested `.card` within `.card-group`
+		// to display properly.
+
+		> .card {
+			margin-bottom: $card-group-margin;
+		}
+
+		@include media-breakpoint-up(sm) {
+			display: flex;
+			flex-flow: row wrap;
+
+			> .card {
+				// Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+
+				flex: 1 0 0%;
+				margin-bottom: 0;
+
+				+ .card {
+					border-left: 0;
+					margin-left: 0;
+				}
+
+				// Handle rounded corners
+
+				@if $enable-rounded {
+					&:not(:last-child) {
+						@include border-right-radius(0);
+
+						.card-img-top,
+						.card-header {
+							border-top-right-radius: 0;
+						}
+
+						.card-img-bottom,
+						.card-footer {
+							border-bottom-right-radius: 0;
+						}
+					}
+
+					&:not(:first-child) {
+						@include border-left-radius(0);
+
+						.card-img-top,
+						.card-header {
+							border-top-left-radius: 0;
+						}
+
+						.card-img-bottom,
+						.card-footer {
+							border-bottom-left-radius: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Card Columns
+
+	.card-columns {
+		.card {
+			margin-bottom: $card-columns-margin;
+		}
+
+		@include media-breakpoint-up(sm) {
+			column-count: $card-columns-count;
+			column-gap: $card-columns-gap;
+			orphans: 1;
+			widows: 1;
+
+			.card {
+				// Don't let them vertically span multiple columns
+
+				display: inline-block;
+
+				// Don't let their width change
+
+				width: 100%;
+			}
+		}
+	}
+
+	// Bootstrap 4 Accordion
+
+	.accordion {
+		> .card {
+			overflow: hidden;
+
+			&:not(:last-of-type) {
+				border-bottom: 0;
+
+				@include border-bottom-radius(0);
+			}
+
+			&:not(:first-of-type) {
+				@include border-top-radius(0);
+			}
+
+			> .card-header {
+				@include border-radius(0);
+
+				margin-bottom: math-sign($card-border-width);
+			}
+		}
+	}
+}
+
+// Checkbox and Radio Cards
+
+.form-check-card {
+	@include clay-form-check-card-variant($form-check-card);
+
+	.form-check-input:checked ~ .card {
+		@include clay-card-variant(
+			map-deep-get(
+				$form-check-card,
+				custom-control,
+				custom-control-input,
+				checked,
+				card
+			)
+		);
+	}
+}
+
+.form-check-bottom-left,
+.form-check-middle-left,
+.form-check-top-left {
+	.card-horizontal {
+		> .card-body {
+			padding-left: $checkbox-left-card-padding;
+		}
+	}
+}
+
+.form-check-bottom-right,
+.form-check-middle-right,
+.form-check-top-right {
+	.card-horizontal {
+		> .card-body {
+			padding-right: $checkbox-right-card-padding;
+		}
+	}
+}
+
+.form-check-bottom-left {
+	@include clay-form-check-card-variant($form-check-bottom-left);
+}
+
+.form-check-bottom-right {
+	@include clay-form-check-card-variant($form-check-bottom-right);
+}
+
+.form-check-middle-left {
+	@include clay-form-check-card-variant($form-check-middle-left);
+}
+
+.form-check-middle-right {
+	@include clay-form-check-card-variant($form-check-middle-right);
+}
+
+.form-check-top-left {
+	@include clay-form-check-card-variant($form-check-top-left);
+}
+
+.form-check-top-right {
+	@include clay-form-check-card-variant($form-check-top-right);
+}
+
+// Card Page
+
+.card-page {
+	@include clay-map-to-css($card-page);
+
+	&.card-page-equal-height {
+		.card-page-item,
+		.card-page-item-asset,
+		.card-page-item-directory {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.form-check-card {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+		}
+
+		.card {
+			flex-grow: 1;
+		}
+	}
+}
+
+.card-page-item-header {
+	padding-left: $grid-gutter-width * 0.5;
+	padding-right: $grid-gutter-width * 0.5;
+	width: 100%;
+}
+
+.card-page-item-directory {
+	@include clay-map-to-css($card-page-item-directory);
+}
+
+.card-page-item-asset {
+	@include clay-map-to-css($card-page-item-asset);
+}
+
+.card-page-item-user {
+	@include clay-map-to-css($card-page-item-user);
+}
+
+// Card Interactive
+
+.card-interactive {
+	@include clay-card-variant($card-interactive);
+
+	label {
+		cursor: $link-cursor;
+	}
+}
+
+.card-interactive-primary {
+	@include clay-card-variant($card-interactive-primary);
+}
+
+.card-interactive-secondary {
+	@include clay-card-variant($card-interactive-secondary);
+}
+
+// Card Type Asset
+
+.card-type-asset {
+	@include clay-card-variant($card-type-asset);
+}
+
+.image-card {
+	@include clay-card-variant($image-card);
+}
+
+.file-card {
+	@include clay-card-variant($file-card);
+}
+
+.product-card {
+	@include clay-card-variant($product-card);
+}
+
+.user-card {
+	@include clay-card-variant($user-card);
+}
+
+// Card Type Directory
+
+.card-type-directory {
+	@include clay-card-variant($card-type-directory);
+}
+
+// Card Type Template
+
+.card-type-template {
+	@include clay-card-variant($card-type-template);
+}
+
+// Template Card
+
+.template-card {
+	@include clay-card-variant($template-card);
+}
+
+// Template Card Horizontal
+
+.template-card-horizontal {
+	@include clay-card-variant($template-card-horizontal);
+}

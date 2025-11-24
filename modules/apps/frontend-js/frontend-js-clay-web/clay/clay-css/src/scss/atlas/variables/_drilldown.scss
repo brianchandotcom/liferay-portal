@@ -1,0 +1,15 @@
+$drilldown-dropdown-item-indicator-start: () !default;
+$drilldown-dropdown-item-indicator-start: map-merge(
+	(
+		top: 0.5rem,
+	),
+	$drilldown-dropdown-item-indicator-start
+);
+
+$drilldown-dropdown-item-indicator-end: () !default;
+$drilldown-dropdown-item-indicator-end: map-merge(
+	(
+		top: 0.5rem,
+	),
+	$drilldown-dropdown-item-indicator-end
+);

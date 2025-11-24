@@ -1,0 +1,227 @@
+.btn {
+	@include clay-button-variant($btn);
+}
+
+fieldset:disabled a.btn {
+	$btn-disabled: setter(map-get($btn, disabled), ());
+
+	@include clay-css($btn-disabled);
+
+	&:focus {
+		@include clay-css(map-get($btn-disabled, focus));
+	}
+
+	&:active {
+		@include clay-css(map-get($btn-disabled, active));
+	}
+}
+
+// Button Sizes
+
+@each $size, $value in $btn-sizes {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($size, 'btn-'),
+			clay-str-replace($size, 'btn-', '.btn-'),
+			$size
+		);
+
+		@if (starts-with($size, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		} @else if (starts-with($size, 'btn-')) {
+			$placeholder: '%clay-#{$size}';
+
+			#{$placeholder} {
+				@include clay-button-variant($value);
+			}
+
+			#{$selector} {
+				@extend #{$placeholder} !optional;
+			}
+		} @else {
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		}
+	}
+}
+
+// Button Block
+
+.btn-block {
+	display: block;
+	width: 100%;
+
+	+ .btn-block {
+		margin-top: $btn-block-spacing-y;
+	}
+}
+
+// Specificity overrides
+
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+	&.btn-block {
+		width: 100%;
+	}
+}
+
+// Button Unstyled
+
+%btn-unstyled {
+	@include clay-button-variant($btn-unstyled);
+}
+
+.btn-unstyled {
+	@extend %btn-unstyled;
+}
+
+// Button Monospaced
+
+@each $size, $value in $btn-monospaced-sizes {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($size, 'btn-monospaced-'),
+			clay-str-replace($size, 'btn-monospaced', '.btn-monospaced.btn'),
+			if(
+				$size == 'btn-monospaced',
+				clay-str-replace($size, 'btn-monospaced', '.btn-monospaced'),
+				$size
+			)
+		);
+
+		@if (starts-with($size, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		} @else if (starts-with($size, 'btn-monospaced')) {
+			$placeholder: '%clay-#{$size}';
+
+			#{$placeholder} {
+				@include clay-button-variant($value);
+			}
+
+			#{$selector} {
+				@extend #{$placeholder} !optional;
+			}
+		} @else {
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		}
+	}
+}
+
+// Button Variants
+
+@each $color, $value in $btn-palette {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			if(
+				starts-with($color, 'btn'),
+				str-insert($color, '.', 1),
+				str-insert($color, '.btn-', 1)
+			)
+		);
+
+		@if (starts-with($color, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		} @else if (starts-with($color, 'btn-')) {
+			$placeholder: '%#{str-slice($selector, 2)}';
+
+			$placeholder-focus: '%#{str-slice($selector, 2)}-focus';
+
+			#{$placeholder} {
+				@include clay-button-variant($value);
+			}
+
+			#{$selector} {
+				@extend #{$placeholder} !optional;
+			}
+
+			#{$placeholder-focus} {
+				@include clay-button-variant(map-get($value, focus));
+			}
+		} @else {
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		}
+	}
+}
+
+// Button Outline Variants
+
+@each $color, $value in $btn-outline-palette {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			if(
+				starts-with($color, 'btn'),
+				str-insert($color, '.', 1),
+				str-insert($color, '.btn-outline-', 1)
+			)
+		);
+
+		@if (starts-with($color, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		} @else if (starts-with($color, 'btn-outline')) {
+			$placeholder: '%#{str-slice($selector, 2)}';
+
+			$placeholder-focus: '%#{str-slice($selector, 2)}-focus';
+
+			#{$placeholder} {
+				@include clay-button-variant($value);
+			}
+
+			#{$selector} {
+				@extend #{$placeholder} !optional;
+			}
+
+			#{$placeholder-focus} {
+				@include clay-button-variant(map-get($value, focus));
+			}
+		} @else {
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		}
+	}
+}
+
+.btn-outline-borderless {
+	@include clay-button-variant($btn-outline-borderless);
+}
+
+.btn-outline-borderless:not(:disabled):not(.disabled):active {
+	border-color: transparent;
+}
+
+.show > .btn-outline-borderless.dropdown-toggle {
+	border-color: transparent;
+}
+
+// Loading Icons with Buttons
+
+.btn .loading-animation {
+	font-size: 1em;
+	margin-top: if(
+		variable-exists(inline-item-lexicon-icon-margin-top),
+		$inline-item-lexicon-icon-margin-top,
+		null
+	);
+}

@@ -1,0 +1,15 @@
+// INSERT @use rules
+
+@import '_license-text';
+
+@import 'functions/_global-functions';
+
+// INSERT CUSTOM BASE VARS
+
+@import 'atlas/_variables';
+
+@import '_variables';
+
+@import '_mixins';
+
+// INSERT CUSTOM VARS

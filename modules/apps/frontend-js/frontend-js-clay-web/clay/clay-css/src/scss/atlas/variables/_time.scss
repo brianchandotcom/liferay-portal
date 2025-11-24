@@ -1,0 +1,18 @@
+$clay-time-btn: () !default;
+$clay-time-btn: map-deep-merge(
+	(
+		color: $secondary,
+		focus: (
+			box-shadow: 0 0 0 1px $primary-l0,
+		),
+	),
+	$clay-time-btn
+);
+
+$clay-time-inner-spin: () !default;
+$clay-time-inner-spin: map-merge(
+	(
+		border-color: $secondary-l2,
+	),
+	$clay-time-inner-spin
+);

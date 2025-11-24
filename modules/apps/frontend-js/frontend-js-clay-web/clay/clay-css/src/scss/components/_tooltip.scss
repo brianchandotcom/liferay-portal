@@ -1,0 +1,161 @@
+.tooltip {
+	@include clay-tooltip-variant($tooltip);
+}
+
+.tooltip-inner {
+	@include clay-css($tooltip-inner);
+}
+
+.tooltip-arrow {
+	background-color: $tooltip-bg;
+	position: absolute;
+	transform: rotate(45deg);
+}
+
+// Bootstrap 4 Tooltip Positions
+
+%bs-tooltip-top {
+	padding: $tooltip-arrow-height 0;
+
+	.arrow {
+		bottom: 0;
+
+		&::before {
+			border-top-color: $tooltip-arrow-color;
+			border-width: $tooltip-arrow-height ($tooltip-arrow-width * 0.5) 0;
+			top: 0;
+		}
+	}
+}
+
+%bs-tooltip-right {
+	padding: 0 $tooltip-arrow-height;
+
+	.arrow {
+		height: $tooltip-arrow-width;
+		left: 0;
+		width: $tooltip-arrow-height;
+
+		&::before {
+			border-right-color: $tooltip-arrow-color;
+			border-width: ($tooltip-arrow-width * 0.5) $tooltip-arrow-height
+				($tooltip-arrow-width * 0.5) 0;
+			right: 0;
+		}
+	}
+}
+
+%bs-tooltip-bottom {
+	padding: $tooltip-arrow-height 0;
+
+	.arrow {
+		top: 0;
+
+		&::before {
+			border-bottom-color: $tooltip-arrow-color;
+			border-width: 0 ($tooltip-arrow-width * 0.5) $tooltip-arrow-height;
+			bottom: 0;
+		}
+	}
+}
+
+%bs-tooltip-left {
+	padding: 0 $tooltip-arrow-height;
+
+	.arrow {
+		height: $tooltip-arrow-width;
+		right: 0;
+		width: $tooltip-arrow-height;
+
+		&::before {
+			border-left-color: $tooltip-arrow-color;
+			border-width: ($tooltip-arrow-width * 0.5) 0
+				($tooltip-arrow-width * 0.5) $tooltip-arrow-height;
+			left: 0;
+		}
+	}
+}
+
+.bs-tooltip-top,
+.bs-tooltip-auto[x-placement^='top'] {
+	@extend %bs-tooltip-top !optional;
+}
+
+.bs-tooltip-right,
+.bs-tooltip-auto[x-placement^='right'] {
+	@extend %bs-tooltip-right !optional;
+}
+
+.bs-tooltip-bottom,
+.bs-tooltip-auto[x-placement^='bottom'] {
+	@extend %bs-tooltip-bottom !optional;
+}
+
+.bs-tooltip-left,
+.bs-tooltip-auto[x-placement^='left'] {
+	@extend %bs-tooltip-left !optional;
+}
+
+// Bottom
+
+.clay-tooltip-bottom,
+.clay-tooltip-bottom-left,
+.clay-tooltip-bottom-right {
+	@include clay-tooltip-variant($clay-tooltip-bottom);
+}
+
+.clay-tooltip-bottom-left {
+	@include clay-tooltip-variant($clay-tooltip-bottom-left);
+}
+
+.clay-tooltip-bottom-right {
+	@include clay-tooltip-variant($clay-tooltip-bottom-right);
+}
+
+// Left
+
+.clay-tooltip-left,
+.clay-tooltip-left-bottom,
+.clay-tooltip-left-top {
+	@include clay-tooltip-variant($clay-tooltip-left);
+}
+
+.clay-tooltip-left-bottom {
+	@include clay-tooltip-variant($clay-tooltip-left-bottom);
+}
+
+.clay-tooltip-left-top {
+	@include clay-tooltip-variant($clay-tooltip-left-top);
+}
+
+// Right
+
+.clay-tooltip-right,
+.clay-tooltip-right-bottom,
+.clay-tooltip-right-top {
+	@include clay-tooltip-variant($clay-tooltip-right);
+}
+
+.clay-tooltip-right-bottom {
+	@include clay-tooltip-variant($clay-tooltip-right-bottom);
+}
+
+.clay-tooltip-right-top {
+	@include clay-tooltip-variant($clay-tooltip-right-top);
+}
+
+// Top
+
+.clay-tooltip-top,
+.clay-tooltip-top-left,
+.clay-tooltip-top-right {
+	@include clay-tooltip-variant($clay-tooltip-top);
+}
+
+.clay-tooltip-top-left {
+	@include clay-tooltip-variant($clay-tooltip-top-left);
+}
+
+.clay-tooltip-top-right {
+	@include clay-tooltip-variant($clay-tooltip-top-right);
+}

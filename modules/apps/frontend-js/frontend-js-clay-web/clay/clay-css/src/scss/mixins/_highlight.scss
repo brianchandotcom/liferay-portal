@@ -1,0 +1,130 @@
+////
+/// @group Utilities
+////
+
+/// A mixin to create custom underline highlights or overwrite highlights on an element using the CSS pseudo element `::after`.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// See Mixin `clay-css` for available keys to pass into the base selector
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-height: {Number | String | Null}, // deprecated after 3.9.0
+/// hover-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// focus-height: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// active-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// active-height: {Number | String | Null}, // deprecated after 3.9.0
+/// active-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-after-highlight-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		$hover: setter(map-get($map, hover), ());
+		$hover: map-merge(
+			$hover,
+			(
+				background-color:
+					setter(
+						map-get($map, hover-bg),
+						map-get($hover, background-color)
+					),
+				height:
+					setter(
+						map-get($map, hover-height),
+						map-get($hover, height)
+					),
+				opacity:
+					setter(
+						map-get($map, hover-opacity),
+						map-get($hover, opacity)
+					),
+			)
+		);
+
+		$focus: setter(map-get($map, focus), ());
+		$focus: map-merge(
+			$focus,
+			(
+				bg:
+					setter(
+						map-get($map, focus-bg),
+						map-get($focus, background-color)
+					),
+				height:
+					setter(
+						map-get($map, focus-height),
+						map-get($focus, height)
+					),
+				opacity:
+					setter(
+						map-get($map, focus-opacity),
+						map-get($focus, opacity)
+					),
+			)
+		);
+
+		$active: setter(map-get($map, active), ());
+		$active: map-merge(
+			$active,
+			(
+				background-color:
+					setter(
+						map-get($map, active-bg),
+						map-get($active, background-color)
+					),
+				height:
+					setter(
+						map-get($map, active-height),
+						map-get($active, height)
+					),
+				opacity:
+					setter(
+						map-get($map, active-opacity),
+						map-get($active, opacity)
+					),
+			)
+		);
+
+		@if ($enabled) {
+			&::after {
+				@include clay-css($base);
+			}
+
+			&:hover,
+			&.hover {
+				&::after {
+					@include clay-css($hover);
+				}
+			}
+
+			&:focus,
+			&.focus {
+				&::after {
+					@include clay-css($focus);
+				}
+			}
+
+			&:active,
+			&.active {
+				&::after {
+					@include clay-css($active);
+				}
+			}
+		}
+	}
+}

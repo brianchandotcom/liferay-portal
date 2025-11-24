@@ -1,0 +1,213 @@
+.nav {
+	@include clay-css($cadmin-nav);
+}
+
+// Nav Link
+
+.nav-link {
+	@include clay-link($cadmin-nav-link);
+
+	&::before {
+		@extend %cadmin-pseudo-reset !optional;
+	}
+
+	&::after {
+		@extend %cadmin-pseudo-reset !optional;
+	}
+}
+
+.nav-link.btn-unstyled {
+	@include clay-button-variant($cadmin-nav-link-btn-unstyled);
+}
+
+// Nav Btn
+
+.nav-btn {
+	@include clay-button-variant($cadmin-nav-btn);
+
+	&.btn-link {
+		@include clay-button-variant(map-get($cadmin-nav-btn, btn-link));
+	}
+}
+
+// Nav Item Monospaced
+
+.nav-btn-monospaced {
+	@include clay-button-variant($cadmin-nav-btn-monospaced);
+}
+
+.nav-link-monospaced {
+	@include clay-link($cadmin-nav-link-monospaced);
+}
+
+// Nav Item
+
+.nav-item {
+	@include clay-css($cadmin-nav-item);
+}
+
+.nav-item[class*='col-'] {
+	padding-left: 0;
+	padding-right: 0;
+	text-align: center;
+}
+
+// .nav-divider
+
+.nav-divider {
+	@include clay-css($cadmin-nav-divider);
+
+	&::before {
+		@include clay-css(map-get($cadmin-nav-divider, before));
+	}
+
+	&::after {
+		@include clay-css(map-get($cadmin-nav-divider, after));
+	}
+}
+
+.nav-divider-end {
+	@include clay-css($cadmin-nav-divider-end);
+
+	&::before {
+		@include clay-css(map-get($cadmin-nav-divider-end, before));
+	}
+
+	&::after {
+		@include clay-css(map-get($cadmin-nav-divider-end, after));
+	}
+}
+
+.nav-text-truncate {
+	@include clay-css($cadmin-nav-text-truncate);
+}
+
+.dropdown-toggle .nav-text-truncate {
+	max-width: calc(100% - 24px);
+}
+
+// Nav Form
+
+.nav .nav-form {
+	@include clay-css($cadmin-nav-form);
+}
+
+// Nav Justified
+
+.nav-fill {
+	.nav-item {
+		flex: 1 1 auto;
+		text-align: center;
+	}
+}
+
+.nav-justified {
+	.nav-item {
+		flex-basis: 0;
+		flex-grow: 1;
+		text-align: center;
+	}
+
+	button.nav-link {
+		text-align: center;
+		width: 100%;
+	}
+}
+
+// Nav Stacked
+
+.nav-stacked {
+	@include clay-nav-variant($cadmin-nav-stacked);
+}
+
+// Nav Unstyled
+
+.nav-unstyled {
+	@include clay-nav-variant($cadmin-nav-unstyled);
+}
+
+// Nav Nested
+
+.nav-nested {
+	flex-direction: column;
+	flex-wrap: nowrap;
+
+	@include clay-nav-nested($cadmin-nav-nested-spacer-x);
+}
+
+.nav-nested-margins {
+	flex-direction: column;
+	flex-wrap: nowrap;
+
+	> li .nav > li {
+		margin-left: $cadmin-nav-nested-margins-spacer-x;
+	}
+}
+
+// Nav Tabs
+
+.nav-tabs {
+	@include clay-nav-variant($cadmin-nav-tabs);
+
+	.dropdown-menu {
+		@include border-top-radius(0);
+
+		margin-top: math-sign($cadmin-nav-tabs-border-width);
+	}
+
+	+ .tab-content {
+		.tab-pane {
+			background-color: $cadmin-nav-tabs-tab-pane-bg;
+
+			@include border-radius($cadmin-nav-tabs-tab-pane-border-radius);
+
+			padding: $cadmin-nav-tabs-tab-pane-padding;
+
+			&.active:first-child {
+				border-top-left-radius: 0;
+			}
+		}
+	}
+}
+
+.tab-content {
+	> .tab-pane {
+		display: none;
+	}
+
+	> .active {
+		display: block;
+	}
+}
+
+.dropdown-item[data-toggle='tab'] {
+	.dropdown-item-indicator,
+	.dropdown-item-indicator-start,
+	.dropdown-item-indicator-end {
+		display: none;
+	}
+
+	&.active {
+		.dropdown-item-indicator,
+		.dropdown-item-indicator-start,
+		.dropdown-item-indicator-end {
+			display: block;
+		}
+	}
+}
+
+// Nav Variants
+
+@each $key, $value in $cadmin-nav-palette {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($key, '.') or starts-with($key, '#'),
+			$key,
+			str-insert($key, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-nav-variant($value);
+		}
+	}
+}

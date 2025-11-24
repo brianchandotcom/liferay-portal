@@ -1,0 +1,820 @@
+$bg-checkered-fg: $gray-200 !default;
+
+$c-focus-trap: () !default;
+$c-focus-trap: map-merge(
+	(
+		background: inherit,
+		color: inherit,
+		display: contents,
+		font: inherit,
+	),
+	$c-focus-trap
+);
+
+// .inline-scroller
+
+$inline-scroller-max-height: 125px !default;
+
+$inline-scroller: () !default;
+$inline-scroller: map-deep-merge(
+	(
+		-webkit-overflow-scrolling: touch,
+		list-style: none,
+		margin: 0,
+		max-height: $inline-scroller-max-height,
+		overflow: auto,
+		padding: 0,
+		focus: (
+			outline: 0,
+		),
+		focus-visible: (
+			box-shadow: $component-focus-box-shadow,
+		)
+	),
+	$inline-scroller
+);
+
+// Autofit Row
+
+$autofit-col-expand-min-width: 3.125rem !default; // 50px
+
+$autofit-padded-col-padding-x: 0.5rem !default; // 8px
+$autofit-padded-col-padding-y: 0.25rem !default; // 4px
+
+$autofit-padded-no-gutters-sm: () !default;
+$autofit-padded-no-gutters-sm: map-merge(
+	(
+		margin: -0.25rem,
+		width: auto,
+		autofit-col: (
+			padding: 0.25rem,
+		),
+	),
+	$autofit-padded-no-gutters-sm
+);
+
+// Close
+
+$close-color: $black !default;
+$close-font-size: calc(#{$font-size-base} * 1.5) !default;
+$close-font-weight: $font-weight-bold !default;
+$close-text-shadow: 0 1px 0 $white !default;
+
+$close: () !default;
+$close: map-deep-merge(
+	(
+		align-items: center,
+		appearance: none,
+		background-color: transparent,
+		border-radius: $border-radius-sm,
+		border-width: 0px,
+		color: $close-color,
+		cursor: $link-cursor,
+		display: inline-flex,
+		font-size: 1rem,
+		font-weight: $close-font-weight,
+		height: 2rem,
+		justify-content: center,
+		line-height: 1,
+		opacity: 0.5,
+		padding: 0,
+		text-align: center,
+		text-shadow: $close-text-shadow,
+		transition: #{color 0.15s ease-in-out,
+		background-color 0.15s ease-in-out,
+		border-color 0.15s ease-in-out,
+		box-shadow 0.15s ease-in-out},
+		width: 2rem,
+		hover: (
+			color: $close-color,
+			opacity: 0.75,
+			text-decoration: none,
+		),
+		focus: (
+			box-shadow: $input-btn-focus-box-shadow,
+			outline: 0,
+			opacity: 0.75,
+		),
+		disabled: (
+			box-shadow: none,
+			cursor: $disabled-cursor,
+			opacity: 0.25,
+			outline: 0,
+			active: (
+				pointer-events: none,
+			),
+		),
+		lexicon-icon: (
+			margin-top: 0,
+		),
+	),
+	$close
+);
+
+// C Focus Inset
+
+$c-focus-inset-focus: () !default;
+$c-focus-inset-focus: map-deep-merge(
+	(
+		box-shadow: $component-focus-inset-box-shadow,
+		border-color: $input-btn-focus-color,
+		outline: 0,
+	),
+	$c-focus-inset-focus
+);
+
+// C Inner
+
+$c-inner: () !default;
+$c-inner: map-deep-merge(
+	(
+		align-items: inherit,
+		display: inherit,
+		flex-direction: inherit,
+		height: inherit,
+		justify-content: inherit,
+		line-height: inherit,
+		max-width: inherit,
+		min-width: inherit,
+		outline: 0,
+		overflow: inherit,
+		padding-bottom: inherit,
+		padding-left: inherit,
+		padding-right: inherit,
+		padding-top: inherit,
+		text-overflow: inherit,
+		width: inherit,
+	),
+	$c-inner
+);
+
+// Heading
+
+$heading-spacer-x: 1rem !default; // 16px
+
+$heading-text-margin-bottom: auto !default;
+$heading-text-margin-top: auto !default;
+
+// Inline Item
+
+$inline-item-lexicon-icon-margin-top: -0.1em !default;
+$inline-item-spacer-x: 0.5rem !default; // 8px
+
+$inline-item-loading-animation-font-size: null !default;
+
+$inline-item: () !default;
+$inline-item: map-deep-merge(
+	(
+		align-items: center,
+		display: inline-flex,
+		vertical-align: middle,
+		inline-item: (
+			display: inline,
+		),
+		lexicon-icon: (
+			margin-top: $inline-item-lexicon-icon-margin-top,
+		),
+		loading-animation: (
+			font-size: $inline-item-loading-animation-font-size,
+		),
+	),
+	$inline-item
+);
+
+// Page Header
+
+$page-header-bg: $gray-200 !default;
+
+// Clay Gap
+
+$c-gap: () !default;
+$c-gap: map-merge(
+	(
+		0: map-get($spacers, 0),
+		1: map-get($spacers, 1),
+		2: map-get($spacers, 2),
+		3: map-get($spacers, 3),
+		4: map-get($spacers, 4),
+		5: map-get($spacers, 5),
+	),
+	$c-gap
+);
+
+// Background
+
+$bg-theme-colors: () !default;
+$bg-theme-colors: map-deep-merge(
+	(
+		'blue': (
+			background-color: $blue !important,
+			hover: (
+				background-color: clay-darken($blue, 10%) !important,
+			),
+		),
+		'indigo': (
+			background-color: $indigo !important,
+			hover: (
+				background-color: clay-darken($indigo, 10%) !important,
+			),
+		),
+		'purple': (
+			background-color: $purple !important,
+			hover: (
+				background-color: clay-darken($purple, 10%) !important,
+			),
+		),
+		'pink': (
+			background-color: $pink !important,
+			hover: (
+				background-color: clay-darken($pink, 10%) !important,
+			),
+		),
+		'red': (
+			background-color: $red !important,
+			hover: (
+				background-color: clay-darken($red, 10%) !important,
+			),
+		),
+		'orange': (
+			background-color: $orange !important,
+			hover: (
+				background-color: clay-darken($orange, 10%) !important,
+			),
+		),
+		'yellow': (
+			background-color: $yellow !important,
+			hover: (
+				background-color: clay-darken($yellow, 10%) !important,
+			),
+		),
+		'green': (
+			background-color: $green !important,
+			hover: (
+				background-color: clay-darken($green, 10%) !important,
+			),
+		),
+		'teal': (
+			background-color: $teal !important,
+			hover: (
+				background-color: clay-darken($teal, 10%) !important,
+			),
+		),
+		'cyan': (
+			background-color: $cyan !important,
+			hover: (
+				background-color: clay-darken($cyan, 10%) !important,
+			),
+		),
+		'primary': (
+			background-color: $primary !important,
+			hover: (
+				background-color: clay-darken($primary, 10%) !important,
+			),
+		),
+		'primary-l3': (
+			background-color: $primary-l3 !important,
+			hover: (
+				background-color: clay-darken($primary-l3, 10%) !important,
+			),
+		),
+		'secondary': (
+			background-color: $secondary !important,
+			hover: (
+				background-color: clay-darken($secondary, 10%) !important,
+			),
+		),
+		'success': (
+			background-color: $success !important,
+			hover: (
+				background-color: clay-darken($success, 10%) !important,
+			),
+		),
+		'info': (
+			background-color: $info !important,
+			hover: (
+				background-color: clay-darken($info, 10%) !important,
+			),
+		),
+		'warning': (
+			background-color: $warning !important,
+			hover: (
+				background-color: clay-darken($warning, 10%) !important,
+			),
+		),
+		'danger': (
+			background-color: $danger !important,
+			hover: (
+				background-color: clay-darken($danger, 10%) !important,
+			),
+		),
+		'light': (
+			background-color: $light !important,
+			hover: (
+				background-color: clay-darken($light, 10%) !important,
+			),
+		),
+		'dark': (
+			background-color: $dark !important,
+			hover: (
+				background-color: clay-darken($dark, 10%) !important,
+			),
+		),
+		'white': (
+			background-color: $white !important,
+		),
+		'transparent': (
+			background-color: transparent !important,
+		),
+	),
+	$bg-theme-colors
+);
+
+$bg-gradient-theme-colors: () !default;
+$bg-gradient-theme-colors: map-deep-merge(
+	(
+		'primary': (
+			background: $primary
+				linear-gradient(
+					180deg,
+					clay-mix($body-bg, $primary, 15%),
+					$primary
+				)
+				repeat-x !important,
+		),
+		'secondary': (
+			background: $secondary
+				linear-gradient(
+					180deg,
+					clay-mix($body-bg, $secondary, 15%),
+					$secondary
+				)
+				repeat-x !important,
+		),
+		'success': (
+			background: $success
+				linear-gradient(
+					180deg,
+					clay-clay-mix($body-bg, $success, 15%),
+					$success
+				)
+				repeat-x !important,
+		),
+		'info': (
+			background: $info
+				linear-gradient(180deg, clay-mix($body-bg, $info, 15%), $info)
+				repeat-x !important,
+		),
+		'warning': (
+			background: $warning
+				linear-gradient(
+					180deg,
+					clay-mix($body-bg, $warning, 15%),
+					$warning
+				)
+				repeat-x !important,
+		),
+		'danger': (
+			background: $danger
+				linear-gradient(
+					180deg,
+					clay-mix($body-bg, $danger, 15%),
+					$danger
+				)
+				repeat-x !important,
+		),
+		'light': (
+			background: $light
+				linear-gradient(180deg, clay-mix($body-bg, $light, 15%), $light)
+				repeat-x !important,
+		),
+		'dark': (
+			background: $dark
+				linear-gradient(180deg, clay-mix($body-bg, $dark, 15%), $dark)
+				repeat-x !important,
+		),
+	),
+	$bg-gradient-theme-colors
+);
+
+// Border
+
+$border-theme-colors: () !default;
+$border-theme-colors: map-deep-merge(
+	(
+		'primary': (
+			border-color: $primary !important,
+		),
+		'secondary': (
+			border-color: $secondary !important,
+		),
+		'success': (
+			border-color: $success !important,
+		),
+		'info': (
+			border-color: $info !important,
+		),
+		'warning': (
+			border-color: $warning !important,
+		),
+		'danger': (
+			border-color: $danger !important,
+		),
+		'light': (
+			border-color: $light !important,
+		),
+		'dark': (
+			border-color: $dark !important,
+		),
+		'white': (
+			border-color: $white !important,
+		),
+	),
+	$border-theme-colors
+);
+
+// Display
+
+$displays: none, inline, inline-block, block, grid, contents, table, table-row,
+	table-cell, flex, inline-flex !default;
+
+// Overflow
+
+$overflows: auto, hidden !default;
+
+// Position
+
+$positions: static, relative, absolute, fixed, sticky !default;
+
+// Font Sizes
+
+$font-sizes: () !default;
+$font-sizes: map-deep-merge(
+	(
+		text-1: (
+			font-size: map-get($font-scale, 1),
+		),
+		text-2: (
+			font-size: map-get($font-scale, 2),
+		),
+		text-3: (
+			font-size: map-get($font-scale, 3),
+		),
+		text-4: (
+			font-size: map-get($font-scale, 4),
+		),
+		text-5: (
+			font-size: map-get($font-scale, 5),
+		),
+		text-6: (
+			font-size: map-get($font-scale, 6),
+		),
+		text-7: (
+			font-size: map-get($font-scale, 7),
+		),
+		text-8: (
+			font-size: map-get($font-scale, 8),
+		),
+		text-9: (
+			font-size: map-get($font-scale, 9),
+		),
+		text-10: (
+			font-size: map-get($font-scale, 10),
+		),
+		text-11: (
+			font-size: map-get($font-scale, 11),
+		),
+	),
+	$font-sizes
+);
+
+// Text
+
+$text-theme-colors: () !default;
+$text-theme-colors: map-deep-merge(
+	(
+		'blue': (
+			color: $blue !important,
+			hover: (
+				color:
+					clay-darken($blue, $emphasized-link-hover-darken-percentage)
+					!important,
+			),
+		),
+		'indigo': (
+			color: $indigo !important,
+			hover: (
+				color:
+					clay-darken(
+						$indigo,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'purple': (
+			color: $purple !important,
+			hover: (
+				color:
+					clay-darken(
+						$purple,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'pink': (
+			color: $pink !important,
+			hover: (
+				color:
+					clay-darken($pink, $emphasized-link-hover-darken-percentage)
+					!important,
+			),
+		),
+		'red': (
+			color: $red !important,
+			hover: (
+				color:
+					clay-darken($red, $emphasized-link-hover-darken-percentage)
+					!important,
+			),
+		),
+		'orange': (
+			color: $orange !important,
+			hover: (
+				color:
+					clay-darken(
+						$orange,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'yellow': (
+			color: $yellow !important,
+			hover: (
+				color:
+					clay-darken(
+						$yellow,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'green': (
+			color: $green !important,
+			hover: (
+				color:
+					clay-darken(
+						$green,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'teal': (
+			color: $teal !important,
+			hover: (
+				color:
+					clay-darken($teal, $emphasized-link-hover-darken-percentage)
+					!important,
+			),
+		),
+		'cyan': (
+			color: $cyan !important,
+			hover: (
+				color:
+					clay-darken($cyan, $emphasized-link-hover-darken-percentage)
+					!important,
+			),
+		),
+		'primary': (
+			color: $primary !important,
+			hover: (
+				color:
+					clay-darken(
+						$primary,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'secondary': (
+			color: $secondary !important,
+			hover: (
+				color:
+					clay-darken(
+						$secondary,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'success': (
+			color: $success !important,
+			hover: (
+				color:
+					clay-darken(
+						$success,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'info': (
+			color: $info !important,
+			hover: (
+				color:
+					clay-darken($info, $emphasized-link-hover-darken-percentage)
+					!important,
+			),
+		),
+		'warning': (
+			color: $warning !important,
+			hover: (
+				color:
+					clay-darken(
+						$warning,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'danger': (
+			color: $danger !important,
+			hover: (
+				color:
+					clay-darken(
+						$danger,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'light': (
+			color: $light !important,
+			hover: (
+				color:
+					clay-darken(
+						$light,
+						$emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'dark': (
+			color: $dark !important,
+			hover: (
+				color:
+					clay-darken($dark, $emphasized-link-hover-darken-percentage)
+					!important,
+			),
+		),
+		'body': (
+			color: $body-color !important,
+		),
+		'muted': (
+			color: $text-muted !important,
+		),
+		'black-50': (
+			color: rgba($black, 0.5) !important,
+		),
+		'white-50': (
+			color: rgba($white, 0.5) !important,
+		),
+	),
+	$text-theme-colors
+);
+
+$text-decorations: () !default;
+$text-decorations: map-deep-merge(
+	(
+		'.text-none, .text-decoration-none': (
+			text-decoration: none !important,
+		),
+		'.text-underline, .text-decoration-underline': (
+			text-decoration: underline !important,
+		),
+	),
+	$text-decorations
+);
+
+// Text Truncate
+
+$text-truncate: () !default;
+$text-truncate: map-merge(
+	(
+		display: block,
+		overflow: hidden,
+		text-overflow: ellipsis,
+		white-space: nowrap,
+	),
+	$text-truncate
+);
+
+// Text Truncate Inline
+
+$text-truncate-inline: () !default;
+$text-truncate-inline: map-deep-merge(
+	(
+		display: inline-flex,
+		max-width: 100%,
+		text-truncate: (
+			display: inline-block,
+			max-width: 100%,
+			overflow: hidden,
+			text-overflow: ellipsis,
+			vertical-align: bottom,
+			white-space: nowrap,
+			word-wrap: normal,
+		),
+	),
+	$text-truncate-inline
+);
+
+// C Prefers
+
+$c-prefers-link-underline: () !default;
+$c-prefers-link-underline: map-deep-merge(
+	(
+		'.c-prefers-link-underline': (
+			'[href]:not(.disabled):not([role="button"])': (
+				text-decoration: underline !important,
+			),
+			'.btn-monospaced, .nav-btn-monospaced, .nav-link-monospaced': (
+				'&[href]:not(.disabled):not([role="button"]):not([role="tab"])::after':
+				(
+					content: '\00a0\00a0\00a0',
+					position: absolute,
+					text-decoration: underline !important,
+				),
+			),
+			'.multi-step-item.active, .multi-step-item.complete, .multi-step-item.error, .dropdown':
+			(
+				'.multi-step-icon[href]:not([role="button"])::after': (
+					content: '\00a0\00a0\00a0',
+					position: absolute,
+					text-decoration: underline !important,
+				),
+			),
+			'.multi-step-item.disabled .multi-step-icon[href]:not([role="button"])::after':
+			(
+				text-decoration: none !important,
+			),
+		),
+	),
+	$c-prefers-link-underline
+);
+
+$c-prefers-letter-spacing: () !default;
+$c-prefers-letter-spacing: map-deep-merge(
+	(
+		'.c-prefers-letter-spacing-1, .c-prefers-letter-spacing-1 *': (
+			letter-spacing: 1px !important,
+		),
+	),
+	$c-prefers-letter-spacing
+);
+
+$displays-c-prefers-reduced-motion: () !default;
+$displays-c-prefers-reduced-motion: map-deep-merge(
+	(
+		d-block-c-prefers-reduced-motion: (
+			display: none !important,
+		),
+		d-inline-block-c-prefers-reduced-motion: (
+			display: none !important,
+		),
+		'@media (prefers-reduced-motion: reduce)': (
+			d-none-c-prefers-reduced-motion: (
+				display: none !important,
+			),
+			d-block-c-prefers-reduced-motion: (
+				display: block !important,
+			),
+			d-inline-block-c-prefers-reduced-motion: (
+				display: inline-block !important,
+			),
+		),
+		c-prefers-reduced-motion: (
+			d-none-c-prefers-reduced-motion: (
+				display: none !important,
+			),
+			d-block-c-prefers-reduced-motion: (
+				display: block !important,
+			),
+			d-inline-block-c-prefers-reduced-motion: (
+				display: inline-block !important,
+			),
+		),
+	),
+	$displays-c-prefers-reduced-motion
+);
+
+$c-prefers-reduced-motion: () !default;
+$c-prefers-reduced-motion: map-merge(
+	(
+		scroll-behavior: auto,
+		transition: clay-enable-transitions(none),
+	),
+	$c-prefers-reduced-motion
+);

@@ -1,0 +1,173 @@
+$cadmin-clay-range-disabled-color: $cadmin-gray-500 !default;
+
+$cadmin-clay-range-input-group: () !default;
+$cadmin-clay-range-input-group: map-merge(
+	(
+		align-items: center,
+	),
+	$cadmin-clay-range-input-group
+);
+
+$cadmin-clay-range-input-group-item: () !default;
+$cadmin-clay-range-input-group-item: map-merge(
+	(
+		flex-direction: column,
+	),
+	$cadmin-clay-range-input-group-item
+);
+
+$cadmin-clay-range-input-group-text: () !default;
+$cadmin-clay-range-input-group-text: map-merge(
+	(
+		background-color:
+			setter(
+				map-get($cadmin-clay-range-input-group-text, bg),
+				transparent
+			),
+		border-width: 0,
+		color: $cadmin-gray-500,
+		font-size: 14px,
+		font-weight: $cadmin-font-weight-semi-bold,
+		min-width: 24px,
+		padding-bottom: 0,
+		padding-left: 0,
+		padding-right: 0,
+		padding-top: 0,
+	),
+	$cadmin-clay-range-input-group-text
+);
+
+$cadmin-clay-range-title: () !default;
+$cadmin-clay-range-title: map-deep-merge(
+	(
+		display: block,
+		font-weight: $cadmin-font-weight-semi-bold,
+		line-height: 1,
+		margin-bottom: 8px,
+		text-align: center,
+	),
+	$cadmin-clay-range-title
+);
+
+$cadmin-clay-range-input: () !default;
+$cadmin-clay-range-input: map-deep-merge(
+	(
+		color: $cadmin-gray-500,
+		display: block,
+		padding-bottom: 0.1px,
+		position: relative,
+		vertical-align: middle,
+		width: 100%,
+		clay-range-thumb: (
+			background-color: $cadmin-white,
+			border-radius: 100px,
+			border-width: 0,
+			box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.3),
+			height: 24px,
+			width: 24px,
+		),
+		clay-range-track: (
+			background-color: $cadmin-gray-200,
+			border-radius: 100px,
+			height: 4px,
+			position: absolute,
+			top: 50%,
+			width: 100%,
+		),
+		clay-range-progress: (
+			background-color: $cadmin-primary,
+			border-radius: 100px 0 0 100px,
+			position: absolute,
+			top: 50%,
+			width: 50%,
+		),
+		tooltip: (
+			margin-left: 13px,
+			transition: opacity 0.15s linear,
+			visibility: hidden,
+			white-space: nowrap,
+		),
+		tooltip-inner: (
+			padding: 8px 12px,
+		),
+		tooltip-arrow: (
+			height: 6px,
+			width: 6px,
+		),
+		clay-tooltip-bottom: (
+			margin-top: 4px,
+			padding-top: 3px,
+			top: 100%,
+			transform: translateX(-50%),
+			tooltip-arrow: (
+				margin-left: -4px,
+			),
+		),
+		clay-tooltip-top: (
+			bottom: 100%,
+			margin-bottom: 4px,
+			padding-bottom: 3px,
+			transform: translateX(-50%),
+			tooltip-arrow: (
+				margin-left: -4px,
+			),
+		),
+		form-control-range: (
+			appearance: none,
+			background-color: transparent,
+			height: $cadmin-input-height,
+			position: relative,
+			z-index: $cadmin-zindex-clay-range-input-form-control,
+			hover: (
+				cursor: $cadmin-link-cursor,
+				clay-range-thumb: (
+					background-color: $cadmin-primary-l3,
+				),
+			),
+			focus: (
+				outline: 0,
+				clay-range-thumb: (
+					box-shadow: $cadmin-component-focus-inset-box-shadow,
+				),
+			),
+			disabled: (
+				color: $cadmin-clay-range-disabled-color,
+				cursor: $cadmin-disabled-cursor,
+				clay-range-thumb: (
+					background-color: $cadmin-gray-100,
+				),
+				clay-range-progress: (
+					background-color: $cadmin-primary-l2,
+				),
+				clay-range-track: (
+					background-color: $cadmin-gray-200,
+				),
+			),
+		),
+		data-label-min-max: (
+			margin-bottom: 16px,
+		),
+		before-after: (
+			font-size: 14px,
+			font-weight: $cadmin-font-weight-semi-bold,
+			line-height: 1,
+			margin-top: 40px,
+			position: absolute,
+			text-align: center,
+			top: 0,
+			width: 24px,
+		),
+		data-label-min: (
+			before: (
+				content: unquote("'\\FEFF' attr(data-label-min)"),
+			),
+		),
+		data-label-max: (
+			after: (
+				content: unquote("'\\FEFF' attr(data-label-max)"),
+				right: 0,
+			),
+		),
+	),
+	$cadmin-clay-range-input
+);

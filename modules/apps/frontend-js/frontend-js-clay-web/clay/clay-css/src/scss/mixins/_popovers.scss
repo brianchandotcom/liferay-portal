@@ -1,0 +1,185 @@
+////
+/// @group popovers
+////
+
+/// A mixin to help create `.popover-header` variants.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .popover-header
+/// 	before: (
+/// 		// .popover-header::before
+/// 	),
+/// 	after: (
+/// 		// .popover-header::after
+/// 	),
+/// 	empty: (
+/// 		// .popover-header:empty
+/// 	),
+/// 	close: (
+/// 		// .popover-header .close
+/// 	),
+/// )
+
+@mixin clay-popover-header-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		@if ($enabled) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			$_before: map-get($map, before);
+
+			@if ($_before) {
+				&::before {
+					@include clay-css($_before);
+				}
+			}
+
+			$_after: map-get($map, after);
+
+			@if ($_after) {
+				&::after {
+					@include clay-css($_after);
+				}
+			}
+
+			$_empty: map-get($map, empty);
+
+			@if ($_empty) {
+				&:empty {
+					@include clay-css($_empty);
+				}
+			}
+
+			$_close: map-get($map, close);
+
+			@if ($_close) {
+				.close {
+					@include clay-close($_close);
+				}
+			}
+		}
+	}
+}
+
+/// A mixin to help create `.popover` variants.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .popover
+/// 	arrow: (
+/// 		// .popover .arrow
+/// 		before: (
+/// 			// .popover .arrow::before
+/// 		),
+/// 		after: (
+/// 			// .popover .arrow::after
+/// 		),
+/// 	),
+/// 	popover-header: (
+/// 		// .popover .popover-header
+/// 		before: (
+/// 			// .popover .popover-header::before
+/// 		),
+/// 		after: (
+/// 			// .popover .popover-header::after
+/// 		),
+/// 		empty: (
+/// 			// .popover .popover-header:empty
+/// 		),
+/// 	),
+/// 	popover-body: (
+/// 		// .popover .popover-body
+/// 	),
+/// 	inline-scroller: (
+/// 		// .popover .inline-scroller
+/// 	),
+/// 	close: (
+/// 		// .popover .close
+/// 	),
+/// )
+
+@mixin clay-popover-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		@if ($enabled) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			$_arrow: map-get($map, arrow);
+
+			@if ($_arrow) {
+				.arrow {
+					@include clay-css($_arrow);
+
+					$_before: map-get($_arrow, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_arrow, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+				}
+			}
+
+			$_popover-header: map-get($map, popover-header);
+
+			@if ($_popover-header) {
+				.popover-header {
+					@include clay-popover-header-variant($_popover-header);
+				}
+			}
+
+			$_popover-body: map-get($map, popover-body);
+
+			@if ($_popover-body) {
+				.popover-body {
+					@include clay-css($_popover-body);
+				}
+			}
+
+			$_inline-scroller: map-get($map, inline-scroller);
+
+			@if ($_inline-scroller) {
+				.inline-scroller {
+					@include clay-css($_inline-scroller);
+				}
+			}
+
+			$_close: map-get($map, close);
+
+			@if ($_close) {
+				.close {
+					@include clay-close($_close);
+				}
+			}
+
+			$_focus: map-get($map, focus);
+
+			@if ($_focus) {
+				@at-root {
+					&.focus,
+					#{$focus-visible-selector},
+					#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+						@include clay-popover-variant($_focus);
+					}
+				}
+			}
+		}
+	}
+}

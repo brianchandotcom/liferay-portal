@@ -1,0 +1,489 @@
+.dropdown {
+	position: relative;
+}
+
+.dropdown-toggle {
+	@include clay-button-variant($cadmin-dropdown-toggle);
+}
+
+.dropdown-header {
+	@include clay-css($cadmin-dropdown-header);
+
+	@include media-breakpoint-down(
+		map-get($cadmin-dropdown-header, breakpoint-down)
+	) {
+		@include clay-css(setter(map-get($cadmin-dropdown-header, mobile), ()));
+	}
+
+	&:first-child {
+		@include clay-css(
+			setter(map-get($cadmin-dropdown-header, first-child), ())
+		);
+	}
+}
+
+.dropdown-subheader {
+	@include clay-css($cadmin-dropdown-subheader);
+
+	&:first-child {
+		@include clay-css(
+			setter(map-get($cadmin-dropdown-subheader, first-child), ())
+		);
+	}
+}
+
+.dropdown-caption {
+	@include clay-css($cadmin-dropdown-caption);
+}
+
+.dropdown-item {
+	@include clay-dropdown-item-variant($cadmin-dropdown-item-base);
+
+	.form-check {
+		margin-bottom: 0;
+	}
+
+	.custom-control {
+		margin-bottom: 0;
+		margin-right: 0;
+		min-height: $cadmin-custom-control-indicator-size;
+	}
+}
+
+// Dropdown Item Text
+
+.dropdown-item-text {
+	@include clay-css($cadmin-dropdown-item-text);
+}
+
+.dropdown-section {
+	@include clay-css($cadmin-dropdown-section);
+
+	.form-group + .form-group {
+		@include clay-css(
+			setter(
+				map-deep-get($cadmin-dropdown-section, form-group, form-group),
+				()
+			)
+		);
+	}
+
+	.custom-control {
+		@include clay-css(
+			setter(map-get($cadmin-dropdown-section, custom-control), ())
+		);
+	}
+
+	.custom-control-label {
+		@include clay-css(
+			setter(map-get($cadmin-dropdown-section, custom-control-label), ())
+		);
+	}
+
+	.custom-control-label-text {
+		@include clay-css(
+			setter(
+				map-get($cadmin-dropdown-section, custom-control-label-text),
+				()
+			)
+		);
+	}
+
+	.custom-control-outside {
+		@include clay-custom-control-variant(
+			map-get($cadmin-dropdown-section, custom-control-outside)
+		);
+	}
+
+	&.active {
+		@include clay-css(
+			setter(map-get($cadmin-dropdown-section, active), ())
+		);
+
+		.custom-control-label {
+			@include clay-css(
+				setter(
+					map-deep-get(
+						$cadmin-dropdown-section,
+						active,
+						custom-control-label
+					),
+					()
+				)
+			);
+		}
+	}
+}
+
+.dropdown-section-grid {
+	@extend %list-unstyled !optional;
+
+	display: grid;
+	gap: 0.5rem 0.75rem;
+	grid-template-columns: repeat(9, 1fr);
+	margin-bottom: 0;
+	padding: map-get($cadmin-dropdown-section, padding);
+}
+
+// Dropdown Footer
+
+.dropdown-footer {
+	@include clay-css($cadmin-dropdown-footer);
+}
+
+// Dropdown Menu
+
+.dropdown-menu,
+&.dropdown-menu {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu);
+
+	.alert {
+		font-size: $cadmin-dropdown-alert-font-size;
+		line-height: $cadmin-dropdown-alert-line-height;
+		margin: $cadmin-dropdown-alert-margin;
+		padding: $cadmin-dropdown-alert-padding-y
+			$cadmin-dropdown-alert-padding-x;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.alert-fluid {
+		margin-left: 0;
+		margin-right: 0;
+
+		&:first-child {
+			margin-top: math-sign($cadmin-dropdown-padding-y);
+		}
+
+		&:last-child {
+			margin-bottom: math-sign($cadmin-dropdown-padding-y);
+		}
+	}
+
+	.form-group {
+		margin-bottom: 0;
+	}
+
+	.inline-scroller {
+		max-height: $cadmin-dropdown-inline-scroller-max-height;
+
+		@include media-breakpoint-down(md, $cadmin-grid-breakpoints) {
+			max-height: $cadmin-dropdown-inline-scroller-max-height-mobile;
+		}
+	}
+
+	> .list-unstyled {
+		margin-bottom: 0;
+	}
+}
+
+.dropdown-menu.show,
+&.dropdown-menu.show {
+	display: block;
+}
+
+// Dropdown Menu Variants
+
+@each $key, $value in $cadmin-dropdown-menu-palette {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($key, '.') or starts-with($key, '#'),
+			$key,
+			str-insert($key, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-dropdown-menu-variant($value);
+		}
+	}
+}
+
+// Dropdown Menu Alignment
+
+@each $cadmin-breakpoint in map-keys($cadmin-grid-breakpoints) {
+	@include media-breakpoint-up($cadmin-breakpoint) {
+		$cadmin-infix: breakpoint-infix(
+			$cadmin-breakpoint,
+			$cadmin-grid-breakpoints
+		);
+
+		.dropdown-menu#{$cadmin-infix}-left,
+		&.dropdown-menu#{$cadmin-infix}-left {
+			left: 0;
+			right: auto;
+		}
+
+		.dropdown-menu#{$cadmin-infix}-right,
+		&.dropdown-menu#{$cadmin-infix}-right {
+			left: auto;
+			right: 0;
+		}
+	}
+}
+
+// When enabled Popper.js, reset basic dropdown position
+
+.dropdown-menu,
+&.dropdown-menu {
+	&[x-placement^='top'],
+	&[x-placement^='right'],
+	&[x-placement^='bottom'],
+	&[x-placement^='left'] {
+		bottom: auto;
+		right: auto;
+	}
+}
+
+// Dropdown Divider
+
+.dropdown-divider {
+	@include clay-css($cadmin-dropdown-divider);
+}
+
+// Dropdown Action
+
+.dropdown-action {
+	@include clay-css($cadmin-dropdown-action);
+
+	> .dropdown-toggle {
+		@include clay-button-variant(
+			setter(map-get($cadmin-dropdown-action, dropdown-toggle), ())
+		);
+	}
+}
+
+// Dropdown Menu Indicator Start
+
+.dropdown-menu-indicator-start,
+&.dropdown-menu-indicator-start {
+	// `.dropdown-item-indicator` is deprecated in v2.3.5 use
+	// `.dropdown-item-indicator-start` instead
+	.dropdown-item-indicator {
+		height: $cadmin-dropdown-item-indicator-size;
+		left: $cadmin-dropdown-item-padding-x;
+		position: absolute;
+		top: $cadmin-dropdown-item-padding-y;
+		width: $cadmin-dropdown-item-indicator-size;
+	}
+
+	.dropdown-item-indicator-text-start {
+		padding-left: 0;
+	}
+
+	.dropdown-header,
+	.dropdown-subheader,
+	.dropdown-caption,
+	.dropdown-item {
+		padding-left: calc(
+			#{$cadmin-dropdown-item-padding-x} + #{$cadmin-dropdown-item-indicator-size} +
+				#{$cadmin-dropdown-item-indicator-spacer-x}
+		);
+	}
+
+	@if ($cadmin-enable-c-inner) {
+		.dropdown-item {
+			.c-inner {
+				margin-left: calc(
+					(
+							#{$cadmin-dropdown-item-padding-x} +
+								#{$cadmin-dropdown-item-indicator-size} +
+								#{$cadmin-dropdown-item-indicator-spacer-x}
+						) *
+						-1
+				);
+			}
+		}
+	}
+}
+
+.dropdown-item-indicator-start {
+	@include clay-link($cadmin-dropdown-item-indicator-start);
+}
+
+.dropdown-item-indicator-text-start {
+	@include clay-link($cadmin-dropdown-item-indicator-text-start);
+}
+
+// Dropdown Menu Indicator End
+
+.dropdown-menu-indicator-end,
+&.dropdown-menu-indicator-end {
+	// `.dropdown-item-indicator` is deprecated in v2.3.5 use
+	// `.dropdown-item-indicator-end` instead
+	.dropdown-item-indicator {
+		position: absolute;
+		right: $cadmin-dropdown-item-padding-x;
+		top: $cadmin-dropdown-item-padding-y;
+	}
+
+	.dropdown-item-indicator-text-end {
+		padding-right: 0;
+	}
+
+	.dropdown-item {
+		padding-right: calc(
+			#{$cadmin-dropdown-item-padding-x} + #{$cadmin-dropdown-item-indicator-size} +
+				#{$cadmin-dropdown-item-indicator-spacer-x}
+		);
+
+		@if ($cadmin-enable-c-inner) {
+			.c-inner {
+				margin-right: calc(
+					(
+							#{$cadmin-dropdown-item-padding-x} +
+								#{$cadmin-dropdown-item-indicator-size} +
+								#{$cadmin-dropdown-item-indicator-spacer-x}
+						) *
+						-1
+				);
+			}
+		}
+	}
+}
+
+.dropdown-item-indicator-end {
+	@include clay-link($cadmin-dropdown-item-indicator-end);
+}
+
+.dropdown-item-indicator-text-end {
+	@include clay-link($cadmin-dropdown-item-indicator-text-end);
+}
+
+// Dropdown Menu Positions
+
+.dropdown-menu-top,
+&.dropdown-menu-top {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-top);
+}
+
+.dropdown-menu-top-right,
+&.dropdown-menu-top-right {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-top-right);
+}
+
+.dropdown-menu-top-center,
+&.dropdown-menu-top-center {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-top-center);
+}
+
+.dropdown-menu-center,
+&.dropdown-menu-center {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-center);
+}
+
+.dropdown-menu-left-side,
+&.dropdown-menu-left-side {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-left-side);
+}
+
+.dropdown-menu-left-side-bottom,
+&.dropdown-menu-left-side-bottom {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-left-side-bottom);
+}
+
+.dropdown-menu-left-side-middle,
+&.dropdown-menu-left-side-middle {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-left-side-middle);
+}
+
+.dropdown-menu-right-side,
+&.dropdown-menu-right-side {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-right-side);
+}
+
+.dropdown-menu-right-side-bottom,
+&.dropdown-menu-right-side-bottom {
+	@include clay-dropdown-menu-variant(
+		$cadmin-dropdown-menu-right-side-bottom
+	);
+}
+
+.dropdown-menu-right-side-middle,
+&.dropdown-menu-right-side-middle {
+	@include clay-dropdown-menu-variant(
+		$cadmin-dropdown-menu-right-side-middle
+	);
+}
+
+// Dropdown wide / full
+
+%dropdown-full-wide-dropdown-menu {
+	max-width: none;
+	width: 100%;
+
+	@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+		max-height: none;
+		width: 100%;
+	}
+}
+
+.dropdown-full,
+.dropdown-wide {
+	.dropdown-header ~ .dropdown-header {
+		margin-top: $cadmin-dropdown-full-wide-header-spacer-y;
+	}
+
+	.dropdown-menu {
+		@extend %dropdown-full-wide-dropdown-menu;
+
+		> .row {
+			margin-left: 0;
+			margin-right: 0;
+			min-width: $cadmin-dropdown-wide-width;
+		}
+	}
+}
+
+.dropdown-wide .dropdown-menu {
+	// min-width 992px
+
+	@include media-breakpoint-up(lg, $cadmin-grid-breakpoints) {
+		min-width: $cadmin-dropdown-wide-width;
+	}
+}
+
+// Dropdown Menu Width
+
+.dropdown-menu-width-shrink {
+	@include clay-dropdown-menu-variant($cadmin-dropdown-menu-width-shrink);
+}
+
+.dropdown-menu-width-full {
+	@include clay-css($cadmin-dropdown-menu-width-full);
+}
+
+.dropdown-menu-width-sm {
+	@include clay-css($cadmin-dropdown-menu-width-sm);
+
+	@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+		@include clay-css($cadmin-dropdown-menu-width-sm-sm-down);
+	}
+}
+
+// Dropdown Menu Height
+
+.dropdown-menu-height-auto {
+	@include clay-css($cadmin-dropdown-menu-height-auto);
+}
+
+// Dropdown Menu Autocomplete
+
+.dropdown-full .autocomplete-dropdown-menu,
+.dropdown-full .dropdown-menu-autocomplete {
+	max-height: map-get($cadmin-autocomplete-dropdown-menu, max-height-mobile);
+
+	@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+		max-height: map-get($cadmin-autocomplete-dropdown-menu, max-height);
+	}
+}
+
+.autocomplete-dropdown-menu,
+.dropdown-menu-autocomplete {
+	@include clay-dropdown-menu-variant($cadmin-autocomplete-dropdown-menu);
+}

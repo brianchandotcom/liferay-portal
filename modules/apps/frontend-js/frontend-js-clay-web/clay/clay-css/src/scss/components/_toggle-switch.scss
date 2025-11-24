@@ -1,0 +1,103 @@
+// Toggle Switch
+
+.toggle-switch {
+	@include clay-toggle-switch-variant($toggle-switch);
+}
+
+.toggle-switch-check-bar {
+	@include clay-css($toggle-switch-check-bar);
+}
+
+.toggle-switch-bar {
+	@include clay-toggle-switch-bar-variant($toggle-switch-bar);
+}
+
+.toggle-switch-check {
+	@include clay-toggle-switch-check-variant($toggle-switch-check);
+}
+
+.toggle-switch-label {
+	@include clay-css($toggle-switch-label);
+}
+
+.toggle-switch-text {
+	@include clay-css($toggle-switch-text);
+}
+
+.toggle-switch-text-left {
+	$breakpoint-down: setter(
+		map-get($toggle-switch-text-left, breakpoint-down),
+		sm
+	);
+
+	@include clay-css($toggle-switch-text-left);
+
+	@include media-breakpoint-down($breakpoint-down) {
+		@include clay-css(map-get($toggle-switch-text-left, mobile));
+	}
+}
+
+.toggle-switch-text-right {
+	$breakpoint-down: setter(
+		map-get($toggle-switch-text-right, breakpoint-down),
+		sm
+	);
+
+	@include clay-css($toggle-switch-text-right);
+
+	@include media-breakpoint-down($breakpoint-down) {
+		@include clay-css(map-get($toggle-switch-text-right, mobile));
+	}
+}
+
+// Simple Toggle Switch
+
+.simple-toggle-switch.toggle-switch {
+	@include clay-toggle-switch-variant($simple-toggle-switch);
+
+	// deprecated
+
+	.toggle-switch-check + .toggle-switch-label {
+		margin-right: $simple-toggle-switch-label-spacer-x;
+	}
+
+	.toggle-switch-label + .toggle-switch-check-bar {
+		margin-left: $simple-toggle-switch-label-spacer-x;
+	}
+}
+
+.simple-toggle-switch-reverse.simple-toggle-switch {
+	@include clay-toggle-switch-variant($simple-toggle-switch-reverse);
+}
+
+// Toggle Switch Sizes
+
+@each $size, $value in $toggle-switch-sizes {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($size, 'toggle-switch-'),
+			clay-str-replace($size, 'toggle-switch-', '.toggle-switch-'),
+			$size
+		);
+
+		@if (starts-with($size, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-toggle-switch-variant($value);
+			}
+		} @else if (starts-with($size, 'toggle-switch-')) {
+			$placeholder: '%clay-#{$size}';
+
+			#{$placeholder} {
+				@include clay-toggle-switch-variant($value);
+			}
+
+			#{$selector} {
+				@extend #{$placeholder} !optional;
+			}
+		} @else {
+			#{$selector} {
+				@include clay-toggle-switch-variant($value);
+			}
+		}
+	}
+}

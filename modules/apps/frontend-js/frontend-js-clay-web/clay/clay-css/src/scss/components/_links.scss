@@ -1,0 +1,75 @@
+.c-link {
+	@include clay-link($c-link);
+}
+
+.component-link {
+	@include clay-link($component-link);
+}
+
+.single-link {
+	font-weight: $single-link-font-weight;
+}
+
+.link-primary {
+	@include clay-link($link-primary);
+}
+
+.link-secondary {
+	@include clay-link($link-secondary);
+}
+
+// Link Outline
+
+button.link-outline {
+	cursor: $link-cursor;
+}
+
+.link-outline {
+	@include clay-link($link-outline);
+}
+
+.link-outline-primary {
+	@include clay-link($link-outline-primary);
+}
+
+.link-outline-secondary {
+	@include clay-link($link-outline-secondary);
+}
+
+.link-outline-borderless {
+	border-color: transparent;
+}
+
+%link-monospaced {
+	@include clay-link($link-monospaced);
+}
+
+.link-monospaced {
+	@extend %link-monospaced;
+}
+
+// Component Links
+
+.component-title {
+	@include clay-text-typography($component-title);
+}
+
+.component-subtitle {
+	@include clay-text-typography($component-subtitle);
+}
+
+.component-action {
+	@include clay-link($component-action);
+}
+
+.component-text {
+	@include clay-text-typography($component-text);
+}
+
+.component-icon {
+	@include clay-css($component-icon);
+
+	.lexicon-icon {
+		@include clay-css(map-get($component-icon, lexicon-icon));
+	}
+}

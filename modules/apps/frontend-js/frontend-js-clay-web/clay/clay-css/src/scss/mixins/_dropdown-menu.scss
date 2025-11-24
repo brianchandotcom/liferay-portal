@@ -1,0 +1,1092 @@
+////
+/// @group Dropdowns
+////
+
+/// A mixin to create Dropdown Menu variants. You can base your variant off Bootstrap's `.dropdown-menu` class or create your own base class (e.g., `<div class="dropdown-menu my-custom-dropdown-menu"></div>` or `<div class="my-custom-dropdown-menu"></div>`).
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent .dropdown-item styles from being output. Default: true
+/// 	breakpoint-down: {String}, // The breakpoint to use in `media-breakpoint-down`
+/// 	mobile: (
+/// 		// .dropdown-menu { @include media-breakpoint-down(breakpoint-down) {} }
+/// 	),
+/// 	before: (
+/// 		// .dropdown-menu::before
+/// 	),
+/// 	after: (
+/// 		// .dropdown-menu::after
+/// 	),
+/// 	show: (
+/// 		// .dropdown-menu.show
+/// 	),
+/// 	dropdown-item: (
+/// 		// .dropdown-menu .dropdown-item
+/// 	),
+/// 	alert: (
+/// 		// .dropdown-menu .alert
+/// 	),
+/// 	alert-fluid: (
+/// 		// .dropdown-menu .alert-fluid
+/// 	),
+/// )
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+/// bg-clip: {String | Null}, // deprecated after 3.9.0
+/// font-size-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// max-height-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// max-width-mobile: {Number | String | Null}, // deprecated after 3.9.0
+
+@mixin clay-dropdown-menu-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$breakpoint-down: map-get($map, breakpoint-down);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+				background-clip:
+					setter(
+						map-get($map, bg-clip),
+						map-get($map, background-clip)
+					),
+			)
+		);
+
+		$mobile: setter(map-get($map, mobile), ());
+		$mobile: map-merge(
+			$mobile,
+			(
+				font-size:
+					setter(
+						map-get($map, font-size-mobile),
+						map-get($mobile, font-size)
+					),
+				max-height:
+					setter(
+						map-get($map, max-height-mobile),
+						map-get($mobile, max-height)
+					),
+				max-width:
+					setter(
+						map-get($map, max-width-mobile),
+						map-get($mobile, max-width)
+					),
+			)
+		);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			@if ($breakpoint-down) {
+				@include media-breakpoint-down($breakpoint-down) {
+					@include clay-css($mobile);
+				}
+			}
+
+			$_before: map-get($map, before);
+
+			@if ($_before) {
+				&::before {
+					@include clay-css($_before);
+				}
+			}
+
+			$_after: map-get($map, after);
+
+			@if ($_after) {
+				&::after {
+					@include clay-css($_after);
+				}
+			}
+
+			$_show: map-get($map, show);
+
+			@if ($_show) {
+				&.show {
+					@include clay-css($_show);
+				}
+			}
+
+			$_dropdown-header: map-get($map, dropdown-header);
+
+			@if ($_dropdown-header) {
+				.dropdown-header {
+					@include clay-css($_dropdown-header);
+				}
+			}
+
+			$_dropdown-subheader: map-get($map, dropdown-subheader);
+
+			@if ($_dropdown-subheader) {
+				.dropdown-subheader {
+					@include clay-css($_dropdown-subheader);
+				}
+			}
+
+			$_dropdown-section: map-get($map, dropdown-section);
+
+			@if ($_dropdown-section) {
+				.dropdown-section {
+					@include clay-css($_dropdown-section);
+				}
+			}
+
+			$_dropdown-caption: map-get($map, dropdown-caption);
+
+			@if ($_dropdown-caption) {
+				.dropdown-caption {
+					@include clay-css($_dropdown-caption);
+				}
+			}
+
+			$_dropdown-item: map-get($map, dropdown-item);
+
+			@if ($_dropdown-item) {
+				.dropdown-item {
+					@include clay-dropdown-item-variant($_dropdown-item);
+				}
+			}
+
+			$_dropdown-item-scroll: map-get($map, dropdown-item-scroll);
+
+			@if ($_dropdown-item-scroll) {
+				.dropdown-item-scroll {
+					@include clay-dropdown-item-variant($_dropdown-item-scroll);
+				}
+			}
+
+			$_dropdown-item-scroll-down: map-get(
+				$map,
+				dropdown-item-scroll-down
+			);
+
+			@if ($_dropdown-item-scroll-down) {
+				.dropdown-item-scroll-down {
+					@include clay-dropdown-item-variant(
+						$_dropdown-item-scroll-down
+					);
+				}
+			}
+
+			$_dropdown-item-scroll-up: map-get($map, dropdown-item-scroll-up);
+
+			@if ($_dropdown-item-scroll-up) {
+				.dropdown-item-scroll-up {
+					@include clay-dropdown-item-variant(
+						$_dropdown-item-scroll-up
+					);
+				}
+			}
+
+			$_dropdown-divider: map-get($map, dropdown-divider);
+
+			@if ($_dropdown-divider) {
+				.dropdown-divider {
+					@include clay-css($_dropdown-divider);
+				}
+			}
+
+			$_dropdown-ooter: map-get($map, dropdown-ooter);
+
+			@if ($_dropdown-ooter) {
+				.dropdown-footer {
+					@include clay-css($_dropdown-footer);
+				}
+			}
+
+			$_alert: map-get($map, alert);
+
+			@if ($_alert) {
+				.alert {
+					@include clay-alert-variant($_alert);
+				}
+			}
+
+			$_alert-fluid: map-get($map, alert-fluid);
+
+			@if ($_alert-fluid) {
+				.alert-fluid {
+					@include clay-alert-variant($_alert-fluid);
+				}
+			}
+
+			$_dropdown-menu-indicator-start: map-get(
+				$map,
+				dropdown-menu-indicator-start
+			);
+
+			@if ($_dropdown-menu-indicator-start) {
+				&.dropdown-menu-indicator-start {
+					@include clay-css($_dropdown-menu-indicator-start);
+
+					$_dropdown-item: map-get(
+						$_dropdown-menu-indicator-start,
+						dropdown-item
+					);
+
+					@if ($_dropdown-item) {
+						.dropdown-item {
+							@include clay-dropdown-item-variant(
+								$_dropdown-item
+							);
+						}
+					}
+
+					$_dropdown-item-indicator-start: map-get(
+						$_dropdown-menu-indicator-start,
+						dropdown-item-indicator-start
+					);
+
+					@if ($_dropdown-item-indicator-start) {
+						.dropdown-item-indicator-start {
+							@include clay-link($_dropdown-item-indicator-start);
+						}
+					}
+				}
+			}
+
+			$_dropdown-menu-indicator-end: map-get(
+				$map,
+				dropdown-menu-indicator-end
+			);
+
+			@if ($_dropdown-menu-indicator-end) {
+				&.dropdown-menu-indicator-end {
+					@include clay-css($_dropdown-menu-indicator-end);
+
+					$_dropdown-item: map-get(
+						$_dropdown-menu-indicator-end,
+						dropdown-item
+					);
+
+					@if ($_dropdown-item) {
+						.dropdown-item {
+							@include clay-dropdown-item-variant(
+								$_dropdown-item
+							);
+						}
+					}
+
+					$_dropdown-item-indicator-end: map-get(
+						$_dropdown-menu-indicator-end,
+						dropdown-item-indicator-end
+					);
+
+					@if ($_dropdown-item-indicator-end) {
+						.dropdown-item-indicator-end {
+							@include clay-link($_dropdown-item-indicator-end);
+						}
+					}
+				}
+			}
+
+			$_inline-scroller: map-get($map, inline-scroller);
+
+			@if ($_inline-scroller) {
+				.inline-scroller {
+					@include clay-css($_inline-scroller);
+				}
+			}
+
+			$_media-breakpoint-down: map-get($map, media-breakpoint-down);
+			$_media-breakpoint-up: map-get($map, media-breakpoint-up);
+
+			@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+				@include clay-generate-media-breakpoints(
+					$map,
+					'clay-dropdown-menu-variant'
+				);
+			}
+		}
+	}
+}
+
+/// A mixin to create Dropdown Item variants. You can base your variant off Bootstrap's `.dropdown-item` class or create your own base class (e.g., `<a class="dropdown-item my-custom-dropdown-item" href="/"></a>` or `<a class="my-custom-dropdown-item" href="/"></a>`).
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent .dropdown-item styles from being output. Default: true
+/// 	hover: (
+/// 		// .dropdown-item:hover
+/// 		c-kbd-inline: (
+/// 			// .dropdown-item:hover .c-kbd-inline
+/// 		),
+/// 	),
+/// 	focus: (
+/// 		// .dropdown-item:focus
+/// 		c-kbd-inline: (
+/// 			// .dropdown-item:focus .c-kbd-inline
+/// 		),
+/// 	),
+/// 	active: (
+/// 		// .dropdown-item:active
+/// 		c-kbd-inline: (
+/// 			// .dropdown-item:active .c-kbd-inline
+/// 		),
+/// 	),
+/// 	active-class: (
+/// 		// .dropdown-item.active
+/// 		c-kbd-inline: (
+/// 			// .dropdown-item.active .c-kbd-inline
+/// 		),
+/// 	),
+/// 	disabled: (
+/// 		c-kbd-inline: (
+/// 			// .dropdown-item:disabled .c-kbd-inline
+/// 		),
+/// 		active: (
+/// 			// .dropdown-item:disabled:active
+/// 		),
+/// 	),
+/// 	c-inner: (
+/// 		enabled: {Bool}, // Set to false to prevent .c-inner styles from being output. Default: true
+/// 		// .dropdown-item .c-inner
+/// 	),
+/// 	'&.autofit-row': (
+/// 		// .dropdown-item.autofit-row
+/// 		autofit-col: (
+/// 			// .dropdown-item.autofit-row > .autofit-col
+/// 		),
+/// 		autofit-col-expand: (
+/// 			// .dropdown-item.autofit-row > .autofit-col-expand
+/// 		),
+/// 	),
+/// 	autofit-row: (
+/// 		// .dropdown-item .autofit-row
+/// 		autofit-col: (
+/// 			// .dropdown-item .autofit-row > .autofit-col
+/// 		),
+/// 		autofit-col-expand: (
+/// 			// .dropdown-item .autofit-row > .autofit-col-expand
+/// 		),
+/// 	),
+/// 	c-kbd-inline: (
+/// 		// .dropdown-item .c-kbd-inline
+/// 	),
+/// )
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-color: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// hover-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// hover-c-kbd-inline: {Map},
+/// focus-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// focus-border-radius: {Number | String | List | Null}, // deprecated after 3.9.0
+/// focus-box-shadow: {String | List | Null}, // deprecated after 3.9.0
+/// focus-color: {Color | String | Null}, // deprecated after 3.9.0
+/// focus-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-outline: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// focus-c-kbd-inline: {Map},
+/// active-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// active-border-color: {String | List | Null}, // deprecated after 3.9.0
+/// active-color: {Color | String | Null}, // deprecated after 3.9.0
+/// active-font-weight: {Number | String | Null}, // deprecated after 3.9.0
+/// active-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// active-c-kbd-inline: {Map},
+/// active-class-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// active-class-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// active-class-color: {Color | String | Null}, // deprecated after 3.9.0
+/// active-class-font-weight: {Number | String | Null}, // deprecated after 3.9.0
+/// active-class-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// active-class-c-kbd-inline: {Map},
+/// disabled-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// disabled-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// disabled-box-shadow: {String | List | Null}, // deprecated after 3.9.0
+/// disabled-color: {Color | String | Null}, // deprecated after 3.9.0
+/// disabled-cursor: {String | Null}, // deprecated after 3.9.0
+/// disabled-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// disabled-outline: {Number | String | Null}, // deprecated after 3.9.0
+/// disabled-pointer-events: {String | Null}, // deprecated after 3.9.0
+/// disabled-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// disabled-c-kbd-inline: {Map},
+/// disabled-active-pointer-events: {String | Null}, // deprecated after 3.9.0
+/// disabled-active: {Map},
+
+@mixin clay-dropdown-item-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		$hover: setter(map-get($map, hover), ());
+		$hover: map-deep-merge(
+			$hover,
+			(
+				background-color:
+					setter(
+						map-get($map, hover-bg),
+						map-get($hover, background-color)
+					),
+				color:
+					setter(map-get($map, hover-color), map-get($hover, color)),
+				opacity:
+					setter(
+						map-get($map, hover-opacity),
+						map-get($hover, opacity)
+					),
+				text-decoration:
+					setter(
+						map-get($map, hover-text-decoration),
+						map-get($hover, text-decoration)
+					),
+			)
+		);
+
+		$hover-c-kbd-inline: map-merge(
+			setter(map-get($hover, c-kbd-inline), ()),
+			setter(map-get($map, hover-c-kbd-inline), ())
+		);
+
+		$focus: setter(map-get($map, focus), ());
+		$focus: map-deep-merge(
+			$focus,
+			(
+				background-color:
+					setter(
+						map-get($map, focus-bg),
+						map-get($focus, background-color)
+					),
+				border-radius:
+					setter(
+						map-get($map, focus-border-radius),
+						map-get($focus, border-radius)
+					),
+				box-shadow:
+					setter(
+						map-get($map, focus-box-shadow),
+						map-get($focus, box-shadow)
+					),
+				color:
+					setter(map-get($map, focus-color), map-get($focus, color)),
+				opacity:
+					setter(
+						map-get($map, focus-opacity),
+						map-get($focus, opacity)
+					),
+				outline:
+					setter(
+						map-get($map, focus-outline),
+						map-get($focus, outline)
+					),
+				text-decoration:
+					setter(
+						map-get($map, focus-text-decoration),
+						map-get($focus, text-decoration)
+					),
+			)
+		);
+
+		$focus-c-kbd-inline: map-deep-merge(
+			setter(map-get($focus, c-kbd-inline), ()),
+			setter(map-get($map, focus-c-kbd-inline), ())
+		);
+
+		$active: setter(map-get($map, active), ());
+		$active: map-deep-merge(
+			$active,
+			(
+				background-color:
+					setter(
+						map-get($map, active-bg),
+						map-get($active, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, active-border-color),
+						map-get($active, border-color)
+					),
+				color:
+					setter(
+						map-get($map, active-color),
+						map-get($active, color)
+					),
+				font-weight:
+					setter(
+						map-get($map, active-font-weight),
+						map-get($active, font-weight)
+					),
+				text-decoration:
+					setter(
+						map-get($map, active-text-decoration),
+						map-get($active, text-decoration)
+					),
+			)
+		);
+
+		$active-c-kbd-inline: map-merge(
+			setter(map-get($active, c-kbd-inline), ()),
+			setter(map-get($map, active-c-kbd-inline), ())
+		);
+
+		$active-class: setter(map-get($map, active-class), ());
+		$active-class: map-deep-merge($active, $active-class);
+		$active-class: map-deep-merge(
+			$active-class,
+			(
+				background-color:
+					setter(
+						map-get($map, active-class-bg),
+						map-get($active-class, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, active-class-border-color),
+						map-get($active-class, border-color)
+					),
+				color:
+					setter(
+						map-get($map, active-class-color),
+						map-get($active-class, color)
+					),
+				font-weight:
+					setter(
+						map-get($map, active-class-font-weight),
+						map-get($active-class, font-weight)
+					),
+				text-decoration:
+					setter(
+						map-get($map, active-class-text-decoration),
+						map-get($active-class, text-decoration)
+					),
+			)
+		);
+
+		$active-class-c-kbd-inline: map-merge(
+			setter(map-get($active-class, c-kbd-inline), ()),
+			setter(map-get($map, active-class-c-kbd-inline), ())
+		);
+
+		$disabled: setter(map-get($map, disabled), ());
+		$disabled: map-deep-merge(
+			$disabled,
+			(
+				background-color:
+					setter(
+						map-get($map, disabled-bg),
+						map-get($disabled, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, disabled-border-color),
+						map-get($disabled, border-color)
+					),
+				box-shadow:
+					setter(
+						map-get($map, disabled-box-shadow),
+						map-get($disabled, box-shadow)
+					),
+				color:
+					setter(
+						map-get($map, disabled-color),
+						map-get($disabled, color)
+					),
+				cursor:
+					setter(
+						map-get($map, disabled-cursor),
+						map-get($disabled, cursor)
+					),
+				opacity:
+					setter(
+						map-get($map, disabled-opacity),
+						map-get($disabled, opacity)
+					),
+				outline:
+					setter(
+						map-get($map, disabled-outline),
+						map-get($disabled, outline)
+					),
+				pointer-events:
+					setter(
+						map-get($map, disabled-pointer-events),
+						map-get($disabled, pointer-events)
+					),
+				text-decoration:
+					setter(
+						map-get($map, disabled-text-decoration),
+						map-get($disabled, text-decoration)
+					),
+			)
+		);
+
+		$disabled-c-kbd-inline: map-merge(
+			setter(map-get($disabled, c-kbd-inline), ()),
+			setter(map-get($map, disabled-c-kbd-inline), ())
+		);
+
+		$disabled-active: map-deep-merge(
+			setter(map-get($disabled, active), ()),
+			setter(map-get($map, disabled-active), ())
+		);
+		$disabled-active: map-deep-merge(
+			$disabled-active,
+			(
+				pointer-events:
+					setter(
+						map-get($map, disabled-active-pointer-events),
+						map-get($disabled-active, pointer-events)
+					),
+			)
+		);
+
+		$c-inner: setter(map-get($map, c-inner), ());
+		$c-inner: map-merge(
+			(
+				enabled:
+					if(
+						variable-exists(enable-c-inner),
+						$enable-c-inner,
+						if(
+							variable-exists(cadmin-enable-c-inner),
+							$cadmin-enable-c-inner,
+							true
+						)
+					),
+				flex-grow: 1,
+				margin-bottom: math-sign(map-get($map, padding-bottom)),
+				margin-left: math-sign(map-get($map, padding-left)),
+				margin-right: math-sign(map-get($map, padding-right)),
+				margin-top: math-sign(map-get($map, padding-top)),
+				width: auto,
+			),
+			$c-inner
+		);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			$_link: map-get($map, link);
+
+			@if ($_link) {
+				&:link {
+					@include clay-css($_link);
+
+					$_before: map-get($_link, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_link, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					$_c-kbd-inline: map-get($_link, c-kbd-inline);
+
+					@if ($_c-kbd-inline) {
+						.c-kbd-inline {
+							@include clay-css($_c-kbd-inline);
+						}
+					}
+				}
+			}
+
+			$_visited: map-get($map, visited);
+
+			@if ($_visited) {
+				&:visited {
+					@include clay-css($_visited);
+
+					$_before: map-get($_visited, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_visited, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					$_c-kbd-inline: map-get($_visited, c-kbd-inline);
+
+					@if ($_c-kbd-inline) {
+						.c-kbd-inline {
+							@include clay-css($_c-kbd-inline);
+						}
+					}
+				}
+			}
+
+			@if (length($hover) != 0) {
+				&:hover,
+				&.hover {
+					@include clay-css($hover);
+
+					$_before: map-get($hover, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($hover, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					@if (length($hover-c-kbd-inline) != 0) {
+						.c-kbd-inline {
+							@include clay-css($hover-c-kbd-inline);
+						}
+					}
+				}
+			}
+
+			@if (length($focus) != 0) {
+				@at-root {
+					&.focus,
+					#{$focus-visible-selector},
+					#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+						@include clay-css($focus);
+
+						$_before: map-get($focus, before);
+
+						@if ($_before) {
+							&::before {
+								@include clay-css($_before);
+							}
+						}
+
+						$_after: map-get($focus, after);
+
+						@if ($_after) {
+							&::after {
+								@include clay-css($_after);
+							}
+						}
+
+						@if (length($focus-c-kbd-inline) != 0) {
+							.c-kbd-inline {
+								@include clay-css($focus-c-kbd-inline);
+							}
+						}
+					}
+				}
+			}
+
+			@if (length($active) != 0) {
+				&:active {
+					@include clay-css($active);
+
+					$_before: map-get($active, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($active, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					label {
+						color: map-get($active, color);
+					}
+
+					.form-check-label {
+						color: map-get($active, color);
+						font-weight: map-get($active, font-weight);
+					}
+
+					.custom-control-label {
+						font-weight: map-get($active, font-weight);
+					}
+
+					@if (length($active-c-kbd-inline) != 0) {
+						.c-kbd-inline {
+							@include clay-css($active-c-kbd-inline);
+						}
+					}
+				}
+			}
+
+			@if (length($active-class) != 0) {
+				&.active {
+					@include clay-css($active-class);
+
+					$_before: map-get($active-class, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($active-class, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					label {
+						color: map-get($active-class, color);
+					}
+
+					.form-check-label {
+						color: map-get($active-class, color);
+						font-weight: map-get($active-class, font-weight);
+					}
+
+					.custom-control-label {
+						font-weight: map-get($active-class, font-weight);
+					}
+
+					@if (length($active-class-c-kbd-inline) != 0) {
+						.c-kbd-inline {
+							@include clay-css($active-class-c-kbd-inline);
+						}
+					}
+				}
+			}
+
+			// Overwrite Bootstrap's Ensure active button styles are not applied to disabled buttons
+			// https://github.com/twbs/bootstrap/commit/de3973b5e74058e37fd15fecc4cb7b9fd3409def
+
+			@at-root {
+				&.btn:not([disabled]):not(.disabled):active,
+				&.btn:not([disabled]):not(.disabled).active {
+					#{$focus-visible-selector},
+					#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+						box-shadow: map-get($focus, box-shadow);
+					}
+				}
+			}
+
+			@if (length($disabled) != 0) {
+				&:disabled,
+				&.disabled {
+					@include clay-css($disabled);
+
+					$_before: map-get($disabled, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($disabled, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					label,
+					.form-check-label {
+						color: map-get($disabled, color);
+					}
+
+					@if (length($disabled-c-kbd-inline) != 0) {
+						.c-kbd-inline {
+							@include clay-css($disabled-c-kbd-inline);
+						}
+					}
+
+					@if (length($disabled-active) != 0) {
+						&:active {
+							@include clay-css($disabled-active);
+
+							$_before: map-get($disabled-active, before);
+
+							@if ($_before) {
+								&::before {
+									@include clay-css($_before);
+								}
+							}
+
+							$_after: map-get($map, after);
+
+							@if ($_after) {
+								&::after {
+									@include clay-css($_after);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			$_show: map-get($map, show);
+
+			@if ($_show) {
+				&.show {
+					@include clay-css($_show);
+
+					$_before: map-get($_show, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_show, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+				}
+			}
+
+			$_before: map-get($map, before);
+
+			@if ($_before) {
+				&::before {
+					@include clay-css($_before);
+				}
+			}
+
+			$_after: map-get($map, after);
+
+			@if ($_after) {
+				&::after {
+					@include clay-css($_after);
+				}
+			}
+
+			@if (map-get($c-inner, enabled)) {
+				.c-inner {
+					@include clay-css($c-inner);
+				}
+			}
+
+			$_autofit-row: map-get($map, '&.autofit-row');
+
+			@if ($_autofit-row) {
+				&.autofit-row {
+					@include clay-css($_autofit-row);
+
+					$_autofit-col: map-get($_autofit-row, autofit-col);
+
+					@if ($_autofit-col) {
+						> .autofit-col {
+							@include clay-css($_autofit-col);
+						}
+					}
+
+					$_autofit-col-expand: map-get(
+						$_autofit-row,
+						autofit-col-expand
+					);
+
+					@if ($_autofit-col-expand) {
+						> .autofit-col-expand {
+							@include clay-css($_autofit-col-expand);
+						}
+					}
+				}
+			}
+
+			$_autofit-row: map-get($map, autofit-row);
+
+			@if ($_autofit-row) {
+				.autofit-row {
+					@include clay-css($_autofit-row);
+
+					$_autofit-col: map-get($_autofit-row, autofit-col);
+
+					@if ($_autofit-col) {
+						> .autofit-col {
+							@include clay-css($_autofit-col);
+						}
+					}
+
+					$_autofit-col-expand: map-get(
+						$_autofit-row,
+						autofit-col-expand
+					);
+
+					@if ($_autofit-col-expand) {
+						> .autofit-col-expand {
+							@include clay-css($_autofit-col-expand);
+						}
+					}
+				}
+			}
+
+			$_c-kbd-inline: map-get($map, c-kbd-inline);
+
+			@if ($_c-kbd-inline) {
+				.c-kbd-inline {
+					@include clay-css($_c-kbd-inline);
+				}
+			}
+
+			.form-check-label {
+				font-weight: map-get($map, font-weight);
+			}
+
+			.custom-control-label {
+				font-weight: map-get($map, font-weight);
+			}
+
+			$_inline-item: map-get($map, inline-item);
+
+			@if ($_inline-item) {
+				.inline-item {
+					@include clay-css($_inline-item);
+
+					$_lexicon-icon: map-get($_inline-item, lexicon-icon);
+
+					@if ($_lexicon-icon) {
+						.lexicon-icon {
+							@include clay-css(
+								map-get($_inline-item, lexicon-icon)
+							);
+						}
+					}
+				}
+			}
+
+			$_label: map-get($map, label);
+
+			@if ($_label) {
+				.label {
+					@include clay-label-variant($_label);
+				}
+			}
+		}
+	}
+}

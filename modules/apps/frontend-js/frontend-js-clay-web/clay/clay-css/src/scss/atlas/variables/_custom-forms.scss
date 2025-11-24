@@ -1,0 +1,376 @@
+$custom-control-indicator-bg: $white !default;
+$custom-control-indicator-border-color: $gray-600 !default;
+$custom-control-indicator-border-style: solid !default;
+$custom-control-indicator-border-width: 0.0625rem !default; // 1px
+$custom-control-indicator-box-shadow: none !default;
+$custom-control-indicator-position-top: 0 !default;
+
+$custom-control-indicator-focus-border-color: $custom-control-indicator-border-color !default;
+$custom-control-indicator-focus-box-shadow: $component-focus-box-shadow !default;
+
+$custom-control-indicator-active-bg: $white !default;
+$custom-control-indicator-active-border-color: $custom-control-indicator-border-color !default;
+$custom-control-indicator-active-box-shadow: c-unset !default;
+
+$custom-control-indicator-disabled-bg: if(
+	variable-exists(input-disabled-bg),
+	$input-disabled-bg,
+	$gray-200
+) !default;
+$custom-control-indicator-disabled-border-color: $secondary-l3 !default;
+
+// Custom Control Indicator Checked
+
+$custom-control-indicator-checked-border-color: $component-active-bg !default;
+$custom-control-indicator-checked-box-shadow: c-unset !default;
+$custom-control-indicator-checked-color: $component-active-color !default;
+
+// @deprecated as of v2.2.1 use `$custom-control-indicator-checked-active-bg` instead
+
+$custom-control-indicator-active-checked-bg: $component-active-bg !default;
+$custom-control-indicator-checked-active-bg: $custom-control-indicator-active-checked-bg !default;
+
+// @deprecated as of v2.2.1 use `$custom-control-indicator-checked-active-border-color` instead
+
+$custom-control-indicator-active-checked-border-color: $custom-control-indicator-checked-active-bg !default;
+$custom-control-indicator-checked-active-border-color: $custom-control-indicator-active-checked-border-color !default;
+
+// @deprecated as of v2.2.1 use `$custom-control-indicator-checked-disabled-bg` instead
+
+$custom-control-indicator-disabled-checked-bg: clay-lighten(
+	$component-active-bg,
+	32.94
+) !default;
+$custom-control-indicator-checked-disabled-bg: $custom-control-indicator-disabled-checked-bg !default;
+
+// @deprecated as of v2.2.1 use `$custom-control-indicator-checked-disabled-border-color` instead
+
+$custom-control-indicator-disabled-checked-border-color: $custom-control-indicator-disabled-checked-bg !default;
+$custom-control-indicator-checked-disabled-border-color: $custom-control-indicator-disabled-checked-border-color !default;
+
+// Custom Control Indicator Indeterminate
+
+$custom-control-indicator-indeterminate-border-color: $custom-control-indicator-checked-active-bg !default;
+
+// .custom-control
+
+// @deprecated after of v3.5.0 use the Sass map `$custom-control` instead
+
+$custom-control-margin-bottom: 0.5rem !default;
+
+// Custom Control Description
+
+// @deprecated as of v2.19.0 use the Sass map `$custom-control-label` instead
+
+$custom-control-description-font-size: if(
+	variable-exists(input-label-font-size),
+	$input-label-font-size,
+	0.875rem
+) !default; // 13px
+
+// @deprecated as of v2.19.0 use the Sass map `$custom-control-label` instead
+
+$custom-control-description-font-weight: $font-weight-normal !default;
+
+// @deprecated as of v2.19.0 use the Sass map `$custom-control-label-disabled` instead. This variable is not used in Clay CSS.
+
+$custom-control-label-disabled-color: if(
+	variable-exists(input-label-disabled-color),
+	$input-label-disabled-color,
+	$gray-500
+) !default;
+
+// @deprecated as of v2.19.0 use the Sass map `$custom-control-label-text-small` instead
+
+$custom-control-description-small-font-size: 100% !default;
+
+$custom-control-label: () !default;
+$custom-control-label: map-deep-merge(
+	(
+		font-size: $custom-control-description-font-size,
+		font-weight: $custom-control-description-font-weight,
+		before: (
+			background-color: $custom-control-indicator-bg,
+			border-color: $custom-control-indicator-border-color,
+			border-style: $custom-control-indicator-border-style,
+			border-width: $custom-control-indicator-border-width,
+			box-shadow:
+				clay-enable-shadows($custom-control-indicator-box-shadow),
+			top: 0.25rem,
+		),
+		after: (
+			top: $custom-control-indicator-position-top,
+		),
+	),
+	$custom-control-label
+);
+
+$custom-control-label-disabled: () !default;
+$custom-control-label-disabled: map-deep-merge(
+	(
+		color: $custom-control-label-disabled-color,
+		before: (
+			background-color: $custom-control-indicator-disabled-bg,
+			border-color: $custom-control-indicator-disabled-border-color,
+			box-shadow: none,
+		),
+	),
+	$custom-control-label-disabled
+);
+
+// .custom-control-label-text small, .custom-control-label-text .small
+
+$custom-control-label-text-small: () !default;
+$custom-control-label-text-small: map-merge(
+	(
+		font-size: $custom-control-description-small-font-size,
+	),
+	$custom-control-label-text-small
+);
+
+$custom-control: () !default;
+$custom-control: map-deep-merge(
+	(
+		line-height: 1,
+		margin-bottom: $custom-control-margin-bottom,
+	),
+	$custom-control
+);
+
+// .custom-control-input
+
+$custom-control-input: () !default;
+$custom-control-input: map-deep-merge(
+	(
+		focus: (
+			custom-control-label: (
+				before: (
+					border-color: $custom-control-indicator-focus-border-color,
+				),
+				after: (
+					box-shadow: $custom-control-indicator-focus-box-shadow,
+				),
+			),
+		),
+		active: (
+			custom-control-label: (
+				before: (
+					background-color: $custom-control-indicator-active-bg,
+					border-color: $custom-control-indicator-active-border-color,
+					box-shadow: $custom-control-indicator-active-box-shadow,
+				),
+			),
+		),
+		disabled: (
+			custom-control-label: $custom-control-label-disabled,
+		),
+		readonly: (
+			custom-control-label: (
+				color: $gray-900,
+				before: (
+					background-color: $gray-200,
+					border-color: $secondary-l3,
+				),
+			),
+			disabled: (
+				custom-control-label: (
+					color: $custom-control-label-disabled-color,
+				),
+			),
+		),
+		checked: (
+			custom-control-label: (
+				before: (
+					border-color: $custom-control-indicator-checked-border-color,
+					box-shadow: $custom-control-indicator-checked-box-shadow,
+					color: $custom-control-indicator-checked-color,
+				),
+			),
+			active: (
+				custom-control-label: (
+					before: (
+						background-color:
+							$custom-control-indicator-checked-active-bg,
+						border-color:
+							$custom-control-indicator-checked-active-border-color,
+					),
+				),
+			),
+		),
+	),
+	$custom-control-input
+);
+
+// .custom-checkbox
+
+$custom-checkbox-indicator-icon-checked: clay-icon(
+	check-small,
+	$white
+) !default;
+$custom-checkbox-indicator-icon-checked-bg-size: 1rem !default;
+$custom-checkbox-indicator-icon-indeterminate-bg-size: 1rem !default;
+
+$custom-checkbox-indicator-indeterminate-bg: $component-active-bg !default;
+$custom-checkbox-indicator-indeterminate-box-shadow: c-unset !default;
+$custom-checkbox-indicator-indeterminate-color: $custom-control-indicator-checked-color !default;
+
+$custom-checkbox-indicator-icon-indeterminate: clay-icon(
+	hr,
+	$custom-checkbox-indicator-indeterminate-color
+) !default;
+
+$custom-checkbox-indicator-border-radius: 0.125rem !default; // 2px
+
+$custom-checkbox: () !default;
+$custom-checkbox: map-deep-merge(
+	(
+		custom-control-input: (
+			custom-control-label: (
+				before: (
+					border-radius:
+						clay-enable-rounded(
+							$custom-checkbox-indicator-border-radius
+						),
+				),
+			),
+			checked: (
+				custom-control-label: (
+					before: (),
+					after: (
+						background-image:
+							$custom-checkbox-indicator-icon-checked,
+						background-size:
+							$custom-checkbox-indicator-icon-checked-bg-size,
+					),
+				),
+				disabled: (
+					custom-control-label: (
+						before: (
+							background-color:
+								$custom-control-indicator-checked-disabled-bg,
+							border-color:
+								$custom-control-indicator-checked-disabled-border-color,
+						),
+					),
+				),
+				readonly: (
+					custom-control-label: (
+						before: (
+							background-color: $white,
+							border-color: $secondary-l2,
+						),
+						after: (
+							background-image: clay-icon(check-small, $secondary),
+						),
+					),
+					disabled: (
+						custom-control-label: (
+							before: (
+								opacity: 0.4,
+							),
+							after: (
+								opacity: 0.4,
+							),
+						),
+					),
+				),
+			),
+			indeterminate: (
+				custom-control-label: (
+					before: (
+						background-color:
+							$custom-checkbox-indicator-indeterminate-bg,
+						border-color:
+							$custom-control-indicator-indeterminate-border-color,
+						box-shadow:
+							$custom-checkbox-indicator-indeterminate-box-shadow,
+					),
+					after: (
+						background-image:
+							$custom-checkbox-indicator-icon-indeterminate,
+						background-size:
+							$custom-checkbox-indicator-icon-indeterminate-bg-size,
+					),
+				),
+				disabled: (
+					custom-control-label: (
+						before: (
+							background-color:
+								$custom-control-indicator-checked-disabled-bg,
+							border-color:
+								$custom-control-indicator-checked-disabled-border-color,
+						),
+					),
+				),
+				readonly: (
+					custom-control-label: (
+						before: (
+							background-color: $white,
+							border-color: $secondary-l2,
+						),
+						after: (
+							background-image: clay-icon(hr, $secondary),
+						),
+					),
+					disabled: (
+						custom-control-label: (
+							before: (
+								opacity: 0.4,
+							),
+							after: (
+								opacity: 0.4,
+							),
+						),
+					),
+				),
+			),
+		),
+	),
+	$custom-checkbox
+);
+
+// .custom-radio
+
+$custom-radio-indicator-icon-checked: clay-icon(circle, $white) !default;
+$custom-radio-indicator-icon-checked-bg-size: 0.5rem !default;
+
+$custom-radio-indicator-disabled-border-color: $custom-control-indicator-disabled-bg !default;
+
+// @deprecated as of v2.2.1 use `$custom-radio-indicator-checked-disabled-border-color` instead
+
+$custom-radio-indicator-disabled-checked-border-color: $custom-control-indicator-disabled-checked-border-color !default;
+$custom-radio-indicator-checked-disabled-border-color: $custom-radio-indicator-disabled-checked-border-color !default;
+
+$custom-radio: () !default;
+$custom-radio: map-deep-merge(
+	(
+		custom-control-input: (
+			disabled: (
+				custom-control-label: (
+					before: (
+						border-color:
+							$custom-radio-indicator-disabled-border-color,
+					),
+				),
+			),
+			checked: (
+				custom-control-label: (
+					after: (
+						background-image: $custom-radio-indicator-icon-checked,
+						background-size:
+							$custom-radio-indicator-icon-checked-bg-size,
+					),
+				),
+				disabled: (
+					custom-control-label: (
+						before: (
+							border-color:
+								$custom-radio-indicator-checked-disabled-border-color,
+						),
+					),
+				),
+			),
+		),
+	),
+	$custom-radio
+);

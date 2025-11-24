@@ -1,0 +1,169 @@
+////
+/// @group utilities
+////
+
+/// A Boostrap 4 mixin for resetting text properties inside a component so weird values aren't inherited. Used in components that can be inserted inside a variety of components like `popover` and `tooltip`.
+
+@mixin reset-text() {
+	font-family: $font-family-base;
+	font-style: normal;
+	font-weight: $font-weight-normal;
+	letter-spacing: normal;
+	line-break: auto;
+	line-height: $line-height-base;
+	text-align: left;
+	text-align: start;
+	text-decoration: none;
+	text-shadow: none;
+	text-transform: none;
+	white-space: normal;
+	word-break: normal;
+	word-spacing: normal;
+}
+
+/// A Bootstrap 4 mixin for making any element resizable. Per CSS3 UI, `resize` only applies when `overflow` isn't `visible`.
+/// @param {String} $direction - `horizontal`, `vertical`, `both`
+
+@mixin resizable($direction) {
+	overflow: auto;
+	resize: $direction;
+}
+
+// * SPDX-SnippetBegin
+// * SPDX-License-Identifier: Apache-2.0
+// * SPDX-SnippetCopyrightText: © 2018 A11Y Project <https://a11yproject.com/posts/how-to-hide-content/>
+// *
+
+/// A Bootstrap 4 mixin that generates styles to only display content to screen readers.
+
+@mixin sr-only() {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+// * SPDX-SnippetEnd
+
+// * SPDX-SnippetBegin
+// * SPDX-License-Identifier: MIT
+// * SPDX-SnippetCopyrightText: © 2018 HTML5 Boilerplate <https://github.com/h5bp/main.css>
+// *
+
+/// A Bootstrap 4 mixin to display `.sr-only` content when focused. Useful for "Skip to main content" links; see https://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+
+@mixin sr-only-focusable() {
+	&:active,
+	&:focus {
+		clip: auto;
+		height: auto;
+		overflow: visible;
+		position: static;
+		white-space: normal;
+		width: auto;
+	}
+}
+
+// * SPDX-SnippetEnd
+
+/// A Bootstrap 4 mixin for generating `width` and `height` properties.
+/// @deprecated
+/// @param {Number} $width
+/// @param {Number} $height[$width]
+
+@mixin size($width, $height: $width) {
+	height: $height;
+	width: $width;
+
+	@include deprecate('`size()`', 'v4.3.0', 'v5');
+}
+
+/// A Bootstrap 4 mixin that outputs the `visibility` property with the `!important` flag.
+/// @deprecated
+/// @param {String} $visibility
+
+@mixin invisible($visibility) {
+	visibility: $visibility !important;
+
+	@include deprecate('`invisible()`', 'v4.3.0', 'v5');
+}
+
+@mixin clay-autofit-float {
+	flex-wrap: wrap;
+
+	> .autofit-col {
+		max-width: 100%;
+	}
+
+	> .autofit-col-end {
+		margin-left: auto;
+
+		+ .autofit-col-end {
+			margin-left: 0;
+		}
+	}
+}
+
+/// A mixin to create custom spacing for the `autofit-row` component.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool},  // Set to false to prevent mixin styles from being output. Default: true
+/// See Mixin `clay-css` for available keys to pass into the base selector
+/// autofit-col: {Map | Null}, // See Mixin `clay-css` for available keys
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// autofit-col-padding: {Number | String | List | Null}, // deprecated after 3.9.0
+/// autofit-col-padding-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// autofit-col-padding-left: {Number | String | Null}, // deprecated after 3.9.0
+/// autofit-col-padding-right: {Number | String | Null}, // deprecated after 3.9.0
+/// autofit-col-padding-top: {Number | String | Null}, // deprecated after 3.9.0
+
+@mixin clay-autofit-row($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$autofit-col: setter(map-get($map, autofit-col), ());
+		$autofit-col: map-merge(
+			$autofit-col,
+			(
+				padding:
+					setter(
+						map-get($map, autofit-col-padding),
+						map-get($autofit-col, padding)
+					),
+				padding-bottom:
+					setter(
+						map-get($map, autofit-col-padding-bottom),
+						map-get($autofit-col, padding-bottom)
+					),
+				padding-left:
+					setter(
+						map-get($map, autofit-col-padding-left),
+						map-get($autofit-col, padding-left)
+					),
+				padding-right:
+					setter(
+						map-get($map, autofit-col-padding-right),
+						map-get($autofit-col, padding-right)
+					),
+				padding-top:
+					setter(
+						map-get($map, autofit-col-padding-top),
+						map-get($autofit-col, padding-top)
+					),
+			)
+		);
+
+		@if ($enabled) {
+			@include clay-css($map);
+
+			> .autofit-col {
+				@include clay-css($autofit-col);
+			}
+		}
+	}
+}

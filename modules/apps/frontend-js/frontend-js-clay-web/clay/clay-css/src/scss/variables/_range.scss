@@ -1,0 +1,206 @@
+$clay-range-disabled-color: $gray-600 !default;
+
+$clay-range-input-group: () !default;
+$clay-range-input-group: map-merge(
+	(
+		align-items: center,
+	),
+	$clay-range-input-group
+);
+
+$clay-range-input-group-item: () !default;
+$clay-range-input-group-item: map-merge(
+	(
+		flex-direction: column,
+	),
+	$clay-range-input-group-item
+);
+
+$clay-range-input-group-text: () !default;
+$clay-range-input-group-text: map-merge(
+	(
+		background-color:
+			setter(map-get($clay-range-input-group-text, bg), transparent),
+		border-width: 0px,
+		color: $body-color,
+		font-size: 0.875rem,
+		font-weight: $font-weight-semi-bold,
+		min-width: 1.5rem,
+		padding-bottom: 0,
+		padding-left: 0,
+		padding-right: 0,
+		padding-top: 0,
+	),
+	$clay-range-input-group-text
+);
+
+$clay-range-title: () !default;
+$clay-range-title: map-deep-merge(
+	(
+		display: block,
+		font-weight: $font-weight-semi-bold,
+		line-height: 1,
+		margin-bottom: 0.5rem,
+		text-align: center,
+	),
+	$clay-range-title
+);
+
+// `data-label-before-content` and `data-label-after-content`, see https://issues.liferay.com/browse/LPS-147457
+
+$clay-range-input: () !default;
+$clay-range-input: map-deep-merge(
+	(
+		display: block,
+		padding-bottom: 0.1px,
+		position: relative,
+		vertical-align: middle,
+		width: 100%,
+		clay-range-thumb: (
+			background-color: $white,
+			border-radius: 100px,
+			border-width: 0px,
+			box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.3),
+			height: 1.5rem,
+			margin-top: -0.75rem,
+			position: absolute,
+			right: -0.75rem,
+			top: 50%,
+			width: 1.5rem,
+		),
+		ms-thumb: (
+			visibility: hidden,
+		),
+		moz-range-thumb: (
+			visibility: hidden,
+		),
+		webkit-slider-thumb: (
+			visibility: hidden,
+		),
+		clay-range-track: (
+			appearance: none,
+			background-color: $gray-300,
+			border-radius: 100px,
+			height: 0.25rem,
+			margin-top: -0.125rem,
+			position: absolute,
+			top: 50%,
+			width: 100%,
+		),
+		clay-range-progress: (
+			background-color: $primary,
+			border-radius: 100px 0 0 100px,
+			position: absolute,
+			top: 50%,
+			width: 50%,
+		),
+		tooltip: (
+			margin-left: 0.8125rem,
+			transition: opacity 0.15s linear,
+			visibility: hidden,
+			white-space: nowrap,
+		),
+		tooltip-inner: (
+			padding: 0.25rem 0.5rem,
+		),
+		tooltip-arrow: (
+			height: 0.375rem,
+			width: 0.375rem,
+		),
+		clay-tooltip-bottom: (
+			margin-top: 0.25rem,
+			padding-top: 0.1875rem,
+			top: 100%,
+			transform: translateX(-50%),
+			tooltip-arrow: (
+				margin-left: -0.25rem,
+			),
+		),
+		clay-tooltip-top: (
+			bottom: 100%,
+			margin-bottom: 0.25rem,
+			padding-bottom: 0.1875rem,
+			transform: translateX(-50%),
+			tooltip-arrow: (
+				margin-left: -0.25rem,
+			),
+		),
+		form-control-range: (
+			appearance: none,
+			background-color: transparent,
+			height: if(variable-exists(input-height), $input-height, 2.375rem),
+			margin: 0,
+			padding: 0,
+			position: relative,
+			z-index: $zindex-clay-range-input-form-control,
+			hover: (
+				cursor: $link-cursor,
+			),
+			focus: (
+				outline: 0,
+				clay-range-thumb: (
+					box-shadow: $component-focus-box-shadow,
+				),
+			),
+			disabled: (
+				color: $clay-range-disabled-color,
+				cursor: $disabled-cursor,
+				clay-range-track: (
+					background-color: $gray-200,
+				),
+				clay-range-progress: (
+					background-color: $primary-l2,
+				),
+			),
+		),
+		data-label-min-max: (
+			margin-bottom: 1rem,
+		),
+		before-after: (
+			font-size: 0.875rem,
+			font-weight: $font-weight-semi-bold,
+			line-height: 1,
+			margin-top: 2.5rem,
+			position: absolute,
+			text-align: center,
+			top: 0,
+			width: 1.5rem,
+		),
+		data-label-min: (
+			before: (
+				content: unquote("'\\FEFF' attr(data-label-min)"),
+			),
+		),
+		data-label-max: (
+			after: (
+				content: unquote("'\\FEFF' attr(data-label-max)"),
+				right: 0,
+			),
+		),
+	),
+	$clay-range-input
+);
+
+$clay-range-progress-none: () !default;
+$clay-range-progress-none: map-deep-merge(
+	(
+		clay-range-input: (
+			ms-thumb: (
+				visibility: visible,
+			),
+			moz-range-thumb: (
+				visibility: visible,
+			),
+			webkit-slider-thumb: (
+				visibility: visible,
+			),
+			clay-range-thumb: (
+				visibility: hidden,
+			),
+			clay-range-progress: (
+				visibility: hidden,
+			),
+		),
+	),
+	$clay-range-progress-none
+);

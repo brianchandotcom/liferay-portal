@@ -1,0 +1,198 @@
+$navigation-bar-size: () !default;
+$navigation-bar-size: map-deep-merge(
+	(
+		scaling-navbar: false,
+		border-bottom-width: 0.0625rem,
+		font-size:
+			if(variable-exists(navbar-font-size), $navbar-font-size, null),
+		height: 3rem,
+		padding-x: 0,
+		padding-y: 0,
+		link-padding-x: 1rem,
+		collapse-dropdown-item-padding-x-mobile: 1rem,
+		collapse-dropdown-item-padding-y-mobile: 0.71875rem,
+		nav-item-dropdown-margin-top: 0,
+		active-border-bottom-width: 0.25rem,
+	),
+	$navigation-bar-size
+);
+
+$navigation-bar-base: () !default;
+$navigation-bar-base: map-deep-merge(
+	(
+		border-color: transparent,
+		border-style: solid,
+		navbar-nav: (
+			nav-link: (
+				border-width: 0,
+				font-size: inherit,
+			),
+		),
+		media-breakpoint-down: (),
+		media-breakpoint-up: (),
+	),
+	$navigation-bar-base
+);
+
+$navigation-bar-light: () !default;
+$navigation-bar-light: map-deep-merge(
+	(
+		background-color: $light,
+		navbar-nav: (
+			nav-link: (
+				color:
+					if(
+						variable-exists(navbar-light-color),
+						$navbar-light-color,
+						rgba($black, 0.5)
+					),
+				hover: (
+					color:
+						if(
+							variable-exists(navbar-light-hover-color),
+							$navbar-light-hover-color,
+							rgba($black, 0.7)
+						),
+				),
+				active: (
+					color:
+						if(
+							variable-exists(navbar-light-active-color),
+							$navbar-light-active-color,
+							rgba($black, 0.9)
+						),
+				),
+				disabled: (
+					color:
+						if(
+							variable-exists(navbar-light-disabled-color),
+							$navbar-light-disabled-color,
+							rgba($black, 0.3)
+						),
+					opacity: 1,
+				),
+			),
+		),
+		media-breakpoint-down: (
+			sm: (
+				navbar-expand-md: (
+					navbar-collapse: (
+						navbar-nav: (
+							dropdown-item: (
+								color:
+									if(
+										variable-exists(navbar-light-color),
+										$navbar-light-color,
+										rgba($black, 0.5)
+									),
+								hover: (
+									color:
+										if(
+											variable-exists(
+												navbar-light-hover-color
+											),
+											$navbar-light-hover-color,
+											rgba($black, 0.7)
+										),
+								),
+								active: (
+									color:
+										if(
+											variable-exists(
+												navbar-light-active-color
+											),
+											$navbar-light-active-color,
+											rgba($black, 0.9)
+										),
+								),
+								disabled: (
+									color:
+										if(
+											variable-exists(
+												navbar-light-disabled-color
+											),
+											$navbar-light-disabled-color,
+											rgba($black, 0.3)
+										),
+									opacity: 1,
+								),
+							),
+						),
+					),
+				),
+			),
+		),
+		media-breakpoint-up: (
+			md: (
+				navbar-expand-md: (
+					navbar-underline: (
+						navbar-nav: (
+							nav-link: (
+								active-class: (
+									after: (
+										background-color: $primary-l0,
+									),
+								),
+							),
+						),
+					),
+				),
+			),
+		),
+	),
+	$navigation-bar-light
+);
+
+$navigation-bar-secondary: () !default;
+$navigation-bar-secondary: map-deep-merge(
+	(
+		background-color: $secondary,
+		color: $white,
+		navbar-nav: (
+			nav-link: (
+				color: rgba(255, 255, 255, 0.65),
+				hover: (
+					color: rgba(255, 255, 255, 0.9),
+				),
+				active: (
+					color: rgba(255, 255, 255, 0.9),
+				),
+				disabled: (
+					color: rgba(255, 255, 255, 0.25),
+					opacity: 1,
+				),
+			),
+		),
+		navbar-brand: (
+			color: rgba(255, 255, 255, 0.9),
+			hover: (
+				color: rgba(255, 255, 255, 0.9),
+			),
+		),
+		media-breakpoint-down: (
+			sm: (
+				navbar-expand-md: (
+					navbar-collapse: (
+						navbar-nav: (
+							dropdown-item: (
+								color: rgba(255, 255, 255, 0.65),
+								hover: (
+									color: rgba(255, 255, 255, 0.9),
+								),
+								active: (
+									color: rgba(255, 255, 255, 0.9),
+								),
+								disabled: (
+									color: rgba(255, 255, 255, 0.25),
+									opacity: 1,
+								),
+							),
+						),
+					),
+				),
+			),
+		),
+		media-breakpoint-up: (),
+	),
+	$navigation-bar-secondary
+);

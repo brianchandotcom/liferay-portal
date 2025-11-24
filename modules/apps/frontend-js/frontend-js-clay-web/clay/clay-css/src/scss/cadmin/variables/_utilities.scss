@@ -1,0 +1,850 @@
+$cadmin-bg-checkered-fg: $cadmin-gray-300 !default;
+
+$cadmin-c-focus-trap: () !default;
+$cadmin-c-focus-trap: map-merge(
+	(
+		background: inherit,
+		color: inherit,
+		display: contents,
+		font: inherit,
+	),
+	$cadmin-c-focus-trap
+);
+
+// .inline-scroller
+
+$cadmin-inline-scroller-max-height: 125px !default;
+
+$cadmin-inline-scroller: () !default;
+$cadmin-inline-scroller: map-deep-merge(
+	(
+		list-style: none,
+		margin: 0,
+		max-height: $cadmin-inline-scroller-max-height,
+		overflow: auto,
+		-webkit-overflow-scrolling: touch,
+		padding: 0,
+		focus: (
+			outline: 0,
+		),
+		focus-visible: (
+			box-shadow: $cadmin-component-focus-box-shadow,
+		),
+	),
+	$cadmin-inline-scroller
+);
+
+// Autofit Row
+
+$cadmin-autofit-col-expand-min-width: 50px !default; // 50px
+
+$cadmin-autofit-padded-col-padding-x: 8px !default; // 8px
+$cadmin-autofit-padded-col-padding-y: 4px !default; // 4px
+
+$cadmin-autofit-padded-no-gutters-sm: () !default;
+$cadmin-autofit-padded-no-gutters-sm: map-merge(
+	(
+		margin: -4px,
+		width: auto,
+		autofit-col: (
+			padding: 4px,
+		),
+	),
+	$cadmin-autofit-padded-no-gutters-sm
+);
+
+// Close
+
+$cadmin-close-color: $cadmin-gray-900 !default;
+$cadmin-close-font-size: $cadmin-font-size-base * 1.5 !default;
+$cadmin-close-font-weight: $cadmin-font-weight-bold !default;
+$cadmin-close-text-shadow: null !default;
+
+$cadmin-close: () !default;
+$cadmin-close: map-deep-merge(
+	(
+		align-items: center,
+		appearance: none,
+		background-color: transparent,
+		border-radius: $cadmin-btn-border-radius-sm,
+		border-width: 0,
+		color: $cadmin-close-color,
+		cursor: $cadmin-link-cursor,
+		display: inline-flex,
+		font-size: 16px,
+		font-weight: $cadmin-close-font-weight,
+		height: 32px,
+		justify-content: center,
+		line-height: 1,
+		padding: 0,
+		text-align: center,
+		text-shadow: $cadmin-close-text-shadow,
+		transition: $cadmin-component-transition,
+		width: 32px,
+		hover: (
+			color: $cadmin-close-color,
+			text-decoration: none,
+		),
+		focus: (
+			box-shadow: $cadmin-component-focus-box-shadow,
+			outline: 0,
+		),
+		disabled: (
+			box-shadow: none,
+			color: $cadmin-gray-600,
+			cursor: $cadmin-disabled-cursor,
+			opacity: $cadmin-component-disabled-opacity,
+			outline: 0,
+			active: (
+				pointer-events: none,
+			),
+		),
+		lexicon-icon: (
+			margin-top: 0,
+		),
+	),
+	$cadmin-close
+);
+
+// C Focus Inset
+
+$cadmin-c-focus-inset-focus: () !default;
+$cadmin-c-focus-inset-focus: map-deep-merge(
+	(
+		box-shadow: $cadmin-component-focus-inset-box-shadow,
+		border-color: $cadmin-primary-l0,
+		outline: 0,
+	),
+	$cadmin-c-focus-inset-focus
+);
+
+// C Inner
+
+$cadmin-c-inner: () !default;
+$cadmin-c-inner: map-deep-merge(
+	(
+		align-items: inherit,
+		display: inherit,
+		flex-direction: inherit,
+		height: inherit,
+		justify-content: inherit,
+		line-height: inherit,
+		max-width: inherit,
+		min-width: inherit,
+		outline: 0,
+		overflow: inherit,
+		padding-bottom: inherit,
+		padding-left: inherit,
+		padding-right: inherit,
+		padding-top: inherit,
+		text-overflow: inherit,
+		width: inherit,
+	),
+	$cadmin-c-inner
+);
+
+// Heading
+
+$cadmin-heading-spacer-x: 16px !default; // 16px
+
+$cadmin-heading-text-margin-bottom: auto !default;
+$cadmin-heading-text-margin-top: auto !default;
+
+// Inline Item
+
+$cadmin-inline-item-lexicon-icon-margin-top: -0.1em !default;
+$cadmin-inline-item-spacer-x: 8px !default; // 8px
+
+$cadmin-inline-item-loading-animation-font-size: null !default;
+
+$cadmin-inline-item: () !default;
+$cadmin-inline-item: map-deep-merge(
+	(
+		align-items: center,
+		display: inline-flex,
+		vertical-align: middle,
+		inline-item: (
+			display: inline,
+		),
+		lexicon-icon: (
+			margin-top: $cadmin-inline-item-lexicon-icon-margin-top,
+		),
+		loading-animation: (
+			font-size: $cadmin-inline-item-loading-animation-font-size,
+		),
+	),
+	$cadmin-inline-item
+);
+
+// Page Header
+
+$cadmin-page-header-bg: $cadmin-white !default;
+
+// Clay Gap
+
+$cadmin-c-gap: () !default;
+$cadmin-c-gap: map-merge(
+	(
+		0: map-get($cadmin-spacers, 0),
+		1: map-get($cadmin-spacers, 1),
+		2: map-get($cadmin-spacers, 2),
+		3: map-get($cadmin-spacers, 3),
+		4: map-get($cadmin-spacers, 4),
+		5: map-get($cadmin-spacers, 5),
+	),
+	$cadmin-c-gap
+);
+
+// Background
+
+$cadmin-bg-theme-colors: () !default;
+$cadmin-bg-theme-colors: map-deep-merge(
+	(
+		'blue': (
+			background-color: $cadmin-blue !important,
+			hover: (
+				background-color: clay-darken($cadmin-blue, 10%) !important,
+			),
+		),
+		'indigo': (
+			background-color: $cadmin-indigo !important,
+			hover: (
+				background-color: clay-darken($cadmin-indigo, 10%) !important,
+			),
+		),
+		'purple': (
+			background-color: $cadmin-purple !important,
+			hover: (
+				background-color: clay-darken($cadmin-purple, 10%) !important,
+			),
+		),
+		'pink': (
+			background-color: $cadmin-pink !important,
+			hover: (
+				background-color: clay-darken($cadmin-pink, 10%) !important,
+			),
+		),
+		'red': (
+			background-color: $cadmin-red !important,
+			hover: (
+				background-color: clay-darken($cadmin-red, 10%) !important,
+			),
+		),
+		'orange': (
+			background-color: $cadmin-orange !important,
+			hover: (
+				background-color: clay-darken($cadmin-orange, 10%) !important,
+			),
+		),
+		'yellow': (
+			background-color: $cadmin-yellow !important,
+			hover: (
+				background-color: clay-darken($cadmin-yellow, 10%) !important,
+			),
+		),
+		'green': (
+			background-color: $cadmin-green !important,
+			hover: (
+				background-color: clay-darken($cadmin-green, 10%) !important,
+			),
+		),
+		'teal': (
+			background-color: $cadmin-teal !important,
+			hover: (
+				background-color: clay-darken($cadmin-teal, 10%) !important,
+			),
+		),
+		'cyan': (
+			background-color: $cadmin-cyan !important,
+			hover: (
+				background-color: clay-darken($cadmin-cyan, 10%) !important,
+			),
+		),
+		'primary': (
+			background-color: $cadmin-primary !important,
+			hover: (
+				background-color: clay-darken($cadmin-primary, 10%) !important,
+			),
+		),
+		'primary-l3': (
+			background-color: $cadmin-primary-l3 !important,
+			hover: (
+				background-color: clay-darken($cadmin-primary-l3, 10%)
+					!important,
+			),
+		),
+		'secondary': (
+			background-color: $cadmin-secondary !important,
+			hover: (
+				background-color: clay-darken($cadmin-secondary, 10%) !important,
+			),
+		),
+		'success': (
+			background-color: $cadmin-success !important,
+			hover: (
+				background-color: clay-darken($cadmin-success, 10%) !important,
+			),
+		),
+		'info': (
+			background-color: $cadmin-info !important,
+			hover: (
+				background-color: clay-darken($cadmin-info, 10%) !important,
+			),
+		),
+		'warning': (
+			background-color: $cadmin-warning !important,
+			hover: (
+				background-color: clay-darken($cadmin-warning, 10%) !important,
+			),
+		),
+		'danger': (
+			background-color: $cadmin-danger !important,
+			hover: (
+				background-color: clay-darken($cadmin-danger, 10%) !important,
+			),
+		),
+		'light': (
+			background-color: $cadmin-light !important,
+			hover: (
+				background-color: clay-darken($cadmin-light, 10%) !important,
+			),
+		),
+		'dark': (
+			background-color: $cadmin-dark !important,
+			hover: (
+				background-color: clay-darken($cadmin-dark, 10%) !important,
+			),
+		),
+		'white': (
+			background-color: $cadmin-white !important,
+		),
+		'transparent': (
+			background-color: transparent !important,
+		),
+	),
+	$cadmin-bg-theme-colors
+);
+
+$cadmin-bg-gradient-theme-colors: () !default;
+$cadmin-bg-gradient-theme-colors: map-deep-merge(
+	(
+		'primary': (
+			background: $cadmin-primary
+				linear-gradient(
+					180deg,
+					clay-mix($cadmin-body-bg, $cadmin-primary, 15%),
+					$cadmin-primary
+				)
+				repeat-x !important,
+		),
+		'secondary': (
+			background: $cadmin-secondary
+				linear-gradient(
+					180deg,
+					clay-mix($cadmin-body-bg, $cadmin-secondary, 15%),
+					$cadmin-secondary
+				)
+				repeat-x !important,
+		),
+		'success': (
+			background: $cadmin-success
+				linear-gradient(
+					180deg,
+					clay-clay-mix($cadmin-body-bg, $cadmin-success, 15%),
+					$cadmin-success
+				)
+				repeat-x !important,
+		),
+		'info': (
+			background: $cadmin-info
+				linear-gradient(
+					180deg,
+					clay-mix($cadmin-body-bg, $cadmin-info, 15%),
+					$cadmin-info
+				)
+				repeat-x !important,
+		),
+		'warning': (
+			background: $cadmin-warning
+				linear-gradient(
+					180deg,
+					clay-mix($cadmin-body-bg, $cadmin-warning, 15%),
+					$cadmin-warning
+				)
+				repeat-x !important,
+		),
+		'danger': (
+			background: $cadmin-danger
+				linear-gradient(
+					180deg,
+					clay-mix($cadmin-body-bg, $cadmin-danger, 15%),
+					$cadmin-danger
+				)
+				repeat-x !important,
+		),
+		'light': (
+			background: $cadmin-light
+				linear-gradient(
+					180deg,
+					clay-mix($cadmin-body-bg, $cadmin-light, 15%),
+					$cadmin-light
+				)
+				repeat-x !important,
+		),
+		'dark': (
+			background: $cadmin-dark
+				linear-gradient(
+					180deg,
+					clay-mix($cadmin-body-bg, $cadmin-dark, 15%),
+					$cadmin-dark
+				)
+				repeat-x !important,
+		),
+	),
+	$cadmin-bg-gradient-theme-colors
+);
+
+// Border
+
+$cadmin-border-theme-colors: () !default;
+$cadmin-border-theme-colors: map-deep-merge(
+	(
+		'primary': (
+			border-color: $cadmin-primary !important,
+		),
+		'secondary': (
+			border-color: $cadmin-secondary !important,
+		),
+		'success': (
+			border-color: $cadmin-success !important,
+		),
+		'info': (
+			border-color: $cadmin-info !important,
+		),
+		'warning': (
+			border-color: $cadmin-warning !important,
+		),
+		'danger': (
+			border-color: $cadmin-danger !important,
+		),
+		'light': (
+			border-color: $cadmin-light !important,
+		),
+		'dark': (
+			border-color: $cadmin-dark !important,
+		),
+		'white': (
+			border-color: $cadmin-white !important,
+		),
+	),
+	$cadmin-border-theme-colors
+);
+
+// Display
+
+$cadmin-displays: none, inline, inline-block, grid, block, contents, table,
+	table-row, table-cell, flex, inline-flex !default;
+
+// Overflow
+
+$cadmin-overflows: auto, hidden !default;
+
+// Position
+
+$cadmin-positions: static, relative, absolute, fixed, sticky !default;
+
+// Font Sizes
+
+$cadmin-font-sizes: () !default;
+$cadmin-font-sizes: map-deep-merge(
+	(
+		text-1: (
+			font-size: 10px,
+		),
+		text-2: (
+			font-size: 12px,
+		),
+		text-3: (
+			font-size: 14px,
+		),
+		text-4: (
+			font-size: 16px,
+		),
+		text-5: (
+			font-size: 18px,
+		),
+		text-6: (
+			font-size: 20px,
+		),
+		text-7: (
+			font-size: 24px,
+		),
+		text-8: (
+			font-size: 28px,
+		),
+		text-9: (
+			font-size: 32px,
+		),
+		text-10: (
+			font-size: 36px,
+		),
+		text-11: (
+			font-size: 40px,
+		),
+	),
+	$cadmin-font-sizes
+);
+
+// Text
+
+$cadmin-text-theme-colors: () !default;
+$cadmin-text-theme-colors: map-deep-merge(
+	(
+		'blue': (
+			color: $cadmin-blue !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-blue,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'indigo': (
+			color: $cadmin-indigo !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-indigo,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'purple': (
+			color: $cadmin-purple !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-purple,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'pink': (
+			color: $cadmin-pink !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-pink,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'red': (
+			color: $cadmin-red !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-red,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'orange': (
+			color: $cadmin-orange !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-orange,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'yellow': (
+			color: $cadmin-yellow !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-yellow,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'green': (
+			color: $cadmin-green !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-green,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'teal': (
+			color: $cadmin-teal !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-teal,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'cyan': (
+			color: $cadmin-cyan !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-cyan,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'primary': (
+			color: $cadmin-primary !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-primary,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'secondary': (
+			color: $cadmin-secondary !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-secondary,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'success': (
+			color: $cadmin-success !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-success,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'info': (
+			color: $cadmin-info !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-info,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'warning': (
+			color: $cadmin-warning !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-warning,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'danger': (
+			color: $cadmin-danger !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-danger,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'light': (
+			color: $cadmin-light !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-light,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'dark': (
+			color: $cadmin-dark !important,
+			hover: (
+				color:
+					clay-darken(
+						$cadmin-dark,
+						$cadmin-emphasized-link-hover-darken-percentage
+					)
+					!important,
+			),
+		),
+		'body': (
+			color: $cadmin-body-color !important,
+		),
+		'muted': (
+			color: $cadmin-text-muted !important,
+		),
+		'black-50': (
+			color: rgba($cadmin-black, 0.5) !important,
+		),
+		'white-50': (
+			color: rgba($cadmin-white, 0.5) !important,
+		),
+	),
+	$cadmin-text-theme-colors
+);
+
+$cadmin-text-decorations: () !default;
+$cadmin-text-decorations: map-deep-merge(
+	(
+		'.text-none, .text-decoration-none': (
+			text-decoration: none !important,
+		),
+		'.text-underline, .text-decoration-underline': (
+			text-decoration: underline !important,
+		),
+	),
+	$cadmin-text-decorations
+);
+
+// Text Truncate
+
+$cadmin-text-truncate: () !default;
+$cadmin-text-truncate: map-merge(
+	(
+		display: block,
+		overflow: hidden,
+		text-overflow: ellipsis,
+		white-space: nowrap,
+	),
+	$cadmin-text-truncate
+);
+
+// Text Truncate Inline
+
+$cadmin-text-truncate-inline: () !default;
+$cadmin-text-truncate-inline: map-deep-merge(
+	(
+		display: inline-flex,
+		max-width: 100%,
+		text-truncate: (
+			display: inline-block,
+			max-width: 100%,
+			overflow: hidden,
+			text-overflow: ellipsis,
+			vertical-align: bottom,
+			white-space: nowrap,
+			word-wrap: normal,
+		),
+	),
+	$cadmin-text-truncate-inline
+);
+
+// C Prefers
+
+$cadmin-c-prefers-link-underline: () !default;
+$cadmin-c-prefers-link-underline: map-deep-merge(
+	(
+		'.c-prefers-link-underline .cadmin': (
+			'[href]:not(.disabled):not([role="button"])': (
+				text-decoration: underline !important,
+			),
+			'.btn-monospaced, .nav-btn-monospaced, .nav-link-monospaced': (
+				'&[href]:not(.disabled):not([role="button"]):not([role="tab"])::after':
+				(
+					content: '\00a0\00a0\00a0',
+					position: absolute,
+					text-decoration: underline !important,
+				),
+			),
+			'.multi-step-item.active, .multi-step-item.complete, .multi-step-item.error, .dropdown':
+			(
+				'.multi-step-icon[href]:not([role="button"])::after': (
+					content: '\00a0\00a0\00a0',
+					position: absolute,
+					text-decoration: underline !important,
+				),
+			),
+			'.multi-step-item.disabled .multi-step-icon[href]:not([role="button"])::after':
+			(
+				text-decoration: none !important,
+			),
+		),
+	),
+	$cadmin-c-prefers-link-underline
+);
+
+$cadmin-c-prefers-letter-spacing: () !default;
+$cadmin-c-prefers-letter-spacing: map-deep-merge(
+	(
+		'.c-prefers-letter-spacing-1 .cadmin, .c-prefers-letter-spacing-1 .cadmin *':
+		(
+			letter-spacing: 1px !important,
+		),
+	),
+	$cadmin-c-prefers-letter-spacing
+);
+
+$cadmin-displays-c-prefers-reduced-motion: () !default;
+$cadmin-displays-c-prefers-reduced-motion: map-deep-merge(
+	(
+		'.cadmin .d-block-c-prefers-reduced-motion': (
+			display: none !important,
+		),
+		'.cadmin .d-inline-block-c-prefers-reduced-motion': (
+			display: none !important,
+		),
+		'@media (prefers-reduced-motion: reduce)': (
+			'.cadmin .d-none-c-prefers-reduced-motion': (
+				display: none !important,
+			),
+			'.cadmin .d-block-c-prefers-reduced-motion': (
+				display: block !important,
+			),
+			'.cadmin .d-inline-block-c-prefers-reduced-motion': (
+				display: inline-block !important,
+			),
+		),
+		'.c-prefers-reduced-motion .cadmin': (
+			'.d-none-c-prefers-reduced-motion': (
+				display: none !important,
+			),
+			'.d-block-c-prefers-reduced-motion': (
+				display: block !important,
+			),
+			'.d-inline-block-c-prefers-reduced-motion': (
+				display: inline-block !important,
+			),
+		),
+	),
+	$cadmin-displays-c-prefers-reduced-motion
+);
+
+$cadmin-c-prefers-reduced-motion: () !default;
+$cadmin-c-prefers-reduced-motion: map-merge(
+	(
+		scroll-behavior: auto,
+		transition: clay-enable-transitions(none),
+	),
+	$cadmin-c-prefers-reduced-motion
+);

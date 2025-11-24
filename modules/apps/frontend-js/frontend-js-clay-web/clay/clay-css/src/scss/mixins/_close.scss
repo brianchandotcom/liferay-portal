@@ -1,0 +1,420 @@
+////
+/// @group utilities
+////
+
+// A mixin for styling `.close` overwrites Bootstrap 4.1.2's `&:not(:disabled):not(.disabled)` selector
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// See Mixin `clay-css` for available keys to pass into the base selector
+/// hover: {Map | Null}, // See Mixin `clay-css` for available keys
+/// focus: {Map | Null}, // See Mixin `clay-css` for available keys
+/// active: {Map | Null}, // See Mixin `clay-css` for available keys
+/// active-class: {Map | Null}, // See Mixin `clay-css` for available keys, inherits:
+/// // background-color, border-color, color, font-weight, z-index from active
+/// disabled: {Map | Null}, // See Mixin `clay-css` for available keys
+/// disabled-active: {Map | Null}, // See Mixin `clay-css` for available keys
+/// btn-focus: {Map | Null}, // See Mixin `clay-css` for available keys
+/// lexicon-icon: {Map | Null}, // See Mixin `clay-css` for available keys
+/// c-inner: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// hover-color: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// hover-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// hover-z-index: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// focus-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// focus-border-radius: {Number | String | List | Null}, // deprecated after 3.9.0
+/// focus-box-shadow: {String | List | Null}, // deprecated after 3.9.0
+/// focus-color: {Color | String | Null}, // deprecated after 3.9.0
+/// focus-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-outline: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-z-index: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// active-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// active-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// active-color: {Color | String | Null}, // deprecated after 3.9.0
+/// active-font-weight: {Number | String | Null}, // deprecated after 3.9.0
+/// active-z-index: {Number | String | Null}, // deprecated after 3.9.0
+/// active-class-bg: {Color | String | Null}, // deprecated after 3.9.0 Default: active-bg
+/// active-class-border-color: {Color | String | List | Null}, // deprecated after 3.9.0 Default: active-border-color
+/// active-class-color: {Color | String | Null}, // deprecated after 3.9.0 Default: active-color
+/// active-class-font-weight: {Number | String | Null}, // deprecated after 3.9.0 Default: active-font-weight
+/// active-class-z-index: {Number | String | Null}, // deprecated after 3.9.0 Default: active-z-index
+/// disabled-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// disabled-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// disabled-box-shadow: {String | List | Null}, // deprecated after 3.9.0
+/// disabled-color: {Color | String | Null}, // deprecated after 3.9.0
+/// disabled-cursor: {String | Null}, // deprecated after 3.9.0
+/// disabled-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// disabled-pointer-events: {String | Null}, // deprecated after 3.9.0
+/// disabled-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// disabled-active-pointer-events: {String | Null}, // deprecated after 3.9.0
+/// btn-focus-box-shadow: {String | List | Null}, // deprecated after 3.9.0
+/// btn-focus-outline: {Number | String | Null}, // deprecated after 3.9.0
+/// lexicon-icon-margin-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// lexicon-icon-margin-left: {Number | String | Null}, // deprecated after 3.9.0
+/// lexicon-icon-margin-right: {Number | String | Null}, // deprecated after 3.9.0
+/// lexicon-icon-margin-top: {Number | String | Null}, // deprecated after 3.9.0
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-close($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		$hover: setter(map-get($map, hover), ());
+		$hover: map-merge(
+			$hover,
+			(
+				background-color:
+					setter(
+						map-get($map, hover-bg),
+						map-get($hover, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, hover-border-color),
+						map-get($hover, border-color)
+					),
+				color:
+					setter(map-get($map, hover-color), map-get($hover, color)),
+				opacity:
+					setter(
+						map-get($map, hover-opacity),
+						map-get($hover, opacity)
+					),
+				text-decoration:
+					setter(
+						map-get($map, hover-text-decoration),
+						map-get($hover, text-decoration)
+					),
+			)
+		);
+
+		$focus: setter(map-get($map, focus), ());
+		$focus: map-merge(
+			$focus,
+			(
+				background-color:
+					setter(
+						map-get($map, focus-bg),
+						map-get($focus, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, focus-border-color),
+						map-get($focus, border-color)
+					),
+				border-radius:
+					setter(
+						map-get($map, focus-border-radius),
+						map-get($focus, border-radius)
+					),
+				box-shadow:
+					setter(
+						map-get($map, focus-box-shadow),
+						map-get($focus, box-shadow)
+					),
+				color:
+					setter(map-get($map, focus-color), map-get($focus, color)),
+				opacity:
+					setter(
+						map-get($map, focus-opacity),
+						map-get($focus, opacity)
+					),
+				outline:
+					setter(
+						map-get($map, focus-outline),
+						map-get($focus, outline)
+					),
+				text-decoration:
+					setter(
+						map-get($map, focus-text-decoration),
+						map-get($focus, text-decoration)
+					),
+				z-index:
+					setter(
+						map-get($map, focus-z-index),
+						map-get($focus, z-index)
+					),
+			)
+		);
+
+		$active: setter(map-get($map, active), ());
+		$active: map-merge(
+			$active,
+			(
+				background-color:
+					setter(
+						map-get($map, active-bg),
+						map-get($active, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, active-border-color),
+						map-get($active, border-color)
+					),
+				color:
+					setter(
+						map-get($map, active-color),
+						map-get($active, color)
+					),
+				font-weight:
+					setter(
+						map-get($map, active-font-weight),
+						map-get($active, font-weight)
+					),
+				z-index:
+					setter(
+						map-get($map, active-z-index),
+						map-get($active, z-index)
+					),
+			)
+		);
+
+		$active-class: setter(map-get($map, active-class), ());
+		$active-class: map-merge(
+			$active-class,
+			(
+				background-color:
+					setter(
+						map-get($map, active-class-bg),
+						map-get($active-class, background-color),
+						map-get($active, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, active-class-border-color),
+						map-get($active-class, border-color),
+						map-get($active, border-color)
+					),
+				color:
+					setter(
+						map-get($map, active-class-color),
+						map-get($active-class, color),
+						map-get($active, color)
+					),
+				font-weight:
+					setter(
+						map-get($map, active-class-font-weight),
+						map-get($active-class, font-weight),
+						map-get($active, font-weight)
+					),
+				z-index:
+					setter(
+						map-get($map, active-class-z-index),
+						map-get($active-class, z-index),
+						map-get($active, z-index)
+					),
+			)
+		);
+
+		$disabled: setter(map-get($map, disabled), ());
+		$disabled: map-merge(
+			$disabled,
+			(
+				background-color:
+					setter(
+						map-get($map, disabled-bg),
+						map-get($disabled, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, disabled-border-color),
+						map-get($disabled, border-color)
+					),
+				box-shadow:
+					setter(
+						map-get($map, disabled-box-shadow),
+						map-get($disabled, box-shadow)
+					),
+				color:
+					setter(
+						map-get($map, disabled-color),
+						map-get($disabled, color)
+					),
+				cursor:
+					setter(
+						map-get($map, disabled-cursor),
+						map-get($disabled, cursor)
+					),
+				opacity:
+					setter(
+						map-get($map, disabled-opacity),
+						map-get($disabled, opacity)
+					),
+				pointer-events:
+					setter(
+						map-get($map, disabled-pointer-events),
+						map-get($disabled, pointer-events)
+					),
+				text-decoration:
+					setter(
+						map-get($map, disabled-text-decoration),
+						map-get($disabled, text-decoration)
+					),
+			)
+		);
+
+		$disabled-active: setter(map-get($map, disabled-active), ());
+		$disabled-active: map-merge(
+			(
+				pointer-events: map-get($map, disabled-active-pointer-events),
+			),
+			$disabled-active
+		);
+
+		$btn-focus: setter(map-get($map, btn-focus), ());
+		$btn-focus: map-merge(
+			$btn-focus,
+			(
+				box-shadow:
+					setter(
+						map-get($map, btn-focus-box-shadow),
+						map-get($btn-focus, box-shadow)
+					),
+				outline:
+					setter(
+						map-get($map, btn-focus-outline),
+						map-get($btn-focus, outline)
+					),
+			)
+		);
+
+		$lexicon-icon: setter(map-get($map, lexicon-icon), ());
+		$lexicon-icon: map-merge(
+			$lexicon-icon,
+			(
+				font-size:
+					setter(
+						map-get($map, lexicon-icon-font-size),
+						map-get($lexicon-icon, font-size)
+					),
+				margin-bottom:
+					setter(
+						map-get($map, lexicon-icon-margin-bottom),
+						map-get($lexicon-icon, margin-bottom)
+					),
+				margin-left:
+					setter(
+						map-get($map, lexicon-icon-margin-left),
+						map-get($lexicon-icon, margin-left)
+					),
+				margin-right:
+					setter(
+						map-get($map, lexicon-icon-margin-right),
+						map-get($lexicon-icon, margin-right)
+					),
+				margin-top:
+					setter(
+						map-get($map, lexicon-icon-margin-top),
+						map-get($lexicon-icon, margin-top)
+					),
+			)
+		);
+
+		$c-inner: setter(map-get($map, c-inner), ());
+		$c-inner: map-merge(
+			(
+				enabled:
+					if(
+						variable-exists(enable-c-inner),
+						$enable-c-inner,
+						if(
+							variable-exists(cadmin-enable-c-inner),
+							$cadmin-enable-c-inner,
+							true
+						)
+					),
+				margin-bottom: math-sign(map-get($map, padding-bottom)),
+				margin-left: math-sign(map-get($map, padding-left)),
+				margin-right: math-sign(map-get($map, padding-right)),
+				margin-top: math-sign(map-get($map, padding-top)),
+			),
+			$c-inner
+		);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			@if (length($hover) != 0) {
+				&:hover {
+					@include clay-css($hover);
+				}
+			}
+
+			@if (length($btn-focus) != 0) {
+				@at-root {
+					button#{&} {
+						#{$focus-visible-selector},
+						#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+							@include clay-css($btn-focus);
+						}
+					}
+				}
+			}
+
+			@if (length($focus) != 0) {
+				@at-root {
+					&.focus,
+					#{$focus-visible-selector},
+					#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+						@include clay-css($focus);
+					}
+				}
+			}
+
+			@if (length($active) != 0) {
+				&:active {
+					@include clay-css($active);
+				}
+			}
+
+			@if (length($active-class) != 0) {
+				&.active {
+					@include clay-css($active-class);
+				}
+			}
+
+			@if (length($disabled) != 0) {
+				&:disabled,
+				&.disabled {
+					@include clay-css($disabled);
+
+					@if (length($disabled-active) != 0) {
+						&:active {
+							@include clay-css($disabled-active);
+						}
+					}
+				}
+			}
+
+			@if (map-get($c-inner, enabled)) {
+				.c-inner {
+					@include clay-css($c-inner);
+				}
+			}
+
+			@if (length($lexicon-icon) != 0) {
+				.lexicon-icon {
+					@include clay-css($lexicon-icon);
+				}
+			}
+		}
+	}
+}

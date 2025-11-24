@@ -1,0 +1,166 @@
+// .breadcrumb
+
+$cadmin-breadcrumb-bg: transparent !default;
+$cadmin-breadcrumb-border-radius: $cadmin-border-radius !default;
+$cadmin-breadcrumb-font-size: 14px !default;
+$cadmin-breadcrumb-font-weight: null !default;
+$cadmin-breadcrumb-margin-bottom: 0 !default;
+$cadmin-breadcrumb-padding-x: 2px !default; // 2px
+$cadmin-breadcrumb-padding-y: 9.5px !default;
+$cadmin-breadcrumb-text-transform: null !default;
+
+$cadmin-breadcrumb: () !default;
+$cadmin-breadcrumb: map-merge(
+	(
+		background-color: $cadmin-breadcrumb-bg,
+		border-radius: clay-enable-rounded($cadmin-breadcrumb-border-radius),
+		display: flex,
+		flex-wrap: wrap,
+		font-size: $cadmin-breadcrumb-font-size,
+		list-style: none,
+		margin-bottom: $cadmin-breadcrumb-margin-bottom,
+		padding: $cadmin-breadcrumb-padding-y $cadmin-breadcrumb-padding-x,
+	),
+	$cadmin-breadcrumb
+);
+
+// .breadcrumb-item + .breadcrumb-item::before
+
+$cadmin-breadcrumb-divider: quote('/') !default;
+
+$cadmin-breadcrumb-divider-color: $cadmin-gray-600 !default;
+$cadmin-breadcrumb-divider-font-family: null !default;
+$cadmin-breadcrumb-divider-font-weight: null !default;
+
+$cadmin-breadcrumb-divider-svg-icon: clay-icon(
+	angle-right,
+	$cadmin-breadcrumb-divider-color
+) !default;
+$cadmin-breadcrumb-divider-svg-icon-height: 0.6em !default;
+$cadmin-breadcrumb-divider-svg-icon-width: $cadmin-breadcrumb-divider-svg-icon-height !default;
+
+// .breadcrumb-item
+
+$cadmin-breadcrumb-item-padding: 8px !default;
+
+$cadmin-breadcrumb-active-color: $cadmin-gray-900 !default;
+$cadmin-breadcrumb-active-font-weight: $cadmin-font-weight-semi-bold !default;
+
+$cadmin-breadcrumb-item: () !default;
+$cadmin-breadcrumb-item: map-deep-merge(
+	(
+		font-size: $cadmin-breadcrumb-font-size,
+		font-weight: $cadmin-breadcrumb-font-weight,
+		margin-right: 0.5em,
+		position: relative,
+		active: (
+			color: $cadmin-breadcrumb-active-color,
+			font-weight: $cadmin-breadcrumb-active-font-weight,
+		),
+		breadcrumb-item: (
+			padding-left: 1em,
+			before: (
+				color: $cadmin-breadcrumb-divider-color,
+				display: block,
+				float: left,
+				background-image: $cadmin-breadcrumb-divider-svg-icon,
+				background-repeat: no-repeat,
+				background-size: 100%,
+				content: '',
+				height: $cadmin-breadcrumb-divider-svg-icon-height,
+				left: 0,
+				margin-top:
+					calc(
+						#{math-sign($cadmin-breadcrumb-divider-svg-icon-height)} /
+							2
+					),
+				padding: 0,
+				position: absolute,
+				top: 50%,
+				width: $cadmin-breadcrumb-divider-svg-icon-width,
+			),
+		),
+		dropdown-toggle: (
+			text-decoration: none,
+			hover: (
+				text-decoration: none,
+			),
+			focus: (
+				text-decoration: none,
+			),
+		),
+	),
+	$cadmin-breadcrumb-item
+);
+
+// Breadcrumb Text Truncate
+
+$cadmin-breadcrumb-text-truncate-icon-spacer-x: 14px !default;
+$cadmin-breadcrumb-text-truncate-max-width: 300px -
+	$cadmin-breadcrumb-text-truncate-icon-spacer-x !default;
+$cadmin-breadcrumb-text-truncate-max-width-mobile: 150px -
+	$cadmin-breadcrumb-text-truncate-icon-spacer-x !default;
+
+$cadmin-breadcrumb-text-truncate: () !default;
+$cadmin-breadcrumb-text-truncate: map-merge(
+	(
+		display: inline-block,
+		max-width: $cadmin-breadcrumb-text-truncate-max-width,
+		overflow: hidden,
+		text-decoration: inherit,
+		text-overflow: ellipsis,
+		vertical-align: bottom,
+		white-space: nowrap,
+	),
+	$cadmin-breadcrumb-text-truncate
+);
+
+// Breadcrumb Link
+
+$cadmin-breadcrumb-link-color: $cadmin-gray-600 !default;
+$cadmin-breadcrumb-link-text-decoration: $cadmin-link-decoration !default;
+
+$cadmin-breadcrumb-link-hover-color: $cadmin-breadcrumb-link-color !default;
+$cadmin-breadcrumb-link-hover-text-decoration: $cadmin-link-hover-decoration !default;
+
+$cadmin-breadcrumb-link: () !default;
+$cadmin-breadcrumb-link: map-deep-merge(
+	(
+		border-radius: 1px,
+		color: $cadmin-breadcrumb-link-color,
+		display: block,
+		text-decoration: $cadmin-breadcrumb-link-text-decoration,
+		text-transform: $cadmin-breadcrumb-text-transform,
+		transition: box-shadow 0.15s ease-in-out,
+		hover: (
+			color: $cadmin-breadcrumb-link-hover-color,
+			text-decoration: $cadmin-breadcrumb-link-hover-text-decoration,
+		),
+		focus: (
+			box-shadow: $cadmin-component-focus-box-shadow,
+			color: $cadmin-breadcrumb-link-hover-color,
+			outline: 0,
+			text-decoration: $cadmin-breadcrumb-link-hover-text-decoration,
+		),
+	),
+	$cadmin-breadcrumb-link
+);
+
+// Breadcrumb Item Expand
+
+$cadmin-breadcrumb-toggle: () !default;
+$cadmin-breadcrumb-toggle: map-merge(
+	(
+		color: $cadmin-breadcrumb-link-color,
+	),
+	$cadmin-breadcrumb-toggle
+);
+
+$cadmin-breadcrumb-bar: () !default;
+$cadmin-breadcrumb-bar: map-deep-merge(
+	(
+		align-items: center,
+		display: flex,
+	),
+	$cadmin-breadcrumb-bar
+);

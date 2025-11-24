@@ -1,0 +1,322 @@
+// Headings
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	@include clay-css($headings);
+
+	@include clay-generate-media-breakpoints($headings);
+}
+
+h1,
+.h1 {
+	@include clay-css($h1);
+
+	@include clay-generate-media-breakpoints($h1);
+}
+
+h2,
+.h2 {
+	@include clay-css($h2);
+
+	@include clay-generate-media-breakpoints($h2);
+}
+
+h3,
+.h3 {
+	@include clay-css($h3);
+
+	@include clay-generate-media-breakpoints($h3);
+}
+
+h4,
+.h4 {
+	@include clay-css($h4);
+
+	@include clay-generate-media-breakpoints($h4);
+}
+
+h5,
+.h5 {
+	@include clay-css($h5);
+
+	@include clay-generate-media-breakpoints($h5);
+}
+
+h6,
+.h6 {
+	@include clay-css($h6);
+
+	@include clay-generate-media-breakpoints($h6);
+}
+
+.lead {
+	font-size: $lead-font-size;
+	font-weight: $lead-font-weight;
+}
+
+// Type display classes
+
+.display-1 {
+	@include clay-css($display-1);
+
+	@include clay-generate-media-breakpoints($display-1);
+}
+
+.display-2 {
+	@include clay-css($display-2);
+
+	@include clay-generate-media-breakpoints($display-2);
+}
+
+.display-3 {
+	@include clay-css($display-3);
+
+	@include clay-generate-media-breakpoints($display-3);
+}
+
+.display-4 {
+	@include clay-css($display-4);
+
+	@include clay-generate-media-breakpoints($display-4);
+}
+
+// Horizontal rules
+
+hr {
+	border-color: $hr-border-color;
+	border-style: solid;
+	border-width: $hr-border-width 0 0 0;
+	margin-bottom: $hr-margin-y;
+	margin-top: $hr-margin-y;
+}
+
+// Emphasis
+
+small,
+.small {
+	font-size: $small-font-size;
+	font-weight: $font-weight-normal;
+}
+
+mark,
+.mark {
+	@include clay-css($mark);
+
+	&::before {
+		@include clay-css(map-get($mark, before));
+	}
+}
+
+mark.clay-dark,
+.clay-dark.mark,
+.clay-dark mark,
+.clay-dark .mark {
+	@include clay-css($clay-dark-mark);
+
+	&::before {
+		@include clay-css(map-get($clay-dark-mark, before));
+	}
+}
+
+// Lists
+
+%list-unstyled {
+	list-style: none;
+	padding-left: 0;
+}
+
+.list-unstyled {
+	@extend %list-unstyled;
+}
+
+// Inline turns list items into inline-block
+
+.list-inline {
+	list-style: none;
+	padding-left: 0;
+}
+
+.list-inline-item {
+	display: inline-block;
+
+	&:not(:last-child) {
+		margin-right: $list-inline-padding;
+	}
+}
+
+// Misc
+
+// Builds on `abbr`
+
+.initialism {
+	font-size: 90%;
+	text-transform: uppercase;
+}
+
+// Blockquotes
+
+.blockquote {
+	font-size: $blockquote-font-size;
+	margin-bottom: $spacer;
+}
+
+.blockquote-footer {
+	color: $blockquote-small-color;
+	display: block;
+	font-size: $blockquote-small-font-size;
+
+	&::before {
+		// em dash, nbsp
+
+		content: '\2014\00A0';
+	}
+}
+
+// CLAY CSS START
+
+b {
+	font-weight: $b-font-weight;
+}
+
+strong {
+	font-weight: $strong-font-weight;
+}
+
+// Reference Mark
+
+.reference-mark {
+	@include clay-css($reference-mark);
+
+	&.lexicon-icon {
+		@include clay-css(map-get($reference-mark, lexicon-icon));
+	}
+}
+
+// Kbd
+
+.c-kbd-group {
+	@include clay-css($c-kbd-group);
+
+	> .c-kbd {
+		@include clay-css(map-get($c-kbd-group, c-kbd));
+	}
+}
+
+.c-kbd {
+	@include clay-css($c-kbd);
+}
+
+// Nested Kbd
+
+.c-kbd {
+	> .c-kbd {
+		@include clay-css($c-kbd-c-kbd);
+
+		&[class*='c-kbd-'] {
+			border-width: inherit;
+			height: inherit;
+			min-width: inherit;
+			padding: inherit;
+
+			&:first-child {
+				margin-left: math-sign(map-get($c-kbd, padding-left));
+			}
+
+			&:last-child {
+				margin-right: math-sign(map-get($c-kbd, padding-right));
+			}
+		}
+	}
+
+	> .c-kbd.c-kbd-monospaced {
+		@include clay-css($c-kbd-monospaced);
+	}
+
+	> .c-kbd-separator {
+		@include clay-css($c-kbd-c-kbd-separator);
+	}
+}
+
+// Kbd Monospaced
+
+.c-kbd-monospaced {
+	@include clay-css($c-kbd-monospaced);
+}
+
+// Kbd Inline
+
+.c-kbd-inline {
+	@include clay-css($c-kbd-inline);
+
+	.c-kbd-separator {
+		@include clay-css($c-kbd-inline-c-kbd-separator);
+	}
+}
+
+// Kbd Sm
+
+%c-kbd-sm {
+	@include clay-css($c-kbd-sm);
+}
+
+.c-kbd-group-sm {
+	@include clay-css($c-kbd-group-sm);
+
+	> .c-kbd {
+		@include clay-css(map-get($c-kbd-group-sm, c-kbd));
+	}
+}
+
+.c-kbd-sm,
+.c-kbd.c-kbd-sm {
+	@extend %c-kbd-sm !optional;
+}
+
+// Kbd Lg
+
+%c-kbd-lg {
+	@include clay-css($c-kbd-lg);
+}
+
+.c-kbd-group-lg {
+	@include clay-css($c-kbd-group-lg);
+
+	> .c-kbd {
+		@include clay-css(map-get($c-kbd-group-lg, c-kbd));
+	}
+}
+
+.c-kbd-lg,
+.c-kbd.c-kbd-lg {
+	@extend %c-kbd-lg !optional;
+}
+
+// Kbd Light
+
+.c-kbd-group-light {
+	@include clay-css($c-kbd-group-light);
+}
+
+.c-kbd-light {
+	@include clay-css($c-kbd-light);
+}
+
+// Kbd Dark
+
+.c-kbd-group-dark {
+	@include clay-css($c-kbd-group-dark);
+}
+
+.c-kbd-dark {
+	@include clay-css($c-kbd-dark);
+}

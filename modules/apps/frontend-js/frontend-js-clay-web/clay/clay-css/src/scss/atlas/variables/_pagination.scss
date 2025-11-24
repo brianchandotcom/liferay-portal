@@ -1,0 +1,241 @@
+$pagination-font-size: 0.875rem !default; // 14px
+$pagination-line-height: 1 !default;
+
+// Pagination Item
+
+$pagination-item-height: 2rem !default; // 32px
+
+// @deprecated as of v2 use the Sass map `$pagination-item` instead
+
+$pagination-item-margin-x: 0.25rem !default; // 4px
+
+// Pagination Link
+
+// @deprecated as of v2 use the Sass map `$pagination-link` instead
+
+$pagination-link-border-radius: 4px !default;
+
+// @deprecated as of v2 use the Sass map `$pagination-link` instead
+
+$pagination-link-transition: background-color 0.15s ease-in-out,
+	border-color 0.15s ease-in-out !default;
+
+$pagination-link-first-border-radius: $pagination-link-border-radius !default;
+$pagination-link-last-border-radius: $pagination-link-border-radius !default;
+
+$pagination-bg: transparent !default;
+$pagination-border-color: $pagination-bg !default;
+$pagination-border-width: 0.0625rem !default; // 1px
+$pagination-color: $gray-600 !default;
+$pagination-padding-x: 0.625rem !default; // 10px
+$pagination-padding-y: 0 !default;
+
+$pagination-hover-bg: rgba($gray-900, 0.04) !default;
+$pagination-hover-border-color: transparent !default;
+$pagination-hover-color: $gray-900 !default;
+
+$pagination-focus-box-shadow: $component-focus-box-shadow !default;
+
+$pagination-active-bg: rgba($primary, 0.06) !default;
+$pagination-active-border-color: transparent !default;
+$pagination-active-color: $gray-900 !default;
+
+$pagination-disabled-bg: transparent !default;
+$pagination-disabled-border-color: $pagination-disabled-bg !default;
+$pagination-disabled-color: $gray-600 !default;
+
+// @deprecated as of v2 use the Sass map `$pagination-link-disabled` instead
+
+$pagination-disabled-opacity: 0.5 !default;
+
+$pagination-link-hover: () !default;
+$pagination-link-hover: map-deep-merge(
+	(
+		background-color: $pagination-hover-bg,
+		border-color: $pagination-hover-border-color,
+		color: $pagination-hover-color,
+		font-weight: $font-weight-semi-bold,
+		letter-spacing: 0,
+		text-decoration: none,
+		z-index: 2,
+		before: (
+			background-color: $secondary-l0,
+			height: 0.1875rem,
+		),
+	),
+	$pagination-link-hover
+);
+
+$pagination-link-focus: () !default;
+$pagination-link-focus: map-deep-merge(
+	(
+		background-color: c-unset,
+		border-color: $pagination-hover-border-color,
+		box-shadow: none,
+		color: $pagination-hover-color,
+		after: (
+			border-radius: $pagination-link-border-radius,
+			bottom: 0,
+			box-shadow: $pagination-focus-box-shadow,
+			content: '',
+			display: block,
+			left: 0,
+			pointer-events: none,
+			position: absolute,
+			right: 0,
+			top: 0,
+		),
+	),
+	$pagination-link-focus
+);
+
+$pagination-link-active: () !default;
+$pagination-link-active: map-deep-merge(
+	(
+		background-color: $pagination-active-bg,
+		border-color: $pagination-active-border-color,
+		color: $pagination-active-color,
+		font-weight: $font-weight-semi-bold,
+		letter-spacing: 0,
+	),
+	$pagination-link-active
+);
+
+$pagination-link-disabled: () !default;
+$pagination-link-disabled: map-deep-merge(
+	(
+		before: (
+			content: none,
+		),
+		focus: (
+			after: (
+				content: none,
+			),
+		),
+	),
+	$pagination-link-disabled
+);
+
+$pagination-link: () !default;
+$pagination-link: map-deep-merge(
+	(
+		letter-spacing: 0.033em,
+		before: (
+			border-radius: 0 0 $border-radius $border-radius,
+			bottom: 0,
+			content: '',
+			display: block,
+			left: 0,
+			position: absolute,
+			right: 0,
+		),
+		active: $pagination-link-active,
+		active-class: (
+			background-color: $pagination-active-bg,
+			border-color: $pagination-active-border-color,
+			color: $pagination-active-color,
+			font-weight: $font-weight-semi-bold,
+			letter-spacing: 0,
+			before: (
+				background-color: $primary-l0,
+				height: 0.25rem,
+			),
+		),
+		show: (
+			font-weight: $font-weight-semi-bold,
+			letter-spacing: 0,
+			before: (
+				background-color: transparent,
+			),
+			hover: (
+				before: (
+					background-color: $secondary-l0,
+					height: 0.1875rem,
+				),
+			),
+		),
+	),
+	$pagination-link
+);
+
+// Pagination Dropdown Menu
+
+$pagination-dropdown-menu-spacer-y: 0.625rem !default; // 10px
+
+/// @deprecated as of v2 use the Sass map `$pagination-items-per-page-link-focus` instead
+
+$pagination-items-per-page-focus-box-shadow: c-unset !default;
+
+// Pagination Items Per Page Link
+
+$pagination-items-per-page-link-focus: () !default;
+$pagination-items-per-page-link-focus: map-deep-merge(
+	(
+		background-color: map-get($pagination-link-focus, background-color),
+		border-color: map-get($pagination-link-focus, border-color),
+		box-shadow: $pagination-items-per-page-focus-box-shadow,
+		color: map-get($pagination-link-focus, color),
+		after: map-get($pagination-link-focus, after),
+	),
+	$pagination-items-per-page-link-focus
+);
+
+$pagination-items-per-page-link-disabled: () !default;
+$pagination-items-per-page-link-disabled: map-deep-merge(
+	(
+		font-weight: $font-weight-normal,
+		letter-spacing: 0.033em,
+		before: (
+			content: none,
+		),
+		focus: (
+			after: (
+				content: none,
+			),
+		),
+	),
+	$pagination-items-per-page-link-disabled
+);
+
+// .pagination-items-per-page > a, .pagination-items-per-page > button
+
+$pagination-items-per-page-link: () !default;
+$pagination-items-per-page-link: map-deep-merge(
+	(
+		letter-spacing: 0.025em,
+		before: (
+			border-radius: 0 0 $border-radius $border-radius,
+			bottom: 0,
+			content: '',
+			display: block,
+			left: 0,
+			position: absolute,
+			right: 0,
+		),
+		hover: $pagination-link-hover,
+		disabled: $pagination-items-per-page-link-disabled,
+		show: map-get($pagination-link, show),
+	),
+	$pagination-items-per-page-link
+);
+
+// Pagination Results
+
+$pagination-results-color: $pagination-color !default;
+
+// @deprecated Pagination Sizes as of v3.146.0
+
+// .pagination-sm
+
+$pagination-link-border-radius-sm: 0.3125rem !default;
+$pagination-font-size-sm: 0.75rem !default; // 12px
+$pagination-item-height-sm: 1.5rem !default; // 24px
+$pagination-padding-y-sm: 0 !default;
+
+// .pagination-lg
+
+$pagination-link-border-radius-lg: 0.3125rem !default; // 5px
+$pagination-font-size-lg: 1.125rem !default; // 18px
+$pagination-item-height-lg: 2.75rem !default; //44px
+$pagination-padding-x-lg: 1rem !default; // 16px
+$pagination-padding-y-lg: 0 !default;

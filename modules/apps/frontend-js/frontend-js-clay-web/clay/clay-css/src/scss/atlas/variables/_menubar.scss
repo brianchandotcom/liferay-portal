@@ -1,0 +1,268 @@
+// Menubar Vertical MD
+
+$menubar-vertical-transparent-md: () !default;
+$menubar-vertical-transparent-md: map-deep-merge(
+	(
+		nav-link: (
+			border-radius: $border-radius,
+			letter-spacing: 0.02rem,
+			line-height: 1.25rem,
+			margin-bottom: 0.25rem,
+			transition: #{color 0.15s ease-in-out,
+			background-color 0.15s ease-in-out,
+			border-color 0.15s ease-in-out,
+			box-shadow 0.15s ease-in-out},
+			before: (
+				border-radius: $border-radius 0 0 $border-radius,
+				bottom: 0,
+				content: '',
+				display: block,
+				left: 0,
+				position: absolute,
+				top: 0,
+			),
+			hover: (
+				background-color: rgba($gray-900, 0.04),
+				color: $gray-900,
+				font-weight: $font-weight-semi-bold,
+				letter-spacing: 0,
+				before: (
+					background: $secondary-l0,
+					width: 0.1875rem,
+				),
+			),
+			focus: (
+				background-color: c-unset,
+				color: $gray-900,
+				outline: 0,
+				after: (
+					border-radius: $border-radius,
+					bottom: 0,
+					box-shadow: $component-focus-box-shadow,
+					content: '',
+					display: block,
+					left: 0,
+					pointer-events: none,
+					position: absolute,
+					right: 0,
+					top: 0,
+				),
+			),
+			active-class: (
+				background-color: rgba($primary, 0.06),
+				color: $gray-900,
+				font-weight: $font-weight-semi-bold,
+				letter-spacing: 0,
+				before: (
+					background-color: $primary-l0,
+					width: 0.25rem,
+				),
+			),
+			disabled: (
+				background-color: transparent,
+				box-shadow: none,
+				font-weight: $font-weight-normal,
+				letter-spacing: 0.02rem,
+				before: (
+					content: none,
+				),
+				after: (
+					content: none,
+				),
+			),
+			show: (
+				background-color: c-unset,
+				box-shadow: c-unset,
+				color: $gray-900,
+				font-weight: $font-weight-semi-bold,
+				before: (
+					background-color: transparent,
+				),
+				hover: (
+					before: (
+						background-color: $secondary-l0,
+						width: 0.1875rem,
+					),
+				),
+			),
+		),
+		media-breakpoint-down: (
+			sm: (
+				background-color: $white,
+				nav-link: (
+					margin-bottom: 0,
+					before: (
+						content: none,
+					),
+					hover: (
+						background-color: rgba($gray-900, 0.04),
+						box-shadow: none,
+					),
+					focus: (
+						background-color: transparent,
+						after: (
+							box-shadow: $component-focus-inset-box-shadow,
+						),
+					),
+					active: (
+						background-color: c-unset,
+						color: c-unset,
+					),
+					active-class: (
+						background-color: rgba($primary, 0.06),
+						box-shadow: none,
+						color: c-unset,
+					),
+				),
+				menubar-toggler: (
+					color: $gray-600,
+					font-size: 0.875rem,
+					font-weight: $font-weight-semi-bold,
+					transition: box-shadow 0.15s ease-in-out,
+					focus: (
+						box-shadow: $component-focus-box-shadow,
+						outline: 0,
+					),
+					disabled: (
+						box-shadow: clay-enable-shadows(none),
+					),
+				),
+			),
+		),
+	),
+	$menubar-vertical-transparent-md
+);
+
+// Menubar Vertical LG
+
+$menubar-vertical-transparent-lg: () !default;
+$menubar-vertical-transparent-lg: map-deep-merge(
+	(
+		nav-link: (
+			border-radius: $border-radius,
+			letter-spacing: 0.02rem,
+			margin-bottom: 0.25rem,
+			transition: #{color 0.15s ease-in-out,
+			background-color 0.15s ease-in-out,
+			border-color 0.15s ease-in-out,
+			box-shadow 0.15s ease-in-out},
+			before: (
+				border-radius: $border-radius 0 0 $border-radius,
+				bottom: 0,
+				content: '',
+				display: block,
+				left: 0,
+				position: absolute,
+				top: 0,
+			),
+			hover: (
+				background-color: rgba($gray-900, 0.04),
+				color: $gray-900,
+				font-weight: $font-weight-semi-bold,
+				letter-spacing: 0,
+				before: (
+					background: $secondary-l0,
+					width: 0.1875rem,
+				),
+			),
+			focus: (
+				background-color: c-unset,
+				color: $gray-900,
+				outline: 0,
+				after: (
+					border-radius: $border-radius,
+					bottom: 0,
+					box-shadow: $component-focus-box-shadow,
+					content: '',
+					display: block,
+					left: 0,
+					position: absolute,
+					right: 0,
+					top: 0,
+				),
+			),
+			active-class: (
+				background-color: rgba($primary, 0.06),
+				color: $gray-900,
+				font-weight: $font-weight-semi-bold,
+				letter-spacing: 0,
+				before: (
+					background-color: $primary-l0,
+					width: 0.25rem,
+				),
+			),
+			disabled: (
+				background-color: transparent,
+				box-shadow: none,
+				font-weight: $font-weight-normal,
+				letter-spacing: 0.02rem,
+				before: (
+					content: none,
+				),
+				after: (
+					content: none,
+				),
+			),
+			show: (
+				background-color: c-unset,
+				box-shadow: c-unset,
+				color: $gray-900,
+				font-weight: $font-weight-semi-bold,
+				before: (
+					background-color: transparent,
+				),
+				hover: (
+					before: (
+						background-color: $secondary-l0,
+						width: 0.1875rem,
+					),
+				),
+			),
+		),
+		media-breakpoint-down: (
+			md: (
+				background-color: $white,
+				nav-link: (
+					margin-bottom: 0,
+					before: (
+						content: none,
+					),
+					hover: (
+						background-color: rgba($gray-900, 0.04),
+						box-shadow: none,
+					),
+					focus: (
+						background-color: transparent,
+						after: (
+							box-shadow: $component-focus-inset-box-shadow,
+						),
+					),
+					active: (
+						background-color: c-unset,
+						color: c-unset,
+					),
+					active-class: (
+						background-color: rgba($primary, 0.06),
+						box-shadow: none,
+						color: $gray-900,
+					),
+				),
+				menubar-toggler: (
+					color: $gray-600,
+					font-size: 0.875rem,
+					font-weight: $font-weight-semi-bold,
+					transition: box-shadow 0.15s ease-in-out,
+					focus: (
+						box-shadow:
+							clay-enable-shadows($component-focus-box-shadow),
+						outline: 0,
+					),
+					disabled: (
+						box-shadow: clay-enable-shadows(none),
+					),
+				),
+			),
+		),
+	),
+	$menubar-vertical-transparent-lg
+);

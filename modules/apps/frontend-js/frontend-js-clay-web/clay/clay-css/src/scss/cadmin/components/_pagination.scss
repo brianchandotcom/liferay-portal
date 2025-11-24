@@ -1,0 +1,71 @@
+.pagination {
+	@include clay-pagination-variant($cadmin-pagination);
+}
+
+.pagination-bar {
+	@include clay-pagination-variant($cadmin-pagination-bar);
+}
+
+// Pagination Link
+
+.page-link {
+	@include clay-link($cadmin-pagination-link);
+}
+
+// Pagination Item
+
+.page-item {
+	@include clay-css($cadmin-pagination-item);
+
+	&.active {
+		.page-link {
+			@include clay-link(map-get($cadmin-pagination-link, active-class));
+		}
+	}
+
+	&.disabled {
+		.page-link {
+			@include clay-link(map-get($cadmin-pagination-link, disabled));
+		}
+	}
+}
+
+.page-item:first-child .page-link,
+.page-link-first {
+	@include clay-css($cadmin-pagination-link-first);
+}
+
+.page-item:last-child .page-link,
+.page-link-last {
+	@include clay-css($cadmin-pagination-link-last);
+}
+
+// Pagination Items Per Page
+
+.pagination-items-per-page {
+	@include clay-pagination-items-per-page-variant(
+		$cadmin-pagination-items-per-page
+	);
+}
+
+.page-item .dropdown-menu,
+.pagination-items-per-page .dropdown-menu {
+	margin-bottom: $cadmin-pagination-dropdown-menu-spacer-y;
+	margin-top: $cadmin-pagination-dropdown-menu-spacer-y;
+}
+
+.pagination-results {
+	@include clay-css($cadmin-pagination-results);
+}
+
+// @deprecated Pagination Sizes as of v3.146.0
+
+@if ($cadmin-enable-pagination-sizes) {
+	.pagination-sm {
+		@include clay-pagination-variant($cadmin-pagination-sm);
+	}
+
+	.pagination-lg {
+		@include clay-pagination-variant($cadmin-pagination-lg);
+	}
+}

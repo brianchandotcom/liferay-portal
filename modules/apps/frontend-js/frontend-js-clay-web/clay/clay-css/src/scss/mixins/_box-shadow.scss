@@ -1,0 +1,27 @@
+////
+/// @group utilities
+////
+
+/// A mixin that overwrites Bootstrap 4's `box-shadow` mixin.
+/// @param {Arglist} $shadow
+
+@mixin box-shadow($shadow...) {
+	$enable: if(
+		variable-exists(enable-shadows),
+		$enable-shadows,
+		if(variable-exists(cadmin-enable-shadows), $cadmin-enable-shadows, true)
+	);
+
+	@if ($enable) {
+		@if (
+			nth($shadow, 1) !=
+				null and
+				nth($shadow, 1) !=
+				() and
+				length($shadow) <=
+				1
+		) {
+			box-shadow: $shadow;
+		}
+	}
+}

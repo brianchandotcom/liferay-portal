@@ -1,0 +1,41 @@
+$bg-checkered-fg: $gray-300 !default;
+
+// C Focus Inset
+
+$c-focus-inset-focus: () !default;
+$c-focus-inset-focus: map-deep-merge(
+	(
+		box-shadow: $component-focus-inset-box-shadow,
+		border-color: $primary-l1,
+		outline: 0,
+	),
+	$c-focus-inset-focus
+);
+
+// Close
+
+$close-text-shadow: c-unset !default;
+
+$close: () !default;
+$close: map-deep-merge(
+	(
+		color: $gray-900,
+		opacity: 1,
+		hover: (
+			color: $gray-900,
+			opacity: 1,
+			outline: 0,
+		),
+		focus: (
+			box-shadow: $component-focus-box-shadow,
+			opacity: c-unset,
+		),
+		disabled: (
+			color: $gray-600,
+			opacity: 0.65,
+		),
+	),
+	$close
+);
+
+$page-header-bg: $white !default;

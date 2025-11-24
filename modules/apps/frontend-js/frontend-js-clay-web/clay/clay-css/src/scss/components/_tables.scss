@@ -1,0 +1,819 @@
+table {
+	@include clay-css($c-table-base);
+}
+
+th {
+	@include clay-css($c-th-base);
+}
+
+caption {
+	color: $table-caption-color;
+	padding-bottom: $table-cell-padding;
+	padding-top: $table-cell-padding;
+	text-align: left;
+}
+
+.table-head-title {
+	.inline-item-before {
+		margin-right: $table-head-title-inline-item-spacer-x;
+
+		+ .text-truncate-inline {
+			max-width: $table-head-title-text-truncate-max-width;
+		}
+	}
+
+	.inline-item-after {
+		margin-left: $table-head-title-inline-item-spacer-x;
+	}
+}
+
+.table {
+	@include clay-table-variant($c-table);
+}
+
+// Table Caption
+
+.table-caption-bottom caption {
+	caption-side: bottom;
+}
+
+// Table lg
+
+.table-lg {
+	@include clay-table-variant($c-table-lg);
+}
+
+// Table Md
+
+.table-md {
+	@include clay-table-variant($c-table-md);
+}
+
+// Table Sm
+
+.table-sm {
+	@include clay-table-variant($c-table-sm);
+}
+
+// Table Bordered
+
+.table-bordered {
+	@include clay-table-variant($c-table-bordered);
+}
+
+.table-head-bordered {
+	@include clay-table-variant($c-table-head-bordered);
+}
+
+.table-borderless {
+	th,
+	td,
+	thead th,
+	tbody + tbody {
+		border: 0;
+	}
+}
+
+// Table Striped
+
+.table-striped {
+	tbody tr:nth-of-type(#{$table-striped-order}) {
+		&:not(.table-active):not(.table-disabled):not(.table-divider) {
+			&,
+			td,
+			th {
+				background-color: $table-accent-bg;
+			}
+		}
+	}
+
+	&.table-hover {
+		tbody tr:nth-of-type(#{$table-striped-order}):hover {
+			&:not(.table-active):not(.table-disabled):not(.table-divider) {
+				&,
+				td,
+				th {
+					background-color: map-deep-get(
+						$c-table-hover,
+						tbody,
+						tr,
+						hover,
+						background-color
+					);
+				}
+			}
+		}
+	}
+}
+
+// Table Hover
+
+.table-hover {
+	@include clay-table-variant($c-table-hover);
+}
+
+// Table Focus
+
+tr.table-focus {
+	@include clay-css($c-tr-table-focus);
+
+	th,
+	td {
+		$_td: setter(map-get($c-tr-table-focus, td), ());
+
+		@include clay-css($_td);
+
+		&::before {
+			@include clay-css(map-get($_td, before));
+		}
+
+		&::after {
+			@include clay-css(map-get($_td, after));
+		}
+
+		&:first-child {
+			$_first-child: setter(map-get($_td, first-child), ());
+
+			@include clay-css($_first-child);
+
+			&::before {
+				@include clay-css(map-get($_first-child, before));
+			}
+
+			&::after {
+				@include clay-css(map-get($_first-child, after));
+			}
+		}
+
+		&:last-child {
+			$_last-child: setter(map-get($_td, last-child), ());
+
+			@include clay-css($_last-child);
+
+			&::before {
+				@include clay-css(map-get($_last-child, before));
+			}
+
+			&::after {
+				@include clay-css(map-get($_last-child, after));
+			}
+		}
+	}
+}
+
+td.table-focus {
+	@include clay-css($c-td-table-focus);
+}
+
+// Table Row Backgrounds
+
+@each $color, $value in $table-row-theme-colors {
+	@if not clay-is-map-unset($value) {
+		.table {
+			.table-#{$color} {
+				$table-row: setter($value, ());
+
+				&,
+				> th,
+				> td {
+					@include clay-css($table-row);
+
+					.table-title {
+						@include clay-text-typography(
+							map-get($table-row, table-title)
+						);
+					}
+				}
+
+				th,
+				td,
+				thead th,
+				tbody + tbody {
+					border-color: map-get($table-row, border-color);
+				}
+			}
+		}
+
+		// Hover states for `.table-hover`
+		// Note: this is not available for cells or rows within `thead` or `tfoot`.
+
+		.table-hover {
+			$hover: setter(map-get($value, hover), ());
+
+			.table-#{$color} {
+				&:hover {
+					@include clay-css($hover);
+
+					> td,
+					> th {
+						background-color: map-get($hover, background-color);
+					}
+				}
+			}
+		}
+	}
+}
+
+// Dark styles
+
+.table {
+	.thead-dark {
+		th {
+			background-color: $table-dark-bg;
+			border-color: $table-dark-border-color;
+			color: $table-dark-color;
+		}
+	}
+
+	.thead-light {
+		th {
+			background-color: $table-head-bg;
+			border-color: $table-border-color;
+			color: $table-head-color;
+		}
+	}
+}
+
+.table-dark {
+	background-color: $table-dark-bg;
+	color: $table-dark-color;
+
+	th,
+	td,
+	thead th {
+		border-color: $table-dark-border-color;
+	}
+
+	&.table-bordered {
+		border-width: 0;
+	}
+
+	&.table-striped {
+		tbody tr:nth-of-type(#{$table-striped-order}) {
+			&:not(.table-active):not(.table-disabled):not(.table-divider) {
+				&,
+				th,
+				td {
+					background-color: $table-dark-accent-bg;
+				}
+			}
+		}
+
+		&.table-hover {
+			tbody tr:nth-of-type(#{$table-striped-order}):hover {
+				&:not(.table-active):not(.table-disabled):not(.table-divider) {
+					&,
+					td,
+					th {
+						background-color: $table-dark-hover-bg;
+					}
+				}
+			}
+		}
+	}
+
+	&.table-hover {
+		tbody tr {
+			&:hover {
+				background-color: $table-dark-hover-bg;
+				color: $table-dark-hover-color;
+			}
+		}
+	}
+}
+
+// Table Title
+
+.table-title {
+	@include clay-text-typography($table-title);
+}
+
+// Table Link
+
+.table-link {
+	@include clay-link($table-link);
+}
+
+// Table Action Link
+
+.table-action-link {
+	@include clay-link($table-action-link);
+}
+
+// Responsive tables
+//
+// Generate series of `.table-responsive-*` classes for configuring the screen
+// size of where your table will overflow.
+
+.table-responsive {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		$next: breakpoint-next($breakpoint, $grid-breakpoints);
+		$infix: breakpoint-infix($next, $grid-breakpoints);
+
+		&#{$infix} {
+			margin-bottom: $table-responsive-margin-bottom;
+
+			@include media-breakpoint-down($breakpoint) {
+				display: block;
+
+				-webkit-overflow-scrolling: touch;
+
+				overflow-x: auto;
+				width: 100%;
+			}
+		}
+	}
+}
+
+// Table List Skin
+
+.table-list {
+	@include clay-table-variant($c-table-list);
+}
+
+// Table List Bordered
+
+.table.table-list.table-bordered {
+	@include clay-table-variant($c-table-list-table-bordered);
+}
+
+// Table List Striped
+
+.table-list.table-striped {
+	tbody tr:nth-of-type(#{$table-striped-order}) {
+		&:not(.table-active):not(.table-disabled):not(.table-divider) {
+			&,
+			th,
+			td {
+				background-color: $table-list-accent-bg;
+			}
+		}
+	}
+
+	&.table-hover {
+		tbody tr:nth-of-type(#{$table-striped-order}):hover {
+			&:not(.table-active):not(.table-disabled):not(.table-divider) {
+				&,
+				th,
+				td {
+					background-color: map-deep-get(
+						$c-table-list-table-hover,
+						tbody,
+						tr,
+						hover,
+						background-color
+					);
+				}
+			}
+		}
+	}
+}
+
+// Table List Hover
+
+.table-list.table-hover {
+	@include clay-table-variant($c-table-list-table-hover);
+}
+
+// Table List Title
+
+.table-list-title {
+	@include clay-text-typography($table-list-title);
+}
+
+// Table List Link
+
+.table-list-link {
+	@include clay-link($table-list-link);
+}
+
+// Table List Action Link
+
+.table-list-action-link {
+	@include clay-link($table-list-action-link);
+}
+
+// Table Helpers
+
+.table-autofit {
+	td,
+	th {
+		@extend %table-cell-contract !optional;
+	}
+
+	.table-cell-expand {
+		@extend %table-cell-expand !optional;
+	}
+
+	.table-cell-expand-small {
+		@extend %table-cell-expand-small !optional;
+	}
+
+	.table-cell-expand-smaller {
+		@extend %table-cell-expand-smaller !optional;
+	}
+
+	.table-cell-expand-smallest {
+		@extend %table-cell-expand-smallest !optional;
+	}
+}
+
+.table-nowrap {
+	td,
+	th {
+		white-space: nowrap;
+	}
+}
+
+.table-heading-nowrap thead {
+	td,
+	th {
+		white-space: nowrap;
+	}
+}
+
+// Table Vertical Align
+
+.table-valign-bottom {
+	tbody,
+	tfoot,
+	thead {
+		td,
+		th {
+			vertical-align: bottom;
+		}
+	}
+
+	tbody {
+		td,
+		th {
+			padding-bottom: $table-valign-bottom-body-cell-padding-bottom;
+		}
+	}
+
+	&.show-quick-actions-on-hover {
+		.quick-action-menu {
+			align-items: flex-end;
+		}
+	}
+}
+
+.table-valign-middle {
+	tbody,
+	tfoot,
+	thead {
+		td,
+		th {
+			vertical-align: middle;
+		}
+	}
+}
+
+.table-valign-top {
+	tbody,
+	tfoot,
+	thead {
+		td,
+		th {
+			vertical-align: top;
+		}
+	}
+
+	tbody {
+		td,
+		th {
+			padding-top: $table-valign-top-body-cell-padding-top;
+		}
+	}
+
+	&.show-quick-actions-on-hover {
+		.quick-action-menu {
+			align-items: flex-start;
+		}
+	}
+}
+
+// Tbody Vertical Align
+
+.tbody-valign-bottom {
+	tbody {
+		td,
+		th {
+			padding-bottom: $table-valign-bottom-body-cell-padding-bottom;
+			vertical-align: bottom;
+		}
+	}
+
+	&.show-quick-actions-on-hover {
+		.quick-action-menu {
+			align-items: flex-end;
+		}
+	}
+}
+
+.tbody-valign-middle {
+	tbody td {
+		vertical-align: middle;
+	}
+}
+
+.tbody-valign-top {
+	tbody {
+		td,
+		th {
+			padding-top: $table-valign-top-body-cell-padding-top;
+			vertical-align: top;
+		}
+	}
+
+	&.show-quick-actions-on-hover {
+		.quick-action-menu {
+			align-items: flex-start;
+		}
+	}
+}
+
+// Thead Vertical Align
+
+.thead-valign-bottom {
+	thead {
+		td,
+		th {
+			vertical-align: bottom;
+		}
+	}
+}
+
+.thead-valign-middle {
+	thead {
+		td,
+		th {
+			vertical-align: middle;
+		}
+	}
+}
+
+.thead-valign-top {
+	thead {
+		td,
+		th {
+			vertical-align: top;
+		}
+	}
+}
+
+// .table-nested-rows
+
+.table-nested-rows {
+	@include clay-table-variant($c-table-nested-rows);
+
+	.component-action.show .collapse-icon-closed {
+		display: none;
+	}
+
+	.component-action:not(.show) .collapse-icon-open {
+		display: none;
+	}
+}
+
+// .table-sort
+
+.table-sort {
+	@include clay-table-variant($c-table-sort);
+}
+
+// Show Quick Action
+
+.show-quick-actions-on-hover {
+	tr:not(.table-active):not(.table-disabled) {
+		&:hover {
+			.quick-action-menu {
+				display: flex;
+			}
+		}
+	}
+
+	.table-focus:not(.table-active):not(.table-disabled) {
+		.quick-action-menu {
+			display: flex;
+		}
+	}
+}
+
+.table-striped {
+	tbody tr:nth-of-type(#{$table-striped-order}) {
+		.quick-action-menu {
+			background-color: $table-quick-action-menu-accent-bg;
+		}
+	}
+
+	tbody .table-active:nth-of-type(#{$table-striped-order}) {
+		.quick-action-menu {
+			background-color: $table-quick-action-menu-accent-active-bg;
+		}
+	}
+
+	&.table-hover {
+		tbody tr:nth-of-type(#{$table-striped-order}):hover {
+			.quick-action-menu {
+				background-color: map-deep-get(
+					$c-table-hover,
+					tbody,
+					tr,
+					hover,
+					quick-action-menu,
+					background-color
+				);
+			}
+		}
+	}
+}
+
+.table-list.table-striped {
+	tbody tr:nth-of-type(#{$table-striped-order}) {
+		.quick-action-menu {
+			background-color: $table-list-quick-action-menu-accent-bg;
+		}
+	}
+
+	tbody .table-active:nth-of-type(#{$table-striped-order}) {
+		.quick-action-menu {
+			background-color: $table-list-quick-action-menu-accent-active-bg;
+		}
+	}
+
+	&.table-hover {
+		tbody tr:nth-of-type(#{$table-striped-order}):hover {
+			.quick-action-menu {
+				background-color: map-deep-get(
+					$c-table-list-table-hover,
+					tbody,
+					tr,
+					hover,
+					quick-action-menu,
+					background-color
+				);
+			}
+		}
+	}
+}
+
+// Table Column Utilities
+
+.table-column-text-start,
+.table-cell-text-start {
+	text-align: left;
+}
+
+.table-column-text-center,
+.table-cell-text-center {
+	text-align: center;
+}
+
+.table-column-text-end,
+.table-cell-text-end {
+	text-align: right;
+}
+
+%table-cell-contract {
+	@include clay-css(
+		(
+			display: table-cell,
+			overflow-wrap: break-word,
+			width: 1%,
+		)
+	);
+}
+
+%table-cell-expand {
+	@include clay-css(
+		(
+			display: table-cell,
+			max-width: $table-cell-expand-min-width,
+			min-width: $table-cell-expand-min-width,
+			overflow-wrap: break-word,
+			width: auto,
+		)
+	);
+}
+
+%table-cell-expand-small {
+	@include clay-css(
+		(
+			max-width: $table-cell-expand-small-max-width,
+			overflow-wrap: break-word,
+			width: $table-cell-expand-small-width,
+		)
+	);
+}
+
+%table-cell-expand-smaller {
+	@include clay-css(
+		(
+			max-width: $table-cell-expand-smaller-max-width,
+			overflow-wrap: break-word,
+			width: $table-cell-expand-smaller-width,
+		)
+	);
+}
+
+%table-cell-expand-smallest {
+	@include clay-css(
+		(
+			max-width: $table-cell-expand-smallest-max-width,
+			overflow-wrap: break-word,
+			width: $table-cell-expand-smallest-width,
+		)
+	);
+}
+
+.table-column,
+.table-cell-contract {
+	@extend %table-cell-contract !optional;
+}
+
+.table-cell-expand,
+.table-column-expand {
+	@extend %table-cell-expand !optional;
+}
+
+.table-cell-expand-small,
+.table-column-expand-small {
+	@extend %table-cell-expand-small !optional;
+}
+
+.table-cell-expand-smaller,
+.table-column-expand-smaller {
+	@extend %table-cell-expand-smaller !optional;
+}
+
+.table-cell-expand-smallest,
+.table-column-expand-smallest {
+	@extend %table-cell-expand-smallest !optional;
+}
+
+.table-cell-minw-50,
+.table-column-minw-50 {
+	min-width: 50px;
+}
+
+.table-cell-minw-75,
+.table-column-minw-75 {
+	min-width: 75px;
+}
+
+.table-cell-minw-100,
+.table-column-minw-100 {
+	min-width: 100px;
+}
+
+.table-cell-minw-150,
+.table-column-minw-150 {
+	min-width: 150px;
+}
+
+.table-cell-minw-200,
+.table-column-minw-200 {
+	min-width: 200px;
+}
+
+.table-cell-minw-250,
+.table-column-minw-250 {
+	min-width: 250px;
+}
+
+.table-cell-minw-300,
+.table-column-minw-300 {
+	min-width: 300px;
+}
+
+.table-cell-minw-350,
+.table-column-minw-350 {
+	min-width: 350px;
+}
+
+.table-cell-minw-400,
+.table-column-minw-400 {
+	min-width: 400px;
+}
+
+// White Space
+
+.table-cell-ws-normal,
+.table-column-ws-normal {
+	white-space: normal;
+}
+
+.table-cell-ws-nowrap,
+.table-column-ws-nowrap {
+	white-space: nowrap;
+}
+
+// Image
+
+.table-img {
+	height: auto;
+	max-height: $table-img-max-height;
+	max-width: none;
+	width: auto;
+}

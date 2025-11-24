@@ -1,0 +1,618 @@
+////
+/// @group inputGroups
+////
+
+/// A mixin that stacks an `.input-group` that uses an `.input-group-item` at a specific `max-width` breakpoint. This sets the `.input-group-item` width to 100% and `.input-group-item-shrink` width to auto at the `max-width` breakpoint.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// breakpoint: {String | Null}, // This uses Bootstrap 4's breakpoint up to calculate breakpoint down. Use `breakpoint-down` instead. // Default: md
+/// See Mixin `clay-css` for available keys to pass into the base selector
+/// item: {Map | Null}, // See Mixin `clay-css` for available keys
+/// item-shrink: {Map | Null}, // See Mixin `clay-css` for available keys
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// breakpoint-down: {String, Null}, // The Bootstrap 4 Breakpoint {xs | sm | md | lg | xl}
+/// item-margin-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// item-margin-left: {Number | String | Null}, // deprecated after 3.9.0
+/// item-margin-right: {Number | String | Null}, // deprecated after 3.9.0
+/// item-margin-top: {Number | String | Null}, // deprecated after 3.9.0
+/// shrink-margin-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// shrink-margin-left: {Number | String | Null}, // deprecated after 3.9.0
+/// shrink-margin-right: {Number | String | Null}, // deprecated after 3.9.0
+/// shrink-margin-top: {Number | String | Null}, // deprecated after 3.9.0
+
+@mixin clay-input-group-stacked($map) {
+	$enabled: setter(map-get($map, enabled), true);
+
+	$breakpoint: setter(map-get($map, breakpoint), md);
+	$breakpoint-down: clay-breakpoint-prev($breakpoint);
+
+	$item: setter(map-get($map, input-group-item), map-get($map, item), ());
+	$item: map-merge(
+		$item,
+		(
+			margin-bottom:
+				setter(
+					map-get($map, item-margin-bottom),
+					map-get($item, margin-bottom)
+				),
+			margin-left:
+				setter(
+					map-get($map, item-margin-left),
+					map-get($item, margin-left)
+				),
+			margin-right:
+				setter(
+					map-get($map, item-margin-right),
+					map-get($item, margin-right)
+				),
+			margin-top:
+				setter(
+					map-get($map, item-margin-top),
+					map-get($item, margin-top)
+				),
+			width: setter(map-get($item, width), 100%),
+		)
+	);
+
+	$item-shrink: setter(
+		map-get($map, input-group-item-shrink),
+		map-get($map, item-shrink),
+		()
+	);
+	$item-shrink: map-merge(
+		$item-shrink,
+		(
+			margin-bottom:
+				setter(
+					map-get($map, shrink-margin-bottom),
+					map-get($item-shrink, margin-bottom)
+				),
+			margin-left:
+				setter(
+					map-get($map, shrink-margin-left),
+					map-get($item-shrink, margin-left)
+				),
+			margin-right:
+				setter(
+					map-get($map, shrink-margin-right),
+					map-get($item-shrink, margin-right)
+				),
+			margin-top:
+				setter(
+					map-get($map, shrink-margin-top),
+					map-get($item-shrink, margin-top)
+				),
+			width: setter(map-get($item-shrink, width), auto),
+		)
+	);
+
+	@if ($enabled) {
+		@include media-breakpoint-down($breakpoint-down) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			@if (length($item) != 0) {
+				> .input-group-item {
+					@include clay-css($item);
+				}
+			}
+
+			@if (length($item-shrink) != 0) {
+				> .input-group-item-shrink {
+					@include clay-css($item-shrink);
+				}
+			}
+		}
+	}
+}
+
+/// A mixin to create `input-group-item` variants
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .input-group-text
+/// 	label: (
+/// 		// .input-group-text label
+/// 	),
+/// 	custom-control: (
+/// 		// .input-group-text .custom-control
+/// 		//     @include clay-custom-control-variant();
+/// 	),
+/// 	form-check: (
+/// 		// .input-group-text .form-check
+/// 		input: (
+/// 			// .input-group-text .form-check input[type='radio'],
+/// 			// .input-group-text .form-check input[type='checkbox']
+/// 		),
+/// 	),
+/// 	lexicon-icon: (
+/// 		// .input-group-text .lexicon-icon
+/// 	),
+/// 	media-breakpoint-down: (
+/// 		xs: (
+/// 			// @include media-breakpoint-down(xs) {
+/// 			//      @include clay-input-group-text-variant();
+/// 			// }
+/// 		),
+/// 		sm: (
+/// 			// @include media-breakpoint-down(sm) {
+/// 			//      @include clay-input-group-text-variant();
+/// 			// }
+/// 		),
+/// 		md: (
+/// 			// @include media-breakpoint-down(md) {
+/// 			//      @include clay-input-group-text-variant();
+/// 			// }
+/// 		),
+/// 		lg: (
+/// 			// @include media-breakpoint-down(lg) {
+/// 			//      @include clay-input-group-text-variant();
+/// 			// }
+/// 		),
+/// 	),
+/// )
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+
+@mixin clay-input-group-text-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			$_label: map-get($map, label);
+
+			@if ($_label) {
+				label {
+					@include clay-css($_label);
+				}
+			}
+
+			$_custom-control: map-get($map, custom-control);
+
+			@if ($_custom-control) {
+				.custom-control {
+					@include clay-custom-control-variant($_custom-control);
+				}
+			}
+
+			$_form-check: map-get($map, form-check);
+
+			@if ($_form-check) {
+				.form-check {
+					@include clay-css($_form-check);
+
+					$_input: map-get($_form-check, input);
+
+					@if ($_input) {
+						input[type='radio'],
+						input[type='checkbox'] {
+							@include clay-css($_input);
+						}
+					}
+				}
+			}
+
+			$_lexicon-icon: map-get($map, lexicon-icon);
+
+			@if ($_lexicon-icon) {
+				.lexicon-icon {
+					@include clay-css($_lexicon-icon);
+				}
+			}
+
+			$_media-breakpoint-down: map-get($map, media-breakpoint-down);
+			$_media-breakpoint-up: map-get($map, media-breakpoint-up);
+
+			@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+				@include clay-generate-media-breakpoints(
+					$map,
+					'clay-input-group-text-variant'
+				);
+			}
+		}
+	}
+}
+
+/// A mixin to create `input-group-item` variants
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .input-group-item
+/// 	focus: (
+/// 		// .input-group-item.focus
+/// 		//     @include clay-input-group-item-variant();
+/// 	),
+/// 	first-child: (
+/// 		// .input-group-item:first-child
+/// 	),
+/// 	input-group-prepend: (
+/// 		// .input-group-item.input-group-prepend
+/// 	),
+/// 	input-group-append: (
+/// 		// .input-group-item.input-group-append
+/// 	),
+/// 	btn: (
+/// 		// .input-group-item > .btn
+/// 		//     @include clay-button-variant();
+/// 	),
+/// 	btn-monospaced: (
+/// 		// .input-group-item > .btn-monospaced
+/// 		//     @include clay-button-variant();
+/// 	),
+/// 	dropdown: (
+/// 		// .input-group-item > .dropdown
+/// 	),
+/// 	form-control: (
+/// 		// .input-group-item > .form-control
+/// 		//     @include clay-form-control-variant();
+/// 		label: (
+/// 			// .input-group-item > .form-control .label
+/// 			//     @include clay-label-variant();
+/// 		),
+/// 	),
+/// 	form-file: (
+/// 		// .input-group-item > .form-file
+/// 		btn: (
+/// 			// .input-group-item > .form-file .btn
+/// 			//     @include clay-button-variant();
+/// 		),
+/// 	),
+/// 	textarea: (
+/// 		// .input-group-item > textarea.form-control,
+/// 		// .input-group-item > .form-control-textarea
+/// 		//     @include clay-form-control-variant();
+/// 	),
+/// 	form-control-plaintext: (
+/// 		// .input-group-item > .form-control-plaintext
+/// 		//     @include clay-form-control-variant();
+/// 	),
+/// 	input-group-text: (
+/// 		// .input-group-item > .input-group-text
+/// 		//     @include clay-input-group-text-variant();
+/// 	),
+/// 	input-group-inset-item: (
+/// 		// .input-group-item > .input-group-inset-item
+/// 		btn: (
+/// 			// .input-group-item > .input-group-inset-item > .btn
+/// 			//     @include clay-button-variant();
+/// 		),
+/// 		btn-monospaced: (
+/// 			// .input-group-item > .input-group-inset-item > .btn-monospaced
+/// 			//     @include clay-button-variant();
+/// 		),
+/// 		form-file: (
+/// 			// .input-group-item > .input-group-inset-item > .form-file
+/// 			btn: (
+/// 				// .input-group-item > .input-group-inset-item > .form-file .btn
+/// 				//     @include clay-button-variant();
+/// 			),
+/// 		),
+/// 	),
+/// 	form-control-inset: (
+/// 		// .input-group-item .form-control-inset
+/// 	),
+/// )
+
+@mixin clay-input-group-item-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		@if ($enabled) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			$_before: map-get($map, before);
+
+			@if ($_before) {
+				&::before {
+					@include clay-css($_before);
+				}
+			}
+
+			$_after: map-get($map, after);
+
+			@if ($_after) {
+				&::after {
+					@include clay-css($_after);
+				}
+			}
+
+			$_focus: map-get($map, focus);
+
+			@if ($_focus) {
+				&.focus {
+					@include clay-input-group-item-variant($_focus);
+				}
+			}
+
+			$_focus-within: map-get($map, focus-within);
+
+			@if ($_focus-within) {
+				&:focus-within:has(input:focus) {
+					@include clay-input-group-item-variant($_focus-within);
+				}
+			}
+
+			$_first-child: map-get($map, first-child);
+
+			@if ($_first-child) {
+				&:first-child {
+					@include clay-css($_first-child);
+				}
+			}
+
+			$_input-group-prepend: map-get($map, input-group-prepend);
+
+			@if ($_input-group-prepend) {
+				&.input-group-prepend {
+					@include clay-css($_input-group-prepend);
+				}
+			}
+
+			$_input-group-append: map-get($map, input-group-append);
+
+			@if ($_input-group-append) {
+				&.input-group-append {
+					@include clay-css($_input-group-append);
+				}
+			}
+
+			$_btn: map-get($map, btn);
+
+			@if ($_btn) {
+				> .btn {
+					@include clay-button-variant($_btn);
+				}
+			}
+
+			$_btn-monospaced: map-get($map, btn-monospaced);
+
+			@if ($_btn-monospaced) {
+				> .btn-monospaced {
+					@include clay-button-variant($_btn-monospaced);
+				}
+			}
+
+			$_dropdown: map-get($map, dropdown);
+
+			@if ($_dropdown) {
+				> .dropdown {
+					@include clay-css($_dropdown);
+				}
+			}
+
+			$_form-control: map-get($map, form-control);
+
+			@if ($_form-control) {
+				> .form-control {
+					@include clay-form-control-variant($_form-control);
+				}
+			}
+
+			$_form-file: map-get($map, form-file);
+
+			@if ($_form-file) {
+				> .form-file {
+					@include clay-css($_form-file);
+
+					$_btn: map-get($_form-file, btn);
+
+					@if ($_btn) {
+						.btn {
+							@include clay-button-variant($_btn);
+						}
+					}
+				}
+			}
+
+			$_textarea: map-get($map, textarea);
+
+			@if ($_textarea) {
+				> textarea.form-control,
+				> .form-control-textarea {
+					@include clay-form-control-variant($_textarea);
+				}
+			}
+
+			$_form-control-plaintext: map-get($map, form-control-plaintext);
+
+			@if ($_form-control-plaintext) {
+				> .form-control-plaintext {
+					@include clay-form-control-variant(
+						$_form-control-plaintext
+					);
+				}
+			}
+
+			$_input-group-text: map-get($map, input-group-text);
+
+			@if ($_input-group-text) {
+				> .input-group-text {
+					@include clay-input-group-text-variant($_input-group-text);
+				}
+			}
+
+			$_input-group-inset-item: map-get($map, input-group-inset-item);
+
+			@if ($_input-group-inset-item) {
+				> .input-group-inset-item {
+					@include clay-css($_input-group-inset-item);
+
+					$_btn: map-get($_input-group-inset-item, btn);
+
+					@if ($_btn) {
+						> .btn {
+							@include clay-button-variant($_btn);
+						}
+					}
+
+					$_btn-monospaced: map-get(
+						$_input-group-inset-item,
+						btn-monospaced
+					);
+
+					@if ($_btn-monospaced) {
+						> .btn-monospaced {
+							@include clay-button-variant($_btn-monospaced);
+						}
+					}
+
+					$_form-file: map-get($map, form-file);
+
+					@if ($_form-file) {
+						> .form-file {
+							@include clay-css($_form-file);
+
+							$_btn: map-get($_form-file, btn);
+
+							@if ($_btn) {
+								.btn {
+									@include clay-button-variant($_btn);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			$_form-control-inset: map-get($map, form-control-inset);
+
+			@if ($_form-control-inset) {
+				.form-control-inset {
+					@include clay-form-control-variant($_form-control-inset);
+				}
+			}
+		}
+	}
+}
+
+/// A mixin to create `input-group` variants
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .input-group
+/// 	input-group-item: (
+/// 		// .input-group > .input-group-item
+/// 		//     @include clay-input-group-item-variant();
+/// 	),
+/// 	input-group-item-shrink: (
+/// 		// .input-group > .input-group-item-shrink
+/// 		//     @include clay-input-group-item-variant();
+/// 	),
+/// 	btn-primary: (
+/// 		// .input-group .btn-primary
+/// 		//     @include clay-button-variant();
+/// 	),
+/// 	btn-secondary: (
+/// 		// .input-group .btn-secondary
+/// 		//     @include clay-button-variant();
+/// 	),
+/// 	btn-unstyled: (
+/// 		// .input-group .btn-unstyled
+/// 		//     @include clay-button-variant();
+/// 	),
+/// 	media-breakpoint-down: (
+/// 		xs: (
+/// 			// @include media-breakpoint-down(xs) {
+/// 			//     @include clay-input-group-variant();
+/// 			// }
+/// 		),
+/// 		sm: (
+/// 			// @include media-breakpoint-down(sm) {
+/// 			//     @include clay-input-group-variant();
+/// 			// }
+/// 		),
+/// 		md: (
+/// 			// @include media-breakpoint-down(md) {
+/// 			//     @include clay-input-group-variant();
+/// 			// }
+/// 		),
+/// 		lg: (
+/// 			// @include media-breakpoint-down(lg) {
+/// 			//     @include clay-input-group-variant();
+/// 			// }
+/// 		),
+/// 	),
+/// )
+
+@mixin clay-input-group-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		@if ($enabled) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			$_input-group-item: map-get($map, input-group-item);
+
+			@if ($_input-group-item) {
+				> .input-group-item {
+					@include clay-input-group-item-variant($_input-group-item);
+				}
+			}
+
+			$_input-group-item-shrink: map-get($map, input-group-item-shrink);
+
+			@if ($_input-group-item-shrink) {
+				> .input-group-item-shrink {
+					@include clay-input-group-item-variant(
+						$_input-group-item-shrink
+					);
+				}
+			}
+
+			$_btn-primary: map-get($map, btn-primary);
+
+			@if ($_btn-primary) {
+				.btn-primary {
+					@include clay-button-variant($_btn-primary);
+				}
+			}
+
+			$_btn-secondary: map-get($map, btn-secondary);
+
+			@if ($_btn-secondary) {
+				.btn-secondary {
+					@include clay-button-variant($_btn-secondary);
+				}
+			}
+
+			$_btn-unstyled: map-get($map, btn-unstyled);
+
+			@if ($_btn-unstyled) {
+				.btn-unstyled {
+					@include clay-button-variant($_btn-unstyled);
+				}
+			}
+
+			$_media-breakpoint-down: map-get($map, media-breakpoint-down);
+			$_media-breakpoint-up: map-get($map, media-breakpoint-up);
+
+			@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+				@include clay-generate-media-breakpoints(
+					$map,
+					'clay-input-group-variant'
+				);
+			}
+		}
+	}
+}

@@ -1,0 +1,1058 @@
+$cadmin-alert-border-style: solid !default;
+$cadmin-alert-border-radius: $cadmin-border-radius !default;
+$cadmin-alert-border-width: 1px !default;
+
+$cadmin-alert-font-size: 14px !default;
+$cadmin-alert-margin-bottom: 16px !default;
+$cadmin-alert-padding-x: 16px !default;
+$cadmin-alert-padding-y: 15px !default;
+
+$cadmin-alert-btn: () !default;
+$cadmin-alert-btn: map-deep-merge(
+	(
+		border-radius: $cadmin-btn-border-radius-sm,
+		font-size: $cadmin-btn-font-size-sm,
+		line-height: $cadmin-btn-line-height-sm,
+		padding-bottom: $cadmin-btn-padding-y-sm,
+		padding-left: $cadmin-btn-padding-x-sm,
+		padding-right: $cadmin-btn-padding-x-sm,
+		padding-top: $cadmin-btn-padding-y-sm,
+	),
+	$cadmin-alert-btn
+);
+
+$cadmin-alert-btn-group: () !default;
+$cadmin-alert-btn-group: map-deep-merge(
+	(
+		margin-bottom: -2px,
+		margin-top: -2px,
+	),
+	$cadmin-alert-btn-group
+);
+
+$cadmin-alert-btn-group-item: () !default;
+$cadmin-alert-btn-group-item: map-deep-merge(
+	(
+		margin-bottom: 2px,
+		margin-top: 2px,
+	),
+	$cadmin-alert-btn-group-item
+);
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-font-size: 16px !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-height: 32px !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-line-height: null !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-opacity: 1 !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-margin-left: null !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-padding-bottom: 0 !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-padding-left: 0 !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-padding-right: 0 !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-padding-top: 0 !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-position-right: 8px !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-position-top: 11px !default;
+
+// @deprecated as of v2.12.0 use the Sass map `$cadmin-alert-close` instead
+
+$cadmin-alert-close-width: $cadmin-alert-close-height !default;
+
+$cadmin-alert-close: () !default;
+$cadmin-alert-close: map-deep-merge(
+	(
+		color: inherit,
+		font-size: $cadmin-alert-close-font-size,
+		height: $cadmin-alert-close-height,
+		line-height: $cadmin-alert-close-line-height,
+		margin-left: $cadmin-alert-close-margin-left,
+		opacity: $cadmin-alert-close-opacity,
+		padding-bottom: $cadmin-alert-close-padding-bottom,
+		padding-left: $cadmin-alert-close-padding-left,
+		padding-right: $cadmin-alert-close-padding-right,
+		padding-top: $cadmin-alert-close-padding-top,
+		position: absolute,
+		right: $cadmin-alert-close-position-right,
+		top: $cadmin-alert-close-position-top,
+		width: $cadmin-alert-close-width,
+		hover: (
+			color: inherit,
+		),
+		disabled: (
+			color: inherit,
+		),
+	),
+	$cadmin-alert-close
+);
+
+$cadmin-alert-lead-font-size: $cadmin-alert-font-size !default;
+$cadmin-alert-lead-font-weight: $cadmin-font-weight-semi-bold !default;
+$cadmin-alert-lead-spacer-x: 5px !default;
+
+$cadmin-alert-title: () !default;
+$cadmin-alert-title: map-deep-merge(
+	(
+		font-size: 14px,
+		margin-bottom: 4px,
+		margin-top: 0,
+	),
+	$cadmin-alert-title
+);
+
+$cadmin-alert-subtitle: () !default;
+$cadmin-alert-subtitle: map-deep-merge(
+	(
+		font-size: 12px,
+		font-weight: $cadmin-font-weight-normal,
+	),
+	$cadmin-alert-subtitle
+);
+
+$cadmin-alert: () !default;
+$cadmin-alert: map-deep-merge(
+	(
+		border-color: transparent,
+		border-style: $cadmin-alert-border-style,
+		border-width: $cadmin-alert-border-width,
+		border-radius: clay-enable-rounded($cadmin-alert-border-radius),
+		display: block,
+		font-size: $cadmin-alert-font-size,
+		margin-bottom: $cadmin-alert-margin-bottom,
+		padding: $cadmin-alert-padding-y $cadmin-alert-padding-x,
+		position: relative,
+		white-space: normal,
+		word-wrap: break-word,
+		alert-btn: $cadmin-alert-btn,
+		btn-group: $cadmin-alert-btn-group,
+		btn-group-item: $cadmin-alert-btn-group-item,
+		close: $cadmin-alert-close,
+		lead: (
+			font-size: $cadmin-alert-lead-font-size,
+			font-weight: $cadmin-alert-lead-font-weight,
+			margin-right: $cadmin-alert-lead-spacer-x,
+		),
+		component-title: $cadmin-alert-title,
+		component-subtitle: $cadmin-alert-subtitle,
+	),
+	$cadmin-alert
+);
+
+// .alert-link
+
+$cadmin-alert-link-decoration: underline !default;
+$cadmin-alert-link-font-weight: $cadmin-font-weight-semi-bold !default;
+
+$cadmin-alert-link-hover-decoration: none !default;
+
+$cadmin-alert-link: () !default;
+$cadmin-alert-link: map-deep-merge(
+	(
+		font-weight: $cadmin-alert-link-font-weight,
+		text-decoration: $cadmin-alert-link-decoration,
+		hover: (
+			text-decoration: $cadmin-alert-link-hover-decoration,
+		),
+		focus: (
+			text-decoration: $cadmin-alert-link-hover-decoration,
+		),
+	),
+	$cadmin-alert-link
+);
+
+// .alert-indicator
+
+$cadmin-alert-indicator-font-size: 16px !default;
+
+$cadmin-alert-indicator: () !default;
+$cadmin-alert-indicator: map-deep-merge(
+	(
+		font-size: $cadmin-alert-indicator-font-size,
+		line-height: 1,
+		lead: (
+			margin-left: $cadmin-alert-lead-spacer-x,
+		),
+	),
+	$cadmin-alert-indicator
+);
+
+// .alert-footer
+
+$cadmin-alert-footer: () !default;
+$cadmin-alert-footer: map-merge(
+	(
+		margin-top: 16px,
+	),
+	$cadmin-alert-footer
+);
+
+// Alert Dismissible
+
+$cadmin-alert-dismissible-padding-bottom: null !default;
+$cadmin-alert-dismissible-padding-left: null !default;
+$cadmin-alert-dismissible-padding-right: 40px !default;
+$cadmin-alert-dismissible-padding-top: null !default;
+
+$cadmin-alert-dismissible: () !default;
+$cadmin-alert-dismissible: map-deep-merge(
+	(
+		padding-bottom: $cadmin-alert-dismissible-padding-bottom,
+		padding-left: $cadmin-alert-dismissible-padding-left,
+		padding-right: $cadmin-alert-dismissible-padding-right,
+		padding-top: $cadmin-alert-dismissible-padding-top,
+	),
+	$cadmin-alert-dismissible
+);
+
+// Alert Fluid
+
+// @deprecated use the Sass map `$alert-fluid` instead
+
+$cadmin-alert-fluid-border-bottom-width: 1px !default;
+
+// @deprecated use the Sass map `$alert-fluid` instead
+
+$cadmin-alert-fluid-border-left-width: 0 !default;
+
+// @deprecated use the Sass map `$alert-fluid` instead
+
+$cadmin-alert-fluid-border-right-width: 0 !default;
+
+// @deprecated use the Sass map `$alert-fluid` instead
+
+$cadmin-alert-fluid-border-top-width: 0 !default;
+
+// @deprecated use the Sass map `$alert-fluid` instead
+
+$cadmin-alert-fluid-border-width: $cadmin-alert-fluid-border-top-width
+	$cadmin-alert-fluid-border-right-width
+	$cadmin-alert-fluid-border-bottom-width
+	$cadmin-alert-fluid-border-left-width !default;
+$cadmin-alert-fluid-margin-bottom: 0 !default;
+
+// .alert-fluid .container-fluid
+
+// @deprecated use the Sass map `$alert-fluid` instead
+
+$cadmin-alert-fluid-container: () !default;
+$cadmin-alert-fluid-container: map-merge(
+	(
+		padding-bottom: 15.5px,
+		padding-left: $cadmin-alert-padding-x,
+		padding-right: $cadmin-alert-padding-x,
+		padding-top: 15.5px,
+	),
+	$cadmin-alert-fluid-container
+);
+
+// .alert-fluid.alert-dismissible .container-fluid
+
+// @deprecated use the Sass map `$alert-fluid` instead
+
+$cadmin-alert-fluid-dismissible-container: () !default;
+$cadmin-alert-fluid-dismissible-container: map-merge(
+	(
+		padding-bottom: $cadmin-alert-dismissible-padding-bottom,
+		padding-left: $cadmin-alert-dismissible-padding-left,
+		padding-right:
+			calc(
+				#{$cadmin-alert-dismissible-padding-right} + #{$cadmin-grid-gutter-width} *
+					0.5
+			),
+		padding-top: $cadmin-alert-dismissible-padding-top,
+		position: relative,
+	),
+	$cadmin-alert-fluid-dismissible-container
+);
+
+// .alert-fluid .close
+
+// @deprecated use the Sass map `$alert-fluid` instead
+
+$cadmin-alert-fluid-close: () !default;
+$cadmin-alert-fluid-close: map-deep-merge(
+	(
+		right: calc(#{$cadmin-grid-gutter-width * 0.5} + 4px),
+	),
+	$cadmin-alert-fluid-close
+);
+
+$cadmin-alert-fluid: () !default;
+$cadmin-alert-fluid: map-merge(
+	(
+		border-radius: 0,
+		border-width: $cadmin-alert-fluid-border-width,
+		margin-bottom: $cadmin-alert-fluid-margin-bottom,
+		padding: 0,
+		alert-dismissible: (
+			container-fluid: $cadmin-alert-fluid-dismissible-container,
+		),
+		close: $cadmin-alert-fluid-close,
+		container-fluid: $cadmin-alert-fluid-container,
+	),
+	$cadmin-alert-fluid
+);
+
+// .alert-notifications-absolute
+
+$cadmin-alert-notifications-absolute-bottom: null !default;
+$cadmin-alert-notifications-absolute-left: null !default;
+$cadmin-alert-notifications-absolute-right: 8px !default;
+$cadmin-alert-notifications-absolute-top: 76px !default;
+
+$cadmin-alert-notifications-absolute-bottom-mobile: null !default;
+$cadmin-alert-notifications-absolute-left-mobile: 8px !default;
+$cadmin-alert-notifications-absolute-right-mobile: 8px !default;
+$cadmin-alert-notifications-absolute-top-mobile: 68px !default;
+
+$cadmin-alert-notifications-absolute: () !default;
+$cadmin-alert-notifications-absolute: map-deep-merge(
+	(
+		breakpoint-down: sm,
+		bottom: $cadmin-alert-notifications-absolute-bottom,
+		height: 0,
+		left: $cadmin-alert-notifications-absolute-left,
+		position: absolute,
+		right: $cadmin-alert-notifications-absolute-right,
+		top: $cadmin-alert-notifications-absolute-top,
+		z-index: $cadmin-zindex-alert-notifications,
+		mobile: (
+			bottom: $cadmin-alert-notifications-absolute-bottom-mobile,
+			left: $cadmin-alert-notifications-absolute-left-mobile,
+			right: $cadmin-alert-notifications-absolute-right-mobile,
+			top: $cadmin-alert-notifications-absolute-top-mobile,
+		),
+	),
+	$cadmin-alert-notifications-absolute
+);
+
+// .alert-notifications-fixed
+
+$cadmin-alert-notifications-fixed-bottom: 20px !default;
+$cadmin-alert-notifications-fixed-left: 20px !default;
+$cadmin-alert-notifications-fixed-right: null !default;
+$cadmin-alert-notifications-fixed-top: null !default;
+
+$cadmin-alert-notifications-fixed-bottom-mobile: 16px !default;
+$cadmin-alert-notifications-fixed-left-mobile: (
+	$cadmin-grid-gutter-width * 0.5
+) !default;
+$cadmin-alert-notifications-fixed-right-mobile: (
+	$cadmin-grid-gutter-width * 0.5
+) !default;
+$cadmin-alert-notifications-fixed-top-mobile: null !default;
+
+$cadmin-alert-notifications-fixed: () !default;
+$cadmin-alert-notifications-fixed: map-deep-merge(
+	(
+		bottom: $cadmin-alert-notifications-fixed-bottom,
+		left: $cadmin-alert-notifications-fixed-left,
+		position: fixed,
+		right: $cadmin-alert-notifications-fixed-right,
+		top: $cadmin-alert-notifications-fixed-top,
+		z-index: $cadmin-zindex-alert-notifications,
+		mobile: (
+			bottom: $cadmin-alert-notifications-fixed-bottom-mobile,
+			left: $cadmin-alert-notifications-fixed-left-mobile,
+			right: $cadmin-alert-notifications-fixed-right-mobile,
+			top: $cadmin-alert-notifications-fixed-top-mobile,
+		),
+	),
+	$cadmin-alert-notifications-fixed
+);
+
+// .alert-notification
+
+$cadmin-alert-notifications-box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.3) !default;
+$cadmin-alert-notifications-max-width: 360px !default;
+
+$cadmin-alert-notification: () !default;
+$cadmin-alert-notification: map-merge(
+	(
+		box-shadow: $cadmin-alert-notifications-box-shadow,
+		margin-bottom: $cadmin-alert-margin-bottom,
+		max-width: $cadmin-alert-notifications-max-width,
+		padding-bottom: 16px,
+		padding-top: 16px,
+	),
+	$cadmin-alert-notification
+);
+
+$cadmin-alert-notification-sm-down: () !default;
+$cadmin-alert-notification-sm-down: map-merge(
+	(
+		enabled: $cadmin-enable-scaling-components,
+		max-width: none,
+		width: 100%,
+	),
+	$cadmin-alert-notification-sm-down
+);
+
+// Alert Autofit Row
+
+$cadmin-alert-autofit-row: () !default;
+$cadmin-alert-autofit-row: map-deep-merge(
+	(
+		align-items: baseline,
+		margin-left: -4px,
+		margin-right: -4px,
+		width: auto,
+		autofit-col: (
+			padding-left: 4px,
+			padding-right: 4px,
+		),
+	),
+	$cadmin-alert-autofit-row
+);
+
+// Alert Color Levels
+
+$cadmin-alert-bg-level: -10 !default;
+$cadmin-alert-border-level: -9 !default;
+$cadmin-alert-color-level: 6 !default;
+
+// Alert Feedback
+
+$cadmin-alert-feedback-close: () !default;
+$cadmin-alert-feedback-close: map-deep-merge(
+	(
+		font-size: inherit,
+		height: 16px,
+		position: relative,
+		right: auto,
+		top: 0.125em,
+		width: 16px,
+	),
+	$cadmin-alert-feedback-close
+);
+
+$cadmin-alert-feedback: () !default;
+$cadmin-alert-feedback: map-deep-merge(
+	(
+		background-color: transparent,
+		border-width: 0,
+		margin-bottom: 4px,
+		padding: 0,
+		close: (),
+	),
+	$cadmin-alert-feedback
+);
+
+// .alert-inline.alert
+
+$cadmin-alert-inline: () !default;
+$cadmin-alert-inline: map-deep-merge(
+	(
+		display: inline-block,
+		max-width: 100%,
+		width: auto,
+		alert-dismissible: (
+			padding-right: 56px,
+		),
+		alert-dismissible-alert-fluid: (
+			padding-right: 0,
+			container-fluid: (
+				padding-right: 56px,
+			),
+		),
+		alert-autofit-row: (
+			align-items: center,
+			margin-bottom: calc(#{math-sign($cadmin-alert-padding-y)} - 1px),
+			margin-top: calc(#{math-sign($cadmin-alert-padding-y)} - 1px),
+			padding-bottom: 9px,
+			padding-top: 9px,
+			min-height: 56px,
+			btn-group: (
+				margin-right: 32px,
+				margin-left: 12px,
+			),
+		),
+		close: (
+			margin-top: math-sign(16px),
+			top: 50%,
+		),
+	),
+	$cadmin-alert-inline
+);
+
+// .alert-autofit-stacked.alert
+
+$cadmin-alert-autofit-stacked: () !default;
+$cadmin-alert-autofit-stacked: map-deep-merge(
+	(
+		alert-autofit-row: (
+			align-items: flex-start,
+			flex-direction: column,
+			margin-bottom: 0,
+			margin-top: 0,
+			min-height: 0,
+			padding-bottom: 0,
+			padding-top: 0,
+			autofit-col: (
+				width: 100%,
+			),
+			btn-group: (
+				margin-left: 0,
+				margin-right: 0,
+				margin-top: 14px,
+			),
+		),
+		close: (
+			margin-top: 0,
+			top: map-get($cadmin-alert-close, top),
+		),
+	),
+	$cadmin-alert-autofit-stacked
+);
+
+// .alert-autofit-stacked-sm-down.alert
+
+$cadmin-alert-autofit-stacked-sm-down: () !default;
+$cadmin-alert-autofit-stacked-sm-down: map-deep-merge(
+	$cadmin-alert-autofit-stacked,
+	$cadmin-alert-autofit-stacked-sm-down
+);
+
+// .alert-autofit-stacked-xs-down.alert
+
+$cadmin-alert-autofit-stacked-xs-down: () !default;
+$cadmin-alert-autofit-stacked-xs-down: map-deep-merge(
+	$cadmin-alert-autofit-stacked,
+	$cadmin-alert-autofit-stacked-xs-down
+);
+
+// .alert-indicator-start.alert
+
+$cadmin-alert-indicator-start: () !default;
+$cadmin-alert-indicator-start: map-deep-merge(
+	(
+		padding-left:
+			calc(
+				#{$cadmin-alert-indicator-font-size} + #{$cadmin-alert-padding-x} +
+					#{map-deep-get(
+						$cadmin-alert-autofit-row,
+						autofit-col,
+						padding-left
+					)}
+			),
+		alert-fluid: (
+			padding-left: 0,
+			container-fluid: (
+				padding-left:
+					calc(
+						#{$cadmin-alert-indicator-font-size} + #{$cadmin-alert-padding-x} +
+							#{map-deep-get(
+								$cadmin-alert-autofit-row,
+								autofit-col,
+								padding-left
+							)}
+					),
+			),
+		),
+		alert-feedback: (
+			padding-left: calc(#{$cadmin-alert-indicator-font-size} + 8px),
+		),
+		alert-indicator: (
+			line-height: 1,
+			margin-left: calc(-1em - 8px),
+			margin-top: 2px,
+			position: absolute,
+			lead: (
+				margin-left: 0,
+			),
+		),
+		alert-autofit-row: (
+			alert-indicator-only-child: (
+				margin-right: 0,
+			),
+		),
+	),
+	$cadmin-alert-indicator-start
+);
+
+// .alert-primary
+
+$cadmin-alert-primary-bg: $cadmin-primary-l3 !default;
+$cadmin-alert-primary-border-color: $cadmin-primary-l1 !default;
+$cadmin-alert-primary-color: $cadmin-primary !default;
+$cadmin-alert-primary-close-color: $cadmin-alert-primary-color !default;
+$cadmin-alert-primary-close-hover-color: $cadmin-alert-primary-color !default;
+$cadmin-alert-primary-lead-color: $cadmin-alert-primary-color !default;
+$cadmin-alert-primary-link-color: $cadmin-link-color !default;
+$cadmin-alert-primary-link-hover-color: null !default;
+$cadmin-alert-primary-btn: () !default;
+$cadmin-alert-primary-btn: map-deep-merge(
+	(
+		background-color: $cadmin-white,
+		border-color: $cadmin-primary-l1,
+		color: $cadmin-primary,
+		hover: (
+			background-color: $cadmin-primary,
+			border-color: $cadmin-primary,
+			color: color-yiq($cadmin-primary),
+		),
+		active: (
+			background-color: clay-darken($cadmin-primary, 5%),
+			border-color: clay-darken($cadmin-primary, 5%),
+		),
+	),
+	$cadmin-alert-primary-btn
+);
+
+$cadmin-alert-primary: () !default;
+$cadmin-alert-primary: map-deep-merge(
+	(
+		background-color: $cadmin-alert-primary-bg,
+		border-color: $cadmin-alert-primary-border-color,
+		color: $cadmin-alert-primary-color,
+		close: (
+			color: $cadmin-alert-primary-close-color,
+			hover: (
+				color: $cadmin-alert-primary-close-hover-color,
+			),
+		),
+		lead: (
+			color: $cadmin-alert-primary-lead-color,
+		),
+		link: (
+			color: $cadmin-alert-primary-link-color,
+			hover: (
+				color: $cadmin-alert-primary-link-hover-color,
+			),
+		),
+		alert-btn: $cadmin-alert-primary-btn,
+	),
+	$cadmin-alert-primary
+);
+
+// .alert-secondary
+
+$cadmin-alert-secondary-bg: $cadmin-light-l1 !default;
+$cadmin-alert-secondary-border-color: $cadmin-light-d2 !default;
+$cadmin-alert-secondary-color: $cadmin-secondary !default;
+$cadmin-alert-secondary-close-color: $cadmin-alert-secondary-color !default;
+$cadmin-alert-secondary-close-hover-color: $cadmin-alert-secondary-color !default;
+$cadmin-alert-secondary-lead-color: $cadmin-alert-secondary-color !default;
+$cadmin-alert-secondary-link-color: $cadmin-link-color !default;
+$cadmin-alert-secondary-link-hover-color: null !default;
+
+$cadmin-alert-secondary-btn: () !default;
+$cadmin-alert-secondary-btn: map-deep-merge(
+	(
+		background-color: $cadmin-white,
+		border-color: $cadmin-secondary-l1,
+		color: $cadmin-secondary,
+		hover: (
+			background-color: $cadmin-secondary,
+			border-color: $cadmin-secondary,
+			color: color-yiq($cadmin-secondary),
+		),
+		active: (
+			background-color: clay-darken($cadmin-secondary, 5%),
+			border-color: clay-darken($cadmin-secondary, 5%),
+		),
+	),
+	$cadmin-alert-secondary-btn
+);
+
+$cadmin-alert-secondary: () !default;
+$cadmin-alert-secondary: map-deep-merge(
+	(
+		background-color: $cadmin-alert-secondary-bg,
+		border-color: $cadmin-alert-secondary-border-color,
+		color: $cadmin-alert-secondary-color,
+		close: (
+			color: $cadmin-alert-secondary-close-color,
+			hover: (
+				color: $cadmin-alert-secondary-close-hover-color,
+			),
+		),
+		lead: (
+			color: $cadmin-alert-secondary-lead-color,
+		),
+		link: (
+			color: $cadmin-alert-secondary-link-color,
+			hover: (
+				color: $cadmin-alert-secondary-link-hover-color,
+			),
+		),
+		alert-btn: $cadmin-alert-secondary-btn,
+	),
+	$cadmin-alert-secondary
+);
+
+// .alert-success
+
+$cadmin-alert-success-bg: $cadmin-success-l2 !default;
+$cadmin-alert-success-border-color: $cadmin-success-l1 !default;
+$cadmin-alert-success-color: $cadmin-success !default;
+$cadmin-alert-success-close-color: $cadmin-alert-success-color !default;
+$cadmin-alert-success-close-hover-color: $cadmin-alert-success-color !default;
+$cadmin-alert-success-lead-color: $cadmin-alert-success-color !default;
+$cadmin-alert-success-link-color: $cadmin-link-color !default;
+$cadmin-alert-success-link-hover-color: null !default;
+$cadmin-alert-success-btn: () !default;
+$cadmin-alert-success-btn: map-deep-merge(
+	(
+		background-color: $cadmin-white,
+		border-color: $cadmin-success-l1,
+		color: $cadmin-success,
+		hover: (
+			background-color: $cadmin-success,
+			border-color: $cadmin-success,
+			color: color-yiq($cadmin-success),
+		),
+		active: (
+			background-color: clay-darken($cadmin-success, 5%),
+			border-color: clay-darken($cadmin-success, 5%),
+		),
+	),
+	$cadmin-alert-success-btn
+);
+
+$cadmin-alert-success: () !default;
+$cadmin-alert-success: map-deep-merge(
+	(
+		background-color: $cadmin-alert-success-bg,
+		border-color: $cadmin-alert-success-border-color,
+		color: $cadmin-alert-success-color,
+		close: (
+			color: $cadmin-alert-success-close-color,
+			hover: (
+				color: $cadmin-alert-success-close-hover-color,
+			),
+		),
+		lead: (
+			color: $cadmin-alert-success-lead-color,
+		),
+		link: (
+			color: $cadmin-alert-success-link-color,
+			hover: (
+				color: $cadmin-alert-success-link-hover-color,
+			),
+		),
+		alert-btn: $cadmin-alert-success-btn,
+	),
+	$cadmin-alert-success
+);
+
+// .alert-info
+
+$cadmin-alert-info-bg: $cadmin-info-l2 !default;
+$cadmin-alert-info-border-color: $cadmin-info-l1 !default;
+$cadmin-alert-info-color: $cadmin-info !default;
+$cadmin-alert-info-close-color: $cadmin-alert-info-color !default;
+$cadmin-alert-info-close-hover-color: $cadmin-alert-info-color !default;
+$cadmin-alert-info-lead-color: $cadmin-alert-info-color !default;
+$cadmin-alert-info-link-color: $cadmin-link-color !default;
+$cadmin-alert-info-link-hover-color: null !default;
+
+$cadmin-alert-info-btn: () !default;
+$cadmin-alert-info-btn: map-deep-merge(
+	(
+		background-color: $cadmin-white,
+		border-color: $cadmin-info-l1,
+		color: $cadmin-info,
+		hover: (
+			background-color: $cadmin-info,
+			border-color: $cadmin-info,
+			color: color-yiq($cadmin-info),
+		),
+		active: (
+			background-color: clay-darken($cadmin-info, 5%),
+			border-color: clay-darken($cadmin-info, 5%),
+		),
+	),
+	$cadmin-alert-info-btn
+);
+
+$cadmin-alert-info: () !default;
+$cadmin-alert-info: map-deep-merge(
+	(
+		background-color: $cadmin-alert-info-bg,
+		border-color: $cadmin-alert-info-border-color,
+		color: $cadmin-alert-info-color,
+		close: (
+			color: $cadmin-alert-info-close-color,
+			hover: (
+				color: $cadmin-alert-info-close-hover-color,
+			),
+		),
+		lead: (
+			color: $cadmin-alert-info-lead-color,
+		),
+		link: (
+			color: $cadmin-alert-info-link-color,
+			hover: (
+				color: $cadmin-alert-info-link-hover-color,
+			),
+		),
+		alert-btn: $cadmin-alert-info-btn,
+	),
+	$cadmin-alert-info
+);
+
+// .alert-warning
+
+$cadmin-alert-warning-bg: $cadmin-warning-l2 !default;
+$cadmin-alert-warning-border-color: $cadmin-warning-l1 !default;
+$cadmin-alert-warning-color: $cadmin-warning !default;
+$cadmin-alert-warning-close-color: $cadmin-alert-warning-color !default;
+$cadmin-alert-warning-close-hover-color: $cadmin-alert-warning-color !default;
+$cadmin-alert-warning-lead-color: $cadmin-alert-warning-color !default;
+$cadmin-alert-warning-link-color: $cadmin-link-color !default;
+$cadmin-alert-warning-link-hover-color: null !default;
+$cadmin-alert-warning-btn: () !default;
+$cadmin-alert-warning-btn: map-deep-merge(
+	(
+		background-color: $cadmin-white,
+		border-color: $cadmin-warning-l1,
+		color: $cadmin-warning,
+		hover: (
+			background-color: $cadmin-warning,
+			border-color: $cadmin-warning,
+			color: color-yiq($cadmin-warning),
+		),
+		active: (
+			background-color: clay-darken($cadmin-warning, 5%),
+			border-color: clay-darken($cadmin-warning, 5%),
+		),
+	),
+	$cadmin-alert-warning-btn
+);
+
+$cadmin-alert-warning: () !default;
+$cadmin-alert-warning: map-deep-merge(
+	(
+		background-color: $cadmin-alert-warning-bg,
+		border-color: $cadmin-alert-warning-border-color,
+		color: $cadmin-alert-warning-color,
+		close: (
+			color: $cadmin-alert-warning-close-color,
+			hover: (
+				color: $cadmin-alert-warning-close-hover-color,
+			),
+		),
+		lead: (
+			color: $cadmin-alert-warning-lead-color,
+		),
+		link: (
+			color: $cadmin-alert-warning-link-color,
+			hover: (
+				color: $cadmin-alert-warning-link-hover-color,
+			),
+		),
+		alert-btn: $cadmin-alert-warning-btn,
+	),
+	$cadmin-alert-warning
+);
+
+// .alert-danger
+
+$cadmin-alert-danger-bg: $cadmin-danger-l2 !default;
+$cadmin-alert-danger-border-color: $cadmin-danger-l1 !default;
+$cadmin-alert-danger-color: $cadmin-danger !default;
+$cadmin-alert-danger-close-color: $cadmin-alert-danger-color !default;
+$cadmin-alert-danger-close-hover-color: $cadmin-alert-danger-color !default;
+$cadmin-alert-danger-lead-color: $cadmin-alert-danger-color !default;
+$cadmin-alert-danger-link-color: $cadmin-link-color !default;
+$cadmin-alert-danger-link-hover-color: null !default;
+$cadmin-alert-danger-btn: () !default;
+$cadmin-alert-danger-btn: map-deep-merge(
+	(
+		background-color: $cadmin-white,
+		border-color: $cadmin-danger-l1,
+		color: $cadmin-danger,
+		hover: (
+			background-color: $cadmin-danger,
+			border-color: $cadmin-danger,
+			color: color-yiq($cadmin-danger),
+		),
+		active: (
+			background-color: clay-darken($cadmin-danger, 5%),
+			border-color: clay-darken($cadmin-danger, 5%),
+		),
+	),
+	$cadmin-alert-danger-btn
+);
+
+$cadmin-alert-danger: () !default;
+$cadmin-alert-danger: map-deep-merge(
+	(
+		background-color: $cadmin-alert-danger-bg,
+		border-color: $cadmin-alert-danger-border-color,
+		color: $cadmin-alert-danger-color,
+		close: (
+			color: $cadmin-alert-danger-close-color,
+			hover: (
+				color: $cadmin-alert-danger-close-hover-color,
+			),
+		),
+		lead: (
+			color: $cadmin-alert-danger-lead-color,
+		),
+		link: (
+			color: $cadmin-alert-danger-link-color,
+			hover: (
+				color: $cadmin-alert-danger-link-hover-color,
+			),
+		),
+		alert-btn: $cadmin-alert-danger-btn,
+	),
+	$cadmin-alert-danger
+);
+
+// .alert-light
+
+$cadmin-alert-light-bg: $cadmin-light-l2 !default;
+$cadmin-alert-light-border-color: $cadmin-light-l1 !default;
+$cadmin-alert-light-color: $cadmin-dark !default;
+$cadmin-alert-light-close-color: $cadmin-alert-light-color !default;
+$cadmin-alert-light-close-hover-color: $cadmin-alert-light-color !default;
+$cadmin-alert-light-lead-color: $cadmin-alert-light-color !default;
+$cadmin-alert-light-link-color: $cadmin-link-color !default;
+$cadmin-alert-light-link-hover-color: null !default;
+
+$cadmin-alert-light-btn: () !default;
+$cadmin-alert-light-btn: map-deep-merge(
+	(
+		background-color: $cadmin-white,
+		border-color: $cadmin-dark-l1,
+		color: $cadmin-dark,
+		hover: (
+			background-color: $cadmin-dark,
+			border-color: $cadmin-dark,
+			color: $cadmin-white,
+		),
+		active: (
+			background-color: clay-darken($cadmin-dark, 5%),
+			border-color: clay-darken($cadmin-dark, 5%),
+		),
+	),
+	$cadmin-alert-light-btn
+);
+
+$cadmin-alert-light: () !default;
+$cadmin-alert-light: map-deep-merge(
+	(
+		background-color: $cadmin-alert-light-bg,
+		border-color: $cadmin-alert-light-border-color,
+		color: $cadmin-alert-light-color,
+		close: (
+			color: $cadmin-alert-light-close-color,
+			hover: (
+				color: $cadmin-alert-light-close-hover-color,
+			),
+		),
+		lead: (
+			color: $cadmin-alert-light-lead-color,
+		),
+		link: (
+			color: $cadmin-alert-light-link-color,
+			hover: (
+				color: $cadmin-alert-light-link-hover-color,
+			),
+		),
+		alert-btn: $cadmin-alert-light-btn,
+	),
+	$cadmin-alert-light
+);
+
+// .alert-dark
+
+$cadmin-alert-dark-bg: $cadmin-dark-l2 !default;
+$cadmin-alert-dark-border-color: $cadmin-dark-l1 !default;
+$cadmin-alert-dark-color: $cadmin-light !default;
+$cadmin-alert-dark-close-color: $cadmin-alert-dark-color !default;
+$cadmin-alert-dark-close-hover-color: $cadmin-alert-dark-color !default;
+$cadmin-alert-dark-lead-color: $cadmin-alert-dark-color !default;
+$cadmin-alert-dark-link-color: $cadmin-alert-dark-color !default;
+$cadmin-alert-dark-link-hover-color: null !default;
+
+$cadmin-alert-dark-btn: () !default;
+$cadmin-alert-dark-btn: map-deep-merge(
+	(
+		background-color: $cadmin-white,
+		border-color: $cadmin-dark-l1,
+		color: $cadmin-dark,
+		hover: (
+			background-color: $cadmin-dark,
+			border-color: $cadmin-dark,
+			color: color-yiq($cadmin-dark),
+		),
+		active: (
+			background-color: clay-darken($cadmin-dark, 5%),
+			border-color: clay-darken($cadmin-dark, 5%),
+		),
+	),
+	$cadmin-alert-dark-btn
+);
+
+$cadmin-alert-dark: () !default;
+$cadmin-alert-dark: map-deep-merge(
+	(
+		background-color: $cadmin-alert-dark-bg,
+		border-color: $cadmin-alert-dark-border-color,
+		color: $cadmin-alert-dark-color,
+		close: (
+			color: $cadmin-alert-dark-close-color,
+			hover: (
+				color: $cadmin-alert-dark-close-hover-color,
+			),
+		),
+		lead: (
+			color: $cadmin-alert-dark-lead-color,
+		),
+		link: (
+			color: $cadmin-alert-dark-link-color,
+			hover: (
+				color: $cadmin-alert-dark-link-hover-color,
+			),
+		),
+		alert-btn: $cadmin-alert-dark-btn,
+	),
+	$cadmin-alert-dark
+);
+
+$cadmin-alert-palette: () !default;
+$cadmin-alert-palette: map-deep-merge(
+	(
+		primary: $cadmin-alert-primary,
+		secondary: $cadmin-alert-secondary,
+		success: $cadmin-alert-success,
+		info: $cadmin-alert-info,
+		warning: $cadmin-alert-warning,
+		danger: $cadmin-alert-danger,
+		light: $cadmin-alert-light,
+		dark: $cadmin-alert-dark,
+	),
+	$cadmin-alert-palette
+);

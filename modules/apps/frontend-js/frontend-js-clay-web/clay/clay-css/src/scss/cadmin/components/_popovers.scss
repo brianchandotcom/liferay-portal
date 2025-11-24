@@ -1,0 +1,273 @@
+// Popovers
+
+@each $selector, $value in $cadmin-popovers {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($selector, '.') or
+				starts-with($selector, '#') or
+				starts-with($selector, '%'),
+			$selector,
+			str-insert($selector, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-popover-variant($value);
+		}
+	}
+}
+
+%bs-popover-bottom {
+	margin-top: $cadmin-popover-arrow-height;
+
+	> .arrow {
+		top: calc(
+			#{math-sign($cadmin-popover-arrow-height)} - #{$cadmin-popover-border-width}
+		);
+
+		&::before {
+			border-bottom-color: $cadmin-popover-arrow-outer-color;
+			border-width: 0 ($cadmin-popover-arrow-width * 0.5)
+				$cadmin-popover-arrow-height ($cadmin-popover-arrow-width * 0.5);
+			top: 0;
+		}
+
+		&::after {
+			border-bottom-color: $cadmin-popover-bottom-arrow-color;
+			border-width: 0 ($cadmin-popover-arrow-width * 0.5)
+				$cadmin-popover-arrow-height ($cadmin-popover-arrow-width * 0.5);
+			top: $cadmin-popover-border-width;
+		}
+	}
+
+	// This will remove the popover-header's border just below the arrow
+
+	.popover-header::before {
+		border-bottom: $cadmin-popover-border-width solid
+			$cadmin-popover-header-bg;
+		content: '';
+		display: block;
+		left: 50%;
+		margin-left: calc(#{math-sign($cadmin-popover-arrow-width)} / 2);
+		position: absolute;
+		top: 0;
+		width: $cadmin-popover-arrow-width;
+	}
+}
+
+%bs-popover-left {
+	margin-right: $cadmin-popover-arrow-height;
+
+	> .arrow {
+		height: $cadmin-popover-arrow-width;
+		margin: $cadmin-popover-border-radius 0;
+		right: calc(
+			#{math-sign($cadmin-popover-arrow-height)} - #{$cadmin-popover-border-width}
+		);
+		width: $cadmin-popover-arrow-height;
+
+		&::before {
+			border-left-color: $cadmin-popover-arrow-outer-color;
+			border-width: ($cadmin-popover-arrow-width * 0.5) 0
+				($cadmin-popover-arrow-width * 0.5) $cadmin-popover-arrow-height;
+			right: 0;
+		}
+
+		&::after {
+			border-left-color: $cadmin-popover-left-arrow-color;
+			border-width: ($cadmin-popover-arrow-width * 0.5) 0
+				($cadmin-popover-arrow-width * 0.5) $cadmin-popover-arrow-height;
+			right: $cadmin-popover-border-width;
+		}
+	}
+}
+
+%bs-popover-right {
+	margin-left: $cadmin-popover-arrow-height;
+
+	> .arrow {
+		height: $cadmin-popover-arrow-width;
+		left: calc(
+			#{math-sign($cadmin-popover-arrow-height)} - #{$cadmin-popover-border-width}
+		);
+		margin: $cadmin-popover-border-radius 0;
+		width: $cadmin-popover-arrow-height;
+
+		&::before {
+			border-right-color: $cadmin-popover-arrow-outer-color;
+			border-width: ($cadmin-popover-arrow-width * 0.5)
+				$cadmin-popover-arrow-height ($cadmin-popover-arrow-width * 0.5)
+				0;
+			left: 0;
+		}
+
+		&::after {
+			border-right-color: $cadmin-popover-right-arrow-color;
+			border-width: ($cadmin-popover-arrow-width * 0.5)
+				$cadmin-popover-arrow-height ($cadmin-popover-arrow-width * 0.5)
+				0;
+			left: $cadmin-popover-border-width;
+		}
+	}
+}
+
+%bs-popover-top {
+	margin-bottom: $cadmin-popover-arrow-height;
+
+	> .arrow {
+		bottom: calc(
+			#{math-sign($cadmin-popover-arrow-height)} - #{$cadmin-popover-border-width}
+		);
+
+		&::before {
+			border-top-color: $cadmin-popover-arrow-outer-color;
+			border-width: $cadmin-popover-arrow-height
+				($cadmin-popover-arrow-width * 0.5) 0;
+			bottom: 0;
+		}
+
+		&::after {
+			border-top-color: $cadmin-popover-top-arrow-color;
+			border-width: $cadmin-popover-arrow-height
+				($cadmin-popover-arrow-width * 0.5) 0;
+			bottom: $cadmin-popover-border-width;
+		}
+	}
+}
+
+.bs-popover-bottom,
+.bs-popover-auto[x-placement^='bottom'] {
+	@extend %bs-popover-bottom !optional;
+}
+
+.bs-popover-left,
+.bs-popover-auto[x-placement^='left'] {
+	@extend %bs-popover-left !optional;
+}
+
+.bs-popover-right,
+.bs-popover-auto[x-placement^='right'] {
+	@extend %bs-popover-right !optional;
+}
+
+.bs-popover-top,
+.bs-popover-auto[x-placement^='top'] {
+	@extend %bs-popover-top !optional;
+}
+
+// Popover Headers
+
+@each $selector, $value in $cadmin-popover-headers {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($selector, '.') or
+				starts-with($selector, '#') or
+				starts-with($selector, '%'),
+			$selector,
+			str-insert($selector, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-popover-header-variant($value);
+		}
+	}
+}
+
+// Popover Bodies
+
+@each $selector, $value in $cadmin-popover-bodies {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($selector, '.') or
+				starts-with($selector, '#') or
+				starts-with($selector, '%'),
+			$selector,
+			str-insert($selector, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-popover-header-variant($value);
+		}
+	}
+}
+
+// Popover Widths
+
+@each $selector, $value in $cadmin-popover-widths {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($selector, '.') or
+				starts-with($selector, '#') or
+				starts-with($selector, '%'),
+			$selector,
+			str-insert($selector, '.', 1)
+		);
+
+		#{$selector} {
+			@include clay-popover-variant($value);
+		}
+	}
+}
+
+// Top
+
+.clay-popover-top,
+.clay-popover-top-left,
+.clay-popover-top-right {
+	@include clay-popover-variant($cadmin-clay-popover-top);
+}
+
+.clay-popover-top-left {
+	@include clay-popover-variant($cadmin-clay-popover-top-left);
+}
+
+.clay-popover-top-right {
+	@include clay-popover-variant($cadmin-clay-popover-top-right);
+}
+
+// Right
+
+.clay-popover-right,
+.clay-popover-right-bottom,
+.clay-popover-right-top {
+	@include clay-popover-variant($cadmin-clay-popover-right);
+}
+
+.clay-popover-right-bottom {
+	@include clay-popover-variant($cadmin-clay-popover-right-bottom);
+}
+
+.clay-popover-right-top {
+	@include clay-popover-variant($cadmin-clay-popover-right-top);
+}
+
+// Bottom
+
+.clay-popover-bottom,
+.clay-popover-bottom-left,
+.clay-popover-bottom-right {
+	@include clay-popover-variant($cadmin-clay-popover-bottom);
+}
+
+.clay-popover-bottom-left {
+	@include clay-popover-variant($cadmin-clay-popover-bottom-left);
+}
+
+.clay-popover-bottom-right {
+	@include clay-popover-variant($cadmin-clay-popover-bottom-right);
+}
+
+// Left
+
+.clay-popover-left,
+.clay-popover-left-bottom,
+.clay-popover-left-top {
+	@include clay-popover-variant($cadmin-clay-popover-left);
+}
+
+.clay-popover-left-bottom {
+	@include clay-popover-variant($cadmin-clay-popover-left-bottom);
+}
+
+.clay-popover-left-top {
+	@include clay-popover-variant($cadmin-clay-popover-left-top);
+}

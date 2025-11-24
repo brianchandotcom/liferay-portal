@@ -1,0 +1,526 @@
+$clay-color-border-color: if(
+	variable-exists(input-border-color),
+	$input-border-color,
+	$gray-400
+) !default;
+$clay-color-padding-x: if(
+	variable-exists(input-padding-x),
+	$input-padding-x,
+	0.75rem
+) !default;
+
+$clay-color-sm-padding-x: if(
+	variable-exists(input-padding-x-sm),
+	$input-padding-x-sm,
+	0.5rem
+) !default;
+
+// Clay Color Input Group Text (.clay-color > .input-group-item > .input-group-text)
+
+$clay-color-input-group-text: () !default;
+$clay-color-input-group-text: map-merge(
+	(
+		background-color:
+			setter(map-get($clay-color-input-group-text, bg), $white),
+		border-color: $clay-color-border-color,
+		padding-left: 0,
+		padding-right: 0,
+	),
+	$clay-color-input-group-text
+);
+
+// Clay Color Input Group Input (.clay-color > .input-group-item > .form-control)
+
+$clay-color-input-group-input: () !default;
+
+// Clay Color Input Group Inset Item Before (.clay-color > .input-group-item > .input-group-inset-item-before)
+
+$clay-color-input-group-inset-item-before: () !default;
+$clay-color-input-group-inset-item-before: map-merge(
+	(
+		color: $gray-600,
+		font-size: inherit,
+		padding-left: $clay-color-padding-x,
+		padding-right: 0.5rem,
+	),
+	$clay-color-input-group-inset-item-before
+);
+
+// Dropdown Menu
+
+$clay-color-dropdown-menu: () !default;
+$clay-color-dropdown-menu: map-deep-merge(
+	(
+		max-height: 500px,
+		max-width: none,
+		padding-bottom: 0,
+		padding-left: 1rem,
+		padding-right: 1rem,
+		padding-top: 1rem,
+		width: 272px,
+	),
+	$clay-color-dropdown-menu
+);
+
+// Dropdown Menu Form Group
+
+$clay-color-dropdown-menu-form-group: () !default;
+$clay-color-dropdown-menu-form-group: map-merge(
+	(
+		margin-bottom: 1rem,
+	),
+	$clay-color-dropdown-menu-form-group
+);
+
+// Dropdown Menu Input (.clay-color-dropdown-menu .form-control)
+
+$clay-color-dropdown-menu-input: () !default;
+$clay-color-dropdown-menu-input: map-deep-merge(
+	(
+		font-size: 0.875rem,
+		height: 2rem,
+		padding-bottom: 0.25rem,
+		padding-left: 0.75rem,
+		padding-right: 0.75rem,
+		padding-top: 0.25rem,
+	),
+	$clay-color-dropdown-menu-input
+);
+
+// Dropdown Menu Input Group Inset Item Before
+
+$clay-color-dropdown-menu-input-group-inset-item-before: () !default;
+$clay-color-dropdown-menu-input-group-inset-item-before: map-deep-merge(
+	(
+		color: $gray-600,
+		font-size: 0.875rem,
+		padding-left: $clay-color-sm-padding-x,
+		padding-right: 0.5rem,
+	),
+	$clay-color-dropdown-menu-input-group-inset-item-before
+);
+
+// Dropdown Menu Close
+
+$clay-color-dropdown-menu-close: () !default;
+
+// Dropdown Menu Component Action
+
+$clay-color-dropdown-menu-component-action: () !default;
+$clay-color-dropdown-menu-component-action: map-deep-merge(
+	(
+		hover: (
+			background-color: transparent,
+			color: $black,
+		),
+		focus: (
+			box-shadow: $component-focus-box-shadow,
+			color: $black,
+		),
+	),
+	$clay-color-dropdown-menu-component-action
+);
+
+// Clay Color Swatch
+
+$clay-color-swatch: () !default;
+$clay-color-swatch: map-merge(
+	(
+		display: flex,
+		flex-wrap: wrap,
+		margin-left: -0.5rem,
+		margin-right: -0.5rem,
+		margin-top: 0.5rem,
+	),
+	$clay-color-swatch
+);
+
+$clay-color-swatch-item: () !default;
+$clay-color-swatch-item: map-deep-merge(
+	(
+		display: flex,
+		flex-wrap: wrap,
+		justify-content: center,
+		padding-bottom: 1rem,
+		width: 16.66667%,
+	),
+	$clay-color-swatch-item
+);
+
+// Clay Color Btn
+
+$clay-color-btn: () !default;
+$clay-color-btn: map-deep-merge(
+	(
+		border-radius: 2px,
+		height: 1.5rem,
+		padding-bottom: 0,
+		padding-left: 0,
+		padding-right: 0,
+		padding-top: 0,
+		width: 1.5rem,
+		active: (
+			box-shadow: $component-focus-box-shadow,
+		),
+	),
+	$clay-color-btn
+);
+
+$clay-color-btn-bordered: () !default;
+$clay-color-btn-bordered: map-deep-merge(
+	(
+		border-color: $gray-300,
+	),
+	$clay-color-btn-bordered
+);
+
+// Clay Color Pointer
+
+$clay-color-pointer: () !default;
+$clay-color-pointer: map-deep-merge(
+	(
+		background-color: setter(map-get($clay-color-pointer, bg), transparent),
+		border-radius: 100px,
+		border-color: $white,
+		border-style: solid,
+		border-width: 2px,
+		height: 0.875rem,
+		padding-bottom: 0,
+		padding-left: 0,
+		padding-right: 0,
+		padding-top: 0,
+		position: absolute,
+		transition: box-shadow 0.15s ease-in-out,
+		width: 0.875rem,
+		focus: (
+			box-shadow: $component-focus-box-shadow,
+			outline: 0,
+		),
+	),
+	$clay-color-pointer
+);
+
+// Clay Color Header
+
+$clay-color-header: () !default;
+$clay-color-header: map-merge(
+	(
+		display: flex,
+		justify-content: space-between,
+		margin-bottom: 1rem,
+		margin-right: -0.25rem,
+	),
+	$clay-color-header
+);
+
+// Clay Color Header Component Title
+
+$clay-color-header-component-title: () !default;
+$clay-color-header-component-title: map-deep-merge(
+	(
+		color: $gray-600,
+		display: inline-block,
+		font-size: 0.875rem,
+		font-weight: $font-weight-semi-bold,
+		max-width: calc(100% - 2rem),
+	),
+	$clay-color-header-component-title
+);
+
+// Clay Color Footer
+
+$clay-color-footer: () !default;
+$clay-color-footer: map-merge(
+	(
+		margin-bottom: 1rem,
+	),
+	$clay-color-footer
+);
+
+// Clay Color Map
+
+$clay-color-map-group: () !default;
+$clay-color-map-group: map-merge(
+	(
+		display: flex,
+		margin-top: 0.5rem,
+	),
+	$clay-color-map-group
+);
+
+$clay-color-map: () !default;
+$clay-color-map: map-merge(
+	(
+		flex-shrink: 0,
+		height: 128px,
+		margin-bottom: 1rem,
+		margin-right: 1rem,
+		position: relative,
+		touch-action: none,
+		user-select: none,
+		width: 144px,
+	),
+	$clay-color-map
+);
+
+$clay-color-map-hsb: () !default;
+$clay-color-map-hsb: map-merge(
+	(
+		background-image: #{linear-gradient(to top, #000, rgba(0, 0, 0, 0)),
+		linear-gradient(to right, #fff, rgba(255, 255, 255, 0))},
+	),
+	$clay-color-map-hsb
+);
+
+// Clay Color Map Pointer
+
+$clay-color-map-pointer: () !default;
+
+// Clay Color Map Values
+
+$clay-color-map-values: () !default;
+$clay-color-map-values: map-merge(
+	(
+		flex-grow: 1,
+		flex-shrink: 1,
+		width: 1%,
+	),
+	$clay-color-map-values
+);
+
+$clay-color-map-values-form-group: () !default;
+
+// Clay Color Map Values (.clay-color-map-values .form-control)
+
+$clay-color-map-values-input: () !default;
+$clay-color-map-values-input: map-deep-merge(
+	(
+		padding-left: 0,
+		padding-right: 10%,
+		text-align: right,
+	),
+	$clay-color-map-values-input
+);
+
+// Clay Color Map Values Input Group Inset Item Before (.clay-color-map-values .input-group-inset-item-before)
+
+$clay-color-map-values-input-group-inset-item-before: () !default;
+$clay-color-map-values-input-group-inset-item-before: map-merge(
+	(
+		font-weight: $font-weight-semi-bold,
+		padding-left: 10%,
+		padding-right: 0,
+		min-width: 1.125rem,
+	),
+	$clay-color-map-values-input-group-inset-item-before
+);
+
+// Clay Color Range
+
+$clay-color-range: () !default;
+$clay-color-range: map-merge(
+	(
+		border-radius: 100px,
+		height: 0.5rem,
+		margin-bottom: 1.25rem,
+		margin-top: 0.25rem,
+		position: relative,
+		touch-action: none,
+		user-select: none,
+	),
+	$clay-color-range
+);
+
+$clay-color-range-pointer: () !default;
+$clay-color-range-pointer: map-deep-merge(
+	(
+		margin-top: -7px,
+		top: 50%,
+	),
+	$clay-color-range-pointer
+);
+
+// Clay Color Form Group
+
+$clay-color-form-group: () !default;
+$clay-color-form-group: map-deep-merge(
+	(
+		display: flex,
+		align-items: center,
+		margin-top: 0.25rem,
+		margin-bottom: 1rem,
+		clay-range: (
+			flex-grow: 1,
+			flex-shrink: 0,
+			margin-right: 1rem,
+			width: 144px,
+		),
+		form-control: (
+			padding-left: 0,
+			padding-right: 10%,
+			text-align: right,
+		),
+		input-group: (
+			input-group-inset-item-before: (
+				font-weight: $font-weight-semi-bold,
+				padding-left: 10%,
+				padding-right: 0,
+				min-width: 1.125rem,
+			),
+		),
+	),
+	$clay-color-form-group
+);
+
+// Clay Color Slider
+
+$clay-color-slider: () !default;
+$clay-color-slider: map-deep-merge(
+	(
+		clay-range-input: (
+			border-radius: 100px,
+			clay-range-track: (
+				border-radius: inherit,
+				height: 0.5rem,
+				margin-top: -0.25rem,
+			),
+			clay-range-progress: (
+				background-color: transparent,
+				border-radius: inherit,
+				height: 0.5rem,
+				margin-top: -0.25rem,
+				width: 100%,
+			),
+			ms-thumb: (
+				visibility: visible,
+			),
+			moz-range-thumb: (
+				height: 0.625rem,
+				visibility: visible,
+				width: 0.625rem,
+			),
+			webkit-slider-thumb: (
+				visibility: visible,
+			),
+			clay-range-thumb: (
+				background-color: currentColor,
+				border-width: 0,
+				box-shadow: 0 0 0 0.125rem $white,
+				height: 0.625rem,
+				margin-top: -0.3125rem,
+				transition:
+					clay-enable-transitions(box-shadow 0.15s ease-in-out),
+				visibility: hidden,
+				width: 0.625rem,
+			),
+			form-control-range: (
+				background-color: inherit,
+				border-radius: inherit,
+				color: inherit,
+				height: 0.5rem,
+				webkit-slider-runnable-track: (
+					-webkit-appearance: none,
+					appearance: none,
+				),
+			),
+			focus: (
+				clay-range-thumb: (
+					box-shadow: #{0 0 0 0.125rem $white,
+					0 0 0 0.25rem $primary-l1},
+				),
+			),
+		),
+	),
+	$clay-color-slider
+);
+
+$clay-color-slider-hue: () !default;
+$clay-color-slider-hue: map-deep-merge(
+	(
+		clay-range-input: (
+			color: #26affd,
+			clay-range-track: (
+				background-image:
+					linear-gradient(
+						270deg,
+						#fc0d1b 0%,
+						#fc22d6 18.23%,
+						#1824fb 34.25%,
+						#2bf6fd 50.28%,
+						#2bfd2e 67.58%,
+						#fcfd37 81.22%,
+						#fc121b 100%
+					),
+			),
+		),
+	),
+	$clay-color-slider-hue
+);
+
+$clay-color-slider-alpha: () !default;
+$clay-color-slider-alpha: map-deep-merge(
+	(
+		clay-range-input: (
+			color: $black,
+			clay-range-track: (
+				background-color: $white,
+				background-image: #{linear-gradient(
+						45deg,
+						#e7e7ed 25%,
+						transparent 25%
+					),
+				linear-gradient(
+					-45deg,
+					#e7e7ed 25%,
+					transparent 25%,
+				),
+				linear-gradient(
+					45deg,
+					transparent 75%,
+					#e7e7ed 75%,
+				),
+				linear-gradient(-45deg, transparent 75%, #e7e7ed 75%)},
+				background-position: #{0 0,
+				0 4px,
+				4px -4px,
+				-4px 0px},
+				background-size: 8px 8px,
+			),
+			form-control-range: (
+				background-image:
+					linear-gradient(90deg, transparent 0%, currentcolor 100%),
+				color: inherit,
+			),
+		),
+	),
+	$clay-color-slider-alpha
+);
+
+// Clay Color Sm
+
+$clay-color-sm-input-group-inset-item-before: () !default;
+$clay-color-sm-input-group-inset-item-before: map-merge(
+	(
+		padding-left: $clay-color-sm-padding-x,
+	),
+	$clay-color-sm-input-group-inset-item-before
+);
+
+$clay-color-sm-input-group-text: () !default;
+$clay-color-sm-input-group-text: map-merge(
+	(
+		padding: 0,
+	),
+	$clay-color-sm-input-group-text
+);
+
+$clay-color-sm-clay-color-btn: () !default;
+$clay-color-sm-clay-color-btn: map-deep-merge(
+	(
+		border-radius: 2px,
+		height: 1.25rem,
+		padding: 0,
+		width: 1.25rem,
+	),
+	$clay-color-sm-clay-color-btn
+);

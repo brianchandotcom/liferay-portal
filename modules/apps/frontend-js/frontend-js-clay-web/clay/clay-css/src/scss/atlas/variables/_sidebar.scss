@@ -1,0 +1,119 @@
+// Sidebar Header Title
+
+$sidebar-header-component-title: () !default;
+$sidebar-header-component-title: map-deep-merge(
+	(
+		font-size: 1rem,
+	),
+	$sidebar-header-component-title
+);
+
+// Sidebar Header Subtitle
+
+$sidebar-header-component-subtitle: () !default;
+$sidebar-header-component-subtitle: map-deep-merge(
+	(
+		font-size: 0.875rem,
+		font-weight: $font-weight-normal,
+	),
+	$sidebar-header-component-subtitle
+);
+
+// Sidebar DT
+
+$sidebar-dt: () !default;
+$sidebar-dt: map-deep-merge(
+	(
+		font-size: 0.75rem,
+	),
+	$sidebar-dt
+);
+
+// Sidebar DD
+
+$sidebar-dd: () !default;
+$sidebar-dd: map-deep-merge(
+	(
+		font-size: 0.875rem,
+	),
+	$sidebar-dd
+);
+
+// Sidebar List Group
+
+$sidebar-list-group-border-color: $secondary-l2 !default;
+
+// Sidebar Light
+
+$sidebar-light-navigation-bar: () !default;
+$sidebar-light-navigation-bar: map-deep-merge(
+	(
+		background-color: $white,
+		border-color: $secondary-l2,
+	),
+	$sidebar-light-navigation-bar
+);
+
+$sidebar-light: () !default;
+$sidebar-light: map-deep-merge(
+	(
+		background-color: $white,
+		border-left-width: 0px,
+		box-shadow: -0.25rem 0 0.5rem -0.25rem rgba(0, 0, 0, 0.1),
+		close: (
+			color: $secondary,
+			hover: (
+				background-color: rgba($gray-900, 0.03),
+				color: $gray-900,
+			),
+			focus: (
+				background-color: rgba($gray-900, 0.03),
+				color: $gray-900,
+			),
+			active: (
+				background-color: rgba($gray-900, 0.06),
+				color: $gray-900,
+			),
+			disabled: (
+				background-color: transparent,
+				box-shadow: none,
+			),
+		),
+		sidenav-start: (
+			box-shadow: 0.25rem 0 0.5rem -0.25rem rgba(0, 0, 0, 0.1),
+		),
+		sidebar-panel: (
+			background-color: $gray-200,
+		),
+		sidebar-dt: (
+			color: $gray-600,
+		),
+		sidebar-dd: (
+			href: (
+				color: $gray-900,
+			),
+		),
+		panel-unstyled: (
+			header: (
+				link: (
+					focus: (
+						box-shadow: #{0 0 0 0.25rem $white,
+						0 0 0 0.375rem $primary-l0},
+					),
+				),
+			),
+		),
+		component-navigation-bar: $sidebar-light-navigation-bar,
+	),
+	$sidebar-light
+);
+
+$sidebar-c-slideout-start: () !default;
+$sidebar-c-slideout-start: map-deep-merge(
+	(
+		'.sidebar-light': (
+			box-shadow: 0.25rem 0 0.5rem -0.25rem rgba(0, 0, 0, 0.1),
+		),
+	),
+	$sidebar-c-slideout-start
+);

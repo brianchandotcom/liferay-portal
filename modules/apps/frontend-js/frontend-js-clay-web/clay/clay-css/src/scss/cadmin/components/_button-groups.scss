@@ -1,0 +1,190 @@
+.btn-group,
+.btn-group-vertical {
+	display: inline-flex;
+	position: relative;
+	vertical-align: middle;
+
+	> .btn {
+		position: relative;
+
+		&:hover {
+			z-index: 1;
+		}
+
+		&:focus {
+			z-index: 3;
+		}
+
+		&:active,
+		&.active {
+			z-index: 2;
+		}
+	}
+}
+
+.btn-group {
+	> .btn:not(:first-child),
+	> .btn-group:not(:first-child) {
+		margin-left: math-sign($cadmin-btn-border-width);
+	}
+
+	> .btn:not(:last-child):not(.dropdown-toggle),
+	> .btn-group:not(:last-child) > .btn {
+		@include border-right-radius(0);
+	}
+
+	> .btn:not(:first-child),
+	> .btn-group:not(:first-child) > .btn {
+		@include border-left-radius(0);
+	}
+}
+
+.btn-group {
+	flex-wrap: wrap;
+}
+
+.btn-group-spaced {
+	@include clay-css($cadmin-btn-group-spaced);
+}
+
+.btn-group-nowrap {
+	flex-wrap: nowrap;
+}
+
+// @deprecated as of v3.113.0 replace `.btn-group` with `.btn-group-spaced`
+// instead
+
+.btn-group-item {
+	align-items: center;
+	display: inline-flex;
+	margin-right: $cadmin-btn-group-item-margin-right;
+}
+
+.btn-group-item:last-child,
+.btn-group-item-last {
+	margin-right: 0;
+}
+
+.btn-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+
+	.btn-group,
+	.input-group {
+		margin-bottom: $cadmin-btn-toolbar-spacer-y;
+		margin-top: $cadmin-btn-toolbar-spacer-y;
+
+		&:not(:last-child) {
+			margin-right: $cadmin-btn-toolbar-spacer-x;
+		}
+	}
+
+	.input-group {
+		width: auto;
+	}
+}
+
+// Button Group Sizes
+
+.btn-group-lg {
+	> .btn,
+	.btn-group > .btn {
+		@extend %clay-btn-lg !optional;
+	}
+
+	.btn-monospaced {
+		@extend %clay-btn-monospaced-lg !optional;
+	}
+}
+
+.btn-group-sm {
+	> .btn,
+	.btn-group > .btn {
+		@extend %clay-btn-sm !optional;
+	}
+
+	.btn-monospaced {
+		@extend %clay-btn-monospaced-sm !optional;
+	}
+}
+
+// Button Group Vertical
+
+.btn-group-vertical {
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: center;
+
+	> .btn,
+	> .btn-group {
+		width: 100%;
+	}
+
+	> .btn:not(:first-child),
+	> .btn-group:not(:first-child) {
+		margin-top: math-sign($cadmin-btn-border-width);
+	}
+
+	> .btn:not(:last-child):not(.dropdown-toggle),
+	> .btn-group:not(:last-child) > .btn {
+		@include border-bottom-radius(0);
+	}
+
+	> .btn:not(:first-child),
+	> .btn-group:not(:first-child) > .btn {
+		@include border-top-radius(0);
+	}
+
+	> .btn-monospaced {
+		width: $cadmin-btn-monospaced-size;
+
+		&.btn-lg {
+			@extend %clay-btn-monospaced-lg !optional;
+		}
+
+		&.btn-sm {
+			@extend %clay-btn-monospaced-sm !optional;
+		}
+	}
+}
+
+%clay-btn-group-divider {
+	$_not-first-of-type: map-get(
+		$cadmin-clay-btn-group-divider,
+		'&:not(:first-of-type)'
+	);
+
+	@if ($_not-first-of-type) {
+		&:not(:first-of-type) {
+			@include clay-css($_not-first-of-type);
+		}
+	}
+
+	$_not-last-of-type: map-get(
+		$cadmin-clay-btn-group-divider,
+		'&:not(:last-of-type)'
+	);
+
+	@if ($_not-last-of-type) {
+		&:not(:last-of-type) {
+			@include clay-css($_not-last-of-type);
+		}
+	}
+}
+
+.btn-group {
+	@each $name, $value in $cadmin-btn-group-palette {
+		@if not clay-is-map-unset($value) {
+			$selector: if(
+				starts-with($name, 'btn'),
+				str-insert($name, '.', 1),
+				$name
+			);
+
+			#{$selector} {
+				@include clay-button-variant($value);
+			}
+		}
+	}
+}

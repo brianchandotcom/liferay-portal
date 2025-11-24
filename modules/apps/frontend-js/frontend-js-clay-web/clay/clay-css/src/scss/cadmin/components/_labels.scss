@@ -1,0 +1,132 @@
+.label {
+	@include clay-label-variant($cadmin-label);
+}
+
+.label-dismissible {
+	@include clay-css($cadmin-label-dismissible);
+}
+
+.label-item {
+	@include clay-css($cadmin-label-item);
+
+	a {
+		@include clay-link(setter(map-get($cadmin-label-item, link), ()));
+	}
+
+	.btn-unstyled {
+		@include clay-button-variant(
+			setter(map-get($cadmin-label-item, btn-unstyled), ())
+		);
+	}
+
+	.close {
+		@include clay-close(setter(map-get($cadmin-label-item, close), ()));
+	}
+
+	.lexicon-icon {
+		@include clay-css(
+			setter(map-get($cadmin-label-item, lexicon-icon), ())
+		);
+	}
+
+	.text-truncate-inline {
+		@include clay-css(
+			setter(map-get($cadmin-label-item, text-truncate-inline), ())
+		);
+	}
+}
+
+.label-item-expand {
+	@include clay-css($cadmin-label-item-expand);
+
+	a {
+		@include clay-link(
+			setter(map-get($cadmin-label-item-expand, link), ())
+		);
+	}
+}
+
+.label-item-before {
+	@include clay-css($cadmin-label-item-before);
+}
+
+.label-item-after {
+	@include clay-css($cadmin-label-item-after);
+}
+
+// Label Sizes
+
+@each $size, $value in $cadmin-label-sizes {
+	@if not clay-is-map-unset($value) {
+		$selector: if(
+			starts-with($size, '.') or
+				starts-with($size, '#') or
+				starts-with($size, '%'),
+			$size,
+			str-insert($size, '.', 1)
+		);
+
+		@if (starts-with($size, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-label-variant($value);
+			}
+		} @else if (starts-with($size, 'label-')) {
+			$placeholder: '%#{size}';
+
+			#{$placeholder} {
+				@include clay-label-variant($value);
+			}
+
+			#{$selector} {
+				@extend #{$placeholder} !optional;
+			}
+		} @else {
+			#{$selector} {
+				@include clay-label-variant($value);
+			}
+		}
+	}
+}
+
+// Label Variants
+
+@each $color, $value in $cadmin-label-palette {
+	@if not clay-is-map-unset($value) {
+		$deprecated-keys: 'primary', 'secondary', 'success', 'info', 'warning',
+			'danger', 'dark', 'light';
+
+		$selector: if(
+			starts-with($color, '.') or
+				starts-with($color, '#') or
+				starts-with($color, '%'),
+			$color,
+			str-insert($color, '.label-', 1)
+		);
+
+		@if (starts-with($color, '%') or map-get($value, extend)) {
+			#{$selector} {
+				@include clay-label-variant($value);
+			}
+		} @else if
+			(
+				starts-with($color, 'inverse-') or
+					index($deprecated-keys, '#{$color}') !=
+					null
+			)
+		{
+			$placeholder: '%label-#{$color}';
+
+			#{$placeholder} {
+				@include clay-label-variant($value);
+			}
+
+			#{$selector} {
+				@extend #{$placeholder} !optional;
+			}
+		} @else {
+			#{$selector} {
+				@include clay-label-variant($value);
+			}
+		}
+	}
+}

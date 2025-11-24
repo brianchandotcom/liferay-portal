@@ -1,0 +1,167 @@
+.progress {
+	background-color: $progress-bg;
+
+	@include border-radius($progress-border-radius);
+	@include box-shadow($progress-box-shadow);
+
+	display: flex;
+	flex-grow: 1;
+	font-size: $progress-font-size;
+	height: $progress-height;
+	min-width: $progress-min-width;
+	overflow: hidden;
+}
+
+.progress-bar {
+	background-color: $progress-bar-bg;
+
+	@include box-shadow($progress-bar-box-shadow);
+
+	color: $progress-bar-color;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: hidden;
+	text-align: center;
+
+	@include transition($progress-bar-transition);
+
+	white-space: nowrap;
+}
+
+.progress-bar-striped {
+	background-image: linear-gradient(
+		45deg,
+		rgba($white, 0.15) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba($white, 0.15) 50%,
+		rgba($white, 0.15) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-size: $progress-height $progress-height;
+}
+
+@if $enable-transitions {
+	@keyframes progress-bar-stripes {
+		from {
+			background-position: $progress-height 0;
+		}
+		to {
+			background-position: 0 0;
+		}
+	}
+
+	.progress-bar-animated {
+		animation: progress-bar-stripes $progress-bar-animation-timing;
+
+		@if $enable-prefers-reduced-motion-media-query {
+			@media (prefers-reduced-motion: reduce) {
+				animation: none;
+			}
+		}
+
+		.c-prefers-reduced-motion & {
+			animation: none;
+		}
+	}
+}
+
+.progress-lg,
+.progress-lg > .progress {
+	@include border-radius($progress-border-radius-lg);
+
+	font-size: $progress-font-size-lg;
+	height: $progress-height-lg;
+	line-height: $progress-height-lg;
+}
+
+// Progress Group
+
+.progress-group {
+	align-items: center;
+	display: flex;
+
+	.component-subtitle {
+		@include clay-link($progress-group-subtitle);
+	}
+}
+
+.progress-group-addon {
+	@include clay-css($progress-group-addon);
+
+	&:first-child {
+		@include clay-css(map-get($progress-group-addon, first-child));
+	}
+
+	&:last-child {
+		@include clay-css(map-get($progress-group-addon, last-child));
+	}
+}
+
+.progress ~ .progress-group-addon {
+	margin-left: $progress-group-addon-spacer-x;
+	margin-right: 0;
+}
+
+.progress-group-feedback {
+	color: $progress-group-feedback-color;
+}
+
+.progress-group-stacked {
+	display: block;
+
+	.progress {
+		margin-bottom: $progress-group-stacked-progress-margin-bottom;
+		margin-top: $progress-group-stacked-progress-margin-top;
+	}
+
+	.progress-group-addon {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+// Progress Variants
+
+@each $color, $value in $progress-palette {
+	@if not clay-is-map-unset($value) {
+		.progress-#{$color} {
+			.progress-bar {
+				$progress-bar: setter(map-get($value, progress-bar), ());
+				$progress-bar: map-merge(
+					$progress-bar,
+					(
+						background-color:
+							setter(
+								map-get($progress-bar, background-color),
+								map-get($value, bar-bg)
+							),
+					)
+				);
+
+				@include clay-css($progress-bar);
+			}
+
+			.progress-group-feedback {
+				$progress-group-feedback: setter(
+					map-get($value, progress-group-feedback),
+					()
+				);
+				$progress-group-feedback: map-merge(
+					$progress-group-feedback,
+					(
+						color:
+							setter(
+								map-get($progress-group-feedback, color),
+								map-get($value, group-feedback-color)
+							),
+					)
+				);
+
+				@include clay-css($progress-group-feedback);
+			}
+		}
+	}
+}

@@ -1,0 +1,102 @@
+$progress-bg: $gray-200 !default;
+$progress-border-radius: $border-radius !default;
+$progress-box-shadow: inset 0 0.1rem 0.1rem rgba($black, 0.1) !default;
+$progress-font-size: calc(#{$font-size-base} * 0.75) !default;
+$progress-height: 1rem !default;
+$progress-min-width: 6.25rem !default;
+
+$progress-bar-animation-timing: 1s linear infinite !default;
+$progress-bar-bg: $primary !default;
+$progress-bar-box-shadow: null !default;
+$progress-bar-color: $white !default;
+$progress-bar-transition: width 0.6s ease !default;
+
+// Progress Sizes
+
+$progress-border-radius-lg: $border-radius !default;
+$progress-font-size-lg: $font-size-lg !default;
+$progress-height-lg: calc(#{$progress-height} * 2) !default;
+
+// Progress Group
+
+$progress-group-subtitle: () !default;
+
+$progress-group-addon-font-size: null !default;
+$progress-group-addon-font-weight: null !default;
+$progress-group-addon-spacer-x: 0.25rem !default;
+
+$progress-group-addon: () !default;
+$progress-group-addon: map-deep-merge(
+	(
+		font-size: $progress-group-addon-font-size,
+		font-weight: $progress-group-addon-font-weight,
+		margin-right: $progress-group-addon-spacer-x,
+		min-width: 2rem,
+		text-align: center,
+		first-child: (
+			padding-left: 0,
+		),
+		last-child: (
+			padding-right: 0,
+		),
+	),
+	$progress-group-addon
+);
+
+$progress-group-stacked-progress-margin-bottom: 0.25rem !default;
+$progress-group-stacked-progress-margin-top: 0.25rem !default;
+
+// Progress Variants
+
+$progress-group-feedback-color: $primary !default;
+
+$progress-bar-danger-bg: $danger !default;
+$progress-group-feedback-danger-color: $progress-bar-danger-bg !default;
+
+$progress-bar-info-bg: $info !default;
+$progress-group-feedback-info-color: $progress-bar-info-bg !default;
+
+$progress-bar-success-bg: $success !default;
+$progress-group-feedback-success-color: $progress-bar-success-bg !default;
+
+$progress-bar-warning-bg: $warning !default;
+$progress-group-feedback-warning-color: $progress-bar-warning-bg !default;
+
+$progress-palette: () !default;
+$progress-palette: map-deep-merge(
+	(
+		success: (
+			progress-bar: (
+				background-color: $progress-bar-success-bg,
+			),
+			progress-group-feedback: (
+				color: $progress-group-feedback-success-color,
+			),
+		),
+		info: (
+			progress-bar: (
+				background-color: $progress-bar-info-bg,
+			),
+			progress-group-feedback: (
+				color: $progress-group-feedback-info-color,
+			),
+		),
+		warning: (
+			progress-bar: (
+				background-color: $progress-bar-warning-bg,
+			),
+			progress-group-feedback: (
+				color: $progress-group-feedback-warning-color,
+			),
+		),
+		danger: (
+			progress-bar: (
+				background-color: $progress-bar-danger-bg,
+			),
+			progress-group-feedback: (
+				color: $progress-group-feedback-danger-color,
+			),
+		),
+	),
+	$progress-palette
+);

@@ -1,0 +1,1984 @@
+// `clay-navbar-size` is deprecated as of v2.11.1
+// Sizes Navbar Desktop and Mobile based on height, font-size, and padding
+// @param $map - Sass map that contain Navbar properties to modify
+
+@mixin clay-navbar-size($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$enable-c-inner: if(
+			variable-exists(enable-c-inner),
+			$enable-c-inner,
+			if(
+				variable-exists(cadmin-enable-c-inner),
+				$cadmin-enable-c-inner,
+				true
+			)
+		);
+
+		$breakpoints: if(
+			variable-exists(grid-breakpoints),
+			$grid-breakpoints,
+			if(
+				variable-exists(cadmin-grid-breakpoints),
+				$cadmin-grid-breakpoints,
+				(
+					xs: 0,
+					sm: 576px,
+					md: 768px,
+					lg: 992px,
+					xl: 1280px,
+				)
+			)
+		);
+
+		$_line-height-base: if(
+			variable-exists(line-height-base),
+			$line-height-base,
+			if(
+				variable-exists(cadmin-line-height-base),
+				$cadmin-line-height-base,
+				1.5
+			)
+		);
+
+		$scaling-navbar: setter(map-get($map, scaling-navbar), false);
+		$container-padding-x: map-get($map, container-padding-x);
+		$container-padding-x-mobile: setter(
+			map-get($map, container-padding-x-mobile),
+			$container-padding-x
+		);
+
+		$height: setter(map-get($map, height), 3.5rem);
+		$border-bottom-width: setter(map-get($map, border-bottom-width), 0px);
+		$border-left-width: setter(map-get($map, border-left-width), 0px);
+		$border-right-width: setter(map-get($map, border-right-width), 0px);
+		$border-top-width: setter(map-get($map, border-top-width), 0px);
+		$box-shadow: map-get($map, box-shadow);
+		$font-size: setter(
+			map-get($map, font-size),
+			if(
+				variable-exists(font-size-base),
+				$font-size-base,
+				if(
+					variable-exists(cadmin-font-size-base),
+					$cadmin-font-size-base,
+					1rem
+				)
+			)
+		);
+		$min-height: map-get($map, min-height);
+		$padding-x: setter(
+			map-get($map, padding-x),
+			if(
+				variable-exists(navbar-padding-x),
+				$navbar-padding-x,
+				if(
+					variable-exists(cadmin-navbar-padding-x),
+					$cadmin-navbar-padding-x,
+					null
+				)
+			)
+		);
+		$padding-y: setter(
+			map-get($map, padding-y),
+			if(
+				variable-exists(navbar-padding-y),
+				$navbar-padding-y,
+				if(
+					variable-exists(cadmin-navbar-padding-y),
+					$cadmin-navbar-padding-y,
+					null
+				)
+			)
+		);
+		$padding-y: if($padding-y == 0 or $padding-y == null, 0px, $padding-y);
+		$link-height: setter(
+			map-get($map, link-height),
+			'#{$height} - #{$border-bottom-width} - #{$border-top-width} - #{$padding-y} * 2'
+		);
+
+		$link-margin-x: map-get($map, link-margin-x);
+		$link-margin-y: setter(
+			map-get($map, link-margin-y),
+			calc(
+				(
+						(
+								#{$height} -
+									#{$border-bottom-width} -
+									#{$border-top-width}
+							) -
+							#{$link-height}
+					) *
+					0.5
+			)
+		);
+		$link-padding-x: setter(
+			map-get($map, link-padding-x),
+			if(
+				variable-exists(navbar-nav-link-padding-x),
+				$navbar-nav-link-padding-x,
+				if(
+					variable-exists(cadmin-navbar-nav-link-padding-x),
+					$cadmin-navbar-nav-link-padding-x,
+					null
+				)
+			)
+		);
+		$link-padding-y: setter(
+			map-get($map, link-padding-y),
+			(
+				calc(
+					(
+							#{$link-height} -
+								(#{$font-size} * #{$_line-height-base})
+						) *
+						0.5
+				)
+			)
+		);
+		$btn-font-size: setter(map-get($map, btn-font-size), $font-size);
+		$btn-monospaced-font-size: map-get($map, btn-monospaced-font-size);
+		$btn-monospaced-size: map-get($map, btn-monospaced-size);
+		$btn-margin-x: setter(map-get($map, btn-margin-x), $link-padding-x);
+		$btn-margin-y: setter(
+			map-get($map, btn-margin-y),
+			calc(
+				(
+						#{$height} -
+							#{$border-bottom-width} -
+							#{$border-top-width} -
+							#{$padding-y} *
+							2 -
+							#{if(
+								$btn-monospaced-size,
+								$btn-monospaced-size,
+								if(
+									variable-exists(nav-item-monospaced-size),
+									$nav-item-monospaced-size,
+									if(
+										variable-exists(
+											cadmin-nav-item-monospaced-size
+										),
+										$cadmin-nav-item-monospaced-size,
+										2rem
+									)
+								)
+							)}
+					) *
+					0.5
+			)
+		);
+		$btn-padding-x: setter(map-get($map, btn-padding-x), $link-padding-x);
+		$btn-padding-y: setter(map-get($map, btn-padding-y), $link-padding-y);
+		$form-control-height: map-get($map, form-control-height);
+		$brand-font-size: setter(
+			map-get($map, brand-font-size),
+			if(
+				variable-exists(navbar-brand-font-size),
+				$navbar-brand-font-size,
+				if(
+					variable-exists(cadmin-navbar-brand-font-size),
+					$cadmin-navbar-brand-font-size,
+					1rem
+				)
+			)
+		);
+		$brand-max-width: map-get($map, brand-max-width);
+		$brand-margin-right: setter(
+			map-get($map, brand-margin-right),
+			$link-padding-x
+		);
+		$brand-padding-x: setter(
+			map-get($map, brand-padding-x),
+			$link-padding-x
+		);
+		$brand-padding-y: setter(
+			map-get($map, brand-padding-y),
+			(
+				calc(
+					(
+							#{$height} -
+								#{$border-bottom-width} -
+								#{$border-top-width} -
+								#{$padding-y} *
+								2 -
+								(#{$brand-font-size} * #{$_line-height-base})
+						) *
+						0.5
+				)
+			)
+		);
+		$title-font-size: map-get($map, title-font-size);
+		$title-font-weight: map-get($map, title-font-weight);
+		$title-margin-bottom: map-get($map, title-margin-bottom);
+		$title-text-transform: map-get($map, title-text-transform);
+		$nav-item-dropdown-margin-top: map-get(
+			$map,
+			nav-item-dropdown-margin-top
+		);
+
+		$height-mobile: setter(map-get($map, height-mobile), $height);
+		$font-size-mobile: setter(map-get($map, font-size-mobile), $font-size);
+		$min-height-mobile: map-get($map, min-height-mobile);
+		$link-height-mobile: setter(
+			map-get($map, link-height-mobile),
+			'#{$height-mobile} - #{$border-bottom-width} - #{$border-top-width} - #{$padding-y} * 2'
+		);
+		$link-margin-x-mobile: setter(
+			map-get($map, link-margin-x-mobile),
+			$link-margin-x
+		);
+		$link-margin-y-mobile: setter(
+			map-get($map, link-margin-y-mobile),
+			calc(
+				(
+						(
+								#{$height-mobile} -
+									#{$border-bottom-width} -
+									#{$border-top-width}
+							) -
+							#{$link-height-mobile}
+					) *
+					0.5
+			)
+		);
+		$link-padding-x-mobile: setter(
+			map-get($map, link-padding-x-mobile),
+			$link-padding-x
+		);
+		$link-padding-y-mobile: setter(
+			map-get($map, link-padding-y-mobile),
+			calc(
+				(
+						#{$link-height-mobile} -
+							(#{$font-size-mobile} * #{$_line-height-base})
+					) *
+					0.5
+			)
+		);
+		$btn-font-size-mobile: setter(
+			map-get($map, btn-font-size-mobile),
+			$font-size-mobile
+		);
+		$btn-monospaced-font-size-mobile: setter(
+			map-get($map, btn-monospaced-font-size-mobile),
+			$btn-monospaced-font-size
+		);
+		$btn-monospaced-size-mobile: setter(
+			map-get($map, btn-monospaced-size-mobile),
+			$btn-monospaced-size
+		);
+		$btn-margin-x-mobile: setter(
+			map-get($map, btn-margin-x-mobile),
+			$link-padding-x-mobile
+		);
+		$btn-margin-y-mobile: setter(
+			map-get($map, btn-margin-y-mobile),
+			calc(
+				(
+						#{$height-mobile} -
+							#{$border-bottom-width} -
+							#{$border-top-width} -
+							#{$padding-y} *
+							2 -
+							#{if(
+								$btn-monospaced-size-mobile,
+								$btn-monospaced-size-mobile,
+								if(
+									variable-exists(nav-item-monospaced-size),
+									$nav-item-monospaced-size,
+									if(
+										variable-exists(
+											cadmin-nav-item-monospaced-size
+										),
+										$cadmin-nav-item-monospaced-size,
+										2rem
+									)
+								)
+							)}
+					) *
+					0.5
+			)
+		);
+		$btn-padding-x-mobile: setter(
+			map-get($map, btn-padding-x-mobile),
+			$link-padding-x-mobile
+		);
+		$btn-padding-y-mobile: setter(
+			map-get($map, btn-padding-y-mobile),
+			$link-padding-x-mobile
+		);
+		$form-control-height-mobile: map-get($map, form-control-height-mobile);
+		$brand-font-size-mobile: setter(
+			map-get($map, brand-font-size-mobile),
+			if(
+				variable-exists(font-size-lg-mobile),
+				$font-size-lg-mobile,
+				if(
+					variable-exists(cadmin-font-size-lg-mobile),
+					$cadmin-font-size-lg-mobile,
+					null
+				)
+			)
+		);
+		$brand-margin-right-mobile: setter(
+			map-get($map, brand-margin-right-mobile),
+			0
+		);
+		$brand-padding-x-mobile: setter(
+			map-get($map, brand-padding-x-mobile),
+			$link-padding-x-mobile
+		);
+		$brand-padding-y-mobile: setter(
+			map-get($map, brand-padding-y-mobile),
+			(
+				calc(
+					(
+							#{$height-mobile} -
+								#{$border-bottom-width} -
+								#{$border-top-width} -
+								#{$padding-y} *
+								2 -
+								#{$brand-font-size-mobile} *
+								#{$_line-height-base}
+						) *
+						0.5
+				)
+			)
+		);
+		$collapse-dropdown-item-padding-x-mobile: map-get(
+			$map,
+			collapse-dropdown-item-padding-x-mobile
+		);
+		$collapse-dropdown-item-padding-y-mobile: map-get(
+			$map,
+			collapse-dropdown-item-padding-y-mobile
+		);
+
+		$toggler-font-size: setter(
+			map-get($map, toggler-font-size),
+			if(
+				variable-exists(navbar-toggler-font-size),
+				$navbar-toggler-font-size,
+				if(
+					variable-exists(cadmin-navbar-toggler-font-size),
+					$cadmin-navbar-toggler-font-size,
+					null
+				)
+			)
+		);
+		$toggler-height: setter(
+			map-get($map, toggler-height),
+			calc(#{$height-mobile} * 0.66667)
+		);
+		$toggler-margin-x: setter(
+			map-get($map, toggler-margin-x),
+			$link-padding-x-mobile
+		);
+		$toggler-margin-y: map-get($map, toggler-margin-y);
+		$toggler-padding-x: setter(
+			map-get($map, toggler-padding-x),
+			if(
+				variable-exists(navbar-toggler-padding-x),
+				$navbar-toggler-padding-x,
+				if(
+					variable-exists(cadmin-navbar-toggler-padding-x),
+					$cadmin-navbar-toggler-padding-x,
+					null
+				)
+			)
+		);
+		$toggler-padding-y: setter(
+			map-get($map, toggler-padding-y),
+			if(
+				variable-exists(navbar-toggler-padding-y),
+				$navbar-toggler-padding-y,
+				if(
+					variable-exists(cadmin-navbar-toggler-padding-y),
+					$cadmin-navbar-toggler-padding-y,
+					null
+				)
+			)
+		);
+
+		$toggler-link-font-size: setter(
+			map-get($map, toggler-link-font-size),
+			$font-size-mobile
+		);
+		$toggler-link-height: setter(map-get($map, toggler-link-height), auto);
+		$toggler-link-line-height: setter(
+			map-get($map, toggler-link-line-height),
+			$_line-height-base
+		);
+		$toggler-link-margin-x: setter(map-get($map, toggler-link-margin-x), 0);
+		$toggler-link-margin-y: map-get($map, toggler-link-margin-y);
+		$toggler-link-padding-x: setter(
+			map-get($map, toggler-link-padding-x),
+			$link-padding-x-mobile
+		);
+		$toggler-link-padding-y: setter(
+			map-get($map, toggler-link-padding-y),
+			calc(
+				(
+						#{$height-mobile} -
+							#{$border-bottom-width} -
+							#{$border-top-width} -
+							#{$padding-y} *
+							2 -
+							#{$toggler-link-font-size} *
+							#{$toggler-link-line-height}
+					) *
+					0.5
+			)
+		);
+
+		$active-border-bottom-width: setter(
+			map-get($map, active-border-bottom-width),
+			0.125rem
+		);
+		$active-border-offset-x: map-get($map, active-border-offset-x);
+		$active-border-offset-bottom: setter(
+			map-get($map, active-border-offset-bottom),
+			calc(
+				(#{$border-bottom-width} + #{$padding-y} + #{$link-margin-y}) *
+					-1
+			)
+		);
+		$active-border-offset-top: map-get($map, active-border-offset-top);
+
+		$active-border-offset-bottom-mobile: setter(
+			map-get($map, active-border-offset-bottom-mobile),
+			calc(
+				(
+						#{$border-bottom-width} +
+							#{$padding-y} +
+							#{$link-margin-y-mobile}
+					) *
+					-1
+			)
+		);
+
+		@if ($enabled) {
+			@include border-radius(
+				if(
+					variable-exists(navbar-border-radius),
+					$navbar-border-radius,
+					if(
+						variable-exists(cadmin-navbar-border-radius),
+						$cadmin-navbar-border-radius,
+						null
+					)
+				)
+			);
+
+			border-width: $border-top-width
+				$border-right-width
+				$border-bottom-width
+				$border-left-width;
+
+			@include box-shadow($box-shadow);
+
+			font-size: $font-size;
+			min-height: $min-height;
+			padding: $padding-y $padding-x;
+
+			.container,
+			.container-fluid {
+				padding-left: $container-padding-x-mobile;
+				padding-right: $container-padding-x-mobile;
+			}
+
+			.navbar-toggler {
+				font-size: $toggler-font-size;
+				height: $toggler-height;
+				margin-bottom: $toggler-margin-y;
+				margin-left: $toggler-margin-x;
+				margin-right: $toggler-margin-x;
+				margin-top: $toggler-margin-y;
+				padding-bottom: $toggler-padding-y;
+				padding-left: $toggler-padding-x;
+				padding-right: $toggler-padding-x;
+				padding-top: $toggler-padding-y;
+
+				@if ($enable-c-inner) {
+					.c-inner {
+						margin-bottom: math-sign($toggler-padding-y);
+						margin-left: math-sign($toggler-padding-x);
+						margin-right: math-sign($toggler-padding-x);
+						margin-top: math-sign($toggler-padding-y);
+					}
+				}
+			}
+
+			.navbar-toggler-link {
+				font-size: $toggler-link-font-size;
+				height: $toggler-link-height;
+				line-height: $toggler-link-line-height;
+				margin-bottom: $toggler-link-margin-y;
+				margin-left: $toggler-link-margin-x;
+				margin-right: $toggler-link-margin-x;
+				margin-top: $toggler-link-margin-y;
+				padding-bottom: $toggler-link-padding-y;
+				padding-left: $toggler-link-padding-x;
+				padding-right: $toggler-link-padding-x;
+				padding-top: $toggler-link-padding-y;
+
+				@if ($enable-c-inner) {
+					.c-inner {
+						margin-bottom: math-sign($toggler-link-padding-y);
+						margin-left: math-sign($toggler-link-padding-x);
+						margin-right: math-sign($toggler-link-padding-x);
+						margin-top: math-sign($toggler-link-padding-y);
+					}
+				}
+			}
+
+			.navbar-brand {
+				font-size: $brand-font-size-mobile;
+				margin-right: $brand-margin-right-mobile;
+				max-width: $brand-max-width;
+				padding-bottom: $brand-padding-y-mobile;
+				padding-left: $brand-padding-x-mobile;
+				padding-right: $brand-padding-x-mobile;
+				padding-top: $brand-padding-y-mobile;
+
+				@if ($enable-c-inner) {
+					.c-inner {
+						margin-bottom: math-sign($brand-padding-y-mobile);
+						margin-left: math-sign($brand-padding-x-mobile);
+						margin-right: math-sign($brand-padding-x-mobile);
+						margin-top: math-sign($brand-padding-y-mobile);
+					}
+				}
+			}
+
+			.navbar-title {
+				font-size: $title-font-size;
+				font-weight: $title-font-weight;
+				margin-bottom: $title-margin-bottom;
+				text-transform: $title-text-transform;
+			}
+
+			.navbar-nav {
+				.nav-btn {
+					font-size: $btn-font-size-mobile;
+					height: $btn-monospaced-size-mobile;
+					margin-bottom: $btn-margin-y-mobile;
+					margin-left: $btn-margin-x-mobile;
+					margin-right: $btn-margin-x-mobile;
+					margin-top: $btn-margin-y-mobile;
+					padding-bottom: $btn-padding-y-mobile;
+					padding-left: $btn-padding-x-mobile;
+					padding-right: $btn-padding-x-mobile;
+					padding-top: $btn-padding-y-mobile;
+					min-width: $btn-monospaced-size-mobile;
+
+					@if ($enable-c-inner) {
+						.c-inner {
+							margin-bottom: math-sign($btn-padding-y-mobile);
+							margin-left: math-sign($btn-padding-x-mobile);
+							margin-right: math-sign($btn-padding-x-mobile);
+							margin-top: math-sign($btn-padding-y-mobile);
+						}
+					}
+				}
+
+				.nav-btn-monospaced {
+					font-size: $btn-monospaced-font-size-mobile;
+					padding: 0;
+
+					@if ($enable-c-inner) {
+						.c-inner {
+							margin: 0;
+						}
+					}
+				}
+
+				.nav-item {
+					> .custom-control,
+					> .form-check {
+						margin-left: $btn-margin-x-mobile;
+						margin-right: $btn-margin-x-mobile;
+					}
+				}
+
+				.nav-link,
+				.navbar-text {
+					margin-bottom: $link-margin-y-mobile;
+					margin-left: $link-margin-x-mobile;
+					margin-right: $link-margin-x-mobile;
+					margin-top: $link-margin-y-mobile;
+					padding-bottom: $link-padding-y-mobile;
+					padding-left: $link-padding-x-mobile;
+					padding-right: $link-padding-x-mobile;
+					padding-top: $link-padding-y-mobile;
+
+					@if ($enable-c-inner) {
+						.c-inner {
+							margin-bottom: math-sign($link-padding-y-mobile);
+							margin-left: math-sign($link-padding-x-mobile);
+							margin-right: math-sign($link-padding-x-mobile);
+							margin-top: math-sign($link-padding-y-mobile);
+						}
+					}
+				}
+
+				.nav-link-monospaced {
+					font-size: $btn-monospaced-font-size-mobile;
+					margin-bottom: $btn-margin-y-mobile;
+					margin-left: $btn-margin-x-mobile;
+					margin-right: $btn-margin-x-mobile;
+					margin-top: $btn-margin-y-mobile;
+					padding: 0;
+
+					@if ($enable-c-inner) {
+						.c-inner {
+							margin: 0;
+						}
+					}
+				}
+			}
+
+			.dropdown-menu {
+				margin-top: $nav-item-dropdown-margin-top;
+			}
+
+			// Navbar Expand
+
+			&.navbar-expand {
+				@each $breakpoint in map-keys($breakpoints) {
+					$next: breakpoint-next($breakpoint, $breakpoints);
+					$infix: breakpoint-infix($next, $breakpoints);
+
+					&#{$infix} {
+						// .navbar-expand, sm, md, lg, xl
+						@if not($infix == '') {
+							@if not(map-get($map, media-breakpoint-down)) {
+								// .navbar-expand-sm, md, lg, xl
+								@include media-breakpoint-down($breakpoint) {
+									min-height: $min-height-mobile;
+
+									&.navbar-collapse-absolute {
+										.navbar-collapse {
+											border-color: transparent;
+											border-style: solid;
+											border-width: 0 $border-right-width
+												$border-bottom-width
+												$border-left-width;
+
+											@include box-shadow($box-shadow);
+
+											left: -$border-left-width;
+											margin-top: $border-bottom-width;
+											padding-bottom: $padding-y;
+											padding-left: $padding-x;
+											padding-right: $padding-x;
+											padding-top: $padding-y;
+											right: -$border-right-width;
+										}
+									}
+
+									.navbar-collapse {
+										.navbar-nav {
+											.dropdown-divider {
+												margin-left: -$padding-x;
+												margin-right: -$padding-x;
+											}
+
+											.dropdown-item {
+												padding-bottom: $collapse-dropdown-item-padding-y-mobile;
+												padding-left: $collapse-dropdown-item-padding-x-mobile;
+												padding-right: $collapse-dropdown-item-padding-x-mobile;
+												padding-top: $collapse-dropdown-item-padding-y-mobile;
+											}
+										}
+									}
+
+									.navbar-form {
+										height: calc(
+											#{$height-mobile} - #{$border-bottom-width} -
+												#{$border-top-width}
+										);
+										padding-bottom: $link-padding-y-mobile;
+										padding-left: $link-padding-x-mobile;
+										padding-right: $link-padding-x-mobile;
+										padding-top: $link-padding-y-mobile;
+
+										.form-control {
+											height: $form-control-height-mobile;
+											padding-bottom: 0;
+											padding-top: 0;
+										}
+									}
+								}
+							}
+
+							@if not(map-get($map, media-breakpoint-up)) {
+								@include media-breakpoint-up($next) {
+									.container,
+									.container-fluid {
+										@if ($scaling-navbar) {
+											padding-left: $container-padding-x;
+											padding-right: $container-padding-x;
+										}
+									}
+
+									.navbar-brand {
+										@if ($scaling-navbar) {
+											font-size: $brand-font-size;
+											margin-right: $brand-margin-right;
+											padding-bottom: $brand-padding-y;
+											padding-left: $brand-padding-x;
+											padding-right: $brand-padding-x;
+											padding-top: $brand-padding-y;
+
+											@if ($enable-c-inner) {
+												.c-inner {
+													margin-bottom: math-sign(
+														$brand-padding-y
+													);
+													margin-left: math-sign(
+														$brand-padding-x
+													);
+													margin-right: math-sign(
+														$brand-padding-x
+													);
+													margin-top: math-sign(
+														$brand-padding-y
+													);
+												}
+											}
+										}
+									}
+
+									.navbar-form {
+										@if ($scaling-navbar) {
+											height: calc(
+												#{$height} -
+													#{$border-bottom-width} -
+													#{$border-top-width}
+											);
+											padding-left: $link-padding-x;
+											padding-right: $link-padding-x;
+
+											> .container,
+											> .container-fluid {
+												padding-left: 0;
+												padding-right: 0;
+											}
+
+											.form-control {
+												height: $form-control-height;
+											}
+										}
+									}
+
+									.nav-btn {
+										@if ($scaling-navbar) {
+											font-size: $btn-font-size;
+											height: $btn-monospaced-size;
+											margin-bottom: $btn-margin-y;
+											margin-left: $btn-margin-x;
+											margin-right: $btn-margin-x;
+											margin-top: $btn-margin-y;
+											padding-bottom: $btn-padding-y;
+											padding-left: $btn-padding-x;
+											padding-right: $btn-padding-x;
+											padding-top: $btn-padding-y;
+											min-width: $btn-monospaced-size;
+
+											@if ($enable-c-inner) {
+												.c-inner {
+													margin-bottom: math-sign(
+														$btn-padding-y
+													);
+													margin-left: math-sign(
+														$btn-padding-x
+													);
+													margin-right: math-sign(
+														$btn-padding-x
+													);
+													margin-top: math-sign(
+														$btn-padding-y
+													);
+												}
+											}
+										}
+									}
+
+									.nav-btn-monospaced {
+										@if ($scaling-navbar) {
+											font-size: $btn-monospaced-font-size;
+											padding: 0;
+
+											@if ($enable-c-inner) {
+												.c-inner {
+													margin: 0;
+												}
+											}
+										}
+									}
+
+									.nav-item {
+										> .custom-control,
+										> .form-check {
+											@if ($scaling-navbar) {
+												margin-left: $btn-margin-x;
+												margin-right: $btn-margin-x;
+											}
+										}
+									}
+
+									.nav-link,
+									.navbar-text {
+										@if ($scaling-navbar) {
+											margin-bottom: $link-margin-y;
+											margin-left: $link-margin-x;
+											margin-right: $link-margin-x;
+											margin-top: $link-margin-y;
+											padding-bottom: $link-padding-y;
+											padding-left: $link-padding-x;
+											padding-right: $link-padding-x;
+											padding-top: $link-padding-y;
+
+											@if ($enable-c-inner) {
+												.c-inner {
+													margin-bottom: math-sign(
+														$link-padding-y
+													);
+													margin-left: math-sign(
+														$link-padding-x
+													);
+													margin-right: math-sign(
+														$link-padding-x
+													);
+													margin-top: math-sign(
+														$link-padding-y
+													);
+												}
+											}
+										}
+									}
+
+									.nav-link-monospaced {
+										@if ($scaling-navbar) {
+											font-size: $btn-monospaced-font-size;
+											margin-bottom: $btn-margin-y;
+											margin-left: $btn-margin-x;
+											margin-right: $btn-margin-x;
+											margin-top: $btn-margin-y;
+											padding: 0;
+
+											@if ($enable-c-inner) {
+												.c-inner {
+													margin: 0;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// if media-breakpoint-up doesn't exist output styles .navbar-expand-{sm|md|lg|xl|??}
+
+			@if not(map-get($map, media-breakpoint-down)) {
+				// Navbar Overlay Styles for `.navbar-overlay-xs-down`,
+				// `.navbar-overlay-sm-down`, `.navbar-overlay-md-down`,
+				// `.navbar-overlay-lg-down`, `.navbar-overlay-up`
+
+				@each $breakpoint in map-keys($breakpoints) {
+					$index: index(map-keys($breakpoints), $breakpoint);
+					$length: length(map-keys($breakpoints));
+					$infix: '.navbar-overlay-#{$breakpoint}-down';
+
+					@if ($index == $length) {
+						$infix: '.navbar-overlay-up';
+					}
+
+					#{$infix} {
+						@include media-breakpoint-down($breakpoint) {
+							@include border-radius(
+								if(
+									variable-exists(navbar-border-radius),
+									$navbar-border-radius,
+									if(
+										variable-exists(
+											cadmin-navbar-border-radius
+										),
+										$cadmin-navbar-border-radius,
+										null
+									)
+								)
+							);
+
+							padding-bottom: $padding-y;
+							padding-left: $padding-x;
+							padding-right: $padding-x;
+							padding-top: $padding-y;
+						}
+					}
+				}
+
+				// Navbar Underline
+
+				&.navbar-underline {
+					.navbar-toggler-link {
+						&:after {
+							bottom: $active-border-offset-bottom-mobile;
+							height: $active-border-bottom-width;
+							left: $active-border-offset-x;
+							right: $active-border-offset-x;
+							top: $active-border-offset-top;
+						}
+					}
+				}
+
+				// if media-breakpoint-up doesn't exist output styles .navbar-expand-{sm|md|lg|xl|??}
+
+				@if not(map-get($map, media-breakpoint-up)) {
+					&.navbar-underline.navbar-expand {
+						@each $breakpoint in map-keys($breakpoints) {
+							$next: breakpoint-next($breakpoint, $breakpoints);
+							$infix: breakpoint-infix($next, $breakpoints);
+
+							&#{$infix} {
+								// .navbar-expand, sm, md, lg, xl
+								@include media-breakpoint-up($next) {
+									.navbar-nav .nav-link {
+										&.active:after {
+											bottom: $active-border-offset-bottom;
+											height: $active-border-bottom-width;
+											left: $active-border-offset-x;
+											right: $active-border-offset-x;
+											top: $active-border-offset-top;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@mixin clay-navbar-expand-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		@if ($enabled) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			$_navbar-underline: map-get($map, navbar-underline);
+
+			@if ($_navbar-underline) {
+				&.navbar-underline {
+					@include clay-css($_navbar-underline);
+
+					$_navbar-nav: map-get($_navbar-underline, navbar-nav);
+
+					@if ($_navbar-nav) {
+						.navbar-nav {
+							@include clay-css($_navbar-nav);
+
+							$_nav-link: map-get($_navbar-nav, nav-link);
+
+							@if ($_nav-link) {
+								.nav-link {
+									@include clay-link($_nav-link);
+								}
+							}
+
+							$_nav-link-monospaced: map-get(
+								$_navbar-nav,
+								nav-link-monospaced
+							);
+
+							@if ($_nav-link-monospaced) {
+								.nav-link-monospaced {
+									@include clay-link($_nav-link-monospaced);
+								}
+							}
+
+							$_nav-btn: map-get($_navbar-nav, nav-btn);
+
+							@if ($_nav-btn) {
+								.nav-btn {
+									@include clay-button-variant($_nav-btn);
+								}
+							}
+
+							$_nav-btn-monospaced: map-get(
+								$_navbar-nav,
+								nav-btn-monospaced
+							);
+
+							@if ($_nav-btn-monospaced) {
+								.nav-btn-monospaced {
+									@include clay-button-variant(
+										$_nav-btn-monospaced
+									);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			$_navbar-collapse: map-deep-get(
+				$map,
+				navbar-collapse-absolute,
+				navbar-collapse
+			);
+
+			@if ($_navbar-collapse) {
+				&.navbar-collapse-absolute .navbar-collapse {
+					@include clay-css($_navbar-collapse);
+				}
+			}
+
+			$_navbar-collapse: map-get($map, navbar-collapse);
+
+			@if ($_navbar-collapse) {
+				.navbar-collapse {
+					@include clay-css($_navbar-collapse);
+
+					$_navbar-nav: map-get($_navbar-collapse, navbar-nav);
+
+					@if ($_navbar-nav) {
+						.navbar-nav {
+							@include clay-css($_navbar-nav);
+
+							$_dropdown-header: map-get(
+								$_navbar-nav,
+								dropdown-header
+							);
+
+							@if ($_dropdown-header) {
+								.dropdown-header {
+									@include clay-css($_dropdown-header);
+								}
+							}
+
+							$_dropdown-divider: map-get(
+								$_navbar-nav,
+								dropdown-divider
+							);
+
+							@if ($_dropdown-divider) {
+								.dropdown-divider {
+									@include clay-css($_dropdown-divider);
+								}
+							}
+
+							$_dropdown-item: map-get(
+								$_navbar-nav,
+								dropdown-item
+							);
+
+							@if ($_dropdown-item) {
+								.dropdown-item {
+									@include clay-link($_dropdown-item);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			$_container: map-get($map, container);
+
+			@if ($_container) {
+				.container {
+					@include clay-css($_container);
+				}
+			}
+
+			$_container-fluid: map-get($map, container-fluid);
+
+			@if ($_container-fluid) {
+				.container-fluid {
+					@include clay-css($_container-fluid);
+				}
+			}
+
+			$_navbar-nav: map-get($map, navbar-nav);
+
+			@if ($_navbar-nav) {
+				.navbar-nav {
+					$_nav-link: map-get($_navbar-nav, nav-link);
+
+					@if ($_nav-link) {
+						.nav-link {
+							@include clay-link($_nav-link);
+						}
+					}
+
+					$_nav-link-monospaced: map-get(
+						$_navbar-nav,
+						nav-link-monospaced
+					);
+
+					@if ($_nav-link-monospaced) {
+						.nav-link-monospaced {
+							@include clay-link($_nav-link-monospaced);
+						}
+					}
+
+					$_nav-btn: map-get($_navbar-nav, nav-btn);
+
+					@if ($_nav-btn) {
+						.nav-btn {
+							@include clay-button-variant($_nav-btn);
+						}
+					}
+
+					$_nav-btn-monospaced: map-get(
+						$_navbar-nav,
+						nav-btn-monospaced
+					);
+
+					@if ($_nav-btn-monospaced) {
+						.nav-btn-monospaced {
+							@include clay-button-variant($_nav-btn-monospaced);
+						}
+					}
+
+					$_nav-item: map-get($_navbar-nav, nav-item);
+
+					@if ($_nav-item) {
+						.nav-item {
+							$_custom-control: map-get(
+								$_nav-item,
+								custom-control
+							);
+
+							@if ($_custom-control) {
+								> .custom-control {
+									@include clay-custom-control-variant(
+										$_custom-control
+									);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			$_navbar-form: map-get($map, navbar-form);
+
+			@if ($_navbar-form) {
+				.navbar-form {
+					@include clay-css($_navbar-form);
+
+					$_container: map-get($_navbar-form, container);
+
+					@if ($_container) {
+						> .container {
+							@include clay-css($_container);
+						}
+					}
+
+					$_container-fluid: map-get($_navbar-form, container-fluid);
+
+					@if ($_container-fluid) {
+						> .container-fluid {
+							@include clay-css($_container-fluid);
+						}
+					}
+
+					$_form-control: map-get($_navbar-form, form-control);
+
+					@if ($_form-control) {
+						.form-control {
+							@include clay-form-control-variant($_form-control);
+						}
+					}
+				}
+			}
+
+			$_navbar-brand: map-get($map, navbar-brand);
+
+			@if ($_navbar-brand) {
+				.navbar-brand {
+					@include clay-link($_navbar-brand);
+				}
+			}
+
+			$_navbar-title: map-get($map, navbar-title);
+
+			@if ($_navbar-title) {
+				.navbar-title {
+					@include clay-link($_navbar-title);
+				}
+			}
+
+			$_navbar-text: map-get($map, navbar-text);
+
+			@if ($_navbar-text) {
+				.navbar-text {
+					@include clay-link($_navbar-text);
+				}
+			}
+
+			$_navbar-toggler: map-get($map, navbar-toggler);
+
+			@if ($_navbar-toggler) {
+				.navbar-toggler {
+					@include clay-button-variant($_navbar-toggler);
+				}
+			}
+
+			$_navbar-toggler-link: map-get($map, navbar-toggler-link);
+
+			@if ($_navbar-toggler-link) {
+				.navbar-toggler-link {
+					@include clay-link($_navbar-toggler-link);
+				}
+			}
+
+			$_navbar-overlay: map-get($map, navbar-overlay);
+
+			@if ($_navbar-overlay) {
+				.navbar-overlay {
+					@include clay-css($_navbar-overlay);
+				}
+			}
+
+			$_dropdown-menu: map-get($map, dropdown-menu);
+
+			@if ($_dropdown-menu) {
+				.dropdown-menu {
+					@include clay-dropdown-menu-variant($_dropdown-menu);
+				}
+			}
+		}
+	}
+}
+
+/// A mixin to create `.navbar` variants.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+
+@mixin clay-navbar-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+		$breakpoints: if(
+			variable-exists(grid-breakpoints),
+			$grid-breakpoints,
+			if(
+				variable-exists(cadmin-grid-breakpoints),
+				$cadmin-grid-breakpoints,
+				(
+					xs: 0,
+					sm: 576px,
+					md: 768px,
+					lg: 992px,
+					xl: 1280px,
+				)
+			)
+		);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		$nav-link: map-deep-merge(
+			map-deep-get($map, navbar-nav, nav-link),
+			(
+				background-color:
+					setter(
+						map-get($map, link-bg),
+						map-deep-get(
+							$map,
+							navbar-nav,
+							nav-link,
+							background-color
+						)
+					),
+				border-radius:
+					setter(
+						map-get($map, link-border-radius),
+						map-deep-get($map, navbar-nav, nav-link, border-radius)
+					),
+				color:
+					setter(
+						map-get($map, link-color),
+						map-deep-get($map, navbar-nav, nav-link, color)
+					),
+				font-weight:
+					setter(
+						map-get($map, link-font-weight),
+						map-deep-get($map, navbar-nav, nav-link, font-weight)
+					),
+				outline:
+					setter(
+						map-get($map, link-outline),
+						map-deep-get($map, navbar-nav, nav-link, outline)
+					),
+				transition:
+					setter(
+						map-get($map, link-transition),
+						map-deep-get($map, navbar-nav, nav-link, transition)
+					),
+				hover: (
+					background-color:
+						setter(
+							map-get($map, link-hover-bg),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								hover,
+								background-color
+							)
+						),
+					color:
+						setter(
+							map-get($map, link-hover-color),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								hover,
+								color
+							)
+						),
+				),
+				focus: (
+					background-color:
+						setter(
+							map-get($map, link-focus-bg),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								focus,
+								background-color
+							)
+						),
+					box-shadow:
+						setter(
+							map-get($map, link-focus-box-shadow),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								focus,
+								box-shadow
+							)
+						),
+					color:
+						setter(
+							map-get($map, link-focus-color),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								focus,
+								color
+							)
+						),
+				),
+				active: (
+					background-color:
+						setter(
+							map-get($map, link-active-bg),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								active,
+								background-color
+							)
+						),
+					color:
+						setter(
+							map-get($map, link-active-color),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								active,
+								color
+							)
+						),
+				),
+				disabled: (
+					background-color:
+						setter(
+							map-get($map, link-disabled-bg),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								disabled,
+								background-color
+							)
+						),
+					box-shadow:
+						setter(
+							map-get($map, link-disabled-box-shadow),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								disabled,
+								box-shadow
+							)
+						),
+					color:
+						setter(
+							map-get($map, link-disabled-color),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								disabled,
+								color
+							)
+						),
+					opacity:
+						setter(
+							map-get($map, link-disabled-opacity),
+							map-deep-get(
+								$map,
+								navbar-nav,
+								nav-link,
+								disabled,
+								opacity
+							)
+						),
+					pointer-events: (
+						map-get($map, link-disabled-pointer-events),
+						map-deep-get(
+							$map,
+							navbar-nav,
+							nav-link,
+							disabled,
+							pointer-events
+						),
+					),
+				),
+			)
+		);
+
+		$nav-btn: map-deep-merge(
+			map-deep-get($map, navbar-nav, nav-btn),
+			(
+				font-weight:
+					setter(
+						map-get($map, btn-font-weight),
+						map-deep-get($map, navbar-nav, nav-btn, font-weight),
+						map-get($nav-link, font-weight)
+					),
+			)
+		);
+
+		$navbar-brand: map-deep-merge($nav-link, map-get($map, navbar-brand));
+		$navbar-brand: map-deep-merge(
+			$navbar-brand,
+			(
+				background-color:
+					setter(
+						map-get($map, brand-bg),
+						map-deep-get($map, navbar-brand, background-color)
+					),
+				color:
+					setter(
+						map-get($map, brand-color),
+						map-deep-get($map, navbar-brand, color)
+					),
+				hover: (
+					background-color:
+						setter(
+							map-get($map, brand-hover-bg),
+							map-deep-get(
+								$map,
+								navbar-brand,
+								hover,
+								background-color
+							)
+						),
+					color:
+						setter(
+							map-get($map, brand-hover-color),
+							map-deep-get($map, navbar-brand, hover, color)
+						),
+				),
+			)
+		);
+
+		$navbar-toggler: map-deep-merge(
+			map-get($map, navbar-toggler),
+			(
+				color:
+					setter(
+						map-get($map, toggler-color),
+						map-deep-get($map, navbar-toggler, color),
+						map-get($nav-link, color)
+					),
+				font-weight:
+					setter(
+						map-get($map, toggler-font-weight),
+						map-deep-get($map, navbar-toggler, font-weight),
+						map-get($nav-link, font-weight)
+					),
+			)
+		);
+
+		$navbar-overlay: map-deep-merge(
+			map-get($map, navbar-overlay),
+			(
+				background-color:
+					setter(
+						map-deep-get($map, navbar-overlay, background-color),
+						map-get($map, background-color)
+					),
+			)
+		);
+
+		$underline-active-bg: map-get($map, underline-active-bg);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			$_container: map-get($map, container);
+
+			@if ($_container) {
+				.container {
+					@include clay-css($_container);
+				}
+			}
+
+			$_container-fluid: map-get($map, container-fluid);
+
+			@if ($_container-fluid) {
+				.container-fluid {
+					@include clay-css($_container-fluid);
+				}
+			}
+
+			$_navbar-nav: map-get($map, navbar-nav);
+
+			@if ($_navbar-nav) {
+				.navbar-nav {
+					@if (length($nav-link) != 0) {
+						.nav-link {
+							@include clay-link($nav-link);
+						}
+					}
+
+					$_nav-link-monospaced: map-get(
+						$_navbar-nav,
+						nav-link-monospaced
+					);
+
+					@if ($_nav-link-monospaced) {
+						.nav-link-monospaced {
+							@include clay-link($_nav-link-monospaced);
+						}
+					}
+
+					@if (length($nav-btn) != 0) {
+						.nav-btn {
+							@include clay-button-variant($nav-btn);
+						}
+					}
+
+					$_nav-btn-monospaced: map-get(
+						$_navbar-nav,
+						nav-btn-monospaced
+					);
+
+					@if ($_nav-btn-monospaced) {
+						.nav-btn-monospaced {
+							@include clay-button-variant($_nav-btn-monospaced);
+						}
+					}
+
+					$_nav-item: map-get($_navbar-nav, nav-item);
+
+					@if ($_nav-item) {
+						.nav-item {
+							$_custom-control: map-get(
+								$_nav-item,
+								custom-control
+							);
+
+							@if ($_custom-control) {
+								> .custom-control {
+									@include clay-custom-control-variant(
+										$_custom-control
+									);
+								}
+							}
+						}
+					}
+
+					$_nav-divider: map-get($map, nav-divider);
+
+					@if ($_nav-divider) {
+						.nav-divider {
+							@include clay-css($_nav-divider);
+
+							$_before: map-get($_nav-divider, before);
+
+							@if ($_before) {
+								&::before {
+									@include clay-css($_before);
+								}
+							}
+
+							$_after: map-get($_nav-divider, after);
+
+							@if ($_after) {
+								&::after {
+									@include clay-css($_after);
+								}
+							}
+						}
+					}
+
+					$_nav-divider-end: map-get($map, nav-divider-end);
+
+					@if ($_nav-divider-end) {
+						.nav-divider-end {
+							@include clay-css($_nav-divider-end);
+
+							$_before: map-get($_nav-divider-end, before);
+
+							@if ($_before) {
+								&::before {
+									@include clay-css($_before);
+								}
+							}
+
+							$_after: map-get($_nav-divider-end, after);
+
+							@if ($_after) {
+								&::after {
+									@include clay-css($_after);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			$_navbar-form: map-get($map, navbar-form);
+
+			@if ($_navbar-form) {
+				.navbar-form {
+					@include clay-css($_navbar-form);
+
+					> .container {
+						@include clay-css(map-get($_navbar-form, container));
+					}
+
+					$_container-fluid: map-get($_navbar-form, container-fluid);
+
+					@if ($_container-fluid) {
+						> .container-fluid {
+							@include clay-css($_container-fluid);
+						}
+					}
+
+					$_form-control: map-get($_navbar-form, form-control);
+
+					@if ($_form-control) {
+						.form-control {
+							@include clay-form-control-variant($_form-control);
+						}
+					}
+				}
+			}
+
+			@if (length($navbar-brand) != 0) {
+				.navbar-brand {
+					@include clay-link($navbar-brand);
+				}
+			}
+
+			$_navbar-title: map-get($map, navbar-title);
+
+			@if ($_navbar-title) {
+				.navbar-title {
+					@include clay-link($_navbar-title);
+				}
+			}
+
+			$_navbar-text: map-get($map, navbar-text);
+
+			@if ($_navbar-text) {
+				.navbar-text {
+					@include clay-link($_navbar-text);
+				}
+			}
+
+			@if (length($navbar-toggler) != 0) {
+				.navbar-toggler {
+					@include clay-button-variant($navbar-toggler);
+				}
+			}
+
+			$_navbar-toggler-link: map-get($map, navbar-toggler-link);
+
+			@if ($_navbar-toggler-link) {
+				.navbar-toggler-link {
+					@include clay-link($_navbar-toggler-link);
+				}
+			}
+
+			@if (length($navbar-overlay) != 0) {
+				.navbar-overlay {
+					@include clay-css($navbar-overlay);
+				}
+			}
+
+			$_dropdown-menu: map-get($map, dropdown-menu);
+
+			@if ($_dropdown-menu) {
+				.dropdown-menu {
+					@include clay-dropdown-menu-variant($_dropdown-menu);
+				}
+			}
+
+			$_navbar-underline-toggler-link: map-deep-get(
+				$map,
+				navbar-underline,
+				navbar-toggler-link
+			);
+
+			@if ($_navbar-underline-toggler-link) {
+				&.navbar-underline {
+					.navbar-toggler-link {
+						@include clay-link($_navbar-underline-toggler-link);
+					}
+				}
+			}
+
+			// only output specific media-breakpoint-down styles
+
+			@if (map-get($map, media-breakpoint-down)) {
+				@each $breakpoint
+					in map-keys(map-get($map, media-breakpoint-down))
+				{
+					$media-breakpoint-down: map-deep-get(
+						$map,
+						media-breakpoint-down,
+						$breakpoint
+					);
+
+					@if ($breakpoint) {
+						@include media-breakpoint-down($breakpoint) {
+							$breakpoint-position: index(
+								$breakpoints,
+								$breakpoint map-get($breakpoints, $breakpoint)
+							);
+
+							$is-first-breakpoint: $breakpoint-position == 1;
+
+							$is-last-breakpoint: $breakpoint-position ==
+								length($breakpoints);
+
+							@if not($is-last-breakpoint) {
+								$infix: '-' + breakpoint-next($breakpoint);
+
+								$_navbar-expand: map-get(
+									$media-breakpoint-down,
+									'navbar-expand#{$infix}'
+								);
+
+								@if ($_navbar-expand) {
+									&.navbar-expand#{$infix} {
+										@include clay-navbar-expand-variant(
+											$_navbar-expand
+										);
+									}
+								}
+
+								$_navbar-overlay: map-get(
+									$media-breakpoint-down,
+									'navbar-overlay-#{$breakpoint}-down'
+								);
+
+								@if ($_navbar-overlay) {
+									.navbar-overlay-#{$breakpoint}-down {
+										@include clay-css($_navbar-overlay);
+
+										$_show: map-get($_navbar-overlay, show);
+
+										@if ($_show) {
+											&.show {
+												@include clay-css($_show);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// only output specific media-breakpoint-up styles
+
+			@if (map-get($map, media-breakpoint-up)) {
+				@each $breakpoint
+					in map-keys(map-get($map, media-breakpoint-up))
+				{
+					$media-breakpoint-up: map-deep-get(
+						$map,
+						media-breakpoint-up,
+						$breakpoint
+					);
+
+					@if ($breakpoint) {
+						@include media-breakpoint-up($breakpoint) {
+							$is-first-breakpoint: index(
+									$breakpoints,
+									$breakpoint
+										map-get($breakpoints, $breakpoint)
+								)
+								== 1;
+
+							@if not($is-first-breakpoint) {
+								$infix: '-' + $breakpoint;
+
+								$_navbar-expand: map-get(
+									$media-breakpoint-up,
+									'navbar-expand#{$infix}'
+								);
+
+								@if ($_navbar-expand) {
+									&.navbar-expand#{$infix} {
+										@include clay-navbar-expand-variant(
+											$_navbar-expand
+										);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// if media-breakpoint-down doesn't exist output styles .navbar-expand-{sm|md|lg|xl|??}
+			// deprecated use the key `media-breakpoint-down` instead
+
+			@if not(map-get($map, media-breakpoint-down)) {
+				&.navbar-expand {
+					@each $breakpoint in map-keys($breakpoints) {
+						$next: breakpoint-next($breakpoint, $breakpoints);
+						$infix: breakpoint-infix($next, $breakpoints);
+
+						&#{$infix} {
+							// .navbar-expand, sm, md, lg, xl
+							@if not($infix == '') {
+								// .navbar-expand-sm, md, lg, xl
+								@include media-breakpoint-down($breakpoint) {
+									&.navbar-collapse-absolute {
+										.navbar-collapse {
+											background-color: map-get(
+												$base,
+												background-color
+											);
+											border-color: map-get(
+												$base,
+												border-color
+											);
+										}
+									}
+
+									.navbar-collapse .navbar-nav {
+										.dropdown-header,
+										.dropdown-item {
+											color: map-get($nav-link, color);
+											font-weight: map-get(
+												$nav-link,
+												font-weight
+											);
+										}
+
+										.dropdown-divider {
+											border-color: map-get(
+												$nav-link,
+												color
+											);
+										}
+
+										.dropdown-item {
+											&:hover {
+												color: map-deep-get(
+													$nav-link,
+													hover,
+													color
+												);
+											}
+
+											&.active {
+												color: map-deep-get(
+													$nav-link,
+													active-class,
+													color
+												);
+											}
+
+											&.disabled {
+												color: map-deep-get(
+													$nav-link,
+													disabled,
+													color
+												);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// if media-breakpoint-up doesn't exist output styles .navbar-expand through .navbar-expand-{sm|md|lg|xl|??}
+			// deprecated use the key `media-breakpoint-up` instead
+
+			@if not(map-get($map, media-breakpoint-up)) {
+				&.navbar-expand {
+					@each $breakpoint in map-keys($breakpoints) {
+						$next: breakpoint-next($breakpoint, $breakpoints);
+						$infix: breakpoint-infix($next, $breakpoints);
+
+						&#{$infix} {
+							// .navbar-expand, sm, md, lg, xl
+							@include media-breakpoint-up($next) {
+								&.navbar-underline .navbar-nav {
+									.nav-link.active:after {
+										background-color: $underline-active-bg;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			@content;
+		}
+	}
+}

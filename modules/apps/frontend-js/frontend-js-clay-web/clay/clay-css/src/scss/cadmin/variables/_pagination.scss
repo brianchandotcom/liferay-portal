@@ -1,0 +1,615 @@
+$cadmin-pagination-bg: transparent !default;
+$cadmin-pagination-border-color: $cadmin-pagination-bg !default;
+$cadmin-pagination-border-width: 1px !default; // 1px
+$cadmin-pagination-color: $cadmin-gray-600 !default;
+$cadmin-pagination-font-size: 14px !default; // 14px
+$cadmin-pagination-line-height: 1 !default;
+$cadmin-pagination-padding-x: 10px !default; // 10px
+$cadmin-pagination-padding-y: 0 !default;
+
+$cadmin-pagination-hover-bg: rgba($cadmin-gray-900, 0.04) !default;
+$cadmin-pagination-hover-border-color: transparent !default;
+$cadmin-pagination-hover-color: $cadmin-gray-900 !default;
+
+$cadmin-pagination-focus-box-shadow: $cadmin-component-focus-box-shadow !default;
+$cadmin-pagination-focus-outline: 0 !default;
+
+$cadmin-pagination-active-bg: rgba($cadmin-primary, 0.06) !default;
+$cadmin-pagination-active-border-color: transparent !default;
+$cadmin-pagination-active-color: $cadmin-gray-900 !default;
+
+$cadmin-pagination-disabled-bg: transparent !default;
+$cadmin-pagination-disabled-border-color: $cadmin-pagination-disabled-bg !default;
+$cadmin-pagination-disabled-color: $cadmin-gray-600 !default;
+
+// Pagination Item
+
+$cadmin-pagination-item-height: 32px !default; // 32px
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-item` instead
+
+$cadmin-pagination-item-margin-x: 4px !default; // 4px
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-item` instead
+
+$cadmin-pagination-item-margin-y: null !default;
+
+$cadmin-pagination-item: () !default;
+$cadmin-pagination-item: map-deep-merge(
+	(
+		margin-bottom: $cadmin-pagination-item-margin-y,
+		margin-left: $cadmin-pagination-item-margin-x,
+		margin-right: $cadmin-pagination-item-margin-x,
+		margin-top: $cadmin-pagination-item-margin-y,
+	),
+	$cadmin-pagination-item
+);
+
+// Pagination Link
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-link` instead
+
+$cadmin-pagination-link-border-radius: 4px !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-link` instead
+
+$cadmin-pagination-link-cursor: null !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-link` instead
+
+$cadmin-pagination-link-transition: background-color 0.15s ease-in-out,
+	border-color 0.15s ease-in-out !default;
+
+$cadmin-pagination-link-first-border-radius: $cadmin-pagination-link-border-radius !default;
+$cadmin-pagination-link-last-border-radius: $cadmin-pagination-link-border-radius !default;
+
+$cadmin-pagination-margin-bottom: 8px !default;
+
+$cadmin-pagination-margin-top-mobile: 8px !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-link-disabled` instead
+
+$cadmin-pagination-disabled-cursor: $cadmin-disabled-cursor !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-link-disabled` instead
+
+$cadmin-pagination-disabled-opacity: 0.5 !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-link-disabled` instead
+
+$cadmin-pagination-disabled-pointer-events: auto !default;
+
+// .page-link
+
+$cadmin-pagination-link-hover: () !default;
+$cadmin-pagination-link-hover: map-deep-merge(
+	(
+		background-color: $cadmin-pagination-hover-bg,
+		border-color: $cadmin-pagination-hover-border-color,
+		color: $cadmin-pagination-hover-color,
+		font-weight: $cadmin-font-weight-semi-bold,
+		letter-spacing: 0,
+		text-decoration: none,
+		z-index: 2,
+		before: (
+			background-color: $cadmin-secondary-l0,
+			height: 3px,
+		),
+	),
+	$cadmin-pagination-link-hover
+);
+
+$cadmin-pagination-link-focus: () !default;
+$cadmin-pagination-link-focus: map-deep-merge(
+	(
+		border-color: $cadmin-pagination-hover-border-color,
+		box-shadow: none,
+		color: $cadmin-pagination-hover-color,
+		outline: $cadmin-pagination-focus-outline,
+		z-index: $cadmin-zindex-pagination-link-focus,
+		after: (
+			border-radius: $cadmin-pagination-link-border-radius,
+			bottom: 0,
+			box-shadow: $cadmin-pagination-focus-box-shadow,
+			content: '',
+			display: block,
+			left: 0,
+			pointer-events: none,
+			position: absolute,
+			right: 0,
+			top: 0,
+		),
+	),
+	$cadmin-pagination-link-focus
+);
+
+$cadmin-pagination-link-active: () !default;
+$cadmin-pagination-link-active: map-deep-merge(
+	(
+		background-color: $cadmin-pagination-active-bg,
+		border-color: $cadmin-pagination-active-border-color,
+		color: $cadmin-pagination-active-color,
+		font-weight: $cadmin-font-weight-semi-bold,
+		letter-spacing: 0,
+		z-index: $cadmin-zindex-pagination-link-active,
+	),
+	$cadmin-pagination-link-active
+);
+
+$cadmin-pagination-link-disabled: () !default;
+$cadmin-pagination-link-disabled: map-deep-merge(
+	(
+		background-color: $cadmin-pagination-disabled-bg,
+		border-color: $cadmin-pagination-disabled-border-color,
+		box-shadow: none,
+		color: $cadmin-pagination-disabled-color,
+		cursor: $cadmin-pagination-disabled-cursor,
+		opacity: $cadmin-pagination-disabled-opacity,
+		pointer-events: $cadmin-pagination-disabled-pointer-events,
+		z-index: $cadmin-zindex-pagination-link-disabled,
+		before: (
+			content: none,
+		),
+		focus: (
+			after: (
+				content: none,
+			),
+		),
+	),
+	$cadmin-pagination-link-disabled
+);
+
+$cadmin-pagination-link: () !default;
+$cadmin-pagination-link: map-deep-merge(
+	(
+		align-items: center,
+		background-color: $cadmin-pagination-bg,
+		border-radius: $cadmin-pagination-link-border-radius,
+		border-color: $cadmin-pagination-border-color,
+		border-style: solid,
+		border-width: $cadmin-pagination-border-width,
+		color: $cadmin-pagination-color,
+		cursor: $cadmin-pagination-link-cursor,
+		display: inline-flex,
+		height: $cadmin-pagination-item-height,
+		justify-content: center,
+		letter-spacing: 0.033em,
+		line-height: $cadmin-pagination-line-height,
+		margin-left: 0,
+		padding-bottom: $cadmin-pagination-padding-y,
+		padding-left: $cadmin-pagination-padding-x,
+		padding-right: $cadmin-pagination-padding-x,
+		padding-top: $cadmin-pagination-padding-y,
+		position: relative,
+		transition: $cadmin-pagination-link-transition,
+		before: (
+			border-radius: 0 0 $cadmin-border-radius $cadmin-border-radius,
+			bottom: 0,
+			content: '',
+			display: block,
+			left: 0,
+			position: absolute,
+			right: 0,
+		),
+		hover: $cadmin-pagination-link-hover,
+		focus: $cadmin-pagination-link-focus,
+		active: $cadmin-pagination-link-active,
+		active-class: (
+			background-color: $cadmin-pagination-active-bg,
+			border-color: $cadmin-pagination-active-border-color,
+			color: $cadmin-pagination-active-color,
+			font-weight: $cadmin-font-weight-semi-bold,
+			letter-spacing: 0,
+			before: (
+				background-color: $cadmin-primary-l0,
+				height: 4px,
+			),
+		),
+		disabled: $cadmin-pagination-link-disabled,
+		show: (
+			font-weight: $cadmin-font-weight-semi-bold,
+			letter-spacing: 0,
+			before: (
+				background-color: transparent,
+			),
+			hover: (
+				before: (
+					background-color: $cadmin-secondary-l0,
+					height: 3px,
+				),
+			),
+		),
+		lexicon-icon: (
+			margin-top: 0,
+		),
+	),
+	$cadmin-pagination-link
+);
+
+// .page-item:first-child .page-link, .page-link-first
+
+$cadmin-pagination-link-first: () !default;
+$cadmin-pagination-link-first: map-merge(
+	(
+		border-radius:
+			clay-enable-rounded($cadmin-pagination-link-first-border-radius),
+	),
+	$cadmin-pagination-link-first
+);
+
+// .page-item:last-child .page-link, .page-link-last
+
+$cadmin-pagination-link-last: () !default;
+$cadmin-pagination-link-last: map-deep-merge(
+	(
+		border-radius:
+			clay-enable-rounded($cadmin-pagination-link-last-border-radius),
+	),
+	$cadmin-pagination-link-last
+);
+
+// .pagination
+
+$cadmin-pagination: () !default;
+$cadmin-pagination: map-deep-merge(
+	(
+		border-radius: clay-enable-rounded($cadmin-border-radius),
+		display: flex,
+		flex-wrap: wrap,
+		font-size: $cadmin-pagination-font-size,
+		list-style: none,
+		margin-bottom: $cadmin-pagination-margin-bottom,
+		padding-left: 0,
+	),
+	$cadmin-pagination
+);
+
+// .pagination-bar
+
+$cadmin-pagination-bar: () !default;
+$cadmin-pagination-bar: map-deep-merge(
+	(
+		align-items: center,
+		display: flex,
+		flex-wrap: wrap,
+		media-breakpoint-down: (
+			sm: (
+				flex-direction: column,
+				justify-content: center,
+				pagination: (
+					margin-top: $cadmin-pagination-margin-top-mobile,
+				),
+			),
+		),
+	),
+	$cadmin-pagination-bar
+);
+
+// Pagination Dropdown Menu
+
+$cadmin-pagination-dropdown-menu-spacer-y: 10px !default; // 10px
+
+// Pagination Items Per Page
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link` instead
+
+$cadmin-pagination-items-per-page-bg: null !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link` instead
+
+$cadmin-pagination-items-per-page-border-color: $cadmin-pagination-border-color !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link` instead
+
+$cadmin-pagination-items-per-page-border-radius: $cadmin-border-radius !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link` instead
+
+$cadmin-pagination-items-per-page-color: $cadmin-pagination-color !default;
+$cadmin-pagination-items-per-page-font-size: $cadmin-pagination-font-size !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link` instead
+
+$cadmin-pagination-items-per-page-transition: $cadmin-pagination-link-transition !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link-hover` instead
+
+$cadmin-pagination-items-per-page-hover-bg: $cadmin-pagination-hover-bg !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link-hover` instead
+
+$cadmin-pagination-items-per-page-hover-border-color: $cadmin-pagination-hover-border-color !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link-hover` instead
+
+$cadmin-pagination-items-per-page-hover-color: $cadmin-pagination-hover-color !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link-focus` instead
+
+$cadmin-pagination-items-per-page-focus-box-shadow: $cadmin-pagination-focus-box-shadow !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link-focus` instead
+
+$cadmin-pagination-items-per-page-focus-outline: 0 !default;
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link` instead
+
+$cadmin-pagination-items-per-page-lexicon-icon-margin-left: 2px !default; // 2px
+
+// @deprecated as of v2 use the Sass map `$cadmin-pagination-items-per-page-link` instead
+
+$cadmin-pagination-items-per-page-lexicon-icon-margin-top: 2px !default; // 2px
+
+// Pagination Items Per Page Link
+
+$cadmin-pagination-items-per-page-link-hover: () !default;
+$cadmin-pagination-items-per-page-link-hover: map-deep-merge(
+	(
+		background-color: $cadmin-pagination-items-per-page-hover-bg,
+		border-color: $cadmin-pagination-items-per-page-hover-border-color,
+		color: $cadmin-pagination-items-per-page-hover-color,
+	),
+	$cadmin-pagination-items-per-page-link-hover
+);
+
+$cadmin-pagination-items-per-page-link-focus: () !default;
+$cadmin-pagination-items-per-page-link-focus: map-deep-merge(
+	(
+		background-color:
+			map-get($cadmin-pagination-link-focus, background-color),
+		border-color: map-get($cadmin-pagination-link-focus, border-color),
+		box-shadow: $cadmin-pagination-items-per-page-focus-box-shadow,
+		color: map-get($cadmin-pagination-link-focus, color),
+		outline: $cadmin-pagination-items-per-page-focus-outline,
+		after: map-get($cadmin-pagination-link-focus, after),
+	),
+	$cadmin-pagination-items-per-page-link-focus
+);
+
+$cadmin-pagination-items-per-page-link-active: () !default;
+$cadmin-pagination-items-per-page-link-active: map-deep-merge(
+	(
+		background-color: $cadmin-pagination-active-bg,
+		border-color: $cadmin-pagination-active-border-color,
+		color: $cadmin-pagination-active-color,
+	),
+	$cadmin-pagination-items-per-page-link-active
+);
+
+$cadmin-pagination-items-per-page-link-disabled: () !default;
+$cadmin-pagination-items-per-page-link-disabled: map-deep-merge(
+	(
+		background-color: $cadmin-pagination-disabled-bg,
+		border-color: $cadmin-pagination-disabled-border-color,
+		box-shadow: none,
+		color: $cadmin-pagination-disabled-color,
+		cursor: $cadmin-pagination-disabled-cursor,
+		font-weight: $cadmin-font-weight-normal,
+		opacity: $cadmin-pagination-disabled-opacity,
+		pointer-events: $cadmin-pagination-disabled-pointer-events,
+		letter-spacing: 0.033em,
+		before: (
+			content: none,
+		),
+		focus: (
+			after: (
+				content: none,
+			),
+		),
+	),
+	$cadmin-pagination-items-per-page-link-disabled
+);
+
+$cadmin-pagination-items-per-page-link: () !default;
+$cadmin-pagination-items-per-page-link: map-deep-merge(
+	(
+		align-items: center,
+		background-color: $cadmin-pagination-items-per-page-bg,
+		border-color: $cadmin-pagination-items-per-page-border-color,
+		border-radius: $cadmin-pagination-items-per-page-border-radius,
+		border-style: solid,
+		border-width: $cadmin-pagination-border-width,
+		color: $cadmin-pagination-items-per-page-color,
+		display: inline-flex,
+		height: $cadmin-pagination-item-height,
+		justify-content: center,
+		letter-spacing: 0.025em,
+		line-height: $cadmin-pagination-line-height,
+		padding-bottom: $cadmin-pagination-padding-y,
+		padding-left: $cadmin-pagination-padding-x,
+		padding-right: $cadmin-pagination-padding-x,
+		padding-top: $cadmin-pagination-padding-y,
+		text-decoration: none,
+		transition: $cadmin-pagination-items-per-page-transition,
+		before: (
+			border-radius: 0 0 $cadmin-border-radius $cadmin-border-radius,
+			bottom: 0,
+			content: '',
+			display: block,
+			left: 0,
+			position: absolute,
+			right: 0,
+		),
+		hover: $cadmin-pagination-items-per-page-link-hover,
+		focus: $cadmin-pagination-items-per-page-link-focus,
+		active: $cadmin-pagination-items-per-page-link-active,
+		disabled: $cadmin-pagination-items-per-page-link-disabled,
+		show: map-get($cadmin-pagination-link, show),
+		lexicon-icon: (
+			margin-left:
+				$cadmin-pagination-items-per-page-lexicon-icon-margin-left,
+			margin-top:
+				$cadmin-pagination-items-per-page-lexicon-icon-margin-top,
+		),
+	),
+	$cadmin-pagination-items-per-page-link
+);
+
+// .pagination-items-per-page
+
+$cadmin-pagination-items-per-page: () !default;
+$cadmin-pagination-items-per-page: map-deep-merge(
+	(
+		font-size: $cadmin-pagination-items-per-page-font-size,
+		margin-bottom: $cadmin-pagination-margin-bottom,
+		link: $cadmin-pagination-items-per-page-link,
+		media-breakpoint-down: (
+			sm: (
+				pagination-results: (
+					margin-left: auto,
+				),
+			),
+		),
+	),
+	$cadmin-pagination-items-per-page
+);
+
+// .pagination-results
+
+$cadmin-pagination-results-color: $cadmin-pagination-color !default;
+
+$cadmin-pagination-results: () !default;
+$cadmin-pagination-results: map-deep-merge(
+	(
+		border-color: transparent,
+		border-style: solid,
+		border-width: $cadmin-pagination-border-width,
+		color: $cadmin-pagination-results-color,
+		font-size: $cadmin-pagination-font-size,
+		line-height: $cadmin-pagination-line-height,
+		margin-bottom: $cadmin-pagination-margin-bottom,
+		margin-right: auto,
+		max-width: 100%,
+		padding: $cadmin-pagination-padding-y $cadmin-pagination-padding-x,
+		word-wrap: break-word,
+	),
+	$cadmin-pagination-results
+);
+
+// @deprecated Pagination Sizes as of v3.146.0
+
+// .pagination-sm
+
+$cadmin-pagination-font-size-sm: 12px !default; // 12px
+$cadmin-pagination-line-height-sm: 1 !default;
+$cadmin-pagination-padding-x-sm: 8px !default;
+$cadmin-pagination-padding-y-sm: 0 !default;
+
+$cadmin-pagination-item-height-sm: 24px !default; // 24px
+
+$cadmin-pagination-link-border-radius-sm: 5px !default;
+
+$cadmin-pagination-items-per-page-lexicon-icon-margin-left-sm: null !default;
+$cadmin-pagination-items-per-page-lexicon-icon-margin-top-sm: null !default;
+
+$cadmin-pagination-sm: () !default;
+$cadmin-pagination-sm: map-deep-merge(
+	(
+		page-link: (
+			font-size: $cadmin-pagination-font-size-sm,
+			height: $cadmin-pagination-item-height-sm,
+			line-height: $cadmin-pagination-line-height-sm,
+			padding-bottom: $cadmin-pagination-padding-y-sm,
+			padding-right: $cadmin-pagination-padding-x-sm,
+			padding-left: $cadmin-pagination-padding-x-sm,
+			padding-top: $cadmin-pagination-padding-y-sm,
+		),
+		page-link-first: (
+			border-bottom-left-radius: $cadmin-pagination-link-border-radius-sm,
+			border-top-left-radius: $cadmin-pagination-link-border-radius-sm,
+		),
+		page-link-last: (
+			border-bottom-right-radius: $cadmin-pagination-link-border-radius-sm,
+			border-top-right-radius: $cadmin-pagination-link-border-radius-sm,
+		),
+		pagination-items-per-page: (
+			border-radius:
+				clay-enable-rounded($cadmin-pagination-link-border-radius-sm),
+			link: (
+				font-size: $cadmin-pagination-font-size-sm,
+				height: $cadmin-pagination-item-height-sm,
+				line-height: $cadmin-pagination-line-height-sm,
+				padding-bottom: $cadmin-pagination-padding-y-sm,
+				padding-left: $cadmin-pagination-padding-x,
+				padding-right: $cadmin-pagination-padding-x,
+				padding-top: $cadmin-pagination-padding-y-sm,
+			),
+			lexicon-icon: (
+				margin-left:
+					$cadmin-pagination-items-per-page-lexicon-icon-margin-left-sm,
+				margin-right:
+					$cadmin-pagination-items-per-page-lexicon-icon-margin-top-sm,
+			),
+			pagination-results: (
+				font-size: $cadmin-pagination-font-size-sm,
+				line-height: $cadmin-pagination-line-height-sm,
+				padding: $cadmin-pagination-padding-y-sm
+					$cadmin-pagination-padding-x,
+			),
+		),
+	),
+	$cadmin-pagination-sm
+);
+
+// .pagination-lg
+
+$cadmin-pagination-font-size-lg: 18px !default; // 18px
+$cadmin-pagination-line-height-lg: 1 !default;
+$cadmin-pagination-padding-x-lg: 16px !default; // 16px
+$cadmin-pagination-padding-y-lg: 0 !default;
+
+$cadmin-pagination-item-height-lg: 44px !default; //44px
+
+$cadmin-pagination-link-border-radius-lg: 5px !default; // 5px
+
+$cadmin-pagination-items-per-page-lexicon-icon-margin-left-lg: null !default;
+$cadmin-pagination-items-per-page-lexicon-icon-margin-top-lg: null !default;
+
+$cadmin-pagination-lg: () !default;
+$cadmin-pagination-lg: map-deep-merge(
+	(
+		page-link: (
+			font-size: $cadmin-pagination-font-size-lg,
+			height: $cadmin-pagination-item-height-lg,
+			line-height: $cadmin-pagination-line-height-lg,
+			padding-bottom: $cadmin-pagination-padding-y-lg,
+			padding-left: $cadmin-pagination-padding-x-lg,
+			padding-right: $cadmin-pagination-padding-x-lg,
+			padding-top: $cadmin-pagination-padding-y-lg,
+		),
+		page-link-first: (
+			border-bottom-left-radius: $cadmin-pagination-link-border-radius-lg,
+			border-top-left-radius: $cadmin-pagination-link-border-radius-lg,
+		),
+		page-link-last: (
+			border-bottom-right-radius: $cadmin-pagination-link-border-radius-lg,
+			border-top-right-radius: $cadmin-pagination-link-border-radius-lg,
+		),
+		pagination-items-per-page: (
+			border-radius:
+				clay-enable-rounded($cadmin-pagination-link-border-radius-lg),
+			link: (
+				font-size: $cadmin-pagination-font-size-lg,
+				height: $cadmin-pagination-item-height-lg,
+				line-height: $cadmin-pagination-line-height-lg,
+				padding-bottom: $cadmin-pagination-padding-y-lg,
+				padding-left: $cadmin-pagination-padding-x,
+				padding-right: $cadmin-pagination-padding-x,
+				padding-top: $cadmin-pagination-padding-y-lg,
+			),
+			lexicon-icon: (
+				margin-left:
+					$cadmin-pagination-items-per-page-lexicon-icon-margin-left-lg,
+				margin-right:
+					$cadmin-pagination-items-per-page-lexicon-icon-margin-top-lg,
+			),
+			pagination-results: (
+				font-size: $cadmin-pagination-font-size-lg,
+				line-height: $cadmin-pagination-line-height-lg,
+				padding: $cadmin-pagination-padding-y-lg
+					$cadmin-pagination-padding-x,
+			),
+		),
+	),
+	$cadmin-pagination-lg
+);

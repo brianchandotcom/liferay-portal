@@ -1,0 +1,1982 @@
+////
+/// @group Cards
+////
+
+/// A mixin that styles a Card Section (e.g., `.card-header`, `.card-body`, `.card-footer` or `.card-row`). This mixin is used by `clay-card-variant`.
+/// @param {Map} $map - A map of key-value pairs. The keys are defined in the mixin. Example below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .card-section
+/// 	before: (
+/// 		// .card-section::before
+/// 	),
+/// 	after: (
+/// 		// .card-section::after
+/// 	),
+/// 	first-child: (
+/// 		// .card-section:first-child
+/// 	),
+/// 	last-child: (
+/// 		// .card-section:last-child
+/// 	),
+/// 	autofit-col: (
+/// 		// .card-section .autofit-col
+/// 	),
+///
+/// )
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+/// autofit-col-padding-left: {Number | String | Null},
+/// autofit-col-padding-right: {Number | String | Null},
+
+@mixin clay-card-section-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		$autofit-col: setter(map-get($map, autofit-col), ());
+		$autofit-col: map-merge(
+			$autofit-col,
+			(
+				padding-left:
+					setter(
+						map-get($map, autofit-col-padding-left),
+						map-get($autofit-col, padding-left)
+					),
+				padding-right:
+					setter(
+						map-get($map, autofit-col-padding-right),
+						map-get($autofit-col, padding-right)
+					),
+			)
+		);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			$_before: map-get($map, before);
+
+			@if ($_before) {
+				&::before {
+					@include clay-css($_before);
+				}
+			}
+
+			$_after: map-get($map, after);
+
+			@if ($_after) {
+				&::after {
+					@include clay-css($_after);
+				}
+			}
+
+			$_first-child: map-get($map, first-child);
+
+			@if ($_first-child) {
+				&:first-child {
+					@include clay-css($_first-child);
+				}
+			}
+
+			$_last-child: map-get($map, last-child);
+
+			@if ($_last-child) {
+				&:last-child {
+					@include clay-css($_last-child);
+				}
+			}
+
+			@if (length($autofit-col) != 0) {
+				.autofit-col {
+					@include clay-css($autofit-col);
+				}
+			}
+		}
+	}
+}
+
+/// A mixin that styles a custom Card.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent .dropdown-item styles from being output. Default: true
+/// 	hover: (
+/// 		// .card:hover, .card.hover
+/// 		after: (
+/// 			// .card:hover::after, .card.hover::after
+/// 		),
+/// 		card-title: (
+/// 			// .card:hover .card-title, .card.hover .card-title
+/// 		),
+/// 		card-subtitle: (
+/// 			// .card:hover .card-subtitle, .card.hover .card-subtitle
+/// 		),
+/// 		card-text: (
+/// 			// .card:hover .card-text, .card.hover .card-text
+/// 		),
+/// 		card-link: (
+/// 			// .card:hover .card-link, .card.hover .card-link
+/// 		),
+/// 	),
+/// 	focus: (
+/// 		// .card:focus, .card.focus
+/// 		after: (
+/// 			// .card:focus::after, .card.focus::after
+/// 		),
+/// 		card-title: (
+/// 			// .card:focus .card-title, .card.focus .card-title
+/// 		),
+/// 		card-subtitle: (
+/// 			// .card:focus .card-subtitle, .card.focus .card-subtitle
+/// 		),
+/// 		card-text: (
+/// 			// .card:focus .card-text, .card.focus .card-text
+/// 		),
+/// 		card-link: (
+/// 			// .card:focus .card-link, .card.focus .card-link
+/// 		),
+/// 	),
+/// 	active: (
+/// 		// .card:active, .card.active
+/// 		after: (
+/// 			// .card:active::after, .card.active::after
+/// 		),
+/// 		card-title: (
+/// 			// .card:active .card-title, .card.active .card-title
+/// 		),
+/// 		card-subtitle: (
+/// 			// .card:active .card-subtitle, .card.active .card-subtitle
+/// 		),
+/// 		card-text: (
+/// 			// .card:active .card-text, .card.active .card-text
+/// 		),
+/// 		card-link: (
+/// 			// .card:active .card-link, .card.active .card-link
+/// 		),
+/// 	),
+/// 	disabled: (
+/// 		// .card:disabled, .card.disabled
+/// 		after: (
+/// 			// .card:disabled::after, .card.disabled::after
+/// 		),
+/// 		card-title: (
+/// 			// .card:disabled .card-title, .card.disabled .card-title
+/// 		),
+/// 		card-subtitle: (
+/// 			// .card:disabled .card-subtitle, .card.disabled .card-subtitle
+/// 		),
+/// 		card-text: (
+/// 			// .card:disabled .card-text, .card.disabled .card-text
+/// 		),
+/// 		card-link: (
+/// 			// .card:disabled .card-link, .card.disabled .card-link
+/// 		),
+/// 	),
+/// 	after: (
+/// 		// .card::after
+/// 	),
+/// 	aspect-ratio: (
+/// 		// .card .aspect-ratio
+/// 		custom-control: (
+/// 			label: (
+/// 				// .card .custom-control label, .card .form-check-label
+/// 			),
+/// 		),
+/// 		label: (
+/// 			// .card .aspect-ratio .label
+/// 		),
+/// 	),
+/// 	aspect-ratio-item: (
+/// 		// .card .aspect-ratio-item
+/// 	),
+/// 	aspect-ratio-item-top-left: (
+/// 		// .card .aspect-ratio-item-top-left
+/// 	),
+/// 	aspect-ratio-item-top-center: (
+/// 		// .card .aspect-ratio-item-top-center
+/// 	),
+/// 	aspect-ratio-item-top-right: (
+/// 		// .card .aspect-ratio-item-top-right
+/// 	),
+/// 	aspect-ratio-item-right-middle: (
+/// 		// .card .aspect-ratio-item-right-middle
+/// 	),
+/// 	aspect-ratio-item-bottom-right: (
+/// 		// .card .aspect-ratio-item-bottom-right
+/// 	),
+/// 	aspect-ratio-item-bottom-center: (
+/// 		// .card .aspect-ratio-item-bottom-center
+/// 	),
+/// 	aspect-ratio-item-bottom-left: (
+/// 		// .card .aspect-ratio-item-bottom-left
+/// 	),
+/// 	hr: (
+/// 		// .card > hr
+/// 		before: (
+/// 			// .card > hr::before
+/// 		),
+/// 		after: (
+/// 			// .card > hr::after
+/// 		),
+/// 	),
+/// 	sticker: (
+/// 		// .card .sticker
+/// 	),
+/// 	card: (
+/// 		// .card .card
+/// 	),
+/// 	card-header: (
+/// 		// .card .card-header
+/// 	),
+/// 	card-body: (
+/// 		// .card .card-body
+/// 	),
+/// 	card-footer: (
+/// 		// .card .card-footer
+/// 	),
+/// 	card-row: (
+/// 		// .card .card-row
+/// 		autofit-col: (
+/// 			// .card .card-row .autofit-col
+/// 		),
+/// 	),
+/// 	card-title: (
+/// 		// .card .card-title
+/// 	),
+/// 	card-subtitle: (
+/// 		// .card .card-subtitle
+/// 	),
+/// 	card-text: (
+/// 		// .card .card-text
+/// 	),
+/// 	card-link: (
+/// 		// .card .card-link
+/// 	),
+/// 	card-divider: (
+///			// .card .card-divider
+/// 	),
+/// 	card-type-asset-icon: (
+/// 		// .card .card-type-asset-icon
+/// 		inline-item: (
+/// 			// .card .card-type-asset-icon .inline-item
+/// 		),
+/// 		lexicon-icon: (
+/// 			// .card .card-type-asset-icon > .lexicon-icon
+/// 		),
+/// 		sticker: (
+/// 			// .card .card-type-asset-icon > .sticker
+/// 			sticker-overlay: (
+/// 				// .card .card-type-asset-icon > .sticker .sticker-overlay
+/// 			),
+/// 		),
+/// 	),
+/// 	dropdown-action: (
+/// 		// .card .dropdown-action
+/// 	),
+/// )
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null},
+/// hover-bg: {Color | String | Null},
+/// hover-border-color: {Color | String | List | Null},
+/// hover-box-shadow: {String | List | Null},
+/// hover-color: {Color | String | Null},
+/// hover-text-decoration: {String | Null},
+/// hover-card-title: {Map | Null},
+/// hover-card-subtitle: {Map | Null},
+/// hover-card-text: {Map | Null},
+/// hover-card-link: {Map | Null},
+/// focus-bg: {Color | String | Null},
+/// focus-border-color: {Color | String | List | Null},
+/// focus-box-shadow: {String | List | Null},
+/// focus-color: {Color | String | Null},
+/// focus-text-decoration: {String | Null},
+/// focus-card-title: {Map | Null},
+/// focus-card-subtitle: {Map | Null},
+/// focus-card-text: {Map | Null},
+/// focus-card-link: {Map | Null},
+/// active-bg: {Color | String | Null},
+/// active-border-color: {Color | String | List | Null},
+/// active-color: {Color | String | Null},
+/// active-card-title: {Map | Null},
+/// active-card-subtitle: {Map | Null},
+/// active-card-text: {Map | Null},
+/// active-card-link: {Map | Null},
+/// after-highlight: {Map | Null},
+
+@mixin clay-card-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+			)
+		);
+
+		$hover: setter(map-get($map, hover), ());
+		$hover: map-merge(
+			$hover,
+			(
+				background-color:
+					setter(
+						map-get($map, hover-bg),
+						map-get($hover, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, hover-border-color),
+						map-get($hover, border-color)
+					),
+				box-shadow:
+					setter(
+						map-get($map, hover-box-shadow),
+						map-get($hover, box-shadow)
+					),
+				color:
+					setter(map-get($map, hover-color), map-get($hover, color)),
+				text-decoration:
+					setter(
+						map-get($map, hover-text-decoration),
+						map-get($hover, text-decoration)
+					),
+			)
+		);
+
+		$old-hover-card-title: setter(map-get($map, hover-card-title), ());
+		$hover-card-title: setter(map-get($hover, card-title), ());
+		$hover-card-title: map-merge($hover-card-title, $old-hover-card-title);
+
+		$old-hover-card-subtitle: setter(
+			map-get($map, hover-card-subtitle),
+			()
+		);
+		$hover-card-subtitle: setter(map-get($hover, card-subtitle), ());
+		$hover-card-subtitle: map-merge(
+			$hover-card-subtitle,
+			$old-hover-card-subtitle
+		);
+
+		$old-hover-card-text: setter(map-get($map, hover-card-text), ());
+		$hover-card-text: setter(map-get($hover, card-text), ());
+		$hover-card-text: map-merge($hover-card-text, $old-hover-card-text);
+
+		$old-hover-card-link: setter(map-get($map, hover-card-link), ());
+		$hover-card-link: setter(map-get($hover, card-link), ());
+		$hover-card-link: map-merge($hover-card-link, $old-hover-card-link);
+
+		$focus: setter(map-get($map, focus), ());
+		$focus: map-merge(
+			$focus,
+			(
+				background-color:
+					setter(
+						map-get($map, focus-bg),
+						map-get($focus, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, focus-border-color),
+						map-get($focus, border-color)
+					),
+				box-shadow:
+					setter(
+						map-get($map, focus-box-shadow),
+						map-get($focus, box-shadow)
+					),
+				color:
+					setter(map-get($map, focus-color), map-get($focus, color)),
+				text-decoration:
+					setter(
+						map-get($map, focus-text-decoration),
+						map-get($focus, text-decoration)
+					),
+			)
+		);
+
+		$old-focus-card-title: setter(map-get($map, focus-card-title), ());
+		$focus-card-title: setter(map-get($focus, card-title), ());
+		$focus-card-title: map-merge($focus-card-title, $old-focus-card-title);
+
+		$old-focus-card-subtitle: setter(
+			map-get($map, focus-card-subtitle),
+			()
+		);
+		$focus-card-subtitle: setter(map-get($focus, card-subtitle), ());
+		$focus-card-subtitle: map-merge(
+			$focus-card-subtitle,
+			$old-focus-card-subtitle
+		);
+
+		$old-focus-card-text: setter(map-get($map, focus-card-text), ());
+		$focus-card-text: setter(map-get($focus, card-text), ());
+		$focus-card-text: map-merge($focus-card-text, $old-focus-card-text);
+
+		$old-focus-card-link: setter(map-get($map, focus-card-link), ());
+		$focus-card-link: setter(map-get($focus, card-link), ());
+		$focus-card-link: map-merge($focus-card-link, $old-focus-card-link);
+
+		$active: setter(map-get($map, active), ());
+		$active: map-merge(
+			$active,
+			(
+				background-color:
+					setter(
+						map-get($map, active-bg),
+						map-get($active, background-color)
+					),
+				border-color:
+					setter(
+						map-get($map, active-border-color),
+						map-get($active, border-color)
+					),
+				color:
+					setter(
+						map-get($map, active-color),
+						map-get($active, color)
+					),
+			)
+		);
+
+		$old-active-card-title: setter(map-get($map, active-card-title), ());
+		$active-card-title: setter(map-get($active, card-title), ());
+		$active-card-title: map-merge(
+			$active-card-title,
+			$old-active-card-title
+		);
+
+		$old-active-card-subtitle: setter(
+			map-get($map, active-card-subtitle),
+			()
+		);
+		$active-card-subtitle: setter(map-get($active, card-subtitle), ());
+		$active-card-subtitle: map-merge(
+			$active-card-subtitle,
+			$old-active-card-subtitle
+		);
+
+		$old-active-card-text: setter(map-get($map, active-card-text), ());
+		$active-card-text: setter(map-get($active, card-text), ());
+		$active-card-text: map-merge($active-card-text, $old-active-card-text);
+
+		$old-active-card-link: setter(map-get($map, active-card-link), ());
+		$active-card-link: setter(map-get($active, card-link), ());
+		$active-card-link: map-merge($active-card-link, $old-active-card-link);
+
+		$aspect-ratio: setter(map-get($map, aspect-ratio), ());
+
+		$aspect-ratio-custom-control-label: setter(
+			map-deep-get($aspect-ratio, custom-control, label),
+			()
+		);
+
+		$checkbox: setter(map-get($map, checkbox), ());
+		$checkbox: map-merge(
+			$checkbox,
+			(
+				cursor:
+					setter(
+						map-get($map, checkbox-cursor),
+						map-get($checkbox, cursor),
+						map-get($aspect-ratio-custom-control-label, cursor)
+					),
+			)
+		);
+
+		$aspect-ratio-custom-control-label: map-deep-merge(
+			$aspect-ratio-custom-control-label,
+			$checkbox
+		);
+
+		$aspect-ratio: map-deep-merge(
+			$aspect-ratio,
+			(
+				background-color:
+					setter(
+						map-get($map, aspect-ratio-bg),
+						map-get($map, aspect-ratio-checkered-bg),
+						map-get($aspect-ratio, background-color)
+					),
+				checkered-foreground-color:
+					setter(
+						map-get($map, aspect-ratio-checkered-fg),
+						map-get($aspect-ratio, checkered-foreground-color)
+					),
+				border-color:
+					setter(
+						map-get($map, aspect-ratio-border-color),
+						map-get($aspect-ratio, border-color)
+					),
+				border-style:
+					setter(
+						map-get($map, aspect-ratio-border-style),
+						map-get($aspect-ratio, border-style)
+					),
+				border-width:
+					setter(
+						map-get($map, aspect-ratio-border-bottom-width),
+						map-get($map, aspect-ratio-border-width),
+						map-get($aspect-ratio, border-width)
+					),
+				horizontal:
+					setter(
+						map-get($map, aspect-ratio-horizontal),
+						map-get($aspect-ratio, horizontal)
+					),
+				vertical:
+					setter(
+						map-get($map, aspect-ratio-vertical),
+						map-get($aspect-ratio, vertical)
+					),
+				custom-control: (
+					label: $aspect-ratio-custom-control-label,
+				),
+			)
+		);
+
+		$aspect-ratio-checkered-fg: map-get(
+			$aspect-ratio,
+			checkered-foreground-color
+		);
+
+		$card-body: setter(map-get($map, card-body), ());
+		$card-body: map-merge(
+			$card-body,
+			(
+				padding-bottom:
+					setter(
+						map-get($map, card-body-padding-bottom),
+						map-get($card-body, padding-bottom)
+					),
+				padding-left:
+					setter(
+						map-get($map, card-body-padding-left),
+						map-get($card-body, padding-left)
+					),
+				padding-right:
+					setter(
+						map-get($map, card-body-padding-right),
+						map-get($card-body, padding-right)
+					),
+				padding-top:
+					setter(
+						map-get($map, card-body-padding-top),
+						map-get($card-body, padding-top)
+					),
+			)
+		);
+
+		$card-row: setter(map-get($map, card-row), ());
+		$card-row: map-merge(
+			$card-row,
+			(
+				align-items:
+					setter(
+						map-get($map, card-row-align-items),
+						map-get($card-row, align-items)
+					),
+			)
+		);
+
+		$card-type-asset-icon: setter(map-get($map, card-type-asset-icon), ());
+
+		$asset-icon: setter(map-get($map, asset-icon), ());
+
+		$asset-icon-lexicon-icon: setter(
+			map-get($asset-icon, lexicon-icon),
+			()
+		);
+
+		$card-type-asset-icon-lexicon-icon: setter(
+			map-get($card-type-asset-icon, lexicon-icon),
+			()
+		);
+		$card-type-asset-icon-lexicon-icon: map-merge(
+			$card-type-asset-icon-lexicon-icon,
+			$asset-icon-lexicon-icon
+		);
+		$card-type-asset-icon-lexicon-icon: map-merge(
+			$card-type-asset-icon-lexicon-icon,
+			(
+				height:
+					setter(
+						map-get($map, asset-icon-lexicon-icon-height),
+						map-get($card-type-asset-icon-lexicon-icon, height)
+					),
+				width:
+					setter(
+						map-get($map, asset-icon-lexicon-icon-width),
+						map-get($card-type-asset-icon-lexicon-icon, width)
+					),
+			)
+		);
+
+		$card-type-asset-icon: map-deep-merge(
+			$card-type-asset-icon,
+			$asset-icon
+		);
+		$card-type-asset-icon: map-deep-merge(
+			$card-type-asset-icon,
+			(
+				color:
+					setter(
+						map-get($map, asset-icon-color),
+						map-get($card-type-asset-icon, color)
+					),
+				max-width:
+					setter(
+						map-get($map, asset-icon-max-width),
+						map-get($card-type-asset-icon, max-width)
+					),
+				min-width:
+					setter(
+						map-get($map, asset-icon-min-width),
+						map-get($card-type-asset-icon, min-width)
+					),
+				width:
+					setter(
+						map-get($map, asset-icon-width),
+						map-get($card-type-asset-icon, width)
+					),
+				lexicon-icon: $card-type-asset-icon-lexicon-icon,
+			)
+		);
+
+		$card-type-asset-icon-sticker: setter(
+			map-get($card-type-asset-icon, sticker),
+			()
+		);
+		$card-type-asset-icon-sticker: map-merge(
+			$card-type-asset-icon-sticker,
+			(
+				border-radius:
+					setter(
+						map-get($map, asset-icon-sticker-border-radius),
+						map-get($card-type-asset-icon-sticker, border-radius)
+					),
+				font-size:
+					setter(
+						map-get($map, asset-icon-sticker-font-size),
+						map-get($card-type-asset-icon-sticker, font-size)
+					),
+			)
+		);
+
+		$dropdown-action: setter(map-get($map, dropdown-action), ());
+		$dropdown-action: map-merge(
+			$dropdown-action,
+			(
+				margin-bottom:
+					setter(
+						map-get($map, dropdown-action-offset-bottom),
+						map-get($dropdown-action, margin-bottom)
+					),
+				margin-left:
+					setter(
+						map-get($map, dropdown-action-offset-left),
+						map-get($dropdown-action, margin-left)
+					),
+				margin-right:
+					setter(
+						map-get($map, dropdown-action-offset-right),
+						map-get($dropdown-action, margin-right)
+					),
+				margin-top:
+					setter(
+						map-get($map, dropdown-action-offset-top),
+						map-get($dropdown-action, margin-top)
+					),
+			)
+		);
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			@if (length($hover) != 0) {
+				&:hover,
+				&.hover {
+					@include clay-css($hover);
+
+					$_after: map-get($hover, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					@if (length($hover-card-title) != 0) {
+						.card-title {
+							@include clay-link($hover-card-title);
+						}
+					}
+
+					@if (length($hover-card-subtitle) != 0) {
+						.card-subtitle {
+							@include clay-link($hover-card-subtitle);
+						}
+					}
+
+					@if (length($hover-card-text) != 0) {
+						.card-text {
+							@include clay-link($hover-card-text);
+						}
+					}
+
+					@if (length($hover-card-link) != 0) {
+						.card-link {
+							@include clay-link($hover-card-link);
+						}
+					}
+				}
+			}
+
+			@if (length($focus) != 0) {
+				@at-root {
+					&.focus,
+					#{$focus-visible-selector},
+					#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+						@include clay-css($focus);
+
+						$_after: map-get($focus, after);
+
+						@if ($_after) {
+							&::after {
+								@include clay-css($_after);
+							}
+						}
+
+						@if (length($focus-card-title) != 0) {
+							.card-title {
+								@include clay-link($focus-card-title);
+							}
+						}
+
+						@if (length($focus-card-subtitle) != 0) {
+							.card-subtitle {
+								@include clay-link($focus-card-subtitle);
+							}
+						}
+
+						@if (length($focus-card-text) != 0) {
+							.card-text {
+								@include clay-link($focus-card-text);
+							}
+						}
+
+						@if (length($focus-card-link) != 0) {
+							.card-link {
+								@include clay-link($focus-card-link);
+							}
+						}
+					}
+				}
+			}
+
+			@if (length($active) != 0) {
+				&:active,
+				&.active {
+					@include clay-css($active);
+
+					$_after: map-get($active, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					@if (length($active-card-title) != 0) {
+						.card-title {
+							@include clay-link($active-card-title);
+						}
+					}
+
+					@if (length($active-card-subtitle) != 0) {
+						.card-subtitle {
+							@include clay-link($active-card-subtitle);
+						}
+					}
+
+					@if (length($active-card-text) != 0) {
+						.card-text {
+							@include clay-link($active-card-text);
+						}
+					}
+
+					@if (length($active-card-link) != 0) {
+						.card-link {
+							@include clay-link($active-card-link);
+						}
+					}
+				}
+			}
+
+			$_disabled: map-get($map, disabled);
+
+			@if ($_disabled) {
+				&:disabled,
+				&.disabled {
+					@include clay-css($_disabled);
+
+					$_after: map-get($_disabled, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					$_card-title: map-get($_disabled, card-title);
+
+					@if ($_card-title) {
+						.card-title {
+							@include clay-link($_card-title);
+						}
+					}
+
+					$_card-subtitle: map-get($_disabled, card-subtitle);
+
+					@if ($_card-subtitle) {
+						.card-subtitle {
+							@include clay-link($_card-subtitle);
+						}
+					}
+
+					$_card-text: map-get($_disabled, card-text);
+
+					@if ($_card-text) {
+						.card-text {
+							@include clay-link($_card-text);
+						}
+					}
+
+					$_card-link: map-get($_disabled, card-link);
+
+					@if ($_card-link) {
+						.card-link {
+							@include clay-link($_card-link);
+						}
+					}
+				}
+			}
+
+			$_after-highlight: map-get($map, after-highlight);
+
+			@if ($_after-highlight) {
+				@include clay-after-highlight-variant($_after-highlight);
+			}
+
+			$_before: map-get($map, before);
+
+			@if ($_before) {
+				&::before {
+					@include clay-css($_before);
+				}
+			}
+
+			$_after: map-get($map, after);
+
+			@if ($_after) {
+				&::after {
+					@include clay-css($_after);
+				}
+			}
+
+			$_form-check-card: map-get($map, form-check-card);
+
+			@if ($_form-check-card) {
+				&.form-check-card {
+					@include clay-form-check-card-variant($_form-check-card);
+				}
+			}
+
+			$_aspect-ratio: map-get($map, aspect-ratio);
+
+			@if ($_aspect-ratio) {
+				.aspect-ratio {
+					@include clay-aspect-ratio-variant($_aspect-ratio);
+
+					@if ($aspect-ratio-checkered-fg) {
+						@include clay-bg-checkered($aspect-ratio-checkered-fg);
+					}
+
+					$_custom-control-label: map-deep-get(
+						$aspect-ratio,
+						custom-control,
+						label
+					);
+
+					@if ($_custom-control-label) {
+						.custom-control label,
+						.form-check-label {
+							@include clay-css($_custom-control-label);
+						}
+					}
+
+					$_label: map-get($aspect-ratio, label);
+
+					@if ($_label) {
+						.label {
+							@include clay-label-variant($_label);
+						}
+					}
+				}
+			}
+
+			$_aspect-ratio-item: map-get($map, aspect-ratio-item);
+
+			@if ($_aspect-ratio-item) {
+				.aspect-ratio-item {
+					@include clay-aspect-ratio-item-variant(
+						$_aspect-ratio-item
+					);
+				}
+			}
+
+			$_aspect-ratio-item-top-left: map-get(
+				$map,
+				aspect-ratio-item-top-left
+			);
+
+			@if ($_aspect-ratio-item-top-left) {
+				.aspect-ratio-item-top-left {
+					@include clay-css($_aspect-ratio-item-top-left);
+				}
+			}
+
+			$_aspect-ratio-item-top-center: map-get(
+				$map,
+				aspect-ratio-item-top-center
+			);
+
+			@if ($_aspect-ratio-item-top-center) {
+				.aspect-ratio-item-top-center {
+					@include clay-css($_aspect-ratio-item-top-center);
+				}
+			}
+
+			$_aspect-ratio-item-top-right: map-get(
+				$map,
+				aspect-ratio-item-top-right
+			);
+
+			@if ($_aspect-ratio-item-top-right) {
+				.aspect-ratio-item-top-right {
+					@include clay-css($_aspect-ratio-item-top-right);
+				}
+			}
+
+			$_aspect-ratio-item-right-middle: map-get(
+				$map,
+				aspect-ratio-item-right-middle
+			);
+
+			@if ($_aspect-ratio-item-right-middle) {
+				.aspect-ratio-item-right-middle {
+					@include clay-css($_aspect-ratio-item-right-middle);
+				}
+			}
+
+			$_aspect-ratio-item-bottom-right: map-get(
+				$map,
+				aspect-ratio-item-bottom-right
+			);
+
+			@if ($_aspect-ratio-item-bottom-right) {
+				.aspect-ratio-item-bottom-right {
+					@include clay-css($_aspect-ratio-item-bottom-right);
+				}
+			}
+
+			$_aspect-ratio-item-bottom-center: map-get(
+				$map,
+				aspect-ratio-item-bottom-center
+			);
+
+			@if ($_aspect-ratio-item-bottom-center) {
+				.aspect-ratio-item-bottom-center {
+					@include clay-css($_aspect-ratio-item-bottom-center);
+				}
+			}
+
+			$_aspect-ratio-item-bottom-left: map-get(
+				$map,
+				aspect-ratio-item-bottom-left
+			);
+
+			@if ($_aspect-ratio-item-bottom-left) {
+				.aspect-ratio-item-bottom-left {
+					@include clay-css($_aspect-ratio-item-bottom-left);
+				}
+			}
+
+			$_hr: map-get($map, hr);
+
+			@if ($_hr) {
+				> hr {
+					@include clay-css($_hr);
+
+					$_before: map-get($_hr, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_hr, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+				}
+			}
+
+			$_sticker: map-get($map, sticker);
+
+			@if ($_sticker) {
+				.sticker {
+					@include clay-sticker-variant($_sticker);
+				}
+			}
+
+			$_card: map-get($map, card);
+
+			@if ($_card) {
+				.card {
+					@include clay-css($_card);
+				}
+			}
+
+			$_card-header: map-get($map, card-header);
+
+			@if ($_card-header) {
+				.card-header {
+					@include clay-card-section-variant($_card-header);
+				}
+			}
+
+			@if (length($card-body) != 0) {
+				.card-body {
+					@include clay-card-section-variant($card-body);
+				}
+			}
+
+			$_card-footer: map-get($map, card-footer);
+
+			@if ($_card-footer) {
+				.card-footer {
+					@include clay-card-section-variant($_card-footer);
+				}
+			}
+
+			@if (length($card-row) != 0) {
+				.card-row {
+					@include clay-card-section-variant($card-row);
+				}
+			}
+
+			$_card-title: map-get($map, card-title);
+
+			@if ($_card-title) {
+				.card-title {
+					@include clay-link($_card-title);
+				}
+			}
+
+			$_card-subtitle: map-get($map, card-subtitle);
+
+			@if ($_card-subtitle) {
+				.card-subtitle {
+					@include clay-link($_card-subtitle);
+				}
+			}
+
+			$_card-text: map-get($map, card-text);
+
+			@if ($_card-text) {
+				.card-text {
+					@include clay-link($_card-text);
+				}
+			}
+
+			$_card-link: map-get($map, card-link);
+
+			@if ($_card-link) {
+				.card-link {
+					@include clay-link($_card-link);
+				}
+			}
+
+			$_card-divider: map-get($map, card-divider);
+
+			@if ($_card-divider) {
+				.card-divider {
+					@include clay-css($_card-divider);
+				}
+			}
+
+			@if (length($card-type-asset-icon) != 0) {
+				.card-type-asset-icon {
+					@include clay-css($card-type-asset-icon);
+
+					$_inline-item: map-get($card-type-asset-icon, inline-item);
+
+					@if ($_inline-item) {
+						.inline-item {
+							@include clay-css($_inline-item);
+						}
+					}
+
+					$_lexicon-icon: map-get(
+						$card-type-asset-icon,
+						lexicon-icon
+					);
+
+					@if ($_lexicon-icon) {
+						> .lexicon-icon {
+							@include clay-css($_lexicon-icon);
+						}
+					}
+
+					@if (length($card-type-asset-icon-sticker) != 0) {
+						> .sticker {
+							@include clay-css($card-type-asset-icon-sticker);
+
+							$_sticker-overlay: map-get(
+								$card-type-asset-icon-sticker,
+								sticker-overlay
+							);
+
+							@if ($_sticker-overlay) {
+							}
+							.sticker-overlay {
+								@include clay-css($_sticker-overlay);
+							}
+						}
+					}
+				}
+			}
+
+			$_custom-control: map-get($map, custom-control);
+
+			@if ($_custom-control) {
+				.form-check-input {
+					$_hover: map-get($_custom-control, hover);
+
+					@if ($_hover) {
+						&:hover {
+							$_card: map-get($_hover, card);
+
+							@if ($_card) {
+								~ .card {
+									@include clay-card-variant($_card);
+								}
+							}
+						}
+					}
+
+					$_focus: map-get($_custom-control, focus);
+
+					@if ($_focus) {
+						&:focus {
+							$_card: map-get($_focus, card);
+
+							@if ($_card) {
+								~ .card {
+									@include clay-card-variant($_card);
+								}
+							}
+						}
+					}
+
+					$_active: map-get($_custom-control, active);
+
+					@if ($_active) {
+						&:active {
+							$_card: map-get($_active, card);
+
+							@if ($_card) {
+								~ .card {
+									@include clay-card-variant($_card);
+								}
+							}
+						}
+					}
+
+					$_disabled: map-get($_custom-control, disabled);
+
+					@if ($_disabled) {
+						&[disabled],
+						&:disabled {
+							$_card: map-get($_disabled, card);
+
+							@if ($_card) {
+								~ .card {
+									@include clay-card-variant($_card);
+								}
+							}
+						}
+					}
+
+					$_checked: map-get($_custom-control, checked);
+
+					@if ($_checked) {
+						&:checked {
+							$_card: map-get($_checked, card);
+
+							@if ($_card) {
+								~ .card {
+									@include clay-card-variant($_card);
+								}
+							}
+						}
+					}
+
+					$_indeterminate: map-get($_custom-control, indeterminate);
+
+					@if ($_indeterminate) {
+						&:indeterminate {
+							$_card: map-get($_indeterminate, card);
+
+							@if ($_card) {
+								~ .card {
+									@include clay-card-variant($_card);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			@if (length($dropdown-action) != 0) {
+				.dropdown-action {
+					@include clay-button-variant($dropdown-action);
+				}
+			}
+		}
+	}
+}
+
+/// A mixin for creating the base component `.card-type-asset` that is used with `.image-card`, `.file-card`, `.user-card`.
+/// @deprecated use the mixin `clay-card-variant` instead
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// aspect-ratio-border-color: {Color | String | List | Null}, // Default: $card-border-color
+/// aspect-ratio-border-style: {String | List | Null}, // Default: solid
+/// aspect-ratio-border-bottom-width: {Number | List | Null}, // deprecated as of v2.5.1 use `aspect-ratio-border-width` instead. Default: 0 0 0.0625rem 0
+/// aspect-ratio-border-width: {Number | List | Null}, // Default: $aspect-ratio-border-width
+/// aspect-ratio-horizontal: {Number | Null}, // Sets the `clay-aspect-ratio` `$width`. Default: 16
+/// aspect-ratio-vertical: {Number | Null}, // Sets the `clay-aspect-ratio` `$height`. Default: 9
+/// card-body-padding-bottom: {Number | String | Null},
+/// card-body-padding-left: {Number | String | Null},
+/// card-body-padding-right: {Number | String | Null},
+/// card-body-padding-top: {Number | String | Null},
+/// card-row-align-items: {String | Null}, // Default: flex-start
+/// checkbox-cursor: {String | Null}, // Default: $link-cursor
+/// asset-icon-color: {Color | String | Null},
+/// asset-icon-width: {Number | String | Null}, // Default: 22.225%
+/// asset-icon-sticker-border-radius: {Number | List | Null}, // Default: 50%
+/// asset-icon-sticker-font-size: {Number | String | Null}, // Default: 2vw
+/// dropdown-action-offset-bottom: {Number | String | Null},
+/// dropdown-action-offset-left: {Number | String | Null},
+/// dropdown-action-offset-right: {Number | String | Null}, // Default: -0.5rem
+/// dropdown-action-offset-top: {Number | String | Null}, // Default: -0.1875rem
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-card-type-asset($map) {
+	$enabled: setter(map-get($map, enabled), true);
+
+	$aspect-ratio: setter(map-get($map, aspect-ratio), ());
+	$aspect-ratio: map-merge(
+		$aspect-ratio,
+		(
+			border-color:
+				setter(
+					map-get($map, aspect-ratio-border-color),
+					map-get($aspect-ratio, border-color),
+					if(
+						variable-exists(card-border-color),
+						$card-border-color,
+						if(
+							variable-exists(cadmin-card-border-color),
+							$cadmin-card-border-color,
+							null
+						)
+					)
+				),
+			border-style:
+				setter(
+					map-get($map, aspect-ratio-border-style),
+					map-get($aspect-ratio, border-style),
+					solid
+				),
+			border-width:
+				setter(
+					map-get($map, aspect-ratio-border-bottom-width),
+					map-get($map, aspect-ratio-border-width),
+					map-get($aspect-ratio, border-width),
+					0 0 0.0625rem 0
+				),
+			horizontal:
+				setter(
+					map-get($map, aspect-ratio-horizontal),
+					map-get($aspect-ratio, horizontal),
+					16
+				),
+			vertical:
+				setter(
+					map-get($map, aspect-ratio-vertical),
+					map-get($aspect-ratio, vertical),
+					9
+				),
+		)
+	);
+
+	$aspect-ratio-horizontal: map-get($aspect-ratio, horizontal);
+	$aspect-ratio-vertical: map-get($aspect-ratio, vertical);
+
+	$card-body: setter(map-get($map, card-body), ());
+	$card-body: map-merge(
+		$card-body,
+		(
+			padding-bottom:
+				setter(
+					map-get($map, card-body-padding-bottom),
+					map-get($card-body, padding-bottom)
+				),
+			padding-left:
+				setter(
+					map-get($map, card-body-padding-left),
+					map-get($card-body, padding-left)
+				),
+			padding-right:
+				setter(
+					map-get($map, card-body-padding-right),
+					map-get($card-body, padding-right)
+				),
+			padding-top:
+				setter(
+					map-get($map, card-body-padding-top),
+					map-get($card-body, padding-top)
+				),
+		)
+	);
+
+	$card-row: setter(map-get($map, card-row), ());
+	$card-row: map-merge(
+		$card-row,
+		(
+			align-items:
+				setter(
+					map-get($map, card-row-align-items),
+					map-get($card-row, align-items),
+					flex-start
+				),
+		)
+	);
+
+	$checkbox: setter(map-get($map, checkbox), ());
+	$checkbox: map-merge(
+		$checkbox,
+		(
+			cursor:
+				setter(
+					map-get($map, checkbox-cursor),
+					map-get($checkbox, cursor),
+					if(
+						variable-exists(link-cursor),
+						$link-cursor,
+						if(
+							variable-exists(cadmin-link-cursor),
+							$cadmin-link-cursor,
+							null
+						)
+					)
+				),
+		)
+	);
+
+	$card-type-asset-icon: setter(map-get($map, card-type-asset-icon), ());
+	$card-type-asset-icon: map-merge(
+		$card-type-asset-icon,
+		(
+			color:
+				setter(
+					map-get($map, asset-icon-color),
+					map-get($card-type-asset-icon, color)
+				),
+			width:
+				setter(
+					map-get($map, asset-icon-width),
+					map-get($card-type-asset-icon, width),
+					22.225%
+				),
+		)
+	);
+
+	$card-type-asset-icon-sticker: setter(
+		map-get($card-type-asset-icon, sticker),
+		()
+	);
+	$card-type-asset-icon-sticker: map-merge(
+		$card-type-asset-icon-sticker,
+		(
+			border-radius:
+				setter(
+					map-get($map, asset-icon-sticker-border-radius),
+					map-get($card-type-asset-icon-sticker, border-radius),
+					50%
+				),
+			font-size:
+				setter(
+					map-get($map, asset-icon-sticker-font-size),
+					map-get($card-type-asset-icon-sticker, font-size),
+					2vw
+				),
+		)
+	);
+
+	$dropdown-action: setter(map-get($map, dropdown-action), ());
+	$dropdown-action: map-merge(
+		$dropdown-action,
+		(
+			margin-bottom:
+				setter(
+					map-get($map, dropdown-action-offset-bottom),
+					map-get($dropdown-action, margin-bottom)
+				),
+			margin-left:
+				setter(
+					map-get($map, dropdown-action-offset-left),
+					map-get($dropdown-action, margin-left)
+				),
+			margin-right:
+				setter(
+					map-get($map, dropdown-action-offset-right),
+					map-get($dropdown-action, margin-right),
+					-0.5rem
+				),
+			margin-top:
+				setter(
+					map-get($map, dropdown-action-offset-top),
+					map-get($dropdown-action, margin-top),
+					-0.1875rem
+				),
+		)
+	);
+
+	@if ($enabled) {
+		.aspect-ratio {
+			@if (length($aspect-ratio) != 0) {
+				@include clay-css($aspect-ratio);
+			}
+
+			@if ($aspect-ratio-horizontal and $aspect-ratio-vertical) {
+				@include clay-aspect-ratio(
+					$aspect-ratio-horizontal,
+					$aspect-ratio-vertical
+				);
+			}
+
+			.custom-control label,
+			.form-check-label {
+				bottom: 0;
+				cursor: map-get($checkbox, cursor);
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+		}
+
+		@if (length($card-body) != 0) {
+			.card-body {
+				@include clay-css($card-body);
+			}
+		}
+
+		@if (length($card-row) != 0) {
+			.card-row {
+				@include clay-css($card-row);
+			}
+		}
+
+		.card-type-asset-icon {
+			@if (length($card-type-asset-icon) != 0) {
+				@include clay-css($card-type-asset-icon);
+			}
+
+			.inline-item {
+				bottom: 0;
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+
+			> .lexicon-icon {
+				height: 100%;
+				width: 100%;
+			}
+
+			@if (length($card-type-asset-icon-sticker) != 0) {
+				> .sticker {
+					@include clay-css($card-type-asset-icon-sticker);
+				}
+			}
+
+			$_border-radius: map-get(
+				$card-type-asset-icon-sticker,
+				border-radius
+			);
+
+			@if ($_border-radius) {
+				.sticker-overlay {
+					@include border-radius($_border-radius);
+				}
+			}
+		}
+
+		@if (length($dropdown-action) != 0) {
+			.dropdown-action {
+				@include clay-css($dropdown-action);
+			}
+		}
+	}
+}
+
+/// A mixin to create `.card-type-asset` variants. This mixin is used by `.image-card`, `.file-card`, `.user-card`.
+/// @deprecated use the mixin `clay-card-variant` instead
+/// @param {Map} $map - A map of key-value pairs. The keys are defined in the mixin. Example below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// aspect-ratio-bg: {Color | String | Null},
+/// aspect-ratio-checkered-fg: {Color | Null}, // Pass parameter to `clay-bg-checkered` mixin
+/// aspect-ratio-checkered-bg: {Color},
+/// asset-icon-color: {Color | String | Null},
+/// asset-icon-max-width: {Number | String | Null},
+/// asset-icon-min-width: {Number | String | Null},
+/// asset-icon-width: {Number | String | Null},
+/// asset-icon-lexicon-icon-height: {Number | String | Null},
+/// asset-icon-lexicon-icon-width: {Number | String | Null},
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-card-type-asset-variant($map) {
+	$enabled: setter(map-get($map, enabled), true);
+
+	$aspect-ratio: setter(map-get($map, aspect-ratio), ());
+	$aspect-ratio: map-merge(
+		$aspect-ratio,
+		(
+			background-color:
+				setter(
+					map-get($map, aspect-ratio-bg),
+					map-get($map, aspect-ratio-checkered-bg),
+					map-get($aspect-ratio, background-color)
+				),
+			checkered-foreground-color:
+				setter(
+					map-get($map, aspect-ratio-checkered-fg),
+					map-get($aspect-ratio, checkered-foreground-color)
+				),
+		)
+	);
+
+	$aspect-ratio-checkered-fg: map-get(
+		$aspect-ratio,
+		checkered-foreground-color
+	);
+
+	$asset-icon: setter(map-get($map, asset-icon), ());
+	$asset-icon: map-merge(
+		$asset-icon,
+		(
+			color:
+				setter(
+					map-get($map, asset-icon-color),
+					map-get($asset-icon, color)
+				),
+			max-width:
+				setter(
+					map-get($map, asset-icon-max-width),
+					map-get($asset-icon, max-width)
+				),
+			min-width:
+				setter(
+					map-get($map, asset-icon-min-width),
+					map-get($asset-icon, min-width)
+				),
+			width:
+				setter(
+					map-get($map, asset-icon-width),
+					map-get($asset-icon, width)
+				),
+		)
+	);
+
+	$asset-icon-lexicon-icon: setter(map-get($asset-icon, lexicon-icon), ());
+	$asset-icon-lexicon-icon: map-merge(
+		$asset-icon-lexicon-icon,
+		(
+			height:
+				setter(
+					map-get($map, asset-icon-lexicon-icon-height),
+					map-get($asset-icon-lexicon-icon, height)
+				),
+			width:
+				setter(
+					map-get($map, asset-icon-lexicon-icon-width),
+					map-get($asset-icon-lexicon-icon, width)
+				),
+		)
+	);
+
+	@if ($enabled) {
+		@if (length($map) != 0) {
+			@include clay-css($map);
+		}
+
+		.aspect-ratio {
+			@if (length($aspect-ratio) != 0) {
+				@include clay-css($aspect-ratio);
+			}
+
+			@if ($aspect-ratio-checkered-fg) {
+				@include clay-bg-checkered($aspect-ratio-checkered-fg);
+			}
+		}
+
+		@if (length($asset-icon) != 0) {
+			.card-type-asset-icon {
+				@include clay-css($asset-icon);
+
+				@if (length($asset-icon-lexicon-icon) != 0) {
+					.lexicon-icon {
+						@include clay-css($asset-icon-lexicon-icon);
+					}
+				}
+			}
+		}
+	}
+}
+
+/// A mixin for creating the base component `.card-type-directory`.
+/// @deprecated use the mixin `clay-card-variant` instead
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// card-body-padding-bottom: {Number | String | Null},
+/// card-body-padding-left: {Number | String | Null},
+/// card-body-padding-right: {Number | String | Null},
+/// card-body-padding-top: {Number | String | Null},
+/// sticker-font-size: {Number | String | Null},
+/// sticker-line-height: {Number | String | Null},
+/// sticker-size: {Number | String | Null},
+/// dropdown-action-offset-bottom: {Number | String | Null},
+/// dropdown-action-offset-left: {Number | String | Null},
+/// dropdown-action-offset-right: {Number | String | Null}, // Default: -0.5rem
+/// dropdown-action-offset-top: {Number | String | Null},
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-card-type-directory($map) {
+	$enabled: setter(map-get($map, enabled), true);
+
+	$base: setter($map, ());
+
+	$card-body: setter(map-get($map, card-body), ());
+	$card-body: map-merge(
+		$card-body,
+		(
+			padding-bottom:
+				setter(
+					map-get($map, card-body-padding-bottom),
+					map-get($card-body, padding-bottom)
+				),
+			padding-left:
+				setter(
+					map-get($map, card-body-padding-left),
+					map-get($card-body, padding-left)
+				),
+			padding-right:
+				setter(
+					map-get($map, card-body-padding-right),
+					map-get($card-body, padding-right)
+				),
+			padding-top:
+				setter(
+					map-get($map, card-body-padding-top),
+					map-get($card-body, padding-top)
+				),
+		)
+	);
+
+	$sticker: setter(map-get($map, sticker), ());
+	$sticker: map-merge(
+		$sticker,
+		(
+			font-size:
+				setter(
+					map-get($map, sticker-font-size),
+					map-get($sticker, font-size)
+				),
+			height:
+				setter(map-get($map, sticker-size), map-get($sticker, height)),
+			line-height:
+				setter(
+					map-get($map, sticker-line-height),
+					map-get($map, sticker-size),
+					map-get($sticker, line-height)
+				),
+			width: setter(map-get($map, sticker-size), map-get($sticker, width)),
+		)
+	);
+
+	$sticker-size: map-get($map, sticker-size);
+
+	$dropdown-action: setter(map-get($map, dropdown-action), ());
+	$dropdown-action: map-merge(
+		$dropdown-action,
+		(
+			margin-bottom:
+				setter(
+					map-get($map, dropdown-action-offset-bottom),
+					map-get($dropdown-action, margin-bottom)
+				),
+			margin-left:
+				setter(
+					map-get($map, dropdown-action-offset-left),
+					map-get($dropdown-action, margin-left)
+				),
+			margin-right:
+				setter(
+					map-get($map, dropdown-action-offset-right),
+					map-get($dropdown-action, margin-right),
+					-0.5rem
+				),
+			margin-top:
+				setter(
+					map-get($map, dropdown-action-offset-top),
+					map-get($dropdown-action, margin-top)
+				),
+		)
+	);
+
+	@if ($enabled) {
+		@if (length($base) != 0) {
+			@include clay-css($base);
+		}
+
+		@if (length($card-body) != 0) {
+			.card-body {
+				@include clay-css($card-body);
+			}
+		}
+
+		@if (length($dropdown-action) != 0) {
+			.dropdown-action {
+				@include clay-css($dropdown-action);
+			}
+		}
+
+		@if (length($sticker) != 0) {
+			.sticker {
+				@include clay-css($sticker);
+			}
+		}
+	}
+}
+
+/// A mixin to help create `form-check-card` variants.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// (
+/// 	enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// 	// .form-check-card
+/// 	hover: (
+/// 		// .form-check-card:hover
+/// 		card: (
+/// 			// .form-check-card:hover .card
+/// 			//     @include clay-card-variant();
+/// 		),
+/// 	),
+/// 	focus: (
+/// 		// .form-check-card.focus
+/// 		card: (
+/// 			// .form-check-card.focus .card
+/// 			//     @include clay-card-variant();
+/// 		),
+/// 	),
+/// 	active: (
+/// 		// .form-check-card.active
+/// 		card: (
+/// 			// .form-check-card.active .card
+/// 			//     @include clay-card-variant();
+/// 		),
+/// 	),
+/// 	checked: (
+/// 		// .form-check-card.checked
+/// 		card: (
+/// 			// .form-check-card.checked .card
+/// 			//     @include clay-card-variant();
+/// 		),
+/// 	),
+/// 	indeterminate: (
+/// 		// .form-check-card.indeterminate
+/// 		card: (
+/// 			// .form-check-card.indeterminate .card
+/// 			//     @include clay-card-variant();
+/// 		),
+/// 	),
+/// 	card: (
+/// 		// .form-check-card .card
+/// 		//     @include clay-card-variant();
+/// 	),
+/// 	form-check-input: (
+/// 		// .form-check-card .form-check-input
+/// 	),
+/// 	form-check-label: (
+/// 		// .form-check-card .form-check-label
+/// 	),
+/// 	custom-control: (
+/// 		// .form-check-card .custom-control
+/// 		//     @include clay-custom-control-variant();
+/// 	),
+/// )
+
+@mixin clay-form-check-card-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		@if ($enabled) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			$_hover: map-get($map, hover);
+
+			@if ($_hover) {
+				&:hover {
+					$_card: map-get($_hover, card);
+
+					@if ($_card) {
+						.card {
+							@include clay-card-variant($_card);
+						}
+					}
+				}
+			}
+
+			$_focus: map-get($map, focus);
+
+			@if ($_focus) {
+				&.focus {
+					$_card: map-get($_focus, card);
+
+					@if ($_card) {
+						.card {
+							@include clay-card-variant($_card);
+						}
+					}
+				}
+			}
+
+			$_active: map-get($map, active);
+
+			@if ($_active) {
+				&.active {
+					$_card: map-get($_active, card);
+
+					@if ($_card) {
+						.card {
+							@include clay-card-variant($_card);
+						}
+					}
+				}
+			}
+
+			$_checked: map-get($map, checked);
+
+			@if ($_checked) {
+				&.checked {
+					$_card: map-get($_checked, card);
+
+					@if ($_card) {
+						.card {
+							@include clay-card-variant($_card);
+						}
+					}
+				}
+			}
+
+			$_indeterminate: map-get($map, indeterminate);
+
+			@if ($_indeterminate) {
+				&.indeterminate {
+					$_card: map-get($_indeterminate, card);
+
+					@if ($_card) {
+						.card {
+							@include clay-card-variant($_card);
+						}
+					}
+				}
+			}
+
+			$_card: map-get($map, card);
+
+			@if ($_card) {
+				.card {
+					@include clay-card-variant($_card);
+				}
+			}
+
+			$_form-check-input: map-get($map, form-check-input);
+
+			@if ($_form-check-input) {
+				.form-check-input {
+					@include clay-css($_form-check-input);
+				}
+			}
+
+			$_form-check-label: map-get($map, form-check-label);
+
+			@if ($_form-check-label) {
+				.form-check-label {
+					@include clay-css($_form-check-label);
+				}
+			}
+
+			$_custom-control: map-get($map, custom-control);
+
+			@if ($_custom-control) {
+				.custom-control {
+					@include clay-custom-control-variant($_custom-control);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,177 @@
+////
+/// @group slideout
+////
+
+/// A mixin to create `.c-slideout` variants.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool},  // Set to false to prevent mixin styles from being output. Default: true
+/// c-slideout-shown: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// c-slideout-tbar-shown: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// c-slideout-tbar-shown-sidebar: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// sidebar: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// sidebar-c-slideout-show: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// sidebar-c-slideout-transition: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// tbar-stacked: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// tbar-stacked-c-slideout-show: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// tbar-stacked-c-slideout-transition: {Map | Null}, // Pass parameters to `clay-css` mixin
+
+@mixin clay-slideout-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		@if ($enabled) {
+			@if (length($map) != 0) {
+				@include clay-css($map);
+			}
+
+			$_c-slideout-push-start: map-get($map, '&.c-slideout-push-start');
+
+			@if ($_c-slideout-push-start) {
+				&.c-slideout-push-start {
+					@include clay-css($_c-slideout-push-start);
+				}
+			}
+
+			$_c-slideout-push-end: map-get($map, '&.c-slideout-push-end');
+
+			@if ($_c-slideout-push-end) {
+				&.c-slideout-push-end {
+					@include clay-css($_c-slideout-push-end);
+				}
+			}
+
+			$_c-slideout-shown: map-get($map, c-slideout-shown);
+
+			@if ($_c-slideout-shown) {
+				&.c-slideout-shown {
+					@include clay-css($_c-slideout-shown);
+				}
+			}
+
+			$_c-slideout-tbar-shown: map-get($map, c-slideout-tbar-shown);
+
+			@if ($_c-slideout-tbar-shown) {
+				&.c-slideout-tbar-shown {
+					@include clay-css($_c-slideout-tbar-shown);
+				}
+			}
+
+			$_c-slideout-tbar-shown-sidebar: map-get(
+				$map,
+				c-slideout-tbar-shown-sidebar
+			);
+
+			@if ($_c-slideout-tbar-shown-sidebar) {
+				&.c-slideout-tbar-shown .sidebar {
+					@include clay-css($_c-slideout-tbar-shown-sidebar);
+				}
+			}
+
+			$_sidebar: map-get($map, sidebar);
+
+			@if ($_sidebar) {
+				.sidebar {
+					@include clay-sidebar-variant($_sidebar);
+				}
+			}
+
+			$_sidebar-c-slideout-show: map-get($map, sidebar-c-slideout-show);
+
+			@if ($_sidebar-c-slideout-show) {
+				.sidebar.c-slideout-show {
+					@include clay-css($_sidebar-c-slideout-show);
+				}
+			}
+
+			$_sidebar-c-slideout-transition: map-get(
+				$map,
+				sidebar-c-slideout-transition
+			);
+
+			@if ($_sidebar-c-slideout-transition) {
+				.sidebar.c-slideout-transition {
+					@include clay-css($_sidebar-c-slideout-transition);
+
+					$_c-horizontal-resizer: map-get(
+						$_sidebar-c-slideout-transition,
+						c-horizontal-resizer
+					);
+
+					@if ($_c-horizontal-resizer) {
+						.c-horizontal-resizer {
+							@include clay-css($_c-horizontal-resizer);
+						}
+					}
+				}
+			}
+
+			$_tbar-stacked: map-get($map, tbar-stacked);
+
+			@if ($_tbar-stacked) {
+				.tbar-stacked {
+					@include clay-css($_tbar-stacked);
+				}
+			}
+
+			$_tbar-stacked-c-slideout-show: map-get(
+				$map,
+				tbar-stacked-c-slideout-show
+			);
+
+			@if ($_tbar-stacked-c-slideout-show) {
+				.tbar-stacked.c-slideout-show {
+					@include clay-css($_tbar-stacked-c-slideout-show);
+				}
+			}
+
+			$_tbar-stacked-c-slideout-transition: map-get(
+				$map,
+				tbar-stacked-c-slideout-transition
+			);
+
+			@if ($_tbar-stacked-c-slideout-transition) {
+				.tbar-stacked.c-slideout-transition {
+					@include clay-css($_tbar-stacked-c-slideout-transition);
+				}
+			}
+
+			$_c-horizontal-resizer: map-get($map, c-horizontal-resizer);
+
+			@if ($_c-horizontal-resizer) {
+				.c-horizontal-resizer {
+					@include clay-css($_c-horizontal-resizer);
+
+					$_hover: map-get($_c-horizontal-resizer, hover);
+
+					@if ($_hover) {
+						&:hover {
+							@include clay-css($_hover);
+						}
+					}
+
+					$_focus: map-get($_c-horizontal-resizer, focus);
+
+					@if ($_focus) {
+						@at-root {
+							#{$focus-visible-selector},
+							#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+								@include clay-css($_focus);
+							}
+						}
+					}
+				}
+			}
+
+			$_media-breakpoint-down: map-get($map, media-breakpoint-down);
+			$_media-breakpoint-up: map-get($map, media-breakpoint-up);
+
+			@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+				@include clay-generate-media-breakpoints(
+					$map,
+					'clay-slideout-variant'
+				);
+			}
+		}
+	}
+}

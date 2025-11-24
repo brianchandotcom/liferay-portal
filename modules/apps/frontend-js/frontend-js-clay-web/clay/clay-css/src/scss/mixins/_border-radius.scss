@@ -1,0 +1,128 @@
+@mixin border-radius(
+	$radius:
+		if(
+			variable-exists(border-radius),
+			$border-radius,
+			if(
+				variable-exists(cadmin-border-radius),
+				$cadmin-border-radius,
+				0.25rem
+			)
+		),
+	$fallback-border-radius: false
+) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		border-radius: $radius;
+	} @else if $fallback-border-radius != false {
+		border-radius: $fallback-border-radius;
+	}
+}
+
+@mixin border-top-radius($radius) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		border-top-left-radius: $radius;
+		border-top-right-radius: $radius;
+	}
+}
+
+@mixin border-right-radius($radius) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		border-bottom-right-radius: $radius;
+		border-top-right-radius: $radius;
+	}
+}
+
+@mixin border-bottom-radius($radius) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		border-bottom-left-radius: $radius;
+		border-bottom-right-radius: $radius;
+	}
+}
+
+@mixin border-left-radius($radius) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		border-bottom-left-radius: $radius;
+		border-top-left-radius: $radius;
+	}
+}
+
+@mixin border-top-left-radius($radius) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		border-top-left-radius: $radius;
+	}
+}
+
+@mixin border-top-right-radius($radius) {
+	$enable: setter(
+		if(
+			variable-exists(enable-rounded),
+			$enable-rounded,
+			$cadmin-enable-rounded
+		),
+		true
+	);
+
+	@if ($enable) {
+		border-top-right-radius: $radius;
+	}
+}
+
+@mixin border-bottom-right-radius($radius) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		border-bottom-right-radius: $radius;
+	}
+}
+
+@mixin border-bottom-left-radius($radius) {
+	$enable: if(
+		variable-exists(enable-rounded),
+		$enable-rounded,
+		if(variable-exists(cadmin-enable-rounded), $cadmin-enable-rounded, true)
+	);
+
+	@if ($enable) {
+		border-bottom-left-radius: $radius;
+	}
+}

@@ -1,0 +1,196 @@
+.date-picker {
+	.input-group-item {
+		@include clay-input-group-item-variant($date-picker-input-group-item);
+	}
+
+	.input-group-text {
+		@include clay-input-group-text-variant($date-picker-input-group-text);
+	}
+
+	.clay-time .form-control {
+		@include clay-form-control-variant($date-picker-input-form-control);
+	}
+}
+
+// Date Picker Dropdown Menu
+
+.date-picker-dropdown-menu {
+	@include clay-dropdown-menu-variant($date-picker-dropdown-menu);
+}
+
+// Date Picker Nav
+
+.date-picker-nav {
+	@include clay-row($date-picker-nav-row);
+
+	.nav-btn {
+		@include clay-button-variant($date-picker-nav-btn);
+	}
+
+	.nav-btn-monospaced {
+		@include clay-button-variant($date-picker-nav-btn-monospaced);
+	}
+
+	select.form-control {
+		@include clay-select-variant($date-picker-nav-select);
+	}
+
+	.form-control-select {
+		@include clay-select-variant($date-picker-nav-select);
+	}
+}
+
+.date-picker-nav-item {
+	align-items: center;
+	display: flex;
+	padding-left: 0.125rem;
+	padding-right: 0.125rem;
+}
+
+.date-picker-nav-item-expand {
+	flex-grow: 1;
+}
+
+.date-picker-nav-controls {
+	display: flex;
+	justify-content: flex-end;
+}
+
+// Date Picker Calendar
+
+.date-picker-calendar {
+	@include clay-css($date-picker-calendar-container);
+}
+
+.date-picker-calendar-header {
+	@include clay-css($date-picker-calendar-header-container);
+
+	$_media-breakpoint-down: map-get(
+		$date-picker-calendar-header-container,
+		media-breakpoint-down
+	);
+	$_media-breakpoint-up: map-get(
+		$date-picker-calendar-header-container,
+		media-breakpoint-up
+	);
+
+	@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+		@include clay-generate-media-breakpoints(
+			$date-picker-calendar-header-container,
+			'clay-css'
+		);
+	}
+}
+
+.date-picker-calendar-body {
+	@include clay-css($date-picker-calendar-body-container);
+
+	$_media-breakpoint-down: map-get(
+		$date-picker-calendar-body-container,
+		media-breakpoint-down
+	);
+	$_media-breakpoint-up: map-get(
+		$date-picker-calendar-body-container,
+		media-breakpoint-up
+	);
+
+	@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+		@include clay-generate-media-breakpoints(
+			$date-picker-calendar-body-container,
+			'clay-css'
+		);
+	}
+}
+
+.date-picker-calendar-footer {
+	@include clay-css($date-picker-calendar-footer-container);
+
+	$_media-breakpoint-down: map-get(
+		$date-picker-calendar-footer-container,
+		media-breakpoint-down
+	);
+	$_media-breakpoint-up: map-get(
+		$date-picker-calendar-footer-container,
+		media-breakpoint-up
+	);
+
+	@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+		@include clay-generate-media-breakpoints(
+			$date-picker-calendar-footer-container,
+			'clay-css'
+		);
+	}
+}
+
+.date-picker-calendar-item {
+	@include clay-button-variant($date-picker-calendar-item);
+}
+
+// Date Picker Days
+
+.date-picker-row {
+	@include clay-row($date-picker-row);
+}
+
+.date-picker-col {
+	@include clay-css($date-picker-col);
+
+	&.c-selected {
+		@include clay-css(map-get($date-picker-col, c-selected));
+
+		&:first-child {
+			@include clay-css(
+				map-get($date-picker-col, c-selected-first-child)
+			);
+		}
+
+		&:last-child {
+			@include clay-css(map-get($date-picker-col, c-selected-last-child));
+		}
+	}
+
+	&.c-selected-start {
+		@include clay-css(map-get($date-picker-col, c-selected-start));
+	}
+
+	&.c-selected-end {
+		@include clay-css(map-get($date-picker-col, c-selected-end));
+	}
+
+	$_media-breakpoint-down: map-get($date-picker-col, media-breakpoint-down);
+	$_media-breakpoint-up: map-get($date-picker-col, media-breakpoint-up);
+
+	@if ($_media-breakpoint-down) or ($_media-breakpoint-up) {
+		@include clay-generate-media-breakpoints($date-picker-col);
+	}
+}
+
+.date-picker-days-row {
+	@include clay-row($date-picker-days-row);
+}
+
+.date-picker-day {
+	@include clay-button-variant($date-picker-day);
+}
+
+// Date Picker Date
+
+.date-picker-date-row {
+	@include clay-row($date-picker-date-row);
+}
+
+.date-picker-date {
+	@include clay-button-variant($date-picker-date);
+}
+
+// Previous Month Date
+
+.previous-month-date {
+	@include clay-button-variant($date-picker-previous-month-date);
+}
+
+// Next Month Date
+
+.next-month-date {
+	@include clay-button-variant($date-picker-next-month-date);
+}

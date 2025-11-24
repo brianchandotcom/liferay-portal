@@ -1,0 +1,785 @@
+////
+/// @group stickers
+////
+
+/// A mixin that helps create custom Sticker sizes.
+/// @deprecated  after 3.9.0 use `clay-sticker-variant` instead
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// font-size: {Number | String | Null},
+/// inline-item-font-size: {Number | String | Null},
+/// outside-offset: {Number | String}, // Default: -(map-get($map, size) * 0.5)
+/// size: {Number | String | Null},
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-sticker-size($map) {
+	@if (type-of($map) == 'map') {
+		$font-size: map-get($map, font-size);
+		$inline-item-font-size: map-get($map, inline-item-font-size);
+		$outside-offset: setter(
+			map-get($map, outside-offset),
+			math-sign(map-get($map, size) * 0.5)
+		);
+		$size: map-get($map, size);
+
+		font-size: $font-size;
+
+		@include clay-monospace($size);
+
+		> .inline-item {
+			font-size: $inline-item-font-size;
+		}
+
+		&.sticker-outside {
+			left: $outside-offset;
+			top: $outside-offset;
+
+			&.sticker-bottom-left {
+				bottom: $outside-offset;
+				top: auto;
+			}
+
+			&.sticker-bottom-right {
+				bottom: $outside-offset;
+				left: auto;
+				right: $outside-offset;
+				top: auto;
+			}
+
+			&.sticker-top-right {
+				left: auto;
+				right: $outside-offset;
+			}
+		}
+	}
+}
+
+/// A mixin to create sticker variants. You can base your variant off `.sticker` or create your own base class (e.g., `<span class="sticker my-custom-sticker-variant"></span>` or `<span class="my-custom-sticker"></span>`).
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+///
+/// (
+///     enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+///     inline-item: (
+///         // .your-variant-name > .inline-item
+///         lexicon-icon: (
+///             // .your-variant-name > .inline-item .lexicon-icon
+///         ),
+///     ),
+///     lexicon-icon: (
+///         // .your-variant-name .lexicon-icon
+///     ),
+///     sticker-img: (
+///         // .your-variant-name .sticker-img
+///     ),
+///     sticker-overlay: (
+///         // .your-variant-name .sticker-overlay
+///     ),
+///     rounded: (
+///         // .your-variant-name.rounded
+///         sticker-overlay: (
+///             // .your-variant-name.rounded .sticker-overlay
+///         ),
+///     ),
+///     rounded-circle: (
+///         // .your-variant-name.rounded-circle
+///         sticker-overlay: (
+///             // .your-variant-name.rounded-circle .sticker-overlay
+///         ),
+///     ),
+///     rounded-0: (
+///         // .your-variant-name.rounded-0
+///         sticker-overlay: (
+///             // .your-variant-name.rounded-0 .sticker-overlay
+///         ),
+///     ),
+///     sticker-outside: (
+///         // .your-variant-name.sticker-outside
+///         sticker-bottom-left: (
+///             // .your-variant-name.sticker-outside.sticker-bottom-left
+///         ),
+///         sticker-bottom-right: (
+///             // .your-variant-name.sticker-outside.sticker-bottom-right
+///         ),
+///         sticker-top-right: (
+///             // .your-variant-name.sticker-outside.sticker-top-right
+///         ),
+///     ),
+/// )
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-sticker-variant($map) {
+	@if (type-of($map) == 'map') {
+		$enabled: setter(map-get($map, enabled), true);
+
+		$base: map-merge(
+			$map,
+			(
+				background-color:
+					setter(map-get($map, bg), map-get($map, background-color)),
+				height: setter(map-get($map, size), map-get($map, height)),
+				line-height:
+					setter(map-get($map, size), map-get($map, line-height)),
+				width: setter(map-get($map, size), map-get($map, width)),
+			)
+		);
+
+		$inline-item: setter(map-get($map, inline-item), ());
+		$inline-item: map-merge(
+			$inline-item,
+			(
+				font-size:
+					setter(
+						map-get($map, inline-item-font-size),
+						map-get($inline-item, font-size)
+					),
+			)
+		);
+
+		$outside-offset: setter(
+			map-get($map, outside-offset),
+			if(
+				map-get($map, size),
+				calc(#{math-sign(map-get($map, size))} / 2),
+				null
+			)
+		);
+
+		$sticker-outside: setter(map-get($map, sticker-outside), ());
+
+		$sticker-outside-bottom-left: setter(
+			map-get($sticker-outside, sticker-bottom-left),
+			()
+		);
+		$sticker-outside-bottom-left: map-merge(
+			$sticker-outside-bottom-left,
+			setter(map-get($map, sticker-outside-bottom-left), ())
+		);
+
+		$sticker-outside-bottom-right: setter(
+			map-get($sticker-outside, sticker-bottom-right),
+			()
+		);
+		$sticker-outside-bottom-right: map-merge(
+			$sticker-outside-bottom-right,
+			setter(map-get($map, sticker-outside-bottom-right), ())
+		);
+
+		$sticker-outside-top-right: setter(
+			map-get($sticker-outside, sticker-top-right),
+			()
+		);
+		$sticker-outside-top-right: map-merge(
+			$sticker-outside-top-right,
+			setter(map-get($map, sticker-outside-top-right), ())
+		);
+
+		@if ($outside-offset) {
+			$sticker-outside: map-merge(
+				$sticker-outside,
+				(
+					left: $outside-offset,
+					top: $outside-offset,
+				)
+			);
+
+			$sticker-outside-bottom-left: map-merge(
+				$sticker-outside-bottom-left,
+				(
+					bottom: $outside-offset,
+					top: auto,
+				)
+			);
+
+			$sticker-outside-bottom-right: map-merge(
+				$sticker-outside-bottom-right,
+				(
+					bottom: $outside-offset,
+					left: auto,
+					right: $outside-offset,
+					top: auto,
+				)
+			);
+
+			$sticker-outside-top-right: map-merge(
+				$sticker-outside-top-right,
+				(
+					left: auto,
+					right: $outside-offset,
+				)
+			);
+		}
+
+		@if ($enabled) {
+			@if (length($base) != 0) {
+				@include clay-css($base);
+			}
+
+			$_hover: map-get($map, hover);
+
+			@if ($_hover) {
+				&:hover {
+					@include clay-css($_hover);
+
+					$_before: map-get($_hover, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_hover, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					$_inline-item: map-get($_hover, inline-item);
+
+					@if ($_inline-item) {
+						.inline-item {
+							@include clay-css($_inline-item);
+						}
+					}
+
+					$_inline-item-before: map-get($_hover, inline-item-before);
+
+					@if ($_inline-item-before) {
+						.inline-item-before {
+							@include clay-css($_inline-item-before);
+						}
+					}
+
+					$_inline-item-middle: map-get($_hover, inline-item-middle);
+
+					@if ($_inline-item-middle) {
+						.inline-item-middle {
+							@include clay-css($_inline-item-middle);
+						}
+					}
+
+					$_inline-item-after: map-get($_hover, inline-item-after);
+
+					@if ($_inline-item-after) {
+						.inline-item-after {
+							@include clay-css($_inline-item-after);
+						}
+					}
+				}
+			}
+
+			$_focus: map-get($map, focus);
+
+			@if ($_focus) {
+				@at-root {
+					&.focus,
+					#{$focus-visible-selector},
+					#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+						@include clay-css($_focus);
+
+						$_before: map-get($_focus, before);
+
+						@if ($_before) {
+							&::before {
+								@include clay-css($_before);
+							}
+						}
+
+						$_after: map-get($_focus, after);
+
+						@if ($_after) {
+							&::after {
+								@include clay-css($_after);
+							}
+						}
+
+						$_hover: map-get($_focus, hover);
+
+						@if ($_hover) {
+							&:hover {
+								@include clay-css($_hover);
+
+								$_before: map-get($_hover, before);
+
+								@if ($_before) {
+									&::before {
+										@include clay-css($_before);
+									}
+								}
+
+								$_after: map-get($_hover, after);
+
+								@if ($_after) {
+									&::after {
+										@include clay-css($_after);
+									}
+								}
+							}
+						}
+
+						$_inline-item: map-get($_focus, inline-item);
+
+						@if ($_inline-item) {
+							.inline-item {
+								@include clay-css($_inline-item);
+							}
+						}
+
+						$_inline-item-before: map-get(
+							$_focus,
+							inline-item-before
+						);
+
+						@if ($_inline-item-before) {
+							.inline-item-before {
+								@include clay-css($_inline-item-before);
+							}
+						}
+
+						$_inline-item-middle: map-get(
+							$_focus,
+							inline-item-middle
+						);
+
+						@if ($_inline-item-middle) {
+							.inline-item-middle {
+								@include clay-css($_inline-item-middle);
+							}
+						}
+
+						$_inline-item-after: map-get(
+							$_focus,
+							inline-item-after
+						);
+
+						@if ($_inline-item-after) {
+							.inline-item-after {
+								@include clay-css($_inline-item-after);
+							}
+						}
+					}
+				}
+			}
+
+			$_active: map-get($map, active);
+
+			@if ($_active) {
+				&:active {
+					@include clay-css($_active);
+
+					$_before: map-get($_active, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_active, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					$_focus: map-get($_active, focus);
+
+					@if ($_focus) {
+						@at-root {
+							#{$focus-visible-selector},
+							#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+								@include clay-css($_focus);
+
+								$_before: map-get($_focus, before);
+
+								@if ($_before) {
+									&::before {
+										@include clay-css($_before);
+									}
+								}
+
+								$_after: map-get($_focus, after);
+
+								@if ($_after) {
+									&::after {
+										@include clay-css($_after);
+									}
+								}
+							}
+						}
+					}
+
+					$_inline-item: map-get($_active, inline-item);
+
+					@if ($_inline-item) {
+						.inline-item {
+							@include clay-css($_inline-item);
+						}
+					}
+
+					$_inline-item-before: map-get($_active, inline-item-before);
+
+					@if ($_inline-item-before) {
+						.inline-item-before {
+							@include clay-css($_inline-item-before);
+						}
+					}
+
+					$_inline-item-middle: map-get($_active, inline-item-middle);
+
+					@if ($_inline-item-middle) {
+						.inline-item-middle {
+							@include clay-css($_inline-item-middle);
+						}
+					}
+
+					$_inline-item-after: map-get($_active, inline-item-after);
+
+					@if ($_inline-item-after) {
+						.inline-item-after {
+							@include clay-css($_inline-item-after);
+						}
+					}
+				}
+			}
+
+			$_active-class: map-get($map, active-class);
+
+			@if ($_active-class) {
+				&.active {
+					@include clay-css($_active-class);
+
+					$_before: map-get($_active-class, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_active-class, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					$_focus: map-get($_active-class, focus);
+
+					@if ($_focus) {
+						@at-root {
+							#{$focus-visible-selector},
+							#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+								@include clay-css($_focus);
+							}
+						}
+					}
+
+					$_inline-item: map-get($_active-class, inline-item);
+
+					@if ($_inline-item) {
+						.inline-item {
+							@include clay-css($_inline-item);
+						}
+					}
+
+					$_inline-item-before: map-get(
+						$_active-class,
+						inline-item-before
+					);
+
+					@if ($_inline-item-before) {
+						.inline-item-before {
+							@include clay-css($_inline-item-before);
+						}
+					}
+
+					$_inline-item-middle: map-get(
+						$_active-class,
+						inline-item-middle
+					);
+
+					@if ($_inline-item-middle) {
+						.inline-item-middle {
+							@include clay-css($_inline-item-middle);
+						}
+					}
+
+					$_inline-item-after: map-get(
+						$_active-class,
+						inline-item-after
+					);
+
+					@if ($_inline-item-after) {
+						.inline-item-after {
+							@include clay-css($_inline-item-after);
+						}
+					}
+				}
+			}
+
+			$_disabled: map-get($map, disabled);
+
+			@if ($_disabled) {
+				&:disabled,
+				&.disabled {
+					@include clay-css($_disabled);
+
+					$_before: map-get($_disabled, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_disabled, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+
+					$_focus: map-get($_disabled, focus);
+
+					@if ($_focus) {
+						@at-root {
+							#{$focus-visible-selector},
+							#{if($c-prefers-focus-selector,$c-prefers-focus-selector,clay-insert-before('.cadmin', '.c-prefers-focus ', '&:focus'))} {
+								@include clay-css($_focus);
+
+								$_before: map-get($_focus, before);
+
+								@if ($_before) {
+									&::before {
+										@include clay-css($_before);
+									}
+								}
+
+								$_after: map-get($_focus, after);
+
+								@if ($_after) {
+									&::after {
+										@include clay-css($_after);
+									}
+								}
+							}
+						}
+					}
+
+					$_active: map-get($_disabled, active);
+
+					@if ($_active) {
+						&:active {
+							@include clay-css($_active);
+
+							$_before: map-get($_active, before);
+
+							@if ($_before) {
+								&::before {
+									@include clay-css($_before);
+								}
+							}
+
+							$_after: map-get($_active, after);
+
+							@if ($_after) {
+								&::after {
+									@include clay-css($_after);
+								}
+							}
+						}
+					}
+
+					$_inline-item: map-get($_disabled, inline-item);
+
+					@if ($_inline-item) {
+						.inline-item {
+							@include clay-css($_inline-item);
+						}
+					}
+
+					$_inline-item-before: map-get(
+						$_disabled,
+						inline-item-before
+					);
+
+					@if ($_inline-item-before) {
+						.inline-item-before {
+							@include clay-css($_inline-item-before);
+						}
+					}
+
+					$_inline-item-middle: map-get(
+						$_disabled,
+						inline-item-middle
+					);
+
+					@if ($_inline-item-middle) {
+						.inline-item-middle {
+							@include clay-css($_inline-item-middle);
+						}
+					}
+
+					$_inline-item-after: map-get($_disabled, inline-item-after);
+
+					@if ($_inline-item-after) {
+						.inline-item-after {
+							@include clay-css($_inline-item-after);
+						}
+					}
+				}
+			}
+
+			$_show: map-get($map, show);
+
+			@if ($_show) {
+				&[aria-expanded='true'],
+				&.show {
+					@include clay-css($_show);
+
+					$_before: map-get($_show, before);
+
+					@if ($_before) {
+						&::before {
+							@include clay-css($_before);
+						}
+					}
+
+					$_after: map-get($_show, after);
+
+					@if ($_after) {
+						&::after {
+							@include clay-css($_after);
+						}
+					}
+				}
+			}
+
+			@if (length($inline-item) != 0) {
+				> .inline-item {
+					@include clay-css($inline-item);
+
+					$_lexicon-icon: map-get($inline-item, lexicon-icon);
+
+					@if ($_lexicon-icon) {
+						.lexicon-icon {
+							@include clay-css($_lexicon-icon);
+						}
+					}
+				}
+			}
+
+			$_lexicon-icon: map-get($map, lexicon-icon);
+
+			@if ($_lexicon-icon) {
+				.lexicon-icon {
+					@include clay-css($_lexicon-icon);
+				}
+			}
+
+			$_sticker-img: map-get($map, sticker-img);
+
+			@if ($_sticker-img) {
+				.sticker-img {
+					@include clay-css($_sticker-img);
+				}
+			}
+
+			$_sticker-overlay: map-get($map, sticker-overlay);
+
+			@if ($_sticker-overlay) {
+				.sticker-overlay {
+					@include clay-css($_sticker-overlay);
+				}
+			}
+
+			$_rounded: map-get($map, rounded);
+
+			@if ($_rounded) {
+				&.rounded {
+					@include clay-css($_rounded);
+
+					$_sticker-overlay: map-get($_rounded, sticker-overlay);
+
+					@if ($_sticker-overlay) {
+						.sticker-overlay {
+							@include clay-css($_sticker-overlay);
+						}
+					}
+				}
+			}
+
+			$_rounded-circle: map-get($map, rounded-circle);
+
+			@if ($_rounded-circle) {
+				&.rounded-circle {
+					@include clay-css($_rounded-circle);
+
+					$_sticker-overlay: map-get(
+						$_rounded-circle,
+						sticker-overlay
+					);
+
+					@if ($_sticker-overlay) {
+						.sticker-overlay {
+							@include clay-css($_sticker-overlay);
+						}
+					}
+				}
+			}
+
+			$_rounded-0: map-get($map, rounded-0);
+
+			@if ($_rounded-0) {
+				&.rounded-0 {
+					@include clay-css($_rounded-0);
+
+					$_sticker-overlay: map-get($_rounded-0, sticker-overlay);
+
+					@if ($_sticker-overlay) {
+						.sticker-overlay {
+							@include clay-css($_sticker-overlay);
+						}
+					}
+				}
+			}
+
+			@if (length($sticker-outside) != 0) {
+				&.sticker-outside {
+					@include clay-css($sticker-outside);
+
+					@if (length($sticker-outside-bottom-left) != 0) {
+						&.sticker-bottom-left {
+							@include clay-css($sticker-outside-bottom-left);
+						}
+					}
+
+					@if (length($sticker-outside-bottom-right) != 0) {
+						&.sticker-bottom-right {
+							@include clay-css($sticker-outside-bottom-right);
+						}
+					}
+
+					@if (length($sticker-outside-top-right) != 0) {
+						&.sticker-top-right {
+							@include clay-css($sticker-outside-top-right);
+						}
+					}
+				}
+			}
+		}
+	}
+}

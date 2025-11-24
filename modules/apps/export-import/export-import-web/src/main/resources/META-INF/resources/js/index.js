@@ -47,4 +47,4 @@ export function ExportImportManagementToolbarPropsTransformer({
 export {NewExport} from '../revamp/js/pages/export/NewExport';
 export {ViewImportReportEntryDetail} from '../revamp/js/pages/import/report/ViewImportReportEntryDetail';
 export {default as formatDate} from '../revamp/js/utils/formatDate';
-export {default as ImportButton} from './legacy/components/buttons/ImportButton';
+export {default as ImportButton} from './components/buttons/ImportButton';

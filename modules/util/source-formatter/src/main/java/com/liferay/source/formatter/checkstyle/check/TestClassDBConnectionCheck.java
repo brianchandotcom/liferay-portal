@@ -64,41 +64,8 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 			parentDetailAST = variableDefDetailAST.getParent();
 
 			if (!equals(objBlockDetailAST, parentDetailAST)) {
-				DetailAST firstChildDetailAST =
-					variableDefDetailAST.findFirstToken(TokenTypes.ASSIGN);
-
-				if (firstChildDetailAST == null) {
-					continue;
-				}
-
-				firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-				if ((firstChildDetailAST == null) ||
-					(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
-
-					continue;
-				}
-
-				firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-				if ((firstChildDetailAST == null) ||
-					(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
-
-					continue;
-				}
-
-				FullIdent fullIdent = FullIdent.createFullIdentBelow(
-					firstChildDetailAST);
-
-				if (!StringUtil.equals(
-						fullIdent.getText(), "DataAccess.getConnection")) {
-
-					continue;
-				}
-
-				log(
-					variableDefDetailAST, _MSG_USE_TRY_WITH_RESOURCES,
-					variableName);
+				_checkMissingTryWithResourcesStatement(
+					variableDefDetailAST, variableName);
 
 				continue;
 			}
@@ -106,18 +73,19 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 			DetailAST modifiersDetailAST = variableDefDetailAST.findFirstToken(
 				TokenTypes.MODIFIERS);
 
-			if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE) &&
-				modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
+			if (!modifiersDetailAST.branchContains(
+					TokenTypes.LITERAL_PRIVATE) ||
+				!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
 
-				List<DetailAST> variableCallerDetailASTs =
-					getVariableCallerDetailASTs(variableDefDetailAST);
-
-				_checkConnectionInSetupAndTearDown(
-					variableCallerDetailASTs, variableDefDetailAST,
-					variableName);
-				_checkIncorrectCloseCall(
-					variableCallerDetailASTs, variableName);
+				continue;
 			}
+
+			List<DetailAST> variableCallerDetailASTs =
+				getVariableCallerDetailASTs(variableDefDetailAST);
+
+			_checkConnectionInSetupAndTearDown(
+				variableCallerDetailASTs, variableDefDetailAST, variableName);
+			_checkIncorrectCloseCall(variableCallerDetailASTs, variableName);
 		}
 
 		List<DetailAST> methodCallDetailASTs = getMethodCalls(
@@ -250,6 +218,44 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 				detailAST, _MSG_INCORRECT_CLOSE_CALL, variableName,
 				variableName);
 		}
+	}
+
+	private void _checkMissingTryWithResourcesStatement(
+		DetailAST variableDefDetailAST, String variableName) {
+
+		DetailAST firstChildDetailAST = variableDefDetailAST.findFirstToken(
+			TokenTypes.ASSIGN);
+
+		if (firstChildDetailAST == null) {
+			return;
+		}
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return;
+		}
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return;
+		}
+
+		FullIdent fullIdent = FullIdent.createFullIdentBelow(
+			firstChildDetailAST);
+
+		if (!StringUtil.equals(
+				fullIdent.getText(), "DataAccess.getConnection")) {
+
+			return;
+		}
+
+		log(variableDefDetailAST, _MSG_USE_TRY_WITH_RESOURCES, variableName);
 	}
 
 	private boolean _isAssignedByDataAccessGetConnectionCall(

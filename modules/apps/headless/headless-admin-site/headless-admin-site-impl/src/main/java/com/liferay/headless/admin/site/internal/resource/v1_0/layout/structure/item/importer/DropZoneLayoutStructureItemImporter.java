@@ -154,22 +154,23 @@ public class DropZoneLayoutStructureItemImporter
 	private List<String> _toFragmentEntryKeys(
 		List<FragmentEntryReference> fragmentEntryReferences) {
 
-		List<String> fragmentKeys = new ArrayList<>();
+		List<String> fragmentEntryKeys = new ArrayList<>();
 
 		for (FragmentEntryReference fragmentEntryReference :
 				fragmentEntryReferences) {
 
 			if (Validator.isNotNull(fragmentEntryReference.getRendererKey())) {
-				fragmentKeys.add(fragmentEntryReference.getRendererKey());
+				fragmentEntryKeys.add(fragmentEntryReference.getRendererKey());
 			}
 			else if (Validator.isNotNull(
 						fragmentEntryReference.getFragmentEntryKey())) {
 
-				fragmentKeys.add(fragmentEntryReference.getFragmentEntryKey());
+				fragmentEntryKeys.add(
+					fragmentEntryReference.getFragmentEntryKey());
 			}
 		}
 
-		return fragmentKeys;
+		return fragmentEntryKeys;
 	}
 
 }

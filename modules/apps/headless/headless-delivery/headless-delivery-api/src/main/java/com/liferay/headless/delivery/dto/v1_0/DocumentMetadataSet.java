@@ -608,7 +608,7 @@ public class DocumentMetadataSet implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the localized Document Metadata Set's names."
+		description = "The localized Document Metadata Set's names."
 	)
 	@Valid
 	public Map<String, String> getName_i18n() {
@@ -645,7 +645,7 @@ public class DocumentMetadataSet implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the localized Document Metadata Set's names.")
+	@GraphQLField(description = "The localized Document Metadata Set's names.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 

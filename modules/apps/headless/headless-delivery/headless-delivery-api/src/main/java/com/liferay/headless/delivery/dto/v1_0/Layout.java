@@ -38,7 +38,7 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "the page section's layout.", value = "Layout")
+@GraphQLName(description = "The page section's layout.", value = "Layout")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Layout")
 public class Layout implements Serializable {

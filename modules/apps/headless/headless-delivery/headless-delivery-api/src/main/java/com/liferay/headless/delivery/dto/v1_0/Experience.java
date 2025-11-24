@@ -53,7 +53,7 @@ public class Experience implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the experience's key."
+		description = "The experience's key."
 	)
 	public String getKey() {
 		if (_keySupplier != null) {
@@ -86,7 +86,7 @@ public class Experience implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the experience's key.")
+	@GraphQLField(description = "The experience's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
@@ -94,7 +94,7 @@ public class Experience implements Serializable {
 	private Supplier<String> _keySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the experience's name."
+		description = "The experience's name."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -127,7 +127,7 @@ public class Experience implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the experience's name.")
+	@GraphQLField(description = "The experience's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -135,7 +135,7 @@ public class Experience implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the localized experience's names."
+		description = "The localized experience's names."
 	)
 	@Valid
 	public Map<String, String> getName_i18n() {
@@ -172,7 +172,7 @@ public class Experience implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the localized experience's names.")
+	@GraphQLField(description = "The localized experience's names.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 

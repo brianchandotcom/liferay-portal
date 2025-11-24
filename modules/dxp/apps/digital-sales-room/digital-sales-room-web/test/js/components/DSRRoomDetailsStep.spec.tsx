@@ -1,0 +1,285 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import '@testing-library/jest-dom';
+import {
+	act,
+	fireEvent,
+	render,
+	renderHook,
+	screen,
+	waitFor,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React, {useState} from 'react';
+
+import {DSRContext} from '../../../src/main/resources/META-INF/resources/js/components/DSRInitializer';
+import DSRRoomDetailsStep from '../../../src/main/resources/META-INF/resources/js/components/DSRRoomDetailsStep';
+import {
+	TDSRDataContext,
+	TDSRRoomDetailsStepProps,
+} from '../../../src/main/resources/META-INF/resources/js/components/DSRTypes';
+
+export async function setFieldValue(
+	field: HTMLInputElement | HTMLSelectElement,
+	value: null | number | string,
+	checkValue = true
+) {
+	if (field === null) {
+		return;
+	}
+
+	if (field instanceof HTMLSelectElement) {
+		userEvent.selectOptions(field, String(value));
+	}
+	else {
+		if (String(value).length) {
+			await userEvent.clear(field);
+			await userEvent.type(field, String(value));
+			field.value = String(value);
+		}
+		else {
+			await userEvent.clear(field);
+			field.value = '';
+		}
+	}
+	act(() => {
+		fireEvent.change(field);
+	});
+
+	if (checkValue) {
+		if (field.type === 'number' && (value === '' || value === 0)) {
+			expect(field).not.toHaveValue();
+		}
+		else {
+			expect(field).toHaveValue(value);
+		}
+	}
+}
+
+let {result: useStateHookResult} = renderHook(() =>
+	useState<TDSRDataContext>({
+		banner: {},
+		clientLogo: {},
+		clientName: '',
+		errors: {},
+		friendlyURL: '',
+		primaryColor: '0B5FFF',
+		roomName: '',
+		secondaryColor: 'FFFFFF',
+	})
+);
+
+const component = ({
+	numberOfSteps = 1,
+	setHandleStepSubmit,
+}: TDSRRoomDetailsStepProps) => {
+	return (
+		<DSRContext.Provider
+			value={{
+				dataContext: useStateHookResult.current[0],
+				setDataContext: useStateHookResult.current[1],
+			}}
+		>
+			<DSRRoomDetailsStep
+				numberOfSteps={numberOfSteps}
+				setHandleStepSubmit={setHandleStepSubmit}
+			/>
+		</DSRContext.Provider>
+	);
+};
+
+const renderComponent = ({
+	numberOfSteps = 1,
+	setHandleStepSubmit,
+}: TDSRRoomDetailsStepProps) => {
+	return render(component({numberOfSteps, setHandleStepSubmit}));
+};
+
+describe('DSRRoomDetailsStep', () => {
+	beforeEach(() => {
+		({result: useStateHookResult} = renderHook(() =>
+			useState({
+				banner: {},
+				clientLogo: {},
+				clientName: '',
+				errors: {},
+				friendlyURL: '',
+				primaryColor: '0B5FFF',
+				roomName: '',
+				secondaryColor: 'FFFFFF',
+			})
+		));
+	});
+
+	it('renders the correct UI elements', async () => {
+		renderComponent({
+			numberOfSteps: 1,
+			setHandleStepSubmit: () => {},
+		});
+
+		expect(screen.getByTestId('bannerImage')).toBeInTheDocument();
+		expect(screen.getByTestId('clientNameInput')).toBeInTheDocument();
+		expect(screen.getByTestId('clientLogoSticker')).toBeInTheDocument();
+		expect(screen.getByTestId('friendlyURLInput')).toBeInTheDocument();
+		expect(screen.getByTestId('primaryColorInput')).toBeInTheDocument();
+		expect(screen.getByTestId('secondaryColorInput')).toBeInTheDocument();
+		expect(screen.getByTestId('stepLocator')).toBeInTheDocument();
+		expect(screen.getByTestId('stepTitle')).toBeInTheDocument();
+	});
+
+	it.skip('upload client logo', async () => {
+		const container = renderComponent({
+			numberOfSteps: 1,
+			setHandleStepSubmit: () => {},
+		});
+
+		expect(screen.getByTestId('clientLogoButton')).toBeInTheDocument();
+		expect(
+			screen.queryByTestId('clientLogoDeleteButton')
+		).not.toBeInTheDocument();
+
+		const file = new File(['(⌐□_□)'], 'logo.png', {
+			type: 'image/png',
+		});
+
+		await waitFor(() => {
+			fireEvent.change(screen.getByTestId('clientLogoInput'), {
+				target: {files: [file]},
+			});
+		});
+
+		container.rerender(
+			component({numberOfSteps: 1, setHandleStepSubmit: () => {}})
+		);
+
+		expect(screen.getByTestId('clientLogoButton')).toBeInTheDocument();
+		expect(
+			screen.getByTestId('clientLogoDeleteButton')
+		).toBeInTheDocument();
+	});
+
+	it('validate step', async () => {
+		let stepSubmit: Function = function () {};
+
+		const submit = (fun: Function) => {
+			stepSubmit = fun();
+		};
+
+		const container = renderComponent({
+			numberOfSteps: 1,
+			setHandleStepSubmit: submit,
+		});
+
+		expect(screen.queryByTestId('clientNameError')).not.toBeInTheDocument();
+		expect(screen.queryByTestId('roomNameError')).not.toBeInTheDocument();
+
+		await act(async () => {
+			expect(await stepSubmit(new CustomEvent('event'))).toBeFalsy();
+		});
+
+		container.rerender(
+			component({numberOfSteps: 1, setHandleStepSubmit: submit})
+		);
+
+		expect(screen.queryByTestId('clientNameError')).toBeInTheDocument();
+		expect(screen.queryByTestId('roomNameError')).toBeInTheDocument();
+
+		await setFieldValue(
+			screen.getByTestId('clientNameInput'),
+			'clientName'
+		);
+		container.rerender(
+			component({numberOfSteps: 1, setHandleStepSubmit: submit})
+		);
+
+		await act(async () => {
+			expect(await stepSubmit(new CustomEvent('event'))).toBeFalsy();
+		});
+
+		container.rerender(
+			component({numberOfSteps: 1, setHandleStepSubmit: submit})
+		);
+
+		expect(screen.queryByTestId('clientNameError')).not.toBeInTheDocument();
+		expect(screen.queryByTestId('roomNameError')).toBeInTheDocument();
+
+		await setFieldValue(screen.getByTestId('roomNameInput'), 'roomName');
+		container.rerender(
+			component({numberOfSteps: 1, setHandleStepSubmit: submit})
+		);
+
+		await act(async () => {
+			expect(await stepSubmit(new CustomEvent('event'))).toBeTruthy();
+		});
+
+		container.rerender(
+			component({numberOfSteps: 1, setHandleStepSubmit: submit})
+		);
+
+		expect(screen.queryByTestId('clientNameError')).not.toBeInTheDocument();
+		expect(screen.queryByTestId('roomNameError')).not.toBeInTheDocument();
+	});
+
+	it('validate UI interaction', async () => {
+		const stepSubmit = jest.fn();
+
+		const container = renderComponent({
+			numberOfSteps: 1,
+			setHandleStepSubmit: stepSubmit,
+		});
+
+		await setFieldValue(
+			screen.getByTestId('clientNameInput'),
+			'clientName'
+		);
+		await setFieldValue(screen.getByTestId('roomNameInput'), 'roomName');
+		await setFieldValue(screen.getByTestId('primaryColorInput'), '#000');
+		await setFieldValue(
+			screen.getByTestId('secondaryColorInput'),
+			'#FF0000'
+		);
+		await setFieldValue(
+			screen.getByTestId('friendlyURLInput'),
+			'friendlyURL'
+		);
+
+		let state = useStateHookResult.current[0];
+
+		expect(state.clientName).not.toBe('');
+		expect(state.roomName).not.toBe('');
+		expect(state.primaryColor).not.toBe('');
+		expect(state.secondaryColor).not.toBe('');
+		expect(state.friendlyURL).not.toBe('');
+		expect(state.errors.clientName).toBe('');
+		expect(state.errors.roomName).toBe('');
+		expect(state.errors.primaryColor).toBe('');
+		expect(state.errors.secondaryColor).toBe('');
+		expect(state.errors.friendlyURL).toBe('');
+
+		await setFieldValue(screen.getByTestId('clientNameInput'), '');
+		await setFieldValue(screen.getByTestId('roomNameInput'), '');
+
+		state = useStateHookResult.current[0];
+
+		expect(state.clientName).toBe('');
+		expect(state.roomName).toBe('');
+		expect(state.primaryColor).not.toBe('');
+		expect(state.secondaryColor).not.toBe('');
+		expect(state.friendlyURL).not.toBe('');
+		expect(state.errors.clientName).not.toBe('');
+		expect(state.errors.roomName).not.toBe('');
+		expect(state.errors.primaryColor).toBe('');
+		expect(state.errors.secondaryColor).toBe('');
+		expect(state.errors.friendlyURL).toBe('');
+
+		container.rerender(
+			component({numberOfSteps: 1, setHandleStepSubmit: stepSubmit})
+		);
+
+		expect(screen.queryByTestId('clientNameError')).toBeInTheDocument();
+		expect(screen.queryByTestId('roomNameError')).toBeInTheDocument();
+	});
+});

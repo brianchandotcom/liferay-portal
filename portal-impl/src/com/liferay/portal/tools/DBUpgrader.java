@@ -323,6 +323,12 @@ public class DBUpgrader {
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortletsInitialized);
 
+		if (!StartupHelperUtil.isRunOnPortalUpgradeVerifiers()) {
+			stopUpgradeLogAppender();
+
+			return;
+		}
+
 		try {
 			ServiceTracker<VerifyProcess, VerifyProcess> serviceTracker =
 				new ServiceTracker<>(

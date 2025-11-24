@@ -14,7 +14,9 @@ export default function PreviewButton({
 	newArticle,
 	saveAsDraftURL,
 }) {
-	const [articleId, setArticleId] = useState(null);
+	const [articleId, setArticleId] = useState(
+		document.getElementById(`${namespace}articleId`).value
+	);
 
 	const lockRef = useRef(null);
 
@@ -40,8 +42,6 @@ export default function PreviewButton({
 				Liferay.detach('asyncFormSubmission', updateArticleId);
 			};
 		}
-
-		setArticleId(document.getElementById(`${namespace}articleId`).value);
 	}, [namespace]);
 
 	const disableInAutosave = Liferay.FeatureFlags['LPD-11228'] && !articleId;

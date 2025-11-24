@@ -6,8 +6,8 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,34 +39,24 @@ public class EditVocabularyDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"availableAssetTypes",
-			() -> {
-				List<Map<String, String>> assetTypes = new ArrayList<>();
-
-				for (ObjectDefinition objectDefinition :
-						ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
-							CompanyThreadLocal.getCompanyId(),
-							new String[] {
-								ObjectFolderConstants.
-									EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-								ObjectFolderConstants.
-									EXTERNAL_REFERENCE_CODE_FILE_TYPES
-							})) {
-
-					assetTypes.add(
-						HashMapBuilder.put(
-							"required", Boolean.FALSE.toString()
-						).put(
-							"type", objectDefinition.getLabelCurrentValue()
-						).put(
-							"typeId",
-							String.valueOf(
-								PortalUtil.getClassNameId(
-									objectDefinition.getClassName()))
-						).build());
-				}
-
-				return assetTypes;
-			}
+			TransformUtil.transform(
+				ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
+					CompanyThreadLocal.getCompanyId(),
+					new String[] {
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+						ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+					}),
+				objectDefinition -> HashMapBuilder.put(
+					"required", Boolean.FALSE.toString()
+				).put(
+					"type", objectDefinition.getLabelCurrentValue()
+				).put(
+					"typeId",
+					String.valueOf(
+						PortalUtil.getClassNameId(
+							objectDefinition.getClassName()))
+				).build())
 		).put(
 			"backURL",
 			PortalUtil.getLayoutFullURL(

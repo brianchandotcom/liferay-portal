@@ -9,11 +9,10 @@ import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,26 +46,17 @@ public class VocabularyObjectDefinitionSelectionFDSFilter
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
-
-		List<ObjectDefinition> objectDefinitions =
+		return TransformUtil.transform(
 			ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
 				CompanyThreadLocal.getCompanyId(),
 				new String[] {
 					ObjectFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
-				});
-
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			selectionFDSFilterItems.add(
-				new SelectionFDSFilterItem(
-					objectDefinition.getLabel(locale),
-					objectDefinition.getObjectDefinitionId()));
-		}
-
-		return selectionFDSFilterItems;
+				}),
+			objectDefinition -> new SelectionFDSFilterItem(
+				objectDefinition.getLabel(locale),
+				objectDefinition.getObjectDefinitionId()));
 	}
 
 }

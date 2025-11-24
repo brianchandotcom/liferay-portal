@@ -130,7 +130,7 @@ public class DLFileEntryModelDocumentContributorTest {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.content.dashboard.document.library.internal.search.spi.model.index.contributor.DLFileEntryModelDocumentContributor"
+		filter = "component.name=com.liferay.document.library.internal.search.spi.model.index.contributor.DLFileEntryModelDocumentContributor"
 	)
 	private ModelDocumentContributor<DLFileEntry>
 		_dlFileEntryModelDocumentContributor;

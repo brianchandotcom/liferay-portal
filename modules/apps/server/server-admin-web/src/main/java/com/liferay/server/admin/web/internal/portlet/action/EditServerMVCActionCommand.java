@@ -292,9 +292,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<String, String> priorities = Log4JUtil.getPriorities();
 
-		Set<Map.Entry<String, String>> entrySet = logLevels.entrySet();
+		Set<Map.Entry<String, String>> set = logLevels.entrySet();
 
-		Iterator<Map.Entry<String, String>> iterator = entrySet.iterator();
+		Iterator<Map.Entry<String, String>> iterator = set.iterator();
 
 		while (iterator.hasNext()) {
 			Map.Entry<String, String> entry = iterator.next();

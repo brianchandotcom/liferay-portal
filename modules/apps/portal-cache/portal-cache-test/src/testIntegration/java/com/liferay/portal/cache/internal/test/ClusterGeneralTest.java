@@ -96,7 +96,7 @@ public class ClusterGeneralTest {
 		Assert.assertFalse(
 			_tomcatNode2.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		// register a listener for node 2
+		// Register a listener for node 2
 
 		_tomcatNode2.syncExecute(
 			() -> {
@@ -105,7 +105,7 @@ public class ClusterGeneralTest {
 				return null;
 			});
 
-		// stop node 1
+		// Stop node 1
 
 		_tomcatNode1.stop();
 
@@ -161,15 +161,15 @@ public class ClusterGeneralTest {
 			boolean senderTomcatNodeIsMaster)
 		throws Exception {
 
-		// Assert updateTomcatNode is master node
-		// when updateTomcatNodeIsMasterNode is true
+		// Assert updateTomcatNode is master node when
+		// updateTomcatNodeIsMasterNode is true
 
 		Assert.assertEquals(
 			senderTomcatNodeIsMaster,
 			senderTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		// Assert listenTomcatNode is master node
-		// when updateTomcatNodeIsMasterNode is false
+		// Assert listenTomcatNode is master node when
+		// updateTomcatNodeIsMasterNode is false
 
 		Assert.assertEquals(
 			!senderTomcatNodeIsMaster,

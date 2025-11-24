@@ -1155,6 +1155,137 @@ test.describe('Select From List input field', () => {
 			await page.goto('/en');
 		}
 	);
+
+	test(
+		'Show all picklist options after having selected an option in a Display Page Template',
+		{tag: '@LPD-72323'},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
+
+			// Create an object with a picklist field
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			for (const option of ['Spain', 'Italy', 'Germany']) {
+				await apiHelpers.listTypeAdmin.postListTypeEntry({
+					key: option,
+					listTypeDefinitionExternalReferenceCode:
+						listTypeDefinition.externalReferenceCode,
+					name_i18n: {en_US: option},
+				});
+			}
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode: 'vegetableERC',
+					label: {en_US: 'Vegetable'},
+					name: 'Vegetable',
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Picklist',
+							externalReferenceCode: 'originERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {en_US: 'Origin'},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							name: 'origin',
+							required: false,
+						},
+					],
+					pluralLabel: {en_US: 'Vegetables'},
+					scope: 'company',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create an entry for the object
+
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					origin_i18n: {
+						en_US: 'Spain',
+					},
+				},
+				'c/' + objectDefinition.name.toLowerCase() + 's'
+			);
+
+			// Create a display page
+
+			const displayPageTemplateName = getRandomString();
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinition.className
+				);
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					classTypeId: '0',
+					groupId: site.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+			// Go to edit the display page template and add a From Container mapped to the Vegetable object
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			await pageEditorPage.mapFormFragment(
+				await pageEditorPage.getFragmentId('Form Container'),
+				'Vegetable (Default)'
+			);
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Go to the object display page and change the origin in the picklist field
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
+			);
+
+			const selectField = page.getByPlaceholder('Choose an Option');
+			const option = page.getByRole('option');
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: option.filter({hasText: 'Italy'}),
+				trigger: selectField,
+			});
+
+			await selectField.click();
+
+			await expect(option.filter({hasText: 'Spain'})).toBeVisible();
+			await expect(option.filter({hasText: 'Italy'})).toBeVisible();
+			await expect(option.filter({hasText: 'Germany'})).toBeVisible();
+		}
+	);
 });
 
 test.describe('URL Video Previewer Fragment', () => {

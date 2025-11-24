@@ -123,6 +123,15 @@ public interface ObjectEntryResource {
 			getObjectEntryPermissionsPage(Long objectEntryId, String roleNames)
 		throws Exception;
 
+	public Response getObjectEntryTranslation(
+			Long objectEntryId, String sourceLanguageId,
+			String targetLanguageIds, String version)
+		throws Exception;
+
+	public Response getObjectEntryTranslationLanguage(
+			Long objectEntryId, String languageId, String targetLanguageId)
+		throws Exception;
+
 	public ObjectEntry getScopeScopeKeyApprovedByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode)
 		throws Exception;
@@ -141,6 +150,16 @@ public interface ObjectEntryResource {
 
 	public ObjectEntry getScopeScopeKeyByExternalReferenceCodeByVersion(
 			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public Response getScopeScopeKeyByExternalReferenceCodeTranslation(
+			String scopeKey, String externalReferenceCode,
+			String sourceLanguageId, String targetLanguageIds, String version)
+		throws Exception;
+
+	public Response getScopeScopeKeyByExternalReferenceCodeTranslationLanguage(
+			String scopeKey, String externalReferenceCode, String languageId,
+			String targetLanguageId)
 		throws Exception;
 
 	public Page<ObjectEntry>

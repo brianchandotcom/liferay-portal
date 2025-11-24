@@ -13,7 +13,7 @@ export default defineConfig({
 			external: [
 				'clarity-solution-js-import-maps-entry',
 				'react',
-				'react-dom'
+				'react-dom',
 			],
 			output: {
 				assetFileNames: '[name]-[hash][extname]',

@@ -25,7 +25,7 @@ const fetchRequest = async (input) => {
 
 const handleRedirect = async (classnameId) => {
 	const vocabulary = await fetchRequest(
-		`/o/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/QUARTERLY-RELEASES`
+		`/o/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/T_QR`
 	);
 
 	if (vocabulary) {

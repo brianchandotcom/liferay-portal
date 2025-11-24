@@ -89,7 +89,7 @@
 			"label": {
 				"en_US": "Current Liferay Version"
 			},
-			"listTypeDefinitionExternalReferenceCode": "DXP-MINOR-VERSION-AND-PORTAL-MAJOR-VERSION",
+			"listTypeDefinitionExternalReferenceCode": "LT_DXP_MINOR_VERSION_AND_PORTAL_MAJOR_VERSION",
 			"localized": false,
 			"name": "currentLiferayVersion",
 			"readOnly": "false",
@@ -220,7 +220,7 @@
 			"label": {
 				"en_US": "New Liferay Version"
 			},
-			"listTypeDefinitionExternalReferenceCode": "DXP-MINOR-VERSION-AND-PORTAL-MAJOR-VERSION",
+			"listTypeDefinitionExternalReferenceCode": "DXP_MINOR_VERSION_AND_PORTAL_MAJOR_VERSION",
 			"localized": false,
 			"name": "newLiferayVersion",
 			"readOnly": "false",
@@ -267,7 +267,7 @@
 			"label": {
 				"en_US": "Time Zone"
 			},
-			"listTypeDefinitionExternalReferenceCode": "UTC-TIME-ZONES",
+			"listTypeDefinitionExternalReferenceCode": "UTC_TIME_ZONES",
 			"localized": false,
 			"name": "timeZone",
 			"readOnly": "false",

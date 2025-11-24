@@ -180,7 +180,7 @@
 													"displayStyleGroupKey": "Customer Portal",
 													"frequenciesVisible": "false",
 													"frequencyThreshold": "1",
-													"groupVocabularyExternalReferenceCodes": "CUSTOMER_PORTAL&&ARTICLE-CATEGORIES",
+													"groupVocabularyExternalReferenceCodes": "CUSTOMER_PORTAL&&T_AC",
 													"maxTerms": "1000",
 													"order": "key:asc",
 													"parameterName": "category",

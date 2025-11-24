@@ -97,10 +97,10 @@ public class ObjectActionBusinessEventRestController
 			"comment",
 			_getComment(businessEvent, objectActionTriggerKey, systemUpdate)
 		).put(
-			"r_accountEntryToBusinessEventVersions_accountEntryId",
+			"r_accountEntryToBusinessEventVersion_accountEntryId",
 			businessEvent.getAccountId()
 		).put(
-			"r_businessEventToBusinessEventVersions_c_businessEventId",
+			"r_businessEventToBusinessEventVersion_c_businessEventId",
 			businessEvent.getBusinessEventId()
 		).toString();
 

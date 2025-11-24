@@ -169,8 +169,8 @@ const IncidentContactCard = ({
 	const hasSecurityBreachContact = !!currentHighPriorityContacts
 		.securityBreach?.length;
 
-	const handleOnClick = (highPriorityContactsCategory) => {
-		setModalFilter(highPriorityContactsCategory);
+	const handleOnClick = (highPriorityContactCategory) => {
+		setModalFilter(highPriorityContactCategory);
 		openModal();
 	};
 

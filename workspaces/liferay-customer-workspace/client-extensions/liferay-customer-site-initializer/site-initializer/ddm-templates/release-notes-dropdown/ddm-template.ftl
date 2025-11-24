@@ -1,6 +1,6 @@
 <#assign
 	previousReleaseURL = "https://customer.liferay.com/dxp-release-notes?p_p_id=com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_product=dxp&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_tabs1=&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_productVersion=7.4&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_fromFixPackVersion=2024.101&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_toFixPackVersion=2024.105"
-	quarterlyReleaseVocabularyId = (restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/QUARTERLY-RELEASES").id)!
+	quarterlyReleaseVocabularyId = (restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/T_QR").id)!
 />
 
 <#if quarterlyReleaseVocabularyId?has_content>

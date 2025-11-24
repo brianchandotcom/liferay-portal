@@ -14,7 +14,7 @@ export default defineConfig({
 				'/@clayui/*/',
 				'react',
 				'react-dom',
-				'clarity-distributors-api',
+				'clarity-solution-js-import-maps-entry',
 			],
 			output: {
 				assetFileNames: '[name]-[hash][extname]',

@@ -1095,6 +1095,20 @@ public class ObjectEntryResourceTest {
 		_groupLocalService.deleteGroup(_group);
 	}
 
+	@FeatureFlag("LPD-69419")
+	@Test
+	public void testDeleteByExternalReferenceCodeComment() throws Exception {
+
+		// Company scope
+
+		_testDeleteByExternalReferenceCodeComment(_objectDefinition1, 0L);
+
+		// Site scope
+
+		_testDeleteByExternalReferenceCodeComment(
+			_siteScopedObjectDefinition1, _testGroupId);
+	}
+
 	@Test
 	public void testCustomizeNestedFieldsContextWithoutRootModelHierarchy()
 		throws Exception {
@@ -15804,6 +15818,39 @@ public class ObjectEntryResourceTest {
 		return jsonArray;
 	}
 
+	private ObjectDefinition _enableComments(
+			boolean enable, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _objectDefinitionLocalService.updateCustomObjectDefinition(
+			objectDefinition.getExternalReferenceCode(),
+			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getAccountEntryRestrictedObjectFieldId(),
+			objectDefinition.getDescriptionObjectFieldId(),
+			objectDefinition.getObjectFolderId(),
+			objectDefinition.getTitleObjectFieldId(),
+			objectDefinition.isAccountEntryRestricted(),
+			objectDefinition.isActive(), objectDefinition.getClassName(),
+			objectDefinition.isEnableCategorization(), enable,
+			objectDefinition.isEnableFormContainer(),
+			objectDefinition.isEnableFriendlyURLCustomization(),
+			objectDefinition.isEnableIndexSearch(),
+			objectDefinition.isEnableLocalization(),
+			objectDefinition.isEnableObjectEntryDraft(),
+			objectDefinition.isEnableObjectEntryHistory(),
+			objectDefinition.isEnableObjectEntrySchedule(),
+			objectDefinition.isEnableObjectEntrySubscription(),
+			objectDefinition.isEnableObjectEntryVersioning(),
+			objectDefinition.getFriendlyURLSeparator(),
+			objectDefinition.getLabelMap(), objectDefinition.getName(),
+			objectDefinition.getPanelAppOrder(),
+			objectDefinition.getPanelCategoryKey(),
+			objectDefinition.isPortlet(), objectDefinition.getLabelMap(),
+			objectDefinition.getScope(), objectDefinition.getStatus(),
+			objectDefinition.getObjectDefinitionSettings(),
+			Collections.emptyList(), Collections.emptyList());
+	}
+
 	private String _escape(String string) {
 		return URLCodec.encodeURL(string);
 	}
@@ -16508,6 +16555,47 @@ public class ObjectEntryResourceTest {
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
+	}
+
+	private void _testDeleteByExternalReferenceCodeComment(
+			ObjectDefinition objectDefinition, long groupId)
+		throws Exception {
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		objectDefinition = _enableComments(true, objectDefinition);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"text", RandomTestUtil.randomString()
+			).toString(),
+			StringBundler.concat(
+				_getEndpoint(objectDefinition, groupId),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(), "/comments"),
+			Http.Method.POST);
+
+		String endpoint = StringBundler.concat(
+			_getEndpoint(objectDefinition, groupId),
+			"/by-external-reference-code/",
+			objectEntry.getExternalReferenceCode(), "/comments",
+			"/by-external-reference-code/",
+			jsonObject.getString("externalReferenceCode"));
+
+		objectDefinition = _enableComments(false, objectDefinition);
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(null, endpoint, Http.Method.DELETE));
+
+		_enableComments(true, objectDefinition);
+
+		Assert.assertEquals(
+			204,
+			HTTPTestUtil.invokeToHttpCode(null, endpoint, Http.Method.DELETE));
 	}
 
 	private void _testFilterObjectEntriesByRelatedLocalizedObjectEntries(

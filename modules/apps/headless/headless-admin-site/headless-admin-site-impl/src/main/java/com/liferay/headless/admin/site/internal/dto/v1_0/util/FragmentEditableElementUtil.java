@@ -37,6 +37,23 @@ import java.util.Objects;
  */
 public class FragmentEditableElementUtil {
 
+	public static JSONObject getEditableFragmentEntryProcessorJSONObject(
+			long companyId, FragmentEditableElement[] fragmentEditableElements,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws Exception {
+
+		JSONObject editableFragmentEntryProcessorJSONObject =
+			_getEditableFragmentEntryProcessorJSONObject(
+				companyId, fragmentEditableElements, infoItemServiceRegistry,
+				scopeGroupId);
+
+		if (editableFragmentEntryProcessorJSONObject.length() > 0) {
+			return editableFragmentEntryProcessorJSONObject;
+		}
+
+		return null;
+	}
+
 	public static FragmentEditableElement[] getFragmentEditableElements(
 		long companyId, FragmentEntryLink fragmentEntryLink,
 		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
@@ -70,29 +87,6 @@ public class FragmentEditableElementUtil {
 				editableFragmentEntryProcessorJSONObject, scopeGroupId));
 
 		return fragmentEditableElements.toArray(new FragmentEditableElement[0]);
-	}
-
-	public static JSONObject
-		getFragmentEditableElementsEditableValuesJSONObject(
-			long companyId, FragmentEditableElement[] fragmentEditableElements,
-			InfoItemServiceRegistry infoItemServiceRegistry,
-			long scopeGroupId) {
-
-		return JSONUtil.put(
-			FragmentEntryProcessorConstants.
-				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-			() -> {
-				JSONObject editableFragmentEntryProcessorJSONObject =
-					_getEditableFragmentEntryProcessorJSONObject(
-						companyId, fragmentEditableElements,
-						infoItemServiceRegistry, scopeGroupId);
-
-				if (editableFragmentEntryProcessorJSONObject.length() > 0) {
-					return editableFragmentEntryProcessorJSONObject;
-				}
-
-				return null;
-			});
 	}
 
 	private static JSONObject _getEditableFragmentEntryProcessorJSONObject(

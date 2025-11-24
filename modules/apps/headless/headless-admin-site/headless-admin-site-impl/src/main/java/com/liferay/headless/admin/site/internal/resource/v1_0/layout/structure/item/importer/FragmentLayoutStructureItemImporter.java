@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -239,21 +240,26 @@ public class FragmentLayoutStructureItemImporter
 				layoutStructureItemImporterContext)
 		throws Exception {
 
-		return JSONUtil.merge(
-			FragmentConfigurationFieldValuesUtil.
-				getFragmentConfigurationFieldValuesEditableValuesJSONObject(
-					fragmentInstancePageElementDefinition.getConfiguration(),
-					fragmentInstancePageElementDefinition.
-						getFragmentConfigurationFieldValues(),
-					layoutStructureItemImporterContext),
+		return JSONUtil.put(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			FragmentEditableElementUtil.
-				getFragmentEditableElementsEditableValuesJSONObject(
+				getEditableFragmentEntryProcessorJSONObject(
 					layoutStructureItemImporterContext.getCompanyId(),
 					fragmentInstancePageElementDefinition.
 						getFragmentEditableElements(),
 					layoutStructureItemImporterContext.
 						getInfoItemServiceRegistry(),
 					layoutStructureItemImporterContext.getGroupId())
+		).put(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+			FragmentConfigurationFieldValuesUtil.
+				getFreeMarkerFragmentEntryProcessorJSONObject(
+					fragmentInstancePageElementDefinition.getConfiguration(),
+					fragmentInstancePageElementDefinition.
+						getFragmentConfigurationFieldValues(),
+					layoutStructureItemImporterContext)
 		).toString();
 	}
 

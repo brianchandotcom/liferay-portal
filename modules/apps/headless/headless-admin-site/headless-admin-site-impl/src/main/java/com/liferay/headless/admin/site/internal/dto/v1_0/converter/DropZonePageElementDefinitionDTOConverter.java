@@ -84,37 +84,18 @@ public class DropZonePageElementDefinitionDTOConverter
 
 			if (fragmentEntry != null) {
 				fragmentReferences.add(
-					new DefaultFragmentReference() {
-						{
-							setDefaultFragmentKey(() -> fragmentEntryKey);
-							setFragmentReferenceType(
-								() ->
-									FragmentReferenceType.
-										DEFAULT_FRAGMENT_REFERENCE);
-						}
-					});
+					_toDefaultFragmentReference(fragmentEntryKey));
 			}
 			else {
 				fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
 					scopeGroupId, fragmentEntryKey);
 
 				if (fragmentEntry != null) {
-					FragmentItemExternalReference
-						fragmentItemExternalReference =
-							new FragmentItemExternalReference();
-
-					String externalReferenceCode =
-						fragmentEntry.getExternalReferenceCode();
-
-					fragmentItemExternalReference.setExternalReferenceCode(
-						() -> externalReferenceCode);
-
-					Scope scope = ItemScopeUtil.getItemScope(
-						fragmentEntry.getGroupId(), scopeGroupId);
-
-					fragmentItemExternalReference.setScope(() -> scope);
-
-					fragmentReferences.add(fragmentItemExternalReference);
+					fragmentReferences.add(
+						_toFragmentItemExternalReference(
+							fragmentEntry.getExternalReferenceCode(),
+							ItemScopeUtil.getItemScope(
+								fragmentEntry.getGroupId(), scopeGroupId)));
 				}
 			}
 		}
@@ -155,40 +136,55 @@ public class DropZonePageElementDefinitionDTOConverter
 
 			if (jsonObject.has("fragmentEntryRendererKey")) {
 				fragmentReferences.add(
-					new DefaultFragmentReference() {
-						{
-							setDefaultFragmentKey(
-								() -> jsonObject.getString(
-									"fragmentEntryRendererKey"));
-							setFragmentReferenceType(
-								() ->
-									FragmentReferenceType.
-										DEFAULT_FRAGMENT_REFERENCE);
-						}
-					});
+					_toDefaultFragmentReference(
+						jsonObject.getString("fragmentEntryRendererKey")));
 			}
 			else if (jsonObject.has("fragmentEntryERC")) {
 				fragmentReferences.add(
-					new FragmentItemExternalReference() {
-						{
-							setExternalReferenceCode(
-								() -> jsonObject.getString("fragmentEntryERC"));
-							setFragmentReferenceType(
-								() ->
-									FragmentReferenceType.
-										FRAGMENT_ITEM_EXTERNAL_REFERENCE);
-							setScope(
-								() -> ItemScopeUtil.getItemScope(
-									companyId,
-									jsonObject.getString(
-										"fragmentEntryScopeERC"),
-									scopeGroupId));
-						}
-					});
+					_toFragmentItemExternalReference(
+						jsonObject.getString("fragmentEntryERC"),
+						ItemScopeUtil.getItemScope(
+							companyId,
+							jsonObject.getString("fragmentEntryScopeERC"),
+							scopeGroupId)));
 			}
 		}
 
 		return fragmentReferences.toArray(new FragmentReference[0]);
+	}
+
+	private DefaultFragmentReference _toDefaultFragmentReference(
+		String defaultFragmentKey) {
+
+		DefaultFragmentReference defaultFragmentReference =
+			new DefaultFragmentReference();
+
+		defaultFragmentReference.setDefaultFragmentKey(
+			() -> defaultFragmentKey);
+		defaultFragmentReference.setFragmentReferenceType(
+			() ->
+				FragmentReference.FragmentReferenceType.
+					DEFAULT_FRAGMENT_REFERENCE);
+
+		return defaultFragmentReference;
+	}
+
+	private FragmentItemExternalReference _toFragmentItemExternalReference(
+		String externalReferenceCode, Scope scope) {
+
+		FragmentItemExternalReference fragmentItemExternalReference =
+			new FragmentItemExternalReference();
+
+		fragmentItemExternalReference.setExternalReferenceCode(
+			() -> externalReferenceCode);
+		fragmentItemExternalReference.setFragmentReferenceType(
+			() ->
+				FragmentReference.FragmentReferenceType.
+					FRAGMENT_ITEM_EXTERNAL_REFERENCE);
+
+		fragmentItemExternalReference.setScope(() -> scope);
+
+		return fragmentItemExternalReference;
 	}
 
 	@Reference

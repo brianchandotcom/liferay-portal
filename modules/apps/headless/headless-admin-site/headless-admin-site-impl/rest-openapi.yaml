@@ -2116,9 +2116,9 @@ components:
             description:
                 A value of a field of type item.
             properties:
-                item:
+                itemExternalReference:
                     $ref: "#/components/schemas/ItemExternalReference"
-                template:
+                templateReference:
                     $ref: "#/components/schemas/TemplateReference"
             type: object
         Layout:

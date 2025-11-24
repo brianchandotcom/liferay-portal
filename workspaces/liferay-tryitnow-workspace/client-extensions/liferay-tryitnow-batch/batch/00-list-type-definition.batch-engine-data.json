@@ -16,18 +16,12 @@
 				{
 					"externalReferenceCode": "TARGET_BLANK",
 					"key": "targetBlank",
-					"name": "Target Blank",
-					"name_i18n": {
-						"en-US": "New Tab / Window"
-					}
+					"name": "Target Blank"
 				},
 				{
 					"externalReferenceCode": "TARGET_SELF",
 					"key": "targetSelf",
-					"name": "Target Self",
-					"name_i18n": {
-						"en-US": "Same Tab / Window"
-					}
+					"name": "Target Self"
 				}
 			],
 			"name": "M2H8 Call To Action Target",

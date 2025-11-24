@@ -115,13 +115,6 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 				continue;
 			}
 
-			if (!hasParentWithTokenType(
-					methodCallDetailAST, TokenTypes.LITERAL_NEW,
-					TokenTypes.METHOD_CALL)) {
-
-				continue;
-			}
-
 			log(methodCallDetailAST, _MSG_INCORRECT_PARAMETER);
 		}
 	}

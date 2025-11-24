@@ -501,12 +501,12 @@ test(
 		await performUserSwitch(page, 'test');
 
 		await test.step('Import the file with useCurrentUser enabled and check the imported entry authorship', async () => {
-			await companyExportImportPage.import(
-				exportFilePath,
-				undefined,
-				undefined,
-				true
-			);
+            await companyExportImportPage.import({
+                expectedUploadErrorMessage: null,
+                filePath: exportFilePath,
+                includePermissions: false,
+                useCurrentUser: true,
+            });
 			await applicationsMenuPage.goToObjectDefinition(
 				objectDefinition.name
 			);
@@ -694,7 +694,10 @@ test(
 			})
 		).toEqual({status: 'NOT_FOUND'});
 
-		await companyExportImportPage.import(exportFilePath, true);
+		await companyExportImportPage.import({
+			filePath: exportFilePath,
+			includePermissions: true,
+		});
 
 		const importedObjectEntry = await apiHelpers.get(
 			`${apiHelpers.baseUrl}${applicationName}/by-external-reference-code/${objectEntry.externalReferenceCode}`
@@ -859,7 +862,7 @@ test('Can import many to many entries', async ({
 	]);
 
 	await test.step("import object entry where objectDefinition1ObjectEntry3 was still unrelated and assert it's persistence", async () => {
-		await companyExportImportPage.import(exportFilePath1);
+		await companyExportImportPage.import({filePath: exportFilePath1});
 
 		const objectEntry =
 			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
@@ -873,7 +876,7 @@ test('Can import many to many entries', async ({
 	});
 
 	await test.step("import object entry where objectDefinition1ObjectEntry3 was related to objectDefinition2ObjectEntry1 and assert it's persistence", async () => {
-		await companyExportImportPage.import(exportFilePath2);
+		await companyExportImportPage.import({filePath: exportFilePath2});
 
 		const objectEntry =
 			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
@@ -934,11 +937,12 @@ test('Can only import custom object entries when their definitions are already i
 
 	await objectActionAPIClient.deleteObjectDefinition(objectDefinition.id);
 
-	await companyExportImportPage.import(
-		exportFilePath,
-		false,
-		'The Data Handler for the "Tests" portlet is missing from the system.'
-	);
+	await companyExportImportPage.import({
+		expectedUploadErrorMessage:
+			'The Data Handler for the "Tests" portlet is missing from the system.',
+		filePath: exportFilePath,
+		includePermissions: false,
+	});
 
 	({body: objectDefinition} =
 		await objectActionAPIClient.postObjectDefinition(
@@ -947,7 +951,9 @@ test('Can only import custom object entries when their definitions are already i
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
-	await companyExportImportPage.import(exportFilePath);
+	await companyExportImportPage.import({
+		filePath: exportFilePath,
+	});
 
 	expect(
 		await apiHelpers.get(
@@ -1141,9 +1147,10 @@ test('Cannot import a site scoped lar file', async ({
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(taskName);
 
-	await companyExportImportPage.import(
-		exportFilePath,
-		false,
-		'The LAR file contains one or more entities with a different scope.'
-	);
+	await companyExportImportPage.import({
+		expectedUploadErrorMessage:
+			'The LAR file contains one or more entities with a different scope.',
+		filePath: exportFilePath,
+		includePermissions: false,
+	});
 });

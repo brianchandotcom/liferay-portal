@@ -187,14 +187,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		await exportImportPage.goToImport();
 
-		await exportImportPage.import(exportFilePath);
-
-		await expect(
-			exportImportPage.page
-				.getByText(exportName)
-				.locator('../../..')
-				.getByText('Successful')
-		).toBeVisible();
+		await exportImportPage.import({filePath: exportFilePath});
 
 		expect(
 			await apiHelpers.get(
@@ -240,10 +233,11 @@ testWithExportImportAtInstanceLevelFF(
 
 		await exportImportPage.goToImport();
 
-		await exportImportPage.import(
-			exportFilePath,
-			'The LAR file contains one or more entities with a different scope.'
-		);
+		await exportImportPage.import({
+			expectedUploadErrorMessage:
+				'The LAR file contains one or more entities with a different scope.',
+			filePath: exportFilePath,
+		});
 	}
 );
 
@@ -409,14 +403,7 @@ test('Can import a lar file selecting some items to import', async ({
 
 	await exportImportPage.goToImport();
 
-	await exportImportPage.import(exportFilePath);
-
-	await expect(
-		exportImportPage.page
-			.getByText(exportName)
-			.locator('../../..')
-			.getByText('Successful')
-	).toBeVisible();
+	await exportImportPage.import({filePath: exportFilePath});
 });
 
 testWithExportImportAtInstanceLevelFF(
@@ -582,11 +569,7 @@ testWithExportImportAtInstanceLevelFF(
 
 				await exportImportPage.goToImport(site2.friendlyUrlPath);
 
-				await exportImportPage.import(exportFilePath);
-
-				await expect(
-					exportImportPage.taskSuccessLabel(exportName)
-				).toBeVisible({timeout: 60000});
+				await exportImportPage.import({filePath: exportFilePath});
 			});
 
 			await test.step('Assert the exportable items from site 1 and site 2 are equal', async () => {

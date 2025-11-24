@@ -77,16 +77,16 @@ public class DropZonePageElementDefinitionDTOConverter
 
 		List<FragmentReference> fragmentReferences = new ArrayList<>();
 
-		for (String fragmentKey : fragmentEntryKeys) {
+		for (String fragmentEntryKey : fragmentEntryKeys) {
 			FragmentEntry fragmentEntry =
 				FragmentCollectionContributorRegistryUtil.getFragmentEntry(
-					fragmentKey);
+					fragmentEntryKey);
 
 			if (fragmentEntry != null) {
 				fragmentReferences.add(
 					new DefaultFragmentReference() {
 						{
-							setDefaultFragmentKey(() -> fragmentKey);
+							setDefaultFragmentKey(() -> fragmentEntryKey);
 							setFragmentReferenceType(
 								() ->
 									FragmentReferenceType.
@@ -96,7 +96,7 @@ public class DropZonePageElementDefinitionDTOConverter
 			}
 			else {
 				fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
-					scopeGroupId, fragmentKey);
+					scopeGroupId, fragmentEntryKey);
 
 				if (fragmentEntry != null) {
 					FragmentItemExternalReference

@@ -16,6 +16,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.util.LayoutServiceContextHelperUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -188,13 +189,18 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 					GetterUtil.getInteger(pageExperience.getPriority()));
 		}
 
-		return _toPageExperience(
-			SegmentsExperienceUtil.updateSegmentsExperience(
-				_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
-				layout, pageExperience, segmentsExperience,
-				ServiceContextUtil.createServiceContext(
-					groupId, contextHttpServletRequest,
-					contextUser.getUserId())));
+		try (AutoCloseable autoCloseable =
+				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
+					layout, contextUser)) {
+
+			return _toPageExperience(
+				SegmentsExperienceUtil.updateSegmentsExperience(
+					_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
+					layout, pageExperience, segmentsExperience,
+					ServiceContextUtil.createServiceContext(
+						groupId, contextHttpServletRequest,
+						contextUser.getUserId())));
+		}
 	}
 
 	@Override
@@ -219,13 +225,18 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _toPageExperience(
-			SegmentsExperienceUtil.addSegmentsExperience(
-				_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
-				layout, pageExperience,
-				ServiceContextUtil.createServiceContext(
-					groupId, contextHttpServletRequest,
-					contextUser.getUserId())));
+		try (AutoCloseable autoCloseable =
+				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
+					layout, contextUser)) {
+
+			return _toPageExperience(
+				SegmentsExperienceUtil.addSegmentsExperience(
+					_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
+					layout, pageExperience,
+					ServiceContextUtil.createServiceContext(
+						groupId, contextHttpServletRequest,
+						contextUser.getUserId())));
+		}
 	}
 
 	private PageExperience _toPageExperience(

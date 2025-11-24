@@ -77,50 +77,48 @@ public class FragmentMappedValueUtil {
 	}
 
 	public static ClassFieldsReference toDisplayPageClassFieldsReference(
-		String displayPageTemplateId) {
+		String displayPageUniqueFieldId) {
 
-		if (StringUtil.startsWith(
-				displayPageTemplateId,
+		if (!StringUtil.startsWith(
+				displayPageUniqueFieldId,
 				LayoutPageTemplateEntry.class.getSimpleName())) {
 
-			try {
-				Matcher matcher = _pattern.matcher(displayPageTemplateId);
+			return null;
+		}
 
-				if (matcher.find()) {
-					LayoutPageTemplateEntry layoutPageTemplateEntry =
-						LayoutPageTemplateEntryLocalServiceUtil.
-							getLayoutPageTemplateEntry(
-								GetterUtil.getLong(matcher.group(1)));
+		Matcher matcher = _pattern.matcher(displayPageUniqueFieldId);
 
-					return new ClassFieldsReference() {
-						{
-							setClassName(
-								() -> LayoutPageTemplateEntry.class.getName());
-							setFields(
-								() -> new Field[] {
-									new Field() {
-										{
-											setFieldName(
-												() -> "externalReferenceCode");
-											setFieldValue(
-												layoutPageTemplateEntry::
-													getExternalReferenceCode);
-										}
-									}
-								});
-						}
-					};
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Item reference could not be set since no display " +
-							"page template could be obtained",
-						exception);
-				}
+		if (!matcher.find()) {
+			return null;
+		}
 
-				return null;
+		try {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					getLayoutPageTemplateEntry(
+						GetterUtil.getLong(matcher.group(1)));
+
+			Field field = new Field();
+
+			field.setFieldName(() -> "externalReferenceCode");
+			field.setFieldValue(
+				layoutPageTemplateEntry::getExternalReferenceCode);
+
+			ClassFieldsReference classFieldsReference =
+				new ClassFieldsReference();
+
+			classFieldsReference.setClassName(
+				LayoutPageTemplateEntry.class::getName);
+			classFieldsReference.setFields(() -> new Field[] {field});
+
+			return classFieldsReference;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Item reference could not be set: " +
+						exception.getMessage(),
+					exception);
 			}
 		}
 

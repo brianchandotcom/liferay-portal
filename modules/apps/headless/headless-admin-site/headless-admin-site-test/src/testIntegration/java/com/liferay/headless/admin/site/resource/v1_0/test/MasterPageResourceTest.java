@@ -804,7 +804,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		PageElement[] pageElements = {
 			PageElementsTestUtil.getDropZonePageElement(
-				testGroup.getGroupId(), RandomTestUtil.randomString())
+				RandomTestUtil.randomString(), testGroup.getGroupId())
 		};
 
 		MasterPage masterPage = _getMasterPage(pageElements);
@@ -1071,7 +1071,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		PageElement[] pageElements = {
 			PageElementsTestUtil.getDropZonePageElement(
-				testGroup.getGroupId(), RandomTestUtil.randomString())
+				RandomTestUtil.randomString(), testGroup.getGroupId())
 		};
 
 		MasterPage masterPage = _getMasterPage(pageElements);

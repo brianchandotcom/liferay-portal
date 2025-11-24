@@ -11,9 +11,9 @@ export default defineConfig({
 		outDir: 'build/vite',
 		rollupOptions: {
 			external: [
-				'react',
-				'react-dom',
 				'clarity-solution-js-import-maps-entry',
+				'react',
+				'react-dom'
 			],
 			output: {
 				assetFileNames: '[name]-[hash][extname]',

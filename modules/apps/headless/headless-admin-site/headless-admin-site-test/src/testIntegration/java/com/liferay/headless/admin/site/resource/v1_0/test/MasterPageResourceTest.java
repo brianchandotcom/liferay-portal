@@ -432,10 +432,10 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	private void _assertPageElements(
-		PageElement[] expectedPageElements, MasterPage sitePage) {
+		PageElement[] expectedPageElements, MasterPage masterPage) {
 
 		for (PageSpecification pageSpecification :
-				sitePage.getPageSpecifications()) {
+				masterPage.getPageSpecifications()) {
 
 			ContentPageSpecification contentPageSpecification =
 				(ContentPageSpecification)pageSpecification;

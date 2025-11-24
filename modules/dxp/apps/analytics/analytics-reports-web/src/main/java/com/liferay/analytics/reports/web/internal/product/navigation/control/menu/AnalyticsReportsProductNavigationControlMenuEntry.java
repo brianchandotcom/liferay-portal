@@ -378,7 +378,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 						PortletPreferencesTable.INSTANCE.plid.eq(
 							GetterUtil.getLong(plid))
 					).and(
-						predicate
+						Predicate.withParentheses(predicate)
 					)
 				));
 

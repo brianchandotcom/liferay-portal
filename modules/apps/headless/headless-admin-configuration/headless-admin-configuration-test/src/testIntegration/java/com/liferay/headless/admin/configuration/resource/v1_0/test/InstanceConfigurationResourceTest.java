@@ -58,9 +58,10 @@ public class InstanceConfigurationResourceTest
 		}
 	}
 
+	@Override
 	@Test
-	public void testGetInstanceConfigurationWithPasswordField()
-		throws Exception {
+	public void testGetInstanceConfiguration() throws Exception {
+		super.testGetInstanceConfiguration();
 
 		PropsUtil.set(
 			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");

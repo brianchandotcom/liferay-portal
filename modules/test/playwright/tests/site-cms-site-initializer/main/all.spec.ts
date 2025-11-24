@@ -17,7 +17,6 @@ import performLogin, {
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -600,22 +599,8 @@ test(
 				spaceName
 			);
 
-			await test.step('Create an user and add to the Space', async () => {
-				user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-				userData[user.alternateName] = {
-					name: user.givenName,
-					password: 'test',
-					surname: user.familyName,
-				};
-
-				await spaceSummaryPage.goto(spaceName);
-
-				await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
-			});
-
 			await test.step('Go to All Assets and open the Info Panel Categorization Tab', async () => {
-				await page.goto(PORTLET_URLS.cmsAll);
+				await assetsPage.gotoAll();
 
 				await assetsPage.execItemAction({
 					action: 'Show Details',
@@ -664,12 +649,26 @@ test(
 				await expect(categoryLabel).toBeAttached();
 			});
 
+			await test.step('Create an user and add to the Space', async () => {
+				user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+				userData[user.alternateName] = {
+					name: user.givenName,
+					password: 'test',
+					surname: user.familyName,
+				};
+
+				await spaceSummaryPage.goto(spaceName);
+
+				await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
+			});
+
 			await test.step('Login as a space member and go to Info Panel Categorization tab', async () => {
 				await performLogout(page);
 
 				await performLogin(page, user.alternateName);
 
-				await page.goto(PORTLET_URLS.cmsAll);
+				await assetsPage.gotoAll();
 
 				await expect(assetsPage.getItem(file1Title)).toBeVisible();
 
@@ -1131,7 +1130,7 @@ test(
 					spaceName
 				);
 
-				await page.goto(PORTLET_URLS.cmsAll);
+				await assetsPage.gotoAll();
 			});
 
 			await test.step('Select the asset, open the Side Panel and then expire the asset', async () => {
@@ -1196,7 +1195,7 @@ test(
 				'Default'
 			);
 
-			await page.goto(PORTLET_URLS.cmsAll);
+			await assetsPage.gotoAll();
 
 			await assetsPage.execItemAction({
 				action: 'Show Details',

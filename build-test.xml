@@ -7559,6 +7559,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="true" name="delete.liferay.home" />
 		<attribute default="" name="testable.portal.started.marker.file" />
+		<attribute default="false" name="skip.wait.server.startup" />
 
 		<sequential>
 			<lstopwatch action="start" name="start.app.server.@{app.server.bundle.index}" />
@@ -7566,6 +7567,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<start-app-server-cmd
 				app.server.bundle.index="@{app.server.bundle.index}"
 				delete.liferay.home="@{delete.liferay.home}"
+				skip.wait.server.startup="@{skip.wait.server.startup}"
 				test.docker.environment="${test.docker.environment}"
 				testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 			/>
@@ -7590,6 +7592,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="true" name="delete.liferay.home" />
 		<attribute default="host" name="docker.network.name" />
+		<attribute default="false" name="skip.wait.server.startup" />
 		<attribute default="false" name="test.docker.environment" />
 		<attribute default="" name="testable.portal.started.marker.file" />
 
@@ -7656,7 +7659,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<get-operating-system-property property.name="operating.system.docker.image" />
 
 					<parallel>
-						<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
+						<if>
+							<equals arg1="@{skip.wait.server.startup}" arg2="false" />
+							<then>
+								<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
+							</then>
+						</if>
 
 						<daemons>
 							<if>
@@ -17363,8 +17371,18 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 			</then>
 		</if>
 
+		<if>
+			<not>
+				<isset property="skip.wait.server.startup" />
+			</not>
+			<then>
+				<var name="skip.wait.server.startup" value="false" />
+			</then>
+		</if>
+
 		<start-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
+			skip.wait.server.startup="${skip.wait.server.startup}"
 			testable.portal.started.marker.file="${testable.portal.started.marker.file}"
 		/>
 	</target>

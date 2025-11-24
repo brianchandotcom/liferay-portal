@@ -27,11 +27,7 @@ import BulkActionsMonitorItemList from './components/BulkActionsMonitorItemList'
 import {BulkActionTaskStarter} from './services/BulkActionTaskStarter';
 import {INTERVAL_TASK_POLLING_MS, URL_TASKS_REPORT} from './util/constants';
 
-function BulkActionsMonitor({
-	bulkActionTaskClassNameId: classNameId,
-}: {
-	bulkActionTaskClassNameId: number;
-}) {
+function BulkActionsMonitor() {
 	const [active, setActive] = useState<boolean>(false);
 	const [processingTasks, setProcessingTask] = useState(0);
 	const [tasks, setTasks] = useState<IBulkActionTask[]>([]);
@@ -109,10 +105,7 @@ function BulkActionsMonitor({
 			bulkActionDTO: IBulkActionTaskStarterDTO<keyof IBulkActionTaskType>
 		) => {
 			const bulkAction: IBulkActionTaskStarter =
-				new BulkActionTaskStarter({
-					classNameId,
-					...bulkActionDTO,
-				});
+				new BulkActionTaskStarter(bulkActionDTO);
 
 			try {
 				const response = await AssetBulkActionTaskService.createTask(
@@ -138,7 +131,7 @@ function BulkActionsMonitor({
 				}
 			}
 		},
-		[classNameId, pollProcessingTasks]
+		[pollProcessingTasks]
 	);
 
 	useEffect(() => {

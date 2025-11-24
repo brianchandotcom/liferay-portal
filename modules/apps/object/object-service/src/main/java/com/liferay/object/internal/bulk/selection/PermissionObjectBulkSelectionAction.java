@@ -8,8 +8,13 @@ package com.liferay.object.internal.bulk.selection;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.internal.entry.folder.util.ObjectEntryFolderUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -81,6 +86,9 @@ public class PermissionObjectBulkSelectionAction
 
 			bulkSelection.forEach(
 				object -> {
+					long objectDefinitionId = _getObjectDefinitionId(companyId);
+					String status = "completed";
+
 					try {
 						String className = null;
 						long groupId = 0L;
@@ -187,26 +195,6 @@ public class PermissionObjectBulkSelectionAction
 								String.valueOf(resourceId), modelPermissions);
 
 						numberOfSuccessfulItems.getAndIncrement();
-
-						_objectEntryLocalService.addObjectEntry(
-							0, user.getUserId(),
-							_getCMSBulkActionTaskItemObjectDefinitionId(
-								companyId),
-							ObjectEntryFolderConstants.
-								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-							null,
-							HashMapBuilder.<String, Serializable>put(
-								"bulkActionTaskId", bulkActionTaskId
-							).put(
-								"executionStatus", "completed"
-							).put(
-								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
-									"askId",
-								bulkActionTaskId
-							).put(
-								"type", "ObjectEntryFolder"
-							).build(),
-							new ServiceContext());
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
@@ -214,18 +202,17 @@ public class PermissionObjectBulkSelectionAction
 						}
 
 						numberOfFailedItems.getAndIncrement();
-
+					}
+					finally {
 						_objectEntryLocalService.addObjectEntry(
-							0, user.getUserId(),
-							_getCMSBulkActionTaskItemObjectDefinitionId(
-								companyId),
+							0, user.getUserId(), objectDefinitionId,
 							ObjectEntryFolderConstants.
 								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 							null,
 							HashMapBuilder.<String, Serializable>put(
 								"bulkActionTaskId", bulkActionTaskId
 							).put(
-								"executionStatus", "failed"
+								"executionStatus", status
 							).put(
 								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
 									"askId",
@@ -255,9 +242,7 @@ public class PermissionObjectBulkSelectionAction
 		}
 	}
 
-	private long _getCMSBulkActionTaskItemObjectDefinitionId(long companyId)
-		throws PortalException {
-
+	private long _getObjectDefinitionId(long companyId) throws PortalException {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(

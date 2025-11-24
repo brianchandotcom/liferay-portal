@@ -16,7 +16,6 @@ import {BulkActionTaskStarter} from '../../../../../src/main/resources/META-INF/
 import {
 	composeCreateTaskDTO,
 	composeCreateTaskURL,
-	getTaskReportLink,
 } from '../../../../../src/main/resources/META-INF/resources/js/main_view/bulk_actions_monitor/util';
 import {getBulkActionTaskMessage} from '../../../../../src/main/resources/META-INF/resources/js/main_view/bulk_actions_monitor/util/notifications';
 
@@ -144,7 +143,6 @@ describe('BulkActionTaskStarter', () => {
 			starter.onCreateSuccess(mockResponse as any);
 
 			expect(displayCreateTaskSuccessToast).toHaveBeenCalled();
-			expect(getTaskReportLink).toHaveBeenCalled();
 		});
 
 		it('displays default success toast when override is false', () => {
@@ -190,7 +188,6 @@ describe('BulkActionTaskStarter', () => {
 			starter.onCreateSuccess(mockResponse as any);
 
 			expect(displayCreateTaskSuccessToast).toHaveBeenCalled();
-			expect(getTaskReportLink).toHaveBeenCalled();
 		});
 	});
 

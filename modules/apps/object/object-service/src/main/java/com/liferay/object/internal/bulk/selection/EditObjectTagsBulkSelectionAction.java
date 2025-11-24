@@ -81,6 +81,9 @@ public class EditObjectTagsBulkSelectionAction
 
 			bulkSelection.forEach(
 				object -> {
+					long objectDefinitionId = _getObjectDefinitionId(companyId);
+					String status = "completed";
+
 					try {
 						if (object instanceof ObjectEntry) {
 							_updateAssetEntry(
@@ -88,26 +91,6 @@ public class EditObjectTagsBulkSelectionAction
 						}
 
 						numberOfSuccessfulItems.getAndIncrement();
-
-						_objectEntryLocalService.addObjectEntry(
-							0, user.getUserId(),
-							_getCMSBulkActionTaskItemObjectDefinitionId(
-								companyId),
-							ObjectEntryFolderConstants.
-								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-							null,
-							HashMapBuilder.<String, Serializable>put(
-								"bulkActionTaskId", bulkActionTaskId
-							).put(
-								"executionStatus", "completed"
-							).put(
-								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
-									"askId",
-								bulkActionTaskId
-							).put(
-								"type", "ObjectEntryFolder"
-							).build(),
-							new ServiceContext());
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
@@ -115,18 +98,17 @@ public class EditObjectTagsBulkSelectionAction
 						}
 
 						numberOfFailedItems.getAndIncrement();
-
+					}
+					finally {
 						_objectEntryLocalService.addObjectEntry(
-							0, user.getUserId(),
-							_getCMSBulkActionTaskItemObjectDefinitionId(
-								companyId),
+							0, user.getUserId(), objectDefinitionId,
 							ObjectEntryFolderConstants.
 								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 							null,
 							HashMapBuilder.<String, Serializable>put(
 								"bulkActionTaskId", bulkActionTaskId
 							).put(
-								"executionStatus", "failed"
+								"executionStatus", status
 							).put(
 								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
 									"askId",
@@ -156,9 +138,7 @@ public class EditObjectTagsBulkSelectionAction
 		}
 	}
 
-	private long _getCMSBulkActionTaskItemObjectDefinitionId(long companyId)
-		throws PortalException {
-
+	private long _getObjectDefinitionId(long companyId) throws PortalException {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(

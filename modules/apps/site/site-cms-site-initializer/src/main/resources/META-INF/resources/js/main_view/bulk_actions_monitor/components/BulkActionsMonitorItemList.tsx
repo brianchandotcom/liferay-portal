@@ -29,7 +29,6 @@ function BulkActionsMonitorItemList({items}: {items: IBulkActionTask[]}) {
 
 				return (
 					<ClayPanel
-						collapsable
 						displayTitle={
 							<ClayPanel.Title className="d-flex task-status-item">
 								<div className="task-status-item-icon">
@@ -78,7 +77,7 @@ function BulkActionsMonitorItemList({items}: {items: IBulkActionTask[]}) {
 						}
 						key={id}
 						showCollapseIcon={false}
-					></ClayPanel>
+					/>
 				);
 			}}
 		</DropDown.ItemList>

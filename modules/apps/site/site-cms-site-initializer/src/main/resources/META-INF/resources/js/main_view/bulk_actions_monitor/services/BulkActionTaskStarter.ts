@@ -2,9 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
-
 import {sub} from 'frontend-js-web';
-
 import {RequestResult} from '../../../common/services/ApiHelper';
 import {
 	IBulkActionFDSData,
@@ -18,15 +16,10 @@ import {
 	displayCreateTaskErrorToast,
 	displayCreateTaskSuccessToast,
 } from '../../../common/utils/toastUtil';
-import {
-	composeCreateTaskDTO,
-	composeCreateTaskURL,
-	getTaskReportLink,
-} from '../util';
+import {composeCreateTaskDTO, composeCreateTaskURL} from '../util';
 import {getBulkActionTaskMessage} from '../util/notifications';
 
 export class BulkActionTaskStarter implements IBulkActionTaskStarter {
-	private readonly bulkActionClassNameId: number;
 	private readonly onCreateTaskError:
 		| ((response: RequestResult<IBulkActionTaskPage>) => void)
 		| null;
@@ -43,7 +36,6 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 
 	constructor({
 		apiURL,
-		classNameId,
 		keyValues,
 		onCreateError = null,
 		onCreateSuccess = null,
@@ -51,14 +43,11 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 		overrideDefaultSuccessToast = false,
 		selectedData,
 		type,
-	}: IBulkActionTaskStarterDTO<keyof IBulkActionTaskType> & {
-		classNameId?: number;
-	}) {
+	}: IBulkActionTaskStarterDTO<keyof IBulkActionTaskType>) {
 		if (!apiURL) {
 			throw new Error('Cannot POST bulk action task.');
 		}
 
-		this.bulkActionClassNameId = classNameId || 0;
 		this.onCreateTaskError = onCreateError;
 		this.onCreateTaskSuccess = onCreateSuccess;
 		this.overrideDefaultErrorToast = overrideDefaultErrorToast;
@@ -82,12 +71,19 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 			this.onCreateTaskSuccess(response);
 		}
 		else {
-
-			displayCreateTaskSuccessToast(getBulkActionTaskMessage(
+			const message = getBulkActionTaskMessage(
 				this.type,
 				'info',
 				this.selectedData
-			));
+			);
+
+			displayCreateTaskSuccessToast(
+				this.selectedData.selectAll ? message :
+				sub(
+					message,
+					[
+						this.selectedData?.items?.length || 0,
+					]));
 
 			if (this.onCreateTaskSuccess) {
 				this.onCreateTaskSuccess(response);

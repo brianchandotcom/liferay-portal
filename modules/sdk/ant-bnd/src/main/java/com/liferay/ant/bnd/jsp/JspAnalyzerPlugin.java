@@ -572,19 +572,25 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		return false;
 	}
 
+	private boolean _isJavaeePackageJavax(String javaeePackage) {
+		if (javaeePackage.equals("javax")) {
+			return true;
+		}
+		else if (javaeePackage.equals("jakarta")) {
+			return false;
+		}
+
+		throw new RuntimeException(
+			"Could not infer required javaee package; possible values are " +
+				"jakarta or javax");
+	}
+
 	private boolean _isUseJavaxImports(
 			String javaeePackage, Set<String> taglibURIs)
 		throws Exception {
 
 		if (taglibURIs.isEmpty()) {
-			if (javaeePackage.equals("javax")) {
-				return true;
-			}
-			else if (javaeePackage.equals("jakarta")) {
-				return false;
-			}
-
-			return false;
+			return _isJavaeePackageJavax(javaeePackage);
 		}
 
 		for (String javaxURI : _JSTL_CORE_URIS_JAVAX) {
@@ -609,14 +615,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			}
 		}
 
-		if (javaeePackage.equals("javax")) {
-			return true;
-		}
-		else if (javaeePackage.equals("jakarta")) {
-			return false;
-		}
-
-		return false;
+		return _isJavaeePackageJavax(javaeePackage);
 	}
 
 	private String _removeComments(String content) {

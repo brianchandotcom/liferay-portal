@@ -28,7 +28,7 @@ public class ObjectDefinitionModelListener
 	extends BaseModelListener<ObjectDefinition> {
 
 	@Override
-	public void onAfterRemove(ObjectDefinition objectDefinition)
+	public void onBeforeRemove(ObjectDefinition objectDefinition)
 		throws ModelListenerException {
 
 		if (!objectDefinition.isCMS()) {
@@ -42,20 +42,33 @@ public class ObjectDefinitionModelListener
 			return;
 		}
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchDefaultLayoutPageTemplateEntry(
-					group.getGroupId(),
-					_portal.getClassNameId(objectDefinition.getClassName()), 0);
+		try {
+			long classNameId = _portal.getClassNameId(
+				objectDefinition.getClassName());
 
-		if (layoutPageTemplateEntry != null) {
-			try {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchDefaultLayoutPageTemplateEntry(
+						group.getGroupId(), classNameId, 0);
+
+			if (layoutPageTemplateEntry != null) {
 				_layoutPageTemplateEntryLocalService.
 					deleteLayoutPageTemplateEntry(layoutPageTemplateEntry);
 			}
-			catch (PortalException portalException) {
-				throw new ModelListenerException(portalException);
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						group.getGroupId(),
+						"LFR_CMS_TRANSLATION_" + classNameId);
+
+			if (layoutPageTemplateEntry != null) {
+				_layoutPageTemplateEntryLocalService.
+					deleteLayoutPageTemplateEntry(layoutPageTemplateEntry);
 			}
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

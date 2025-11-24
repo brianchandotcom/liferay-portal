@@ -90,6 +90,8 @@ public class ReleaseManagerTest {
 				},
 				null);
 
+			// Allow SchemaCreator to complete and register the new release.
+
 			Thread.sleep(2000);
 
 			release = _releaseLocalService.fetchRelease(

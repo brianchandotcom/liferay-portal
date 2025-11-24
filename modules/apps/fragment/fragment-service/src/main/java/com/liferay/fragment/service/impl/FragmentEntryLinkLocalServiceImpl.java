@@ -145,29 +145,11 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setRendererKey(rendererKey);
 		fragmentEntryLink.setType(type);
 
-		String processedHTML = html;
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-		HttpServletResponse httpServletResponse = serviceContext.getResponse();
-
-		if ((httpServletRequest != null) && (httpServletResponse != null)) {
-			DefaultFragmentEntryProcessorContext
-				defaultFragmentEntryProcessorContext =
-					new DefaultFragmentEntryProcessorContext(
-						httpServletRequest, httpServletResponse,
-						FragmentEntryLinkConstants.EDIT,
-						LocaleUtil.getMostRelevantLocale());
-
-			processedHTML =
-				_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-					fragmentEntryLink, defaultFragmentEntryProcessorContext);
-		}
-
 		if (Validator.isNull(editableValues)) {
 			editableValues = String.valueOf(
 				_fragmentEntryProcessorRegistry.
 					getDefaultEditableValuesJSONObject(
-						processedHTML,
+						_getProcessedHTML(fragmentEntryLink, serviceContext),
 						_jsonFactory.safeCreateJSONObject(configuration)));
 		}
 

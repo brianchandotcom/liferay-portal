@@ -52,29 +52,32 @@ public class ItemValue implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public ItemExternalReference getItem() {
-		if (_itemSupplier != null) {
-			item = _itemSupplier.get();
+	public ItemExternalReference getItemExternalReference() {
+		if (_itemExternalReferenceSupplier != null) {
+			itemExternalReference = _itemExternalReferenceSupplier.get();
 
-			_itemSupplier = null;
+			_itemExternalReferenceSupplier = null;
 		}
 
-		return item;
+		return itemExternalReference;
 	}
 
-	public void setItem(ItemExternalReference item) {
-		this.item = item;
+	public void setItemExternalReference(
+		ItemExternalReference itemExternalReference) {
 
-		_itemSupplier = null;
+		this.itemExternalReference = itemExternalReference;
+
+		_itemExternalReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setItem(
-		UnsafeSupplier<ItemExternalReference, Exception> itemUnsafeSupplier) {
+	public void setItemExternalReference(
+		UnsafeSupplier<ItemExternalReference, Exception>
+			itemExternalReferenceUnsafeSupplier) {
 
-		_itemSupplier = () -> {
+		_itemExternalReferenceSupplier = () -> {
 			try {
-				return itemUnsafeSupplier.get();
+				return itemExternalReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -87,36 +90,37 @@ public class ItemValue implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference item;
+	protected ItemExternalReference itemExternalReference;
 
 	@JsonIgnore
-	private Supplier<ItemExternalReference> _itemSupplier;
+	private Supplier<ItemExternalReference> _itemExternalReferenceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public TemplateReference getTemplate() {
-		if (_templateSupplier != null) {
-			template = _templateSupplier.get();
+	public TemplateReference getTemplateReference() {
+		if (_templateReferenceSupplier != null) {
+			templateReference = _templateReferenceSupplier.get();
 
-			_templateSupplier = null;
+			_templateReferenceSupplier = null;
 		}
 
-		return template;
+		return templateReference;
 	}
 
-	public void setTemplate(TemplateReference template) {
-		this.template = template;
+	public void setTemplateReference(TemplateReference templateReference) {
+		this.templateReference = templateReference;
 
-		_templateSupplier = null;
+		_templateReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setTemplate(
-		UnsafeSupplier<TemplateReference, Exception> templateUnsafeSupplier) {
+	public void setTemplateReference(
+		UnsafeSupplier<TemplateReference, Exception>
+			templateReferenceUnsafeSupplier) {
 
-		_templateSupplier = () -> {
+		_templateReferenceSupplier = () -> {
 			try {
-				return templateUnsafeSupplier.get();
+				return templateReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -129,10 +133,10 @@ public class ItemValue implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected TemplateReference template;
+	protected TemplateReference templateReference;
 
 	@JsonIgnore
-	private Supplier<TemplateReference> _templateSupplier;
+	private Supplier<TemplateReference> _templateReferenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -161,28 +165,29 @@ public class ItemValue implements Serializable {
 
 		sb.append("{");
 
-		ItemExternalReference item = getItem();
+		ItemExternalReference itemExternalReference =
+			getItemExternalReference();
 
-		if (item != null) {
+		if (itemExternalReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"item\": ");
+			sb.append("\"itemExternalReference\": ");
 
-			sb.append(String.valueOf(item));
+			sb.append(String.valueOf(itemExternalReference));
 		}
 
-		TemplateReference template = getTemplate();
+		TemplateReference templateReference = getTemplateReference();
 
-		if (template != null) {
+		if (templateReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"template\": ");
+			sb.append("\"templateReference\": ");
 
-			sb.append(String.valueOf(template));
+			sb.append(String.valueOf(templateReference));
 		}
 
 		sb.append("}");

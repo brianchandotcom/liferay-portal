@@ -25,47 +25,51 @@ public class ItemValue implements Cloneable, Serializable {
 		return ItemValueSerDes.toDTO(json);
 	}
 
-	public ItemExternalReference getItem() {
-		return item;
+	public ItemExternalReference getItemExternalReference() {
+		return itemExternalReference;
 	}
 
-	public void setItem(ItemExternalReference item) {
-		this.item = item;
+	public void setItemExternalReference(
+		ItemExternalReference itemExternalReference) {
+
+		this.itemExternalReference = itemExternalReference;
 	}
 
-	public void setItem(
-		UnsafeSupplier<ItemExternalReference, Exception> itemUnsafeSupplier) {
+	public void setItemExternalReference(
+		UnsafeSupplier<ItemExternalReference, Exception>
+			itemExternalReferenceUnsafeSupplier) {
 
 		try {
-			item = itemUnsafeSupplier.get();
+			itemExternalReference = itemExternalReferenceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ItemExternalReference item;
+	protected ItemExternalReference itemExternalReference;
 
-	public TemplateReference getTemplate() {
-		return template;
+	public TemplateReference getTemplateReference() {
+		return templateReference;
 	}
 
-	public void setTemplate(TemplateReference template) {
-		this.template = template;
+	public void setTemplateReference(TemplateReference templateReference) {
+		this.templateReference = templateReference;
 	}
 
-	public void setTemplate(
-		UnsafeSupplier<TemplateReference, Exception> templateUnsafeSupplier) {
+	public void setTemplateReference(
+		UnsafeSupplier<TemplateReference, Exception>
+			templateReferenceUnsafeSupplier) {
 
 		try {
-			template = templateUnsafeSupplier.get();
+			templateReference = templateReferenceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected TemplateReference template;
+	protected TemplateReference templateReference;
 
 	@Override
 	public ItemValue clone() throws CloneNotSupportedException {

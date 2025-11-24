@@ -44,24 +44,24 @@ public class ItemValueSerDes {
 
 		sb.append("{");
 
-		if (itemValue.getItem() != null) {
+		if (itemValue.getItemExternalReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"item\": ");
+			sb.append("\"itemExternalReference\": ");
 
-			sb.append(String.valueOf(itemValue.getItem()));
+			sb.append(String.valueOf(itemValue.getItemExternalReference()));
 		}
 
-		if (itemValue.getTemplate() != null) {
+		if (itemValue.getTemplateReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"template\": ");
+			sb.append("\"templateReference\": ");
 
-			sb.append(String.valueOf(itemValue.getTemplate()));
+			sb.append(String.valueOf(itemValue.getTemplateReference()));
 		}
 
 		sb.append("}");
@@ -82,18 +82,22 @@ public class ItemValueSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (itemValue.getItem() == null) {
-			map.put("item", null);
+		if (itemValue.getItemExternalReference() == null) {
+			map.put("itemExternalReference", null);
 		}
 		else {
-			map.put("item", String.valueOf(itemValue.getItem()));
+			map.put(
+				"itemExternalReference",
+				String.valueOf(itemValue.getItemExternalReference()));
 		}
 
-		if (itemValue.getTemplate() == null) {
-			map.put("template", null);
+		if (itemValue.getTemplateReference() == null) {
+			map.put("templateReference", null);
 		}
 		else {
-			map.put("template", String.valueOf(itemValue.getTemplate()));
+			map.put(
+				"templateReference",
+				String.valueOf(itemValue.getTemplateReference()));
 		}
 
 		return map;
@@ -113,10 +117,10 @@ public class ItemValueSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "item")) {
+			if (Objects.equals(jsonParserFieldName, "itemExternalReference")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "template")) {
+			else if (Objects.equals(jsonParserFieldName, "templateReference")) {
 				return false;
 			}
 
@@ -128,16 +132,16 @@ public class ItemValueSerDes {
 			ItemValue itemValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "item")) {
+			if (Objects.equals(jsonParserFieldName, "itemExternalReference")) {
 				if (jsonParserFieldValue != null) {
-					itemValue.setItem(
+					itemValue.setItemExternalReference(
 						ItemExternalReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "template")) {
+			else if (Objects.equals(jsonParserFieldName, "templateReference")) {
 				if (jsonParserFieldValue != null) {
-					itemValue.setTemplate(
+					itemValue.setTemplateReference(
 						TemplateReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}

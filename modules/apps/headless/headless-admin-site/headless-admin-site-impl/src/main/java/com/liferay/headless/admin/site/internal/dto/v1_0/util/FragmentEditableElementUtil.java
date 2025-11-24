@@ -197,8 +197,7 @@ public class FragmentEditableElementUtil {
 				}
 
 				return configJSONObject.put("prefix", "tel:");
-			}
-		);
+			});
 
 		if (textFragmentValue instanceof TextInlineFragmentValue) {
 			TextInlineFragmentValue textInlineFragmentValue =
@@ -237,9 +236,11 @@ public class FragmentEditableElementUtil {
 			return jsonObject;
 		}
 
-		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
-			companyId, infoItemServiceRegistry,
-			fragmentMappedValue.getMapping(), scopeGroupId);
+		return JSONUtil.merge(
+			FragmentMappingUtil.getFragmentMappedValueJSONObject(
+				companyId, infoItemServiceRegistry,
+				fragmentMappedValue.getMapping(), scopeGroupId),
+			jsonObject);
 	}
 
 	private static List<FragmentEditableElement>

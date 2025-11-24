@@ -59,8 +59,11 @@ public class SiteConfigurationResourceTest
 		}
 	}
 
+	@Override
 	@Test
-	public void testGetSiteConfigurationWithPasswordField() throws Exception {
+	public void testGetSiteSiteConfiguration() throws Exception {
+		super.testGetSiteSiteConfiguration();
+
 		PropsUtil.set(
 			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");
 

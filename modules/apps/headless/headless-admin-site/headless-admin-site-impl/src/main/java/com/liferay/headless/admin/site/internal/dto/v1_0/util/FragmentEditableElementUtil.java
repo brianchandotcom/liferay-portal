@@ -14,6 +14,10 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValueFrag
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
+import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentEditableElementValue;
+import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentValue;
+import com.liferay.headless.admin.site.dto.v1_0.HTMLInlineFragmentValue;
+import com.liferay.headless.admin.site.dto.v1_0.HTMLMappedFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextInlineFragmentValue;
@@ -118,6 +122,22 @@ public class FragmentEditableElementUtil {
 
 			if (Objects.equals(
 					fragmentEditableElementValue.getType(),
+					FragmentEditableElementValue.Type.HTML)) {
+
+				jsonObject.put(
+					fragmentEditableElement.getId(),
+					() -> _getJSONObject(
+						() -> _getHTMLFragmentEditableElementJSONObject(
+							companyId,
+							(HTMLFragmentEditableElementValue)
+								fragmentEditableElementValue,
+							infoItemServiceRegistry, scopeGroupId)));
+
+				continue;
+			}
+
+			if (Objects.equals(
+					fragmentEditableElementValue.getType(),
 					FragmentEditableElementValue.Type.TEXT)) {
 
 				jsonObject.put(
@@ -133,6 +153,63 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
+	private static JSONObject _getHTMLFragmentEditableElementJSONObject(
+			long companyId,
+			HTMLFragmentEditableElementValue htmlFragmentEditableElementValue,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		HTMLFragmentValue htmlFragmentValue =
+			htmlFragmentEditableElementValue.getHtmlFragmentValue();
+
+		if (htmlFragmentValue == null) {
+			return jsonObject;
+		}
+
+		if (htmlFragmentValue instanceof HTMLInlineFragmentValue) {
+			HTMLInlineFragmentValue htmlInlineFragmentValue =
+				(HTMLInlineFragmentValue)htmlFragmentValue;
+
+			FragmentInlineValue fragmentInlineValue =
+				htmlInlineFragmentValue.getFragmentInlineValue();
+
+			if (fragmentInlineValue == null) {
+				return jsonObject;
+			}
+
+			Map<String, String> languageIdMap =
+				LocalizedMapUtil.getLanguageIdMap(
+					LocalizedMapUtil.getLocalizedMap(
+						fragmentInlineValue.getValue_i18n()));
+
+			for (Map.Entry<String, String> entry : languageIdMap.entrySet()) {
+				jsonObject.put(entry.getKey(), entry.getValue());
+			}
+
+			return jsonObject;
+		}
+
+		if (!(htmlFragmentValue instanceof HTMLMappedFragmentValue)) {
+			return jsonObject;
+		}
+
+		HTMLMappedFragmentValue htmlMappedFragmentValue =
+			(HTMLMappedFragmentValue)htmlFragmentValue;
+
+		FragmentMappedValue fragmentMappedValue =
+			htmlMappedFragmentValue.getFragmentMappedValue();
+
+		if (fragmentMappedValue == null) {
+			return jsonObject;
+		}
+
+		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
+			companyId, infoItemServiceRegistry,
+			fragmentMappedValue.getMapping(), scopeGroupId);
+	}
+
 	private static JSONObject _getJSONObject(
 			UnsafeSupplier<JSONObject, Exception> unsafeSupplier)
 		throws Exception {
@@ -145,7 +222,6 @@ public class FragmentEditableElementUtil {
 
 		return jsonObject;
 	}
-
 
 	private static JSONObject _getTextFragmentEditableElementJSONObject(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,

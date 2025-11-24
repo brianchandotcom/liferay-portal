@@ -50,7 +50,7 @@ export class Analytics {
 
 	async cleanup() {
 		await this.page.evaluate(() => {
-			window.localStorage.clear();
+			Liferay.Util.LocalStorage.clear();
 		});
 
 		await this.page.waitForTimeout(1000);

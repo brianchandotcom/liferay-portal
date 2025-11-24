@@ -73,9 +73,12 @@ public class RESTClientTemplateContextContributorTest {
 					HTTPTestUtil.invokeToString(
 						null,
 						"web" + jsonObject.getString("friendlyUrlPath") +
-							"/portal-vulcan-test",
+							"/portal-vulcan-test?pageSize=2",
 						Http.Method.GET),
-					CoreMatchers.containsString("Countries: spain"))
+					CoreMatchers.allOf(
+						CoreMatchers.containsString("Name: spain."),
+						CoreMatchers.containsString("Page Size (default): 20."),
+						CoreMatchers.containsString("Page Size (query): 1.")))
 			);
 		}
 		finally {

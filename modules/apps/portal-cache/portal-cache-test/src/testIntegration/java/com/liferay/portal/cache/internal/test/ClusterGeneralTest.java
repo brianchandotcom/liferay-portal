@@ -161,22 +161,22 @@ public class ClusterGeneralTest {
 			boolean senderTomcatNodeIsMaster)
 		throws Exception {
 
-		// Assert updateTomcatNode is master node when
-		// updateTomcatNodeIsMasterNode is true
+		// Assert senderTomcatNode is master node when
+		// senderTomcatNodeIsMasterNode is true
 
 		Assert.assertEquals(
 			senderTomcatNodeIsMaster,
 			senderTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		// Assert listenTomcatNode is master node when
-		// updateTomcatNodeIsMasterNode is false
+		// Assert receiverTomcatNode is master node when
+		// senderTomcatNodeIsMasterNode is false
 
 		Assert.assertEquals(
 			!senderTomcatNodeIsMaster,
 			receiverTomcatNode.syncExecute(
 				ClusterMasterExecutorUtil::isMaster));
 
-		// Register listener for listenTomcatNode
+		// Register listener for receiverTomcatNode
 
 		receiverTomcatNode.syncExecute(
 			() -> {
@@ -185,7 +185,7 @@ public class ClusterGeneralTest {
 				return null;
 			});
 
-		// Update properties in updateTomcatNode and assert change
+		// Update properties in senderTomcatNode and assert change
 
 		Assert.assertEquals(
 			"DEBUG",
@@ -201,7 +201,7 @@ public class ClusterGeneralTest {
 						ClusterGeneralTest.class.getName());
 				}));
 
-		// Assert the change in listenTomcatNode
+		// Assert the change in receiverTomcatNode
 
 		Assert.assertEquals(
 			"DEBUG",
@@ -213,7 +213,7 @@ public class ClusterGeneralTest {
 						ClusterGeneralTest.class.getName());
 				}));
 
-		// Register listener for listenTomcatNode
+		// Register listener for receiverTomcatNode
 
 		receiverTomcatNode.syncExecute(
 			() -> {
@@ -222,7 +222,7 @@ public class ClusterGeneralTest {
 				return null;
 			});
 
-		// Update properties in updateTomcatNode and assert change
+		// Update properties in senderTomcatNode and assert change
 
 		Assert.assertEquals(
 			"ERROR",
@@ -238,7 +238,7 @@ public class ClusterGeneralTest {
 						ClusterGeneralTest.class.getName());
 				}));
 
-		// Assert the change in listenTomcatNode
+		// Assert the change in receiverTomcatNode
 
 		Assert.assertEquals(
 			"ERROR",

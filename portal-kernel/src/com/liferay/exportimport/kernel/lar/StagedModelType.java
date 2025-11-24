@@ -11,6 +11,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -224,7 +226,15 @@ public class StagedModelType {
 			_referrerClassName = REFERRER_CLASS_NAME_ANY;
 		}
 		else if (referrerClassNameId > 0) {
-			_referrerClassName = PortalUtil.getClassName(referrerClassNameId);
+			ClassName className = ClassNameLocalServiceUtil.fetchClassName(
+				referrerClassNameId);
+
+			if (className == null) {
+				_referrerClassName = null;
+			}
+			else {
+				_referrerClassName = className.getClassName();
+			}
 		}
 	}
 

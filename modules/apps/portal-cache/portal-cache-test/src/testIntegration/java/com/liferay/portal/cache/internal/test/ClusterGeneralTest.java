@@ -88,12 +88,12 @@ public class ClusterGeneralTest implements Serializable {
 	@Test
 	public void testSlaveNodeCanBecomeMasterNode() throws Exception {
 
-		// Assert node 1 is master node
+		// Assert node 1 is the master node
 
 		Assert.assertTrue(
 			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		// Assert node 2 is slave node
+		// Assert node 2 is a slave node
 
 		Assert.assertFalse(
 			_tomcatNode2.syncExecute(ClusterMasterExecutorUtil::isMaster));
@@ -111,8 +111,7 @@ public class ClusterGeneralTest implements Serializable {
 
 		_tomcatNode1.stop();
 
-		// As node 1 stop, expect node 2 will become new master. Wait till node
-		// 2 finish swapping from slave to master. Confirm it is master now
+		// After node 1 stops, confirm that node 2 is the new master node
 
 		Assert.assertTrue(
 			_tomcatNode2.syncExecute(
@@ -126,12 +125,12 @@ public class ClusterGeneralTest implements Serializable {
 
 		_tomcatNode1.start(true);
 
-		// Assert node 2 is still master node
+		// Assert node 2 is still the master node
 
 		Assert.assertTrue(
 			_tomcatNode2.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		// Assert node 1 is still slave node
+		// Assert node 1 is still a slave node
 
 		Assert.assertFalse(
 			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
@@ -162,14 +161,14 @@ public class ClusterGeneralTest implements Serializable {
 			boolean senderTomcatNodeIsMaster)
 		throws Exception {
 
-		// Assert senderTomcatNode is master node when
+		// Assert senderTomcatNode is the master node when
 		// senderTomcatNodeIsMasterNode is true
 
 		Assert.assertEquals(
 			senderTomcatNodeIsMaster,
 			senderTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		// Assert receiverTomcatNode is master node when
+		// Assert receiverTomcatNode is the master node when
 		// senderTomcatNodeIsMasterNode is false
 
 		Assert.assertEquals(
@@ -352,7 +351,7 @@ public class ClusterGeneralTest implements Serializable {
 		}
 
 		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
+		public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
 			_countDownLatch.countDown();
 		}
 

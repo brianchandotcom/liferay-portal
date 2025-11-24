@@ -571,9 +571,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, _serviceContext);
 
-		randomOrder.setAccountId(accountEntry.getAccountEntryId());
 		randomOrder.setAccountExternalReferenceCode(
 			accountEntry.getExternalReferenceCode());
+		randomOrder.setAccountId(accountEntry.getAccountEntryId());
 
 		Order order = testGetOrdersPage_addOrder(randomOrder);
 

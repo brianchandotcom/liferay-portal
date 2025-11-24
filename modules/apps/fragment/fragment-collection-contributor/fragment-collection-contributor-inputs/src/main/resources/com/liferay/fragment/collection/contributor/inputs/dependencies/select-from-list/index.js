@@ -595,7 +595,7 @@ function setSelectedOption(optionElement) {
 		selectedOption.classList.remove('active');
 	}
 
-	lastSearchQuery = optionElement.textContent.toLowerCase();
+	lastSearchQuery = optionElement.textContent.toLowerCase().trim();
 
 	optionElement.classList.add('active');
 

@@ -57,7 +57,7 @@
 			<isset property="custom.startup.log.message" />
 			<then>
 				<parallel>
-					<start-app-server />
+					<start-app-server skip.wait.server.startup="true" />
 
 					<sequential>
 						<wait-for-app-server-log-message log.message="${custom.startup.log.message}" />

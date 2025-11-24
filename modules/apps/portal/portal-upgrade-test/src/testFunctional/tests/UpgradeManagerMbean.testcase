@@ -49,6 +49,8 @@ definition {
 	@priority = 5
 	test CheckMbeanFailedUpgrade {
 		property custom.mysql.sql.statement = "ALTER TABLE FragmentComposition DROP description;";
+		property custom.properties = "upgrade.report.enabled=true";
+		property custom.startup.log.message = "Upgrade report generated";
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
 		property skip.upgrade-legacy-database = "true";
@@ -80,6 +82,8 @@ definition {
 
 	@priority = 4
 	test CheckMbeanSuccessfulUpgrade {
+		property custom.properties = "upgrade.report.enabled=true";
+		property custom.startup.log.message = "Upgrade report generated";
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
 		property skip.upgrade-legacy-database = "true";
@@ -111,6 +115,8 @@ definition {
 
 	@priority = 4
 	test CheckMbeanWarningUpgrade {
+		property custom.properties = "upgrade.report.enabled=true";
+		property custom.startup.log.message = "Upgrade report generated";
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
 		property skip.get.testcase.database.properties = "true";
@@ -172,6 +178,8 @@ definition {
 	@priority = 5
 	test CheckMbeanWhenUpgradeHaveWarnAndError {
 		property custom.mysql.sql.statement = "ALTER TABLE FragmentComposition DROP description;";
+		property custom.properties = "upgrade.report.enabled=true";
+		property custom.startup.log.message = "Upgrade report generated";
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
 		property skip.get.testcase.database.properties = "true";
@@ -209,6 +217,8 @@ definition {
 
 	@priority = 4
 	test CheckMbeanWhenUpgradeItsNotExecuted {
+		property custom.startup.log.message = "upgrade finished with result";
+
 		task ("Given portal is started When no upgrade processes runned") {
 			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
 		}

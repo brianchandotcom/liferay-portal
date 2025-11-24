@@ -86,9 +86,9 @@ public class CommerceOrderKeywordQueryContributor
 					_getTrailingWildcardQuery(Field.ENTRY_CLASS_PK, keywords),
 					BooleanClauseOccur.SHOULD);
 
-				BooleanQuery searchQuery = new BooleanQueryImpl();
+				BooleanQuery searchBooleanQuery = new BooleanQueryImpl();
 
-				searchQuery.add(
+				searchBooleanQuery.add(
 					new TermQueryImpl("accountName.1_10_ngram", keywords),
 					BooleanClauseOccur.SHOULD);
 
@@ -97,13 +97,16 @@ public class CommerceOrderKeywordQueryContributor
 				multiMatchQuery.addFields("accountName", "accountName.reverse");
 				multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
 
-				searchQuery.add(multiMatchQuery, BooleanClauseOccur.SHOULD);
+				searchBooleanQuery.add(
+					multiMatchQuery, BooleanClauseOccur.SHOULD);
 
 				if (searchContext.isAndSearch()) {
-					booleanQuery.add(searchQuery, BooleanClauseOccur.MUST);
+					booleanQuery.add(
+						searchBooleanQuery, BooleanClauseOccur.MUST);
 				}
 				else {
-					booleanQuery.add(searchQuery, BooleanClauseOccur.SHOULD);
+					booleanQuery.add(
+						searchBooleanQuery, BooleanClauseOccur.SHOULD);
 				}
 			}
 			catch (ParseException parseException) {

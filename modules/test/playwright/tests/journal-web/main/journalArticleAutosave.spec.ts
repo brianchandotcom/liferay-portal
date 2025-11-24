@@ -796,3 +796,60 @@ autosaveWithoutPermissionsTest(
 		await expect(page.getByTitle(articleTitle)).toBeVisible();
 	}
 );
+
+autoSaveTest(
+	'Preview button is disabled until first autosave',
+	{
+		tag: '@LPD-72082',
+	},
+	async ({displayPageTemplatesPage, journalEditArticlePage, page, site}) => {
+		const articleTitle = getRandomString();
+		const displayPageTemplateName = getRandomString();
+
+		await autoSaveTest.step('Create Display Page Template', async () => {
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await displayPageTemplatesPage.createTemplate({
+				contentSubtype: 'Basic Web Content',
+				contentType: 'Web Content Article',
+				name: displayPageTemplateName,
+			});
+		});
+
+		await autoSaveTest.step('Create WC with DPT', async () => {
+			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+			await journalEditArticlePage.selectSpecificDisplayPage(
+				displayPageTemplateName
+			);
+
+			expect(journalEditArticlePage.previewButton).toBeDisabled();
+		});
+
+		await autoSaveTest.step(
+			'Wait for autosave and click Preview',
+			async () => {
+				await journalEditArticlePage.fillTitle(articleTitle);
+				await expect(
+					journalEditArticlePage.changesSavedIndicator
+				).toHaveText('Saved');
+
+				await journalEditArticlePage.previewButton.click();
+				await expect(
+					page.getByRole('heading', {name: 'Preview'})
+				).toBeVisible();
+				await page.getByLabel('Close', {exact: true}).click();
+			}
+		);
+
+		await autoSaveTest.step('Publish WC and Edit', async () => {
+			await journalEditArticlePage.publishArticle();
+
+			await page
+				.getByTestId('row')
+				.getByRole('link', {name: articleTitle})
+				.click();
+
+			await expect(journalEditArticlePage.previewButton).toBeEnabled();
+		});
+	}
+);

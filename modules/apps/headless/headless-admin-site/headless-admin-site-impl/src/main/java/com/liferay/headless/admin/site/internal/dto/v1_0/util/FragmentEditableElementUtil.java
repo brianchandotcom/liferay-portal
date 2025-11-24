@@ -192,6 +192,25 @@ public class FragmentEditableElementUtil {
 		return null;
 	}
 
+	private static FragmentInlineValue _getFragmentInlineValue(
+		JSONObject jsonObject) {
+
+		Map<String, String> i18nMap = LocalizedMapUtil.getI18nMap(
+			true,
+			LocalizedMapUtil.populateLocalizedMap(
+				JSONUtil.toStringMap(jsonObject)));
+
+		if (MapUtil.isEmpty(i18nMap)) {
+			return null;
+		}
+
+		FragmentInlineValue fragmentInlineValue = new FragmentInlineValue();
+
+		fragmentInlineValue.setValue_i18n(() -> i18nMap);
+
+		return fragmentInlineValue;
+	}
+
 	private static JSONObject _getFragmentInlineValueJSONObject(
 		FragmentInlineValue fragmentInlineValue) {
 
@@ -448,12 +467,10 @@ public class FragmentEditableElementUtil {
 			return htmlMappedFragmentValue;
 		}
 
-		Map<String, String> i18nMap = LocalizedMapUtil.getI18nMap(
-			true,
-			LocalizedMapUtil.populateLocalizedMap(
-				JSONUtil.toStringMap(jsonObject)));
+		FragmentInlineValue fragmentInlineValue = _getFragmentInlineValue(
+			jsonObject);
 
-		if (MapUtil.isEmpty(i18nMap)) {
+		if (fragmentInlineValue == null) {
 			return null;
 		}
 
@@ -461,14 +478,7 @@ public class FragmentEditableElementUtil {
 			new HTMLInlineFragmentValue();
 
 		htmlInlineFragmentValue.setFragmentInlineValue(
-			() -> {
-				FragmentInlineValue fragmentInlineValue =
-					new FragmentInlineValue();
-
-				fragmentInlineValue.setValue_i18n(() -> i18nMap);
-
-				return fragmentInlineValue;
-			});
+			() -> fragmentInlineValue);
 		htmlInlineFragmentValue.setType(HTMLFragmentValue.Type.INLINE);
 
 		return htmlInlineFragmentValue;
@@ -534,12 +544,10 @@ public class FragmentEditableElementUtil {
 			return textMappedFragmentValue;
 		}
 
-		Map<String, String> i18nMap = LocalizedMapUtil.getI18nMap(
-			true,
-			LocalizedMapUtil.populateLocalizedMap(
-				JSONUtil.toStringMap(jsonObject)));
+		FragmentInlineValue fragmentInlineValue = _getFragmentInlineValue(
+			jsonObject);
 
-		if (MapUtil.isEmpty(i18nMap)) {
+		if (fragmentInlineValue == null) {
 			return null;
 		}
 
@@ -547,14 +555,7 @@ public class FragmentEditableElementUtil {
 			new TextInlineFragmentValue();
 
 		textInlineFragmentValue.setFragmentInlineValue(
-			() -> {
-				FragmentInlineValue fragmentInlineValue =
-					new FragmentInlineValue();
-
-				fragmentInlineValue.setValue_i18n(() -> i18nMap);
-
-				return fragmentInlineValue;
-			});
+			() -> fragmentInlineValue);
 		textInlineFragmentValue.setType(() -> TextFragmentValue.Type.INLINE);
 
 		return textInlineFragmentValue;

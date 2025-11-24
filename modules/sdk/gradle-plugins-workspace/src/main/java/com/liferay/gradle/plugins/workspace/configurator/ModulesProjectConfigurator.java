@@ -127,13 +127,14 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			Map<String, String> javaeePackageBundleInstruction =
 				new HashMap<>();
 
+			String javaeePackage = "javax";
+
 			if (JakartaCompatibilityUtil.isUseJakarta(project)) {
-				javaeePackageBundleInstruction.put(
-					"-javaee-package", "jakarta");
+				javaeePackage = "jakarta";
 			}
-			else {
-				javaeePackageBundleInstruction.put("-javaee-package", "javax");
-			}
+
+			javaeePackageBundleInstruction.put(
+				"-javaee-package", javaeePackage);
 
 			liferayOSGiExtension.bundleDefaultInstructions(
 				javaeePackageBundleInstruction);

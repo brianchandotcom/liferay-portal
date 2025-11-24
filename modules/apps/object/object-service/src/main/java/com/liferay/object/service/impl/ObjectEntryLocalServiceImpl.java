@@ -3554,17 +3554,10 @@ public class ObjectEntryLocalServiceImpl
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-			ObjectDefinition objectDefinition1 =
-				_objectDefinitionPersistence.fetchByPrimaryKey(
-					objectRelationship.getObjectDefinitionId1());
-			ObjectDefinition objectDefinition2 =
-				_objectDefinitionPersistence.fetchByPrimaryKey(
-					objectRelationship.getObjectDefinitionId2());
-
 			DynamicObjectRelationshipMappingTable
 				dynamicObjectRelationshipMappingTable =
 					DynamicObjectRelationshipMappingTableFactory.create(
-						objectDefinition1, objectDefinition2,
+						objectDefinition, relatedObjectDefinition,
 						objectRelationship.getDBTableName());
 
 			joinStep = joinStep.innerJoinON(

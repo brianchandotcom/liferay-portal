@@ -45,7 +45,7 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		Assert.assertTrue(
 			_store.hasFile(
@@ -60,13 +60,13 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String fileName2 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		_store.deleteDirectory(_companyId, _repositoryId, dirName);
 
@@ -88,13 +88,13 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		_store.deleteDirectory(_companyId, _repositoryId, dirName);
 
@@ -112,7 +112,7 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		addVersions(fileName, 1);
 
@@ -132,7 +132,7 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		addVersions(fileName, 5);
 
@@ -140,7 +140,7 @@ public abstract class BaseStoreTestCase {
 				_companyId, _repositoryId, fileName, "1.5")) {
 
 			for (int i = 0; i < _DATA_SIZE; i++) {
-				Assert.assertEquals(_DATA_VERSION[i], (byte)inputStream.read());
+				Assert.assertEquals(DATA_VERSION[i], (byte)inputStream.read());
 			}
 
 			Assert.assertEquals(-1, inputStream.read());
@@ -153,13 +153,13 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String fileName2 = RandomTestUtil.randomString();
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String[] fileNames = _store.getFileNames(
 			_companyId, _repositoryId, StringPool.BLANK);
@@ -182,13 +182,13 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String fileName2 = dirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String[] fileNames = _store.getFileNames(
 			_companyId, _repositoryId, dirName);
@@ -213,20 +213,20 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String fileName3 =
 			RandomTestUtil.randomString() + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName3, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String[] fileNames = _store.getFileNames(
 			_companyId, _repositoryId, dirName);
@@ -274,13 +274,13 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName2, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		String[] fileNames = _store.getFileNames(
 			_companyId, _repositoryId, StringPool.BLANK);
@@ -301,7 +301,7 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		long size = _store.getFileSize(
 			_companyId, _repositoryId, fileName, StringPool.BLANK);
@@ -322,7 +322,7 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		addVersions(fileName, 5);
 
@@ -340,7 +340,7 @@ public abstract class BaseStoreTestCase {
 
 		_store.addFile(
 			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION));
+			new UnsyncByteArrayInputStream(DATA_VERSION));
 
 		addVersions(fileName, 5);
 
@@ -361,19 +361,20 @@ public abstract class BaseStoreTestCase {
 		for (int i = 1; i <= newVersionCount; i++) {
 			_store.addFile(
 				_companyId, _repositoryId, fileName, versionLabel + i,
-				new UnsyncByteArrayInputStream(_DATA_VERSION));
+				new UnsyncByteArrayInputStream(DATA_VERSION));
 		}
 	}
 
 	protected abstract Store getStore();
 
-	private static final int _DATA_SIZE = 1024 * 65;
+	protected static final byte[] DATA_VERSION =
+		new byte[BaseStoreTestCase._DATA_SIZE];
 
-	private static final byte[] _DATA_VERSION = new byte[_DATA_SIZE];
+	private static final int _DATA_SIZE = 1024 * 65;
 
 	static {
 		for (int i = 0; i < _DATA_SIZE; i++) {
-			_DATA_VERSION[i] = (byte)i;
+			DATA_VERSION[i] = (byte)i;
 		}
 	}
 

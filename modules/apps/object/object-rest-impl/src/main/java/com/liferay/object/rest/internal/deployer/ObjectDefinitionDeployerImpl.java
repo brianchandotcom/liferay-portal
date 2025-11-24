@@ -821,11 +821,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			Arrays.<Supplier<ExceptionMapper<?>>>asList(
 				ObjectEntryManagerHttpExceptionMapper::new,
 				() -> new ObjectAssetCategoryExceptionMapper(_language),
-				ObjectEntryScopeExceptionMapper::new,
 				ObjectDefinitionScopeExceptionMapper::new,
 				() -> new ObjectEntryCountExceptionMapper(_language),
 				() -> new ObjectEntryExpirationDateExceptionMapper(_language),
 				() -> new ObjectEntryGroupIdExceptionMapper(_language),
+				ObjectEntryScopeExceptionMapper::new,
 				() -> new ObjectEntryStatusExceptionMapper(_language),
 				() -> new ObjectEntryValuesExceptionMapper(_language),
 				() -> new ObjectRelationshipDeletionTypeExceptionMapper(

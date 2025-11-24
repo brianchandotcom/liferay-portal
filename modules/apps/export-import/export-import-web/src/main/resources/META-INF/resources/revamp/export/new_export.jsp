@@ -49,6 +49,6 @@ portletDisplay.setURLBack(backURL);
 	</div>
 
 	<react:component
-		module="{EditExport} from exportimport-web"
+		module="{NewExport} from exportimport-web"
 	/>
 </clay:container-fluid>

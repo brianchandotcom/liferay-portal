@@ -86,7 +86,7 @@ public class ExportImportToolbarDisplayContext {
 					cmd = Constants.EXPORT;
 					label = "custom-export";
 					mvcPath = FeatureFlagManagerUtil.isEnabled("LPD-57655") ?
-						"/revamp/export/export_layouts.jsp" :
+						"/revamp/export/new_export.jsp" :
 							"/export/new_export/export_layouts.jsp";
 				}
 				else {

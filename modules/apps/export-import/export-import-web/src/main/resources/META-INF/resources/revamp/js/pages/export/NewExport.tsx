@@ -6,7 +6,7 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-export function EditExport() {
+export function NewExport() {
 	return (
 		<ClayLayout.Sheet>
 			<h1>New Export UI</h1>

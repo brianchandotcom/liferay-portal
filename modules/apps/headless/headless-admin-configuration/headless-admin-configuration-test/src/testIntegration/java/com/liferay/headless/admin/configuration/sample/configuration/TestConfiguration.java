@@ -14,21 +14,18 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Thiago Buarque
  */
 @ExtendedObjectClassDefinition(
-	category = "other", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(id = ConfigurationTestUtil.TEST_CONFIGURATION_PID)
 public interface TestConfiguration {
 
-	@Meta.AD(name = "array-key", required = false)
+	@Meta.AD(required = false)
 	public String[] arrayKey();
 
-	@Meta.AD(
-		name = "password-string-key", required = false,
-		type = Meta.Type.Password
-	)
+	@Meta.AD(required = false, type = Meta.Type.Password)
 	public String passwordStringKey();
 
-	@Meta.AD(name = "required-boolean-key")
+	@Meta.AD
 	public boolean requiredBooleanKey();
 
 }

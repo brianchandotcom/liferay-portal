@@ -14,14 +14,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Thiago Buarque
  */
 @ExtendedObjectClassDefinition(
-	category = "other", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	factory = true, id = ConfigurationTestUtil.TEST_FACTORY_CONFIGURATION_PID
 )
 public interface TestFactoryConfiguration {
 
-	@Meta.AD(name = "string-key-name", required = false)
+	@Meta.AD(required = false)
 	public String stringKey();
 
 }

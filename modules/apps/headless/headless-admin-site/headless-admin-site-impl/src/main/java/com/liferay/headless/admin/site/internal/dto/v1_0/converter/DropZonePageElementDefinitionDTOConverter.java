@@ -134,12 +134,7 @@ public class DropZonePageElementDefinitionDTOConverter
 		for (int i = 0; i < fragmentEntriesJSONArray.length(); i++) {
 			JSONObject jsonObject = fragmentEntriesJSONArray.getJSONObject(i);
 
-			if (jsonObject.has("fragmentEntryRendererKey")) {
-				fragmentReferences.add(
-					_toDefaultFragmentReference(
-						jsonObject.getString("fragmentEntryRendererKey")));
-			}
-			else if (jsonObject.has("fragmentEntryERC")) {
+			if (jsonObject.has("fragmentEntryERC")) {
 				fragmentReferences.add(
 					_toFragmentItemExternalReference(
 						jsonObject.getString("fragmentEntryERC"),
@@ -147,6 +142,11 @@ public class DropZonePageElementDefinitionDTOConverter
 							companyId,
 							jsonObject.getString("fragmentEntryScopeERC"),
 							scopeGroupId)));
+			}
+			else if (jsonObject.has("fragmentEntryRendererKey")) {
+				fragmentReferences.add(
+					_toDefaultFragmentReference(
+						jsonObject.getString("fragmentEntryRendererKey")));
 			}
 		}
 

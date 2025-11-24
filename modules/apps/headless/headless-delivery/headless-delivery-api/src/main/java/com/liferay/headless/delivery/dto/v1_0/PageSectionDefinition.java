@@ -598,7 +598,7 @@ public class PageSectionDefinition implements Serializable {
 	private Supplier<Boolean> _indexedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the page section's layout."
+		description = "The page section's layout."
 	)
 	@Valid
 	public Layout getLayout() {
@@ -634,7 +634,7 @@ public class PageSectionDefinition implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the page section's layout.")
+	@GraphQLField(description = "The page section's layout.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 

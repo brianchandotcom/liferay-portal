@@ -372,7 +372,7 @@ public class ContentTemplate implements Serializable {
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the content template's description."
+		description = "The content template's description."
 	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
@@ -407,7 +407,7 @@ public class ContentTemplate implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the content template's description.")
+	@GraphQLField(description = "The content template's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -415,7 +415,7 @@ public class ContentTemplate implements Serializable {
 	private Supplier<String> _descriptionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the localized content template's descriptions."
+		description = "The localized content template's descriptions."
 	)
 	@Valid
 	public Map<String, String> getDescription_i18n() {
@@ -453,7 +453,7 @@ public class ContentTemplate implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "the localized content template's descriptions."
+		description = "The localized content template's descriptions."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
@@ -503,7 +503,7 @@ public class ContentTemplate implements Serializable {
 	private Supplier<String> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the content template's name."
+		description = "The content template's name."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -536,7 +536,7 @@ public class ContentTemplate implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the content template's name.")
+	@GraphQLField(description = "The content template's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -545,7 +545,7 @@ public class ContentTemplate implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the localized content template's name."
+		description = "The localized content template's name."
 	)
 	@Valid
 	public Map<String, String> getName_i18n() {
@@ -582,7 +582,7 @@ public class ContentTemplate implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the localized content template's name.")
+	@GraphQLField(description = "The localized content template's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
@@ -590,7 +590,7 @@ public class ContentTemplate implements Serializable {
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the content template's programming language."
+		description = "The content template's programming language."
 	)
 	public String getProgrammingLanguage() {
 		if (_programmingLanguageSupplier != null) {
@@ -625,7 +625,7 @@ public class ContentTemplate implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the content template's programming language.")
+	@GraphQLField(description = "The content template's programming language.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String programmingLanguage;
 

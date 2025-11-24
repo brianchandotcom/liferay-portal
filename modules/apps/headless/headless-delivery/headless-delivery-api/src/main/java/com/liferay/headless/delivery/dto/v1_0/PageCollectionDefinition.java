@@ -372,7 +372,7 @@ public class PageCollectionDefinition implements Serializable {
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the page section's layout."
+		description = "The page section's layout."
 	)
 	@Valid
 	public Layout getLayout() {
@@ -408,7 +408,7 @@ public class PageCollectionDefinition implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the page section's layout.")
+	@GraphQLField(description = "The page section's layout.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 

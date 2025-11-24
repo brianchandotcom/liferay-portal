@@ -360,7 +360,7 @@ public class Comment implements Serializable {
 	private Supplier<Integer> _numberOfCommentsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the ID of the comment's parent, if it exists."
+		description = "The ID of the comment's parent, if it exists."
 	)
 	public Long getParentCommentId() {
 		if (_parentCommentIdSupplier != null) {
@@ -395,7 +395,7 @@ public class Comment implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the ID of the comment's parent, if it exists.")
+	@GraphQLField(description = "The ID of the comment's parent, if it exists.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentCommentId;
 

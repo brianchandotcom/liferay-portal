@@ -432,7 +432,7 @@ public class ContainerPageElementDefinition
 	private Supplier<Boolean> _indexedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the container page element's layout."
+		description = "The container page element's layout."
 	)
 	@Valid
 	public Layout getLayout() {
@@ -468,7 +468,7 @@ public class ContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "the container page element's layout.")
+	@GraphQLField(description = "The container page element's layout.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 

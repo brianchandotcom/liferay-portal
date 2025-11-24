@@ -114,6 +114,11 @@ public class NavigationMenuResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getLabelLanguageKey() {
+				return "navigation-menus";
+			}
+
+			@Override
 			public String getModelClassName() {
 				return SiteNavigationMenu.class.getName();
 			}

@@ -512,24 +512,33 @@ function UQBEditSXPBlueprintForm({
 				}
 			};
 
-			const responses = await Promise.all(
-				initialConfiguration.generalConfiguration.scope.map(fetchScope)
-			);
+			if (
+				initialConfiguration.generalConfiguration.scope &&
+				initialConfiguration.generalConfiguration.scope.length
+			) {
+				const responses = await Promise.all(
+					initialConfiguration.generalConfiguration.scope.map(
+						fetchScope
+					)
+				);
 
-			setScope(
-				responses.map((item) => {
-					return {
-						externalReferenceCode: item.externalReferenceCode,
-						name: item.descriptiveName,
-						status: item.active ? STATUS.ACTIVE : STATUS.INACTIVE,
-						type: item.typeSettings?.depotEntryType
-							? item.typeSettings?.depotEntryType === '0'
-								? Liferay.Language.get('asset-library')
-								: Liferay.Language.get('space')
-							: Liferay.Language.get('site'),
-					};
-				})
-			);
+				setScope(
+					responses.map((item) => {
+						return {
+							externalReferenceCode: item.externalReferenceCode,
+							name: item.descriptiveName,
+							status: item.active
+								? STATUS.ACTIVE
+								: STATUS.INACTIVE,
+							type: item.typeSettings?.depotEntryType
+								? item.typeSettings?.depotEntryType === '0'
+									? Liferay.Language.get('asset-library')
+									: Liferay.Language.get('space')
+								: Liferay.Language.get('site'),
+						};
+					})
+				);
+			}
 		};
 
 		fetchAllScope();

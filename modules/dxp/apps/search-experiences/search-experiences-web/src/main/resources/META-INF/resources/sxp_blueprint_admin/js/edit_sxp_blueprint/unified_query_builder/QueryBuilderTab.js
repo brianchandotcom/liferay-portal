@@ -154,7 +154,7 @@ QueryBuilderTab.propTypes = {
 	onFetchSearchableTypes: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
 	openSidebar: PropTypes.string,
-	scope: PropTypes.object,
+	scope: PropTypes.arrayOf(PropTypes.object),
 	searchableTypes: PropTypes.arrayOf(PropTypes.object),
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,

@@ -64,6 +64,38 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 			parentDetailAST = variableDefDetailAST.getParent();
 
 			if (!equals(objBlockDetailAST, parentDetailAST)) {
+				DetailAST firstChildDetailAST =
+					variableDefDetailAST.findFirstToken(TokenTypes.ASSIGN);
+
+				if (firstChildDetailAST == null) {
+					continue;
+				}
+
+				firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+				if ((firstChildDetailAST == null) ||
+					(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+
+					continue;
+				}
+
+				firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+				if ((firstChildDetailAST == null) ||
+					(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
+
+					continue;
+				}
+
+				FullIdent fullIdent = FullIdent.createFullIdentBelow(
+					firstChildDetailAST);
+
+				if (!StringUtil.equals(
+						fullIdent.getText(), "DataAccess.getConnection")) {
+
+					continue;
+				}
+
 				log(
 					variableDefDetailAST, _MSG_USE_TRY_WITH_RESOURCES,
 					variableName);

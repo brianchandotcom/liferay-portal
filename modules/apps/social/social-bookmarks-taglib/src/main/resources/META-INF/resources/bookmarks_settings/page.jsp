@@ -83,16 +83,25 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 		var socialBookmarksTypes = document.getElementById(
 			'<portlet:namespace />socialBookmarksTypes'
 		);
-		var currentTypes = document.getElementById(
-			'<portlet:namespace />currentTypes'
-		);
 
 		Liferay.after('inputmoveboxes:moveItem', () => {
-			socialBookmarksTypes.value = Util.getSelectedOptionValues(currentTypes);
+			setTimeout(() => {
+				var currentTypes = document.getElementById(
+					'<portlet:namespace />currentTypes'
+				);
+				socialBookmarksTypes.value =
+					Util.getSelectedOptionValues(currentTypes);
+			});
 		});
 
 		Liferay.after('inputmoveboxes:orderItem', () => {
-			socialBookmarksTypes.value = Util.getSelectedOptionValues(currentTypes);
+			setTimeout(() => {
+				var currentTypes = document.getElementById(
+					'<portlet:namespace />currentTypes'
+				);
+				socialBookmarksTypes.value =
+					Util.getSelectedOptionValues(currentTypes);
+			});
 		});
 	})();
 </aui:script>

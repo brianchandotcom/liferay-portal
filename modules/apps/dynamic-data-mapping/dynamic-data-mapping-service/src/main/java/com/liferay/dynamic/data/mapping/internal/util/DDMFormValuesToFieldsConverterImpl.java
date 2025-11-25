@@ -159,10 +159,9 @@ public class DDMFormValuesToFieldsConverterImpl
 		field.setDefaultLocale(defaultLocale);
 		field.setName(ddmFormFieldValue.getName());
 
-		Set<Locale> availableLocales = _getAvailableLocales(
-			ddmFormFieldValueListMap, ddmFormField.getName());
-
 		Value value = ddmFormFieldValue.getValue();
+
+		boolean addValueLocales = false;
 
 		if (MapUtil.isEmpty(value.getValues())) {
 			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
@@ -181,7 +180,7 @@ public class DDMFormValuesToFieldsConverterImpl
 
 			value = ddmFormField.getPredefinedValue();
 
-			availableLocales.addAll(value.getAvailableLocales());
+			addValueLocales = true;
 		}
 
 		if (!value.isLocalized()) {
@@ -192,6 +191,13 @@ public class DDMFormValuesToFieldsConverterImpl
 					value.getString(LocaleUtil.ROOT)));
 
 			return field;
+		}
+
+		Set<Locale> availableLocales = _getAvailableLocales(
+			ddmFormFieldValueListMap, ddmFormField.getName());
+
+		if (addValueLocales) {
+			availableLocales.addAll(value.getAvailableLocales());
 		}
 
 		for (Locale availableLocale : availableLocales) {

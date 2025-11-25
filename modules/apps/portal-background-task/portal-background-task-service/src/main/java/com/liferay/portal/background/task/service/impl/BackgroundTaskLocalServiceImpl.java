@@ -182,9 +182,9 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTask.setTaskContextMap(taskContextMap);
 		}
 
-		if ((status == BackgroundTaskConstants.STATUS_FAILED) ||
-			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL) ||
-			(status == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS)) {
+		if ((status == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS) ||
+			(status == BackgroundTaskConstants.STATUS_FAILED) ||
+			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
 
 			backgroundTask.setCompleted(true);
 			backgroundTask.setCompletionDate(new Date());

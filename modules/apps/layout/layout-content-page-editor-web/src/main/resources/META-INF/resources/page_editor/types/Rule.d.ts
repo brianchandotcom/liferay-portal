@@ -11,6 +11,6 @@ export type Rule = {
 	actions: Action[];
 	conditionType: ConditionType;
 	conditions: Condition[];
-	id: string;
+	id?: string;
 	name: string;
 };

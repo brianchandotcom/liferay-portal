@@ -16,6 +16,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface LayoutPageTemplateEntryLayoutProvider {
 
 	public Layout getLayoutPageTemplateEntryLayout(
-		long groupId, String externalReferenceCode);
+		long groupId, String externalReferenceCode, long plid);
 
 }

@@ -47,7 +47,7 @@ export function formatValue(value, type) {
 	else if (type === 'date' && value) {
 		const date = new Intl.DateTimeFormat(
 			Liferay.ThemeDisplay.getBCP47LanguageId(),
-			{dateStyle: 'short'}
+			{dateStyle: 'medium'}
 		).format(new Date(value));
 
 		return <p>{date}</p>;

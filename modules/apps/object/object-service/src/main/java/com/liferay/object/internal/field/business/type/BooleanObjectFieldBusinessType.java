@@ -15,6 +15,7 @@ import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -80,6 +81,12 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return HashMapBuilder.<String, Object>put(
 			"predefinedValue",
 			() -> {
+				if (!FeatureFlagManagerUtil.isEnabled(
+						objectField.getCompanyId(), "LPD-46451")) {
+
+					return null;
+				}
+
 				LocalizedValue localizedValue = new LocalizedValue(
 					objectFieldRenderingContext.getLocale());
 

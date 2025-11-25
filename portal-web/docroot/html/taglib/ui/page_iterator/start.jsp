@@ -194,7 +194,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			</aui:script>
 		</c:if>
 
-		<p aria-hidden="true" class="pagination-results" data-aria-hidden="true" id="<%= ariaPaginationResults %>">
+		<p class="pagination-results" id="<%= ariaPaginationResults %>">
 			<liferay-ui:message arguments="<%= new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)} %>" key="showing-x-to-x-of-x-entries" />
 		</p>
 
@@ -207,7 +207,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 								<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur -1) : "" %>" title="<%= LanguageUtil.get(request, "previous-page") %>">
 							</c:when>
 							<c:otherwise>
-								<div class="page-link">
+								<div aria-disabled="true" aria-label="<%= LanguageUtil.get(request, "previous-page") %>" class="page-link" role="link" tabindex="-1">
 							</c:otherwise>
 						</c:choose>
 
@@ -459,7 +459,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 								<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur + 1) : "" %>" title="<%= LanguageUtil.get(request, "next-page") %>">
 							</c:when>
 							<c:otherwise>
-								<div class="page-link">
+								<div aria-disabled="true" aria-label="<%= LanguageUtil.get(request, "next-page") %>" class="page-link" role="link" tabindex="-1">
 							</c:otherwise>
 						</c:choose>
 

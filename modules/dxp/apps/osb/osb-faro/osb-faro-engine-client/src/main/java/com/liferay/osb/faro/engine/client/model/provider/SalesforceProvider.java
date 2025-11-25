@@ -68,7 +68,7 @@ public class SalesforceProvider implements Provider {
 
 	public static class Channel {
 
-		public Long getChannelId() {
+		public String getChannelId() {
 			return _channelId;
 		}
 
@@ -76,7 +76,7 @@ public class SalesforceProvider implements Provider {
 			return _enabled;
 		}
 
-		public void setChannelId(Long channelId) {
+		public void setChannelId(String channelId) {
 			_channelId = channelId;
 		}
 
@@ -84,7 +84,7 @@ public class SalesforceProvider implements Provider {
 			_enabled = enabled;
 		}
 
-		private Long _channelId;
+		private String _channelId;
 		private Boolean _enabled;
 
 	}

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -42,18 +43,17 @@ public class PortletSharedSearchRequestImplTest {
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService =
 			Mockito.mock(FragmentEntryLinkLocalService.class);
 
-		PortletSharedSearchRequestImpl portletSharedSearchRequestImpl =
+		PortletSharedSearchRequest portletSharedSearchRequest =
 			new PortletSharedSearchRequestImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			portletSharedSearchRequestImpl, "_fragmentEntryLinkLocalService",
+			portletSharedSearchRequest, "_fragmentEntryLinkLocalService",
 			fragmentEntryLinkLocalService);
 
 		PortletRegistry portletRegistry = Mockito.mock(PortletRegistry.class);
 
 		ReflectionTestUtil.setFieldValue(
-			portletSharedSearchRequestImpl, "_portletRegistry",
-			portletRegistry);
+			portletSharedSearchRequest, "_portletRegistry", portletRegistry);
 
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -121,7 +121,7 @@ public class PortletSharedSearchRequestImplTest {
 		);
 
 		Set<String> result = ReflectionTestUtil.invoke(
-			portletSharedSearchRequestImpl, "_getSegmentExperiencePortletIds",
+			portletSharedSearchRequest, "_getSegmentExperiencePortletIds",
 			new Class<?>[] {Layout.class, long.class}, layout, 123L);
 
 		Assert.assertEquals(

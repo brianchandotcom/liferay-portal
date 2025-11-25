@@ -35,10 +35,8 @@ public class CommentUtil {
 			CommentManager commentManager, Portal portal)
 		throws Exception {
 
-		com.liferay.portal.kernel.comment.Comment comment;
-
 		try {
-			comment = addCommentUnsafeSupplier.get();
+			_toComment(addCommentUnsafeSupplier.get(), commentManager, portal);
 		}
 		catch (DiscussionMaxCommentsException discussionMaxCommentsException) {
 			throw new ClientErrorException(
@@ -55,7 +53,7 @@ public class CommentUtil {
 				"Comment text is null", 422, messageSubjectException);
 		}
 
-		return _toComment(comment, commentManager, portal);
+		return null;
 	}
 
 	private static Comment _toComment(
@@ -66,24 +64,21 @@ public class CommentUtil {
 			return null;
 		}
 
-		com.liferay.portal.kernel.comment.Comment finalComment = comment;
-
 		return new Comment() {
 			{
 				setCreator(
 					() -> CreatorUtil.toCreator(
-						null, portal, finalComment.getUser()));
-				setDateCreated(finalComment::getCreateDate);
-				setDateModified(finalComment::getModifiedDate);
-				setExternalReferenceCode(
-					finalComment::getExternalReferenceCode);
-				setId(finalComment::getCommentId);
+						null, portal, comment.getUser()));
+				setDateCreated(comment::getCreateDate);
+				setDateModified(comment::getModifiedDate);
+				setExternalReferenceCode(comment::getExternalReferenceCode);
+				setId(comment::getCommentId);
 				setNumberOfComments(
 					() -> commentManager.getChildCommentsCount(
-						finalComment.getCommentId(),
+						comment.getCommentId(),
 						WorkflowConstants.STATUS_APPROVED));
-				setParentCommentId(finalComment::getParentCommentId);
-				setText(finalComment::getBody);
+				setParentCommentId(comment::getParentCommentId);
+				setText(comment::getBody);
 			}
 		};
 	}

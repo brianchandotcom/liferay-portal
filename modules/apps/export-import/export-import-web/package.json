@@ -9,7 +9,7 @@
 		"frontend-js-web": "*",
 		"react": "18.2.0"
 	},
-	"main": "js/index.js",
+	"main": "js/index.ts",
 	"name": "exportimport-web",
 	"scripts": {
 		"build": "node-scripts build",

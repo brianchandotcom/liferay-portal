@@ -104,7 +104,7 @@ portletDisplay.setURLBack(objectEntryDisplayContext.getBackURL());
 		});
 	</aui:script>
 
-	<c:if test="<%= SessionErrors.contains(renderRequest, ObjectEntryGroupIdException.class.getName()) %>">
+	<c:if test="<%= SessionErrors.contains(renderRequest, ObjectEntryGroupIdException.MustShareSameGroupId.class.getName()) %>">
 		<aui:script>
 			Liferay.Util.openToast({
 				autoClose: 5000,

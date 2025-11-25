@@ -195,11 +195,7 @@ public class ObjectRelationshipLocalServiceImpl
 				_getObjectEntryGroupId(objectDefinition1, primaryKey1),
 				_getObjectEntryGroupId(objectDefinition2, primaryKey2))) {
 
-			throw new ObjectEntryGroupIdException(
-				"Object entries within the same scope must share the same " +
-					"group ID to be related",
-				"object-entries-within-the-same-scope-must-share-the-same-" +
-					"group-id-to-be-related");
+			throw new ObjectEntryGroupIdException.MustShareSameGroupId();
 		}
 
 		if (Objects.equals(

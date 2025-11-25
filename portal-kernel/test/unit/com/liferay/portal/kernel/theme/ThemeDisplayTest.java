@@ -46,7 +46,8 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetClayCSSURL() {
-		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, false);
+		_mockPortalUtil(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, false);
 
 		Assert.assertEquals(
 			"/o/classic-theme/css/clay.(" + _HASH + ").css",
@@ -54,8 +55,37 @@ public class ThemeDisplayTest {
 	}
 
 	@Test
+	public void testGetClayCSSURLWithCDN() {
+		_mockPortalUtil(
+			"http://cdn.com", StringPool.BLANK, StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"http://cdn.com/o/classic-theme/css/clay.(" + _HASH + ").css",
+			_themeDisplay.getClayCSSURL());
+	}
+
+	@Test
+	public void testGetClayCSSURLWithCDNAndContext() {
+		_mockPortalUtil("http://cdn.com", "/dxp", StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"http://cdn.com/dxp/o/classic-theme/css/clay.(" + _HASH + ").css",
+			_themeDisplay.getClayCSSURL());
+	}
+
+	@Test
+	public void testGetClayCSSURLWithCDNContextAndProxy() {
+		_mockPortalUtil("http://cdn.com", "/dxp", "/proxy", false);
+
+		Assert.assertEquals(
+			"http://cdn.com/proxy/dxp/o/classic-theme/css/clay.(" + _HASH +
+				").css",
+			_themeDisplay.getClayCSSURL());
+	}
+
+	@Test
 	public void testGetClayCSSURLWithContext() {
-		_mockPortalUtil("/dxp", StringPool.BLANK, false);
+		_mockPortalUtil(StringPool.BLANK, "/dxp", StringPool.BLANK, false);
 
 		Assert.assertEquals(
 			"/dxp/o/classic-theme/css/clay.(" + _HASH + ").css",
@@ -64,7 +94,7 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetClayCSSURLWithContextAndProxy() {
-		_mockPortalUtil("/dxp", "/liferay", false);
+		_mockPortalUtil(StringPool.BLANK, "/dxp", "/liferay", false);
 
 		Assert.assertEquals(
 			"/liferay/dxp/o/classic-theme/css/clay.(" + _HASH + ").css",
@@ -73,7 +103,7 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetClayCSSURLWithProxy() {
-		_mockPortalUtil(StringPool.BLANK, "/liferay", false);
+		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, "/liferay", false);
 
 		Assert.assertEquals(
 			"/liferay/o/classic-theme/css/clay.(" + _HASH + ").css",
@@ -82,7 +112,8 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetMainCSSURL() {
-		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, false);
+		_mockPortalUtil(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, false);
 
 		Assert.assertEquals(
 			"/o/classic-theme/css/main.(" + _HASH + ").css",
@@ -90,8 +121,37 @@ public class ThemeDisplayTest {
 	}
 
 	@Test
+	public void testGetMainCSSURLWithCDN() {
+		_mockPortalUtil(
+			"http://cdn.com", StringPool.BLANK, StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"http://cdn.com/o/classic-theme/css/main.(" + _HASH + ").css",
+			_themeDisplay.getMainCSSURL());
+	}
+
+	@Test
+	public void testGetMainCSSURLWithCDNAndContext() {
+		_mockPortalUtil("http://cdn.com", "/dxp", StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"http://cdn.com/dxp/o/classic-theme/css/main.(" + _HASH + ").css",
+			_themeDisplay.getMainCSSURL());
+	}
+
+	@Test
+	public void testGetMainCSSURLWithCDNContextAndProxy() {
+		_mockPortalUtil("http://cdn.com", "/dxp", "/proxy", false);
+
+		Assert.assertEquals(
+			"http://cdn.com/proxy/dxp/o/classic-theme/css/main.(" + _HASH +
+				").css",
+			_themeDisplay.getMainCSSURL());
+	}
+
+	@Test
 	public void testGetMainCSSURLWithContext() {
-		_mockPortalUtil("/dxp", StringPool.BLANK, false);
+		_mockPortalUtil(StringPool.BLANK, "/dxp", StringPool.BLANK, false);
 
 		Assert.assertEquals(
 			"/dxp/o/classic-theme/css/main.(" + _HASH + ").css",
@@ -100,7 +160,7 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetMainCSSURLWithContextAndProxy() {
-		_mockPortalUtil("/dxp", "/liferay", false);
+		_mockPortalUtil(StringPool.BLANK, "/dxp", "/liferay", false);
 
 		Assert.assertEquals(
 			"/liferay/dxp/o/classic-theme/css/main.(" + _HASH + ").css",
@@ -109,7 +169,7 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetMainCSSURLWithProxy() {
-		_mockPortalUtil(StringPool.BLANK, "/liferay", false);
+		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, "/liferay", false);
 
 		Assert.assertEquals(
 			"/liferay/o/classic-theme/css/main.(" + _HASH + ").css",
@@ -118,7 +178,8 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetMainJSURL() {
-		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, false);
+		_mockPortalUtil(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, false);
 
 		Assert.assertEquals(
 			"/o/classic-theme/js/main.(" + _HASH + ").js",
@@ -126,8 +187,37 @@ public class ThemeDisplayTest {
 	}
 
 	@Test
+	public void testGetMainJSURLWithCDN() {
+		_mockPortalUtil(
+			"http://cdn.com", StringPool.BLANK, StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"http://cdn.com/o/classic-theme/js/main.(" + _HASH + ").js",
+			_themeDisplay.getMainJSURL());
+	}
+
+	@Test
+	public void testGetMainJSURLWithCDNAndContext() {
+		_mockPortalUtil("http://cdn.com", "/dxp", StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"http://cdn.com/dxp/o/classic-theme/js/main.(" + _HASH + ").js",
+			_themeDisplay.getMainJSURL());
+	}
+
+	@Test
+	public void testGetMainJSURLWithCDNContextAndProxy() {
+		_mockPortalUtil("http://cdn.com", "/dxp", "/proxy", false);
+
+		Assert.assertEquals(
+			"http://cdn.com/proxy/dxp/o/classic-theme/js/main.(" + _HASH +
+				").js",
+			_themeDisplay.getMainJSURL());
+	}
+
+	@Test
 	public void testGetMainJSURLWithContext() {
-		_mockPortalUtil("/dxp", StringPool.BLANK, false);
+		_mockPortalUtil(StringPool.BLANK, "/dxp", StringPool.BLANK, false);
 
 		Assert.assertEquals(
 			"/dxp/o/classic-theme/js/main.(" + _HASH + ").js",
@@ -136,7 +226,7 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetMainJSURLWithContextAndProxy() {
-		_mockPortalUtil("/dxp", "/liferay", false);
+		_mockPortalUtil(StringPool.BLANK, "/dxp", "/liferay", false);
 
 		Assert.assertEquals(
 			"/liferay/dxp/o/classic-theme/js/main.(" + _HASH + ").js",
@@ -145,7 +235,7 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testGetMainJSURLWithProxy() {
-		_mockPortalUtil(StringPool.BLANK, "/liferay", false);
+		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, "/liferay", false);
 
 		Assert.assertEquals(
 			"/liferay/o/classic-theme/js/main.(" + _HASH + ").js",
@@ -154,7 +244,8 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testRTLGetClayCSSURL() {
-		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, true);
+		_mockPortalUtil(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, true);
 
 		Assert.assertEquals(
 			"/o/classic-theme/css/clay_rtl.(" + _HASH + ").css",
@@ -163,7 +254,8 @@ public class ThemeDisplayTest {
 
 	@Test
 	public void testRTLGetMainCSSURL() {
-		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, true);
+		_mockPortalUtil(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, true);
 
 		Assert.assertEquals(
 			"/o/classic-theme/css/main_rtl.(" + _HASH + ").css",
@@ -171,7 +263,13 @@ public class ThemeDisplayTest {
 	}
 
 	private void _mockPortalUtil(
-		String contextPath, String proxyPath, boolean rtl) {
+		String cdnPath, String contextPath, String proxyPath, boolean rtl) {
+
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.getCDNHost(Mockito.any())
+		).thenReturn(
+			cdnPath
+		);
 
 		_portalUtilMockedStatic.when(
 			PortalUtil::getPathContext

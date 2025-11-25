@@ -86,8 +86,6 @@ describe('PageDesignOptionsSidebar', () => {
 	});
 
 	it('assert style books info message', () => {
-		Liferay.FeatureFlags['LPD-30204'] = true;
-
 		renderComponent();
 
 		expect(
@@ -95,8 +93,6 @@ describe('PageDesignOptionsSidebar', () => {
 				'only-style-books-based-on-the-frontend-token-definition-provided-by-Test Theme-are-visible'
 			)
 		).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPD-30204'] = false;
 	});
 
 	it('checks panel accessibility', async () => {

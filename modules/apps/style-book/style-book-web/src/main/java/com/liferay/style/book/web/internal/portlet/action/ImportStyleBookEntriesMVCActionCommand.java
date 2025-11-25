@@ -8,14 +8,12 @@ package com.liferay.style.book.web.internal.portlet.action;
 import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -137,21 +135,9 @@ public class ImportStyleBookEntriesMVCActionCommand
 
 		Set<String> frontendTokenNames = new HashSet<>();
 
-		FrontendTokenDefinition frontendTokenDefinition = null;
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-30204")) {
-
-			frontendTokenDefinition =
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					themeDisplay.getCompanyId(), themeId);
-		}
-		else {
-			frontendTokenDefinition =
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					_layoutSetLocalService.fetchLayoutSet(
-						themeDisplay.getSiteGroupId(), false));
-		}
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				themeDisplay.getCompanyId(), themeId);
 
 		if (frontendTokenDefinition != null) {
 			Collection<FrontendToken> frontendTokens =
@@ -199,9 +185,6 @@ public class ImportStyleBookEntriesMVCActionCommand
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private Portal _portal;

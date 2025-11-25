@@ -11,7 +11,6 @@ import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,9 +20,7 @@ import org.junit.runner.RunWith;
  * @author Rubén Pulido
  * @author Thiago Buarque
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-30204"), @FeatureFlag("LPD-56718")}
-)
+@FeatureFlag("LPD-56718")
 @RunWith(Arquillian.class)
 public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 

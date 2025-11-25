@@ -64,7 +64,6 @@ public class StyleBookEntryLocalServiceTest {
 			_group, TestPropsValues.getUserId());
 	}
 
-	@FeatureFlag("LPD-30204")
 	@Test(expected = StyleBookEntryThemeIdException.MustNotBeNull.class)
 	public void testAddStyleBookEntry() throws Exception {
 		StyleBookEntry styleBookEntry =

@@ -513,9 +513,6 @@ test.describe('Cannot preview style book', () => {
 });
 
 const themeScopedTest = mergeTests(
-	featureFlagsTest({
-		'LPD-30204': {enabled: true},
-	}),
 	isolatedSiteTest,
 	loginTest(),
 	styleBookPageTest

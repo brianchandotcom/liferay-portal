@@ -11,10 +11,8 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -25,9 +23,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.item.selector.StyleBookEntryItemSelectorCriterion;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
-import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.StyleBookUtil;
-import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
@@ -127,23 +123,7 @@ public class StyleBookEntryItemSelectorViewDescriptor
 		return _selLayout;
 	}
 
-	private List<StyleBookEntry> _getStyleBookEntries() throws PortalException {
-		List<StyleBookEntry> styleBookEntries = ListUtil.fromArray(
-			StyleBookUtil.getStyleFromThemeStyleBookEntry(
-				_getSelLayout(), _themeDisplay.getLocale()));
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-30204")) {
-
-			styleBookEntries.addAll(
-				StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-					StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					StyleBookEntryNameComparator.getInstance(true)));
-
-			return styleBookEntries;
-		}
-
+	private List<StyleBookEntry> _getStyleBookEntries() {
 		FrontendTokenDefinition frontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_getSelLayout());
@@ -151,6 +131,10 @@ public class StyleBookEntryItemSelectorViewDescriptor
 		if (frontendTokenDefinition == null) {
 			return Collections.emptyList();
 		}
+
+		List<StyleBookEntry> styleBookEntries = ListUtil.fromArray(
+			StyleBookUtil.getStyleFromThemeStyleBookEntry(
+				_getSelLayout(), _themeDisplay.getLocale()));
 
 		styleBookEntries.addAll(
 			_styleBookEntryLocalService.getStyleBookEntries(

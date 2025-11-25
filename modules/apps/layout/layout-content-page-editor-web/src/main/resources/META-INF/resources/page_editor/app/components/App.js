@@ -26,6 +26,7 @@ import {LayoutKeyboardContextProvider} from '../contexts/LayoutKeyboardContext';
 import {LocalConfigContextProvider} from '../contexts/LocalConfigContext';
 import {ObjectDataContextProvider} from '../contexts/ObjectDataContext';
 import {PortletContentContextProvider} from '../contexts/PortletContentContext';
+import {RulesModalContextProvider} from '../contexts/RulesModalContext';
 import {ShortcutContextProvider} from '../contexts/ShortcutContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
 import {WidgetsContextProvider} from '../contexts/WidgetsContext';
@@ -88,15 +89,17 @@ export default function App({state}) {
 
 																	<StyleBookContextProvider>
 																		<ObjectDataContextProvider>
-																			<Sidebar />
+																			<RulesModalContextProvider>
+																				<Sidebar />
 
-																			<LayoutKeyboardContextProvider>
-																				<LayoutViewport />
-																			</LayoutKeyboardContextProvider>
+																				<LayoutKeyboardContextProvider>
+																					<LayoutViewport />
+																				</LayoutKeyboardContextProvider>
 
-																			<LayoutBreadcrumbs />
+																				<LayoutBreadcrumbs />
 
-																			<ItemConfigurationSidebar />
+																				<ItemConfigurationSidebar />
+																			</RulesModalContextProvider>
 																		</ObjectDataContextProvider>
 																	</StyleBookContextProvider>
 																</GlobalContextProvider>

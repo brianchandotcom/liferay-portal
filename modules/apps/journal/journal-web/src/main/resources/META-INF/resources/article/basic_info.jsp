@@ -55,7 +55,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 </p>
 
 <c:choose>
-	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") %>'>
+	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") && !JournalUtil.isEditDefaultValues(article) %>'>
 		<p class="article-version-status <%= ((article == null) || article.isNew()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />articleVersionStatusWrapper">
 			<b><liferay-ui:message key="version" /></b>: <span id="<portlet:namespace />displayedVersion"><%= (article != null) ? article.getVersion() : "" %></span>
 
@@ -136,7 +136,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
 
 		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") %>'>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") && !JournalUtil.isEditDefaultValues(article) %>'>
 				<p class="article-id <%= ((article == null) || article.isNew()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />articleIdWrapper">
 					<b><liferay-ui:message key="id" /></b>: <span id="<portlet:namespace />displayedArticleId"><%= (article != null) ? article.getArticleId() : "" %></span>
 				</p>

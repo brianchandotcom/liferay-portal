@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -64,6 +66,33 @@ public class LayoutImplTest {
 		LayoutTestUtil.addTypePortletLayout(_group);
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
+	}
+
+	@Test
+	@TestInfo("LPD-72415")
+	public void testGetMasterLayoutPlid() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				WorkflowConstants.STATUS_APPROVED);
+
+		layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			masterLayoutPageTemplateEntry.getPlid(),
+			layout.getMasterLayoutPlid());
 	}
 
 	@Test

@@ -324,15 +324,16 @@ public class ObjectRelationshipLocalServiceImpl
 
 		Connection connection = _currentConnection.getConnection(
 			objectRelationshipPersistence.getDataSource());
-
 		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn1 =
 			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn1();
-		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn2 =
-			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn2();
 
 		ObjectDBManagerUtil.createIndexMetadata(
 			connection, objectRelationship.getDBTableName(), false,
 			primaryKeyColumn1.getName());
+
+		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn2 =
+			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn2();
+
 		ObjectDBManagerUtil.createIndexMetadata(
 			connection, objectRelationship.getDBTableName(), false,
 			primaryKeyColumn2.getName());

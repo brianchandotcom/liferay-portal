@@ -31,6 +31,7 @@ import BooleanDefaultValueSelect from '../../DefaultValueFields/BooleanDefaultVa
 import ListTypeDefaultValueSelect from '../../DefaultValueFields/ListTypeDefaultValueSelect';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 interface DefaultValueContainerProps {
+	ckEditor5Config?: object;
 	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	learnResources: ILearnResourceContext;
@@ -42,6 +43,7 @@ interface DefaultValueContainerProps {
 }
 
 export interface InputAsValueFieldComponentProps {
+	ckEditor5Config?: object;
 	creationLanguageId: Liferay.Language.Locale;
 	defaultValue?: ObjectFieldSettingValue;
 	error?: string;
@@ -65,6 +67,7 @@ const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
 };
 
 export function DefaultValueContainer({
+	ckEditor5Config,
 	creationLanguageId,
 	errors,
 	learnResources,
@@ -212,6 +215,7 @@ export function DefaultValueContainer({
 				defaultValueTypeSelection === 'inputAsValue' &&
 				InputAsValueFieldComponent && (
 					<InputAsValueFieldComponent
+						ckEditor5Config={ckEditor5Config}
 						creationLanguageId={creationLanguageId}
 						defaultValue={
 							defaultValueType === 'inputAsValue' && defaultValue

@@ -34,6 +34,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 			HashMapBuilder.<String, Object>put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
+				"ckEditor5Config", objectDefinitionsFieldsDisplayContext.getEditorConfig()
+			).put(
 				"companies", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("company")
 			).put(
 				"editObjectDefinitionURL", objectDefinitionsDetailsDisplayContext.getEditObjectDefinitionURL()

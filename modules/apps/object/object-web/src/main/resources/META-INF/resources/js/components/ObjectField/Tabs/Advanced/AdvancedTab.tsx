@@ -12,6 +12,7 @@ import {DefaultValueContainer} from './DefaultValueContainer';
 import {ReadOnlyContainer} from './ReadOnlyContainer';
 
 interface AdvancedTabProps {
+	ckEditor5Config?: object;
 	containerWrapper: ElementType;
 	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
@@ -27,6 +28,7 @@ interface AdvancedTabProps {
 }
 
 export function AdvancedTab({
+	ckEditor5Config,
 	containerWrapper: ContainerWrapper,
 	creationLanguageId,
 	errors,
@@ -85,6 +87,7 @@ export function AdvancedTab({
 					title={Liferay.Language.get('default-value')}
 				>
 					<DefaultValueContainer
+						ckEditor5Config={ckEditor5Config}
 						creationLanguageId={creationLanguageId}
 						errors={errors}
 						learnResources={learnResources}

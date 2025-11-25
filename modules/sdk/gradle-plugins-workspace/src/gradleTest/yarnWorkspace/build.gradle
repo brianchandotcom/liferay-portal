@@ -1,0 +1,16 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":setUpYarn"
+
+	doLast {
+		String packageJsonFileContent = file("package.json").text
+
+		assert !packageJsonFileContent.contains("modules/project-1")
+		assert packageJsonFileContent.contains("modules/project-2")
+	}
+}
+
+setUpYarn {
+	excludes "project-1"
+}

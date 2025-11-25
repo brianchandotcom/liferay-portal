@@ -72,7 +72,7 @@ export class LanguageOverridePage {
 
 			await expect(
 				this.page.locator(
-					`a:has-text("${key}"):has-text("Languages With Override: ${normalizedLanguageIds.join(', ')}")`
+					`a:has-text('${key}'):has-text("Languages With Override: ${normalizedLanguageIds.join(', ')}")`
 				)
 			).toBeVisible();
 		}

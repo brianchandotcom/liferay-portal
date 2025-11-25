@@ -258,3 +258,59 @@ test('LPD-33373 assert that default and overriden translations show up when no f
 
 	await languageOverridePage.assertLanguageKeyInListView(languageKey);
 });
+
+test('LPD-72281 assert that Language Override is XSS safe', async ({
+	languageOverridePage,
+	page,
+}) => {
+	const originalValue = `"><img/src="x"onerror="alert(1)">`;
+
+	const languageKey: TLanguageKey = {
+		key: originalValue,
+		translations: [
+			{
+				languageId: 'en-US',
+				value: originalValue,
+			},
+		],
+	};
+
+	await test.step('Add listener to fail in case the malicious alert renders', async () => {
+		page.on('dialog', (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('Malicious code has been executed');
+			}
+		});
+	});
+
+	await test.step('Add a language key with malicious key and value', async () => {
+		await languageOverridePage.goto();
+
+		await languageOverridePage.addLanguageKey(languageKey);
+	});
+
+	await test.step('Assert that the key and value are properly rendered/escaped', async () => {
+		await languageOverridePage.searchLanguageKey(languageKey.key);
+
+		const escapedValue = `&quot;&gt;<img src="x">`;
+
+		await languageOverridePage.assertLanguageKeyInListView({
+			key: languageKey.key,
+			translations: [
+				{
+					languageId: 'en-US',
+					value: escapedValue,
+				},
+			],
+		});
+
+		await languageOverridePage.editLanguageKey(languageKey.key);
+
+		await page.getByText(originalValue, {exact: true}).waitFor();
+
+		await languageOverridePage.assertLanguageKeyTranslationValue(
+			'en-US',
+			escapedValue
+		);
+	});
+});

@@ -437,7 +437,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		Layout masterLayout =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayout(
-					getGroupId(), getMasterLayoutPageTemplateEntryERC());
+					getGroupId(), getMasterLayoutPageTemplateEntryERC(),
+					getPlid());
 
 		if (masterLayout != null) {
 			return masterLayout.getCssText();
@@ -846,7 +847,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		Layout masterLayout =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayout(
-					getGroupId(), getMasterLayoutPageTemplateEntryERC());
+					getGroupId(), getMasterLayoutPageTemplateEntryERC(),
+					getPlid());
 
 		if (masterLayout == null) {
 			return 0;
@@ -940,7 +942,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		Layout masterLayout =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayout(
-					getGroupId(), getMasterLayoutPageTemplateEntryERC());
+					getGroupId(), getMasterLayoutPageTemplateEntryERC(),
+					getPlid());
 
 		if (masterLayout != null) {
 			typeSettingsUnicodeProperties =
@@ -1208,7 +1211,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		Layout masterLayout =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayout(
-					getGroupId(), getMasterLayoutPageTemplateEntryERC());
+					getGroupId(), getMasterLayoutPageTemplateEntryERC(),
+					getPlid());
 
 		if (masterLayout != null) {
 			return masterLayout.isInheritLookAndFeel();
@@ -1669,7 +1673,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		Layout masterLayout =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayout(
-					getGroupId(), getMasterLayoutPageTemplateEntryERC());
+					getGroupId(), getMasterLayoutPageTemplateEntryERC(),
+					getPlid());
 
 		if (masterLayout != null) {
 			return ThemeLocalServiceUtil.getColorScheme(
@@ -1808,7 +1813,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		Layout masterLayout =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayout(
-					getGroupId(), getMasterLayoutPageTemplateEntryERC());
+					getGroupId(), getMasterLayoutPageTemplateEntryERC(),
+					getPlid());
 
 		if (masterLayout != null) {
 			return ThemeLocalServiceUtil.getTheme(

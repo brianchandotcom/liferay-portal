@@ -55,7 +55,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 						href="<%= editPLOEntryURL %>"
 					>
 						<div class="h5">
-							<strong><%= languageItemDisplay.getKey() %></strong>
+							<strong><%= HtmlUtil.escape(languageItemDisplay.getKey()) %></strong>
 						</div>
 
 						<div class="h6 text-default">
@@ -78,7 +78,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 						cssClass="table-cell-expand-small"
 						href="<%= editPLOEntryURL %>"
 						name="key"
-						value="<%= languageItemDisplay.getKey() %>"
+						value="<%= HtmlUtil.escape(languageItemDisplay.getKey()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

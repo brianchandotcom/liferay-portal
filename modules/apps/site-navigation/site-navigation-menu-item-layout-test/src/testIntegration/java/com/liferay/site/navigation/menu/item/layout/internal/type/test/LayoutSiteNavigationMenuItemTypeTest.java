@@ -14,16 +14,19 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -42,12 +45,15 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -66,14 +72,33 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
+
+		_serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
 				_serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -166,9 +191,11 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				SiteNavigationMenuItemTypeConstants.LAYOUT);
 
 		String layoutUuid = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		if (layout != null) {
 			layoutUuid = layout.getUuid();
+			externalReferenceCode = layout.getExternalReferenceCode();
 		}
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
@@ -179,7 +206,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
-					"groupId", String.valueOf(_group.getGroupId())
+					"externalReferenceCode", externalReferenceCode
 				).put(
 					"layoutUuid", layoutUuid
 				).put(
@@ -215,8 +242,8 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				StringBundler.concat(
 					"No layout found for site navigation menu item ID ",
 					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-					" with layout UUID ", layoutUuid,
-					" and private layout false"),
+					" with  external reference code  ", externalReferenceCode,
+					" and group ID ", _group.getGroupId()),
 				logEntry.getMessage());
 		}
 	}

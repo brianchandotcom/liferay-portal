@@ -80,6 +80,10 @@ public class RankingJSONStorageHelper {
 		JSONObject jsonObject = jsonStorageEntryLocalService.getJSONObject(
 			classNameLocalService.getClassNameId(Ranking.class), classPK);
 
+		if (jsonObject == null) {
+			return;
+		}
+
 		jsonObject.put(
 			"aliases", _jsonFactory.createJSONArray(ranking.getAliases())
 		).put(

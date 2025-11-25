@@ -148,14 +148,24 @@ public class SettingsTestUtil {
 			Assert.assertNull(masterPageItemExternalReference);
 		}
 		else {
+			long masterGroupId = layout.getGroupId();
+
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+			if (layoutPageTemplateEntry != null) {
+				masterGroupId = layoutPageTemplateEntry.getGroupId();
+			}
+
+			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 				LayoutPageTemplateEntryLocalServiceUtil.
 					fetchLayoutPageTemplateEntryByExternalReferenceCode(
 						layout.getMasterLayoutPageTemplateEntryERC(),
-						layout.getGroupId());
+						masterGroupId);
 
 			Assert.assertEquals(
-				layoutPageTemplateEntry.getExternalReferenceCode(),
+				masterLayoutPageTemplateEntry.getExternalReferenceCode(),
 				masterPageItemExternalReference.getExternalReferenceCode());
 		}
 

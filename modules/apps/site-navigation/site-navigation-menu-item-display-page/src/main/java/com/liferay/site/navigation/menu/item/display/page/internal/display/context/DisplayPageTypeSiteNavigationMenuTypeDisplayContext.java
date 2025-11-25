@@ -213,6 +213,8 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			).put(
 				"externalReferenceCode", getExternalReferenceCode()
 			).put(
+				"scopeExternalReferenceCode", getScopeExternalReferenceCode()
+			).put(
 				"title", getTitle()
 			).put(
 				"type", getType()
@@ -349,6 +351,22 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return _originalTitle;
 	}
 
+	public String getScopeExternalReferenceCode() {
+		if (_scopeExternalReferenceCode != null) {
+			return _scopeExternalReferenceCode;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				_siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		_scopeExternalReferenceCode = typeSettingsUnicodeProperties.get(
+			"scopeExternalReferenceCode");
+
+		return _scopeExternalReferenceCode;
+	}
+
 	public String getTitle() {
 		if (Validator.isNotNull(_title)) {
 			return _title;
@@ -432,6 +450,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	private LayoutDisplayPageObjectProvider<?> _layoutDisplayPageObjectProvider;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _originalTitle;
+	private String _scopeExternalReferenceCode;
 	private final SiteNavigationMenuItem _siteNavigationMenuItem;
 	private final ThemeDisplay _themeDisplay;
 	private String _title;

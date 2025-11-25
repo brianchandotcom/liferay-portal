@@ -16,8 +16,8 @@ export default function propsTransformer({
 	return {
 		...props,
 		onClick() {
-			const groupIdInput = document.getElementById(
-				`${portletNamespace}groupId`
+			const externalReferenceCodeInput = document.getElementById(
+				`${portletNamespace}externalReferenceCode`
 			);
 
 			const layoutItemRemoveButton = document.getElementById(
@@ -42,7 +42,8 @@ export default function propsTransformer({
 				multiple: true,
 				onSelect: (selectedItem) => {
 					if (selectedItem) {
-						groupIdInput.value = selectedItem.groupId;
+						externalReferenceCodeInput.value =
+							selectedItem.externalReferenceCode;
 						layoutUuidInput.value = selectedItem.id;
 						layoutNameInput.textContent = selectedItem.name;
 						privateLayoutInput.value = selectedItem.privateLayout;

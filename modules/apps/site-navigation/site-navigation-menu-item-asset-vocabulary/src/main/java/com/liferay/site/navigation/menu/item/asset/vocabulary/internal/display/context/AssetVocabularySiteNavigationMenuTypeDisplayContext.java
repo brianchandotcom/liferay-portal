@@ -79,9 +79,10 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 				"externalReferenceCode",
 				_typeSettingsUnicodeProperties.get("externalReferenceCode")
 			).put(
-				"groupId",
-				GetterUtil.getLong(
-					_typeSettingsUnicodeProperties.get("groupId"))
+				"scopeExternalReferenceCode",
+				GetterUtil.getString(
+					_typeSettingsUnicodeProperties.get(
+						"scopeExternalReferenceCode"))
 			).put(
 				"title",
 				() -> {
@@ -142,14 +143,22 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		).put(
 			"siteName",
 			() -> {
-				long groupId = GetterUtil.getLong(
-					_typeSettingsUnicodeProperties.get("groupId"));
+				Group group = GroupLocalServiceUtil.getGroup(
+					_assetVocabulary.getGroupId());
+				String scopeExternalReferenceCode =
+					_typeSettingsUnicodeProperties.get(
+						"scopeExternalReferenceCode");
 
-				if (groupId == _themeDisplay.getCompanyGroupId()) {
-					return LanguageUtil.get(_httpServletRequest, "global");
+				if (scopeExternalReferenceCode != null) {
+					group =
+						GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+							scopeExternalReferenceCode,
+							_themeDisplay.getCompanyId());
 				}
 
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				if (group.getGroupId() == _themeDisplay.getCompanyGroupId()) {
+					return LanguageUtil.get(_httpServletRequest, "global");
+				}
 
 				return group.getDescriptiveName(_themeDisplay.getLocale());
 			}

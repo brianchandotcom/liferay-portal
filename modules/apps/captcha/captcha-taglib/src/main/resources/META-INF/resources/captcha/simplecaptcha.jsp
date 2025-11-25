@@ -53,7 +53,7 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 	</div>
 
 	<aui:script>
-		function <portlet:namespace />attachEvent() {
+		function <%= captchaId %>attachEvent() {
 			var refreshCaptcha = document.getElementById(
 				'<portlet:namespace /><%= refreshCaptchaId %>'
 			);
@@ -77,11 +77,11 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 			}
 		}
 
-		<portlet:namespace />attachEvent();
+		<%= captchaId %>attachEvent();
 
 		Liferay.on(
 			'<portlet:namespace />simplecaptcha_attachEvent',
-			<portlet:namespace />attachEvent
+			<%= captchaId %>attachEvent
 		);
 	</aui:script>
 </c:if>

@@ -8,13 +8,11 @@ package com.liferay.portal.search.web.internal.portlet.shared.search;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -29,6 +27,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 /**
+ * @author Felipe Lorenz
  * @author Joshua Cords
  */
 public class PortletSharedSearchRequestImplTest {
@@ -50,10 +49,21 @@ public class PortletSharedSearchRequestImplTest {
 			portletSharedSearchRequest, "_fragmentEntryLinkLocalService",
 			fragmentEntryLinkLocalService);
 
-		PortletRegistry portletRegistry = Mockito.mock(PortletRegistry.class);
-
 		ReflectionTestUtil.setFieldValue(
-			portletSharedSearchRequest, "_portletRegistry", portletRegistry);
+			portletSharedSearchRequest, "_portletRegistry", _portletRegistry);
+
+		FragmentEntryLink fragmentEntryLink1 = _mockFragmentEntryLink(
+			"portletA", true);
+		FragmentEntryLink fragmentEntryLink2 = _mockFragmentEntryLink(
+			"portletB", false);
+
+		Mockito.doReturn(
+			List.of(fragmentEntryLink1, fragmentEntryLink2)
+		).when(
+			fragmentEntryLinkLocalService
+		).getFragmentEntryLinksBySegmentsExperienceId(
+			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong()
+		);
 
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -69,56 +79,6 @@ public class PortletSharedSearchRequestImplTest {
 			layout
 		).getPlid();
 
-		String elementId = RandomTestUtil.randomString();
-		String portletAlias = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
-		FragmentEntryLink fragmentEntryLink1 = _getFragmentEntryLink(
-			StringBundler.concat(
-				"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
-				"<lfr-widget-", portletAlias, " id=\"", elementId, "\">",
-				RandomTestUtil.randomString(), "</div>"),
-			RandomTestUtil.randomString(), "portletA");
-		FragmentEntryLink fragmentEntryLink2 = _getFragmentEntryLink(
-			StringBundler.concat(
-				"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
-				"old-working-values", portletAlias, " id=\"", elementId, "\">",
-				RandomTestUtil.randomString(), "</div>"),
-			RandomTestUtil.randomString(), "portletB");
-
-		List<FragmentEntryLink> fragmentEntryLinks = List.of(
-			fragmentEntryLink1, fragmentEntryLink2);
-
-		Mockito.doReturn(
-			fragmentEntryLinks
-		).when(
-			fragmentEntryLinkLocalService
-		).getFragmentEntryLinksBySegmentsExperienceId(
-			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong()
-		);
-
-		Mockito.when(
-			fragmentEntryLink1.isTypePortlet()
-		).thenReturn(
-			true
-		);
-
-		Mockito.doReturn(
-			ListUtil.toList("portletA_INSTANCE_rdna")
-		).when(
-			portletRegistry
-		).getFragmentEntryLinkPortletIds(
-			fragmentEntryLink1
-		);
-
-		Mockito.doReturn(
-			ListUtil.toList("portletB_INSTANCE_rdna")
-		).when(
-			portletRegistry
-		).getFragmentEntryLinkPortletIds(
-			fragmentEntryLink2
-		);
-
 		Set<String> result = ReflectionTestUtil.invoke(
 			portletSharedSearchRequest, "_getSegmentExperiencePortletIds",
 			new Class<?>[] {Layout.class, long.class}, layout, 123L);
@@ -127,8 +87,8 @@ public class PortletSharedSearchRequestImplTest {
 			Set.of("portletA_INSTANCE_rdna", "portletB_INSTANCE_rdna"), result);
 	}
 
-	private FragmentEntryLink _getFragmentEntryLink(
-		String html, String namespace, String portletName) {
+	private FragmentEntryLink _mockFragmentEntryLink(
+		String portletName, boolean typePortlet) {
 
 		FragmentEntryLink fragmentEntryLink = Mockito.mock(
 			FragmentEntryLink.class);
@@ -144,16 +104,39 @@ public class PortletSharedSearchRequestImplTest {
 		Mockito.when(
 			fragmentEntryLink.getHtml()
 		).thenReturn(
-			html
+			String.format(
+				_FRAGMENT_HTML_TEMPLATE, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString())
 		);
 
 		Mockito.when(
 			fragmentEntryLink.getNamespace()
 		).thenReturn(
-			namespace
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			fragmentEntryLink.isTypePortlet()
+		).thenReturn(
+			typePortlet
+		);
+
+		Mockito.doReturn(
+			ListUtil.toList(portletName + "_INSTANCE_rdna")
+		).when(
+			_portletRegistry
+		).getFragmentEntryLinkPortletIds(
+			fragmentEntryLink
 		);
 
 		return fragmentEntryLink;
 	}
+
+	private static final String _FRAGMENT_HTML_TEMPLATE =
+		"<div class=\"fragment\">%s<lfr-widget-%s id=\"%s\">%s</div>";
+
+	private final PortletRegistry _portletRegistry = Mockito.mock(
+		PortletRegistry.class);
 
 }

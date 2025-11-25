@@ -62,3 +62,55 @@ test(
 		});
 	}
 );
+
+test(
+	'When a space is already connected to a site, connect button should be disable',
+	{tag: '@LPD-69447'},
+	async ({apiHelpers, page}) => {
+		const spaceName = getRandomString();
+		const siteName = 'Global';
+
+		await test.step('Create a new space', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Check the space is visible in All Spaces and left panel', async () => {
+			await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+			expect(page.getByRole('menuitem', {name: spaceName})).toBeVisible();
+			expect(page.getByRole('link', {name: spaceName})).toBeVisible();
+		});
+
+		await test.step(`Go to View Connected Sites modal and connect the space to ${siteName} site`, async () => {
+			await page.getByRole('cell', {name: 'Actions'}).nth(2).click();
+			await page.getByRole('menuitem', {name: 'View Connected Sites'}).click();
+			await page.getByPlaceholder('Select a Site').fill(siteName);
+			await page.getByRole('option', {name: siteName}).click();
+
+			await expect(
+				page.getByRole('button', {name: 'Connect'})
+			).toBeEnabled();
+
+			await page.getByRole('button', {name: 'Connect'}).click();
+
+			await waitForAlert(
+				page,
+				`Success:Site ${siteName} was successfully connected to the space.`
+			);
+
+			expect(
+				page.getByRole('button', {name: 'Connect'})
+			).toBeDisabled();
+
+			expect(
+				page.getByText(siteName)
+			).toBeVisible();
+
+		});
+
+	}
+);

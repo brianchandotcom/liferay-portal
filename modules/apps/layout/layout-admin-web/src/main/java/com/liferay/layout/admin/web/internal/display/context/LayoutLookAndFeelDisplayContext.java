@@ -195,14 +195,12 @@ public class LayoutLookAndFeelDisplayContext {
 
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
-		if (Validator.isNotNull(
-				selLayout.getMasterLayoutPageTemplateEntryERC())) {
+		long masterLayoutPlid = selLayout.getMasterLayoutPlid();
 
+		if (masterLayoutPlid > 0) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				LayoutPageTemplateEntryLocalServiceUtil.
-					fetchLayoutPageTemplateEntryByExternalReferenceCode(
-						selLayout.getMasterLayoutPageTemplateEntryERC(),
-						selLayout.getGroupId());
+					fetchLayoutPageTemplateEntryByPlid(masterLayoutPlid);
 
 			if (layoutPageTemplateEntry != null) {
 				masterLayoutName = layoutPageTemplateEntry.getName();

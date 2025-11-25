@@ -49,6 +49,7 @@ export interface InputAsValueFieldComponentProps {
 	creationLanguageId: Liferay.Language.Locale;
 	defaultValue?: ObjectFieldSettingValue;
 	error?: string;
+	id?: string;
 	label: string;
 	onSubmit?: (values?: Partial<ObjectField>) => void;
 	placeholder?: string;
@@ -226,6 +227,7 @@ export function DefaultValueContainer({
 							defaultValueType === 'inputAsValue' && defaultValue
 						}
 						error={errors.defaultValue}
+						id="default_value_container_input"
 						label={
 							!values.state
 								? Liferay.Language.get('default-value')

@@ -36,7 +36,8 @@ public class CommentUtil {
 		throws Exception {
 
 		try {
-			_toComment(addCommentUnsafeSupplier.get(), commentManager, portal);
+			return _toComment(
+				addCommentUnsafeSupplier.get(), commentManager, portal);
 		}
 		catch (DiscussionMaxCommentsException discussionMaxCommentsException) {
 			throw new ClientErrorException(
@@ -52,8 +53,6 @@ public class CommentUtil {
 			throw new ClientErrorException(
 				"Comment text is null", 422, messageSubjectException);
 		}
-
-		return null;
 	}
 
 	private static Comment _toComment(

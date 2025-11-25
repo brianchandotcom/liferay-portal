@@ -22,12 +22,31 @@ public class LayoutPageTemplateEntryLayoutProviderImpl
 	implements LayoutPageTemplateEntryLayoutProvider {
 
 	public Layout getLayoutPageTemplateEntryLayout(
-		long groupId, String externalReferenceCode) {
+		long groupId, String externalReferenceCode, long plid) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
 					externalReferenceCode, groupId);
+
+		if (layoutPageTemplateEntry != null) {
+			return _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
+		}
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(plid);
+
+		if (layoutPageTemplateEntry == null) {
+			return null;
+		}
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					externalReferenceCode,
+					layoutPageTemplateEntry.getGroupId());
 
 		if (layoutPageTemplateEntry == null) {
 			return null;

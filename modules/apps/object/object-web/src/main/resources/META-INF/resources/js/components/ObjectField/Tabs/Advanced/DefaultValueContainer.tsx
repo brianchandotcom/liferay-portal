@@ -29,6 +29,7 @@ import {
 import {removeFieldSettings} from '../../../../utils/fieldSettings';
 import BooleanDefaultValueSelect from '../../DefaultValueFields/BooleanDefaultValueSelect';
 import ListTypeDefaultValueSelect from '../../DefaultValueFields/ListTypeDefaultValueSelect';
+import NumericDefaultValueInput from '../../DefaultValueFields/NumericDefaultValueInput';
 import RichTextDefaultValue from '../../DefaultValueFields/RichTextDefaultValue';
 import TextDefaultValueInput from '../../DefaultValueFields/TextDefaultValueInput';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
@@ -47,6 +48,7 @@ interface DefaultValueContainerProps {
 export interface InputAsValueFieldComponentProps {
 	ckEditor5Config?: object;
 	creationLanguageId: Liferay.Language.Locale;
+	dataType?: string;
 	defaultValue?: ObjectFieldSettingValue;
 	error?: string;
 	id?: string;
@@ -65,7 +67,11 @@ type InputAsValueFieldComponents = {
 const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
 	...(Liferay.FeatureFlags['LPD-46451'] && {
 		Boolean: BooleanDefaultValueSelect,
+		Decimal: NumericDefaultValueInput,
+		Integer: NumericDefaultValueInput,
+		LongInteger: NumericDefaultValueInput,
 		LongText: TextDefaultValueInput,
+		PrecisionDecimal: NumericDefaultValueInput,
 		RichText: RichTextDefaultValue,
 		Text: TextDefaultValueInput,
 	}),
@@ -93,6 +99,12 @@ export function DefaultValueContainer({
 	const [defaultValueTypeSelection, setDefaultValueTypeSelection] = useState(
 		defaultValueType || 'inputAsValue'
 	);
+
+	const dataType =
+		values.businessType === 'Decimal' ||
+		values.businessType === 'PrecisionDecimal'
+			? 'double'
+			: '';
 
 	useEffect(() => {
 		if (values.state) {
@@ -223,6 +235,7 @@ export function DefaultValueContainer({
 					<InputAsValueFieldComponent
 						ckEditor5Config={ckEditor5Config}
 						creationLanguageId={creationLanguageId}
+						dataType={dataType}
 						defaultValue={
 							defaultValueType === 'inputAsValue' && defaultValue
 						}

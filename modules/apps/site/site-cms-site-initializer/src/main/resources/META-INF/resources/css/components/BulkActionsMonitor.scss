@@ -79,7 +79,7 @@
 	&-view-all {
 		border: 0;
 		border-radius: 0;
-		border-top: 1px solid $gray-300;
+		padding: 0.1875rem;
 		text-decoration: none !important;
 
 		&:hover {
@@ -95,16 +95,17 @@
 	}
 
 	.panel {
+		border-bottom: 1px solid $gray-300;
 		border-radius: 0;
-		border-top: 1px solid $gray-300;
 		margin-bottom: 0;
+		padding: 0.1875rem;
 
 		&-body {
 			padding: 0 0 0.5rem 2.0625rem;
 		}
 
 		&-header {
-			padding: 0.4rem 0.6rem;
+			padding: 0.3rem 0.4rem;
 
 			.collapse-icon-closed,
 			.collapse-icon-open {

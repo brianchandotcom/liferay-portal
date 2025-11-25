@@ -55,6 +55,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			 shortFileName.startsWith("portal") &&
 			 !shortFileName.contains("-legacy-") &&
 			 !shortFileName.equals("portal-osgi-configuration.properties") &&
+			 !shortFileName.equals("portal-upgrade-database.properties") &&
 			 !shortFileName.equals("portal-upgrade-ext.properties")) ||
 			(!isPortalSource() && !isSubrepository() &&
 			 (shortFileName.equals("portal.properties") ||

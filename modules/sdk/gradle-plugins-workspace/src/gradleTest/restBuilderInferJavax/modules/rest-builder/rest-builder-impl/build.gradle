@@ -1,6 +1,0 @@
-dependencies {
-	api project(":modules:rest-builder:rest-builder-api")
-	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
-}
-
-group = "rest.builder"

@@ -1692,19 +1692,33 @@ definition {
 	test CanFilterByRecentAndOrderByDownloads {
 		property custom.properties = "dl.actions.visible=true";
 
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_2.doc",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "application/msword",
 			sourceFileName = "Document_2.doc");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_3.doc",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.gotoPage(
+			pageName = "Documents and Media Page",
+			siteName = "site-name");
 
 		DMDocument.downloadPG(dmDocumentTitle = "Document_3.doc");
 
@@ -1712,7 +1726,7 @@ definition {
 
 		DMDocument.assertFileNameFromTempFolder(fileName = "Document_3.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		ManagementBar.setFilterAndOrder(
 			filterBy = "Recent",

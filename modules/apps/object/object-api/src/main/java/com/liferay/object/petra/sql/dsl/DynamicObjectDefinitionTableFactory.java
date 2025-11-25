@@ -21,8 +21,8 @@ public class DynamicObjectDefinitionTableFactory {
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		return _create(
-			objectDefinition, objectFieldLocalService,
-			objectDefinition.getDBTableName());
+			objectDefinition.getDBTableName(), objectDefinition,
+			objectFieldLocalService);
 	}
 
 	public static DynamicObjectDefinitionTable createExtension(
@@ -30,20 +30,20 @@ public class DynamicObjectDefinitionTableFactory {
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		return _create(
-			objectDefinition, objectFieldLocalService,
-			objectDefinition.getExtensionDBTableName());
+			objectDefinition.getExtensionDBTableName(), objectDefinition,
+			objectFieldLocalService);
 	}
 
 	private static DynamicObjectDefinitionTable _create(
-		ObjectDefinition objectDefinition,
-		ObjectFieldLocalService objectFieldLocalService, String tableName) {
+		String dbTableName, ObjectDefinition objectDefinition,
+		ObjectFieldLocalService objectFieldLocalService) {
 
 		List<ObjectField> objectFields =
 			objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId(), tableName);
+				objectDefinition.getObjectDefinitionId(), dbTableName);
 
 		return new DynamicObjectDefinitionTable(
-			objectDefinition, objectFields, tableName);
+			objectDefinition, objectFields, dbTableName);
 	}
 
 }

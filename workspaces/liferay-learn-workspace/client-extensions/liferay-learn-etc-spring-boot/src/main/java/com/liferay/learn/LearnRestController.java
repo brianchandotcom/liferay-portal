@@ -757,7 +757,7 @@ public class LearnRestController extends BaseRestController {
 		String[] sentences = ssml.split("(?<=[.!?])\\s+");
 
 		for (String sentence : sentences) {
-			if ((sb.length() + sentence.length()) > 5000) {
+			if ((sb.length() + sentence.length()) > _MAX_TTS_CHUNK_LENGTH) {
 				parts.add(StringUtil.trim(sb.toString()));
 				sb = new StringBundler();
 			}
@@ -792,6 +792,8 @@ public class LearnRestController extends BaseRestController {
 			"title", objectDefinitionMap.get("pluralLabel")
 		).build();
 	}
+
+	private static final int _MAX_TTS_CHUNK_LENGTH = 5000;
 
 	private static final Map<Pattern, String> _learnPatternReplacements =
 		HashMapBuilder.put(

@@ -5,6 +5,7 @@
 
 export {BooleanEntryBaseField} from './components/BaseEntryFields/BooleanEntryBaseField';
 export {ListTypeEntryBaseField} from './components/BaseEntryFields/ListTypeEntryBaseField';
+export {RichTextEntryBaseField} from './components/BaseEntryFields/RichTextEntryBaseField';
 export {
 	BuilderScreen,
 	TBuilderScreenItem,

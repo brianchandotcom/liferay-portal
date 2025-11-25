@@ -21,7 +21,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.Serializable;
 
+import java.util.Dictionary;
 import java.util.Locale;
 
 /**
@@ -37,6 +39,12 @@ public class SiteSettingsConfigurationScreen implements ConfigurationScreen {
 		_siteSettingsConfigurationScreenContributor =
 			siteSettingsConfigurationScreenContributor;
 		_servletContext = servletContext;
+	}
+
+	@Override
+	public Dictionary<String, Object> exportProperties(Serializable scopePK) {
+		return _siteSettingsConfigurationScreenContributor.exportProperties(
+			scopePK);
 	}
 
 	@Override
@@ -59,6 +67,15 @@ public class SiteSettingsConfigurationScreen implements ConfigurationScreen {
 	@Override
 	public String getScope() {
 		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	}
+
+	@Override
+	public void importProperties(
+			Dictionary<String, Object> properties, Serializable scopePK)
+		throws Exception {
+
+		_siteSettingsConfigurationScreenContributor.importProperties(
+			properties, scopePK);
 	}
 
 	@Override

@@ -624,7 +624,6 @@ public class FragmentConfigurationFieldValueDTOConverter
 
 		siteMenuNavigationMenuValue.setNavigationMenuItemExternalReference(
 			() -> itemExternalReference);
-
 		siteMenuNavigationMenuValue.setParentMenuItemExternalReferenceCode(
 			() -> {
 				SiteNavigationMenuItem siteNavigationMenuItem =
@@ -688,7 +687,6 @@ public class FragmentConfigurationFieldValueDTOConverter
 
 				return SitePagesNavigationMenuValue.PageSetType.PUBLIC_PAGES;
 			});
-
 		sitePagesNavigationMenuValue.setParentSitePageExternalReferenceCode(
 			() -> {
 				if (Validator.isNull(

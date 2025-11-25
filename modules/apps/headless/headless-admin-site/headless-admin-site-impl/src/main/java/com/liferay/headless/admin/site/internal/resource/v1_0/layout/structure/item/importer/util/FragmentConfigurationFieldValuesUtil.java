@@ -507,7 +507,7 @@ public class FragmentConfigurationFieldValuesUtil {
 
 	private static JSONObject
 			_getSiteMenuItemExternalReferenceMissingReferenceJSONObject(
-				ItemExternalReference itemExternalReference, long groupId,
+				long groupId, ItemExternalReference itemExternalReference,
 				String parentSiteNavigationMenuItemExternalReferenceCode)
 		throws Exception {
 
@@ -543,8 +543,8 @@ public class FragmentConfigurationFieldValuesUtil {
 
 		if (itemGroupId == null) {
 			return _getSiteMenuItemExternalReferenceMissingReferenceJSONObject(
-				itemExternalReference,
 				layoutStructureItemImporterContext.getGroupId(),
+				itemExternalReference,
 				siteMenuNavigationMenuValue.
 					getParentMenuItemExternalReferenceCode());
 		}
@@ -557,8 +557,8 @@ public class FragmentConfigurationFieldValuesUtil {
 
 		if (siteNavigationMenu == null) {
 			return _getSiteMenuItemExternalReferenceMissingReferenceJSONObject(
-				itemExternalReference,
 				layoutStructureItemImporterContext.getGroupId(),
+				itemExternalReference,
 				siteMenuNavigationMenuValue.
 					getParentMenuItemExternalReferenceCode());
 		}

@@ -1900,7 +1900,9 @@ definition {
 		}
 
 		task ("Add a Spanish translation") {
-			PortletEntry.changeLocale(locale = "es-ES");
+			PortletEntry.changeLocale(
+				locale = "es-ES",
+				translated = "true");
 
 			PortletEntry.inputTitle(title = "Spanish (Spain) Title");
 
@@ -1911,7 +1913,9 @@ definition {
 		}
 
 		task ("View English translation is shown") {
-			PortletEntry.changeLocale(locale = "en-US");
+			PortletEntry.changeLocale(
+				locale = "en-US",
+				translated = "true");
 
 			AssertTextEquals(
 				locator1 = "TextInput#TITLE",
@@ -1924,7 +1928,9 @@ definition {
 		}
 
 		task ("View Spanish translation is shown then publish") {
-			PortletEntry.changeLocale(locale = "es-ES");
+			PortletEntry.changeLocale(
+				locale = "es-ES",
+				translated = "true");
 
 			AssertTextEquals(
 				locator1 = "TextInput#TITLE",

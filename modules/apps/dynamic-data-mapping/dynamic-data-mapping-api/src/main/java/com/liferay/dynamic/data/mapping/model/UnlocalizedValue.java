@@ -5,9 +5,10 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -19,17 +20,16 @@ import java.util.Set;
 public class UnlocalizedValue implements Value {
 
 	public UnlocalizedValue(String value) {
-		_values.put(LocaleUtil.ROOT, value);
+		_value = value;
 	}
 
 	public UnlocalizedValue(UnlocalizedValue unlocalizedValue) {
-		_values.put(
-			LocaleUtil.ROOT, unlocalizedValue.getString(LocaleUtil.ROOT));
+		_value = unlocalizedValue.getString(null);
 	}
 
 	@Override
 	public void addString(Locale locale, String value) {
-		_values.put(LocaleUtil.ROOT, value);
+		_value = value;
 	}
 
 	@Override
@@ -44,12 +44,12 @@ public class UnlocalizedValue implements Value {
 
 		UnlocalizedValue unlocalizedValue = (UnlocalizedValue)object;
 
-		return Objects.equals(_values, unlocalizedValue._values);
+		return Objects.equals(_value, unlocalizedValue._value);
 	}
 
 	@Override
 	public Set<Locale> getAvailableLocales() {
-		return _values.keySet();
+		return Collections.singleton(LocaleUtil.ROOT);
 	}
 
 	@Override
@@ -59,17 +59,17 @@ public class UnlocalizedValue implements Value {
 
 	@Override
 	public String getString(Locale locale) {
-		return _values.get(LocaleUtil.ROOT);
+		return _value;
 	}
 
 	@Override
 	public Map<Locale, String> getValues() {
-		return _values;
+		return Collections.singletonMap(LocaleUtil.ROOT, _value);
 	}
 
 	@Override
 	public int hashCode() {
-		return _values.hashCode();
+		return HashUtil.hash(0, _value);
 	}
 
 	@Override
@@ -87,6 +87,6 @@ public class UnlocalizedValue implements Value {
 		throw new UnsupportedOperationException();
 	}
 
-	private final Map<Locale, String> _values = new HashMap<>();
+	private String _value;
 
 }

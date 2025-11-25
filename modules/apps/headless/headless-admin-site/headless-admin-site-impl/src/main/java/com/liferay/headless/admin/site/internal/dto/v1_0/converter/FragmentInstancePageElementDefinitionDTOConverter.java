@@ -18,6 +18,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.WidgetInstanceUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -161,6 +162,10 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 
 						return FragmentType.FORM;
 					});
+				setFragmentViewports(
+					() -> FragmentViewportUtil.toFragmentViewports(
+						fragmentStyledLayoutStructureItem.
+							getItemConfigJSONObject()));
 				setHtml(fragmentEntryLink::getHtml);
 				setIndexed(fragmentStyledLayoutStructureItem::isIndexed);
 				setJs(fragmentEntryLink::getJs);

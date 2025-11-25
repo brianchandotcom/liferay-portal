@@ -1,8 +1,0 @@
-Bundle-Name: rest-builder-test
-Bundle-SymbolicName: rest.builder.test
-Bundle-Version: 1.0.0
--includeresource: rest.builder.client.jar=../rest-builder-client/build/libs/rest.builder.client-[0-9]*.jar;lib:=true
--provider-policy:\
-	${replacestring;${range;[==,\
-	==]};.*,\
-	(.*)];$1}

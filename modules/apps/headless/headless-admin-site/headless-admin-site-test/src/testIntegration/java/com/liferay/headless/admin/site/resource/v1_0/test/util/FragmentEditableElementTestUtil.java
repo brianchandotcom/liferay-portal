@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValueFragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
@@ -35,28 +36,43 @@ public class FragmentEditableElementTestUtil {
 			fragmentMappedValueItemReferenceType,
 		TextFragmentValue.Type textFragmentValueType) {
 
-		return new FragmentEditableElement[] {
-			new FragmentEditableElement() {
-				{
-					setFragmentEditableElementValue(
-						() -> new TextFragmentEditableElementValue() {
-							{
-								setFragmentEditableElementValueFragmentLink(
-									() ->
-										_getFragmentEditableElementValueFragmentLink(
-											prefix, fragmentLink));
-								setTextFragmentValue(
-									() -> _getTextFragmentValue(
-										contextSource,
-										fragmentMappedValueItemReferenceType,
-										textFragmentValueType));
-								setType(Type.TEXT);
-							}
-						});
-					setId("element-text");
-				}
-			}
-		};
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink =
+				_getFragmentEditableElementValueFragmentLink(
+					prefix, fragmentLink);
+
+		TextFragmentValue textFragmentValue = _getTextFragmentValue(
+			contextSource, fragmentMappedValueItemReferenceType,
+			textFragmentValueType);
+
+		if ((fragmentEditableElementValueFragmentLink == null) &&
+			(textFragmentValue == null)) {
+
+			return new FragmentEditableElement[0];
+		}
+
+		FragmentEditableElement fragmentEditableElement =
+			new FragmentEditableElement();
+
+		TextFragmentEditableElementValue textFragmentEditableElementValue =
+			new TextFragmentEditableElementValue();
+
+		textFragmentEditableElementValue.
+			setFragmentEditableElementValueFragmentLink(
+				() -> fragmentEditableElementValueFragmentLink);
+
+		textFragmentEditableElementValue.setTextFragmentValue(
+			() -> textFragmentValue);
+
+		textFragmentEditableElementValue.setType(
+			() -> FragmentEditableElementValue.Type.TEXT);
+
+		fragmentEditableElement.setFragmentEditableElementValue(
+			() -> textFragmentEditableElementValue);
+
+		fragmentEditableElement.setId(() -> "element-text");
+
+		return new FragmentEditableElement[] {fragmentEditableElement};
 	}
 
 	private static FragmentEditableElementValueFragmentLink

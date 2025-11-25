@@ -8,7 +8,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
 import {ScreenReaderAnnouncerContext} from '@liferay/layout-js-components-web';
-import React, {Dispatch, SetStateAction, useContext, useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {flushSync} from 'react-dom';
 import {v4 as uuidv4} from 'uuid';
 
@@ -36,7 +36,7 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 
 type RuleBuilderActionProps = {
 	actions: Action[];
-	setActions: Dispatch<SetStateAction<Action[]>>;
+	setActions: (actions: Action[]) => void;
 };
 
 export function RuleBuilderActionSection({
@@ -101,10 +101,7 @@ export function RuleBuilderActionSection({
 		const actionId = uuidv4();
 
 		flushSync(() => {
-			setActions((previousActions) => [
-				...previousActions,
-				{id: actionId} as Action,
-			]);
+			setActions([...actions, {id: actionId} as Action]);
 		});
 
 		const actionElement = actionsRefMap.get(actionId);
@@ -122,8 +119,8 @@ export function RuleBuilderActionSection({
 
 			actionsRefMap.get(nextCondition.id)?.focus();
 
-			setActions((previousActions) =>
-				previousActions.filter(
+			setActions(
+				actions.filter(
 					(_action, currentIndex) => currentIndex !== index
 				)
 			);
@@ -168,15 +165,13 @@ export function RuleBuilderActionSection({
 							inputFragmentItems={inputFragmentItems}
 							key={action.id}
 							layoutDataItems={layoutDataItems}
-							onActionChange={(action) =>
-								setActions((previousActions) => {
-									const newActions = [...previousActions];
+							onActionChange={(action) => {
+								const newActions = [...actions];
 
-									newActions[index] = action;
+								newActions[index] = action;
 
-									return newActions;
-								})
-							}
+								setActions(newActions);
+							}}
 							onDeleteAction={() => {
 								onDeleteAction(action, index);
 							}}
@@ -208,8 +203,8 @@ export type ConditionType = 'all' | 'any';
 type RuleBuilderConditionProps = {
 	conditionType: ConditionType;
 	conditions: Condition[];
-	setConditionType: Dispatch<SetStateAction<ConditionType>>;
-	setConditions: Dispatch<SetStateAction<Condition[]>>;
+	setConditionType: (conditionType: ConditionType) => void;
+	setConditions: (conditions: Condition[]) => void;
 };
 
 export function RuleBuilderConditionSection({
@@ -259,10 +254,7 @@ export function RuleBuilderConditionSection({
 		const conditionId = uuidv4();
 
 		flushSync(() => {
-			setConditions((previousConditions) => [
-				...previousConditions,
-				{id: conditionId} as Condition,
-			]);
+			setConditions([...conditions, {id: conditionId} as Condition]);
 		});
 
 		const conditionElement = conditionRefMap.get(conditionId);
@@ -281,8 +273,8 @@ export function RuleBuilderConditionSection({
 
 			conditionRefMap.get(nextCondition.id)?.focus();
 
-			setConditions((previousConditions) =>
-				previousConditions.filter(
+			setConditions(
+				conditions.filter(
 					(_condition, currentIndex) => currentIndex !== index
 				)
 			);
@@ -386,17 +378,13 @@ export function RuleBuilderConditionSection({
 							condition={condition}
 							inputFragmentItems={inputFragmentItems}
 							key={condition.id}
-							onConditionChange={(condition) =>
-								setConditions((previousConditions) => {
-									const newConditions = [
-										...previousConditions,
-									];
+							onConditionChange={(condition) => {
+								const newConditions = [...conditions];
 
-									newConditions[index] = condition;
+								newConditions[index] = condition;
 
-									return newConditions;
-								})
-							}
+								setConditions(newConditions);
+							}}
 							onDeleteCondition={() =>
 								onDeleteCondition(condition, index)
 							}

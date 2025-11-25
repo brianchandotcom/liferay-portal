@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
@@ -158,114 +159,19 @@ public class ClusterGeneralTest implements Serializable {
 
 	@Test
 	public void testTCPControlChannelProperties() throws Exception {
-
-		// Set cluster.link.channel.properties.control=tcp.xml
-
-		PropsUtil.set(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, "tcp.xml");
-
-		// Create node 3 with property
-		// cluster.link.channel.properties.control=tcp.xml
-
-		TomcatNode tomcatNode3 = _createAndStartTomcatNodeWithProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
-
-		// Create node 4 with property
-		// cluster.link.channel.properties.control=tcp.xml
-
-		TomcatNode tomcatNode4 = _createAndStartTomcatNodeWithProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
-
-		// Assert node 3 has tcp.xml set up
-
-		Assert.assertEquals(
-			"tcp.xml",
-			tomcatNode3.syncExecute(
-				() -> PropsUtil.get(
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)));
-
-		// Assert node 4 has tcp.xml set up
-
-		Assert.assertEquals(
-			"tcp.xml",
-			tomcatNode4.syncExecute(
-				() -> PropsUtil.get(
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)));
-
-		// Assert node 3 can get its cluster node id
-
-		Assert.assertNotNull(
-			tomcatNode3.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
-
-		// Assert node 4 can get its cluster node id
-
-		Assert.assertNotNull(
-			tomcatNode4.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
+		_testControlChannelProperties(
+			Collections.singletonMap(
+				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, "tcp.xml"));
 	}
 
 	@Test
 	public void testUDPControlChannelProperties() throws Exception {
-
-		// Set cluster.link.channel.properties.control=udp.xml
-
-		PropsUtil.set(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, "udp.xml");
-
-		PropsUtil.set("cluster.link.channel.properties.transport.0", "udp.xml");
-
-		// Create node 3 with property
-		// cluster.link.channel.properties.control=udp.xml
-		// cluster.link.channel.properties.transport.0=udp.xml
-
-		TomcatNode tomcatNode3 = _createAndStartTomcatNodeWithProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
-			"cluster.link.channel.properties.transport.0");
-
-		// Create node 4 with property
-		// cluster.link.channel.properties.control=udp.xml
-		// cluster.link.channel.properties.transport.0=udp.xml
-
-		TomcatNode tomcatNode4 = _createAndStartTomcatNodeWithProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
-			"cluster.link.channel.properties.transport.0");
-
-		// Assert node 3 has udp.xml set up
-
-		Assert.assertEquals(
-			"udp.xml",
-			tomcatNode3.syncExecute(
-				() -> PropsUtil.get(
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)));
-
-		Assert.assertEquals(
-			"udp.xml",
-			tomcatNode3.syncExecute(
-				() -> PropsUtil.get(
-					"cluster.link.channel.properties.transport.0")));
-
-		// Assert node 4 has udp.xml set up
-
-		Assert.assertEquals(
-			"udp.xml",
-			tomcatNode4.syncExecute(
-				() -> PropsUtil.get(
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)));
-
-		Assert.assertEquals(
-			"udp.xml",
-			tomcatNode4.syncExecute(
-				() -> PropsUtil.get(
-					"cluster.link.channel.properties.transport.0")));
-
-		// Assert node 3 can get its cluster node id
-
-		Assert.assertNotNull(
-			tomcatNode3.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
-
-		// Assert node 4 can get its cluster node id
-
-		Assert.assertNotNull(
-			tomcatNode4.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
+		_testControlChannelProperties(
+			HashMapBuilder.put(
+				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, "udp.xml"
+			).put(
+				"cluster.link.channel.properties.transport.0", "udp.xml"
+			).build());
 	}
 
 	private void _assertNodesVisibleToEachOther(
@@ -302,7 +208,7 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	private TomcatNode _createAndStartTomcatNodeWithProperties(
-			String... properties)
+			Collection<String> properties)
 		throws Exception {
 
 		TomcatCluster.Builder builder = tomcatClusterTestRule.buildTomcatNode();
@@ -495,6 +401,50 @@ public class ClusterGeneralTest implements Serializable {
 					return Log4JUtil.getPriority(
 						ClusterGeneralTest.class.getName());
 				}));
+	}
+
+	private void _testControlChannelProperties(Map<String, String> properties)
+		throws Exception {
+
+		// Set these properties globally
+
+		for (Map.Entry<String, String> entry : properties.entrySet()) {
+			PropsUtil.set(entry.getKey(), entry.getValue());
+		}
+
+		// Create nodes with properties
+
+		TomcatNode tomcatNode3 = _createAndStartTomcatNodeWithProperties(
+			properties.keySet());
+		TomcatNode tomcatNode4 = _createAndStartTomcatNodeWithProperties(
+			properties.keySet());
+
+		// Assert properties are set correctly on both nodes
+
+		for (Map.Entry<String, String> entry : properties.entrySet()) {
+			String key = entry.getKey();
+			String expectedValue = entry.getValue();
+
+			// Assert Node 3
+
+			Assert.assertEquals(
+				expectedValue,
+				tomcatNode3.syncExecute(() -> PropsUtil.get(key)));
+
+			// Assert Node 4
+
+			Assert.assertEquals(
+				expectedValue,
+				tomcatNode4.syncExecute(() -> PropsUtil.get(key)));
+		}
+
+		// Assert nodes can get their cluster node IDs successfully
+
+		Assert.assertNotNull(
+			tomcatNode3.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
+
+		Assert.assertNotNull(
+			tomcatNode4.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
 	}
 
 	private static transient TomcatNode _tomcatNode1;

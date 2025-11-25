@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -32,6 +34,7 @@ import jakarta.portlet.ActionResponse;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -332,59 +335,41 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private CommerceShipment _updateExpectedDate(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceShipmentId = ParamUtil.getLong(
 			actionRequest, "commerceShipmentId");
 
-		int expectedDateMonth = ParamUtil.getInteger(
-			actionRequest, "expectedDateMonth");
-		int expectedDateDay = ParamUtil.getInteger(
-			actionRequest, "expectedDateDay");
-		int expectedDateYear = ParamUtil.getInteger(
-			actionRequest, "expectedDateYear");
-		int expectedDateHour = ParamUtil.getInteger(
-			actionRequest, "expectedDateHour");
-		int expectedDateMinute = ParamUtil.getInteger(
-			actionRequest, "expectedDateMinute");
-		int expectedDateAmPm = ParamUtil.getInteger(
-			actionRequest, "expectedDateAmPm");
+		Date expectedDate = DateUtil.parseDate(
+			"yyyy-MM-dd", ParamUtil.getString(actionRequest, "expectedDate"),
+			actionRequest.getLocale());
 
-		if (expectedDateAmPm == Calendar.PM) {
-			expectedDateHour += 12;
-		}
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			expectedDate.getTime());
 
 		return _commerceShipmentService.updateExpectedDate(
-			commerceShipmentId, expectedDateMonth, expectedDateDay,
-			expectedDateYear, expectedDateHour, expectedDateMinute);
+			commerceShipmentId, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
 	}
 
 	private CommerceShipment _updateShippingDate(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceShipmentId = ParamUtil.getLong(
 			actionRequest, "commerceShipmentId");
 
-		int shippingDateMonth = ParamUtil.getInteger(
-			actionRequest, "shippingDateMonth");
-		int shippingDateDay = ParamUtil.getInteger(
-			actionRequest, "shippingDateDay");
-		int shippingDateYear = ParamUtil.getInteger(
-			actionRequest, "shippingDateYear");
-		int shippingDateHour = ParamUtil.getInteger(
-			actionRequest, "shippingDateHour");
-		int shippingDateMinute = ParamUtil.getInteger(
-			actionRequest, "shippingDateMinute");
-		int shippingDateAmPm = ParamUtil.getInteger(
-			actionRequest, "shippingDateAmPm");
+		Date shippingDate = DateUtil.parseDate(
+			"yyyy-MM-dd", ParamUtil.getString(actionRequest, "shippingDate"),
+			actionRequest.getLocale());
 
-		if (shippingDateAmPm == Calendar.PM) {
-			shippingDateHour += 12;
-		}
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			shippingDate.getTime());
 
 		return _commerceShipmentService.updateShippingDate(
-			commerceShipmentId, shippingDateMonth, shippingDateDay,
-			shippingDateYear, shippingDateHour, shippingDateMinute);
+			commerceShipmentId, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
 	}
 
 	private CommerceShipment _updateStatus(ActionRequest actionRequest)

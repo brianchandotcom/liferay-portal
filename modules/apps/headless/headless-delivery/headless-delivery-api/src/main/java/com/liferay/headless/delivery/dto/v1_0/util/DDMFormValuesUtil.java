@@ -163,11 +163,9 @@ public class DDMFormValuesUtil {
 		Map<String, List<ContentField>> contentFieldsMap = new HashMap<>();
 
 		for (ContentField contentField : contentFields) {
-			String contentFieldName = contentField.getName();
-
 			List<ContentField> contentFieldsList =
 				contentFieldsMap.computeIfAbsent(
-					contentFieldName, key -> new ArrayList<>());
+					contentField.getFieldReference(), key -> new ArrayList<>());
 
 			contentFieldsList.add(contentField);
 		}

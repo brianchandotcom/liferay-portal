@@ -143,6 +143,8 @@ definition {
 			MenuItem.viewPresent(menuItem = "Edit");
 		}
 
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#INFO_DM");
+
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertTextEquals(

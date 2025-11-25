@@ -11,6 +11,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -22,6 +23,13 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	loginTest(),
 	notificationPagesTest
+);
+
+const ckEditor5Test = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	})
 );
 
 let objectDefinition: ObjectDefinition;
@@ -815,6 +823,69 @@ test.describe('Email notification template', () => {
 					).toBe(recipientUserGroupFields.length);
 				}
 			});
+		}
+	);
+});
+
+ckEditor5Test.describe('Content template with CKEditor5', () => {
+	ckEditor5Test(
+		'can be created and saved correctly',
+		{tag: ['@LPD-66958']},
+		async ({
+			emailNotificationTemplatePage,
+			notificationTemplatesPage,
+			page,
+		}) => {
+			const templateMessage = {
+				en_US: 'This is a text from CKEditor5',
+				pt_BR: 'Isso é um texto do CKEditor5',
+			};
+
+			await emailNotificationTemplatePage.goto();
+
+			const notificationTemplateName =
+				'Notification Template Name' + getRandomInt();
+
+			await emailNotificationTemplatePage.fillNotificationTemplateInfo(
+				notificationTemplateName,
+				notificationTemplateInfo
+			);
+
+			await emailNotificationTemplatePage.richTextCKEditor5Field.click();
+			await emailNotificationTemplatePage.richTextCKEditor5Field.fill(
+				templateMessage['en_US']
+			);
+
+			await page.getByRole('button', {name: 'en_US'}).click();
+
+			await page
+				.getByRole('menuitem', {name: 'pt_BR Untranslated'})
+				.click();
+
+			await emailNotificationTemplatePage.richTextCKEditor5Field.click();
+			await emailNotificationTemplatePage.richTextCKEditor5Field.fill(
+				templateMessage['pt_BR']
+			);
+
+			await emailNotificationTemplatePage.saveButton.click();
+
+			await notificationTemplatesPage
+				.getFrontEndDatasetItemLocator(notificationTemplateName)
+				.click();
+
+			await expect(
+				page.getByText(templateMessage['en_US'])
+			).toBeVisible();
+
+			await page.getByRole('button', {name: 'en_US'}).click();
+
+			await page
+				.getByRole('menuitem', {name: 'pt_BR Translated'})
+				.click();
+
+			await expect(
+				page.getByText(templateMessage['pt_BR'])
+			).toBeVisible();
 		}
 	);
 });

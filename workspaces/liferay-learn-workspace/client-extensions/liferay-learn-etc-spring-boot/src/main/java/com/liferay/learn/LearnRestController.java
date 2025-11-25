@@ -71,9 +71,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class LearnRestController extends BaseRestController {
 
-	@GetMapping("/lesson/{lessonId}/audio/base64")
+	@GetMapping("/lesson/{lessonId}/audio/url")
 	@ResponseBody
-	public ResponseEntity<Object> getLessonAudioBase64(
+	public ResponseEntity<Object> getLessonAudioURL(
 		@PathVariable long lessonId, @RequestParam String languageCode,
 		@RequestParam String voiceName) {
 

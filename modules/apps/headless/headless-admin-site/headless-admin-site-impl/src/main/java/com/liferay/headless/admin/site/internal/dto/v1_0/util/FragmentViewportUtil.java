@@ -71,12 +71,21 @@ public class FragmentViewportUtil {
 		for (FragmentViewport fragmentViewport : fragmentViewports) {
 			String customCSS = fragmentViewport.getCustomCSS();
 
-			if (Validator.isNull(customCSS)) {
+			if (Validator.isNull(customCSS) &&
+				(fragmentViewport.getFragmentViewportStyle() == null)) {
+
 				continue;
 			}
 
 			jsonObject.put(
-				fragmentViewport.getId(), JSONUtil.put("customCSS", customCSS));
+				fragmentViewport.getId(),
+				JSONUtil.put(
+					"customCSS", customCSS
+				).put(
+					"styles",
+					FragmentViewportStyleUtil.toJSONObject(
+						fragmentViewport.getFragmentViewportStyle())
+				));
 		}
 
 		return jsonObject;
@@ -100,6 +109,9 @@ public class FragmentViewportUtil {
 			{
 				setCustomCSS(
 					() -> viewportJSONObject.getString("customCSS", null));
+				setFragmentViewportStyle(
+					() -> FragmentViewportStyleUtil.toFragmentViewportStyle(
+						viewportJSONObject.getJSONObject("styles")));
 				setId(viewportSize::getViewportSizeId);
 			}
 		};

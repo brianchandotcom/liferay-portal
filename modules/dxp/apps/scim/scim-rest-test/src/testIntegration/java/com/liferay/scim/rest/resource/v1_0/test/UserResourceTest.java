@@ -14,6 +14,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -249,33 +250,34 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	@Test
 	@TestInfo("LPD-48895")
 	public void testPatchV2User() throws Exception {
-		String title = StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-		User patchUser = _testPatchV2User("title", title);
-
-		Assert.assertEquals(patchUser.getTitle(), title);
-
-		patchUser = _testPatchV2User("active", "false");
-
-		Assert.assertEquals(patchUser.getActive(), false);
+		_testPatchV2User(
+			"active", "false",
+			user -> Assert.assertEquals(user.getActive(), false));
 
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
-		patchUser = _testPatchV2User(
+		_testPatchV2User(
 			"emails[type eq \"work\" and primary eq \"true\"].value",
-			emailAddress);
+			emailAddress,
+			user -> {
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					String.valueOf(user.getEmails()[0]));
 
-		JSONObject patchUserEmailJSONObject = _jsonFactory.createJSONObject(
-			String.valueOf(patchUser.getEmails()[0]));
+				Assert.assertNotEquals(
+					emailAddress, jsonObject.getString("value"));
+			});
 
-		Assert.assertNotEquals(
-			emailAddress, patchUserEmailJSONObject.getString("value"));
+		String title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+		_testPatchV2User(
+			"title", title,
+			user -> Assert.assertEquals(user.getTitle(), title));
 
 		String userName = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		patchUser = _testPatchV2User("userName", userName);
-
-		Assert.assertEquals(patchUser.getUserName(), userName);
+		_testPatchV2User(
+			"userName", userName,
+			user -> Assert.assertEquals(user.getUserName(), userName));
 	}
 
 	@Override
@@ -582,7 +584,9 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		return User.toDTO(userObject.toString());
 	}
 
-	private User _testPatchV2User(String fieldPath, String fieldValue)
+	private void _testPatchV2User(
+			String fieldPath, String fieldValue,
+			UnsafeConsumer<User, Exception> unsafeConsumer)
 		throws Exception {
 
 		User user = testDeleteV2User_addUser();
@@ -611,8 +615,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		User patchUser = User.toDTO(httpResponse.getContent());
 
 		assertValid(patchUser);
-
-		return patchUser;
+		unsafeConsumer.accept(patchUser);
 	}
 
 	private static final String _PREFIX = StringUtil.toLowerCase(

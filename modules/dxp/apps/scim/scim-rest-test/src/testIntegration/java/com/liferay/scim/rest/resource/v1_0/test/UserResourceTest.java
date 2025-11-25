@@ -251,8 +251,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	@TestInfo("LPD-48895")
 	public void testPatchV2User() throws Exception {
 		_testPatchV2User(
-			"active", "false",
-			user -> Assert.assertEquals(user.getActive(), false));
+			"active", "false", user -> Assert.assertFalse(user.getActive()));
 
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
@@ -271,13 +270,13 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		_testPatchV2User(
 			"title", title,
-			user -> Assert.assertEquals(user.getTitle(), title));
+			user -> Assert.assertEquals(title, user.getTitle()));
 
 		String userName = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		_testPatchV2User(
 			"userName", userName,
-			user -> Assert.assertEquals(user.getUserName(), userName));
+			user -> Assert.assertEquals(userName, user.getUserName()));
 	}
 
 	@Override

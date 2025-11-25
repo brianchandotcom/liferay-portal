@@ -26,6 +26,14 @@ public class SystemExecutorServiceUtil {
 		return _executorService;
 	}
 
+	public static boolean isOnSystemExecutorServiceThread() {
+		Thread thread = Thread.currentThread();
+
+		String name = thread.getName();
+
+		return name.startsWith(_THREAD_NAME_PREFIX);
+	}
+
 	public static <T> Callable<T> renameThread(
 		Callable<T> callable, String taskName) {
 
@@ -74,6 +82,12 @@ public class SystemExecutorServiceUtil {
 		_executorService.awaitTermination(shutdownTimeout, TimeUnit.SECONDS);
 	}
 
+	private static final String _THREAD_FACTORY_NAME =
+		SystemExecutorServiceUtil.class.getSimpleName();
+
+	private static final String _THREAD_NAME_PREFIX =
+		_THREAD_FACTORY_NAME + "-";
+
 	private static final ExecutorService _executorService;
 
 	static {
@@ -96,8 +110,7 @@ public class SystemExecutorServiceUtil {
 			maxPoolSize, maxPoolSize, keepAliveTime, TimeUnit.SECONDS,
 			new LinkedBlockingQueue<>(),
 			new NamedThreadFactory(
-				SystemExecutorServiceUtil.class.getSimpleName(),
-				Thread.NORM_PRIORITY, null),
+				_THREAD_FACTORY_NAME, Thread.NORM_PRIORITY, null),
 			new ThreadPoolExecutor.CallerRunsPolicy());
 
 		threadPoolExecutor.allowCoreThreadTimeOut(true);

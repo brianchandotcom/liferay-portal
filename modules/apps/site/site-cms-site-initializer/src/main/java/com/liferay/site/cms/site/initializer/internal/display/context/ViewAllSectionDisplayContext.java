@@ -80,6 +80,13 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 				StringPool.BLANK, "password-policies", "permissions",
 				LanguageUtil.get(_httpServletRequest, "permissions"), null,
 				null, null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies",
+				"reset-to-default-permissions",
+				LanguageUtil.get(
+					httpServletRequest, "reset-to-default-permissions"),
+				null, null, null));
 
 		return fdsBulkActionDropdownItems;
 	}

@@ -149,6 +149,13 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 				"#", "password-policies", "default-permissions",
 				LanguageUtil.get(httpServletRequest, "default-permissions"),
 				null, null, null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies",
+				"reset-to-default-permissions",
+				LanguageUtil.get(
+					httpServletRequest, "reset-to-default-permissions"),
+				null, null, null));
 
 		return fdsBulkActionDropdownItems;
 	}

@@ -5,7 +5,7 @@ gradle.liferayWorkspace {
 }
 
 runGradleTest {
-	dependsOn ":modules:rest-builder:buildRest"
+	dependsOn ":modules:rest-builder:rest-builder-impl:buildREST"
 
 	doLast {
 		Project project = project(":modules:rest-builder")

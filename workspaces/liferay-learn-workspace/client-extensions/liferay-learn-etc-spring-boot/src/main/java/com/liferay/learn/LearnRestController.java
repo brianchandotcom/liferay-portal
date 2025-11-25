@@ -289,9 +289,9 @@ public class LearnRestController extends BaseRestController {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		List<String> ssmls = _splitSsml(_htmlToReadableText(content));
+		List<String> list = _splitSsml(_htmlToReadableText(content));
 
-		for (String ssml : ssmls) {
+		for (String ssml : list) {
 			String response = post(
 				_getGoogleAccessToken(),
 				new JSONObject(

@@ -407,6 +407,42 @@ describe('SpaceConnectedSitesModal', () => {
 
 			await assertErrorToast();
 		});
+
+		it('disable connect to site button when site already selected', async () => {
+			mockFetch.mockImplementation(async () => {
+				return {
+					headers: new Headers([
+						['Content-Type', 'application/json'],
+					]),
+					json: async () => ({
+						items: [...mockConnectedSites],
+					}),
+				} as Response;
+			});
+
+			renderComponent();
+			await waitForComponentRendering();
+
+			await userEvent.click(screen.getByPlaceholderText('select-a-site'));
+
+			await waitFor(() => {
+				expect(
+					screen.getByRole('option', {
+						name: mockConnectedSites[0].descriptiveName,
+					})
+				).toBeInTheDocument();
+			});
+
+			await userEvent.click(
+				screen.getByRole('option', {
+					name: mockConnectedSites[0].descriptiveName,
+				})
+			);
+
+			expect(
+				screen.getByRole('button', {name: 'connect'})
+			).toBeDisabled();
+		});
 	});
 
 	describe('without connect permissions', () => {

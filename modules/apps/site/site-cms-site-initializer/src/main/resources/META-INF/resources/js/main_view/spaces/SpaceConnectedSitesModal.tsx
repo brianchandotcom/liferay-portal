@@ -119,13 +119,17 @@ const ConnectedSiteActions = ({
 };
 
 const SitesSelector = ({
+	connectedSites,
 	externalReferenceCode,
 	onSiteConnected,
 }: {
 	externalReferenceCode: string;
 	onSiteConnected: (site: Site) => void;
+	connectedSites: Site[];
 }) => {
 	const [site, setSite] = useState<Site>();
+	const [disableConnectButton, setDisableConnectButton] =
+		useState<boolean>(true);
 
 	const connectSiteToSpace = async () => {
 		if (site) {
@@ -151,7 +155,21 @@ const SitesSelector = ({
 						Liferay.Language.get('unable-to-connect-site-to-space')
 				);
 			}
+			setDisableConnectButton(true);
+			setSite(undefined);
 		}
+	};
+
+	const controlConnectSiteButton = (
+		selectedSite: Site,
+		connectedSites: Site[]
+	) => {
+		const alreadyConnected = connectedSites.some(
+			(connectedSite) =>
+				connectedSite.externalReferenceCode ===
+				selectedSite.externalReferenceCode
+		);
+		setDisableConnectButton(alreadyConnected);
 	};
 
 	return (
@@ -168,7 +186,9 @@ const SitesSelector = ({
 						items={site ? [site] : []}
 						onItemsChange={(items: Site[]) => {
 							if (items.length) {
-								setSite(items[0]);
+								const item = items[0];
+								controlConnectSiteButton(item, connectedSites);
+								setSite(item);
 							}
 							else {
 								setSite(undefined);
@@ -190,7 +210,10 @@ const SitesSelector = ({
 				</div>
 
 				<div className="autofit-col">
-					<ClayButton onClick={connectSiteToSpace}>
+					<ClayButton
+						disabled={disableConnectButton}
+						onClick={connectSiteToSpace}
+					>
 						{Liferay.Language.get('connect')}
 					</ClayButton>
 				</div>
@@ -265,6 +288,7 @@ export default function SpaceConnectedSitesModal({
 			{hasConnectSitesPermission && (
 				<ClayModal.Item>
 					<SitesSelector
+						connectedSites={connectedSites}
 						externalReferenceCode={externalReferenceCode}
 						onSiteConnected={onSiteConnected}
 					/>

@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_ENTRY_ACTIONS</td>
+	<td>//div[contains(@class,'file-entry-action')]//div[contains(@class,'dropdown-action')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_TITLE</td>
 	<td>//ul[contains(@class,'navbar-nav')]//h3[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>

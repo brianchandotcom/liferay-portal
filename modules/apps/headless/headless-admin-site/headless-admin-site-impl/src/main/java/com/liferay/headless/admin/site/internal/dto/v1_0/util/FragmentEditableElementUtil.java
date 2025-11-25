@@ -145,16 +145,7 @@ public class FragmentEditableElementUtil {
 			TextFragmentEditableElementValue textFragmentEditableElementValue)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		TextFragmentValue textFragmentValue =
-			textFragmentEditableElementValue.getTextFragmentValue();
-
-		if (textFragmentValue == null) {
-			return jsonObject;
-		}
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"config",
 			() -> {
 				FragmentEditableElementValueFragmentLink
@@ -198,6 +189,13 @@ public class FragmentEditableElementUtil {
 
 				return configJSONObject.put("prefix", "tel:");
 			});
+
+		TextFragmentValue textFragmentValue =
+			textFragmentEditableElementValue.getTextFragmentValue();
+
+		if (textFragmentValue == null) {
+			return jsonObject;
+		}
 
 		if (textFragmentValue instanceof TextInlineFragmentValue) {
 			TextInlineFragmentValue textInlineFragmentValue =

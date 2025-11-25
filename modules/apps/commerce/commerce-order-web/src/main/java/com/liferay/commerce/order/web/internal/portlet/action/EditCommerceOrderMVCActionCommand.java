@@ -37,7 +37,9 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,6 +53,7 @@ import jakarta.portlet.PortletRequest;
 import java.io.IOException;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -591,7 +594,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _updateRequestedDeliveryDate(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
@@ -599,31 +602,22 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		int requestedDeliveryDateMonth = ParamUtil.getInteger(
-			actionRequest, "requestedDeliveryDateMonth");
-		int requestedDeliveryDateDay = ParamUtil.getInteger(
-			actionRequest, "requestedDeliveryDateDay");
-		int requestedDeliveryDateYear = ParamUtil.getInteger(
-			actionRequest, "requestedDeliveryDateYear");
-		int requestedDeliveryDateHour = ParamUtil.getInteger(
-			actionRequest, "requestedDeliveryDateHour");
-		int requestedDeliveryDateMinute = ParamUtil.getInteger(
-			actionRequest, "requestedDeliveryDateMinute");
-		int requestedDeliveryDateAmPm = ParamUtil.getInteger(
-			actionRequest, "requestedDeliveryDateAmPm");
+		Date requestedDeliveryDate = DateUtil.parseDate(
+			"yyyy-MM-dd",
+			ParamUtil.getString(actionRequest, "requestedDeliveryDate"),
+			actionRequest.getLocale());
 
-		if (requestedDeliveryDateAmPm == Calendar.PM) {
-			requestedDeliveryDateHour += 12;
-		}
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			requestedDeliveryDate.getTime());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrder.class.getName(), actionRequest);
 
 		_commerceOrderService.updateInfo(
 			commerceOrder.getCommerceOrderId(), commerceOrder.getPrintedNote(),
-			requestedDeliveryDateMonth, requestedDeliveryDateDay,
-			requestedDeliveryDateYear, requestedDeliveryDateHour,
-			requestedDeliveryDateMinute, serviceContext);
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), serviceContext);
 	}
 
 	private void _updateShippingAddress(ActionRequest actionRequest)

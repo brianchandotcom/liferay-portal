@@ -16,6 +16,7 @@ import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
+import {useRulesModal} from '../../../app/contexts/RulesModalContext';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import {useHighlightItems, useKeyboardNavigation} from '../../../app/js-index';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
@@ -31,7 +32,6 @@ import useConditionValues, {
 import {Rule} from '../../../types/Rule';
 import {Action as ActionType} from './Action';
 import {Condition as ConditionType} from './Condition';
-import RulesModal from './RulesModal';
 
 const MAX_RULES = 20;
 
@@ -42,10 +42,6 @@ export default function RulesList({
 	isSearching: boolean;
 	rules: Rule[];
 }) {
-	const [modalVisible, setModalVisible] = useState(false);
-	const [editingRule, setEditingRule] = useState<Rule | null>(null);
-	const [savedRuleId, setSavedRuleId] = useState<string | null>(null);
-
 	const dispatch = useDispatch();
 	const highlightItems = useHighlightItems();
 
@@ -70,7 +66,7 @@ export default function RulesList({
 		document
 	);
 
-	const onCreateRule = () => setModalVisible(true);
+	const {openRulesModal} = useRulesModal();
 
 	const onDeleteRule = (rule: Rule) => {
 		dispatch(
@@ -87,11 +83,8 @@ export default function RulesList({
 		);
 	};
 
-	const onEditRule = (rule: Rule) => {
-		setEditingRule(rule);
-
-		setModalVisible(true);
-	};
+	const onEditRule = (rule: Rule, trigger: HTMLButtonElement | null) =>
+		openRulesModal({rule, trigger});
 
 	return (
 		<>
@@ -99,7 +92,7 @@ export default function RulesList({
 				<ClayButton
 					className="mb-3 mx-3"
 					displayType="secondary"
-					onClick={onCreateRule}
+					onClick={() => openRulesModal()}
 					size="sm"
 				>
 					<ClayIcon className="mr-2" symbol="plus" />
@@ -128,26 +121,9 @@ export default function RulesList({
 							onDelete={onDeleteRule}
 							onEdit={onEditRule}
 							rule={rule}
-							savedRuleId={savedRuleId}
-							setSavedRuleId={setSavedRuleId}
 						/>
 					))}
 				</ClayList>
-
-				{modalVisible && (
-					<RulesModal
-						editingRule={editingRule}
-						onCloseModal={(ruleId) => {
-							if (ruleId) {
-								setSavedRuleId(ruleId);
-							}
-
-							setEditingRule(null);
-
-							setModalVisible(false);
-						}}
-					/>
-				)}
 			</div>
 		</>
 	);
@@ -157,14 +133,10 @@ function RuleItem({
 	onDelete,
 	onEdit,
 	rule,
-	savedRuleId,
-	setSavedRuleId,
 }: {
 	onDelete: (rule: Rule) => void;
-	onEdit: (rule: Rule) => void;
+	onEdit: (rule: Rule, trigger: HTMLButtonElement | null) => void;
 	rule: Rule;
-	savedRuleId: string | null;
-	setSavedRuleId: (id: string | null) => void;
 }) {
 	const highlightItems = useHighlightItems();
 	const {isTarget, setElement} = useKeyboardNavigation({
@@ -180,14 +152,6 @@ function RuleItem({
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (savedRuleId === rule.id) {
-			triggerElement?.focus();
-
-			setSavedRuleId(null);
-		}
-	}, [savedRuleId, triggerElement, rule, setSavedRuleId]);
 
 	useEffect(() => {
 		if (editing && inputRef.current) {
@@ -362,7 +326,7 @@ function RuleItem({
 					>
 						<ClayDropDown.ItemList>
 							<ClayDropDown.Item
-								onClick={() => onEdit(rule)}
+								onClick={() => onEdit(rule, triggerElement)}
 								symbolLeft="pencil"
 							>
 								{Liferay.Language.get('edit')}

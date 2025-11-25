@@ -5,12 +5,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
-import React, {useState} from 'react';
+import React from 'react';
 
-import RulesModal from './RulesModal';
+import {useRulesModal} from '../../../app/contexts/RulesModalContext';
 
 export default function RulesEmptyState({isSearching}: {isSearching: boolean}) {
-	const [modalVisible, setModalVisible] = useState(false);
+	const {openRulesModal} = useRulesModal();
 
 	return (
 		<>
@@ -39,7 +39,7 @@ export default function RulesEmptyState({isSearching}: {isSearching: boolean}) {
 						<ClayButton
 							className="mt-2"
 							displayType="secondary"
-							onClick={() => setModalVisible(true)}
+							onClick={() => openRulesModal()}
 							size="sm"
 						>
 							{Liferay.Language.get('new-rule')}
@@ -47,10 +47,6 @@ export default function RulesEmptyState({isSearching}: {isSearching: boolean}) {
 					</>
 				)}
 			</div>
-
-			{modalVisible && (
-				<RulesModal onCloseModal={() => setModalVisible(false)} />
-			)}
 		</>
 	);
 }

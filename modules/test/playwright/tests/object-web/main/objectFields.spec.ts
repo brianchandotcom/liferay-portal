@@ -215,139 +215,6 @@ test.describe('Manage object fields through Model Builder', () => {
 		).toBeVisible();
 	});
 
-	test(
-		'can create, update, and delete default value for boolean field',
-		{tag: ['@LPD-70980']},
-		async ({
-			apiHelpers,
-			modelBuilderDiagramPage,
-			modelBuilderLeftSidebarPage,
-			modelBuilderObjectDefinitionNodePage,
-			modelBuilderRightSidebarPage,
-			page,
-			viewObjectEntriesPage,
-		}) => {
-			let booleanFieldName: string;
-
-			let objectClassName: string;
-
-			let objectName: string;
-
-			await test.step('create object with boolean field', async () => {
-				const objectFields = generateObjectFields({
-					objectFieldBusinessTypes: ['Boolean'],
-				});
-
-				booleanFieldName = objectFields[0].label['en_US'];
-
-				const objectDefinition =
-					await apiHelpers.objectAdmin.postRandomObjectDefinition({
-						objectFields,
-						status: {code: 0},
-					});
-
-				objectClassName = objectDefinition.className;
-
-				objectName = objectDefinition.name;
-
-				apiHelpers.data.push({
-					id: objectDefinition.id,
-					type: 'objectDefinition',
-				});
-			});
-
-			await test.step('set default value to false for boolean field and check in object entry', async () => {
-				await modelBuilderDiagramPage.goto({
-					objectFolderName: 'Default',
-				});
-
-				await modelBuilderLeftSidebarPage.sidebarItems
-					.filter({hasText: objectName})
-					.click();
-
-				await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
-					objectName,
-					modelBuilderDiagramPage.objectDefinitionNodes
-				);
-
-				await modelBuilderDiagramPage.objectDefinitionNodes
-					.filter({hasText: objectName})
-					.getByText('Boolean', {exact: true})
-					.click();
-
-				await modelBuilderRightSidebarPage.setDefaultValue('False');
-
-				await viewObjectEntriesPage.goto(objectClassName);
-
-				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
-
-				await expect(
-					page.getByLabel(booleanFieldName)
-				).not.toBeChecked();
-			});
-
-			await test.step('set default value to true for boolean field and check in object entry', async () => {
-				await modelBuilderDiagramPage.goto({
-					objectFolderName: 'Default',
-				});
-
-				await modelBuilderLeftSidebarPage.sidebarItems
-					.filter({hasText: objectName})
-					.click();
-
-				await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
-					objectName,
-					modelBuilderDiagramPage.objectDefinitionNodes
-				);
-
-				await modelBuilderDiagramPage.objectDefinitionNodes
-					.filter({hasText: objectName})
-					.getByText('Boolean', {exact: true})
-					.click();
-
-				await modelBuilderRightSidebarPage.setDefaultValue('True');
-
-				await viewObjectEntriesPage.goto(objectClassName);
-
-				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
-
-				await expect(page.getByLabel(booleanFieldName)).toBeChecked();
-			});
-
-			await test.step('untoggle default value for boolean field and check in object entry', async () => {
-				await modelBuilderDiagramPage.goto({
-					objectFolderName: 'Default',
-				});
-
-				await modelBuilderLeftSidebarPage.sidebarItems
-					.filter({hasText: objectName})
-					.click();
-
-				await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
-					objectName,
-					modelBuilderDiagramPage.objectDefinitionNodes
-				);
-
-				await modelBuilderDiagramPage.objectDefinitionNodes
-					.filter({hasText: objectName})
-					.getByText('Boolean', {exact: true})
-					.click();
-
-				await modelBuilderRightSidebarPage.advancedTab.click();
-
-				await modelBuilderRightSidebarPage.useDefaultValueToggle.uncheck();
-
-				await viewObjectEntriesPage.goto(objectClassName);
-
-				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
-
-				await expect(
-					page.getByLabel(booleanFieldName)
-				).not.toBeChecked();
-			});
-		}
-	);
-
 	test('can delete object field', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,
@@ -1239,108 +1106,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	});
 
 	test(
-		'can create, update, and delete default value for boolean field',
-		{tag: ['@LPD-49587']},
-		async ({apiHelpers, objectFieldsPage, page, viewObjectEntriesPage}) => {
-			const objectName = 'ObjectDefinitionName' + getRandomInt();
-
-			let booleanField: Partial<ObjectField>[];
-
-			let booleanFieldName: string;
-
-			let objectClassName: string;
-
-			await test.step('create object with boolean field', async () => {
-				booleanField = generateObjectFields({
-					objectFieldBusinessTypes: ['Boolean'],
-				});
-
-				booleanFieldName = booleanField[0].label['en_US'];
-
-				const objectDefinitionAPIClient =
-					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-				const {body: objectDefinition} =
-					await objectDefinitionAPIClient.postObjectDefinition({
-						active: true,
-						externalReferenceCode: getRandomString(),
-						label: {
-							en_US: objectName,
-						},
-						name: objectName,
-						objectFields: booleanField,
-						panelCategoryKey: 'control_panel.object',
-						pluralLabel: {
-							en_US: 'NewObject',
-						},
-						portlet: true,
-						scope: 'company',
-						status: {
-							code: 0,
-						},
-					});
-
-				objectClassName = objectDefinition.className;
-
-				apiHelpers.data.push({
-					id: objectDefinition.id,
-					type: 'objectDefinition',
-				});
-			});
-
-			await test.step('set default value to false for boolean field and check in object entry', async () => {
-				await objectFieldsPage.setDefaultValue({
-					defaultValue: 'False',
-					objectFieldBusinessType: 'Boolean',
-					objectFieldName: booleanFieldName,
-				});
-
-				await viewObjectEntriesPage.goto(objectClassName);
-
-				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
-
-				await expect(
-					page.getByLabel(booleanFieldName)
-				).not.toBeChecked();
-			});
-
-			await test.step('set default value to true for boolean field and check in object entry', async () => {
-				await objectFieldsPage.setDefaultValue({
-					defaultValue: 'True',
-					objectFieldBusinessType: 'Boolean',
-					objectFieldName: booleanFieldName,
-				});
-
-				await viewObjectEntriesPage.goto(objectClassName);
-
-				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
-
-				await expect(page.getByLabel(booleanFieldName)).toBeChecked();
-			});
-
-			await test.step('untoggle default value for boolean field and check in object entry', async () => {
-				await objectFieldsPage.goto(objectName);
-
-				await objectFieldsPage.openObjectField(booleanFieldName);
-
-				await objectFieldsPage.advancedTab.click();
-
-				await objectFieldsPage.useDefaultValueToggle.uncheck();
-
-				await objectFieldsPage.editFieldSaveButton.click();
-
-				await viewObjectEntriesPage.goto(objectClassName);
-
-				await viewObjectEntriesPage.clickAddObjectEntry(objectName);
-
-				await expect(
-					page.getByLabel(booleanFieldName)
-				).not.toBeChecked();
-			});
-		}
-	);
-
-	test(
 		'can delete created custom fields in a System Object',
 		{tag: ['@LPD-53450']},
 		async ({apiHelpers, objectFieldsPage, page}) => {
@@ -1694,7 +1459,248 @@ defaultValueTest.describe(
 	'Manage object fields default value properties',
 	() => {
 		defaultValueTest(
-			'can create, read, update and delete the default value of a long text and text fields',
+			'can create, update, and delete default value for boolean field through Model Builder',
+			{tag: ['@LPD-70980']},
+			async ({
+				apiHelpers,
+				modelBuilderDiagramPage,
+				modelBuilderLeftSidebarPage,
+				modelBuilderObjectDefinitionNodePage,
+				modelBuilderRightSidebarPage,
+				page,
+				viewObjectEntriesPage,
+			}) => {
+				let booleanFieldName: string;
+
+				let objectClassName: string;
+
+				let objectName: string;
+
+				await test.step('create object with boolean field', async () => {
+					const objectFields = generateObjectFields({
+						objectFieldBusinessTypes: ['Boolean'],
+					});
+
+					booleanFieldName = objectFields[0].label['en_US'];
+
+					const objectDefinition =
+						await apiHelpers.objectAdmin.postRandomObjectDefinition(
+							{
+								objectFields,
+								status: {code: 0},
+							}
+						);
+
+					objectClassName = objectDefinition.className;
+
+					objectName = objectDefinition.name;
+
+					apiHelpers.data.push({
+						id: objectDefinition.id,
+						type: 'objectDefinition',
+					});
+				});
+
+				await test.step('set default value to false for boolean field and check in object entry', async () => {
+					await modelBuilderDiagramPage.goto({
+						objectFolderName: 'Default',
+					});
+
+					await modelBuilderLeftSidebarPage.sidebarItems
+						.filter({hasText: objectName})
+						.click();
+
+					await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+						objectName,
+						modelBuilderDiagramPage.objectDefinitionNodes
+					);
+
+					await modelBuilderDiagramPage.objectDefinitionNodes
+						.filter({hasText: objectName})
+						.getByText('Boolean', {exact: true})
+						.click();
+
+					await modelBuilderRightSidebarPage.setDefaultValue('False');
+
+					await viewObjectEntriesPage.goto(objectClassName);
+
+					await viewObjectEntriesPage.clickAddObjectEntry(objectName);
+
+					await expect(
+						page.getByLabel(booleanFieldName)
+					).not.toBeChecked();
+				});
+
+				await test.step('set default value to true for boolean field and check in object entry', async () => {
+					await modelBuilderDiagramPage.goto({
+						objectFolderName: 'Default',
+					});
+
+					await modelBuilderLeftSidebarPage.sidebarItems
+						.filter({hasText: objectName})
+						.click();
+
+					await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+						objectName,
+						modelBuilderDiagramPage.objectDefinitionNodes
+					);
+
+					await modelBuilderDiagramPage.objectDefinitionNodes
+						.filter({hasText: objectName})
+						.getByText('Boolean', {exact: true})
+						.click();
+
+					await modelBuilderRightSidebarPage.setDefaultValue('True');
+
+					await viewObjectEntriesPage.goto(objectClassName);
+
+					await viewObjectEntriesPage.clickAddObjectEntry(objectName);
+
+					await expect(
+						page.getByLabel(booleanFieldName)
+					).toBeChecked();
+				});
+
+				await test.step('untoggle default value for boolean field and check in object entry', async () => {
+					await modelBuilderDiagramPage.goto({
+						objectFolderName: 'Default',
+					});
+
+					await modelBuilderLeftSidebarPage.sidebarItems
+						.filter({hasText: objectName})
+						.click();
+
+					await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+						objectName,
+						modelBuilderDiagramPage.objectDefinitionNodes
+					);
+
+					await modelBuilderDiagramPage.objectDefinitionNodes
+						.filter({hasText: objectName})
+						.getByText('Boolean', {exact: true})
+						.click();
+
+					await modelBuilderRightSidebarPage.advancedTab.click();
+
+					await modelBuilderRightSidebarPage.useDefaultValueToggle.uncheck();
+
+					await viewObjectEntriesPage.goto(objectClassName);
+
+					await viewObjectEntriesPage.clickAddObjectEntry(objectName);
+
+					await expect(
+						page.getByLabel(booleanFieldName)
+					).not.toBeChecked();
+				});
+			}
+		);
+
+		defaultValueTest(
+			'can create, update, and delete default value for boolean field through Object Admin',
+			{tag: ['@LPD-49587']},
+			async ({
+				apiHelpers,
+				objectFieldsPage,
+				page,
+				viewObjectEntriesPage,
+			}) => {
+				let objectDefinition: Partial<ObjectDefinition>;
+
+				let booleanField: Partial<ObjectField>[];
+
+				let booleanFieldName: string;
+
+				let objectClassName: string;
+
+				await test.step('create object with boolean field', async () => {
+					booleanField = generateObjectFields({
+						objectFieldBusinessTypes: ['Boolean'],
+					});
+
+					booleanFieldName = booleanField[0].label['en_US'];
+
+					objectDefinition =
+						await apiHelpers.objectAdmin.postRandomObjectDefinition(
+							{
+								objectFields: booleanField,
+								status: {code: 0},
+							}
+						);
+
+					objectClassName = objectDefinition.className;
+
+					apiHelpers.data.push({
+						id: objectDefinition.id,
+						type: 'objectDefinition',
+					});
+				});
+
+				await test.step('set default value to false for boolean field and check in object entry', async () => {
+					await objectFieldsPage.goto(
+						objectDefinition.label['en_US']
+					);
+
+					await objectFieldsPage.setDefaultValue({
+						defaultValue: 'False',
+						objectFieldBusinessType: 'Boolean',
+						objectFieldName: booleanFieldName,
+					});
+
+					await viewObjectEntriesPage.goto(objectClassName);
+
+					await viewObjectEntriesPage.clickAddObjectEntry(
+						objectDefinition.name
+					);
+
+					await expect(
+						page.getByLabel(booleanFieldName)
+					).not.toBeChecked();
+				});
+
+				await test.step('set default value to true for boolean field and check in object entry', async () => {
+					await objectFieldsPage.setDefaultValue({
+						defaultValue: 'True',
+						objectFieldBusinessType: 'Boolean',
+						objectFieldName: booleanFieldName,
+					});
+
+					await viewObjectEntriesPage.goto(objectClassName);
+
+					await viewObjectEntriesPage.clickAddObjectEntry(
+						objectDefinition.name
+					);
+
+					await expect(
+						page.getByLabel(booleanFieldName)
+					).toBeChecked();
+				});
+
+				await test.step('untoggle default value for boolean field and check in object entry', async () => {
+					await objectFieldsPage.goto(objectDefinition.name);
+
+					await objectFieldsPage.openObjectField(booleanFieldName);
+
+					await objectFieldsPage.advancedTab.click();
+
+					await objectFieldsPage.useDefaultValueToggle.uncheck();
+
+					await objectFieldsPage.editFieldSaveButton.click();
+
+					await viewObjectEntriesPage.goto(objectClassName);
+
+					await viewObjectEntriesPage.clickAddObjectEntry(
+						objectDefinition.name
+					);
+
+					await expect(
+						page.getByLabel(booleanFieldName)
+					).not.toBeChecked();
+				});
+			}
+		);
+
+		defaultValueTest(
+			'can create, read, update and delete the default value of long text and text fields',
 			{tag: ['@LPD-48612']},
 			async ({
 				apiHelpers,

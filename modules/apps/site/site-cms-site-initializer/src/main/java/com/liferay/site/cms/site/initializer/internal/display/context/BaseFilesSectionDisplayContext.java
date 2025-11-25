@@ -15,6 +15,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -71,6 +72,13 @@ public abstract class BaseFilesSectionDisplayContext
 			new FDSActionDropdownItem(
 				"#", "password-policies", "default-permissions",
 				LanguageUtil.get(httpServletRequest, "default-permissions"),
+				null, null, null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies",
+				"reset-to-default-permissions",
+				LanguageUtil.get(
+					httpServletRequest, "reset-to-default-permissions"),
 				null, null, null));
 
 		return fdsBulkActionDropdownItems;

@@ -21,6 +21,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		HashMapBuilder.<String, Object>put(
 			"baseResourceURL", String.valueOf(baseResourceURL)
 		).put(
+			"ckEditor5Config", objectDefinitionsFieldsDisplayContext.getEditorConfig()
+		).put(
 			"creationLanguageId", objectDefinition.getDefaultLanguageId()
 		).put(
 			"filterOperators", LocalizedJSONArrayUtil.getFilterOperatorsJSONObject(locale)

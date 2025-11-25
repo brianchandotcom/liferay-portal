@@ -35,6 +35,7 @@ export function RightSidebarObjectFieldDetails() {
 	const [
 		{
 			baseResourceURL,
+			ckEditor5Config,
 			filterOperators,
 			forbiddenChars,
 			forbiddenLastChars,
@@ -199,6 +200,7 @@ export function RightSidebarObjectFieldDetails() {
 					{selectedObjectField?.id && (
 						<EditObjectFieldContent
 							baseResourceURL={baseResourceURL}
+							ckEditor5Config={ckEditor5Config}
 							containerWrapper={ClayPanel}
 							creationLanguageId={
 								objectDefinitionNodeData.defaultLanguageId

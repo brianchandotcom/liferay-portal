@@ -25,6 +25,7 @@ interface EditObjectFieldContentProps
 		| 'objectDefinitionExternalReferenceCode'
 		| 'objectFieldId'
 	> {
+	ckEditor5Config?: object;
 	containerWrapper: ElementType;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -40,6 +41,7 @@ const TABS = [Liferay.Language.get('basic-info')];
 
 export function EditObjectFieldContent({
 	baseResourceURL,
+	ckEditor5Config,
 	containerWrapper,
 	creationLanguageId,
 	errors,
@@ -191,6 +193,7 @@ export function EditObjectFieldContent({
 							})}
 						>
 							<AdvancedTab
+								ckEditor5Config={ckEditor5Config}
 								containerWrapper={containerWrapper}
 								creationLanguageId={creationLanguageId}
 								errors={errors}

@@ -13,6 +13,7 @@ import {ObjectFolderContextProvider} from './ModelBuilderContext/objectFolderCon
 
 interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
+	ckEditor5Config?: object;
 	companies: Scope[];
 	editObjectDefinitionURL: string;
 	filterOperators: TFilterOperators;
@@ -34,6 +35,7 @@ const ReactFlowProviderWrapper = ReactFlowProvider as React.FC<{
 
 export default function CustomObjectFolderWrapper({
 	baseResourceURL,
+	ckEditor5Config,
 	companies,
 	editObjectDefinitionURL,
 	filterOperators,
@@ -53,6 +55,7 @@ export default function CustomObjectFolderWrapper({
 			<ObjectFolderContextProvider
 				value={{
 					baseResourceURL,
+					ckEditor5Config,
 					editObjectDefinitionURL,
 					filterOperators,
 					forbiddenChars,

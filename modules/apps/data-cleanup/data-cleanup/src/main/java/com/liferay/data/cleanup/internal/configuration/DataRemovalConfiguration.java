@@ -101,6 +101,12 @@ public interface DataRemovalConfiguration {
 	public boolean removeQuartzJobDetailsData();
 
 	@Meta.AD(
+		deflt = "false", name = "remove-resource-action-orphan-data",
+		required = false
+	)
+	public boolean removeResourceActionOrphanData();
+
+	@Meta.AD(
 		deflt = "false", name = "remove-service-component-orphan-data",
 		required = false
 	)

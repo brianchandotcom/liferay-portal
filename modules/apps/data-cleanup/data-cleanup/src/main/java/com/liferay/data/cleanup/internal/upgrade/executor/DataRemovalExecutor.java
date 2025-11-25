@@ -18,6 +18,7 @@ import com.liferay.data.cleanup.internal.upgrade.WidgetLayoutTypeSettingsUpgrade
 import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
 import com.liferay.data.cleanup.internal.verify.ClassNamePostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.PostUpgradeDataCleanupProcess;
+import com.liferay.data.cleanup.internal.verify.ResourceActionPostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.ServiceComponentPostUpgradeDataCleanupProcess;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
@@ -147,6 +149,24 @@ public class DataRemovalExecutor {
 						postUpgradeDataCleanupProcess =
 							new ClassNamePostUpgradeDataCleanupProcess(
 								_classNameLocalService, connection);
+
+					postUpgradeDataCleanupProcess.cleanUp();
+				}
+
+			};
+
+			verifyProcess.verify();
+		}
+
+		if (dataRemovalConfiguration.removeResourceActionOrphanData()) {
+			VerifyProcess verifyProcess = new VerifyProcess() {
+
+				@Override
+				protected void doVerify() throws Exception {
+					PostUpgradeDataCleanupProcess
+						postUpgradeDataCleanupProcess =
+							new ResourceActionPostUpgradeDataCleanupProcess(
+								connection, _resourceActionLocalService);
 
 					postUpgradeDataCleanupProcess.cleanUp();
 				}
@@ -298,6 +318,9 @@ public class DataRemovalExecutor {
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ServiceComponentLocalService _serviceComponentLocalService;

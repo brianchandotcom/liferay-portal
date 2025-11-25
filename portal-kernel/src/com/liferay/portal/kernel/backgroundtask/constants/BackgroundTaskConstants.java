@@ -85,6 +85,9 @@ public class BackgroundTaskConstants {
 		if (status == STATUS_CANCELLED) {
 			return LABEL_CANCELLED;
 		}
+		else if (status == STATUS_COMPLETED_WITH_ERRORS) {
+			return LABEL_COMPLETED_WITH_ERRORS;
+		}
 		else if (status == STATUS_FAILED) {
 			return LABEL_FAILED;
 		}
@@ -99,9 +102,6 @@ public class BackgroundTaskConstants {
 		}
 		else if (status == STATUS_SUCCESSFUL) {
 			return LABEL_SUCCESSFUL;
-		}
-		else if (status == STATUS_COMPLETED_WITH_ERRORS) {
-			return LABEL_COMPLETED_WITH_ERRORS;
 		}
 
 		return StringPool.BLANK;

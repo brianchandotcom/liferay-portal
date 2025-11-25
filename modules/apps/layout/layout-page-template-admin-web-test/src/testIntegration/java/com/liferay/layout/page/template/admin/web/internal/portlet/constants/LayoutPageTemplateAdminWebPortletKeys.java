@@ -15,4 +15,8 @@ public class LayoutPageTemplateAdminWebPortletKeys {
 			"com_liferay_layout_page_template_admin_web_internal_portlet_" +
 				"LayoutPageTemplateAdminWebNoninstanceableTestPortlet";
 
+	public static final String LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_TEST_PORTLET =
+		"com_liferay_layout_page_template_admin_web_internal_portlet_" +
+			"LayoutPageTemplateAdminWebTestPortlet";
+
 }

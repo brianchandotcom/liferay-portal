@@ -1648,6 +1648,10 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `imported-files.properties` file." />
 		</check>
+		<check name="PropertiesJVMAttributesOrderCheck">
+			<category name="Bug Prevention" />
+			<description name="Sorts JVM attributes." />
+		</check>
 		<check name="PropertiesLanguageContractionsCheck">
 			<category name="Styling" />
 			<description name="Finds contractions (such as `can't` or `you're`)." />

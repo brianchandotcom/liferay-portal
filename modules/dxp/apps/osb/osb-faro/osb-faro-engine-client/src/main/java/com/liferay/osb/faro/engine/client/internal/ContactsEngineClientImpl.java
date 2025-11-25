@@ -983,9 +983,8 @@ public class ContactsEngineClientImpl
 	}
 
 	public Results<ChannelDataSource> getChannelDataSources(
-		int cur, Long dataSourceId, int delta, Boolean enabled,
-		FaroProject faroProject, String name,
-		List<OrderByField> orderByFields) {
+		FaroProject faroProject, Long dataSourceId, Boolean enabled,
+		String name, int cur, int delta, List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields);

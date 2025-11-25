@@ -346,19 +346,18 @@ public class DataSourceController extends BaseFaroController {
 	@Path("/{id}/channel-data-sources")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
 	public FaroResultsDisplay getChannelDataSourceDisplay(
-			@QueryParam("cur") int cur,
-			@DefaultValue("20") @QueryParam("delta") int delta,
-			@QueryParam("enabled") Boolean enabled,
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("name") String name,
+			@QueryParam("enabled") Boolean enabled,
+			@QueryParam("name") String name, @QueryParam("cur") int cur,
+			@DefaultValue("20") @QueryParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
 		Results<ChannelDataSource> results =
 			contactsEngineClient.getChannelDataSources(
-				cur, Long.valueOf(id), delta, enabled,
-				faroProjectLocalService.getFaroProjectByGroupId(groupId), name,
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				Long.valueOf(id), enabled, name, cur, delta,
 				orderByFieldsFaroParam.getValue());
 
 		Function<ChannelDataSource, ChannelDataSourceDisplay> function =

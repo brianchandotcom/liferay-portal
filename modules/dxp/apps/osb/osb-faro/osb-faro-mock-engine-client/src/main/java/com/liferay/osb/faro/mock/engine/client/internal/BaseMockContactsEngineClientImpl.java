@@ -433,12 +433,11 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	public Results<ChannelDataSource> getChannelDataSources(
-		int cur, Long dataSourceId, int delta, Boolean enabled,
-		FaroProject faroProject, String name,
-		List<OrderByField> orderByFields) {
+		FaroProject faroProject, Long dataSourceId, Boolean enabled,
+		String name, int cur, int delta, List<OrderByField> orderByFields) {
 
 		return contactsEngineClient.getChannelDataSources(
-			cur, dataSourceId, delta, enabled, faroProject, name,
+			faroProject, dataSourceId, enabled, name, cur, delta,
 			orderByFields);
 	}
 

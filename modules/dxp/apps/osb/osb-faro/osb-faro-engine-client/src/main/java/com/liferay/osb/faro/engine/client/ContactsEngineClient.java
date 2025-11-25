@@ -219,8 +219,8 @@ public interface ContactsEngineClient {
 		throws FaroEngineClientException;
 
 	public Results<ChannelDataSource> getChannelDataSources(
-		int cur, Long dataSourceId, int delta, Boolean enabled,
-		FaroProject faroProject, String name, List<OrderByField> orderByFields);
+		FaroProject faroProject, Long dataSourceId, Boolean enabled,
+		String name, int cur, int delta, List<OrderByField> orderByFields);
 
 	public Results<Channel> getChannels(
 		FaroProject faroProject, int cur, int delta, List<String> ids,

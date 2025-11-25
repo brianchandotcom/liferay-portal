@@ -241,6 +241,8 @@ definition {
 	@priority = 3
 	test PreviewPredefinedValuesThroughTheDisplayPageOfSpecificSiteInAssetLibrary {
 		task ("Given a site designer has display page templates for web content") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
@@ -272,8 +274,6 @@ definition {
 		}
 
 		task ("When the site designer creates a web content in an Asset Library") {
-			JSONDepot.addDepot(depotName = "Test Depot Name");
-
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 			WebContentNavigator.gotoAddCP();

@@ -1654,19 +1654,21 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanFilterByRecent {
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title 2",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "application/msword",
 			sourceFileName = "Document_2.doc");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title 3",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

@@ -27,34 +27,19 @@ Date requestedDeliveryDate = commerceOrder.getRequestedDeliveryDate();
 		<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
 		<%
-		int requestedDeliveryDay = 0;
-		int requestedDeliveryMonth = -1;
-		int requestedDeliveryYear = 0;
+		String requestedDeliveryDateString = null;
 
 		if (requestedDeliveryDate != null) {
 			Calendar calendar = CalendarFactoryUtil.getCalendar(requestedDeliveryDate.getTime());
 
-			requestedDeliveryDay = calendar.get(Calendar.DAY_OF_MONTH);
-			requestedDeliveryMonth = calendar.get(Calendar.MONTH);
-			requestedDeliveryYear = calendar.get(Calendar.YEAR);
+			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd", locale);
+
+			requestedDeliveryDateString = format.format(calendar.getTime());
 		}
 		%>
 
 		<div class="form-group input-date-wrapper">
-			<label for="requestedDeliveryDate"><liferay-ui:message key="requested-delivery-date" /></label>
-
-			<liferay-ui:input-date
-				dayParam="requestedDeliveryDateDay"
-				dayValue="<%= requestedDeliveryDay %>"
-				disabled="<%= false %>"
-				monthParam="requestedDeliveryDateMonth"
-				monthValue="<%= requestedDeliveryMonth %>"
-				name="requestedDeliveryDate"
-				nullable="<%= true %>"
-				showDisableCheckbox="<%= false %>"
-				yearParam="requestedDeliveryDateYear"
-				yearValue="<%= requestedDeliveryYear %>"
-			/>
+			<aui:input name="requestedDeliveryDate" type="date" value="<%= requestedDeliveryDateString %>" />
 		</div>
 	</aui:form>
 </div>

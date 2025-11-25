@@ -116,18 +116,22 @@ public class FragmentEditableElementUtil {
 				(fragmentEditableElementValue.getType() !=
 					FragmentEditableElementValue.Type.TEXT)) {
 
-				jsonObject.put(
-					fragmentEditableElement.getId(), (JSONObject)null);
+				continue;
+			}
 
+			JSONObject fragmentEditableElementJSONObject =
+				_getFragmentEditableElementJSONObject(
+					companyId, infoItemServiceRegistry, scopeGroupId,
+					(TextFragmentEditableElementValue)
+						fragmentEditableElementValue);
+
+			if (JSONUtil.isEmpty(fragmentEditableElementJSONObject)) {
 				continue;
 			}
 
 			jsonObject.put(
 				fragmentEditableElement.getId(),
-				_getFragmentEditableElementJSONObject(
-					companyId, infoItemServiceRegistry, scopeGroupId,
-					(TextFragmentEditableElementValue)
-						fragmentEditableElementValue));
+				fragmentEditableElementJSONObject);
 		}
 
 		return jsonObject;

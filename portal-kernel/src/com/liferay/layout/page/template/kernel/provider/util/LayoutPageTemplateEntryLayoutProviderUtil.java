@@ -15,14 +15,15 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 public class LayoutPageTemplateEntryLayoutProviderUtil {
 
 	public static Layout getLayoutPageTemplateEntryLayout(
-		long groupId, String externalReferenceCode) {
+		long groupId, String externalReferenceCode, long plid) {
 
 		LayoutPageTemplateEntryLayoutProvider
 			layoutPageTemplateEntryLayoutProviderUtil =
 				_layoutPageTemplateEntryLayoutProviderSnapshot.get();
 
 		return layoutPageTemplateEntryLayoutProviderUtil.
-			getLayoutPageTemplateEntryLayout(groupId, externalReferenceCode);
+			getLayoutPageTemplateEntryLayout(
+				groupId, externalReferenceCode, plid);
 	}
 
 	private static final Snapshot<LayoutPageTemplateEntryLayoutProvider>

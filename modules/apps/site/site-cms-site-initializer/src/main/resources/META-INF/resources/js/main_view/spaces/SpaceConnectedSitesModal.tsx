@@ -123,9 +123,9 @@ const SitesSelector = ({
 	externalReferenceCode,
 	onSiteConnected,
 }: {
+	connectedSites: Site[];
 	externalReferenceCode: string;
 	onSiteConnected: (site: Site) => void;
-	connectedSites: Site[];
 }) => {
 	const [site, setSite] = useState<Site>();
 	const [disableConnectButton, setDisableConnectButton] =

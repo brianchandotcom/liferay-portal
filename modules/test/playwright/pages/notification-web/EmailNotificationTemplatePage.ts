@@ -34,6 +34,7 @@ export class EmailNotificationTemplatePage {
 	readonly primaryRecipientType: Locator;
 	readonly primaryRecipients: Locator;
 	readonly regularRolesGroupTitle: Locator;
+	readonly richTextCKEditor5Field: Locator;
 	readonly richTextField: Locator;
 	readonly richTextSourceButton: Locator;
 	readonly richTextSourceField: Locator;
@@ -71,6 +72,9 @@ export class EmailNotificationTemplatePage {
 		this.regularRolesGroupTitle = page
 			.getByText('Regular Roles')
 			.locator('visible=true');
+		this.richTextCKEditor5Field = page.getByRole('textbox', {
+			name: 'Rich Text Editor. Editing',
+		});
 		this.richTextField = page
 			.getByRole('application', {name: 'Rich Text Editor'})
 			.frameLocator('iframe')
@@ -110,19 +114,19 @@ export class EmailNotificationTemplatePage {
 		notificationTemplateName: string,
 		notificationTemplateInfo: NotificationTemplateInfo
 	) {
-		await this.basicInfoName.fill(notificationTemplateName);
-
 		await this.descriptionInput.fill(notificationTemplateInfo.description);
+
+		await this.primaryRecipients.fill(notificationTemplateInfo.recipients);
+
+		await this.secondaryRecipientsCC.fill(notificationTemplateInfo.cc);
+
+		await this.basicInfoName.fill(notificationTemplateName);
 
 		await this.senderEmailAddress.fill(
 			notificationTemplateInfo.senderAddress
 		);
 
 		await this.senderName.fill(notificationTemplateInfo.senderName);
-
-		await this.primaryRecipients.fill(notificationTemplateInfo.recipients);
-
-		await this.secondaryRecipientsCC.fill(notificationTemplateInfo.cc);
 
 		await this.secondaryRecipientsBCC.fill(notificationTemplateInfo.bcc);
 

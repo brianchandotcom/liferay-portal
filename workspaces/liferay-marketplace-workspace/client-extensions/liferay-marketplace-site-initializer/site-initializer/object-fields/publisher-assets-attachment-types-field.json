@@ -3,16 +3,16 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"externalReferenceCode": "PUBLISHER-ASSET-TYPE",
+			"externalReferenceCode": "PUBLISHER-ASSET-ATTACHMENT-TYPE",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Publisher Asset Types"
+				"en_US": "Publisher Asset Attachment Type"
 			},
-			"listTypeDefinitionExternalReferenceCode": "PUBLISHER-ASSET-TYPES",
+			"listTypeDefinitionExternalReferenceCode": "PUBLISHER-ASSET-ATTACHMENT-TYPES",
 			"localized": false,
-			"name": "publisherAssetType",
+			"name": "publisherAssetAttachmentType",
 			"objectFieldSettings": [
 				{
 					"name": "defaultValueType",
@@ -25,5 +25,5 @@
 			"unique": false
 		}
 	],
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:PublisherAssets$]"
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:PublisherAssetAttachment$]"
 }

@@ -13,52 +13,11 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Name"
-			},
-			"name": "name",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
 				"en_US": "Version"
 			},
 			"name": "version",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "Attachment",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Source Code"
-			},
-			"name": "sourceCode",
-			"objectFieldSettings": [
-				{
-					"name": "acceptedFileExtensions",
-					"value": "zip,war,jar"
-				},
-				{
-					"name": "maximumFileSize",
-					"value": 200
-				},
-				{
-					"name": "fileSource",
-					"value": "userComputer"
-				},
-				{
-					"name": "showFilesInDocumentsAndMedia",
-					"value": false
-				}
-			],
-			"required": false,
-			"type": "Long"
 		}
 	],
 	"objectFolderExternalReferenceCode": "MARKETPLACE",

@@ -94,7 +94,7 @@ public class BuildRESTTask extends JavaExec {
 		_forcePredictableOperationId = forcePredictableOperationId;
 	}
 
-	public void setJakartaEnabled(Boolean jakartaEnabled) {
+	public void setJakartaEnabled(boolean jakartaEnabled) {
 		_jakartaEnabled = jakartaEnabled;
 	}
 
@@ -147,7 +147,7 @@ public class BuildRESTTask extends JavaExec {
 	private Object _copyrightFile;
 	private Object _forceClientVersionDescription;
 	private Object _forcePredictableOperationId;
-	private Boolean _jakartaEnabled;
+	private boolean _jakartaEnabled;
 	private Object _restConfigDir;
 
 }

@@ -5,14 +5,13 @@
 				{
 					"dataType": "int",
 					"defaultValue": "3",
-					"description": "Here you can choose the number of slides you need.",
-					"label": "Slides",
+					"label": "Number of Slides",
 					"localizable": false,
 					"name": "numberOfSlides",
 					"type": "text",
 					"typeOptions": {
 						"validation": {
-							"errorMessage": "The maximum is 3 slides",
+							"errorMessage": "Maximum: 3 slides",
 							"max": 3,
 							"min": 1,
 							"type": "number"

@@ -319,7 +319,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					_executeExportTask(
 						Integer.MAX_VALUE, portletDataContext, registration);
 
-				if (result == null) {
+				if ((result == null) ||
+					_isEmptyJsonArray(result.getInputStream())) {
+
 					continue;
 				}
 
@@ -568,6 +570,27 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PermissionThreadLocal.getPermissionChecker();
 
 		return permissionChecker.getUserId();
+	}
+
+	private boolean _isEmptyJsonArray(InputStream inputStream) {
+		try {
+			inputStream.mark(2);
+
+			byte[] buffer = new byte[2];
+
+			int read = inputStream.read(buffer);
+
+			inputStream.reset();
+
+			if ((read == 2) && (buffer[0] == '[') && (buffer[1] == ']')) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private String _normalize(String fileName, long groupId) {

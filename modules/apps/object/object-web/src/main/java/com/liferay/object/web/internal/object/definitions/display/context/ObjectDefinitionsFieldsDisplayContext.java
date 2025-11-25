@@ -15,16 +15,22 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -88,6 +94,31 @@ public class ObjectDefinitionsFieldsDisplayContext
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	public Object getEditorConfig() {
+		HttpServletRequest httpServletRequest =
+			objectRequestHelper.getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				themeDisplay.getPpid(), "rich_text", "ckeditor5_classic",
+				HashMapBuilder.<String, Object>put(
+					"liferay-ui:input-editor:allowBrowseDocuments", true
+				).put(
+					"liferay-ui:input-editor:name", "richTextDefaultValue"
+				).build(),
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY),
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
+
+		Map<String, Object> data = editorConfiguration.getData();
+
+		return data.get("editorConfig");
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()

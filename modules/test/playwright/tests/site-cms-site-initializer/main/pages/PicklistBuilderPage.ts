@@ -22,7 +22,7 @@ export class PicklistBuilderPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.addButton = this.page.getByLabel('Add New').first();
+		this.addButton = this.page.getByRole('button', {name: 'Add New'});
 		this.ercInput = this.page.getByLabel('ERC');
 		this.nameInput = this.page.getByLabel('Picklist Name');
 		this.saveButton = this.page.getByRole('button', {name: 'Save'});

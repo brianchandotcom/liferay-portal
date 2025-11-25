@@ -14,6 +14,7 @@ import {
 	BULK_ACTION_DOWNLOAD,
 	BULK_ACTION_MOVE,
 	BULK_ACTION_PERMISSIONS,
+	BULK_ACTION_RESET_PERMISSIONS,
 	BULK_ACTION_TAGS,
 } from './constants';
 
@@ -91,6 +92,19 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			),
 			singular: Liferay.Language.get(
 				'permissions-update-action-started-for-one-asset'
+			),
+		},
+	},
+	[BULK_ACTION_RESET_PERMISSIONS]: {
+		info: {
+			all: Liferay.Language.get(
+				'reset-permissions-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'reset-permissions-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'reset-permissions-action-started-for-one-asset'
 			),
 		},
 	},

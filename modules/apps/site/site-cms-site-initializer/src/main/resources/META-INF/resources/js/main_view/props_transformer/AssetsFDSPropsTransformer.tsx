@@ -30,6 +30,7 @@ import deleteAssetEntriesBulkAction, {
 	executeBulkDeleteAction,
 } from './actions/deleteAssetEntriesBulkAction';
 import deleteItemAction from './actions/deleteItemAction';
+import executeResetPermissionBulkAction from './actions/executeResetPermissionBulkAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
@@ -450,6 +451,16 @@ export default function AssetsFDSPropsTransformer({
 						additionalProps.rootObjectEntryFolderExternalReferenceCode ||
 						additionalProps.parentObjectEntryFolderExternalReferenceCode,
 					selectedData,
+				});
+			}
+			else if (action?.data?.id === 'reset-to-default-permissions') {
+				openResetAssetPermissionModal({
+					loadData: () => {
+						executeResetPermissionBulkAction({
+							apiURL: otherProps.apiURL,
+							selectedData,
+						});
+					},
 				});
 			}
 		},

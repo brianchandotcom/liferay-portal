@@ -19,6 +19,7 @@ export const BULK_ACTION_DELETE = 'DeleteBulkAction';
 export const BULK_ACTION_DOWNLOAD = 'DownloadBulkAction';
 export const BULK_ACTION_MOVE = 'MoveBulkAction';
 export const BULK_ACTION_PERMISSIONS = 'PermissionBulkAction';
+export const BULK_ACTION_RESET_PERMISSIONS = 'ResetPermissionBulkAction';
 export const BULK_ACTION_TAGS = 'KeywordBulkAction';
 
 export const INTERVAL_TASK_POLLING_MS = 5000;
@@ -37,6 +38,9 @@ export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 		[BULK_ACTION_MOVE]: Liferay.Language.get('assets-movement'),
 		[BULK_ACTION_PERMISSIONS]: Liferay.Language.get(
 			'assets-default-permissioning'
+		),
+		[BULK_ACTION_RESET_PERMISSIONS]: Liferay.Language.get(
+			'reset-to-default-permissions'
 		),
 		[BULK_ACTION_TAGS]: Liferay.Language.get('assets-tagging'),
 	};

@@ -10,8 +10,8 @@ export default function openResetAssetPermissionModal({
 	classPK,
 	loadData,
 }: {
-	className: string;
-	classPK: number;
+	className?: string;
+	classPK?: number;
 	loadData: () => void;
 }) {
 	Liferay.Util.openModal({
@@ -29,24 +29,26 @@ export default function openResetAssetPermissionModal({
 				label: Liferay.Language.get('confirm'),
 				onClick: async ({processClose}: {processClose: () => void}) => {
 					try {
-						const response =
-							await CMSAssetPermissionService.resetAssetPermission(
-								{
-									className,
-									classPK,
-								}
-							);
+						if (className && classPK !== undefined) {
+							const response =
+								await CMSAssetPermissionService.resetAssetPermission(
+									{
+										className,
+										classPK,
+									}
+								);
 
-						if (response.error) {
-							throw new Error(response.error);
+							if (response.error) {
+								throw new Error(response.error);
+							}
+
+							Liferay.Util.openToast({
+								message: Liferay.Language.get(
+									'permissions-reset-successfully'
+								),
+								type: 'success',
+							});
 						}
-
-						Liferay.Util.openToast({
-							message: Liferay.Language.get(
-								'permissions-reset-successfully'
-							),
-							type: 'success',
-						});
 
 						loadData();
 					}

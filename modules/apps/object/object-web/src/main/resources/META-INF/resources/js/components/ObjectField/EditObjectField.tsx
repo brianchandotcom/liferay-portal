@@ -37,7 +37,7 @@ export interface EditObjectFieldProps {
 
 export const objectFieldInitialValues: Partial<ObjectField> = {
 	DBType: '',
-	businessType: 'Text',
+	businessType: undefined,
 	externalReferenceCode: '',
 	id: 0,
 	indexed: true,

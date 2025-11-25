@@ -289,7 +289,7 @@ public class LearnRestController extends BaseRestController {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		List<String> list = _splitSsml(_htmlToReadableText(content));
+		List<String> list = _splitSsml(_toReadableText(content));
 
 		for (String ssml : list) {
 			String response = post(
@@ -581,29 +581,6 @@ public class LearnRestController extends BaseRestController {
 		return map;
 	}
 
-	private String _htmlToReadableText(String html) {
-		Document document = Jsoup.parse(html);
-
-		_processHeadings(document);
-		_processLists(document);
-		_processTables(document);
-
-		String content = document.text();
-
-		for (Map.Entry<Pattern, String> entry :
-				_learnPatternReplacements.entrySet()) {
-
-			content = entry.getKey(
-			).matcher(
-				content
-			).replaceAll(
-				entry.getValue()
-			);
-		}
-
-		return content;
-	}
-
 	private String _normalizeCell(Element element) {
 		String text = element.text();
 
@@ -791,6 +768,29 @@ public class LearnRestController extends BaseRestController {
 		).put(
 			"title", objectDefinitionMap.get("pluralLabel")
 		).build();
+	}
+
+	private String _toReadableText(String html) {
+		Document document = Jsoup.parse(html);
+
+		_processHeadings(document);
+		_processLists(document);
+		_processTables(document);
+
+		String content = document.text();
+
+		for (Map.Entry<Pattern, String> entry :
+				_learnPatternReplacements.entrySet()) {
+
+			content = entry.getKey(
+			).matcher(
+				content
+			).replaceAll(
+				entry.getValue()
+			);
+		}
+
+		return content;
 	}
 
 	private static final int _MAX_TTS_CHUNK_LENGTH = 5000;

@@ -15,6 +15,7 @@ import com.liferay.notification.web.internal.display.context.helper.Notification
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -85,9 +86,17 @@ public class ViewNotificationTemplatesDisplayContext {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String editorName = "ckeditor_classic";
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-11235")) {
+
+			editorName = "ckeditor5_classic";
+		}
+
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				themeDisplay.getPpid(), "rich_text", "ckeditor_classic",
+				themeDisplay.getPpid(), "rich_text", editorName,
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true
 				).put(

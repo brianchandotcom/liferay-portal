@@ -692,33 +692,33 @@ public class LearnRestController extends BaseRestController {
 	}
 
 	private void _processTables(Document document) {
-		for (Element table : document.select("table")) {
+		for (Element tableElement : document.select("table")) {
 			StringBundler sb = new StringBundler();
 
 			List<String> headers = new ArrayList<>();
 
-			Elements tableHeaders = table.select("thead th");
+			Elements headerElements = tableElement.select("thead th");
 
-			if (tableHeaders.isEmpty()) {
-				Element tableRow = table.selectFirst("tr");
+			if (headerElements.isEmpty()) {
+				Element rowElement = tableElement.selectFirst("tr");
 
-				if (tableRow != null) {
-					tableHeaders = tableRow.select("td, th");
+				if (rowElement != null) {
+					headerElements = rowElement.select("td, th");
 				}
 			}
 
-			for (Element tableHeader : tableHeaders) {
-				headers.add(StringUtil.trim(tableHeader.text()));
+			for (Element headerElement : headerElements) {
+				headers.add(StringUtil.trim(headerElement.text()));
 			}
 
-			for (Element element : table.select("tbody tr")) {
-				Elements tableColumns = element.select("td, th");
+			for (Element bodyElement : tableElement.select("tbody tr")) {
+				Elements cellElements = bodyElement.select("td, th");
 
-				if (tableColumns.isEmpty()) {
+				if (cellElements.isEmpty()) {
 					continue;
 				}
 
-				for (int i = 0; i < tableColumns.size(); i++) {
+				for (int i = 0; i < cellElements.size(); i++) {
 					String label = "Column " + (i + 1);
 
 					if (i < headers.size()) {
@@ -727,7 +727,7 @@ public class LearnRestController extends BaseRestController {
 
 					sb.append(label);
 					sb.append(": ");
-					sb.append(_normalizeCell(tableColumns.get(i)));
+					sb.append(_normalizeCell(cellElements.get(i)));
 					sb.append(". ");
 				}
 
@@ -735,7 +735,7 @@ public class LearnRestController extends BaseRestController {
 			}
 
 			if (sb.length() > 0) {
-				_replaceElementWithText(table, "p", sb.toString());
+				_replaceElementWithText(tableElement, "p", sb.toString());
 			}
 		}
 	}

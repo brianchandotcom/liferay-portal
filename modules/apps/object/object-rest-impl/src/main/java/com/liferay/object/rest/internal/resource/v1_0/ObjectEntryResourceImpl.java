@@ -1165,13 +1165,13 @@ public class ObjectEntryResourceImpl
 		ObjectEntry objectEntry = _getObjectEntry(
 			objectEntryExternalReferenceCode, null);
 
-		com.liferay.portal.kernel.comment.Comment existingComment =
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
 				ObjectEntry.class.getName(), objectEntry.getId(),
 				externalReferenceCode, _getNonzeroGroupId(objectEntry.getId()));
 
-		if (existingComment != null) {
-			return _updateComment(comment, existingComment);
+		if (serviceBuilderComment != null) {
+			return _updateComment(comment, serviceBuilderComment);
 		}
 
 		return _addComment(
@@ -1332,13 +1332,13 @@ public class ObjectEntryResourceImpl
 		ObjectEntry objectEntry = _getObjectEntry(
 			objectEntryExternalReferenceCode, scopeKey);
 
-		com.liferay.portal.kernel.comment.Comment existingComment =
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
 				ObjectEntry.class.getName(), objectEntry.getId(),
 				externalReferenceCode, objectEntry.getScopeId());
 
-		if (existingComment != null) {
-			return _updateComment(comment, existingComment);
+		if (serviceBuilderComment != null) {
+			return _updateComment(comment, serviceBuilderComment);
 		}
 
 		return _addComment(
@@ -1583,19 +1583,20 @@ public class ObjectEntryResourceImpl
 
 	private Comment _updateComment(
 			Comment comment,
-			com.liferay.portal.kernel.comment.Comment existingComment)
+			com.liferay.portal.kernel.comment.Comment serviceBuilderComment)
 		throws Exception {
 
 		_discussionPermission.checkUpdatePermission(
 			PermissionThreadLocal.getPermissionChecker(),
-			existingComment.getCommentId());
+			serviceBuilderComment.getCommentId());
 
 		return CommentUtil.toComment(
 			() -> _commentManager.fetchComment(
 				_commentManager.updateComment(
 					PrincipalThreadLocal.getUserId(),
-					ObjectEntry.class.getName(), existingComment.getClassPK(),
-					existingComment.getCommentId(), StringPool.BLANK,
+					ObjectEntry.class.getName(),
+					serviceBuilderComment.getClassPK(),
+					serviceBuilderComment.getCommentId(), StringPool.BLANK,
 					StringBundler.concat("<p>", comment.getText(), "</p>"),
 					_createServiceContextFunction())),
 			_commentManager, PortalUtil.getPortal());

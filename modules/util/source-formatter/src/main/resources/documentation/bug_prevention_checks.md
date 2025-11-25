@@ -196,6 +196,7 @@ PropertiesBuildIncludeDirsCheck | .eslintignore, .prettierignore, or .properties
 PropertiesDefaultAdminScreenNameCheck | .eslintignore, .prettierignore, or .properties | Checks that we do not use `default.admin.screen.name`. |
 PropertiesFeatureFlagsCheck | .eslintignore, .prettierignore, or .properties | Generate feature flags in `portal.properties` file. |
 PropertiesImportedFilesContentCheck | .eslintignore, .prettierignore, or .properties | Performs several checks on `imported-files.properties` file. |
+PropertiesJVMAttributesOrderCheck | .eslintignore, .prettierignore, or .properties | Sorts JVM attributes. |
 [PropertiesLanguageKeysCheck](check/properties_language_keys_check.md#propertieslanguagekeyscheck) | .eslintignore, .prettierignore, or .properties | Checks that there is no HTML markup in language keys. |
 PropertiesLanguageKeysContextCheck | .eslintignore, .prettierignore, or .properties | Checks if the language keys include a word of context to indicate specific meaning. |
 PropertiesLiferayPluginPackageFileCheck | .eslintignore, .prettierignore, or .properties | Performs several checks on `liferay-plugin-package.properties` file. |

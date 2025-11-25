@@ -8,17 +8,14 @@ package com.liferay.style.book.web.internal.zip.processor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -113,12 +110,7 @@ public class StyleBookEntryZipProcessorImpl
 			boolean overwrite, String styleBookEntryKey, String themeId)
 		throws Exception {
 
-		Group group = _groupLocalService.getGroup(groupId);
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-30204") &&
-			Validator.isBlank(themeId)) {
-
+		if (Validator.isBlank(themeId)) {
 			throw new StyleBookEntryThemeIdException.MustNotBeNull();
 		}
 
@@ -374,9 +366,6 @@ public class StyleBookEntryZipProcessorImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	private List<StyleBookEntryZipProcessorImportResultEntry>
 		_importResultEntries;

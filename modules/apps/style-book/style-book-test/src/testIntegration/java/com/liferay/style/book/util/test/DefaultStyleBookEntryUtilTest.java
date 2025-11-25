@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -128,7 +127,6 @@ public class DefaultStyleBookEntryUtilTest {
 		_testGetDefaultStyleBookEntryWhenStagingIsEnabled();
 	}
 
-	@FeatureFlag("LPD-30204")
 	@Test
 	public void testGetDefaultStyleBookEntry2() throws Exception {
 		StyleBookEntry styleBookEntry1 = _addStyleBookEntry(false);
@@ -222,7 +220,6 @@ public class DefaultStyleBookEntryUtilTest {
 			"styles-from-theme");
 	}
 
-	@FeatureFlag("LPD-30204")
 	@Test
 	public void testGetStyleBookEntryNameWithMasterLayoutWithoutStyleBookEntry2()
 		throws Exception {
@@ -261,7 +258,6 @@ public class DefaultStyleBookEntryUtilTest {
 				_layout, null, null));
 	}
 
-	@FeatureFlag("LPD-30204")
 	@Test
 	public void testGetStyleBookEntryNameWithoutMasterLayout2() {
 		Assert.assertEquals(

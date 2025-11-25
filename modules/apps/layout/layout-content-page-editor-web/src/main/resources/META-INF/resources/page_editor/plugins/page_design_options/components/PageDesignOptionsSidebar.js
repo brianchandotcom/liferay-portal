@@ -57,32 +57,20 @@ export default function PageDesignOptionsSidebar() {
 					return;
 				}
 
-				if (Liferay.FeatureFlags['LPD-30204']) {
-					const selectedStyleBook = styleBooks.find(
-						(styleBook) =>
-							styleBook.styleBookEntryERC === styleBookEntryERC
-					);
+				const selectedStyleBook = styleBooks.find(
+					(styleBook) =>
+						styleBook.styleBookEntryERC === styleBookEntryERC
+				);
 
-					if (selectedStyleBook) {
-						setSelectedStyleBook({...selectedStyleBook});
-					}
-					else {
-						setSelectedStyleBook({...styleBooks[0]});
-					}
+				if (selectedStyleBook) {
+					setSelectedStyleBook({...selectedStyleBook});
 				}
 				else {
-
-					// Changing the master layout should only affect the
-					// selected stylebook if the styleBookEntryERC is equal to 0
-					// which means that the stylebook is inherited
-
-					if (selectedStyleBook.styleBookEntryERC === '') {
-						setSelectedStyleBook({...styleBooks[0]});
-					}
+					setSelectedStyleBook({...styleBooks[0]});
 				}
 			});
 		},
-		[dispatch, selectedStyleBook.styleBookEntryERC, setSelectedStyleBook]
+		[dispatch, setSelectedStyleBook]
 	);
 
 	const onSelectStyleBook = useCallback(
@@ -196,11 +184,7 @@ export default function PageDesignOptionsSidebar() {
 }
 
 const OptionList = ({options = [], icon, type}) => {
-	if (
-		type === OPTIONS_TYPES.styleBook &&
-		!config.styleBookEnabled &&
-		!Liferay.FeatureFlags['LPD-30204']
-	) {
+	if (type === OPTIONS_TYPES.styleBook && !config.styleBookEnabled) {
 		return (
 			<ClayAlert className="mt-3" displayType="info">
 				{config.isPrivateLayoutsEnabled
@@ -226,18 +210,16 @@ const OptionList = ({options = [], icon, type}) => {
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPD-30204'] &&
-				type === OPTIONS_TYPES.styleBook &&
-				!!options.length && (
-					<ClayAlert className="mt-3" displayType="info" title="Info">
-						{sub(
-							Liferay.Language.get(
-								'only-style-books-based-on-the-frontend-token-definition-provided-by-x-are-visible'
-							),
-							config.themeName
-						)}
-					</ClayAlert>
-				)}
+			{type === OPTIONS_TYPES.styleBook && !!options.length && (
+				<ClayAlert className="mt-3" displayType="info" title="Info">
+					{sub(
+						Liferay.Language.get(
+							'only-style-books-based-on-the-frontend-token-definition-provided-by-x-are-visible'
+						),
+						config.themeName
+					)}
+				</ClayAlert>
+			)}
 
 			<ul className="list-unstyled mt-4">
 				{options.map(

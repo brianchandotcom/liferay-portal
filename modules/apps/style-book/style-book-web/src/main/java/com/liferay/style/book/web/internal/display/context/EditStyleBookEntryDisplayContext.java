@@ -27,7 +27,6 @@ import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryM
 import com.liferay.layout.util.comparator.LayoutModifiedDateComparator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -36,10 +35,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -47,7 +44,6 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -174,7 +170,10 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
 		).put(
-			"themeName", _getThemeName()
+			"themeName",
+			StyleBookUtil.getThemeName(
+				_styleBookEntry.getCompanyId(), _themeDisplay.getLocale(),
+				_styleBookEntry.getThemeId())
 		).build();
 	}
 
@@ -314,23 +313,9 @@ public class EditStyleBookEntryDisplayContext {
 	private JSONObject _getFrontendTokenDefinitionJSONObject()
 		throws Exception {
 
-		FrontendTokenDefinition frontendTokenDefinition = null;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
-			frontendTokenDefinition =
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
-		}
-		else {
-			LayoutSet layoutSet = _themeDisplay.getLayoutSet();
-
-			Group group = layoutSet.getGroup();
-
-			frontendTokenDefinition =
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					LayoutSetLocalServiceUtil.fetchLayoutSet(
-						group.getGroupId(), group.isLayoutSetPrototype()));
-		}
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
 
 		if (frontendTokenDefinition != null) {
 			return frontendTokenDefinition.getJSONObject(
@@ -576,23 +561,6 @@ public class EditStyleBookEntryDisplayContext {
 		StyleBookEntry styleBookEntry = _getStyleBookEntry();
 
 		return styleBookEntry.getName();
-	}
-
-	private String _getThemeName() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
-			return StyleBookUtil.getThemeName(
-				_styleBookEntry.getCompanyId(), _themeDisplay.getLocale(),
-				_styleBookEntry.getThemeId());
-		}
-
-		Group group = _themeDisplay.getScopeGroup();
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			_themeDisplay.getSiteGroupId(), group.isLayoutSetPrototype());
-
-		Theme theme = layoutSet.getTheme();
-
-		return theme.getName();
 	}
 
 	private void _setViewAttributes() {

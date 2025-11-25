@@ -8,7 +8,6 @@ package com.liferay.style.book.util;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -49,16 +48,10 @@ public class StyleBookUtil {
 			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
-			styleFromThemeStyleBookEntry.setName(
-				LanguageUtil.format(
-					locale, "styles-from-x",
-					_getThemeName(frontendTokenDefinition, locale)));
-		}
-		else {
-			styleFromThemeStyleBookEntry.setName(
-				LanguageUtil.get(locale, "styles-from-theme"));
-		}
+		styleFromThemeStyleBookEntry.setName(
+			LanguageUtil.format(
+				locale, "styles-from-x",
+				_getThemeName(frontendTokenDefinition, locale)));
 
 		return styleFromThemeStyleBookEntry;
 	}

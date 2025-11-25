@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -15,7 +14,6 @@ import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.StyleBookEntryService;
-import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -57,20 +55,10 @@ public class UpdateStyleBookEntryDefaultMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		StyleBookEntry styleBookEntry = null;
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-30204")) {
-
-			styleBookEntry =
-				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-					themeDisplay.getScopeGroupId(),
-					ParamUtil.getString(actionRequest, "themeId"));
-		}
-		else {
-			styleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
-				themeDisplay.getLayout());
-		}
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+				themeDisplay.getScopeGroupId(),
+				ParamUtil.getString(actionRequest, "themeId"));
 
 		if (styleBookEntry != null) {
 			_styleBookEntryService.updateDefaultStyleBookEntry(

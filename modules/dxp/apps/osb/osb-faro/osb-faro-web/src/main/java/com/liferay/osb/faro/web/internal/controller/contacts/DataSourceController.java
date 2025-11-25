@@ -359,7 +359,6 @@ public class DataSourceController extends BaseFaroController {
 				faroProjectLocalService.getFaroProjectByGroupId(groupId),
 				Long.valueOf(id), enabled, name, cur, delta,
 				orderByFieldsFaroParam.getValue());
-
 		Function<ChannelDataSource, ChannelDataSourceDisplay> function =
 			channelDataSource -> new ChannelDataSourceDisplay(
 				channelDataSource);

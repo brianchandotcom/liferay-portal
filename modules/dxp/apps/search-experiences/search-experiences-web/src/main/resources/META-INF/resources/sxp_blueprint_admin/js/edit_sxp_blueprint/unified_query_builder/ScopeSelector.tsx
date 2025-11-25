@@ -90,7 +90,7 @@ export default function ScopeSelector({
 						externalReferenceCode:
 							selectedItem.groupexternalreferencecode,
 						name: selectedItem.groupdescriptivename,
-						status: 'active',
+						status: STATUS.ACTIVE,
 						type: selectedItem.groupscopelabel,
 					},
 				]);
@@ -101,12 +101,12 @@ export default function ScopeSelector({
 		});
 	};
 
-	const _handleRemoveScope = (index: number) => {
-		const newScope = [...scope];
-
-		newScope.splice(index, 1);
-
-		setScope(newScope);
+	const _handleRemoveScope = (externalReferenceCode: string) => {
+		setScope(
+			scope.filter(
+				(item) => item.externalReferenceCode !== externalReferenceCode
+			)
+		);
 	};
 
 	return (
@@ -185,7 +185,7 @@ export default function ScopeSelector({
 									<Cell>{scopeItem.type}</Cell>
 
 									<Cell>
-										{scopeItem.status === 'active' ? (
+										{scopeItem.status === STATUS.ACTIVE ? (
 											<ClayLabel displayType="success">
 												{Liferay.Language.get('active')}
 											</ClayLabel>
@@ -206,7 +206,9 @@ export default function ScopeSelector({
 											className="component-action"
 											displayType="unstyled"
 											onClick={() =>
-												_handleRemoveScope(index)
+												_handleRemoveScope(
+													scopeItem.externalReferenceCode
+												)
 											}
 										>
 											<ClayIcon symbol="times-circle" />

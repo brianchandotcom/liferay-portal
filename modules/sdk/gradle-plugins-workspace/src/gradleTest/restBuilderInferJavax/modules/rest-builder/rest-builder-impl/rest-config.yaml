@@ -1,9 +1,0 @@
-apiDir: ../rest-builder-api/src/main/java
-apiPackagePath: rest.builder
-application:
-    baseURI: /rest-builder
-    className: RestBuilderApplication
-    name: RestBuilder
-author: me
-clientDir: ../rest-builder-client/src/main/java
-testDir: ../rest-builder-test/src/testIntegration/java

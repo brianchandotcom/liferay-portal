@@ -1,11 +1,11 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
-	product = "dxp-2025.q2.12"
+	product = "dxp-2023.q2.12"
 }
 
 runGradleTest {
-	dependsOn ":modules:rest-builder:rest-builder-impl:buildREST"
+	dependsOn "modules:rest-builder:rest-builder-impl:buildREST"
 
 	doLast {
 		Project project = project(":modules:rest-builder")

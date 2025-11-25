@@ -80,11 +80,11 @@ public class FragmentConfigurationFieldValuesUtil {
 				layoutStructureItemImporterContext)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		if (fragmentConfigurationFieldValuesMap == null) {
-			return jsonObject;
+			return null;
 		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
 			configuration);
@@ -114,6 +114,10 @@ public class FragmentConfigurationFieldValuesUtil {
 				_fromFragmentConfigurationFieldValue(
 					fragmentConfigurationFieldValue, fragmentConfigurationField,
 					layoutStructureItemImporterContext));
+		}
+
+		if (jsonObject.length() == 0) {
+			return null;
 		}
 
 		return jsonObject;

@@ -132,14 +132,14 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="ParentCommercePriceListId" return-type="CommercePriceList">
+		<finder name="ParentCommercePriceListId" return-type="Collection">
 			<finder-column name="parentCommercePriceListId" />
 		</finder>
 		<finder name="G_C" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="G_CBPL" return-type="CommercePriceList">
+		<finder name="G_CBPL" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="catalogBasePriceList" />
 		</finder>
@@ -160,11 +160,6 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column comparator="!=" name="status" />
-		</finder>
-		<finder name="G_C_T" return-type="CommercePriceList">
-			<finder-column name="groupId" />
-			<finder-column name="catalogBasePriceList" />
-			<finder-column name="type" />
 		</finder>
 		<finder name="G_C_T_S" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />

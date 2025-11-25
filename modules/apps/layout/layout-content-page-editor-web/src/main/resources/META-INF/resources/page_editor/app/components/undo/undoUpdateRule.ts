@@ -11,7 +11,7 @@ import updateRule from '../../thunks/updateRule';
 function undoAction({action}: {action: Rule}) {
 	const {actions, conditionType, conditions, id, name} = action;
 
-	return updateRule({actions, conditionType, conditions, name, ruleId: id});
+	return updateRule({actions, conditionType, conditions, name, ruleId: id!});
 }
 
 function getDerivedStateForUndo({
@@ -28,4 +28,4 @@ function getDerivedStateForUndo({
 	return rule;
 }
 
-export {undoAction, getDerivedStateForUndo};
+export {getDerivedStateForUndo, undoAction};

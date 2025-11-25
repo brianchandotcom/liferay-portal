@@ -75,7 +75,7 @@ export default function RulesList({
 	const onDeleteRule = (rule: Rule) => {
 		dispatch(
 			deleteRule({
-				ruleId: rule.id,
+				ruleId: rule.id!,
 			})
 		).then(() =>
 			openToast({
@@ -200,7 +200,7 @@ function RuleItem({
 			updateRule({
 				...rule,
 				name,
-				ruleId: rule.id,
+				ruleId: rule.id!,
 			})
 		);
 	}, [dispatch, name, rule]);

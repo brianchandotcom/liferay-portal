@@ -33,18 +33,12 @@ function sourceTagTemplate({media, srcset}) {
 
 					event.cancel();
 
-					let onSelectedImageChangeFn;
-
 					if (typeof event.data.commandData === 'function') {
-						onSelectedImageChangeFn = event.data.commandData;
+						instance._commandData = event.data.commandData;
 					}
-					else {
-						onSelectedImageChangeFn =
-							instance._onSelectedImageChange.bind(
-								instance,
-								editor
-							);
-					}
+
+					const onSelectedImageChangeFn =
+						instance._onSelectedImageChange.bind(instance, editor);
 
 					editor.execCommand(
 						'imageselector',
@@ -130,6 +124,10 @@ function sourceTagTemplate({media, srcset}) {
 		_onSelectedImageChange(editor, imageSrc, selectedItem) {
 			const instance = this;
 
+			if (instance._commandData) {
+				instance._commandData(imageSrc);
+			}
+
 			let element;
 
 			const fileEntryAttributeName =
@@ -155,15 +153,30 @@ function sourceTagTemplate({media, srcset}) {
 				const elementOuterHtml = element.getOuterHtml();
 				const emptySelectionMarkup = '&nbsp;';
 
-				editor.insertHtml(elementOuterHtml + emptySelectionMarkup);
+				const selectedElement = editor
+					.getSelection()
+					.getSelectedElement();
+
+				if (selectedElement) {
+					const itemValue = JSON.parse(selectedItem.value);
+
+					selectedElement
+						.findOne('img')
+						.$.setAttribute('src', itemValue.url);
+					selectedElement
+						.findOne('img')
+						.$.setAttribute(
+							'data-fileentryid',
+							itemValue.fileEntryId
+						);
+				}
+				else {
+					editor.insertHtml(elementOuterHtml + emptySelectionMarkup);
+				}
 			}
 			else {
 				editor.insertElement(element);
 			}
-
-			element = new CKEDITOR.dom.element('br');
-			editor.insertElement(element);
-			editor.getSelection();
 
 			editor.fire('editorInteraction', {
 				nativeEvent: {},

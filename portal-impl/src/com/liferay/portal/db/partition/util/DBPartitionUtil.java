@@ -195,7 +195,9 @@ public class DBPartitionUtil {
 			return;
 		}
 
-		if (PropsValues.DATABASE_PARTITION_THREAD_POOL_ENABLED) {
+		if (PropsValues.DATABASE_PARTITION_THREAD_POOL_ENABLED &&
+			!SystemExecutorServiceUtil.isOnSystemExecutorServiceThread()) {
+
 			_forEachCompanyIdConcurrently(unsafeConsumer);
 
 			return;

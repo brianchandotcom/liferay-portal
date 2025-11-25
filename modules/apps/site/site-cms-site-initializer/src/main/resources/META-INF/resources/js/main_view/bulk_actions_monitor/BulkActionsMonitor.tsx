@@ -213,14 +213,16 @@ function BulkActionsMonitor({
 					</div>
 				) : null}
 
-				<ClayLink
-					block
-					className="btn btn-block btn-secondary task-status-view-all text-3"
-					displayType="secondary"
-					href={URL_TASKS_REPORT}
-				>
-					{Liferay.Language.get('view-all-tasks')}
-				</ClayLink>
+				<div className="p-1">
+					<ClayLink
+						block
+						className="btn btn-block btn-secondary task-status-view-all text-3"
+						displayType="secondary"
+						href={URL_TASKS_REPORT}
+					>
+						{Liferay.Language.get('view-all-tasks')}
+					</ClayLink>
+				</div>
 			</>
 		</DropDown>
 	) : null;

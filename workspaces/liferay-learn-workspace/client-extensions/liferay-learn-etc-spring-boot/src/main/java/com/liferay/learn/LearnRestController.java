@@ -5,6 +5,7 @@
 
 package com.liferay.learn;
 
+import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
@@ -289,10 +290,8 @@ public class LearnRestController extends BaseRestController {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		List<String> list = _splitSsml(_toReadableText(content));
-
-		for (String ssml : list) {
-			String response = post(
+		for (String ssml : _splitSsml(_toReadableText(content))) {
+			String json = post(
 				_getGoogleAccessToken(),
 				new JSONObject(
 					HashMapBuilder.<String, Object>put(
@@ -324,22 +323,12 @@ public class LearnRestController extends BaseRestController {
 				Base64.getDecoder(
 				).decode(
 					new JSONObject(
-						response
+						json
 					).getString(
 						"audioContent"
 					)
 				));
 		}
-
-		ByteArrayResource byteArrayResource = new ByteArrayResource(
-			byteArrayOutputStream.toByteArray()) {
-
-			@Override
-			public String getFilename() {
-				return fileName;
-			}
-
-		};
 
 		MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
 
@@ -359,7 +348,16 @@ public class LearnRestController extends BaseRestController {
 			).toString(),
 			MediaType.APPLICATION_JSON);
 		multipartBodyBuilder.part(
-			"file", byteArrayResource, MediaType.APPLICATION_OCTET_STREAM);
+			"file",
+			new ByteArrayResource(byteArrayOutputStream.toByteArray()) {
+
+				@Override
+				public String getFilename() {
+					return fileName;
+				}
+
+			},
+			MediaType.APPLICATION_OCTET_STREAM);
 
 		if (documentId != 0) {
 			return Collections.singletonMap(
@@ -438,10 +436,9 @@ public class LearnRestController extends BaseRestController {
 
 		googleCredentials.refresh();
 
-		String accessTokenValue = googleCredentials.getAccessToken(
-		).getTokenValue();
+		AccessToken accessToken = googleCredentials.getAccessToken();
 
-		return "Bearer " + accessTokenValue;
+		return "Bearer " + accessToken.getTokenValue();
 	}
 
 	private int _getQuizQuestionScore(
@@ -581,20 +578,6 @@ public class LearnRestController extends BaseRestController {
 		return map;
 	}
 
-	private String _normalizeCell(Element element) {
-		String text = element.text();
-
-		if (_supportedValuesContentTable.contains(text)) {
-			return "Supported";
-		}
-
-		if (_notSupportedValuesContentTable.contains(text)) {
-			return "Not supported";
-		}
-
-		return StringUtil.trim(text);
-	}
-
 	private void _postUserBadge(long quizId, long userId) {
 		JSONArray jsonArray = new JSONObject(
 			get(
@@ -704,7 +687,20 @@ public class LearnRestController extends BaseRestController {
 
 					sb.append(label);
 					sb.append(": ");
-					sb.append(_normalizeCell(cellElements.get(i)));
+
+					Element cellElement = cellElements.get(i);
+
+					String text = StringUtil.trim(cellElement.text());
+
+					if (_supportedValuesContentTable.contains(text)) {
+						text = "Supported";
+					}
+					else if (_notSupportedValuesContentTable.contains(text)) {
+						text = "Not supported";
+					}
+
+					sb.append(text);
+
 					sb.append(". ");
 				}
 

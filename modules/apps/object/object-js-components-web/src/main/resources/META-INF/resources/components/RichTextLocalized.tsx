@@ -12,7 +12,11 @@ import classNames from 'classnames';
 
 // @ts-ignore
 
-import {ClassicEditor, IEditor} from 'frontend-editor-ckeditor-web';
+import {
+	CKEditor5ClassicEditor,
+	ClassicEditor,
+	LiferayEditorConfig,
+} from 'frontend-editor-ckeditor-web';
 import {FieldBase} from 'frontend-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -39,7 +43,7 @@ interface RichTextLocalizedProps
 		translated: string;
 		untranslated: string;
 	};
-	editorConfig: CKEDITOR.config;
+	editorConfig: LiferayEditorConfig;
 	helpMessage?: string;
 	label: string;
 	onSelectedLocaleChange: (val: LabelSymbolObject) => void;
@@ -74,28 +78,65 @@ export function RichTextLocalized({
 	selectedLocale,
 	translations,
 }: RichTextLocalizedProps) {
-	const editorRef = useRef<IEditor>(null);
+	const editorRef = useRef<any>(null);
 
 	const [active, setActive] = useState(false);
 
 	const defaultLanguage = availableLocales[0];
 
 	useEffect(() => {
-		const editor = editorRef.current?.editor;
+		if (Liferay.FeatureFlags['LPD-11235']) {
+			const editor = editorRef.current;
 
-		if (editor) {
-			editor.config.contentsLangDirection =
-				Liferay.Language.direction[selectedLocale];
+			if (editor) {
+				const value = translations[selectedLocale] ?? '';
 
-			editor.config.contentsLanguage = selectedLocale;
+				if (editor.getData() !== value) {
+					editor.setData(value);
+				}
+			}
+		}
+		else {
+			const editor = editorRef.current?.editor;
 
-			if (translations[selectedLocale]) {
-				editor.setData(translations[selectedLocale] as string);
+			if (editor) {
+				editor.config.contentsLangDirection =
+					Liferay.Language.direction[selectedLocale];
+
+				editor.config.contentsLanguage = selectedLocale;
+
+				if (translations[selectedLocale]) {
+					editor.setData(translations[selectedLocale] as string);
+				}
 			}
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedLocale]);
+
+	const handleLocaleChange = (locale: LabelSymbolObject) => {
+		const editor = editorRef.current;
+
+		if (Liferay.FeatureFlags['LPD-11235'] && editor) {
+			const currentData = editor.getData();
+			const currentLocaleValue = translations[selectedLocale];
+			const targetLocaleValue = translations[locale.label];
+
+			const updatedTranslations = {
+				...translations,
+				[selectedLocale]: currentData,
+			};
+
+			if (!targetLocaleValue && currentLocaleValue) {
+				updatedTranslations[locale.label] = currentLocaleValue;
+			}
+
+			onTranslationsChange(updatedTranslations);
+		}
+
+		onSelectedLocaleChange(locale);
+		setActive(false);
+	};
 
 	return (
 		<FieldBase
@@ -108,35 +149,60 @@ export function RichTextLocalized({
 		>
 			<div className="lfr-objects__rich-text-localized">
 				<div className="lfr-objects__rich-text-localized-editor">
-					<ClassicEditor
-						contents={translations[selectedLocale] as string}
-						editorConfig={editorConfig}
-						name="richTextLocalizedEditor"
-						onChange={(content: string) => {
-							onTranslationsChange({
-								...translations,
-								[selectedLocale]: content,
-							});
-						}}
-						onSetData={(event: OnSetDataEvent) => {
-							const editor = event.editor;
-
-							if (editor.mode === 'source') {
-								const value = event.data.dataValue;
-
-								const sanitizedValue = sanitizeHTML(value);
+					{Liferay.FeatureFlags['LPD-11235'] ? (
+						<CKEditor5ClassicEditor
+							className="w-100"
+							config={editorConfig}
+							disabled={readOnly}
+							onChange={(_event: any, editor: any) => {
+								const data = editor?.getData?.() ?? '';
 
 								onTranslationsChange({
 									...translations,
-									[selectedLocale]: sanitizedValue,
+									[selectedLocale]: data,
 								});
+							}}
+							onReady={(editor: any) => {
+								editorRef.current = editor;
 
-								event.data.dataValue = sanitizedValue;
-							}
-						}}
-						readOnly={readOnly}
-						ref={editorRef}
-					/>
+								if (translations[selectedLocale]) {
+									editor.setData(
+										translations[selectedLocale] as string
+									);
+								}
+							}}
+						/>
+					) : (
+						<ClassicEditor
+							contents={translations[selectedLocale] as string}
+							editorConfig={editorConfig}
+							name="richTextLocalizedEditor"
+							onChange={(content: string) => {
+								onTranslationsChange({
+									...translations,
+									[selectedLocale]: content,
+								});
+							}}
+							onSetData={(event: OnSetDataEvent) => {
+								const editor = event.editor;
+
+								if (editor.mode === 'source') {
+									const value = event.data.dataValue;
+
+									const sanitizedValue = sanitizeHTML(value);
+
+									onTranslationsChange({
+										...translations,
+										[selectedLocale]: sanitizedValue,
+									});
+
+									event.data.dataValue = sanitizedValue;
+								}
+							}}
+							readOnly={readOnly}
+							ref={editorRef}
+						/>
+					)}
 				</div>
 
 				<ClayDropDown
@@ -174,10 +240,7 @@ export function RichTextLocalized({
 							return (
 								<ClayDropDown.Item
 									key={locale.label}
-									onClick={() => {
-										onSelectedLocaleChange(locale);
-										setActive(false);
-									}}
+									onClick={() => handleLocaleChange(locale)}
 								>
 									<ClayLayout.ContentRow containerElement="span">
 										<ClayLayout.ContentCol

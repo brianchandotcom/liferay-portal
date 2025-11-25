@@ -87,7 +87,9 @@ test(
 
 		await test.step(`Go to View Connected Sites modal and connect the space to ${siteName} site`, async () => {
 			await page.getByRole('cell', {name: 'Actions'}).nth(2).click();
-			await page.getByRole('menuitem', {name: 'View Connected Sites'}).click();
+			await page
+				.getByRole('menuitem', {name: 'View Connected Sites'})
+				.click();
 			await page.getByPlaceholder('Select a Site').fill(siteName);
 			await page.getByRole('option', {name: siteName}).click();
 
@@ -102,15 +104,9 @@ test(
 				`Success:Site ${siteName} was successfully connected to the space.`
 			);
 
-			expect(
-				page.getByRole('button', {name: 'Connect'})
-			).toBeDisabled();
+			expect(page.getByRole('button', {name: 'Connect'})).toBeDisabled();
 
-			expect(
-				page.getByText(siteName)
-			).toBeVisible();
-
+			expect(page.getByText(siteName)).toBeVisible();
 		});
-
 	}
 );

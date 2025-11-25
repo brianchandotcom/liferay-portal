@@ -86,7 +86,13 @@ public class PropertiesJVMAttributesOrderCheck extends BaseFileCheck {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		return sb.toString();
+		String newContent = sb.toString();
+
+		if (!content.equals(newContent)) {
+			return newContent;
+		}
+
+		return content;
 	}
 
 	private String _sortAttributes(String s) {

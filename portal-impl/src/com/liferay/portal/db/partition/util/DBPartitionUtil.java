@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.db.DBPartitionMySQLDB;
 import com.liferay.portal.db.partition.db.DBPartitionPostgreSQLDB;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -57,7 +58,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import javax.sql.DataSource;
@@ -1051,10 +1051,8 @@ public class DBPartitionUtil {
 			UnsafeConsumer<Long, Exception> unsafeConsumer)
 		throws Exception {
 
-		Runtime runtime = Runtime.getRuntime();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors());
+		ExecutorService executorService =
+			SystemExecutorServiceUtil.getExecutorService();
 
 		List<Future<Void>> futures = new ArrayList<>();
 
@@ -1101,8 +1099,6 @@ public class DBPartitionUtil {
 			}
 		}
 		finally {
-			executorService.shutdown();
-
 			for (Future<Void> future : futures) {
 				future.get();
 			}

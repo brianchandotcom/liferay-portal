@@ -132,7 +132,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 							ddmStructure.getStructureId(),
 							ddmFormField.getFieldReference(), locale,
 							indexType);
-						value = field.getValue(locale);
+						value = _getValue(field, ddmFormField, locale);
 
 						if (legacyDDMIndexFieldsEnabled) {
 							_addToDocument(
@@ -150,7 +150,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 					name = encodeName(
 						ddmStructure.getStructureId(),
 						ddmFormField.getFieldReference(), null, indexType);
-					value = field.getValue(ddmFormValues.getDefaultLocale());
+					value = _getValue(
+						field, ddmFormField, ddmFormValues.getDefaultLocale());
 
 					if (legacyDDMIndexFieldsEnabled) {
 						_addToDocument(document, field, indexType, name, value);
@@ -997,6 +998,32 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		return sortableValue;
+	}
+
+	private Serializable _getValue(
+		Field field, DDMFormField ddmFormField, Locale locale) {
+
+		List<Serializable> values = field.getValues(locale);
+
+		if (values.isEmpty()) {
+			return null;
+		}
+
+		try {
+			if ((values.size() > 1) ||
+				(!field.isPrivate() && ddmFormField.isRepeatable())) {
+
+				return FieldConstants.getSerializable(
+					ddmFormField.getDataType(), values);
+			}
+
+			return values.get(0);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to extract field value", exception);
+		}
+
+		return null;
 	}
 
 	private Fields _toFields(

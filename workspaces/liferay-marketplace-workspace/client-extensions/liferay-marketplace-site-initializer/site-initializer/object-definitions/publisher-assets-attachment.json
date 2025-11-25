@@ -1,0 +1,67 @@
+{
+	"externalReferenceCode": "PUBLISHER-ASSET-ATTACHMENT",
+	"label": {
+		"en_US": "Publisher Asset Attachment"
+	},
+	"name": "PublisherAssetAttachment",
+	"objectFields": [
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Processed"
+			},
+			"name": "processed",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Source Code"
+			},
+			"name": "sourceCode",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "zip,war,jar"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": 200
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": false
+				}
+			],
+			"required": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
+	"pluralLabel": {
+		"en_US": "Publisher Asset Attachments"
+	},
+	"scope": "company"
+}

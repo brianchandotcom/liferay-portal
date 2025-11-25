@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Publisher Assets to Publisher Asset Attachment"
+	},
+	"name": "publisherAssetsToAttachment",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:PublisherAssets$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:PublisherAssetAttachment$]",
+	"objectDefinitionName2": "PublisherAssetAttachment",
+	"type": "oneToMany"
+}

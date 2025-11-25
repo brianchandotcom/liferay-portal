@@ -19,7 +19,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.Serializable;
 
+import java.util.Dictionary;
 import java.util.Locale;
 
 /**
@@ -35,6 +37,12 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 		_portalSettingsConfigurationScreenContributor =
 			portalSettingsConfigurationScreenContributor;
 		_servletContext = servletContext;
+	}
+
+	@Override
+	public Dictionary<String, Object> exportProperties(Serializable scopePK) {
+		return _portalSettingsConfigurationScreenContributor.exportProperties(
+			scopePK);
 	}
 
 	@Override
@@ -57,6 +65,15 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 	@Override
 	public String getScope() {
 		return "company";
+	}
+
+	@Override
+	public void importProperties(
+			Dictionary<String, Object> properties, Serializable scopePK)
+		throws Exception {
+
+		_portalSettingsConfigurationScreenContributor.importProperties(
+			properties, scopePK);
 	}
 
 	@Override

@@ -7,6 +7,9 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.admin.web.internal.portlet.constants.LayoutPageTemplateAdminWebPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -15,10 +18,13 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -26,6 +32,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -49,6 +56,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import jakarta.portlet.ActionRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -92,6 +101,18 @@ public class
 				null, StringUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addPortletToLayout(
+			draftLayout,
+			LayoutPageTemplateAdminWebPortletKeys.
+				LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_TEST_PORTLET);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
@@ -150,6 +171,7 @@ public class
 	}
 
 	@Test
+	@TestInfo("LPD-66116")
 	public void testCopyLayoutPageTemplateEntryMasterLayout() throws Exception {
 		Assert.assertNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
@@ -167,13 +189,51 @@ public class
 				}),
 			new MockLiferayPortletActionResponse());
 
-		Assert.assertNotNull(
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				_getName(_layoutPageTemplateEntry.getName()),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+
+		Assert.assertNotNull(layoutPageTemplateEntry);
+
+		List<FragmentEntryLink> sourceFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_layoutPageTemplateEntry.getGroupId(),
+				_layoutPageTemplateEntry.getPlid());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		List<FragmentEntryLink> targetFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				layoutPageTemplateEntry.getGroupId(), draftLayout.getPlid());
+
+		Assert.assertEquals(
+			targetFragmentEntryLinks.toString(),
+			sourceFragmentEntryLinks.size(), targetFragmentEntryLinks.size());
+
+		JSONObject sourceEditableValuesJSONObject =
+			sourceFragmentEntryLinks.get(
+				0
+			).getEditableValuesJSONObject();
+
+		JSONObject targetEditableValuesJSONObject =
+			targetFragmentEntryLinks.get(
+				0
+			).getEditableValuesJSONObject();
+
+		Assert.assertNotNull(targetEditableValuesJSONObject.get("instanceId"));
+		Assert.assertNotEquals(
+			sourceEditableValuesJSONObject.get("instanceId"),
+			targetEditableValuesJSONObject.get("instanceId"));
+		Assert.assertEquals(
+			sourceEditableValuesJSONObject.get("portletId"),
+			targetEditableValuesJSONObject.get("portletId"));
 	}
 
 	@Test
@@ -331,6 +391,9 @@ public class
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -11,77 +11,57 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ScreenReaderAnnouncerContextProvider} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {openToast, useId} from 'frontend-js-components-web';
-import React, {useEffect, useRef, useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
+import {
+	useRulesModal,
+	useRulesModalState,
+} from '../../../app/contexts/RulesModalContext';
+import {useDispatch} from '../../../app/contexts/StoreContext';
 import addRule from '../../../app/thunks/addRule';
 import updateRule from '../../../app/thunks/updateRule';
-import {Rule} from '../../../types/Rule';
-import {Action} from './Action';
-import {Condition} from './Condition';
 import {
-	ConditionType,
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
 } from './RuleBuilderSection';
 
-export default function RulesModal({
-	editingRule,
-	onCloseModal,
-}: {
-	editingRule?: Rule | null;
-	onCloseModal: (id: string | undefined) => void;
-}) {
+export default function RulesModal() {
+	const {editingRule, visible} = useRulesModalState();
+
+	const {closeRulesModal, updateEditingRule} = useRulesModal();
+
 	const {observer, onClose} = useModal({
-		onClose: () => onCloseModal(editingRule?.id),
+		onClose: () => closeRulesModal(),
 	});
-
-	const layoutData = useSelector((state) => state.layoutData);
-
-	const rules = layoutData.pageRules;
 
 	const dispatch = useDispatch();
 	const nameId = useId();
 
-	const [name, setName] = useState(
-		editingRule?.name || getDefaultName(rules)
-	);
-
 	const [nameError, setNameError] = useState(false);
 	const [ruleError, setRuleError] = useState(false);
 
-	const [actions, setActions] = useState<Action[]>(
-		() => editingRule?.actions || [{id: uuidv4(), type: undefined}]
-	);
-	const [conditions, setConditions] = useState<Condition[]>(
-		() => editingRule?.conditions || [{id: uuidv4(), type: undefined}]
-	);
-	const [conditionType, setConditionType] = useState<ConditionType>('all');
-
-	const onSave = () => {
-		if (!name) {
+	const onSave = useCallback(() => {
+		if (!editingRule.name) {
 			setNameError(true);
 
 			return;
 		}
 
 		if (
-			actions.some((action) => !action.itemId) ||
-			conditions.some((condition) => !condition.options?.value)
+			editingRule.actions.some((action) => !action.itemId) ||
+			editingRule.conditions.some(
+				(condition) => !condition.options?.value
+			)
 		) {
 			setRuleError(true);
 
 			return;
 		}
 
-		if (editingRule) {
+		if (editingRule.id) {
 			dispatch(
 				updateRule({
-					actions,
-					conditionType,
-					conditions,
-					name,
+					...editingRule,
 					ruleId: editingRule.id,
 				})
 			).then(() =>
@@ -94,14 +74,7 @@ export default function RulesModal({
 			);
 		}
 		else {
-			dispatch(
-				addRule({
-					actions,
-					conditionType,
-					conditions,
-					name,
-				})
-			).then(() =>
+			dispatch(addRule(editingRule)).then(() =>
 				openToast({
 					message: Liferay.Language.get(
 						'the-rule-was-created-successfully'
@@ -112,11 +85,15 @@ export default function RulesModal({
 		}
 
 		onClose();
-	};
+	}, [dispatch, editingRule, onClose]);
 
-	const title = editingRule
+	const title = editingRule.id
 		? Liferay.Language.get('edit-rule')
 		: Liferay.Language.get('new-rule');
+
+	if (!visible) {
+		return null;
+	}
 
 	return (
 		<ClayModal
@@ -154,9 +131,9 @@ export default function RulesModal({
 								setNameError(false);
 							}
 
-							setName(event.target.value);
+							updateEditingRule({name: event.target.value});
 						}}
-						value={name}
+						value={editingRule.name}
 					/>
 
 					{nameError && (
@@ -182,13 +159,15 @@ export default function RulesModal({
 						role="group"
 					>
 						<RuleBuilderConditionSection
-							conditionType={conditionType}
-							conditions={conditions}
-							setConditionType={setConditionType}
+							conditionType={editingRule.conditionType}
+							conditions={editingRule.conditions}
+							setConditionType={(conditionType) =>
+								updateEditingRule({conditionType})
+							}
 							setConditions={(conditions) => {
 								setRuleError(false);
 
-								setConditions(conditions);
+								updateEditingRule({conditions});
 							}}
 						/>
 					</div>
@@ -198,11 +177,11 @@ export default function RulesModal({
 						role="group"
 					>
 						<RuleBuilderActionSection
-							actions={actions}
+							actions={editingRule.actions}
 							setActions={(actions) => {
 								setRuleError(false);
 
-								setActions(actions);
+								updateEditingRule({actions});
 							}}
 						/>
 					</div>
@@ -224,22 +203,6 @@ export default function RulesModal({
 			/>
 		</ClayModal>
 	);
-}
-
-function getDefaultName(rules: Rule[]) {
-	const nameIsUsed = (rules: Rule[], name: string) =>
-		rules.some((rule) => rule.name === name);
-
-	let name = Liferay.Language.get('rule');
-	let suffix = 0;
-
-	while (nameIsUsed(rules, name)) {
-		suffix++;
-
-		name = `${Liferay.Language.get('rule')} ${suffix}`;
-	}
-
-	return name;
 }
 
 function ErrorAlert({

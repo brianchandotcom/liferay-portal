@@ -38,8 +38,6 @@ public class SiteNavigationMenuItemTestUtil {
 			).put(
 				"externalReferenceCode", layout.getExternalReferenceCode()
 			).put(
-				"groupId", String.valueOf(layout.getGroupId())
-			).put(
 				"layoutUuid", layout.getUuid()
 			).put(
 				"privateLayout", String.valueOf(layout.isPrivateLayout())

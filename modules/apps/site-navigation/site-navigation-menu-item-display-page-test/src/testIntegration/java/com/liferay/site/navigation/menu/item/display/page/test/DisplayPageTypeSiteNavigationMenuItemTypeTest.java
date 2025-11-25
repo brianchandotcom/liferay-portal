@@ -12,7 +12,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -20,6 +19,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
@@ -40,7 +40,9 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -76,6 +78,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -110,6 +113,8 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
 		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), _serviceContext);
@@ -118,6 +123,11 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			_serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -174,6 +184,68 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 	}
 
 	@Test
+	public void testGetDisplayPageTypeFromSiteNavigationMenuItemAcrossSites()
+		throws Exception {
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
+
+		Group group = GroupTestUtil.addGroup();
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(),
+				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				JournalArticle.class.getName(),
+				UnicodePropertiesBuilder.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle1.getResourcePrimKey()
+				).put(
+					"externalReferenceCode",
+					journalArticle1.getExternalReferenceCode()
+				).put(
+					"scopeExternalReferenceCode",
+					_group.getExternalReferenceCode()
+				).buildString(),
+				_serviceContext);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		String scopeExternalReferenceCode = typeSettingsUnicodeProperties.get(
+			"scopeExternalReferenceCode");
+
+		ERCInfoItemIdentifier ercInfoItemIdentifier = new ERCInfoItemIdentifier(
+			typeSettingsUnicodeProperties.get("externalReferenceCode"),
+			scopeExternalReferenceCode);
+
+		group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			ercInfoItemIdentifier.getScopeExternalReferenceCode(),
+			siteNavigationMenu.getCompanyId());
+
+		JournalArticle journalArticle2 =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					group.getGroupId(),
+					ercInfoItemIdentifier.getExternalReferenceCode());
+
+		Assert.assertEquals(journalArticle1, journalArticle2);
+	}
+
+	@Test
 	public void testGetLabel() throws Exception {
 		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
@@ -205,7 +277,10 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 
 		InfoItemIdentifier infoItemIdentifier = new ERCInfoItemIdentifier(
 			GetterUtil.getString(
-				typeSettingsUnicodeProperties.get("externalReferenceCode")));
+				typeSettingsUnicodeProperties.get("externalReferenceCode")),
+			GetterUtil.getString(
+				typeSettingsUnicodeProperties.get(
+					"scopeExternalReferenceCode")));
 
 		Assert.assertTrue(
 			AssetDisplayPageUtil.hasAssetDisplayPage(
@@ -246,10 +321,15 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				AssetCategory.class.getName(),
 				UnicodePropertiesBuilder.put(
+					"className", JournalArticle.class.getName()
+				).put(
 					"classNameId",
 					_portal.getClassNameId(JournalArticle.class.getName())
 				).put(
 					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"externalReferenceCode",
+					journalArticle.getExternalReferenceCode()
 				).buildString(),
 				_serviceContext);
 
@@ -366,8 +446,6 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				String.valueOf(
 					_portal.getClassNameId(AssetCategory.class.getName()))
 			).put(
-				"classPK", String.valueOf(_assetCategory.getCategoryId())
-			).put(
 				"externalReferenceCode",
 				_assetCategory.getExternalReferenceCode()
 			).build();
@@ -392,9 +470,11 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 					_portal.getClassName(
 						GetterUtil.getLong(
 							typeSettingsUnicodeProperties.get("classNameId"))),
-					new ClassPKInfoItemIdentifier(
-						GetterUtil.getLong(
-							typeSettingsUnicodeProperties.get("classPK")))),
+					new ERCInfoItemIdentifier(
+						typeSettingsUnicodeProperties.get(
+							"externalReferenceCode"),
+						typeSettingsUnicodeProperties.get(
+							"scopeExternalReferenceCode"))),
 				themeDisplay);
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
@@ -564,8 +644,6 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 					"classNameId",
 					String.valueOf(
 						_portal.getClassNameId(AssetCategory.class.getName()))
-				).put(
-					"classPK", String.valueOf(_assetCategory.getCategoryId())
 				).buildString(),
 				_serviceContext);
 
@@ -620,7 +698,8 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				String.valueOf(
 					_portal.getClassNameId(AssetCategory.class.getName()))
 			).put(
-				"classPK", String.valueOf(_assetCategory.getCategoryId())
+				"externalReferenceCode",
+				_assetCategory.getExternalReferenceCode()
 			).put(
 				"localizedNames", localizedNames
 			).put(
@@ -670,7 +749,13 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 	private Group _group;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

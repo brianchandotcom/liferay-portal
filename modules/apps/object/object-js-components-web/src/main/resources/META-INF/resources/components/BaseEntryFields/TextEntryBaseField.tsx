@@ -10,6 +10,7 @@ import {Input} from '../Input';
 interface TextEntryBaseFieldProps {
 	component?: 'input' | 'textarea';
 	error?: string;
+	id?: string;
 	label: string;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
 	placeholder?: string;
@@ -20,6 +21,7 @@ interface TextEntryBaseFieldProps {
 export function TextEntryBaseField({
 	component,
 	error,
+	id,
 	label,
 	onChange,
 	placeholder,
@@ -30,6 +32,7 @@ export function TextEntryBaseField({
 		<Input
 			component={component}
 			error={error}
+			id={id}
 			label={label}
 			onChange={onChange}
 			placeholder={placeholder}

@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class ObjectFieldsPage {
@@ -167,6 +168,21 @@ export class ObjectFieldsPage {
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
 
+	async disableDefaultValue(objectFieldName: string) {
+		await this.openObjectField(objectFieldName);
+
+		await this.advancedTab.click();
+
+		await this.useDefaultValueToggle.uncheck();
+
+		await this.editFieldSaveButton.click();
+
+		await waitForAlert(
+			this.page,
+			'The object field was updated successfully'
+		);
+	}
+
 	async goto(objectDefinitionLabel: string) {
 		await this.viewObjectDefinitionsPage.goto();
 
@@ -198,24 +214,45 @@ export class ObjectFieldsPage {
 
 	async setDefaultValue({
 		defaultValue,
+		objectFieldBusinessType,
 		objectFieldName,
-		objectName,
 	}: {
 		defaultValue: string;
+		objectFieldBusinessType: string;
 		objectFieldName: string;
-		objectName: string;
 	}) {
-		await this.goto(objectName);
-
 		await this.openObjectField(objectFieldName);
 
 		await this.advancedTab.click();
 
 		await this.useDefaultValueToggle.check({timeout: 1000});
 
-		await this.selectDefaultValue(defaultValue);
+		if (objectFieldBusinessType === 'Boolean') {
+			await this.selectDefaultValue(defaultValue);
+		}
+
+		if (
+			objectFieldBusinessType === 'LongText' ||
+			objectFieldBusinessType === 'Text'
+		) {
+			await this.iframeLocator
+				.getByLabel('Default ValueMandatory')
+				.fill(defaultValue);
+		}
+
+		if (objectFieldBusinessType === 'RichText') {
+			await this.iframeLocator
+				.getByLabel('Rich Text Editor')
+				.nth(1)
+				.fill(defaultValue);
+		}
 
 		await this.editFieldSaveButton.click();
+
+		await waitForAlert(
+			this.page,
+			'The object field was updated successfully'
+		);
 	}
 
 	getMaximumFileSizeErrorMessage({

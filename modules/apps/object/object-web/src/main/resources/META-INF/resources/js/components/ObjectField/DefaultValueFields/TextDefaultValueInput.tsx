@@ -14,6 +14,7 @@ const TextDefaultValueInput: React.FC<
 > = ({
 	defaultValue,
 	error,
+	id,
 	label,
 	onSubmit,
 	required,
@@ -50,6 +51,7 @@ const TextDefaultValueInput: React.FC<
 		<TextEntryBaseField
 			component={isLongText ? 'textarea' : 'input'}
 			error={error}
+			id={id}
 			label={label}
 			onChange={handleChangeInput}
 			placeholder={

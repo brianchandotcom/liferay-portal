@@ -79,7 +79,6 @@ public class PortletSharedSearchRequestImplTest {
 				"<lfr-widget-", portletAlias, " id=\"", elementId, "\">",
 				RandomTestUtil.randomString(), "</div>"),
 			RandomTestUtil.randomString(), "portletA");
-
 		FragmentEntryLink fragmentEntryLink2 = _getFragmentEntryLink(
 			StringBundler.concat(
 				"<div class=\"fragment_1\">", RandomTestUtil.randomString(),

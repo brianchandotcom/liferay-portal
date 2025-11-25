@@ -27,6 +27,7 @@ const AssignIndividualsDatatoPropertiesStep = ({
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [allChannelsSelected, setAllChannelsSelected] = useState(false);
 	const {dataSource} = useConnectSalesforce();
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const channelsConfiguration = dataSource?.provider?.get(
@@ -34,7 +35,12 @@ const AssignIndividualsDatatoPropertiesStep = ({
 		);
 
 		if (channelsConfiguration) {
-			setSelectedItems(channelsConfiguration.get('channelIds').toArray());
+			setSelectedItems(
+				channelsConfiguration
+					.get('channels')
+					.toJS()
+					.map(channel => channel.channelId)
+			);
 			setAllChannelsSelected(
 				channelsConfiguration.get('enableAllChannels')
 			);
@@ -48,7 +54,10 @@ const AssignIndividualsDatatoPropertiesStep = ({
 
 				const updatedDataSource = {
 					channelsConfiguration: {
-						channelIds: selectedItems,
+						channels: selectedItems.map(channelId => ({
+							channelId,
+							enabled: true
+						})),
 						enableAllChannels: allChannelsSelected
 					},
 					groupId,
@@ -56,6 +65,8 @@ const AssignIndividualsDatatoPropertiesStep = ({
 				} as any;
 
 				try {
+					setLoading(true);
+
 					await updateSalesforce(updatedDataSource);
 
 					const accountsEnabled = dataSource.provider.getIn([
@@ -100,8 +111,8 @@ const AssignIndividualsDatatoPropertiesStep = ({
 							'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
 						)
 					});
-
-					return;
+				} finally {
+					setLoading(false);
 				}
 			}}
 		>
@@ -151,6 +162,7 @@ const AssignIndividualsDatatoPropertiesStep = ({
 								onClick={() => {
 									open(modalTypes.SELECT_CHANNELS_MODAL, {
 										groupId,
+										initialItems: selectedItems,
 										onClose: close,
 										onSelect: setSelectedItems
 									});
@@ -185,6 +197,7 @@ const AssignIndividualsDatatoPropertiesStep = ({
 
 			<ButtonGroup
 				nextButtonLabel={Liferay.Language.get('finish-setup')}
+				nextButtonLoading={loading}
 				onCancel={onPrev}
 				prevButtonLabel={Liferay.Language.get('previous')}
 			/>

@@ -8,19 +8,20 @@ import Modal from 'shared/components/modal';
 import NoResultsDisplay from '../NoResultsDisplay';
 import React, {useEffect, useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
-import {CREATE_TIME, createOrderIOMap} from 'shared/util/pagination';
+import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {Sizes} from 'shared/util/constants';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
 import {
 	useSelectionContext,
 	withSelectionProvider
 } from 'shared/context/selection';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 interface ISelectChannelsModalProps {
+	groupId: string;
 	onClose: () => {};
 	onSelect: (channels: string[]) => {};
-	groupId: string;
+	initialItems: string[];
 }
 
 const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
@@ -29,12 +30,22 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 	 */
 	groupId,
 	onClose,
-	onSelect
+	onSelect,
+	initialItems = []
 }) => {
-	const {selectedItems} = useSelectionContext();
+	const {selectedItems, selectionDispatch} = useSelectionContext();
 
-	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(CREATE_TIME)
+	const {
+		delta,
+		onDeltaChange,
+		onOrderIOMapChange,
+		onPageChange,
+		onQueryChange,
+		orderIOMap,
+		page,
+		query
+	} = useStatefulPagination(null, {
+		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
 	const {data, error, loading} = useRequest({
@@ -55,6 +66,15 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 			setShowAlert(false);
 		}
 	}, [selectedItems]);
+
+	useEffect(() => {
+		if (initialItems.length) {
+			selectionDispatch({
+				payload: {items: initialItems.map(id => ({id}))},
+				type: 'add'
+			});
+		}
+	}, [initialItems]);
 
 	return (
 		<Modal size='lg'>
@@ -96,7 +116,7 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 					<CrossPageSelect
 						columns={[
 							{
-								accessor: 'name',
+								accessor: NAME,
 								className: 'table-cell-expand',
 								label: Liferay.Language.get(
 									'available-properties'
@@ -153,6 +173,16 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 								)}
 							/>
 						}
+						onDeltaChange={onDeltaChange}
+						onOrderIOMapChange={onOrderIOMapChange}
+						onPageChange={onPageChange}
+						onQueryChange={onQueryChange}
+						orderByOptions={[
+							{
+								label: Liferay.Language.get('property-name'),
+								value: NAME
+							}
+						]}
 						orderIOMap={orderIOMap}
 						page={page}
 						query={query}

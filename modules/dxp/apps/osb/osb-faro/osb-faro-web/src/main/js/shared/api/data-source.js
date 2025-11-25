@@ -383,6 +383,29 @@ export function fetchUserCount({groupId, id}) {
 	});
 }
 
+export function fetchChannelDatasources({
+	delta,
+	groupId,
+	id,
+	orderIOMap = createOrderIOMap(NAME),
+	page,
+	query = ''
+}) {
+	const orderParams = orderIOMap.first();
+	const orderByFields = buildOrderByFields(orderParams);
+
+	return sendRequest({
+		data: {
+			cur: page,
+			delta,
+			name: query,
+			orderByFields
+		},
+		method: 'GET',
+		path: `contacts/${groupId}/data_source/${id}/channel-datasources`
+	});
+}
+
 export function fetchCompanies({groupId}) {
 	return sendRequest({
 		method: 'GET',

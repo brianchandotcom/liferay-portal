@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.util;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -18,12 +19,14 @@ import java.util.Map;
 public class SpaceSummaryHeaderUtil {
 
 	public static Map<String, Object> getSpaceSummaryHeaderProps(
-			HttpServletRequest httpServletRequest, String labelKey,
-			Map<String, Object> permissions,
+			CreationMenu creationMenu, HttpServletRequest httpServletRequest,
+			String labelKey, Map<String, Object> permissions,
 			Map<String, Object> spaceModalProps, String titleKey, String url)
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
+			"creationMenu", creationMenu
+		).put(
 			"label", LanguageUtil.get(httpServletRequest, labelKey)
 		).put(
 			"permissions", permissions

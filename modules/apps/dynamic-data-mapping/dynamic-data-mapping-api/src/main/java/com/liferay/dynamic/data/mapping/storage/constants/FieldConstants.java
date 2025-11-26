@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,6 +29,8 @@ import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Marcellus Tavares
@@ -228,7 +231,9 @@ public class FieldConstants {
 	}
 
 	public static Serializable getSerializable(String type, String value) {
-		if (Validator.isNull(type)) {
+		TypedFunction typedFunction = _typedFunctions.get(type);
+
+		if (typedFunction == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Invalid type " + type);
 			}
@@ -236,56 +241,118 @@ public class FieldConstants {
 			return value;
 		}
 
-		if (isNumericType(type) && Validator.isNull(value)) {
-			return StringPool.BLANK;
-		}
-
-		if (type.equals(BOOLEAN)) {
-			return GetterUtil.getBoolean(value);
-		}
-		else if (type.equals(DATE) && Validator.isNotNull(value)) {
-			return value;
-		}
-		else if (type.equals(DOUBLE)) {
-			if (!NumberUtil.hasDecimalSeparator(value)) {
-				return GetterUtil.getInteger(value);
-			}
-
-			return GetterUtil.getDouble(value);
-		}
-		else if (type.equals(FLOAT)) {
-			if (!NumberUtil.hasDecimalSeparator(value)) {
-				return GetterUtil.getInteger(value);
-			}
-
-			return GetterUtil.getFloat(value);
-		}
-		else if (type.equals(INTEGER)) {
-			return GetterUtil.getInteger(value);
-		}
-		else if (type.equals(LONG)) {
-			return GetterUtil.getLong(value);
-		}
-		else if (type.equals(NUMBER)) {
-			return GetterUtil.getNumber(value);
-		}
-		else if (type.equals(SHORT)) {
-			return GetterUtil.getShort(value);
-		}
-
-		return value;
+		return typedFunction.apply(value);
 	}
 
 	public static boolean isNumericType(String type) {
-		if (type.equals(DOUBLE) || type.equals(FLOAT) || type.equals(INTEGER) ||
-			type.equals(LONG) || type.equals(NUMBER) || type.equals(SHORT)) {
+		TypedFunction typedFunction = _typedFunctions.get(type);
 
-			return true;
+		if (typedFunction == null) {
+			return false;
 		}
 
-		return false;
+		return typedFunction._numericType;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(FieldConstants.class);
+
+	private static final Map<String, TypedFunction> _typedFunctions =
+		HashMapBuilder.<String, TypedFunction>put(
+			BOOLEAN, new TypedFunction(GetterUtil::getBoolean, false)
+		).put(
+			DATE, new TypedFunction(value -> value, false)
+		).put(
+			DOUBLE,
+			new TypedFunction(
+				value -> {
+					if (Validator.isNull(value)) {
+						return StringPool.BLANK;
+					}
+
+					if (NumberUtil.hasDecimalSeparator(value)) {
+						return GetterUtil.getDouble(value);
+					}
+
+					return GetterUtil.getInteger(value);
+				},
+				true)
+		).put(
+			FLOAT,
+			new TypedFunction(
+				value -> {
+					if (Validator.isNull(value)) {
+						return StringPool.BLANK;
+					}
+
+					if (NumberUtil.hasDecimalSeparator(value)) {
+						return GetterUtil.getFloat(value);
+					}
+
+					return GetterUtil.getInteger(value);
+				},
+				true)
+		).put(
+			INTEGER,
+			new TypedFunction(
+				value -> {
+					if (Validator.isNull(value)) {
+						return StringPool.BLANK;
+					}
+
+					return GetterUtil.getInteger(value);
+				},
+				true)
+		).put(
+			LONG,
+			new TypedFunction(
+				value -> {
+					if (Validator.isNull(value)) {
+						return StringPool.BLANK;
+					}
+
+					return GetterUtil.getLong(value);
+				},
+				true)
+		).put(
+			NUMBER,
+			new TypedFunction(
+				value -> {
+					if (Validator.isNull(value)) {
+						return StringPool.BLANK;
+					}
+
+					return GetterUtil.getNumber(value);
+				},
+				true)
+		).put(
+			SHORT,
+			new TypedFunction(
+				value -> {
+					if (Validator.isNull(value)) {
+						return StringPool.BLANK;
+					}
+
+					return GetterUtil.getShort(value);
+				},
+				true)
+		).build();
+
+	private static class TypedFunction {
+
+		public Serializable apply(String value) {
+			return _function.apply(value);
+		}
+
+		private TypedFunction(
+			Function<String, Serializable> function, boolean numericType) {
+
+			_function = function;
+			_numericType = numericType;
+		}
+
+		private final Function<String, Serializable> _function;
+		private final boolean _numericType;
+
+	}
 
 }

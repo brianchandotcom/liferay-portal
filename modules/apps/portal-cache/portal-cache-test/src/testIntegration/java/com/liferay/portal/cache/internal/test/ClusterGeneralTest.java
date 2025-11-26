@@ -203,6 +203,71 @@ public class ClusterGeneralTest implements Serializable {
 			tomcatNode4.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
 	}
 
+	@Test
+	public void testUDPControlChannelProperties() throws Exception {
+
+		// Set cluster.link.channel.properties.control=udp.xml
+
+		PropsUtil.set(
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, "udp.xml");
+
+		PropsUtil.set("cluster.link.channel.properties.transport.0", "udp.xml");
+
+		// Create node 3 with property
+		// cluster.link.channel.properties.control=udp.xml
+		// cluster.link.channel.properties.transport.0=udp.xml
+
+		TomcatNode tomcatNode3 = _createAndStartTomcatNodeWithProperties(
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
+			"cluster.link.channel.properties.transport.0");
+
+		// Create node 4 with property
+		// cluster.link.channel.properties.control=udp.xml
+		// cluster.link.channel.properties.transport.0=udp.xml
+
+		TomcatNode tomcatNode4 = _createAndStartTomcatNodeWithProperties(
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
+			"cluster.link.channel.properties.transport.0");
+
+		// Assert node 3 has udp.xml set up
+
+		Assert.assertEquals(
+			"udp.xml",
+			tomcatNode3.syncExecute(
+				() -> PropsUtil.get(
+					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)));
+
+		Assert.assertEquals(
+			"udp.xml",
+			tomcatNode3.syncExecute(
+				() -> PropsUtil.get(
+					"cluster.link.channel.properties.transport.0")));
+
+		// Assert node 4 has udp.xml set up
+
+		Assert.assertEquals(
+			"udp.xml",
+			tomcatNode4.syncExecute(
+				() -> PropsUtil.get(
+					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)));
+
+		Assert.assertEquals(
+			"udp.xml",
+			tomcatNode4.syncExecute(
+				() -> PropsUtil.get(
+					"cluster.link.channel.properties.transport.0")));
+
+		// Assert node 3 can get its cluster node id
+
+		Assert.assertNotNull(
+			tomcatNode3.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
+
+		// Assert node 4 can get its cluster node id
+
+		Assert.assertNotNull(
+			tomcatNode4.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
+	}
+
 	private void _assertNodesVisibleToEachOther(
 			TomcatNode tomcatNode1, TomcatNode tomcatNode2)
 		throws Exception {
@@ -236,13 +301,18 @@ public class ClusterGeneralTest implements Serializable {
 				)));
 	}
 
-	private TomcatNode _createAndStartTomcatNodeWithProperties(String property)
+	private TomcatNode _createAndStartTomcatNodeWithProperties(
+			String... properties)
 		throws Exception {
 
 		TomcatCluster.Builder builder = tomcatClusterTestRule.buildTomcatNode();
 
 		builder.configureCopyPropertyKeys(
-			copyPropertyKeys -> copyPropertyKeys.add(property));
+			copyPropertyKeys -> {
+				for (String property : properties) {
+					copyPropertyKeys.add(property);
+				}
+			});
 
 		TomcatNode tomcatNode = builder.build();
 

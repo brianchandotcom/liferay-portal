@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportStyleUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.layout.converter.VerticalAlignmentConverter;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
@@ -126,6 +127,9 @@ public class GridPageElementDefinitionDTOConverter
 		return new GridViewport() {
 			{
 				setCustomCSS(() -> viewportJSONObject.getString("customCSS"));
+				setFragmentViewportStyle(
+					() -> FragmentViewportStyleUtil.toFragmentViewportStyle(
+						viewportJSONObject.getJSONObject("styles")));
 				setGridViewportDefinition(
 					() -> _toGridViewportDefinition(viewportJSONObject));
 				setId(() -> gridViewportId);

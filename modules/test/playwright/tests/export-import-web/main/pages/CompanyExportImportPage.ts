@@ -164,13 +164,8 @@ export class CompanyExportImportPage {
 
 		const fileName = path.basename(filePath);
 
-		if (taskStatus === 'completedWithErrors') {
-			await this.exportImportPage
-				.taskCompleteWithErrorsLabel(fileName)
-				.waitFor();
-		}
-		else {
-			await this.exportImportPage.taskSuccessLabel(fileName).waitFor();
-		}
+		await this.exportImportPage
+			.taskStatusLabel(fileName, taskStatus)
+			.waitFor();
 	}
 }

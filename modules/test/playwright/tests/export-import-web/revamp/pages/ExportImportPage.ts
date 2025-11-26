@@ -7,6 +7,8 @@ import {Locator, Page} from '@playwright/test';
 
 import {zipFolder} from '../../../../utils/zip';
 
+import type {taskStatus} from '../../main/pages/ExportImportPage';
+
 export class ExportImportPage {
 	readonly continueButton: Locator;
 	readonly currentAndPreviousTab: Locator;
@@ -20,6 +22,11 @@ export class ExportImportPage {
 	readonly newImportTab: Locator;
 	readonly page: Page;
 	readonly title: Locator;
+	readonly taskRow: (taskName: string) => Locator;
+	readonly taskStatusLabel: (
+		taskName: string,
+		taskStatus?: taskStatus
+	) => Locator;
 
 	constructor(page: Page) {
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
@@ -44,12 +51,20 @@ export class ExportImportPage {
 		});
 		this.page = page;
 		this.title = page.getByLabel('Export the selected data to');
-	}
+		this.taskRow = (taskName) =>
+			this.page.locator('[data-qa-id="row"]', {
+				hasText: taskName,
+			});
+		this.taskStatusLabel = (taskName, taskStatus = 'success') => {
+			const taskStatusTexts: Record<taskStatus, string> = {
+				completedWithErrors: 'Completed with errors',
+				success: 'Successful',
+			};
 
-	taskSuccessLabel(taskName: string) {
-		return this.page
-			.locator('[data-qa-id="row"]', {hasText: taskName})
-			.getByText('Successful');
+			return this.taskRow(taskName).getByText(
+				taskStatusTexts[taskStatus]
+			);
+		};
 	}
 
 	async export(title: string) {

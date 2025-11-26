@@ -164,6 +164,44 @@
 					"#tag-name": "labels"
 				},
 				{
+					"#cdata-value": [
+						"[",
+						"    {",
+						"        \"name\": \"inputVariable\",",
+						"        \"type\": \"string\"",
+						"    }",
+						"]"
+					],
+					"#tag-name": "input-variables"
+				},
+				{
+					"#cdata-value": [
+						"[",
+						"    {",
+						"        \"name\": \"outputVariable\",",
+						"        \"type\": \"string\"",
+						"    }",
+						"]"
+					],
+					"#tag-name": "output-variables"
+				},
+				{
+					"#cdata-value": [
+						"Prompt"
+					],
+					"#tag-name": "prompt"
+				},
+				{
+					"#cdata-value": [
+						"[",
+						"    {",
+						"        \"externalReferenceCode\": \"L_LIFERAY_MCP_SERVER\"",
+						"    }",
+						"]"
+					],
+					"#tag-name": "tools"
+				},
+				{
 					"#child-nodes": [
 						{
 							"#child-nodes": [
@@ -221,34 +259,6 @@
 						}
 					],
 					"#tag-name": "transitions"
-				},
-				{
-					"#cdata-value": [
-						"[",
-						"    {",
-						"        \"name\": \"inputVariable\",",
-						"        \"type\": \"string\"",
-						"    }",
-						"]"
-					],
-					"#tag-name": "input-variables"
-				},
-				{
-					"#cdata-value": [
-						"[",
-						"    {",
-						"        \"name\": \"outputVariable\",",
-						"        \"type\": \"string\"",
-						"    }",
-						"]"
-					],
-					"#tag-name": "output-variables"
-				},
-				{
-					"#cdata-value": [
-						"Prompt"
-					],
-					"#tag-name": "prompt"
 				},
 				{
 					"#cdata-value": [

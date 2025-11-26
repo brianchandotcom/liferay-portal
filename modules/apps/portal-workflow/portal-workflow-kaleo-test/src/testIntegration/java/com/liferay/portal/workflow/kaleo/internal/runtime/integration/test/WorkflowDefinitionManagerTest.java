@@ -167,6 +167,12 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 						)
 					).toString()),
 				_createWorkflowNodeSetting("prompt", "Prompt"),
+				_createWorkflowNodeSetting(
+					"tools",
+					JSONUtil.put(
+						JSONUtil.put(
+							"externalReferenceCode", "L_LIFERAY_MCP_SERVER")
+					).toString()),
 				_createWorkflowNodeSetting("userMessage", "User Message")),
 			workflowNode.getWorkflowNodeSettings());
 	}
@@ -270,6 +276,12 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 						)
 					).toString()),
 				_createWorkflowNodeSetting("prompt", "Prompt"),
+				_createWorkflowNodeSetting(
+					"tools",
+					JSONUtil.put(
+						JSONUtil.put(
+							"externalReferenceCode", "L_LIFERAY_MCP_SERVER")
+					).toString()),
 				_createWorkflowNodeSetting("userMessage", "User Message")),
 			workflowNode.getWorkflowNodeSettings());
 	}

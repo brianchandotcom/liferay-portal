@@ -20,6 +20,7 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 export const baseTest = mergeTests(
 	dataApiHelpersTest,
 	exportImportPagesTest,
+	isolatedSiteTest,
 	loginTest(),
 	productMenuPageTest,
 	uiElementsPageTest
@@ -45,7 +46,6 @@ export const testWithHeadlessContentPagesFF = mergeTests(
 		'LPD-35443': {enabled: true},
 		'LPD-35914': {enabled: true},
 	}),
-	isolatedSiteTest,
 	masterPagesPagesTest,
 	pageTemplatesPagesTest
 );

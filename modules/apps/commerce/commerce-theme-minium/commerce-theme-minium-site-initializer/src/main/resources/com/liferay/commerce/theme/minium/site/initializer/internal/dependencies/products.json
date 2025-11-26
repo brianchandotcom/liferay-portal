@@ -1505,9 +1505,6 @@
 		"displayAvailability": true,
 		"displayStockQuantity": true,
 		"externalReferenceCode": "MIN19999",
-		"filterAccountGroups": [
-			"North American Accounts"
-		],
 		"height": 14.4,
 		"images": [
 			"Minium_ProductImage_106.png",

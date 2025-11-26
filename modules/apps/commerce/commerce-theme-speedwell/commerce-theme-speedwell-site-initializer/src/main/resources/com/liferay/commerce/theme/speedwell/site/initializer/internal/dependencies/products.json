@@ -1499,9 +1499,6 @@
 		"displayAvailability": true,
 		"displayStockQuantity": true,
 		"externalReferenceCode": "SPEED19999",
-		"filterAccountGroups": [
-			"North American Accounts"
-		],
 		"height": 14.4,
 		"images": [
 			"Speedwell_ProductImage_106.png",

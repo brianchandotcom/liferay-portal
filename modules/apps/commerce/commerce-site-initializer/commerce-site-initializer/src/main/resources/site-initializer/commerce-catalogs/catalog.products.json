@@ -555,9 +555,6 @@
 		"displayAvailability": true,
 		"displayStockQuantity": true,
 		"externalReferenceCode": "CLSC19999",
-		"filterAccountGroups": [
-			"North American Accounts"
-		],
 		"height": 14.4,
 		"images": [
 			"product_image_106.png",

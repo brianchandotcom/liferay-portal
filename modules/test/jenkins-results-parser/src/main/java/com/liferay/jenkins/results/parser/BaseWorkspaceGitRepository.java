@@ -10,8 +10,12 @@ import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.IOException;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -769,7 +773,16 @@ public abstract class BaseWorkspaceGitRepository
 							gitWorkingDirectory.getGitRepositoryName(),
 							senderBranchSHA);
 
-					if (gitHubRemoteGitCommit.isOlderThanOneMonth() &&
+					Date commitDate = gitHubRemoteGitCommit.getCommitDate();
+
+					Instant commitInstant = commitDate.toInstant();
+
+					Instant oneMonthAgo = Instant.now(
+					).minus(
+						Duration.ofDays(30)
+					);
+
+					if (commitInstant.isBefore(oneMonthAgo) &&
 						_isPullRequest()) {
 
 						PullRequest pullRequest =

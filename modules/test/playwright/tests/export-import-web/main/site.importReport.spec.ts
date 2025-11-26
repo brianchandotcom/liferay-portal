@@ -56,7 +56,7 @@ test('Can see error report and details', async ({
 
 	await exportImportPage.export(exportName, 'Tests 1 Items');
 
-	await expect(exportImportPage.taskSuccessLabel(exportName)).toBeVisible();
+	await expect(exportImportPage.taskStatusLabel(exportName)).toBeVisible();
 
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(exportName);
@@ -141,7 +141,7 @@ test(
 			await exportImportPage.export(exportName, 'Tests 1 Items');
 
 			await expect(
-				exportImportPage.taskSuccessLabel(exportName)
+				exportImportPage.taskStatusLabel(exportName)
 			).toBeVisible();
 
 			const exportFilePath =

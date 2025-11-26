@@ -547,7 +547,7 @@ testWithExportImportAtInstanceLevelFF(
 				await exportImportPage.exportAll(exportName);
 
 				await expect(
-					exportImportPage.taskSuccessLabel(exportName)
+					exportImportPage.taskStatusLabel(exportName)
 				).toBeVisible({timeout: 60000});
 
 				exportFilePath =

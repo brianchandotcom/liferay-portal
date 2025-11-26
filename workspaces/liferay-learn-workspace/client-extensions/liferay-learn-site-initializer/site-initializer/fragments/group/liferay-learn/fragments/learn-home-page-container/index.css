@@ -90,6 +90,18 @@
 	grid-template-columns: repeat(4, 1fr);
 }
 
+.learn-home-search-bar {
+	.input-group {
+		.input-group-inset {
+			border-radius: 5rem 0 0 5rem !important;
+		}
+
+		.input-group-inset-item {
+			border-radius: 0 5rem 5rem 0 !important;
+		}
+	}
+}
+
 .learn-welcome-container {
 	gap: 2.5rem;
 	

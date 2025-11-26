@@ -38,6 +38,7 @@ jest.mock(
 );
 
 const LAYOUT_DATA = {
+	deletedItems: [],
 	items: {
 		itemId: {
 			children: [],
@@ -115,6 +116,7 @@ describe('Topper', () => {
 
 	it('renders custom name of the fragment', () => {
 		const layoutData = {
+			deletedItems: [],
 			items: {
 				itemId: {
 					children: [],
@@ -135,6 +137,7 @@ describe('Topper', () => {
 
 	it('disables options when multiple items are selected', () => {
 		const layoutData = {
+			deletedItems: [],
 			items: {
 				'item-1': {
 					children: [],
@@ -172,6 +175,7 @@ describe('Topper', () => {
 
 	describe('Ensures that selectItem() is not called when the topper buttons are clicked', () => {
 		const layoutData = {
+			deletedItems: [],
 			items: {
 				fragment: {
 					children: [],
@@ -232,6 +236,7 @@ describe('Topper', () => {
 	describe('Form Step components', () => {
 		it('renders step name correctly', () => {
 			const layoutData = {
+				deletedItems: [],
 				items: {
 					formStep1: {
 						children: [],
@@ -270,6 +275,7 @@ describe('Topper', () => {
 
 		it('does not render actions in the form step container', () => {
 			const layoutData = {
+				deletedItems: [],
 				items: {
 					formStepContainer: {
 						children: [],

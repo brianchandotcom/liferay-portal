@@ -44,6 +44,7 @@ jest.mock(
 );
 
 const LAYOUT_DATA = {
+	deletedItems: [],
 	items: {
 		itemId1: {
 			children: [],

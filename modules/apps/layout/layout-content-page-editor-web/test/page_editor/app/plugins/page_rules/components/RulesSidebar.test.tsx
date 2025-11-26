@@ -41,6 +41,20 @@ jest.mock(
 	() => jest.fn()
 );
 
+const mockOpenRulesModal = jest.fn();
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/RulesModalContext',
+	() => ({
+		useRulesModal: () => ({
+			closeRulesModal: jest.fn(),
+			openRulesModal: mockOpenRulesModal,
+			updateRule: jest.fn(),
+		}),
+		useRulesModalState: () => ({rule: null, visible: false}),
+	})
+);
+
 const renderComponent = ({rules = []}: {rules?: Rule[]} = {}) =>
 	render(
 		<StoreAPIContextProvider
@@ -98,6 +112,8 @@ describe('RulesSidebar', () => {
 	beforeEach(() => {
 		disposeCache();
 		initializeCache();
+
+		mockOpenRulesModal.mockClear();
 
 		setCacheItem({
 			data: [
@@ -434,11 +450,7 @@ describe('RulesSidebar', () => {
 				jest.advanceTimersByTime(100);
 			});
 
-			const modalTitle = document.querySelector('.modal-title')!;
-
-			expect(modalTitle.innerHTML).toBe('new-rule');
-
-			expect(screen.getByLabelText('rule-name')).toHaveValue('rule 2');
+			expect(mockOpenRulesModal).toHaveBeenCalledTimes(1);
 		});
 
 		it('opens modal to edit a rule when clicking that option', async () => {
@@ -469,11 +481,13 @@ describe('RulesSidebar', () => {
 				jest.advanceTimersByTime(100);
 			});
 
-			const modalTitle = document.querySelector('.modal-title')!;
+			expect(mockOpenRulesModal).toHaveBeenCalledTimes(1);
 
-			expect(modalTitle.innerHTML).toBe('edit-rule');
-
-			expect(screen.getByLabelText('rule-name')).toHaveValue('rule 1');
+			expect(mockOpenRulesModal).toHaveBeenCalledWith(
+				expect.objectContaining({
+					rule: expect.objectContaining({id: 'rule-1'}),
+				})
+			);
 		});
 
 		it('calls delete rule thunk with correct rule id when clicking that option', async () => {

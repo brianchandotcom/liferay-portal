@@ -7,6 +7,8 @@ import {ScreenReaderAnnouncerContext} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {ComponentProps, useContext, useRef} from 'react';
 
+import {useSelectorCallback} from '../../../app/contexts/StoreContext';
+import isInputFragment from '../../../app/utils/isInputFragment';
 import useActionValues from '../../../app/utils/useActionValues';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
@@ -28,25 +30,24 @@ interface ActionProps {
 	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
 }
 
-export const ACTION_TYPE_ITEMS = [
-	{
-		label: Liferay.Language.get('show'),
-		value: 'show',
-	},
-
-	{
-		label: Liferay.Language.get('hide'),
-		value: 'hide',
-	},
-	{
-		label: Liferay.Language.get('enable'),
-		value: 'enable',
-	},
-	{
+export const ACTION_TYPE_ITEMS = {
+	disable: {
 		label: Liferay.Language.get('disable'),
 		value: 'disable',
 	},
-] as const;
+	enable: {
+		label: Liferay.Language.get('enable'),
+		value: 'enable',
+	},
+	hide: {
+		label: Liferay.Language.get('hide'),
+		value: 'hide',
+	},
+	show: {
+		label: Liferay.Language.get('show'),
+		value: 'show',
+	},
+} as const;
 
 export const ACTION_ITEMS = [
 	{
@@ -73,6 +74,24 @@ export default function Action({
 
 	const selectRef = useRef<HTMLButtonElement | undefined>();
 
+	const actionTypes = useSelectorCallback(
+		(state) => {
+			if (action.readOnly && action.itemId) {
+				const isFormFragment = isInputFragment(
+					state.layoutData.items[action.itemId],
+					state.fragmentEntryLinks
+				);
+
+				if (!isFormFragment) {
+					return [ACTION_TYPE_ITEMS.hide, ACTION_TYPE_ITEMS.show];
+				}
+			}
+
+			return Object.values(ACTION_TYPE_ITEMS);
+		},
+		[action.itemId]
+	);
+
 	const completeAction = !!action.itemId;
 
 	return (
@@ -96,7 +115,7 @@ export default function Action({
 					Liferay.Language.get('select-x'),
 					Liferay.Language.get('action')
 				)}
-				items={ACTION_TYPE_ITEMS}
+				items={actionTypes}
 				onSelectionChange={(type) => onActionChange({...action, type})}
 				selectedKey={action.type}
 				triggerRef={selectRef}

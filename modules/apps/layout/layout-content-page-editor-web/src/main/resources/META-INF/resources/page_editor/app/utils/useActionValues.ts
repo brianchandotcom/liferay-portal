@@ -68,5 +68,5 @@ function getType(type?: Action['type']) {
 		return '';
 	}
 
-	return ACTION_TYPE_ITEMS.find(({value}) => value === type)?.label;
+	return ACTION_TYPE_ITEMS[type].label;
 }

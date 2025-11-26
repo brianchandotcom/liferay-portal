@@ -77,7 +77,7 @@ public class AssetCategoryDocumentContributor
 			return;
 		}
 
-		Collection<AssetCategory> assetCategories = _lookupAssetCategories(
+		Collection<AssetCategory> assetCategories = _getAssetCategories(
 			_classNameLocalService.getClassNameId(className), classPK);
 
 		if ((assetCategories == null) || assetCategories.isEmpty()) {
@@ -226,6 +226,85 @@ public class AssetCategoryDocumentContributor
 			assetVocabularyCategoryExternalReferenceCodes);
 	}
 
+	private Collection<AssetCategory> _getAssetCategories(
+		long classNameId, long classPK) {
+
+		Map<Long, Map<Long, Set<Serializable>>> assetCategoryIdsMaps =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
+				() -> _assetCategoryLocalService.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						AssetCategoryTable.INSTANCE
+					),
+					false),
+				AssetCategoryDocumentContributor.class.getName(),
+				count -> {
+					Map<Long, Map<Long, Set<Serializable>>>
+						localAssetCategoryIdsMap = new HashMap<>();
+
+					if (count == 0) {
+						return localAssetCategoryIdsMap;
+					}
+
+					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+						AssetEntryTable.INSTANCE.classNameId,
+						AssetEntryTable.INSTANCE.classPK,
+						AssetCategoryTable.INSTANCE.categoryId
+					).from(
+						AssetCategoryTable.INSTANCE
+					).innerJoinON(
+						AssetEntryAssetCategoryRelTable.INSTANCE,
+						AssetCategoryTable.INSTANCE.categoryId.eq(
+							AssetEntryAssetCategoryRelTable.INSTANCE.
+								assetCategoryId)
+					).innerJoinON(
+						AssetEntryTable.INSTANCE,
+						AssetEntryAssetCategoryRelTable.INSTANCE.assetEntryId.
+							eq(AssetEntryTable.INSTANCE.entryId)
+					);
+
+					for (Object[] values :
+							(List<Object[]>)_assetCategoryLocalService.dslQuery(
+								dslQuery, false)) {
+
+						Map<Long, Set<Serializable>> assetCategoryIdsMap =
+							localAssetCategoryIdsMap.computeIfAbsent(
+								(Long)values[0], key -> new HashMap<>());
+
+						Set<Serializable> assetCategoryIds =
+							assetCategoryIdsMap.computeIfAbsent(
+								(Long)values[1], key -> new HashSet<>());
+
+						assetCategoryIds.add((Serializable)values[2]);
+					}
+
+					return localAssetCategoryIdsMap;
+				});
+
+		if (assetCategoryIdsMaps == null) {
+			return _assetCategoryLocalService.getCategories(
+				classNameId, classPK);
+		}
+
+		Map<Long, Set<Serializable>> assetCategoryIdsMap =
+			assetCategoryIdsMaps.get(classNameId);
+
+		if (assetCategoryIdsMap == null) {
+			return null;
+		}
+
+		Set<Serializable> assetCategoryIds = assetCategoryIdsMap.get(classPK);
+
+		if (assetCategoryIds == null) {
+			return null;
+		}
+
+		Map<Serializable, AssetCategory> assetCategories =
+			_assetCategoryLocalService.fetchPersistedModels(assetCategoryIds);
+
+		return assetCategories.values();
+	}
+
 	private Map<Integer, Map<Long, List<AssetCategory>>>
 		_getAssetVocabularyVisibilityTypeMap(
 			Collection<AssetCategory> assetCategories) {
@@ -319,85 +398,6 @@ public class AssetCategoryDocumentContributor
 		}
 
 		return groupExternalReferenceCode;
-	}
-
-	private Collection<AssetCategory> _lookupAssetCategories(
-		long classNameId, long classPK) {
-
-		Map<Long, Map<Long, Set<Serializable>>> assetCategoryIdsMaps =
-			ReindexCacheThreadLocal.getGlobalReindexCache(
-				() -> _assetCategoryLocalService.dslQueryCount(
-					DSLQueryFactoryUtil.count(
-					).from(
-						AssetCategoryTable.INSTANCE
-					),
-					false),
-				AssetCategoryDocumentContributor.class.getName(),
-				count -> {
-					Map<Long, Map<Long, Set<Serializable>>>
-						localAssetCategoryIdsMap = new HashMap<>();
-
-					if (count == 0) {
-						return localAssetCategoryIdsMap;
-					}
-
-					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-						AssetEntryTable.INSTANCE.classNameId,
-						AssetEntryTable.INSTANCE.classPK,
-						AssetCategoryTable.INSTANCE.categoryId
-					).from(
-						AssetCategoryTable.INSTANCE
-					).innerJoinON(
-						AssetEntryAssetCategoryRelTable.INSTANCE,
-						AssetCategoryTable.INSTANCE.categoryId.eq(
-							AssetEntryAssetCategoryRelTable.INSTANCE.
-								assetCategoryId)
-					).innerJoinON(
-						AssetEntryTable.INSTANCE,
-						AssetEntryAssetCategoryRelTable.INSTANCE.assetEntryId.
-							eq(AssetEntryTable.INSTANCE.entryId)
-					);
-
-					for (Object[] values :
-							(List<Object[]>)_assetCategoryLocalService.dslQuery(
-								dslQuery, false)) {
-
-						Map<Long, Set<Serializable>> assetCategoryIdsMap =
-							localAssetCategoryIdsMap.computeIfAbsent(
-								(Long)values[0], key -> new HashMap<>());
-
-						Set<Serializable> assetCategoryIds =
-							assetCategoryIdsMap.computeIfAbsent(
-								(Long)values[1], key -> new HashSet<>());
-
-						assetCategoryIds.add((Serializable)values[2]);
-					}
-
-					return localAssetCategoryIdsMap;
-				});
-
-		if (assetCategoryIdsMaps == null) {
-			return _assetCategoryLocalService.getCategories(
-				classNameId, classPK);
-		}
-
-		Map<Long, Set<Serializable>> assetCategoryIdsMap =
-			assetCategoryIdsMaps.get(classNameId);
-
-		if (assetCategoryIdsMap == null) {
-			return null;
-		}
-
-		Set<Serializable> assetCategoryIds = assetCategoryIdsMap.get(classPK);
-
-		if (assetCategoryIds == null) {
-			return null;
-		}
-
-		Map<Serializable, AssetCategory> assetCategories =
-			_assetCategoryLocalService.fetchPersistedModels(assetCategoryIds);
-
-		return assetCategories.values();
 	}
 
 	private static final String _DELIMITER =

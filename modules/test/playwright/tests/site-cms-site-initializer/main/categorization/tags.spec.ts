@@ -164,11 +164,11 @@ test(
 
 		await expect(tag).toBeVisible();
 
-		await expect(
-			page
-				.locator('[data-testid="visualization-mode-table"]')
-				.getByText('Default')
-		).toBeVisible();
+		const tagRow = page
+			.locator('.fds tbody tr')
+			.filter({has: page.getByText(name)});
+
+		await expect(tagRow.getByRole('cell', {name: 'Default'})).toBeVisible();
 
 		await tagsPage.deleteTag(name);
 	}

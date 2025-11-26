@@ -28,16 +28,19 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 					"FragmentEntryLink2.externalReferenceCode, ",
 					"Group_.externalReferenceCode from FragmentEntryLink ",
 					"FragmentEntryLink1 left join FragmentEntryLink ",
-					"FragmentEntryLink2 on FragmentEntryLink2.ctCollectionId ",
-					"= FragmentEntryLink1.ctCollectionId and ",
+					"FragmentEntryLink2 on (FragmentEntryLink2.ctCollectionId ",
+					"= FragmentEntryLink1.ctCollectionId or ",
+					"FragmentEntryLink2.ctCollectionId = 0) and ",
 					"FragmentEntryLink2.fragmentEntryLinkId = ",
 					"FragmentEntryLink1.originalFragmentEntryLinkId left join ",
-					"FragmentEntry on FragmentEntry.ctCollectionId = ",
-					"FragmentEntryLink1.ctCollectionId and ",
+					"FragmentEntry on (FragmentEntry.ctCollectionId = ",
+					"FragmentEntryLink1.ctCollectionId or ",
+					"FragmentEntry.ctCollectionId = 0) and ",
 					"FragmentEntry.fragmentEntryId = ",
 					"FragmentEntryLink1.fragmentEntryId left join Group_ on ",
-					"Group_.ctCollectionId = FragmentEntry.ctCollectionId and ",
-					"Group_.groupId = FragmentEntry.groupId")),
+					"(Group_.ctCollectionId = FragmentEntry.ctCollectionId or ",
+					"Group_.ctCollectionId = 0) and Group_.groupId = ",
+					"FragmentEntry.groupId")),
 			StringBundler.concat(
 				"update FragmentEntryLink set originalFragmentEntryLinkERC = ",
 				"?, fragmentEntryERC = ?, fragmentEntryScopeERC = ? where ",
@@ -49,10 +52,10 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 				resultSet.getString(7)
 			},
 			(values, preparedStatement) -> {
-				long ctCollectionId = (Long)values[0];
-				long fragmentEntryLinkId = (Long)values[1];
-				long fragmentEntryLinkGroupId = (Long)values[2];
-				long fragmentEntryGroupId = (Long)values[3];
+				long ctCollectionId = (long)values[0];
+				long fragmentEntryLinkId = (long)values[1];
+				long fragmentEntryLinkGroupId = (long)values[2];
+				long fragmentEntryGroupId = (long)values[3];
 				String fragmentEntryERC = (String)values[4];
 				String fragmentEntryLinkERC = (String)values[5];
 				String fragmentEntryScopeERC = (String)values[6];

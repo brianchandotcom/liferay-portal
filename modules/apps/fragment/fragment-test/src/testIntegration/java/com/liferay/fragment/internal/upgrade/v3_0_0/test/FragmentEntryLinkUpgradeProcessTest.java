@@ -397,20 +397,24 @@ public class FragmentEntryLinkUpgradeProcessTest
 					"FragmentEntryLink2.fragmentEntryLinkId from ",
 					"FragmentEntryLink FragmentEntryLink1 left join ",
 					"FragmentEntryLink FragmentEntryLink2 on ",
-					"FragmentEntryLink1.ctCollectionId = ",
-					"FragmentEntryLink2.ctCollectionId and ",
+					"(FragmentEntryLink2.ctCollectionId = ",
+					"FragmentEntryLink1.ctCollectionId or ",
+					"FragmentEntryLink2.ctCollectionId = 0) and ",
 					"FragmentEntryLink1.originalFragmentEntryLinkERC = ",
 					"FragmentEntryLink2.externalReferenceCode left join ",
-					"FragmentEntry on FragmentEntry.ctCollectionId = ",
-					"FragmentEntryLink1.ctCollectionId and ",
+					"FragmentEntry on (FragmentEntry.ctCollectionId = ",
+					"FragmentEntryLink1.ctCollectionId or ",
+					"FragmentEntry.ctCollectionId = 0) and ",
 					"FragmentEntry.externalReferenceCode = ",
 					"FragmentEntryLink1.fragmentEntryERC left join Group_ on ",
-					"Group_.ctCollectionId = ",
-					"FragmentEntryLink1.ctCollectionId and ( ",
+					"(Group_.ctCollectionId = ",
+					"FragmentEntryLink1.ctCollectionId or ",
+					"Group_.ctCollectionId = 0) and ( ",
 					"Group_.externalReferenceCode = ",
 					"FragmentEntryLink1.fragmentEntryScopeERC or ( ",
 					"Group_.groupId = FragmentEntryLink1.groupId and ",
-					"FragmentEntryLink1.fragmentEntryScopeERC is null))"));
+					"FragmentEntryLink1.fragmentEntryScopeERC is null)) and ",
+					"FragmentEntry.groupId = Group_.groupId"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

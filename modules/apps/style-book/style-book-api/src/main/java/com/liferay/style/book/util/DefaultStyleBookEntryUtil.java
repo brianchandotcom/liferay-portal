@@ -117,7 +117,8 @@ public class DefaultStyleBookEntryUtil {
 
 		return StyleBookEntryLocalServiceUtil.
 			fetchStyleBookEntryByExternalReferenceCode(
-				layout.getStyleBookEntryERC(), layout.getGroupId());
+				layout.getStyleBookEntryERC(),
+				StagingUtil.getLiveGroupId(layout.getGroupId()));
 	}
 
 	private static boolean _isStyleBookEntryApplicable(

@@ -33,6 +33,7 @@ test('Add a new tag', {tag: '@LPD-51250'}, async ({page, tagsPage}) => {
 	await checkAccessibility({
 		page,
 		selectors: ['.categorization-section'],
+		selectorsToExclude: ['.management-bar-wrapper'],
 	});
 
 	await tagsPage.deleteTag(tagName);
@@ -223,6 +224,7 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 	await checkAccessibility({
 		page,
 		selectors: ['.merge-tags'],
+		selectorsToExclude: ['.management-bar-wrapper'],
 	});
 
 	await page

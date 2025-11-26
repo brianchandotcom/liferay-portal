@@ -1555,12 +1555,12 @@ test(
 
 		await widgetPagePage.addPortlet('Web Content Display');
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.locator(
+		await page.getByRole('link', {exact: true, name: 'Back'}).click();
+
+		await expect(
+			page.locator(
 				'//td[contains(@class,"publications-render-view-content")]'
-			),
-			trigger: page.getByRole('link', {exact: true, name: 'Back'}),
-		});
+			)
+		).toBeVisible();
 	}
 );

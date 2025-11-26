@@ -11,13 +11,13 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiselectItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiselectItemBuilder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,18 +45,13 @@ public class InviteUsersDisplayContext {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				RoleNameComparator.getInstance(true));
 
-		List<MultiselectItem> multiselectItems = new ArrayList<>();
-
-		for (AccountRole accountRole : baseModelSearchResult.getBaseModels()) {
-			multiselectItems.add(
-				MultiselectItemBuilder.setLabel(
-					accountRole::getRoleName
-				).setValue(
-					String.valueOf(accountRole.getAccountRoleId())
-				).build());
-		}
-
-		return multiselectItems;
+		return TransformUtil.transform(
+			baseModelSearchResult.getBaseModels(),
+			accountRole -> MultiselectItemBuilder.setLabel(
+				accountRole::getRoleName
+			).setValue(
+				String.valueOf(accountRole.getAccountRoleId())
+			).build());
 	}
 
 }

@@ -294,12 +294,6 @@ const RichText = ({
 		const data = currentValue[defaultLocale.localeId];
 
 		if (Liferay.FeatureFlags['LPD-11235']) {
-
-			// setCKEditor5Config({
-			// 	...ckEditor5Config,
-			// 	initialData: data ?? '',
-			// });
-
 			setCurrentInternalValue(data ?? '');
 		}
 		else {
@@ -309,15 +303,8 @@ const RichText = ({
 
 	useEffect(() => {
 		const handleRestoreState = () => {
-			console.log(value, 'value');
 			if (Liferay.FeatureFlags['LPD-11235']) {
-				// setCKEditor5Config({
-				// 	...ckEditor5Config,
-				// 	initialData: value,
-				// });
-
 				setCurrentInternalValue(value ?? '');
-				
 			}
 			else {
 				editorRef.current.editor.setData(value);

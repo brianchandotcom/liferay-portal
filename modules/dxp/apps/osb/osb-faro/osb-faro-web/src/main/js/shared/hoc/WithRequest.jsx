@@ -44,7 +44,7 @@ export default (
 			<WrappedComponent
 				groupId={groupId}
 				{...otherProps}
-				{...mapResultToProps(data)}
+				{...mapResultToProps(data, otherProps)}
 			/>
 		));
 

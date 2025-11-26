@@ -14,6 +14,8 @@ import {connect} from 'react-redux';
 import {PropTypes} from 'prop-types';
 import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {Segment} from 'shared/util/records';
+import {SegmentTypes} from 'shared/util/constants';
+import {sub} from 'shared/util/lang';
 
 const MessageKeys = {
 	NameCannotBeBlank: 'name-cannot-be-blank',
@@ -209,6 +211,7 @@ export default WrappedComponent => {
 				groupId,
 				id,
 				segment,
+				type,
 				...otherProps
 			} = this.props;
 
@@ -241,6 +244,11 @@ export default WrappedComponent => {
 						}
 				  ];
 
+			const SEGMENT_TYPES_LABEL_MAP = {
+				[SegmentTypes.Batch]: Liferay.Language.get('batch'),
+				[SegmentTypes.RealTime]: Liferay.Language.get('real-time')
+			};
+
 			return (
 				<BasePage
 					className={getCN('segment-edit-root', className, {
@@ -267,7 +275,9 @@ export default WrappedComponent => {
 								title={this.getPageTitle()}
 							>
 								<Label display='secondary' size='lg' uppercase>
-									{Liferay.Language.get('segment')}
+									{sub(Liferay.Language.get('x-segment'), [
+										SEGMENT_TYPES_LABEL_MAP[type]
+									])}
 								</Label>
 							</BasePage.Header.TitleSection>
 

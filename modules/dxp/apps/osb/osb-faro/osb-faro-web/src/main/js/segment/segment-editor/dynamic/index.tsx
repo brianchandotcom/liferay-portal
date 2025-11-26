@@ -86,6 +86,7 @@ interface ISegmentEditorProps {
 	) => void;
 	propertyGroupsIList: List<PropertyGroup>;
 	segment: Segment;
+	type: SegmentTypes;
 }
 
 class SegmentEditor extends React.Component<ISegmentEditorProps> {
@@ -154,7 +155,8 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 					includeAnonymousUsers,
 					name,
 					state: segmentState
-				}
+				},
+				type
 			}
 		} = this;
 
@@ -215,6 +217,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 										includeAnonymousUsers={
 											includeAnonymousUsers
 										}
+										segmentType={type}
 										valid={isValid && hasChanges}
 									/>
 

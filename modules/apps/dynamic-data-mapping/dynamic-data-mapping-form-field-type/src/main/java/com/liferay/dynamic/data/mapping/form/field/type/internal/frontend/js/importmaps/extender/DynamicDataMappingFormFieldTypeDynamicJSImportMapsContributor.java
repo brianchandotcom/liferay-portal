@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Álvaro Leal
  */
 @Component(service = DynamicJSImportMapsContributor.class)
-public class DynamicDataMappingFormFieldTypeJSImportMapsContributor
+public class DynamicDataMappingFormFieldTypeDynamicJSImportMapsContributor
 	implements DynamicJSImportMapsContributor {
 
 	@Override

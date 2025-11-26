@@ -5,6 +5,6 @@
 		<suppress checks="CamelCaseNameCheck" files="oauth2-provider-rest/src/main/java/com/liferay/oauth2/provider/rest/internal/endpoint/introspect/TokenIntrospection\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="JavaJSImportMapsContributorCheck" files="oauth2-provider-web/src/main/java/com/liferay/oauth2/provider/web/internal/frontend/js/importmaps/extender/OAuth2ClientJSImportMapsContributor\.java" />
+		<suppress checks="JavaJSImportMapsContributorCheck" files="oauth2-provider-web/src/main/java/com/liferay/oauth2/provider/web/internal/frontend/js/importmaps/extender/OAuth2ClientDynamicJSImportMapsContributor\.java" />
 	</source-check>
 </suppressions>

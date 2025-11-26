@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.oauth2.provider.web.internal.frontend.js.importmaps.extender;
+package com.liferay.fragment.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
 import com.liferay.petra.string.StringPool;
@@ -20,10 +20,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Bryce Osterhaus
+ * @author Víctor Galán
  */
 @Component(service = DynamicJSImportMapsContributor.class)
-public class OAuth2ClientJSImportMapsContributor
+public class FragmentImplDynamicJSImportMapsContributor
 	implements DynamicJSImportMapsContributor {
 
 	@Override
@@ -36,10 +36,9 @@ public class OAuth2ClientJSImportMapsContributor
 				httpServletRequest);
 
 		ESModuleAbsolutePortalURLBuilder esModuleAbsolutePortalURLBuilder =
-			absolutePortalURLBuilder.forESModule(
-				"oauth2-provider-web", "client.js");
+			absolutePortalURLBuilder.forESModule("fragment-impl", "api.js");
 
-		writer.write("\"@liferay/oauth2-provider-web/client\" : \"");
+		writer.write("\"@liferay/fragment-impl/api\" : \"");
 		writer.write(esModuleAbsolutePortalURLBuilder.build());
 		writer.write(StringPool.QUOTE);
 	}

@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -222,14 +223,14 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (freeMarkerJSONObject == null) {
-			return null;
+			return Collections.emptyMap();
 		}
 
 		JSONObject configurationJSONObject =
 			fragmentEntryLink.getConfigurationJSONObject();
 
 		if (configurationJSONObject == null) {
-			return null;
+			return Collections.emptyMap();
 		}
 
 		DTOConverterContext dtoConverterContext = _getDTOConverterContext(

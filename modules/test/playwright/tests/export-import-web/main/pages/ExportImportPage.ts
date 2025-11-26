@@ -12,6 +12,8 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
 
+export type taskStatus = 'success' | 'completedWithErrors';
+
 export class ExportImportPage {
 	readonly cancelButton: Locator;
 	readonly continueButton: Locator;
@@ -38,8 +40,10 @@ export class ExportImportPage {
 	readonly productMenuPage: ProductMenuPage;
 	readonly taskActionsMenu: (taskName: string) => Locator;
 	readonly taskRow: (taskName: string) => Locator;
-	readonly taskCompleteWithErrorsLabel: (taskName: string) => Locator;
-	readonly taskSuccessLabel: (taskName: string) => Locator;
+	readonly taskStatusLabel: (
+		taskName: string,
+		taskStatus?: taskStatus
+	) => Locator;
 	readonly title: Locator;
 	readonly updateDataAlert: Locator;
 	readonly updateDataMirrorWarningLabel: Locator;
@@ -92,16 +96,22 @@ export class ExportImportPage {
 			'[id="_com_liferay_exportimport_web_portlet_ImportPortlet_contentLink_com_liferay_layout_admin_web_portlet_GroupPagesPortlet"]'
 		);
 		this.productMenuPage = new ProductMenuPage(page);
-		this.taskActionsMenu = (taskName: string) =>
+		this.taskActionsMenu = (taskName) =>
 			this.taskRow(taskName).getByRole('button');
-		this.taskRow = (taskName: string) =>
+		this.taskRow = (taskName) =>
 			this.page.locator('[data-qa-id="row"]', {
 				hasText: taskName,
 			});
-		this.taskCompleteWithErrorsLabel = (taskName: string) =>
-			this.taskRow(taskName).getByText('Completed with errors');
-		this.taskSuccessLabel = (taskName: string) =>
-			this.taskRow(taskName).getByText('Successful');
+		this.taskStatusLabel = (taskName, taskStatus = 'success') => {
+			const taskStatusTexts: Record<taskStatus, string> = {
+				completedWithErrors: 'Completed with errors',
+				success: 'Successful',
+			};
+
+			return this.taskRow(taskName).getByText(
+				taskStatusTexts[taskStatus]
+			);
+		};
 		this.title = page.getByPlaceholder('Enter the name of the process');
 		this.updateDataAlert = page.locator('[role="alert"]', {
 			hasText:
@@ -259,14 +269,7 @@ export class ExportImportPage {
 		await this.importButton.click();
 
 		const fileName = path.basename(filePath);
-		if (taskStatus === 'completedWithErrors') {
-			await expect(
-				this.taskCompleteWithErrorsLabel(fileName)
-			).toBeVisible();
-		}
-		else {
-			await expect(this.taskSuccessLabel(fileName)).toBeVisible();
-		}
+		await expect(this.taskStatusLabel(fileName, taskStatus)).toBeVisible();
 	}
 
 	async getExportableItems() {

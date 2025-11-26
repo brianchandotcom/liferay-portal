@@ -14,14 +14,14 @@
 			"externalReferenceCode": "M2H8_CALL_TO_ACTION_TARGET",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "TARGET_BLANK",
-					"key": "targetBlank",
-					"name": "Target Blank"
+					"externalReferenceCode": "BLANK",
+					"key": "blank",
+					"name": "Blank"
 				},
 				{
-					"externalReferenceCode": "TARGET_SELF",
-					"key": "targetSelf",
-					"name": "Target Self"
+					"externalReferenceCode": "SELF",
+					"key": "self",
+					"name": "Self"
 				}
 			],
 			"name": "M2H8 Call To Action Target",

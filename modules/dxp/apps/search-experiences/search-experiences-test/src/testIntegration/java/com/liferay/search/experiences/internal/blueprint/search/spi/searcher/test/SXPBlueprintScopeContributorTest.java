@@ -86,9 +86,9 @@ public class SXPBlueprintScopeContributorTest {
 
 		_addJournalArticle(_assetLibraryGroup, _ASSET_LIBRARY_TITLE);
 
-		_depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
+		_spaceDepotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
-		_spaceGroup = _depotEntry.getGroup();
+		_spaceGroup = _spaceDepotEntry.getGroup();
 
 		_addJournalArticle(_spaceGroup, _SPACE_TITLE);
 	}
@@ -96,7 +96,7 @@ public class SXPBlueprintScopeContributorTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_depotEntryLocalService.deleteDepotEntry(_assetLibraryDepotEntry);
-		_depotEntryLocalService.deleteDepotEntry(_depotEntry);
+		_depotEntryLocalService.deleteDepotEntry(_spaceDepotEntry);
 		_sxpBlueprintLocalService.deleteSXPBlueprint(_sxpBlueprint);
 
 		GroupTestUtil.deleteGroup(_group1);
@@ -105,21 +105,14 @@ public class SXPBlueprintScopeContributorTest {
 
 	@Test
 	public void testAssetLibraryScope() throws Exception {
-		_addSXPBlueprint(_assetLibraryGroup.getExternalReferenceCode());
-		_assertSearch(ListUtil.toList(_ASSET_LIBRARY_TITLE));
-	}
+		_configureSXPBlueprint(_assetLibraryGroup.getExternalReferenceCode());
 
-	@Test
-	public void testMultipleSiteScope() throws Exception {
-		_addSXPBlueprint(
-			_group1.getExternalReferenceCode(),
-			_group2.getExternalReferenceCode());
-		_assertSearch(Arrays.asList(_GROUP_1_TITLE, _GROUP_2_TITLE));
+		_assertSearch(Arrays.asList(_ASSET_LIBRARY_TITLE));
 	}
 
 	@Test
 	public void testNoScope() throws Exception {
-		_addSXPBlueprint();
+		_configureSXPBlueprint();
 
 		SearchResponse searchResponse = _search();
 
@@ -130,8 +123,15 @@ public class SXPBlueprintScopeContributorTest {
 
 	@Test
 	public void testSiteScope() throws Exception {
-		_addSXPBlueprint(_group1.getExternalReferenceCode());
-		_assertSearch(ListUtil.toList(_GROUP_1_TITLE));
+		_configureSXPBlueprint(_group1.getExternalReferenceCode());
+
+		_assertSearch(Arrays.asList(_GROUP_1_TITLE));
+
+		_configureSXPBlueprint(
+			_group1.getExternalReferenceCode(),
+			_group2.getExternalReferenceCode());
+
+		_assertSearch(Arrays.asList(_GROUP_1_TITLE, _GROUP_2_TITLE));
 	}
 
 	@Test
@@ -146,7 +146,8 @@ public class SXPBlueprintScopeContributorTest {
 					_assetLibraryDepotEntry.getDepotEntryId(),
 					_group1.getGroupId());
 
-			_addSXPBlueprint(_group1.getExternalReferenceCode());
+			_configureSXPBlueprint(_group1.getExternalReferenceCode());
+
 			_assertSearch(ListUtil.toList(_GROUP_1_TITLE));
 		}
 		finally {
@@ -159,7 +160,8 @@ public class SXPBlueprintScopeContributorTest {
 
 	@Test
 	public void testSpaceScope() throws Exception {
-		_addSXPBlueprint(_spaceGroup.getExternalReferenceCode());
+		_configureSXPBlueprint(_spaceGroup.getExternalReferenceCode());
+
 		_assertSearch(ListUtil.toList(_SPACE_TITLE));
 	}
 
@@ -192,25 +194,34 @@ public class SXPBlueprintScopeContributorTest {
 			LocaleUtil.US, null, false, true, _serviceContext);
 	}
 
-	private void _addSXPBlueprint(String... scopeGroupExternalReferenceCodes)
+	private void _assertSearch(List<String> expected) throws Exception {
+		SearchResponse searchResponse = _search();
+
+		DocumentsAssert.assertValuesIgnoreRelevance(
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			_LOCALIZED_TITLE_FIELD, expected);
+	}
+
+	private void _configureSXPBlueprint(
+			String... scopeGroupExternalReferenceCodes)
 		throws Exception {
 
-		JSONObject generalConfigurationJSONObject = JSONUtil.put(
+		JSONObject configurationJSONObject = JSONUtil.put(
 			"emptySearchEnabled", true);
 
 		if (ArrayUtil.isNotEmpty(scopeGroupExternalReferenceCodes)) {
-			generalConfigurationJSONObject.put(
+			configurationJSONObject.put(
 				"scope",
 				JSONUtil.putAll((Object[])scopeGroupExternalReferenceCodes));
 		}
 
-		JSONObject configurationJSONObject = JSONUtil.put(
-			"generalConfiguration", generalConfigurationJSONObject);
+		JSONObject generalConfigurationJSONObject = JSONUtil.put(
+			"generalConfiguration", configurationJSONObject);
 
 		if (_sxpBlueprint == null) {
 			_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 				null, TestPropsValues.getUserId(),
-				configurationJSONObject.toString(),
+				generalConfigurationJSONObject.toString(),
 				Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
 				StringPool.BLANK, StringPool.BLANK,
 				Collections.singletonMap(
@@ -219,19 +230,11 @@ public class SXPBlueprintScopeContributorTest {
 		}
 		else {
 			_sxpBlueprint.setConfigurationJSON(
-				configurationJSONObject.toString());
+				generalConfigurationJSONObject.toString());
 
 			_sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
 				_sxpBlueprint);
 		}
-	}
-
-	private void _assertSearch(List<String> expected) throws Exception {
-		SearchResponse searchResponse = _search();
-
-		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(), searchResponse.getDocuments(),
-			_LOCALIZED_TITLE_FIELD, expected);
 	}
 
 	private SearchResponse _search() throws Exception {
@@ -260,7 +263,6 @@ public class SXPBlueprintScopeContributorTest {
 
 	private static DepotEntry _assetLibraryDepotEntry;
 	private static Group _assetLibraryGroup;
-	private static DepotEntry _depotEntry;
 
 	@Inject
 	private static DepotEntryLocalService _depotEntryLocalService;
@@ -268,6 +270,7 @@ public class SXPBlueprintScopeContributorTest {
 	private static Group _group1;
 	private static Group _group2;
 	private static ServiceContext _serviceContext;
+	private static DepotEntry _spaceDepotEntry;
 	private static Group _spaceGroup;
 	private static SXPBlueprint _sxpBlueprint;
 

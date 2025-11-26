@@ -1290,7 +1290,9 @@ public abstract class BaseUtilityPageResourceImpl
 			Permission permission = new Permission() {
 				{
 					actionIds = actionsIdsSet.toArray(new String[0]);
+
 					roleExternalReferenceCode = role.getExternalReferenceCode();
+
 					roleName = role.getName();
 				}
 			};

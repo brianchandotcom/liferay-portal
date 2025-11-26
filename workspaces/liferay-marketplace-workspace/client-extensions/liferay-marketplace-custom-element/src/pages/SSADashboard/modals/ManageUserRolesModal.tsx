@@ -56,37 +56,46 @@ const ManageUserModal = ({
 
 	const onSubmit = async (formData: FormValues) => {
 		try {
+			if (!ssaAccount?.id) {
+				return Liferay.Util.openToast({
+					message: i18n.translate('could-not-find-ssa-account'),
+					type: 'danger',
+				});
+			}
+
 			const {items: roles} =
 				await HeadlessAdminUser.getAccountRoles(accountERC);
 
-			const intialSet = new Set(currentRoles.map((role) => role.value));
-			const newSet = new Set(formData.roles.map((role) => role.value));
+			const currentRolesSet = new Set(
+				currentRoles.map((role) => role.value)
+			);
+			const newRolesSet = new Set(
+				formData.roles.map((role) => role.value)
+			);
 
 			const rolesToAdd = roles.filter(
-				(role) => !intialSet.has(role.name) && newSet.has(role.name)
+				(role) =>
+					!currentRolesSet.has(role.name) &&
+					newRolesSet.has(role.name)
 			);
 
 			const rolesToRemove = roles.filter(
-				(role) => intialSet.has(role.name) && !newSet.has(role.name)
+				(role) =>
+					currentRolesSet.has(role.name) &&
+					!newRolesSet.has(role.name)
 			);
-
-			const accountId = Liferay.CommerceContext.account?.accountId;
-
-			if (!accountId) {
-				return;
-			}
 
 			await Promise.all([
 				...rolesToRemove.map((role) =>
 					HeadlessAdminUser.deleteRoleAccountUser(
-						accountId,
+						ssaAccount?.id,
 						role.id,
 						user.id
 					)
 				),
 				...rolesToAdd.map((role) =>
 					HeadlessAdminUser.sendRoleAccountUser(
-						accountId,
+						ssaAccount?.id,
 						role.id,
 						user.id
 					)
@@ -94,7 +103,7 @@ const ManageUserModal = ({
 			]);
 
 			const updatedRoleBriefs = roles.filter((role) =>
-				newSet.has(role.name)
+				newRolesSet.has(role.name)
 			);
 
 			mutate(
@@ -119,7 +128,8 @@ const ManageUserModal = ({
 
 										return {
 											...account,
-											roleBriefs: updatedRoleBriefs,
+											roleBriefs:
+												updatedRoleBriefs.reverse(),
 										};
 									}
 								),
@@ -131,7 +141,7 @@ const ManageUserModal = ({
 			);
 		}
 		catch {
-			Liferay.Util.openToast({
+			return Liferay.Util.openToast({
 				message: i18n.translate('unable-to-assign-roles'),
 				title: i18n.translate('error'),
 				type: 'danger',

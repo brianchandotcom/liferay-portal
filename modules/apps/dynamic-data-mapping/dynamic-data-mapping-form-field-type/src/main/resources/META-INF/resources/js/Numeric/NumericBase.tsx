@@ -67,7 +67,6 @@ const NumericBase = ({
 			focused,
 			inputMask,
 			inputMaskFormat,
-			inputValue,
 			symbols,
 			value,
 		});

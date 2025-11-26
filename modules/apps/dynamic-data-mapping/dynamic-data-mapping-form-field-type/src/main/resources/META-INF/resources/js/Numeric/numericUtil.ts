@@ -15,8 +15,6 @@ import {trimLeftZero} from '../util/numericalOperations';
 import {NumericDataType} from './Numeric';
 import {IMaskedNumber} from './NumericBase';
 
-const NON_NUMERIC_REGEX = /[\D]/g;
-
 const adaptiveMask = (rawValue: string, inputMaskFormat: string) => {
 	const generateMask = (mask: string): string => {
 		if (!mask.includes('0')) {
@@ -220,7 +218,6 @@ type formatValueProps = {
 	focused: boolean;
 	inputMask: boolean | undefined;
 	inputMaskFormat: string | undefined;
-	inputValue: IMaskedNumber;
 	symbols: ISymbols;
 	value: string;
 };
@@ -231,7 +228,6 @@ export function formatValue({
 	focused,
 	inputMask,
 	inputMaskFormat,
-	inputValue,
 	symbols,
 	value,
 }: formatValueProps) {
@@ -243,18 +239,6 @@ export function formatValue({
 					thousandsSeparator: symbols.thousandsSeparator,
 					value,
 				});
-
-	// allows user to delete characters from the mask
-
-	const inputValueRaw = inputValue.raw.replace(NON_NUMERIC_REGEX, '');
-	const rawValue = value.replace(NON_NUMERIC_REGEX, '');
-
-	if (
-		inputValue.masked?.length > value.length &&
-		(inputValueRaw?.length ?? 0) === rawValue.length
-	) {
-		value = inputValueRaw.slice(0, -1);
-	}
 
 	return inputMask
 		? getMaskedValue({

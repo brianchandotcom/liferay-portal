@@ -31,9 +31,9 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.framework.BundleContext;
@@ -96,6 +96,10 @@ public class BatchEnginePortletDataHandlerRegistrar {
 		BundleContext bundleContext, long companyId, boolean enabled) {
 
 		if (enabled) {
+			if (_enabledCompanyIds.contains(companyId)) {
+				return;
+			}
+
 			_enabledCompanyIds.add(companyId);
 		}
 		else {
@@ -174,7 +178,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	@Reference
 	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
-	private final List<Long> _enabledCompanyIds = new CopyOnWriteArrayList<>();
+	private final Set<Long> _enabledCompanyIds = new CopyOnWriteArraySet<>();
 
 	@Reference
 	private GroupLocalService _groupLocalService;

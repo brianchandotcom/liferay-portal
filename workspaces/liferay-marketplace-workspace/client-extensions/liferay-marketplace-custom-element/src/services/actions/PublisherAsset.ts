@@ -156,20 +156,22 @@ export default class PublisherAsset {
 					version: this.versions,
 				});
 
-			this.file.forEach(async (file) => {
-				await HeadlessPublisherAssetAttachment.createPublisherAssetAttachment(
-					{
-						name: file.fileName,
-						publisherAssetType: PICK_LIST_ASSET_TYPE,
-						r_publisherAssetsToAttachment_c_publisherAssetsId:
-							publisherAsset.id,
-						sourceCode: await this.getPublisherAssetDocumentId(
-							file,
-							packageFolderId
-						),
-					}
-				);
-			});
+			await Promise.all(
+				this.file.map(async (file) => {
+					await HeadlessPublisherAssetAttachment.createPublisherAssetAttachment(
+						{
+							name: file.fileName,
+							publisherAssetType: PICK_LIST_ASSET_TYPE,
+							r_publisherAssetsToAttachment_c_publisherAssetsId:
+								publisherAsset.id,
+							sourceCode: await this.getPublisherAssetDocumentId(
+								file,
+								packageFolderId
+							),
+						}
+					);
+				})
+			);
 		}
 		catch {
 			Liferay.Util.openToast({

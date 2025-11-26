@@ -94,10 +94,10 @@ export function NewAppUploadAppPackagesComponent({
 			if (liferayPackage.id === _liferayPackage.id) {
 				if (
 					_liferayPackage.file &&
-					_liferayPackage.file.some((liferayPackage: UploadedFile) =>
+					_liferayPackage.file.some((existingFile: UploadedFile) =>
 						newUploadedPackage.some(
 							(newPackage) =>
-								newPackage.fileName === liferayPackage.fileName
+								newPackage.fileName === existingFile.fileName
 						)
 					)
 				) {

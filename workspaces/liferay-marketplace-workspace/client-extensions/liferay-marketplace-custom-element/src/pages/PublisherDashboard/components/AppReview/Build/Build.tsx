@@ -86,7 +86,9 @@ const Build = ({
 											{liferayPackage.file.map(
 												(packageFile: any) => {
 													return (
-														<>
+														<div
+															key={packageFile.id}
+														>
 															<FileContent
 																liferayPackage={
 																	packageFile
@@ -100,7 +102,7 @@ const Build = ({
 																	packageFile?.readableSize
 																}
 															</small>
-														</>
+														</div>
 													);
 												}
 											)}

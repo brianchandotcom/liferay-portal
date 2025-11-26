@@ -6,6 +6,7 @@
 package com.liferay.style.book.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -14,7 +15,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -93,41 +97,8 @@ public class DefaultStyleBookEntryUtilTest {
 
 	@Test
 	public void testGetDefaultStyleBookEntry1() throws Exception {
-		Layout masterLayoutBasedLayout = _getMasterLayoutBasedLayout();
-
-		Layout masterLayout = _layoutLocalService.getLayout(
-			masterLayoutBasedLayout.getMasterLayoutPlid());
-
-		StyleBookEntry styleBookEntry1 = _addStyleBookEntry(false);
-
-		masterLayout.setStyleBookEntryERC(
-			styleBookEntry1.getExternalReferenceCode());
-
-		_layoutLocalService.updateLayout(masterLayout);
-
-		StyleBookEntry defaultStyleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
-				masterLayoutBasedLayout);
-
-		Assert.assertEquals(
-			styleBookEntry1.getStyleBookEntryId(),
-			defaultStyleBookEntry.getStyleBookEntryId());
-
-		StyleBookEntry styleBookEntry2 = _addStyleBookEntry(false);
-
-		masterLayoutBasedLayout.setStyleBookEntryERC(
-			styleBookEntry2.getExternalReferenceCode());
-
-		masterLayoutBasedLayout = _layoutLocalService.updateLayout(
-			masterLayoutBasedLayout);
-
-		defaultStyleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
-				masterLayoutBasedLayout);
-
-		Assert.assertEquals(
-			styleBookEntry2.getStyleBookEntryId(),
-			defaultStyleBookEntry.getStyleBookEntryId());
+		_testGetDefaultStyleBookEntryFromMasterLayout();
+		_testGetDefaultStyleBookEntryWhenStagingIsEnabled();
 	}
 
 	@FeatureFlag("LPD-30204")
@@ -313,6 +284,87 @@ public class DefaultStyleBookEntryUtilTest {
 			masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		return _layoutLocalService.updateLayout(masterLayoutBasedLayout);
+	}
+
+	private void _testGetDefaultStyleBookEntryFromMasterLayout()
+		throws Exception {
+
+		Layout masterLayoutBasedLayout = _getMasterLayoutBasedLayout();
+
+		Layout masterLayout = _layoutLocalService.getLayout(
+			masterLayoutBasedLayout.getMasterLayoutPlid());
+
+		StyleBookEntry styleBookEntry1 = _addStyleBookEntry(false);
+
+		masterLayout.setStyleBookEntryERC(
+			styleBookEntry1.getExternalReferenceCode());
+
+		_layoutLocalService.updateLayout(masterLayout);
+
+		StyleBookEntry defaultStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+				masterLayoutBasedLayout);
+
+		Assert.assertEquals(
+			styleBookEntry1.getStyleBookEntryId(),
+			defaultStyleBookEntry.getStyleBookEntryId());
+
+		StyleBookEntry styleBookEntry2 = _addStyleBookEntry(false);
+
+		masterLayoutBasedLayout.setStyleBookEntryERC(
+			styleBookEntry2.getExternalReferenceCode());
+
+		masterLayoutBasedLayout = _layoutLocalService.updateLayout(
+			masterLayoutBasedLayout);
+
+		defaultStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+				masterLayoutBasedLayout);
+
+		Assert.assertEquals(
+			styleBookEntry2.getStyleBookEntryId(),
+			defaultStyleBookEntry.getStyleBookEntryId());
+	}
+
+	private void _testGetDefaultStyleBookEntryWhenStagingIsEnabled()
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false,
+			new ServiceContext());
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), true, null, RandomTestUtil.randomString(),
+				null, _THEME_ID_CLASSIC, new ServiceContext());
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+
+		Assert.assertEquals(stagingGroup.getGroupId(), layout.getGroupId());
+
+		layout.setStyleBookEntryERC(styleBookEntry.getExternalReferenceCode());
+
+		StyleBookEntry defaultStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(layout);
+
+		Assert.assertEquals(
+			styleBookEntry.getStyleBookEntryId(),
+			defaultStyleBookEntry.getStyleBookEntryId());
+
+		layout.setGroupId(_group.getGroupId());
+
+		defaultStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(layout);
+
+		Assert.assertEquals(
+			styleBookEntry.getStyleBookEntryId(),
+			defaultStyleBookEntry.getStyleBookEntryId());
 	}
 
 	private void

@@ -17,34 +17,37 @@ import getRandomString from '../../../utils/getRandomString';
 import {getTempDir} from '../../../utils/temp';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
-export const test = mergeTests(
+export const baseTest = mergeTests(
 	dataApiHelpersTest,
 	exportImportPagesTest,
-	featureFlagsTest({
-		'LPD-35914': {enabled: false},
-	}),
 	loginTest(),
 	productMenuPageTest,
 	uiElementsPageTest
 );
 
+export const test = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-35914': {enabled: false},
+	})
+);
+
 export const testWithExportImportAtInstanceLevelFF = mergeTests(
-	test,
+	baseTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true},
 	})
 );
 
 export const testWithHeadlessContentPagesFF = mergeTests(
-	testWithExportImportAtInstanceLevelFF,
+	baseTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
+		'LPD-35914': {enabled: true},
 	}),
 	isolatedSiteTest,
 	masterPagesPagesTest,
-	pageTemplatesPagesTest,
-	productMenuPageTest,
-	uiElementsPageTest
+	pageTemplatesPagesTest
 );
 
 async function expectExportName(exportImportPage, taskName: string) {

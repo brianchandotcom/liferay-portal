@@ -527,7 +527,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		for (var tagName : list "sleeve,t-shirt,pattern") {
+		for (var tagName : list "sleeve,shirt,pattern") {
 			DMDocument.viewTagInfo(tagName = ${tagName});
 		}
 	}

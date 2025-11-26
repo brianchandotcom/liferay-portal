@@ -58,11 +58,20 @@ export default function RulesModal() {
 			return;
 		}
 
-		if (editingRule.id) {
+		// Remove readOnly prop so it's not persisted
+
+		const rule = {
+			...editingRule,
+			actions: editingRule.actions.map(
+				({readOnly: _, ...action}) => action
+			),
+		};
+
+		if (rule.id) {
 			dispatch(
 				updateRule({
-					...editingRule,
-					ruleId: editingRule.id,
+					...rule,
+					ruleId: rule.id,
 				})
 			).then(() =>
 				openToast({
@@ -74,7 +83,7 @@ export default function RulesModal() {
 			);
 		}
 		else {
-			dispatch(addRule(editingRule)).then(() =>
+			dispatch(addRule(rule)).then(() =>
 				openToast({
 					message: Liferay.Language.get(
 						'the-rule-was-created-successfully'

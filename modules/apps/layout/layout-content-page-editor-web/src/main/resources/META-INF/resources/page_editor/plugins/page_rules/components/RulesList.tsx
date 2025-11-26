@@ -17,11 +17,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
-import {
-	useHighlightItems,
-	useHighlightedItemIds,
-	useKeyboardNavigation,
-} from '../../../app/js-index';
+import {useHighlightItems, useKeyboardNavigation} from '../../../app/js-index';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import deleteRule from '../../../app/thunks/deleteRule';
 import updateRule from '../../../app/thunks/updateRule';
@@ -52,6 +48,28 @@ export default function RulesList({
 	const [savedRuleId, setSavedRuleId] = useState<string | null>(null);
 
 	const dispatch = useDispatch();
+	const highlightItems = useHighlightItems();
+
+	const onUnhighlightItems = (event: Event) => {
+		const target = event.target as HTMLElement;
+
+		if (!target.classList.contains('page-editor__rule')) {
+			highlightItems([]);
+		}
+	};
+
+	useEventListener(
+		'keydown',
+		(event) => {
+			const {key} = event as KeyboardEvent;
+
+			if (key === 'Enter') {
+				onUnhighlightItems(event);
+			}
+		},
+		false,
+		document
+	);
 
 	const onCreateRule = () => setModalVisible(true);
 
@@ -150,8 +168,7 @@ function RuleItem({
 	setSavedRuleId: (id: string | null) => void;
 }) {
 	const highlightItems = useHighlightItems();
-	const highlightedItemIds = useHighlightedItemIds();
-	const {element, isTarget, setElement} = useKeyboardNavigation({
+	const {isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
 	const layoutData = useSelector((state) => state.layoutData);
@@ -212,26 +229,6 @@ function RuleItem({
 	const onHighlightItems = async () => {
 		highlightItems(ruleItemIds);
 	};
-
-	const onUnhighlightItems = (event: Event) => {
-		if (highlightedItemIds.length && !element.contains(event.target)) {
-			highlightItems([]);
-		}
-	};
-
-	useEventListener('click', onUnhighlightItems, false, document);
-	useEventListener(
-		'keydown',
-		(event) => {
-			const {key} = event as KeyboardEvent;
-
-			if (key === 'Enter') {
-				onUnhighlightItems(event);
-			}
-		},
-		false,
-		document
-	);
 
 	const onScroll = () => {
 		const fragment = document.querySelector('.highlighted-from-rule');
@@ -350,7 +347,10 @@ function RuleItem({
 								)}
 								borderless
 								displayType="secondary"
-								onClick={(event) => event.stopPropagation()}
+								onClick={(event) => {
+									event.stopPropagation();
+									highlightItems([]);
+								}}
 								ref={setTriggerElement}
 								size="sm"
 								symbol="ellipsis-v"

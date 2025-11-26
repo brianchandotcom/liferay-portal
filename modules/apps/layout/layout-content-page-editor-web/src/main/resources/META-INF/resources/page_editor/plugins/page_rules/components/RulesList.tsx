@@ -29,7 +29,6 @@ import useConditionValues, {
 	ConditionValues,
 } from '../../../app/utils/useConditionValues';
 import {Rule} from '../../../types/Rule';
-import {LayoutData} from '../../../types/layout_data/LayoutData';
 import {Action as ActionType} from './Action';
 import {Condition as ConditionType} from './Condition';
 import RulesModal from './RulesModal';
@@ -222,8 +221,8 @@ function RuleItem({
 	const actions = useActionValues({...rule, items});
 
 	const ruleItemIds = useMemo(
-		() => getRuleItemIds(rule.actions, rule.conditions, layoutData.items),
-		[rule.actions, rule.conditions, layoutData.items]
+		() => getRuleItemIds(rule.actions, rule.conditions),
+		[rule.actions, rule.conditions]
 	);
 
 	const onHighlightItems = async () => {
@@ -481,21 +480,17 @@ function getRuleAriaLabel(
 	return `${name}${disabled ? ` ${Liferay.Language.get('disabled-rule')}` : ''}: ${conditionsDescription} ${actionsDescription}`;
 }
 
-function getRuleItemIds(
-	actions: ActionType[],
-	conditions: ConditionType[],
-	items: LayoutData['items']
-) {
+function getRuleItemIds(actions: ActionType[], conditions: ConditionType[]) {
 	const ruleItemIds = new Set<string>();
 
 	for (const {itemId} of actions) {
-		if (itemId && items[itemId]) {
+		if (itemId) {
 			ruleItemIds.add(itemId);
 		}
 	}
 
 	for (const {field, type} of conditions) {
-		if (field && type === 'form' && items[field]) {
+		if (field && type === 'form') {
 			ruleItemIds.add(field);
 		}
 	}

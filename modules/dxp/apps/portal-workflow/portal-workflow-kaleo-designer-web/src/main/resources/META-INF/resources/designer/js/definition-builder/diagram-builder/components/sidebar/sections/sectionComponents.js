@@ -16,6 +16,7 @@ import PromptSummary from './prompt/PromptSummary';
 import TimerSourceCode from './timers/TimerSourceCode';
 import Timers from './timers/Timers';
 import TimersSummary from './timers/TimersSummary';
+import ToolsSummary from './tools/ToolsSummary';
 
 const sectionComponents = {
 	actions: Actions,
@@ -31,6 +32,7 @@ const sectionComponents = {
 	timerSourceCode: TimerSourceCode,
 	timers: Timers,
 	timersSummary: TimersSummary,
+	toolsSummary: ToolsSummary,
 };
 
 export default sectionComponents;

@@ -34,7 +34,7 @@ function sourceTagTemplate({media, srcset}) {
 					event.cancel();
 
 					if (typeof event.data.commandData === 'function') {
-						instance._commandData = event.data.commandData;
+						instance._imageSelectorCallback = event.data.commandData;
 					}
 
 					const onSelectedImageChangeFn =
@@ -124,8 +124,8 @@ function sourceTagTemplate({media, srcset}) {
 		_onSelectedImageChange(editor, imageSrc, selectedItem) {
 			const instance = this;
 
-			if (instance._commandData) {
-				instance._commandData(imageSrc);
+			if (instance._imageSelectorCallback) {
+				instance._imageSelectorCallback(imageSrc);
 			}
 
 			let element;

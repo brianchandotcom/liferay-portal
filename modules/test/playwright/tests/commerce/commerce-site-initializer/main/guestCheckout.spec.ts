@@ -451,3 +451,138 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 		}
 	}
 });
+
+test(
+	'Guest order cookie is removed if it is manipulated',
+	{tag: ['@LPD-68662']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceMiniCartPage,
+		commerceThemeClassicCatalogPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
+
+		await test.step('Initialize a site with guest checkout enabled', async () => {
+			const {channel, site} = await classicCommerceSetUp(
+				apiHelpers,
+				`B2B_${getRandomString()}`
+			);
+
+			await apiHelpers.headlessAdminUser.postAccount({
+				name: getRandomString(),
+				type: 'business',
+			});
+
+			await guestCheckoutSetUp(
+				channel,
+				commerceAdminChannelDetailsPage,
+				commerceAdminChannelsPage,
+				page,
+				site
+			);
+		});
+
+		try {
+			await test.step('A product is added to cart', async () => {
+				await page.waitForLoadState('networkidle');
+
+				await commerceThemeClassicCatalogPage
+					.productCardAddToCartButton('Wear Sensors')
+					.click();
+
+				await page.waitForLoadState('networkidle');
+
+				await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+					'has-badge mini-cart-opener'
+				);
+
+				await page.reload();
+				await page.waitForLoadState('networkidle');
+			});
+
+			await test.step('The guest order cookie is modified', async () => {
+				const context = await page.context();
+
+				const cookies = await context.cookies();
+
+				await context.clearCookies();
+				await context.addCookies(
+					cookies.map((cookie) => {
+						if (
+							cookie.name.startsWith(
+								'com.liferay.commerce.model.CommerceOrder#'
+							)
+						) {
+							return {
+								...cookie,
+								value: `${cookie.value}modified`,
+							};
+						}
+
+						return cookie;
+					})
+				);
+			});
+
+			await test.step('When the guest user signs in', async () => {
+				await commerceMiniCartPage.miniCartButton.click();
+				await commerceMiniCartPage.signInToCheckoutButton.click();
+
+				const signInToCheckoutModal = page.locator(
+					'#guest-sign-in-modal'
+				);
+
+				await expect(signInToCheckoutModal).toBeVisible();
+
+				const emailAddressInput = signInToCheckoutModal.locator(
+					'input[id*="LoginPortlet_login"]'
+				);
+				const passInput = signInToCheckoutModal.locator(
+					'input[id*="LoginPortlet_pass"]'
+				);
+				const signInButton = signInToCheckoutModal.getByRole('button', {
+					name: 'Sign In',
+				});
+
+				await emailAddressInput.fill('test@liferay.com');
+				await passInput.fill('test');
+
+				await signInButton.click();
+			});
+
+			await test.step('Then the cookie is removed and the order is not re-conciliated', async () => {
+				const context = await page.context();
+
+				const cookies = await context.cookies();
+
+				await expect(
+					await cookies.find((cookie) =>
+						cookie.name.startsWith(
+							'com.liferay.commerce.model.CommerceOrder#'
+						)
+					)
+				).toBeUndefined();
+
+				await commerceMiniCartPage.miniCartButton.click();
+
+				await expect(
+					commerceMiniCartPage.miniCartItem('Wear Sensors')
+				).toHaveCount(0);
+			});
+		}
+		finally {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const orders =
+				await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+			if (orders.items[0]) {
+				apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+			}
+		}
+	}
+);

@@ -743,6 +743,8 @@ public abstract class BaseWorkspaceGitRepository
 				gitWorkingDirectory.fetch(remoteGitBranch);
 			}
 			catch (Exception exception) {
+				exception.printStackTrace();
+
 				continue;
 			}
 
@@ -759,6 +761,42 @@ public abstract class BaseWorkspaceGitRepository
 		String senderBranchSHA = getSenderBranchSHA();
 
 		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
+			if (JenkinsResultsParserUtil.isCloudCINode()) {
+				try {
+					GitHubRemoteGitCommit gitHubRemoteGitCommit =
+						GitCommitFactory.newGitHubRemoteGitCommit(
+							getSenderBranchUsername(),
+							gitWorkingDirectory.getGitRepositoryName(),
+							senderBranchSHA);
+
+					if (gitHubRemoteGitCommit.isOlderThanOneMonth() &&
+						_isPullRequest()) {
+
+						PullRequest pullRequest =
+							PullRequestFactory.newPullRequest(getGitHubURL());
+
+						if (pullRequest != null) {
+							String message =
+								"User's commit " + senderBranchSHA +
+									" is older than 1 month. Please rebase " +
+										"and retest your changes.";
+
+							pullRequest.addComment(message);
+
+							throw new RuntimeException(
+								"Sender's commit is older than 1 month");
+						}
+					}
+				}
+				catch (Exception exception) {
+					exception.printStackTrace();
+
+					throw new RuntimeException(
+						"Sender's commit is older than 1 month or there was " +
+							"an error retrieving commit information");
+				}
+			}
+
 			gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 		}
 

@@ -5,6 +5,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -80,6 +83,19 @@ public abstract class BaseGitCommit implements GitCommit {
 		String json = String.valueOf(toJSONObject());
 
 		return json.hashCode();
+	}
+
+	public boolean isOlderThanOneMonth() {
+		Date commitDate = getCommitDate();
+
+		Instant commitInstant = commitDate.toInstant();
+
+		Instant oneMonthAgo = Instant.now(
+		).minus(
+			Duration.ofDays(30)
+		);
+
+		return commitInstant.isBefore(oneMonthAgo);
 	}
 
 	@Override

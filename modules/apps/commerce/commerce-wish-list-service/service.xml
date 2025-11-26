@@ -105,7 +105,7 @@
 			<finder-column name="commerceWishListId" />
 			<finder-column name="CProductId" />
 		</finder>
-		<finder name="CW_CPI_CP" return-type="CommerceWishListItem">
+		<finder name="CW_CPI_CP" return-type="CommerceWishListItem" unique="true">
 			<finder-column name="commerceWishListId" />
 			<finder-column name="CPInstanceUuid" />
 			<finder-column name="CProductId" />

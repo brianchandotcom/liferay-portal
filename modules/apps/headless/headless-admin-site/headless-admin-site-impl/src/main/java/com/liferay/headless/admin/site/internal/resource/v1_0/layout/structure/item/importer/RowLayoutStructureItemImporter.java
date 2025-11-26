@@ -140,6 +140,7 @@ public class RowLayoutStructureItemImporter
 			gridViewport.getGridViewportDefinition();
 
 		if (Validator.isNull(gridViewport.getCustomCSS()) &&
+			(gridViewport.getFragmentViewportStyle() == null) &&
 			((gridViewportDefinition == null) ||
 			 ((gridViewportDefinition.getModulesPerRow() == null) &&
 			  (gridViewportDefinition.getVerticalAlignment() == null)))) {
@@ -157,6 +158,16 @@ public class RowLayoutStructureItemImporter
 				}
 
 				return gridViewportDefinition.getModulesPerRow();
+			}
+		).put(
+			"styles",
+			() -> {
+				if (gridViewport.getFragmentViewportStyle() == null) {
+					return null;
+				}
+
+				return FragmentViewportStyleUtil.toJSONObject(
+					gridViewport.getFragmentViewportStyle());
 			}
 		).put(
 			"verticalAlignment",

@@ -32,12 +32,6 @@ describe('SegmentProfileRoutes', () => {
 	it('should render', async () => {
 		window.location = {pathname: '/'};
 
-		API.individualSegment.fetch.mockReturnValueOnce(
-			Promise.resolve({
-				segment: new Segment(data.mockSegment())
-			})
-		);
-
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>

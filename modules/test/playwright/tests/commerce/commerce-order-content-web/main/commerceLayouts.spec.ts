@@ -583,7 +583,9 @@ test(
 			.fill('2024-09-11');
 		await commerceLayoutsPage.saveButton.click();
 
-		await expect(page.getByText('9/11/24', {exact: true})).toBeVisible();
+		await expect(
+			page.getByText('Sep 11, 2024', {exact: true})
+		).toBeVisible();
 
 		await commerceLayoutsPage
 			.infoBoxButton('Requested Delivery Date')
@@ -593,7 +595,9 @@ test(
 			.fill('2024-09-13');
 		await commerceLayoutsPage.saveButton.click();
 
-		await expect(page.getByText('9/13/24', {exact: true})).toBeVisible();
+		await expect(
+			page.getByText('Sep 13, 2024', {exact: true})
+		).toBeVisible();
 
 		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
 

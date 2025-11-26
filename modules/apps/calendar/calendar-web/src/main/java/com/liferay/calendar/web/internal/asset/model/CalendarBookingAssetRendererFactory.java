@@ -139,6 +139,10 @@ public class CalendarBookingAssetRendererFactory
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
+		if (calendar == null) {
+			return false;
+		}
+
 		return _calendarModelResourcePermission.contains(
 			permissionChecker, calendar.getCalendarId(),
 			CalendarActionKeys.MANAGE_BOOKINGS);

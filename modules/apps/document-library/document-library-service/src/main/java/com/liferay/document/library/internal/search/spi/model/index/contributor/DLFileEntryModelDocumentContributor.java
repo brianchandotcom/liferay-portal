@@ -10,6 +10,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.document.library.internal.configuration.DLIndexerConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.store.DLStore;
@@ -24,6 +25,8 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -57,6 +61,8 @@ import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -141,7 +147,7 @@ public class DLFileEntryModelDocumentContributor
 			document.addNumber(
 				"versionCount", GetterUtil.getDouble(dlFileEntry.getVersion()));
 
-			_processDDMIndexer(document, dlFileVersion);
+			_processDDMIndexer(document, dlFileVersion.getFileVersionId());
 
 			if (dlFileEntry.isInHiddenFolder()) {
 				List<RelatedEntryIndexer> relatedEntryIndexers =
@@ -318,50 +324,157 @@ public class DLFileEntryModelDocumentContributor
 		return ctCollection.isReadOnly();
 	}
 
-	private void _processDDMIndexer(
-		Document document, DLFileVersion dlFileVersion) {
+	private Map<DDMStructure, DDMFormValues> _lookupDDMFormValues(
+		long dlFileVersionId) {
 
-		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
-				dlFileVersion.getFileVersionId());
+		Map<Long, Map<DDMStructure, DDMFormValues>> ddmFormValuesMaps =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
+				() -> _dlFileEntryMetadataLocalService.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						DLFileEntryMetadataTable.INSTANCE
+					),
+					false),
+				DLFileEntryModelDocumentContributor.class.getName(),
+				count -> {
+					Map<Long, Map<DDMStructure, DDMFormValues>>
+						localDDMFormValuesMaps = new HashMap<>();
+
+					if (count == 0) {
+						return localDDMFormValuesMaps;
+					}
+
+					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+						DLFileEntryMetadataTable.INSTANCE.DDMStructureId,
+						DLFileEntryMetadataTable.INSTANCE.DDMStorageId,
+						DLFileEntryMetadataTable.INSTANCE.fileVersionId
+					).from(
+						DLFileEntryMetadataTable.INSTANCE
+					);
+
+					Map<Long, DDMStructure> ddmStructureMap = new HashMap<>();
+					Map<DDMStructure, DDMFormValues> ddmFormValuesMap =
+						new HashMap<>();
+
+					for (Object[] values :
+							_dlFileEntryMetadataLocalService.
+								<List<Object[]>>dslQuery(dslQuery, false)) {
+
+						try {
+							Long ddmStructureId = (Long)values[0];
+
+							DDMStructure ddmStructure = ddmStructureMap.get(
+								ddmStructureId);
+
+							if (ddmStructure == null) {
+								ddmStructure =
+									_ddmStructureLocalService.getDDMStructure(
+										ddmStructureId);
+
+								ddmStructureMap.put(
+									ddmStructureId, ddmStructure);
+							}
+
+							DDMFormValues ddmFormValues = ddmFormValuesMap.get(
+								ddmStructure);
+
+							if (ddmFormValues == null) {
+								ddmFormValues =
+									_ddmStorageEngineManager.getDDMFormValues(
+										(Long)values[1],
+										ddmStructure.getDDMForm(false));
+
+								ddmFormValuesMap.put(
+									ddmStructure, ddmFormValues);
+							}
+
+							Map<DDMStructure, DDMFormValues>
+								localDDMFormValues =
+									localDDMFormValuesMaps.computeIfAbsent(
+										(Long)values[2],
+										key -> new HashMap<>());
+
+							localDDMFormValues.put(ddmStructure, ddmFormValues);
+						}
+						catch (Exception exception) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Unable to retrieve metadata values",
+									exception);
+							}
+						}
+					}
+
+					return localDDMFormValuesMaps;
+				});
+
+		if (ddmFormValuesMaps == null) {
+			Map<DDMStructure, DDMFormValues> ddmFormValuesMap = new HashMap<>();
+
+			List<DLFileEntryMetadata> dlFileEntryMetadatas =
+				_dlFileEntryMetadataLocalService.
+					getFileVersionFileEntryMetadatas(dlFileVersionId);
+
+			for (DLFileEntryMetadata dlFileEntryMetadata :
+					dlFileEntryMetadatas) {
+
+				try {
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.getStructure(
+							dlFileEntryMetadata.getDDMStructureId());
+
+					DDMFormValues ddmFormValues =
+						_ddmStorageEngineManager.getDDMFormValues(
+							dlFileEntryMetadata.getDDMStorageId(),
+							ddmStructure.getDDMForm(false));
+
+					if (ddmFormValues != null) {
+						ddmFormValuesMap.put(ddmStructure, ddmFormValues);
+					}
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to retrieve metadata values", exception);
+					}
+				}
+			}
+
+			return ddmFormValuesMap;
+		}
+
+		return ddmFormValuesMaps.getOrDefault(
+			dlFileVersionId, Collections.emptyMap());
+	}
+
+	private void _processDDMIndexer(Document document, long dlFileVersionId) {
+		Map<DDMStructure, DDMFormValues> ddmFormValuesMap =
+			_lookupDDMFormValues(dlFileVersionId);
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		StringBundler sb = new StringBundler(dlFileEntryMetadatas.size() * 2);
+		StringBundler sb = new StringBundler(ddmFormValuesMap.size() * 2);
 
-		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
-			try {
-				DDMStructure ddmStructure =
-					_ddmStructureLocalService.getStructure(
-						dlFileEntryMetadata.getDDMStructureId());
+		for (Map.Entry<DDMStructure, DDMFormValues> entry :
+				ddmFormValuesMap.entrySet()) {
 
-				DDMFormValues ddmFormValues =
-					_ddmStorageEngineManager.getDDMFormValues(
-						dlFileEntryMetadata.getDDMStorageId(),
-						ddmStructure.getDDMForm(false));
+			DDMStructure ddmStructure = entry.getKey();
 
-				if (ddmFormValues != null) {
-					sb.append(
-						_ddmIndexer.extractIndexableAttributes(
-							ddmStructure, ddmFormValues, locale));
+			DDMFormValues ddmFormValues = entry.getValue();
 
-					sb.append(StringPool.SPACE);
+			sb.append(
+				_ddmIndexer.extractIndexableAttributes(
+					ddmStructure, ddmFormValues, locale));
 
-					for (DDMFormValuesIndexer ddmFormValuesIndexer :
-							_serviceTrackerList) {
+			sb.append(StringPool.SPACE);
 
-						ddmFormValuesIndexer.index(document, ddmFormValues);
-					}
+			for (DDMFormValuesIndexer ddmFormValuesIndexer :
+					_serviceTrackerList) {
 
-					_ddmIndexer.addAttributes(
-						document, ddmStructure, ddmFormValues);
-				}
+				ddmFormValuesIndexer.index(document, ddmFormValues);
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to retrieve metadata values", exception);
-				}
-			}
+
+			_ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 		}
 
 		if (sb.index() > 0) {

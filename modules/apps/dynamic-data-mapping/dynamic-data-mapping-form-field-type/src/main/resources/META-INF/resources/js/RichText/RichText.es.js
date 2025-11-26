@@ -152,12 +152,6 @@ const RichText = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditingLocale]);
 
-	useEffect(() => {
-		changeLanguage(editingLanguageId ?? defaultLocale?.localeId ?? locale);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [editingLanguageId, locale, predefinedValue]);
-
 	const changeLanguage = (localeId) => {
 		if (!localeId) {
 			return;
@@ -191,6 +185,12 @@ const RichText = ({
 
 		setCurrentValue(newValue);
 	};
+
+	useEffect(() => {
+		changeLanguage(editingLanguageId ?? defaultLocale?.localeId ?? locale);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [editingLanguageId, locale, predefinedValue]);
 
 	const handleContentChange = (content) => {
 		if (currentValue[currentEditingLocale?.localeId] !== content) {

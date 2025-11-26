@@ -48,7 +48,6 @@ function getQuantity(settings, skuUnitOfMeasure) {
 function AddToCart({
 	accountId: initialAccountId,
 	cartId: initialCartId,
-	cartUUID: initialCartUUID,
 	channel,
 	cpInstance: initialCpInstance,
 	disabled: initialDisabled,
@@ -58,10 +57,8 @@ function AddToCart({
 }) {
 	const account = useCommerceAccount({id: initialAccountId});
 	const cart = useCommerceCart({
-		channelGroupId: channel.groupId,
 		guestOrderEnabled,
 		initialCart: {
-			UUID: initialCartUUID,
 			id: initialCartId,
 		},
 	});

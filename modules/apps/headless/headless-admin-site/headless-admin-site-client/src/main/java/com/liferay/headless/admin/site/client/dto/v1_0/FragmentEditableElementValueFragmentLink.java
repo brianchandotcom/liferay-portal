@@ -114,7 +114,7 @@ public class FragmentEditableElementValueFragmentLink
 
 	public static enum Prefix {
 
-		NONE("None"), EMAIL("Email"), PHONE("Phone");
+		EMAIL("Email"), NONE("None"), PHONE("Phone");
 
 		public static Prefix create(String value) {
 			for (Prefix prefix : values()) {

@@ -233,7 +233,7 @@ public class FragmentEditableElementValueFragmentLink implements Serializable {
 	@GraphQLName("Prefix")
 	public static enum Prefix {
 
-		NONE("None"), EMAIL("Email"), PHONE("Phone");
+		EMAIL("Email"), NONE("None"), PHONE("Phone");
 
 		@JsonCreator
 		public static Prefix create(String value) {

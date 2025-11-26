@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import {openToast} from 'frontend-js-components-web';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
+import {v4 as uuidv4} from 'uuid';
 
 import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
@@ -25,6 +26,7 @@ import {
 	useSelectMultipleItems,
 } from '../../../../../app/contexts/ControlsContext';
 import {useSetMovementText} from '../../../../../app/contexts/KeyboardMovementContext';
+import {useRulesModal} from '../../../../../app/contexts/RulesModalContext';
 import {useSetEditedNodeId} from '../../../../../app/contexts/ShortcutContext';
 import {
 	useDispatch,
@@ -42,6 +44,7 @@ import {
 	FORM_ERROR_TYPES,
 	getFormErrorDescription,
 } from '../../../../../app/utils/getFormErrorDescription';
+import {isAllowedInRules} from '../../../../../app/utils/isAllowedInRules';
 import isCuttable from '../../../../../app/utils/isCuttable';
 import isInputFragment from '../../../../../app/utils/isInputFragment';
 import {isMovementValid} from '../../../../../app/utils/isMovementValid';
@@ -146,6 +149,7 @@ export default function StructureTreeNodeActions({disabled, item, visible}) {
 const ActionList = ({item, setActive, setOpenSaveModal}) => {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.id);
+	const {openRulesModal} = useRulesModal();
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 	const setEditedNodeId = useSetEditedNodeId();
@@ -169,6 +173,27 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 	const dropdownItems = useMemo(() => {
 		const items = [];
+
+		if (isAllowedInRules(layoutDataItem, layoutData)) {
+			items.push({
+				action: () => {
+					openRulesModal({
+						rule: {
+							actions: [
+								{
+									id: uuidv4(),
+									itemId: item.id,
+									readOnly: true,
+									type: 'show',
+								},
+							],
+						},
+					});
+				},
+				icon: 'rules',
+				label: Liferay.Language.get('add-rule'),
+			});
+		}
 
 		if (
 			item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
@@ -388,6 +413,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		item,
 		layoutData,
 		layoutDataItem,
+		openRulesModal,
 		selectedViewportSize,
 		selectItem,
 		setClipboard,

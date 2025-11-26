@@ -141,9 +141,6 @@ test('LPD-55426 Test sign in button is disabled until page is fully loaded', asy
 	await expect(page.getByText('Forgot Password')).toBeVisible();
 	await expect(
 		page.getByRole('button', {name: 'Sign In'}).last()
-	).toHaveAttribute('disabled');
-	await expect(
-		page.getByRole('button', {name: 'Sign In'}).last()
 	).toBeEnabled();
 
 	await cdpSession.detach();

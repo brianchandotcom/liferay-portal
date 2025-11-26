@@ -115,6 +115,8 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 		List<KeyValuePair> subtypesLeftList = new ArrayList<KeyValuePair>();
 
 		boolean anyAssetSubtype = GetterUtil.getBoolean(portletPreferences.getValue("anyClassType" + className, Boolean.TRUE.toString()));
+
+		Arrays.sort(assetSelectedClassTypeIds);
 	%>
 
 		<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace /><%= className %>Options">

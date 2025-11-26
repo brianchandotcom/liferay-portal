@@ -8,9 +8,9 @@ import SearchBuilder from '../../core/SearchBuilder';
 import {DOCUMENT_FOLDER_PERMISSIONS} from '../../enums/File';
 import {Liferay} from '../../liferay/liferay';
 import {MarketplaceProperties} from '../../utils/attributes';
-import HeadlessAppPackage from '../rest/HeadlessAppPackages';
 import HeadlessDelivery from '../rest/HeadlessDelivery';
 import HeadlessPublisherAssetses from '../rest/HeadlessPublisherAsset';
+import HeadlessPublisherAssetAttachment from '../rest/HeadlessPublisherAssetAttachment';
 
 const DOCUMENTS_ROOT_FOLDER = 0;
 const PICK_LIST_ASSET_TYPE = 'package';
@@ -149,24 +149,26 @@ export default class PublisherAsset {
 
 			const publisherAsset =
 				await HeadlessPublisherAssetses.createPublisherAsset({
-					name: this.product.name.en_US,
 					[productRelationshipName]: this.product
 						.id as unknown as string,
-					publisherAssetType: PICK_LIST_ASSET_TYPE,
 					r_accountEntryToPublisherAssets_accountEntryId:
 						Liferay.CommerceContext.account?.accountId,
 					version: this.versions,
 				});
 
 			this.file.forEach(async (file) => {
-				await HeadlessAppPackage.createAppPackage({
-					r_publisherAssetsToAppPackage_c_publisherAssetsId:
-						publisherAsset.id,
-					sourceCode: await this.getPublisherAssetDocumentId(
-						file,
-						packageFolderId
-					),
-				});
+				await HeadlessPublisherAssetAttachment.createPublisherAssetAttachment(
+					{
+						name: file.fileName,
+						publisherAssetType: PICK_LIST_ASSET_TYPE,
+						r_publisherAssetsToAttachment_c_publisherAssetsId:
+							publisherAsset.id,
+						sourceCode: await this.getPublisherAssetDocumentId(
+							file,
+							packageFolderId
+						),
+					}
+				);
 			});
 		}
 		catch {

@@ -726,7 +726,7 @@ export default function NewAppContextProvider({
 							: 'r_productEntryToPublisherAssets_CPDefinitionId',
 						productId as string
 					),
-					nestedFields: 'publisherAssetsToAppPackage',
+					nestedFields: 'publisherAssetsToAttachment',
 				})
 			).then((response) => response.items),
 		{
@@ -734,7 +734,7 @@ export default function NewAppContextProvider({
 				const liferayPackages = await Promise.all(
 					publisherAssetses.map(async (publisherAsset) => {
 						const packageFiles = await Promise.all(
-							publisherAsset.publisherAssetsToAppPackage.map(
+							publisherAsset.publisherAssetsToAttachment.map(
 								async (file: any) => {
 									const sourceFileDocument =
 										await HeadlessDelivery.getDocument(

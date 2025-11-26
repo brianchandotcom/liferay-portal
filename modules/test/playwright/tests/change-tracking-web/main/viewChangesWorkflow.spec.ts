@@ -90,7 +90,11 @@ test('LPD-19748 Add workflow info to the View Change screen', async ({
 
 	await changeTrackingPage.reviewChange(journalName);
 
-	await expect(page.getByText(`Pending`)).toBeVisible();
+	await expect(
+		page.getByText(`Pending`, {
+			exact: true,
+		})
+	).toBeVisible();
 
 	await changeTrackingPage.viewDisplayTab('Workflow');
 });
@@ -127,7 +131,11 @@ test('LPD-19748 Only workflow status is displayed when workflow is disabled', as
 
 	await changeTrackingPage.reviewChange(journalName);
 
-	await expect(page.getByText(`Pending`)).toBeVisible();
+	await expect(
+		page.getByText(`Pending`, {
+			exact: true,
+		})
+	).toBeVisible();
 
 	await changeTrackingPage.viewDisplayTab('Workflow', {isHidden: true});
 });

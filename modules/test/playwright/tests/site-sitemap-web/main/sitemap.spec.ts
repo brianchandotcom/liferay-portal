@@ -5,10 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 
-export const test = mergeTests(instanceSettingsPagesTest, loginTest());
+export const test = mergeTests(
+	dataApiHelpersTest,
+	instanceSettingsPagesTest,
+	loginTest()
+);
 
 test(
 	'XML Sitemap configuration does not cause issues going to different configuration',
@@ -29,5 +35,61 @@ test(
 		await expect(
 			page.getByRole('menuitem', {name: 'Friendly URL'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Guest site child sites can be selected within XML Sitemap configuration',
+	{
+		tag: '@LPD-72680',
+	},
+	async ({apiHelpers, instanceSettingsPage, page}) => {
+		const guestSite = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
+
+		const childSite = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+			parentSiteKey: guestSite.name,
+		});
+
+		apiHelpers.data.push({id: childSite.id, type: 'site'});
+
+		await instanceSettingsPage.goToInstanceSetting('SEO', 'XML Sitemap');
+
+		await page
+			.getByLabel('Select Sites Included in the XML Sitemap')
+			.click();
+
+		await page
+			.frameLocator('iframe[title="Select Site"]')
+			.getByRole('link', {name: 'Child Sites'})
+			.click();
+
+		await page
+			.frameLocator('iframe[title="Select Site"]')
+			.getByRole('link', {name: childSite.name})
+			.click();
+
+		await expect(page.getByText(childSite.name)).toBeVisible();
+	}
+);
+
+test(
+	'Selecting an already selected site in XML Sitemap does not add a duplicate',
+	{
+		tag: '@LPD-72680',
+	},
+	async ({instanceSettingsPage, page}) => {
+		await instanceSettingsPage.goToInstanceSetting('SEO', 'XML Sitemap');
+
+		await page
+			.getByLabel('Select Sites Included in the XML Sitemap')
+			.click();
+
+		await page
+			.frameLocator('iframe[title="Select Site"]')
+			.getByRole('link', {name: 'Liferay DXP'})
+			.click();
+
+		await expect(page.getByText('Liferay DXP')).toHaveCount(1);
 	}
 );

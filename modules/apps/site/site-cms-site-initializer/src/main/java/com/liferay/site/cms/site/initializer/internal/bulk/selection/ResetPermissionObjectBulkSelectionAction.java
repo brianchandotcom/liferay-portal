@@ -107,7 +107,7 @@ public class ResetPermissionObjectBulkSelectionAction
 						}
 						else {
 							throw new IllegalArgumentException(
-								"Unsupported object type " + object);
+								"Unsupported object " + object);
 						}
 
 						numberOfSuccessfulItems.getAndIncrement();

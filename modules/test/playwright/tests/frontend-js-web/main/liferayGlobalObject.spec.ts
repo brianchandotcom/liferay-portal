@@ -37,7 +37,7 @@ test(
 
 			const crossoriginAttr = await page
 				.locator(
-					'script[src^="http://127.0.0.1/o/frontend-js-web/Liferay.js"]'
+					'script[src^="http://127.0.0.1/o/frontend-js-web/Liferay.("]'
 				)
 				.getAttribute('crossorigin', {timeout: 1000});
 
@@ -52,7 +52,7 @@ test(
 			await page.getByRole('button', {name: 'Save'}).click();
 
 			await expect(
-				page.locator('script[src^="/o/frontend-js-web/Liferay.js"]')
+				page.locator('script[src^="/o/frontend-js-web/Liferay.("]')
 			).not.toHaveAttribute('crossorigin', '');
 		});
 	}

@@ -1,3 +1,13 @@
+[#if configuration.channelId?has_content]
+	[#assign channelId = configuration.channelId /]
+[#else]
+	[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels") /]
+
+	[#if channel?has_content]
+		[#assign channelId = channel.items[0].id /]
+	[/#if]
+[/#if]
+
 <div class="home-apps-display">
 	<div class="section-container">
 		<div id="section-header">
@@ -17,13 +27,10 @@
 		</div>
 
 		[#if configuration.specificationFilterValue?has_content]
-			[#if configuration.channelId?has_content]
-				[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${configuration.channelId}/products?accountId=-1&nestedFields=categories,productSpecifications&pageSize=${configuration.pageSize}&filter=specificationValues/any(x:contains(x,'${configuration.specificationFilterValue}'))") /]
-			[/#if]
+			[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?accountId=-1&nestedFields=categories,productSpecifications&pageSize=${configuration.pageSize}&filter=specificationValues/any(x:contains(x,'${configuration.specificationFilterValue}'))") /]
+			[#assign products = response.items /]
 
 			<div id="section-body">
-				[#assign products = response.items /]
-
 				<div class="apps-container d-flex flex-row flex-wrap mb-5">
 					[#list products as product]
 						[#if product?has_content]
@@ -38,11 +45,11 @@
 							[#if product.productSpecifications?has_content]
 								[#assign productSpecifications=product.productSpecifications![] /]
 
-								[#function getSpecificationValue key default=""]
-									[#local spec = productSpecifications?filter(productSpecification ->
+								[#function getSpecificationValue key defaultValue=""]
+									[#local specification = productSpecifications?filter(productSpecification ->
 										stringUtil.equals(productSpecification.specificationKey, key)) /]
 
-									[#return (spec?first.value)!default /]
+									[#return (specification?first.value)!defaultValue /]
 								[/#function]
 							[/#if]
 
@@ -51,7 +58,7 @@
 							<a class="product-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none [#if configuration.cardSize == 'large'] large [/#if] [#if configuration.cardSize == 'medium'] medium [/#if] [#if configuration.cardSize == 'small'] small [/#if]" href="p/${product.slug}" target="_self">
 								<div class="card-image-title-container d-flex">
 									<div class="image-container mr-2 rounded">
-										<img alt="${product.name}" class="app-search-image" draggable="false" height="56" src="${(product.urlImage?replace('https://', 'http://'))?js_string}" width="56" />
+										<img alt="${product.name}" class="app-search-image" draggable="false" height="56" lazy="true" src="${(product.urlImage?replace('https://', 'http://'))?js_string}" width="56" />
 									</div>
 
 									<div class="d-flex flex-column w-100">

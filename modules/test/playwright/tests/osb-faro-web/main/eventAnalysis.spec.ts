@@ -233,7 +233,7 @@ test(
 				await expect(
 					page.getByRole('button', {
 						exact: true,
-						name: `EVENT ${attributeName}`,
+						name: `Event ${attributeName}`,
 					})
 				).toBeVisible();
 			}
@@ -325,7 +325,7 @@ test(
 				await expect(
 					page.getByRole('button', {
 						exact: true,
-						name: `EVENT ${attributeName}`,
+						name: `Event ${attributeName}`,
 					})
 				).toBeVisible();
 			}

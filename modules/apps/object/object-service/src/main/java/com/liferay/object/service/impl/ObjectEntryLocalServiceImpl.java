@@ -1998,6 +1998,39 @@ public class ObjectEntryLocalServiceImpl
 			assetLinkEntryIds, priority, null);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectEntry updateModifiedDate(long objectEntryId, Date modifiedDate)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
+			objectEntryId);
+
+		objectEntry.setModifiedDate(modifiedDate);
+
+		objectEntry = objectEntryPersistence.update(objectEntry);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		if (!objectDefinition.isEnableObjectEntryVersioning()) {
+			return objectEntry;
+		}
+
+		int objectEntryVersionsCount =
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId());
+
+		if (objectEntryVersionsCount > 0) {
+			_objectEntryVersionLocalService.
+				updateLatestObjectEntryVersionModifiedDate(
+					modifiedDate, objectEntry.getObjectEntryId());
+		}
+
+		return objectEntry;
+	}
+
 	@Override
 	public ObjectEntry updateObjectEntry(
 			long userId, long objectEntryId, long objectEntryFolderId,
@@ -2207,11 +2240,11 @@ public class ObjectEntryLocalServiceImpl
 		if ((status == WorkflowConstants.STATUS_EXPIRED) ||
 			originalObjectEntry.isDraft() || originalObjectEntry.isPending()) {
 
-			List<ObjectEntryVersion> objectEntryVersions =
-				_objectEntryVersionLocalService.getObjectEntryVersions(
+			int objectEntryVersionsCount =
+				_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 					objectEntry.getObjectEntryId());
 
-			if (!objectEntryVersions.isEmpty()) {
+			if (objectEntryVersionsCount > 0) {
 				_updateLatestObjectEntryVersion(objectDefinition, objectEntry);
 			}
 		}

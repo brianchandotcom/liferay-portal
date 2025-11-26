@@ -99,14 +99,16 @@ async function goToAllSpaces(page) {
 	}).toPass({timeout: 10000});
 }
 
-async function resetPermissions(page, folderName: string) {
+async function resetPermissions(page, folderName?: string) {
 	await expect(async () => {
 		await clickMenuItem('Reset to Default Permissions', page, folderName);
 
 		await page.getByRole('button', {name: 'Confirm'}).click();
 	}).toPass({timeout: 5000});
 
-	await waitForAlert(page, 'Permissions reset successfully.');
+	if (folderName) {
+		await waitForAlert(page, 'Permissions reset successfully.');
+	}
 }
 
 async function tickCheckBoxes(page, names: string[]) {
@@ -601,6 +603,157 @@ test(
 				objectName: folderName,
 				page,
 				permissions: childPermissions,
+			});
+		}
+		finally {
+			await goToAllSpaces(page);
+
+			await deleteSpace(page, spaceName);
+		}
+	}
+);
+
+test(
+	'Reset permissions in bulk to the default permissions of the parent',
+	{tag: '@LPD-68735'},
+	async ({
+		contentsPage,
+		defaultPermissionsPage,
+		folderPage,
+		page,
+		permissionsPage,
+		spaceSummaryPage,
+	}) => {
+		await goToAllSpaces(page);
+
+		const spaceName = 'Space' + getRandomInt();
+
+		await createSpace(page, spaceName);
+
+		try {
+			await goToAllSpaces(page);
+
+			await clickMenuItem('Default Permissions', page, spaceName);
+
+			const parentPermissions = [
+				{action: 'DELETE', checked: true, role: 'Power User'},
+				{action: 'PERMISSIONS', checked: true, role: 'User'},
+			];
+
+			await defaultPermissionsPage.checkPermissionsAndSave(
+				parentPermissions
+			);
+
+			await clickMenuItem('Default Permissions', page, spaceName);
+
+			await page.getByTestId('tab-L_CONTENTS').click();
+
+			await defaultPermissionsPage.checkPermissionsAndSave(
+				parentPermissions
+			);
+
+			await spaceSummaryPage.goto(spaceName);
+
+			await spaceSummaryPage.viewAllContentLink.click();
+
+			const folderName = 'Folder' + getRandomInt();
+
+			await folderPage.createFolder(folderName);
+
+			await verifyPermissions({
+				menuitem: 'Permissions',
+				objectName: folderName,
+				page,
+				permissions: parentPermissions,
+			});
+
+			await clickMenuItem('Permissions', page, folderName);
+
+			let childFolderPermissions = [
+				{action: 'ADD_ENTRY', checked: true, role: 'Power User'},
+				{action: 'UPDATE', checked: true, role: 'User'},
+			];
+
+			await permissionsPage.checkPermissionsAndSave(
+				childFolderPermissions
+			);
+
+			await verifyPermissions({
+				menuitem: 'Permissions',
+				objectName: folderName,
+				page,
+				permissions: childFolderPermissions,
+			});
+
+			await contentsPage.createContent('Basic Content');
+
+			const contentName = 'Content' + getRandomInt();
+
+			await contentsPage.fillData([{label: 'Title', value: contentName}]);
+
+			await contentsPage.saveContent();
+
+			await clickMenuItem('Permissions', page, contentName);
+
+			let childContentPermissions = [
+				{
+					action: 'DELETE_DISCUSSION',
+					checked: true,
+					role: 'Power User',
+				},
+				{action: 'UPDATE_DISCUSSION', checked: true, role: 'User'},
+			];
+
+			await permissionsPage.checkPermissionsAndSave(
+				childContentPermissions
+			);
+
+			await verifyPermissions({
+				menuitem: 'Permissions',
+				objectName: contentName,
+				page,
+				permissions: childContentPermissions,
+			});
+
+			await spaceSummaryPage.goto(spaceName);
+
+			await spaceSummaryPage.viewAllContentLink.click();
+
+			await tickCheckBoxes(page, [folderName, contentName]);
+
+			await resetPermissions(page);
+
+			await page
+				.locator('.alert-info')
+				.getByRole('button', {name: 'Close'})
+				.click();
+
+			childFolderPermissions = [
+				{action: 'ADD_ENTRY', checked: false, role: 'Power User'},
+				{action: 'UPDATE', checked: false, role: 'User'},
+			];
+
+			await verifyPermissions({
+				menuitem: 'Permissions',
+				objectName: folderName,
+				page,
+				permissions: childFolderPermissions,
+			});
+
+			childContentPermissions = [
+				{
+					action: 'DELETE_DISCUSSION',
+					checked: false,
+					role: 'Power User',
+				},
+				{action: 'UPDATE_DISCUSSION', checked: false, role: 'User'},
+			];
+
+			await verifyPermissions({
+				menuitem: 'Permissions',
+				objectName: contentName,
+				page,
+				permissions: childContentPermissions,
 			});
 		}
 		finally {

@@ -55,6 +55,7 @@ const renderFragment = ({
 	};
 
 	const layoutData = {
+		deletedItems: [],
 		items: {[fragment.itemId]: fragment},
 	};
 

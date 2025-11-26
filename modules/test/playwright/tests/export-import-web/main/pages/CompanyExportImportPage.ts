@@ -166,11 +166,11 @@ export class CompanyExportImportPage {
 
 		if (taskStatus === 'completedWithErrors') {
 			await this.exportImportPage
-				.taskCompleteWithErrorsLabel(fileName)
+				.taskStatusLabel(fileName, taskStatus)
 				.waitFor();
 		}
 		else {
-			await this.exportImportPage.taskSuccessLabel(fileName).waitFor();
+			await this.exportImportPage.taskStatusLabel(fileName).waitFor();
 		}
 	}
 }

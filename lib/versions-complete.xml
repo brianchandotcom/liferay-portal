@@ -1878,18 +1878,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.k8s.agent.impl.jar!kotlin-stdlib.jar</file-name>
-				<version>1.8.0</version>
-				<project-name>Kotlin Stdlib</project-name>
-				<project-url>https://kotlinlang.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-client.jar</file-name>
 				<version>5.12.2</version>
 				<project-name>Fabric8 :: Kubernetes :: Java Client</project-name>
@@ -3472,7 +3460,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.tika.jar!org.apache.tika.core.jar</file-name>
-				<version>1.28.5.LIFERAY-PATCHED-1</version>
+				<version>1.28.5.LIFERAY-PATCHED-2</version>
 				<project-name>Apache Tika core</project-name>
 				<project-url>http://tika.apache.org/</project-url>
 				<licenses>
@@ -4361,8 +4349,7 @@
 				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD-3-Clause;link=https://asm.ow2.io/LICENSE.txt</license-name>
 					</license>
 				</licenses>
 			</library>
@@ -4373,8 +4360,7 @@
 				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD-3-Clause;link=https://asm.ow2.io/LICENSE.txt</license-name>
 					</license>
 				</licenses>
 			</library>
@@ -4385,8 +4371,7 @@
 				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD-3-Clause;link=https://asm.ow2.io/LICENSE.txt</license-name>
 					</license>
 				</licenses>
 			</library>
@@ -4397,8 +4382,7 @@
 				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>BSD-3-Clause;link=https://asm.ow2.io/LICENSE.txt</license-name>
 					</license>
 				</licenses>
 			</library>

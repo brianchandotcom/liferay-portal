@@ -8,6 +8,7 @@ package com.liferay.layout.admin.web.internal.change.tracking.spi.display;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -247,7 +248,8 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 				StyleBookEntry styleBookEntry =
 					_styleBookEntryLocalService.
 						fetchStyleBookEntryByExternalReferenceCode(
-							layout.getStyleBookEntryERC(), layout.getGroupId());
+							layout.getStyleBookEntryERC(),
+							_staging.getLiveGroupId(layout.getGroupId()));
 
 				if (styleBookEntry == null) {
 					return null;
@@ -283,6 +285,9 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

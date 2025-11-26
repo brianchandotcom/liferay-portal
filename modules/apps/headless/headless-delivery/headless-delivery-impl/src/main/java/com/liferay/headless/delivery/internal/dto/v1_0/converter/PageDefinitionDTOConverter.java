@@ -12,6 +12,7 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.headless.delivery.dto.v1_0.ClientExtension;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
@@ -356,7 +357,8 @@ public class PageDefinitionDTOConverter
 							_styleBookEntryLocalService.
 								fetchStyleBookEntryByExternalReferenceCode(
 									layout.getStyleBookEntryERC(),
-									layout.getGroupId());
+									_staging.getLiveGroupId(
+										layout.getGroupId()));
 
 						return new StyleBook() {
 							{
@@ -437,6 +439,9 @@ public class PageDefinitionDTOConverter
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

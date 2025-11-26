@@ -11,6 +11,7 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
@@ -769,7 +770,8 @@ public class LayoutUtil {
 		StyleBookEntry styleBookEntry =
 			StyleBookEntryLocalServiceUtil.
 				fetchStyleBookEntryByExternalReferenceCode(
-					itemExternalReference.getExternalReferenceCode(), groupId);
+					itemExternalReference.getExternalReferenceCode(),
+					StagingUtil.getLiveGroupId(groupId));
 
 		if (styleBookEntry == null) {
 			LogUtil.logOptionalReference(

@@ -1784,7 +1784,8 @@ public class LayoutStagedModelDataHandler
 
 		return _styleBookEntryLocalService.
 			fetchStyleBookEntryByExternalReferenceCode(
-				layout.getStyleBookEntryERC(), layout.getGroupId());
+				layout.getStyleBookEntryERC(),
+				_staging.getLiveGroupId(layout.getGroupId()));
 	}
 
 	private void _fixExportTypeSettings(Layout layout) throws Exception {

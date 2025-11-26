@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
@@ -98,7 +99,7 @@ public class ChangeStyleBookEntryMVCActionCommand
 			_styleBookEntryLocalService.
 				fetchStyleBookEntryByExternalReferenceCode(
 					updatedLayout.getStyleBookEntryERC(),
-					updatedLayout.getGroupId());
+					_staging.getLiveGroupId(updatedLayout.getGroupId()));
 
 		if (styleBookEntry == null) {
 			styleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
@@ -125,6 +126,9 @@ public class ChangeStyleBookEntryMVCActionCommand
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Staging _staging;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

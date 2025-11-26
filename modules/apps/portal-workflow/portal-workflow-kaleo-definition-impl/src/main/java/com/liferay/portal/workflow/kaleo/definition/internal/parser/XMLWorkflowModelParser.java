@@ -266,6 +266,13 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		settings.add(
 			new Setting("prompt", aiDecisionElement.elementTextTrim("prompt")));
+
+		String tools = aiDecisionElement.elementTextTrim("tools");
+
+		if (tools != null) {
+			settings.add(new Setting("tools", tools));
+		}
+
 		settings.add(
 			new Setting(
 				"userMessage",
@@ -526,6 +533,13 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		settings.add(
 			new Setting("prompt", llmElement.elementTextTrim("prompt")));
+
+		String tools = llmElement.elementTextTrim("tools");
+
+		if (tools != null) {
+			settings.add(new Setting("tools", tools));
+		}
+
 		settings.add(
 			new Setting(
 				"userMessage", llmElement.elementTextTrim("user-message")));

@@ -8,7 +8,9 @@ package com.liferay.view.count.service.impl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -18,6 +20,7 @@ import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.SQLStateAcceptor;
@@ -37,6 +40,7 @@ import com.liferay.view.count.service.ViewCountEntryLocalService;
 import com.liferay.view.count.service.base.ViewCountEntryLocalServiceBaseImpl;
 import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -107,18 +111,11 @@ public class ViewCountEntryLocalServiceImpl
 
 	@Override
 	public long getViewCount(long companyId, long classNameId, long classPK) {
-		ViewCountEntry viewCountEntry = null;
-
 		if (isViewCountEnabled(classNameId)) {
-			viewCountEntry = viewCountEntryPersistence.fetchByPrimaryKey(
-				new ViewCountEntryPK(companyId, classNameId, classPK));
+			return _lookupViewCount(companyId, classNameId, classPK);
 		}
 
-		if (viewCountEntry == null) {
-			return 0;
-		}
-
-		return viewCountEntry.getViewCount();
+		return 0;
 	}
 
 	@Override
@@ -221,6 +218,87 @@ public class ViewCountEntryLocalServiceImpl
 		_disabledClassNames = disabledClassNames;
 
 		_enabled = viewCountConfiguration.enabled();
+	}
+
+	private long _lookupViewCount(
+		long companyId, long classNameId, long classPK) {
+
+		Map<Long, Long> indexedViewCounts =
+			ReindexCacheThreadLocal.getScopeReindexCache(
+				ViewCountEntryLocalServiceImpl.class.getName(),
+				String.valueOf(classNameId),
+				() -> viewCountEntryPersistence.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						ViewCountEntryTable.INSTANCE
+					).where(
+						ViewCountEntryTable.INSTANCE.companyId.eq(companyId)
+					),
+					false),
+				() -> viewCountEntryPersistence.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						ViewCountEntryTable.INSTANCE
+					).where(
+						ViewCountEntryTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							ViewCountEntryTable.INSTANCE.classNameId.eq(
+								classNameId)
+						)
+					),
+					false),
+				count -> {
+					Map<Long, Long> localIndexedViewCounts = new HashMap<>();
+
+					if (count == 0) {
+						return localIndexedViewCounts;
+					}
+
+					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+						ViewCountEntryTable.INSTANCE.classPK,
+						ViewCountEntryTable.INSTANCE.viewCount
+					).from(
+						ViewCountEntryTable.INSTANCE
+					).where(
+						ViewCountEntryTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							ViewCountEntryTable.INSTANCE.classNameId.eq(
+								classNameId)
+						)
+					);
+
+					for (Object[] values :
+							(List<Object[]>)viewCountEntryPersistence.dslQuery(
+								dslQuery, false)) {
+
+						localIndexedViewCounts.put(
+							(Long)values[0], (Long)values[1]);
+					}
+
+					return localIndexedViewCounts;
+				});
+
+		if (indexedViewCounts == null) {
+			ViewCountEntry viewCountEntry =
+				viewCountEntryPersistence.fetchByPrimaryKey(
+					new ViewCountEntryPK(companyId, classNameId, classPK));
+
+			if (viewCountEntry == null) {
+				return 0;
+			}
+
+			return viewCountEntry.getViewCount();
+		}
+
+		Long viewCount = indexedViewCounts.get(classPK);
+
+		if (viewCount == null) {
+			return 0;
+		}
+
+		return viewCount;
 	}
 
 	@Reference

@@ -11,6 +11,7 @@ import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLoginViaApi, {performLogout} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(dataApiHelpersTest, loginTest(), formsPagesTest);
@@ -54,6 +55,44 @@ test.describe('Manage fields through Form Preview page', () => {
 		await expect(newTabPage.getByLabel('Text')).toHaveValue('');
 
 		await newTabPage.close();
+	});
+
+	test('Assert that it is possible to delete the decimal separator of a numeric field without removing the character before it', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		page,
+	}) => {
+		await formBuilderPage.goToNew();
+
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Numeric');
+
+		await formBuilderSidePanelPage.numericTypeDecimal.check();
+
+		await expect(formBuilderSidePanelPage.numericTypeDecimal).toBeChecked();
+
+		await formBuilderSidePanelPage.advancedTab.click();
+
+		await formBuilderSidePanelPage.inputMaskToggle.check();
+
+		await expect(page.getByLabel('Thousands Separator')).toBeVisible();
+
+		await formBuilderPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		const newTabPage = await formBuilderPage.openPreviewForm();
+
+		const numericInput = newTabPage.getByLabel('Numeric');
+
+		await numericInput.fill('22.');
+
+		await numericInput.click();
+
+		await newTabPage.keyboard.press('Backspace');
+
+		await expect(numericInput).toHaveValue('22');
 	});
 
 	test('Duplicating field with evaluation rules has correct behavior', async ({

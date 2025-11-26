@@ -18,7 +18,6 @@ import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
@@ -379,8 +378,6 @@ public class AddToCartTag extends IncludeTag {
 			ServletContextUtil.getCommerceChannelLocalService();
 		_commerceInventoryEngine =
 			ServletContextUtil.getCommerceInventoryEngine();
-		_commerceOrderHttpHelper =
-			ServletContextUtil.getCommerceOrderHttpHelper();
 		_commerceOrderItemLocalService =
 			ServletContextUtil.getCommerceOrderItemLocalService();
 		_commerceOrderPortletResourcePermission =
@@ -431,7 +428,6 @@ public class AddToCartTag extends IncludeTag {
 		_commerceChannelLocalService = null;
 		_commerceCurrencyCode = null;
 		_commerceInventoryEngine = null;
-		_commerceOrderHttpHelper = null;
 		_commerceOrderId = 0;
 		_commerceOrderItemLocalService = null;
 		_commerceOrderPortletResourcePermission = null;
@@ -494,7 +490,6 @@ public class AddToCartTag extends IncludeTag {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 	private String _commerceCurrencyCode;
 	private CommerceInventoryEngine _commerceInventoryEngine;
-	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private long _commerceOrderId;
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 	private PortletResourcePermission _commerceOrderPortletResourcePermission;

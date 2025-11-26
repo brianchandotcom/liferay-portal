@@ -32,7 +32,7 @@ public class VocabularyObjectDefinitionSelectionFDSFilter
 
 	@Override
 	public String getEntityFieldType() {
-		return FDSEntityFieldTypes.INTEGER;
+		return FDSEntityFieldTypes.STRING;
 	}
 
 	@Override

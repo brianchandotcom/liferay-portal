@@ -1786,6 +1786,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		widgetInstancePageElementDefinition.
 			setDraftWidgetInstanceExternalReferenceCode(
 				draftWidgetInstanceExternalReferenceCode);
+		widgetInstancePageElementDefinition.setFragmentViewports(
+			FragmentViewportTestUtil.getFragmentViewports());
 		widgetInstancePageElementDefinition.setIndexed(indexed);
 		widgetInstancePageElementDefinition.setName(name);
 		widgetInstancePageElementDefinition.setType(

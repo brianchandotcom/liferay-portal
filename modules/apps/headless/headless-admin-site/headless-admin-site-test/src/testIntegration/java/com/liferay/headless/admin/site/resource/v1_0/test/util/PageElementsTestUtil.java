@@ -148,6 +148,8 @@ public class PageElementsTestUtil {
 		fragmentInstancePageElementDefinition.setFragmentType(
 			FragmentInstancePageElementDefinition.FragmentType.BASIC);
 		fragmentInstancePageElementDefinition.setHtml(fragmentEntry::getHtml);
+		fragmentInstancePageElementDefinition.setFragmentViewports(
+			FragmentViewportTestUtil.getFragmentViewports());
 		fragmentInstancePageElementDefinition.setIndexed(
 			RandomTestUtil::randomBoolean);
 		fragmentInstancePageElementDefinition.setJs(fragmentEntry::getJs);

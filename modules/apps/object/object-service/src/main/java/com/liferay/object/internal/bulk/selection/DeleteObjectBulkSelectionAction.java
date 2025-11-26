@@ -7,16 +7,26 @@ package com.liferay.object.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
 
@@ -57,7 +67,8 @@ public class DeleteObjectBulkSelectionAction
 		try {
 			values.put("executionStatus", "started");
 
-			objectEntry = _partialUpdateObjectEntry(objectEntry, values);
+			objectEntry = _partialUpdateObjectEntry(
+				user.getUserId(), objectEntry, values);
 
 			values = objectEntry.getValues();
 
@@ -67,22 +78,46 @@ public class DeleteObjectBulkSelectionAction
 						if (object instanceof ObjectEntry) {
 							ObjectEntry objectObjectEntry = (ObjectEntry)object;
 
-							_objectEntryLocalService.deleteObjectEntry(
-								objectObjectEntry);
+							ObjectDefinition objectDefinition =
+								_objectDefinitionLocalService.
+									getObjectDefinition(
+										objectObjectEntry.
+											getObjectDefinitionId());
+
+							ObjectEntryManager objectEntryManager =
+								_objectEntryManagerRegistry.
+									getObjectEntryManager(
+										objectDefinition.getCompanyId(),
+										objectDefinition.getStorageType());
+
+							if (!(objectEntryManager instanceof
+									DefaultObjectEntryManager)) {
+
+								throw new UnsupportedOperationException();
+							}
+
+							DefaultObjectEntryManager
+								defaultObjectEntryManager =
+									(DefaultObjectEntryManager)
+										objectEntryManager;
+
+							defaultObjectEntryManager.deleteObjectEntry(
+								objectDefinition,
+								objectObjectEntry.getObjectEntryId());
 						}
 						else {
 							ObjectEntryFolder objectEntryFolder =
 								(ObjectEntryFolder)object;
 
-							_objectEntryFolderLocalService.
-								deleteObjectEntryFolder(objectEntryFolder);
+							_deleteObjectEntryFolder(
+								user.getUserId(), objectEntryFolder);
 						}
 
 						numberOfSuccessfulItems.getAndIncrement();
 					}
-					catch (PortalException portalException) {
+					catch (Exception exception) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(portalException);
+							_log.warn(exception);
 						}
 
 						numberOfFailedItems.getAndIncrement();
@@ -103,16 +138,40 @@ public class DeleteObjectBulkSelectionAction
 			values.put(
 				"numberOfSuccessfulItems", numberOfSuccessfulItems.get());
 
-			_partialUpdateObjectEntry(objectEntry, values);
+			_partialUpdateObjectEntry(user.getUserId(), objectEntry, values);
+		}
+	}
+
+	private void _deleteObjectEntryFolder(
+			long userId, ObjectEntryFolder objectEntryFolder)
+		throws PortalException {
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			objectEntryFolder.getGroupId());
+
+		if ((depotEntry != null) &&
+			_trashHelper.isTrashEnabled(objectEntryFolder.getGroupId()) &&
+			(objectEntryFolder.getStatus() !=
+				WorkflowConstants.STATUS_IN_TRASH) &&
+			FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17564")) {
+
+			_objectEntryFolderLocalService.moveObjectEntryFolderToTrash(
+				userId, objectEntryFolder, new ServiceContext());
+		}
+		else {
+			_objectEntryFolderLocalService.deleteObjectEntryFolder(
+				objectEntryFolder.getObjectEntryFolderId());
 		}
 	}
 
 	private ObjectEntry _partialUpdateObjectEntry(
-			ObjectEntry objectEntry, Map<String, Serializable> values)
+			long userId, ObjectEntry objectEntry,
+			Map<String, Serializable> values)
 		throws PortalException {
 
 		return _objectEntryLocalService.partialUpdateObjectEntry(
-			objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+			userId, objectEntry.getObjectEntryId(),
 			objectEntry.getObjectEntryFolderId(), values, new ServiceContext());
 	}
 
@@ -120,9 +179,21 @@ public class DeleteObjectBulkSelectionAction
 		DeleteObjectBulkSelectionAction.class);
 
 	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

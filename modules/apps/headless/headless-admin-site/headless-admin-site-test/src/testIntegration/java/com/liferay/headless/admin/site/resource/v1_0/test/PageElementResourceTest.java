@@ -62,7 +62,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
@@ -92,6 +91,7 @@ import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.serdes.v1_0.PageElementSerDes;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentConfigurationTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEditableElementTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentViewportTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ReferencesTestUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
@@ -102,7 +102,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
-import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -969,7 +968,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				fragmentLinkClassName, fragmentLinkExternalReferenceCode,
 				fragmentLinkFieldKey, fragmentLinkLocalizedValues));
 		containerPageElementDefinition.setFragmentViewports(
-			_getFragmentViewports());
+			FragmentViewportTestUtil.getFragmentViewports());
 		containerPageElementDefinition.setHtmlProperties(
 			() -> new HtmlProperties() {
 				{
@@ -1076,7 +1075,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				formContainerSubmissionResultType, formContainerType,
 				numberOfSteps, unlocalizedFieldsState));
 		formContainerPageElementDefinition.setFragmentViewports(
-			_getFragmentViewports());
+			FragmentViewportTestUtil.getFragmentViewports());
 		formContainerPageElementDefinition.setIndexed(indexed);
 		formContainerPageElementDefinition.setLayout(
 			() -> new com.liferay.headless.admin.site.client.dto.v1_0.Layout() {
@@ -1125,7 +1124,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		formStepContainerPageElementDefinition.setCustomCSS(
 			RandomTestUtil.randomString());
 		formStepContainerPageElementDefinition.setFragmentViewports(
-			_getFragmentViewports());
+			FragmentViewportTestUtil.getFragmentViewports());
 		formStepContainerPageElementDefinition.setType(
 			PageElementDefinition.Type.FORM_STEP_CONTAINER);
 
@@ -1261,23 +1260,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return _getFragmentMappedValueItemExternalReference(
 			className, externalReferenceCode);
-	}
-
-	private FragmentViewport[] _getFragmentViewports() {
-		return new FragmentViewport[] {
-			new FragmentViewport() {
-				{
-					setCustomCSS(RandomTestUtil.randomString());
-					setId(ViewportSize.MOBILE_LANDSCAPE::getViewportSizeId);
-				}
-			},
-			new FragmentViewport() {
-				{
-					setCustomCSS(RandomTestUtil.randomString());
-					setId(ViewportSize.TABLET::getViewportSizeId);
-				}
-			}
-		};
 	}
 
 	private PageElement _getGridPageElement(

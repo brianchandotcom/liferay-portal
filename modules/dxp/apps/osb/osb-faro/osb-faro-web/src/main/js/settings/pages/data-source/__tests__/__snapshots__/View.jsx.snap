@@ -1776,141 +1776,389 @@ exports[`View should render a Salesforce data-source page 1`] = `
               </div>
             </div>
             <div
-              class="mb-4 p-4 sheet"
+              class="panel mb-4 panel-secondary"
             >
               <div
-                class="row justify-content-center"
+                class="panel-header"
+              >
+                <h2
+                  class="mb-0 p-2 text-6 text-dark"
+                >
+                  Authentication
+                </h2>
+              </div>
+              <div
+                class="panel-body p-4"
               >
                 <div
-                  class="col-12"
+                  class="mb-4"
+                >
+                  <span
+                    class="text-3 text-secondary font-weight-semi-bold"
+                  >
+                    CONNECTION STATUS
+                  </span>
+                  <hr
+                    class="my-2"
+                  />
+                  <div
+                    class="alert alert-success"
+                  >
+                    <div
+                      class="alert-autofit-row autofit-row"
+                      role="alert"
+                    >
+                      <div
+                        class="autofit-col"
+                      >
+                        <div
+                          class="autofit-section"
+                        >
+                          <span
+                            class="alert-indicator"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-check-circle-full"
+                              role="presentation"
+                            >
+                              <use
+                                href="#check-circle-full"
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="autofit-col autofit-col-expand"
+                      >
+                        <div
+                          class="autofit-section"
+                        >
+                          You have successfully authenticated your token with Liferay Analytics Cloud. You can now select the data to sync.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mb-4"
+                >
+                  <span
+                    class="text-3 text-secondary font-weight-semi-bold"
+                  >
+                    DATA SOURCE DETAILS
+                  </span>
+                  <hr
+                    class="my-2"
+                  />
+                  <div
+                    class="input-group d-flex mt-3"
+                  >
+                    <div
+                      class="input-group-item mr-3 input-group-item-shrink"
+                    >
+                      <label
+                        for="dataSourceType"
+                      >
+                        Data Source Type
+                      </label>
+                      <input
+                        class="form-control"
+                        readonly=""
+                        type="text"
+                        value="Salesforce"
+                      />
+                    </div>
+                    <div
+                      class="input-group-item ml-0 input-group-item-shrink"
+                    >
+                      <label
+                        for="dataSourceId"
+                      >
+                        Data Source ID
+                      </label>
+                      <input
+                        class="form-control"
+                        readonly=""
+                        type="text"
+                        value="1"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <button
+                  aria-label="Disconnect Data Source"
+                  class="btn btn-sm btn-outline-danger"
+                  type="button"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-logout mr-2"
+                    role="presentation"
+                  >
+                    <use
+                      href="#logout"
+                    />
+                  </svg>
+                  Disconnect Data Source
+                </button>
+              </div>
+            </div>
+            <div
+              class="panel mb-4 panel-secondary"
+            >
+              <div
+                class="panel-header"
+              >
+                <h2
+                  class="mb-0 p-2 text-6 text-dark"
+                >
+                  Synced Data
+                </h2>
+              </div>
+              <div
+                class="panel-body p-4"
+              >
+                <span
+                  aria-hidden="true"
+                  class="loading-root spacer loading-animation"
+                />
+              </div>
+            </div>
+            <div
+              class="panel mb-4 panel-secondary"
+            >
+              <div
+                class="panel-header"
+              >
+                <h2
+                  class="mb-0 p-2 text-6 text-dark"
+                >
+                  Assigned Properties
+                </h2>
+              </div>
+              <div
+                class="panel-body p-0"
+              >
+                <div
+                  class="p-4"
+                >
+                  <p
+                    class="text-4 text-secondary"
+                  >
+                    Properties allow you to aggregate data from your users and DXP sites and channels. Data source information is available in any property they are assigned to.
+                  </p>
+                  <span
+                    class="text-3 text-secondary font-weight-semi-bold"
+                  >
+                    DATA AVAILABILITY
+                  </span>
+                  <hr
+                    class="my-2"
+                  />
+                  <p
+                    class="text-4 text-secondary"
+                  >
+                    Choose the properties that will have access to this data source.
+                  </p>
+                  <div
+                    class=""
+                  >
+                    <div
+                      class="custom-control custom-radio custom-control-inline custom-control-outside"
+                    >
+                      <label>
+                        <input
+                          class="custom-control-input"
+                          role="radio"
+                          type="radio"
+                          value="all"
+                        />
+                        <span
+                          class="custom-control-label"
+                        >
+                          <span
+                            class="custom-control-label-text"
+                          >
+                            All properties, including those not yet created.
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="custom-control custom-radio custom-control-inline custom-control-outside"
+                    >
+                      <label>
+                        <input
+                          checked=""
+                          class="custom-control-input"
+                          role="radio"
+                          type="radio"
+                          value="custom"
+                        />
+                        <span
+                          class="custom-control-label"
+                        >
+                          <span
+                            class="custom-control-label-text"
+                          >
+                            Select Properties
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="toolbar-root"
+                >
+                  <nav
+                    class="navbar navbar-root management-bar management-bar-light navbar-expand"
+                  >
+                    <div
+                      class="container-fluid"
+                    >
+                      <ul
+                        class="nav-root front-nav navbar-nav"
+                        role="tablist"
+                      >
+                        <li
+                          class="nav-item"
+                          role="presentation"
+                        >
+                          <div
+                            class="dropdown dropdown-root"
+                          >
+                            <button
+                              aria-controls="clay-dropdown-menu-3"
+                              aria-expanded="false"
+                              aria-haspopup="true"
+                              class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+                              data-testid="order-button"
+                              type="button"
+                            >
+                              <span
+                                class="caret-root"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-order-list-down"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#order-list-down"
+                                  />
+                                </svg>
+                              </span>
+                              <span
+                                class="mx-2"
+                              >
+                                Order
+                              </span>
+                              <span
+                                class="caret-root"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-caret-bottom"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#caret-bottom"
+                                  />
+                                </svg>
+                              </span>
+                            </button>
+                          </div>
+                        </li>
+                      </ul>
+                      <div
+                        class="navbar-form navbar-form-autofit mx-2"
+                      >
+                        <div
+                          class="input-group search"
+                        >
+                          <div
+                            class="input-group-item"
+                          >
+                            <input
+                              class="input-root form-control input-group-inset input-group-inset-after"
+                              placeholder="Search"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="input-group-inset-item input-group-inset-item-after"
+                            >
+                              <button
+                                aria-label="Search"
+                                class="button-root btn btn-unstyled"
+                                type="button"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-search icon-root"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#search"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                      >
+                        Select Property
+                      </button>
+                    </div>
+                  </nav>
+                </div>
+                <div
+                  class="py-6 no-results-root flex-grow-1"
                 >
                   <div
-                    class="mb-5"
+                    class="no-results-content"
                   >
-                    <span
-                      class="text-6 font-weight-bold"
-                    >
-                      Authentication
-                    </span>
-                  </div>
-                  <div
-                    class="sheet-section"
-                  >
-                    <span
-                      class="text-3 text-secondary font-weight-semi-bold"
-                    >
-                      CONNECTION STATUS
-                    </span>
-                    <hr
-                      class="my-2"
-                    />
                     <div
-                      class="alert alert-success"
-                    >
-                      <div
-                        class="alert-autofit-row autofit-row"
-                        role="alert"
-                      >
-                        <div
-                          class="autofit-col"
-                        >
-                          <div
-                            class="autofit-section"
-                          >
-                            <span
-                              class="alert-indicator"
-                            >
-                              <svg
-                                class="lexicon-icon lexicon-icon-check-circle-full"
-                                role="presentation"
-                              >
-                                <use
-                                  href="#check-circle-full"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                        <div
-                          class="autofit-col autofit-col-expand"
-                        >
-                          <div
-                            class="autofit-section"
-                          >
-                            You have successfully authenticated your token with Liferay Analytics Cloud. You can now select the data to sync.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="sheet-section"
-                    >
-                      <span
-                        class="text-3 text-secondary font-weight-semi-bold"
-                      >
-                        DATA SOURCE DETAILS
-                      </span>
-                      <hr
-                        class="my-2"
-                      />
-                      <div
-                        class="input-group d-flex mt-3"
-                      >
-                        <div
-                          class="input-group-item mr-3 input-group-item-shrink"
-                        >
-                          <label
-                            for="dataSourceType"
-                          >
-                            Data Source Type
-                          </label>
-                          <input
-                            class="form-control"
-                            readonly=""
-                            type="text"
-                            value="Salesforce"
-                          />
-                        </div>
-                        <div
-                          class="input-group-item ml-0 input-group-item-shrink"
-                        >
-                          <label
-                            for="dataSourceId"
-                          >
-                            Data Source ID
-                          </label>
-                          <input
-                            class="form-control"
-                            readonly=""
-                            type="text"
-                            value="1"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      aria-label="Disconnect Data Source"
-                      class="btn btn-sm btn-outline-danger"
-                      type="button"
+                      class="no-results-icon"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-logout mr-2"
+                        class="lexicon-icon lexicon-icon-ac_satellite icon-root icon-size-xxxl"
                         role="presentation"
                       >
                         <use
-                          href="#logout"
+                          href="#ac_satellite"
                         />
                       </svg>
-                      Disconnect Data Source
-                    </button>
+                    </div>
+                    <div
+                      class="h4 no-results-title"
+                    >
+                      There are no properties found.
+                    </div>
+                    <div
+                      class="no-results-description"
+                    >
+                      Go to Properties under Workspace Settings to create a property.
+                      <a
+                        class="d-block mb-3"
+                        href="https://learn.liferay.com/w/dxp/personalization/analytics-cloud/workspace-settings/scoping-sites-and-individuals-using-properties"
+                        rel="noreferrer noopener"
+                        target="_blank"
+                      >
+                        Access our documentation to learn more.
+                        <span
+                          class="sr-only"
+                        >
+                          (Opens a new window)
+                        </span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <span
-              aria-hidden="true"
-              class="loading-root spacer loading-animation"
-            />
           </div>
         </div>
       </div>

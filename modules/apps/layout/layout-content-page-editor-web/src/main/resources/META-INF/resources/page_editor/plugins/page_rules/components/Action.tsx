@@ -14,6 +14,7 @@ import RuleSelect from './RuleSelect';
 export interface Action {
 	id: string;
 	itemId?: string;
+	readOnly?: boolean;
 	type: 'show' | 'hide' | 'enable' | 'disable' | undefined;
 }
 
@@ -117,6 +118,7 @@ export default function Action({
 
 						sendMessage(Liferay.Language.get('action-completed'));
 					}}
+					readOnly={action.readOnly}
 				/>
 			) : null}
 		</RuleBuilderItem>
@@ -127,10 +129,12 @@ function FragmentSelector({
 	itemId,
 	layoutDataItems,
 	onItemIdChanged,
+	readOnly,
 }: {
 	itemId: string | undefined;
 	layoutDataItems: {label: string; value: string}[];
 	onItemIdChanged: (itemId: string) => void;
+	readOnly?: boolean;
 }) {
 	const selectedKey = layoutDataItems.some((item) => item.value === itemId)
 		? itemId
@@ -144,6 +148,7 @@ function FragmentSelector({
 			)}
 			items={layoutDataItems}
 			onSelectionChange={onItemIdChanged}
+			readOnly={readOnly}
 			selectedKey={selectedKey}
 		/>
 	);

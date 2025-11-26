@@ -48,6 +48,7 @@ interface RuleSelectProps<T> {
 	'aria-label'?: string;
 	'items': ReadonlyArray<{label: string; value: T}>;
 	'onSelectionChange': (selection: T) => void;
+	'readOnly'?: boolean;
 	'selectedKey'?: string;
 	'triggerRef'?: MutableRefObject<HTMLButtonElement | undefined>;
 }
@@ -55,6 +56,7 @@ interface RuleSelectProps<T> {
 export default function RuleSelect<T extends string>({
 	items,
 	onSelectionChange,
+	readOnly,
 	selectedKey,
 	triggerRef,
 	...otherProps
@@ -68,6 +70,19 @@ export default function RuleSelect<T extends string>({
 				readOnly
 				sizing="sm"
 				value={Liferay.Language.get('no-options-available')}
+			/>
+		);
+	}
+
+	if (readOnly) {
+		const item = items.find(({value}) => value === selectedKey);
+
+		return (
+			<ClayInput
+				className="w-auto"
+				readOnly
+				sizing="sm"
+				value={item?.label}
 			/>
 		);
 	}

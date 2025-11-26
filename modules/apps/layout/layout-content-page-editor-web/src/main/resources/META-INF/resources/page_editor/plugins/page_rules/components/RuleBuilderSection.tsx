@@ -176,7 +176,8 @@ export function RuleBuilderActionSection({
 								onDeleteAction(action, index);
 							}}
 							showDeleteButton={
-								actions.length > 1 || !!action.type
+								!action.readOnly &&
+								(actions.length > 1 || !!action.type)
 							}
 							wrapperRef={(element) =>
 								setActionRef(action, element)

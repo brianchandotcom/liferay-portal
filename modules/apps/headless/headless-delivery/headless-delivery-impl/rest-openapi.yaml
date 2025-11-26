@@ -1964,6 +1964,7 @@ components:
                     anyOf:
                         -   $ref: "#/components/schemas/FragmentFieldAction"
                         -   $ref: "#/components/schemas/FragmentFieldBackgroundImage"
+                        -   $ref: "#/components/schemas/FragmentFieldDate"
                         -   $ref: "#/components/schemas/FragmentFieldHTML"
                         -   $ref: "#/components/schemas/FragmentFieldImage"
                         -   $ref: "#/components/schemas/FragmentFieldText"
@@ -2026,6 +2027,24 @@ components:
                                 -   $ref: "#/components/schemas/FragmentInlineValue"
                                 -   $ref: "#/components/schemas/FragmentMappedValue"
                     type: object
+            type: object
+        FragmentFieldDate:
+            # @review
+            description:
+                Represents a fragment field with a date.
+            properties:
+                date:
+                    # @review
+                    description:
+                        The fragment field's date.
+                    oneOf:
+                        -   $ref: "#/components/schemas/FragmentMappedValue"
+                dateFormat:
+                    # @review
+                    description:
+                        The fragment editable element's date format.
+                    oneOf:
+                        -   $ref: "#/components/schemas/FragmentInlineValue"
             type: object
         FragmentFieldHTML:
             # @review

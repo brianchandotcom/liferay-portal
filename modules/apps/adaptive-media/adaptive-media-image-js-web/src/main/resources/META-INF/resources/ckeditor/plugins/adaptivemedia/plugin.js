@@ -34,7 +34,8 @@ function sourceTagTemplate({media, srcset}) {
 					event.cancel();
 
 					if (typeof event.data.commandData === 'function') {
-						instance._imageSelectorCallback = event.data.commandData;
+						instance._imageSelectorCallback =
+							event.data.commandData;
 					}
 
 					const onSelectedImageChangeFn =

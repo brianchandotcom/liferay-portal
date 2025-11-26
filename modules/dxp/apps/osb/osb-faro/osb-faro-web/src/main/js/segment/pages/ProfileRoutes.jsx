@@ -159,6 +159,8 @@ export const SegmentProfileRoutes = () => {
 		}
 	};
 
+	const isBatch = segmentDetails.segmentType === SegmentTypes.Batch;
+
 	return (
 		<BasePage
 			className={getCN(
@@ -186,8 +188,7 @@ export const SegmentProfileRoutes = () => {
 					<BasePage.Header.TitleSection
 						className='mb-3'
 						subtitle={
-							segmentDetails.segmentType ===
-								SegmentTypes.RealTime &&
+							!isBatch &&
 							`Last update: ${formatUTCDate(
 								segmentDetails.dateModified,
 								'MMM DD, YYYY hh:mm a'
@@ -201,7 +202,7 @@ export const SegmentProfileRoutes = () => {
 							{SEGMENTS_LANGUAGE_MAP[segmentDetails.segmentType]}
 						</Label>
 					</BasePage.Header.TitleSection>
-					{segmentDetails.segmentType === SegmentTypes.Batch && (
+					{isBatch && (
 						<BasePage.Header.Section>
 							<BasePage.Header.PageActions
 								actions={[
@@ -226,7 +227,7 @@ export const SegmentProfileRoutes = () => {
 						</BasePage.Header.Section>
 					)}
 				</BasePage.Row>
-				{segmentDetails.segmentType === SegmentTypes.Batch && (
+				{isBatch && (
 					<BasePage.Header.NavBar
 						items={NAV_ITEMS}
 						routeParams={{channelId, groupId, id}}
@@ -234,21 +235,20 @@ export const SegmentProfileRoutes = () => {
 				)}
 			</BasePage.Header>
 
-			{segmentDetails.segmentType === SegmentTypes.Batch &&
-				getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_SEGMENT && (
-					<BasePage.SubHeader>
-						<div className='d-flex justify-content-end w-100'>
-							<DownloadPDFReport
-								disabled={false}
-								showDateRange={false}
-								subtitle={selectedChannel?.name}
-								title={title}
-							/>
-						</div>
-					</BasePage.SubHeader>
-				)}
+			{isBatch && getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_SEGMENT && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadPDFReport
+							disabled={false}
+							showDateRange={false}
+							subtitle={selectedChannel?.name}
+							title={title}
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
 
-			{segmentDetails.segmentType === SegmentTypes.Batch &&
+			{isBatch &&
 				getMatchedRoute(NAV_ITEMS) ===
 					Routes.CONTACTS_SEGMENT_MEMBERSHIP && (
 					<BasePage.SubHeader>
@@ -265,7 +265,7 @@ export const SegmentProfileRoutes = () => {
 					</BasePage.SubHeader>
 				)}
 
-			{segmentDetails.segmentType === SegmentTypes.RealTime && (
+			{!isBatch && (
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<ClayButton
@@ -339,12 +339,7 @@ export const SegmentProfileRoutes = () => {
 
 							<BundleRouter
 								componentProps={{segment}}
-								data={
-									segmentDetails.segmentType ===
-									SegmentTypes.Batch
-										? Overview
-										: OverviewRealTime
-								}
+								data={isBatch ? Overview : OverviewRealTime}
 								exact
 								path={Routes.CONTACTS_SEGMENT}
 							/>

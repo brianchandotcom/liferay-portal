@@ -20,12 +20,15 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayListStyle;
@@ -603,7 +606,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
-		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
 			externalReferenceCode, TestPropsValues.getUserId(),
 			testGroup.getGroupId(), null, null, null, 0, layout.getPlid(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
@@ -930,6 +933,30 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return _getPageElement(
 			containerPageElementDefinition, pageElementExternalReferenceCode);
+	}
+
+	private Object _getEditableDefaultValue(
+		FragmentEntryLink fragmentEntryLink) {
+
+		JSONObject defaultJSONObject =
+			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
+				fragmentEntryLink.getHtml(),
+				fragmentEntryLink.getConfigurationJSONObject());
+
+		JSONObject defaultEditableJSONObject = defaultJSONObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject defaultElementTextJSONObject =
+			defaultEditableJSONObject.getJSONObject("element-text");
+
+		Object defaultValue = defaultElementTextJSONObject.get("defaultValue");
+
+		Assert.assertTrue(
+			defaultElementTextJSONObject.toString(),
+			Validator.isNotNull(defaultValue));
+
+		return defaultValue;
 	}
 
 	private FileEntry _getFileEntry(long groupId) throws Exception {
@@ -2985,12 +3012,39 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			null, testGroup.getGroupId(),
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 
-		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getFragmentInstancePageElement(
-				externalReferenceCode,
-				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
-					null, fragmentEditableElements, fragmentEntry,
-					testGroup.getGroupId())));
+		PageElement pageElement =
+			_testPutSitePageSpecificationPageExperiencePageElement(
+				_getFragmentInstancePageElement(
+					externalReferenceCode,
+					PageElementsTestUtil.
+						getFragmentInstancePageElementDefinition(
+							null, fragmentEditableElements, fragmentEntry,
+							testGroup.getGroupId())));
+
+		FragmentInstancePageElementDefinition
+			fragmentInstancePageElementDefinition =
+				(FragmentInstancePageElementDefinition)
+					pageElement.getPageElementDefinition();
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinkByExternalReferenceCode(
+					fragmentInstancePageElementDefinition.
+						getFragmentInstanceExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject editableJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject elementTextJSONObject = editableJSONObject.getJSONObject(
+			"element-text");
+
+		Assert.assertEquals(
+			_getEditableDefaultValue(fragmentEntryLink),
+			elementTextJSONObject.get("defaultValue"));
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement()
@@ -3083,7 +3137,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Inject
 	private JSONFactory _jsonFactory;

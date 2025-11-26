@@ -15,6 +15,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 	testIntegrationImplementation project(":apps:fragment:fragment-api")
+	testIntegrationImplementation project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
 	testIntegrationImplementation project(":apps:google-places:google-places-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-site:headless-admin-site-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-site:headless-admin-site-client")

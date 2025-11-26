@@ -1783,10 +1783,9 @@ public class DefaultObjectEntryManagerImpl
 						}
 					}
 
-					if ((objectDefinition.isRootNode() ||
-						 objectDefinition.isRootDescendantNode()) &&
-						objectRelationship.isEdge()) {
+					// Root model check must precede lazy reference check
 
+					if (objectRelationship.isEdge()) {
 						com.liferay.object.model.ObjectEntry
 							nestedServiceBuilderObjectEntry =
 								_objectEntryService.fetchObjectEntry(

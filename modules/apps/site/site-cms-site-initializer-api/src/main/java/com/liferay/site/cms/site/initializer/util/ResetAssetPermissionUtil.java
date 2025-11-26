@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -198,11 +197,7 @@ public class ResetAssetPermissionUtil {
 		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
 			className);
 
-		Iterator<String> iterator = jsonObject.keys();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
+		for (String key : jsonObject.keySet()) {
 			JSONArray jsonArray = jsonObject.getJSONArray(key);
 
 			if ((jsonArray == null) || JSONUtil.isEmpty(jsonArray)) {

@@ -2053,7 +2053,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Log in to save your learning progress and start earning Course Badges!"
+																		"en_US": "Log in to save your learning progress and start earning course badges!"
 																	}
 																}
 															}
@@ -2139,7 +2139,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Couldn't find what you're looking for?"
+																				"en_US": "Could not find what you are looking for?"
 																			}
 																		}
 																	}

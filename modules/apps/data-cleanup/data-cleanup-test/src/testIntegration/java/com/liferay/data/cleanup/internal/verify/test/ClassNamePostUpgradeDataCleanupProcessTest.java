@@ -7,7 +7,6 @@ package com.liferay.data.cleanup.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.osgi.util.BundleUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
@@ -15,16 +14,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
@@ -32,8 +28,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Luis Ortiz
@@ -245,10 +239,10 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 				Bundle bundle = bundleAtomicReference.get();
 
 				if (bundle != null) {
-					_installBundle(bundle);
+					installBundle(bundle);
 				}
 			},
-			() -> bundleAtomicReference.set(_uninstallBundle()));
+			() -> bundleAtomicReference.set(uninstallBundle()));
 	}
 
 	@Override
@@ -287,53 +281,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 		}
 	}
 
-	private void _installBundle(Bundle bundle) throws Exception {
-		Bundle currentBundle = FrameworkUtil.getBundle(
-			ClassNamePostUpgradeDataCleanupProcessTest.class);
-
-		BundleContext bundleContext = currentBundle.getBundleContext();
-
-		BundleUtil.installBundle(
-			bundleContext, _lpkgDeployer, bundle.getLocation(), 1);
-
-		List<Bundle> bundlesToRefresh = new ArrayList<>();
-
-		bundlesToRefresh.add(bundle);
-
-		BundleUtil.refreshBundles(bundleContext, bundlesToRefresh);
-	}
-
-	private Bundle _uninstallBundle() throws Exception {
-		Bundle currentBundle = FrameworkUtil.getBundle(
-			ClassNamePostUpgradeDataCleanupProcessTest.class);
-
-		BundleContext bundleContext = currentBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.dynamic.data.mapping.service") &&
-				(bundle.getState() == Bundle.ACTIVE)) {
-
-				bundle.uninstall();
-
-				List<Bundle> bundlesToRefresh = new ArrayList<>();
-
-				bundlesToRefresh.add(bundle);
-
-				BundleUtil.refreshBundles(bundleContext, bundlesToRefresh);
-
-				return bundle;
-			}
-		}
-
-		return null;
-	}
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private LPKGDeployer _lpkgDeployer;
 
 }

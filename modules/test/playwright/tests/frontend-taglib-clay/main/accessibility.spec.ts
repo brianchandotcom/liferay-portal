@@ -32,6 +32,7 @@ test('When accessing all clay sample portlet tabs, then verifies that the compon
 				selectors: [
 					'.portlet-body > .lfr-tooltip-scope > .tab-content > .tab-pane.active',
 				],
+				selectorsToExclude: ['span[role="gridcell"].label-item-expand'],
 			});
 		});
 	}

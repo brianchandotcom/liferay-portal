@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRowsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -54,6 +55,15 @@ public class CommerceWishListItemServiceUpgradeStepRegistrator
 			"1.2.0", "1.2.1",
 			new CommerceWishListUpgradeProcess(
 				_resourceActionLocalService, _resourcePermissionLocalService));
+
+		registry.register(
+			"1.2.1", "2.0.0",
+			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
+				"CommerceWishListItem",
+				new String[] {
+					"commerceWishListId", "CPInstanceUuid", "CProductId"
+				},
+				"createDate desc"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce wish list upgrade step registrator finished");

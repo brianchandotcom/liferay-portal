@@ -855,6 +855,8 @@ public class CommerceServiceUpgradeStepRegistrator
 				_companyLocalService, _objectDefinitionLocalService,
 				_objectFieldLocalService, _objectRelationshipLocalService));
 
+		registry.register("14.0.0", "15.0.0", new DummyUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

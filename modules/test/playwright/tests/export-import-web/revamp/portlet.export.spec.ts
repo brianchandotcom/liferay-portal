@@ -39,5 +39,5 @@ test('Can export using the new navigation buttons', async ({
 
 	await exportImportPage.export(exportName);
 
-	await expect(exportImportPage.taskSuccessLabel(exportName)).toBeVisible();
+	await expect(exportImportPage.taskStatusLabel(exportName)).toBeVisible();
 });

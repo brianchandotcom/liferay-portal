@@ -80,8 +80,12 @@ const InviteTeamMembersPage = ({
 	const [showEmptyEmailError, setshowEmptyEmailError] = useState(false);
 	const [roleSelectorFilled, setRoleSelectorFilled] = useState(false);
 
-	const projectHasSLAGoldPlatinum =
+	const projectHasPrioritySLA =
+		project?.slaCurrent?.includes(SLA_TYPES.elite) ||
+		project?.slaCurrent?.includes(SLA_TYPES.enhanced) ||
+		project?.slaCurrent?.includes(SLA_TYPES.essential) ||
 		project?.slaCurrent?.includes(SLA_TYPES.gold) ||
+		project?.slaCurrent?.includes(SLA_TYPES.missionCritical) ||
 		project?.slaCurrent?.includes(SLA_TYPES.platinum);
 
 	const isUnlimitedSupportSeats =
@@ -588,7 +592,7 @@ const InviteTeamMembersPage = ({
 								<div className="mx-3 pt-3">
 									<h5 className="text-neutral-7">
 										{`${
-											projectHasSLAGoldPlatinum
+											projectHasPrioritySLA
 												? i18n.translate(
 														'support-seats'
 													)

@@ -6,6 +6,7 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -19,6 +20,9 @@ import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/Page
 import {MasterPagesPage} from '../../../pages/layout-page-template-admin-web/MasterPagesPage';
 import {StyleBooksPage} from '../../../pages/style-book-web/StyleBooksPage';
 import getRandomString from '../../../utils/getRandomString';
+import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
+import {enableLocalStaging} from '../../../utils/staging';
+import {portletPublishToLivePageTest} from '../../staging-configuration-web/main/fixtures/portletPublishToLivePageTest';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -375,3 +379,175 @@ test.describe('Style book is incompatible with the applied theme', () => {
 		});
 	});
 });
+
+const stagingTest = mergeTests(
+	dataApiHelpersTest,
+	isolatedSiteTest,
+	loginTest(),
+	masterPagesPagesTest,
+	pageEditorPagesTest,
+	pagesAdminPagesTest,
+	portletPublishToLivePageTest,
+	styleBookPageTest
+);
+
+stagingTest(
+	'Assert that style books work when staging is enabled',
+	async ({
+		apiHelpers,
+		masterPagesPage,
+		page,
+		pageEditorPage,
+		pagesAdminPage,
+		portletPublishToLivePage,
+		site,
+		styleBooksPage,
+	}) => {
+		async function createStyleBook(color: string, styleBookName: string) {
+			await test.step('Create style book while live site is selected and edit Brand Color 1 token', async () => {
+				await styleBooksPage.goto(site.friendlyUrlPath);
+
+				await styleBooksPage.create(styleBookName);
+
+				await styleBooksPage.updateTokenInputColor(
+					'Brand Color 1',
+					color,
+					'Brand Colors'
+				);
+
+				await styleBooksPage.waitForAutoSave();
+
+				await styleBooksPage.publish();
+			});
+		}
+
+		const stagingSite = await stagingTest.step(
+			'Enable local staging',
+			async () => {
+				const layout = await apiHelpers.jsonWebServicesLayout.addLayout(
+					{
+						groupId: site.id,
+						options: {type: 'content'},
+						title: getRandomString(),
+					}
+				);
+
+				await enableLocalStaging(apiHelpers, page, site);
+
+				const stagingSite =
+					await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+						`${site.friendlyUrlPath}-staging`
+					);
+
+				await page.goto(
+					`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
+				);
+
+				await reloadUntilVisible({
+					myLocator: portletPublishToLivePage.publishToLiveButton,
+					page,
+				});
+
+				await portletPublishToLivePage.publishToLiveButton.click();
+
+				return stagingSite;
+			}
+		);
+
+		const styleBookName1 = getRandomString();
+
+		await createStyleBook('#FF0000', styleBookName1);
+
+		const styleBookName2 = getRandomString();
+
+		await createStyleBook('#00ccffff', styleBookName2);
+
+		const masterPageName = getRandomString();
+
+		await stagingTest.step(
+			'Create a master page and assign Brand Color 1 token to a Heading fragment',
+			async () => {
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: stagingSite.id,
+						name: masterPageName,
+						type: 'master-layout',
+					}
+				);
+
+				await masterPagesPage.goto(stagingSite.friendlyUrlPath);
+
+				await masterPagesPage.editMaster(masterPageName);
+
+				await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+				await pageEditorPage.goToConfigurationTab('Styles');
+
+				await page
+					.getByLabel('Text Color', {exact: true})
+					.getByLabel('Detach Style')
+					.click();
+
+				await pageEditorPage.changeFragmentConfiguration({
+					fieldLabel: 'Text Color',
+					fragmentId: await pageEditorPage.getFragmentId('Heading'),
+					tab: 'Styles',
+					value: 'Brand Color 1',
+					valueFromStylebook: true,
+				});
+			}
+		);
+
+		const styleBook1BrandColor1 = 'rgb(255, 0, 0)';
+
+		await stagingTest.step('Assert Heading fragment color', async () => {
+			await expect(page.locator('.component-heading')).toHaveCSS(
+				'color',
+				'rgb(11, 95, 255)'
+			);
+
+			await pageEditorPage.selectStyleBook(styleBookName1);
+
+			await expect(page.locator('.component-heading')).toHaveCSS(
+				'color',
+				styleBook1BrandColor1
+			);
+
+			await pageEditorPage.publishMasterButton.click();
+		});
+
+		await test.step('Create a child page based on master page', async () => {
+			const pageName = getRandomString();
+
+			await pagesAdminPage.goto(stagingSite.friendlyUrlPath);
+
+			await pagesAdminPage.createNewPage({
+				draft: true,
+				name: pageName,
+				template: masterPageName,
+			});
+		});
+
+		await test.step('Assert that a child page can inherit the master page style book selection', async () => {
+			await pageEditorPage.goToSidebarTab('Page Design Options');
+
+			await pageEditorPage.goToConfigurationTab('Style Book');
+
+			await expect(page.getByText('Styles from master')).toBeVisible();
+
+			await expect(page.locator('.component-heading')).toHaveCSS(
+				'color',
+				styleBook1BrandColor1
+			);
+		});
+
+		await test.step('Assert that a child page can override the master page style book selection', async () => {
+			await pageEditorPage.selectStyleBook(styleBookName2);
+
+			await expect(page.locator('.component-heading')).toHaveCSS(
+				'color',
+				'rgb(0, 204, 255)'
+			);
+		});
+	}
+);

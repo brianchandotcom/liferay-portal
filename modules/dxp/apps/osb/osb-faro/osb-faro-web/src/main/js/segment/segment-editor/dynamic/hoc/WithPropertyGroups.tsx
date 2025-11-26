@@ -11,7 +11,11 @@ import {
 } from '../utils/utils';
 import {createInterestProperty} from '../utils/utils';
 import {EventTypes} from 'event-analysis/utils/types';
-import {FieldContexts, FieldOwnerTypes} from 'shared/util/constants';
+import {
+	FieldContexts,
+	FieldOwnerTypes,
+	SegmentTypes
+} from 'shared/util/constants';
 import {
 	INDIVIDUAL_PROPERTIES,
 	ORGANIZATION_PROPERTIES,
@@ -29,10 +33,12 @@ const MAX_DELTA = 500;
 
 const fetchPropertyGroups = ({
 	channelId,
-	groupId
+	groupId,
+	segmentType
 }: {
 	channelId: string;
 	groupId: string;
+	segmentType?: string;
 }): Promise<any> =>
 	Promise.all([
 		API.fieldMappings.search({
@@ -60,8 +66,6 @@ const fetchPropertyGroups = ({
 			groupId,
 			ownerType: FieldOwnerTypes.Organization
 		}),
-		API.interests.searchKeywords({channelId, delta: MAX_DELTA, groupId}),
-		Promise.resolve(SESSION_PROPERTIES),
 		client.query({
 			fetchPolicy: 'network-only',
 			query: EventDefinitionsQuery,
@@ -76,20 +80,34 @@ const fetchPropertyGroups = ({
 				}
 			}
 		}),
-		Promise.resolve(WEB_BEHAVIORS)
+		Promise.resolve(WEB_BEHAVIORS),
+		segmentType === SegmentTypes.Batch
+			? API.interests.searchKeywords({
+					channelId,
+					delta: MAX_DELTA,
+					groupId
+			  })
+			: Promise.resolve({items: []}),
+
+		segmentType === SegmentTypes.Batch
+			? Promise.resolve(SESSION_PROPERTIES)
+			: Promise.resolve([])
 	]);
 
-const mapResultToProps = ([
-	individualDemographicsMappings,
-	individualCustomMappings,
-	accountMappings,
-	organizationProperties,
-	organizationCustomMappings,
-	interestKeywords,
-	sessionProperties,
-	eventProperties,
-	webBehaviors
-]) => {
+const mapResultToProps = (
+	[
+		individualDemographicsMappings,
+		individualCustomMappings,
+		accountMappings,
+		organizationProperties,
+		organizationCustomMappings,
+		eventProperties,
+		webBehaviors,
+		interestKeywords,
+		sessionProperties
+	],
+	{type}
+) => {
 	const individualDemographicProperties = individualDemographicsMappings.items.map(
 		convertFieldMappingToIndividualProperty
 	);
@@ -177,26 +195,32 @@ const mapResultToProps = ([
 					})
 				])
 			}),
-			new PropertyGroup({
-				label: Liferay.Language.get('interests'),
-				propertyKey: 'interest',
-				propertySubgroups: List([
-					new PropertySubgroup({
-						properties: List(
-							interestKeywords.items.map(createInterestProperty)
-						)
-					})
-				])
-			}),
-			new PropertyGroup({
-				label: sub(Liferay.Language.get('x-attributes'), [
-					Liferay.Language.get('session')
-				]) as string,
-				propertyKey: 'session',
-				propertySubgroups: List([
-					new PropertySubgroup({properties: sessionProperties})
-				])
-			})
+			type === SegmentTypes.Batch &&
+				new PropertyGroup({
+					label: Liferay.Language.get('interests'),
+					propertyKey: 'interest',
+					propertySubgroups: List([
+						new PropertySubgroup({
+							properties: List(
+								interestKeywords.items.map(
+									createInterestProperty
+								)
+							)
+						})
+					])
+				}),
+			type === SegmentTypes.Batch &&
+				new PropertyGroup({
+					label: sub(Liferay.Language.get('x-attributes'), [
+						Liferay.Language.get('session')
+					]) as string,
+					propertyKey: 'session',
+					propertySubgroups: List([
+						new PropertySubgroup({
+							properties: List(sessionProperties)
+						})
+					])
+				})
 		].filter(Boolean) as PropertyGroup[]
 	);
 

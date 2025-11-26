@@ -51,10 +51,6 @@ public class JournalDefaultTemplateProviderTest {
 
 	@Test
 	public void testGetScript() throws Exception {
-		_testGetScriptWithImageField();
-	}
-
-	private void _testGetScriptWithImageField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(

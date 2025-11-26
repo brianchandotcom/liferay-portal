@@ -13,24 +13,25 @@ import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
 import {Action} from '../../../utils/constants';
+import {useSSADashboardOutlet} from '../SSADashboardOutlet';
 import {ssaRoles as ssaRolesValues} from '../constants';
 import ManageUserModal from '../modals/ManageUserRolesModal';
 
 function mutateUser(
 	accountERC: string,
-	user: UserAccount,
-	usersPage: APIResponse<UserAccount>
+	userId: number,
+	userAccountPage: APIResponse<UserAccount>
 ) {
 	return {
-		...usersPage,
-		items: usersPage.items.map((prevUser) => {
-			if (prevUser.id !== user.id) {
-				return prevUser;
+		...userAccountPage,
+		items: userAccountPage.items.map((userAccount) => {
+			if (userAccount.id !== userId) {
+				return userAccount;
 			}
 
 			return {
-				...prevUser,
-				accountBriefs: prevUser.accountBriefs.map((account) =>
+				...userAccount,
+				accountBriefs: userAccount.accountBriefs.map((account) =>
 					account.externalReferenceCode === accountERC
 						? {
 								...account,
@@ -45,6 +46,7 @@ function mutateUser(
 
 const useManageUserActions = () => {
 	const {properties} = useMarketplaceContext();
+	const {ssaAccount} = useSSADashboardOutlet();
 	const modalContext = useModalContext();
 
 	return useMemo(
@@ -98,7 +100,7 @@ const useManageUserActions = () => {
 				},
 				{
 					name: i18n.translate('remove-all-roles'),
-					onClick: (user: UserAccount, mutate) => {
+					onClick: (userAccount: UserAccount, mutate) => {
 						modalContext.onOpenModal({
 							body: (
 								<div>
@@ -132,27 +134,19 @@ const useManageUserActions = () => {
 											)
 										);
 
-										const accountId =
-											Liferay.CommerceContext.account
-												?.accountId;
-
-										if (!accountId) {
-											return;
-										}
-
 										try {
-											await Promise.all(
+											await Promise.allSettled(
 												ssaRoles.map((role) =>
 													HeadlessAdminUser.deleteRoleAccountUser(
-														accountId,
+														ssaAccount.id,
 														role.id,
-														user.id
+														userAccount.id
 													)
 												)
 											);
 										}
 										catch {
-											Liferay.Util.openToast({
+											return Liferay.Util.openToast({
 												message: i18n.translate(
 													'unable-to-remove-roles'
 												),
@@ -160,6 +154,7 @@ const useManageUserActions = () => {
 												type: 'danger',
 											});
 										}
+
 										Liferay.Util.openToast({
 											message: i18n.translate(
 												'successfully-removed-roles'
@@ -172,7 +167,7 @@ const useManageUserActions = () => {
 											) => {
 												return mutateUser(
 													properties.accountExternalReferenceCode,
-													user,
+													userAccount.id,
 													usersPage
 												);
 											},
@@ -191,7 +186,7 @@ const useManageUserActions = () => {
 					},
 				},
 			] as Action[],
-		[modalContext, properties.accountExternalReferenceCode]
+		[modalContext, properties.accountExternalReferenceCode, ssaAccount.id]
 	);
 };
 

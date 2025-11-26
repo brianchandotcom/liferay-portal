@@ -164,6 +164,7 @@ export default {
 	'continue-to-download': 'Continue to Download',
 	'continue-to-install': 'Continue to Install',
 	'copied-x-to-the-clipboard': 'Copied {0} to the clipboard.',
+	'could-not-find-ssa-account': 'Could not find SSA account',
 	'could-not-upload-the-file-a-package-with-this-filename-already-exists':
 		'Could not upload the file. A package with this filename already exists.',
 	'coupon-code': 'Coupon Code',

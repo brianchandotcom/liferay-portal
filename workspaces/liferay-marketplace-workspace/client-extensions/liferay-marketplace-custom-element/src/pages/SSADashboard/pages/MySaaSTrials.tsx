@@ -72,14 +72,8 @@ export default function MySaaSTrials() {
 				<EmptyState
 					description={
 						<p>
-							Reach out to
-							<a
-								className="mx-1"
-								href="mailto:rafael.lluis@liferay.com"
-							>
-								rafael.lluis@liferay.com
-							</a>
-							to obtain the necessary permissions to continue.
+							Reach out to the <strong>#help-ssa</strong> channel
+							on slack for permission to continue
 						</p>
 					}
 					title={i18n.translate('access-required')}

@@ -1464,13 +1464,14 @@ public class ObjectEntryResourceImpl
 		String className, long classPK, String externalReferenceCode,
 		long groupId) {
 
-		com.liferay.portal.kernel.comment.Comment comment =
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_commentManager.fetchComment(groupId, externalReferenceCode);
 
-		if ((comment != null) &&
-			CommentResourceUtil.isAssociated(className, classPK, comment)) {
+		if ((serviceBuilderComment != null) &&
+			CommentResourceUtil.isAssociated(
+				className, classPK, serviceBuilderComment)) {
 
-			return comment;
+			return serviceBuilderComment;
 		}
 
 		return null;

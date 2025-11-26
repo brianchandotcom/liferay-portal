@@ -9189,10 +9189,7 @@ public class ObjectEntryResourceTest {
 			HTTPTestUtil.invokeToHttpCode(
 				bodyJSONObject.toString(), endpoint, Http.Method.POST));
 
-		_objectDefinition1.setEnableComments(true);
-
-		_objectDefinitionLocalService.updateObjectDefinition(
-			_objectDefinition1);
+		_enableObjectEntryComments(_objectDefinition1);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			bodyJSONObject.toString(), endpoint, Http.Method.POST);
@@ -9225,10 +9222,7 @@ public class ObjectEntryResourceTest {
 			HTTPTestUtil.invokeToHttpCode(
 				bodyJSONObject.toString(), endpoint, Http.Method.POST));
 
-		_siteScopedObjectDefinition1.setEnableComments(true);
-
-		_objectDefinitionLocalService.updateObjectDefinition(
-			_siteScopedObjectDefinition1);
+		_enableObjectEntryComments(_siteScopedObjectDefinition1);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			bodyJSONObject.toString(), endpoint, Http.Method.POST);
@@ -10975,10 +10969,7 @@ public class ObjectEntryResourceTest {
 
 		// Company scope
 
-		_objectDefinition1.setEnableComments(true);
-
-		_objectDefinitionLocalService.updateObjectDefinition(
-			_objectDefinition1);
+		_enableObjectEntryComments(_objectDefinition1);
 
 		ObjectEntry companyObjectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
@@ -11013,10 +11004,7 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		_siteScopedObjectDefinition1.setEnableComments(true);
-
-		_objectDefinitionLocalService.updateObjectDefinition(
-			_siteScopedObjectDefinition1);
+		_enableObjectEntryComments(_siteScopedObjectDefinition1);
 
 		ObjectEntry siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
@@ -15821,36 +15809,13 @@ public class ObjectEntryResourceTest {
 	}
 
 	private ObjectDefinition _enableObjectEntryComments(
-			boolean enable, ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		return _objectDefinitionLocalService.updateCustomObjectDefinition(
-			objectDefinition.getExternalReferenceCode(),
-			objectDefinition.getObjectDefinitionId(),
-			objectDefinition.getAccountEntryRestrictedObjectFieldId(),
-			objectDefinition.getDescriptionObjectFieldId(),
-			objectDefinition.getObjectFolderId(),
-			objectDefinition.getTitleObjectFieldId(),
-			objectDefinition.isAccountEntryRestricted(),
-			objectDefinition.isActive(), objectDefinition.getClassName(),
-			objectDefinition.isEnableCategorization(), enable,
-			objectDefinition.isEnableFormContainer(),
-			objectDefinition.isEnableFriendlyURLCustomization(),
-			objectDefinition.isEnableIndexSearch(),
-			objectDefinition.isEnableLocalization(),
-			objectDefinition.isEnableObjectEntryDraft(),
-			objectDefinition.isEnableObjectEntryHistory(),
-			objectDefinition.isEnableObjectEntrySchedule(),
-			objectDefinition.isEnableObjectEntrySubscription(),
-			objectDefinition.isEnableObjectEntryVersioning(),
-			objectDefinition.getFriendlyURLSeparator(),
-			objectDefinition.getLabelMap(), objectDefinition.getName(),
-			objectDefinition.getPanelAppOrder(),
-			objectDefinition.getPanelCategoryKey(),
-			objectDefinition.isPortlet(), objectDefinition.getLabelMap(),
-			objectDefinition.getScope(), objectDefinition.getStatus(),
-			objectDefinition.getObjectDefinitionSettings(),
-			Collections.emptyList(), Collections.emptyList());
+		objectDefinition.setEnableComments(true);
+
+		return _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
 	}
 
 	private String _escape(String string) {
@@ -16563,10 +16528,10 @@ public class ObjectEntryResourceTest {
 			ObjectDefinition objectDefinition, long groupId)
 		throws Exception {
 
+		_enableObjectEntryComments(objectDefinition);
+
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
-		objectDefinition = _enableObjectEntryComments(true, objectDefinition);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -16586,14 +16551,6 @@ public class ObjectEntryResourceTest {
 			objectEntry.getExternalReferenceCode(), "/comments",
 			"/by-external-reference-code/",
 			jsonObject.getString("externalReferenceCode"));
-
-		objectDefinition = _enableObjectEntryComments(false, objectDefinition);
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(null, endpoint, Http.Method.DELETE));
-
-		_enableObjectEntryComments(true, objectDefinition);
 
 		Assert.assertEquals(
 			204,
@@ -18188,13 +18145,10 @@ public class ObjectEntryResourceTest {
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
+		_enableObjectEntryComments(objectDefinition);
+
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
-		objectDefinition.setEnableComments(true);
-
-		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

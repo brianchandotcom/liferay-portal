@@ -22,7 +22,11 @@ describe('SegmentEditor', () => {
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<DndProvider backend={HTML5Backend}>
-						<SegmentEditor channelId='321' groupId='23' />
+						<SegmentEditor
+							channelId='321'
+							groupId='23'
+							type='BATCH'
+						/>
 					</DndProvider>
 				</BrowserRouter>
 			</Provider>
@@ -47,6 +51,7 @@ describe('SegmentEditor', () => {
 									state: SegmentStates.Disabled
 								}
 							)}
+							type='BATCH'
 						/>
 					</DndProvider>
 				</BrowserRouter>

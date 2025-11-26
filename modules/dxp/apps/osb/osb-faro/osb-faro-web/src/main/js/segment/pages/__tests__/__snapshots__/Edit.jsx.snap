@@ -77,7 +77,7 @@ exports[`Edit should render 1`] = `
                 <span
                   class="label-item"
                 >
-                  Segment
+                  Batch Segment
                 </span>
               </div>
             </span>
@@ -206,23 +206,6 @@ exports[`Edit should render 1`] = `
                       <div
                         class="btn-group-item"
                       >
-                        <div
-                          class="total-members"
-                        >
-                          Total Members: 
-                          <div
-                            class="total-members-count"
-                          >
-                            <span
-                              aria-hidden="true"
-                              class="loading-root center loading-animation"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="btn-group-item"
-                      >
                         <button
                           aria-label="View Members"
                           class="button-root preview-criteria btn btn-outline-borderless btn-sm btn-outline-secondary"
@@ -232,20 +215,21 @@ exports[`Edit should render 1`] = `
                           title="View Members"
                           type="button"
                         >
-                          <span
+                          <div
                             data-tooltip="true"
                             data-tooltip-align="bottom"
                             title="Some of your criteria are incomplete or invalid."
                           >
                             <svg
-                              class="lexicon-icon lexicon-icon-view icon-root"
+                              class="lexicon-icon lexicon-icon-view icon-root mr-2"
                               role="presentation"
                             >
                               <use
                                 href="#view"
                               />
                             </svg>
-                          </span>
+                            View Members
+                          </div>
                         </button>
                       </div>
                     </div>

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DynamicSegmentEdit should render 1`] = `
+exports[`DynamicSegmentEdit should render in BATCH mode 1`] = `
 <div>
   <div
     class="segment-edit-page-root"
@@ -29,7 +29,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
                   placeholder="Unnamed Segment"
                   required=""
                   type="text"
-                  value="Seattle0"
+                  value="Seattle123"
                 />
                 <div
                   class="title-display"
@@ -39,7 +39,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
                     role="button"
                     tabindex="0"
                   >
-                    Seattle0
+                    Seattle123
                   </span>
                   <button
                     aria-label="Edit"

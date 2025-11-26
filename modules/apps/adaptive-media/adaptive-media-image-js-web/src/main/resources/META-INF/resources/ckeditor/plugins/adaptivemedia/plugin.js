@@ -160,15 +160,14 @@ function sourceTagTemplate({media, srcset}) {
 				if (selectedElement) {
 					const itemValue = JSON.parse(selectedItem.value);
 
-					selectedElement
-						.findOne('img')
-						.$.setAttribute('src', itemValue.url);
-					selectedElement
-						.findOne('img')
-						.$.setAttribute(
+					const imgElement = selectedElement.findOne('img').$;
+
+					imgElement.onload = function () {
+						imgElement.setAttribute(
 							'data-fileentryid',
 							itemValue.fileEntryId
 						);
+					};
 				}
 				else {
 					editor.insertHtml(elementOuterHtml + emptySelectionMarkup);

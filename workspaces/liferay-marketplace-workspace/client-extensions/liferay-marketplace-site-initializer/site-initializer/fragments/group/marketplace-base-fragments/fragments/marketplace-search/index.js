@@ -373,7 +373,7 @@ async function main() {
 		state.searchTimeout = setTimeout(() => {
 			fetchSearchResults(state.categorySelected, searchValue);
 
-			if (!searchInput.value.trim().length) {
+			if (!searchValue.length) {
 				listSectionContainers.forEach((container) =>
 					container.classList.remove('hidden')
 				);
@@ -455,28 +455,30 @@ async function main() {
 				return;
 			}
 
-			if (searchInput.value.trim()) {
-				setSearchInput(searchInput.value);
+			const searchValue = searchInput.value.trim();
 
-				const data = await getProducts(
-					state.categorySelected !== 'All Categories'
-						? state.categorySelected
-						: '',
-					searchInput.value.trim()
-				);
-
-				state.enterSelection = null;
-
-				const queryParam = data.items.length ? 'q' : 'n';
-
-				window.location.href = `/web/marketplace/applications?${queryParam}=${searchInput.value.trim()}${
-					state.categorySelected !== 'All Categories'
-						? `&category=${encodeURIComponent(
-								state.categorySelected
-							)}`
-						: ''
-				}`;
+			if (!searchValue) {
+				return;
 			}
+
+			setSearchInput(searchValue);
+
+			const data = await getProducts(
+				state.categorySelected !== 'All Categories'
+					? state.categorySelected
+					: '',
+				searchValue
+			);
+
+			state.enterSelection = null;
+
+			const queryParam = data.items.length ? 'q' : 'n';
+
+			window.location.href = `/web/marketplace/applications?${queryParam}=${searchValue}${
+				state.categorySelected !== 'All Categories'
+					? `&category=${encodeURIComponent(state.categorySelected)}`
+					: ''
+			}`;
 		}
 	});
 

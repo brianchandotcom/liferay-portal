@@ -182,3 +182,18 @@ testWithHeadlessContentPagesFF(
 		).toBeVisible();
 	}
 );
+
+testWithHeadlessContentPagesFF(
+	'cannot see Site Pages checkbox',
+	async ({exportImportPage, productMenuPage}) => {
+		await productMenuPage.openProductMenuIfClosed();
+		await productMenuPage.goToPublishingExport();
+		await productMenuPage.page
+			.getByRole('link', {name: 'Custom Export'})
+			.click();
+
+		await expect(
+			exportImportPage.page.getByLabel(/Site Pages\s+\d+\s+Items/)
+		).not.toBeVisible();
+	}
+);

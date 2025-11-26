@@ -12,8 +12,10 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Constructor;
@@ -21,12 +23,18 @@ import java.lang.reflect.Method;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Luis Ortiz
@@ -57,6 +65,23 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 
 	protected abstract String getPostUpgradeDataCleanupProcessClassName();
 
+	protected void installBundle(Bundle bundle) throws Exception {
+		Bundle currentBundle = FrameworkUtil.getBundle(
+			BasePostUpgradeDataCleanupProcessTestCase.class);
+
+		BundleContext bundleContext = currentBundle.getBundleContext();
+
+		com.liferay.osgi.util.BundleUtil.installBundle(
+			bundleContext, _lpkgDeployer, bundle.getLocation(), 1);
+
+		List<Bundle> bundlesToRefresh = new ArrayList<>();
+
+		bundlesToRefresh.add(bundle);
+
+		com.liferay.osgi.util.BundleUtil.refreshBundles(
+			bundleContext, bundlesToRefresh);
+	}
+
 	protected void test(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
@@ -76,6 +101,34 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 		finally {
 			cleanUpDataUnsafeRunnable.run();
 		}
+	}
+
+	protected Bundle uninstallBundle() throws Exception {
+		Bundle currentBundle = FrameworkUtil.getBundle(
+			BasePostUpgradeDataCleanupProcessTestCase.class);
+
+		BundleContext bundleContext = currentBundle.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					"com.liferay.dynamic.data.mapping.service") &&
+				(bundle.getState() == Bundle.ACTIVE)) {
+
+				bundle.uninstall();
+
+				List<Bundle> bundlesToRefresh = new ArrayList<>();
+
+				bundlesToRefresh.add(bundle);
+
+				com.liferay.osgi.util.BundleUtil.refreshBundles(
+					bundleContext, bundlesToRefresh);
+
+				return bundle;
+			}
+		}
+
+		return null;
 	}
 
 	protected static Connection connection;
@@ -99,5 +152,8 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 
 		method.invoke(object);
 	}
+
+	@Inject
+	private LPKGDeployer _lpkgDeployer;
 
 }

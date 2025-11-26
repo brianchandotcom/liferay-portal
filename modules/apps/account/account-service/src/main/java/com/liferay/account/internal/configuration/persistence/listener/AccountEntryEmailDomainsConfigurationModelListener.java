@@ -9,6 +9,7 @@ import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.internal.validator.util.DomainValidatorFactoryUtil;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -109,13 +109,15 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 			GetterUtil.getStringValues(
 				properties.get("customTLDs"), _EMPTY_STRING_ARRAY));
 
-		List<String> invalidDomains = new ArrayList<>();
+		List<String> invalidDomains = TransformUtil.transformToList(
+			blockedEmailAddressDomains,
+			blockedEmailAddressDomain -> {
+				if (!domainValidator.isValid(blockedEmailAddressDomain)) {
+					return blockedEmailAddressDomain;
+				}
 
-		for (String blockedEmailAddressDomain : blockedEmailAddressDomains) {
-			if (!domainValidator.isValid(blockedEmailAddressDomain)) {
-				invalidDomains.add(blockedEmailAddressDomain);
-			}
-		}
+				return null;
+			});
 
 		if (ListUtil.isNotEmpty(invalidDomains)) {
 			throw new ConfigurationModelListenerException(

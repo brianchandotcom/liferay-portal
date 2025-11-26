@@ -8,13 +8,13 @@ package com.liferay.account.internal.configuration.persistence.listener;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.internal.configuration.AccountEntryGroupConfiguration;
 import com.liferay.account.internal.settings.AccountEntryGroupSettingsImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
@@ -44,16 +44,19 @@ public class AccountEntryGroupConfigurationModelListener
 				AccountEntryGroupSettingsImpl.class, properties);
 		}
 
-		List<String> invalidAllowedTypes = new ArrayList<>();
+		List<String> invalidAllowedTypes = TransformUtil.transformToList(
+			allowedTypes,
+			allowedType -> {
+				if (!ArrayUtil.contains(
+						AccountConstants.
+							ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
+						allowedType)) {
 
-		for (String allowedType : allowedTypes) {
-			if (!ArrayUtil.contains(
-					AccountConstants.ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
-					allowedType)) {
+					return allowedType;
+				}
 
-				invalidAllowedTypes.add(allowedType);
-			}
-		}
+				return null;
+			});
 
 		if (!invalidAllowedTypes.isEmpty()) {
 			throw new ConfigurationModelListenerException(

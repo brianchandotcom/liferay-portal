@@ -45,7 +45,9 @@ exports[`SegmentProfileRoutes should render 1`] = `
             >
               <span
                 class="breadcrumb-text-truncate"
-              />
+              >
+                Seattle0
+              </span>
             </li>
           </ol>
         </div>
@@ -66,7 +68,7 @@ exports[`SegmentProfileRoutes should render 1`] = `
                   data-tooltip="false"
                   title=""
                 >
-                  Unknown
+                  Seattle0
                 </span>
               </h1>
               <div
@@ -80,7 +82,7 @@ exports[`SegmentProfileRoutes should render 1`] = `
             <div
               class="subtitle"
             >
-              Last update: Invalid date
+              Last update: Jul 10, 2018 11:01 p.m.
             </div>
           </div>
         </div>

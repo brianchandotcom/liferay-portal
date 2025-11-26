@@ -247,7 +247,7 @@ exports[`List should render 1`] = `
                           aria-expanded="false"
                           aria-haspopup="true"
                           aria-label="Menu"
-                          class="dropdown-toggle button-root nav-btn p-2 btn btn-primary"
+                          class="dropdown-toggle button-root nav-btn p-2 rounded-lg btn btn-primary"
                           type="button"
                         >
                           <span>

@@ -4,7 +4,6 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "000000",
 					"label": "Channel Id",
 					"name": "channelId",
 					"type": "text"

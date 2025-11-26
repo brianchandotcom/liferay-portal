@@ -5,11 +5,11 @@
 				{
 					"dataType": "string",
 					"defaultValue": {
-						"featuredKeyword": "Highlights",
+						"specificationValue": "Highlights",
 						"title": "Highlights"
 					},
-					"label": "Featured  1",
-					"name": "featured1",
+					"label": "Featured Section 1",
+					"name": "featuredSection1",
 					"type": "text"
 				}
 			]
@@ -19,11 +19,11 @@
 				{
 					"dataType": "string",
 					"defaultValue": {
-						"featuredKeyword": "What is new",
+						"specificationValue": "What is new",
 						"title": "What's New"
 					},
-					"label": "Featured 2",
-					"name": "featured2",
+					"label": "Featured Section 2",
+					"name": "featuredSection2",
 					"type": "text"
 				}
 			]

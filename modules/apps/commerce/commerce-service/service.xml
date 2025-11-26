@@ -395,9 +395,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceInventoryBookedQuantityId" return-type="CommerceOrderItem">
-			<finder-column name="commerceInventoryBookedQuantityId" />
-		</finder>
 		<finder name="CommerceOrderId" return-type="Collection">
 			<finder-column name="commerceOrderId" />
 		</finder>
@@ -982,6 +979,7 @@
 		<exception>CPDefinitionInventoryMinOrderQuantity</exception>
 		<exception>CPDefinitionInventoryMultipleOrderQuantity</exception>
 		<exception>CPDefinitionInventoryQuantity</exception>
+		<exception>DuplicateCommerceOrderItem</exception>
 		<exception>DuplicateCommerceOrderNote</exception>
 		<exception>DuplicateCommerceOrderTypeRel</exception>
 		<exception>DuplicateCommerceShipment</exception>

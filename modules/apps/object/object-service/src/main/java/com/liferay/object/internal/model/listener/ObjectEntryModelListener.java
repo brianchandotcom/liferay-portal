@@ -80,7 +80,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	public void onAfterCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_route(EventTypes.ADD, null, objectEntry);
+		try {
+			_route(EventTypes.ADD, null, objectEntry);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 
 		_runRelevantObjectEntryModelListeners(
 			objectEntry,
@@ -92,9 +97,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	public void onAfterRemove(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_route(EventTypes.DELETE, null, objectEntry);
-
 		try {
+			_route(EventTypes.DELETE, null, objectEntry);
+
 			_updateObjectViewFilterColumn(StringPool.BLANK, objectEntry);
 
 			long userId = PrincipalThreadLocal.getUserId();
@@ -141,22 +146,22 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_route(EventTypes.UPDATE, originalObjectEntry, objectEntry);
-
 		_runRelevantObjectEntryModelListeners(
 			objectEntry,
 			relevantObjectEntryModelListener ->
 				relevantObjectEntryModelListener.onAfterUpdate(
 					originalObjectEntry, objectEntry));
 
-		if (StringUtil.equals(
-				originalObjectEntry.getExternalReferenceCode(),
-				objectEntry.getExternalReferenceCode())) {
-
-			return;
-		}
-
 		try {
+			_route(EventTypes.UPDATE, originalObjectEntry, objectEntry);
+
+			if (StringUtil.equals(
+					originalObjectEntry.getExternalReferenceCode(),
+					objectEntry.getExternalReferenceCode())) {
+
+				return;
+			}
+
 			_updateObjectViewFilterColumn(
 				objectEntry.getExternalReferenceCode(), originalObjectEntry);
 		}
@@ -345,33 +350,29 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _route(
-		String eventType, ObjectEntry originalObjectEntry,
-		ObjectEntry objectEntry) {
+			String eventType, ObjectEntry originalObjectEntry,
+			ObjectEntry objectEntry)
+		throws PortalException {
 
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId());
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
 
-			if (!objectDefinition.isEnableObjectEntryHistory()) {
-				return;
-			}
-
-			if (StringUtil.equals(EventTypes.UPDATE, eventType)) {
-				_auditRouter.route(
-					AuditMessageBuilder.buildAuditMessage(
-						EventTypes.UPDATE, objectEntry,
-						_getModifiedAttributes(
-							objectDefinition, originalObjectEntry.getValues(),
-							objectEntry.getValues())));
-			}
-			else {
-				_auditRouter.route(
-					_getAuditMessage(eventType, objectDefinition, objectEntry));
-			}
+		if (!objectDefinition.isEnableObjectEntryHistory()) {
+			return;
 		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
+
+		if (StringUtil.equals(EventTypes.UPDATE, eventType)) {
+			_auditRouter.route(
+				AuditMessageBuilder.buildAuditMessage(
+					EventTypes.UPDATE, objectEntry,
+					_getModifiedAttributes(
+						objectDefinition, originalObjectEntry.getValues(),
+						objectEntry.getValues())));
+		}
+		else {
+			_auditRouter.route(
+				_getAuditMessage(eventType, objectDefinition, objectEntry));
 		}
 	}
 

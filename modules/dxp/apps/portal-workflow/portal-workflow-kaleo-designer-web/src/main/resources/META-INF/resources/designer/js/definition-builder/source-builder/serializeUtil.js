@@ -714,6 +714,9 @@ function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 				)
 			);
 			buffer.push(XMLUtil.create('prompt', cdata(prompt)));
+			buffer.push(
+				XMLUtil.create('tools', cdata(jsonStringify(item.data.tools)))
+			);
 		}
 
 		const nodeTransitions = transitions.filter(

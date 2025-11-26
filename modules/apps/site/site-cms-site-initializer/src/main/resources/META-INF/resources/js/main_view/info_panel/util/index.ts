@@ -7,17 +7,24 @@ import {
 	ISearchAssetObjectEntry,
 	ISearchAssetTypeInformation,
 } from '../../../common/types/AssetType';
-import {ASSET_TYPE} from './constants';
+import {ASSET_TYPE, L_CONTENTS, L_FILES} from './constants';
 
 export function getBaseAssetInformation({
 	actions: {
 		get: {href},
 	},
-	embedded: {externalReferenceCode, id, title, title_i18n},
+	embedded: {
+		externalReferenceCode,
+		id,
+		objectEntryFolderExternalReferenceCode,
+		title,
+		title_i18n,
+	},
 }: ISearchAssetObjectEntry): ISearchAssetTypeInformation {
 	const baseAssetInfo: ISearchAssetTypeInformation = {
 		externalReferenceCode,
 		id,
+		objectEntryFolderExternalReferenceCode,
 		title,
 		title_i18n,
 	};
@@ -26,14 +33,11 @@ export function getBaseAssetInformation({
 		baseAssetInfo.icon = 'folder';
 		baseAssetInfo.type = ASSET_TYPE.FOLDER;
 	}
-	else if (
-		href.includes('basic-documents') ||
-		href.includes('external-videos')
-	) {
+	else if (objectEntryFolderExternalReferenceCode === L_FILES) {
 		baseAssetInfo.icon = 'document-image';
 		baseAssetInfo.type = ASSET_TYPE.FILES;
 	}
-	else if (href.includes('basic-web-contents') || href.includes('blogs')) {
+	else if (objectEntryFolderExternalReferenceCode === L_CONTENTS) {
 		baseAssetInfo.icon = 'forms';
 		baseAssetInfo.type = ASSET_TYPE.CONTENTS;
 	}

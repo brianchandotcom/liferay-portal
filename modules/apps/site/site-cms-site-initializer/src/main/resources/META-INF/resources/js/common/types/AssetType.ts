@@ -88,6 +88,7 @@ export interface ISearchAssetTypeInformation {
 	externalReferenceCode?: string | null;
 	icon?: string | null;
 	id?: number | null;
+	objectEntryFolderExternalReferenceCode?: string | null;
 	title?: string | null;
 	title_i18n?:
 		| {

@@ -17,7 +17,7 @@ import '../../../css/components/AssetTypeInfoPanel.scss';
 import {getBaseAssetInformation} from './util';
 
 const AssetTypeInfoPanelContent = ({
-	additionalProps: {assetLibraries, cmsGroupId, commentsProps},
+	additionalProps: {assetLibraries, cmsGroupId, commentsProps, ...otherProps},
 	items: objectEntries,
 }: {
 	additionalProps: any;
@@ -46,7 +46,7 @@ const AssetTypeInfoPanelContent = ({
 					} as IAssetTypeInfoPanelContext
 				}
 			>
-				<AssetTypeInfoPanelHeader />
+				<AssetTypeInfoPanelHeader additionalProps={otherProps} />
 
 				<AssetTypeInfoPanelBody />
 			</AssetTypeInfoPanelContext.Provider>

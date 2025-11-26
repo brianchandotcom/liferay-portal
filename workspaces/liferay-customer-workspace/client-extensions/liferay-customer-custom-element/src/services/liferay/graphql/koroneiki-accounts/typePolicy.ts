@@ -10,7 +10,7 @@ import concatPageSizePagination from '../common/utils/concatPageSizePagination';
 export const koroneikiAccountsTypePolicy = {
 	C_KoroneikiAccount: {
 		fields: {
-			hasSLAGoldPlatinum: {
+			hasPrioritySLA: {
 				read(
 					_: any,
 					{readField}: {readField: (arg: string) => any}
@@ -19,7 +19,11 @@ export const koroneikiAccountsTypePolicy = {
 
 					return (
 						slaCurrent &&
-						(slaCurrent.includes(SLA_TYPES.gold) ||
+						(slaCurrent.includes(SLA_TYPES.elite) ||
+							slaCurrent.includes(SLA_TYPES.enhanced) ||
+							slaCurrent.includes(SLA_TYPES.essential) ||
+							slaCurrent.includes(SLA_TYPES.gold) ||
+							slaCurrent.includes(SLA_TYPES.missionCritical) ||
 							slaCurrent.includes(SLA_TYPES.platinum))
 					);
 				},

@@ -13,7 +13,7 @@ export default function useAccountRolesByAccountExternalReferenceCode(
 	const getFilter = () => {
 		const filters = ["name ne 'Provisioning'"];
 
-		if (!koroneikiAccount?.hasSLAGoldPlatinum) {
+		if (!koroneikiAccount?.hasPrioritySLA) {
 			filters.push(`name ne 'Requester'`);
 		}
 

@@ -80,7 +80,7 @@ public class FragmentViewportStyleUtil {
 		).put(
 			"display",
 			() -> {
-				if (fragmentViewportStyle.getHidden()) {
+				if (Boolean.TRUE.equals(fragmentViewportStyle.getHidden())) {
 					return "none";
 				}
 

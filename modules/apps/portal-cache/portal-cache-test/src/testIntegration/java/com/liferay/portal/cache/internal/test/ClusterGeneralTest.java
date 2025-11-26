@@ -279,9 +279,9 @@ public class ClusterGeneralTest implements Serializable {
 
 		// Assert verifier node cannot see restart node
 
-		Assert.assertTrue(
+		Assert.assertFalse(
 			verifierNode.syncExecute(
-				() -> !ClusterExecutorUtil.getClusterNodes(
+				() -> ClusterExecutorUtil.getClusterNodes(
 				).contains(
 					restartClusterNode
 				)));
@@ -408,8 +408,8 @@ public class ClusterGeneralTest implements Serializable {
 
 		// Set these properties globally
 
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			PropsUtil.set(entry.getKey(), entry.getValue());
+		for (Map.Entry<String, String> property : properties.entrySet()) {
+			PropsUtil.set(property.getKey(), property.getValue());
 		}
 
 		// Create nodes with properties
@@ -421,9 +421,9 @@ public class ClusterGeneralTest implements Serializable {
 
 		// Assert properties are set correctly on both nodes
 
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			String key = entry.getKey();
-			String expectedValue = entry.getValue();
+		for (Map.Entry<String, String> property : properties.entrySet()) {
+			String key = property.getKey();
+			String expectedValue = property.getValue();
 
 			// Assert Node 3
 

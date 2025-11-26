@@ -1,0 +1,19 @@
+{
+	"keys": [
+		"are-you-sure-you-want-to-remove-this-component",
+		"danger",
+		"due-to-inactivity-your-session-has-expired",
+		"due-to-inactivity-your-session-will-expire",
+		"no-reviewers-were-found",
+		"extend",
+		"minimize",
+		"page-x",
+		"please-contact-the-administrator-to-assign-reviewers",
+		"proceed",
+		"restore",
+		"reviewer",
+		"session-expires-in-x",
+		"there-was-an-unexpected-error.-please-refresh-the-current-page",
+		"this-change-will-only-be-shown-after-you-refresh-the-page"
+	]
+}

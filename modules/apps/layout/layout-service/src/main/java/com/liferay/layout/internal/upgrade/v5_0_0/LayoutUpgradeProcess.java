@@ -29,10 +29,10 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 			StringBundler.concat(
-				"select DLFileEntry.fileEntryId, DLFileEntry.", columnName,
+				"select DLFileEntry.", columnName,
 				", Layout.ctCollectionId, Layout.plid, Layout.groupId,  ",
 				"DLFileEntry.groupId, Group_.externalReferenceCode from ",
-				"Layout left join DLFileEntry on (DLFileEntry.ctCollectionId ",
+				"Layout inner join DLFileEntry on (DLFileEntry.ctCollectionId ",
 				"= Layout.ctCollectionId or DLFileEntry.ctCollectionId = 0) ",
 				"and DLFileEntry.fileEntryId = Layout.faviconFileEntryId left ",
 				"join Group_ on (Group_.ctCollectionId = ",
@@ -49,19 +49,13 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					 "and plid = ?")) {
 
 			while (resultSet.next()) {
-				long fileEntryId = resultSet.getLong(1);
+				String faviconFileEntryERC = resultSet.getString(1);
+				long ctCollectionId = resultSet.getLong(2);
+				long plid = resultSet.getLong(3);
 
-				if (fileEntryId == 0) {
-					continue;
-				}
-
-				String faviconFileEntryERC = resultSet.getString(2);
-				long ctCollectionId = resultSet.getLong(3);
-				long plid = resultSet.getLong(4);
-
-				long groupId1 = resultSet.getLong(5);
-				long groupId2 = resultSet.getLong(6);
-				String faviconFileEntryScopeERC = resultSet.getString(7);
+				long groupId1 = resultSet.getLong(4);
+				long groupId2 = resultSet.getLong(5);
+				String faviconFileEntryScopeERC = resultSet.getString(6);
 
 				if (groupId1 == groupId2) {
 					faviconFileEntryScopeERC = null;

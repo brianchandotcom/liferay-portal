@@ -57,11 +57,7 @@ export function useCommerceAccount(initialCommerceAccount) {
 
 const orderCookie = new CommerceCookie(GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER);
 
-export function useCommerceCart({
-	channelGroupId,
-	guestOrderEnabled = false,
-	initialCart,
-}) {
+export function useCommerceCart({guestOrderEnabled = false, initialCart}) {
 	const [commerceCart, setCommerceCart] = useState(initialCart);
 
 	useEffect(() => {
@@ -69,8 +65,18 @@ export function useCommerceCart({
 			if (commerceCart.id !== order.id) {
 				setCommerceCart(order);
 
-				if (channelGroupId && guestOrderEnabled && order.orderUUID) {
-					orderCookie.setValue(channelGroupId, order.orderUUID);
+				const {commerceChannelGroupId = 0} = Liferay.CommerceContext;
+
+				if (
+					commerceChannelGroupId &&
+					guestOrderEnabled &&
+					order.orderUUID &&
+					order.createDate
+				) {
+					orderCookie.setValue(
+						commerceChannelGroupId,
+						`${order.orderUUID}|${order.createDate}`
+					);
 				}
 			}
 		}
@@ -80,7 +86,7 @@ export function useCommerceCart({
 		return () => {
 			Liferay.detach(CURRENT_ORDER_UPDATED, handleOrderUpdate);
 		};
-	}, [commerceCart, channelGroupId, guestOrderEnabled]);
+	}, [commerceCart, guestOrderEnabled]);
 
 	return commerceCart;
 }

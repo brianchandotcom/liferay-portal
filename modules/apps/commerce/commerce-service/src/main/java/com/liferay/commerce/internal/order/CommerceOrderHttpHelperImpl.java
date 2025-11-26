@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -542,7 +543,12 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if ((commerceOrder != null) && !commerceOrder.isOpen()) {
+		if ((commerceOrder != null) &&
+			(!commerceOrder.isOpen() ||
+			 !_commerceOrderModelResourcePermission.contains(
+				 PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+				 ActionKeys.VIEW))) {
+
 			CookiesManagerUtil.deleteCookies(
 				CookiesManagerUtil.getDomain(httpServletRequest),
 				httpServletRequest, themeDisplay.getResponse(),
@@ -905,8 +911,10 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		String commerceOrderUuid = (String)httpSession.getAttribute(cookieName);
 
 		if (Validator.isNull(commerceOrderUuid)) {
-			commerceOrderUuid = CookiesManagerUtil.getCookieValue(
-				cookieName, httpServletRequest, true);
+			commerceOrderUuid = StringUtil.extractFirst(
+				CookiesManagerUtil.getCookieValue(
+					cookieName, httpServletRequest, true),
+				StringPool.PIPE);
 		}
 
 		return commerceOrderUuid;

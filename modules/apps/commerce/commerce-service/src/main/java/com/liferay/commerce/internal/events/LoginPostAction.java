@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.Cookie;
@@ -48,8 +49,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -185,6 +191,15 @@ public class LoginPostAction extends Action {
 		return accountEntry;
 	}
 
+	private String _formatDate(Date date) {
+		DateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		dateFormat.setTimeZone(TimeZone.getTimeZone(StringPool.UTC));
+
+		return dateFormat.format(date);
+	}
+
 	private AccountEntry _getAccountEntry(int commerceSiteType, long userId) {
 		AccountEntry accountEntry = null;
 
@@ -228,22 +243,6 @@ public class LoginPostAction extends Action {
 	private long _getCommerceChannelGroupId(String key) {
 		return GetterUtil.getLong(
 			StringUtil.extractLast(key, StringPool.POUND));
-	}
-
-	private CommerceOrder _getCommerceOrderByUuidAndGroupId(
-		long commerceChannelGroupId, String commerceOrderUuid) {
-
-		try {
-			return _commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
-				commerceOrderUuid, commerceChannelGroupId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
 	}
 
 	private Map<String, String> _parseAccountEntryInformation(
@@ -358,27 +357,52 @@ public class LoginPostAction extends Action {
 				long commerceChannelGroupId = _getCommerceChannelGroupId(
 					cookieName);
 
-				String commerceOrderUuid = cookie.getValue();
+				String cookieValue = cookie.getValue();
 
-				if (commerceOrderUuid.endsWith(
+				if (cookieValue.endsWith(
 						CommerceCheckoutWebKeys.SUFFIX_IMMEDIATE_CHECKOUT)) {
 
-					commerceOrderUuid = StringUtil.removeSubstring(
-						commerceOrderUuid,
+					cookieValue = StringUtil.removeSubstring(
+						cookieValue,
 						CommerceCheckoutWebKeys.SUFFIX_IMMEDIATE_CHECKOUT);
 					immediateCheckout = true;
 				}
 
-				commerceOrder = _getCommerceOrderByUuidAndGroupId(
-					commerceChannelGroupId, commerceOrderUuid);
+				String commerceOrderUuid = StringUtil.extractFirst(
+					cookieValue, StringPool.PIPE);
 
-				if ((commerceOrder != null) && immediateCheckout) {
+				commerceOrder =
+					_commerceOrderLocalService.
+						fetchCommerceOrderByUuidAndGroupId(
+							commerceOrderUuid, commerceChannelGroupId);
+
+				if (commerceOrder == null) {
+					continue;
+				}
+
+				String commerceOrderCreateDate = StringUtil.extractLast(
+					cookieValue, StringPool.PIPE);
+
+				if (Validator.isNull(commerceOrderCreateDate) ||
+					!commerceOrderCreateDate.equals(
+						_formatDate(commerceOrder.getCreateDate()))) {
+
+					CookiesManagerUtil.deleteCookies(
+						cookie.getDomain(), httpServletRequest,
+						httpServletResponse, cookieName);
+
+					return;
+				}
+
+				if (immediateCheckout) {
 					_prepareOrderForCheckout(commerceOrder, httpServletRequest);
 				}
 			}
 		}
 
-		if ((accountEntry == null) && (commerceOrder != null)) {
+		if ((accountEntry == null) && (commerceOrder != null) &&
+			commerceOrder.isGuestOrder()) {
+
 			accountEntry = _getAccountEntry(
 				_commerceAccountHelper.getCommerceSiteType(
 					commerceOrder.getGroupId()),
@@ -414,7 +438,9 @@ public class LoginPostAction extends Action {
 			}
 		}
 
-		if ((accountEntry != null) && (commerceOrder != null)) {
+		if ((accountEntry != null) && (commerceOrder != null) &&
+			commerceOrder.isGuestOrder()) {
+
 			_associateAccountEntryToCommerceOrder(
 				accountEntry, commerceOrder.getGroupId(), commerceOrder,
 				httpServletRequest, user.getUserId());

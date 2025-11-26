@@ -15,7 +15,11 @@ import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomize
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,50 +54,33 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			FeatureFlagListener.class,
-			(companyId, featureFlagKey, enabled) -> {
-				if (enabled) {
-					_enabledCompanyIds.add(companyId);
-				}
-				else {
-					_enabledCompanyIds.remove(companyId);
-				}
-
-				if (_enabledCompanyIds.isEmpty()) {
-					_serviceTrackerListDCLSingleton.destroy(
-						ServiceTrackerList::close);
-
-					return;
-				}
-
-				AtomicBoolean newOpen = new AtomicBoolean();
-
-				_serviceTrackerListDCLSingleton.getSingleton(
-					() -> {
-						newOpen.set(true);
-
-						return ServiceTrackerListFactory.open(
-							bundleContext, null,
-							"(export.import.vulcan.batch.engine.task.item." +
-								"delegate=true)",
-							new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-								bundleContext));
-					});
-
-				if (newOpen.get()) {
-					return;
-				}
-
-				for (ServiceRegistration<PortletDataHandler>
-						serviceRegistration : _serviceRegistrations.values()) {
-
-					Dictionary<String, Object> properties = _toProperties(
-						serviceRegistration.getReference());
-
-					serviceRegistration.setProperties(
-						_setEnabledCompanyIds(properties));
-				}
-			},
+			(companyId, featureFlagKey, enabled) -> _registerCompany(
+				bundleContext, companyId, enabled),
 			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));
+
+		_portalInstanceLifecycleListenerServiceRegistration =
+			bundleContext.registerService(
+				PortalInstanceLifecycleListener.class,
+				new BasePortalInstanceLifecycleListener() {
+
+					@Override
+					public void portalInstanceRegistered(Company company) {
+						if (FeatureFlagManagerUtil.isEnabled(
+								company.getCompanyId(), "LPD-35914")) {
+
+							_registerCompany(
+								bundleContext, company.getCompanyId(), true);
+						}
+					}
+
+					@Override
+					public void portalInstanceUnregistered(Company company) {
+						_registerCompany(
+							bundleContext, company.getCompanyId(), false);
+					}
+
+				},
+				null);
 	}
 
 	@Deactivate
@@ -101,6 +88,53 @@ public class BatchEnginePortletDataHandlerRegistrar {
 		_serviceRegistration.unregister();
 
 		_serviceTrackerListDCLSingleton.destroy(ServiceTrackerList::close);
+
+		_portalInstanceLifecycleListenerServiceRegistration.unregister();
+	}
+
+	private void _registerCompany(
+		BundleContext bundleContext, long companyId, boolean enabled) {
+
+		if (enabled) {
+			_enabledCompanyIds.add(companyId);
+		}
+		else {
+			_enabledCompanyIds.remove(companyId);
+		}
+
+		if (_enabledCompanyIds.isEmpty()) {
+			_serviceTrackerListDCLSingleton.destroy(ServiceTrackerList::close);
+
+			return;
+		}
+
+		AtomicBoolean newOpen = new AtomicBoolean();
+
+		_serviceTrackerListDCLSingleton.getSingleton(
+			() -> {
+				newOpen.set(true);
+
+				return ServiceTrackerListFactory.open(
+					bundleContext, null,
+					"(export.import.vulcan.batch.engine.task.item." +
+						"delegate=true)",
+					new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
+						bundleContext));
+			});
+
+		if (newOpen.get()) {
+			return;
+		}
+
+		for (ServiceRegistration<PortletDataHandler> serviceRegistration :
+				_serviceRegistrations.values()) {
+
+			Dictionary<String, Object> properties = _toProperties(
+				serviceRegistration.getReference());
+
+			serviceRegistration.setProperties(
+				_setEnabledCompanyIds(properties));
+		}
 	}
 
 	private Dictionary<String, Object> _setEnabledCompanyIds(
@@ -145,6 +179,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	private ServiceRegistration<PortalInstanceLifecycleListener>
+		_portalInstanceLifecycleListenerServiceRegistration;
 	private volatile ServiceRegistration<FeatureFlagListener>
 		_serviceRegistration;
 	private final Map<String, ServiceRegistration<PortletDataHandler>>

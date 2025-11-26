@@ -161,6 +161,16 @@
 					"#tag-name": "prompt"
 				},
 				{
+					"#cdata-value": [
+						"[",
+						"    {",
+						"        \"externalReferenceCode\": \"L_LIFERAY_MCP_SERVER\"",
+						"    }",
+						"]"
+					],
+					"#tag-name": "tools"
+				},
+				{
 					"#child-nodes": [
 						{
 							"#child-nodes": [

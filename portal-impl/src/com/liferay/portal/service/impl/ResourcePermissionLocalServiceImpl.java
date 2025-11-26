@@ -948,7 +948,7 @@ public class ResourcePermissionLocalServiceImpl
 			return Collections.emptyList();
 		}
 
-		return _lookupRoles(
+		return _getRoles(
 			companyId, name, scope, resourceAction.getBitwiseValue(), primKey);
 	}
 
@@ -2162,74 +2162,7 @@ public class ResourcePermissionLocalServiceImpl
 		return resourcePermissionsMap;
 	}
 
-	private void _initDefaultPermissions(
-			long companyId, String name, Role guestRole, Role ownerRole,
-			Role siteMemberRole, List<String> guestActionIds,
-			List<String> ownerActionIds, List<String> groupActionIds)
-		throws PortalException {
-
-		Map<Long, ResourcePermission> resourcePermissionsMap =
-			_getResourcePermissionsMap(
-				_getResourcePermissions(companyId, name));
-
-		boolean flushResourcePermissionEnabled =
-			PermissionThreadLocal.isFlushResourcePermissionEnabled(name, name);
-
-		PermissionThreadLocal.setFlushResourcePermissionEnabled(
-			name, name, false);
-
-		boolean modified = false;
-
-		try {
-			ResourcePermission guestResourcePermission =
-				_updateResourcePermission(
-					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, guestRole.getRoleId(), Boolean.TRUE,
-					guestActionIds.toArray(new String[0]),
-					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap);
-			ResourcePermission ownerResourcePermission =
-				_updateResourcePermission(
-					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, ownerRole.getRoleId(), Boolean.FALSE,
-					ownerActionIds.toArray(new String[0]),
-					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap);
-
-			ResourcePermission siteMemberResourcePermission = null;
-
-			if (groupActionIds != null) {
-				siteMemberResourcePermission = _updateResourcePermission(
-					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, siteMemberRole.getRoleId(), Boolean.FALSE,
-					groupActionIds.toArray(new String[0]),
-					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap);
-			}
-
-			if ((guestResourcePermission != null) ||
-				(ownerResourcePermission != null) ||
-				(siteMemberResourcePermission != null)) {
-
-				modified = true;
-			}
-		}
-		finally {
-			PermissionThreadLocal.setFlushResourcePermissionEnabled(
-				name, name, flushResourcePermissionEnabled);
-
-			if (modified) {
-				PermissionCacheUtil.clearResourcePermissionCache(
-					ResourceConstants.SCOPE_INDIVIDUAL, name, name);
-
-				_removeResourcePermissions(companyId, name);
-
-				IndexWriterHelperUtil.updatePermissionFields(name, name);
-			}
-		}
-	}
-
-	private List<Role> _lookupRoles(
+	private List<Role> _getRoles(
 		long companyId, String name, int scope, long bitwiseValue,
 		String primKey) {
 
@@ -2339,6 +2272,73 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		return roles;
+	}
+
+	private void _initDefaultPermissions(
+			long companyId, String name, Role guestRole, Role ownerRole,
+			Role siteMemberRole, List<String> guestActionIds,
+			List<String> ownerActionIds, List<String> groupActionIds)
+		throws PortalException {
+
+		Map<Long, ResourcePermission> resourcePermissionsMap =
+			_getResourcePermissionsMap(
+				_getResourcePermissions(companyId, name));
+
+		boolean flushResourcePermissionEnabled =
+			PermissionThreadLocal.isFlushResourcePermissionEnabled(name, name);
+
+		PermissionThreadLocal.setFlushResourcePermissionEnabled(
+			name, name, false);
+
+		boolean modified = false;
+
+		try {
+			ResourcePermission guestResourcePermission =
+				_updateResourcePermission(
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
+					0, guestRole.getRoleId(), Boolean.TRUE,
+					guestActionIds.toArray(new String[0]),
+					ResourcePermissionConstants.OPERATOR_SET, true,
+					resourcePermissionsMap);
+			ResourcePermission ownerResourcePermission =
+				_updateResourcePermission(
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
+					0, ownerRole.getRoleId(), Boolean.FALSE,
+					ownerActionIds.toArray(new String[0]),
+					ResourcePermissionConstants.OPERATOR_SET, true,
+					resourcePermissionsMap);
+
+			ResourcePermission siteMemberResourcePermission = null;
+
+			if (groupActionIds != null) {
+				siteMemberResourcePermission = _updateResourcePermission(
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
+					0, siteMemberRole.getRoleId(), Boolean.FALSE,
+					groupActionIds.toArray(new String[0]),
+					ResourcePermissionConstants.OPERATOR_SET, true,
+					resourcePermissionsMap);
+			}
+
+			if ((guestResourcePermission != null) ||
+				(ownerResourcePermission != null) ||
+				(siteMemberResourcePermission != null)) {
+
+				modified = true;
+			}
+		}
+		finally {
+			PermissionThreadLocal.setFlushResourcePermissionEnabled(
+				name, name, flushResourcePermissionEnabled);
+
+			if (modified) {
+				PermissionCacheUtil.clearResourcePermissionCache(
+					ResourceConstants.SCOPE_INDIVIDUAL, name, name);
+
+				_removeResourcePermissions(companyId, name);
+
+				IndexWriterHelperUtil.updatePermissionFields(name, name);
+			}
+		}
 	}
 
 	private boolean _matches(

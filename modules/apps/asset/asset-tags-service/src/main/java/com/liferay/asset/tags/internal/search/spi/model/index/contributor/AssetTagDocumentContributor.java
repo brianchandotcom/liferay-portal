@@ -60,7 +60,7 @@ public class AssetTagDocumentContributor
 
 		long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 
-		List<Object[]> assetTagObjectsList = _lookupAssetTagObjectsList(
+		List<Object[]> assetTagObjectsList = _getAssetTagObjectsList(
 			classNameId, classPK);
 
 		if (ListUtil.isEmpty(assetTagObjectsList)) {
@@ -100,38 +100,7 @@ public class AssetTagDocumentContributor
 			assetTagNames);
 	}
 
-	private Long _getGroupId(BaseModel<?> baseModel) {
-		if (baseModel instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)baseModel;
-
-			return groupedModel.getGroupId();
-		}
-
-		if (baseModel instanceof Organization) {
-			Organization organization = (Organization)baseModel;
-
-			return organization.getGroupId();
-		}
-
-		if (!(baseModel instanceof User)) {
-			return null;
-		}
-
-		User user = (User)baseModel;
-
-		return user.getGroupId();
-	}
-
-	private Locale _getSiteDefaultLocale(long groupId) {
-		try {
-			return _portal.getSiteDefaultLocale(groupId);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-	}
-
-	private List<Object[]> _lookupAssetTagObjectsList(
+	private List<Object[]> _getAssetTagObjectsList(
 		long classNameId, long classPK) {
 
 		Map<Long, Map<Long, List<Object[]>>> assetTagObjectsListsMap =
@@ -214,6 +183,37 @@ public class AssetTagDocumentContributor
 		}
 
 		return assetTagObjectsLists.get(classPK);
+	}
+
+	private Long _getGroupId(BaseModel<?> baseModel) {
+		if (baseModel instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)baseModel;
+
+			return groupedModel.getGroupId();
+		}
+
+		if (baseModel instanceof Organization) {
+			Organization organization = (Organization)baseModel;
+
+			return organization.getGroupId();
+		}
+
+		if (!(baseModel instanceof User)) {
+			return null;
+		}
+
+		User user = (User)baseModel;
+
+		return user.getGroupId();
+	}
+
+	private Locale _getSiteDefaultLocale(long groupId) {
+		try {
+			return _portal.getSiteDefaultLocale(groupId);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	@Reference

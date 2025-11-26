@@ -112,7 +112,7 @@ public class ViewCountEntryLocalServiceImpl
 	@Override
 	public long getViewCount(long companyId, long classNameId, long classPK) {
 		if (isViewCountEnabled(classNameId)) {
-			return _lookupViewCount(companyId, classNameId, classPK);
+			return _getViewCount(companyId, classNameId, classPK);
 		}
 
 		return 0;
@@ -220,9 +220,7 @@ public class ViewCountEntryLocalServiceImpl
 		_enabled = viewCountConfiguration.enabled();
 	}
 
-	private long _lookupViewCount(
-		long companyId, long classNameId, long classPK) {
-
+	private long _getViewCount(long companyId, long classNameId, long classPK) {
 		Map<Long, Long> indexedViewCounts =
 			ReindexCacheThreadLocal.getScopeReindexCache(
 				ViewCountEntryLocalServiceImpl.class.getName(),

@@ -305,26 +305,7 @@ public class DLFileEntryModelDocumentContributor
 		return text;
 	}
 
-	private boolean _isIndexContent(DLFileEntry dlFileEntry) {
-		String[] ignoreExtensions = _prefsProps.getStringArray(
-			PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS, StringPool.COMMA);
-
-		return !ArrayUtil.contains(
-			ignoreExtensions, StringPool.PERIOD + dlFileEntry.getExtension());
-	}
-
-	private boolean _isReadOnlyCtCollection() throws PortalException {
-		if (CTCollectionThreadLocal.isProductionMode()) {
-			return false;
-		}
-
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
-			CTCollectionThreadLocal.getCTCollectionId());
-
-		return ctCollection.isReadOnly();
-	}
-
-	private Map<DDMStructure, DDMFormValues> _lookupDDMFormValues(
+	private Map<DDMStructure, DDMFormValues> _getDDMFormValues(
 		long dlFileVersionId) {
 
 		Map<Long, Map<DDMStructure, DDMFormValues>> ddmFormValuesMaps =
@@ -447,9 +428,28 @@ public class DLFileEntryModelDocumentContributor
 			dlFileVersionId, Collections.emptyMap());
 	}
 
+	private boolean _isIndexContent(DLFileEntry dlFileEntry) {
+		String[] ignoreExtensions = _prefsProps.getStringArray(
+			PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS, StringPool.COMMA);
+
+		return !ArrayUtil.contains(
+			ignoreExtensions, StringPool.PERIOD + dlFileEntry.getExtension());
+	}
+
+	private boolean _isReadOnlyCtCollection() throws PortalException {
+		if (CTCollectionThreadLocal.isProductionMode()) {
+			return false;
+		}
+
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			CTCollectionThreadLocal.getCTCollectionId());
+
+		return ctCollection.isReadOnly();
+	}
+
 	private void _processDDMIndexer(Document document, long dlFileVersionId) {
-		Map<DDMStructure, DDMFormValues> ddmFormValuesMap =
-			_lookupDDMFormValues(dlFileVersionId);
+		Map<DDMStructure, DDMFormValues> ddmFormValuesMap = _getDDMFormValues(
+			dlFileVersionId);
 
 		Locale locale = LocaleUtil.getSiteDefault();
 

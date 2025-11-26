@@ -54,7 +54,7 @@ public class SharingEntrySearchPermissionDocumentContributor
 			return;
 		}
 
-		List<Object[]> sharingEntryObjectsList = _lookupSharingEntryObjectsList(
+		List<Object[]> sharingEntryObjectsList = _getSharingEntryObjectsList(
 			_classNameLocalService.getClassNameId(className), classPK);
 
 		if (ListUtil.isEmpty(sharingEntryObjectsList)) {
@@ -89,7 +89,7 @@ public class SharingEntrySearchPermissionDocumentContributor
 				}));
 	}
 
-	private List<Object[]> _lookupSharingEntryObjectsList(
+	private List<Object[]> _getSharingEntryObjectsList(
 		long classNameId, long classPK) {
 
 		Map<Long, Map<Long, List<Object[]>>> sharingEntryObjectsListsMap =

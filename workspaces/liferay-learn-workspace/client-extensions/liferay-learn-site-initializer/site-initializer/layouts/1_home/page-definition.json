@@ -721,7 +721,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/home_learning-paths_blue.svg$]"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/home_learning_paths_blue.svg$]"
 																						}
 																					}
 																				},
@@ -889,7 +889,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/home_knowledge-base_blue.svg$]"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/home_knowledge_base_blue.svg$]"
 																						}
 																					}
 																				},
@@ -968,7 +968,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/home_enablement-hub_blue.svg$]"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/home_enablement_hub_blue.svg$]"
 																						}
 																					}
 																				},
@@ -1908,7 +1908,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/documentation_low-code.svg$]"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/documentation_low_code.svg$]"
 																						}
 																					}
 																				},

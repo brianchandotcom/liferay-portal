@@ -24,6 +24,7 @@ describe('Toolbar', () => {
 						channelId='321'
 						criteria={data.mockNewCriteria(1, {valid: false})}
 						groupId='123'
+						segmentType='BATCH'
 					/>
 				</Formik>
 			</StaticRouter>
@@ -39,6 +40,7 @@ describe('Toolbar', () => {
 						channelId='321'
 						criteria={data.mockNewCriteria(1, {valid: true})}
 						groupId='123'
+						segmentType='BATCH'
 					/>
 				</Formik>
 			</StaticRouter>
@@ -55,6 +57,7 @@ describe('Toolbar', () => {
 						channelId='321'
 						criteria={data.mockNewCriteria(1, {valid: false})}
 						groupId='123'
+						segmentType='BATCH'
 					/>
 				</Formik>
 			</StaticRouter>
@@ -73,6 +76,7 @@ describe('Toolbar', () => {
 						channelId='321'
 						criteria={data.mockNewCriteria(1, {valid: true})}
 						groupId='123'
+						segmentType='BATCH'
 					/>
 				</Formik>
 			</StaticRouter>

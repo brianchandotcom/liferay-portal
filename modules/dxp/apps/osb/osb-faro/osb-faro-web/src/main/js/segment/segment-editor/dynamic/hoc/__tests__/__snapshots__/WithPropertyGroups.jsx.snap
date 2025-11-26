@@ -30,13 +30,13 @@ exports[`WithPropertyGroups should pass propertyGroups to the WrappedComponent 1
     <div>
       Interests
       <div>
-        Interests-0: 5
+        Interests-0: 0
       </div>
     </div>
     <div>
       Session Attributes
       <div>
-        Session Attributes-0: 6
+        Session Attributes-0: 0
       </div>
     </div>
     <div>

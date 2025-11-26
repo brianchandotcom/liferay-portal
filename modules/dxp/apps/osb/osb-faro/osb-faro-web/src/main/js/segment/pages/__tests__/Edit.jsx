@@ -20,7 +20,7 @@ const DefaultComponent = props => (
 	<Provider store={mockStore()}>
 		<StaticRouter>
 			<DndProvider backend={HTML5Backend}>
-				<Edit groupId='23' {...props} />
+				<Edit groupId='23' type='BATCH' {...props} />
 			</DndProvider>
 		</StaticRouter>
 	</Provider>
@@ -88,6 +88,6 @@ describe('Edit', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText('Segment')).toBeTruthy();
+		expect(getByText('Batch Segment')).toBeTruthy();
 	});
 });

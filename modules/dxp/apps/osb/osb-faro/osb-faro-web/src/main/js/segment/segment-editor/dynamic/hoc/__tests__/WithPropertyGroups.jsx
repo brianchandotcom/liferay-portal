@@ -14,23 +14,24 @@ jest.unmock('react-dom');
 
 const TestComponent = ({propertyGroupsIList}) => (
 	<div>
-		{propertyGroupsIList.map((attribute, i) => {
-			if (attribute) {
-				return (
-					<div key={i}>
-						{attribute.label}
+		{propertyGroupsIList &&
+			propertyGroupsIList.map((attribute, i) => {
+				if (attribute) {
+					return (
+						<div key={i}>
+							{attribute.label}
 
-						{attribute.propertySubgroups.map(
-							({label, properties}, i) => (
-								<div key={i}>{`${
-									label || attribute.label
-								}-${i}: ${properties.size}`}</div>
-							)
-						)}
-					</div>
-				);
-			}
-		})}
+							{attribute.propertySubgroups.map(
+								({label, properties}, i) => (
+									<div key={i}>{`${
+										label || attribute.label
+									}-${i}: ${properties.size}`}</div>
+								)
+							)}
+						</div>
+					);
+				}
+			})}
 	</div>
 );
 
@@ -146,7 +147,7 @@ describe('WithPropertyGroups', () => {
 
 		const {container} = render(
 			<StaticRouter>
-				<WrappedComponent channelId='123' groupId='123' />
+				<WrappedComponent channelId='123' groupId='123' type='BATCH' />
 			</StaticRouter>
 		);
 
@@ -155,5 +156,59 @@ describe('WithPropertyGroups', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
+	});
+
+	describe('Testing Conditional Requests', () => {
+		API.interests.searchKeywords = jest.fn();
+
+		test('Should return mocked data when segmentType is Batch', async () => {
+			API.interests.searchKeywords.mockReturnValueOnce(
+				Promise.resolve({
+					items: [
+						{id: 'kw1', name: 'Keyword 1'},
+						{id: 'kw2', name: 'Keyword 2'},
+						{id: 'kw2', name: 'Keyword 3'},
+						{id: 'kw2', name: 'Keyword 4'},
+						{id: 'kw2', name: 'Keyword 5'}
+					],
+					total: 5
+				})
+			);
+
+			const SESSION_PROPERTIES = [
+				{key: 'prop1', value: 'value1'},
+				{key: 'prop2', value: 'value2'}
+			];
+
+			const segmentType = 'BATCH';
+
+			const [
+				keywordsResponse,
+				sessionPropertiesResponse
+			] = await Promise.all([
+				segmentType === 'BATCH'
+					? API.interests.searchKeywords({
+							channelId: 123,
+							delta: 50,
+							groupId: 123
+					  })
+					: Promise.resolve({items: []}),
+
+				segmentType === 'BATCH'
+					? Promise.resolve(SESSION_PROPERTIES)
+					: Promise.resolve([])
+			]);
+
+			expect(API.interests.searchKeywords).toHaveBeenCalledWith({
+				channelId: 123,
+				delta: 50,
+				groupId: 123
+			});
+
+			expect(keywordsResponse.items.length).toBe(5);
+			expect(keywordsResponse.items[0].name).toBe('Keyword 1');
+
+			expect(sessionPropertiesResponse).toEqual(SESSION_PROPERTIES);
+		});
 	});
 });

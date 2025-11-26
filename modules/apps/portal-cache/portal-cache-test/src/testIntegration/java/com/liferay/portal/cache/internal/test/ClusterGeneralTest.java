@@ -90,139 +90,17 @@ public class ClusterGeneralTest implements Serializable {
 	@Test
 	public void testShutdownAndStartupNodes() throws Exception {
 
-		// Assert node 1 has a valid cluster node
-
-		ClusterNode clusterNodeOne = _tomcatNode1.syncExecute(
-			ClusterExecutorUtil::getLocalClusterNode);
-
-		Assert.assertNotNull(clusterNodeOne);
-
-		// Assert node 2 has a valid cluster node
-
-		ClusterNode clusterNodeTwo = _tomcatNode2.syncExecute(
-			ClusterExecutorUtil::getLocalClusterNode);
-
-		Assert.assertNotNull(clusterNodeTwo);
-
 		// Assert node 1 and node 2 can see each others
 
-		Assert.assertTrue(
-			_tomcatNode1.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					clusterNodeTwo
-				)));
+		_assertNodesVisibleToEachOther(_tomcatNode1, _tomcatNode2);
 
-		Assert.assertTrue(
-			_tomcatNode2.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					clusterNodeOne
-				)));
+		// Restart node 1, use node 2 as verifier
 
-		// Stop node 1
+		_restartAndVerifyNode(_tomcatNode1, _tomcatNode2);
 
-		_tomcatNode1.stop();
+		// Restart node 2, use node 1 as verifier
 
-		// Assert node 2 still have the same cluster node id running
-
-		Assert.assertEquals(
-			clusterNodeTwo.getClusterNodeId(),
-			_tomcatNode2.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
-
-		// Assert node 2 cannot see node 1
-
-		Assert.assertTrue(
-			_tomcatNode2.syncExecute(
-				() -> !ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					clusterNodeOne
-				)));
-
-		// Restart node 1
-
-		_tomcatNode1.start(true);
-
-		// Assert node 1 has a valid cluster node
-
-		ClusterNode newClusterNodeOne = _tomcatNode1.syncExecute(
-			ClusterExecutorUtil::getLocalClusterNode);
-
-		Assert.assertNotNull(newClusterNodeOne);
-
-		// Assert node 2 still have the same cluster node id running
-
-		Assert.assertEquals(
-			clusterNodeTwo.getClusterNodeId(),
-			_tomcatNode2.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
-
-		// Assert node 1 and node 2 can see each others
-
-		Assert.assertTrue(
-			_tomcatNode1.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					clusterNodeTwo
-				)));
-
-		Assert.assertTrue(
-			_tomcatNode2.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					newClusterNodeOne
-				)));
-
-		// Stop node 2
-
-		_tomcatNode2.stop();
-
-		// Assert node 1 still have the same cluster node id running
-
-		Assert.assertEquals(
-			newClusterNodeOne.getClusterNodeId(),
-			_tomcatNode1.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
-
-		// Assert node 1 cannot see node 2
-
-		Assert.assertTrue(
-			_tomcatNode1.syncExecute(
-				() -> !ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					clusterNodeTwo
-				)));
-
-		// Restart node 2
-
-		_tomcatNode2.start(true);
-
-		// Assert node 2 has a valid cluster node
-
-		ClusterNode newClusterNodeTwo = _tomcatNode2.syncExecute(
-			ClusterExecutorUtil::getLocalClusterNode);
-
-		Assert.assertNotNull(newClusterNodeTwo);
-
-		// Assert node 1 still have the same cluster node id running
-
-		Assert.assertEquals(
-			newClusterNodeOne.getClusterNodeId(),
-			_tomcatNode1.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
-
-		// Assert node 1 and node 2 can see each others
-
-		Assert.assertTrue(
-			_tomcatNode1.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					newClusterNodeTwo
-				)));
-
-		Assert.assertTrue(
-			_tomcatNode2.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					newClusterNodeOne
-				)));
+		_restartAndVerifyNode(_tomcatNode2, _tomcatNode1);
 	}
 
 	@Test
@@ -276,6 +154,39 @@ public class ClusterGeneralTest implements Serializable {
 			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
 	}
 
+	private void _assertNodesVisibleToEachOther(
+			TomcatNode tomcatNode1, TomcatNode tomcatNode2)
+		throws Exception {
+
+		// Assert node 1 has a valid cluster node
+
+		ClusterNode clusterNodeOne = tomcatNode1.syncExecute(
+			ClusterExecutorUtil::getLocalClusterNode);
+
+		Assert.assertNotNull(clusterNodeOne);
+
+		// Assert node 2 has a valid cluster node
+
+		ClusterNode clusterNodeTwo = tomcatNode2.syncExecute(
+			ClusterExecutorUtil::getLocalClusterNode);
+
+		Assert.assertNotNull(clusterNodeTwo);
+
+		Assert.assertTrue(
+			tomcatNode1.syncExecute(
+				() -> ClusterExecutorUtil.getClusterNodes(
+				).contains(
+					clusterNodeTwo
+				)));
+
+		Assert.assertTrue(
+			tomcatNode2.syncExecute(
+				() -> ClusterExecutorUtil.getClusterNodes(
+				).contains(
+					clusterNodeOne
+				)));
+	}
+
 	private String _getClusterNodeIdByTomcatNode() {
 		return ClusterExecutorUtil.getLocalClusterNode(
 		).getClusterNodeId();
@@ -299,6 +210,62 @@ public class ClusterGeneralTest implements Serializable {
 
 		return bundleContext.getService(
 			editServerMVCActionCommandServiceReference);
+	}
+
+	private void _restartAndVerifyNode(
+			TomcatNode restartNode, TomcatNode verifierNode)
+		throws Exception {
+
+		// Capture state before stopping the restartNode
+
+		ClusterNode restartClusterNode = restartNode.syncExecute(
+			ClusterExecutorUtil::getLocalClusterNode);
+
+		ClusterNode verifierClusterNode = verifierNode.syncExecute(
+			ClusterExecutorUtil::getLocalClusterNode);
+
+		Assert.assertNotNull(restartClusterNode);
+		Assert.assertNotNull(verifierClusterNode);
+
+		// Stop restart node
+
+		restartNode.stop();
+
+		// Assert verifier node still has the same cluster node id running
+
+		Assert.assertEquals(
+			verifierClusterNode.getClusterNodeId(),
+			verifierNode.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
+
+		// Assert verifier node cannot see restart node
+
+		Assert.assertTrue(
+			verifierNode.syncExecute(
+				() -> !ClusterExecutorUtil.getClusterNodes(
+				).contains(
+					restartClusterNode
+				)));
+
+		// Restart restart node
+
+		restartNode.start(true);
+
+		// Assert restart node has a valid cluster node (New ID)
+
+		ClusterNode newRestartClusterNode = restartNode.syncExecute(
+			ClusterExecutorUtil::getLocalClusterNode);
+
+		Assert.assertNotNull(newRestartClusterNode);
+
+		// Assert verifier still has the same cluster node id running
+
+		Assert.assertEquals(
+			verifierClusterNode.getClusterNodeId(),
+			verifierNode.syncExecute(() -> _getClusterNodeIdByTomcatNode()));
+
+		// Assert mutual visibility with the NEW restart node
+
+		_assertNodesVisibleToEachOther(restartNode, verifierNode);
 	}
 
 	private void _testCanUpdateLogLevelsForAllNodes(

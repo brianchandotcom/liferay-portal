@@ -407,7 +407,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		InfoItemDetails infoItemDetails =
 			infoItemDetailsProvider.getInfoItemDetails(
-				group.getGroupId(), ClassPKInfoItemIdentifier.class, infoItem);
+				siteNavigationMenuItem.getGroupId(),
+				ClassPKInfoItemIdentifier.class, infoItem);
 
 		return infoItemPermissionProvider.hasPermission(
 			permissionChecker, infoItemDetails.getInfoItemReference(),

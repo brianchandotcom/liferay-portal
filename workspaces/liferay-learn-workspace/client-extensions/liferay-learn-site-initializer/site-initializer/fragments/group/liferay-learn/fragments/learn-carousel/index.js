@@ -6,6 +6,9 @@
 /* eslint-disable no-undef */
 (function () {
 	function addEventListeners(container, swiper) {
+		container.addEventListener('focusin', () => swiper.autoplay.stop());
+		container.addEventListener('focusout', () => swiper.autoplay.start());
+
 		container.addEventListener('keydown', (event) => {
 			switch (event.key) {
 				case 'ArrowLeft':
@@ -23,40 +26,13 @@
 
 		container.addEventListener('mouseenter', () => swiper.autoplay.stop());
 		container.addEventListener('mouseleave', () => swiper.autoplay.start());
-		container.addEventListener('focusin', () => swiper.autoplay.stop());
-		container.addEventListener('focusout', () => swiper.autoplay.start());
 	}
 
-	function adjustUIForSingleSlide(
-		nextButton,
-		prevButton,
-		slideCount,
-		swiper
-	) {
-		if (slideCount > 1) {
-			return;
-		}
+	function cloneSlides(slides, slideCount, wrapper) {
+		const fragment = document.createDocumentFragment();
+		let total = slideCount;
 
-		swiper.autoplay.stop();
-
-		const elementsToHide = [
-			nextButton,
-			prevButton,
-			document.querySelector('.carousel-nav-container-indicators'),
-		];
-
-		elementsToHide.forEach((element) => {
-			if (element) {
-				element.style.display = 'none';
-			}
-		});
-	}
-
-	function cloneSlidesForLoop(slides, slideCount, wrapper) {
-		const docFragment = document.createDocumentFragment();
-		let currentCount = slideCount;
-
-		while (currentCount < 5) {
+		while (total < 5) {
 			slides.forEach((slide, index) => {
 				const clone = slide.cloneNode(true);
 
@@ -67,24 +43,22 @@
 					.querySelectorAll('[id]')
 					.forEach((element) => element.removeAttribute('id'));
 
-				docFragment.appendChild(clone);
+				fragment.appendChild(clone);
 			});
 
-			currentCount += slideCount;
+			total += slideCount;
 		}
 
-		wrapper.appendChild(docFragment);
+		wrapper.appendChild(fragment);
 	}
 
-	function getPaginationConfig(slideCount) {
+	function getPagination(slideCount) {
 		return {
 			clickable: true,
 			el: '.carousel-nav-container-indicators',
 			renderBullet(index, className) {
 				if (index < slideCount) {
-					return `<span class="${className}" role="button" aria-label="Go to slide ${
-						index + 1
-					}"></span>`;
+					return `<span aria-label="Go to slide ${index + 1}" class="${className}" role="button"></span>`;
 				}
 
 				return '';
@@ -118,7 +92,7 @@
 				nextEl: '.carousel-nav-button-next',
 				prevEl: '.carousel-nav-button-prev',
 			},
-			pagination: getPaginationConfig(slideCount),
+			pagination: getPagination(slideCount),
 			spaceBetween: 16,
 		});
 	}
@@ -129,98 +103,85 @@
 		const slideCount = slides.length;
 
 		if (slideCount > 1 && slideCount < 5) {
-			cloneSlidesForLoop(slides, slideCount, wrapper);
+			cloneSlides(slides, slideCount, wrapper);
 
-			slides = Array.from(container.querySelectorAll('.swiper-slide'));
+			return Array.from(container.querySelectorAll('.swiper-slide'));
 		}
-		else {
-			slides.forEach((slide, index) => {
-				slide.dataset.originalIndex = index;
-			});
-		}
+		
+		slides.forEach((slide, index) => {
+			slide.dataset.originalIndex = index;
+		});
 
 		return slides;
 	}
 
 	function setupCarousel() {
-		const carouselContainer = document.querySelector(
+		const carouselMainContainer = document.querySelector(
 			'.carousel-main-container'
 		);
 
-		if (!carouselContainer) {
+		if (!carouselMainContainer) {
 			return;
 		}
 
 		const initialSlides = Array.from(
-			carouselContainer.querySelectorAll('.swiper-slide')
+			carouselMainContainer.querySelectorAll('.swiper-slide')
 		);
-		const liveRegion = document.querySelector('.carousel-live-region');
-		const nextButton = document.querySelector('.carousel-nav-button-next');
-		const prevButton = document.querySelector('.carousel-nav-button-prev');
 		const swiperWrapper =
-			carouselContainer.querySelector('.swiper-wrapper');
+			carouselMainContainer.querySelector('.swiper-wrapper');
 
-		const originalSlideCount = initialSlides.length;
-		const slides = prepareSlides(carouselContainer, swiperWrapper);
+		const slides = prepareSlides(carouselMainContainer, swiperWrapper);
 
-		const swiper = initializeSwiper(slides, originalSlideCount);
+		const swiper = initializeSwiper(slides, initialSlides.length);
 
-		function updateActiveBullet() {
-			const bullets = document.querySelectorAll(
-				'.carousel-nav-container-indicators .swiper-pagination-bullet'
-			);
-
-			bullets.forEach((bullet) =>
-				bullet.classList.remove('swiper-pagination-bullet-active')
-			);
-
-			const activeIndex = swiper.realIndex % originalSlideCount;
-
-			if (bullets[activeIndex]) {
-				bullets[activeIndex].classList.add(
-					'swiper-pagination-bullet-active'
-				);
-				bullets[activeIndex].setAttribute('aria-current', 'true');
-			}
-		}
-
-		function updateSlideARIA() {
-			const realIndex = (swiper.realIndex % originalSlideCount) + 1;
-
-			if (liveRegion) {
-				liveRegion.textContent = `Slide ${realIndex} of ${originalSlideCount}.`;
-			}
-
-			slides.forEach((slide) => {
-				slide.setAttribute('role', 'group');
-				slide.setAttribute('aria-roledescription', 'slide');
-
-				const originalIndex = slide.dataset.originalIndex
-					? Number.parseInt(slide.dataset.originalIndex, 10) + 1
-					: realIndex;
-
-				slide.setAttribute(
-					'aria-label',
-					`Slide ${originalIndex} of ${originalSlideCount}`
-				);
-			});
-		}
-
-		updateSlideARIA();
-		updateActiveBullet();
+		updateSlides(initialSlides, slides, swiper);
 
 		swiper.on('slideChange', () => {
-			updateSlideARIA();
-			updateActiveBullet();
+			updateSlides(initialSlides, slides, swiper);
 		});
 
-		addEventListeners(carouselContainer, swiper);
-		adjustUIForSingleSlide(
-			nextButton,
-			prevButton,
-			originalSlideCount,
-			swiper
+		addEventListeners(carouselMainContainer, swiper);
+	}
+
+	function updateSlides(initialSlides, slides, swiper) {
+		const bullets = document.querySelectorAll(
+			'.carousel-nav-container-indicators .swiper-pagination-bullet'
 		);
+
+		bullets.forEach((bullet) =>
+			bullet.classList.remove('swiper-pagination-bullet-active')
+		);
+
+		const activeIndex = swiper.realIndex % initialSlides.length;
+
+		if (bullets[activeIndex]) {
+			bullets[activeIndex].classList.add(
+				'swiper-pagination-bullet-active'
+			);
+			bullets[activeIndex].setAttribute('aria-current', 'true');
+		}
+
+		const realIndex = (swiper.realIndex % initialSlides.length) + 1;
+
+		const carouselLiveRegion = document.querySelector('.carousel-live-region');
+
+		if (carouselLiveRegion) {
+			carouselLiveRegion.textContent = `Slide ${realIndex} of ${initialSlides.length}.`;
+		}
+
+		slides.forEach((slide) => {
+			slide.setAttribute('aria-roledescription', 'slide');
+			slide.setAttribute('role', 'group');
+
+			const originalIndex = slide.dataset.originalIndex
+				? Number.parseInt(slide.dataset.originalIndex, 10) + 1
+				: realIndex;
+
+			slide.setAttribute(
+				'aria-label',
+				`Slide ${originalIndex} of ${initialSlides.length}`
+			);
+		});
 	}
 
 	Liferay.on('allPortletsReady', setupCarousel);

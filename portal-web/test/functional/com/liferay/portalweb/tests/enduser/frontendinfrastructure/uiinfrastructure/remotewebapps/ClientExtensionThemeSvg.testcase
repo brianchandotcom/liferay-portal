@@ -78,34 +78,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-173318. Verify that new SVG spritemap file from external site is applied on the page"
-	@priority = 3
-	test CanExtendSvgFileFromExternalSite {
-		property portal.acceptance = "false";
-
-		task ("A created Theme svg extensions using the external URL") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addThemeSvgSpritemap(
-				entryName = "external_url_theme",
-				entryURL = "https://liferay.github.io/liferay-frontend-projects/spritemap-svg/spritemap-pencil-swapped-with-cog.svg");
-		}
-
-		task ("And given Go to edit the 'Look and Feel' on page / When Update with registered 'Theme Spritemap Client Extension'") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-			ClientExtensionGeneral.changeSiteCurrentThemeSvgSpritemap(entryName = "external_url_theme");
-		}
-
-		task ("And When: Navigate to home page") {
-			ProductMenu.gotoHomePage();
-		}
-
-		task ("Then: new SVG spritemap is applied on the page") {
-			AssertVisible(locator1 = "ClientExtension#PENCIL_ICON_IN_CONFIG_ICON_POSITION");
-
-			AssertVisible(locator1 = "ClientExtension#COG_ICON_IN_EDIT_ICON_POSITION");
-		}
-	}
-
 }

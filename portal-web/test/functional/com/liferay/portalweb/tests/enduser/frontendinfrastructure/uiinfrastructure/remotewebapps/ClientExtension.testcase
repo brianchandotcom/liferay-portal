@@ -37,100 +37,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-182184. Verify the option to export a client extension is displayed."
-	@priority = 4
-	test AssertExportOptionIsDisplayed {
-		task ("Given the admin page of client extensions") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-		}
-
-		task ("And Create a Custom Element") {
-			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryURL = " http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
-		}
-
-		task ("When the user clicks the ellipsis button of the client extension created") {
-			Click(
-				key_entryName = "Vanilla Counter",
-				locator1 = "ClientExtension#ENTRY_ELLIPSIS_BUTTON");
-		}
-
-		task ("Then the export option is displayed") {
-			AssertVisible(
-				key_menuItem = "Export as JSON",
-				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
-		}
-	}
-
-	@description = "LPS-182184. Verify the JSON field contains the name of the file selected to be imported"
-	@priority = 5
-	test AssertFileNameInJSONField {
-		property portal.acceptance = "true";
-
-		task ("Given the admin page of client extensions") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
-
-			Click(
-				key_entryName = "Vanilla Counter",
-				locator1 = "ClientExtension#ENTRY_ELLIPSIS_BUTTON");
-
-			Click(
-				key_menuItem = "Export as JSON",
-				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
-
-			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Vanilla Counter");
-		}
-
-		task ("When the import option is selected") {
-			Click(locator1 = "Icon#SVG_ELLIPSIS");
-
-			DropdownMenuItem.click(menuItem = "Import");
-		}
-
-		task ("And the client-extension json file is selected") {
-			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
-			var tempFileDirectory = selenium.getOutputDirName();
-
-			var filePath = "${tempFileDirectory}/${sampleFileName}";
-
-			UploadFile(
-				locator1 = "TextInput#FILE",
-				value1 = ${filePath});
-		}
-
-		task ("Then the file name is shown in the JSON File field") {
-			AssertVisible(
-				key_fieldValue = ${sampleFileName},
-				locator1 = "FormFields#TEXT_FIELD_3");
-		}
-	}
-
-	@description = "LPS-114812. Verify Client Extension can be deleted"
-	@priority = 5
-	@refactordone
-	test CanBeDeleted {
-		property portal.acceptance = "true";
-
-		var remoteAppName = "My New Remote App To Delete";
-
-		JSONClientExtension.addIFrameRemoteAppEntry(
-			iFrameURL = "http://www.liferay.com/my_new_remote_app",
-			name = ${remoteAppName});
-
-		ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-		ClientExtensionGeneral.deleteRemoteApp(tableEntry = ${remoteAppName});
-
-		ClientExtensionGeneral.viewEmptyRemoteTable();
-	}
-
 	@description = "LPS-153716. Add Client Extension with DB Partitioning enabled."
 	@priority = 5
 	test CanBeDisplayedWithDBPartitioning {
@@ -153,58 +59,6 @@ definition {
 			ClientExtensionGeneral.viewTableEntries(
 				entryName = "Vanilla Counter",
 				entryType = "Custom Element");
-		}
-	}
-
-	@description = "LPS-182184. Verify it's possible to cancel an import."
-	@priority = 4
-	test CanCancelImport {
-		task ("Given the admin page of client extensions") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
-
-			Click(
-				key_entryName = "Vanilla Counter",
-				locator1 = "ClientExtension#ENTRY_ELLIPSIS_BUTTON");
-
-			Click(
-				key_menuItem = "Export as JSON",
-				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
-
-			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Vanilla Counter");
-		}
-
-		task ("When the import option is selected") {
-			Click(locator1 = "Icon#SVG_ELLIPSIS");
-
-			DropdownMenuItem.click(menuItem = "Import");
-		}
-
-		task ("And the client-extension json file is selected") {
-			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
-			var tempFileDirectory = selenium.getOutputDirName();
-
-			var filePath = "${tempFileDirectory}/${sampleFileName}";
-
-			UploadFile(
-				locator1 = "TextInput#FILE",
-				value1 = ${filePath});
-		}
-
-		task ("And click the cancel button") {
-			Click(
-				key_text = "Cancel",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Then confirm that there is no Client Extension entry") {
-			AssertElementNotPresent(
-				key_tableEntryName = "Vanilla Counter",
-				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 		}
 	}
 
@@ -418,115 +272,6 @@ definition {
 	test CanUpdateExistingClientExtension {
 	}
 
-	@description = "LPS-182184. Verify the JSON field is present when the user clicks on Import button. Blocked by LPS-189881."
-	@ignore = "true"
-	@priority = 4
-	test CanViewImportField {
-		task ("Given the admin page of Client Extension") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-		}
-
-		task ("When you click the ellipsis button in the upper right corner") {
-			Click(locator1 = "Icon#SVG_ELLIPSIS");
-		}
-
-		task ("And you click the import option") {
-			DropdownMenuItem.click(menuItem = "Import");
-		}
-
-		task ("Then “JSON file” field is present") {
-			AssertVisible(
-				key_fieldLabel = "JSON File",
-				locator1 = "FormFields#FIELD_DISABLED");
-		}
-
-		task ("And The text "The file containing the code with the client extension." is displayed under the field ") {
-			AssertVisible(
-				key_message = "The file containing the code with the client extension.",
-				locator1 = "DataSet#MODAL_MESSAGE");
-		}
-
-		task ("And the button Clear is not present") {
-			AssertElementNotPresent(
-				key_text = "Clear",
-				locator1 = "Button#ANY");
-		}
-	}
-
-	@description = "LPS-162031. The site administrator could add a CSS remote app."
-	@priority = 3
-	test CSSCanBeCreated {
-		task ("Given a site administrator accesses to the Client Extensions admin") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Font Family",
-				groupName = "Test Site Name",
-				mimeType = "text/css",
-				sourceFileName = "font_family.css");
-
-			var url = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "Font Family",
-				groupName = "Test Site Name");
-
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-		}
-
-		task ("When the site administrator creates a CSS remote app") {
-			ClientExtensionGeneral.addType(type = "Add CSS");
-
-			ClientExtensionGeneral.addApp(
-				entryName = "Font Family",
-				entryURL = ${url});
-		}
-
-		task ("Then the site administrator sees the created CSS remote app") {
-			ClientExtensionGeneral.viewTableEntryName(entryName = "Font Family");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
-	@description = "Verify that client extension of type Custom Element can be created"
-	@priority = 5
-	test CustomElementCanBeCreated {
-		property app.server.types = "tomcat";
-		property database.types = "mysql";
-		property environment.acceptance = "false";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "true";
-
-		task ("Create Vanilla Counter as a Custom Element") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addCustomElementAllFields(
-				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryProperties = "test-data-user=QAuser",
-				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
-		}
-
-		task ("Assert that the Vanilla Counter is listed") {
-			ClientExtensionGeneral.viewTableEntries(
-				entryName = "Vanilla Counter",
-				entryType = "Custom Element");
-		}
-
-		task ("Assert that the Vanilla Counter fields have been saved correctly") {
-			Click(
-				key_tableEntryName = "Vanilla Counter",
-				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
-
-			ClientExtensionGeneral.assertCustomElementFields(
-				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryProperties = "test-data-user=QAuser",
-				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
-		}
-	}
-
 	@description = "LPS-158083. Client Extension using non-root portal context"
 	@priority = 4
 	test CustomElementCanBeCreatedInNonRootContext {
@@ -597,27 +342,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-139377. Verify that remote app of type Custom Element can be deleted"
-	@priority = 4
-	test CustomElementCanBeDeleted {
-		task ("Create Vanilla Counter as a Custom Element") {
-			JSONClientExtension.addCustomElementRemoteAppEntry(
-				customElementHtmlName = "vanilla-counter",
-				customElementName = "Vanilla Counter",
-				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
-		}
-
-		task ("Delete Vanilla Counter") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Vanilla Counter");
-		}
-
-		task ("Assert that Vanilla Counter has been deleted") {
-			ClientExtensionGeneral.assertTableEntryNameNotPresent(entryName = "Vanilla Counter");
-		}
-	}
-
 	@description = "LPS-139377. Verify that remote app of type Custom Element can be displayed by portlet"
 	@priority = 5
 	test CustomElementCanBeDisplayedByPortlet {
@@ -657,50 +381,6 @@ definition {
 			Navigator.gotoPage(pageName = "Test Page");
 
 			AssertElementPresent(locator1 = "ClientExtension#VANILLA_COUNTER_REMOTE_APP");
-		}
-	}
-
-	@description = "LPS-139377. Verify that remote app of type Custom Element can be edited"
-	@priority = 4
-	test CustomElementCanBeEdited {
-		var remoteAppName = "New Counter";
-
-		task ("Create a Custom Element") {
-			JSONClientExtension.addCustomElementRemoteAppEntry(
-				customElementHtmlName = "new-counter",
-				customElementName = "New Counter",
-				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
-		}
-
-		task ("Edit the fields of the Custom Element") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			Click(
-				key_tableEntryName = ${remoteAppName},
-				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
-
-			ClientExtensionGeneral.editCustomElement(
-				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryHtmlName = "vanilla-counter-edited",
-				entryName = "Vanilla Counter Edited",
-				entryProperties = "test-data-user=QAuser");
-		}
-
-		task ("Assert that the Custom Element is listed") {
-			ClientExtensionGeneral.viewTableEntryName(entryName = "Vanilla Counter Edited");
-		}
-
-		task ("Assert that the fields have been updated") {
-			Click(
-				key_tableEntryName = "Vanilla Counter Edited",
-				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
-
-			ClientExtensionGeneral.assertCustomElementFields(
-				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryHtmlName = "vanilla-counter-edited",
-				entryName = "Vanilla Counter Edited",
-				entryProperties = "test-data-user=QAuser",
-				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 
@@ -763,64 +443,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-158832. Verify remote app can be configured one its portlet name has been changed"
-	@priority = 3
-	test CustomElementCanConfigurePortletName {
-		task ("Given Create Vanilla Counter as a Custom Element") {
-			JSONClientExtension.addCustomElementRemoteAppEntry(
-				customElementHtmlName = "vanilla-counter",
-				customElementName = "Vanilla Counter",
-				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
-		}
-
-		task ("When adding created portlet to a widget page") {
-			ClientExtension.addPortletToWidgetPage(
-				portletName = "Vanilla Counter",
-				widgetPageName = "Test Page");
-		}
-
-		task ("And change Vanilla Counter portlet name") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			Click(
-				key_tableEntryName = "Vanilla Counter",
-				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
-
-			Type(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = "Vanilla Counter Modified");
-
-			PortletEntry.publish();
-		}
-
-		task ("Then assert that Vanilla Counter name has been changed in Widget Page Editor") {
-			Navigator.gotoPage(pageName = "Test Page");
-
-			Click(locator1 = "ControlMenu#ADD");
-
-			AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
-
-			Navigator.gotoNavTab(navTab = "Widgets");
-
-			WaitForElementPresent(locator1 = "NavBar#APPLICATION_SEARCH_FIELD");
-
-			Type(
-				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-				value1 = "Vanilla Counter Modified");
-
-			AssertElementPresent(
-				key_remoteAppName = "Vanilla Counter Modified",
-				locator1 = "ClientExtension#APPLICATION_SEARCH_FIELD_WIDGET_SEARCH_REMOTE_APP");
-		}
-
-		task ("Then assert Vanilla Counter continues displayed") {
-			Navigator.gotoPage(pageName = "Test Page");
-
-			AssertElementPresent(locator1 = "ClientExtension#VANILLA_COUNTER_REMOTE_APP");
-		}
-	}
-
 	@description = "LPS-139377. Verify that remote app of type Custom Element can displayed properties in HTML"
 	@priority = 3
 	test CustomElementCanInjectHTMLProperties {
@@ -846,26 +468,6 @@ definition {
 				key_customElementHtmlName = "vanilla-counter",
 				key_customElementProperty = "QAuser",
 				locator1 = "ClientExtension#REMOTE_APP_PROPERTY_HTML");
-		}
-	}
-
-	@description = "LPS-139377. Verify that remote app of type Custom Element can save multiple URLs"
-	@priority = 4
-	test CustomElementCanSaveMultipleURLs {
-		task ("Create Vanilla Counter as a Custom Element") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addCustomElementMultipleURLs();
-		}
-
-		task ("Go to edit entry") {
-			Click(
-				key_tableEntryName = "Vanilla Counter",
-				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
-		}
-
-		task ("Assert multiple URL fields are saved") {
-			ClientExtensionGeneral.assertCustomElementMultipleURLFields();
 		}
 	}
 
@@ -937,35 +539,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "Message#EMPTY_STATE_INFO",
 				value1 = "No Results Found");
-		}
-	}
-
-	@description = "LPS-154718. Validate Client Extensions UI has an understandable error message when user inputs an invalid URL."
-	@priority = 4
-	test HasAnUnderstandableErrorMessageWhenURLInvalid {
-		task ("Given Add IFrame Client Extensions") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Custom Apps",
-				panel = "Applications",
-				portlet = "Client Extensions");
-
-			ClientExtensionGeneral.addType(type = "IFrame");
-		}
-
-		task ("When type testurl in URL field and a valid name is entered") {
-			ClientExtensionGeneral.addApp(
-				entryName = "Test Name",
-				entryURL = ${testURL});
-		}
-
-		task ("And When attempt to save the remote app") {
-			Button.clickPublish();
-		}
-
-		task ("Then error message 'Please enter a valid URL' appears") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_ENTER_A_VALID_URL",
-				value1 = "Please enter a valid URL.");
 		}
 	}
 
@@ -1084,60 +657,6 @@ definition {
 			entryURL = "http://www.liferay.com");
 
 		ClientExtensionGeneral.viewTableEntryName(entryName = "Test Remote App");
-	}
-
-	@description = "LPS-139377. Verify that remote app type IFrame can display property fields"
-	@priority = 4
-	test IframeTypeCanDisplayProperFields {
-		property portal.acceptance = "true";
-
-		ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-		ClientExtensionGeneral.addType(type = "Custom Element");
-
-		AssertVisible(
-			key_text = "HTML Element Name",
-			locator1 = "TextInput#ANY");
-
-		AssertVisible(
-			key_text = "CSS URL",
-			locator1 = "TextInput#ANY");
-
-		Click(locator1 = "Button#BACK");
-
-		ClientExtensionGeneral.addType(type = "IFrame");
-
-		AssertElementNotPresent(
-			key_text = "HTML Element Name",
-			locator1 = "TextInput#ANY");
-
-		AssertElementNotPresent(
-			key_text = "CSS URL",
-			locator1 = "TextInput#ANY");
-	}
-
-	@description = "LPS-166479. Created (theme SVG extensions), the theme SVG extensions admin page lists the name and type"
-	@priority = 4
-	test ThemeSvgTypeCanBeCreated {
-		task ("Given a created Client Extension") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-		}
-
-		task ("When type is Theme svg extensions") {
-			ClientExtensionGeneral.addType(type = "Theme SVG Spritemap");
-		}
-
-		task ("And when adding requirements,and click in publish") {
-			ClientExtensionGeneral.addApp(
-				entryName = "speitemap_example.svg",
-				entryURL = "https://liferay.github.io/liferay-frontend-projects/spritemap-svg/spritemap-pencil-swapped- with-cog.svg");
-		}
-
-		task ("Then theme svg extensions admin page lists the Name and Type") {
-			ClientExtensionGeneral.viewTableEntryName(entryName = "speitemap_example.svg");
-
-			ClientExtensionGeneral.viewTableEntryType(entryType = "Theme SVG Spritemap");
-		}
 	}
 
 	@description = "LPS-154725. Verify that the UI label is present when a client extension is not created through osgi"

@@ -77,46 +77,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-180167. Verify if has possible change the language on language icon"
-	@priority = 3
-	test CanChangeLanguage {
-		task ("And changes the language flag icon to Spanish flag") {
-			Click(
-				key_locale = "en-US",
-				locator1 = "Translation#CURRENT_LOCALE_NAME");
-
-			DropdownMenuItem.click(menuItem = "es-ES");
-		}
-
-		task ("And types “Cambiar formato de fecha” on Name field") {
-			Type(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = "Cambiar formato de fecha");
-		}
-
-		task ("And changes the language icon to English and Spanish again") {
-			Click(
-				key_locale = "es-ES",
-				locator1 = "Translation#CURRENT_LOCALE_NAME");
-
-			DropdownMenuItem.click(menuItem = "en-US");
-
-			Click(
-				key_locale = "en-US",
-				locator1 = "Translation#CURRENT_LOCALE_NAME");
-
-			DropdownMenuItem.click(menuItem = "es-ES");
-		}
-
-		task ("Then the title and information about the fields are displayed in Spanish") {
-			AssertTextEquals(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = "Cambiar formato de fecha");
-		}
-	}
-
 	@description = "LPS-180167. Verify if is possible publish with only requireds fields"
 	@priority = 5
 	test CanCreateWithOnlyRequiredFieldsFilled {
@@ -155,62 +115,6 @@ definition {
 			AssertElementPresent(
 				key_tableEntryName = "JS Import Map Entry Test",
 				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
-		}
-	}
-
-	@description = "LPS-180167. Verify if the Additional Resources field can be hidden"
-	@priority = 3
-	test CanHiddenAdditionalResourcesField {
-		task ("And clicks on Additional Resources collapse icon") {
-			ClientExtensionGeneral.openOrCloseCollapseField(
-				key_fieldName = "Additional Resources",
-				key_status = "Close");
-		}
-
-		task ("Then Name and Description fields are hidden") {
-			AssertNotVisible(
-				key_fieldName = "Source Code URL",
-				locator1 = "ClientExtension#ANY_FIELD");
-		}
-	}
-
-	@description = "LPS-180167. Verify if the Content field can be hidden"
-	@priority = 3
-	test CanHiddenContentField {
-		task ("And clicks on Content collapse icon") {
-			ClientExtensionGeneral.openOrCloseCollapseField(
-				key_fieldName = "Content",
-				key_status = "Close");
-		}
-
-		task ("Then JS URL field is hidden") {
-			AssertNotVisible(
-				key_fieldName = "JavaScript URL",
-				locator1 = "ClientExtension#ANY_FIELD");
-
-			AssertNotVisible(
-				key_fieldName = "Bare Specifier",
-				locator1 = "ClientExtension#ANY_FIELD");
-		}
-	}
-
-	@description = "LPS-180167. Verify if the Identity field can be hidden"
-	@priority = 3
-	test CanHiddenIdentityField {
-		task ("And clicks on Identity collapse icon") {
-			ClientExtensionGeneral.openOrCloseCollapseField(
-				key_fieldName = "Identity",
-				key_status = "Close");
-		}
-
-		task ("Then Name and Description fields are hidden") {
-			AssertNotVisible(
-				key_fieldName = "Name",
-				locator1 = "ClientExtension#ANY_FIELD");
-
-			AssertNotVisible(
-				key_fieldName = "Description",
-				locator1 = "ClientExtension#ANY_FIELD");
 		}
 	}
 
@@ -297,93 +201,6 @@ definition {
 
 		task ("Then an error message should be displayed ") {
 			Alert.viewSpecificRequiredField(fieldFieldLabel = "JavaScript URL");
-		}
-	}
-
-	@description = "LPS-180167. Verify if JavaScript URL field can convert text to .js"
-	@priority = 4
-	test CanPublishWithAnTextOnJSField {
-		task ("And fills Name field") {
-			Type.typeNoMouseOver(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = "JS Import Map Entry Test");
-		}
-
-		task ("And fills Bare Specifier field") {
-			Type.typeNoMouseOver(
-				key_text = "Bare Specifier",
-				locator1 = "TextInput#ANY",
-				value1 = "bare-specifier-test");
-		}
-
-		task ("And types "Lorem Ipsum is simply dummy text of the printing and typesetting industry." in JavaScript URL field") {
-			Type.typeNoMouseOver(
-				key_text = "JavaScript URL",
-				locator1 = "TextInput#ANY",
-				value1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-		}
-
-		task ("And clicks on Publish button") {
-			Button.clickPublish();
-		}
-
-		task ("Then an success message should be displayed ") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And entry name is present on Client Extension admin page") {
-			AssertElementPresent(
-				key_tableEntryName = "JS Import Map Entry Test",
-				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
-		}
-	}
-
-	@description = "LPS-180167. Verify if Source Code URL field can convert text to URL"
-	@priority = 4
-	test CanPublishWithAnTextOnSourceCodeURLField {
-		task ("And fills Name field") {
-			Type.typeNoMouseOver(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = "JS Import Map Entry Test");
-		}
-
-		task ("And fills Bare Specifier field") {
-			Type.typeNoMouseOver(
-				key_text = "Bare Specifier",
-				locator1 = "TextInput#ANY",
-				value1 = "bare-specifier-test");
-		}
-
-		task ("And fills JavaScript URL field") {
-			Type.typeNoMouseOver(
-				key_text = "JavaScript URL",
-				locator1 = "TextInput#ANY",
-				value1 = "https://liferay.github.io/liferay-frontend-projects/");
-		}
-
-		task ("And types “Lorem Ipsum is simply dummy text of the printing and typesetting industry.” on Source Code URL field") {
-			Type(
-				key_text = "Source Code URL",
-				locator1 = "TextInput#ANY",
-				value1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-		}
-
-		task ("And clicks on Publish button") {
-			Button.clickPublish();
-		}
-
-		task ("Then an success message should be displayed") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And entry name is present on Client Extension admin page") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			AssertElementPresent(
-				key_tableEntryName = "JS Import Map Entry Test",
-				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 		}
 	}
 

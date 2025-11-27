@@ -10,10 +10,8 @@ import com.liferay.consent.management.platform.integration.configuration.Consent
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -53,10 +51,6 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 	@FeatureFlag("LPD-65286")
 	@Test
 	public void testIncludeScriptTag() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
-
 		ConfigurationTestUtil.saveConfiguration(
 			ConsentManagementPlatformConfiguration.class.getName(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -72,22 +66,22 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			GroupTestUtil.addGroup());
+
 		themeDisplay.setLayout(layout);
-
-		themeDisplay.setCompany(company);
-
-		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setScopeGroupId(layout.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_dynamicInclude.include(
 			mockHttpServletRequest, mockHttpServletResponse,
@@ -102,6 +96,9 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 	private static final String _SCRIPT_TAG =
 		"<script id=\"Cookiebot\" src=\"https://consent.cookiebot.com" +
 			"/uc.js\" data-cbid=\"000000\" type=\"text/javascript\"></script>";
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.consent.management.platform.integration.internal.servlet.taglib.ConsentManagementPlatformTopHeadDynamicInclude"

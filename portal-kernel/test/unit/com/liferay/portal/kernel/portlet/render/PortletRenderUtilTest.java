@@ -78,25 +78,29 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getHeaderCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/header-portal.js?t=7", "/nocombo-header-portal.js?t=7",
-				"/o/portlet-web/header-portlet.js?t=7",
-				"/o/portlet-web/nocombo-header-portlet.js?t=7",
+				"/header-portal.(" + _HASH + ").js",
+				"/nocombo-header-portal.(" + _HASH + ").js",
+				"/o/portlet-web/header-portlet.(" + _HASH + ").js",
+				"/o/portlet-web/nocombo-header-portlet.(" + _HASH + ").js",
 				"http://example.com/header-portal.js",
 				"http://example.com/header-portlet.js",
-				"module:/module-header-portal.js?t=7",
-				"module:/o/portlet-web/module-header-portlet.js?t=7",
+				"module:/module-header-portal.(" + _HASH + ").js",
+				"module:/o/portlet-web/module-header-portlet.(" + _HASH +
+					").js",
 				"module:http://example.com/module-header-portal.js",
 				"module:http://example.com/module-header-portlet.js"),
 			portletRenderParts.getHeaderJavaScriptPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/footer-portal.js?t=7", "/nocombo-footer-portal.js?t=7",
-				"/o/portlet-web/footer-portlet.js?t=7",
-				"/o/portlet-web/nocombo-footer-portlet.js?t=7",
+				"/footer-portal.(" + _HASH + ").js",
+				"/nocombo-footer-portal.(" + _HASH + ").js",
+				"/o/portlet-web/footer-portlet.(" + _HASH + ").js",
+				"/o/portlet-web/nocombo-footer-portlet.(" + _HASH + ").js",
 				"http://example.com/footer-portal.js",
 				"http://example.com/footer-portlet.js",
-				"module:/module-footer-portal.js?t=7",
-				"module:/o/portlet-web/module-footer-portlet.js?t=7",
+				"module:/module-footer-portal.(" + _HASH + ").js",
+				"module:/o/portlet-web/module-footer-portlet.(" + _HASH +
+					").js",
 				"module:http://example.com/module-footer-portal.js",
 				"module:http://example.com/module-footer-portlet.js"),
 			portletRenderParts.getFooterJavaScriptPaths());
@@ -144,14 +148,16 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getHeaderCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/portal/header-portal.js?t=7",
-				"/portal/nocombo-header-portal.js?t=7",
-				"/portal/o/portlet-web/header-portlet.js?t=7",
-				"/portal/o/portlet-web/nocombo-header-portlet.js?t=7",
+				"/portal/header-portal.(" + _HASH + ").js",
+				"/portal/nocombo-header-portal.(" + _HASH + ").js",
+				"/portal/o/portlet-web/header-portlet.(" + _HASH + ").js",
+				"/portal/o/portlet-web/nocombo-header-portlet.(" + _HASH +
+					").js",
 				"http://example.com/header-portal.js",
 				"http://example.com/header-portlet.js",
-				"module:/portal/module-header-portal.js?t=7",
-				"module:/portal/o/portlet-web/module-header-portlet.js?t=7",
+				"module:/portal/module-header-portal.(" + _HASH + ").js",
+				"module:/portal/o/portlet-web/module-header-portlet.(" + _HASH +
+					").js",
 				"module:http://example.com/module-header-portal.js",
 				"module:http://example.com/module-header-portlet.js"),
 			portletRenderParts.getHeaderJavaScriptPaths());
@@ -171,14 +177,16 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getFooterCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/portal/footer-portal.js?t=7",
-				"/portal/nocombo-footer-portal.js?t=7",
-				"/portal/o/portlet-web/footer-portlet.js?t=7",
-				"/portal/o/portlet-web/nocombo-footer-portlet.js?t=7",
+				"/portal/footer-portal.(" + _HASH + ").js",
+				"/portal/nocombo-footer-portal.(" + _HASH + ").js",
+				"/portal/o/portlet-web/footer-portlet.(" + _HASH + ").js",
+				"/portal/o/portlet-web/nocombo-footer-portlet.(" + _HASH +
+					").js",
 				"http://example.com/footer-portal.js",
 				"http://example.com/footer-portlet.js",
-				"module:/portal/module-footer-portal.js?t=7",
-				"module:/portal/o/portlet-web/module-footer-portlet.js?t=7",
+				"module:/portal/module-footer-portal.(" + _HASH + ").js",
+				"module:/portal/o/portlet-web/module-footer-portlet.(" + _HASH +
+					").js",
 				"module:http://example.com/module-footer-portal.js",
 				"module:http://example.com/module-footer-portlet.js"),
 			portletRenderParts.getFooterJavaScriptPaths());
@@ -217,15 +225,16 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getHeaderCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/proxy/portal/header-portal.js?t=7",
-				"/proxy/portal/nocombo-header-portal.js?t=7",
-				"/proxy/portal/o/portlet-web/header-portlet.js?t=7",
-				"/proxy/portal/o/portlet-web/nocombo-header-portlet.js?t=7",
+				"/proxy/portal/header-portal.(" + _HASH + ").js",
+				"/proxy/portal/nocombo-header-portal.(" + _HASH + ").js",
+				"/proxy/portal/o/portlet-web/header-portlet.(" + _HASH + ").js",
+				"/proxy/portal/o/portlet-web/nocombo-header-portlet.(" + _HASH +
+					").js",
 				"http://example.com/header-portal.js",
 				"http://example.com/header-portlet.js",
-				"module:/proxy/portal/module-header-portal.js?t=7",
-				"module:/proxy/portal/o/portlet-web/module-header-portlet.js?" +
-					"t=7",
+				"module:/proxy/portal/module-header-portal.(" + _HASH + ").js",
+				"module:/proxy/portal/o/portlet-web/module-header-portlet.(" +
+					_HASH + ").js",
 				"module:http://example.com/module-header-portal.js",
 				"module:http://example.com/module-header-portlet.js"),
 			portletRenderParts.getHeaderJavaScriptPaths());
@@ -247,15 +256,16 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getFooterCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/proxy/portal/footer-portal.js?t=7",
-				"/proxy/portal/nocombo-footer-portal.js?t=7",
-				"/proxy/portal/o/portlet-web/footer-portlet.js?t=7",
-				"/proxy/portal/o/portlet-web/nocombo-footer-portlet.js?t=7",
+				"/proxy/portal/footer-portal.(" + _HASH + ").js",
+				"/proxy/portal/nocombo-footer-portal.(" + _HASH + ").js",
+				"/proxy/portal/o/portlet-web/footer-portlet.(" + _HASH + ").js",
+				"/proxy/portal/o/portlet-web/nocombo-footer-portlet.(" + _HASH +
+					").js",
 				"http://example.com/footer-portal.js",
 				"http://example.com/footer-portlet.js",
-				"module:/proxy/portal/module-footer-portal.js?t=7",
-				"module:/proxy/portal/o/portlet-web/module-footer-portlet.js?" +
-					"t=7",
+				"module:/proxy/portal/module-footer-portal.(" + _HASH + ").js",
+				"module:/proxy/portal/o/portlet-web/module-footer-portlet.(" +
+					_HASH + ").js",
 				"module:http://example.com/module-footer-portal.js",
 				"module:http://example.com/module-footer-portlet.js"),
 			portletRenderParts.getFooterJavaScriptPaths());
@@ -290,14 +300,16 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getHeaderCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/proxy/header-portal.js?t=7",
-				"/proxy/nocombo-header-portal.js?t=7",
-				"/proxy/o/portlet-web/header-portlet.js?t=7",
-				"/proxy/o/portlet-web/nocombo-header-portlet.js?t=7",
+				"/proxy/header-portal.(" + _HASH + ").js",
+				"/proxy/nocombo-header-portal.(" + _HASH + ").js",
+				"/proxy/o/portlet-web/header-portlet.(" + _HASH + ").js",
+				"/proxy/o/portlet-web/nocombo-header-portlet.(" + _HASH +
+					").js",
 				"http://example.com/header-portal.js",
 				"http://example.com/header-portlet.js",
-				"module:/proxy/module-header-portal.js?t=7",
-				"module:/proxy/o/portlet-web/module-header-portlet.js?t=7",
+				"module:/proxy/module-header-portal.(" + _HASH + ").js",
+				"module:/proxy/o/portlet-web/module-header-portlet.(" + _HASH +
+					").js",
 				"module:http://example.com/module-header-portal.js",
 				"module:http://example.com/module-header-portlet.js"),
 			portletRenderParts.getHeaderJavaScriptPaths());
@@ -317,14 +329,16 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getFooterCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/proxy/footer-portal.js?t=7",
-				"/proxy/nocombo-footer-portal.js?t=7",
-				"/proxy/o/portlet-web/footer-portlet.js?t=7",
-				"/proxy/o/portlet-web/nocombo-footer-portlet.js?t=7",
+				"/proxy/footer-portal.(" + _HASH + ").js",
+				"/proxy/nocombo-footer-portal.(" + _HASH + ").js",
+				"/proxy/o/portlet-web/footer-portlet.(" + _HASH + ").js",
+				"/proxy/o/portlet-web/nocombo-footer-portlet.(" + _HASH +
+					").js",
 				"http://example.com/footer-portal.js",
 				"http://example.com/footer-portlet.js",
-				"module:/proxy/module-footer-portal.js?t=7",
-				"module:/proxy/o/portlet-web/module-footer-portlet.js?t=7",
+				"module:/proxy/module-footer-portal.(" + _HASH + ").js",
+				"module:/proxy/o/portlet-web/module-footer-portlet.(" + _HASH +
+					").js",
 				"module:http://example.com/module-footer-portal.js",
 				"module:http://example.com/module-footer-portlet.js"),
 			portletRenderParts.getFooterJavaScriptPaths());

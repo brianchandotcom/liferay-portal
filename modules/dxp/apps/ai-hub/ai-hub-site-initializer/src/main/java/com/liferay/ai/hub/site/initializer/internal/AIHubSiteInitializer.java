@@ -156,7 +156,7 @@ public class AIHubSiteInitializer implements SiteInitializer {
 				"a friendly and professional conversational tone, and use the ",
 				"chat history to maintain flow."),
 			"This is the content: \\\"{{content}}\\\" and title: " +
-				"\\\"{{title}}\\\", respond this message: " +
+				"\\\"{{title}}\\\", reply to this message: " +
 					"\\\"{{userMessage}}\\\"");
 		_deployWorkflowDefinition(
 			company,

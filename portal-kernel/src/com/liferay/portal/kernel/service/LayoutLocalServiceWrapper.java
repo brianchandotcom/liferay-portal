@@ -75,7 +75,7 @@ public class LayoutLocalServiceWrapper
 	 * @param system whether the layout is of system type
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
-	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 FriendlyURLNormalizerUtil#normalize(
 	 String)}.
 	 * @param masterLayoutPageTemplateEntryERC the external reference code of
 	 the master layout page template entry
@@ -148,7 +148,7 @@ public class LayoutLocalServiceWrapper
 	 * @param system whether the layout is of system type
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
-	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 FriendlyURLNormalizerUtil#normalize(
 	 String)}.
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date, modification
@@ -216,7 +216,7 @@ public class LayoutLocalServiceWrapper
 	 * @param hidden whether the layout is hidden
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
-	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 FriendlyURLNormalizerUtil#normalize(
 	 String)}.
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date, modification
@@ -293,7 +293,7 @@ public class LayoutLocalServiceWrapper
 	 <code>portal-ext.properties</code> by specifying new values for
 	 the corresponding properties defined in {@link PropsValues}. To
 	 see how the URL is normalized when accessed, see {@link
-	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 FriendlyURLNormalizerUtil#normalize(
 	 String)}.
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date and modification
@@ -355,7 +355,7 @@ public class LayoutLocalServiceWrapper
 	 <code>portal-ext.properties</code> by specifying new values for
 	 the corresponding properties defined in {@link PropsValues}. To
 	 see how the URL is normalized when accessed, see {@link
-	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 FriendlyURLNormalizerUtil#normalize(
 	 String)}.
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date and modification
@@ -1888,13 +1888,14 @@ public class LayoutLocalServiceWrapper
 	 * @param hidden whether the layout is hidden
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
-	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 FriendlyURLNormalizerUtil#normalize(
 	 String)}.
 	 * @param hasIconImage whether the icon image will be updated
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param styleBookEntryERC the external reference code of the style book
 	 entry
-	 * @param faviconFileEntryId the file entry ID of the layout's new favicon
+	 * @param faviconFileEntryERC the file entry ERC of the layout's new favicon
+	 * @param faviconFileEntryScopeERC the file entry Scope ERC of the layout's new favicon
 	 * @param masterLayoutPageTemplateEntryERC the external reference code of
 	 the master layout page template entry
 	 * @param serviceContext the service context to be applied. Can set the
@@ -1921,7 +1922,8 @@ public class LayoutLocalServiceWrapper
 			boolean hidden,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			boolean hasIconImage, byte[] iconBytes, String styleBookEntryERC,
-			long faviconFileEntryId, String masterLayoutPageTemplateEntryERC,
+			String faviconFileEntryERC, String faviconFileEntryScopeERC,
+			String masterLayoutPageTemplateEntryERC,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1929,8 +1931,8 @@ public class LayoutLocalServiceWrapper
 			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap,
 			descriptionMap, keywordsMap, robotsMap, type, hidden,
 			friendlyURLMap, hasIconImage, iconBytes, styleBookEntryERC,
-			faviconFileEntryId, masterLayoutPageTemplateEntryERC,
-			serviceContext);
+			faviconFileEntryERC, faviconFileEntryScopeERC,
+			masterLayoutPageTemplateEntryERC, serviceContext);
 	}
 
 	@Override
@@ -1938,13 +1940,14 @@ public class LayoutLocalServiceWrapper
 			long groupId, boolean privateLayout, long layoutId,
 			String typeSettings, byte[] iconBytes, String themeId,
 			String colorSchemeId, String styleBookEntryERC, String css,
-			long faviconFileEntryId, String masterLayoutPageTemplateEntryERC)
+			String faviconFileEntryERC, String faviconFileEntryScopeERC,
+			String masterLayoutPageTemplateEntryERC)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutLocalService.updateLayout(
 			groupId, privateLayout, layoutId, typeSettings, iconBytes, themeId,
-			colorSchemeId, styleBookEntryERC, css, faviconFileEntryId,
-			masterLayoutPageTemplateEntryERC);
+			colorSchemeId, styleBookEntryERC, css, faviconFileEntryERC,
+			faviconFileEntryScopeERC, masterLayoutPageTemplateEntryERC);
 	}
 
 	@Override

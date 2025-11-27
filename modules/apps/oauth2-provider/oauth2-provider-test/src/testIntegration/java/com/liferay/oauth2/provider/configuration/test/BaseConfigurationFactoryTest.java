@@ -150,7 +150,7 @@ public class BaseConfigurationFactoryTest {
 		properties.put("userAccountScreenName", "test");
 
 		List<User> users = _userLocalService.getUsersByRoleName(
-			companyId, RoleConstants.ADMINISTRATOR, 0, 1);
+			companyId, RoleConstants.ADMINISTRATOR, 0, 2);
 
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationHeadlessServerConfiguration.class.

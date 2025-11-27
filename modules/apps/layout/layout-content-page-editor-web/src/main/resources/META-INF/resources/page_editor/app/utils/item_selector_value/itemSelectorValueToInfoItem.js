@@ -11,6 +11,7 @@ export default function itemSelectorValueToInfoItem(infoItem) {
 		classTypeId,
 		externalReferenceCode,
 		returnType,
+		scopeExternalReferenceCode,
 		subtype,
 		title,
 		type,
@@ -24,6 +25,7 @@ export default function itemSelectorValueToInfoItem(infoItem) {
 		externalReferenceCode,
 		itemSubtype: subtype,
 		itemType: type,
+		scopeExternalReferenceCode,
 		title,
 		type: returnType,
 	};

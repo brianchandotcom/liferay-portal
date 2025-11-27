@@ -58,6 +58,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import jakarta.validation.constraints.NotEmpty;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Map;
@@ -717,7 +718,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {multipartTestEntity(multipartTestEntityId: ___){id, name}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {multipartTestEntity(multipartTestEntityId: ___){externalReferenceCode, id, name, siteExternalReferenceCode}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MultipartTestEntity multipartTestEntity(
@@ -730,6 +731,25 @@ public class Query {
 			multipartTestEntityResource ->
 				multipartTestEntityResource.getMultipartTestEntity(
 					multipartTestEntityId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteMultipartTestEntity(siteExternalReferenceCode: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Response siteMultipartTestEntity(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_multipartTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			multipartTestEntityResource ->
+				multipartTestEntityResource.getSiteMultipartTestEntity(
+					siteExternalReferenceCode));
 	}
 
 	/**

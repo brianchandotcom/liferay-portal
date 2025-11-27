@@ -1086,6 +1086,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLName(
+		description = "null",
+		value = "putSiteMultipartTestEntitySiteExternalReferenceCodeMultipartBody"
+	)
+	public MultipartTestEntity updateSiteMultipartTestEntity(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_multipartTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			multipartTestEntityResource ->
+				multipartTestEntityResource.putSiteMultipartTestEntity(
+					siteExternalReferenceCode, multipartBody));
+	}
+
+	@GraphQLField
 	public Response createSchemasPageExportBatch(
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,

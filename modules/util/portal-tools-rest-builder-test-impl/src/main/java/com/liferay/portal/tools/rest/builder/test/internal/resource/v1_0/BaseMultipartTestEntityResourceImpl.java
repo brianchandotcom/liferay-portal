@@ -28,6 +28,7 @@ import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipartTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Schema;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MultipartTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -110,7 +111,45 @@ public abstract class BaseMultipartTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}' -d $'{"id": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteExternalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "MultipartTestEntity"
+			)
+		}
+	)
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/multipart-test-entity"
+	)
+	@jakarta.ws.rs.Produces("application/zip")
+	@Override
+	public Response getSiteMultipartTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}' -d $'{"externalReferenceCode": ___, "id": ___, "name": ___, "siteExternalReferenceCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -146,7 +185,7 @@ public abstract class BaseMultipartTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/multipart-test-entity' -d $'{"id": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/multipart-test-entity' -d $'{"externalReferenceCode": ___, "id": ___, "name": ___, "siteExternalReferenceCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -322,6 +361,47 @@ public abstract class BaseMultipartTestEntityResourceImpl
 			vulcanBatchEngineImportTaskResource.putImportTask(
 				MultipartTestEntity.class.getName(), callbackURL, object)
 		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "multipart/form-data", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PutSiteMultipartTestEntityRequestBody.class)))
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteExternalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "MultipartTestEntity"
+			)
+		}
+	)
+	@jakarta.ws.rs.Consumes("multipart/form-data")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/multipart-test-entity"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
+	@Override
+	public MultipartTestEntity putSiteMultipartTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			MultipartBody multipartBody)
+		throws Exception {
+
+		return new MultipartTestEntity();
 	}
 
 	@Override
@@ -1050,5 +1130,14 @@ public abstract class BaseMultipartTestEntityResourceImpl
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseMultipartTestEntityResourceImpl.class);
+
+	private class PutSiteMultipartTestEntityRequestBody {
+
+		@io.swagger.v3.oas.annotations.media.Schema(
+			description = "File", format = "binary", type = "string"
+		)
+		public String file;
+
+	}
 
 }

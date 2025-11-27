@@ -10,8 +10,10 @@
  */
 
 	export class MultipartTestEntity {
+			"externalReferenceCode"?: string;
 			"id"?: number;
 			"name"?: string;
+			"siteExternalReferenceCode"?: string;
 
 		static "discriminator": string | undefined = undefined;
 
@@ -21,6 +23,11 @@
 		type: string;
 	}> = [
 		{
+			baseName: "externalReferenceCode",
+			name: "externalReferenceCode",
+			type: "string",
+		},
+		{
 			baseName: "id",
 			name: "id",
 			type: "number",
@@ -28,6 +35,11 @@
 		{
 			baseName: "name",
 			name: "name",
+			type: "string",
+		},
+		{
+			baseName: "siteExternalReferenceCode",
+			name: "siteExternalReferenceCode",
 			type: "string",
 		},
 		];

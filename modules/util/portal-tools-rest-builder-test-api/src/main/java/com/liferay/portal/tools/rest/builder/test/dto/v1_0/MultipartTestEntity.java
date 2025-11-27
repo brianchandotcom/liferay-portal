@@ -48,6 +48,47 @@ public class MultipartTestEntity implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -125,6 +166,49 @@ public class MultipartTestEntity implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getSiteExternalReferenceCode() {
+		if (_siteExternalReferenceCodeSupplier != null) {
+			siteExternalReferenceCode =
+				_siteExternalReferenceCodeSupplier.get();
+
+			_siteExternalReferenceCodeSupplier = null;
+		}
+
+		return siteExternalReferenceCode;
+	}
+
+	public void setSiteExternalReferenceCode(String siteExternalReferenceCode) {
+		this.siteExternalReferenceCode = siteExternalReferenceCode;
+
+		_siteExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSiteExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			siteExternalReferenceCodeUnsafeSupplier) {
+
+		_siteExternalReferenceCodeSupplier = () -> {
+			try {
+				return siteExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String siteExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _siteExternalReferenceCodeSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -152,6 +236,22 @@ public class MultipartTestEntity implements Serializable {
 
 		sb.append("{");
 
+		String externalReferenceCode = getExternalReferenceCode();
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Long id = getId();
 
 		if (id != null) {
@@ -176,6 +276,22 @@ public class MultipartTestEntity implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		String siteExternalReferenceCode = getSiteExternalReferenceCode();
+
+		if (siteExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(siteExternalReferenceCode));
 
 			sb.append("\"");
 		}

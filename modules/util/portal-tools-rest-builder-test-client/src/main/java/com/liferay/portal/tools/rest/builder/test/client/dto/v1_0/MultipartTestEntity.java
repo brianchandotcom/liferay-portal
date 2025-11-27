@@ -25,6 +25,27 @@ public class MultipartTestEntity implements Cloneable, Serializable {
 		return MultipartTestEntitySerDes.toDTO(json);
 	}
 
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalReferenceCode;
+
 	public Long getId() {
 		return id;
 	}
@@ -62,6 +83,29 @@ public class MultipartTestEntity implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public String getSiteExternalReferenceCode() {
+		return siteExternalReferenceCode;
+	}
+
+	public void setSiteExternalReferenceCode(String siteExternalReferenceCode) {
+		this.siteExternalReferenceCode = siteExternalReferenceCode;
+	}
+
+	public void setSiteExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			siteExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			siteExternalReferenceCode =
+				siteExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String siteExternalReferenceCode;
 
 	@Override
 	public MultipartTestEntity clone() throws CloneNotSupportedException {

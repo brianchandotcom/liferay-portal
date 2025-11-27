@@ -46,6 +46,20 @@ public class MultipartTestEntitySerDes {
 
 		sb.append("{");
 
+		if (multipartTestEntity.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(multipartTestEntity.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (multipartTestEntity.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -66,6 +80,21 @@ public class MultipartTestEntitySerDes {
 			sb.append("\"");
 
 			sb.append(_escape(multipartTestEntity.getName()));
+
+			sb.append("\"");
+		}
+
+		if (multipartTestEntity.getSiteExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(multipartTestEntity.getSiteExternalReferenceCode()));
 
 			sb.append("\"");
 		}
@@ -91,6 +120,15 @@ public class MultipartTestEntitySerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (multipartTestEntity.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(multipartTestEntity.getExternalReferenceCode()));
+		}
+
 		if (multipartTestEntity.getId() == null) {
 			map.put("id", null);
 		}
@@ -103,6 +141,16 @@ public class MultipartTestEntitySerDes {
 		}
 		else {
 			map.put("name", String.valueOf(multipartTestEntity.getName()));
+		}
+
+		if (multipartTestEntity.getSiteExternalReferenceCode() == null) {
+			map.put("siteExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"siteExternalReferenceCode",
+				String.valueOf(
+					multipartTestEntity.getSiteExternalReferenceCode()));
 		}
 
 		return map;
@@ -123,10 +171,18 @@ public class MultipartTestEntitySerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "siteExternalReferenceCode")) {
+
 				return false;
 			}
 
@@ -138,7 +194,13 @@ public class MultipartTestEntitySerDes {
 			MultipartTestEntity multipartTestEntity, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					multipartTestEntity.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					multipartTestEntity.setId(
 						Long.valueOf((String)jsonParserFieldValue));
@@ -147,6 +209,14 @@ public class MultipartTestEntitySerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					multipartTestEntity.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "siteExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					multipartTestEntity.setSiteExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

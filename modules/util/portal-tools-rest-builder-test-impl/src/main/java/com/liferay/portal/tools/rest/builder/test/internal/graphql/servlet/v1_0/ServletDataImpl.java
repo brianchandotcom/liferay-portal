@@ -423,6 +423,11 @@ public class ServletDataImpl implements ServletData {
 							MultipartTestEntityResourceImpl.class,
 							"putMultipartTestEntityBatch"));
 					put(
+						"mutation#updateSiteMultipartTestEntity",
+						new ObjectValuePair<>(
+							MultipartTestEntityResourceImpl.class,
+							"putSiteMultipartTestEntity"));
+					put(
 						"mutation#createSchemasPageExportBatch",
 						new ObjectValuePair<>(
 							SchemaResourceImpl.class,
@@ -752,6 +757,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							MultipartTestEntityResourceImpl.class,
 							"getMultipartTestEntity"));
+					put(
+						"query#siteMultipartTestEntity",
+						new ObjectValuePair<>(
+							MultipartTestEntityResourceImpl.class,
+							"getSiteMultipartTestEntity"));
 					put(
 						"query#schemas",
 						new ObjectValuePair<>(

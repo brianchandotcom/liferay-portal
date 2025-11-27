@@ -81,6 +81,59 @@ export class MultipartTestEntityAPI {
 
 		/**
 		 * 
+				 * @param siteExternalReferenceCode
+		 * @param headers Optional custom request headers
+		 */
+		public async getSiteMultipartTestEntity(
+						siteExternalReferenceCode: string,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body: File;
+			response: Response;
+		}> {
+
+			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity"
+						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
+				;
+
+			const queryParameters: any = {};
+
+						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling getSiteMultipartTestEntity.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/zip"
+						}
+					,headers || {}
+					),
+				method: "GET",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: ObjectSerializer.deserialize(await response.json(), "File"), response};
+					}
+					else {
+						return {body: await response.text() as any, response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+		/**
+		 * 
 				 * @param multipartTestEntityId
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
@@ -325,6 +378,66 @@ export class MultipartTestEntityAPI {
 					Object.assign({}, this._defaultHeaders
 						,{
 								Accept: "multipart/form-data"
+						}
+					,headers || {}
+					),
+				method: "PUT",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: ObjectSerializer.deserialize(await response.json(), "MultipartTestEntity"), response};
+					}
+					else {
+						return {body: await response.text() as any, response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+		/**
+		 * 
+				 * @param siteExternalReferenceCode
+				 	* @param file
+		 * @param headers Optional custom request headers
+		 */
+		public async putSiteMultipartTestEntity(
+						siteExternalReferenceCode: string,
+						file?: File,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body: MultipartTestEntity;
+			response: Response;
+		}> {
+				let body;
+						const formData = new FormData();
+								formData.append("file", file);
+						body = formData;
+
+			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity"
+						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
+				;
+
+			const queryParameters: any = {};
+
+						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling putSiteMultipartTestEntity.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+					body: body,
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
 						}
 					,headers || {}
 					),

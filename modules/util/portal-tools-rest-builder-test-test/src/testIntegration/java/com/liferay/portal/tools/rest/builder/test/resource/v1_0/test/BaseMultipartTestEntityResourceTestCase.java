@@ -196,7 +196,9 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 
 		MultipartTestEntity multipartTestEntity = randomMultipartTestEntity();
 
+		multipartTestEntity.setExternalReferenceCode(regex);
 		multipartTestEntity.setName(regex);
+		multipartTestEntity.setSiteExternalReferenceCode(regex);
 
 		String json = MultipartTestEntitySerDes.toJSON(multipartTestEntity);
 
@@ -204,7 +206,11 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 
 		multipartTestEntity = MultipartTestEntitySerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, multipartTestEntity.getExternalReferenceCode());
 		Assert.assertEquals(regex, multipartTestEntity.getName());
+		Assert.assertEquals(
+			regex, multipartTestEntity.getSiteExternalReferenceCode());
 	}
 
 	@Test
@@ -523,6 +529,11 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteMultipartTestEntity() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPatchMultipartTestEntity() throws Exception {
 		MultipartTestEntity postMultipartTestEntity =
 			testPatchMultipartTestEntity_addMultipartTestEntity();
@@ -642,6 +653,50 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 
 	protected MultipartTestEntity
 			testPutMultipartTestEntity_addMultipartTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSiteMultipartTestEntity() throws Exception {
+		MultipartTestEntity postMultipartTestEntity =
+			testPutSiteMultipartTestEntity_addMultipartTestEntity();
+
+		MultipartTestEntity randomMultipartTestEntity =
+			randomMultipartTestEntity();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		MultipartTestEntity putMultipartTestEntity =
+			multipartTestEntityResource.putSiteMultipartTestEntity(
+				postMultipartTestEntity.getSiteExternalReferenceCode(),
+				randomMultipartTestEntity, multipartFiles);
+
+		assertEquals(randomMultipartTestEntity, putMultipartTestEntity);
+		assertValid(putMultipartTestEntity);
+
+		MultipartTestEntity getMultipartTestEntity =
+			testPutSiteMultipartTestEntity_getMultipartTestEntity(
+				putMultipartTestEntity.getSiteExternalReferenceCode());
+
+		assertEquals(randomMultipartTestEntity, getMultipartTestEntity);
+		assertValid(getMultipartTestEntity);
+
+		assertValid(getMultipartTestEntity, multipartFiles);
+	}
+
+	protected MultipartTestEntity
+		testPutSiteMultipartTestEntity_getMultipartTestEntity(
+			String siteExternalReferenceCode) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected MultipartTestEntity
+			testPutSiteMultipartTestEntity_addMultipartTestEntity()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -865,8 +920,30 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (multipartTestEntity.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (multipartTestEntity.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"siteExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (multipartTestEntity.getSiteExternalReferenceCode() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -941,6 +1018,8 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		graphQLFields.add(new GraphQLField("id"));
 
 		for (java.lang.reflect.Field field :
@@ -1005,6 +1084,19 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						multipartTestEntity1.getExternalReferenceCode(),
+						multipartTestEntity2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						multipartTestEntity1.getId(),
@@ -1020,6 +1112,19 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 				if (!Objects.deepEquals(
 						multipartTestEntity1.getName(),
 						multipartTestEntity2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"siteExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						multipartTestEntity1.getSiteExternalReferenceCode(),
+						multipartTestEntity2.getSiteExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1135,6 +1240,52 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = multipartTestEntity.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1142,6 +1293,52 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 
 		if (entityFieldName.equals("name")) {
 			Object object = multipartTestEntity.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("siteExternalReferenceCode")) {
+			Object object = multipartTestEntity.getSiteExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -1236,8 +1433,12 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 	protected MultipartTestEntity randomMultipartTestEntity() throws Exception {
 		return new MultipartTestEntity() {
 			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				siteExternalReferenceCode =
+					testGroup.getExternalReferenceCode();
 			}
 		};
 	}
@@ -1247,6 +1448,9 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 
 		MultipartTestEntity randomIrrelevantMultipartTestEntity =
 			randomMultipartTestEntity();
+
+		randomIrrelevantMultipartTestEntity.setSiteExternalReferenceCode(
+			irrelevantGroup.getExternalReferenceCode());
 
 		return randomIrrelevantMultipartTestEntity;
 	}

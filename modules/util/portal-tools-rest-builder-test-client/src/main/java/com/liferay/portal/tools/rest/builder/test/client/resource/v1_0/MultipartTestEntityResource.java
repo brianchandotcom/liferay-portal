@@ -42,6 +42,13 @@ public interface MultipartTestEntityResource {
 			Long multipartTestEntityId)
 		throws Exception;
 
+	public void getSiteMultipartTestEntity(String siteExternalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getSiteMultipartTestEntityHttpResponse(
+			String siteExternalReferenceCode)
+		throws Exception;
+
 	public MultipartTestEntity patchMultipartTestEntity(
 			Long multipartTestEntityId, MultipartTestEntity multipartTestEntity)
 		throws Exception;
@@ -93,6 +100,18 @@ public interface MultipartTestEntityResource {
 	public HttpInvoker.HttpResponse putMultipartTestEntityBatchHttpResponse(
 			MultipartTestEntity multipartTestEntity,
 			Map<String, File> multipartFiles, String callbackURL, Object object)
+		throws Exception;
+
+	public MultipartTestEntity putSiteMultipartTestEntity(
+			String siteExternalReferenceCode,
+			MultipartTestEntity multipartTestEntity,
+			Map<String, File> multipartFiles)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putSiteMultipartTestEntityHttpResponse(
+			String siteExternalReferenceCode,
+			MultipartTestEntity multipartTestEntity,
+			Map<String, File> multipartFiles)
 		throws Exception;
 
 	public static class Builder {
@@ -301,6 +320,102 @@ public interface MultipartTestEntityResource {
 						"/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}");
 
 			httpInvoker.path("multipartTestEntityId", multipartTestEntityId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void getSiteMultipartTestEntity(String siteExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteMultipartTestEntityHttpResponse(
+					siteExternalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse getSiteMultipartTestEntityHttpResponse(
+				String siteExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -965,6 +1080,129 @@ public interface MultipartTestEntityResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/test/v1.0/multipart-test-entities/batch");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public MultipartTestEntity putSiteMultipartTestEntity(
+				String siteExternalReferenceCode,
+				MultipartTestEntity multipartTestEntity,
+				Map<String, File> multipartFiles)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putSiteMultipartTestEntityHttpResponse(
+					siteExternalReferenceCode, multipartTestEntity,
+					multipartFiles);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return MultipartTestEntitySerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse putSiteMultipartTestEntityHttpResponse(
+				String siteExternalReferenceCode,
+				MultipartTestEntity multipartTestEntity,
+				Map<String, File> multipartFiles)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.multipart();
+
+			httpInvoker.part(
+				"multipartTestEntity",
+				MultipartTestEntitySerDes.toJSON(multipartTestEntity));
+
+			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
+				httpInvoker.part(entry.getKey(), entry.getValue());
+			}
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

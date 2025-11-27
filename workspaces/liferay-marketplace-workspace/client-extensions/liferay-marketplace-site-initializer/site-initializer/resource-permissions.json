@@ -30,16 +30,6 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:UserAdditionalInfo$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
 			"VIEW"
 		],
 		"primKey": "0",

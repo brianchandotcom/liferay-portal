@@ -1284,11 +1284,11 @@ public class LayoutStagedModelDataHandlerTest
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
-				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				null, TestPropsValues.getUserId(), liveGroup.getGroupId(),
 				false, StringPool.BLANK, RandomTestUtil.randomString(),
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
-					stagingGroup.getGroupId()));
+					liveGroup.getGroupId()));
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 

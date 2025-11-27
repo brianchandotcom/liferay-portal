@@ -7,6 +7,9 @@ package com.liferay.style.book.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -19,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -93,6 +97,29 @@ public class DefaultStyleBookEntryUtilTest {
 		Assert.assertEquals(
 			styleBookEntry.getStyleBookEntryId(),
 			defaultMasterStyleBookEntry.getStyleBookEntryId());
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				masterLayoutBasedLayout);
+
+		try {
+			ReflectionTestUtil.setFieldValue(
+				frontendTokenDefinition, "_themeType",
+				FrontendTokenDefinitionConstants.THEME_TYPE_THEME_CSS_CET);
+
+			defaultMasterStyleBookEntry =
+				DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(
+					masterLayoutBasedLayout);
+
+			Assert.assertEquals(
+				defaultStyleBookEntry.getStyleBookEntryId(),
+				defaultMasterStyleBookEntry.getStyleBookEntryId());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				frontendTokenDefinition, "_themeType",
+				FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE);
+		}
 	}
 
 	@Test
@@ -385,6 +412,9 @@ public class DefaultStyleBookEntryUtilTest {
 	private static final String _THEME_ID_CLASSIC = "classic_WAR_classictheme";
 
 	private static final String _THEME_ID_DIALECT = "dialect_WAR_dialecttheme";
+
+	@Inject
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	private Group _group;
 	private Layout _layout;

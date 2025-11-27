@@ -184,20 +184,6 @@ export default function PageDesignOptionsSidebar() {
 }
 
 const OptionList = ({options = [], icon, type}) => {
-	if (type === OPTIONS_TYPES.styleBook && !config.styleBookEnabled) {
-		return (
-			<ClayAlert className="mt-3" displayType="info">
-				{config.isPrivateLayoutsEnabled
-					? Liferay.Language.get(
-							'this-page-is-using-a-different-theme-than-the-one-set-for-public-pages'
-						)
-					: Liferay.Language.get(
-							'this-page-is-using-a-different-theme-than-the-one-set-for-all-pages'
-						)}
-			</ClayAlert>
-		);
-	}
-
 	if (type === OPTIONS_TYPES.styleBook && !options.length) {
 		return (
 			<ClayAlert className="mt-3" displayType="info">

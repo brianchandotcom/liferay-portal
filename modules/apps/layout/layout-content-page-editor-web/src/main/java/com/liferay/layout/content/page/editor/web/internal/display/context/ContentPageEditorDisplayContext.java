@@ -79,7 +79,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -674,19 +673,6 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"siteNavigationMenuItemSelectorURL",
 				_getSiteNavigationMenuItemSelectorURL()
-			).put(
-				"styleBookEnabled",
-				() -> {
-					Layout layout = themeDisplay.getLayout();
-
-					Theme theme = layout.getTheme();
-
-					LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-						themeDisplay.getSiteGroupId(), false);
-
-					return Objects.equals(
-						theme.getThemeId(), layoutSet.getThemeId());
-				}
 			).put(
 				"styleBookEntryERC",
 				() -> {

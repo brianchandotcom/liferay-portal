@@ -179,12 +179,7 @@ export class PageEditorPage {
 
 		await this.goToSidebarTab('Page Rules');
 
-		const modal = this.page.locator('.modal-dialog');
-
-		await clickAndExpectToBeVisible({
-			target: modal.getByRole('heading', {name: 'New Rule'}),
-			trigger: this.newRuleButton,
-		});
+		const modal = await this.openRulesModal();
 
 		await modal.getByLabel('Rule Name').fill(name);
 
@@ -1264,6 +1259,18 @@ export class PageEditorPage {
 				.getByRole('menuitem', {name: 'Select Item...'})
 				.click();
 		}
+	}
+
+	async openRulesModal() {
+		const modal = this.page.locator('.modal-dialog');
+
+		await clickAndExpectToBeVisible({
+			target: modal.getByRole('heading', {name: 'New Rule'}),
+			timeout: 3000,
+			trigger: this.newRuleButton,
+		});
+
+		return modal;
 	}
 
 	async openSpacingSelector(fragmentId: string, spacingType: SpacingType) {

@@ -36,6 +36,11 @@ jest.mock(
 	() => jest.fn(() => [{id: 'condition-id'}])
 );
 
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/isInputFragment',
+	() => jest.fn(() => false)
+);
+
 jest.mock('frontend-js-components-web', () => ({
 	...jest.requireActual('frontend-js-components-web'),
 	openToast: jest.fn(),
@@ -184,6 +189,42 @@ describe('RulesSidebar', () => {
 		expect(
 			screen.getByText('containercillo', {selector: '[role="combobox"]'})
 		).toBeInTheDocument();
+	});
+
+	it('limits action types to show/hide for readOnly non-input fragments', async () => {
+		renderComponent({
+			editingRule: {
+				...DEFAULT_RULE,
+				actions: [
+					{
+						id: 'action-1',
+						itemId: 'item1',
+						readOnly: true,
+						type: undefined,
+					},
+				],
+			},
+		});
+
+		const picker = await screen.findByLabelText('select-action');
+
+		await userEvent.click(picker);
+
+		expect(
+			await screen.findByText('show', {selector: '[role="option"]'})
+		).toBeInTheDocument();
+
+		expect(
+			await screen.findByText('hide', {selector: '[role="option"]'})
+		).toBeInTheDocument();
+
+		expect(
+			screen.queryByText('enable', {selector: '[role="option"]'})
+		).not.toBeInTheDocument();
+
+		expect(
+			screen.queryByText('disable', {selector: '[role="option"]'})
+		).not.toBeInTheDocument();
 	});
 
 	it('allows saving a rule', async () => {

@@ -43,6 +43,17 @@ jest.mock(
 	() => jest.fn()
 );
 
+const mockOpenRulesModal = jest.fn();
+
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/RulesModalContext',
+	() => ({
+		useRulesModal: () => ({
+			openRulesModal: mockOpenRulesModal,
+		}),
+	})
+);
+
 const LAYOUT_DATA = {
 	deletedItems: [],
 	items: {
@@ -162,5 +173,27 @@ describe('TopperItemActions', () => {
 		renderTopperItemActions({canManageFragments: false, itemId: 'itemId3'});
 
 		expect(screen.queryByText('save-composition')).not.toBeInTheDocument();
+	});
+
+	it('calls openRulesModal with a readOnly action when clicking add-rule', async () => {
+		renderTopperItemActions({itemId: 'itemId3'});
+
+		await userEvent.click(screen.getByText('add-rule'));
+
+		expect(mockOpenRulesModal).toHaveBeenCalledTimes(1);
+
+		expect(mockOpenRulesModal).toHaveBeenCalledWith(
+			expect.objectContaining({
+				rule: expect.objectContaining({
+					actions: [
+						expect.objectContaining({
+							itemId: 'itemId3',
+							readOnly: true,
+							type: 'show',
+						}),
+					],
+				}),
+			})
+		);
 	});
 });

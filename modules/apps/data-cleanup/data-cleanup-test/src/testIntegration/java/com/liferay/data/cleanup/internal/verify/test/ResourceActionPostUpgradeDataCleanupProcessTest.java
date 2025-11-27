@@ -91,7 +91,8 @@ public class ResourceActionPostUpgradeDataCleanupProcessTest
 							"Table ",
 							dbInspector.normalizeName("ResourceAction"),
 							", 2 rows deleted because '", resourceActionName,
-							"' has not been found and is not in use")));
+							"' is not defined in any deployed module and is ",
+							"not in use")));
 
 				ResourceAction resourceAction =
 					_resourceActionLocalService.fetchResourceAction(
@@ -145,7 +146,8 @@ public class ResourceActionPostUpgradeDataCleanupProcessTest
 					messages.contains(
 						StringBundler.concat(
 							"Resource action ", resourceActionName,
-							" has not been found but is referenced in ",
+							" is not defined in any deployed module but is ",
+							"referenced in ",
 							dbInspector.normalizeName("ResourcePermission"),
 							" table")));
 

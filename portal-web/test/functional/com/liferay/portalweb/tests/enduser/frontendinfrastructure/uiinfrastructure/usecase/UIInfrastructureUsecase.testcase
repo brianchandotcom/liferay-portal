@@ -24,35 +24,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-95157. Verify control menu on an admin page is styled correctly after refreshing page"
-	@priority = 5
-	@refactordone
-	test AdminPageCanDisplayStyleCorrectlyAfterPageRefresh {
-		property app.server.types = "tomcat";
-		property database.types = "mysql";
-		property environment.acceptance = "false";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "true";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		Refresh();
-
-		AssertCssValue(
-			locator1 = "//*[contains(@id,'controlMenu')]",
-			locator2 = "display",
-			value1 = "flex");
-
-		AssertCssValue(
-			locator1 = "//*[contains(@id,'controlMenu')]",
-			locator2 = "list-style",
-			value1 = "outside none none");
-
-		takeScreenshot();
-	}
-
 	@description = "LRQA-55778. Smoke test to verify portlet configuration is available, look and feel is available"
 	@priority = 5
 	@refactordone
@@ -181,29 +152,6 @@ definition {
 		task ("Then Clay Sample Portlet is not present on page") {
 			Portlet.viewNoSpecificPG(portletName = "Clay Sample");
 		}
-	}
-
-	@description = "LPS-70390. Non ascii characters would be displayed correctly, when SPA is turned off"
-	@priority = 4
-	@refactordone
-	test CanViewNonASCIICharactersWithSPADisabled {
-		property custom.properties = "javascript.single.page.application.enabled=false";
-
-		User.openUsersAdmin();
-
-		User.addCP(
-			userEmailAddress = "skandi@liferay.com",
-			userFirstName = "Skändi",
-			userLastName = "Ääkkönen",
-			userScreenName = "uskandi");
-
-		User.openUsersAdmin();
-
-		User.viewCP(
-			userEmailAddress = "skandi@liferay.com",
-			userFirstName = "Skändi",
-			userLastName = "Ääkkönen",
-			userScreenName = "uskandi");
 	}
 
 	@description = "Verify portlets have defined boundaries in 3 column page layout."

@@ -88,10 +88,7 @@ const fetchPropertyGroups = ({
 					groupId
 			  })
 			: Promise.resolve({items: []}),
-
-		segmentType === SegmentTypes.Batch
-			? Promise.resolve(SESSION_PROPERTIES)
-			: Promise.resolve([])
+		Promise.resolve(SESSION_PROPERTIES)
 	]);
 
 const mapResultToProps = (

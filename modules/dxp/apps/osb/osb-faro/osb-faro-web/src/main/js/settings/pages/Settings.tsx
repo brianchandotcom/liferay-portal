@@ -40,6 +40,12 @@ const DataSource = lazy(
 const DataSourceEdit = lazy(
 	() => import(/* webpackChunkName: "DataSourceEdit" */ './data-source/Edit')
 );
+const DataSourceOnboarding = lazy(
+	() =>
+		import(
+			/* webpackChunkName: "DataSourceEdit" */ './data-source/Onboarding'
+		)
+);
 const DataSourceList = lazy(
 	() => import(/* webpackChunkName: "DataSourceList" */ './DataSourceList')
 );
@@ -54,15 +60,6 @@ const DeleteDataSource = lazy(
 
 const Definitions = lazy(
 	() => import(/* webpackChunkName: "Definitions" */ '../definitions/pages')
-);
-
-// Salesforce data source
-
-const ConnectSalesforce = lazy(
-	() =>
-		import(
-			/* webpackChunkName: "SalesforceConnnection" */ './data-source/ConnectSalesforce'
-		)
 );
 
 // Channels
@@ -150,9 +147,9 @@ export const Settings = () => {
 				/>
 
 				<BundleRouter
-					data={ConnectSalesforce}
+					data={DataSourceOnboarding}
 					exact
-					path={Routes.SETTINGS_SALESFORCE_ADD}
+					path={Routes.SETTINGS_DATA_SOURCE_ONBOARDING}
 				/>
 
 				<BundleRouter

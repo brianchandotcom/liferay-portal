@@ -370,25 +370,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
-		String scopeExternalReferenceCode = typeSettingsUnicodeProperties.get(
-			"scopeExternalReferenceCode");
-
-		Group group = null;
-
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
-			group = _groupLocalService.fetchGroupByExternalReferenceCode(
-				scopeExternalReferenceCode,
-				siteNavigationMenuItem.getCompanyId());
-		}
-		else {
-			group = _groupLocalService.fetchGroup(
-				siteNavigationMenuItem.getGroupId());
-		}
-
-		if (group == null) {
-			return false;
-		}
-
 		String className = typeSettingsUnicodeProperties.get("className");
 
 		InfoItemObjectProvider<?> infoItemObjectProvider =
@@ -399,7 +380,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		Object infoItem = infoItemObjectProvider.getInfoItem(
 			new ERCInfoItemIdentifier(
 				typeSettingsUnicodeProperties.get("externalReferenceCode"),
-				scopeExternalReferenceCode));
+				typeSettingsUnicodeProperties.get(
+					"scopeExternalReferenceCode")));
 
 		InfoItemDetailsProvider infoItemDetailsProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(

@@ -25,6 +25,6 @@ public class SharingJavaScriptThreadLocal {
 	private static final ThreadLocal<Boolean> _sharingJavaScriptNeeded =
 		new CentralizedThreadLocal<>(
 			SharingJavaScriptThreadLocal.class + "._sharingJavaScriptNeeded",
-			() -> Boolean.FALSE, false);
+			() -> Boolean.FALSE, true);
 
 }

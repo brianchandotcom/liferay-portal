@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -367,6 +368,17 @@ public class MarketplaceCommandLineRunner
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
+	}
+
+	private void _invoke(UnsafeRunnable<?> task, String name) {
+		try {
+			task.run();
+		}
+		catch (Throwable throwable) {
+			_log.error("Unable to process " + name);
+
+			_log.error(throwable);
+		}
 	}
 
 	private void _patchOrder(long orderId, long publisherSalesSummaryId) {

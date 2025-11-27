@@ -38,7 +38,7 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 	>
 		<EventAnalysisBuilder event={event} onEventChange={onEventChange} />
 
-		<div className='options-container d-flex justify-content-between'>
+		<div className='options-container d-flex flex-column-reverse flex-md-row justify-content-between'>
 			<CardTabs
 				activeTabId={type}
 				className='type-selector'
@@ -62,7 +62,7 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 				]}
 			/>
 
-			<div className='d-flex align-items-center'>
+			<div className='d-flex align-items-center mb-3 mb-md-0'>
 				<Checkbox
 					checked={compareToPrevious}
 					className='compare-to-previous-checkbox mb-0 mr-4'

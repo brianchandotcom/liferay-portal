@@ -52,7 +52,7 @@
 		.table-column-event-name:first-child {
 			padding-left: 16px;
 			text-align: right;
-			width: 18%;
+			width: 200px;
 		}
 
 		.table-column-event-total {
@@ -64,6 +64,7 @@
 			background: unset;
 			border-radius: unset;
 			display: flex;
+			flex: 0 0 auto;
 			height: 20px;
 			justify-content: flex-start;
 
@@ -172,4 +173,8 @@
 			border-right-width: 1px;
 		}
 	}
+}
+
+.table-root.bar-comparison-root {
+	min-width: 400px;
 }

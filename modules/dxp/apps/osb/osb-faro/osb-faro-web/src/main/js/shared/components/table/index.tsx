@@ -21,6 +21,7 @@ export const getRowIdentifierValue = (item, rowIdentifier) => {
 };
 
 interface ITableProps {
+	bordered?: boolean;
 	checkDisabled?: (item: {[key: string]: any}) => boolean;
 	className?: string;
 	columns: Column[];
@@ -55,9 +56,11 @@ interface ITableProps {
 	rowIdentifier: string | string[];
 	selectedItemsIOMap?: OrderedMap<string, object>;
 	showCheckbox?: boolean;
+	striped?: boolean;
 }
 
 const Table: React.FC<ITableProps> = ({
+	bordered = false,
 	checkDisabled = () => false,
 	className,
 	columns,
@@ -76,7 +79,8 @@ const Table: React.FC<ITableProps> = ({
 	renderRowActions,
 	rowIdentifier = 'id',
 	selectedItemsIOMap = OrderedMap(),
-	showCheckbox = false
+	showCheckbox = false,
+	striped = true
 }) => {
 	const handleSortOrderChange = (orderParams: OrderParams) => {
 		if (onOrderIOMapChange) {
@@ -125,13 +129,14 @@ const Table: React.FC<ITableProps> = ({
 	const classes = getCN(
 		'table',
 		'table-autofit',
-		'table-striped',
 		'table-list',
 		'table-nowrap',
 		'table-head-bordered',
 		'table-hover',
 		{
-			'show-quick-actions-on-hover': renderRowActions
+			'show-quick-actions-on-hover': renderRowActions,
+			'table-bordered': bordered,
+			'table-striped': striped
 		}
 	);
 

@@ -635,15 +635,12 @@ public class AssetVocabularySiteNavigationMenuItemType
 		long companyId, long defaultGroupId,
 		String scopeExternalReferenceCode) {
 
-		Group group = null;
+		if (Validator.isNull(scopeExternalReferenceCode)) {
+			return defaultGroupId;
+		}
 
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
-			group = _groupLocalService.fetchGroupByExternalReferenceCode(
-				scopeExternalReferenceCode, companyId);
-		}
-		else {
-			group = _groupLocalService.fetchGroup(defaultGroupId);
-		}
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			scopeExternalReferenceCode, companyId);
 
 		if (group == null) {
 			return 0;

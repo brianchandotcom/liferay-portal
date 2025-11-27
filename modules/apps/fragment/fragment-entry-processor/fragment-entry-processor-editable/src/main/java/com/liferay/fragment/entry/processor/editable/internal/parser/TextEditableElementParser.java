@@ -10,6 +10,7 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -78,7 +79,7 @@ public class TextEditableElementParser extends BaseEditableElementParser {
 		if (value.indexOf(CharPool.LESS_THAN) == -1) {
 			element.empty();
 
-			element.appendChild(new TextNode(value));
+			element.appendChild(new TextNode(HtmlUtil.unescape(value)));
 		}
 		else {
 			element.html(value);

@@ -14,24 +14,33 @@ import com.liferay.list.type.constants.ListTypeActionKeys;
 import com.liferay.list.type.constants.ListTypeConstants;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.Collection;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -204,6 +213,12 @@ public class ListTypeDefinitionResourceImpl
 
 		Locale locale = _getLocale();
 
+		String resourceName =
+			com.liferay.list.type.model.ListTypeDefinition.class.getName();
+
+		User user = _userLocalService.fetchUser(
+			serviceBuilderListTypeDefinition.getUserId());
+
 		return new ListTypeDefinition() {
 			{
 				setActions(
@@ -224,8 +239,7 @@ public class ListTypeDefinitionResourceImpl
 
 							return addAction(
 								ActionKeys.DELETE, "deleteListTypeDefinition",
-								com.liferay.list.type.model.ListTypeDefinition.
-									class.getName(),
+								resourceName,
 								serviceBuilderListTypeDefinition.
 									getListTypeDefinitionId());
 						}
@@ -233,27 +247,26 @@ public class ListTypeDefinitionResourceImpl
 						"get",
 						addAction(
 							ActionKeys.VIEW, "getListTypeDefinition",
-							com.liferay.list.type.model.ListTypeDefinition.
-								class.getName(),
+							resourceName,
 							serviceBuilderListTypeDefinition.
 								getListTypeDefinitionId())
 					).put(
 						"permissions",
 						addAction(
 							ActionKeys.PERMISSIONS, "patchListTypeDefinition",
-							com.liferay.list.type.model.ListTypeDefinition.
-								class.getName(),
+							resourceName,
 							serviceBuilderListTypeDefinition.
 								getListTypeDefinitionId())
 					).put(
 						"update",
 						addAction(
 							ActionKeys.UPDATE, "putListTypeDefinition",
-							com.liferay.list.type.model.ListTypeDefinition.
-								class.getName(),
+							resourceName,
 							serviceBuilderListTypeDefinition.
 								getListTypeDefinitionId())
 					).build());
+				setCreator(
+					() -> CreatorUtil.toCreator(_portal, contextUriInfo, user));
 				setDateCreated(serviceBuilderListTypeDefinition::getCreateDate);
 				setDateModified(
 					serviceBuilderListTypeDefinition::getModifiedDate);
@@ -268,12 +281,35 @@ public class ListTypeDefinitionResourceImpl
 								getListTypeDefinitionId(),
 							QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 						listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
-							null, locale, listTypeEntry),
+							null, locale, _portal, listTypeEntry,
+							contextUriInfo,
+							_userLocalService.fetchUser(
+								listTypeEntry.getUserId())),
 						ListTypeEntry.class));
 				setName(() -> serviceBuilderListTypeDefinition.getName(locale));
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						serviceBuilderListTypeDefinition.getNameMap()));
+				setPermissions(
+					() -> NestedFieldsSupplier.supply(
+						"permissions",
+						nestedFieldNames -> {
+							_permissionService.checkPermission(
+								user.getGroupId(), resourceName,
+								serviceBuilderListTypeDefinition.
+									getListTypeDefinitionId());
+
+							Collection<Permission> permissions =
+								PermissionUtil.getPermissions(
+									user.getCompanyId(),
+									resourceActionLocalService.
+										getResourceActions(resourceName),
+									serviceBuilderListTypeDefinition.
+										getListTypeDefinitionId(),
+									resourceName, null);
+
+							return permissions.toArray(new Permission[0]);
+						}));
 				setSystem(serviceBuilderListTypeDefinition::isSystem);
 			}
 		};
@@ -290,5 +326,14 @@ public class ListTypeDefinitionResourceImpl
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private PermissionService _permissionService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -14,6 +14,16 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class DataCleanupLoggingUtil {
 
+	public static void logAlter(Log log, String tableName, String cause) {
+		if (!log.isInfoEnabled()) {
+			return;
+		}
+
+		log.info(
+			StringBundler.concat(
+				"Table ", tableName, ", altered because ", cause));
+	}
+
 	public static void logDelete(
 		Log log, long count, String tableName, String cause) {
 

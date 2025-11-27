@@ -86,7 +86,8 @@ public class ResourceActionPostUpgradeDataCleanupProcess
 						_log.info(
 							StringBundler.concat(
 								"Resource action ", name,
-								" has not been found but is referenced in ",
+								" is not defined in any deployed module but ",
+								"is referenced in ",
 								_dbInspector.normalizeName(
 									"ResourcePermission"),
 								" table"));
@@ -106,7 +107,10 @@ public class ResourceActionPostUpgradeDataCleanupProcess
 				DataCleanupLoggingUtil.logDelete(
 					_log, resourceActions.size(),
 					_dbInspector.normalizeName("ResourceAction"),
-					"'" + name + "' has not been found and is not in use");
+					StringBundler.concat(
+						"'", name,
+						"' is not defined in any deployed module and is not ",
+						"in use"));
 			}
 		}
 	}

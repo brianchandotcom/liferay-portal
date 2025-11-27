@@ -28,6 +28,18 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro setExternalReferenceCode(vocabularyId = null, groupId = null, categoryName = null) {
+		Variables.assertDefined(parameterList = "${categoryName},${groupId},${vocabularyId}");
+
+		var externalReferenceCode = JSONCategoryAPI._getCategoryExternalReferenceCodeByName(
+			categoryName = ${categoryName},
+			groupId = ${groupId},
+			vocabularyId = ${vocabularyId});
+
+		return ${externalReferenceCode};
+	}
+
+	@summary = "Default summary"
 	macro setGroupId(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 

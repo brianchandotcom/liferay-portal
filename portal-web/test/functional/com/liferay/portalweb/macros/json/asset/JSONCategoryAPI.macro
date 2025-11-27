@@ -80,6 +80,33 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro _getCategoryExternalReferenceCodeByName(vocabularyId = null, groupId = null, categoryName = null) {
+		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \
+				-u ${userLoginInfo} \
+				-d groupId=${groupId} \
+				-d <CURL_DATA[name=${categoryName}]CURL_DATA> \
+				-d vocabularyId=${vocabularyId} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA> \
+				-d -orderByComparator=
+		''';
+
+		var externalReferenceCode = JSONCurlUtil.post(${curl}, "$.[?(@['titleCurrentValue'] == '${categoryName}')]['externalReferenceCode']");
+
+		if (${externalReferenceCode} == "") {
+			fail("FAIL. Cannot find category.");
+		}
+
+		return ${externalReferenceCode};
+	}
+
+	@summary = "Default summary"
 	macro _getCategoryFieldValueById(categoryId = null, fieldName = null) {
 		Variables.assertDefined(parameterList = "${categoryId},${fieldName}");
 
@@ -178,8 +205,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _updateCategory(vocabularyId = null, parentCategoryId = null, descriptionMap = null, titleMap = null, categoryId = null) {
-		Variables.assertDefined(parameterList = "${categoryId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
+	macro _updateCategory(vocabularyId = null, parentCategoryId = null, descriptionMap = null, titleMap = null, categoryId = null, externalReferenceCode = null) {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${categoryId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -187,6 +214,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/assetcategory/update-category \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode=${externalReferenceCode} \
 				-d categoryId=${categoryId} \
 				-d parentCategoryId=${parentCategoryId} \
 				-d titleMap=${titleMap} \

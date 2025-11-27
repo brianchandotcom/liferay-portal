@@ -203,6 +203,10 @@ definition {
 			groupId = ${groupId},
 			vocabularyName = ${vocabularyName});
 
+		var externalReferenceCode = JSONCategorySetter.setExternalReferenceCode(
+			categoryName = ${categoryName},
+			groupId = ${groupId},
+			vocabularyId = ${vocabularyId});
 		var categoryId = JSONCategorySetter.setCategoryId(
 			categoryName = ${categoryName},
 			groupId = ${groupId},
@@ -220,6 +224,7 @@ definition {
 		JSONCategoryAPI._updateCategory(
 			categoryId = ${categoryId},
 			descriptionMap = ${descriptionMap},
+			externalReferenceCode = ${externalReferenceCode},
 			parentCategoryId = ${parentCategoryId},
 			titleMap = ${titleMap},
 			vocabularyId = ${vocabularyId});

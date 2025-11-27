@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.translation.web.internal.helper;
+package com.liferay.translation.internal.helper;
 
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemIdentifier;

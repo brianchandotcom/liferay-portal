@@ -84,6 +84,20 @@ public class DLReferencesExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
+		Group group = _groupLocalService.getGroup(
+			portletDataContext.getGroupId());
+
+		if (group.isStagingGroup()) {
+			group = group.getLiveGroup();
+		}
+
+		if (group.isStaged() && !group.isStagedRemotely() &&
+			!group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) &&
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			return content;
+		}
+
 		return _replaceExportDLReferences(
 			portletDataContext, stagedModel, content, exportReferencedContent);
 	}
@@ -607,20 +621,6 @@ public class DLReferencesExportImportContentProcessor
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content, boolean exportReferencedContent)
 		throws Exception {
-
-		Group group = _groupLocalService.getGroup(
-			portletDataContext.getGroupId());
-
-		if (group.isStagingGroup()) {
-			group = group.getLiveGroup();
-		}
-
-		if (group.isStaged() && !group.isStagedRemotely() &&
-			!group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) &&
-			ExportImportThreadLocal.isStagingInProcess()) {
-
-			return content;
-		}
 
 		StringBuilder sb = new StringBuilder(content);
 

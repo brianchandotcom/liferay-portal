@@ -10,7 +10,7 @@ import '../chat.scss';
 
 const AssistantMessageBalloon: React.FC<{message: string}> = ({message}) => {
 	return (
-		<div className="ai-assistant-chat__assistant-message-balloon d-flex flex-row font-weight-semi-bold mb-2 rounded">
+		<div className="ai-assistant-chat__ai-assistant-message-balloon d-flex flex-row font-weight-semi-bold mb-2 rounded">
 			<div className="align-items-center d-flex ml-2">
 				<ClayIcon
 					color="#0B5FFF"

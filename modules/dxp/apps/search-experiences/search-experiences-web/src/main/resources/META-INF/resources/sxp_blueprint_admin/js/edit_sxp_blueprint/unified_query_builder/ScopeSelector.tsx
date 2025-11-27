@@ -35,7 +35,7 @@ export default function ScopeSelector({
 	scope: Scope[];
 	setScope: (scope: Scope[]) => void;
 }) {
-	const [sort, setSort] = useState<Sorting>();
+	const [sort, setSort] = useState<Sorting | null>();
 
 	const {
 		namespace,
@@ -48,16 +48,25 @@ export default function ScopeSelector({
 		}
 
 		return scope.slice().sort((a, b) => {
-			let cmp = new Intl.Collator('en', {numeric: true}).compare(
+
+			// Sort using Intl.Collator JS object to handle string and
+			// numeric comparison, keeping in mind of current locale.
+
+			let scopeCollator = new Intl.Collator(
+				Liferay.ThemeDisplay.getBCP47LanguageId(),
+				{numeric: true}
+			).compare(
 				a[sort.column as keyof Scope],
 				b[sort.column as keyof Scope]
 			);
 
+			// If the sorting direction is descending, invert the value
+
 			if (sort.direction === 'descending') {
-				cmp *= -1;
+				scopeCollator *= -1;
 			}
 
-			return cmp;
+			return scopeCollator;
 		});
 	}, [sort, scope]);
 
@@ -135,9 +144,7 @@ export default function ScopeSelector({
 				{!!scope.length && (
 					<Table
 						columnsVisibility={false}
-						onSortChange={
-							setSort as (sorting: Sorting | null) => void
-						}
+						onSortChange={setSort}
 						sort={sort}
 					>
 						<Head

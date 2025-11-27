@@ -103,7 +103,7 @@ function QueryBuilderTab({
 					/>
 
 					<CustomPanel
-						initialCollapse={true}
+						initialCollapse
 						title={Liferay.Language.get('query-settings')}
 					>
 						<QuerySettings

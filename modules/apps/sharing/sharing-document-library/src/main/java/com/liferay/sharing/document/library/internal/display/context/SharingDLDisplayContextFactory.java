@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
+import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.document.library.internal.constants.SharingDLWebKeys;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -83,7 +84,8 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 				parentDLViewFileVersionDisplayContext, httpServletRequest,
 				httpServletResponse, fileEntry, fileVersion,
 				_sharingEntryLocalService, _sharingDropdownItemFactory,
-				_sharingPermission, sharingConfiguration);
+				_sharingJavaScriptFactory, _sharingPermission,
+				sharingConfiguration);
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(
@@ -126,6 +128,9 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Reference
+	private SharingJavaScriptFactory _sharingJavaScriptFactory;
 
 	@Reference
 	private SharingPermission _sharingPermission;

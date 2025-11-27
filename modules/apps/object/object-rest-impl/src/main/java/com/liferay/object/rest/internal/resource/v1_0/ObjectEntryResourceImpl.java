@@ -355,16 +355,16 @@ public class ObjectEntryResourceImpl
 		ObjectEntry objectEntry = _getObjectEntry(
 			objectEntryExternalReferenceCode, null);
 
-		com.liferay.portal.kernel.comment.Comment serviceBuildercomment =
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
 				ObjectEntry.class.getName(), objectEntry.getId(),
 				externalReferenceCode, _getNonzeroGroupId(objectEntry.getId()));
 
-		if (serviceBuildercomment == null) {
+		if (serviceBuilderComment == null) {
 			throw new NotFoundException();
 		}
 
-		_deleteComment(serviceBuildercomment.getCommentId());
+		_deleteComment(serviceBuilderComment.getCommentId());
 	}
 
 	@Override
@@ -454,16 +454,16 @@ public class ObjectEntryResourceImpl
 		ObjectEntry objectEntry = _getObjectEntry(
 			objectEntryExternalReferenceCode, scopeKey);
 
-		com.liferay.portal.kernel.comment.Comment serviceBuildercomment =
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
 				ObjectEntry.class.getName(), objectEntry.getId(),
 				externalReferenceCode, objectEntry.getScopeId());
 
-		if (serviceBuildercomment == null) {
+		if (serviceBuilderComment == null) {
 			throw new NotFoundException();
 		}
 
-		_deleteComment(serviceBuildercomment.getCommentId());
+		_deleteComment(serviceBuilderComment.getCommentId());
 	}
 
 	@Override

@@ -402,7 +402,7 @@ export function fetchChannelDatasources({
 			orderByFields
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id}/channel-datasources`
+		path: `contacts/${groupId}/data_source/${id}/channel-data-sources`
 	});
 }
 

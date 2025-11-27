@@ -97,23 +97,21 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 
 		Map<String, Map<String, String>> columnsMap = new TreeMap<>();
 
-		try (ResultSet resultSet = databaseMetaData.getColumns(
-				dbInspector.getCatalog(), dbInspector.getSchema(), "%", "%")) {
+		for (String tableName : expectedTableNames) {
+			try (ResultSet resultSet = databaseMetaData.getColumns(
+					dbInspector.getCatalog(), dbInspector.getSchema(),
+					tableName, "%")) {
 
-			while (resultSet.next()) {
-				String tableName = resultSet.getString("TABLE_NAME");
+				while (resultSet.next()) {
+					String columnName = resultSet.getString("COLUMN_NAME");
 
-				if (!expectedTableNames.contains(tableName)) {
-					continue;
+					columnsMap.computeIfAbsent(
+						tableName,
+						k -> new TreeMap<>(String.CASE_INSENSITIVE_ORDER)
+					).put(
+						columnName, columnName
+					);
 				}
-
-				String columnName = resultSet.getString("COLUMN_NAME");
-
-				columnsMap.computeIfAbsent(
-					tableName, k -> new TreeMap<>(String.CASE_INSENSITIVE_ORDER)
-				).put(
-					columnName, columnName
-				);
 			}
 		}
 
@@ -126,14 +124,14 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 			Map<String, String> columnNames = columnsMap.get(tableName);
 
 			_validateColumnNamesCasing(
-				dbInspector.normalizeName(tableName), columnDefinitions,
-				columnNames);
+				dbInspector, dbInspector.normalizeName(tableName),
+				columnDefinitions, columnNames);
 		}
 	}
 
 	private void _validateColumnNamesCasing(
-			String tableName, List<String> columnDefinitions,
-			Map<String, String> columnNames)
+			DBInspector dbInspector, String tableName,
+			List<String> columnDefinitions, Map<String, String> columnNames)
 		throws Exception {
 
 		if ((columnNames == null) || columnNames.isEmpty()) {
@@ -141,8 +139,6 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 		}
 
 		DB db = DBManagerUtil.getDB();
-
-		DBInspector dbInspector = new DBInspector(connection);
 
 		for (String columnDefinition : columnDefinitions) {
 			if (Validator.isNull(columnDefinition)) {

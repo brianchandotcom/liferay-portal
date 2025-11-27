@@ -229,7 +229,7 @@ exports[`Event Analysis Create should render 1`] = `
             </div>
           </div>
           <div
-            class="options-container d-flex justify-content-between"
+            class="options-container d-flex flex-column-reverse flex-md-row justify-content-between"
           >
             <ul
               class="card-tabs-root type-selector small"
@@ -284,7 +284,7 @@ exports[`Event Analysis Create should render 1`] = `
               </li>
             </ul>
             <div
-              class="d-flex align-items-center"
+              class="d-flex align-items-center mb-3 mb-md-0"
             >
               <div
                 class="custom-control custom-checkbox compare-to-previous-checkbox mb-0 mr-4"

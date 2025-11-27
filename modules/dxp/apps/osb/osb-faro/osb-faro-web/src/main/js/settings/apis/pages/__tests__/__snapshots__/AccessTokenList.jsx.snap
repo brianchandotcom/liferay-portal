@@ -8,7 +8,7 @@ exports[`AccessTokenList should display the "Generate Token" card  above the tab
     class="table-responsive"
   >
     <table
-      class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover"
+      class="table table-autofit table-list table-nowrap table-head-bordered table-hover table-striped"
     >
       <thead>
         <tr>
@@ -448,7 +448,7 @@ exports[`AccessTokenList should render 1`] = `
                     class="table-responsive"
                   >
                     <table
-                      class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover"
+                      class="table table-autofit table-list table-nowrap table-head-bordered table-hover table-striped"
                     >
                       <thead>
                         <tr>
@@ -572,7 +572,7 @@ exports[`AccessTokenList should show the generated token in a list and the "Gene
     class="table-responsive"
   >
     <table
-      class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover"
+      class="table table-autofit table-list table-nowrap table-head-bordered table-hover table-striped"
     >
       <thead>
         <tr>

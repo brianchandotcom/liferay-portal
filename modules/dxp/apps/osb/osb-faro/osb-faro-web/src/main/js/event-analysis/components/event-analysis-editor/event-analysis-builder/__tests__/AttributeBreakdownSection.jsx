@@ -45,7 +45,7 @@ describe('AttributeBreakdownSection', () => {
 		expect(container.querySelector('.add-attribute')).toBeTruthy();
 	});
 
-	it('renders w/o add breakdown button if 3 breakdowns exists', () => {
+	it('renders w/o add breakdown button if 5 breakdowns exists', () => {
 		const {container} = render(
 			<WrappedComponent
 				attributes={{
@@ -66,9 +66,21 @@ describe('AttributeBreakdownSection', () => {
 						displayName: 'Article Title',
 						id: '321321',
 						name: 'articleTitle'
+					},
+					400: {
+						dataType: 'STRING',
+						displayName: 'Author',
+						id: '400',
+						name: 'author'
+					},
+					500: {
+						dataType: 'STRING',
+						displayName: 'Date',
+						id: '500',
+						name: 'date'
 					}
 				}}
-				breakdownOrder={['1', '321321', '123123']}
+				breakdownOrder={['1', '321321', '123123', '400', '500']}
 				breakdowns={{
 					1: {
 						attributeId: '1',
@@ -82,6 +94,16 @@ describe('AttributeBreakdownSection', () => {
 					},
 					321321: {
 						attributeId: '321321',
+						dataType: 'STRING',
+						type: 'event'
+					},
+					400: {
+						attributeId: '400',
+						dataType: 'STRING',
+						type: 'event'
+					},
+					500: {
+						attributeId: '500',
 						dataType: 'STRING',
 						type: 'event'
 					}

@@ -425,7 +425,7 @@ exports[`Channels List should render 1`] = `
                   class="table-responsive"
                 >
                   <table
-                    class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover show-quick-actions-on-hover"
+                    class="table table-autofit table-list table-nowrap table-head-bordered table-hover show-quick-actions-on-hover table-striped"
                   >
                     <thead>
                       <tr>

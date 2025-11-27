@@ -63,6 +63,52 @@ export default function SpaceSummaryHeader({
 
 	const loadData = () => window.location.reload();
 
+	const CreationMenu = () => {
+		if (!creationMenu?.primaryItems?.length) {
+			return null;
+		}
+
+		return (
+			<ClayDropDown
+				active={active}
+				className="ml-2"
+				onActiveChange={setActive}
+				trigger={
+					<ClayButtonWithIcon
+						aria-label={`Add ${title}`}
+						displayType="secondary"
+						small
+						symbol="plus"
+						title={`Add ${title}`}
+					/>
+				}
+			>
+				<ClayDropDown.ItemList>
+					{addOnClickToCreationMenuItems(
+						creationMenu.primaryItems,
+						ACTIONS
+					).map((item: any, i: number) => (
+						<ClayDropDown.Item
+							key={i}
+							onClick={() => {
+								setActive(false);
+								item.onClick({loadData});
+							}}
+						>
+							{item.icon && (
+								<span className="pr-2">
+									<ClayIcon symbol={item.icon} />
+								</span>
+							)}
+
+							{item.label}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		);
+	};
+
 	const openMembersModal = (props: SpaceModalPropsType) => {
 		const {assetLibraryCreatorUserId, externalReferenceCode} = props;
 
@@ -123,45 +169,7 @@ export default function SpaceSummaryHeader({
 					</ClayButton>
 				)}
 
-				{creationMenu && !!creationMenu.primaryItems.length && (
-					<ClayDropDown
-						active={active}
-						className="ml-2"
-						onActiveChange={setActive}
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('add-space')}
-								displayType="secondary"
-								small
-								symbol="plus"
-								title={Liferay.Language.get('add-space')}
-							/>
-						}
-					>
-						<ClayDropDown.ItemList>
-							{addOnClickToCreationMenuItems(
-								creationMenu.primaryItems,
-								ACTIONS
-							).map((item: any, index) => (
-								<ClayDropDown.Item
-									key={index}
-									onClick={() => {
-										setActive(false);
-										item.onClick({loadData});
-									}}
-								>
-									{item.icon && (
-										<span className="pr-2">
-											<ClayIcon symbol={item.icon} />
-										</span>
-									)}
-
-									{item.label}
-								</ClayDropDown.Item>
-							))}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-				)}
+				<CreationMenu />
 			</div>
 		</div>
 	);

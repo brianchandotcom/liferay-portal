@@ -49,6 +49,27 @@ public class ListTypeDefinition implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Creator creator;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -214,6 +235,37 @@ public class ListTypeDefinition implements Cloneable, Serializable {
 	}
 
 	protected Map<String, String> name_i18n;
+
+	public com.liferay.headless.admin.list.type.client.permission.Permission[]
+		getPermissions() {
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.headless.admin.list.type.client.permission.Permission[]
+			permissions) {
+
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.headless.admin.list.type.client.permission.
+				Permission[],
+			 Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected
+		com.liferay.headless.admin.list.type.client.permission.Permission[]
+			permissions;
 
 	public Boolean getSystem() {
 		return system;

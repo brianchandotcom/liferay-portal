@@ -2228,6 +2228,14 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (listTypeEntry.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -2405,6 +2413,17 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				if (!equals(
 						(Map)listTypeEntry1.getActions(),
 						(Map)listTypeEntry2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						listTypeEntry1.getCreator(),
+						listTypeEntry2.getCreator())) {
 
 					return false;
 				}
@@ -2617,6 +2636,11 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

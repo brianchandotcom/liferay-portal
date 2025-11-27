@@ -1102,12 +1102,13 @@ public class ObjectEntryResourceTest {
 
 		// Company scope
 
-		_testDeleteByExternalReferenceCodeComment(_objectDefinition1, 0L);
+		_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+			0L, _objectDefinition1);
 
 		// Site scope
 
-		_testDeleteByExternalReferenceCodeComment(
-			_siteScopedObjectDefinition1, _testGroupId);
+		_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+			_testGroupId, _siteScopedObjectDefinition1);
 	}
 
 	@Test
@@ -9169,67 +9170,12 @@ public class ObjectEntryResourceTest {
 
 		// Company scope
 
-		ObjectEntry companyObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
-		String comment = RandomTestUtil.randomString();
-
-		JSONObject bodyJSONObject = JSONUtil.put(
-			"externalReferenceCode", _ERC_VALUE_1
-		).put(
-			"text", comment
-		);
-
-		String endpoint = StringBundler.concat(
-			_getEndpoint(_objectDefinition1, 0), "/by-external-reference-code/",
-			companyObjectEntry.getExternalReferenceCode(), "/comments");
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				bodyJSONObject.toString(), endpoint, Http.Method.POST));
-
-		_enableObjectEntryComments(_objectDefinition1);
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			bodyJSONObject.toString(), endpoint, Http.Method.POST);
-
-		Assert.assertEquals(
-			_ERC_VALUE_1, jsonObject.get("externalReferenceCode"));
-		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
+		_testPostByExternalReferenceCodeComment(0L, _objectDefinition1);
 
 		// Site scope
 
-		ObjectEntry siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
-			_OBJECT_FIELD_VALUE_1);
-
-		comment = RandomTestUtil.randomString();
-
-		bodyJSONObject = JSONUtil.put(
-			"externalReferenceCode", _ERC_VALUE_2
-		).put(
-			"text", comment
-		);
-
-		endpoint = StringBundler.concat(
-			_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
-			"/by-external-reference-code/",
-			siteObjectEntry.getExternalReferenceCode(), "/comments");
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				bodyJSONObject.toString(), endpoint, Http.Method.POST));
-
-		_enableObjectEntryComments(_siteScopedObjectDefinition1);
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			bodyJSONObject.toString(), endpoint, Http.Method.POST);
-
-		Assert.assertEquals(
-			_ERC_VALUE_2, jsonObject.get("externalReferenceCode"));
-		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
+		_testPostByExternalReferenceCodeComment(
+			_testGroupId, _siteScopedObjectDefinition1);
 	}
 
 	@FeatureFlag("LPD-69419")
@@ -9239,12 +9185,13 @@ public class ObjectEntryResourceTest {
 
 		// Company scope
 
-		_testPostChildComment(_ERC_VALUE_1, 0L, _objectDefinition1);
+		_testPostByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
+			0L, _objectDefinition1);
 
 		// Site scope
 
-		_testPostChildComment(
-			_ERC_VALUE_2, _testGroupId, _siteScopedObjectDefinition1);
+		_testPostByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
+			_testGroupId, _siteScopedObjectDefinition1);
 	}
 
 	@Test
@@ -10969,74 +10916,12 @@ public class ObjectEntryResourceTest {
 
 		// Company scope
 
-		_enableObjectEntryComments(_objectDefinition1);
-
-		ObjectEntry companyObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"externalReferenceCode", _ERC_VALUE_1
-			).put(
-				"text", RandomTestUtil.randomString()
-			).toString(),
-			StringBundler.concat(
-				_getEndpoint(_objectDefinition1, 0),
-				"/by-external-reference-code/",
-				companyObjectEntry.getExternalReferenceCode(), "/comments"),
-			Http.Method.POST);
-
-		String comment = RandomTestUtil.randomString();
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"text", comment
-			).toString(),
-			StringBundler.concat(
-				_getEndpoint(_objectDefinition1, 0),
-				"/by-external-reference-code/",
-				companyObjectEntry.getExternalReferenceCode(), "/comments",
-				"/by-external-reference-code/",
-				jsonObject.getString("externalReferenceCode")),
-			Http.Method.PUT);
-
-		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
+		_testPutByExternalReferenceCodeComment(0L, _objectDefinition1);
 
 		// Site scope
 
-		_enableObjectEntryComments(_siteScopedObjectDefinition1);
-
-		ObjectEntry siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
-			_OBJECT_FIELD_VALUE_1);
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"externalReferenceCode", _ERC_VALUE_2
-			).put(
-				"text", RandomTestUtil.randomString()
-			).toString(),
-			StringBundler.concat(
-				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
-				"/by-external-reference-code/",
-				siteObjectEntry.getExternalReferenceCode(), "/comments"),
-			Http.Method.POST);
-
-		comment = RandomTestUtil.randomString();
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"text", comment
-			).toString(),
-			StringBundler.concat(
-				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
-				"/by-external-reference-code/",
-				siteObjectEntry.getExternalReferenceCode(), "/comments",
-				"/by-external-reference-code/",
-				jsonObject.getString("externalReferenceCode")),
-			Http.Method.PUT);
-
-		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
+		_testPutByExternalReferenceCodeComment(
+			_testGroupId, _siteScopedObjectDefinition1);
 	}
 
 	@Test
@@ -16524,8 +16409,9 @@ public class ObjectEntryResourceTest {
 			PermissionCheckerFactoryUtil.create(user));
 	}
 
-	private void _testDeleteByExternalReferenceCodeComment(
-			ObjectDefinition objectDefinition, long groupId)
+	private void
+			_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+				long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		_enableObjectEntryComments(objectDefinition);
@@ -18140,9 +18026,45 @@ public class ObjectEntryResourceTest {
 				endpoint2 + externalReferenceCode1, httpMethod));
 	}
 
-	private void _testPostChildComment(
-			String externalReferenceCode, long groupId,
-			ObjectDefinition objectDefinition)
+	private void _testPostByExternalReferenceCodeComment(
+			long groupId, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		String comment = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		JSONObject bodyJSONObject = JSONUtil.put(
+			"externalReferenceCode", externalReferenceCode
+		).put(
+			"text", comment
+		);
+
+		String endpoint = StringBundler.concat(
+			_getEndpoint(objectDefinition, groupId),
+			"/by-external-reference-code/",
+			objectEntry.getExternalReferenceCode(), "/comments");
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				bodyJSONObject.toString(), endpoint, Http.Method.POST));
+
+		_enableObjectEntryComments(objectDefinition);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			bodyJSONObject.toString(), endpoint, Http.Method.POST);
+
+		Assert.assertEquals(
+			externalReferenceCode, jsonObject.get("externalReferenceCode"));
+		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
+	}
+
+	private void
+			_testPostByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
+				long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		_enableObjectEntryComments(objectDefinition);
@@ -18165,6 +18087,7 @@ public class ObjectEntryResourceTest {
 		long parentCommentId = jsonObject.getLong("id");
 
 		String comment = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -19391,6 +19314,44 @@ public class ObjectEntryResourceTest {
 				originalPermissionChecker);
 			PrincipalThreadLocal.setName(originalName);
 		}
+	}
+
+	private void _testPutByExternalReferenceCodeComment(
+			long groupId, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		_enableObjectEntryComments(objectDefinition);
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"text", RandomTestUtil.randomString()
+			).toString(),
+			StringBundler.concat(
+				_getEndpoint(objectDefinition, groupId),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(), "/comments"),
+			Http.Method.POST);
+
+		String comment = RandomTestUtil.randomString();
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"text", comment
+			).toString(),
+			StringBundler.concat(
+				_getEndpoint(objectDefinition, groupId),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(), "/comments",
+				"/by-external-reference-code/",
+				jsonObject.getString("externalReferenceCode")),
+			Http.Method.PUT);
+
+		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
 	}
 
 	private void _testPutCustomObjectEntry(

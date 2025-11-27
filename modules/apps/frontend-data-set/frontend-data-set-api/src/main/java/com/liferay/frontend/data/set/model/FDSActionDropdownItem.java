@@ -7,12 +7,22 @@ package com.liferay.frontend.data.set.model;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Marco Leo
  */
 public class FDSActionDropdownItem extends DropdownItem {
+
+	public FDSActionDropdownItem(
+		String id, String label, boolean separator, String type) {
+
+		setId(id);
+		setLabel(label);
+		setSeparator(separator);
+		super.setType(type);
+	}
 
 	public FDSActionDropdownItem(
 		String confirmationMessage, String confirmationMessageType,
@@ -127,6 +137,12 @@ public class FDSActionDropdownItem extends DropdownItem {
 
 	public void setErrorMessage(String errorMessage) {
 		putData("errorMessage", errorMessage);
+	}
+
+	public void setFDSActionDropdownItems(
+		List<FDSActionDropdownItem> fdsActionDropdownItems) {
+
+		put("items", fdsActionDropdownItems);
 	}
 
 	public void setHighlighted(Boolean highlighted) {

@@ -51,7 +51,7 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = null;
+		Group group;
 		String scopeExternalReferenceCode = ParamUtil.getString(
 			resourceRequest, "scopeExternalReferenceCode");
 
@@ -63,8 +63,6 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 				scopeExternalReferenceCode, themeDisplay.getCompanyId());
 		}
 
-		long groupId = group.getGroupId();
-
 		String externalReferenceCode = ParamUtil.getString(
 			resourceRequest, "externalReferenceCode");
 
@@ -72,9 +70,7 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 			AssetVocabulary assetVocabulary =
 				_assetVocabularyLocalService.
 					getAssetVocabularyByExternalReferenceCode(
-						externalReferenceCode, groupId);
-
-			Group finalGroup = group;
+						externalReferenceCode, group.getGroupId());
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -91,7 +87,7 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 								"global");
 						}
 
-						return finalGroup.getDescriptiveName(
+						return group.getDescriptiveName(
 							themeDisplay.getLocale());
 					}
 				));

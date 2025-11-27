@@ -627,7 +627,7 @@ definition {
 		for (var num : list "1,2") {
 			KBDisplayWidget.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
 
-			AssertLocation(value1 = "${portalURL}/knowledge-base-display-page/-/knowledge_base/custom-friendly-url${num}");
+			AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-display-page/-/knowledge_base/custom-friendly-url${num}");
 		}
 	}
 
@@ -648,7 +648,7 @@ definition {
 		for (var num : list "1,2") {
 			KBDisplayWidget.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
 
-			AssertLocation(value1 = "${portalURL}/knowledge-base-display-page/-/knowledge_base/kb-article-title${num}");
+			AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-display-page/-/knowledge_base/kb-article-title${num}");
 		}
 	}
 

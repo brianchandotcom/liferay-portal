@@ -585,7 +585,6 @@ public class ObjectRelationshipLocalServiceTest {
 		// Site scope
 
 		Group group1 = GroupTestUtil.addGroup();
-
 		Group group2 = GroupTestUtil.addGroup();
 
 		ObjectDefinition siteObjectDefinition1 =
@@ -596,7 +595,6 @@ public class ObjectRelationshipLocalServiceTest {
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
 				ObjectDefinitionConstants.SCOPE_SITE);
-
 		ObjectDefinition siteObjectDefinition2 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Arrays.asList(
@@ -619,7 +617,6 @@ public class ObjectRelationshipLocalServiceTest {
 		ObjectEntry objectEntry3 = _objectEntryLocalService.addObjectEntry(
 			RandomTestUtil.randomString(), group1.getGroupId(),
 			TestPropsValues.getUserId(), siteObjectDefinition1, 0);
-
 		ObjectEntry objectEntry4 = _objectEntryLocalService.addObjectEntry(
 			RandomTestUtil.randomString(), group2.getGroupId(),
 			TestPropsValues.getUserId(), siteObjectDefinition2, 0);

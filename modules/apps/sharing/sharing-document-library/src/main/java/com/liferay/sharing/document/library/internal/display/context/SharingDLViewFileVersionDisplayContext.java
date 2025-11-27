@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
+import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
@@ -45,14 +46,16 @@ public class SharingDLViewFileVersionDisplayContext
 	extends BaseDLViewFileVersionDisplayContext {
 
 	public SharingDLViewFileVersionDisplayContext(
-		DLViewFileVersionDisplayContext parentDLDisplayContext,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, FileEntry fileEntry,
-		FileVersion fileVersion,
-		SharingEntryLocalService sharingEntryLocalService,
-		SharingDropdownItemFactory sharingDropdownItemFactory,
-		SharingPermission sharingPermission,
-		SharingConfiguration sharingConfiguration) {
+			DLViewFileVersionDisplayContext parentDLDisplayContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FileEntry fileEntry,
+			FileVersion fileVersion,
+			SharingEntryLocalService sharingEntryLocalService,
+			SharingDropdownItemFactory sharingDropdownItemFactory,
+			SharingJavaScriptFactory sharingJavaScriptFactory,
+			SharingPermission sharingPermission,
+			SharingConfiguration sharingConfiguration)
+		throws PortalException {
 
 		super(
 			_UUID, parentDLDisplayContext, httpServletRequest,
@@ -62,11 +65,16 @@ public class SharingDLViewFileVersionDisplayContext
 		_fileEntry = fileEntry;
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingDropdownItemFactory = sharingDropdownItemFactory;
+		_sharingJavaScriptFactory = sharingJavaScriptFactory;
 		_sharingPermission = sharingPermission;
 		_sharingConfiguration = sharingConfiguration;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (isSharingLinkVisible()) {
+			_sharingJavaScriptFactory.requestSharingJavaScript();
+		}
 	}
 
 	@Override
@@ -287,6 +295,7 @@ public class SharingDLViewFileVersionDisplayContext
 	private final SharingConfiguration _sharingConfiguration;
 	private final SharingDropdownItemFactory _sharingDropdownItemFactory;
 	private final SharingEntryLocalService _sharingEntryLocalService;
+	private final SharingJavaScriptFactory _sharingJavaScriptFactory;
 	private final SharingPermission _sharingPermission;
 	private Boolean _showShareAction;
 	private final ThemeDisplay _themeDisplay;

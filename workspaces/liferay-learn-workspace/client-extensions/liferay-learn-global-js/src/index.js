@@ -4,10 +4,13 @@
  */
 
 import './article';
+
 import 'prismjs';
+
 import 'swiper/css/bundle';
+import Swiper from 'swiper/bundle';
+
 import DropdownProvider from './DropdownProvider';
 import SpatialNavigationProvider from './SpatialNavigation';
-import Swiper from 'swiper/bundle';
 
 export {DropdownProvider, SpatialNavigationProvider, Swiper};

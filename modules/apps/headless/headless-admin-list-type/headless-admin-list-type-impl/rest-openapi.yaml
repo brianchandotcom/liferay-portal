@@ -9,6 +9,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                creator:
+                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
+                    readOnly: true
                 dateCreated:
                     format: date
                     readOnly: true
@@ -35,6 +38,10 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 system:
                     type: boolean
             type: object
@@ -47,6 +54,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                creator:
+                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
+                    readOnly: true
                 dateCreated:
                     format: date
                     readOnly: true

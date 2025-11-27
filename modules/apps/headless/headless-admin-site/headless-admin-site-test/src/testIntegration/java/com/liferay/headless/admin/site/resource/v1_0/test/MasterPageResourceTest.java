@@ -1090,6 +1090,30 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		assertValid(putMasterPage);
 	}
 
+	private void _testPutSiteMasterPageWithDropZonePageElement()
+		throws Exception {
+
+		MasterPageResource masterPageResource = _getMasterPageResource();
+
+		PageElement[] pageElements = {
+			PageElementsTestUtil.getDropZonePageElement(
+				RandomTestUtil.randomString(), testGroup.getGroupId())
+		};
+
+		MasterPage masterPage = _getMasterPage(pageElements);
+
+		MasterPage postMasterPage = masterPageResource.postSiteMasterPage(
+			testGroup.getExternalReferenceCode(), masterPage);
+
+		postMasterPage.setDateModified(new Date());
+
+		_assertPageElements(
+			pageElements,
+			masterPageResource.putSiteMasterPage(
+				testGroup.getExternalReferenceCode(),
+				postMasterPage.getExternalReferenceCode(), masterPage));
+	}
+
 	private void _testPutSiteMasterPageWithPageSpecifications()
 		throws Exception {
 
@@ -1249,30 +1273,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		_assertThumbnailURLReference(
 			true, putMasterPage.getExternalReferenceCode(), null);
-	}
-
-	private void _testPutSiteMasterPageWithDropZonePageElement()
-		throws Exception {
-
-		MasterPageResource masterPageResource = _getMasterPageResource();
-
-		PageElement[] pageElements = {
-			PageElementsTestUtil.getDropZonePageElement(
-				RandomTestUtil.randomString(), testGroup.getGroupId())
-		};
-
-		MasterPage masterPage = _getMasterPage(pageElements);
-
-		MasterPage postMasterPage = masterPageResource.postSiteMasterPage(
-			testGroup.getExternalReferenceCode(), masterPage);
-
-		postMasterPage.setDateModified(new Date());
-
-		_assertPageElements(
-			pageElements,
-			masterPageResource.putSiteMasterPage(
-				testGroup.getExternalReferenceCode(),
-				postMasterPage.getExternalReferenceCode(), masterPage));
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

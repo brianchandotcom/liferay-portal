@@ -254,8 +254,9 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 
 					onClick: () => {
 						history.push(
-							toRoute(Routes.SETTINGS_SALESFORCE_ADD, {
-								groupId
+							toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
+								groupId,
+								id: DataSourceTypes.Salesforce
 							})
 						);
 					}

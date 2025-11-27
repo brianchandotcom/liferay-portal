@@ -198,10 +198,14 @@ components:
             type: object
         MultipartTestEntity:
             properties:
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     type: integer
                 name:
+                    type: string
+                siteExternalReferenceCode:
                     type: string
             type: object
         NestedArrayItemsTestEntity:
@@ -2222,6 +2226,50 @@ paths:
                     description:
                         "OK"
             tags: ["ERCSiteTestEntity"]
+    "/sites/{siteExternalReferenceCode}/multipart-test-entity":
+        get:
+            operationId: getSiteMultipartTestEntity
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/zip:
+                            schema:
+                                format: binary
+                                type: string
+            tags: ["MultipartTestEntity"]
+        put:
+            operationId: putSiteMultipartTestEntity
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MultipartTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MultipartTestEntity"
+            tags: ["MultipartTestEntity"]
     "/sites/{siteId}/scoped-test-entities":
         get:
             operationId: getSiteScopedTestEntitiesPage

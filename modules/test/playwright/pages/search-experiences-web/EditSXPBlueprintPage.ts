@@ -5,6 +5,8 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
+
 export class EditSXPBlueprintPage {
 	readonly addSXPElementSidebar: Locator;
 	readonly cancelButton: Locator;
@@ -318,5 +320,50 @@ export class EditSXPBlueprintPage {
 				}
 			}
 		}
+	}
+
+	async selectScope({
+		label,
+		tab,
+	}: {
+		label: string;
+		tab?: 'Recent' | 'My Sites' | 'Asset Libraries' | 'Spaces';
+	}) {
+		const scopeSelector = this.page.locator('.scope-selector');
+
+		await scopeSelector.getByRole('button', {name: 'Select Scope'}).click();
+
+		const scopeModal = this.page.frameLocator(
+			'iframe[title="Select Scope"]'
+		);
+
+		if (tab) {
+			await scopeModal
+				.locator('.navbar-nav')
+				.getByRole('link', {name: tab})
+				.click();
+		}
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-dialog'),
+			trigger: scopeModal.getByRole('link', {exact: true, name: label}),
+		});
+
+		await expect(
+			scopeSelector
+				.locator('tr')
+				.filter({has: this.page.getByRole('cell', {name: label})})
+		).toBeVisible();
+	}
+
+	async removeScope({label}: {label: string}) {
+		const scopeSelector = this.page.locator('.scope-selector');
+
+		await clickAndExpectToBeHidden({
+			target: scopeSelector.getByRole('cell', {name: label}),
+			trigger: scopeSelector
+				.getByRole('row', {name: label})
+				.getByLabel('Remove'),
+		});
 	}
 }

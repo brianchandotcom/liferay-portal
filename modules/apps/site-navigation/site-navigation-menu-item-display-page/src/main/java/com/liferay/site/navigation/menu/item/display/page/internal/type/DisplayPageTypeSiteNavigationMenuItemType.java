@@ -23,7 +23,6 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -107,26 +106,10 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		String externalReferenceCode = GetterUtil.getString(
 			typeSettingsUnicodeProperties.get("externalReferenceCode"));
+		String scopeExternalReferenceCode = typeSettingsUnicodeProperties.get(
+			"scopeExternalReferenceCode");
 
 		try {
-			String scopeExternalReferenceCode =
-				typeSettingsUnicodeProperties.get("scopeExternalReferenceCode");
-			String siteNavigationMenuItemType =
-				siteNavigationMenuItem.getType();
-
-			if (Validator.isNull(scopeExternalReferenceCode) &&
-				!siteNavigationMenuItemType.contains(
-					ObjectDefinition.class.getName())) {
-
-				Group group = _groupLocalService.fetchGroup(
-					siteNavigationMenuItem.getGroupId());
-
-				if (group != null) {
-					scopeExternalReferenceCode =
-						group.getExternalReferenceCode();
-				}
-			}
-
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
 					externalReferenceCode, scopeExternalReferenceCode);

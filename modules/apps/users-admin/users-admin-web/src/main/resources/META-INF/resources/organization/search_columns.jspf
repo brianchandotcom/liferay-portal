@@ -29,8 +29,8 @@
 
 			<div class="h6 text-default">
 				<%= HtmlUtil.escape(organization.getAddress().getCity()) %>
-				<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>
-				<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>
+				<%= HtmlUtil.escape(UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization)) %>
+				<%= HtmlUtil.escape(UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization)) %>
 			</div>
 
 			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
@@ -107,13 +107,13 @@
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="region"
-				value="<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
+				value="<%= HtmlUtil.escape(UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="country"
-				value="<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
+				value="<%= HtmlUtil.escape(UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization)) %>"
 			/>
 		</c:if>
 

@@ -62,17 +62,19 @@ public class MarketplaceCommandLineRunner
 	extends BaseRestController implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
-		_processInProgressTrials();
+		_invoke(this::_processInProgressTrials, "In Progress Trials");
 
-		_processOnHoldTrials();
+		_invoke(this::_processOnHoldTrials, "On Hold Trials");
 
-		_processPendingOrders();
+		_invoke(this::_processOrdersTotalAmount, "Orders Total Amount");
 
-		_processOrdersTotalAmount();
+		_invoke(this::_processPendingOrders, "Pending Trials");
 
-		_processProjectsUsingMarketplaceApps();
+		_invoke(
+			this::_processProjectsUsingMarketplaceApps,
+			"Projects Using Marketplace Apps");
 
-		_processPublisherSalesSummary();
+		_invoke(this::_processPublisherSalesSummary, "Publisher Sales Summary");
 	}
 
 	private JSONObject _createPublisherSalesSummary(

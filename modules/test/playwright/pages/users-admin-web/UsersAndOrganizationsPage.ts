@@ -153,6 +153,10 @@ export class UsersAndOrganizationsPage {
 	readonly saveUserButton: Locator;
 	readonly screenNameInput: Locator;
 	readonly selectAllUsersCheckBox: Locator;
+	readonly selectViewButton: Locator;
+	readonly selectViewCardButton: Locator;
+	readonly selectViewListButton: Locator;
+	readonly selectViewTableButton: Locator;
 	readonly statusText: (value: string) => Locator;
 	readonly tableFilterMenu: Locator;
 	readonly tableFilterMenuItem: (option: string) => Locator;
@@ -179,6 +183,7 @@ export class UsersAndOrganizationsPage {
 	readonly timeZoneSelect: Locator;
 	readonly saveTimeZoneButton: Locator;
 	readonly usersAndOrganizationsButton: Locator;
+	readonly viewStatus: (status: string) => Locator;
 
 	constructor(page: Page) {
 		this.activateButton = page.getByRole('button', {name: 'Activate'});
@@ -539,6 +544,14 @@ export class UsersAndOrganizationsPage {
 		this.selectAllUsersCheckBox = page
 			.locator('.management-bar')
 			.getByLabel('Select All Users on the Page');
+		this.selectViewButton = page.getByLabel('Select View');
+		this.selectViewCardButton = page.getByRole('menuitem', {
+			name: 'Cards',
+		});
+		this.selectViewListButton = page.getByRole('menuitem', {name: 'List'});
+		this.selectViewTableButton = page.getByRole('menuitem', {
+			name: 'Table',
+		});
 		this.tableFilterMenu = page
 			.locator('.management-bar')
 			.getByLabel('Filter');
@@ -606,6 +619,8 @@ export class UsersAndOrganizationsPage {
 		});
 		this.timeZoneSelect = page.getByLabel('Time Zone');
 		this.saveTimeZoneButton = page.getByRole('button', {name: 'Save'});
+		this.viewStatus = (status) =>
+			page.getByTitle(`Select View, Currently Selected: ${status}`);
 	}
 
 	async activateUsers(userNames: string[]) {
@@ -614,6 +629,32 @@ export class UsersAndOrganizationsPage {
 		}
 		await this.activateButton.click();
 		await waitForAlert(this.page);
+	}
+
+	async changeView(view: 'Cards' | 'List' | 'Table') {
+		let viewButton: Locator;
+
+		switch (view) {
+			case 'List':
+				viewButton = this.selectViewListButton;
+				break;
+			case 'Cards':
+				viewButton = this.selectViewCardButton;
+				break;
+			default:
+				viewButton = this.selectViewTableButton;
+		}
+
+		await expect(async () => {
+			await this.selectViewButton.click();
+
+			await expect(viewButton).toBeVisible({
+				timeout: 100,
+			});
+		}).toPass({timeout: 1000});
+
+		await viewButton.click();
+		await expect(this.viewStatus(view)).toBeVisible();
 	}
 
 	async createUser(

@@ -23,7 +23,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -36,8 +35,7 @@ import java.util.Locale;
 public class DisplayPageTypeContext {
 
 	public DisplayPageTypeContext(
-		String className, GroupLocalService groupLocalService,
-		InfoItemServiceRegistry infoItemServiceRegistry,
+		String className, InfoItemServiceRegistry infoItemServiceRegistry,
 		LayoutDisplayPageInfoItemFieldValuesProviderRegistry
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry,
 		LayoutDisplayPageMultiSelectionProviderRegistry
@@ -45,7 +43,6 @@ public class DisplayPageTypeContext {
 		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
 
 		_className = className;
-		_groupLocalService = groupLocalService;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry =
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry;
@@ -175,7 +172,6 @@ public class DisplayPageTypeContext {
 	}
 
 	private final String _className;
-	private final GroupLocalService _groupLocalService;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final LayoutDisplayPageInfoItemFieldValuesProviderRegistry
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;

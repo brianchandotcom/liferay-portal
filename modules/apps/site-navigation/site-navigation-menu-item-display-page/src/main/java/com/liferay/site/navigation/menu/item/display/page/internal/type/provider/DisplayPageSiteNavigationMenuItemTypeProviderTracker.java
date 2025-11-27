@@ -171,8 +171,7 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTracker {
 						new DisplayPageTypeSiteNavigationMenuItemType(
 							_assetDisplayPageFriendlyURLProvider,
 							new DisplayPageTypeContext(
-								className, _groupLocalService,
-								_infoItemServiceRegistry,
+								className, _infoItemServiceRegistry,
 								_layoutDisplayPageInfoItemFieldValuesProviderRegistry,
 								_layoutDisplayPageMultiSelectionProviderRegistry,
 								_layoutDisplayPageProviderRegistry),

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -94,6 +95,48 @@ public class ListTypeDefinition implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+
+		_creatorSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator creator;
+
+	@JsonIgnore
+	private Supplier<Creator> _creatorSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
@@ -424,6 +467,53 @@ public class ListTypeDefinition implements Serializable {
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public com.liferay.portal.vulcan.permission.Permission[] getPermissions() {
+		if (_permissionsSupplier != null) {
+			permissions = _permissionsSupplier.get();
+
+			_permissionsSupplier = null;
+		}
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.portal.vulcan.permission.Permission[] permissions) {
+
+		this.permissions = permissions;
+
+		_permissionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.portal.vulcan.permission.Permission[], Exception>
+				permissionsUnsafeSupplier) {
+
+		_permissionsSupplier = () -> {
+			try {
+				return permissionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected com.liferay.portal.vulcan.permission.Permission[] permissions;
+
+	@JsonIgnore
+	private Supplier<com.liferay.portal.vulcan.permission.Permission[]>
+		_permissionsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSystem() {
 		if (_systemSupplier != null) {
 			system = _systemSupplier.get();
@@ -504,6 +594,18 @@ public class ListTypeDefinition implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		Creator creator = getCreator();
+
+		if (creator != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(creator);
 		}
 
 		Date dateCreated = getDateCreated();
@@ -630,6 +732,29 @@ public class ListTypeDefinition implements Serializable {
 			sb.append("\"name_i18n\": ");
 
 			sb.append(_toJSON(name_i18n));
+		}
+
+		com.liferay.portal.vulcan.permission.Permission[] permissions =
+			getPermissions();
+
+		if (permissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < permissions.length; i++) {
+				sb.append(permissions[i]);
+
+				if ((i + 1) < permissions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		Boolean system = getSystem();

@@ -62,6 +62,16 @@ public class ListTypeEntrySerDes {
 			sb.append(_toJSON(listTypeEntry.getActions()));
 		}
 
+		if (listTypeEntry.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(listTypeEntry.getCreator());
+		}
+
 		if (listTypeEntry.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -208,6 +218,13 @@ public class ListTypeEntrySerDes {
 			map.put("actions", String.valueOf(listTypeEntry.getActions()));
 		}
 
+		if (listTypeEntry.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(listTypeEntry.getCreator()));
+		}
+
 		if (listTypeEntry.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -299,6 +316,9 @@ public class ListTypeEntrySerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -341,6 +361,12 @@ public class ListTypeEntrySerDes {
 				if (jsonParserFieldValue != null) {
 					listTypeEntry.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					listTypeEntry.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

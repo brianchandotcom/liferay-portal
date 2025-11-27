@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -94,6 +95,48 @@ public class ListTypeEntry implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+
+		_creatorSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator creator;
+
+	@JsonIgnore
+	private Supplier<Creator> _creatorSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
@@ -498,6 +541,18 @@ public class ListTypeEntry implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		Creator creator = getCreator();
+
+		if (creator != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(creator);
 		}
 
 		Date dateCreated = getDateCreated();

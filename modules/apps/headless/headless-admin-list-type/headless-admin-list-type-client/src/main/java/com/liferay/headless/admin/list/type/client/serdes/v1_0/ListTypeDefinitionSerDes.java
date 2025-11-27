@@ -63,6 +63,16 @@ public class ListTypeDefinitionSerDes {
 			sb.append(_toJSON(listTypeDefinition.getActions()));
 		}
 
+		if (listTypeDefinition.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(listTypeDefinition.getCreator());
+		}
+
 		if (listTypeDefinition.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -180,6 +190,28 @@ public class ListTypeDefinitionSerDes {
 			sb.append(_toJSON(listTypeDefinition.getName_i18n()));
 		}
 
+		if (listTypeDefinition.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < listTypeDefinition.getPermissions().length;
+				 i++) {
+
+				sb.append(listTypeDefinition.getPermissions()[i]);
+
+				if ((i + 1) < listTypeDefinition.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (listTypeDefinition.getSystem() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -219,6 +251,13 @@ public class ListTypeDefinitionSerDes {
 		}
 		else {
 			map.put("actions", String.valueOf(listTypeDefinition.getActions()));
+		}
+
+		if (listTypeDefinition.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(listTypeDefinition.getCreator()));
 		}
 
 		if (listTypeDefinition.getDateCreated() == null) {
@@ -290,6 +329,15 @@ public class ListTypeDefinitionSerDes {
 				"name_i18n", String.valueOf(listTypeDefinition.getName_i18n()));
 		}
 
+		if (listTypeDefinition.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions",
+				String.valueOf(listTypeDefinition.getPermissions()));
+		}
+
 		if (listTypeDefinition.getSystem() == null) {
 			map.put("system", null);
 		}
@@ -318,6 +366,9 @@ public class ListTypeDefinitionSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -344,6 +395,9 @@ public class ListTypeDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "system")) {
 				return false;
 			}
@@ -360,6 +414,12 @@ public class ListTypeDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					listTypeDefinition.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					listTypeDefinition.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -419,6 +479,26 @@ public class ListTypeDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					listTypeDefinition.setName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.list.type.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.list.type.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.list.type.client.
+								permission.Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					listTypeDefinition.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "system")) {

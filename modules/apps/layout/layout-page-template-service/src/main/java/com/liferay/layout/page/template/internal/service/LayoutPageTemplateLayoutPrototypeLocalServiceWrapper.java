@@ -5,11 +5,11 @@
 
 package com.liferay.layout.page.template.internal.service;
 
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -44,9 +44,9 @@ public class LayoutPageTemplateLayoutPrototypeLocalServiceWrapper
 
 		// Remove this condition when private pages are not supported
 
-		if ((ExportImportThreadLocal.isStagingInProcess() ||
-			 ExportImportThreadLocal.isImportInProcess()) &&
-			!LazyReferencingThreadLocal.isEnabled()) {
+		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
+			(ExportImportThreadLocal.isStagingInProcess() ||
+			 ExportImportThreadLocal.isImportInProcess())) {
 
 			return layoutPrototype;
 		}

@@ -35,7 +35,9 @@ export default function Header({
 	return (
 		<div className="autofit-row autofit-row-center">
 			<div className="autofit-col autofit-col-expand">
-				<div className="text-truncate">{headerName}</div>
+				<div className="text-truncate" data-testid="modal-header-name">
+					{headerName}
+				</div>
 			</div>
 
 			<div className="align-items-center c-gap-2 d-flex">

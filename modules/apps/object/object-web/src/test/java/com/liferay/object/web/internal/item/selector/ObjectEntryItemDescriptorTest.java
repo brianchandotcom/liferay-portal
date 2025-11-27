@@ -39,7 +39,7 @@ public class ObjectEntryItemDescriptorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	@TestInfo("LPD-63670")
+	@TestInfo({"LPD-63670", "LPD-72710"})
 	public void testGetPayload() throws Exception {
 		long groupId = RandomTestUtil.randomLong();
 		String scopeExternalReferenceCode = RandomTestUtil.randomString();
@@ -60,7 +60,7 @@ public class ObjectEntryItemDescriptorTest {
 
 		_setUpPortal(className, classNameId);
 
-		_setUpThemeDisplay(groupId);
+		_setUpThemeDisplay(0, groupId);
 
 		ObjectEntryItemDescriptor objectEntryItemDescriptor =
 			new ObjectEntryItemDescriptor(
@@ -83,7 +83,7 @@ public class ObjectEntryItemDescriptorTest {
 
 		Mockito.verifyNoInteractions(_groupLocalService);
 
-		_setUpThemeDisplay(RandomTestUtil.randomLong());
+		_setUpThemeDisplay(0, RandomTestUtil.randomLong());
 
 		Mockito.when(
 			_objectDefinition.getScope()
@@ -112,6 +112,26 @@ public class ObjectEntryItemDescriptorTest {
 		).thenReturn(
 			ObjectDefinitionConstants.SCOPE_SITE
 		);
+
+		_setUpThemeDisplay(groupId, RandomTestUtil.randomLong());
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"className", className
+			).put(
+				"classNameId", classNameId
+			).put(
+				"classPK", classPK
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"title", title
+			).toString(),
+			objectEntryItemDescriptor.getPayload());
+
+		Mockito.verifyNoInteractions(_groupLocalService);
+
+		_setUpThemeDisplay(0, RandomTestUtil.randomLong());
 
 		Assert.assertEquals(
 			JSONUtil.put(
@@ -206,7 +226,9 @@ public class ObjectEntryItemDescriptorTest {
 		);
 	}
 
-	private void _setUpThemeDisplay(long groupId) throws Exception {
+	private void _setUpThemeDisplay(long refererGroupId, long scopeGroupId)
+		throws Exception {
+
 		Mockito.when(
 			_themeDisplay.getLocale()
 		).thenReturn(
@@ -214,9 +236,15 @@ public class ObjectEntryItemDescriptorTest {
 		);
 
 		Mockito.when(
+			_themeDisplay.getRefererGroupId()
+		).thenReturn(
+			refererGroupId
+		);
+
+		Mockito.when(
 			_themeDisplay.getScopeGroupId()
 		).thenReturn(
-			groupId
+			scopeGroupId
 		);
 
 		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);

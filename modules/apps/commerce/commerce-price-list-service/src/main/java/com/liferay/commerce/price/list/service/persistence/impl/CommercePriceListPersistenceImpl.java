@@ -1968,100 +1968,508 @@ public class CommercePriceListPersistenceImpl
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"commercePriceList.companyId = ?";
 
-	private FinderPath _finderPathFetchByParentCommercePriceListId;
+	private FinderPath _finderPathWithPaginationFindByParentCommercePriceListId;
+	private FinderPath
+		_finderPathWithoutPaginationFindByParentCommercePriceListId;
+	private FinderPath _finderPathCountByParentCommercePriceListId;
 
 	/**
-	 * Returns the commerce price list where parentCommercePriceListId = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
+	 * Returns all the commerce price lists where parentCommercePriceListId = &#63;.
 	 *
 	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @return the matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 * @return the matching commerce price lists
 	 */
 	@Override
-	public CommercePriceList findByParentCommercePriceListId(
-			long parentCommercePriceListId)
-		throws NoSuchPriceListException {
-
-		CommercePriceList commercePriceList = fetchByParentCommercePriceListId(
-			parentCommercePriceListId);
-
-		if (commercePriceList == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("parentCommercePriceListId=");
-			sb.append(parentCommercePriceListId);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchPriceListException(sb.toString());
-		}
-
-		return commercePriceList;
-	}
-
-	/**
-	 * Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	@Override
-	public CommercePriceList fetchByParentCommercePriceListId(
+	public List<CommercePriceList> findByParentCommercePriceListId(
 		long parentCommercePriceListId) {
 
-		return fetchByParentCommercePriceListId(
-			parentCommercePriceListId, true);
+		return findByParentCommercePriceListId(
+			parentCommercePriceListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns a range of all the commerce price lists where parentCommercePriceListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @return the range of matching commerce price lists
 	 */
 	@Override
-	public CommercePriceList fetchByParentCommercePriceListId(
-		long parentCommercePriceListId, boolean useFinderCache) {
+	public List<CommercePriceList> findByParentCommercePriceListId(
+		long parentCommercePriceListId, int start, int end) {
+
+		return findByParentCommercePriceListId(
+			parentCommercePriceListId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price lists where parentCommercePriceListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price lists
+	 */
+	@Override
+	public List<CommercePriceList> findByParentCommercePriceListId(
+		long parentCommercePriceListId, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return findByParentCommercePriceListId(
+			parentCommercePriceListId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price lists where parentCommercePriceListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce price lists
+	 */
+	@Override
+	public List<CommercePriceList> findByParentCommercePriceListId(
+		long parentCommercePriceListId, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator,
+		boolean useFinderCache) {
 
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CommercePriceList.class)) {
 
+			FinderPath finderPath = null;
 			Object[] finderArgs = null;
 
-			if (useFinderCache) {
-				finderArgs = new Object[] {parentCommercePriceListId};
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath =
+						_finderPathWithoutPaginationFindByParentCommercePriceListId;
+					finderArgs = new Object[] {parentCommercePriceListId};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath =
+					_finderPathWithPaginationFindByParentCommercePriceListId;
+				finderArgs = new Object[] {
+					parentCommercePriceListId, start, end, orderByComparator
+				};
 			}
 
-			Object result = null;
+			List<CommercePriceList> list = null;
 
 			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByParentCommercePriceListId, finderArgs,
-					this);
-			}
+				list = (List<CommercePriceList>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if (result instanceof CommercePriceList) {
-				CommercePriceList commercePriceList = (CommercePriceList)result;
+				if ((list != null) && !list.isEmpty()) {
+					for (CommercePriceList commercePriceList : list) {
+						if (parentCommercePriceListId !=
+								commercePriceList.
+									getParentCommercePriceListId()) {
 
-				if (parentCommercePriceListId !=
-						commercePriceList.getParentCommercePriceListId()) {
+							list = null;
 
-					result = null;
+							break;
+						}
+					}
 				}
 			}
 
-			if (result == null) {
-				StringBundler sb = new StringBundler(3);
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
 				sb.append(_SQL_SELECT_COMMERCEPRICELIST_WHERE);
+
+				sb.append(
+					_FINDER_COLUMN_PARENTCOMMERCEPRICELISTID_PARENTCOMMERCEPRICELISTID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(CommercePriceListModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(parentCommercePriceListId);
+
+					list = (List<CommercePriceList>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList findByParentCommercePriceListId_First(
+			long parentCommercePriceListId,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws NoSuchPriceListException {
+
+		CommercePriceList commercePriceList =
+			fetchByParentCommercePriceListId_First(
+				parentCommercePriceListId, orderByComparator);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("parentCommercePriceListId=");
+		sb.append(parentCommercePriceListId);
+
+		sb.append("}");
+
+		throw new NoSuchPriceListException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList fetchByParentCommercePriceListId_First(
+		long parentCommercePriceListId,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		List<CommercePriceList> list = findByParentCommercePriceListId(
+			parentCommercePriceListId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList findByParentCommercePriceListId_Last(
+			long parentCommercePriceListId,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws NoSuchPriceListException {
+
+		CommercePriceList commercePriceList =
+			fetchByParentCommercePriceListId_Last(
+				parentCommercePriceListId, orderByComparator);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("parentCommercePriceListId=");
+		sb.append(parentCommercePriceListId);
+
+		sb.append("}");
+
+		throw new NoSuchPriceListException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList fetchByParentCommercePriceListId_Last(
+		long parentCommercePriceListId,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		int count = countByParentCommercePriceListId(parentCommercePriceListId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommercePriceList> list = findByParentCommercePriceListId(
+			parentCommercePriceListId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param commercePriceListId the primary key of the current commerce price list
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price list
+	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
+	 */
+	@Override
+	public CommercePriceList[] findByParentCommercePriceListId_PrevAndNext(
+			long commercePriceListId, long parentCommercePriceListId,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws NoSuchPriceListException {
+
+		CommercePriceList commercePriceList = findByPrimaryKey(
+			commercePriceListId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommercePriceList[] array = new CommercePriceListImpl[3];
+
+			array[0] = getByParentCommercePriceListId_PrevAndNext(
+				session, commercePriceList, parentCommercePriceListId,
+				orderByComparator, true);
+
+			array[1] = commercePriceList;
+
+			array[2] = getByParentCommercePriceListId_PrevAndNext(
+				session, commercePriceList, parentCommercePriceListId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommercePriceList getByParentCommercePriceListId_PrevAndNext(
+		Session session, CommercePriceList commercePriceList,
+		long parentCommercePriceListId,
+		OrderByComparator<CommercePriceList> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEPRICELIST_WHERE);
+
+		sb.append(
+			_FINDER_COLUMN_PARENTCOMMERCEPRICELISTID_PARENTCOMMERCEPRICELISTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommercePriceListModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(parentCommercePriceListId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commercePriceList)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommercePriceList> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce price lists where parentCommercePriceListId = &#63; from the database.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 */
+	@Override
+	public void removeByParentCommercePriceListId(
+		long parentCommercePriceListId) {
+
+		for (CommercePriceList commercePriceList :
+				findByParentCommercePriceListId(
+					parentCommercePriceListId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(commercePriceList);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce price lists where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @return the number of matching commerce price lists
+	 */
+	@Override
+	public int countByParentCommercePriceListId(
+		long parentCommercePriceListId) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CommercePriceList.class)) {
+
+			FinderPath finderPath = _finderPathCountByParentCommercePriceListId;
+
+			Object[] finderArgs = new Object[] {parentCommercePriceListId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
+
+				sb.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
 
 				sb.append(
 					_FINDER_COLUMN_PARENTCOMMERCEPRICELISTID_PARENTCOMMERCEPRICELISTID_2);
@@ -2079,39 +2487,9 @@ public class CommercePriceListPersistenceImpl
 
 					queryPos.add(parentCommercePriceListId);
 
-					List<CommercePriceList> list = query.list();
+					count = (Long)query.uniqueResult();
 
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByParentCommercePriceListId,
-								finderArgs, list);
-						}
-					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
-
-							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {
-										parentCommercePriceListId
-									};
-								}
-
-								_log.warn(
-									"CommercePriceListPersistenceImpl.fetchByParentCommercePriceListId(long, boolean) with parameters (" +
-										StringUtil.merge(finderArgs) +
-											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-							}
-						}
-
-						CommercePriceList commercePriceList = list.get(0);
-
-						result = commercePriceList;
-
-						cacheResult(commercePriceList);
-					}
+					finderCache.putResult(finderPath, finderArgs, count);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -2121,50 +2499,8 @@ public class CommercePriceListPersistenceImpl
 				}
 			}
 
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (CommercePriceList)result;
-			}
+			return count.intValue();
 		}
-	}
-
-	/**
-	 * Removes the commerce price list where parentCommercePriceListId = &#63; from the database.
-	 *
-	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @return the commerce price list that was removed
-	 */
-	@Override
-	public CommercePriceList removeByParentCommercePriceListId(
-			long parentCommercePriceListId)
-		throws NoSuchPriceListException {
-
-		CommercePriceList commercePriceList = findByParentCommercePriceListId(
-			parentCommercePriceListId);
-
-		return remove(commercePriceList);
-	}
-
-	/**
-	 * Returns the number of commerce price lists where parentCommercePriceListId = &#63;.
-	 *
-	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @return the number of matching commerce price lists
-	 */
-	@Override
-	public int countByParentCommercePriceListId(
-		long parentCommercePriceListId) {
-
-		CommercePriceList commercePriceList = fetchByParentCommercePriceListId(
-			parentCommercePriceListId);
-
-		if (commercePriceList == null) {
-			return 0;
-		}
-
-		return 1;
 	}
 
 	private static final String
@@ -3685,105 +4021,891 @@ public class CommercePriceListPersistenceImpl
 	private static final String _FINDER_COLUMN_G_C_COMPANYID_2 =
 		"commercePriceList.companyId = ?";
 
-	private FinderPath _finderPathFetchByG_CBPL;
+	private FinderPath _finderPathWithPaginationFindByG_CBPL;
+	private FinderPath _finderPathWithoutPaginationFindByG_CBPL;
+	private FinderPath _finderPathCountByG_CBPL;
 
 	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
+	 * Returns all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param catalogBasePriceList the catalog base price list
-	 * @return the matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 * @return the matching commerce price lists
 	 */
 	@Override
-	public CommercePriceList findByG_CBPL(
-			long groupId, boolean catalogBasePriceList)
-		throws NoSuchPriceListException {
-
-		CommercePriceList commercePriceList = fetchByG_CBPL(
-			groupId, catalogBasePriceList);
-
-		if (commercePriceList == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", catalogBasePriceList=");
-			sb.append(catalogBasePriceList);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchPriceListException(sb.toString());
-		}
-
-		return commercePriceList;
-	}
-
-	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	@Override
-	public CommercePriceList fetchByG_CBPL(
+	public List<CommercePriceList> findByG_CBPL(
 		long groupId, boolean catalogBasePriceList) {
 
-		return fetchByG_CBPL(groupId, catalogBasePriceList, true);
+		return findByG_CBPL(
+			groupId, catalogBasePriceList, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns a range of all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param catalogBasePriceList the catalog base price list
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @return the range of matching commerce price lists
 	 */
 	@Override
-	public CommercePriceList fetchByG_CBPL(
-		long groupId, boolean catalogBasePriceList, boolean useFinderCache) {
+	public List<CommercePriceList> findByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end) {
+
+		return findByG_CBPL(groupId, catalogBasePriceList, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price lists
+	 */
+	@Override
+	public List<CommercePriceList> findByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return findByG_CBPL(
+			groupId, catalogBasePriceList, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce price lists
+	 */
+	@Override
+	public List<CommercePriceList> findByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator,
+		boolean useFinderCache) {
 
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CommercePriceList.class)) {
 
+			FinderPath finderPath = null;
 			Object[] finderArgs = null;
 
-			if (useFinderCache) {
-				finderArgs = new Object[] {groupId, catalogBasePriceList};
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_CBPL;
+					finderArgs = new Object[] {groupId, catalogBasePriceList};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_CBPL;
+				finderArgs = new Object[] {
+					groupId, catalogBasePriceList, start, end, orderByComparator
+				};
 			}
 
-			Object result = null;
+			List<CommercePriceList> list = null;
 
 			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByG_CBPL, finderArgs, this);
-			}
+				list = (List<CommercePriceList>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if (result instanceof CommercePriceList) {
-				CommercePriceList commercePriceList = (CommercePriceList)result;
+				if ((list != null) && !list.isEmpty()) {
+					for (CommercePriceList commercePriceList : list) {
+						if ((groupId != commercePriceList.getGroupId()) ||
+							(catalogBasePriceList !=
+								commercePriceList.isCatalogBasePriceList())) {
 
-				if ((groupId != commercePriceList.getGroupId()) ||
-					(catalogBasePriceList !=
-						commercePriceList.isCatalogBasePriceList())) {
+							list = null;
 
-					result = null;
+							break;
+						}
+					}
 				}
 			}
 
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
 
 				sb.append(_SQL_SELECT_COMMERCEPRICELIST_WHERE);
+
+				sb.append(_FINDER_COLUMN_G_CBPL_GROUPID_2);
+
+				sb.append(_FINDER_COLUMN_G_CBPL_CATALOGBASEPRICELIST_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(CommercePriceListModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(groupId);
+
+					queryPos.add(catalogBasePriceList);
+
+					list = (List<CommercePriceList>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList findByG_CBPL_First(
+			long groupId, boolean catalogBasePriceList,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws NoSuchPriceListException {
+
+		CommercePriceList commercePriceList = fetchByG_CBPL_First(
+			groupId, catalogBasePriceList, orderByComparator);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", catalogBasePriceList=");
+		sb.append(catalogBasePriceList);
+
+		sb.append("}");
+
+		throw new NoSuchPriceListException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList fetchByG_CBPL_First(
+		long groupId, boolean catalogBasePriceList,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		List<CommercePriceList> list = findByG_CBPL(
+			groupId, catalogBasePriceList, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList findByG_CBPL_Last(
+			long groupId, boolean catalogBasePriceList,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws NoSuchPriceListException {
+
+		CommercePriceList commercePriceList = fetchByG_CBPL_Last(
+			groupId, catalogBasePriceList, orderByComparator);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", catalogBasePriceList=");
+		sb.append(catalogBasePriceList);
+
+		sb.append("}");
+
+		throw new NoSuchPriceListException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList fetchByG_CBPL_Last(
+		long groupId, boolean catalogBasePriceList,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		int count = countByG_CBPL(groupId, catalogBasePriceList);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommercePriceList> list = findByG_CBPL(
+			groupId, catalogBasePriceList, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param commercePriceListId the primary key of the current commerce price list
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price list
+	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
+	 */
+	@Override
+	public CommercePriceList[] findByG_CBPL_PrevAndNext(
+			long commercePriceListId, long groupId,
+			boolean catalogBasePriceList,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws NoSuchPriceListException {
+
+		CommercePriceList commercePriceList = findByPrimaryKey(
+			commercePriceListId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommercePriceList[] array = new CommercePriceListImpl[3];
+
+			array[0] = getByG_CBPL_PrevAndNext(
+				session, commercePriceList, groupId, catalogBasePriceList,
+				orderByComparator, true);
+
+			array[1] = commercePriceList;
+
+			array[2] = getByG_CBPL_PrevAndNext(
+				session, commercePriceList, groupId, catalogBasePriceList,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommercePriceList getByG_CBPL_PrevAndNext(
+		Session session, CommercePriceList commercePriceList, long groupId,
+		boolean catalogBasePriceList,
+		OrderByComparator<CommercePriceList> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEPRICELIST_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_CBPL_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_CBPL_CATALOGBASEPRICELIST_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommercePriceListModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		queryPos.add(catalogBasePriceList);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commercePriceList)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommercePriceList> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @return the matching commerce price lists that the user has permission to view
+	 */
+	@Override
+	public List<CommercePriceList> filterFindByG_CBPL(
+		long groupId, boolean catalogBasePriceList) {
+
+		return filterFindByG_CBPL(
+			groupId, catalogBasePriceList, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @return the range of matching commerce price lists that the user has permission to view
+	 */
+	@Override
+	public List<CommercePriceList> filterFindByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end) {
+
+		return filterFindByG_CBPL(
+			groupId, catalogBasePriceList, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price lists that the user has permissions to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price lists that the user has permission to view
+	 */
+	@Override
+	public List<CommercePriceList> filterFindByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_CBPL(
+				groupId, catalogBasePriceList, start, end, orderByComparator);
+		}
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			isPermissionsInMemoryFilterEnabled()) {
+
+			return InlineSQLHelperUtil.filter(
+				findByG_CBPL(
+					groupId, catalogBasePriceList, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, orderByComparator),
+				groupId);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_G_CBPL_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_CBPL_CATALOGBASEPRICELIST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CommercePriceListModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommercePriceList.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, CommercePriceListImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, CommercePriceListImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(groupId);
+
+			queryPos.add(catalogBasePriceList);
+
+			return (List<CommercePriceList>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param commercePriceListId the primary key of the current commerce price list
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price list
+	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
+	 */
+	@Override
+	public CommercePriceList[] filterFindByG_CBPL_PrevAndNext(
+			long commercePriceListId, long groupId,
+			boolean catalogBasePriceList,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws NoSuchPriceListException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_CBPL_PrevAndNext(
+				commercePriceListId, groupId, catalogBasePriceList,
+				orderByComparator);
+		}
+
+		CommercePriceList commercePriceList = findByPrimaryKey(
+			commercePriceListId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommercePriceList[] array = new CommercePriceListImpl[3];
+
+			array[0] = filterGetByG_CBPL_PrevAndNext(
+				session, commercePriceList, groupId, catalogBasePriceList,
+				orderByComparator, true);
+
+			array[1] = commercePriceList;
+
+			array[2] = filterGetByG_CBPL_PrevAndNext(
+				session, commercePriceList, groupId, catalogBasePriceList,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommercePriceList filterGetByG_CBPL_PrevAndNext(
+		Session session, CommercePriceList commercePriceList, long groupId,
+		boolean catalogBasePriceList,
+		OrderByComparator<CommercePriceList> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_G_CBPL_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_CBPL_CATALOGBASEPRICELIST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CommercePriceListModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommercePriceList.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, CommercePriceListImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, CommercePriceListImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(groupId);
+
+		queryPos.add(catalogBasePriceList);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commercePriceList)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommercePriceList> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 */
+	@Override
+	public void removeByG_CBPL(long groupId, boolean catalogBasePriceList) {
+		for (CommercePriceList commercePriceList :
+				findByG_CBPL(
+					groupId, catalogBasePriceList, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(commercePriceList);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @return the number of matching commerce price lists
+	 */
+	@Override
+	public int countByG_CBPL(long groupId, boolean catalogBasePriceList) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CommercePriceList.class)) {
+
+			FinderPath finderPath = _finderPathCountByG_CBPL;
+
+			Object[] finderArgs = new Object[] {groupId, catalogBasePriceList};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
 
 				sb.append(_FINDER_COLUMN_G_CBPL_GROUPID_2);
 
@@ -3804,38 +4926,9 @@ public class CommercePriceListPersistenceImpl
 
 					queryPos.add(catalogBasePriceList);
 
-					List<CommercePriceList> list = query.list();
+					count = (Long)query.uniqueResult();
 
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByG_CBPL, finderArgs, list);
-						}
-					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
-
-							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {
-										groupId, catalogBasePriceList
-									};
-								}
-
-								_log.warn(
-									"CommercePriceListPersistenceImpl.fetchByG_CBPL(long, boolean, boolean) with parameters (" +
-										StringUtil.merge(finderArgs) +
-											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-							}
-						}
-
-						CommercePriceList commercePriceList = list.get(0);
-
-						result = commercePriceList;
-
-						cacheResult(commercePriceList);
-					}
+					finderCache.putResult(finderPath, finderArgs, count);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -3845,50 +4938,71 @@ public class CommercePriceListPersistenceImpl
 				}
 			}
 
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (CommercePriceList)result;
-			}
+			return count.intValue();
 		}
 	}
 
 	/**
-	 * Removes the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; from the database.
+	 * Returns the number of commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param catalogBasePriceList the catalog base price list
-	 * @return the commerce price list that was removed
+	 * @return the number of matching commerce price lists that the user has permission to view
 	 */
 	@Override
-	public CommercePriceList removeByG_CBPL(
-			long groupId, boolean catalogBasePriceList)
-		throws NoSuchPriceListException {
-
-		CommercePriceList commercePriceList = findByG_CBPL(
-			groupId, catalogBasePriceList);
-
-		return remove(commercePriceList);
-	}
-
-	/**
-	 * Returns the number of commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @return the number of matching commerce price lists
-	 */
-	@Override
-	public int countByG_CBPL(long groupId, boolean catalogBasePriceList) {
-		CommercePriceList commercePriceList = fetchByG_CBPL(
-			groupId, catalogBasePriceList);
-
-		if (commercePriceList == null) {
-			return 0;
+	public int filterCountByG_CBPL(long groupId, boolean catalogBasePriceList) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_CBPL(groupId, catalogBasePriceList);
 		}
 
-		return 1;
+		if (isPermissionsInMemoryFilterEnabled()) {
+			List<CommercePriceList> commercePriceLists = findByG_CBPL(
+				groupId, catalogBasePriceList);
+
+			commercePriceLists = InlineSQLHelperUtil.filter(
+				commercePriceLists, groupId);
+
+			return commercePriceLists.size();
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_CBPL_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_CBPL_CATALOGBASEPRICELIST_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommercePriceList.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(groupId);
+
+			queryPos.add(catalogBasePriceList);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_CBPL_GROUPID_2 =
@@ -8279,253 +9393,6 @@ public class CommercePriceListPersistenceImpl
 	private static final String _FINDER_COLUMN_G_C_NOTS_STATUS_2 =
 		"commercePriceList.status != ?";
 
-	private FinderPath _finderPathFetchByG_C_T;
-
-	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @return the matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	@Override
-	public CommercePriceList findByG_C_T(
-			long groupId, boolean catalogBasePriceList, String type)
-		throws NoSuchPriceListException {
-
-		CommercePriceList commercePriceList = fetchByG_C_T(
-			groupId, catalogBasePriceList, type);
-
-		if (commercePriceList == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", catalogBasePriceList=");
-			sb.append(catalogBasePriceList);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchPriceListException(sb.toString());
-		}
-
-		return commercePriceList;
-	}
-
-	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	@Override
-	public CommercePriceList fetchByG_C_T(
-		long groupId, boolean catalogBasePriceList, String type) {
-
-		return fetchByG_C_T(groupId, catalogBasePriceList, type, true);
-	}
-
-	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	@Override
-	public CommercePriceList fetchByG_C_T(
-		long groupId, boolean catalogBasePriceList, String type,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceList.class)) {
-
-			type = Objects.toString(type, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {groupId, catalogBasePriceList, type};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByG_C_T, finderArgs, this);
-			}
-
-			if (result instanceof CommercePriceList) {
-				CommercePriceList commercePriceList = (CommercePriceList)result;
-
-				if ((groupId != commercePriceList.getGroupId()) ||
-					(catalogBasePriceList !=
-						commercePriceList.isCatalogBasePriceList()) ||
-					!Objects.equals(type, commercePriceList.getType())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(_SQL_SELECT_COMMERCEPRICELIST_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_T_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_T_CATALOGBASEPRICELIST_2);
-
-				boolean bindType = false;
-
-				if (type.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_C_T_TYPE_3);
-				}
-				else {
-					bindType = true;
-
-					sb.append(_FINDER_COLUMN_G_C_T_TYPE_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(catalogBasePriceList);
-
-					if (bindType) {
-						queryPos.add(type);
-					}
-
-					List<CommercePriceList> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByG_C_T, finderArgs, list);
-						}
-					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
-
-							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {
-										groupId, catalogBasePriceList, type
-									};
-								}
-
-								_log.warn(
-									"CommercePriceListPersistenceImpl.fetchByG_C_T(long, boolean, String, boolean) with parameters (" +
-										StringUtil.merge(finderArgs) +
-											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-							}
-						}
-
-						CommercePriceList commercePriceList = list.get(0);
-
-						result = commercePriceList;
-
-						cacheResult(commercePriceList);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (CommercePriceList)result;
-			}
-		}
-	}
-
-	/**
-	 * Removes the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @return the commerce price list that was removed
-	 */
-	@Override
-	public CommercePriceList removeByG_C_T(
-			long groupId, boolean catalogBasePriceList, String type)
-		throws NoSuchPriceListException {
-
-		CommercePriceList commercePriceList = findByG_C_T(
-			groupId, catalogBasePriceList, type);
-
-		return remove(commercePriceList);
-	}
-
-	/**
-	 * Returns the number of commerce price lists where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @return the number of matching commerce price lists
-	 */
-	@Override
-	public int countByG_C_T(
-		long groupId, boolean catalogBasePriceList, String type) {
-
-		CommercePriceList commercePriceList = fetchByG_C_T(
-			groupId, catalogBasePriceList, type);
-
-		if (commercePriceList == null) {
-			return 0;
-		}
-
-		return 1;
-	}
-
-	private static final String _FINDER_COLUMN_G_C_T_GROUPID_2 =
-		"commercePriceList.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_T_CATALOGBASEPRICELIST_2 =
-		"commercePriceList.catalogBasePriceList = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_T_TYPE_2 =
-		"commercePriceList.type = ?";
-
-	private static final String _FINDER_COLUMN_G_C_T_TYPE_3 =
-		"(commercePriceList.type IS NULL OR commercePriceList.type = '')";
-
 	private FinderPath _finderPathWithPaginationFindByG_C_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_T_S;
 	private FinderPath _finderPathCountByG_C_T_S;
@@ -12458,28 +13325,6 @@ public class CommercePriceListPersistenceImpl
 				commercePriceList);
 
 			finderCache.putResult(
-				_finderPathFetchByParentCommercePriceListId,
-				new Object[] {commercePriceList.getParentCommercePriceListId()},
-				commercePriceList);
-
-			finderCache.putResult(
-				_finderPathFetchByG_CBPL,
-				new Object[] {
-					commercePriceList.getGroupId(),
-					commercePriceList.isCatalogBasePriceList()
-				},
-				commercePriceList);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_T,
-				new Object[] {
-					commercePriceList.getGroupId(),
-					commercePriceList.isCatalogBasePriceList(),
-					commercePriceList.getType()
-				},
-				commercePriceList);
-
-			finderCache.putResult(
 				_finderPathFetchByERC_C,
 				new Object[] {
 					commercePriceList.getExternalReferenceCode(),
@@ -12579,31 +13424,6 @@ public class CommercePriceListPersistenceImpl
 
 			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, commercePriceListModelImpl);
-
-			args = new Object[] {
-				commercePriceListModelImpl.getParentCommercePriceListId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByParentCommercePriceListId, args,
-				commercePriceListModelImpl);
-
-			args = new Object[] {
-				commercePriceListModelImpl.getGroupId(),
-				commercePriceListModelImpl.isCatalogBasePriceList()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_CBPL, args, commercePriceListModelImpl);
-
-			args = new Object[] {
-				commercePriceListModelImpl.getGroupId(),
-				commercePriceListModelImpl.isCatalogBasePriceList(),
-				commercePriceListModelImpl.getType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_T, args, commercePriceListModelImpl);
 
 			args = new Object[] {
 				commercePriceListModelImpl.getExternalReferenceCode(),
@@ -13492,10 +14312,28 @@ public class CommercePriceListPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathFetchByParentCommercePriceListId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByParentCommercePriceListId",
+		_finderPathWithPaginationFindByParentCommercePriceListId =
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByParentCommercePriceListId",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"parentCommercePriceListId"}, true);
+
+		_finderPathWithoutPaginationFindByParentCommercePriceListId =
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByParentCommercePriceListId",
+				new String[] {Long.class.getName()},
+				new String[] {"parentCommercePriceListId"}, true);
+
+		_finderPathCountByParentCommercePriceListId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByParentCommercePriceListId",
 			new String[] {Long.class.getName()},
-			new String[] {"parentCommercePriceListId"}, true);
+			new String[] {"parentCommercePriceListId"}, false);
 
 		_finderPathWithPaginationFindByG_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
@@ -13521,10 +14359,24 @@ public class CommercePriceListPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "companyId"}, false);
 
-		_finderPathFetchByG_CBPL = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_CBPL",
+		_finderPathWithPaginationFindByG_CBPL = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CBPL",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "catalogBasePriceList"}, true);
+
+		_finderPathWithoutPaginationFindByG_CBPL = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CBPL",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "catalogBasePriceList"}, true);
+
+		_finderPathCountByG_CBPL = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_CBPL",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"groupId", "catalogBasePriceList"}, false);
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
@@ -13608,14 +14460,6 @@ public class CommercePriceListPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "companyId", "status"}, false);
-
-		_finderPathFetchByG_C_T = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "catalogBasePriceList", "type_"}, true);
 
 		_finderPathWithPaginationFindByG_C_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_S",

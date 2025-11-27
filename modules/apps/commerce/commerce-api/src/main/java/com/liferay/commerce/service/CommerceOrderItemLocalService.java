@@ -6,7 +6,6 @@
 package com.liferay.commerce.service;
 
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -501,7 +500,7 @@ public interface CommerceOrderItemLocalService
 
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, long commerceInventoryBookedQuantityId)
-		throws NoSuchOrderItemException;
+		throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItem(
 			long userId, long commerceOrderItemId, BigDecimal quantity,

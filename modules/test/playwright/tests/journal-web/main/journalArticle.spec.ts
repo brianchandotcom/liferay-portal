@@ -1971,6 +1971,7 @@ ckeditor4Test(
 		await expect(moonImage).toHaveAttribute('data-fileentryid');
 
 		const moonImageFileEntryId = await moonImage
+
 			// eslint-disable-next-line @liferay/no-get-data-attribute
 			.getAttribute('data-fileentryid');
 
@@ -1996,6 +1997,7 @@ ckeditor4Test(
 		await expect(satelliteImage).toHaveAttribute('data-fileentryid');
 
 		const satelliteImageFileEntryId = await satelliteImage
+
 			// eslint-disable-next-line @liferay/no-get-data-attribute
 			.getAttribute('data-fileentryid');
 

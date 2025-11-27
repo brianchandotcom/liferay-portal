@@ -196,9 +196,7 @@ public class BatchEnginePortletDataHandlerUtil {
 	private static boolean _isCompanyScoped(
 		Group group, StagingGroupHelper stagingGroupHelper) {
 
-		if ((group == null) || group.isCompany() ||
-			stagingGroupHelper.isCompanyGroup(group)) {
-
+		if ((group == null) || stagingGroupHelper.isCompanyGroup(group)) {
 			return true;
 		}
 

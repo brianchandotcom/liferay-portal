@@ -53,11 +53,14 @@ const AIAssistantChat: React.FC = () => {
 		const contextElements = getContextElements();
 
 		if (eventSourceReference.current) {
+			const content = contextElements['ObjectField_content_en_US'];
+			const title = contextElements['ObjectField_title'];
+
 			postChatByExternalReferenceCodeMessage(
-				contextElements['ObjectField_content_en_US']['value'],
+				content?.value,
 				eventSourceReference.current,
 				message.text,
-				contextElements['ObjectField_title']['value']
+				title.value
 			);
 		}
 	}
@@ -97,11 +100,13 @@ const AIAssistantChat: React.FC = () => {
 						});
 					}, 0);
 
+					const dataJSON = JSON.parse(event.data);
+
 					return [
 						...previousMessages,
 						{
 							sender: 'assistant',
-							text: event.data,
+							text: dataJSON['data'],
 						},
 					];
 				});

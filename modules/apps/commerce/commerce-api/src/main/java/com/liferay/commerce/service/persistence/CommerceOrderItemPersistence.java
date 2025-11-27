@@ -381,55 +381,6 @@ public interface CommerceOrderItemPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or throws a <code>NoSuchOrderItemException</code> if it could not be found.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @return the matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public CommerceOrderItem findByCommerceInventoryBookedQuantityId(
-			long commerceInventoryBookedQuantityId)
-		throws NoSuchOrderItemException;
-
-	/**
-	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public CommerceOrderItem fetchByCommerceInventoryBookedQuantityId(
-		long commerceInventoryBookedQuantityId);
-
-	/**
-	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public CommerceOrderItem fetchByCommerceInventoryBookedQuantityId(
-		long commerceInventoryBookedQuantityId, boolean useFinderCache);
-
-	/**
-	 * Removes the commerce order item where commerceInventoryBookedQuantityId = &#63; from the database.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @return the commerce order item that was removed
-	 */
-	public CommerceOrderItem removeByCommerceInventoryBookedQuantityId(
-			long commerceInventoryBookedQuantityId)
-		throws NoSuchOrderItemException;
-
-	/**
-	 * Returns the number of commerce order items where commerceInventoryBookedQuantityId = &#63;.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @return the number of matching commerce order items
-	 */
-	public int countByCommerceInventoryBookedQuantityId(
-		long commerceInventoryBookedQuantityId);
-
-	/**
 	 * Returns all the commerce order items where commerceOrderId = &#63;.
 	 *
 	 * @param commerceOrderId the commerce order ID

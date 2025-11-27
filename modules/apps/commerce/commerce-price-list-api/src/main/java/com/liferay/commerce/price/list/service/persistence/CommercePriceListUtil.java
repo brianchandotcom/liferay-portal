@@ -711,60 +711,177 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price list where parentCommercePriceListId = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
+	 * Returns all the commerce price lists where parentCommercePriceListId = &#63;.
 	 *
 	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @return the matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 * @return the matching commerce price lists
 	 */
-	public static CommercePriceList findByParentCommercePriceListId(
-			long parentCommercePriceListId)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
+	public static List<CommercePriceList> findByParentCommercePriceListId(
+		long parentCommercePriceListId) {
 
 		return getPersistence().findByParentCommercePriceListId(
 			parentCommercePriceListId);
 	}
 
 	/**
-	 * Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the commerce price lists where parentCommercePriceListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @return the range of matching commerce price lists
 	 */
-	public static CommercePriceList fetchByParentCommercePriceListId(
-		long parentCommercePriceListId) {
+	public static List<CommercePriceList> findByParentCommercePriceListId(
+		long parentCommercePriceListId, int start, int end) {
 
-		return getPersistence().fetchByParentCommercePriceListId(
-			parentCommercePriceListId);
+		return getPersistence().findByParentCommercePriceListId(
+			parentCommercePriceListId, start, end);
 	}
 
 	/**
-	 * Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the commerce price lists where parentCommercePriceListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price lists
+	 */
+	public static List<CommercePriceList> findByParentCommercePriceListId(
+		long parentCommercePriceListId, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return getPersistence().findByParentCommercePriceListId(
+			parentCommercePriceListId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price lists where parentCommercePriceListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 * @return the ordered range of matching commerce price lists
 	 */
-	public static CommercePriceList fetchByParentCommercePriceListId(
-		long parentCommercePriceListId, boolean useFinderCache) {
+	public static List<CommercePriceList> findByParentCommercePriceListId(
+		long parentCommercePriceListId, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByParentCommercePriceListId(
-			parentCommercePriceListId, useFinderCache);
+		return getPersistence().findByParentCommercePriceListId(
+			parentCommercePriceListId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
-	 * Removes the commerce price list where parentCommercePriceListId = &#63; from the database.
+	 * Returns the first commerce price list in the ordered set where parentCommercePriceListId = &#63;.
 	 *
 	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @return the commerce price list that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
 	 */
-	public static CommercePriceList removeByParentCommercePriceListId(
-			long parentCommercePriceListId)
+	public static CommercePriceList findByParentCommercePriceListId_First(
+			long parentCommercePriceListId,
+			OrderByComparator<CommercePriceList> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.
 			NoSuchPriceListException {
 
-		return getPersistence().removeByParentCommercePriceListId(
+		return getPersistence().findByParentCommercePriceListId_First(
+			parentCommercePriceListId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	public static CommercePriceList fetchByParentCommercePriceListId_First(
+		long parentCommercePriceListId,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return getPersistence().fetchByParentCommercePriceListId_First(
+			parentCommercePriceListId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 */
+	public static CommercePriceList findByParentCommercePriceListId_Last(
+			long parentCommercePriceListId,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws com.liferay.commerce.price.list.exception.
+			NoSuchPriceListException {
+
+		return getPersistence().findByParentCommercePriceListId_Last(
+			parentCommercePriceListId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	public static CommercePriceList fetchByParentCommercePriceListId_Last(
+		long parentCommercePriceListId,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return getPersistence().fetchByParentCommercePriceListId_Last(
+			parentCommercePriceListId, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where parentCommercePriceListId = &#63;.
+	 *
+	 * @param commercePriceListId the primary key of the current commerce price list
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price list
+	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
+	 */
+	public static CommercePriceList[]
+			findByParentCommercePriceListId_PrevAndNext(
+				long commercePriceListId, long parentCommercePriceListId,
+				OrderByComparator<CommercePriceList> orderByComparator)
+		throws com.liferay.commerce.price.list.exception.
+			NoSuchPriceListException {
+
+		return getPersistence().findByParentCommercePriceListId_PrevAndNext(
+			commercePriceListId, parentCommercePriceListId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce price lists where parentCommercePriceListId = &#63; from the database.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 */
+	public static void removeByParentCommercePriceListId(
+		long parentCommercePriceListId) {
+
+		getPersistence().removeByParentCommercePriceListId(
 			parentCommercePriceListId);
 	}
 
@@ -1215,62 +1332,265 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
+	 * Returns all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param catalogBasePriceList the catalog base price list
-	 * @return the matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 * @return the matching commerce price lists
 	 */
-	public static CommercePriceList findByG_CBPL(
-			long groupId, boolean catalogBasePriceList)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
+	public static List<CommercePriceList> findByG_CBPL(
+		long groupId, boolean catalogBasePriceList) {
 
 		return getPersistence().findByG_CBPL(groupId, catalogBasePriceList);
 	}
 
 	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param catalogBasePriceList the catalog base price list
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @return the range of matching commerce price lists
 	 */
-	public static CommercePriceList fetchByG_CBPL(
-		long groupId, boolean catalogBasePriceList) {
+	public static List<CommercePriceList> findByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end) {
 
-		return getPersistence().fetchByG_CBPL(groupId, catalogBasePriceList);
+		return getPersistence().findByG_CBPL(
+			groupId, catalogBasePriceList, start, end);
 	}
 
 	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param catalogBasePriceList the catalog base price list
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price lists
+	 */
+	public static List<CommercePriceList> findByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return getPersistence().findByG_CBPL(
+			groupId, catalogBasePriceList, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 * @return the ordered range of matching commerce price lists
 	 */
-	public static CommercePriceList fetchByG_CBPL(
-		long groupId, boolean catalogBasePriceList, boolean useFinderCache) {
+	public static List<CommercePriceList> findByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByG_CBPL(
-			groupId, catalogBasePriceList, useFinderCache);
+		return getPersistence().findByG_CBPL(
+			groupId, catalogBasePriceList, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
-	 * Removes the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; from the database.
+	 * Returns the first commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param catalogBasePriceList the catalog base price list
-	 * @return the commerce price list that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
 	 */
-	public static CommercePriceList removeByG_CBPL(
-			long groupId, boolean catalogBasePriceList)
+	public static CommercePriceList findByG_CBPL_First(
+			long groupId, boolean catalogBasePriceList,
+			OrderByComparator<CommercePriceList> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.
 			NoSuchPriceListException {
 
-		return getPersistence().removeByG_CBPL(groupId, catalogBasePriceList);
+		return getPersistence().findByG_CBPL_First(
+			groupId, catalogBasePriceList, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	public static CommercePriceList fetchByG_CBPL_First(
+		long groupId, boolean catalogBasePriceList,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return getPersistence().fetchByG_CBPL_First(
+			groupId, catalogBasePriceList, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 */
+	public static CommercePriceList findByG_CBPL_Last(
+			long groupId, boolean catalogBasePriceList,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws com.liferay.commerce.price.list.exception.
+			NoSuchPriceListException {
+
+		return getPersistence().findByG_CBPL_Last(
+			groupId, catalogBasePriceList, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	public static CommercePriceList fetchByG_CBPL_Last(
+		long groupId, boolean catalogBasePriceList,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return getPersistence().fetchByG_CBPL_Last(
+			groupId, catalogBasePriceList, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param commercePriceListId the primary key of the current commerce price list
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price list
+	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
+	 */
+	public static CommercePriceList[] findByG_CBPL_PrevAndNext(
+			long commercePriceListId, long groupId,
+			boolean catalogBasePriceList,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws com.liferay.commerce.price.list.exception.
+			NoSuchPriceListException {
+
+		return getPersistence().findByG_CBPL_PrevAndNext(
+			commercePriceListId, groupId, catalogBasePriceList,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @return the matching commerce price lists that the user has permission to view
+	 */
+	public static List<CommercePriceList> filterFindByG_CBPL(
+		long groupId, boolean catalogBasePriceList) {
+
+		return getPersistence().filterFindByG_CBPL(
+			groupId, catalogBasePriceList);
+	}
+
+	/**
+	 * Returns a range of all the commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @return the range of matching commerce price lists that the user has permission to view
+	 */
+	public static List<CommercePriceList> filterFindByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end) {
+
+		return getPersistence().filterFindByG_CBPL(
+			groupId, catalogBasePriceList, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price lists that the user has permissions to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param start the lower bound of the range of commerce price lists
+	 * @param end the upper bound of the range of commerce price lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price lists that the user has permission to view
+	 */
+	public static List<CommercePriceList> filterFindByG_CBPL(
+		long groupId, boolean catalogBasePriceList, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		return getPersistence().filterFindByG_CBPL(
+			groupId, catalogBasePriceList, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param commercePriceListId the primary key of the current commerce price list
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price list
+	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
+	 */
+	public static CommercePriceList[] filterFindByG_CBPL_PrevAndNext(
+			long commercePriceListId, long groupId,
+			boolean catalogBasePriceList,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws com.liferay.commerce.price.list.exception.
+			NoSuchPriceListException {
+
+		return getPersistence().filterFindByG_CBPL_PrevAndNext(
+			commercePriceListId, groupId, catalogBasePriceList,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce price lists where groupId = &#63; and catalogBasePriceList = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 */
+	public static void removeByG_CBPL(
+		long groupId, boolean catalogBasePriceList) {
+
+		getPersistence().removeByG_CBPL(groupId, catalogBasePriceList);
 	}
 
 	/**
@@ -1284,6 +1604,20 @@ public class CommercePriceListUtil {
 		long groupId, boolean catalogBasePriceList) {
 
 		return getPersistence().countByG_CBPL(groupId, catalogBasePriceList);
+	}
+
+	/**
+	 * Returns the number of commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param catalogBasePriceList the catalog base price list
+	 * @return the number of matching commerce price lists that the user has permission to view
+	 */
+	public static int filterCountByG_CBPL(
+		long groupId, boolean catalogBasePriceList) {
+
+		return getPersistence().filterCountByG_CBPL(
+			groupId, catalogBasePriceList);
 	}
 
 	/**
@@ -2614,88 +2948,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().filterCountByG_C_NotS(
 			groupIds, companyId, status);
-	}
-
-	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @return the matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByG_C_T(
-			long groupId, boolean catalogBasePriceList, String type)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_T(
-			groupId, catalogBasePriceList, type);
-	}
-
-	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_C_T(
-		long groupId, boolean catalogBasePriceList, String type) {
-
-		return getPersistence().fetchByG_C_T(
-			groupId, catalogBasePriceList, type);
-	}
-
-	/**
-	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_C_T(
-		long groupId, boolean catalogBasePriceList, String type,
-		boolean useFinderCache) {
-
-		return getPersistence().fetchByG_C_T(
-			groupId, catalogBasePriceList, type, useFinderCache);
-	}
-
-	/**
-	 * Removes the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @return the commerce price list that was removed
-	 */
-	public static CommercePriceList removeByG_C_T(
-			long groupId, boolean catalogBasePriceList, String type)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().removeByG_C_T(
-			groupId, catalogBasePriceList, type);
-	}
-
-	/**
-	 * Returns the number of commerce price lists where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @return the number of matching commerce price lists
-	 */
-	public static int countByG_C_T(
-		long groupId, boolean catalogBasePriceList, String type) {
-
-		return getPersistence().countByG_C_T(
-			groupId, catalogBasePriceList, type);
 	}
 
 	/**

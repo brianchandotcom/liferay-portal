@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -50,7 +49,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1412,207 +1410,6 @@ public class CommerceOrderItemPersistenceImpl
 
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"commerceOrderItem.companyId = ?";
-
-	private FinderPath _finderPathFetchByCommerceInventoryBookedQuantityId;
-
-	/**
-	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or throws a <code>NoSuchOrderItemException</code> if it could not be found.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @return the matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	@Override
-	public CommerceOrderItem findByCommerceInventoryBookedQuantityId(
-			long commerceInventoryBookedQuantityId)
-		throws NoSuchOrderItemException {
-
-		CommerceOrderItem commerceOrderItem =
-			fetchByCommerceInventoryBookedQuantityId(
-				commerceInventoryBookedQuantityId);
-
-		if (commerceOrderItem == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("commerceInventoryBookedQuantityId=");
-			sb.append(commerceInventoryBookedQuantityId);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchOrderItemException(sb.toString());
-		}
-
-		return commerceOrderItem;
-	}
-
-	/**
-	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	@Override
-	public CommerceOrderItem fetchByCommerceInventoryBookedQuantityId(
-		long commerceInventoryBookedQuantityId) {
-
-		return fetchByCommerceInventoryBookedQuantityId(
-			commerceInventoryBookedQuantityId, true);
-	}
-
-	/**
-	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	@Override
-	public CommerceOrderItem fetchByCommerceInventoryBookedQuantityId(
-		long commerceInventoryBookedQuantityId, boolean useFinderCache) {
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {commerceInventoryBookedQuantityId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByCommerceInventoryBookedQuantityId, finderArgs,
-				this);
-		}
-
-		if (result instanceof CommerceOrderItem) {
-			CommerceOrderItem commerceOrderItem = (CommerceOrderItem)result;
-
-			if (commerceInventoryBookedQuantityId !=
-					commerceOrderItem.getCommerceInventoryBookedQuantityId()) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_COMMERCEORDERITEM_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCEINVENTORYBOOKEDQUANTITYID_COMMERCEINVENTORYBOOKEDQUANTITYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceInventoryBookedQuantityId);
-
-				List<CommerceOrderItem> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByCommerceInventoryBookedQuantityId,
-							finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									commerceInventoryBookedQuantityId
-								};
-							}
-
-							_log.warn(
-								"CommerceOrderItemPersistenceImpl.fetchByCommerceInventoryBookedQuantityId(long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					CommerceOrderItem commerceOrderItem = list.get(0);
-
-					result = commerceOrderItem;
-
-					cacheResult(commerceOrderItem);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceOrderItem)result;
-		}
-	}
-
-	/**
-	 * Removes the commerce order item where commerceInventoryBookedQuantityId = &#63; from the database.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @return the commerce order item that was removed
-	 */
-	@Override
-	public CommerceOrderItem removeByCommerceInventoryBookedQuantityId(
-			long commerceInventoryBookedQuantityId)
-		throws NoSuchOrderItemException {
-
-		CommerceOrderItem commerceOrderItem =
-			findByCommerceInventoryBookedQuantityId(
-				commerceInventoryBookedQuantityId);
-
-		return remove(commerceOrderItem);
-	}
-
-	/**
-	 * Returns the number of commerce order items where commerceInventoryBookedQuantityId = &#63;.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @return the number of matching commerce order items
-	 */
-	@Override
-	public int countByCommerceInventoryBookedQuantityId(
-		long commerceInventoryBookedQuantityId) {
-
-		CommerceOrderItem commerceOrderItem =
-			fetchByCommerceInventoryBookedQuantityId(
-				commerceInventoryBookedQuantityId);
-
-		if (commerceOrderItem == null) {
-			return 0;
-		}
-
-		return 1;
-	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCEINVENTORYBOOKEDQUANTITYID_COMMERCEINVENTORYBOOKEDQUANTITYID_2 =
-			"commerceOrderItem.commerceInventoryBookedQuantityId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCommerceOrderId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceOrderId;
@@ -6110,13 +5907,6 @@ public class CommerceOrderItemPersistenceImpl
 			commerceOrderItem);
 
 		finderCache.putResult(
-			_finderPathFetchByCommerceInventoryBookedQuantityId,
-			new Object[] {
-				commerceOrderItem.getCommerceInventoryBookedQuantityId()
-			},
-			commerceOrderItem);
-
-		finderCache.putResult(
 			_finderPathFetchByERC_C,
 			new Object[] {
 				commerceOrderItem.getExternalReferenceCode(),
@@ -6206,14 +5996,6 @@ public class CommerceOrderItemPersistenceImpl
 
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, commerceOrderItemModelImpl);
-
-		args = new Object[] {
-			commerceOrderItemModelImpl.getCommerceInventoryBookedQuantityId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCommerceInventoryBookedQuantityId, args,
-			commerceOrderItemModelImpl);
 
 		args = new Object[] {
 			commerceOrderItemModelImpl.getExternalReferenceCode(),
@@ -6808,12 +6590,6 @@ public class CommerceOrderItemPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
-
-		_finderPathFetchByCommerceInventoryBookedQuantityId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY,
-			"fetchByCommerceInventoryBookedQuantityId",
-			new String[] {Long.class.getName()},
-			new String[] {"CIBookedQuantityId"}, true);
 
 		_finderPathWithPaginationFindByCommerceOrderId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceOrderId",

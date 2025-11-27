@@ -121,7 +121,8 @@ public class DisplayPageTypeContext {
 
 	public LayoutDisplayPageObjectProvider<?>
 		getLayoutDisplayPageObjectProvider(
-			String externalReferenceCode, String scopeExternalReferenceCode) {
+			String externalReferenceCode, long groupId,
+			String scopeExternalReferenceCode) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			getLayoutDisplayPageProvider();
@@ -134,7 +135,7 @@ public class DisplayPageTypeContext {
 			externalReferenceCode, scopeExternalReferenceCode);
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-			new InfoItemReference(_className, infoItemIdentifier));
+			groupId, new InfoItemReference(_className, infoItemIdentifier));
 	}
 
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider() {

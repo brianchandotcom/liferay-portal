@@ -112,7 +112,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		try {
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
-					externalReferenceCode, scopeExternalReferenceCode);
+					externalReferenceCode, siteNavigationMenuItem.getGroupId(),
+					scopeExternalReferenceCode);
 
 			if (layoutDisplayPageObjectProvider == null) {
 				return false;
@@ -305,6 +306,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
 				typeSettingsUnicodeProperties.get("externalReferenceCode"),
+				siteNavigationMenuItem.getGroupId(),
 				typeSettingsUnicodeProperties.get(
 					"scopeExternalReferenceCode"));
 

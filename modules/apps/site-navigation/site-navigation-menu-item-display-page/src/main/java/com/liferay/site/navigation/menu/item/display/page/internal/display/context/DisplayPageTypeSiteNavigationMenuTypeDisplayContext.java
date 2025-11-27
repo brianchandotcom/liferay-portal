@@ -458,7 +458,9 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 		_layoutDisplayPageObjectProvider =
 			_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
-				getExternalReferenceCode(), getScopeExternalReferenceCode());
+				getExternalReferenceCode(),
+				_siteNavigationMenuItem.getGroupId(),
+				getScopeExternalReferenceCode());
 
 		return _layoutDisplayPageObjectProvider;
 	}

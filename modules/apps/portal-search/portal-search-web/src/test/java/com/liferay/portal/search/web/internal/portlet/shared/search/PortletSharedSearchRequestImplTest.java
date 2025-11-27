@@ -52,13 +52,10 @@ public class PortletSharedSearchRequestImplTest {
 		ReflectionTestUtil.setFieldValue(
 			portletSharedSearchRequest, "_portletRegistry", _portletRegistry);
 
-		FragmentEntryLink fragmentEntryLink1 = _mockFragmentEntryLink(
-			"portletA", true);
-		FragmentEntryLink fragmentEntryLink2 = _mockFragmentEntryLink(
-			"portletB", false);
-
 		Mockito.doReturn(
-			List.of(fragmentEntryLink1, fragmentEntryLink2)
+			List.of(
+				_mockFragmentEntryLink("portletA", true),
+				_mockFragmentEntryLink("portletB", false))
 		).when(
 			fragmentEntryLinkLocalService
 		).getFragmentEntryLinksBySegmentsExperienceId(
@@ -79,12 +76,11 @@ public class PortletSharedSearchRequestImplTest {
 			layout
 		).getPlid();
 
-		Set<String> result = ReflectionTestUtil.invoke(
-			portletSharedSearchRequest, "_getSegmentExperiencePortletIds",
-			new Class<?>[] {Layout.class, long.class}, layout, 123L);
-
 		Assert.assertEquals(
-			Set.of("portletA_INSTANCE_rdna", "portletB_INSTANCE_rdna"), result);
+			Set.of("portletA_INSTANCE_rdna", "portletB_INSTANCE_rdna"),
+			ReflectionTestUtil.<Set<String>>invoke(
+				portletSharedSearchRequest, "_getSegmentExperiencePortletIds",
+				new Class<?>[] {Layout.class, long.class}, layout, 123L));
 	}
 
 	private FragmentEntryLink _mockFragmentEntryLink(
@@ -105,9 +101,9 @@ public class PortletSharedSearchRequestImplTest {
 			fragmentEntryLink.getHtml()
 		).thenReturn(
 			String.format(
-				_FRAGMENT_HTML_TEMPLATE, RandomTestUtil.randomString(),
+				"<div class=\"fragment\">%s<lfr-widget-%s id=\"%s\">%s</div>",
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString())
+				RandomTestUtil.randomString(), RandomTestUtil.randomString())
 		);
 
 		Mockito.when(
@@ -132,9 +128,6 @@ public class PortletSharedSearchRequestImplTest {
 
 		return fragmentEntryLink;
 	}
-
-	private static final String _FRAGMENT_HTML_TEMPLATE =
-		"<div class=\"fragment\">%s<lfr-widget-%s id=\"%s\">%s</div>";
 
 	private final PortletRegistry _portletRegistry = Mockito.mock(
 		PortletRegistry.class);

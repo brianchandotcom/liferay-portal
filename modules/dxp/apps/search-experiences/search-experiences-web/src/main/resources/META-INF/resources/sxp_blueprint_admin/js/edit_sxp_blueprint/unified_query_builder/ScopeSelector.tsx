@@ -11,22 +11,9 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import React, {useContext, useMemo, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
-import {STATUS} from '../UQBEditSXPBlueprintForm';
+import {ACTIVE, INACTIVE, STATUS} from '../../utils/constants';
+import {Scope, Sorting} from '../../utils/types';
 import CustomPanel from './shared/CustomPanel';
-
-type Status = STATUS.ACTIVE | STATUS.INACTIVE;
-
-type Scope = {
-	externalReferenceCode: string;
-	name: string;
-	status: Status;
-	type: string;
-};
-
-type Sorting = {
-	column: React.Key;
-	direction: 'ascending' | 'descending';
-};
 
 export default function ScopeSelector({
 	scope,
@@ -194,13 +181,11 @@ export default function ScopeSelector({
 									<Cell>
 										{scopeItem.status === STATUS.ACTIVE ? (
 											<ClayLabel displayType="success">
-												{Liferay.Language.get('active')}
+												{ACTIVE}
 											</ClayLabel>
 										) : (
 											<ClayLabel displayType="secondary">
-												{Liferay.Language.get(
-													'inactive'
-												)}
+												{INACTIVE}
 											</ClayLabel>
 										)}
 									</Cell>

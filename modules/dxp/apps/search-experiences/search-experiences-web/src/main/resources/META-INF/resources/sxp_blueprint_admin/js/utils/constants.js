@@ -33,6 +33,11 @@ export const GROUP_EXTERNAL_REFERENCE_CODES = 'group_external_reference_codes';
 export const GROUP_ID = 'group_id';
 export const GROUP_IDS = 'group_ids';
 
+export const STATUS = {
+	ACTIVE: 'active',
+	INACTIVE: 'inactive',
+};
+
 export const SXP_ELEMENT_PREFIX = {
 	QUERY: 'querySXPElement',
 };

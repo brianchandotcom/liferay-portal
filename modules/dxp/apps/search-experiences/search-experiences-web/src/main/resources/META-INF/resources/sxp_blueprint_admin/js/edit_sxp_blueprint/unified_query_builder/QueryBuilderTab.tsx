@@ -11,6 +11,12 @@ import {
 	SIDEBAR_STATE,
 	getStorageAddSXPElementSidebar,
 } from '../../utils/sessionStorage';
+import {
+	ElementInstances,
+	IndexFields,
+	Scope,
+	SearchableTypes,
+} from '../../utils/types';
 import {SIDEBAR_TYPES} from '../../utils/types/sidebarTypes';
 import QuerySettings from '../query_builder_tab/QuerySettings';
 import QuerySXPElements from './QuerySXPElements';
@@ -19,6 +25,7 @@ import CustomPanel from './shared/CustomPanel';
 
 function QueryBuilderTab({
 	applyIndexerClauses,
+	assetSubtypesMap,
 	clauseContributorsList = [],
 	elementInstances,
 	entityJSON,
@@ -28,21 +35,46 @@ function QueryBuilderTab({
 	indexFields,
 	isIndexCompany,
 	onApplyIndexerClausesChange,
+	onAssetSubtypesMapChange,
 	onBlur,
 	onChange,
 	onDeleteSXPElement,
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
-	onAssetSubtypesMapChange,
+	openSidebar,
 	scope,
 	searchableTypes = [],
 	setFieldTouched,
 	setFieldValue,
-	openSidebar,
 	setOpenSidebar,
 	setScope,
-	assetSubtypesMap,
 	touched = [],
+}: {
+	applyIndexerClauses: boolean;
+	assetSubtypesMap: {[key: string]: string};
+	clauseContributorsList: string[];
+	elementInstances: ElementInstances[];
+	entityJSON: {[key: string]: any};
+	errors: {[key: string]: any}[];
+	frameworkConfig: {[key: string]: any};
+	indexFields: IndexFields[];
+	isIndexCompany: boolean;
+	isSubmitting: boolean;
+	onApplyIndexerClausesChange: (value: object) => void;
+	onAssetSubtypesMapChange: (value: object) => void;
+	onBlur: (event: React.FocusEvent<any>) => void;
+	onChange: (event: React.ChangeEvent<any>) => void;
+	onDeleteSXPElement: (id: number) => void;
+	onFetchSearchableTypes: () => void;
+	onFrameworkConfigChange: (value: object) => void;
+	openSidebar: keyof typeof SIDEBAR_TYPES | '';
+	scope: Scope[];
+	searchableTypes: SearchableTypes[];
+	setFieldTouched: (field: string, touched?: boolean) => void;
+	setFieldValue: (field: string, value: any) => void;
+	setOpenSidebar: (sidebarType: keyof typeof SIDEBAR_TYPES) => void;
+	setScope: (scope: Scope[]) => void;
+	touched: ({[key: string]: any} | undefined)[];
 }) {
 
 	/**
@@ -64,7 +96,7 @@ function QueryBuilderTab({
 	 * @param {visible} boolean Defaults to false if sidebar is open.
 	 */
 	const _handleChangeSidebarVisibility =
-		(type) =>
+		(type: string) =>
 		(visible = openSidebar !== type) => {
 			if (visible) {
 				setOpenSidebar(type);

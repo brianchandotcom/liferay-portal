@@ -24,7 +24,7 @@ import PageToolbar from '../shared/PageToolbar';
 import Sidebar from '../shared/Sidebar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
-import {DEFAULT_INDEX_CONFIGURATION} from '../utils/constants';
+import {DEFAULT_INDEX_CONFIGURATION, STATUS} from '../utils/constants';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
 import addParams from '../utils/fetch/add_params';
 import fetchData, {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
@@ -71,11 +71,6 @@ import QueryBuilderTab from './unified_query_builder/QueryBuilderTab';
 const TABS = {
 	'query-builder': Liferay.Language.get('query-builder'),
 	'configuration': Liferay.Language.get('configuration'),
-};
-
-export const STATUS = {
-	ACTIVE: 'active',
-	INACTIVE: 'inactive',
 };
 
 /* eslint-enable sort-keys */

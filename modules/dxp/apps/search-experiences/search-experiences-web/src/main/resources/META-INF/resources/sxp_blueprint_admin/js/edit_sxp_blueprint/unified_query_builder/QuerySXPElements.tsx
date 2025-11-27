@@ -13,23 +13,39 @@ import SXPElement from '../../shared/sxp_element/index';
 import {SXP_ELEMENT_PREFIX} from '../../utils/constants';
 import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
 import isCustomJSONSXPElement from '../../utils/sxp_element/is_custom_json_sxp_element';
+import {ElementInstances, IndexFields} from '../../utils/types';
 import CustomPanel from './shared/CustomPanel';
 
 function QuerySXPElements({
 	elementInstances,
 	entityJSON,
 	errors = [],
+	indexFields,
 	isIndexCompany,
 	isSubmitting,
-	indexFields,
 	onBlur,
 	onChange,
-	onDeleteSXPElement,
 	onChangeAddSXPElementVisibility,
+	onDeleteSXPElement,
 	searchableTypes,
 	setFieldTouched,
 	setFieldValue,
 	touched = [],
+}: {
+	elementInstances: ElementInstances[];
+	entityJSON: {[key: string]: any};
+	errors: {[key: string]: any}[];
+	indexFields: IndexFields[];
+	isIndexCompany: boolean;
+	isSubmitting: boolean;
+	onBlur: (event: React.FocusEvent<any>) => void;
+	onChange: (event: React.ChangeEvent<any>) => void;
+	onChangeAddSXPElementVisibility: (visible?: boolean) => void;
+	onDeleteSXPElement: (id: number) => void;
+	searchableTypes: {[key: string]: string}[];
+	setFieldTouched: (field: string, touched?: boolean) => void;
+	setFieldValue: (field: string, value: any) => void;
+	touched: ({[key: string]: any} | undefined)[];
 }) {
 	const [collapseAll, setCollapseAll] = useState(false);
 
@@ -41,7 +57,7 @@ function QuerySXPElements({
 
 	return (
 		<CustomPanel
-			className="query-sxp-elements"
+			classNames="query-sxp-elements"
 			headerContent={
 				<>
 					<ClayButton

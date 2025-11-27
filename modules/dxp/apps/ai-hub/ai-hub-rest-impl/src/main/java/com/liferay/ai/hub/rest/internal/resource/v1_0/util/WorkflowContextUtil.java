@@ -7,6 +7,7 @@ package com.liferay.ai.hub.rest.internal.resource.v1_0.util;
 
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -44,7 +45,10 @@ public class WorkflowContextUtil {
 					sseEventSink.send(
 						sse.newEventBuilder(
 						).data(
-							String.class, data
+							String.class,
+							JSONUtil.put(
+								"data", data
+							).toString()
 						).name(
 							name
 						).build());

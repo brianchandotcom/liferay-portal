@@ -9,13 +9,14 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.internal.odata.entity.v1_0.ObjectEntryFolderEntityModel;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
-import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryFolderService;
@@ -66,10 +67,16 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-entry-folder.properties",
+	property = {
+		"batch.engine.task.item.delegate.name=depot-object-entry-folder",
+		"export.import.vulcan.batch.engine.task.item.delegate=true"
+	},
 	scope = ServiceScope.PROTOTYPE, service = ObjectEntryFolderResource.class
 )
 public class ObjectEntryFolderResourceImpl
-	extends BaseObjectEntryFolderResourceImpl {
+	extends BaseObjectEntryFolderResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate
+		<ObjectEntryFolder> {
 
 	@Override
 	public void deleteObjectEntryFolder(Long objectEntryFolderId)
@@ -112,6 +119,41 @@ public class ObjectEntryFolderResourceImpl
 					com.liferay.object.model.ObjectEntryFolder.class.getName()),
 				contextCompany.getCompanyId(), _expandoBridgeIndexer,
 				_expandoColumnLocalService, _expandoTableLocalService));
+	}
+
+	@Override
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "objectEntryFolders";
+			}
+
+			@Override
+			public String getModelClassName() {
+				return com.liferay.object.model.ObjectEntryFolder.class.
+					getName();
+			}
+
+			@Override
+			public String getPortletId() {
+				return ObjectPortletKeys.OBJECT_ENTRY_FOLDER;
+			}
+
+			@Override
+			public String getResourceClassName() {
+				return ObjectEntryFolderResourceImpl.class.getName();
+			}
+
+			@Override
+			public ExportImportVulcanBatchEngineTaskItemDelegate.Scope
+				getScope() {
+
+				return Scope.DEPOT;
+			}
+
+		};
 	}
 
 	@Override
@@ -526,7 +568,7 @@ public class ObjectEntryFolderResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return ObjectConstants.RESOURCE_NAME;
+		return ObjectPortletKeys.OBJECT_ENTRY_FOLDER;
 	}
 
 	@Override

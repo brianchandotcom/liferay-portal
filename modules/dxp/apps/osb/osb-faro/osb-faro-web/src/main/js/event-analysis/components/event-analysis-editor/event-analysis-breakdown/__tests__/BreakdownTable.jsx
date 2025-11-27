@@ -215,11 +215,8 @@ describe('BreakdownTable', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		const spanElement = getByText('...');
+		const spanElement = getByText('http://localhost:7400/新しいサイト]');
 
-		expect(spanElement).toHaveAttribute(
-			'title',
-			'http://localhost:7400/新しいサイト]'
-		);
+		expect(spanElement).toBeInTheDocument();
 	});
 });

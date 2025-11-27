@@ -9,22 +9,14 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import React, {useState} from 'react';
 
-import createAssetAction from '../props_transformer/actions/createAssetAction';
-import createFolderAction from '../props_transformer/actions/createFolderAction';
+import ACTIONS from '../props_transformer/actions/creationMenuActions';
 import manageConnectedSitesAction, {
 	ManageConnectedSitesData,
 } from '../props_transformer/actions/manageConnectedSitesAction';
 import manageMembersAction, {
 	ManageMembersData,
 } from '../props_transformer/actions/manageMembersAction';
-import multipleFilesUploadAction from '../props_transformer/actions/multipleFilesUploadAction';
 import addOnClickToCreationMenuItems from '../props_transformer/utils/addOnClickToCreationMenuItems';
-
-const ACTIONS = {
-	createAsset: createAssetAction,
-	createFolder: createFolderAction,
-	uploadMultipleFiles: multipleFilesUploadAction,
-};
 
 export enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
@@ -87,9 +79,9 @@ export default function SpaceSummaryHeader({
 					{addOnClickToCreationMenuItems(
 						creationMenu.primaryItems,
 						ACTIONS
-					).map((item: any, i: number) => (
+					).map((item: any, index: number) => (
 						<ClayDropDown.Item
-							key={i}
+							key={index}
 							onClick={() => {
 								setActive(false);
 								item.onClick({loadData});

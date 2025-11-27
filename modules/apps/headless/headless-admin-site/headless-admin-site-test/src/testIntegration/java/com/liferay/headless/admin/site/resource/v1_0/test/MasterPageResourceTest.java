@@ -388,9 +388,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				null, masterPage.getExternalReferenceCode(),
 				fileEntry.getExternalReferenceCode(), thumbnailURL));
 
+		_testPutSiteMasterPageWithDropZonePageElement();
 		_testPutSiteMasterPageWithPageSpecifications();
 		_testPutSiteMasterPageWithThumbnail();
-		_testPutSiteSitePageWithDropZonePageElement();
 
 		_enableLocalStaging();
 
@@ -1251,7 +1251,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			true, putMasterPage.getExternalReferenceCode(), null);
 	}
 
-	private void _testPutSiteSitePageWithDropZonePageElement()
+	private void _testPutSiteMasterPageWithDropZonePageElement()
 		throws Exception {
 
 		MasterPageResource masterPageResource = _getMasterPageResource();

@@ -49,7 +49,9 @@ export default class WritingAssistant extends Plugin {
 
 		Object.values(EActionType).forEach((type) => {
 			eventSource.addEventListener(type, (event) => {
-				this._changeContent(event.data);
+				const dataJSON = JSON.parse(event.data);
+
+				this._changeContent(dataJSON['data']);
 			});
 		});
 	}

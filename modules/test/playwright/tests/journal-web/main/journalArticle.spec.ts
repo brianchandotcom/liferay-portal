@@ -1970,6 +1970,8 @@ ckeditor4Test(
 		await expect(moonImage).toBeVisible();
 		await expect(moonImage).toHaveAttribute('data-fileentryid');
 
+		const moonImageFileEntryId = moonImage.getAttribute('data-fileentryid');
+
 		await moonImage.dblclick();
 
 		await ckeditor4Page.contextMenu.getByText('Browse Server').click();
@@ -1990,6 +1992,10 @@ ckeditor4Test(
 
 		await expect(satelliteImage).toBeVisible();
 		await expect(satelliteImage).toHaveAttribute('data-fileentryid');
+
+		const satelliteImageFileEntryId = satelliteImage.getAttribute('data-fileentryid');
+
+		await expect(moonImageFileEntryId).not.toBe(satelliteImageFileEntryId);
 	}
 );
 

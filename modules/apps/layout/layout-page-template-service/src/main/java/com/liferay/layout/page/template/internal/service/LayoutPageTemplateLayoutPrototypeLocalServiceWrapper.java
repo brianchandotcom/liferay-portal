@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.internal.service;
 
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -41,8 +42,11 @@ public class LayoutPageTemplateLayoutPrototypeLocalServiceWrapper
 		LayoutPrototype layoutPrototype = super.addLayoutPrototype(
 			userId, companyId, nameMap, descriptionMap, active, serviceContext);
 
-		if (ExportImportThreadLocal.isStagingInProcess() ||
-			ExportImportThreadLocal.isImportInProcess()) {
+		// Remove this condition when private pages are not supported
+
+		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
+			(ExportImportThreadLocal.isStagingInProcess() ||
+			 ExportImportThreadLocal.isImportInProcess())) {
 
 			return layoutPrototype;
 		}

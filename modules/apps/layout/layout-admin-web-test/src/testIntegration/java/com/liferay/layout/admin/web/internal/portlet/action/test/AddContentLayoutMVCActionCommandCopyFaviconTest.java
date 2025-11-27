@@ -86,7 +86,9 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 
 		FileEntry fileEntry = _addFileEntry(_expectedBytes, _group);
 
-		layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
+		layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
+
+		layout.setFaviconFileEntryScopeERC(null);
 
 		_layoutLocalService.updateLayout(layout);
 	}

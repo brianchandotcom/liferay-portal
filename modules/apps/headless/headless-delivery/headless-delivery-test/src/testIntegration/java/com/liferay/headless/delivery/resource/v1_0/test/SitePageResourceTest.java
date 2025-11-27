@@ -1358,7 +1358,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertNotNull(layout);
 
 		Assert.assertEquals(
-			dlFileEntry.getFileEntryId(), layout.getFaviconFileEntryId());
+			dlFileEntry.getExternalReferenceCode(),
+			layout.getFaviconFileEntryERC());
+		Assert.assertEquals(
+			dlFileEntry.getGroupId(), layout.getFaviconFileEntryGroupId());
 	}
 
 	private void _testPostSiteSitePageSuccessPagePermissions()

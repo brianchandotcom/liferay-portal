@@ -93,7 +93,9 @@ public class LayoutGetFaviconURLTest {
 
 		FileEntry fileEntry = _addFileEntry(expectedBytes);
 
-		_layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
+		_layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
+
+		_layout.setFaviconFileEntryScopeERC(null);
 
 		Assert.assertArrayEquals(
 			expectedBytes, _getBytes(_layout.getFaviconURL()));
@@ -105,7 +107,9 @@ public class LayoutGetFaviconURLTest {
 
 		FileEntry fileEntry = _addFileEntry(expectedBytes);
 
-		_layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
+		_layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
+
+		_layout.setFaviconFileEntryScopeERC(null);
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
@@ -116,7 +120,7 @@ public class LayoutGetFaviconURLTest {
 			_layout.getGroupId(), _layout.isPrivateLayout(),
 			_layout.getLayoutId(), _layout.getTypeSettings(), null,
 			_layout.getThemeId(), _layout.getColorSchemeId(),
-			_layout.getStyleBookEntryERC(), _layout.getCss(), 0,
+			_layout.getStyleBookEntryERC(), _layout.getCss(), null, null,
 			_layout.getMasterLayoutPageTemplateEntryERC());
 
 		Layout layout = _layoutLocalService.fetchLayout(_layout.getPlid());
@@ -132,7 +136,9 @@ public class LayoutGetFaviconURLTest {
 
 		FileEntry fileEntry = _addFileEntry(expectedBytes);
 
-		_layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
+		_layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
+
+		_layout.setFaviconFileEntryScopeERC(null);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
@@ -180,7 +186,10 @@ public class LayoutGetFaviconURLTest {
 
 		FileEntry layoutFaviconFileEntry = _addFileEntry(layoutFaviconBytes);
 
-		_layout.setFaviconFileEntryId(layoutFaviconFileEntry.getFileEntryId());
+		_layout.setFaviconFileEntryERC(
+			layoutFaviconFileEntry.getExternalReferenceCode());
+
+		_layout.setFaviconFileEntryScopeERC(null);
 
 		Assert.assertArrayEquals(
 			layoutFaviconBytes, _getBytes(_layout.getFaviconURL()));
@@ -202,8 +211,10 @@ public class LayoutGetFaviconURLTest {
 		FileEntry masterLayoutFaviconFileEntry = _addFileEntry(
 			_getExpectedBytes("classic_logo.png"));
 
-		masterLayout.setFaviconFileEntryId(
-			masterLayoutFaviconFileEntry.getFileEntryId());
+		masterLayout.setFaviconFileEntryERC(
+			masterLayoutFaviconFileEntry.getExternalReferenceCode());
+
+		masterLayout.setFaviconFileEntryScopeERC(null);
 
 		_layoutLocalService.updateLayout(masterLayout);
 
@@ -214,7 +225,10 @@ public class LayoutGetFaviconURLTest {
 
 		FileEntry layoutFaviconFileEntry = _addFileEntry(layoutFaviconBytes);
 
-		_layout.setFaviconFileEntryId(layoutFaviconFileEntry.getFileEntryId());
+		_layout.setFaviconFileEntryERC(
+			layoutFaviconFileEntry.getExternalReferenceCode());
+
+		_layout.setFaviconFileEntryScopeERC(null);
 
 		Assert.assertArrayEquals(
 			layoutFaviconBytes, _getBytes(_layout.getFaviconURL()));

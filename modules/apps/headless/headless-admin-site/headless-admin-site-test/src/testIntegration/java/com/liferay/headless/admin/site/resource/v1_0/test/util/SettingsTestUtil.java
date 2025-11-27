@@ -84,7 +84,10 @@ public class SettingsTestUtil {
 		FavIcon favIcon = settings.getFavIcon();
 
 		if (favIcon == null) {
-			Assert.assertEquals(0, layout.getFaviconFileEntryId());
+			Assert.assertTrue(
+				Validator.isNull(layout.getFaviconFileEntryERC()));
+			Assert.assertTrue(
+				Validator.isNull(layout.getFaviconFileEntryScopeERC()));
 		}
 		else if (favIcon instanceof FavIconClientExtension) {
 			favIconClientExtension = (FavIconClientExtension)favIcon;
@@ -97,13 +100,15 @@ public class SettingsTestUtil {
 			Assert.fail("Unexpected class: " + favIcon.getClass());
 		}
 
-		if (layout.getFaviconFileEntryId() == 0) {
+		if (Validator.isNull(layout.getFaviconFileEntryERC())) {
 			Assert.assertNull(favIconItemExternalReference);
 		}
 		else {
 			DLFileEntry dlFileEntry =
-				DLFileEntryLocalServiceUtil.fetchDLFileEntry(
-					layout.getFaviconFileEntryId());
+				DLFileEntryLocalServiceUtil.
+					fetchDLFileEntryByExternalReferenceCode(
+						layout.getFaviconFileEntryERC(),
+						layout.getFaviconFileEntryGroupId());
 
 			Assert.assertEquals(
 				dlFileEntry.getExternalReferenceCode(),

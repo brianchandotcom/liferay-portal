@@ -293,16 +293,18 @@ public class PageDefinitionDTOConverter
 							};
 						}
 
-						long faviconFileEntryId =
-							layout.getFaviconFileEntryId();
+						String faviconFileEntryERC =
+							layout.getFaviconFileEntryERC();
 
-						if (faviconFileEntryId == 0) {
+						if (Validator.isNull(faviconFileEntryERC)) {
 							return null;
 						}
 
 						return ContentDocumentUtil.toContentDocument(
 							_dlURLHelper, "settings.favIcon.image",
-							_dlAppService.getFileEntry(faviconFileEntryId),
+							_dlAppService.getFileEntryByExternalReferenceCode(
+								faviconFileEntryERC,
+								layout.getFaviconFileEntryGroupId()),
 							dtoConverterContext.getUriInfo());
 					});
 				setGlobalCSSClientExtensions(

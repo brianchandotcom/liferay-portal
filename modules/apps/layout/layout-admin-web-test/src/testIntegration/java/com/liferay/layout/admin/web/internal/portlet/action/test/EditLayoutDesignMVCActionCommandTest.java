@@ -214,7 +214,7 @@ public class EditLayoutDesignMVCActionCommandTest {
 			draftLayout.getRobotsMap(), draftLayout.getType(),
 			draftLayout.isHidden(), draftLayout.getFriendlyURLMap(), false,
 			null, styleBookEntry.getExternalReferenceCode(),
-			fileEntry.getFileEntryId(),
+			fileEntry.getExternalReferenceCode(), null,
 			masterLayoutPageTemplateEntry.getExternalReferenceCode(),
 			serviceContext);
 
@@ -240,8 +240,14 @@ public class EditLayoutDesignMVCActionCommandTest {
 			draftLayout.getPlid());
 
 		Assert.assertEquals(
-			draftLayout.getFaviconFileEntryId(),
-			updatedDraftLayout.getFaviconFileEntryId());
+			draftLayout.getFaviconFileEntryERC(),
+			updatedDraftLayout.getFaviconFileEntryERC());
+		Assert.assertEquals(
+			draftLayout.getFaviconFileEntryScopeERC(),
+			updatedDraftLayout.getFaviconFileEntryScopeERC());
+		Assert.assertEquals(
+			draftLayout.getFaviconFileEntryGroupId(),
+			updatedDraftLayout.getFaviconFileEntryGroupId());
 		Assert.assertEquals(
 			draftLayout.getMasterLayoutPlid(),
 			updatedDraftLayout.getMasterLayoutPlid());

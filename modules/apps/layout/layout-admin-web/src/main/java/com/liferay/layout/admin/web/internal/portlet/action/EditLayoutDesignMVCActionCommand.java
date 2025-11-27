@@ -216,9 +216,12 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 				uploadPortletRequest, "styleBookEntryERC",
 				layout.getStyleBookEntryERC());
 
-			long faviconFileEntryId = ParamUtil.getLong(
-				uploadPortletRequest, "faviconFileEntryId",
-				layout.getFaviconFileEntryId());
+			String faviconFileEntryERC = ParamUtil.getString(
+				uploadPortletRequest, "faviconFileEntryERC",
+				layout.getFaviconFileEntryERC());
+			String faviconFileEntryScopeERC = ParamUtil.getString(
+				uploadPortletRequest, "faviconFileEntryScopeERC",
+				layout.getFaviconFileEntryScopeERC());
 			String masterLayoutPageTemplateEntryERC = ParamUtil.getString(
 				uploadPortletRequest, "masterLayoutPageTemplateEntryERC",
 				layout.getMasterLayoutPageTemplateEntryERC());
@@ -255,8 +258,9 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 				layout.getTitleMap(), layout.getDescriptionMap(),
 				layout.getKeywordsMap(), layout.getRobotsMap(),
 				layout.getType(), layout.isHidden(), layout.getFriendlyURLMap(),
-				!deleteLogo, iconBytes, styleBookEntryERC, faviconFileEntryId,
-				masterLayoutPageTemplateEntryERC, serviceContext);
+				!deleteLogo, iconBytes, styleBookEntryERC, faviconFileEntryERC,
+				faviconFileEntryScopeERC, masterLayoutPageTemplateEntryERC,
+				serviceContext);
 
 			_updateClientExtensionEntryRels(
 				actionRequest, layout, themeDisplay.getUserId());
@@ -281,7 +285,8 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 					draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
 					draftLayout.getType(), draftLayout.isHidden(),
 					draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
-					styleBookEntryERC, faviconFileEntryId,
+					styleBookEntryERC, faviconFileEntryERC,
+					faviconFileEntryScopeERC,
 					draftLayout.getMasterLayoutPageTemplateEntryERC(),
 					serviceContext);
 

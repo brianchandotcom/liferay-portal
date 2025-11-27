@@ -7,9 +7,14 @@ package com.liferay.headless.admin.list.type.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Locale;
 import java.util.Map;
@@ -45,11 +50,13 @@ public class ListTypeEntryUtil {
 	}
 
 	public static ListTypeEntry toListTypeEntry(
-		Map<String, Map<String, String>> actions, Locale locale,
-		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry) {
+		Map<String, Map<String, String>> actions, Locale locale, Portal portal,
+		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry,
+		UriInfo uriInfo, User user) {
 
 		ListTypeEntry listTypeEntry = new ListTypeEntry() {
 			{
+				setCreator(() -> CreatorUtil.toCreator(portal, uriInfo, user));
 				setDateCreated(serviceBuilderListTypeEntry::getCreateDate);
 				setDateModified(serviceBuilderListTypeEntry::getModifiedDate);
 				setExternalReferenceCode(

@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -129,7 +131,9 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 
 				return ListTypeEntryUtil.toListTypeEntry(
 					_getActions(listTypeEntry),
-					contextAcceptLanguage.getPreferredLocale(), listTypeEntry);
+					contextAcceptLanguage.getPreferredLocale(), _portal,
+					listTypeEntry, contextUriInfo,
+					_userLocalService.fetchUser(listTypeEntry.getUserId()));
 			});
 	}
 
@@ -137,9 +141,13 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 	public ListTypeEntry getListTypeEntry(Long listTypeEntryId)
 		throws Exception {
 
+		com.liferay.list.type.model.ListTypeEntry listTypeEntry =
+			_listTypeEntryService.getListTypeEntry(listTypeEntryId);
+
 		return ListTypeEntryUtil.toListTypeEntry(
-			null, contextAcceptLanguage.getPreferredLocale(),
-			_listTypeEntryService.getListTypeEntry(listTypeEntryId));
+			null, contextAcceptLanguage.getPreferredLocale(), _portal,
+			listTypeEntry, contextUriInfo,
+			_userLocalService.fetchUser(listTypeEntry.getUserId()));
 	}
 
 	@Override
@@ -170,14 +178,15 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 					listTypeDefinitionId);
 
 		return ListTypeEntryUtil.toListTypeEntry(
-			null, contextAcceptLanguage.getPreferredLocale(),
+			null, contextAcceptLanguage.getPreferredLocale(), _portal,
 			_listTypeEntryService.addListTypeEntry(
 				listTypeEntry.getExternalReferenceCode(), listTypeDefinitionId,
 				listTypeEntry.getKey(),
 				LocalizedMapUtil.populateLocalizedMap(
 					serviceBuilderListTypeDefinition.getDefaultLanguageId(),
 					listTypeEntry.getName_i18n(), listTypeEntry.getName()),
-				GetterUtil.getBoolean(listTypeEntry.getSystem())));
+				GetterUtil.getBoolean(listTypeEntry.getSystem())),
+			contextUriInfo, contextUser);
 	}
 
 	@Override
@@ -194,12 +203,15 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 					serviceBuilderListTypeEntry.getListTypeDefinitionId());
 
 		return ListTypeEntryUtil.toListTypeEntry(
-			null, contextAcceptLanguage.getPreferredLocale(),
+			null, contextAcceptLanguage.getPreferredLocale(), _portal,
 			_listTypeEntryService.updateListTypeEntry(
 				listTypeEntry.getExternalReferenceCode(), listTypeEntryId,
 				LocalizedMapUtil.populateLocalizedMap(
 					serviceBuilderListTypeDefinition.getDefaultLanguageId(),
-					listTypeEntry.getName_i18n(), listTypeEntry.getName())));
+					listTypeEntry.getName_i18n(), listTypeEntry.getName())),
+			contextUriInfo,
+			_userLocalService.fetchUser(
+				serviceBuilderListTypeEntry.getUserId()));
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -247,5 +259,11 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 
 	@Reference
 	private ListTypeEntryService _listTypeEntryService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

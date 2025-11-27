@@ -82,16 +82,14 @@ public class ResourceActionPostUpgradeDataCleanupProcess
 				preparedStatement2.setString(1, name);
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
-					if (resultSet2.next()) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								StringBundler.concat(
-									"Resource action ", name,
-									" has not been found but is referenced in ",
-									_dbInspector.normalizeName(
-										"ResourcePermission"),
-									" table"));
-						}
+					if (resultSet2.next() && _log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Resource action ", name,
+								" has not been found but is referenced in ",
+								_dbInspector.normalizeName(
+									"ResourcePermission"),
+								" table"));
 
 						continue;
 					}

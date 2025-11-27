@@ -553,6 +553,21 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return portlets;
 	}
 
+	public long getFaviconFileEntryGroupId() {
+		if (Validator.isNull(getFaviconFileEntryScopeERC())) {
+			return getGroupId();
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			getFaviconFileEntryScopeERC(), getCompanyId());
+
+		if (group == null) {
+			return 0;
+		}
+
+		return group.getGroupId();
+	}
+
 	@Override
 	public String getFaviconURL() {
 		if (_faviconURL != null) {

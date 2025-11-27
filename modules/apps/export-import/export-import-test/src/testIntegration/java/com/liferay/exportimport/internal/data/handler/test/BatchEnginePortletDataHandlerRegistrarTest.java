@@ -129,6 +129,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			FeatureFlagTestUtil.invokeFeatureFlagListeners(
 				TestPropsValues.getCompanyId(), true, "LPD-35914");
 
+			Company company = null;
+
 			try {
 				_assertPortletDataHandler(
 					TestPropsValues.getCompanyId(), portletId,
@@ -154,7 +156,10 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				Assert.assertEquals(
 					1, _getRegisteredPortletDataHandlersCount(portletId));
 
-				Company company = CompanyTestUtil.addCompany();
+				company = CompanyTestUtil.addCompany();
+
+				FeatureFlagTestUtil.invokeFeatureFlagListeners(
+					company.getCompanyId(), true, "LPD-35914");
 
 				_assertPortletDataHandler(
 					company.getCompanyId(), portletId,
@@ -200,6 +205,11 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			finally {
 				FeatureFlagTestUtil.invokeFeatureFlagListeners(
 					TestPropsValues.getCompanyId(), false, "LPD-35914");
+
+				if (company != null) {
+					FeatureFlagTestUtil.invokeFeatureFlagListeners(
+						company.getCompanyId(), false, "LPD-35914");
+				}
 			}
 		}
 	}

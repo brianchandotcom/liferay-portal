@@ -88,8 +88,13 @@ public class ObjectEntryItemDescriptor
 		).put(
 			"scopeExternalReferenceCode",
 			() -> {
-				if ((_objectEntry.getGroupId() ==
-						themeDisplay.getScopeGroupId()) ||
+				long scopeGroupId = themeDisplay.getRefererGroupId();
+
+				if (scopeGroupId <= 0) {
+					scopeGroupId = themeDisplay.getScopeGroupId();
+				}
+
+				if ((_objectEntry.getGroupId() == scopeGroupId) ||
 					Objects.equals(
 						_objectDefinition.getScope(),
 						ObjectDefinitionConstants.SCOPE_COMPANY)) {

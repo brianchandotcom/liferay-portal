@@ -452,7 +452,7 @@
 	</tr>
 	<tr>
 		<td>KEBAB_MENU_OPTION</td>
-		<td>//button[@role='menuitem' and contains(normalize-space(.), '${key_kebabOption}')]</td>
+		<td>//*[@role='menuitem' and contains(normalize-space(.), '${key_kebabOption}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -168,7 +168,14 @@ const RichText = ({
 			newEditingLocale = {localeId};
 		}
 
-		const newValue = convertStringToObject(contents, localeId);
+		const newLocaleEntry = convertStringToObject(contents, localeId);
+
+		const newCurrentValue = {
+			...currentValue,
+			...newLocaleEntry,
+		};
+
+		setCurrentValue(newCurrentValue);
 
 		setCurrentEditingLocale({
 			...newEditingLocale,
@@ -179,11 +186,9 @@ const RichText = ({
 				defaultLocale,
 				editingLocale: newEditingLocale,
 				fieldName,
-				value: newValue,
+				value: newCurrentValue,
 			})
 		);
-
-		setCurrentValue(newValue);
 	};
 
 	useEffect(() => {

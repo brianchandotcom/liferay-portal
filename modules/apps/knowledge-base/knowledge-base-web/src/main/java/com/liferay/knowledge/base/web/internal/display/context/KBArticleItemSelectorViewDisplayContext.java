@@ -116,6 +116,16 @@ public class KBArticleItemSelectorViewDisplayContext {
 		).put(
 			"scopeExternalReferenceCode",
 			() -> {
+				long scopeGroupId = _themeDisplay.getRefererGroupId();
+
+				if (scopeGroupId <= 0) {
+					scopeGroupId = _themeDisplay.getScopeGroupId();
+				}
+
+				if (kbArticle.getGroupId() == scopeGroupId) {
+					return null;
+				}
+
 				Group group = GroupLocalServiceUtil.getGroup(
 					kbArticle.getGroupId());
 

@@ -260,6 +260,16 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 			).put(
 				"scopeExternalReferenceCode",
 				() -> {
+					long scopeGroupId = _themeDisplay.getRefererGroupId();
+
+					if (scopeGroupId <= 0) {
+						scopeGroupId = _themeDisplay.getScopeGroupId();
+					}
+
+					if (assetCategory.getGroupId() == scopeGroupId) {
+						return null;
+					}
+
 					Group group = GroupLocalServiceUtil.getGroup(
 						assetCategory.getGroupId());
 

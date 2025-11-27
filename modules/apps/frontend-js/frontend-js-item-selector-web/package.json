@@ -1,15 +1,15 @@
 {
 	"dependencies": {
-		"@clayui/autocomplete": "3.151.0",
+		"@clayui/autocomplete": "3.155.0",
 		"@clayui/breadcrumb": "3.144.1",
 		"@clayui/button": "3.144.1",
-		"@clayui/core": "3.151.0",
+		"@clayui/core": "3.155.0",
 		"@clayui/data-provider": "3.151.0",
 		"@clayui/form": "3.151.0",
 		"@clayui/layout": "3.144.1",
 		"@clayui/link": "3.144.1",
 		"@clayui/modal": "3.151.0",
-		"@clayui/multi-select": "3.151.0",
+		"@clayui/multi-select": "3.155.0",
 		"@clayui/shared": "3.151.0",
 		"@clayui/tooltip": "3.151.0",
 		"@liferay/frontend-data-set-web": "*",

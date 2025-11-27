@@ -703,7 +703,8 @@ public interface LayoutService extends BaseService {
 	 * @param hasIconImage if the layout has a custom icon image
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param styleBookEntryERC the external reference code of the style book entry
-	 * @param faviconFileEntryId the file entry ID of the layout's new favicon
+	 * @param faviconFileEntryERC the file entry ERC of the layout's new favicon
+	 * @param faviconFileEntryScopeERC the file entry ScopeERC of the layout's new favicon
 	 * @param masterLayoutPageTemplateEntryERC the external reference code key
 	 of the master layout page template entry
 	 * @param serviceContext the service context to be applied. Can set the
@@ -718,7 +719,8 @@ public interface LayoutService extends BaseService {
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
-			byte[] iconBytes, String styleBookEntryERC, long faviconFileEntryId,
+			byte[] iconBytes, String styleBookEntryERC,
+			String faviconFileEntryERC, String faviconFileEntryScopeERC,
 			String masterLayoutPageTemplateEntryERC,
 			ServiceContext serviceContext)
 		throws PortalException;

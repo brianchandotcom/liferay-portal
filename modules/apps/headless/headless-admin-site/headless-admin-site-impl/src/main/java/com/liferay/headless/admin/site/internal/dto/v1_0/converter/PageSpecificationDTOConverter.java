@@ -221,15 +221,17 @@ public class PageSpecificationDTOConverter
 							};
 						}
 
-						long faviconFileEntryId =
-							layout.getFaviconFileEntryId();
+						String faviconFileEntryERC =
+							layout.getFaviconFileEntryERC();
 
-						if (faviconFileEntryId == 0) {
+						if (Validator.isNull(faviconFileEntryERC)) {
 							return null;
 						}
 
-						FileEntry fileEntry = _dlAppService.getFileEntry(
-							faviconFileEntryId);
+						FileEntry fileEntry =
+							_dlAppService.getFileEntryByExternalReferenceCode(
+								faviconFileEntryERC,
+								layout.getFaviconFileEntryGroupId());
 
 						if (fileEntry == null) {
 							return null;

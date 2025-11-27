@@ -96,7 +96,8 @@ public class StagingLocalServiceTest {
 				stagingLayout.getType(), stagingLayout.isHidden(),
 				stagingLayout.getFriendlyURLMap(), false, null,
 				stagingLayout.getStyleBookEntryERC(),
-				stagingLayout.getFaviconFileEntryId(),
+				stagingLayout.getFaviconFileEntryERC(),
+				stagingLayout.getFaviconFileEntryScopeERC(),
 				stagingLayout.getMasterLayoutPageTemplateEntryERC(),
 				new ServiceContext());
 
@@ -112,7 +113,8 @@ public class StagingLocalServiceTest {
 				stagingLayout.getType(), stagingLayout.isHidden(),
 				stagingLayout.getFriendlyURLMap(), false, null,
 				stagingLayout.getStyleBookEntryERC(),
-				stagingLayout.getFaviconFileEntryId(),
+				stagingLayout.getFaviconFileEntryERC(),
+				stagingLayout.getFaviconFileEntryScopeERC(),
 				stagingLayout.getMasterLayoutPageTemplateEntryERC(),
 				new ServiceContext());
 

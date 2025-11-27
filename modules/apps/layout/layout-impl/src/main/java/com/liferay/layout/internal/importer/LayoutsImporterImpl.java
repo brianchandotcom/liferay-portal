@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.Repository;
@@ -635,11 +636,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				FILE_NAME_DISPLAY_PAGE_TEMPLATE_COLLECTION);
 	}
 
-	private long _getFileEntryId(long contentDocumentId) {
+	private FileEntry _getFileEntry(long contentDocumentId) {
 		try {
-			FileEntry fileEntry = _dlAppService.getFileEntry(contentDocumentId);
-
-			return fileEntry.getFileEntryId();
+			return _dlAppService.getFileEntry(contentDocumentId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -647,7 +646,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 		}
 
-		return 0;
+		return null;
 	}
 
 	private String _getKey(String defaultKey, String fileName, String name) {
@@ -2258,8 +2257,33 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		if (MapUtil.isNotEmpty(favIconMap)) {
 			if (Objects.equals(favIconMap.get("contentType"), "Document")) {
-				layout.setFaviconFileEntryId(
-					_getFileEntryId(GetterUtil.getLong(favIconMap.get("id"))));
+				FileEntry fileEntry = _getFileEntry(
+					GetterUtil.getLong(favIconMap.get("id")));
+
+				if (fileEntry != null) {
+					layout.setFaviconFileEntryERC(
+						fileEntry.getExternalReferenceCode());
+
+					String faviconFileEntryScopeERC = null;
+
+					if (layout.getGroupId() != fileEntry.getGroupId()) {
+						Group fileEntryGroup;
+
+						try {
+							fileEntryGroup = _groupLocalService.getGroup(
+								fileEntry.getGroupId());
+
+							faviconFileEntryScopeERC =
+								fileEntryGroup.getExternalReferenceCode();
+						}
+						catch (PortalException portalException) {
+							throw new RuntimeException(portalException);
+						}
+					}
+
+					layout.setFaviconFileEntryScopeERC(
+						faviconFileEntryScopeERC);
+				}
 			}
 			else if (favIconMap.containsKey("externalReferenceCode")) {
 				_addClientExtensionEntryRel(

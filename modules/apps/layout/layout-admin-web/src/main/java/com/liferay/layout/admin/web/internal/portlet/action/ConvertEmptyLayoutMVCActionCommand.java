@@ -132,7 +132,8 @@ public class ConvertEmptyLayoutMVCActionCommand
 					layout.getKeywordsMap(), layout.getRobotsMap(), type, false,
 					layout.getFriendlyURLMap(), layout.isIconImage(), null,
 					layout.getStyleBookEntryERC(),
-					layout.getFaviconFileEntryId(),
+					layout.getFaviconFileEntryERC(),
+					layout.getFaviconFileEntryScopeERC(),
 					masterLayoutPageTemplateEntryERC, serviceContext);
 
 				if (masterLayoutPlid > 0) {
@@ -202,7 +203,8 @@ public class ConvertEmptyLayoutMVCActionCommand
 					layout.getKeywordsMap(), layout.getRobotsMap(), type, false,
 					layout.getFriendlyURLMap(), layout.isIconImage(), null,
 					layout.getStyleBookEntryERC(),
-					layout.getFaviconFileEntryId(),
+					layout.getFaviconFileEntryERC(),
+					layout.getFaviconFileEntryScopeERC(),
 					masterLayoutPageTemplateEntryERC, serviceContext);
 
 				_layoutLocalService.updateStatus(

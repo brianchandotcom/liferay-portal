@@ -12,7 +12,9 @@ export default function Favicon({
 	clearButtonEnabled: initialClearButtonEnabled,
 	defaultImgURL,
 	defaultTitle,
+	faviconFileEntryERC: initialFaviconFileEntryERC,
 	faviconFileEntryId: initialFaviconFileEntryId,
+	faviconFileEntryScopeERC: initialFaviconFileEntryScopeERC,
 	imgURL: initialImgURL,
 	isReadOnly,
 	portletNamespace,
@@ -21,6 +23,38 @@ export default function Favicon({
 	title: initialTitle,
 	url,
 }) {
+	const [values, setValues] = useState({
+		clearButtonEnabled: initialClearButtonEnabled,
+		faviconFileEntryERC: initialFaviconFileEntryERC,
+		faviconFileEntryId: initialFaviconFileEntryId,
+		faviconFileEntryScopeERC: initialFaviconFileEntryScopeERC,
+		imgURL: initialImgURL,
+		themeFaviconCETExternalReferenceCode:
+			initialThemeFaviconCETExternalReferenceCode,
+		title: initialTitle,
+	});
+
+	const updateFaviconState = ({
+		clearButtonEnabled = true,
+		faviconFileEntryERC = '',
+		faviconFileEntryId = 0,
+		faviconFileEntryScopeERC = '',
+		imgURL,
+		themeFaviconCETExternalReferenceCode = '',
+		title,
+	}) => {
+		setValues((prevValues) => ({
+			...prevValues,
+			clearButtonEnabled,
+			faviconFileEntryERC,
+			faviconFileEntryId,
+			faviconFileEntryScopeERC,
+			imgURL,
+			themeFaviconCETExternalReferenceCode,
+			title,
+		}));
+	};
+
 	const onChangeFaviconButtonClick = () => {
 		if (isReadOnly) {
 			return;
@@ -29,34 +63,40 @@ export default function Favicon({
 		openSelectionModal({
 			iframeBodyCssClass: '',
 			onSelect(selectedItem) {
-				if (selectedItem) {
-					if (selectedItem && selectedItem.value) {
-						const itemValue = JSON.parse(selectedItem.value);
-						const nextValues = {};
+				if (selectedItem && selectedItem.value) {
+					const itemValue = JSON.parse(selectedItem.value);
 
-						if (
-							selectedItem.returnType ===
-							'com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType'
-						) {
-							nextValues.faviconFileEntryId = 0;
-							nextValues.themeFaviconCETExternalReferenceCode =
-								itemValue.cetExternalReferenceCode;
-						}
-						else {
-							nextValues.faviconFileEntryId =
-								itemValue.fileEntryId;
-							nextValues.themeFaviconCETExternalReferenceCode =
-								'';
-						}
+					if (
+						selectedItem.returnType ===
+						'com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType'
+					) {
+						updateFaviconState({
+							imgURL: itemValue.url,
+							themeFaviconCETExternalReferenceCode:
+								itemValue.cetExternalReferenceCode,
+							title: itemValue.title || itemValue.name,
+						});
 
-						if (itemValue.url) {
-							nextValues.imgURL = itemValue.url;
-						}
-
-						nextValues.title = itemValue.title || itemValue.name;
-						nextValues.clearButtonEnabled = true;
-						setValues(nextValues);
+						return;
 					}
+
+					let faviconFileEntryScopeERC = '';
+
+					if (
+						String(itemValue.groupId) !==
+						String(Liferay.ThemeDisplay.getScopeGroupId())
+					) {
+						faviconFileEntryScopeERC =
+							itemValue.groupExternalReferenceCode || '';
+					}
+
+					updateFaviconState({
+						faviconFileEntryERC: itemValue.externalReferenceCode,
+						faviconFileEntryId: itemValue.fileEntryId,
+						faviconFileEntryScopeERC,
+						imgURL: itemValue.url,
+						title: itemValue.title || itemValue.name,
+					});
 				}
 			},
 			selectEventName: `${portletNamespace}selectImage`,
@@ -64,28 +104,18 @@ export default function Favicon({
 			url: url.toString(),
 		});
 	};
+
 	const onClearFaviconButtonClick = () => {
 		if (isReadOnly) {
 			return;
 		}
 
-		setValues({
+		updateFaviconState({
 			clearButtonEnabled: false,
-			faviconFileEntryId: 0,
 			imgURL: defaultImgURL,
-			themeFaviconCETExternalReferenceCode: '',
 			title: defaultTitle,
 		});
 	};
-
-	const [values, setValues] = useState({
-		clearButtonEnabled: initialClearButtonEnabled,
-		faviconFileEntryId: initialFaviconFileEntryId,
-		imgURL: initialImgURL,
-		themeFaviconCETExternalReferenceCode:
-			initialThemeFaviconCETExternalReferenceCode,
-		title: initialTitle,
-	});
 
 	return (
 		<>
@@ -98,6 +128,16 @@ export default function Favicon({
 				name={`${portletNamespace}faviconFileEntryId`}
 				type="hidden"
 				value={values.faviconFileEntryId}
+			/>
+			<ClayInput
+				name={`${portletNamespace}faviconFileEntryERC`}
+				type="hidden"
+				value={values.faviconFileEntryERC}
+			/>
+			<ClayInput
+				name={`${portletNamespace}faviconFileEntryScopeERC`}
+				type="hidden"
+				value={values.faviconFileEntryScopeERC}
 			/>
 
 			{values.imgURL && (

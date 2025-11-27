@@ -48,10 +48,12 @@ public class FaviconUtil {
 			}
 		}
 
-		if (layout.getFaviconFileEntryId() > 0) {
+		if (Validator.isNotNull(layout.getFaviconFileEntryERC())) {
 			try {
-				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-					layout.getFaviconFileEntryId());
+				FileEntry fileEntry =
+					DLAppLocalServiceUtil.getFileEntryByExternalReferenceCode(
+						layout.getFaviconFileEntryERC(),
+						layout.getFaviconFileEntryGroupId());
 
 				return fileEntry.getTitle();
 			}
@@ -74,7 +76,8 @@ public class FaviconUtil {
 							masterLayout.getPlid(),
 							ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
-				if ((masterLayout.getFaviconFileEntryId() > 0) ||
+				if (Validator.isNotNull(
+						masterLayout.getFaviconFileEntryERC()) ||
 					(clientExtensionEntryRel != null)) {
 
 					return LanguageUtil.get(locale, "favicon-from-master");

@@ -98,7 +98,7 @@
 	}
 
 	function prepareSlides(container, wrapper) {
-		let slides = Array.from(container.querySelectorAll('.swiper-slide'));
+		const slides = Array.from(container.querySelectorAll('.swiper-slide'));
 
 		const slideCount = slides.length;
 
@@ -107,7 +107,7 @@
 
 			return Array.from(container.querySelectorAll('.swiper-slide'));
 		}
-		
+
 		slides.forEach((slide, index) => {
 			slide.dataset.originalIndex = index;
 		});
@@ -163,7 +163,9 @@
 
 		const realIndex = (swiper.realIndex % initialSlides.length) + 1;
 
-		const carouselLiveRegion = document.querySelector('.carousel-live-region');
+		const carouselLiveRegion = document.querySelector(
+			'.carousel-live-region'
+		);
 
 		if (carouselLiveRegion) {
 			carouselLiveRegion.textContent = `Slide ${realIndex} of ${initialSlides.length}.`;

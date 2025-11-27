@@ -48,7 +48,10 @@ const PaymentTypeSelector = () => {
 
 					<div>
 						<div className="align-items-center d-flex">
-							<p className="mb-0 mr-3">Pay with Card</p>
+							<p className="mb-0 mr-3">
+								{i18n.translate('pay-with-card')}
+							</p>
+
 							<Tooltip
 								tooltip={i18n.translate(
 									'you-ll-be-redirected-to-paypal-to-complete-your-purchase-securely-after-your-payment-you-are-able-to-activate-the-license-on-customer-dashboard-right-away'
@@ -88,14 +91,16 @@ const PaymentTypeSelector = () => {
 					<div className="d-flex">
 						<ClayIcon
 							className="mr-3"
-							color=" #0B5FFF"
+							color="#0B5FFF"
 							fontSize={16}
 							symbol="document-text"
 						/>
 					</div>
 					<div>
 						<div className="align-items-center d-flex">
-							<p className="mb-0 mr-3">Pay with Invoice</p>
+							<p className="mb-0 mr-3">
+								{i18n.translate('pay-with-bank-transfer')}
+							</p>
 
 							<Tooltip
 								tooltip={i18n.translate(

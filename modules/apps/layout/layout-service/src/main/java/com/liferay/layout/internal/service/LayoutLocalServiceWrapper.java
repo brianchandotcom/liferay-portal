@@ -1430,7 +1430,9 @@ public class LayoutLocalServiceWrapper
 		}
 
 		private boolean _isMasterLayoutCopy() {
-			if (Validator.isNotNull(
+			if ((_sourceLayout.getClassPK() == _targetLayout.getPlid()) ||
+				(_sourceLayout.getPlid() == _targetLayout.getClassPK()) ||
+				Validator.isNotNull(
 					_targetLayout.getMasterLayoutPageTemplateEntryERC())) {
 
 				return false;

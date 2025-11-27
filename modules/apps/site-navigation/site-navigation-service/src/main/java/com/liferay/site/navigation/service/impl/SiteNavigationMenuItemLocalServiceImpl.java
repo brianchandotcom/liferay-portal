@@ -9,13 +9,11 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -501,14 +499,8 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			return;
 		}
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group == null) {
-			return;
-		}
-
 		_layoutService.getLayoutByExternalReferenceCode(
-			externalReferenceCode, group.getGroupId());
+			externalReferenceCode, groupId);
 	}
 
 	private void _validateName(String name) throws PortalException {
@@ -524,9 +516,6 @@ public class SiteNavigationMenuItemLocalServiceImpl
 				"Maximum length of name exceeded");
 		}
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

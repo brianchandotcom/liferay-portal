@@ -100,14 +100,18 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 						).put(
 							"scopeExternalReferenceCode",
 							() -> {
-								Group group = _groupLocalService.fetchGroup(
+								long groupId =
 									assetVocabularyJSONObject.getLong(
-										"groupId"));
+										"groupId");
 
-								if ((group == null) ||
-									(group.getGroupId() ==
-										themeDisplay.getScopeGroupId())) {
+								if (groupId == themeDisplay.getScopeGroupId()) {
+									return null;
+								}
 
+								Group group = _groupLocalService.fetchGroup(
+									groupId);
+
+								if (group == null) {
 									return null;
 								}
 

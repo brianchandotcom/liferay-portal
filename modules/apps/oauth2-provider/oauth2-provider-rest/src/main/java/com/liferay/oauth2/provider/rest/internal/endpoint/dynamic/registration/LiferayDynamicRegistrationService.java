@@ -14,9 +14,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.cors.annotation.CORS;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
@@ -39,6 +42,23 @@ import org.apache.cxf.rs.security.oauth2.utils.OAuthUtils;
 @Path("/register")
 public class LiferayDynamicRegistrationService
 	extends DynamicRegistrationService {
+
+	@GET
+	@Path("{clientId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ClientRegistration readClientRegistrationWithPath(
+		@PathParam("clientId") String clientId) {
+
+		return super.readClientRegistrationWithPath(clientId);
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public ClientRegistration readClientRegistrationWithQuery(
+		@QueryParam("client_id") String clientId) {
+
+		return super.readClientRegistrationWithQuery(clientId);
+	}
 
 	@Consumes(MediaType.APPLICATION_JSON)
 	@CORS(allowMethods = "POST")

@@ -201,56 +201,9 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildParametersWithExportImportGroup() {
-		Group group = _mockGroup(
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong());
-
-		Map<String, Serializable> parameters =
-			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockExportImportDescriptor(), _mockGroupLocalService(group),
-				_mockPortletDataContext(null, null, null),
-				_getStagingGroupHelper(true));
-
-		Assert.assertNull(parameters.get("siteExternalReferenceCode"));
-		Assert.assertNull(parameters.get("siteId"));
-
-		parameters = BatchEnginePortletDataHandlerUtil.buildImportParameters(
-			_mockExportImportDescriptor(), _mockGroupLocalService(group),
-			_mockPortletDataContext(null, null, null),
-			_getStagingGroupHelper(true));
-
-		Assert.assertNull(parameters.get("siteExternalReferenceCode"));
-		Assert.assertNull(parameters.get("siteId"));
-	}
-
-	@Test
 	public void testBuildParametersWithGroup() {
-		String siteExternalReferenceCode = RandomTestUtil.randomString();
-
-		long siteId = RandomTestUtil.randomLong();
-
-		Group group = _mockGroup(siteExternalReferenceCode, siteId);
-
-		Map<String, Serializable> parameters =
-			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockExportImportDescriptor(), _mockGroupLocalService(group),
-				_mockPortletDataContext(null, null, null),
-				_getStagingGroupHelper(false));
-
-		Assert.assertEquals(
-			parameters.get("siteExternalReferenceCode"),
-			siteExternalReferenceCode);
-		Assert.assertEquals(parameters.get("siteId"), siteId);
-
-		parameters = BatchEnginePortletDataHandlerUtil.buildImportParameters(
-			_mockExportImportDescriptor(), _mockGroupLocalService(group),
-			_mockPortletDataContext(null, null, null),
-			_getStagingGroupHelper(false));
-
-		Assert.assertEquals(
-			parameters.get("siteExternalReferenceCode"),
-			siteExternalReferenceCode);
-		Assert.assertEquals(parameters.get("siteId"), siteId);
+		_testBuildParametersWithGroup(false);
+		_testBuildParametersWithGroup(true);
 	}
 
 	private Date _getDate(int days) {
@@ -372,6 +325,38 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		);
 
 		return portletDataContext;
+	}
+
+	private void _testBuildParametersWithGroup(boolean companyGroup) {
+		String siteExternalReferenceCode = RandomTestUtil.randomString();
+		long siteId = RandomTestUtil.randomLong();
+
+		String expectedSiteExternalReferenceCode =
+			companyGroup ? null : siteExternalReferenceCode;
+		Long expectedSiteId = companyGroup ? null : siteId;
+
+		Group group = _mockGroup(siteExternalReferenceCode, siteId);
+
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_mockExportImportDescriptor(), _mockGroupLocalService(group),
+				_mockPortletDataContext(null, null, null),
+				_getStagingGroupHelper(companyGroup));
+
+		Assert.assertEquals(
+			expectedSiteExternalReferenceCode,
+			parameters.get("siteExternalReferenceCode"));
+		Assert.assertEquals(expectedSiteId, parameters.get("siteId"));
+
+		parameters = BatchEnginePortletDataHandlerUtil.buildImportParameters(
+			_mockExportImportDescriptor(), _mockGroupLocalService(group),
+			_mockPortletDataContext(null, null, null),
+			_getStagingGroupHelper(companyGroup));
+
+		Assert.assertEquals(
+			expectedSiteExternalReferenceCode,
+			parameters.get("siteExternalReferenceCode"));
+		Assert.assertEquals(expectedSiteId, parameters.get("siteId"));
 	}
 
 	private DateFormat _dateFormat;

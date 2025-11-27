@@ -53,7 +53,10 @@ import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.trash.TrashHelper;
 
+import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import java.io.Serializable;
 
 import java.util.Map;
 import java.util.Objects;
@@ -507,6 +510,24 @@ public class ObjectEntryFolderResourceImpl
 				ServiceContextBuilder.create(
 					groupId, contextHttpServletRequest, null
 				).build()));
+	}
+
+	@Override
+	public Page<ObjectEntryFolder> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		if (parameters.containsKey("siteId")) {
+			return getScopeScopeKeyObjectEntryFoldersPage(
+				parameters.get(
+					"siteId"
+				).toString(),
+				false, search, null, filter, pagination, sorts);
+		}
+
+		throw new NotSupportedException(
+			"One of the following parameters must be specified: [siteId]");
 	}
 
 	@Override

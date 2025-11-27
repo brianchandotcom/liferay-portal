@@ -568,6 +568,10 @@ public interface ObjectEntryLocalService
 			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectEntry updateModifiedDate(long objectEntryId, Date modifiedDate)
+		throws PortalException;
+
 	public ObjectEntry updateObjectEntry(
 			long userId, long objectEntryId, long objectEntryFolderId,
 			Map<String, Serializable> values, ServiceContext serviceContext)

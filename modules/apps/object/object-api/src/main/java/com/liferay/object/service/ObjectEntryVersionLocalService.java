@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -343,6 +344,10 @@ public interface ObjectEntryVersionLocalService
 
 	public ObjectEntryVersion updateLatestObjectEntryVersion(
 			ObjectEntry objectEntry)
+		throws PortalException;
+
+	public ObjectEntryVersion updateLatestObjectEntryVersionModifiedDate(
+			Date modifiedDate, long objectEntryId)
 		throws PortalException;
 
 	/**

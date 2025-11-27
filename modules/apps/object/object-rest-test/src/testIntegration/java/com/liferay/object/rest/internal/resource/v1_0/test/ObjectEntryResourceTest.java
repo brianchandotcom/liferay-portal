@@ -1127,52 +1127,49 @@ public class ObjectEntryResourceTest {
 		String nestedField2 = RandomTestUtil.randomString();
 		String nestedField3 = RandomTestUtil.randomString();
 
-		try {
-			Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService,
-				true,
-				LinkedHashMapBuilder.put(
-					"A", new String[] {"AA", "AB"}
-				).put(
-					"AA", new String[] {"AAA", "AAB"}
-				).put(
-					"AB", new String[0]
-				).put(
-					"AAA", new String[0]
-				).put(
-					"AAB", new String[0]
-				).build());
+		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
 
-			List<String> nestedFields = Arrays.asList(
-				nestedField1, nestedField2, nestedField3, "rootModelHierarchy");
+		List<String> nestedFields = Arrays.asList(
+			nestedField1, nestedField2, nestedField3, "rootModelHierarchy");
 
-			Node objectDefinitionRootNode = objectDefinitionTree.getRootNode();
+		Node objectDefinitionRootNode = objectDefinitionTree.getRootNode();
 
-			NestedFieldsContextResource nestedFieldsContextResource =
-				(NestedFieldsContextResource)_getObjectEntryResource(
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectDefinitionRootNode.getPrimaryKey()),
-					TestPropsValues.getUser());
+		NestedFieldsContextResource nestedFieldsContextResource =
+			(NestedFieldsContextResource)_getObjectEntryResource(
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionRootNode.getPrimaryKey()),
+				TestPropsValues.getUser());
 
-			NestedFieldsContext nestedFieldsContext =
-				nestedFieldsContextResource.customizeNestedFieldsContext(
-					new NestedFieldsContext(1, nestedFields));
+		NestedFieldsContext nestedFieldsContext =
+			nestedFieldsContextResource.customizeNestedFieldsContext(
+				new NestedFieldsContext(1, nestedFields));
 
-			Set<String> expectedNestedFields = new HashSet<>(nestedFields);
+		Set<String> expectedNestedFields = new HashSet<>(nestedFields);
 
-			expectedNestedFields.addAll(
-				_getObjectRelationshipNames(objectDefinitionRootNode));
+		expectedNestedFields.addAll(
+			_getObjectRelationshipNames(objectDefinitionRootNode));
 
-			Assert.assertEquals(
-				expectedNestedFields,
-				new HashSet<>(nestedFieldsContext.getNestedFields()));
-		}
-		finally {
-			TreeTestUtil.deleteObjectDefinitionHierarchy(
-				_objectDefinitionLocalService,
-				new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
-				_objectEntryLocalService, _objectRelationshipLocalService);
-		}
+		Assert.assertEquals(
+			expectedNestedFields,
+			new HashSet<>(nestedFieldsContext.getNestedFields()));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test

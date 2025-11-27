@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.translation.importer,\
 	com.liferay.translation.info.field,\
 	com.liferay.translation.info.item.provider,\
+	com.liferay.translation.manager,\
 	com.liferay.translation.model,\
 	com.liferay.translation.security.permission,\
 	com.liferay.translation.service,\

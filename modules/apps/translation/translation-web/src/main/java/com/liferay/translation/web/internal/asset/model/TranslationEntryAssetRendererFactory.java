@@ -12,6 +12,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
+import com.liferay.translation.manager.TranslationManager;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.snapshot.TranslationSnapshotProvider;
@@ -47,7 +48,8 @@ public class TranslationEntryAssetRendererFactory
 		if (translationEntry != null) {
 			return new TranslationEntryAssetRenderer(
 				_infoItemServiceRegistry, _servletContext, translationEntry,
-				_translationInfoFieldChecker, _translationSnapshotProvider);
+				_translationManager, _translationInfoFieldChecker,
+				_translationSnapshotProvider);
 		}
 
 		return null;
@@ -74,6 +76,9 @@ public class TranslationEntryAssetRendererFactory
 
 	@Reference
 	private TranslationInfoFieldChecker _translationInfoFieldChecker;
+
+	@Reference
+	private TranslationManager _translationManager;
 
 	@Reference
 	private TranslationSnapshotProvider _translationSnapshotProvider;

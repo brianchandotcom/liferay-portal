@@ -708,18 +708,28 @@ public class ContentPageEditorDisplayContext {
 						return styleBookEntryERC;
 					}
 
-					if (Validator.isNull(styleBookEntryERC)) {
-						StyleBookEntry defaultStyleBookEntry =
-							DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
-								layout);
+					if (Validator.isNotNull(styleBookEntryERC)) {
+						StyleBookEntry styleBookEntry =
+							_styleBookEntryLocalService.
+								fetchStyleBookEntryByExternalReferenceCode(
+									styleBookEntryERC,
+									_staging.getLiveGroupId(
+										layout.getGroupId()));
 
-						if (defaultStyleBookEntry != null) {
-							return defaultStyleBookEntry.
-								getExternalReferenceCode();
+						FrontendTokenDefinition frontendTokenDefinition =
+							_frontendTokenDefinitionRegistry.
+								getFrontendTokenDefinition(layout);
+
+						if ((styleBookEntry != null) &&
+							Objects.equals(
+								frontendTokenDefinition.getThemeId(),
+								styleBookEntry.getThemeId())) {
+
+							return styleBookEntryERC;
 						}
 					}
 
-					return styleBookEntryERC;
+					return StringPool.BLANK;
 				}
 			).put(
 				"styleBooks", _getStyleBooks()

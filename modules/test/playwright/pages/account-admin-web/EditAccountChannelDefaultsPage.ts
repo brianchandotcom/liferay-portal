@@ -22,11 +22,21 @@ export class EditAccountChannelDefaultsPage {
 	readonly defaultBillingAddressesTable: Locator;
 	readonly defaultShippingAddressesTable: Locator;
 	readonly defaultShippingOptionsTable: Locator;
+	readonly defaultShippingOptionsTableRow: (
+		colPosition: number,
+		value: number | string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly defaultShippingOptionsTableRowAction: (
+		action: string,
+		channelName: string
+	) => Promise<Locator>;
 	readonly deleteMenuItem: Locator;
 	readonly getRowByTextFromTable: (
 		tableName: string,
 		text: string
 	) => Locator;
+	readonly modalOptionCheckbox: (optionName: string) => Locator;
 	readonly page: Page;
 	readonly setDefaultBillingAddressFrameBillingAddressDropdownMenu: Locator;
 	readonly setDefaultAddressFrameChannelDropdownMenu: Locator;
@@ -48,9 +58,6 @@ export class EditAccountChannelDefaultsPage {
 		this.modalContainer = page.frameLocator('.fds-modal-body > iframe');
 		this.addDefaultPaymentTermSelector =
 			this.modalContainer.getByLabel('Term');
-		this.modalSaveButton = this.modalContainer.getByRole('button', {
-			name: 'Save',
-		});
 		this.addDefaultShippingAddressButton = page
 			.getByTestId('defaultShippingCommerceAddresses')
 			.getByRole('button', {name: 'Add Default Address'})
@@ -77,9 +84,37 @@ export class EditAccountChannelDefaultsPage {
 		this.defaultShippingAddressesTable = page.getByTestId(
 			'defaultShippingCommerceAddresses'
 		);
-		this.defaultShippingOptionsTable = page.getByTestId(
-			'defaultCommerceShippingOption'
+		this.defaultShippingOptionsTable = page.locator(
+			'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_defaultCommerceShippingOption .fds table'
 		);
+		this.defaultShippingOptionsTableRow = async (
+			colPosition: number,
+			value: number | string,
+			strictEqual: boolean = false
+		) => {
+			return await this.searchTableRowByValue(
+				this.defaultShippingOptionsTable,
+				colPosition,
+				String(value),
+				strictEqual
+			);
+		};
+		this.defaultShippingOptionsTableRowAction = async (
+			action: string,
+			channelName: string
+		) => {
+			const shippingOptionsTableRow =
+				await this.defaultShippingOptionsTableRow(0, channelName, true);
+
+			if (shippingOptionsTableRow && shippingOptionsTableRow.column) {
+				return shippingOptionsTableRow.row.getByRole('button', {
+					name: action,
+				});
+			}
+			throw new Error(
+				`Cannot locate shipping option row with name ${channelName}`
+			);
+		};
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.getRowByTextFromTable = (
 			tableName: string,
@@ -92,6 +127,12 @@ export class EditAccountChannelDefaultsPage {
 				.filter({
 					has: this.page.getByText(text).first(),
 				});
+		};
+		this.modalSaveButton = this.modalContainer.getByRole('button', {
+			name: 'Save',
+		});
+		this.modalOptionCheckbox = (optionName: string) => {
+			return this.modalContainer.getByLabel(optionName);
 		};
 		this.page = page;
 		this.setDefaultBillingAddressFrameBillingAddressDropdownMenu =
@@ -114,4 +155,31 @@ export class EditAccountChannelDefaultsPage {
 		await this.modalSaveButton.click();
 		await this.page.waitForTimeout(200);
 	}
+
+	searchTableRowByValue = async function (
+		tableLocator: Locator,
+		colPosition: number,
+		value: string,
+		strictEqual: boolean = false
+	) {
+		await tableLocator.elementHandle();
+
+		const rows = await tableLocator.locator('tbody tr').all();
+
+		for await (const row of rows) {
+			const column = row.locator('td').nth(colPosition).first();
+
+			const colValue = (await column.allInnerTexts()).join('');
+
+			if (
+				(strictEqual && colValue === value) ||
+				(!strictEqual &&
+					colValue.toLowerCase().indexOf(value.toLowerCase()) >= 0)
+			) {
+				return {column, row};
+			}
+		}
+
+		throw new Error(`Cannot locate table row with value ${value}`);
+	};
 }

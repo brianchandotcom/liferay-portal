@@ -1897,28 +1897,29 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(200000);
+		test.setTimeout(120000);
 
 		const initiateCheckout = async (site: string) => {
-			await expect(async () => {
-				await applicationsMenuPage.goToSite(site);
+			await applicationsMenuPage.goToSite(site);
 
-				await page.waitForLoadState('networkidle');
+			await page.waitForLoadState('networkidle');
 
-				await commerceThemeMiniumCatalogPage.firstCardItemAddToCartButton.click();
+			await commerceThemeMiniumCatalogPage.firstCardItemAddToCartButton.click();
 
-				await expect(
-					commerceThemeMiniumPage.miniCartButton
-				).toHaveClass('has-badge mini-cart-opener');
+			await expect(commerceThemeMiniumPage.miniCartButton).toHaveClass(
+				'has-badge mini-cart-opener'
+			);
 
-				await commerceThemeMiniumPage.miniCartButton.click();
+			await commerceThemeMiniumPage.miniCartButton.click();
 
-				await expect(
-					commerceThemeMiniumPage.miniCartSubmitButton
-				).toBeEnabled({timeout: 1000});
-			}).toPass();
+			await expect(
+				commerceThemeMiniumPage.miniCartSubmitButton
+			).toBeEnabled();
 
 			await commerceThemeMiniumPage.miniCartSubmitButton.click();
+
+			await expect(checkoutPage.useAsBillingCheckbox).toBeVisible();
+
 			await checkoutPage.useAsBillingCheckbox.setChecked(false);
 		};
 
@@ -2109,6 +2110,10 @@ test(
 			editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu
 		).toBeVisible();
 
+		await expect(
+			editAccountChannelDefaultsPage.modalSaveButton
+		).toBeVisible();
+
 		await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
 			siteName1 + ' Portal'
 		);
@@ -2116,6 +2121,10 @@ test(
 			billingAddress.name
 		);
 		await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.modalSaveButton
+		).toBeHidden();
 
 		await expect(
 			editAccountChannelDefaultsPage.addDefaultShippingAddressButton
@@ -2190,9 +2199,7 @@ test(
 
 			if (orders && orders.items) {
 				for (const order of orders.items) {
-					await apiHelpers.headlessCommerceAdminOrder.deleteOrder(
-						order.id
-					);
+					apiHelpers.data.push({id: order.id, type: 'order'});
 				}
 			}
 		}
@@ -2339,12 +2346,21 @@ test(
 				editAccountChannelDefaultsPage.defaultShippingOptionsTable
 			).toBeVisible();
 
-			await editAccountChannelDefaultsPage.defaultShippingOptionsTable
-				.getByRole('button', {name: 'Edit'})
-				.click();
+			await (
+				await editAccountChannelDefaultsPage.defaultShippingOptionsTableRowAction(
+					'Edit',
+					channel.name
+				)
+			).click();
 
-			await editAccountChannelDefaultsPage.modalContainer
-				.getByLabel('Flat Rate / Test Shipping Option')
+			await expect(
+				editAccountChannelDefaultsPage.modalOptionCheckbox(
+					'Flat Rate / Test Shipping Option'
+				)
+			).toBeVisible();
+
+			await editAccountChannelDefaultsPage
+				.modalOptionCheckbox('Flat Rate / Test Shipping Option')
 				.check();
 
 			await editAccountChannelDefaultsPage.modalSaveButton.click();

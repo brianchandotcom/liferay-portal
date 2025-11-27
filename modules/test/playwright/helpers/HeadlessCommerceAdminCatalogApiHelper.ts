@@ -235,6 +235,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async deleteCurrency(currencyId: number | string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/currencies/${currencyId}`
+		);
+	}
+
 	async deleteOption(optionId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/options/${optionId}`

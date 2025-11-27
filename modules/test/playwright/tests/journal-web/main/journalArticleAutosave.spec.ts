@@ -144,6 +144,49 @@ autoSaveTest(
 );
 
 autoSaveTest(
+	'Web Content version, status and ID are hidden when updating default values',
+	{
+		tag: '@LPD-72347',
+	},
+	async ({apiHelpers, journalEditStructureDefaultValuesPage, page, site}) => {
+		const fieldName = 'Text1';
+		const structureName = 'Structure1';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: fieldName, repeatable: true}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditStructureDefaultValuesPage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await expect(page.getByText('1.0')).toBeHidden();
+
+		await expect(page.getByText('Approved', {exact: true})).toBeHidden();
+
+		await expect(page.getByText('ID', {exact: true})).toBeHidden();
+
+		await journalEditStructureDefaultValuesPage.save();
+
+		await journalEditStructureDefaultValuesPage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await expect(page.getByText('1.0')).toBeHidden();
+
+		await expect(page.getByText('Approved', {exact: true})).toBeHidden();
+
+		await expect(page.getByText('ID', {exact: true})).toBeHidden();
+	}
+);
+
+autoSaveTest(
 	'Info message appears when autosave is failed due to missing required fields',
 	{
 		tag: '@LPD-34375',

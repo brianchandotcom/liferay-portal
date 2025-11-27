@@ -115,3 +115,13 @@
 .opacity-100 {
 	opacity: 100%;
 }
+
+/**
+ * White Space
+ */
+
+.white-space-normal {
+	overflow-wrap: break-word;
+	white-space: normal !important;
+	word-break: normal;
+}

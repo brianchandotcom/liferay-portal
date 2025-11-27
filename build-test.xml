@@ -12462,6 +12462,13 @@ ${update.properties}</echo>
 	</Loggers>
 </Configuration>]]></echo>
 
+		<echo file="${liferay.home}/osgi/log4j/com.liferay.oauth2.provider.rest-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider" />
+	</Loggers>
+</Configuration>]]></echo>
+
 		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.osgi.web.wab.generator.impl-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <Configuration strict="true">
 	<Loggers>

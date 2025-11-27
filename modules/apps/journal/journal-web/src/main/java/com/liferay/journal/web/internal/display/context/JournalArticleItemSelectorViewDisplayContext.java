@@ -244,6 +244,16 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		).put(
 			"scopeExternalReferenceCode",
 			() -> {
+				long scopeGroupId = _themeDisplay.getRefererGroupId();
+
+				if (scopeGroupId <= 0) {
+					scopeGroupId = _themeDisplay.getScopeGroupId();
+				}
+
+				if (assetEntry.getGroupId() == scopeGroupId) {
+					return null;
+				}
+
 				Group group = GroupLocalServiceUtil.getGroup(
 					assetEntry.getGroupId());
 

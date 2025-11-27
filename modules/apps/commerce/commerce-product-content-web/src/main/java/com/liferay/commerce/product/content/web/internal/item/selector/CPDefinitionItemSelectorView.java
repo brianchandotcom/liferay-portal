@@ -172,6 +172,16 @@ public class CPDefinitionItemSelectorView
 			).put(
 				"scopeExternalReferenceCode",
 				() -> {
+					long scopeGroupId = themeDisplay.getRefererGroupId();
+
+					if (scopeGroupId <= 0) {
+						scopeGroupId = themeDisplay.getScopeGroupId();
+					}
+
+					if (_cpDefinition.getGroupId() == scopeGroupId) {
+						return null;
+					}
+
 					Group group = _groupLocalService.getGroup(
 						_cpDefinition.getGroupId());
 

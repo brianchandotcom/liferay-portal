@@ -153,11 +153,19 @@ describe('AssetNavigationModalContent', () => {
 	it('renders with the first item with the download link', () => {
 		renderComponent();
 
-		expect(screen.getByText('liferay icon.png')).toBeInTheDocument();
+		expect(
+			document.querySelector(
+				'.modal-title [data-testid="modal-header-name"]'
+			)?.textContent
+		).toEqual('liferay icon.png');
 		expect(
 			screen.getByRole('link', {name: 'download'})
 		).toBeInTheDocument();
-		expect(screen.getByRole('img')).toBeInTheDocument();
+		expect(
+			document.querySelector(
+				'.asset-navigation-container > div:not(.c-slideout) img.preview-file-image'
+			)
+		).toBeInTheDocument();
 	});
 
 	it('navigates to next item when right arrow key is pressed', () => {

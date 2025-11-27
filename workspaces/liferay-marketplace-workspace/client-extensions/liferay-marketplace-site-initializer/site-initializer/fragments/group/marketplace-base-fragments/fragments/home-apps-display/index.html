@@ -54,10 +54,10 @@
 
 							[#assign productDescription=stringUtil.shorten(htmlUtil.stripHtml(product.description!""), 140, "...") /]
 
-							<a class="product-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none [#if configuration.cardSize == 'large'] large [/#if] [#if configuration.cardSize == 'medium'] medium [/#if] [#if configuration.cardSize == 'small'] small [/#if]" href="p/${product.slug}" target="_self">
+							<a class="bg-white border-radius-medium d-flex flex-column mb-0 product-card text-dark text-decoration-none [#if configuration.cardSize == 'large'] large [/#if] [#if configuration.cardSize == 'medium'] medium [/#if] [#if configuration.cardSize == 'small'] small [/#if]" href="/web/marketplace/p/${product.slug}" target="_self">
 								<div class="card-image-title-container d-flex">
 									<div class="image-container mr-2 rounded">
-										<img alt="${product.name}" class="app-search-image" draggable="false" height="56" src="${(product.urlImage?replace('https://', 'http://'))?js_string}" width="56" />
+										<img alt="${product.name}" class="app-search-image" draggable="false" height="56" lazy="true" src="${(product.urlImage?replace('https://', 'http://'))?js_string}" width="56" />
 									</div>
 
 									<div class="d-flex flex-column w-100">

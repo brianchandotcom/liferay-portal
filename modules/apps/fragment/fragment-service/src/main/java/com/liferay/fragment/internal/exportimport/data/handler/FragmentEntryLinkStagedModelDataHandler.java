@@ -185,9 +185,12 @@ public class FragmentEntryLinkStagedModelDataHandler
 
 					fragmentEntryERC =
 						targetFragmentEntry.getExternalReferenceCode();
+					fragmentEntryScopeERC = targetFragmentEntry.getScopeERC();
 				}
 				else {
 					fragmentEntryERC = fragmentEntryLink.getFragmentEntryERC();
+					fragmentEntryScopeERC =
+						fragmentEntryLink.getFragmentEntryScopeERC();
 				}
 			}
 			else {
@@ -211,6 +214,7 @@ public class FragmentEntryLinkStagedModelDataHandler
 
 				if (fragmentEntry != null) {
 					fragmentEntryERC = fragmentEntry.getExternalReferenceCode();
+					fragmentEntryScopeERC = fragmentEntry.getScopeERC();
 				}
 			}
 		}

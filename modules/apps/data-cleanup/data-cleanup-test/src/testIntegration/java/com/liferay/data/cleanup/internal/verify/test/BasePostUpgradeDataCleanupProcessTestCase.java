@@ -23,8 +23,7 @@ import java.lang.reflect.Method;
 
 import java.sql.Connection;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Objects;
 
 import org.junit.AfterClass;
@@ -65,21 +64,14 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 
 	protected abstract String getPostUpgradeDataCleanupProcessClassName();
 
-	protected void installBundle(Bundle bundle) throws Exception {
-		Bundle currentBundle = FrameworkUtil.getBundle(
-			BasePostUpgradeDataCleanupProcessTestCase.class);
-
-		BundleContext bundleContext = currentBundle.getBundleContext();
+	protected void installBundle(BundleContext bundleContext, Bundle bundle)
+		throws Exception {
 
 		com.liferay.osgi.util.BundleUtil.installBundle(
 			bundleContext, _lpkgDeployer, bundle.getLocation(), 1);
 
-		List<Bundle> bundlesToRefresh = new ArrayList<>();
-
-		bundlesToRefresh.add(bundle);
-
 		com.liferay.osgi.util.BundleUtil.refreshBundles(
-			bundleContext, bundlesToRefresh);
+			bundleContext, Collections.singletonList(bundle));
 	}
 
 	protected void test(
@@ -117,12 +109,8 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 
 				bundle.uninstall();
 
-				List<Bundle> bundlesToRefresh = new ArrayList<>();
-
-				bundlesToRefresh.add(bundle);
-
 				com.liferay.osgi.util.BundleUtil.refreshBundles(
-					bundleContext, bundlesToRefresh);
+					bundleContext, Collections.singletonList(bundle));
 
 				return bundle;
 			}

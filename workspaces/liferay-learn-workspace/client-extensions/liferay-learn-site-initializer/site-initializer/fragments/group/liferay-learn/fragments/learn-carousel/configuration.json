@@ -11,7 +11,7 @@
 					"type": "text",
 					"typeOptions": {
 						"validation": {
-							"errorMessage": "Maximum: 3 slides",
+							"errorMessage": "You can only create up to 3 slides.",
 							"max": 3,
 							"min": 1,
 							"type": "number"

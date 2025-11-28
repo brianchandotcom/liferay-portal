@@ -318,17 +318,17 @@ public class CommerceOrderSplitTest {
 				curCommerceOrder.getCommerceOrderItems();
 
 			if (commerceOrderItems.size() == 1) {
-				_assertEqual(commerceOrderItems, cpInstance1);
+				_assertEquals(commerceOrderItems, cpInstance1);
 			}
 			else if (commerceOrderItems.size() == 2) {
-				_assertEqual(
+				_assertEquals(
 					ListUtil.filter(
 						curCommerceOrder.getCommerceOrderItems(),
 						commerceOrderItem -> StringUtil.equals(
 							commerceOrderItem.getSku(), cpInstance2.getSku())),
 					cpInstance2);
 
-				_assertEqual(
+				_assertEquals(
 					ListUtil.filter(
 						curCommerceOrder.getCommerceOrderItems(),
 						commerceOrderItem -> StringUtil.equals(
@@ -336,21 +336,21 @@ public class CommerceOrderSplitTest {
 					cpInstance3);
 			}
 			else if (commerceOrderItems.size() == 3) {
-				_assertEqual(
+				_assertEquals(
 					ListUtil.filter(
 						curCommerceOrder.getCommerceOrderItems(),
 						commerceOrderItem -> StringUtil.equals(
 							commerceOrderItem.getSku(), cpInstance1.getSku())),
 					cpInstance1);
 
-				_assertEqual(
+				_assertEquals(
 					ListUtil.filter(
 						curCommerceOrder.getCommerceOrderItems(),
 						commerceOrderItem -> StringUtil.equals(
 							commerceOrderItem.getSku(), cpInstance2.getSku())),
 					cpInstance2);
 
-				_assertEqual(
+				_assertEquals(
 					ListUtil.filter(
 						curCommerceOrder.getCommerceOrderItems(),
 						commerceOrderItem -> StringUtil.equals(
@@ -363,7 +363,7 @@ public class CommerceOrderSplitTest {
 		}
 	}
 
-	private void _assertEqual(
+	private void _assertEquals(
 			List<CommerceOrderItem> commerceOrderItems, CPInstance cpInstance)
 		throws Exception {
 

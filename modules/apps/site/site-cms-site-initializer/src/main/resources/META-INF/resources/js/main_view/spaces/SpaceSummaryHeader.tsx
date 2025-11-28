@@ -7,8 +7,9 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
+import ApiHelper from '../../common/services/ApiHelper';
 import ACTIONS from '../props_transformer/actions/creationMenuActions';
 import manageConnectedSitesAction, {
 	ManageConnectedSitesData,
@@ -35,6 +36,7 @@ type SpaceModalPropsType = {
 };
 
 interface SpaceSummaryHeaderProps {
+	apiUrl: string;
 	creationMenu?: any;
 	label: string;
 	permissions?: SpaceSummaryHeaderPermissions;
@@ -44,6 +46,7 @@ interface SpaceSummaryHeaderProps {
 }
 
 export default function SpaceSummaryHeader({
+	apiUrl,
 	creationMenu,
 	label,
 	permissions,
@@ -52,6 +55,29 @@ export default function SpaceSummaryHeader({
 	url,
 }: SpaceSummaryHeaderProps) {
 	const [active, setActive] = useState(false);
+	const [showViewAll, setShowViewAll] = useState(false);
+
+	useEffect(() => {
+		if (apiUrl) {
+			ApiHelper.get<{
+				items: any;
+				lastPage: number;
+				page: number;
+				totalCount: number;
+			}>(apiUrl)
+				.then((response) => {
+					if (response.data?.items?.length) {
+						setShowViewAll(true);
+					}
+					else {
+						setShowViewAll(false);
+					}
+				})
+				.catch(() => {
+					setShowViewAll(false);
+				});
+		}
+	}, [apiUrl]);
 
 	const loadData = () => window.location.reload();
 
@@ -143,23 +169,24 @@ export default function SpaceSummaryHeader({
 			<h2 className="font-weight-semi-bold m-0 text-4">{title}</h2>
 
 			<div className="align-items-center d-flex">
-				{url ? (
-					<ClayLink
-						className="text-3 text-weight-semi-bold"
-						href={url}
-					>
-						{label}
-					</ClayLink>
-				) : (
-					<ClayButton
-						className="text-3 text-weight-semi-bold"
-						displayType="link"
-						onClick={getActionCallback}
-						size="sm"
-					>
-						{label}
-					</ClayButton>
-				)}
+				{showViewAll &&
+					(url ? (
+						<ClayLink
+							className="text-3 text-weight-semi-bold"
+							href={url}
+						>
+							{label}
+						</ClayLink>
+					) : (
+						<ClayButton
+							className="text-3 text-weight-semi-bold"
+							displayType="link"
+							onClick={getActionCallback}
+							size="sm"
+						>
+							{label}
+						</ClayButton>
+					))}
 
 				<CreationMenu />
 			</div>

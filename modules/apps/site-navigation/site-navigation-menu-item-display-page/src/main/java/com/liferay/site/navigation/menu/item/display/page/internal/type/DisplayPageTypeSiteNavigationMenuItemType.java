@@ -50,10 +50,13 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.display.context.DisplayPageTypeSiteNavigationMenuTypeDisplayContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
@@ -419,7 +422,31 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			element.attributeValue(
 				"display-page-scope-external-reference-code"));
 
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+		if (Validator.isNull(scopeExternalReferenceCode)) {
+			StagingGroupHelper stagingGroupHelper =
+				StagingGroupHelperUtil.getStagingGroupHelper();
+
+			if (stagingGroupHelper.isStagedPortlet(
+					portletDataContext.getGroupId(),
+					SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU) &&
+				!stagingGroupHelper.isStagedPortletData(
+					portletDataContext.getGroupId(),
+					_displayPageTypeContext.getClassName())) {
+
+				Group group = _groupLocalService.fetchGroup(
+					importedSiteNavigationMenuItem.getGroupId());
+
+				if (group == null) {
+					return false;
+				}
+
+				Group liveGroup = group.getLiveGroup();
+
+				scopeExternalReferenceCode =
+					liveGroup.getExternalReferenceCode();
+			}
+		}
+		else {
 			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
 				scopeExternalReferenceCode,
 				importedSiteNavigationMenuItem.getCompanyId());

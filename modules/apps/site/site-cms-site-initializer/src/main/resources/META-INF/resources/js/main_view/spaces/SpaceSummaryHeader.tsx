@@ -7,9 +7,10 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import ApiHelper from '../../common/services/ApiHelper';
+import {DISPLAY_UPDATED} from '../../common/utils/events';
 import ACTIONS from '../props_transformer/actions/creationMenuActions';
 import manageConnectedSitesAction, {
 	ManageConnectedSitesData,
@@ -57,29 +58,36 @@ export default function SpaceSummaryHeader({
 	const [active, setActive] = useState(false);
 	const [showViewAll, setShowViewAll] = useState(false);
 
-	useEffect(() => {
-		if (apiUrl) {
-			ApiHelper.get<{
-				items: any;
-				lastPage: number;
-				page: number;
-				totalCount: number;
-			}>(apiUrl)
-				.then((response) => {
-					if (response.data?.items?.length) {
-						setShowViewAll(true);
-					}
-					else {
-						setShowViewAll(false);
-					}
-				})
-				.catch(() => {
-					setShowViewAll(false);
-				});
+	const loadData = () => window.location.reload();
+
+	const fetchItems = useCallback(() => {
+		if (!apiUrl) {
+			setShowViewAll(false);
+
+			return;
 		}
+
+		ApiHelper.get<{
+			items: any;
+			lastPage: number;
+			page: number;
+			totalCount: number;
+		}>(apiUrl)
+			.then((response) => {
+				setShowViewAll(Boolean(response.data?.totalCount));
+			})
+			.catch(() => setShowViewAll(false));
 	}, [apiUrl]);
 
-	const loadData = () => window.location.reload();
+	useEffect(() => {
+		Liferay.on(DISPLAY_UPDATED, fetchItems);
+
+		fetchItems();
+
+		return () => {
+			Liferay.detach(DISPLAY_UPDATED, fetchItems);
+		};
+	}, [fetchItems]);
 
 	const CreationMenu = () => {
 		if (!creationMenu?.primaryItems?.length) {

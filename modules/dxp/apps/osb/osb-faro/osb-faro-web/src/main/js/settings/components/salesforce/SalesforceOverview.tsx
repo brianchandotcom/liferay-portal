@@ -494,7 +494,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 								!currentUser.isAdmin() || !dataSourceActive
 							}
 							label={Liferay.Language.get(
-								'all-properties,-including-those-not-yet-created'
+								'make-individual-data-from-this-data-source-available-in-all-properties,-including-those-not-yet-created'
 							)}
 							value='all'
 						/>

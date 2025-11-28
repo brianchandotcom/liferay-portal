@@ -14,15 +14,16 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -119,23 +120,32 @@ public class LongTextObjectFieldBusinessType
 			Map<String, String> objectFieldSettingsValuesMap)
 		throws PortalException {
 
+		if (objectFieldSettingsValuesMap.isEmpty()) {
+			return;
+		}
+
 		super.validateObjectFieldSettingsDefaultValue(
 			objectField, objectFieldSettingsValuesMap);
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				objectField.getCompanyId(), "LPD-46451")) {
+		if (Objects.equals(
+				objectFieldSettingsValuesMap.get(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE),
+				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER)) {
 
-			String defaultValue = objectFieldSettingsValuesMap.get(
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
-
-			if (defaultValue != null) {
-				validateMaxLength(
-					DynamicObjectDefinitionTableUtil.getMaxLength(
-						objectField.getBusinessType()),
-					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-					defaultValue);
-			}
+			return;
 		}
+
+		String defaultValue = objectFieldSettingsValuesMap.get(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
+
+		if (Validator.isNull(defaultValue)) {
+			return;
+		}
+
+		validateMaxLength(
+			DynamicObjectDefinitionTableUtil.getMaxLength(
+				objectField.getBusinessType()),
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE, defaultValue);
 	}
 
 	@Reference

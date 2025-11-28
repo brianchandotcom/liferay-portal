@@ -575,7 +575,7 @@ public class ObjectDefinitionResourceTest
 		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
 			randomObjectDefinition);
 
-		_assertObjectDefinitionWithPermissions(
+		_assertObjectDefinition(
 			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
 			postObjectDefinition);
 
@@ -598,7 +598,7 @@ public class ObjectDefinitionResourceTest
 			String.valueOf(postObjectDefinition.getId()), role2.getRoleId(),
 			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
-		_assertObjectDefinitionWithPermissions(
+		_assertObjectDefinition(
 			JSONUtil.putAll(
 				_getOwnerPermissionsJSONObject(),
 				_getPermissionsJSONObject(
@@ -613,14 +613,13 @@ public class ObjectDefinitionResourceTest
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(postObjectDefinition.getId()), role1.getRoleId(),
 			ActionKeys.DELETE);
-
 		_resourcePermissionLocalService.removeResourcePermission(
 			TestPropsValues.getCompanyId(), permissionName,
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(postObjectDefinition.getId()), role2.getRoleId(),
 			ActionKeys.VIEW);
 
-		_assertObjectDefinitionWithPermissions(
+		_assertObjectDefinition(
 			JSONUtil.putAll(
 				_getOwnerPermissionsJSONObject(),
 				_getPermissionsJSONObject(
@@ -1867,7 +1866,7 @@ public class ObjectDefinitionResourceTest
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
 	}
 
-	private void _assertObjectDefinitionWithPermissions(
+	private void _assertObjectDefinition(
 			JSONArray expectedPermissionsJSONArray,
 			ObjectDefinition objectDefinition)
 		throws Exception {

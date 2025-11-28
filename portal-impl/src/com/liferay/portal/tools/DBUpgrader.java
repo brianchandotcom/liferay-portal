@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -67,6 +68,7 @@ import org.apache.logging.log4j.core.Appender;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -215,6 +217,13 @@ public class DBUpgrader {
 	}
 
 	public static void startUpgradeLogAppender() {
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			_serviceRegistration = bundleContext.registerService(
+				LogContext.class, UpgradeLogContext.getInstance(), null);
+		}
+
 		_stopWatch = new StopWatch();
 
 		_stopWatch.start();
@@ -239,6 +248,14 @@ public class DBUpgrader {
 			_stopWatch.stop();
 
 			_appender.stop();
+		}
+
+		ServiceRegistration<?> serviceRegistration = _serviceRegistration;
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+
+			_serviceRegistration = null;
 		}
 	}
 
@@ -606,6 +623,7 @@ public class DBUpgrader {
 	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
 
 	private static volatile Appender _appender;
+	private static volatile ServiceRegistration<?> _serviceRegistration;
 	private static volatile StopWatch _stopWatch;
 	private static volatile boolean _upgradeClient;
 	private static Boolean _upgradeDatabaseAutoRun;

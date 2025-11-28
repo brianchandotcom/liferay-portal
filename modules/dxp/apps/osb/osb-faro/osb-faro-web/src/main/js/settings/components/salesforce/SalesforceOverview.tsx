@@ -712,6 +712,8 @@ const AccountAndIndividuals = ({
 	});
 
 	const hasChangesRef = useRef(null);
+	const enabledAllAccountsPrevValue = useRef(enabledAllAccounts);
+	const enabledAllIndividualsPrevValue = useRef(enabledAllIndividuals);
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
@@ -765,14 +767,24 @@ const AccountAndIndividuals = ({
 				enabledIndividual={enabledAllIndividuals}
 				individualsSyncedCount={userCountResponse.data}
 				onAccountChange={() => {
-					setEnabledAllAccount(!enabledAllAccounts);
+					const newValue = !enabledAllAccounts;
 
-					hasChangesRef.current = true;
+					setEnabledAllAccount(newValue);
+
+					hasChangesRef.current =
+						enabledAllAccountsPrevValue.current !== newValue ||
+						enabledAllIndividualsPrevValue.current !==
+							enabledAllIndividuals;
 				}}
 				onIndividualChange={() => {
-					setEnabledAllIndividuals(!enabledAllIndividuals);
+					const newValue = !enabledAllIndividuals;
 
-					hasChangesRef.current = true;
+					setEnabledAllIndividuals(newValue);
+
+					hasChangesRef.current =
+						enabledAllIndividualsPrevValue.current !== newValue ||
+						enabledAllAccountsPrevValue.current !==
+							enabledAllAccounts;
 				}}
 			/>
 

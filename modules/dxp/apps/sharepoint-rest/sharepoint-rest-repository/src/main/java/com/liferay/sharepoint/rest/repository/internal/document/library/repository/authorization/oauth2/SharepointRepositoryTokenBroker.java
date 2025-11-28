@@ -5,18 +5,27 @@
 
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
-import com.liferay.document.library.repository.authorization.capability.AuthorizationException;
 import com.liferay.document.library.repository.authorization.oauth2.Token;
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONDeserializer;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.HttpRequestWithBody;
-import com.mashape.unirest.request.body.MultipartBody;
+import com.microsoft.aad.msal4j.AuthorizationCodeParameters;
+import com.microsoft.aad.msal4j.AuthorizationRequestUrlParameters;
+import com.microsoft.aad.msal4j.ClientCredentialFactory;
+import com.microsoft.aad.msal4j.ConfidentialClientApplication;
+import com.microsoft.aad.msal4j.IAccount;
+import com.microsoft.aad.msal4j.IAuthenticationResult;
+import com.microsoft.aad.msal4j.Prompt;
+import com.microsoft.aad.msal4j.ResponseMode;
+import com.microsoft.aad.msal4j.SilentParameters;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Adolfo Pérez
@@ -29,69 +38,102 @@ public class SharepointRepositoryTokenBroker {
 		_sharepointRepositoryConfiguration = sharepointRepositoryConfiguration;
 	}
 
-	public Token refreshAccessToken(Token token)
-		throws AuthorizationException, IOException {
+	public String getAuthorizationRequestUrl(
+			String nonce, String redirectUri, String state)
+		throws MalformedURLException {
 
-		try {
-			HttpRequestWithBody httpRequestWithBody = Unirest.post(
-				_sharepointRepositoryConfiguration.
-					authorizationTokenEndpoint());
+		ConfidentialClientApplication confidentialClientApplication =
+			_getConfidentialClientApplication();
 
-			MultipartBody multipartBody = httpRequestWithBody.field(
-				"client_id",
-				_sharepointRepositoryConfiguration.clientId() + "@" +
-					_sharepointRepositoryConfiguration.tenantId());
+		AuthorizationRequestUrlParameters parameters =
+			AuthorizationRequestUrlParameters.builder(
+				redirectUri,
+				Collections.singleton(
+					_sharepointRepositoryConfiguration.scope())
+			).responseMode(
+				ResponseMode.QUERY
+			).prompt(
+				Prompt.SELECT_ACCOUNT
+			).state(
+				state
+			).nonce(
+				nonce
+			).build();
 
-			multipartBody = multipartBody.field(
-				"client_secret",
-				_sharepointRepositoryConfiguration.clientSecret());
-			multipartBody = multipartBody.field(
-				"refresh_token", token.getRefreshToken());
-			multipartBody = multipartBody.field("grant_type", "refresh_token");
-			multipartBody = multipartBody.field(
-				"resource", _sharepointRepositoryConfiguration.resource());
-
-			HttpResponse<String> httpResponse = multipartBody.asString();
-
-			return SharepointRepositoryToken.newInstance(
-				httpResponse.getBody(), token);
-		}
-		catch (JSONException | UnirestException exception) {
-			throw new IOException(exception);
-		}
+		return confidentialClientApplication.getAuthorizationRequestUrl(
+			parameters
+		).toString();
 	}
 
-	public Token requestAccessToken(String code, String redirectURL)
-		throws AuthorizationException, IOException {
+	public SharepointRepositoryAuthenticationResult requestAccessToken(
+			String code, String redirectURL)
+		throws ExecutionException, InterruptedException, MalformedURLException,
+			   URISyntaxException {
 
-		try {
-			HttpRequestWithBody httpRequestWithBody = Unirest.post(
-				_sharepointRepositoryConfiguration.
-					authorizationTokenEndpoint());
+		AuthorizationCodeParameters authorizationCodeParameters =
+			AuthorizationCodeParameters.builder(
+				code, new URI(redirectURL)
+			).scopes(
+				Collections.singleton(
+					_sharepointRepositoryConfiguration.scope())
+			).build();
 
-			MultipartBody multipartBody = httpRequestWithBody.field(
-				"client_id",
-				_sharepointRepositoryConfiguration.clientId() + "@" +
-					_sharepointRepositoryConfiguration.tenantId());
+		ConfidentialClientApplication confidentialClientApplication =
+			_getConfidentialClientApplication();
 
-			multipartBody = multipartBody.field(
-				"client_secret",
-				_sharepointRepositoryConfiguration.clientSecret());
-			multipartBody = multipartBody.field("code", code);
-			multipartBody = multipartBody.field(
-				"grant_type", "authorization_code");
-			multipartBody = multipartBody.field("redirect_uri", redirectURL);
-			multipartBody = multipartBody.field(
-				"resource", _sharepointRepositoryConfiguration.resource());
+		IAuthenticationResult iAuthenticationResult =
+			confidentialClientApplication.acquireToken(
+				authorizationCodeParameters
+			).get();
 
-			HttpResponse<String> httpResponse = multipartBody.asString();
+		return new SharepointRepositoryAuthenticationResult(
+			confidentialClientApplication.tokenCache(
+			).serialize(),
+			iAuthenticationResult);
+	}
 
-			return SharepointRepositoryToken.newInstance(
-				httpResponse.getBody());
-		}
-		catch (JSONException | UnirestException exception) {
-			throw new IOException(exception);
-		}
+	public SharepointRepositoryAuthenticationResult requestAccessTokenSilently(
+			Token token)
+		throws ExecutionException, InterruptedException, MalformedURLException {
+
+		JSONDeserializer<IAccount> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		SilentParameters silentParameters = SilentParameters.builder(
+			Collections.singleton(_sharepointRepositoryConfiguration.scope()),
+			jsonDeserializer.deserialize(token.getRefreshToken())
+		).build();
+
+		ConfidentialClientApplication confidentialClientApplication =
+			_getConfidentialClientApplication();
+
+		confidentialClientApplication.tokenCache(
+		).deserialize(
+			token.getAccessToken()
+		);
+
+		IAuthenticationResult iAuthenticationResult =
+			confidentialClientApplication.acquireTokenSilently(
+				silentParameters
+			).get();
+
+		return new SharepointRepositoryAuthenticationResult(
+			confidentialClientApplication.tokenCache(
+			).serialize(),
+			iAuthenticationResult);
+	}
+
+	private ConfidentialClientApplication _getConfidentialClientApplication()
+		throws MalformedURLException {
+
+		return ConfidentialClientApplication.builder(
+			_sharepointRepositoryConfiguration.clientId(),
+			ClientCredentialFactory.createFromSecret(
+				_sharepointRepositoryConfiguration.clientSecret())
+		).authority(
+			"https://login.microsoftonline.com/" +
+				_sharepointRepositoryConfiguration.tenantId()
+		).build();
 	}
 
 	private final SharepointRepositoryConfiguration

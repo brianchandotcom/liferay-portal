@@ -139,14 +139,7 @@
 			},
 			{
 			"#tag-name": "output-variables",
-			"#cdata-value": [
-				"[",
-				"    {",
-				"        \"name\": \"rewrittenText\",",
-				"        \"type\": \"string\"",
-				"    }",
-				"]"
-			]
+			"#cdata-value": ["[$WORKFLOW_NODE_OUTPUT_VARIABLES$]"]
 			},
 			{
 			"#tag-name": "prompt",

@@ -723,7 +723,7 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 			.getByRole('checkbox', {name: 'boolean'})
 			.check();
 
-		await dataSetFragmentPage.showResultsButton.click();
+		await dataSetFragmentPage.addFilterButton.click();
 	});
 
 	await test.step('Assert that the filter is hidden', async () => {

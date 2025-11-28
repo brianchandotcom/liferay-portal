@@ -41,7 +41,7 @@ public class FragmentDropZonePageElementDefinitionDTOConverter
 			{
 				setFragmentDropZoneId(
 					fragmentDropZoneLayoutStructureItem::getFragmentDropZoneId);
-				setType(PageElementDefinition.Type.FRAGMENT_DROP_ZONE);
+				setType(() -> PageElementDefinition.Type.FRAGMENT_DROP_ZONE);
 			}
 		};
 	}

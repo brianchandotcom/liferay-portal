@@ -1,4 +1,4 @@
-<script>
+<@liferay_aui.script>
 	const _addEventListener = (selectors) => {
 		var elements = document.querySelectorAll(selectors);
 
@@ -43,8 +43,8 @@
 			}
 		}
 	});
-</script>
-
+ </@>
+ 
 <#assign
 	journalArticleId = .vars["reserved-article-id"].data
 
@@ -181,13 +181,13 @@
 
 									<div class="how-to-cards-container" id="how-to-cards-container">
 										<#list knowledgeArticles.items as knowledgeArticle>
-											<a class="how-to-card" href="${themeDisplay.getCanonicalURL()}/l/${knowledgeArticle.id}/">
+											<a class="how-to-card" href="${themeDisplay.getPortalURL()}/l/${knowledgeArticle.id}/">
 												<div class="how-to-card-header">
 													${knowledgeArticle.title}
 												</div>
 
 												<div class="how-to-card-date-published">
-													<#assign date = knowledgeArticle.dateModified?datetime("MMM dd, yy hh:mm")?string />
+													<#assign date = knowledgeArticle.dateModified?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'")?string("MMM dd, yy HH:mm") />
 
 													${languageUtil.get(locale, 'published-date')}: ${date}
 												</div>

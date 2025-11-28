@@ -83,7 +83,11 @@ export function useObjectFieldForm({
 		const hasDefaultValue =
 			(Liferay.FeatureFlags['LPD-46451'] &&
 				(field.businessType === 'Boolean' ||
+					field.businessType === 'Decimal' ||
+					field.businessType === 'Integer' ||
+					field.businessType === 'LongInteger' ||
 					field.businessType === 'LongText' ||
+					field.businessType === 'PrecisionDecimal' ||
 					field.businessType === 'RichText' ||
 					field.businessType === 'Text')) ||
 			field.businessType === 'Picklist';

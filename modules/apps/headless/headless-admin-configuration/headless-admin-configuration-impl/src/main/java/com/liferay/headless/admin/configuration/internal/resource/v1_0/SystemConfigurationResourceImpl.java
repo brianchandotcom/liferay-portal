@@ -142,6 +142,8 @@ public class SystemConfigurationResourceImpl
 
 		_checkPermission();
 
+		_validateDefaultCompany();
+
 		systemConfiguration.setExternalReferenceCode(
 			() -> systemConfigurationExternalReferenceCode);
 

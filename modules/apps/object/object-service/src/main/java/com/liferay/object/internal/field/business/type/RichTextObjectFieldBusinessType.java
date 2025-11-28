@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectFieldBusinessType.class
 )
 public class RichTextObjectFieldBusinessType
-	implements ObjectFieldBusinessType {
+	extends BaseObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
@@ -74,9 +74,8 @@ public class RichTextObjectFieldBusinessType
 			ObjectField objectField, Long userId, Map<String, Object> values)
 		throws PortalException {
 
-		Map<String, Object> localizedValues =
-			ObjectFieldBusinessType.super.getLocalizedValues(
-				objectField, userId, values);
+		Map<String, Object> localizedValues = super.getLocalizedValues(
+			objectField, userId, values);
 
 		if (localizedValues == null) {
 			return null;
@@ -106,8 +105,7 @@ public class RichTextObjectFieldBusinessType
 			Map<String, Object> values)
 		throws PortalException {
 
-		Object value = ObjectFieldBusinessType.super.getValue(
-			groupId, objectField, userId, values);
+		Object value = super.getValue(groupId, objectField, userId, values);
 
 		return _getValue(objectField, value);
 	}

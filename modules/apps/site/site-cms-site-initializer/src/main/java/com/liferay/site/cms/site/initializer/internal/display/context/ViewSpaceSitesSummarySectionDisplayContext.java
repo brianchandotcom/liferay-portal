@@ -102,7 +102,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
-			null, _httpServletRequest, "view-all-sites",
+			getAPIURL(), null, _httpServletRequest, "view-all-sites",
 			HashMapBuilder.<String, Object>put(
 				"hasConnectSitesPermission", _hasConnectSitesPermission()
 			).build(),

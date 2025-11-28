@@ -114,7 +114,8 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
-			null, _httpServletRequest, "view-all-members",
+			getAPIURL("user-accounts"), null, _httpServletRequest,
+			"view-all-members",
 			HashMapBuilder.<String, Object>put(
 				"hasAssignMembersPermission", _hasAssignMembersPermission()
 			).build(),

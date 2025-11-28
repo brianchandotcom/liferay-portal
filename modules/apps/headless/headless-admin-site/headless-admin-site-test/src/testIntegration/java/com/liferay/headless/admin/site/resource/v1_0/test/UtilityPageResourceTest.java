@@ -249,7 +249,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			});
 
 		utilityPage.setName(RandomTestUtil::randomString);
-
 		utilityPage.setUtilityPageSettings(
 			() -> new UtilityPageSettings() {
 				{
@@ -303,13 +302,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup, TestPropsValues.getUserId()));
 
-		String thumbnailURL = RandomTestUtil.randomString();
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		URLReference urlReference = new URLReference() {
 			{
 				setExternalReferenceCode(fileEntry.getExternalReferenceCode());
-				setUrl(() -> thumbnailURL);
+				setUrl(() -> RandomTestUtil.randomString());
 			}
 		};
 
@@ -320,6 +318,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		assertEquals(utilityPage, postUtilityPage);
 		assertValid(postUtilityPage);
+
 		_assertThumbnailURLReference(
 			false, postUtilityPage.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
@@ -610,14 +609,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		utilityPage.setMarkedAsDefault(markedAsDefault);
 
 		if (fileEntry != null) {
-			String thumbnailURL = RandomTestUtil.randomString();
-
 			utilityPage.setThumbnail(
 				() -> new URLReference() {
 					{
 						setExternalReferenceCode(
 							fileEntry::getExternalReferenceCode);
-						setUrl(() -> thumbnailURL);
+						setUrl(() -> RandomTestUtil.randomString());
 					}
 				});
 		}
@@ -720,14 +717,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		randomUtilityPage.setThumbnail(
 			() -> new URLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
+					setUrl(RandomTestUtil.randomString());
 				}
 			});
 
@@ -900,14 +895,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		utilityPage.setThumbnail(
 			() -> new URLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
+					setUrl(RandomTestUtil.randomString());
 				}
 			});
 

@@ -394,7 +394,9 @@ function DSRRoomDetailsStep({
 					})}
 				>
 					<label className="d-block" htmlFor="dsr-banner">
-						{Liferay.Language.get('upload-dsr-header-image')}
+						{Liferay.Language.get(
+							'upload-digital-sales-room-header-image'
+						)}
 					</label>
 
 					<div

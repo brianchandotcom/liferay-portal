@@ -106,7 +106,7 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TProps) {
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
-				<>{Liferay.Language.get('create-new-dsr')}</>
+				<>{Liferay.Language.get('create-new-digital-sales-room')}</>
 			</ClayModal.Header>
 
 			<ClayModal.Body>

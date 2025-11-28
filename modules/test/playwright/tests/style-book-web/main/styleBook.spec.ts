@@ -166,7 +166,6 @@ test.describe('Style books applied to master pages', async () => {
 		apiHelpers,
 		markStyleBookAsDefault,
 		masterPagesPage,
-		page,
 		pageEditorPage,
 		pagesAdminPage,
 		selectStyleBookForMasterPage,
@@ -321,58 +320,72 @@ test.describe('Style books applied to master pages', async () => {
 	});
 });
 
-test.describe('Style book is incompatible with the applied theme', () => {
-	test('Without selected style book and with default style book for the theme', async ({
-		page,
-		pageEditorPage,
-		pagesAdminPage,
-		site,
-		styleBooksPage,
-	}) => {
-		const styleBookName = getRandomString();
+test('Style book is incompatible with the applied theme', async ({
+	page,
+	pageEditorPage,
+	pagesAdminPage,
+	site,
+	styleBooksPage,
+}) => {
+	const classicStyleBookName = getRandomString();
 
-		await test.step('Create a style book', async () => {
-			await styleBooksPage.goto(site.friendlyUrlPath);
+	await test.step('Create a style book for Classic theme', async () => {
+		await styleBooksPage.goto(site.friendlyUrlPath);
 
-			await styleBooksPage.create(styleBookName);
+		await styleBooksPage.create(classicStyleBookName);
 
-			await styleBooksPage.publish();
+		await styleBooksPage.publish();
+	});
+
+	const dialectStyleBookName = getRandomString();
+
+	await test.step('Create a style book for Dialect theme and mark it as default', async () => {
+		await styleBooksPage.goto(site.friendlyUrlPath);
+
+		await styleBooksPage.create(dialectStyleBookName, 'Dialect Theme');
+
+		await styleBooksPage.publish();
+
+		await styleBooksPage.markAsDefault(dialectStyleBookName);
+	});
+
+	const pageName = getRandomString();
+
+	await test.step('Create a content page and apply the new style book', async () => {
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.createNewPage({
+			draft: true,
+			name: pageName,
 		});
 
-		const pageName = getRandomString();
+		await pageEditorPage.selectStyleBook(classicStyleBookName);
 
-		await test.step('Create a content page and apply the new style book', async () => {
-			await pagesAdminPage.goto(site.friendlyUrlPath);
+		await pageEditorPage.publishPage();
+	});
 
-			await pagesAdminPage.createNewPage({
-				draft: true,
-				name: pageName,
-			});
+	await test.step('Change the theme to Dialect', async () => {
+		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-			await pageEditorPage.selectStyleBook(styleBookName);
+		await pagesAdminPage.goToDesignTabConfiguration(pageName);
 
-			await pageEditorPage.publishPage();
-		});
+		await pagesAdminPage.changeTheme('Dialect');
+	});
 
-		await test.step('Change the theme and assert that the applied style book is the one from the new theme', async () => {
-			await pagesAdminPage.goto(site.friendlyUrlPath);
+	await test.step('Assert that the applied style book is the default one from the Dialect theme', async () => {
+		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-			await pagesAdminPage.goToDesignTabConfiguration(pageName);
+		await pagesAdminPage.editPage(pageName);
 
-			await pagesAdminPage.changeTheme('Dialect');
+		await pageEditorPage.goToSidebarTab('Page Design Options');
 
-			await pagesAdminPage.goto(site.friendlyUrlPath);
+		await pageEditorPage.goToConfigurationTab('Style Book');
 
-			await pagesAdminPage.editPage(pageName);
-
-			await pageEditorPage.goToSidebarTab('Page Design Options');
-
-			await pageEditorPage.goToConfigurationTab('Style Book');
-
-			await expect(
-				page.getByText('Styles from Dialect Theme')
-			).toBeVisible();
-		});
+		await page
+			.locator(
+				`.page-editor__sidebar__design-options__tab-card--active:has-text("${dialectStyleBookName}"):has-text("Styles by Default")`
+			)
+			.waitFor();
 	});
 });
 

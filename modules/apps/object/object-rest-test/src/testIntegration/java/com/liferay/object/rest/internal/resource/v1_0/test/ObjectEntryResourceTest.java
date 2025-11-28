@@ -1095,22 +1095,6 @@ public class ObjectEntryResourceTest {
 		_groupLocalService.deleteGroup(_group);
 	}
 
-	@FeatureFlag("LPD-69419")
-	@Test
-	public void testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode()
-		throws Exception {
-
-		// Company scope
-
-		_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-			0L, _objectDefinition1);
-
-		// Site scope
-
-		_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-			_testGroupId, _siteScopedObjectDefinition1);
-	}
-
 	@Test
 	public void testCustomizeNestedFieldsContextWithoutRootModelHierarchy()
 		throws Exception {
@@ -1212,6 +1196,22 @@ public class ObjectEntryResourceTest {
 			SetUtil.fromArray(
 				nestedField1, nestedField2, nestedField3, "rootModelHierarchy"),
 			new HashSet<>(nestedFieldsContext.getNestedFields()));
+	}
+
+	@FeatureFlag("LPD-69419")
+	@Test
+	public void testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode()
+		throws Exception {
+
+		// Company scope
+
+		_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+			0L, _objectDefinition1);
+
+		// Site scope
+
+		_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+			_testGroupId, _siteScopedObjectDefinition1);
 	}
 
 	@Test

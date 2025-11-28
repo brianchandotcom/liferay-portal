@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
@@ -14,6 +15,7 @@ import com.liferay.list.type.constants.ListTypeActionKeys;
 import com.liferay.list.type.constants.ListTypeConstants;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -52,10 +54,13 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/list-type-definition.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = ListTypeDefinitionResource.class
 )
 public class ListTypeDefinitionResourceImpl
-	extends BaseListTypeDefinitionResourceImpl {
+	extends BaseListTypeDefinitionResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate
+		<ListTypeDefinition> {
 
 	@Override
 	public void deleteListTypeDefinition(Long listTypeDefinitionId)
@@ -68,6 +73,39 @@ public class ListTypeDefinitionResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "list-type-definitions";
+			}
+
+			@Override
+			public String getModelClassName() {
+				return com.liferay.list.type.model.ListTypeDefinition.class.
+					getName();
+			}
+
+			@Override
+			public String getPortletId() {
+				return ObjectPortletKeys.LIST_TYPE_DEFINITIONS;
+			}
+
+			@Override
+			public String getResourceClassName() {
+				return ListTypeDefinitionResourceImpl.class.getName();
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+		};
 	}
 
 	@Override

@@ -362,7 +362,7 @@ public class DataCleanupRegistratorTest {
 			_serviceComponentRuntime.getComponentDescriptionDTO(
 				BundleUtil.getBundle(
 					SystemBundleUtil.getBundleContext(),
-					"com.liferay.data.cleanup"),
+					"com.liferay.data.cleanup.impl"),
 				"com.liferay.data.cleanup.internal.DataCleanupRegistrator");
 
 		Promise<Void> promise = _serviceComponentRuntime.disableComponent(

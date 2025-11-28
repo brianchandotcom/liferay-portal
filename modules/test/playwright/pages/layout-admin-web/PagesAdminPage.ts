@@ -256,9 +256,12 @@ export class PagesAdminPage {
 
 		await themeCard.waitFor();
 
-		await themeCard.click();
+		await clickAndExpectToBeHidden({
+			target: themeCard,
+			trigger: themeCard,
+		});
 
-		await this.configurationSaveButton.waitFor({state: 'visible'});
+		await this.configurationSaveButton.waitFor();
 
 		await this.saveConfiguration();
 	}

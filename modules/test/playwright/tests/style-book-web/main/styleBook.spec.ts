@@ -192,10 +192,6 @@ test.describe('Style books applied to master pages', async () => {
 		await styleBooksPage.publish();
 
 		if (markStyleBookAsDefault) {
-			page.once('dialog', (dialog) => {
-				dialog.accept();
-			});
-
 			await styleBooksPage.markAsDefault(styleBookName);
 		}
 

@@ -44,7 +44,7 @@ export default function QuickActions({
 
 	return (
 		<div className="quick-actions">
-			<div className="pb-2 pt-2 row">
+			<div className="pb-2 pt-2 row w-100">
 				<div className="col">
 					<span className="font-weight-semi-bold text-4">
 						{Liferay.Language.get('quick-actions')}
@@ -54,9 +54,9 @@ export default function QuickActions({
 
 			<div className="row row-cols-lg-5 row-cols-md-3 row-cols-sm-1">
 				{quickActions.map((quickAction: any) => (
-					<div className="col pb-2" key={quickAction.href}>
+					<div className="col d-flex pb-2" key={quickAction.href}>
 						<button
-							className="btn pb-3 pl-4 pr-4 pt-3 quick-action text-left w-100"
+							className="btn flex-fill pb-3 pl-4 pr-4 pt-3 quick-action text-left w-100"
 							onClick={(event) =>
 								handleActionClick(event, quickAction)
 							}

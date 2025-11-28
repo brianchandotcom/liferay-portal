@@ -196,12 +196,20 @@ public class ViewHomeQuickActionsDisplayContext {
 				});
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			String actionIcon = _icons.get(
+				objectDefinition.getExternalReferenceCode());
+
+			if (actionIcon == null) {
+				String entryFolderERC =
+					_getObjectEntryFolderExternalReferenceCode(
+						objectDefinition);
+
+				actionIcon = _icons.getOrDefault(entryFolderERC, "forms");
+			}
+
 			quickActions.add(
 				_createQuickAction(
-					depotEntriesJSONArray,
-					_icons.getOrDefault(
-						objectDefinition.getExternalReferenceCode(), "forms"),
-					objectDefinition));
+					depotEntriesJSONArray, actionIcon, objectDefinition));
 		}
 
 		quickActions.add(
@@ -237,6 +245,10 @@ public class ViewHomeQuickActionsDisplayContext {
 		"L_CMS_EXTERNAL_VIDEO", "video"
 	).put(
 		"L_CMS_VOCABULARY", "vocabulary"
+	).put(
+		"L_CONTENTS", "web-content"
+	).put(
+		"L_FILES", "document-default"
 	).build();
 
 	private final DepotEntryLocalService _depotEntryLocalService;

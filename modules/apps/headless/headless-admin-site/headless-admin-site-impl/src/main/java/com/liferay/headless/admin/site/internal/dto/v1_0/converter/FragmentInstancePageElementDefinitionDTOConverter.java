@@ -165,7 +165,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 				setJs(fragmentEntryLink::getJs);
 				setName(fragmentStyledLayoutStructureItem::getName);
 				setNamespace(fragmentEntryLink::getNamespace);
-				setType(PageElementDefinition.Type.FRAGMENT);
+				setType(() -> PageElementDefinition.Type.FRAGMENT);
 				setUuid(fragmentEntryLink::getUuid);
 				setWidgetInstances(
 					() -> _getWidgetInstances(fragmentEntryLink));

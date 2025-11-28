@@ -49,7 +49,7 @@ public class ModulePageElementDefinitionDTOConverter
 				setModuleViewports(
 					() -> _toModuleViewports(columnLayoutStructureItem));
 				setSize(columnLayoutStructureItem::getSize);
-				setType(Type.MODULE);
+				setType(() -> Type.MODULE);
 			}
 		};
 	}

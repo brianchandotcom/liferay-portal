@@ -52,7 +52,9 @@ public class UpgradeLogContext implements LogContext {
 
 	private boolean _isUpgradeClass(String name) {
 		try {
-			if (_upgradeClassNames.contains(name)) {
+			if (_upgradeClassNames.contains(name) ||
+				name.startsWith(_UPGRADE_CLEANUP_PACKAGE)) {
+
 				return true;
 			}
 
@@ -77,6 +79,9 @@ public class UpgradeLogContext implements LogContext {
 	}
 
 	private static final UpgradeLogContext _INSTANCE = new UpgradeLogContext();
+
+	private static final String _UPGRADE_CLEANUP_PACKAGE =
+		"com.liferay.data.cleanup.internal.verify";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeLogContext.class);

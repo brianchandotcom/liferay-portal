@@ -55,4 +55,7 @@ public interface ObjectEntryFolder
 
 	public boolean isRoot();
 
+	public boolean isTrashable(com.liferay.trash.TrashHelper trashHelper)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

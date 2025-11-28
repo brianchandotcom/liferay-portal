@@ -8,13 +8,8 @@ package com.liferay.sharepoint.rest.repository.internal.document.library.reposit
 import com.liferay.document.library.repository.authorization.oauth2.Token;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.sharepoint.rest.oauth2.service.SharepointOAuth2TokenEntryLocalService;
-import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.util.SharepointRepositoryTokenBrokerFactoryUtil;
 
-import java.io.IOException;
-
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,54 +31,16 @@ public class SharepointRepositoryTokenStore implements TokenStore {
 	public Token get(String configurationPid, long userId)
 		throws PortalException {
 
-		try {
-			Token token = SharepointRepositoryToken.newInstance(
-				_sharepointOAuth2TokenEntryLocalService.
-					fetchSharepointOAuth2TokenEntry(userId, configurationPid));
-
-			if ((token == null) || !token.isExpired()) {
-				return token;
-			}
-
-			SharepointRepositoryTokenBroker sharepointRepositoryTokenBroker =
-				SharepointRepositoryTokenBrokerFactoryUtil.create(
-					_configurationAdmin, configurationPid);
-
-			Token freshToken =
-				sharepointRepositoryTokenBroker.refreshAccessToken(token);
-
-			save(configurationPid, userId, freshToken);
-
-			return freshToken;
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
+		return SharepointRepositoryToken.newInstance(
+			_sharepointOAuth2TokenEntryLocalService.
+				fetchSharepointOAuth2TokenEntry(userId, configurationPid));
 	}
 
 	@Override
 	public Token getFresh(String configurationPid, long userId)
 		throws PortalException {
 
-		try {
-			Token token = SharepointRepositoryToken.newInstance(
-				_sharepointOAuth2TokenEntryLocalService.
-					fetchSharepointOAuth2TokenEntry(userId, configurationPid));
-
-			SharepointRepositoryTokenBroker sharepointRepositoryTokenBroker =
-				SharepointRepositoryTokenBrokerFactoryUtil.create(
-					_configurationAdmin, configurationPid);
-
-			Token freshToken =
-				sharepointRepositoryTokenBroker.refreshAccessToken(token);
-
-			save(configurationPid, userId, freshToken);
-
-			return freshToken;
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -94,9 +51,6 @@ public class SharepointRepositoryTokenStore implements TokenStore {
 			userId, configurationPid, token.getAccessToken(),
 			token.getRefreshToken(), token.getExpirationDate());
 	}
-
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private SharepointOAuth2TokenEntryLocalService

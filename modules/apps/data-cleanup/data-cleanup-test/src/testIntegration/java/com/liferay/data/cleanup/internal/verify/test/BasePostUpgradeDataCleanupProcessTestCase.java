@@ -33,7 +33,6 @@ import org.junit.Rule;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Luis Ortiz
@@ -95,16 +94,12 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 		}
 	}
 
-	protected Bundle uninstallBundle() throws Exception {
-		Bundle currentBundle = FrameworkUtil.getBundle(
-			BasePostUpgradeDataCleanupProcessTestCase.class);
-
-		BundleContext bundleContext = currentBundle.getBundleContext();
+	protected Bundle uninstallBundle(
+			BundleContext bundleContext, String bundleName)
+		throws Exception {
 
 		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.dynamic.data.mapping.service") &&
+			if (Objects.equals(bundle.getSymbolicName(), bundleName) &&
 				(bundle.getState() == Bundle.ACTIVE)) {
 
 				bundle.uninstall();

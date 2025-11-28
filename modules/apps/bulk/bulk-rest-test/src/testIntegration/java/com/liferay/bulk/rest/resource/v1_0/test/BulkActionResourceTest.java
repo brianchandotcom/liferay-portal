@@ -1309,20 +1309,20 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		};
 	}
 
-	private BulkActionItem[] _toBulkActionItems(ObjectEntry... objectEntry)
+	private BulkActionItem[] _toBulkActionItems(ObjectEntry... objectEntries)
 		throws Exception {
 
 		return TransformUtil.transform(
-			objectEntry,
-			entry -> new BulkActionItem() {
+			objectEntries,
+			objectEntry -> new BulkActionItem() {
 				{
 					setClassExternalReferenceCode(
-						entry::getExternalReferenceCode);
+						objectEntry::getExternalReferenceCode);
 					setClassName(
 						() ->
 							_cmsBasicWebContentObjectDefinition.getClassName());
-					setClassPK(entry::getObjectEntryId);
-					setName(entry::getTitleValue);
+					setClassPK(objectEntry::getObjectEntryId);
+					setName(objectEntry::getTitleValue);
 				}
 			},
 			BulkActionItem.class);

@@ -12,7 +12,7 @@ import com.liferay.data.cleanup.DataCleanup;
 import com.liferay.data.cleanup.DataCleanupAdapter;
 import com.liferay.data.cleanup.internal.upgrade.AmazonRankingsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.ChatUpgradeProcess;
-import com.liferay.data.cleanup.internal.upgrade.CurrenctConverterUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.CurrencyConverterUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DLPreviewCTSContentDataUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DictionaryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DirectoryUpgradeProcess;
@@ -175,7 +175,7 @@ public class DataCleanupRegistrator {
 			DataCleanupAdapter.create(
 				"clean-up-currency-converter-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
-				new CurrenctConverterUpgradeProcess()),
+				new CurrencyConverterUpgradeProcess()),
 			"com.liferay.currency.converter.web");
 
 		_registerDataCleanup(

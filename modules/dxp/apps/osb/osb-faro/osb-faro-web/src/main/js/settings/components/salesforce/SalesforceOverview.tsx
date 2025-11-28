@@ -241,7 +241,10 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 		variables: {delta, groupId, id: dataSource.id, orderIOMap, page, query}
 	});
 
-	const channelsConfigurationRef = useRef(null);
+	const channelsConfigurationRef = useRef({
+		channels: [],
+		enableAllChannels: false
+	});
 
 	useEffect(() => {
 		if (dataSource.provider?.get('channelsConfiguration')) {
@@ -628,11 +631,10 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 												modalTypes.SELECT_CHANNELS_MODAL,
 												{
 													groupId,
-													initialItems:
-														channelsConfigurationRef.current?.channels?.map(
-															({channelId}) =>
-																channelId
-														) ?? [],
+													initialItems: channelsConfigurationRef.current?.channels?.map(
+														({channelId}) =>
+															channelId
+													),
 													onClose: close,
 													onSelect: async items => {
 														await updateSalesforce({

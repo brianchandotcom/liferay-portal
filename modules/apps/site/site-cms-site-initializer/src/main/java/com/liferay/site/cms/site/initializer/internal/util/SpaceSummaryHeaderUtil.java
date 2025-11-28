@@ -19,12 +19,15 @@ import java.util.Map;
 public class SpaceSummaryHeaderUtil {
 
 	public static Map<String, Object> getSpaceSummaryHeaderProps(
-			CreationMenu creationMenu, HttpServletRequest httpServletRequest,
-			String labelKey, Map<String, Object> permissions,
+			String apiUrl, CreationMenu creationMenu,
+			HttpServletRequest httpServletRequest, String labelKey,
+			Map<String, Object> permissions,
 			Map<String, Object> spaceModalProps, String titleKey, String url)
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
+			"apiUrl", apiUrl
+		).put(
 			"creationMenu", creationMenu
 		).put(
 			"label", LanguageUtil.get(httpServletRequest, labelKey)

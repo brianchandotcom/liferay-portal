@@ -67,8 +67,9 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 					themeDisplay.getCompanyId());
 
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
-			getCreationMenu(), httpServletRequest, "view-all-content",
-			Collections.emptyMap(), Collections.emptyMap(), "content",
+			getAPIURL(), getCreationMenu(), httpServletRequest,
+			"view-all-content", Collections.emptyMap(), Collections.emptyMap(),
+			"content",
 			ActionUtil.getBaseViewFolderURL(themeDisplay) +
 				objectEntryFolder.getObjectEntryFolderId());
 	}

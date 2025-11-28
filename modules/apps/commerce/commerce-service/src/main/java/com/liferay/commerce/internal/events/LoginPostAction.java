@@ -368,13 +368,13 @@ public class LoginPostAction extends Action {
 					immediateCheckout = true;
 				}
 
-				String commerceOrderUuid = StringUtil.extractFirst(
+				String uuid = StringUtil.extractFirst(
 					cookieValue, StringPool.PIPE);
 
 				commerceOrder =
 					_commerceOrderLocalService.
 						fetchCommerceOrderByUuidAndGroupId(
-							commerceOrderUuid, commerceChannelGroupId);
+							uuid, commerceChannelGroupId);
 
 				if (commerceOrder == null) {
 					continue;

@@ -2,6 +2,7 @@ dependencies {
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation project(":apps:change-tracking:change-tracking-api")
 	testIntegrationImplementation project(":apps:data-cleanup:data-cleanup")
+	testIntegrationImplementation project(":apps:data-cleanup:data-cleanup-api")
 	testIntegrationImplementation project(":apps:expando:expando-test-util")
 	testIntegrationImplementation project(":apps:fragment:fragment-api")
 	testIntegrationImplementation project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")

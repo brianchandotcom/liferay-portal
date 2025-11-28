@@ -149,7 +149,7 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpQuickNoteModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "clean-up-rencet-documents-module-data",
+		deflt = "false", name = "clean-up-recent-documents-module-data",
 		required = false
 	)
 	public boolean cleanUpRecentDocumentsModuleData();

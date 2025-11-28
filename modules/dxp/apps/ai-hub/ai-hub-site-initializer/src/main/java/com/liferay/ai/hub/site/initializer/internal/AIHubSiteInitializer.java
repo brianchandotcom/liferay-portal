@@ -128,11 +128,7 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			workflowDefinitionName, json.getBytes());
 	}
 
-	private void _initialize(long groupId) throws Exception {
-		Group group = _groupLocalService.getGroup(groupId);
-
-		Company company = _companyLocalService.getCompany(group.getCompanyId());
-
+	private void _deployWorkflowDefinitions(Company company) throws Exception {
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
@@ -243,6 +239,13 @@ public class AIHubSiteInitializer implements SiteInitializer {
 				"content, return it unchanged. Output only the shortened ",
 				"text, with no explanations or commentary."),
 			"This is the text to be shortened: {{text}}");
+	}
+
+	private void _initialize(long groupId) throws Exception {
+		Group group = _groupLocalService.getGroup(groupId);
+
+		_deployWorkflowDefinitions(
+			_companyLocalService.getCompany(group.getCompanyId()));
 	}
 
 	@Reference

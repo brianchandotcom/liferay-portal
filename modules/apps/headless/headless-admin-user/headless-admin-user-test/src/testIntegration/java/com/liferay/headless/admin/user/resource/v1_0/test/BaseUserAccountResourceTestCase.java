@@ -7350,6 +7350,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("loginDate", additionalAssertFieldName)) {
+				if (userAccount.getLoginDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (userAccount.getName() == null) {
 					valid = false;
@@ -7883,6 +7891,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getLastLoginDate(),
 						userAccount2.getLastLoginDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("loginDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getLoginDate(),
+						userAccount2.getLoginDate())) {
 
 					return false;
 				}
@@ -8979,6 +8998,35 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("loginDate")) {
+			if (operator.equals("between")) {
+				Date date = userAccount.getLoginDate();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(userAccount.getLoginDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("name")) {
 			Object object = userAccount.getName();
 
@@ -9239,6 +9287,7 @@ public abstract class BaseUserAccountResourceTestCase {
 				languageId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				lastLoginDate = RandomTestUtil.nextDate();
+				loginDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				password = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

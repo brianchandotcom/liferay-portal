@@ -6031,6 +6031,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("loginDate", additionalAssertFieldName)) {
+				if (userAccount.getLoginDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (userAccount.getName() == null) {
 					valid = false;
@@ -6921,6 +6929,17 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("loginDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getLoginDate(),
+						userAccount2.getLoginDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getName(), userAccount2.getName())) {
@@ -7759,6 +7778,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				languageDisplayName = RandomTestUtil.randomString();
 				languageId = RandomTestUtil.randomString();
 				lastLoginDate = RandomTestUtil.nextDate();
+				loginDate = RandomTestUtil.nextDate();
 				name = RandomTestUtil.randomString();
 				password = RandomTestUtil.randomString();
 				profileURL = RandomTestUtil.randomString();

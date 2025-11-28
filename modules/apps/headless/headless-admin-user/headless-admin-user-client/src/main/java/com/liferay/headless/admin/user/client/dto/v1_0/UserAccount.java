@@ -656,6 +656,27 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected Date lastLoginDate;
 
+	public Date getLoginDate() {
+		return loginDate;
+	}
+
+	public void setLoginDate(Date loginDate) {
+		this.loginDate = loginDate;
+	}
+
+	public void setLoginDate(
+		UnsafeSupplier<Date, Exception> loginDateUnsafeSupplier) {
+
+		try {
+			loginDate = loginDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date loginDate;
+
 	public String getName() {
 		return name;
 	}

@@ -1339,6 +1339,47 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _lastLoginDateSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Date getLoginDate() {
+		if (_loginDateSupplier != null) {
+			loginDate = _loginDateSupplier.get();
+
+			_loginDateSupplier = null;
+		}
+
+		return loginDate;
+	}
+
+	public void setLoginDate(Date loginDate) {
+		this.loginDate = loginDate;
+
+		_loginDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLoginDate(
+		UnsafeSupplier<Date, Exception> loginDateUnsafeSupplier) {
+
+		_loginDateSupplier = () -> {
+			try {
+				return loginDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date loginDate;
+
+	@JsonIgnore
+	private Supplier<Date> _loginDateSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The user's full name."
 	)
@@ -2340,6 +2381,22 @@ public class UserAccount implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(lastLoginDate));
+
+			sb.append("\"");
+		}
+
+		Date loginDate = getLoginDate();
+
+		if (loginDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"loginDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(loginDate));
 
 			sb.append("\"");
 		}

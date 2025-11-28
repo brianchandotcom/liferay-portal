@@ -2,7 +2,9 @@
  * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import {sub} from 'frontend-js-web';
+
 import {RequestResult} from '../../../common/services/ApiHelper';
 import {
 	IBulkActionFDSData,
@@ -78,12 +80,10 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 			);
 
 			displayCreateTaskSuccessToast(
-				this.selectedData.selectAll ? message :
-				sub(
-					message,
-					[
-						this.selectedData?.items?.length || 0,
-					]));
+				this.selectedData.selectAll
+					? message
+					: sub(message, [this.selectedData?.items?.length || 0])
+			);
 
 			if (this.onCreateTaskSuccess) {
 				this.onCreateTaskSuccess(response);

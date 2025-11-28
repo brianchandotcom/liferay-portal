@@ -92,20 +92,15 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 	public void testGetProps() throws Exception {
 		_testGetProps(
 			ActionKeys.DELETE,
-			jsonArray -> _assertLabelsEquals(
-				jsonArray, "export", "import", "delete"));
+			jsonArray -> _assertLabelsEquals(jsonArray, "delete"));
 		_testGetProps(
 			ActionKeys.PERMISSIONS,
 			jsonArray -> _assertLabelsEquals(
-				jsonArray, "export", "import", "permissions",
-				"default-permissions"));
+				jsonArray, "permissions", "default-permissions"));
 		_testGetProps(
 			ActionKeys.UPDATE,
 			jsonArray -> _assertLabelsEquals(
 				jsonArray, "space-settings", "export", "import"));
-		_testGetProps(
-			ActionKeys.VIEW,
-			jsonArray -> _assertLabelsEquals(jsonArray, "export", "import"));
 	}
 
 	private void _assertLabelsEquals(

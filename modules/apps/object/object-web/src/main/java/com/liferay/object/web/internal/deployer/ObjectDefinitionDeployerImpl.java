@@ -490,7 +490,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				LayoutDisplayPageProvider.class,
 				new ObjectEntryLayoutDisplayPageProvider(
-					_assetHelper, infoItemFriendlyURLProvider, objectDefinition,
+					_assetHelper, _groupLocalService,
+					infoItemFriendlyURLProvider, objectDefinition,
 					_objectDefinitionLocalService, _objectEntryLocalService,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getCompanyId(),

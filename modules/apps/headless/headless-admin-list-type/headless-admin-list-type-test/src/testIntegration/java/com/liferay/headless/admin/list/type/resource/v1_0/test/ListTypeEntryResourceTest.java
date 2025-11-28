@@ -6,16 +6,23 @@
 package com.liferay.headless.admin.list.type.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.list.type.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.client.pagination.Page;
 import com.liferay.headless.admin.list.type.client.pagination.Pagination;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
@@ -46,13 +53,13 @@ public class ListTypeEntryResourceTest
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.getDefault(), "test"),
-				false, Collections.emptyList());
+				false, Collections.emptyList(), new ServiceContext());
 		_systemListTypeDefinition =
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				true, Collections.emptyList());
+				true, Collections.emptyList(), new ServiceContext());
 	}
 
 	@Override
@@ -210,7 +217,42 @@ public class ListTypeEntryResourceTest
 	public void testPostListTypeDefinitionListTypeEntry() throws Exception {
 		super.testPostListTypeDefinitionListTypeEntry();
 
-		ListTypeEntry listTypeEntry = randomListTypeEntry();
+		// Creator
+
+		User user = TestPropsValues.getUser();
+
+		ListTypeEntry listTypeEntry =
+			testPostListTypeDefinitionListTypeEntry_addListTypeEntry(
+				randomListTypeEntry());
+
+		Creator creator = listTypeEntry.getCreator();
+
+		Assert.assertEquals(
+			user.getExternalReferenceCode(),
+			creator.getExternalReferenceCode());
+
+		user = UserTestUtil.addUser();
+
+		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				RandomTestUtil.randomString(), user.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
+				StringUtil.toLowerCase(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false);
+
+		listTypeEntry = listTypeEntryResource.getListTypeEntry(
+			serviceBuilderListTypeEntry.getListTypeEntryId());
+
+		creator = listTypeEntry.getCreator();
+
+		Assert.assertEquals(
+			user.getExternalReferenceCode(),
+			creator.getExternalReferenceCode());
+
+		// Name
+
+		listTypeEntry = randomListTypeEntry();
 
 		listTypeEntry.setName(RandomTestUtil.randomString());
 		listTypeEntry.setName_i18n((Map<String, String>)null);
@@ -373,6 +415,9 @@ public class ListTypeEntryResourceTest
 
 	@DeleteAfterTestRun
 	private ListTypeDefinition _listTypeDefinition;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@DeleteAfterTestRun
 	private ListTypeDefinition _systemListTypeDefinition;

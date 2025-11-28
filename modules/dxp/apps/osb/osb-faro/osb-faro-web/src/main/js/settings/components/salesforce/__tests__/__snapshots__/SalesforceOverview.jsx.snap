@@ -740,7 +740,7 @@ exports[`SalesforceOverview should render 1`] = `
                           <span
                             class="custom-control-label-text"
                           >
-                            All properties, including those not yet created.
+                            Make individual data from this data source available in all properties, including those not yet created.
                           </span>
                         </span>
                       </label>

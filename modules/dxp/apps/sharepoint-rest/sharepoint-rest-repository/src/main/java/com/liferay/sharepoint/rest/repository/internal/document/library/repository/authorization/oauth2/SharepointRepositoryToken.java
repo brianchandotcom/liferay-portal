@@ -5,17 +5,9 @@
 
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
-import com.liferay.document.library.repository.authorization.oauth2.OAuth2AuthorizationException;
 import com.liferay.document.library.repository.authorization.oauth2.Token;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
 import java.util.Date;
 
@@ -37,43 +29,12 @@ public class SharepointRepositoryToken implements Token {
 			sharepointOAuth2TokenEntry.getExpirationDate());
 	}
 
-	public static Token newInstance(String json)
-		throws JSONException, OAuth2AuthorizationException {
-
-		return newInstance(json, null);
-	}
-
-	public static Token newInstance(String json, Token token)
-		throws JSONException, OAuth2AuthorizationException {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
-
-		if (jsonObject.has("error")) {
-			throw OAuth2AuthorizationException.getErrorException(
-				jsonObject.getString("error"),
-				jsonObject.getString("description"));
-		}
-
-		String accessToken = jsonObject.getString("access_token");
-
+	public static Token newInstance(String accessToken, String refreshToken) {
 		if (Validator.isNull(accessToken)) {
-			throw new IllegalArgumentException(
-				String.format("Invalid access token: %s", json));
+			return null;
 		}
 
-		String refreshToken = jsonObject.getString("refresh_token");
-
-		if ((token != null) && Validator.isNull(refreshToken)) {
-			refreshToken = token.getRefreshToken();
-		}
-
-		Instant instant = Instant.now();
-
-		Date expirationDate = Date.from(
-			instant.plus(jsonObject.getLong("expires_in"), ChronoUnit.SECONDS));
-
-		return new SharepointRepositoryToken(
-			accessToken, refreshToken, expirationDate);
+		return new SharepointRepositoryToken(accessToken, refreshToken, null);
 	}
 
 	@Override
@@ -93,7 +54,7 @@ public class SharepointRepositoryToken implements Token {
 
 	@Override
 	public boolean isExpired() {
-		return _expirationDate.before(DateUtil.newDate());
+		return false;
 	}
 
 	private SharepointRepositoryToken(

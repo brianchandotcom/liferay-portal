@@ -1,5 +1,6 @@
 dependencies {
 	compileInclude group: "com.mashape.unirest", name: "unirest-java", version: "1.4.9"
+	compileInclude group: "com.microsoft.azure", name: "msal4j", version: "1.23.1"
 	compileInclude group: "org.apache.httpcomponents", name: "httpasyncclient", version: "4.1.4"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"

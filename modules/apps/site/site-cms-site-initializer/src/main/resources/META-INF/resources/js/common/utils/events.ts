@@ -4,3 +4,4 @@
  */
 
 export const START_TASK = 'start-task';
+export const DISPLAY_UPDATED = 'fds-display-updated';

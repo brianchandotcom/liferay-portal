@@ -416,10 +416,10 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
     role="menu"
   >
     <li
-      aria-selected="true"
       role="presentation"
     >
       <button
+        aria-selected="true"
         class="dropdown-item active"
         role="menuitem"
         tabindex="-1"
@@ -487,10 +487,10 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       </button>
     </li>
     <li
-      aria-selected="false"
       role="presentation"
     >
       <button
+        aria-selected="false"
         class="dropdown-item"
         role="menuitem"
         tabindex="-1"
@@ -597,10 +597,10 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
     role="menu"
   >
     <li
-      aria-selected="true"
       role="presentation"
     >
       <button
+        aria-selected="true"
         class="dropdown-item active"
         role="menuitem"
         tabindex="-1"
@@ -665,10 +665,10 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       </button>
     </li>
     <li
-      aria-selected="false"
       role="presentation"
     >
       <button
+        aria-selected="false"
         class="dropdown-item"
         role="menuitem"
         tabindex="-1"
@@ -721,10 +721,10 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       </button>
     </li>
     <li
-      aria-selected="false"
       role="presentation"
     >
       <button
+        aria-selected="false"
         class="dropdown-item"
         role="menuitem"
         tabindex="-1"

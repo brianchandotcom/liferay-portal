@@ -331,7 +331,7 @@ export default class Blogs {
 
 		CKEDITOR.instances[
 			`${this._config.namespace}coverImageCaptionEditor`
-		].setData(STR_BLANK);
+		]?.setData(STR_BLANK);
 	}
 
 	_saveEntry(draft, ajax) {

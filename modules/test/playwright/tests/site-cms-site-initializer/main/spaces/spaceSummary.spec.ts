@@ -68,6 +68,37 @@ test(
 );
 
 test(
+	'Can access Add button',
+	{tag: '@LPD-62706'},
+	async ({page, spaceSummaryPage}) => {
+		const spaceName = 'Default';
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await page.getByRole('button', {name: `Add Content`}).click();
+
+		let dropdown = page.locator('.dropdown-menu.show');
+
+		await expect(dropdown.getByText('Basic Content')).toBeVisible();
+		await expect(dropdown.getByText('Blog')).toBeVisible();
+		await expect(dropdown.getByText('Folder')).toBeVisible();
+
+		await page.getByRole('button', {name: `Add Content`}).click();
+
+		await page.getByRole('button', {name: `Add Files`}).click();
+
+		dropdown = page.locator('.dropdown-menu.show');
+
+		await expect(
+			dropdown.getByText('External Video Shortcut')
+		).toBeVisible();
+		await expect(dropdown.getByText('Folder')).toBeVisible();
+		await expect(dropdown.getByText('Multiple Files')).toBeVisible();
+		await expect(dropdown.getByText('Single File')).toBeVisible();
+	}
+);
+
+test(
 	'Can access to View All Files page',
 	{tag: '@LPD-62706'},
 	async ({page, spaceSummaryPage}) => {

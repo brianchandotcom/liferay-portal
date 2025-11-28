@@ -672,91 +672,127 @@ test(
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
+		let exportFilePath;
+		let objectDefinition;
+		let objectEntryId;
+		let user;
+
+		await test.step('Create object definition and initial API entry', async () => {
+			objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
 			});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					externalReferenceCode: '',
+					name: 'test',
+					textField:
+						'objectDefinitionCreatedViaAPI by default test user',
+				},
+				`c/${objectDefinition.name.toLowerCase()}s`
+			);
 		});
 
-		await apiHelpers.objectEntry.postObjectEntry(
-			{externalReferenceCode: '', name: 'test'},
-			`c/${objectDefinition.name.toLowerCase()}s`
-		);
+		await test.step('Create new user, assign roles, and login', async () => {
+			user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
 
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
+			let roles =
+				await apiHelpers.headlessAdminUser.getRoles('Administrator');
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				roles.items[0].id,
+				Number(user.id)
+			);
 
-		let roles =
-			await apiHelpers.headlessAdminUser.getRoles('Administrator');
+			roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				roles.items[0].id,
+				Number(user.id)
+			);
 
-		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
-			roles.items[0].id,
-			Number(user.id)
-		);
+			await performLogout(page);
+			await performLogin(page, user.alternateName);
+		});
 
-		roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
+		await test.step('Create object entry via UI as the new user', async () => {
+			await applicationsMenuPage.goToObjects();
 
-		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
-			roles.items[0].id,
-			Number(user.id)
-		);
+			await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+				objectDefinition.name
+			);
 
-		await performLogout(page);
+			await page.getByLabel('Panel Link', {exact: true}).click();
+			await page.getByRole('option', {name: 'Object'}).click();
+			await page.getByRole('button', {name: 'Save'}).click();
 
-		await performLogin(page, user.alternateName);
+			await page.waitForTimeout(2000);
 
-		await applicationsMenuPage.goToObjects();
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			objectDefinition.name
-		);
-		await page.getByLabel('Panel Link', {exact: true}).click();
-		await page.getByRole('option', {name: 'Object'}).click();
-		await page.getByRole('button', {name: 'Save'}).click();
-		await page.waitForTimeout(2000);
-		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
-		await page.locator('[data-testid="fdsCreationActionButton"]').click();
-		await page.getByLabel('textField').fill('testText');
-		await page.getByRole('button', {name: 'Save'}).click();
-		await waitForAlert(
-			page,
-			'Success:Your request completed successfully.'
-		);
+			await applicationsMenuPage.goToObjectDefinition(
+				objectDefinition.name
+			);
 
-		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
+			await page
+				.locator('[data-testid="fdsCreationActionButton"]')
+				.click();
+			await page
+				.getByLabel('textField')
+				.fill(`objectDefinitionCreatedViaUI by ${user.alternateName}`);
+			await page.getByRole('button', {name: 'Save'}).click();
 
-		const objectEntryId = await page
-			.locator('table tr:first-child td:first-child')
-			.innerText();
+			await waitForAlert(page);
+		});
 
-		const exportFilePath = await companyExportImportPage.export([
-			`${objectDefinition.name} 2 Items`,
-		]);
+		await test.step("Export entries and delete the new user's entry and account", async () => {
+			await applicationsMenuPage.goToObjectDefinition(
+				objectDefinition.name
+			);
 
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
+			objectEntryId = await page
+				.locator('table tr:first-child td:first-child')
+				.innerText();
 
-		await apiHelpers.delete(
-			`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
-		);
+			exportFilePath = await companyExportImportPage.export([
+				`${objectDefinition.name} 2 Items`,
+			]);
 
-		await performLogout(page);
-		await performLogin(page, 'test');
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+			const applicationName =
+				'c/' + objectDefinition.name.toLowerCase() + 's';
 
-		await companyExportImportPage.import(exportFilePath);
+			await apiHelpers.delete(
+				`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
+			);
 
-		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
-		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
+			await performLogout(page);
+			await performLogin(page, 'test');
+
+			await apiHelpers.headlessAdminUser.deleteUserAccount(
+				Number(user.id)
+			);
+		});
+
+		await test.step('Import the file and verify the imported entry', async () => {
+			await companyExportImportPage.import(exportFilePath);
+
+			await applicationsMenuPage.goToObjectDefinition(
+				objectDefinition.name
+			);
+
+			await expect(
+				page.getByRole('cell', {name: 'Test Test'})
+			).toBeVisible();
+		});
 	}
 );
 

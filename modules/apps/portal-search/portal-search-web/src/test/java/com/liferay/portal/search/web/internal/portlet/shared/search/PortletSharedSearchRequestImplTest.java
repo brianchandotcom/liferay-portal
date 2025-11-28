@@ -8,7 +8,6 @@ package com.liferay.portal.search.web.internal.portlet.shared.search;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -54,69 +53,25 @@ public class PortletSharedSearchRequestImplTest {
 
 		Mockito.doReturn(
 			List.of(
-				_mockFragmentEntryLink("portletA", true),
-				_mockFragmentEntryLink("portletB", false))
+				_mockFragmentEntryLink("portletA"),
+				_mockFragmentEntryLink("portletB"))
 		).when(
 			fragmentEntryLinkLocalService
 		).getFragmentEntryLinksBySegmentsExperienceId(
 			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong()
 		);
 
-		Layout layout = Mockito.mock(Layout.class);
-
-		Mockito.doReturn(
-			1L
-		).when(
-			layout
-		).getGroupId();
-
-		Mockito.doReturn(
-			2L
-		).when(
-			layout
-		).getPlid();
-
 		Assert.assertEquals(
 			Set.of("portletA_INSTANCE_rdna", "portletB_INSTANCE_rdna"),
 			ReflectionTestUtil.<Set<String>>invoke(
 				portletSharedSearchRequest, "_getSegmentExperiencePortletIds",
-				new Class<?>[] {Layout.class, long.class}, layout, 123L));
+				new Class<?>[] {Layout.class, long.class},
+				Mockito.mock(Layout.class), RandomTestUtil.randomLong()));
 	}
 
-	private FragmentEntryLink _mockFragmentEntryLink(
-		String portletName, boolean typePortlet) {
-
+	private FragmentEntryLink _mockFragmentEntryLink(String portletName) {
 		FragmentEntryLink fragmentEntryLink = Mockito.mock(
 			FragmentEntryLink.class);
-
-		Mockito.when(
-			fragmentEntryLink.getEditableValuesJSONObject()
-		).thenReturn(
-			JSONFactoryUtil.safeCreateJSONObject(
-				"{\"instanceId\":\"rdna\",\"portletId\":\"" + portletName +
-					"\"}")
-		);
-
-		Mockito.when(
-			fragmentEntryLink.getHtml()
-		).thenReturn(
-			String.format(
-				"<div class=\"fragment\">%s<lfr-widget-%s id=\"%s\">%s</div>",
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString())
-		);
-
-		Mockito.when(
-			fragmentEntryLink.getNamespace()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			fragmentEntryLink.isTypePortlet()
-		).thenReturn(
-			typePortlet
-		);
 
 		Mockito.doReturn(
 			ListUtil.toList(portletName + "_INSTANCE_rdna")

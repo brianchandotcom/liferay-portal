@@ -628,10 +628,11 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 												modalTypes.SELECT_CHANNELS_MODAL,
 												{
 													groupId,
-													initialItems: channelsConfigurationRef.current.channels.map(
-														({channelId}) =>
-															channelId
-													),
+													initialItems:
+														channelsConfigurationRef.current?.channels?.map(
+															({channelId}) =>
+																channelId
+														) ?? [],
 													onClose: close,
 													onSelect: async items => {
 														await updateSalesforce({
@@ -689,7 +690,7 @@ const AccountAndIndividuals = ({
 		)
 	);
 
-	const [enabledAllIndividual, setEnabledAllIndividual] = useState(
+	const [enabledAllIndividuals, setEnabledAllIndividuals] = useState(
 		dataSource.provider.getIn(
 			['contactsConfiguration', 'enableAllContacts'],
 			false
@@ -727,7 +728,7 @@ const AccountAndIndividuals = ({
 			{!hasChangesRef.current &&
 				dataSourceActive &&
 				!enabledAllAccounts &&
-				!enabledAllIndividual && (
+				!enabledAllIndividuals && (
 					<ClayAlert displayType='warning' title='Warning'>
 						{Liferay.Language.get(
 							'the-data-source-setup-is-almost-complete.-sync-data-to-start-seeing-results-as-activities-occur-on-your-sites'
@@ -761,7 +762,7 @@ const AccountAndIndividuals = ({
 				accountsSyncedCount={accountsCountResponse.data}
 				disabled={!dataSourceActive || !currentUser.isAdmin()}
 				enabledAccount={enabledAllAccounts}
-				enabledIndividual={enabledAllIndividual}
+				enabledIndividual={enabledAllIndividuals}
 				individualsSyncedCount={userCountResponse.data}
 				onAccountChange={() => {
 					setEnabledAllAccount(!enabledAllAccounts);
@@ -769,7 +770,7 @@ const AccountAndIndividuals = ({
 					hasChangesRef.current = true;
 				}}
 				onIndividualChange={() => {
-					setEnabledAllIndividual(!enabledAllIndividual);
+					setEnabledAllIndividuals(!enabledAllIndividuals);
 
 					hasChangesRef.current = true;
 				}}
@@ -784,7 +785,7 @@ const AccountAndIndividuals = ({
 
 						await onSubmit({
 							enabledAllAccounts,
-							enabledAllIndividual
+							enabledAllIndividuals
 						});
 					}}
 					size='sm'

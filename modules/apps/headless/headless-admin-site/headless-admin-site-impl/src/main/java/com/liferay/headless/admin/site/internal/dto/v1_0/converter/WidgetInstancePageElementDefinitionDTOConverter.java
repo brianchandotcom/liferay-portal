@@ -108,7 +108,7 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 		widgetInstancePageElementDefinition.setName(
 			fragmentStyledLayoutStructureItem::getName);
 		widgetInstancePageElementDefinition.setType(
-			PageElementDefinition.Type.WIDGET);
+			() -> PageElementDefinition.Type.WIDGET);
 		widgetInstancePageElementDefinition.setWidgetInstance(
 			() -> _getWidgetInstance(fragmentEntryLink));
 		widgetInstancePageElementDefinition.

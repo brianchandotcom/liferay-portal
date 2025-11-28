@@ -114,7 +114,7 @@ public class FormContainerPageElementDefinitionDTOConverter
 		formContainerPageElementDefinition.setName(
 			formStyledLayoutStructureItem::getName);
 		formContainerPageElementDefinition.setType(
-			PageElementDefinition.Type.FORM_CONTAINER);
+			() -> PageElementDefinition.Type.FORM_CONTAINER);
 
 		return formContainerPageElementDefinition;
 	}
@@ -175,6 +175,10 @@ public class FormContainerPageElementDefinitionDTOConverter
 
 			formContainerClassSubtypeReference.setClassName(
 				formStyledLayoutStructureItem::getClassName);
+			formContainerClassSubtypeReference.setType(
+				() ->
+					FormContainerReference.Type.
+						FORM_CONTAINER_CLASS_SUBTYPE_REFERENCE);
 
 			return formContainerClassSubtypeReference;
 		}
@@ -185,6 +189,8 @@ public class FormContainerPageElementDefinitionDTOConverter
 		formContainerContextReference.setContextSource(
 			() ->
 				FormContainerContextReference.ContextSource.DISPLAY_PAGE_ITEM);
+		formContainerContextReference.setType(
+			() -> FormContainerReference.Type.FORM_CONTAINER_CONTEXT_REFERENCE);
 
 		return formContainerContextReference;
 	}
@@ -369,6 +375,8 @@ public class FormContainerPageElementDefinitionDTOConverter
 			displayPageFormContainerSubmissionResult.
 				setSuccessNotificationMessage(
 					() -> _toSuccessNotificationMessage(jsonObject));
+			displayPageFormContainerSubmissionResult.setType(
+				() -> SuccessFormContainerSubmissionResult.Type.DISPLAY_PAGE);
 
 			return displayPageFormContainerSubmissionResult;
 		}
@@ -383,6 +391,9 @@ public class FormContainerPageElementDefinitionDTOConverter
 			embeddedMessageFormContainerSubmissionResult.
 				setSuccessNotificationMessage(
 					() -> _toSuccessNotificationMessage(jsonObject));
+			embeddedMessageFormContainerSubmissionResult.setType(
+				() ->
+					SuccessFormContainerSubmissionResult.Type.EMBEDDED_MESSAGE);
 
 			return embeddedMessageFormContainerSubmissionResult;
 		}
@@ -394,6 +405,8 @@ public class FormContainerPageElementDefinitionDTOConverter
 			stayInPageFormContainerSubmissionResult.
 				setSuccessNotificationMessage(
 					() -> _toSuccessNotificationMessage(jsonObject));
+			stayInPageFormContainerSubmissionResult.setType(
+				() -> SuccessFormContainerSubmissionResult.Type.STAY_IN_PAGE);
 
 			return stayInPageFormContainerSubmissionResult;
 		}
@@ -408,6 +421,8 @@ public class FormContainerPageElementDefinitionDTOConverter
 					scopeGroupId));
 			sitePageFormContainerSubmissionResult.setSuccessNotificationMessage(
 				() -> _toSuccessNotificationMessage(jsonObject));
+			sitePageFormContainerSubmissionResult.setType(
+				() -> SuccessFormContainerSubmissionResult.Type.SITE_PAGE);
 
 			return sitePageFormContainerSubmissionResult;
 		}
@@ -417,6 +432,8 @@ public class FormContainerPageElementDefinitionDTOConverter
 
 			urlFormContainerSubmissionResult.setUrl(
 				() -> _toFragmentInlineValue(jsonObject.getJSONObject("url")));
+			urlFormContainerSubmissionResult.setType(
+				() -> SuccessFormContainerSubmissionResult.Type.URL);
 
 			return urlFormContainerSubmissionResult;
 		}

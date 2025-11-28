@@ -84,6 +84,8 @@ public class FragmentMappingUtil {
 
 		fragmentMappedValueItemContextReference.setContextSource(
 			() -> contextSource);
+		fragmentMappedValueItemContextReference.setType(
+			() -> FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
 
 		return fragmentMappedValueItemContextReference;
 	}
@@ -256,6 +258,9 @@ public class FragmentMappingUtil {
 				new FragmentMappedValueItemExternalReference();
 
 		fragmentMappedValueItemExternalReference.setClassName(() -> className);
+		fragmentMappedValueItemExternalReference.setType(
+			() ->
+				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE);
 
 		if (jsonObject.has("classPK")) {
 			ERCInfoItemIdentifier ercInfoItemIdentifier =
@@ -391,6 +396,9 @@ public class FragmentMappingUtil {
 		fragmentMappedValueItemExternalReference.setScope(
 			() -> _getLayoutScope(
 				companyId, layout, layoutJSONObject, scopeGroupId));
+		fragmentMappedValueItemExternalReference.setType(
+			() ->
+				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE);
 
 		return fragmentMappedValueItemExternalReference;
 	}

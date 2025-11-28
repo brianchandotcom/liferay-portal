@@ -52,7 +52,7 @@ import java.util.function.Supplier;
 	}
 )
 @JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY,
+	include = JsonTypeInfo.As.EXISTING_PROPERTY,
 	property = "collectionDisplayListStyleType", use = JsonTypeInfo.Id.NAME,
 	visible = true
 )

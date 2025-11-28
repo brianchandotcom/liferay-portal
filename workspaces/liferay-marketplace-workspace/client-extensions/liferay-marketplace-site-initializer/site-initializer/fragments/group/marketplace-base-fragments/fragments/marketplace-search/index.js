@@ -228,15 +228,22 @@ const getFirstParam = (...keys) => {
 async function getProducts(category, query) {
 	const params = new URLSearchParams({
 		accountId: '-1',
+		filter: `categoryNames/any(x:(x eq 'App'))`,
 		pageSize: 12,
 	});
 
+	let currentFilter = params.get('filter');
+
 	if (category && category !== 'All Categories') {
-		params.set('filter', `categoryNames/any(x:(x eq '${category}'))`);
+		const categoryFilter = `categoryNames/any(x:(x eq '${category}'))`;
+
+		currentFilter = `${currentFilter} and ${categoryFilter}`;
+
+		params.set('filter', currentFilter);
 	}
 
 	if (query) {
-		params.set('search', encodeURIComponent(query));
+		params.set('search', query);
 	}
 
 	const response = await Liferay.Util.fetch(
@@ -443,12 +450,15 @@ async function main() {
 					selectedItem.firstElementChild;
 
 				if (clickable) {
+					searchToggle.hide();
 					clickable.click();
 				}
 				else if (typeof selectedItem.onclick === 'function') {
+					searchToggle.hide();
 					selectedItem.onclick();
 				}
 				else {
+					searchToggle.hide();
 					selectedItem.click();
 				}
 
@@ -473,6 +483,8 @@ async function main() {
 			state.enterSelection = null;
 
 			const queryParam = data.items.length ? 'q' : 'n';
+
+			searchToggle.hide();
 
 			window.location.href = `/web/marketplace/applications?${queryParam}=${searchValue}${
 				state.categorySelected !== 'All Categories'
@@ -514,6 +526,8 @@ async function onclickNavigateTo(term) {
 			: '',
 		term.trim()
 	);
+
+	searchToggle.hide();
 
 	state.enterSelection = null;
 	const queryParam = data.items.length ? 'q' : 'n';

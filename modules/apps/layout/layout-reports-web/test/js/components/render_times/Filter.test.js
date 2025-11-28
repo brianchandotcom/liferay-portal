@@ -34,7 +34,7 @@ describe('Filter', () => {
 		renderComponent();
 
 		['cached', 'fragment', 'from-master'].forEach((value) => {
-			expect(screen.getByText(value).parentElement).toHaveAttribute(
+			expect(screen.getByText(value)).toHaveAttribute(
 				'aria-selected',
 				'true'
 			);

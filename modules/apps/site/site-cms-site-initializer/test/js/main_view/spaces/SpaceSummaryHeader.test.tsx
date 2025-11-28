@@ -26,6 +26,7 @@ jest.mock(
 
 describe('SpaceSummaryHeader', () => {
 	const defaultProps = {
+		apiUrl: '/some-url',
 		label: 'View All',
 		title: 'Recent Content',
 		url: '',

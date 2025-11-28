@@ -112,7 +112,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 	private void _deployWorkflowDefinition(
 			Company company, String externalReferenceCode,
 			String workflowDefinitionName, String workflowNodeInputVariables,
-			String workflowNodeName, String workflowNodeSettingPrompt,
+			String workflowNodeName, String workflowNodeOutputVariables,
+			String workflowNodeSettingPrompt,
 			String workflowNodeSettingUserMessage)
 		throws Exception {
 
@@ -140,13 +141,14 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			new String[] {
 				"[$WORKFLOW_DEFINITION_NAME$]",
 				"[$WORKFLOW_NODE_INPUT_VARIABLES$]", "[$WORKFLOW_NODE_NAME$]",
+				"[$WORKFLOW_NODE_OUTPUT_VARIABLES$]",
 				"[$WORKFLOW_NODE_SETTING_PROMPT$]",
 				"[$WORKFLOW_NODE_SETTING_USER_MESSAGE$]"
 			},
 			new String[] {
 				workflowDefinitionName, workflowNodeInputVariables,
-				workflowNodeName, workflowNodeSettingPrompt,
-				workflowNodeSettingUserMessage
+				workflowNodeName, workflowNodeOutputVariables,
+				workflowNodeSettingPrompt, workflowNodeSettingUserMessage
 			});
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
@@ -170,6 +172,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}" +
 				",{\\\"name\\\": \\\"tone\\\",\\\"type\\\": \\\"string\\\"}]",
 			"changeTone",
+			"[{\\\"name\\\": \\\"rewrittenText\\\",\\\"type" +
+				"\\\": \\\"string\\\"}]",
 			StringBundler.concat(
 				"You are an expert linguistic editor. Your sole task is to ",
 				"adjust the tone of the provided text to be more {{tone}}. ",
@@ -190,6 +194,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 				"\\\"name\\\": \\\"userMessage\\\",\\\"type\\\": \\\"string",
 				"\\\"}]"),
 			"chatMessageHandler",
+			"[{\\\"name\\\": \\\"generatedContent\\\"," +
+				"\\\"type\\\": \\\"string\\\"}]",
 			StringBundler.concat(
 				"You are a highly helpful and context-aware chat assistant. ",
 				"The context you are aware is the content and the title, they ",
@@ -207,6 +213,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR,
 			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}]",
 			"fixSpellingAndGrammar",
+			"[{\\\"name\\\": \\\"rewrittenText\\\",\\\"type" +
+				"\\\": \\\"string\\\"}]",
 			StringBundler.concat(
 				"You are an expert linguistic editor. Your sole task is to ",
 				"correct all grammatical, spelling, and punctuation errors in ",
@@ -223,6 +231,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
 			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}]",
 			"improveWriting",
+			"[{\\\"name\\\": \\\"rewrittenText\\\",\\\"type" +
+				"\\\": \\\"string\\\"}]",
 			StringBundler.concat(
 				"You are a professional writing editor. Your sole task is to ",
 				"take the provided text and rewrite it to be significantly ",
@@ -238,6 +248,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			WorkflowDefinitionConstants.NAME_MAKE_LONGER,
 			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}]",
 			"makeLonger",
+			"[{\\\"name\\\": \\\"rewrittenText\\\",\\\"type" +
+				"\\\": \\\"string\\\"}]",
 			StringBundler.concat(
 				"You are an expert linguistic enhancer. Expand the provided ",
 				"text by adding relevant and natural details that clarify or ",
@@ -251,6 +263,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER,
 			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}]",
 			"makeShorter",
+			"[{\\\"name\\\": \\\"rewrittenText\\\",\\\"type" +
+				"\\\": \\\"string\\\"}]",
 			StringBundler.concat(
 				"You are an expert linguistic editor. Your sole task is to ",
 				"reduce the length of the provided text while preserving all ",

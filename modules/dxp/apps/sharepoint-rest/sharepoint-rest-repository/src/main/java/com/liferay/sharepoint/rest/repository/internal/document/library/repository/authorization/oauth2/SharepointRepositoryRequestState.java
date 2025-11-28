@@ -35,7 +35,7 @@ public final class SharepointRepositoryRequestState implements Serializable {
 	}
 
 	public static void save(
-		HttpServletRequest httpServletRequest, String state) {
+		HttpServletRequest httpServletRequest, String nonce, String state) {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
@@ -46,8 +46,8 @@ public final class SharepointRepositoryRequestState implements Serializable {
 		httpSession.setAttribute(
 			SharepointRepositoryRequestState.class.getName(),
 			new SharepointRepositoryRequestState(
-				ParamUtil.getLong(portletRequest, "folderId"),
-				PortalUtil.getCurrentCompleteURL(httpServletRequest), state));
+				ParamUtil.getLong(portletRequest, "folderId"), nonce, state,
+				PortalUtil.getCurrentCompleteURL(httpServletRequest)));
 	}
 
 	public long getFolderId() {
@@ -67,27 +67,39 @@ public final class SharepointRepositoryRequestState implements Serializable {
 		httpServletResponse.sendRedirect(_url);
 	}
 
-	public void validate(String state) throws AuthorizationException {
+	public void validateNonce(String nonce) throws AuthorizationException {
+		if (!nonce.equals(_nonce)) {
+			throw new OAuth2AuthorizationException.InvalidNonce(
+				String.format(
+					"The Sharepoint server returned an invalid nonce %s that " +
+						"does not match the expected nonce %s",
+					nonce, _nonce));
+		}
+	}
+
+	public void validateState(String state) throws AuthorizationException {
 		if (!state.equals(_state)) {
 			throw new OAuth2AuthorizationException.InvalidState(
 				String.format(
 					"The Sharepoint server returned an invalid state %s that " +
 						"does not match the expected state %s",
-					_state, state));
+					state, _state));
 		}
 	}
 
 	private SharepointRepositoryRequestState(
-		long folderId, String url, String state) {
+		long folderId, String nonce, String state, String url) {
 
 		_folderId = folderId;
-		_url = url;
+		_nonce = nonce;
 		_state = state;
+		_url = url;
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	private final long _folderId;
+	private final String _nonce;
 	private final String _state;
 	private final String _url;
 

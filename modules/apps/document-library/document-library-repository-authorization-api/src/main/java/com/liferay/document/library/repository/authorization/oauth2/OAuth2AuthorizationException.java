@@ -37,6 +37,18 @@ public class OAuth2AuthorizationException extends AuthorizationException {
 
 	}
 
+	public static class InvalidNonce extends OAuth2AuthorizationException {
+
+		public InvalidNonce(String description) {
+			super(
+				String.format(
+					"The authorization server returned an invalid nonce " +
+						"value: %s",
+					description));
+		}
+
+	}
+
 	public static class InvalidRequest extends OAuth2AuthorizationException {
 
 		public InvalidRequest(String description) {
@@ -63,11 +75,11 @@ public class OAuth2AuthorizationException extends AuthorizationException {
 
 	public static class InvalidState extends OAuth2AuthorizationException {
 
-		public InvalidState(String state) {
+		public InvalidState(String description) {
 			super(
 				String.format(
 					"The resource owner returned an invalid state value: %s",
-					state));
+					description));
 		}
 
 	}

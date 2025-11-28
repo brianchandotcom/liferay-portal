@@ -304,7 +304,24 @@ public class CommerceOrderSplitTest {
 			commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 			user.getUserId(), true);
 
-		_waitForObjectAction();
+		for (int i = 0; i < 3; i++) {
+			ObjectAction objectAction =
+				_objectActionLocalService.getObjectAction(
+					_objectAction.getObjectActionId());
+
+			int status = objectAction.getStatus();
+
+			if ((status == ObjectActionConstants.STATUS_FAILED) ||
+				(status == ObjectActionConstants.STATUS_SUCCESS)) {
+
+				Assert.assertEquals(
+					ObjectActionConstants.STATUS_SUCCESS, status);
+
+				return;
+			}
+
+			Thread.sleep(500);
+		}
 
 		List<CommerceOrder> commerceOrders =
 			_commerceOrderLocalService.getCommerceOrders(
@@ -391,27 +408,6 @@ public class CommerceOrderSplitTest {
 			BigDecimalUtil.eq(
 				commercePriceEntry.getPrice(),
 				commerceOrderItem.getUnitPrice()));
-	}
-
-	private void _waitForObjectAction() throws Exception {
-		for (int i = 0; i < 3; i++) {
-			ObjectAction objectAction =
-				_objectActionLocalService.getObjectAction(
-					_objectAction.getObjectActionId());
-
-			int status = objectAction.getStatus();
-
-			if ((status == ObjectActionConstants.STATUS_FAILED) ||
-				(status == ObjectActionConstants.STATUS_SUCCESS)) {
-
-				Assert.assertEquals(
-					ObjectActionConstants.STATUS_SUCCESS, status);
-
-				return;
-			}
-
-			Thread.sleep(500);
-		}
 	}
 
 	private AccountEntry _accountEntry;

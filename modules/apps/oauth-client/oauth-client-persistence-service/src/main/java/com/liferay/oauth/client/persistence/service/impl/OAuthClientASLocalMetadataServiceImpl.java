@@ -35,6 +35,27 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
+			long userId, String authorizationEndpoint, Boolean enabled,
+			String issuerString, String jwksUri, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpointString, String userinfoEndpoint)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_oAuthClientASLocalMetadataModelResourcePermission,
+			getPermissionChecker(), GroupConstants.DEFAULT_LIVE_GROUP_ID, 0,
+			OAuthClientPersistenceActionKeys.
+				ACTION_ADD_OAUTH_CLIENT_AS_LOCAL_METADATA);
+
+		return oAuthClientASLocalMetadataLocalService.
+			addOAuthClientASLocalMetadata(
+				userId, authorizationEndpoint, enabled, issuerString, jwksUri,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpointString, userinfoEndpoint);
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			long userId, String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
@@ -129,6 +150,28 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		return oAuthClientASLocalMetadataPersistence.filterFindByUserId(
 			userId, start, end);
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
+			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
+			Boolean enabled, String issuerString, String jwksUri,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpointString,
+			String userinfoEndpoint)
+		throws PortalException {
+
+		_oAuthClientASLocalMetadataModelResourcePermission.check(
+			getPermissionChecker(),
+			oAuthClientASLocalMetadataLocalService.
+				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId),
+			ActionKeys.UPDATE);
+
+		return oAuthClientASLocalMetadataLocalService.
+			updateOAuthClientASLocalMetadata(
+				oAuthClientASLocalMetadataId, authorizationEndpoint, enabled,
+				issuerString, jwksUri, supportedGrantTypes, supportedScopes,
+				supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
 	}
 
 	@Override

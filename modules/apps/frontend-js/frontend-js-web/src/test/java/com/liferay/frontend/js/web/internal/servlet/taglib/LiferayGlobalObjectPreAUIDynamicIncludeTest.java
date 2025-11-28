@@ -6,10 +6,13 @@
 package com.liferay.frontend.js.web.internal.servlet.taglib;
 
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.frontend.js.web.internal.configuration.LiferayGlobalObjectConfiguration;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
@@ -46,8 +49,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.function.Predicate;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.MockedStatic;
@@ -65,45 +69,32 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Ignore
+	@Before
+	public void setUp() {
+		_browserSnifferUtilMockedStatic = _mockBrowserSnifferUtil();
+		_contentSecurityPolicyNonceProviderUtilMockedStatic =
+			_mockContentSecurityPolicyNonceProviderUtil();
+		_portalWebResourcesUtilMockedStatic = _mockPortalWebResourcesUtil();
+		_shutdownUtilMockedStatic = _mockShutdownUtil();
+		_timeMockedStatic = _mockTime();
+	}
+
+	@After
+	public void tearDown() {
+		_browserSnifferUtilMockedStatic.close();
+		_contentSecurityPolicyNonceProviderUtilMockedStatic.close();
+		_portalWebResourcesUtilMockedStatic.close();
+		_shutdownUtilMockedStatic.close();
+		_timeMockedStatic.close();
+	}
+
 	@Test
 	public void test() throws Exception {
 		LiferayGlobalObjectPreAUIDynamicInclude
 			liferayGlobalObjectPreAUIDynamicInclude =
 				new LiferayGlobalObjectPreAUIDynamicInclude();
 
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude, "_authToken",
-			_mockAuthToken());
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude, "_fastDateFormatFactory",
-			_mockFastDateFormatFactory());
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude, "_featureFlagManager",
-			_mockFeatureFlagManager());
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude, "_language",
-			_mockLanguage());
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude, "_layoutSEOLinkManager",
-			_mockLayoutSEOLinkManager());
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude, "_portal", _mockPortal());
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude, "_prefsProps",
-			Mockito.mock(PrefsProps.class));
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude, "_staging",
-			_mockStaging());
-		ReflectionTestUtil.setFieldValue(
-			liferayGlobalObjectPreAUIDynamicInclude,
-			"_uploadServletRequestConfigurationProvider",
-			Mockito.mock(UploadServletRequestConfigurationProvider.class));
-
-		_mockBrowserSnifferUtil();
-		_mockPortalWebResourcesUtil();
-		_mockShutdownUtil();
-		_mockTime();
+		_setupDefaultMocks(liferayGlobalObjectPreAUIDynamicInclude);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -115,6 +106,33 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		Assert.assertEquals(
 			_read("liferay_test.js.tpl"),
 			StringUtil.trim(mockHttpServletResponse.getContentAsString()));
+	}
+
+	@Test
+	public void testDisableGetRemoteMethodsConfiguration() throws Exception {
+		LiferayGlobalObjectPreAUIDynamicInclude
+			liferayGlobalObjectPreAUIDynamicInclude =
+				new LiferayGlobalObjectPreAUIDynamicInclude();
+
+		_setupDefaultMocks(liferayGlobalObjectPreAUIDynamicInclude);
+
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_configurationProvider",
+			_mockConfigurationProvider(true));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		liferayGlobalObjectPreAUIDynamicInclude.include(
+			_mockHttpServletRequest(), mockHttpServletResponse,
+			StringPool.BLANK);
+
+		String contentAsString = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertFalse(
+			contentAsString.contains("getRemoteAddr: () => '127.0.0.1',"));
+		Assert.assertFalse(
+			contentAsString.contains("getRemoteHost: () => '127.0.0.1',"));
 	}
 
 	private AuthToken _mockAuthToken() {
@@ -129,7 +147,7 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		return authToken;
 	}
 
-	private void _mockBrowserSnifferUtil() {
+	private MockedStatic<BrowserSnifferUtil> _mockBrowserSnifferUtil() {
 		MockedStatic<BrowserSnifferUtil> browserSnifferUtilMockedStatic =
 			Mockito.mockStatic(BrowserSnifferUtil.class);
 
@@ -155,6 +173,52 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		).thenReturn(
 			"42.0"
 		);
+
+		return browserSnifferUtilMockedStatic;
+	}
+
+	private ConfigurationProvider _mockConfigurationProvider(
+			boolean disableGetRemoteMethods)
+		throws Exception {
+
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
+		LiferayGlobalObjectConfiguration liferayGlobalObjectConfiguration =
+			Mockito.mock(LiferayGlobalObjectConfiguration.class);
+
+		Mockito.when(
+			liferayGlobalObjectConfiguration.disableGetRemoteMethods()
+		).thenReturn(
+			disableGetRemoteMethods
+		);
+
+		Mockito.when(
+			configurationProvider.getCompanyConfiguration(
+				Mockito.any(), Mockito.anyLong())
+		).thenReturn(
+			liferayGlobalObjectConfiguration
+		);
+
+		return configurationProvider;
+	}
+
+	private MockedStatic<ContentSecurityPolicyNonceProviderUtil>
+		_mockContentSecurityPolicyNonceProviderUtil() {
+
+		MockedStatic<ContentSecurityPolicyNonceProviderUtil>
+			contentSecurityPolicyNonceProviderUtilMockedStatic =
+				Mockito.mockStatic(
+					ContentSecurityPolicyNonceProviderUtil.class);
+
+		contentSecurityPolicyNonceProviderUtilMockedStatic.when(
+			() -> ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				Mockito.any())
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		return contentSecurityPolicyNonceProviderUtilMockedStatic;
 	}
 
 	private FastDateFormatFactory _mockFastDateFormatFactory() {
@@ -322,7 +386,7 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		return portal;
 	}
 
-	private void _mockPortalWebResourcesUtil() {
+	private MockedStatic<PortalWebResourcesUtil> _mockPortalWebResourcesUtil() {
 		MockedStatic<PortalWebResourcesUtil>
 			portalWebResourcesUtilMockedStatic = Mockito.mockStatic(
 				PortalWebResourcesUtil.class);
@@ -333,9 +397,11 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 			(Answer<String>)
 				invocationOnMock -> "/o/" + invocationOnMock.getArgument(0)
 		);
+
+		return portalWebResourcesUtilMockedStatic;
 	}
 
-	private void _mockShutdownUtil() {
+	private MockedStatic<ShutdownUtil> _mockShutdownUtil() {
 		MockedStatic<ShutdownUtil> shutdownUtilMockedStatic =
 			Mockito.mockStatic(ShutdownUtil.class);
 
@@ -344,6 +410,8 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		).thenReturn(
 			true
 		);
+
+		return shutdownUtilMockedStatic;
 	}
 
 	private Staging _mockStaging() {
@@ -484,7 +552,7 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		return themeDisplay;
 	}
 
-	private void _mockTime() {
+	private MockedStatic<Time> _mockTime() {
 		MockedStatic<Time> timeMockedStatic = Mockito.mockStatic(Time.class);
 
 		timeMockedStatic.when(
@@ -492,6 +560,8 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		).thenReturn(
 			new Date(109, 3, 23)
 		);
+
+		return timeMockedStatic;
 	}
 
 	private String _read(String name) throws Exception {
@@ -502,5 +572,50 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 			return StringUtil.read(inputStream);
 		}
 	}
+
+	private void _setupDefaultMocks(
+			LiferayGlobalObjectPreAUIDynamicInclude
+				liferayGlobalObjectPreAUIDynamicInclude)
+		throws Exception {
+
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_authToken",
+			_mockAuthToken());
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_configurationProvider",
+			_mockConfigurationProvider(false));
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_fastDateFormatFactory",
+			_mockFastDateFormatFactory());
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_featureFlagManager",
+			_mockFeatureFlagManager());
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_language",
+			_mockLanguage());
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_layoutSEOLinkManager",
+			_mockLayoutSEOLinkManager());
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_portal", _mockPortal());
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_prefsProps",
+			Mockito.mock(PrefsProps.class));
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude, "_staging",
+			_mockStaging());
+		ReflectionTestUtil.setFieldValue(
+			liferayGlobalObjectPreAUIDynamicInclude,
+			"_uploadServletRequestConfigurationProvider",
+			Mockito.mock(UploadServletRequestConfigurationProvider.class));
+	}
+
+	private MockedStatic<BrowserSnifferUtil> _browserSnifferUtilMockedStatic;
+	private MockedStatic<ContentSecurityPolicyNonceProviderUtil>
+		_contentSecurityPolicyNonceProviderUtilMockedStatic;
+	private MockedStatic<PortalWebResourcesUtil>
+		_portalWebResourcesUtilMockedStatic;
+	private MockedStatic<ShutdownUtil> _shutdownUtilMockedStatic;
+	private MockedStatic<Time> _timeMockedStatic;
 
 }

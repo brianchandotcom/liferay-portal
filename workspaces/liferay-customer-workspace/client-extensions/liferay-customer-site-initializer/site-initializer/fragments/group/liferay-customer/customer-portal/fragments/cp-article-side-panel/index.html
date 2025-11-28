@@ -1,3 +1,10 @@
+[#assign contentStructureArticle = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/content-structures?search=article") /]
+[#assign contentStructureId = "" /]
+
+[#if contentStructureArticle.items?has_content]
+	[#assign contentStructureId = contentStructureArticle.items[0].id /]
+[/#if]
+
 [#function getProperty props key]
 	[#list props as prop]
 		[#if prop.key == key]
@@ -50,7 +57,7 @@
 
 		[#if configuration.showArticles]
 			[#attempt]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${category.id}&flatten=true&page=1&pageSize=200") /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${category.id}&flatten=true&page=1&pageSize=200") /]
 
 				[#if articles?has_content && articles.items?has_content]
 					[#list articles.items as article]
@@ -161,7 +168,7 @@
 
 		[#if articleFetchCategoryId?has_content]
 			[#attempt]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?flatten=true&search=${articleFetchCategoryId}&page=1&pageSize=200") /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&flatten=true&search=${articleFetchCategoryId}&page=1&pageSize=200") /]
 
 				[#if articles.items?has_content]
 					[#list articles.items as article]

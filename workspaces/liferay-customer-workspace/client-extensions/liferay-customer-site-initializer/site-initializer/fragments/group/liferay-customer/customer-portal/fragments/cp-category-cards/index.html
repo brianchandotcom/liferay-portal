@@ -1,3 +1,10 @@
+[#assign contentStructureArticle = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/content-structures?search=article") /]
+[#assign contentStructureId = "" /]
+
+[#if contentStructureArticle.items?has_content]
+	[#assign contentStructureId = contentStructureArticle.items[0].id /]
+[/#if]
+
 [#function getProperty props key]
 	[#list props as prop]
 		[#if prop.key == key]
@@ -53,7 +60,7 @@
 					[#assign listItems = [] /]
 
 					[#if configuration.showArticles]
-						[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${childCategory.id}&flatten=true&page=1&pageSize=200").items![] /]
+						[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${childCategory.id}&flatten=true&page=1&pageSize=200").items![] /]
 
 						[#if articles?has_content]
 							[#list articles as article]
@@ -121,7 +128,7 @@
 			/]
 
 			[#if configuration.showArticles]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${categoryId}&flatten=true&page=1&pageSize=200").items![] /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${categoryId}&flatten=true&page=1&pageSize=200").items![] /]
 
 				[#if articles?has_content]
 					[#list articles as article]

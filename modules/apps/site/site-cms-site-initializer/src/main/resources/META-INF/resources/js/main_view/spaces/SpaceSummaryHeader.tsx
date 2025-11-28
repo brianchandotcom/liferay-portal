@@ -63,7 +63,7 @@ export default function SpaceSummaryHeader({
 		return (
 			<ClayDropDown
 				active={active}
-				className="ml-2"
+				className="ml-3"
 				onActiveChange={setActive}
 				trigger={
 					<ClayButtonWithIcon

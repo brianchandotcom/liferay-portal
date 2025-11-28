@@ -791,6 +791,7 @@ public class StructuredContentResourceTest
 						contentFieldValue = contentFieldValues.get(
 							w3cLanguageId);
 						contentFieldValue_i18n = contentFieldValues;
+						fieldReference = "MyText";
 						name = "MyText";
 					}
 				}

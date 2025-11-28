@@ -5,10 +5,14 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +45,20 @@ public class ObjectEntryFolderImpl extends ObjectEntryFolderBaseImpl {
 		if (getParentObjectEntryFolderId() ==
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTrashable(TrashHelper trashHelper) throws PortalException {
+		DepotEntry depotEntry = DepotEntryLocalServiceUtil.fetchGroupDepotEntry(
+			getGroupId());
+
+		if ((depotEntry != null) && trashHelper.isTrashEnabled(getGroupId()) &&
+			(getStatus() != WorkflowConstants.STATUS_IN_TRASH)) {
 
 			return true;
 		}

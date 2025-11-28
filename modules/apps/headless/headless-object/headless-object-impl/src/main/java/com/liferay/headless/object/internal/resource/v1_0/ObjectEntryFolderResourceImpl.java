@@ -559,14 +559,7 @@ public class ObjectEntryFolderResourceImpl
 				serviceBuilderObjectEntryFolder)
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			serviceBuilderObjectEntryFolder.getGroupId());
-
-		if ((depotEntry != null) &&
-			_trashHelper.isTrashEnabled(
-				serviceBuilderObjectEntryFolder.getGroupId()) &&
-			(serviceBuilderObjectEntryFolder.getStatus() !=
-				WorkflowConstants.STATUS_IN_TRASH) &&
+		if (serviceBuilderObjectEntryFolder.isTrashable(_trashHelper) &&
 			FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-17564")) {
 

@@ -385,7 +385,6 @@ public class DisplayPageTemplateResourceTest
 			});
 
 		_testPatchSiteDisplayPageTemplateWithPageSpecifications();
-
 		_testPatchSiteDisplayPageTemplateWithThumbnail();
 
 		_assertProblemException(

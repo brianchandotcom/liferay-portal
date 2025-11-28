@@ -7,13 +7,11 @@ package com.liferay.object.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -84,22 +81,14 @@ public class DeleteObjectBulkSelectionAction
 										objectObjectEntry.
 											getObjectDefinitionId());
 
-							ObjectEntryManager objectEntryManager =
-								_objectEntryManagerRegistry.
-									getObjectEntryManager(
-										objectDefinition.getCompanyId(),
-										objectDefinition.getStorageType());
-
-							if (!(objectEntryManager instanceof
-									DefaultObjectEntryManager)) {
-
-								throw new UnsupportedOperationException();
-							}
-
 							DefaultObjectEntryManager
 								defaultObjectEntryManager =
-									(DefaultObjectEntryManager)
-										objectEntryManager;
+									DefaultObjectEntryManagerProvider.provide(
+										_objectEntryManagerRegistry.
+											getObjectEntryManager(
+												objectDefinition.getCompanyId(),
+												objectDefinition.
+													getStorageType()));
 
 							defaultObjectEntryManager.deleteObjectEntry(
 								objectDefinition,
@@ -146,15 +135,9 @@ public class DeleteObjectBulkSelectionAction
 			long userId, ObjectEntryFolder objectEntryFolder)
 		throws PortalException {
 
-		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			objectEntryFolder.getGroupId());
-
-		if ((depotEntry != null) &&
-			_trashHelper.isTrashEnabled(objectEntryFolder.getGroupId()) &&
-			(objectEntryFolder.getStatus() !=
-				WorkflowConstants.STATUS_IN_TRASH) &&
-			FeatureFlagManagerUtil.isEnabled(
-				objectEntryFolder.getCompanyId(), "LPD-17564")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17564") &&
+			objectEntryFolder.isTrashable(_trashHelper)) {
 
 			_objectEntryFolderLocalService.moveObjectEntryFolderToTrash(
 				userId, objectEntryFolder, new ServiceContext());
@@ -177,9 +160,6 @@ public class DeleteObjectBulkSelectionAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteObjectBulkSelectionAction.class);
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

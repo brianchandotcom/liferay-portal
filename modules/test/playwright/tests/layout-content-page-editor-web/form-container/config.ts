@@ -4,7 +4,7 @@
  */
 
 export const config = {
-	dependencies: ['page-management-site.main'],
+	dependencies: ['page-management-site.main', 'site-cms-site.main'],
 	name: 'layout-content-page-editor-web.form-container',
 	testDir: 'tests/layout-content-page-editor-web/form-container',
 	timeout: 90 * 1000,

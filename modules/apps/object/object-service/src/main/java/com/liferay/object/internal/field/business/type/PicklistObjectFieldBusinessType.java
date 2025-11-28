@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectFieldBusinessType.class
 )
 public class PicklistObjectFieldBusinessType
-	implements ObjectFieldBusinessType {
+	extends BaseObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
@@ -85,8 +85,7 @@ public class PicklistObjectFieldBusinessType
 			return getLocalizedValues(objectField, userId, values);
 		}
 
-		return ObjectFieldBusinessType.super.getDisplayContextValue(
-			objectField, userId, values);
+		return super.getDisplayContextValue(objectField, userId, values);
 	}
 
 	@Override
@@ -99,9 +98,8 @@ public class PicklistObjectFieldBusinessType
 			ObjectField objectField, Long userId, Map<String, Object> values)
 		throws PortalException {
 
-		Map<String, Object> localizedValues =
-			ObjectFieldBusinessType.super.getLocalizedValues(
-				objectField, userId, values);
+		Map<String, Object> localizedValues = super.getLocalizedValues(
+			objectField, userId, values);
 
 		if (localizedValues == null) {
 			return null;
@@ -134,8 +132,7 @@ public class PicklistObjectFieldBusinessType
 			"options",
 			_getDDMFormFieldOptions(objectField, objectFieldRenderingContext)
 		).putAll(
-			ObjectFieldBusinessType.super.getProperties(
-				objectField, objectFieldRenderingContext)
+			super.getProperties(objectField, objectFieldRenderingContext)
 		).build();
 	}
 
@@ -165,9 +162,7 @@ public class PicklistObjectFieldBusinessType
 
 		return _getValue(
 			objectField.getName(),
-			ObjectFieldBusinessType.super.getValue(
-				groupId, objectField, userId, values),
-			values);
+			super.getValue(groupId, objectField, userId, values), values);
 	}
 
 	@Override
@@ -225,7 +220,7 @@ public class PicklistObjectFieldBusinessType
 			return;
 		}
 
-		ObjectFieldBusinessType.super.validateObjectFieldSettingsDefaultValue(
+		super.validateObjectFieldSettingsDefaultValue(
 			objectField, objectFieldSettingsValuesMap);
 
 		String defaultValueType = objectFieldSettingsValuesMap.get(

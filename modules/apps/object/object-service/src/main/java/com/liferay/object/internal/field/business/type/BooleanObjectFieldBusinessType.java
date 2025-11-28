@@ -6,21 +6,14 @@
 package com.liferay.object.internal.field.business.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
-import com.liferay.object.field.render.ObjectFieldRenderingContext;
-import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Locale;
@@ -38,7 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 	service = ObjectFieldBusinessType.class
 )
-public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
+public class BooleanObjectFieldBusinessType
+	extends BaseObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
@@ -73,52 +67,6 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 	}
 
 	@Override
-	public Map<String, Object> getProperties(
-			ObjectField objectField,
-			ObjectFieldRenderingContext objectFieldRenderingContext)
-		throws PortalException {
-
-		return HashMapBuilder.<String, Object>put(
-			"predefinedValue",
-			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled(
-						objectField.getCompanyId(), "LPD-46451")) {
-
-					return null;
-				}
-
-				LocalizedValue localizedValue = new LocalizedValue(
-					objectFieldRenderingContext.getLocale());
-
-				Locale defaultLocale = objectFieldRenderingContext.getLocale();
-				String defaultValue = String.valueOf(
-					ObjectFieldSettingUtil.getDefaultValue(
-						null, objectField, null));
-
-				if (objectField.isLocalized() &&
-					Validator.isNotNull(defaultValue)) {
-
-					localizedValue.addString(
-						defaultLocale,
-						_jsonFactory.createJSONObject(
-							HashMapBuilder.put(
-								defaultLocale, defaultValue
-							).build()
-						).toJSONString());
-				}
-				else {
-					localizedValue.addString(defaultLocale, defaultValue);
-				}
-
-				return localizedValue;
-			}
-		).putAll(
-			ObjectFieldBusinessType.super.getProperties(
-				objectField, objectFieldRenderingContext)
-		).build();
-	}
-
-	@Override
 	public PropertyDefinition.PropertyType getPropertyType() {
 		return PropertyDefinition.PropertyType.BOOLEAN;
 	}
@@ -129,8 +77,7 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 			Map<String, Object> values)
 		throws PortalException {
 
-		Object value = ObjectFieldBusinessType.super.getValue(
-			groupId, objectField, userId, values);
+		Object value = super.getValue(groupId, objectField, userId, values);
 
 		if (value instanceof String) {
 			return Boolean.valueOf((String)value);
@@ -149,7 +96,7 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 			return;
 		}
 
-		ObjectFieldBusinessType.super.validateObjectFieldSettingsDefaultValue(
+		super.validateObjectFieldSettingsDefaultValue(
 			objectField, objectFieldSettingsValuesMap);
 
 		if (Objects.equals(
@@ -173,9 +120,6 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 			objectField.getName(),
 			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE, defaultValue);
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

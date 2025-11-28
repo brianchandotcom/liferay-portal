@@ -52,16 +52,14 @@ public abstract class BaseObjectFieldBusinessType
 			ObjectFieldRenderingContext objectFieldRenderingContext)
 		throws PortalException {
 
-		return HashMapBuilder.<String, Object>putAll(
-			getObjectFieldSettingsValues(
-				objectFieldSettingLocalService.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId()))
-		).put(
+		return HashMapBuilder.<String, Object>put(
 			"predefinedValue",
 			() -> {
 				if (!FeatureFlagManagerUtil.isEnabled(
-						objectField.getCompanyId(), "LPD-32050")) {
+						objectField.getCompanyId(), "LPD-46451") &&
+					!Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 					return null;
 				}
@@ -70,7 +68,7 @@ public abstract class BaseObjectFieldBusinessType
 					objectFieldRenderingContext.getLocale());
 
 				Locale defaultLocale = objectFieldRenderingContext.getLocale();
-				String defaultValue = String.valueOf(
+				String defaultValue = GetterUtil.getString(
 					ObjectFieldSettingUtil.getDefaultValue(
 						null, objectField, null));
 
@@ -91,6 +89,11 @@ public abstract class BaseObjectFieldBusinessType
 
 				return localizedValue;
 			}
+		).putAll(
+			getObjectFieldSettingsValues(
+				objectFieldSettingLocalService.
+					getObjectFieldObjectFieldSettings(
+						objectField.getObjectFieldId()))
 		).putAll(
 			ObjectFieldBusinessType.super.getProperties(
 				objectField, objectFieldRenderingContext)

@@ -17,7 +17,6 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * @author Alan Huang
@@ -102,7 +101,7 @@ public class PropertiesJVMAttributesOrderCheck extends BaseFileCheck {
 
 		String[] attributes = s.split(StringPool.SPACE);
 
-		Arrays.sort(attributes, Comparator.comparing(String::toLowerCase));
+		Arrays.sort(attributes);
 
 		return StringUtil.merge(attributes, StringPool.SPACE);
 	}

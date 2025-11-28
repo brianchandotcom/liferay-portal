@@ -12,6 +12,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -79,7 +80,7 @@ public class ListTypeDefinitionResourceImpl
 					HashMapBuilder.put(
 						_getLocale(), listTypeDefinition.getName()
 					).build(),
-					false, Collections.emptyList());
+					false, Collections.emptyList(), new ServiceContext());
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.getCPSpecificationOption(id);

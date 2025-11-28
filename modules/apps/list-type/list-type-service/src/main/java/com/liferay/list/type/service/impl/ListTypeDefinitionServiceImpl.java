@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +40,8 @@ public class ListTypeDefinitionServiceImpl
 	@Override
 	public ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, Map<Locale, String> nameMap,
-			boolean system, List<ListTypeEntry> listTypeEntries)
+			boolean system, List<ListTypeEntry> listTypeEntries,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -48,7 +50,7 @@ public class ListTypeDefinitionServiceImpl
 
 		return listTypeDefinitionLocalService.addListTypeDefinition(
 			externalReferenceCode, getUserId(), nameMap, system,
-			listTypeEntries);
+			listTypeEntries, serviceContext);
 	}
 
 	@Override
@@ -137,7 +139,8 @@ public class ListTypeDefinitionServiceImpl
 	@Override
 	public ListTypeDefinition updateListTypeDefinition(
 			String externalReferenceCode, long listTypeDefinitionId,
-			Map<Locale, String> nameMap, List<ListTypeEntry> listTypeEntries)
+			Map<Locale, String> nameMap, List<ListTypeEntry> listTypeEntries,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_listTypeDefinitionModelResourcePermission.check(
@@ -145,7 +148,7 @@ public class ListTypeDefinitionServiceImpl
 
 		return listTypeDefinitionLocalService.updateListTypeDefinition(
 			externalReferenceCode, listTypeDefinitionId, getUserId(), nameMap,
-			listTypeEntries);
+			listTypeEntries, serviceContext);
 	}
 
 	@Reference(

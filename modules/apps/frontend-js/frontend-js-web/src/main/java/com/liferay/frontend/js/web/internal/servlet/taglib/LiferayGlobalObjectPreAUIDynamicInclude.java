@@ -6,11 +6,14 @@
 package com.liferay.frontend.js.web.internal.servlet.taglib;
 
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.frontend.js.web.internal.configuration.LiferayGlobalObjectConfiguration;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.AuthToken;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
@@ -63,6 +67,7 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -87,6 +92,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		LiferayGlobalObjectConfiguration liferayGlobalObjectConfiguration =
+			_getLiferayGlobalObjectConfiguration(httpServletRequest);
+
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.print("<script");
@@ -107,7 +115,8 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			_renderLiferayPortlet(sb);
 			_renderLiferayPortletKeys(sb);
 			_renderLiferayPropsValues(httpServletRequest, sb);
-			_renderLiferayThemeDisplay(httpServletRequest, sb);
+			_renderLiferayThemeDisplay(
+				httpServletRequest, liferayGlobalObjectConfiguration, sb);
 			_renderLiferayUtil(sb);
 
 			_renderValue(
@@ -208,6 +217,35 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		_dateFormatPatterns.put(languageId, dateFormatPattern);
 
 		return dateFormatPattern;
+	}
+
+	private LiferayGlobalObjectConfiguration
+		_getLiferayGlobalObjectConfiguration(
+			HttpServletRequest httpServletRequest) {
+
+		LiferayGlobalObjectConfiguration liferayGlobalObjectConfiguration;
+
+		long companyId = _portal.getCompanyId(httpServletRequest);
+
+		try {
+			liferayGlobalObjectConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					LiferayGlobalObjectConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Using default configuration for company " + companyId,
+					configurationException);
+			}
+
+			liferayGlobalObjectConfiguration =
+				ConfigurableUtil.createConfigurable(
+					LiferayGlobalObjectConfiguration.class,
+					Collections.emptyMap());
+		}
+
+		return liferayGlobalObjectConfiguration;
 	}
 
 	private void _renderLiferayAUI(
@@ -499,7 +537,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayThemeDisplay(
-			HttpServletRequest httpServletRequest, StringBundler sb)
+			HttpServletRequest httpServletRequest,
+			LiferayGlobalObjectConfiguration liferayGlobalObjectConfiguration,
+			StringBundler sb)
 		throws PortalException {
 
 		sb.append("ThemeDisplay: {\n");
@@ -581,8 +621,11 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		_renderMethod("getPlid", sb, themeDisplay.getPlid());
 		_renderMethod("getPortalURL", sb, themeDisplay.getPortalURL());
 		_renderMethod("getRealUserId", sb, themeDisplay.getRealUserId());
-		_renderMethod("getRemoteAddr", sb, themeDisplay.getRemoteAddr());
-		_renderMethod("getRemoteHost", sb, themeDisplay.getRemoteHost());
+
+		if (!liferayGlobalObjectConfiguration.disableGetRemoteMethods()) {
+			_renderMethod("getRemoteAddr", sb, themeDisplay.getRemoteAddr());
+			_renderMethod("getRemoteHost", sb, themeDisplay.getRemoteHost());
+		}
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
@@ -750,6 +793,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 	@Reference
 	private AuthToken _authToken;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private final Map<Locale, String> _displayNames = new ConcurrentHashMap<>();
 

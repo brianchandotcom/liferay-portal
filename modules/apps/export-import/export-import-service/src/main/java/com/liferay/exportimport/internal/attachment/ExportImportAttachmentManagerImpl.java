@@ -52,11 +52,11 @@ public class ExportImportAttachmentManagerImpl
 			Company company = _companyLocalService.getCompany(
 				fileEntry.getCompanyId());
 
-			boolean httpsEnabled = _isHttpsEnabled();
+			boolean secure = _isSecure();
 
 			String baseURL = _portal.getPortalURL(
 				company.getVirtualHostname(),
-				_portal.getPortalServerPort(httpsEnabled), httpsEnabled);
+				_portal.getPortalServerPort(secure), secure);
 
 			return baseURL + _dlurlHelper.getThumbnailSrc(fileEntry, null);
 		}
@@ -105,7 +105,7 @@ public class ExportImportAttachmentManagerImpl
 		return "batch-binaries/" + key;
 	}
 
-	private boolean _isHttpsEnabled() {
+	private boolean _isSecure() {
 		if (Objects.equals(
 				Http.HTTPS,
 				PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||

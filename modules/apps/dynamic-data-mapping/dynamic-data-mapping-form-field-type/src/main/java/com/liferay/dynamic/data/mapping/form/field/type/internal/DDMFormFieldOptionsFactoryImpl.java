@@ -160,7 +160,9 @@ public class DDMFormFieldOptionsFactoryImpl
 					ddmDataProviderInstanceOutput, List.class);
 
 			if (keyValuePairs == null) {
-				return ddmFormFieldOptions;
+				return _createDDMFormFieldOptions(
+					ddmFormField, ddmFormFieldRenderingContext,
+					"data-provider");
 			}
 
 			for (KeyValuePair keyValuePair : keyValuePairs) {

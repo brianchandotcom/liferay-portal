@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.patcher.PatcherValues;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.upgrade.log.UpgradeLogContext;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,7 +45,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -140,24 +137,8 @@ public class StartupHelperUtil {
 
 		if (upgrading) {
 			ThreadLocalCacheManager.disable();
-
-			if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-				BundleContext bundleContext =
-					SystemBundleUtil.getBundleContext();
-
-				_serviceRegistration = bundleContext.registerService(
-					LogContext.class, UpgradeLogContext.getInstance(), null);
-			}
 		}
 		else {
-			ServiceRegistration<?> serviceRegistration = _serviceRegistration;
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
-
-				_serviceRegistration = null;
-			}
-
 			ThreadLocalCacheManager.enable();
 		}
 	}
@@ -276,7 +257,6 @@ public class StartupHelperUtil {
 		new DCLSingleton<>();
 	private static boolean _newRelease;
 	private static volatile boolean _runOnPortalUpgradeVerifiers;
-	private static volatile ServiceRegistration<?> _serviceRegistration;
 	private static volatile boolean _upgrading;
 
 }

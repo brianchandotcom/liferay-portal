@@ -8,8 +8,10 @@ package com.liferay.object.internal.bulk.selection;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.object.internal.entry.folder.util.ObjectEntryFolderUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -94,7 +96,24 @@ public class PermissionObjectBulkSelectionAction
 						else if (object instanceof ObjectEntry) {
 							ObjectEntry objectObjectEntry = (ObjectEntry)object;
 
-							className = objectObjectEntry.getModelClassName();
+							long rootObjectEntryFolderId =
+								ObjectEntryFolderUtil.
+									getRootObjectEntryFolderId(
+										objectObjectEntry.
+											getObjectEntryFolderId());
+
+							if (rootObjectEntryFolderId == 0) {
+								return;
+							}
+
+							ObjectEntryFolder objectEntryFolder =
+								_objectEntryFolderLocalService.
+									getObjectEntryFolder(
+										rootObjectEntryFolderId);
+
+							className =
+								objectEntryFolder.getExternalReferenceCode();
+
 							groupId = objectObjectEntry.getGroupId();
 							resourceId = objectObjectEntry.getObjectEntryId();
 							resourceName =
@@ -211,6 +230,9 @@ public class PermissionObjectBulkSelectionAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionObjectBulkSelectionAction.class);
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

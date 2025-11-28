@@ -575,19 +575,19 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		Map<String, Role> roles = new HashMap<>();
 
 		return HashMapBuilder.put(
-			cmsBasicDocumentObjectDefinition.getClassName(),
-			() -> _getPermissions(
-				cmsBasicDocumentObjectDefinition.getClassName(),
-				configurationJSONObject.getJSONObject(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES),
-				roles)
-		).put(
-			cmsBasicWebContentObjectDefinition.getClassName(),
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 			() -> _getPermissions(
 				cmsBasicWebContentObjectDefinition.getClassName(),
 				configurationJSONObject.getJSONObject(
 					ObjectEntryFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENTS),
+				roles)
+		).put(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+			() -> _getPermissions(
+				cmsBasicDocumentObjectDefinition.getClassName(),
+				configurationJSONObject.getJSONObject(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES),
 				roles)
 		).put(
 			ObjectEntryFolder.class.getName(),

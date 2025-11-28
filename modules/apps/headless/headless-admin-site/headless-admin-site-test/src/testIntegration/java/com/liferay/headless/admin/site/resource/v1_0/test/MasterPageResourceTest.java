@@ -284,7 +284,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				StringPool.BLANK, thumbnailURL));
 
 		_testPatchSiteMasterPageWithPageSpecifications();
-
 		_testPatchSiteMasterPageWithThumbnail();
 
 		_assertProblemException(

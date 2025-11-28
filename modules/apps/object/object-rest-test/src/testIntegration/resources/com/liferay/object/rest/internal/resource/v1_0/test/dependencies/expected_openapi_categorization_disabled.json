@@ -1880,6 +1880,41 @@
 			}
 		},
 		"/by-external-reference-code/{object9ExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}": {
+			"delete": {
+				"operationId": "deleteByExternalReferenceCodeObject9ExternalReferenceCodeCommentByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object9ExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+							},
+							"application/xml": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			},
 			"put": {
 				"operationId": "putByExternalReferenceCodeObject9ExternalReferenceCodeCommentByExternalReferenceCode",
 				"parameters": [
@@ -1894,6 +1929,63 @@
 					{
 						"in": "path",
 						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Comment"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Comment"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Comment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Comment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			}
+		},
+		"/by-external-reference-code/{object9ExternalReferenceCode}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments": {
+			"post": {
+				"operationId": "postByExternalReferenceCodeObject9ExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object9ExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "parentCommentExternalReferenceCode",
 						"required": true,
 						"schema": {
 							"type": "string"

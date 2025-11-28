@@ -135,30 +135,7 @@
 			},
 			{
 			"#tag-name": "input-variables",
-			"#cdata-value": [
-				"[",
-				"    {",
-				"        \"name\": \"content\",",
-				"        \"type\": \"string\"",
-				"    },",
-				"    {",
-				"        \"name\": \"text\",",
-				"        \"type\": \"string\"",
-				"    },",
-				"    {",
-				"        \"name\": \"title\",",
-				"        \"type\": \"string\"",
-				"    },",
-				"    {",
-				"        \"name\": \"tone\",",
-				"        \"type\": \"string\"",
-				"    },",
-				"    {",
-				"        \"name\": \"userMessage\",",
-				"        \"type\": \"string\"",
-				"    }",
-				"]"
-			]
+			"#cdata-value": ["[$WORKFLOW_NODE_INPUT_VARIABLES$]"]
 			},
 			{
 			"#tag-name": "output-variables",

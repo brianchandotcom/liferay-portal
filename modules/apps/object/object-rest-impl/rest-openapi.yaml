@@ -774,6 +774,89 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Comment"
             tags: ["ObjectEntry"]
+    "/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}":
+        delete:
+            operationId: deleteByExternalReferenceCodeComment
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: commentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectEntry"]
+        put:
+            operationId: putByExternalReferenceCodeComment
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: commentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["ObjectEntry"]
+    "/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}/reply-comments":
+        post:
+            operationId: postByExternalReferenceCodeCommentReplyComment
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: commentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["ObjectEntry"]
     "/by-external-reference-code/{externalReferenceCode}/object-actions/{objectActionName}":
         put:
             operationId: putByExternalReferenceCodeObjectActionObjectActionName
@@ -881,89 +964,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ObjectEntry"
                                 type: array
-            tags: ["ObjectEntry"]
-    "/by-external-reference-code/{objectEntryExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}":
-        delete:
-            operationId: deleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode
-            parameters:
-                -   in: path
-                    name: objectEntryExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["ObjectEntry"]
-        put:
-            operationId: putByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode
-            parameters:
-                -   in: path
-                    name: objectEntryExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
-    "/by-external-reference-code/{objectEntryExternalReferenceCode}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments":
-        post:
-            operationId: postByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment
-            parameters:
-                -   in: path
-                    name: objectEntryExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: parentCommentExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
             tags: ["ObjectEntry"]
     "/scopes/{scopeKey}/approved/by-external-reference-code/{externalReferenceCode}":
         get:
@@ -1513,6 +1513,104 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Comment"
             tags: ["ObjectEntry"]
+    "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}":
+        delete:
+            operationId: deleteScopeScopeKeyByExternalReferenceCodeComment
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: commentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectEntry"]
+        put:
+            operationId: putScopeScopeKeyByExternalReferenceCodeComment
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: commentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["ObjectEntry"]
+    "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}/reply-comments":
+        post:
+            operationId: postScopeScopeKeyByExternalReferenceCodeCommentReplyComment
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: commentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["ObjectEntry"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/expire":
         post:
             operationId: postScopeScopeKeyByExternalReferenceCodeExpire
@@ -1668,104 +1766,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ObjectEntry"
                                 type: array
-            tags: ["ObjectEntry"]
-    "/scopes/{scopeKey}/by-external-reference-code/{objectEntryExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}":
-        delete:
-            operationId: deleteScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode
-            parameters:
-                -   in: path
-                    name: scopeKey
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: objectEntryExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["ObjectEntry"]
-        put:
-            operationId: putScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode
-            parameters:
-                -   in: path
-                    name: scopeKey
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: objectEntryExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
-    "/scopes/{scopeKey}/by-external-reference-code/{objectEntryExternalReferenceCode}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments":
-        post:
-            operationId: postScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment
-            parameters:
-                -   in: path
-                    name: scopeKey
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: objectEntryExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: path
-                    name: parentCommentExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
             tags: ["ObjectEntry"]
     "/scopes/{scopeKey}/validate":
         post:

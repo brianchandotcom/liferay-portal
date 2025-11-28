@@ -125,7 +125,7 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 				return _internalToExternalValuesMap.get(paginationType);
 			});
 		collectionDisplayPageElementDefinition.setType(
-			PageElementDefinition.Type.COLLECTION_DISPLAY);
+			() -> PageElementDefinition.Type.COLLECTION_DISPLAY);
 
 		return collectionDisplayPageElementDefinition;
 	}
@@ -394,6 +394,9 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 
 		ListStyle listStyle = new ListStyle();
 
+		listStyle.setCollectionDisplayListStyleType(
+			CollectionDisplayListStyle.CollectionDisplayListStyleType.
+				LIST_STYLE);
 		listStyle.setListStyleDefinition(
 			() -> _toListStyleDefinition(collectionStyledLayoutStructureItem));
 		listStyle.setListStyleType(
@@ -484,6 +487,8 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 
 		TemplateListStyle templateListStyle = new TemplateListStyle();
 
+		templateListStyle.setCollectionDisplayListStyleType(
+			CollectionDisplayListStyle.CollectionDisplayListStyleType.TEMPLATE);
 		templateListStyle.setListItemStyleClassName(
 			collectionStyledLayoutStructureItem::getListItemStyle);
 		templateListStyle.setListStyleClassName(

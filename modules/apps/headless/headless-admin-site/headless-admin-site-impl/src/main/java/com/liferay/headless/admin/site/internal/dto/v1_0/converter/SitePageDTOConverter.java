@@ -160,7 +160,11 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		SitePage.Type type = SitePageTypeUtil.toExternalType(layout.getType());
 
 		if (type == SitePage.Type.CONTENT_PAGE) {
-			return new ContentPageSettings();
+			return new ContentPageSettings() {
+				{
+					setType(() -> Type.CONTENT_PAGE_SETTINGS);
+				}
+			};
 		}
 
 		return _toWidgetPageSettings(layout);
@@ -217,6 +221,8 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		widgetPageSettings.setLayoutTemplateId(
 			() -> layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+		widgetPageSettings.setType(
+			() -> PageSettings.Type.WIDGET_PAGE_SETTINGS);
 		widgetPageSettings.setWidgetPageTemplateReference(
 			() -> {
 				if (layout.getLayoutPrototypeUuid() == null) {

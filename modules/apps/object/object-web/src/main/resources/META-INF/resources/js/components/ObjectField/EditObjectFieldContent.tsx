@@ -76,7 +76,11 @@ export function EditObjectFieldContent({
 	const hasDefaultValue =
 		(Liferay.FeatureFlags['LPD-46451'] &&
 			(values.businessType === 'Boolean' ||
+				values.businessType === 'Decimal' ||
+				values.businessType === 'Integer' ||
+				values.businessType === 'LongInteger' ||
 				values.businessType === 'LongText' ||
+				values.businessType === 'PrecisionDecimal' ||
 				values.businessType === 'RichText' ||
 				values.businessType === 'Text')) ||
 		values.businessType === 'Picklist';

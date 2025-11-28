@@ -205,7 +205,10 @@ public class ResourceActionPostUpgradeDataCleanupProcessTest
 					installBundle(SystemBundleUtil.getBundleContext(), bundle);
 				}
 			},
-			() -> bundleAtomicReference.set(uninstallBundle()));
+			() -> bundleAtomicReference.set(
+				uninstallBundle(
+					SystemBundleUtil.getBundleContext(),
+					"com.liferay.dynamic.data.mapping.service")));
 	}
 
 	@Override

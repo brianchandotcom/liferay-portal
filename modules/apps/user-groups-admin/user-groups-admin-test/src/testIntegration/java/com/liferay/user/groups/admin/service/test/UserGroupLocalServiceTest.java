@@ -33,7 +33,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -134,6 +136,78 @@ public class UserGroupLocalServiceTest {
 		_testAddUserGroupWithInvalidName("1");
 		_testAddUserGroupWithInvalidName(RandomTestUtil.randomString() + '*');
 		_testAddUserGroupWithInvalidName(RandomTestUtil.randomString() + ',');
+	}
+
+	@Test
+	public void testAddUserUserGroup() throws Exception {
+		User user = UserTestUtil.addUser();
+		UserGroup userGroup = _userGroupLocalService.addUserGroup(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null);
+
+		_userGroupLocalService.addUserUserGroup(
+			user.getUserId(), userGroup.getUserGroupId());
+
+		Assert.assertEquals(
+			1,
+			_userLocalService.getUserGroupUsersCount(
+				userGroup.getUserGroupId(), WorkflowConstants.STATUS_APPROVED));
+
+		user = UserTestUtil.addUser();
+
+		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
+
+		Assert.assertEquals(
+			2,
+			_userLocalService.getUserGroupUsersCount(
+				userGroup.getUserGroupId(), WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Test
+	public void testAddUserUserGroups() throws Exception {
+		User user = UserTestUtil.addUser();
+		UserGroup userGroup1 = _userGroupLocalService.addUserGroup(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null);
+		UserGroup userGroup2 = _userGroupLocalService.addUserGroup(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null);
+
+		_userGroupLocalService.addUserUserGroups(
+			user.getUserId(),
+			new long[] {
+				userGroup1.getUserGroupId(), userGroup2.getUserGroupId()
+			});
+
+		Assert.assertEquals(
+			1,
+			_userLocalService.getUserGroupUsersCount(
+				userGroup1.getUserGroupId(),
+				WorkflowConstants.STATUS_APPROVED));
+		Assert.assertEquals(
+			1,
+			_userLocalService.getUserGroupUsersCount(
+				userGroup2.getUserGroupId(),
+				WorkflowConstants.STATUS_APPROVED));
+
+		user = UserTestUtil.addUser();
+
+		_userGroupLocalService.addUserUserGroups(
+			user.getUserId(), ListUtil.fromArray(userGroup1, userGroup2));
+
+		Assert.assertEquals(
+			2,
+			_userLocalService.getUserGroupUsersCount(
+				userGroup1.getUserGroupId(),
+				WorkflowConstants.STATUS_APPROVED));
+		Assert.assertEquals(
+			2,
+			_userLocalService.getUserGroupUsersCount(
+				userGroup2.getUserGroupId(),
+				WorkflowConstants.STATUS_APPROVED));
 	}
 
 	@Test

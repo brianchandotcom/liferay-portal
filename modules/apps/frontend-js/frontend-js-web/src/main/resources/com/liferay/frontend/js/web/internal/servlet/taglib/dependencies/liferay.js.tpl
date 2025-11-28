@@ -43,7 +43,7 @@
 
 				merge(target[key], source[key]);
 			}
-else {
+			else {
 				Object.assign(target, { [key]: source[key] });
 			}
 		}

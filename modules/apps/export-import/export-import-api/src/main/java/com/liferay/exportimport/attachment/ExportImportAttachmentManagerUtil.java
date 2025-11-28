@@ -17,15 +17,17 @@ import java.net.URL;
 public class ExportImportAttachmentManagerUtil {
 
 	public static String getFileURL(DLFileEntry dlFileEntry) throws Exception {
-		return getService().getFileURL(dlFileEntry);
-	}
+		ExportImportAttachmentManager exportImportAttachmentManager =
+			_serviceSnapshot.get()
 
-	public static ExportImportAttachmentManager getService() {
-		return _serviceSnapshot.get();
+		return exportImportAttachmentManager.getFileURL(dlFileEntry);
 	}
 
 	public static URL getURL(String url) throws MalformedURLException {
-		return getService().getURL(url);
+		ExportImportAttachmentManager exportImportAttachmentManager =
+			_serviceSnapshot.get()
+
+		return exportImportAttachmentManager.getURL(url);
 	}
 
 	private static final Snapshot<ExportImportAttachmentManager>

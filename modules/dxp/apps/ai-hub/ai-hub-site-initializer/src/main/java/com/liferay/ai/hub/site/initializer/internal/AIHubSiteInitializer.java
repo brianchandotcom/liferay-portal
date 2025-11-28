@@ -111,8 +111,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 
 	private void _deployWorkflowDefinition(
 			Company company, String externalReferenceCode,
-			String workflowDefinitionName, String workflowNodeName,
-			String workflowNodeSettingPrompt,
+			String workflowDefinitionName, String workflowNodeInputVariables,
+			String workflowNodeName, String workflowNodeSettingPrompt,
 			String workflowNodeSettingUserMessage)
 		throws Exception {
 
@@ -138,13 +138,15 @@ public class AIHubSiteInitializer implements SiteInitializer {
 				AIHubSiteInitializer.class.getResourceAsStream(
 					"dependencies/workflow-definition.json.tpl")),
 			new String[] {
-				"[$WORKFLOW_DEFINITION_NAME$]", "[$WORKFLOW_NODE_NAME$]",
+				"[$WORKFLOW_DEFINITION_NAME$]",
+				"[$WORKFLOW_NODE_INPUT_VARIABLES$]", "[$WORKFLOW_NODE_NAME$]",
 				"[$WORKFLOW_NODE_SETTING_PROMPT$]",
 				"[$WORKFLOW_NODE_SETTING_USER_MESSAGE$]"
 			},
 			new String[] {
-				workflowDefinitionName, workflowNodeName,
-				workflowNodeSettingPrompt, workflowNodeSettingUserMessage
+				workflowDefinitionName, workflowNodeInputVariables,
+				workflowNodeName, workflowNodeSettingPrompt,
+				workflowNodeSettingUserMessage
 			});
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
@@ -164,7 +166,10 @@ public class AIHubSiteInitializer implements SiteInitializer {
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
-			WorkflowDefinitionConstants.NAME_CHANGE_TONE, "changeTone",
+			WorkflowDefinitionConstants.NAME_CHANGE_TONE,
+			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}" +
+				",{\\\"name\\\": \\\"tone\\\",\\\"type\\\": \\\"string\\\"}]",
+			"changeTone",
 			StringBundler.concat(
 				"You are an expert linguistic editor. Your sole task is to ",
 				"adjust the tone of the provided text to be more {{tone}}. ",
@@ -179,6 +184,11 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			WorkflowDefinitionConstants.
 				EXTERNAL_REFERENCE_CODE_CHAT_MESSAGE_PIPELINE,
 			WorkflowDefinitionConstants.NAME_CHAT_MESSAGE_PIPELINE,
+			StringBundler.concat(
+				"[{\\\"name\\\": \\\"content\\\",\\\"type\\\": \\\"string\\\"}",
+				",{\\\"name\\\": \\\"title\\\",\\\"type\\\": \\\"string\\\"},{",
+				"\\\"name\\\": \\\"userMessage\\\",\\\"type\\\": \\\"string",
+				"\\\"}]"),
 			"chatMessageHandler",
 			StringBundler.concat(
 				"You are a highly helpful and context-aware chat assistant. ",
@@ -195,6 +205,7 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			WorkflowDefinitionConstants.
 				EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR,
 			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR,
+			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}]",
 			"fixSpellingAndGrammar",
 			StringBundler.concat(
 				"You are an expert linguistic editor. Your sole task is to ",
@@ -209,7 +220,9 @@ public class AIHubSiteInitializer implements SiteInitializer {
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
-			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING, "improveWriting",
+			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
+			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}]",
+			"improveWriting",
 			StringBundler.concat(
 				"You are a professional writing editor. Your sole task is to ",
 				"take the provided text and rewrite it to be significantly ",
@@ -222,7 +235,9 @@ public class AIHubSiteInitializer implements SiteInitializer {
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_LONGER,
-			WorkflowDefinitionConstants.NAME_MAKE_LONGER, "makeLonger",
+			WorkflowDefinitionConstants.NAME_MAKE_LONGER,
+			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}]",
+			"makeLonger",
 			StringBundler.concat(
 				"You are an expert linguistic enhancer. Expand the provided ",
 				"text by adding relevant and natural details that clarify or ",
@@ -233,7 +248,9 @@ public class AIHubSiteInitializer implements SiteInitializer {
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_SHORTER,
-			WorkflowDefinitionConstants.NAME_MAKE_SHORTER, "makeShorter",
+			WorkflowDefinitionConstants.NAME_MAKE_SHORTER,
+			"[{\\\"name\\\": \\\"text\\\",\\\"type\\\": \\\"string\\\"}]",
+			"makeShorter",
 			StringBundler.concat(
 				"You are an expert linguistic editor. Your sole task is to ",
 				"reduce the length of the provided text while preserving all ",

@@ -51,10 +51,8 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
-	public void
-			deleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				String objectEntryExternalReferenceCode,
-				String externalReferenceCode)
+	public void deleteByExternalReferenceCodeComment(
+			String externalReferenceCode, String commentExternalReferenceCode)
 		throws Exception;
 
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;
@@ -73,10 +71,9 @@ public interface ObjectEntryResource {
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception;
 
-	public void
-			deleteScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				String scopeKey, String objectEntryExternalReferenceCode,
-				String externalReferenceCode)
+	public void deleteScopeScopeKeyByExternalReferenceCodeComment(
+			String scopeKey, String externalReferenceCode,
+			String commentExternalReferenceCode)
 		throws Exception;
 
 	public ObjectEntry getApprovedByExternalReferenceCode(
@@ -189,9 +186,9 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public com.liferay.headless.delivery.dto.v1_0.Comment
-			postByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
-				String objectEntryExternalReferenceCode,
-				String parentCommentExternalReferenceCode,
+			postByExternalReferenceCodeCommentReplyComment(
+				String externalReferenceCode,
+				String commentExternalReferenceCode,
 				com.liferay.headless.delivery.dto.v1_0.Comment comment)
 		throws Exception;
 
@@ -261,15 +258,15 @@ public interface ObjectEntryResource {
 				com.liferay.headless.delivery.dto.v1_0.Comment comment)
 		throws Exception;
 
-	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeExpire(
-			String scopeKey, String externalReferenceCode)
+	public com.liferay.headless.delivery.dto.v1_0.Comment
+			postScopeScopeKeyByExternalReferenceCodeCommentReplyComment(
+				String scopeKey, String externalReferenceCode,
+				String commentExternalReferenceCode,
+				com.liferay.headless.delivery.dto.v1_0.Comment comment)
 		throws Exception;
 
-	public com.liferay.headless.delivery.dto.v1_0.Comment
-			postScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
-				String scopeKey, String objectEntryExternalReferenceCode,
-				String parentCommentExternalReferenceCode,
-				com.liferay.headless.delivery.dto.v1_0.Comment comment)
+	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeExpire(
+			String scopeKey, String externalReferenceCode)
 		throws Exception;
 
 	public void postScopeScopeKeyByExternalReferenceCodeSubscribe(
@@ -295,15 +292,15 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
-	public void putByExternalReferenceCodeObjectActionObjectActionName(
-			String externalReferenceCode, String objectActionName)
+	public com.liferay.headless.delivery.dto.v1_0.Comment
+			putByExternalReferenceCodeComment(
+				String externalReferenceCode,
+				String commentExternalReferenceCode,
+				com.liferay.headless.delivery.dto.v1_0.Comment comment)
 		throws Exception;
 
-	public com.liferay.headless.delivery.dto.v1_0.Comment
-			putByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				String objectEntryExternalReferenceCode,
-				String externalReferenceCode,
-				com.liferay.headless.delivery.dto.v1_0.Comment comment)
+	public void putByExternalReferenceCodeObjectActionObjectActionName(
+			String externalReferenceCode, String objectActionName)
 		throws Exception;
 
 	public ObjectEntry putByExternalReferenceCodeRestore(
@@ -340,17 +337,17 @@ public interface ObjectEntryResource {
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public com.liferay.headless.delivery.dto.v1_0.Comment
+			putScopeScopeKeyByExternalReferenceCodeComment(
+				String scopeKey, String externalReferenceCode,
+				String commentExternalReferenceCode,
+				com.liferay.headless.delivery.dto.v1_0.Comment comment)
+		throws Exception;
+
 	public void
 			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
 				String scopeKey, String externalReferenceCode,
 				String objectActionName)
-		throws Exception;
-
-	public com.liferay.headless.delivery.dto.v1_0.Comment
-			putScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				String scopeKey, String objectEntryExternalReferenceCode,
-				String externalReferenceCode,
-				com.liferay.headless.delivery.dto.v1_0.Comment comment)
 		throws Exception;
 
 	public ObjectEntry putScopeScopeKeyByExternalReferenceCodeRestore(

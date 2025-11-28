@@ -925,6 +925,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						newFileEntry.getExternalReferenceCode());
+					// Isn't this a bug???
 					setUrl(url);
 				}
 			});

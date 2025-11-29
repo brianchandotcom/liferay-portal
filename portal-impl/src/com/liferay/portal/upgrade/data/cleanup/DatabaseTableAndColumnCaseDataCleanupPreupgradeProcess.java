@@ -48,13 +48,13 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 		Set<String> expectedTableNames = new TreeSet<>();
 
 		expectedTableNames.addAll(
-			DBResourceUtil.getServiceComponentModuleTableNames(connection));
-		expectedTableNames.addAll(
-			DBResourceUtil.getServiceComponentPortalTableNames(connection));
-		expectedTableNames.addAll(
 			DBResourceUtil.getModuleTableNames(connection));
 		expectedTableNames.addAll(
 			DBResourceUtil.getPortalTableNames(connection));
+		expectedTableNames.addAll(
+			DBResourceUtil.getServiceComponentModuleTableNames(connection));
+		expectedTableNames.addAll(
+			DBResourceUtil.getServiceComponentPortalTableNames(connection));
 
 		DBInspector dbInspector = new DBInspector(connection);
 

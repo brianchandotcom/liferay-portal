@@ -9,7 +9,7 @@ import com.liferay.ai.hub.site.initializer.internal.assistant.handler.AssistantH
 import com.liferay.ai.hub.site.initializer.internal.assistant.handler.AssistantHandlerUtil;
 import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.InputVariablesUtil;
 import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
-import com.liferay.ai.hub.site.initializer.mcp.tool.provider.McpToolProvider;
+import com.liferay.ai.hub.site.initializer.mcp.tool.provider.McpToolProviderFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -146,7 +146,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			).tools(
 				new Tools()
 			).toolProvider(
-				_mcpToolProvider.provide(
+				_mcpToolProviderFactory.create(
 					kaleoInstanceToken.getCompanyId(),
 					kaleoInstanceToken.getGroupId(), serviceContext.getLocale(),
 					ToolsUtil.getMcpServerExternalReferenceCodes(
@@ -193,7 +193,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
 
 	@Reference
-	private McpToolProvider _mcpToolProvider;
+	private McpToolProviderFactory _mcpToolProviderFactory;
 
 	@Reference
 	private WorkflowNodeManager _workflowNodeManager;

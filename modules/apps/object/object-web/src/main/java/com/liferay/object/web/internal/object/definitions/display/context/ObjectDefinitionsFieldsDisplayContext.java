@@ -112,8 +112,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 				).put(
 					"liferay-ui:input-editor:name", "richTextDefaultValue"
 				).build(),
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY),
+				themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 
 		Map<String, Object> data = editorConfiguration.getData();

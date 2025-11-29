@@ -42,7 +42,8 @@ public class LayoutPageTemplateLayoutPrototypeLocalServiceWrapper
 		LayoutPrototype layoutPrototype = super.addLayoutPrototype(
 			userId, companyId, nameMap, descriptionMap, active, serviceContext);
 
-		// Remove this condition when private pages are not supported
+		// TODO Remove this condition when private pages are no longer
+		// supported. See LPD-72837.
 
 		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
 			(ExportImportThreadLocal.isStagingInProcess() ||

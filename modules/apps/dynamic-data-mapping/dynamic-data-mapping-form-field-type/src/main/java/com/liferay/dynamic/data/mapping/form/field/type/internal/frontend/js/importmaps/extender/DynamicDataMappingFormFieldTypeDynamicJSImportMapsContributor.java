@@ -32,7 +32,7 @@ public class DynamicDataMappingFormFieldTypeDynamicJSImportMapsContributor
 		throws IOException {
 
 		writer.write(
-			"\"@liferay/dynamic-data-mapping-form-field-type/api\" : \"");
+			"\"@liferay/dynamic-data-mapping-form-field-type/api\": \"");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(

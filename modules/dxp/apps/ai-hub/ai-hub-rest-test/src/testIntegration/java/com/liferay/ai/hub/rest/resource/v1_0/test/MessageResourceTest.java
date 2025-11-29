@@ -9,6 +9,7 @@ import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
@@ -23,6 +24,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -38,10 +40,19 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer("ai-hub-initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@After
@@ -110,6 +121,8 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 
 		Assert.assertTrue(line.contains("Feliphe"));
 	}
+
+	private static String _originalName;
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;

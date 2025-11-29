@@ -36,18 +36,9 @@ public class CKEditor5DynamicJSImportMapsContributor
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
-
 		boolean first = true;
 
 		for (String moduleName : _MODULE_NAMES) {
-			String escapedModuleName = StringUtil.replace(
-				moduleName, CharPool.FORWARD_SLASH, CharPool.DOLLAR);
-
-			ESModuleAbsolutePortalURLBuilder esModuleAbsolutePortalURLBuilder =
-				absolutePortalURLBuilder.forESModule(
-					"frontend-editor-ckeditor-web",
-					"exports/" + escapedModuleName + ".js");
-
 			if (!first) {
 				writer.write(", ");
 			}
@@ -58,7 +49,17 @@ public class CKEditor5DynamicJSImportMapsContributor
 			writer.write(StringPool.QUOTE);
 			writer.write(moduleName);
 			writer.write("\": \"");
+
+			String escapedModuleName = StringUtil.replace(
+				moduleName, CharPool.FORWARD_SLASH, CharPool.DOLLAR);
+
+			ESModuleAbsolutePortalURLBuilder esModuleAbsolutePortalURLBuilder =
+				absolutePortalURLBuilder.forESModule(
+					"frontend-editor-ckeditor-web",
+					"exports/" + escapedModuleName + ".js");
+
 			writer.write(esModuleAbsolutePortalURLBuilder.build());
+
 			writer.write(StringPool.QUOTE);
 		}
 	}

@@ -5,8 +5,10 @@
 
 package com.liferay.ai.hub.site.initializer.internal.assistant.handler;
 
+import dev.langchain4j.invocation.InvocationParameters;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.TokenStream;
+import dev.langchain4j.service.UserMessage;
 
 /**
  * @author Feliphe Marinho
@@ -23,9 +25,14 @@ public class DefaultAssistantHandler implements AssistantHandler {
 			assistantHandlerContext.getSystemMessageProvider()
 		).streamingChatModel(
 			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
+		).tools(
+			assistantHandlerContext.getTools()
+		).toolProvider(
+			assistantHandlerContext.getToolProvider()
 		).build();
 
 		defaultAssistant.assist(
+			assistantHandlerContext.getInvocationParameters(),
 			assistantHandlerContext.getUserMessage()
 		).onCompleteResponse(
 			assistantHandlerContext.getOnCompleteResponse()
@@ -36,7 +43,9 @@ public class DefaultAssistantHandler implements AssistantHandler {
 
 	public interface DefaultAssistant {
 
-		public TokenStream assist(String userMessage);
+		public TokenStream assist(
+			InvocationParameters invocationParameters,
+			@UserMessage String userMessage);
 
 	}
 

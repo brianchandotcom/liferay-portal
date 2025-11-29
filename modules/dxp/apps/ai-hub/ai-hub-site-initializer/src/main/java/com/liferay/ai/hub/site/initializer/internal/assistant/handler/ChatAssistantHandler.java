@@ -33,6 +33,8 @@ public class ChatAssistantHandler implements AssistantHandler {
 			).id(
 				id
 			).build()
+		).toolProvider(
+			assistantHandlerContext.getToolProvider()
 		).systemMessageProvider(
 			assistantHandlerContext.getSystemMessageProvider()
 		).streamingChatModel(

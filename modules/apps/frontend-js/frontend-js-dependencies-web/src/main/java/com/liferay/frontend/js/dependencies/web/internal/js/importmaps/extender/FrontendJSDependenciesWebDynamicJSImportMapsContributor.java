@@ -31,6 +31,8 @@ public class FrontendJSDependenciesWebDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
+		writer.write("\"@liferay/frontend-js-api\" : \"");
+
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
@@ -39,16 +41,17 @@ public class FrontendJSDependenciesWebDynamicJSImportMapsContributor
 			absolutePortalURLBuilder.forESModule(
 				"frontend-js-dependencies-web", "exports/@liferay$js-api.js");
 
-		writer.write("\"@liferay/frontend-js-api\" : \"");
 		writer.write(esModuleAbsolutePortalURLBuilder.build());
+
 		writer.write("\",");
+		writer.write("\"@liferay/frontend-js-api/data-set\" : \"");
 
 		esModuleAbsolutePortalURLBuilder = absolutePortalURLBuilder.forESModule(
 			"frontend-js-dependencies-web",
 			"exports/@liferay$js-api$data-set.js");
 
-		writer.write("\"@liferay/frontend-js-api/data-set\" : \"");
 		writer.write(esModuleAbsolutePortalURLBuilder.build());
+
 		writer.write(StringPool.QUOTE);
 	}
 

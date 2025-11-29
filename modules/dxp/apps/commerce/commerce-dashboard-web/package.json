@@ -1,9 +1,10 @@
 {
 	"dependencies": {
-		"@clayui/charts": "3.154.0",
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
-		"react": "18.2.0"
+		"react": "18.2.0",
+		"recharts": "^2.8.0",
+		"resize-observer-polyfill": "1.5.1"
 	},
 	"main": "js/index.js",
 	"name": "commerce-dashboard-web",
@@ -11,7 +12,8 @@
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
-		"format": "node-scripts format"
+		"format": "node-scripts format",
+		"test": "node-scripts test"
 	},
 	"sideEffects": false,
 	"version": "4.0.61"

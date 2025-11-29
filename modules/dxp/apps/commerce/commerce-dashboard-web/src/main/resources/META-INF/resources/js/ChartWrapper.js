@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayChart from '@clayui/charts';
 import React, {useCallback, useRef} from 'react';
+
+function ClayChart() {
+	return null;
+}
 
 export default function ChartWrapper({data, loading}) {
 	const chartRef = useRef();

@@ -1,0 +1,62 @@
+[#if !portalUtil.isSystemGroup(themeDisplay.getScopeGroupName())]
+	<div id="dsr-header-main">
+		<div>
+			[#assign groupId = themeDisplay.getScopeGroupId() /]
+			<div>
+				[#assign response = restClient.get("/headless-digital-sales-room/v1.0/digital-sales-rooms/${groupId}") /]
+
+				[#if response?has_content && response.banner?has_content]
+					[@liferay_aui.style]
+						.dsr-header-banner {
+							background-image: url(${response.banner.fileURL})
+						}
+					[/@]
+				[#else]
+					[@liferay_aui.style]
+						.dsr-header-banner {
+							background-image: url([resources:banner.png])
+						}
+					[/@]
+				[/#if]
+
+				<div class="dsr-header-banner">
+					<h1>
+						[#if response?has_content && (response.name)??]${response.name}[/#if]
+					</h1>
+
+					<div class="dsr-container-logos">
+						[#if response?has_content && response.clientLogo?has_content]
+							[@liferay_aui.style]
+								.dsr-primary-logo .dsr-logo {
+									background-image: url(${response.clientLogo.fileURL})
+								}
+							[/@]
+						[#else]
+							[@liferay_aui.style]
+								.dsr-primary-logo .dsr-logo {
+									background-image: url([resources:logo1.png])
+								}
+							[/@]
+						[/#if]
+
+						[@liferay_aui.style]
+							.dsr-secondary-logo .dsr-logo {
+								background-image: url([resources:logo2.png])
+							}
+						[/@]
+
+						<div class="dsr-container-logo dsr-secondary-logo">
+							<div class="dsr-logo-background"></div>
+							<div class="dsr-logo"></div>
+						</div>
+
+						<div class="dsr-container-logo dsr-primary-logo">
+							<div class="dsr-logo-background"></div>
+							<div class="dsr-logo"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+[/#if]

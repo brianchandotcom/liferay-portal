@@ -1,0 +1,15 @@
+#dsr-header-user {
+	background-color: var(--white);
+	border-bottom: 1px solid var(--gray-300);
+	padding: 0.5rem 1.75rem;
+}
+
+.personal-menu-dropdown .sticker-lg {
+	font-size: 0.825rem;
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
+.portlet {
+	margin-bottom: 0 !important;
+}

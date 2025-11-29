@@ -1,0 +1,132 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "header-user",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "header-main",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n .nav-item {\n border-bottom: 0.25rem solid transparent;\n margin-right: 1rem;\n}\n.nav-item.selected.active {\n border-color: var(--primary, #0b5fff);\n}\n}",
+							"fragment": {
+								"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+							},
+							"fragmentConfig": {
+								"displayStyle": "horizontal",
+								"hoveredItemColor": "",
+								"selectedItemColor": "",
+								"source": "",
+								"sublevels": "-1"
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"paddingBottom": "1",
+								"paddingLeft": "4",
+								"paddingRight": "4",
+								"paddingTop": "1"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "#F1F2F5",
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentSettings": {
+										"unallowedFragments": [
+										]
+									}
+								},
+								"type": "DropZone"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

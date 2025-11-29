@@ -1,0 +1,13 @@
+{
+	"friendlyURL": "/documents",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Documents"
+	},
+	"private": false,
+	"system": false,
+	"title_i18n": {
+		"en_US": "Documents"
+	},
+	"type": "Content"
+}

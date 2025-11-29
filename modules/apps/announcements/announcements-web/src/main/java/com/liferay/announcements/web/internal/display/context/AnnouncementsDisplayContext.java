@@ -65,7 +65,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -419,18 +418,18 @@ public class AnnouncementsDisplayContext {
 				_announcementsRequestHelper.getThemeDisplay());
 		}
 
-		List<T> selectedEntries = new ArrayList<>();
+		return TransformUtil.transform(
+			unsafeSupplier.get(),
+			entry -> {
+				if (unsafeTriFunction.apply(
+						_announcementsRequestHelper.getPermissionChecker(),
+						entry, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-		for (T entry : unsafeSupplier.get()) {
-			if (unsafeTriFunction.apply(
-					_announcementsRequestHelper.getPermissionChecker(), entry,
-					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+					return entry;
+				}
 
-				selectedEntries.add(entry);
-			}
-		}
-
-		return selectedEntries;
+				return null;
+			});
 	}
 
 	private PortletURL _getPortletURL() {

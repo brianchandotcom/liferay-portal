@@ -412,14 +412,13 @@ public class LayoutServiceContextHelperImpl
 			themeDisplay.setPermissionChecker(permissionChecker);
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
 
-			boolean httpsEnabled = _isHttpsEnabled();
+			boolean secure = _isSecure();
 
-			int portalServerPort = _portal.getPortalServerPort(httpsEnabled);
+			int portalServerPort = _portal.getPortalServerPort(secure);
 
 			themeDisplay.setPortalURL(
 				_portal.getPortalURL(
-					company.getVirtualHostname(), portalServerPort,
-					httpsEnabled));
+					company.getVirtualHostname(), portalServerPort, secure));
 
 			themeDisplay.setRealUser(user);
 			themeDisplay.setScopeGroupId(_group.getGroupId());
@@ -432,7 +431,7 @@ public class LayoutServiceContextHelperImpl
 			return themeDisplay;
 		}
 
-		private boolean _isHttpsEnabled() {
+		private boolean _isSecure() {
 			if (Objects.equals(
 					Http.HTTPS,
 					PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||

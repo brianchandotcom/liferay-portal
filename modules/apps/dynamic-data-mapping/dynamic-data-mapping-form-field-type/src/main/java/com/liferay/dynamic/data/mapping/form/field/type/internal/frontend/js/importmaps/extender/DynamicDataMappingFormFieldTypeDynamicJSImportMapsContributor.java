@@ -31,6 +31,9 @@ public class DynamicDataMappingFormFieldTypeDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
+		writer.write(
+			"\"@liferay/dynamic-data-mapping-form-field-type/api\" : \"");
+
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
@@ -39,9 +42,8 @@ public class DynamicDataMappingFormFieldTypeDynamicJSImportMapsContributor
 			absolutePortalURLBuilder.forESModule(
 				"dynamic-data-mapping-form-field-type", "api.js");
 
-		writer.write(
-			"\"@liferay/dynamic-data-mapping-form-field-type/api\" : \"");
 		writer.write(esModuleAbsolutePortalURLBuilder.build());
+
 		writer.write(StringPool.QUOTE);
 	}
 

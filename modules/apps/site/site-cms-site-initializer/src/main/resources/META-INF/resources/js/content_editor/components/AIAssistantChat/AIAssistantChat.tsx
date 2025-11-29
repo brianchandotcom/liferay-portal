@@ -197,10 +197,7 @@ const AIAssistantChat: React.FC = () => {
 				</div>
 
 				<div className="ai-assistant-chat__messages-container flex-grow-1 overflow-auto px-3">
-					<AIAssistantMessageBalloon
-						message="Hi! I can help you generate content, titles, tags, or
-						translate your work. What would you like to do?"
-					/>
+					<AIAssistantMessageBalloon message="Hi! I can help you generate content, titles, tags, or translate your work. What would you like to do?" />
 
 					{messages.map((item, index) =>
 						item.sender === 'user' ? (

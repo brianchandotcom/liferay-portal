@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.site.initializer.internal.mcp.tool.provider;
 
-import com.liferay.ai.hub.site.initializer.mcp.tool.provider.McpToolProvider;
+import com.liferay.ai.hub.site.initializer.mcp.tool.provider.McpToolProviderFactory;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -13,17 +13,19 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import dev.langchain4j.agent.tool.ToolSpecification;
+import dev.langchain4j.mcp.McpToolProvider;
 import dev.langchain4j.mcp.client.DefaultMcpClient;
 import dev.langchain4j.mcp.client.McpClient;
 import dev.langchain4j.mcp.client.transport.McpTransport;
@@ -32,8 +34,6 @@ import dev.langchain4j.mcp.client.transport.http.StreamableHttpMcpTransport;
 import dev.langchain4j.model.chat.request.json.JsonAnyOfSchema;
 import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
 import dev.langchain4j.model.chat.request.json.JsonSchemaElement;
-
-import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -47,10 +47,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author João Victor Alves
  */
-@Component(service = McpToolProvider.class)
-public class McpToolProviderImpl implements McpToolProvider {
+@Component(service = McpToolProviderFactory.class)
+public class McpToolProviderFactoryImpl implements McpToolProviderFactory {
 
-	public dev.langchain4j.mcp.McpToolProvider provide(
+	public McpToolProvider create(
 		long companyId, long groupId, Locale locale,
 		List<String> mcpServerExternalReferenceCodes, long userId) {
 
@@ -71,7 +71,7 @@ public class McpToolProviderImpl implements McpToolProvider {
 				).build());
 		}
 
-		return dev.langchain4j.mcp.McpToolProvider.builder(
+		return McpToolProvider.builder(
 		).mcpClients(
 			mcpClients
 		).filter(
@@ -80,15 +80,12 @@ public class McpToolProviderImpl implements McpToolProvider {
 		).build();
 	}
 
-	private Map<String, String> _createCustomHeaders(
-		String authenticationArguments) {
-
-		if (authenticationArguments.isBlank()) {
+	private Map<String, String> _createCustomHeaders(String authArguments) {
+		if (authArguments.isBlank()) {
 			return Map.of();
 		}
 
-		return Map.of(
-			"Authorization", _getAuthorization(authenticationArguments));
+		return Map.of("Authorization", _parseBasicAuthorization(authArguments));
 	}
 
 	private McpTransport _createMcpTransport(Map<String, Object> properties) {
@@ -99,18 +96,18 @@ public class McpToolProviderImpl implements McpToolProvider {
 
 		if (url.endsWith("/sse")) {
 			return new HttpMcpTransport.Builder(
-			).sseUrl(
-				url
 			).customHeaders(
 				customHeaders
+			).sseUrl(
+				url
 			).build();
 		}
 
 		return new StreamableHttpMcpTransport.Builder(
-		).url(
-			url
 		).customHeaders(
 			customHeaders
+		).url(
+			url
 		).build();
 	}
 
@@ -129,22 +126,6 @@ public class McpToolProviderImpl implements McpToolProvider {
 		}
 
 		return true;
-	}
-
-	private String _getAuthorization(String credentials) {
-		try {
-			Base64.Encoder encoder = Base64.getEncoder();
-
-			credentials =
-				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-			return "Basic " +
-				new String(
-					encoder.encode(credentials.getBytes("UTF-8")), "UTF-8");
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new RuntimeException(unsupportedEncodingException);
-		}
 	}
 
 	private List<ObjectEntry> _getMcpServerObjectEntries(
@@ -179,11 +160,34 @@ public class McpToolProviderImpl implements McpToolProvider {
 		}
 	}
 
+	private String _parseBasicAuthorization(String authArguments) {
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				authArguments);
+
+			Base64.Encoder encoder = Base64.getEncoder();
+
+			String credentials =
+				jsonObject.getString("userName") +
+					jsonObject.getString("password");
+
+			return "Basic " +
+				new String(
+					encoder.encode(credentials.getBytes("UTF-8")), "UTF-8");
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

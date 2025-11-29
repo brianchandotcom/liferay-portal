@@ -5,15 +5,17 @@
 
 package com.liferay.ai.hub.site.initializer.mcp.tool.provider;
 
+import dev.langchain4j.mcp.McpToolProvider;
+
 import java.util.List;
 import java.util.Locale;
 
 /**
  * @author João Victor Alves
  */
-public interface McpToolProvider {
+public interface McpToolProviderFactory {
 
-	public dev.langchain4j.mcp.McpToolProvider provide(
+	public McpToolProvider create(
 		long companyId, long groupId, Locale locale,
 		List<String> mcpServerExternalReferenceCodes, long userId);
 

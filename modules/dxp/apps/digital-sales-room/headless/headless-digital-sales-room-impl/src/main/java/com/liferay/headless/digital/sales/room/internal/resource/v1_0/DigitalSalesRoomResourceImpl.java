@@ -18,6 +18,9 @@ import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupService;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.liveusers.LiveUsers;
@@ -43,6 +47,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.LinkedHashMap;
 
@@ -119,7 +125,8 @@ public class DigitalSalesRoomResourceImpl
 		Group group = _addGroup(
 			digitalSalesRoom.getExternalReferenceCode(),
 			digitalSalesRoom.getDescription(),
-			digitalSalesRoom.getFriendlyUrlPath(), "blank-site-initializer",
+			digitalSalesRoom.getFriendlyUrlPath(),
+			"com.liferay.digital.sales.room.site.initializer",
 			digitalSalesRoom.getName());
 
 		ObjectDefinition objectDefinition =
@@ -144,6 +151,23 @@ public class DigitalSalesRoomResourceImpl
 		objectEntryManager.addObjectEntry(
 			defaultDTOConverterContext, objectDefinition,
 			_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				group.getGroupId(), "dsr-classic");
+
+		if (styleBookEntry.isHead()) {
+			styleBookEntry = _styleBookEntryLocalService.getDraft(
+				styleBookEntry.getStyleBookEntryId());
+		}
+
+		styleBookEntry = _styleBookEntryLocalService.updateFrontendTokensValues(
+			styleBookEntry.getStyleBookEntryId(),
+			_getFrontendTokensValues(
+				digitalSalesRoom.getPrimaryColor(),
+				digitalSalesRoom.getSecondaryColor()));
+
+		_styleBookEntryLocalService.publishDraft(styleBookEntry);
 
 		return _toDigitalSalesRoom(group);
 	}
@@ -200,6 +224,108 @@ public class DigitalSalesRoomResourceImpl
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	private String _getFrontendTokensValues(
+		String primaryColor, String secondaryColor) {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		if (!Validator.isBlank(primaryColor)) {
+			jsonObject = jsonObject.put(
+				"brandColor1",
+				JSONUtil.put(
+					"cssVariableMapping", "brand-color-1"
+				).put(
+					"name", "primaryColor"
+				).put(
+					"value", primaryColor
+				)
+			).put(
+				"btnPrimaryBackgroundColor",
+				JSONUtil.put(
+					"cssVariableMapping", "btn-primary-background-color"
+				).put(
+					"name", "primaryColor"
+				).put(
+					"value", primaryColor
+				)
+			).put(
+				"btnPrimaryBorderColor",
+				JSONUtil.put(
+					"cssVariableMapping", "btn-primary-border-color"
+				).put(
+					"name", "primaryColor"
+				).put(
+					"value", primaryColor
+				)
+			).put(
+				"btnPrimaryHoverBackgroundColor",
+				JSONUtil.put(
+					"cssVariableMapping", "btn-primary-hover-background-color"
+				).put(
+					"name", "primaryColor"
+				).put(
+					"value", primaryColor
+				)
+			).put(
+				"primaryColor",
+				JSONUtil.put(
+					"cssVariableMapping", "primary"
+				).put(
+					"value", primaryColor
+				)
+			);
+		}
+
+		if (!Validator.isBlank(secondaryColor)) {
+			jsonObject = jsonObject.put(
+				"brandColor2",
+				JSONUtil.put(
+					"cssVariableMapping", "brand-color-2"
+				).put(
+					"name", "secondaryColor"
+				).put(
+					"value", secondaryColor
+				)
+			).put(
+				"btnSecondaryBackgroundColor",
+				JSONUtil.put(
+					"cssVariableMapping", "btn-secondary-background-color"
+				).put(
+					"name", "secondaryColor"
+				).put(
+					"value", secondaryColor
+				)
+			).put(
+				"btnSecondaryBorderColor",
+				JSONUtil.put(
+					"cssVariableMapping", "btn-secondary-border-color"
+				).put(
+					"name", "secondaryColor"
+				).put(
+					"value", secondaryColor
+				)
+			).put(
+				"btnSecondaryHoverBackgroundColor",
+				JSONUtil.put(
+					"cssVariableMapping", "btn-secondary-hover-background-color"
+				).put(
+					"name", "secondaryColor"
+				).put(
+					"value", secondaryColor
+				)
+			).put(
+				"secondaryColor",
+				JSONUtil.put(
+					"cssVariableMapping", "secondary"
+				).put(
+					"value", secondaryColor
+				)
+			);
+		}
+
+		return jsonObject.toString();
 	}
 
 	private ServiceContext _getServiceContext() throws PortalException {
@@ -334,6 +460,9 @@ public class DigitalSalesRoomResourceImpl
 	private GroupService _groupService;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference
@@ -347,5 +476,8 @@ public class DigitalSalesRoomResourceImpl
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

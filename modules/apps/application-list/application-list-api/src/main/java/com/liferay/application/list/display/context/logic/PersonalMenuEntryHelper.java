@@ -5,10 +5,10 @@
 
 package com.liferay.application.list.display.context.logic;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.product.navigation.personal.menu.BasePersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,16 +23,15 @@ public class PersonalMenuEntryHelper {
 	}
 
 	public List<BasePersonalMenuEntry> getBasePersonalMenuEntries() {
-		List<BasePersonalMenuEntry> basePersonalMenuEntries = new ArrayList<>();
+		return TransformUtil.transform(
+			getPersonalMenuEntries(),
+			personalMenuEntry -> {
+				if (personalMenuEntry instanceof BasePersonalMenuEntry) {
+					return (BasePersonalMenuEntry)personalMenuEntry;
+				}
 
-		for (PersonalMenuEntry personalMenuEntry : getPersonalMenuEntries()) {
-			if (personalMenuEntry instanceof BasePersonalMenuEntry) {
-				basePersonalMenuEntries.add(
-					(BasePersonalMenuEntry)personalMenuEntry);
-			}
-		}
-
-		return basePersonalMenuEntries;
+				return null;
+			});
 	}
 
 	public List<PersonalMenuEntry> getPersonalMenuEntries() {

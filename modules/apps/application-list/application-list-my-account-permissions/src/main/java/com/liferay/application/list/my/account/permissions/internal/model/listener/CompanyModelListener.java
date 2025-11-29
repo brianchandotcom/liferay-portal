@@ -10,6 +10,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.PrefsProps;
 
 import jakarta.portlet.PortletPreferences;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,14 +66,10 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 				List<PanelApp> panelApps = panelCategoryHelper.getAllPanelApps(
 					PanelCategoryKeys.USER_MY_ACCOUNT);
 
-				List<Portlet> portlets = new ArrayList<>(panelApps.size());
-
-				for (PanelApp panelApp : panelApps) {
-					Portlet portlet = _portletLocalService.getPortletById(
-						panelApp.getPortletId());
-
-					portlets.add(portlet);
-				}
+				List<Portlet> portlets = TransformUtil.transform(
+					panelApps,
+					panelApp -> _portletLocalService.getPortletById(
+						panelApp.getPortletId()));
 
 				_initPermissions(company.getCompanyId(), portlets);
 

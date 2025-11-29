@@ -6,6 +6,7 @@
 package com.liferay.address.internal.upgrade.v1_0_0;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -115,16 +116,18 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 		DB db = DBManagerUtil.getDB();
 
-		List<IndexMetadata> addIndexMetadatas = new ArrayList<>();
+		List<IndexMetadata> addIndexMetadatas = TransformUtil.transform(
+			indexMetadatas,
+			indexMetadata -> {
+				if (!hasIndex(
+						indexMetadata.getTableName(),
+						indexMetadata.getIndexName())) {
 
-		for (IndexMetadata indexMetadata : indexMetadatas) {
-			if (!hasIndex(
-					indexMetadata.getTableName(),
-					indexMetadata.getIndexName())) {
+					return indexMetadata;
+				}
 
-				addIndexMetadatas.add(indexMetadata);
-			}
-		}
+				return null;
+			});
 
 		db.addIndexes(connection, addIndexMetadatas);
 	}
@@ -146,11 +149,13 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		List<IndexMetadata> droppedIndexMetadatas = new ArrayList<>();
 
 		try {
-			for (IndexMetadata indexMetadata : indexMetadatas) {
-				db.runSQL(indexMetadata.getDropSQL());
+			droppedIndexMetadatas = TransformUtil.transform(
+				indexMetadatas,
+				indexMetadata -> {
+					db.runSQL(indexMetadata.getDropSQL());
 
-				droppedIndexMetadatas.add(indexMetadata);
-			}
+					return indexMetadata;
+				});
 		}
 		catch (Exception exception) {
 			_addIndexes(droppedIndexMetadatas);

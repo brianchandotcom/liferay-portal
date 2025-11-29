@@ -18,14 +18,14 @@ public class ExportImportAttachmentManagerUtil {
 
 	public static String getFileURL(DLFileEntry dlFileEntry) throws Exception {
 		ExportImportAttachmentManager exportImportAttachmentManager =
-			_serviceSnapshot.get()
+			_serviceSnapshot.get();
 
 		return exportImportAttachmentManager.getFileURL(dlFileEntry);
 	}
 
 	public static URL getURL(String url) throws MalformedURLException {
 		ExportImportAttachmentManager exportImportAttachmentManager =
-			_serviceSnapshot.get()
+			_serviceSnapshot.get();
 
 		return exportImportAttachmentManager.getURL(url);
 	}

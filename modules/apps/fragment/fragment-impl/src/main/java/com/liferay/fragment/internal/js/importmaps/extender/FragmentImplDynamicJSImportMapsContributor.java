@@ -31,7 +31,7 @@ public class FragmentImplDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
-		writer.write("\"@liferay/fragment-impl/api\" : \"");
+		writer.write("\"@liferay/fragment-impl/api\": \"");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(

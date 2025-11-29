@@ -1,0 +1,2273 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ForecastChart component render 1`] = `
+<div>
+  <div
+    class="recharts-responsive-container"
+    style="width: 800px; height: 350px; min-width: 0;"
+  >
+    <div
+      class="recharts-wrapper"
+      role="region"
+      style="position: relative; cursor: default; width: 800px; height: 350px;"
+    >
+      <svg
+        class="recharts-surface"
+        height="350"
+        viewBox="0 0 800 350"
+        width="800"
+      >
+        <title />
+        <desc />
+        <defs>
+          <clippath
+            id="recharts1-clip"
+          >
+            <rect
+              height="310"
+              width="730"
+              x="65"
+              y="5"
+            />
+          </clippath>
+        </defs>
+        <g
+          class="recharts-layer recharts-line"
+        >
+          <path
+            class="recharts-curve recharts-line-curve"
+            d="M65,264.04116666666664L131.36363636363637,276.3967333333333L197.72727272727272,300.6170333333334L264.09090909090907,272.8782333333333L330.45454545454544,268.8926666666667L396.8181818181818,240.84283333333332L463.18181818181813,132.6104666666667L529.5454545454545,287.0163L595.9090909090909,218.56210000000002L662.2727272727273,239.092191L728.6363636363636,235.85313533333337L795,236.2792055333333"
+            fill="none"
+            height="310"
+            name="Brake System"
+            stroke="hsl(180, 50%, 60%)"
+            stroke-dasharray="3 3"
+            stroke-width="1"
+            width="730"
+          />
+          <g
+            class="recharts-layer"
+          />
+          <g
+            class="recharts-layer recharts-line-dots"
+          >
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="65"
+              cy="264.04116666666664"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="131.36363636363637"
+              cy="276.3967333333333"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="197.72727272727272"
+              cy="300.6170333333334"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="264.09090909090907"
+              cy="272.8782333333333"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="330.45454545454544"
+              cy="268.8926666666667"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="396.8181818181818"
+              cy="240.84283333333332"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="463.18181818181813"
+              cy="132.6104666666667"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="529.5454545454545"
+              cy="287.0163"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="595.9090909090909"
+              cy="218.56210000000002"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="662.2727272727273"
+              cy="239.092191"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="728.6363636363636"
+              cy="235.85313533333337"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="795"
+              cy="236.2792055333333"
+              fill="hsl(180, 50%, 60%)"
+              height="310"
+              name="Brake System"
+              r="3"
+              stroke="hsl(180, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-area"
+        >
+          <g
+            class="recharts-layer"
+          >
+            <path
+              class="recharts-curve recharts-area-area"
+              d="M65,264.04116666666664L131.36363636363637,276.3967333333333L197.72727272727272,300.6170333333334L264.09090909090907,272.8782333333333L330.45454545454544,268.8926666666667L396.8181818181818,240.84283333333332L463.18181818181813,132.6104666666667L529.5454545454545,287.0163L595.9090909090909,218.56210000000002L662.2727272727273,169.75154600000002L728.6363636363636,165.79398266666666L795,163.28493566666668L795,309.2734733333333L728.6363636363636,305.9122818L662.2727272727273,308.4328174L595.9090909090909,218.56210000000002L529.5454545454545,287.0163L463.18181818181813,132.6104666666667L396.8181818181818,240.84283333333332L330.45454545454544,268.8926666666667L264.09090909090907,272.8782333333333L197.72727272727272,300.6170333333334L131.36363636363637,276.3967333333333L65,264.04116666666664Z"
+              fill="hsl(180, 50%, 60%)"
+              fill-opacity="0.2"
+              height="310"
+              stroke="none"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-line"
+        >
+          <path
+            class="recharts-curve recharts-line-curve"
+            d="M65,263.01548L131.36363636363637,246.39576L197.72727272727272,257.11928L264.09090909090907,261.77878666666663L330.45454545454544,215.40609333333333L396.8181818181818,191.21824L463.18181818181813,297.4664L529.5454545454545,263.0084533333333L595.9090909090909,174.74690666666666L662.2727272727273,232.04094133333336L728.6363636363636,250.2077576666667L795,242.797621"
+            fill="none"
+            height="310"
+            name="Engine"
+            stroke="hsl(240, 50%, 60%)"
+            stroke-dasharray="3 3"
+            stroke-width="1"
+            width="730"
+          />
+          <g
+            class="recharts-layer"
+          />
+          <g
+            class="recharts-layer recharts-line-dots"
+          >
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="65"
+              cy="263.01548"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="131.36363636363637"
+              cy="246.39576"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="197.72727272727272"
+              cy="257.11928"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="264.09090909090907"
+              cy="261.77878666666663"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="330.45454545454544"
+              cy="215.40609333333333"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="396.8181818181818"
+              cy="191.21824"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="463.18181818181813"
+              cy="297.4664"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="529.5454545454545"
+              cy="263.0084533333333"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="595.9090909090909"
+              cy="174.74690666666666"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="662.2727272727273"
+              cy="232.04094133333336"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="728.6363636363636"
+              cy="250.2077576666667"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="795"
+              cy="242.797621"
+              fill="hsl(240, 50%, 60%)"
+              height="310"
+              name="Engine"
+              r="3"
+              stroke="hsl(240, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-area"
+        >
+          <g
+            class="recharts-layer"
+          >
+            <path
+              class="recharts-curve recharts-area-area"
+              d="M65,263.01548L131.36363636363637,246.39576L197.72727272727272,257.11928L264.09090909090907,261.77878666666663L330.45454545454544,215.40609333333333L396.8181818181818,191.21824L463.18181818181813,297.4664L529.5454545454545,263.0084533333333L595.9090909090909,174.74690666666666L662.2727272727273,164.814021L728.6363636363636,182.84798166666667L795,175.43018800000002L795,310.1650447L728.6363636363636,315L662.2727272727273,299.26786631666664L595.9090909090909,174.74690666666666L529.5454545454545,263.0084533333333L463.18181818181813,297.4664L396.8181818181818,191.21824L330.45454545454544,215.40609333333333L264.09090909090907,261.77878666666663L197.72727272727272,257.11928L131.36363636363637,246.39576L65,263.01548Z"
+              fill="hsl(240, 50%, 60%)"
+              fill-opacity="0.2"
+              height="310"
+              stroke="none"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-line"
+        >
+          <path
+            class="recharts-curve recharts-line-curve"
+            d="M65,311.62100000000004L131.36363636363637,313.0056666666667L197.72727272727272,313.10900000000004L264.09090909090907,308.61400000000003L330.45454545454544,308.9446666666667L396.8181818181818,309.5233333333333L463.18181818181813,309.5956666666667L529.5454545454545,310.3086666666667L595.9090909090909,312.47866666666664L662.2727272727273,310.81690598333336L728.6363636363636,310.24539422L795,310.3923671833333"
+            fill="none"
+            height="310"
+            name="Exhaust System"
+            stroke="hsl(300, 50%, 60%)"
+            stroke-dasharray="3 3"
+            stroke-width="1"
+            width="730"
+          />
+          <g
+            class="recharts-layer"
+          />
+          <g
+            class="recharts-layer recharts-line-dots"
+          >
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="65"
+              cy="311.62100000000004"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="131.36363636363637"
+              cy="313.0056666666667"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="197.72727272727272"
+              cy="313.10900000000004"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="264.09090909090907"
+              cy="308.61400000000003"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="330.45454545454544"
+              cy="308.9446666666667"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="396.8181818181818"
+              cy="309.5233333333333"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="463.18181818181813"
+              cy="309.5956666666667"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="529.5454545454545"
+              cy="310.3086666666667"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="595.9090909090909"
+              cy="312.47866666666664"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="662.2727272727273"
+              cy="310.81690598333336"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="728.6363636363636"
+              cy="310.24539422"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="795"
+              cy="310.3923671833333"
+              fill="hsl(300, 50%, 60%)"
+              height="310"
+              name="Exhaust System"
+              r="3"
+              stroke="hsl(300, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-area"
+        >
+          <g
+            class="recharts-layer"
+          >
+            <path
+              class="recharts-curve recharts-area-area"
+              d="M65,311.62100000000004L131.36363636363637,313.0056666666667L197.72727272727272,313.10900000000004L264.09090909090907,308.61400000000003L330.45454545454544,308.9446666666667L396.8181818181818,309.5233333333333L463.18181818181813,309.5956666666667L529.5454545454545,310.3086666666667L595.9090909090909,312.47866666666664L662.2727272727273,306.3562018L728.6363636363636,305.5978942666667L795,305.74964546666666L795,315L728.6363636363636,314.89289347066665L662.2727272727273,315L595.9090909090909,312.47866666666664L529.5454545454545,310.3086666666667L463.18181818181813,309.5956666666667L396.8181818181818,309.5233333333333L330.45454545454544,308.9446666666667L264.09090909090907,308.61400000000003L197.72727272727272,313.10900000000004L131.36363636363637,313.0056666666667L65,311.62100000000004Z"
+              fill="hsl(300, 50%, 60%)"
+              fill-opacity="0.2"
+              height="310"
+              stroke="none"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-line"
+        >
+          <path
+            class="recharts-curve recharts-line-curve"
+            d="M131.36363636363637,259.38599999999997L197.72727272727272,308.8206666666667L264.09090909090907,288.89799999999997L330.45454545454544,288.89799999999997L396.8181818181818,289.5903333333333L463.18181818181813,282.0263333333333L529.5454545454545,308.8206666666667L595.9090909090909,302.64133333333336M728.6363636363636,297.35022026666667L795,297.20885613333337"
+            fill="none"
+            height="310"
+            name="Suspension"
+            stroke="hsl(0, 50%, 60%)"
+            stroke-dasharray="3 3"
+            stroke-width="1"
+            width="730"
+          />
+          <g
+            class="recharts-layer"
+          />
+          <g
+            class="recharts-layer recharts-line-dots"
+          >
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="131.36363636363637"
+              cy="259.38599999999997"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="197.72727272727272"
+              cy="308.8206666666667"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="264.09090909090907"
+              cy="288.89799999999997"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="330.45454545454544"
+              cy="288.89799999999997"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="396.8181818181818"
+              cy="289.5903333333333"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="463.18181818181813"
+              cy="282.0263333333333"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="529.5454545454545"
+              cy="308.8206666666667"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="595.9090909090909"
+              cy="302.64133333333336"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="728.6363636363636"
+              cy="297.35022026666667"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="795"
+              cy="297.20885613333337"
+              fill="hsl(0, 50%, 60%)"
+              height="310"
+              name="Suspension"
+              r="3"
+              stroke="hsl(0, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-area"
+        >
+          <g
+            class="recharts-layer"
+          >
+            <path
+              class="recharts-curve recharts-area-area"
+              d="M131.36363636363637,259.38599999999997L197.72727272727272,308.8206666666667L264.09090909090907,288.89799999999997L330.45454545454544,288.89799999999997L396.8181818181818,289.5903333333333L463.18181818181813,282.0263333333333L529.5454545454545,308.8206666666667L595.9090909090909,302.64133333333336L595.9090909090909,302.64133333333336L529.5454545454545,308.8206666666667L463.18181818181813,282.0263333333333L396.8181818181818,289.5903333333333L330.45454545454544,288.89799999999997L264.09090909090907,288.89799999999997L197.72727272727272,308.8206666666667L131.36363636363637,259.38599999999997ZM728.6363636363636,262.43633593333334L795,262.24993190000004L795,315L728.6363636363636,315Z"
+              fill="hsl(0, 50%, 60%)"
+              fill-opacity="0.2"
+              height="310"
+              stroke="none"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-line"
+        >
+          <path
+            class="recharts-curve recharts-line-curve"
+            d="M65,256.21883333333335L131.36363636363637,251.91500000000002L197.72727272727272,196.41983333333337L264.09090909090907,74.76033333333332L330.45454545454544,233.02049999999997L396.8181818181818,178.445L463.18181818181813,65.2485L529.5454545454545,230.742L595.9090909090909,270.34450000000004L662.2727272727273,227.604056L728.6363636363636,270.2803816666667L795,277.86753866666663"
+            fill="none"
+            height="310"
+            name="Transmission"
+            stroke="hsl(60, 50%, 60%)"
+            stroke-dasharray="3 3"
+            stroke-width="1"
+            width="730"
+          />
+          <g
+            class="recharts-layer"
+          />
+          <g
+            class="recharts-layer recharts-line-dots"
+          >
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="65"
+              cy="256.21883333333335"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="131.36363636363637"
+              cy="251.91500000000002"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="197.72727272727272"
+              cy="196.41983333333337"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="264.09090909090907"
+              cy="74.76033333333332"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="330.45454545454544"
+              cy="233.02049999999997"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="396.8181818181818"
+              cy="178.445"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="463.18181818181813"
+              cy="65.2485"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="529.5454545454545"
+              cy="230.742"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="595.9090909090909"
+              cy="270.34450000000004"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="662.2727272727273"
+              cy="227.604056"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="728.6363636363636"
+              cy="270.2803816666667"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="795"
+              cy="277.86753866666663"
+              fill="hsl(60, 50%, 60%)"
+              height="310"
+              name="Transmission"
+              r="3"
+              stroke="hsl(60, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-area"
+        >
+          <g
+            class="recharts-layer"
+          >
+            <path
+              class="recharts-curve recharts-area-area"
+              d="M65,256.21883333333335L131.36363636363637,251.91500000000002L197.72727272727272,196.41983333333337L264.09090909090907,74.76033333333332L330.45454545454544,233.02049999999997L396.8181818181818,178.445L463.18181818181813,65.2485L529.5454545454545,230.742L595.9090909090909,270.34450000000004L662.2727272727273,44.721612333333326L728.6363636363636,57.190453000000005L795,12.98511433333335L795,315L728.6363636363636,315L662.2727272727273,315L595.9090909090909,270.34450000000004L529.5454545454545,230.742L463.18181818181813,65.2485L396.8181818181818,178.445L330.45454545454544,233.02049999999997L264.09090909090907,74.76033333333332L197.72727272727272,196.41983333333337L131.36363636363637,251.91500000000002L65,256.21883333333335Z"
+              fill="hsl(60, 50%, 60%)"
+              fill-opacity="0.2"
+              height="310"
+              stroke="none"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-line"
+        >
+          <path
+            class="recharts-curve recharts-line-curve"
+            d="M65,158.1865L131.36363636363637,37.98400000000001L197.72727272727272,187.14566666666667L264.09090909090907,93.33966666666667L330.45454545454544,165.16150000000002L396.8181818181818,229.63633333333334L463.18181818181813,99.53450000000002L529.5454545454545,256.6476666666666L595.9090909090909,269.68316666666664L662.2727272727273,251.7645735333333L728.6363636363636,260.2736974L795,267.71739983333333"
+            fill="none"
+            height="310"
+            name="Turbocharger"
+            stroke="hsl(120, 50%, 60%)"
+            stroke-dasharray="3 3"
+            stroke-width="1"
+            width="730"
+          />
+          <g
+            class="recharts-layer"
+          />
+          <g
+            class="recharts-layer recharts-line-dots"
+          >
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="65"
+              cy="158.1865"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="131.36363636363637"
+              cy="37.98400000000001"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="197.72727272727272"
+              cy="187.14566666666667"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="264.09090909090907"
+              cy="93.33966666666667"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="330.45454545454544"
+              cy="165.16150000000002"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="396.8181818181818"
+              cy="229.63633333333334"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="463.18181818181813"
+              cy="99.53450000000002"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="529.5454545454545"
+              cy="256.6476666666666"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="595.9090909090909"
+              cy="269.68316666666664"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="662.2727272727273"
+              cy="251.7645735333333"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="728.6363636363636"
+              cy="260.2736974"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+            <circle
+              class="recharts-dot recharts-line-dot"
+              cx="795"
+              cy="267.71739983333333"
+              fill="hsl(120, 50%, 60%)"
+              height="310"
+              name="Turbocharger"
+              r="3"
+              stroke="hsl(120, 50%, 60%)"
+              stroke-dasharray="0"
+              stroke-width="1"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-area"
+        >
+          <g
+            class="recharts-layer"
+          >
+            <path
+              class="recharts-curve recharts-area-area"
+              d="M65,158.1865L131.36363636363637,37.98400000000001L197.72727272727272,187.14566666666667L264.09090909090907,93.33966666666667L330.45454545454544,165.16150000000002L396.8181818181818,229.63633333333334L463.18181818181813,99.53450000000002L529.5454545454545,256.6476666666666L595.9090909090909,269.68316666666664L662.2727272727273,24.32878933333336L728.6363636363636,27.12983566666663L795,30.185640000000028L795,315L728.6363636363636,315L662.2727272727273,315L595.9090909090909,269.68316666666664L529.5454545454545,256.6476666666666L463.18181818181813,99.53450000000002L396.8181818181818,229.63633333333334L330.45454545454544,165.16150000000002L264.09090909090907,93.33966666666667L197.72727272727272,187.14566666666667L131.36363636363637,37.98400000000001L65,158.1865Z"
+              fill="hsl(120, 50%, 60%)"
+              fill-opacity="0.2"
+              height="310"
+              stroke="none"
+              width="730"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-cartesian-grid"
+        >
+          <g
+            class="recharts-cartesian-grid-horizontal"
+          >
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="65"
+              x2="795"
+              y="5"
+              y1="315"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="65"
+              x2="795"
+              y="5"
+              y1="237.5"
+              y2="237.5"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="65"
+              x2="795"
+              y="5"
+              y1="160"
+              y2="160"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="65"
+              x2="795"
+              y="5"
+              y1="82.5"
+              y2="82.5"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="65"
+              x2="795"
+              y="5"
+              y1="5"
+              y2="5"
+            />
+          </g>
+          <g
+            class="recharts-cartesian-grid-vertical"
+          >
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="65"
+              x2="65"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="131.36363636363637"
+              x2="131.36363636363637"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="197.72727272727272"
+              x2="197.72727272727272"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="264.09090909090907"
+              x2="264.09090909090907"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="330.45454545454544"
+              x2="330.45454545454544"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="396.8181818181818"
+              x2="396.8181818181818"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="463.18181818181813"
+              x2="463.18181818181813"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="529.5454545454545"
+              x2="529.5454545454545"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="595.9090909090909"
+              x2="595.9090909090909"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="662.2727272727273"
+              x2="662.2727272727273"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="728.6363636363636"
+              x2="728.6363636363636"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+            <line
+              fill="none"
+              height="310"
+              offset="[object Object]"
+              stroke="#ccc"
+              width="730"
+              x="65"
+              x1="795"
+              x2="795"
+              y="5"
+              y1="5"
+              y2="315"
+            />
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis"
+        >
+          <line
+            class="recharts-cartesian-axis-line"
+            fill="none"
+            height="30"
+            orientation="bottom"
+            stroke="#666"
+            width="730"
+            x="65"
+            x1="65"
+            x2="795"
+            y="315"
+            y1="315"
+            y2="315"
+          />
+          <g
+            class="recharts-cartesian-axis-ticks"
+          >
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="65"
+                x2="65"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="65"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="65"
+                >
+                  2025-03-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="131.36363636363637"
+                x2="131.36363636363637"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="131.36363636363637"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="131.36363636363637"
+                >
+                  2025-04-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="197.72727272727272"
+                x2="197.72727272727272"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="197.72727272727272"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="197.72727272727272"
+                >
+                  2025-05-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="264.09090909090907"
+                x2="264.09090909090907"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="264.09090909090907"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="264.09090909090907"
+                >
+                  2025-06-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="330.45454545454544"
+                x2="330.45454545454544"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="330.45454545454544"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="330.45454545454544"
+                >
+                  2025-07-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="396.8181818181818"
+                x2="396.8181818181818"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="396.8181818181818"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="396.8181818181818"
+                >
+                  2025-08-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="463.18181818181813"
+                x2="463.18181818181813"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="463.18181818181813"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="463.18181818181813"
+                >
+                  2025-09-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="529.5454545454545"
+                x2="529.5454545454545"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="529.5454545454545"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="529.5454545454545"
+                >
+                  2025-10-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="595.9090909090909"
+                x2="595.9090909090909"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="595.9090909090909"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="595.9090909090909"
+                >
+                  2025-11-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="662.2727272727273"
+                x2="662.2727272727273"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="662.2727272727273"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="662.2727272727273"
+                >
+                  2025-12-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="728.6363636363636"
+                x2="728.6363636363636"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="728.6363636363636"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="728.6363636363636"
+                >
+                  2026-01-01
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="30"
+                orientation="bottom"
+                stroke="#666"
+                width="730"
+                x="65"
+                x1="795"
+                x2="795"
+                y="315"
+                y1="321"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="middle"
+                width="730"
+                x="795"
+                y="323"
+              >
+                <tspan
+                  dy="0.71em"
+                  x="795"
+                >
+                  2026-02-01
+                </tspan>
+              </text>
+            </g>
+          </g>
+        </g>
+        <g
+          class="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis"
+        >
+          <line
+            class="recharts-cartesian-axis-line"
+            fill="none"
+            height="310"
+            orientation="left"
+            stroke="#666"
+            width="60"
+            x="5"
+            x1="65"
+            x2="65"
+            y="5"
+            y1="5"
+            y2="315"
+          />
+          <g
+            class="recharts-cartesian-axis-ticks"
+          >
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="310"
+                orientation="left"
+                stroke="#666"
+                width="60"
+                x="5"
+                x1="59"
+                x2="65"
+                y="5"
+                y1="315"
+                y2="315"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="310"
+                orientation="left"
+                stroke="none"
+                text-anchor="end"
+                width="60"
+                x="57"
+                y="315"
+              >
+                <tspan
+                  dy="0.355em"
+                  x="57"
+                >
+                  0
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="310"
+                orientation="left"
+                stroke="#666"
+                width="60"
+                x="5"
+                x1="59"
+                x2="65"
+                y="5"
+                y1="237.5"
+                y2="237.5"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="310"
+                orientation="left"
+                stroke="none"
+                text-anchor="end"
+                width="60"
+                x="57"
+                y="237.5"
+              >
+                <tspan
+                  dy="0.355em"
+                  x="57"
+                >
+                  75000
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="310"
+                orientation="left"
+                stroke="#666"
+                width="60"
+                x="5"
+                x1="59"
+                x2="65"
+                y="5"
+                y1="160"
+                y2="160"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="310"
+                orientation="left"
+                stroke="none"
+                text-anchor="end"
+                width="60"
+                x="57"
+                y="160"
+              >
+                <tspan
+                  dy="0.355em"
+                  x="57"
+                >
+                  150000
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="310"
+                orientation="left"
+                stroke="#666"
+                width="60"
+                x="5"
+                x1="59"
+                x2="65"
+                y="5"
+                y1="82.5"
+                y2="82.5"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="310"
+                orientation="left"
+                stroke="none"
+                text-anchor="end"
+                width="60"
+                x="57"
+                y="82.5"
+              >
+                <tspan
+                  dy="0.355em"
+                  x="57"
+                >
+                  225000
+                </tspan>
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <line
+                class="recharts-cartesian-axis-tick-line"
+                fill="none"
+                height="310"
+                orientation="left"
+                stroke="#666"
+                width="60"
+                x="5"
+                x1="59"
+                x2="65"
+                y="5"
+                y1="5"
+                y2="5"
+              />
+              <text
+                class="recharts-text recharts-cartesian-axis-tick-value"
+                fill="#666"
+                height="310"
+                orientation="left"
+                stroke="none"
+                text-anchor="end"
+                width="60"
+                x="57"
+                y="5"
+              >
+                <tspan
+                  dy="0.355em"
+                  x="57"
+                >
+                  300000
+                </tspan>
+              </text>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <div
+        class="recharts-legend-wrapper"
+        style="position: absolute; width: 790px; height: auto; left: 5px; bottom: 5px;"
+      >
+        <ul
+          class="recharts-default-legend"
+          style="padding: 0px; margin: 0px; text-align: center;"
+        >
+          <li
+            class="recharts-legend-item legend-item-0"
+            style="display: inline-block; margin-right: 10px;"
+          >
+            <svg
+              class="recharts-surface"
+              height="14"
+              style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+              viewBox="0 0 32 32"
+              width="14"
+            >
+              <title />
+              <desc />
+              <path
+                class="recharts-legend-icon"
+                d="M0,16h10.666666666666666
+            A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+            H32M21.333333333333332,16
+            A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+                fill="none"
+                stroke="hsl(180, 50%, 60%)"
+                stroke-width="4"
+              />
+            </svg>
+            <span
+              class="recharts-legend-item-text"
+              style="color: rgb(102, 102, 102);"
+            >
+              Brake System
+            </span>
+          </li>
+          <li
+            class="recharts-legend-item legend-item-2"
+            style="display: inline-block; margin-right: 10px;"
+          >
+            <svg
+              class="recharts-surface"
+              height="14"
+              style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+              viewBox="0 0 32 32"
+              width="14"
+            >
+              <title />
+              <desc />
+              <path
+                class="recharts-legend-icon"
+                d="M0,16h10.666666666666666
+            A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+            H32M21.333333333333332,16
+            A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+                fill="none"
+                stroke="hsl(240, 50%, 60%)"
+                stroke-width="4"
+              />
+            </svg>
+            <span
+              class="recharts-legend-item-text"
+              style="color: rgb(102, 102, 102);"
+            >
+              Engine
+            </span>
+          </li>
+          <li
+            class="recharts-legend-item legend-item-4"
+            style="display: inline-block; margin-right: 10px;"
+          >
+            <svg
+              class="recharts-surface"
+              height="14"
+              style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+              viewBox="0 0 32 32"
+              width="14"
+            >
+              <title />
+              <desc />
+              <path
+                class="recharts-legend-icon"
+                d="M0,16h10.666666666666666
+            A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+            H32M21.333333333333332,16
+            A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+                fill="none"
+                stroke="hsl(300, 50%, 60%)"
+                stroke-width="4"
+              />
+            </svg>
+            <span
+              class="recharts-legend-item-text"
+              style="color: rgb(102, 102, 102);"
+            >
+              Exhaust System
+            </span>
+          </li>
+          <li
+            class="recharts-legend-item legend-item-6"
+            style="display: inline-block; margin-right: 10px;"
+          >
+            <svg
+              class="recharts-surface"
+              height="14"
+              style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+              viewBox="0 0 32 32"
+              width="14"
+            >
+              <title />
+              <desc />
+              <path
+                class="recharts-legend-icon"
+                d="M0,16h10.666666666666666
+            A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+            H32M21.333333333333332,16
+            A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+                fill="none"
+                stroke="hsl(0, 50%, 60%)"
+                stroke-width="4"
+              />
+            </svg>
+            <span
+              class="recharts-legend-item-text"
+              style="color: rgb(204, 102, 102);"
+            >
+              Suspension
+            </span>
+          </li>
+          <li
+            class="recharts-legend-item legend-item-8"
+            style="display: inline-block; margin-right: 10px;"
+          >
+            <svg
+              class="recharts-surface"
+              height="14"
+              style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+              viewBox="0 0 32 32"
+              width="14"
+            >
+              <title />
+              <desc />
+              <path
+                class="recharts-legend-icon"
+                d="M0,16h10.666666666666666
+            A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+            H32M21.333333333333332,16
+            A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+                fill="none"
+                stroke="hsl(60, 50%, 60%)"
+                stroke-width="4"
+              />
+            </svg>
+            <span
+              class="recharts-legend-item-text"
+              style="color: rgb(102, 102, 102);"
+            >
+              Transmission
+            </span>
+          </li>
+          <li
+            class="recharts-legend-item legend-item-10"
+            style="display: inline-block; margin-right: 10px;"
+          >
+            <svg
+              class="recharts-surface"
+              height="14"
+              style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+              viewBox="0 0 32 32"
+              width="14"
+            >
+              <title />
+              <desc />
+              <path
+                class="recharts-legend-icon"
+                d="M0,16h10.666666666666666
+            A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+            H32M21.333333333333332,16
+            A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+                fill="none"
+                stroke="hsl(120, 50%, 60%)"
+                stroke-width="4"
+              />
+            </svg>
+            <span
+              class="recharts-legend-item-text"
+              style="color: rgb(102, 102, 102);"
+            >
+              Turbocharger
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="recharts-tooltip-wrapper"
+        role="dialog"
+        style="transition: transform 400ms ease; transform: translate(undefinedpx, undefinedpx); pointer-events: none; visibility: hidden; position: absolute; top: 0px; left: 0px;"
+        tabindex="-1"
+      />
+    </div>
+  </div>
+</div>
+`;

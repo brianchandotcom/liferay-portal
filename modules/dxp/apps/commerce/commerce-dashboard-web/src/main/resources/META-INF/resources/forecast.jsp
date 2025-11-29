@@ -40,7 +40,7 @@ if (commerceContext != null) {
 			HashMapBuilder.<String, Object>put(
 				"accountIds", accountIds
 			).put(
-				"APIBaseUrl", "/o/headless-commerce-machine-learning/v1.0/accountCategoryForecasts/by-monthlyRevenue"
+				"apiURL", "/o/headless-commerce-machine-learning/v1.0/accountCategoryForecasts/by-monthlyRevenue"
 			).put(
 				"categoryIds", categoryIds
 			).put(

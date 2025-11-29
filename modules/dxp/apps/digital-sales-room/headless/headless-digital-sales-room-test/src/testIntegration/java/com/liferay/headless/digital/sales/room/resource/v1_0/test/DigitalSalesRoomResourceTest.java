@@ -8,21 +8,34 @@ package com.liferay.headless.digital.sales.room.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntryModel;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.digital.sales.room.client.dto.v1_0.DigitalSalesRoom;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.File;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -86,6 +99,14 @@ public class DigitalSalesRoomResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostDigitalSalesRoom() throws Exception {
+		super.testPostDigitalSalesRoom();
+
+		_testPostDigitalSalesRoomWithSiteInitializer();
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"accountId", "channelId", "clientName", "description",
@@ -146,6 +167,115 @@ public class DigitalSalesRoomResourceTest
 		}
 	}
 
+	private void _testPostDigitalSalesRoomWithSiteInitializer()
+		throws Exception {
+
+		DigitalSalesRoom randomDigitalSalesRoom = randomDigitalSalesRoom();
+
+		DigitalSalesRoom postDigitalSalesRoom =
+			testPostDigitalSalesRoom_addDigitalSalesRoom(
+				randomDigitalSalesRoom);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.fetchFragmentCollection(
+				postDigitalSalesRoom.getId(), "dsr");
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					_fragmentEntryLocalService.getFragmentEntries(
+						postDigitalSalesRoom.getId(),
+						fragmentCollection.getFragmentCollectionId(), 0),
+					FragmentEntryModel::getName, String.class),
+				new String[] {"DSR Header Main", "DSR Header User"}));
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					_layoutLocalService.getLayouts(
+						postDigitalSalesRoom.getId(), false),
+					layout -> layout.getName(LocaleUtil.getSiteDefault()),
+					String.class),
+				new String[] {"Documents", "Onboarding"}));
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				postDigitalSalesRoom.getId(), "dsr-classic");
+
+		JSONObject jsonObject1 = _jsonFactory.createJSONObject(
+			styleBookEntry.getFrontendTokensValues());
+
+		JSONObject jsonObject2 = jsonObject1.getJSONObject("brandColor1");
+
+		Assert.assertEquals("primaryColor", jsonObject2.getString("name"));
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getPrimaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject("brandColor2");
+
+		Assert.assertEquals("secondaryColor", jsonObject2.getString("name"));
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getSecondaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject("btnPrimaryBackgroundColor");
+
+		Assert.assertEquals("primaryColor", jsonObject2.getString("name"));
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getPrimaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject("btnPrimaryBorderColor");
+
+		Assert.assertEquals("primaryColor", jsonObject2.getString("name"));
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getPrimaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject(
+			"btnPrimaryHoverBackgroundColor");
+
+		Assert.assertEquals("primaryColor", jsonObject2.getString("name"));
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getPrimaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject("btnSecondaryBackgroundColor");
+
+		Assert.assertEquals("secondaryColor", jsonObject2.getString("name"));
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getSecondaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject("btnSecondaryBorderColor");
+
+		Assert.assertEquals("secondaryColor", jsonObject2.getString("name"));
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getSecondaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject(
+			"btnSecondaryHoverBackgroundColor");
+
+		Assert.assertEquals("secondaryColor", jsonObject2.getString("name"));
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getSecondaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject("primaryColor");
+
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getPrimaryColor(),
+			jsonObject2.getString("value"));
+
+		jsonObject2 = jsonObject1.getJSONObject("secondaryColor");
+
+		Assert.assertEquals(
+			randomDigitalSalesRoom.getSecondaryColor(),
+			jsonObject2.getString("value"));
+	}
+
 	@Inject
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
@@ -153,6 +283,21 @@ public class DigitalSalesRoomResourceTest
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
 	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

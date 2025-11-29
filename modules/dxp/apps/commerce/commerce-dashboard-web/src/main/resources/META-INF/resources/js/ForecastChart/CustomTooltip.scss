@@ -1,0 +1,24 @@
+.forecast-chart-tooltip {
+	background: white;
+	padding: 1rem;
+
+	&-date {
+		border-bottom: 1px solid gray;
+		display: block;
+		font-weight: bold;
+		margin-bottom: 1rem;
+	}
+
+	&-row {
+		align-items: center;
+		display: grid;
+		gap: 0.5rem;
+		grid-template-columns: 20px repeat(4, 1fr);
+	}
+
+	&-color-box {
+		display: block;
+		height: 15px;
+		width: 15px;
+	}
+}

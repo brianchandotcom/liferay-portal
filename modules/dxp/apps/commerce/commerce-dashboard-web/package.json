@@ -15,6 +15,5 @@
 		"format": "node-scripts format",
 		"test": "node-scripts test"
 	},
-	"sideEffects": false,
 	"version": "4.0.61"
 }

@@ -9125,13 +9125,14 @@ public class DataFactory {
 	}
 
 	private InputStream _getFragmentComponentInputStream(
-			String fragmentDir, String fragmentName, String suffix)
+			String fragmentDirName, String fragmentName, String suffix)
 		throws Exception {
 
 		return DataFactory.class.getResourceAsStream(
 			StringBundler.concat(
-				"/com/liferay/fragment/collection/contributor/", fragmentDir,
-				"/dependencies/", fragmentName, "/index.", suffix));
+				"/com/liferay/fragment/collection/contributor/",
+				fragmentDirName, "/dependencies/", fragmentName, "/index.",
+				suffix));
 	}
 
 	private String _getObjectLabel(String label) {

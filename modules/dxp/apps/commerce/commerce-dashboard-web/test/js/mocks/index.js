@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const ACCOUNT_CATEGORY_FORECASTS_MOCK = {
+export const ACCOUNT_CATEGORY_FORECASTS_MOCK = {
 	actions: {},
 	facets: [],
 	items: [
@@ -794,5 +794,3 @@ const ACCOUNT_CATEGORY_FORECASTS_MOCK = {
 	pageSize: 200,
 	totalCount: 71,
 };
-
-export default ACCOUNT_CATEGORY_FORECASTS_MOCK;

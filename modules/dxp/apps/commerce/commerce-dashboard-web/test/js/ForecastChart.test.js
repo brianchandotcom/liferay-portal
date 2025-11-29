@@ -9,9 +9,11 @@ import React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import {ForecastChart} from '../../src/main/resources/META-INF/resources/js';
-import ACCOUNT_CATEGORY_FORECASTS_MOCK from './mock';
+import {ACCOUNT_CATEGORY_FORECASTS_MOCK} from './mocks';
 
 global.ResizeObserver = ResizeObserver;
+
+const mathRandomSpy = jest.spyOn(Math, 'random').mockReturnValue(0.5);
 
 jest.mock('frontend-js-web', () => ({
 	fetch: jest.fn(),
@@ -36,6 +38,13 @@ jest.mock('recharts', () => {
 });
 
 describe('ForecastChart component', () => {
+	afterAll(() => {
+		mathRandomSpy.mockRestore();
+		mockedFetch.mockReset();
+
+		delete global.ResizeObserver;
+	});
+
 	it('render', async () => {
 		mockedFetch.mockReturnValue(
 			Promise.resolve({
@@ -43,12 +52,10 @@ describe('ForecastChart component', () => {
 			})
 		);
 
-		const mathRandomSpy = jest.spyOn(Math, 'random').mockReturnValue(0.5);
-
 		const {container} = render(
 			<ForecastChart
-				APIBaseUrl="/o/headless-commerce-machine-learning/v1.0/accountCategoryForecasts/by-monthlyRevenue"
 				accountIds='["39339"]'
+				apiURL="/o/headless-commerce-machine-learning/v1.0/accountCategoryForecasts/by-monthlyRevenue"
 				categoryIds="[]"
 			/>
 		);
@@ -58,7 +65,5 @@ describe('ForecastChart component', () => {
 		);
 
 		expect(container).toMatchSnapshot();
-
-		mathRandomSpy.mockRestore();
 	});
 });

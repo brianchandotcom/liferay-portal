@@ -6,6 +6,11 @@
 		"recharts": "^2.8.0",
 		"resize-observer-polyfill": "1.5.1"
 	},
+	"jest": {
+		"modulePathIgnorePatterns": [
+			"test/js/mocks/*"
+		]
+	},
 	"main": "js/index.js",
 	"name": "commerce-dashboard-web",
 	"private": true,

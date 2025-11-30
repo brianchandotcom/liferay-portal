@@ -36,7 +36,7 @@ public abstract class
 		throws Exception {
 
 		List<FragmentConfigurationField> fragmentConfigurationFields =
-			_getFragmentConfigurationFields((FragmentEntryLink)stagedModel);
+			getFragmentConfigurationFields((FragmentEntryLink)stagedModel);
 
 		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
 			return editableValuesJSONObject;
@@ -73,7 +73,7 @@ public abstract class
 		JSONObject editableValuesJSONObject) {
 
 		List<FragmentConfigurationField> fragmentConfigurationFields =
-			_getFragmentConfigurationFields((FragmentEntryLink)stagedModel);
+			getFragmentConfigurationFields((FragmentEntryLink)stagedModel);
 
 		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
 			return editableValuesJSONObject;
@@ -116,6 +116,19 @@ public abstract class
 
 	protected abstract String getConfigurationType();
 
+	protected List<FragmentConfigurationField> getFragmentConfigurationFields(
+		FragmentEntryLink fragmentEntryLink) {
+
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
+			getFragmentEntryConfigurationParser();
+
+		return ListUtil.filter(
+			fragmentEntryConfigurationParser.getFragmentConfigurationFields(
+				fragmentEntryLink.getConfigurationJSONObject()),
+			fragmentConfigurationField -> Objects.equals(
+				fragmentConfigurationField.getType(), getConfigurationType()));
+	}
+
 	protected abstract FragmentEntryConfigurationParser
 		getFragmentEntryConfigurationParser();
 
@@ -128,18 +141,5 @@ public abstract class
 	protected abstract void replaceImportContentReferences(
 		PortletDataContext portletDataContext,
 		JSONObject configurationValueJSONObject);
-
-	private List<FragmentConfigurationField> _getFragmentConfigurationFields(
-		FragmentEntryLink fragmentEntryLink) {
-
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
-			getFragmentEntryConfigurationParser();
-
-		return ListUtil.filter(
-			fragmentEntryConfigurationParser.getFragmentConfigurationFields(
-				fragmentEntryLink.getConfigurationJSONObject()),
-			fragmentConfigurationField -> Objects.equals(
-				fragmentConfigurationField.getType(), getConfigurationType()));
-	}
 
 }

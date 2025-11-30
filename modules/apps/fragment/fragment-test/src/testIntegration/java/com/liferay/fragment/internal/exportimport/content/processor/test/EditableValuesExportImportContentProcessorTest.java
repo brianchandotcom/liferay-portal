@@ -699,9 +699,7 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
-		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
-			_stagingGroup.getGroupId(),
-			fragmentEntryLink.getExternalReferenceCode(), _layout.getPlid());
+		return fragmentEntryLink;
 	}
 
 	private FragmentEntryLink _addUrlMappedToLayoutFragmentEntryLink(
@@ -751,9 +749,7 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
-		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
-			_stagingGroup.getGroupId(),
-			fragmentEntryLink.getExternalReferenceCode(), _layout.getPlid());
+		return fragmentEntryLink;
 	}
 
 	private void _assertDeletedLayoutJSONObject(JSONObject layoutJSONObject) {

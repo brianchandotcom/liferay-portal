@@ -1118,38 +1118,36 @@ public class EditAssetListDisplayContext {
 	}
 
 	private List<AssetCategory> _filterAssetCategories(long[] categoryIds) {
-		List<AssetCategory> filteredAssetCategories = new ArrayList<>();
+		return TransformUtil.transformToList(
+			categoryIds,
+			categoryId -> {
+				AssetCategory category =
+					AssetCategoryLocalServiceUtil.fetchAssetCategory(
+						categoryId);
 
-		for (long categoryId : categoryIds) {
-			AssetCategory category =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(categoryId);
+				if (category == null) {
+					return null;
+				}
 
-			if (category == null) {
-				continue;
-			}
-
-			filteredAssetCategories.add(category);
-		}
-
-		return filteredAssetCategories;
+				return category;
+			});
 	}
 
 	private String _filterAssetTagNames(long groupId, String assetTagNames) {
-		List<String> filteredAssetTagNames = new ArrayList<>();
-
 		String[] assetTagNamesArray = StringUtil.split(assetTagNames);
 
-		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
-			groupId, assetTagNamesArray);
+		List<String> filteredAssetTagNames = TransformUtil.transformToList(
+			AssetTagLocalServiceUtil.getTagIds(groupId, assetTagNamesArray),
+			assetTagId -> {
+				AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(
+					assetTagId);
 
-		for (long assetTagId : assetTagIds) {
-			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(
-				assetTagId);
+				if (assetTag != null) {
+					return assetTag.getName();
+				}
 
-			if (assetTag != null) {
-				filteredAssetTagNames.add(assetTag.getName());
-			}
-		}
+				return null;
+			});
 
 		return StringUtil.merge(filteredAssetTagNames);
 	}

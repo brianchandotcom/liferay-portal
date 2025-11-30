@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -283,6 +285,129 @@ public class EditableValuesExportImportContentProcessorTest {
 		_assertItemSelectorClassPK(
 			importedJournalArticle.getResourcePrimKey(),
 			importedFragmentEntryLink);
+	}
+
+	@Test
+	@TestInfo("LPD-67532")
+	public void testInfoItemFieldMapped() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getExternalReferenceCode(), null,
+				fragmentEntry.getHtml(), fragmentEntry.getJs(), _draftLayout,
+				fragmentEntry.getFragmentEntryKey(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()),
+				fragmentEntry.getType());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_stagingGroup.getGroupId(), 0);
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						_portal.getClassNameId(JournalArticle.class)
+					).put(
+						"classPK", journalArticle.getResourcePrimKey()
+					).put(
+						"externalReferenceCode",
+						journalArticle.getExternalReferenceCode()
+					).put(
+						"fieldId", "JournalArticle_title"
+					))
+			).toString());
+
+		_publishLayouts();
+
+		journalArticle =
+			_journalArticleLocalService.getJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), _liveGroup.getGroupId());
+
+		_assertInfoItemFieldMappedEditableValues(
+			JournalArticle.class.getName(), journalArticle.getResourcePrimKey(),
+			journalArticle.getExternalReferenceCode(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			null);
+
+		journalArticle = JournalTestUtil.addArticle(
+			_stagingGroup.getGroupId(), 0);
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"externalReferenceCode",
+						journalArticle.getExternalReferenceCode()
+					).put(
+						"fieldId", "JournalArticle_title"
+					))
+			).toString());
+
+		_publishLayouts();
+
+		journalArticle =
+			_journalArticleLocalService.getJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), _liveGroup.getGroupId());
+
+		_assertInfoItemFieldMappedEditableValues(
+			JournalArticle.class.getName(), 0,
+			journalArticle.getExternalReferenceCode(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			null);
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		journalArticle = JournalTestUtil.addArticle(
+			TestPropsValues.getGroupId(), 0);
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"externalReferenceCode",
+						journalArticle.getExternalReferenceCode()
+					).put(
+						"fieldId", "JournalArticle_title"
+					).put(
+						"scopeExternalReferenceCode",
+						group.getExternalReferenceCode()
+					))
+			).toString());
+
+		_publishLayouts();
+
+		_assertInfoItemFieldMappedEditableValues(
+			JournalArticle.class.getName(), 0,
+			journalArticle.getExternalReferenceCode(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			group.getExternalReferenceCode());
 	}
 
 	@Test
@@ -541,6 +666,42 @@ public class EditableValuesExportImportContentProcessorTest {
 		Assert.assertFalse(layoutJSONObject.has("layoutId"));
 	}
 
+	private void _assertInfoItemFieldMappedEditableValues(
+		String className, long classPK, String externalReferenceCode,
+		FragmentEntryLink fragmentEntryLink,
+		String scopeExternalReferenceCode) {
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject editableJSONObject = editableValuesJSONObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject elementTextJSONObject = editableJSONObject.getJSONObject(
+			"element-text");
+
+		Assert.assertEquals(
+			className, elementTextJSONObject.getString("className"));
+		Assert.assertEquals(
+			externalReferenceCode,
+			elementTextJSONObject.getString("externalReferenceCode"));
+
+		if (classPK > 0) {
+			Assert.assertEquals(
+				_portal.getClassNameId(className),
+				elementTextJSONObject.getLong("classNameId"));
+			Assert.assertEquals(
+				classPK, elementTextJSONObject.getLong("classPK"));
+		}
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			Assert.assertEquals(
+				scopeExternalReferenceCode,
+				elementTextJSONObject.getString("scopeExternalReferenceCode"));
+		}
+	}
+
 	private void _assertItemSelectorClassPK(
 		long classPK, FragmentEntryLink fragmentEntryLink) {
 
@@ -607,14 +768,29 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()});
+			new String[] {Boolean.FALSE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()});
+			new String[] {Boolean.FALSE.toString()});
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			_liveGroup.getGroupId(), false, parameterMap);
+	}
+
+	private FragmentEntryLink _setEditableValues(
+			FragmentEntryLink fragmentEntryLink, String editableValues)
+		throws Exception {
+
+		fragmentEntryLink.setEditableValues(editableValues);
+
+		fragmentEntryLink =
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		return fragmentEntryLink;
 	}
 
 	@Inject
@@ -643,6 +819,9 @@ public class EditableValuesExportImportContentProcessorTest {
 
 	@Inject
 	private FragmentRendererRegistry _fragmentRendererRegistry;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

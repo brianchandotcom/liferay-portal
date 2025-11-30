@@ -411,7 +411,7 @@ public class EditableValuesExportImportContentProcessorTest {
 	}
 
 	@Test
-	@TestInfo({"LPD-34189", "LPS-120198"})
+	@TestInfo({"LPD-34189", "LPD-67532", "LPS-120198"})
 	public void testLinkedLayoutMapping() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
@@ -421,7 +421,82 @@ public class EditableValuesExportImportContentProcessorTest {
 		_assertLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
 				fragmentEntryLink),
-			layout);
+			null, _stagingGroup.getGroupId(), layout.getLayoutId(), null);
+
+		_publishLayouts();
+
+		layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), _liveGroup.getGroupId(),
+			layout.isPrivateLayout());
+
+		_assertLayoutJSONObject(
+			_getEditableFragmentEntryProcessorLayoutJSONObject(
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
+			null, _liveGroup.getGroupId(), layout.getLayoutId(), null);
+
+		layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"config",
+						JSONUtil.put(
+							"layout",
+							JSONUtil.put(
+								"externalReferenceCode",
+								layout.getExternalReferenceCode())
+						).put(
+							"mapperType", "link"
+						)))
+			).toString());
+
+		_publishLayouts();
+
+		layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), _liveGroup.getGroupId(),
+			layout.isPrivateLayout());
+
+		_assertLayoutJSONObject(
+			_getEditableFragmentEntryProcessorLayoutJSONObject(
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
+			layout.getExternalReferenceCode(), _liveGroup.getGroupId(),
+			layout.getLayoutId(), null);
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"config",
+						JSONUtil.put(
+							"layout",
+							JSONUtil.put(
+								"externalReferenceCode",
+								layout.getExternalReferenceCode()
+							).put(
+								"scopeExternalReferenceCode",
+								group.getExternalReferenceCode()
+							)
+						).put(
+							"mapperType", "link"
+						)))
+			).toString());
 
 		_publishLayouts();
 
@@ -430,13 +505,12 @@ public class EditableValuesExportImportContentProcessorTest {
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinkByUuidAndGroupId(
 						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
-			_layoutLocalService.getLayoutByUuidAndGroupId(
-				layout.getUuid(), _liveGroup.getGroupId(),
-				layout.isPrivateLayout()));
+			layout.getExternalReferenceCode(), group.getGroupId(),
+			layout.getLayoutId(), group.getExternalReferenceCode());
 	}
 
 	@Test
-	@TestInfo("LPD-34189")
+	@TestInfo({"LPD-34189", "LPD-67532"})
 	public void testLinkedLayoutMappingWithDeletedLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
@@ -446,9 +520,36 @@ public class EditableValuesExportImportContentProcessorTest {
 		_assertLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
 				fragmentEntryLink),
-			layout);
+			null, layout.getGroupId(), layout.getLayoutId(), null);
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
+
+		_publishLayouts();
+
+		_assertDeletedLayoutJSONObject(
+			_getEditableFragmentEntryProcessorLayoutJSONObject(
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())));
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"config",
+						JSONUtil.put(
+							"layout",
+							JSONUtil.put(
+								"externalReferenceCode",
+								layout.getExternalReferenceCode())
+						).put(
+							"mapperType", "link"
+						)))
+			).toString());
 
 		_publishLayouts();
 
@@ -470,18 +571,20 @@ public class EditableValuesExportImportContentProcessorTest {
 		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				fragmentEntryLink),
-			layout);
+			null, _stagingGroup.getGroupId(), layout.getLayoutId(), null);
 
 		_publishLayouts();
+
+		layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), _liveGroup.getGroupId(),
+			layout.isPrivateLayout());
 
 		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinkByUuidAndGroupId(
 						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
-			_layoutLocalService.getLayoutByUuidAndGroupId(
-				layout.getUuid(), _liveGroup.getGroupId(),
-				layout.isPrivateLayout()));
+			null, _liveGroup.getGroupId(), layout.getLayoutId(), null);
 	}
 
 	@Test
@@ -495,7 +598,7 @@ public class EditableValuesExportImportContentProcessorTest {
 		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				fragmentEntryLink),
-			layout);
+			null, layout.getGroupId(), layout.getLayoutId(), null);
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
 
@@ -717,10 +820,24 @@ public class EditableValuesExportImportContentProcessorTest {
 		Assert.assertEquals(classPK, itemSelectorJSONObject.getLong("classPK"));
 	}
 
-	private void _assertLayoutJSONObject(JSONObject jsonObject, Layout layout) {
-		Assert.assertEquals(layout.getGroupId(), jsonObject.getLong("groupId"));
-		Assert.assertEquals(
-			layout.getLayoutId(), jsonObject.getLong("layoutId"));
+	private void _assertLayoutJSONObject(
+		JSONObject jsonObject, String externalReferenceCode, long groupId,
+		long layoutId, String scopeExternalReferenceCode) {
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			Assert.assertEquals(
+				externalReferenceCode,
+				jsonObject.getString("externalReferenceCode"));
+		}
+
+		Assert.assertEquals(groupId, jsonObject.getLong("groupId"));
+		Assert.assertEquals(layoutId, jsonObject.getLong("layoutId"));
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			Assert.assertEquals(
+				scopeExternalReferenceCode,
+				jsonObject.getString("scopeExternalReferenceCode"));
+		}
 	}
 
 	private JSONObject _getEditableFragmentEntryProcessorLayoutJSONObject(

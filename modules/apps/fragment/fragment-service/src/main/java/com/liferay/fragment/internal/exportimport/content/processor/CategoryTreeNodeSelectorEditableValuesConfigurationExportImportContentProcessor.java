@@ -12,13 +12,21 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
+import com.liferay.fragment.collection.filter.FragmentCollectionFilterRegistry;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,6 +45,46 @@ public class
 	@Override
 	protected String getConfigurationType() {
 		return "categoryTreeNodeSelector";
+	}
+
+	@Override
+	protected List<FragmentConfigurationField> getFragmentConfigurationFields(
+		FragmentEntryLink fragmentEntryLink) {
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject editableProcessorJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (editableProcessorJSONObject == null) {
+			return super.getFragmentConfigurationFields(fragmentEntryLink);
+		}
+
+		String filterKey = editableProcessorJSONObject.getString("filterKey");
+
+		if (!Objects.equals(filterKey, "category")) {
+			return super.getFragmentConfigurationFields(fragmentEntryLink);
+		}
+
+		FragmentCollectionFilter fragmentCollectionFilter =
+			_fragmentCollectionFilterRegistry.getFragmentCollectionFilter(
+				filterKey);
+
+		if (fragmentCollectionFilter == null) {
+			return super.getFragmentConfigurationFields(fragmentEntryLink);
+		}
+
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
+			getFragmentEntryConfigurationParser();
+
+		return ListUtil.filter(
+			fragmentEntryConfigurationParser.getFragmentConfigurationFields(
+				fragmentCollectionFilter.getConfigurationJSONObject()),
+			fragmentConfigurationField -> Objects.equals(
+				fragmentConfigurationField.getType(), getConfigurationType()));
 	}
 
 	@Override
@@ -136,6 +184,9 @@ public class
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private FragmentCollectionFilterRegistry _fragmentCollectionFilterRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

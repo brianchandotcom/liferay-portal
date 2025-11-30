@@ -892,7 +892,9 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
-			_liveGroup.getGroupId(), false, parameterMap);
+			_liveGroup.getGroupId(), false,
+			new long[] {_layout.getLayoutId(), _draftLayout.getLayoutId()},
+			RandomTestUtil.randomString(), parameterMap);
 	}
 
 	private FragmentEntryLink _setEditableValues(

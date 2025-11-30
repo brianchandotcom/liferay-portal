@@ -8,6 +8,7 @@ package com.liferay.fragment.internal.exportimport.content.processor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
@@ -80,14 +81,9 @@ public class URLEditableValuesConfigurationExportImportContentProcessor
 			boolean exportReferencedContent)
 		throws Exception {
 
-		if (layoutJSONObject.length() == 0) {
-			return;
-		}
-
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutJSONObject.getLong("groupId"),
-			layoutJSONObject.getBoolean("privateLayout"),
-			layoutJSONObject.getLong("layoutId"));
+		Layout layout = _layoutReferenceResolver.resolve(
+			portletDataContext.getCompanyId(), layoutJSONObject,
+			portletDataContext.getScopeGroupId());
 
 		if (layout == null) {
 			return;
@@ -149,5 +145,8 @@ public class URLEditableValuesConfigurationExportImportContentProcessor
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutReferenceResolver _layoutReferenceResolver;
 
 }

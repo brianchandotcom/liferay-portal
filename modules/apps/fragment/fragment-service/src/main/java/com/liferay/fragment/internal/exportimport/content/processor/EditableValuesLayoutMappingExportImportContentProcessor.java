@@ -9,6 +9,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -120,14 +121,9 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 			boolean exportReferencedContent)
 		throws Exception {
 
-		if (layoutJSONObject.length() == 0) {
-			return;
-		}
-
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutJSONObject.getLong("groupId"),
-			layoutJSONObject.getBoolean("privateLayout"),
-			layoutJSONObject.getLong("layoutId"));
+		Layout layout = _layoutReferenceResolver.resolve(
+			portletDataContext.getCompanyId(), layoutJSONObject,
+			portletDataContext.getScopeGroupId());
 
 		if (layout == null) {
 			return;
@@ -227,5 +223,8 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutReferenceResolver _layoutReferenceResolver;
 
 }

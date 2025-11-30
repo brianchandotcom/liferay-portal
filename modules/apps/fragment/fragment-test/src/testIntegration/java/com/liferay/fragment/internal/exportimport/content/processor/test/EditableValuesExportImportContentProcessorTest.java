@@ -113,10 +113,6 @@ public class EditableValuesExportImportContentProcessorTest {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_stagingGroup.getGroupId(), 0);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		FragmentEntryLink draftFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 				JSONUtil.put(
@@ -154,17 +150,17 @@ public class EditableValuesExportImportContentProcessorTest {
 				_fragmentRendererRegistry.getFragmentRenderer(
 					"com.liferay.fragment.internal.renderer." +
 						"ContentObjectFragmentRenderer"),
-				draftLayout, null, 0,
+				_draftLayout, null, 0,
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				layout.getGroupId(),
+				_layout.getGroupId(),
 				draftFragmentEntryLink.getExternalReferenceCode(),
-				layout.getPlid());
+				_layout.getPlid());
 
 		_publishLayouts();
 
@@ -209,10 +205,6 @@ public class EditableValuesExportImportContentProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		FragmentEntryLink draftFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 				JSONUtil.put(
@@ -246,20 +238,20 @@ public class EditableValuesExportImportContentProcessorTest {
 				_fragmentRendererRegistry.getFragmentRenderer(
 					"com.liferay.fragment.internal.renderer." +
 						"ContentObjectFragmentRenderer"),
-				draftLayout, null, 0,
+				_draftLayout, null, 0,
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
 
 		_assertItemSelectorClassPK(
 			journalArticle.getResourcePrimKey(), draftFragmentEntryLink);
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				layout.getGroupId(),
+				_layout.getGroupId(),
 				draftFragmentEntryLink.getExternalReferenceCode(),
-				layout.getPlid());
+				_layout.getPlid());
 
 		_assertItemSelectorClassPK(
 			journalArticle.getResourcePrimKey(), fragmentEntryLink);

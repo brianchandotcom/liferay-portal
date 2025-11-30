@@ -68,9 +68,10 @@ public abstract class BaseObjectFieldBusinessType
 					objectFieldRenderingContext.getLocale());
 
 				Locale defaultLocale = objectFieldRenderingContext.getLocale();
-				String defaultValue = GetterUtil.getString(
+				String defaultValue = Objects.toString(
 					ObjectFieldSettingUtil.getDefaultValue(
-						null, objectField, null));
+						null, objectField, null),
+					StringPool.BLANK);
 
 				if (objectField.isLocalized() &&
 					Validator.isNotNull(defaultValue)) {

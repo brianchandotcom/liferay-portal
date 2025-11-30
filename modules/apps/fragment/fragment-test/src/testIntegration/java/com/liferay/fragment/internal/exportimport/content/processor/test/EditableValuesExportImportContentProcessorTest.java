@@ -553,7 +553,7 @@ public class EditableValuesExportImportContentProcessorTest {
 	}
 
 	@Test
-	@TestInfo("LPD-34189")
+	@TestInfo({"LPD-34189", "LPD-67532"})
 	public void testURLEditableValues() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
@@ -577,10 +577,72 @@ public class EditableValuesExportImportContentProcessorTest {
 					getFragmentEntryLinkByUuidAndGroupId(
 						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
 			null, _liveGroup.getGroupId(), layout.getLayoutId(), null);
+
+		layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"myURL",
+					JSONUtil.put(
+						"layout",
+						JSONUtil.put(
+							"externalReferenceCode",
+							layout.getExternalReferenceCode())))
+			).toString());
+
+		_publishLayouts();
+
+		layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), _liveGroup.getGroupId(),
+			layout.isPrivateLayout());
+
+		_assertLayoutJSONObject(
+			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
+			layout.getExternalReferenceCode(), _liveGroup.getGroupId(),
+			layout.getLayoutId(), null);
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"myURL",
+					JSONUtil.put(
+						"layout",
+						JSONUtil.put(
+							"externalReferenceCode",
+							layout.getExternalReferenceCode()
+						).put(
+							"scopeExternalReferenceCode",
+							group.getExternalReferenceCode()
+						)))
+			).toString());
+
+		_publishLayouts();
+
+		_assertLayoutJSONObject(
+			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
+			layout.getExternalReferenceCode(), group.getGroupId(),
+			layout.getLayoutId(), group.getExternalReferenceCode());
 	}
 
 	@Test
-	@TestInfo("LPD-34189")
+	@TestInfo({"LPD-34189", "LPD-67532"})
 	public void testURLEditableValuesWithDeletedLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
@@ -593,6 +655,28 @@ public class EditableValuesExportImportContentProcessorTest {
 			null, layout.getGroupId(), layout.getLayoutId(), null);
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
+
+		_publishLayouts();
+
+		_assertDeletedLayoutJSONObject(
+			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())));
+
+		fragmentEntryLink = _setEditableValues(
+			fragmentEntryLink,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"myURL",
+					JSONUtil.put(
+						"layout",
+						JSONUtil.put(
+							"externalReferenceCode",
+							layout.getExternalReferenceCode())))
+			).toString());
 
 		_publishLayouts();
 

@@ -16431,16 +16431,17 @@ public class ObjectEntryResourceTest {
 				objectEntry.getExternalReferenceCode(), "/comments"),
 			Http.Method.POST);
 
-		String endpoint = StringBundler.concat(
-			_getEndpoint(objectDefinition, groupId),
-			"/by-external-reference-code/",
-			objectEntry.getExternalReferenceCode(), "/comments",
-			"/by-external-reference-code/",
-			jsonObject.getString("externalReferenceCode"));
-
 		Assert.assertEquals(
 			204,
-			HTTPTestUtil.invokeToHttpCode(null, endpoint, Http.Method.DELETE));
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_getEndpoint(objectDefinition, groupId),
+					"/by-external-reference-code/",
+					objectEntry.getExternalReferenceCode(), "/comments",
+					"/by-external-reference-code/",
+					jsonObject.getString("externalReferenceCode")),
+				Http.Method.DELETE));
 	}
 
 	private void _testFilterObjectEntriesByRelatedLocalizedObjectEntries(

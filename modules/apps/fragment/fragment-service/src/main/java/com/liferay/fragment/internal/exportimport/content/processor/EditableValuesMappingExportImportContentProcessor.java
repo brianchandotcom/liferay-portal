@@ -14,6 +14,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -256,11 +257,14 @@ public class EditableValuesMappingExportImportContentProcessor
 		long classPK = editableJSONObject.getLong("classPK");
 		String collectionFieldId = editableJSONObject.getString(
 			"collectionFieldId", null);
+		String externalReferenceCode = editableJSONObject.getString(
+			"externalReferenceCode", null);
 		String mappedField = editableJSONObject.getString("mappedField", null);
 
 		if (((classNameId == 0) || (classPK == 0)) &&
 			Validator.isNull(collectionFieldId) &&
-			Validator.isNull(mappedField)) {
+			Validator.isNull(mappedField) &&
+			Validator.isNull(externalReferenceCode)) {
 
 			return;
 		}
@@ -287,17 +291,31 @@ public class EditableValuesMappingExportImportContentProcessor
 				mappedField, portletDataContext, stagedModel);
 		}
 
-		if ((classNameId == 0) || (classPK == 0)) {
-			return;
+		String className = editableJSONObject.getString("className", null);
+
+		if (classNameId > 0) {
+			className = _portal.fetchClassName(classNameId);
 		}
 
-		String className = _portal.fetchClassName(classNameId);
+		String scopeExternalReferenceCode = editableJSONObject.getString(
+			"scopeExternalReferenceCode", null);
 
-		editableJSONObject.put("className", className);
+		if (Validator.isNotNull(className) && (classPK > 0)) {
+			editableJSONObject.put("className", className);
 
-		ExportImportContentProcessorUtil.exportContentReference(
-			className, classPK, exportReferencedContent,
-			_infoItemServiceRegistry, portletDataContext, stagedModel);
+			ExportImportContentProcessorUtil.exportContentReference(
+				className, classPK, exportReferencedContent,
+				_infoItemServiceRegistry, portletDataContext, stagedModel);
+		}
+		else if (Validator.isNotNull(className) &&
+				 Validator.isNotNull(externalReferenceCode)) {
+
+			ExportImportContentProcessorUtil.exportContentReference(
+				className, exportReferencedContent,
+				new ERCInfoItemIdentifier(
+					externalReferenceCode, scopeExternalReferenceCode),
+				_infoItemServiceRegistry, portletDataContext, stagedModel);
+		}
 	}
 
 	private void _replaceMappedFieldImportContentReferences(

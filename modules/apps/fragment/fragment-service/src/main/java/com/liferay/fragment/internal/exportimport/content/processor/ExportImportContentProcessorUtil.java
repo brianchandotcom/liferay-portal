@@ -15,6 +15,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistryUtil;
@@ -39,6 +40,25 @@ import java.util.Map;
 public class ExportImportContentProcessorUtil {
 
 	public static void exportContentReference(
+		String className, boolean exportReferencedContent,
+		InfoItemIdentifier infoItemIdentifier,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		PortletDataContext portletDataContext, StagedModel stagedModel) {
+
+		Object object = _getInfoItem(
+			className, portletDataContext.getScopeGroupId(), infoItemIdentifier,
+			infoItemServiceRegistry);
+
+		if (object == null) {
+			return;
+		}
+
+		_exportReference(
+			className, infoItemIdentifier.toString(), exportReferencedContent,
+			portletDataContext, stagedModel, object);
+	}
+
+	public static void exportContentReference(
 		String className, long classPK, boolean exportReferencedContent,
 		InfoItemServiceRegistry infoItemServiceRegistry,
 		PortletDataContext portletDataContext, StagedModel stagedModel) {
@@ -50,39 +70,9 @@ public class ExportImportContentProcessorUtil {
 			return;
 		}
 
-		if (exportReferencedContent) {
-			try {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, stagedModel, (StagedModel)object,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					String errorMessage = StringBundler.concat(
-						"Staged model with class name ",
-						stagedModel.getModelClassName(), " and primary key ",
-						stagedModel.getPrimaryKeyObj(),
-						" references asset entry with class name ", className,
-						" and class primary key ", classPK,
-						" that could not be exported due to ", exception);
-
-					if (Validator.isNotNull(exception.getMessage())) {
-						errorMessage = StringBundler.concat(
-							errorMessage, ": ", exception.getMessage());
-					}
-
-					_log.debug(errorMessage, exception);
-				}
-			}
-		}
-		else {
-			Element entityElement = portletDataContext.getExportDataElement(
-				stagedModel);
-
-			portletDataContext.addReferenceElement(
-				stagedModel, entityElement, (ClassedModel)object,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-		}
+		_exportReference(
+			className, String.valueOf(classPK), exportReferencedContent,
+			portletDataContext, stagedModel, object);
 	}
 
 	public static void replaceImportContentReferences(
@@ -119,6 +109,72 @@ public class ExportImportContentProcessorUtil {
 
 		jsonObject.put(
 			"classPK", MapUtil.getLong(primaryKeys, classPK, classPK));
+	}
+
+	private static void _exportReference(
+		String className, String referenceKey, boolean exportReferencedContent,
+		PortletDataContext portletDataContext, StagedModel stagedModel,
+		Object referenceObject) {
+
+		if (exportReferencedContent) {
+			try {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, stagedModel,
+					(StagedModel)referenceObject,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					String errorMessage = StringBundler.concat(
+						"Staged model with class name ",
+						stagedModel.getModelClassName(), " and primary key ",
+						stagedModel.getPrimaryKeyObj(),
+						" references asset entry with class name ", className,
+						" and reference key ", referenceKey,
+						" that could not be exported due to ", exception);
+
+					if (Validator.isNotNull(exception.getMessage())) {
+						errorMessage = StringBundler.concat(
+							errorMessage, ": ", exception.getMessage());
+					}
+
+					_log.debug(errorMessage, exception);
+				}
+			}
+		}
+		else {
+			Element entityElement = portletDataContext.getExportDataElement(
+				stagedModel);
+
+			portletDataContext.addReferenceElement(
+				stagedModel, entityElement, (ClassedModel)referenceObject,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+		}
+	}
+
+	private static Object _getInfoItem(
+		String className, long groupId, InfoItemIdentifier infoItemIdentifier,
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className);
+
+		if (infoItemObjectProvider == null) {
+			return null;
+		}
+
+		try {
+			return infoItemObjectProvider.getInfoItem(
+				groupId, infoItemIdentifier);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return null;
 	}
 
 	private static Object _getInfoItem(

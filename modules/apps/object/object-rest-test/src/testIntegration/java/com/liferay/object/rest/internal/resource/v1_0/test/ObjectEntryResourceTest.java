@@ -1200,17 +1200,15 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlag("LPD-69419")
 	@Test
-	public void testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode()
-		throws Exception {
+	public void testDeleteByExternalReferenceCodeComment() throws Exception {
 
 		// Company scope
 
-		_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-			0L, _objectDefinition1);
+		_testDeleteByExternalReferenceCodeComment(0L, _objectDefinition1);
 
 		// Site scope
 
-		_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
+		_testDeleteByExternalReferenceCodeComment(
 			_testGroupId, _siteScopedObjectDefinition1);
 	}
 
@@ -9180,17 +9178,17 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlag("LPD-69419")
 	@Test
-	public void testPostByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment()
+	public void testPostByExternalReferenceCodeCommentReplyComment()
 		throws Exception {
 
 		// Company scope
 
-		_testPostByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
+		_testPostByExternalReferenceCodeCommentReplyComment(
 			0L, _objectDefinition1);
 
 		// Site scope
 
-		_testPostByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
+		_testPostByExternalReferenceCodeCommentReplyComment(
 			_testGroupId, _siteScopedObjectDefinition1);
 	}
 
@@ -16409,9 +16407,8 @@ public class ObjectEntryResourceTest {
 			PermissionCheckerFactoryUtil.create(user));
 	}
 
-	private void
-			_testDeleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				long groupId, ObjectDefinition objectDefinition)
+	private void _testDeleteByExternalReferenceCodeComment(
+			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		_enableObjectEntryComments(objectDefinition);
@@ -16438,8 +16435,7 @@ public class ObjectEntryResourceTest {
 				StringBundler.concat(
 					_getEndpoint(objectDefinition, groupId),
 					"/by-external-reference-code/",
-					objectEntry.getExternalReferenceCode(), "/comments",
-					"/by-external-reference-code/",
+					objectEntry.getExternalReferenceCode(), "/comments/",
 					jsonObject.getString("externalReferenceCode")),
 				Http.Method.DELETE));
 	}
@@ -18063,9 +18059,8 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
 	}
 
-	private void
-			_testPostByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
-				long groupId, ObjectDefinition objectDefinition)
+	private void _testPostByExternalReferenceCodeCommentReplyComment(
+			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		_enableObjectEntryComments(objectDefinition);
@@ -18099,9 +18094,9 @@ public class ObjectEntryResourceTest {
 			StringBundler.concat(
 				_getEndpoint(objectDefinition, groupId),
 				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(),
-				"/comments/by-external-reference-code/",
-				jsonObject.getString("externalReferenceCode"), "/comments"),
+				objectEntry.getExternalReferenceCode(), "/comments/",
+				jsonObject.getString("externalReferenceCode"),
+				"/reply-comments"),
 			Http.Method.POST);
 
 		Assert.assertEquals(
@@ -19347,8 +19342,7 @@ public class ObjectEntryResourceTest {
 			StringBundler.concat(
 				_getEndpoint(objectDefinition, groupId),
 				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(), "/comments",
-				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(), "/comments/",
 				jsonObject.getString("externalReferenceCode")),
 			Http.Method.PUT);
 

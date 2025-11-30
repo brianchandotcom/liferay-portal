@@ -339,10 +339,8 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public void
-			deleteByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				String objectEntryExternalReferenceCode,
-				String externalReferenceCode)
+	public void deleteByExternalReferenceCodeComment(
+			String externalReferenceCode, String commentExternalReferenceCode)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableComments() ||
@@ -352,13 +350,13 @@ public class ObjectEntryResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry = _getObjectEntry(
-			objectEntryExternalReferenceCode, null);
+		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
 				ObjectEntry.class.getName(), objectEntry.getId(),
-				externalReferenceCode, _getNonzeroGroupId(objectEntry.getId()));
+				commentExternalReferenceCode,
+				_getNonzeroGroupId(objectEntry.getId()));
 
 		if (serviceBuilderComment == null) {
 			throw new NotFoundException();
@@ -438,10 +436,9 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public void
-			deleteScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				String scopeKey, String objectEntryExternalReferenceCode,
-				String externalReferenceCode)
+	public void deleteScopeScopeKeyByExternalReferenceCodeComment(
+			String scopeKey, String externalReferenceCode,
+			String commentExternalReferenceCode)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableComments() ||
@@ -452,12 +449,12 @@ public class ObjectEntryResourceImpl
 		}
 
 		ObjectEntry objectEntry = _getObjectEntry(
-			objectEntryExternalReferenceCode, scopeKey);
+			externalReferenceCode, scopeKey);
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
 				ObjectEntry.class.getName(), objectEntry.getId(),
-				externalReferenceCode, objectEntry.getScopeId());
+				commentExternalReferenceCode, objectEntry.getScopeId());
 
 		if (serviceBuilderComment == null) {
 			throw new NotFoundException();
@@ -911,10 +908,9 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public Comment
-			postByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
-				String objectEntryExternalReferenceCode,
-				String parentCommentExternalReferenceCode, Comment comment)
+	public Comment postByExternalReferenceCodeCommentReplyComment(
+			String externalReferenceCode, String commentExternalReferenceCode,
+			Comment comment)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableComments() ||
@@ -924,13 +920,12 @@ public class ObjectEntryResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry = _getObjectEntry(
-			objectEntryExternalReferenceCode, null);
+		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
 				ObjectEntry.class.getName(), objectEntry.getId(),
-				parentCommentExternalReferenceCode,
+				commentExternalReferenceCode,
 				_getNonzeroGroupId(objectEntry.getId()));
 
 		if (serviceBuilderComment == null) {
@@ -1209,6 +1204,38 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Comment postScopeScopeKeyByExternalReferenceCodeCommentReplyComment(
+			String scopeKey, String externalReferenceCode,
+			String commentExternalReferenceCode, Comment comment)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(
+			externalReferenceCode, scopeKey);
+
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
+			_fetchComment(
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				commentExternalReferenceCode, objectEntry.getScopeId());
+
+		if (serviceBuilderComment == null) {
+			throw new NotFoundException();
+		}
+
+		return _addComment(
+			comment.getExternalReferenceCode(),
+			serviceBuilderComment.getGroupId(),
+			serviceBuilderComment.getCommentId(), objectEntry.getId(),
+			comment.getText());
+	}
+
+	@Override
 	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeExpire(
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
@@ -1222,39 +1249,6 @@ public class ObjectEntryResourceImpl
 		return defaultObjectEntryManager.expireObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
 			_objectDefinition, scopeKey);
-	}
-
-	@Override
-	public Comment
-			postScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment(
-				String scopeKey, String objectEntryExternalReferenceCode,
-				String parentCommentExternalReferenceCode, Comment comment)
-		throws Exception {
-
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		ObjectEntry objectEntry = _getObjectEntry(
-			objectEntryExternalReferenceCode, scopeKey);
-
-		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
-			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
-				parentCommentExternalReferenceCode, objectEntry.getScopeId());
-
-		if (serviceBuilderComment == null) {
-			throw new NotFoundException();
-		}
-
-		return _addComment(
-			comment.getExternalReferenceCode(),
-			serviceBuilderComment.getGroupId(),
-			serviceBuilderComment.getCommentId(), objectEntry.getId(),
-			comment.getText());
 	}
 
 	@Override
@@ -1346,6 +1340,37 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Comment putByExternalReferenceCodeComment(
+			String externalReferenceCode, String commentExternalReferenceCode,
+			Comment comment)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
+
+		long groupId = _getNonzeroGroupId(objectEntry.getId());
+
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
+			_fetchComment(
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				commentExternalReferenceCode, groupId);
+
+		if (serviceBuilderComment != null) {
+			return _updateComment(comment, serviceBuilderComment);
+		}
+
+		return _addComment(
+			commentExternalReferenceCode, groupId, null, objectEntry.getId(),
+			comment.getText());
+	}
+
+	@Override
 	public void putByExternalReferenceCodeObjectActionObjectActionName(
 			String externalReferenceCode, String objectActionName)
 		throws Exception {
@@ -1359,39 +1384,6 @@ public class ObjectEntryResourceImpl
 		defaultObjectEntryManager.executeObjectAction(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, objectActionName, _objectDefinition, null);
-	}
-
-	@Override
-	public Comment
-			putByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				String objectEntryExternalReferenceCode,
-				String externalReferenceCode, Comment comment)
-		throws Exception {
-
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		ObjectEntry objectEntry = _getObjectEntry(
-			objectEntryExternalReferenceCode, null);
-
-		long groupId = _getNonzeroGroupId(objectEntry.getId());
-
-		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
-			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
-				externalReferenceCode, groupId);
-
-		if (serviceBuilderComment != null) {
-			return _updateComment(comment, serviceBuilderComment);
-		}
-
-		return _addComment(
-			externalReferenceCode, groupId, null, objectEntry.getId(),
-			comment.getText());
 	}
 
 	@Override
@@ -1513,6 +1505,36 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Comment putScopeScopeKeyByExternalReferenceCodeComment(
+			String scopeKey, String externalReferenceCode,
+			String commentExternalReferenceCode, Comment comment)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(
+			externalReferenceCode, scopeKey);
+
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
+			_fetchComment(
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				commentExternalReferenceCode, objectEntry.getScopeId());
+
+		if (serviceBuilderComment != null) {
+			return _updateComment(comment, serviceBuilderComment);
+		}
+
+		return _addComment(
+			commentExternalReferenceCode, objectEntry.getScopeId(), null,
+			objectEntry.getId(), comment.getText());
+	}
+
+	@Override
 	public void
 			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
 				String scopeKey, String externalReferenceCode,
@@ -1529,37 +1551,6 @@ public class ObjectEntryResourceImpl
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, objectActionName, _objectDefinition,
 			scopeKey);
-	}
-
-	@Override
-	public Comment
-			putScopeScopeKeyByExternalReferenceCodeObjectEntryExternalReferenceCodeCommentByExternalReferenceCode(
-				String scopeKey, String objectEntryExternalReferenceCode,
-				String externalReferenceCode, Comment comment)
-		throws Exception {
-
-		if (!_objectDefinition.isEnableComments() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		ObjectEntry objectEntry = _getObjectEntry(
-			objectEntryExternalReferenceCode, scopeKey);
-
-		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
-			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
-				externalReferenceCode, objectEntry.getScopeId());
-
-		if (serviceBuilderComment != null) {
-			return _updateComment(comment, serviceBuilderComment);
-		}
-
-		return _addComment(
-			externalReferenceCode, objectEntry.getScopeId(), null,
-			objectEntry.getId(), comment.getText());
 	}
 
 	@Override

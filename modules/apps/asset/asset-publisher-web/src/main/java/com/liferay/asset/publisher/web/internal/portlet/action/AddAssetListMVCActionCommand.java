@@ -13,6 +13,7 @@ import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,7 +41,6 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 import jakarta.portlet.PortletPreferences;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
@@ -145,23 +145,26 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 					continue;
 				}
 
-				List<Long> groupIds = new ArrayList<>();
+				List<Long> groupIds = TransformUtil.transformToList(
+					value.split(StringPool.COMMA),
+					part -> {
+						if (part.equals("Group_default")) {
+							return serviceContext.getScopeGroupId();
+						}
 
-				String[] parts = value.split(StringPool.COMMA);
+						if (!part.startsWith("Group_")) {
+							return null;
+						}
 
-				for (String part : parts) {
-					if (part.equals("Group_default")) {
-						groupIds.add(serviceContext.getScopeGroupId());
-					}
-					else if (part.startsWith("Group_")) {
 						long groupId = GetterUtil.getLong(
 							StringUtil.removeSubstring(part, "Group_"), -1);
 
 						if (groupId != -1) {
-							groupIds.add(groupId);
+							return groupId;
 						}
-					}
-				}
+
+						return null;
+					});
 
 				if (groupIds.isEmpty()) {
 					continue;

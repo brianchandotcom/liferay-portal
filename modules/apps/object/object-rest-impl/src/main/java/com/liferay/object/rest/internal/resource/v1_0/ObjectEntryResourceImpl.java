@@ -1390,8 +1390,8 @@ public class ObjectEntryResourceImpl
 		}
 
 		return _addComment(
-			comment.getExternalReferenceCode(), groupId, null,
-			objectEntry.getId(), comment.getText());
+			externalReferenceCode, groupId, null, objectEntry.getId(),
+			comment.getText());
 	}
 
 	@Override
@@ -1558,7 +1558,7 @@ public class ObjectEntryResourceImpl
 		}
 
 		return _addComment(
-			comment.getExternalReferenceCode(), objectEntry.getScopeId(), null,
+			externalReferenceCode, objectEntry.getScopeId(), null,
 			objectEntry.getId(), comment.getText());
 	}
 

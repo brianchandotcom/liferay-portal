@@ -477,7 +477,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return _postComment(
-			comment.getExternalReferenceCode(), blogsEntry.getGroupId(), null,
+			externalReferenceCode, blogsEntry.getGroupId(), null,
 			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 			comment.getText());
 	}
@@ -507,7 +507,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return _postComment(
-			comment.getExternalReferenceCode(), parentComment.getGroupId(),
+			externalReferenceCode, parentComment.getGroupId(),
 			parentComment.getCommentId(), parentComment.getClassName(),
 			parentComment.getClassPK(), comment.getText());
 	}
@@ -535,7 +535,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return _postComment(
-			comment.getExternalReferenceCode(), dlFileEntry.getGroupId(), null,
+			externalReferenceCode, dlFileEntry.getGroupId(), null,
 			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
 			comment.getText());
 	}
@@ -563,9 +563,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return _postComment(
-			comment.getExternalReferenceCode(), journalArticle.getGroupId(),
-			null, JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey(), comment.getText());
+			externalReferenceCode, journalArticle.getGroupId(), null,
+			JournalArticle.class.getName(), journalArticle.getResourcePrimKey(),
+			comment.getText());
 	}
 
 	private Function<String, ServiceContext> _createServiceContextFunction() {

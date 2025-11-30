@@ -264,21 +264,22 @@ public class AssetCategoriesNavigationDisplayContext {
 							assetVocabularyGroupExternalReferenceCode,
 						null));
 
-			for (String assetVocabularyExternalReferenceCode :
-					assetVocabularyExternalReferenceCodes) {
+			assetVocabularyIds.addAll(
+				(List<Long>)TransformUtil.transformToList(
+					assetVocabularyExternalReferenceCodes,
+					assetVocabularyExternalReferenceCode -> {
+						AssetVocabulary assetVocabulary =
+							AssetVocabularyLocalServiceUtil.
+								fetchAssetVocabularyByExternalReferenceCode(
+									assetVocabularyExternalReferenceCode,
+									group.getGroupId());
 
-				AssetVocabulary assetVocabulary =
-					AssetVocabularyLocalServiceUtil.
-						fetchAssetVocabularyByExternalReferenceCode(
-							assetVocabularyExternalReferenceCode,
-							group.getGroupId());
+						if (assetVocabulary == null) {
+							return null;
+						}
 
-				if (assetVocabulary == null) {
-					continue;
-				}
-
-				assetVocabularyIds.add(assetVocabulary.getVocabularyId());
-			}
+						return assetVocabulary.getVocabularyId();
+					}));
 		}
 
 		return assetVocabularyIds;
@@ -287,30 +288,26 @@ public class AssetCategoriesNavigationDisplayContext {
 	private List<Long> _getLocalAssetVocabularyIds(
 		PortletPreferences portletPreferences) {
 
-		List<Long> assetVocabularyIds = new ArrayList<>();
-
 		String[] assetVocabularyExternalReferenceCodes =
 			GetterUtil.getStringValues(
 				portletPreferences.getValues(
 					"assetVocabularyExternalReferenceCodes", null));
 
-		for (String assetVocabularyExternalReferenceCode :
-				assetVocabularyExternalReferenceCodes) {
+		return TransformUtil.transformToList(
+			assetVocabularyExternalReferenceCodes,
+			assetVocabularyExternalReferenceCode -> {
+				AssetVocabulary assetVocabulary =
+					AssetVocabularyLocalServiceUtil.
+						fetchAssetVocabularyByExternalReferenceCode(
+							assetVocabularyExternalReferenceCode,
+							_themeDisplay.getScopeGroupId());
 
-			AssetVocabulary assetVocabulary =
-				AssetVocabularyLocalServiceUtil.
-					fetchAssetVocabularyByExternalReferenceCode(
-						assetVocabularyExternalReferenceCode,
-						_themeDisplay.getScopeGroupId());
+				if (assetVocabulary == null) {
+					return null;
+				}
 
-			if (assetVocabulary == null) {
-				continue;
-			}
-
-			assetVocabularyIds.add(assetVocabulary.getVocabularyId());
-		}
-
-		return assetVocabularyIds;
+				return assetVocabulary.getVocabularyId();
+			});
 	}
 
 	private String _getTitle(AssetVocabulary assetVocabulary) {

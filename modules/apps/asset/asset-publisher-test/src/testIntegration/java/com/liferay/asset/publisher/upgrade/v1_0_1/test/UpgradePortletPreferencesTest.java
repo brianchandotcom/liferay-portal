@@ -8,6 +8,7 @@ package com.liferay.asset.publisher.upgrade.v1_0_1.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,7 +34,6 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import jakarta.portlet.PortletPreferences;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,12 +174,9 @@ public class UpgradePortletPreferencesTest {
 	private String[] _getAssetEntryXMLs(Map<String, String> map)
 		throws Exception {
 
-		List<String> assetEntryXMLs = new ArrayList<>();
-
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			assetEntryXMLs.add(
-				_getAssetEntryXml(entry.getKey(), entry.getValue()));
-		}
+		List<String> assetEntryXMLs = TransformUtil.transform(
+			map.entrySet(),
+			entry -> _getAssetEntryXml(entry.getKey(), entry.getValue()));
 
 		return assetEntryXMLs.toArray(new String[0]);
 	}

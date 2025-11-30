@@ -12,6 +12,7 @@ import com.liferay.asset.auto.tagger.text.extractor.TextExtractorRegistry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
@@ -107,13 +108,16 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 			NameFinderME nameFinderME = new NameFinderME(tokenNameFinderModel);
 
-			Span[] nameSpans = nameFinderME.find(tokens);
+			spans.addAll(
+				TransformUtil.transformToList(
+					nameFinderME.find(tokens),
+					nameSpan -> {
+						if (nameSpan.getProb() > confidenceThreshold) {
+							return nameSpan;
+						}
 
-			for (Span nameSpan : nameSpans) {
-				if (nameSpan.getProb() > confidenceThreshold) {
-					spans.add(nameSpan);
-				}
-			}
+						return null;
+					}));
 		}
 
 		return Span.spansToStrings(spans.toArray(new Span[0]), tokens);

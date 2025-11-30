@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -167,15 +166,15 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		if (MapUtil.isNotEmpty(configuration) &&
 			ArrayUtil.isNotEmpty(configuration.get("item_types"))) {
 
-			List<Long> classNameIds = new ArrayList<>();
+			List<Long> classNameIds = TransformUtil.transformToList(
+				configuration.get("item_types"),
+				itemType -> {
+					if (Validator.isNotNull(itemType)) {
+						return _portal.getClassNameId(itemType);
+					}
 
-			String[] itemTypes = configuration.get("item_types");
-
-			for (String itemType : itemTypes) {
-				if (Validator.isNotNull(itemType)) {
-					classNameIds.add(_portal.getClassNameId(itemType));
-				}
-			}
+					return null;
+				});
 
 			if (ListUtil.isNotEmpty(classNameIds)) {
 				return ArrayUtil.toArray(classNameIds.toArray(new Long[0]));

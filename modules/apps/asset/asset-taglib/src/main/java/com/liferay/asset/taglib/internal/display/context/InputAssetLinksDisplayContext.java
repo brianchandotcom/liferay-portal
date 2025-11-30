@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -55,7 +56,6 @@ import java.io.Serializable;
 
 import java.text.Collator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -262,37 +262,35 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private List<AssetLink> _createAssetLinks() throws PortalException {
-		List<AssetLink> assetLinks = new ArrayList<>();
-
 		String assetLinksSearchContainerPrimaryKeys = ParamUtil.getString(
 			_httpServletRequest, "assetLinksSearchContainerPrimaryKeys");
 
 		if (Validator.isNull(assetLinksSearchContainerPrimaryKeys) &&
 			SessionErrors.isEmpty(_portletRequest) && (_assetEntryId > 0)) {
 
-			List<AssetLink> directAssetLinks =
-				AssetLinkLocalServiceUtil.getDirectLinks(_assetEntryId, false);
+			return TransformUtil.transform(
+				AssetLinkLocalServiceUtil.getDirectLinks(_assetEntryId, false),
+				assetLink -> {
+					AssetEntry assetLinkEntry = getAssetLinkEntry(assetLink);
 
-			for (AssetLink assetLink : directAssetLinks) {
-				AssetEntry assetLinkEntry = getAssetLinkEntry(assetLink);
+					AssetRendererFactory<?> assetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClassName(
+								assetLinkEntry.getClassName());
 
-				AssetRendererFactory<?> assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							assetLinkEntry.getClassName());
+					if (assetRendererFactory.isActive(
+							_themeDisplay.getCompanyId())) {
 
-				if (assetRendererFactory.isActive(
-						_themeDisplay.getCompanyId())) {
+						return assetLink;
+					}
 
-					assetLinks.add(assetLink);
-				}
-			}
+					return null;
+				});
 		}
-		else {
-			String[] assetEntriesPrimaryKeys = StringUtil.split(
-				assetLinksSearchContainerPrimaryKeys);
 
-			for (String assetEntryPrimaryKey : assetEntriesPrimaryKeys) {
+		return TransformUtil.transformToList(
+			StringUtil.split(assetLinksSearchContainerPrimaryKeys),
+			assetEntryPrimaryKey -> {
 				long assetEntryPrimaryKeyLong = GetterUtil.getLong(
 					assetEntryPrimaryKey);
 
@@ -311,11 +309,8 @@ public class InputAssetLinksDisplayContext {
 
 				assetLink.setEntryId2(assetEntry.getEntryId());
 
-				assetLinks.add(assetLink);
-			}
-		}
-
-		return assetLinks;
+				return assetLink;
+			});
 	}
 
 	private long _getAssetBrowserGroupId(

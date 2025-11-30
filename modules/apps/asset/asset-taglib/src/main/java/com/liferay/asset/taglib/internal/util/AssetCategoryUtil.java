@@ -7,6 +7,7 @@ package com.liferay.asset.taglib.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -22,7 +23,6 @@ import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,20 +100,20 @@ public class AssetCategoryUtil {
 	public static long[] filterCategoryIds(
 		long vocabularyId, long[] categoryIds) {
 
-		List<Long> filteredCategoryIds = new ArrayList<>();
+		List<Long> filteredCategoryIds = TransformUtil.transformToList(
+			categoryIds,
+			categoryId -> {
+				AssetCategory category =
+					AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
 
-		for (long categoryId : categoryIds) {
-			AssetCategory category =
-				AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
+				if ((category == null) ||
+					(category.getVocabularyId() != vocabularyId)) {
 
-			if (category == null) {
-				continue;
-			}
+					return null;
+				}
 
-			if (category.getVocabularyId() == vocabularyId) {
-				filteredCategoryIds.add(category.getCategoryId());
-			}
-		}
+				return category.getCategoryId();
+			});
 
 		return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[0]));
 	}

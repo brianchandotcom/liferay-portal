@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -466,38 +467,35 @@ public class AssetSearcher extends BaseSearcher {
 	private long[] _filterCategoryIdsByVisibilityType(
 		long[] assetCategoryIds, String fieldName) {
 
-		List<Long> filteredCategoryIds = new ArrayList<>();
+		List<Long> filteredCategoryIds = TransformUtil.transformToList(
+			assetCategoryIds,
+			assetCategoryId -> {
+				AssetCategory assetCategory =
+					AssetCategoryLocalServiceUtil.fetchAssetCategory(
+						assetCategoryId);
 
-		for (long assetCategoryId : assetCategoryIds) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					assetCategoryId);
+				if (assetCategory == null) {
+					return null;
+				}
 
-			if (assetCategory == null) {
-				continue;
-			}
+				AssetVocabulary assetVocabulary =
+					AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+						assetCategory.getVocabularyId());
 
-			AssetVocabulary assetVocabulary =
-				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-					assetCategory.getVocabularyId());
+				if ((assetVocabulary == null) ||
+					((assetVocabulary.getVisibilityType() ==
+						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) &&
+					 Objects.equals(fieldName, Field.ASSET_CATEGORY_IDS)) ||
+					((assetVocabulary.getVisibilityType() ==
+						AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) &&
+					 Objects.equals(
+						 fieldName, Field.ASSET_INTERNAL_CATEGORY_IDS))) {
 
-			if ((assetVocabulary == null) ||
-				((assetVocabulary.getVisibilityType() ==
-					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) &&
-				 Objects.equals(fieldName, Field.ASSET_CATEGORY_IDS))) {
+					return null;
+				}
 
-				continue;
-			}
-
-			if ((assetVocabulary.getVisibilityType() ==
-					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) &&
-				Objects.equals(fieldName, Field.ASSET_INTERNAL_CATEGORY_IDS)) {
-
-				continue;
-			}
-
-			filteredCategoryIds.add(assetCategoryId);
-		}
+				return assetCategoryId;
+			});
 
 		return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[0]));
 	}

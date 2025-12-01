@@ -614,6 +614,50 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			FragmentConstants.TYPE_PORTLET, new ServiceContext());
 	}
 
+	private void _assertDefaultValues(
+			FragmentInstancePageElementDefinition
+				fragmentInstancePageElementDefinition,
+			String key)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinkByExternalReferenceCode(
+					fragmentInstancePageElementDefinition.
+						getFragmentInstanceExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		JSONObject defaultJSONObject =
+			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
+				fragmentEntryLink.getHtml(),
+				fragmentEntryLink.getConfigurationJSONObject());
+
+		JSONObject defaultEditableJSONObject = defaultJSONObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject defaultElementTextJSONObject =
+			defaultEditableJSONObject.getJSONObject(key);
+
+		Object defaultValue = defaultElementTextJSONObject.get("defaultValue");
+
+		Assert.assertTrue(
+			defaultElementTextJSONObject.toString(),
+			Validator.isNotNull(defaultValue));
+
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject editableJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject elementTextJSONObject = editableJSONObject.getJSONObject(
+			key);
+
+		Assert.assertEquals(
+			defaultValue, elementTextJSONObject.get("defaultValue"));
+	}
+
 	private void _assertProblemException(
 			String status, String title,
 			UnsafeRunnable<Exception> unsafeRunnable)
@@ -933,30 +977,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return _getPageElement(
 			containerPageElementDefinition, pageElementExternalReferenceCode);
-	}
-
-	private Object _getEditableDefaultValue(
-		FragmentEntryLink fragmentEntryLink) {
-
-		JSONObject defaultJSONObject =
-			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				fragmentEntryLink.getHtml(),
-				fragmentEntryLink.getConfigurationJSONObject());
-
-		JSONObject defaultEditableJSONObject = defaultJSONObject.getJSONObject(
-			FragmentEntryProcessorConstants.
-				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
-
-		JSONObject defaultElementTextJSONObject =
-			defaultEditableJSONObject.getJSONObject("element-text");
-
-		Object defaultValue = defaultElementTextJSONObject.get("defaultValue");
-
-		Assert.assertTrue(
-			defaultElementTextJSONObject.toString(),
-			Validator.isNotNull(defaultValue));
-
-		return defaultValue;
 	}
 
 	private FileEntry _getFileEntry(long groupId) throws Exception {
@@ -3021,30 +3041,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							null, fragmentEditableElements, fragmentEntry,
 							testGroup.getGroupId())));
 
-		FragmentInstancePageElementDefinition
-			fragmentInstancePageElementDefinition =
-				(FragmentInstancePageElementDefinition)
-					pageElement.getPageElementDefinition();
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.
-				getFragmentEntryLinkByExternalReferenceCode(
-					fragmentInstancePageElementDefinition.
-						getFragmentInstanceExternalReferenceCode(),
-					testGroup.getGroupId());
-
-		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
-
-		JSONObject editableJSONObject = jsonObject.getJSONObject(
-			FragmentEntryProcessorConstants.
-				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
-
-		JSONObject elementTextJSONObject = editableJSONObject.getJSONObject(
+		_assertDefaultValues(
+			(FragmentInstancePageElementDefinition)
+				pageElement.getPageElementDefinition(),
 			"element-text");
-
-		Assert.assertEquals(
-			_getEditableDefaultValue(fragmentEntryLink),
-			elementTextJSONObject.get("defaultValue"));
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement()

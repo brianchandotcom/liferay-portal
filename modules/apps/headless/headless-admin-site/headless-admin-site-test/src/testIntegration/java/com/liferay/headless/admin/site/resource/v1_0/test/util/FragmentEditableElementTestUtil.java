@@ -28,28 +28,13 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
  */
 public class FragmentEditableElementTestUtil {
 
-	public static FragmentEditableElement[] getFragmentEditableElements(
+	public static FragmentEditableElement getTextFragmentEditableElement(
 		FragmentEditableElementValueFragmentLink.Prefix prefix,
 		FragmentLink fragmentLink,
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
 		FragmentMappedValueItemReference.Type
 			fragmentMappedValueItemReferenceType,
 		TextFragmentValue.Type textFragmentValueType) {
-
-		FragmentEditableElementValueFragmentLink
-			fragmentEditableElementValueFragmentLink =
-				_getFragmentEditableElementValueFragmentLink(
-					prefix, fragmentLink);
-
-		TextFragmentValue textFragmentValue = _getTextFragmentValue(
-			contextSource, fragmentMappedValueItemReferenceType,
-			textFragmentValueType);
-
-		if ((fragmentEditableElementValueFragmentLink == null) &&
-			(textFragmentValue == null)) {
-
-			return new FragmentEditableElement[0];
-		}
 
 		FragmentEditableElement fragmentEditableElement =
 			new FragmentEditableElement();
@@ -59,9 +44,12 @@ public class FragmentEditableElementTestUtil {
 
 		textFragmentEditableElementValue.
 			setFragmentEditableElementValueFragmentLink(
-				() -> fragmentEditableElementValueFragmentLink);
+				() -> _getFragmentEditableElementValueFragmentLink(
+					prefix, fragmentLink));
 		textFragmentEditableElementValue.setTextFragmentValue(
-			() -> textFragmentValue);
+			() -> _getTextFragmentValue(
+				contextSource, fragmentMappedValueItemReferenceType,
+				textFragmentValueType));
 		textFragmentEditableElementValue.setType(
 			() -> FragmentEditableElementValue.Type.TEXT);
 
@@ -70,7 +58,7 @@ public class FragmentEditableElementTestUtil {
 
 		fragmentEditableElement.setId(() -> "element-text");
 
-		return new FragmentEditableElement[] {fragmentEditableElement};
+		return fragmentEditableElement;
 	}
 
 	private static FragmentEditableElementValueFragmentLink

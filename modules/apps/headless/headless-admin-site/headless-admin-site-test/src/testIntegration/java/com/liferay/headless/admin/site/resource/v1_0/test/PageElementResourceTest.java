@@ -2979,7 +2979,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-			FragmentEditableElementTestUtil.getFragmentEditableElements(
+			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
 				FragmentEditableElementValueFragmentLink.Prefix.EMAIL,
 				_getFragmentLink(
 					JournalArticle.class.getName(),
@@ -2988,7 +2988,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				null, null, TextFragmentValue.Type.INLINE));
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-			FragmentEditableElementTestUtil.getFragmentEditableElements(
+			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
 				null, null,
 				FragmentMappedValueItemContextReference.ContextSource.
 					COLLECTION_ITEM,
@@ -2998,7 +2998,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-			FragmentEditableElementTestUtil.getFragmentEditableElements(
+			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
 				FragmentEditableElementValueFragmentLink.Prefix.PHONE,
 				_getFragmentLink(
 					Layout.class.getName(), layout.getExternalReferenceCode(),
@@ -3009,7 +3009,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				TextFragmentValue.Type.MAPPED));
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-			FragmentEditableElementTestUtil.getFragmentEditableElements(
+			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
 				null,
 				_getFragmentLink(
 					null, null, null,
@@ -3022,13 +3022,12 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE,
 				TextFragmentValue.Type.MAPPED));
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-			FragmentEditableElementTestUtil.getFragmentEditableElements(
-				null, null, null, null, null));
+			new FragmentEditableElement[0]);
 	}
 
 	private void
 			_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-				FragmentEditableElement[] fragmentEditableElements)
+				FragmentEditableElement... fragmentEditableElements)
 		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();

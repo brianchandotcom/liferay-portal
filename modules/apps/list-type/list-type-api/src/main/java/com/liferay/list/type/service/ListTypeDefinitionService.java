@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -47,7 +48,8 @@ public interface ListTypeDefinitionService extends BaseService {
 	 */
 	public ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, Map<Locale, String> nameMap,
-			boolean system, List<ListTypeEntry> listTypeEntries)
+			boolean system, List<ListTypeEntry> listTypeEntries,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public ListTypeDefinition deleteListTypeDefinition(
@@ -87,7 +89,8 @@ public interface ListTypeDefinitionService extends BaseService {
 
 	public ListTypeDefinition updateListTypeDefinition(
 			String externalReferenceCode, long listTypeDefinitionId,
-			Map<Locale, String> nameMap, List<ListTypeEntry> listTypeEntries)
+			Map<Locale, String> nameMap, List<ListTypeEntry> listTypeEntries,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

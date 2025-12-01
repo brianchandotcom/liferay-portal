@@ -46,7 +46,8 @@ public class ListTypeDefinitionServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				java.util.Map<java.util.Locale, String> nameMap, boolean system,
 				java.util.List<com.liferay.list.type.model.ListTypeEntry>
-					listTypeEntries)
+					listTypeEntries,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -56,7 +57,7 @@ public class ListTypeDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, nameMap, system,
-				listTypeEntries);
+				listTypeEntries, serviceContext);
 
 			Object returnObj = null;
 
@@ -367,7 +368,8 @@ public class ListTypeDefinitionServiceHttp {
 				long listTypeDefinitionId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.List<com.liferay.list.type.model.ListTypeEntry>
-					listTypeEntries)
+					listTypeEntries,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -377,7 +379,7 @@ public class ListTypeDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, listTypeDefinitionId, nameMap,
-				listTypeEntries);
+				listTypeEntries, serviceContext);
 
 			Object returnObj = null;
 
@@ -413,7 +415,8 @@ public class ListTypeDefinitionServiceHttp {
 	private static final Class<?>[] _addListTypeDefinitionParameterTypes0 =
 		new Class[] {
 			String.class, java.util.Map.class, boolean.class,
-			java.util.List.class
+			java.util.List.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteListTypeDefinitionParameterTypes1 =
 		new Class[] {com.liferay.list.type.model.ListTypeDefinition.class};
@@ -433,7 +436,8 @@ public class ListTypeDefinitionServiceHttp {
 		_getListTypeDefinitionsCountParameterTypes7 = new Class[] {};
 	private static final Class<?>[] _updateListTypeDefinitionParameterTypes8 =
 		new Class[] {
-			String.class, long.class, java.util.Map.class, java.util.List.class
+			String.class, long.class, java.util.Map.class, java.util.List.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

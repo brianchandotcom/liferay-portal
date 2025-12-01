@@ -9,6 +9,7 @@ import com.liferay.google.places.constants.GooglePlacesWebKeys;
 import com.liferay.headless.admin.site.dto.v1_0.Site;
 import com.liferay.headless.admin.site.resource.v1_0.SiteResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -61,10 +63,13 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.initializer.SiteInitializerSerializer;
 import com.liferay.sites.kernel.util.Sites;
 
+import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.Response;
 
 import java.io.File;
+import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -354,6 +359,40 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Group finalGroup = group;
 
 		return _toSite(finalGroup);
+	}
+
+	@Override
+	public void update(
+			Collection<Site> sites, Map<String, Serializable> parameters)
+		throws Exception {
+
+		UnsafeFunction<Site, Site, Exception> siteUnsafeFunction = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			siteUnsafeFunction = site -> putSite(
+				site.getExternalReferenceCode(), site);
+		}
+
+		if (siteUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for Site");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(sites, siteUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(sites, siteUnsafeFunction::apply);
+		}
+		else {
+			for (Site site : sites) {
+				siteUnsafeFunction.apply(site);
+			}
+		}
 	}
 
 	private Group _addGroup(String externalReferenceCode, Site site)

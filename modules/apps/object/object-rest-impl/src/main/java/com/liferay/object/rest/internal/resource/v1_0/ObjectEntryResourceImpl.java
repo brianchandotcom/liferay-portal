@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.util.CommentUtil;
 import com.liferay.headless.delivery.resource.v1_0.util.CommentResourceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -40,6 +41,8 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -48,11 +51,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -532,6 +537,55 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Page<Comment> getByExternalReferenceCodeCommentsPage(
+			String externalReferenceCode, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
+
+		long groupId = _getNonzeroGroupId(objectEntry.getId());
+
+		long objectEntryId = objectEntry.getId();
+
+		Discussion discussion = _commentManager.getDiscussion(
+			PrincipalThreadLocal.getUserId(), groupId,
+			ObjectEntry.class.getName(), objectEntry.getId(),
+			_createServiceContextFunction());
+
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+
+		Creator creator = objectEntry.getCreator();
+
+		return CommentResourceUtil.getComments(
+			HashMapBuilder.put(
+				"add-discussion",
+				addAction(
+					ActionKeys.ADD_DISCUSSION, objectEntryId,
+					"postByExternalReferenceCodeComment", creator.getId(),
+					ObjectEntry.class.getName(), groupId)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, objectEntryId,
+					"getByExternalReferenceCodeCommentsPage", creator.getId(),
+					ObjectEntry.class.getName(), groupId)
+			).build(),
+			rootDiscussionComment.getCommentId(), contextCompany.getCompanyId(),
+			_commentManager, search, aggregation, filter, pagination,
+			PortalUtil.getPortal(), sorts);
+	}
+
+	@Override
 	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
 			String externalReferenceCode, Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -763,6 +817,56 @@ public class ObjectEntryResourceImpl
 		return defaultObjectEntryManager.getObjectEntryByVersion(
 			_getDTOConverterContext(null), externalReferenceCode,
 			_objectDefinition, scopeKey, version);
+	}
+
+	@Override
+	public Page<Comment> getScopeScopeKeyByExternalReferenceCodeCommentsPage(
+			String scopeKey, String externalReferenceCode, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(
+			externalReferenceCode, scopeKey);
+
+		long groupId = objectEntry.getScopeId();
+
+		long objectEntryId = objectEntry.getId();
+
+		Creator creator = objectEntry.getCreator();
+
+		Discussion discussion = _commentManager.getDiscussion(
+			PrincipalThreadLocal.getUserId(), groupId,
+			ObjectEntry.class.getName(), objectEntry.getId(),
+			_createServiceContextFunction());
+
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+
+		return CommentResourceUtil.getComments(
+			HashMapBuilder.put(
+				"add-discussion",
+				addAction(
+					ActionKeys.ADD_DISCUSSION, objectEntryId,
+					"postScopeScopeKeyByExternalReferenceCodeComment",
+					creator.getId(), ObjectEntry.class.getName(), groupId)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, objectEntryId,
+					"getScopeScopeKeyByExternalReferenceCodeCommentsPage",
+					creator.getId(), ObjectEntry.class.getName(), groupId)
+			).build(),
+			rootDiscussionComment.getCommentId(), contextCompany.getCompanyId(),
+			_commentManager, search, aggregation, filter, pagination,
+			PortalUtil.getPortal(), sorts);
 	}
 
 	@Override

@@ -958,6 +958,7 @@ public class FragmentConfigurationFieldValueDTOConverter
 			HrefURLValue hrefURLValue = new HrefURLValue();
 
 			hrefURLValue.setHref(() -> jsonObject.getString("href"));
+			hrefURLValue.setUrlType(() -> URLValue.UrlType.HREF);
 
 			return hrefURLValue;
 		}
@@ -979,6 +980,7 @@ public class FragmentConfigurationFieldValueDTOConverter
 					Layout.class.getName(), layout.getExternalReferenceCode(),
 					ItemScopeUtil.getItemScope(
 						layout.getGroupId(), scopeGroupId)));
+			sitePageURLValue.setUrlType(() -> URLValue.UrlType.SITE_PAGE);
 
 			return sitePageURLValue;
 		}
@@ -997,6 +999,7 @@ public class FragmentConfigurationFieldValueDTOConverter
 					companyId,
 					layoutJSONObject.getString("scopeExternalReferenceCode"),
 					scopeGroupId)));
+		sitePageURLValue.setUrlType(() -> URLValue.UrlType.SITE_PAGE);
 
 		return sitePageURLValue;
 	}

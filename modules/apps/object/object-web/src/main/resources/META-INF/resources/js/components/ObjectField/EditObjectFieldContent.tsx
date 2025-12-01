@@ -15,6 +15,7 @@ import {AdvancedTab} from './Tabs/Advanced/AdvancedTab';
 import {BasicInfoTab} from './Tabs/BasicInfo/BasicInfoTab';
 
 import './EditObjectFieldContent.scss';
+import {DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES} from '../../utils/constants';
 
 interface EditObjectFieldContentProps
 	extends Omit<
@@ -75,14 +76,10 @@ export function EditObjectFieldContent({
 	);
 	const hasDefaultValue =
 		(Liferay.FeatureFlags['LPD-46451'] &&
-			(values.businessType === 'Boolean' ||
-				values.businessType === 'Decimal' ||
-				values.businessType === 'Integer' ||
-				values.businessType === 'LongInteger' ||
-				values.businessType === 'LongText' ||
-				values.businessType === 'PrecisionDecimal' ||
-				values.businessType === 'RichText' ||
-				values.businessType === 'Text')) ||
+			values.businessType &&
+			DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES.includes(
+				values.businessType
+			)) ||
 		values.businessType === 'Picklist';
 
 	if ((isDefaultStorageType || hasDefaultValue) && TABS.length < 2) {

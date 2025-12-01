@@ -11,7 +11,10 @@ import {
 } from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import {defaultLanguageId} from '../../utils/constants';
+import {
+	DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES,
+	defaultLanguageId,
+} from '../../utils/constants';
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
@@ -82,14 +85,10 @@ export function useObjectFieldForm({
 
 		const hasDefaultValue =
 			(Liferay.FeatureFlags['LPD-46451'] &&
-				(field.businessType === 'Boolean' ||
-					field.businessType === 'Decimal' ||
-					field.businessType === 'Integer' ||
-					field.businessType === 'LongInteger' ||
-					field.businessType === 'LongText' ||
-					field.businessType === 'PrecisionDecimal' ||
-					field.businessType === 'RichText' ||
-					field.businessType === 'Text')) ||
+				field.businessType &&
+				DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES.includes(
+					field.businessType
+				)) ||
 			field.businessType === 'Picklist';
 
 		const errors: ObjectFieldErrors = {};

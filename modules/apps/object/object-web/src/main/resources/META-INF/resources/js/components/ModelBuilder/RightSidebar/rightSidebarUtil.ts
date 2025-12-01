@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES} from '../../../utils/constants';
 import {ObjectRelationshipEdgeData, RightSidebarType} from '../types';
 
 export function getRightSidebarWidth(
@@ -12,14 +13,10 @@ export function getRightSidebarWidth(
 ) {
 	const hasDefaultValue =
 		(Liferay.FeatureFlags['LPD-46451'] &&
-			(selectedObjectField?.businessType === 'Boolean' ||
-				selectedObjectField?.businessType === 'Decimal' ||
-				selectedObjectField?.businessType === 'Integer' ||
-				selectedObjectField?.businessType === 'LongInteger' ||
-				selectedObjectField?.businessType === 'LongText' ||
-				selectedObjectField?.businessType === 'PrecisionDecimal' ||
-				selectedObjectField?.businessType === 'RichText' ||
-				selectedObjectField?.businessType === 'Text')) ||
+			selectedObjectField?.businessType &&
+			DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES.includes(
+				selectedObjectField.businessType
+			)) ||
 		selectedObjectField?.businessType === 'Picklist';
 
 	if (rightSidebarType === 'objectDefinitionDetails') {

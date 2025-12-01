@@ -7,6 +7,7 @@ import {SidebarCategory} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {ElementType} from 'react';
 
+import {DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES} from '../../../../utils/constants';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 import {DefaultValueContainer} from './DefaultValueContainer';
 import {ReadOnlyContainer} from './ReadOnlyContainer';
@@ -51,14 +52,10 @@ export function AdvancedTab({
 		values.system;
 	const hasDefaultValue =
 		(Liferay.FeatureFlags['LPD-46451'] &&
-			(values.businessType === 'Boolean' ||
-				values.businessType === 'Decimal' ||
-				values.businessType === 'Integer' ||
-				values.businessType === 'LongInteger' ||
-				values.businessType === 'LongText' ||
-				values.businessType === 'PrecisionDecimal' ||
-				values.businessType === 'RichText' ||
-				values.businessType === 'Text')) ||
+			values.businessType &&
+			DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES.includes(
+				values.businessType
+			)) ||
 		values.businessType === 'Picklist';
 
 	return (

@@ -21,9 +21,9 @@ create unique index IX_8067B450 on CPConfigurationEntry (ctCollectionId, classNa
 create unique index IX_B5AF3F22 on CPConfigurationEntry (ctCollectionId, companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_DE212C7 on CPConfigurationEntry (uuid_[$COLUMN_LENGTH:75$], ctCollectionId, groupId);
 
-create index IX_C07283B0 on CPConfigurationEntrySetting (CPConfigurationEntryId, type_);
 create index IX_576B525B on CPConfigurationEntrySetting (companyId);
-create unique index IX_1A3FBF81 on CPConfigurationEntrySetting (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+create unique index IX_427E9B92 on CPConfigurationEntrySetting (ctCollectionId, CPConfigurationEntryId, type_);
+create unique index IX_9ECCF085 on CPConfigurationEntrySetting (uuid_[$COLUMN_LENGTH:75$], ctCollectionId, groupId);
 
 create unique index IX_9AAA5A84 on CPConfigurationList (companyId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_AC55D871 on CPConfigurationList (groupId, companyId, status);
@@ -103,8 +103,7 @@ create index IX_1140BD8 on CPInstance (status, replacementCPInstanceUuid[$COLUMN
 create index IX_4654BD4C on CPInstance (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_E551D3AA on CPInstanceOptionValueRel (CPDefinitionOptionRelId);
-create unique index IX_C7B0D143 on CPInstanceOptionValueRel (CPInstanceId, CPDefinitionOptionRelId, CPDefinitionOptionValueRelId, ctCollectionId);
-create index IX_D3B702C2 on CPInstanceOptionValueRel (CPInstanceId, CPDefinitionOptionValueRelId);
+create unique index IX_CE1DF4A0 on CPInstanceOptionValueRel (CPInstanceId, ctCollectionId, CPDefinitionOptionValueRelId);
 create unique index IX_4399CE9D on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$], ctCollectionId, groupId);
 
 create index IX_4351C7A1 on CPInstanceUOM (CPInstanceId, active_);
@@ -131,7 +130,7 @@ create unique index IX_DA77C838 on CPOptionValue (CPOptionId, ctCollectionId, ke
 create unique index IX_DC509C0C on CPOptionValue (companyId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_D7C1A0BF on CPOptionValue (uuid_[$COLUMN_LENGTH:75$]);
 
-create index IX_8A69C0A5 on CPSOListTypeDefinitionRel (CPSpecificationOptionId, listTypeDefinitionId);
+create unique index IX_91D0AD03 on CPSOListTypeDefinitionRel (CPSpecificationOptionId, listTypeDefinitionId, ctCollectionId);
 create index IX_BB2AB5C5 on CPSOListTypeDefinitionRel (listTypeDefinitionId);
 
 create index IX_421ED80 on CPSpecificationOption (CPOptionCategoryId);

@@ -583,12 +583,6 @@ public class CommerceChannelPersistenceTest {
 
 	private void _assertOriginalValues(CommerceChannel commerceChannel) {
 		Assert.assertEquals(
-			Long.valueOf(commerceChannel.getSiteGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				commerceChannel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "siteGroupId"));
-
-		Assert.assertEquals(
 			commerceChannel.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				commerceChannel, "getColumnOriginalValue",

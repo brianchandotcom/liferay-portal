@@ -1027,6 +1027,16 @@ public class CommerceOrderItemModelImpl
 		_commerceInventoryBookedQuantityId = commerceInventoryBookedQuantityId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCommerceInventoryBookedQuantityId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CIBookedQuantityId"));
+	}
+
 	@JSON
 	@Override
 	public long getCommerceOrderId() {

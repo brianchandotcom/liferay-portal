@@ -556,6 +556,16 @@ public class CommerceOrderItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCommerceInventoryBookedQuantityId()
+		throws Exception {
+
+		_persistence.countByCommerceInventoryBookedQuantityId(
+			RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceInventoryBookedQuantityId(0L);
+	}
+
+	@Test
 	public void testCountByCommerceOrderId() throws Exception {
 		_persistence.countByCommerceOrderId(RandomTestUtil.nextLong());
 

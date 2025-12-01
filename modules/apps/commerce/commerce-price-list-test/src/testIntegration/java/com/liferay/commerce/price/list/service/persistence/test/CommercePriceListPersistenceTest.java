@@ -392,6 +392,18 @@ public class CommercePriceListPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_CBPL_T() throws Exception {
+		_persistence.countByG_CBPL_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
+
+		_persistence.countByG_CBPL_T(
+			0L, RandomTestUtil.randomBoolean(), "null");
+
+		_persistence.countByG_CBPL_T(
+			0L, RandomTestUtil.randomBoolean(), (String)null);
+	}
+
+	@Test
 	public void testCountByG_C_T_S() throws Exception {
 		_persistence.countByG_C_T_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",

@@ -306,45 +306,17 @@ public class CommercePriceListLocalServiceWrapper
 	}
 
 	@Override
-	public CommercePriceList fetchCatalogBaseCommercePriceList(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public CommercePriceList fetchCatalogBaseCommercePriceList(long groupId) {
 		return _commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 			groupId);
 	}
 
 	@Override
 	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
-			long groupId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, String type) {
 
 		return _commercePriceListLocalService.
 			fetchCatalogBaseCommercePriceListByType(groupId, type);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList fetchCommerceCatalogBasePriceList(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
-			groupId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
-			long groupId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePriceListLocalService.
-			fetchCommerceCatalogBasePriceListByType(groupId, type);
 	}
 
 	@Override
@@ -411,31 +383,6 @@ public class CommercePriceListLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList getCommerceCatalogBasePriceList(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePriceListLocalService.getCommerceCatalogBasePriceList(
-			groupId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList getCommerceCatalogBasePriceListByType(
-			long groupId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePriceListLocalService.
-			getCommerceCatalogBasePriceListByType(groupId, type);
-	}
-
-	/**
 	 * Returns the commerce price list with the primary key.
 	 *
 	 * @param commercePriceListId the primary key of the commerce price list
@@ -465,22 +412,6 @@ public class CommercePriceListLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public CommercePriceList
-		getCommercePriceListByAccountAndChannelAndOrderTypeId(
-			long groupId, long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, String type) {
-
-		return _commercePriceListLocalService.
-			getCommercePriceListByAccountAndChannelAndOrderTypeId(
-				groupId, commerceAccountId, commerceChannelId,
-				commerceOrderTypeId, type);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
 	public CommercePriceList getCommercePriceListByAccountAndChannelId(
 		long groupId, long commerceAccountId, long commerceChannelId,
 		String type) {
@@ -495,42 +426,12 @@ public class CommercePriceListLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public CommercePriceList getCommercePriceListByAccountAndOrderTypeId(
-		long groupId, long commerceAccountId, long commerceOrderTypeId,
-		String type) {
-
-		return _commercePriceListLocalService.
-			getCommercePriceListByAccountAndOrderTypeId(
-				groupId, commerceAccountId, commerceOrderTypeId, type);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
 	public CommercePriceList getCommercePriceListByAccountGroupIds(
 		long groupId, long[] commerceAccountGroupIds, String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListByAccountGroupIds(
 				groupId, commerceAccountGroupIds, type);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList
-		getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
-			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, long commerceOrderTypeId, String type) {
-
-		return _commercePriceListLocalService.
-			getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
-				groupId, commerceAccountGroupIds, commerceChannelId,
-				commerceOrderTypeId, type);
 	}
 
 	/**
@@ -552,39 +453,11 @@ public class CommercePriceListLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public CommercePriceList getCommercePriceListByAccountGroupsAndOrderTypeId(
-		long groupId, long[] commerceAccountGroupIds, long commerceOrderTypeId,
-		String type) {
-
-		return _commercePriceListLocalService.
-			getCommercePriceListByAccountGroupsAndOrderTypeId(
-				groupId, commerceAccountGroupIds, commerceOrderTypeId, type);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
 	public CommercePriceList getCommercePriceListByAccountId(
 		long groupId, long commerceAccountId, String type) {
 
 		return _commercePriceListLocalService.getCommercePriceListByAccountId(
 			groupId, commerceAccountId, type);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList getCommercePriceListByChannelAndOrderTypeId(
-		long groupId, long commerceChannelId, long commerceOrderTypeId,
-		String type) {
-
-		return _commercePriceListLocalService.
-			getCommercePriceListByChannelAndOrderTypeId(
-				groupId, commerceChannelId, commerceOrderTypeId, type);
 	}
 
 	/**
@@ -621,18 +494,6 @@ public class CommercePriceListLocalServiceWrapper
 			groupId, commerceAccountId, commerceAccountGroupIds,
 			commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
 			currencyCode, type, unitOfMeasureKey);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList getCommercePriceListByOrderTypeId(
-		long groupId, long commerceOrderTypeId, String type) {
-
-		return _commercePriceListLocalService.getCommercePriceListByOrderTypeId(
-			groupId, commerceOrderTypeId, type);
 	}
 
 	/**

@@ -800,17 +800,6 @@ public class CPDefinitionPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				cpDefinition, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
-
-		Assert.assertEquals(
-			Long.valueOf(cpDefinition.getCProductId()),
-			ReflectionTestUtil.<Long>invoke(
-				cpDefinition, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CProductId"));
-		Assert.assertEquals(
-			Integer.valueOf(cpDefinition.getVersion()),
-			ReflectionTestUtil.<Integer>invoke(
-				cpDefinition, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected CPDefinition addCPDefinition() throws Exception {

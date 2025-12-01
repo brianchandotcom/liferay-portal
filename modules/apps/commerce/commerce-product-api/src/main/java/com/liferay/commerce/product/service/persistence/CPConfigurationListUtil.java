@@ -714,60 +714,178 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the cp configuration list where parentCPConfigurationListId = &#63; or throws a <code>NoSuchCPConfigurationListException</code> if it could not be found.
+	 * Returns all the cp configuration lists where parentCPConfigurationListId = &#63;.
 	 *
 	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @return the matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 * @return the matching cp configuration lists
 	 */
-	public static CPConfigurationList findByParentCPConfigurationListId(
-			long parentCPConfigurationListId)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
+	public static List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId) {
 
 		return getPersistence().findByParentCPConfigurationListId(
 			parentCPConfigurationListId);
 	}
 
 	/**
-	 * Returns the cp configuration list where parentCPConfigurationListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
 	 */
-	public static CPConfigurationList fetchByParentCPConfigurationListId(
-		long parentCPConfigurationListId) {
+	public static List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId, int start, int end) {
 
-		return getPersistence().fetchByParentCPConfigurationListId(
-			parentCPConfigurationListId);
+		return getPersistence().findByParentCPConfigurationListId(
+			parentCPConfigurationListId, start, end);
 	}
 
 	/**
-	 * Returns the cp configuration list where parentCPConfigurationListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByParentCPConfigurationListId(
+			parentCPConfigurationListId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 * @return the ordered range of matching cp configuration lists
 	 */
-	public static CPConfigurationList fetchByParentCPConfigurationListId(
-		long parentCPConfigurationListId, boolean useFinderCache) {
+	public static List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByParentCPConfigurationListId(
-			parentCPConfigurationListId, useFinderCache);
+		return getPersistence().findByParentCPConfigurationListId(
+			parentCPConfigurationListId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
-	 * Removes the cp configuration list where parentCPConfigurationListId = &#63; from the database.
+	 * Returns the first cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
 	 *
 	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @return the cp configuration list that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
 	 */
-	public static CPConfigurationList removeByParentCPConfigurationListId(
-			long parentCPConfigurationListId)
+	public static CPConfigurationList findByParentCPConfigurationListId_First(
+			long parentCPConfigurationListId,
+			OrderByComparator<CPConfigurationList> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPConfigurationListException {
 
-		return getPersistence().removeByParentCPConfigurationListId(
+		return getPersistence().findByParentCPConfigurationListId_First(
+			parentCPConfigurationListId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	public static CPConfigurationList fetchByParentCPConfigurationListId_First(
+		long parentCPConfigurationListId,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().fetchByParentCPConfigurationListId_First(
+			parentCPConfigurationListId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 */
+	public static CPConfigurationList findByParentCPConfigurationListId_Last(
+			long parentCPConfigurationListId,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationListException {
+
+		return getPersistence().findByParentCPConfigurationListId_Last(
+			parentCPConfigurationListId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	public static CPConfigurationList fetchByParentCPConfigurationListId_Last(
+		long parentCPConfigurationListId,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().fetchByParentCPConfigurationListId_Last(
+			parentCPConfigurationListId, orderByComparator);
+	}
+
+	/**
+	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param CPConfigurationListId the primary key of the current cp configuration list
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
+	 */
+	public static CPConfigurationList[]
+			findByParentCPConfigurationListId_PrevAndNext(
+				long CPConfigurationListId, long parentCPConfigurationListId,
+				OrderByComparator<CPConfigurationList> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationListException {
+
+		return getPersistence().findByParentCPConfigurationListId_PrevAndNext(
+			CPConfigurationListId, parentCPConfigurationListId,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the cp configuration lists where parentCPConfigurationListId = &#63; from the database.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 */
+	public static void removeByParentCPConfigurationListId(
+		long parentCPConfigurationListId) {
+
+		getPersistence().removeByParentCPConfigurationListId(
 			parentCPConfigurationListId);
 	}
 
@@ -1067,57 +1185,181 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or throws a <code>NoSuchCPConfigurationListException</code> if it could not be found.
+	 * Returns all the cp configuration lists where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param master the master
-	 * @return the matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 * @return the matching cp configuration lists
 	 */
-	public static CPConfigurationList findByG_M(long groupId, boolean master)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
+	public static List<CPConfigurationList> findByG_M(
+		long groupId, boolean master) {
 
 		return getPersistence().findByG_M(groupId, master);
 	}
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param master the master
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
 	 */
-	public static CPConfigurationList fetchByG_M(long groupId, boolean master) {
-		return getPersistence().fetchByG_M(groupId, master);
+	public static List<CPConfigurationList> findByG_M(
+		long groupId, boolean master, int start, int end) {
+
+		return getPersistence().findByG_M(groupId, master, start, end);
 	}
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param master the master
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_M(
+		long groupId, boolean master, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByG_M(
+			groupId, master, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 * @return the ordered range of matching cp configuration lists
 	 */
-	public static CPConfigurationList fetchByG_M(
-		long groupId, boolean master, boolean useFinderCache) {
+	public static List<CPConfigurationList> findByG_M(
+		long groupId, boolean master, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByG_M(groupId, master, useFinderCache);
+		return getPersistence().findByG_M(
+			groupId, master, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Removes the cp configuration list where groupId = &#63; and master = &#63; from the database.
+	 * Returns the first cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param master the master
-	 * @return the cp configuration list that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
 	 */
-	public static CPConfigurationList removeByG_M(long groupId, boolean master)
+	public static CPConfigurationList findByG_M_First(
+			long groupId, boolean master,
+			OrderByComparator<CPConfigurationList> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPConfigurationListException {
 
-		return getPersistence().removeByG_M(groupId, master);
+		return getPersistence().findByG_M_First(
+			groupId, master, orderByComparator);
+	}
+
+	/**
+	 * Returns the first cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	public static CPConfigurationList fetchByG_M_First(
+		long groupId, boolean master,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().fetchByG_M_First(
+			groupId, master, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 */
+	public static CPConfigurationList findByG_M_Last(
+			long groupId, boolean master,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationListException {
+
+		return getPersistence().findByG_M_Last(
+			groupId, master, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	public static CPConfigurationList fetchByG_M_Last(
+		long groupId, boolean master,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().fetchByG_M_Last(
+			groupId, master, orderByComparator);
+	}
+
+	/**
+	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param CPConfigurationListId the primary key of the current cp configuration list
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
+	 */
+	public static CPConfigurationList[] findByG_M_PrevAndNext(
+			long CPConfigurationListId, long groupId, boolean master,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationListException {
+
+		return getPersistence().findByG_M_PrevAndNext(
+			CPConfigurationListId, groupId, master, orderByComparator);
+	}
+
+	/**
+	 * Removes all the cp configuration lists where groupId = &#63; and master = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 */
+	public static void removeByG_M(long groupId, boolean master) {
+		getPersistence().removeByG_M(groupId, master);
 	}
 
 	/**

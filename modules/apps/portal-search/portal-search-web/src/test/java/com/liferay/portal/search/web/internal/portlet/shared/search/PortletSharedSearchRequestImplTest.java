@@ -38,33 +38,11 @@ public class PortletSharedSearchRequestImplTest {
 
 	@Test
 	public void testGetSegmentExperiencePortletIdsWithPortletFragments() {
-		FragmentEntryLinkLocalService fragmentEntryLinkLocalService =
-			Mockito.mock(FragmentEntryLinkLocalService.class);
-
-		PortletSharedSearchRequest portletSharedSearchRequest =
-			new PortletSharedSearchRequestImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			portletSharedSearchRequest, "_fragmentEntryLinkLocalService",
-			fragmentEntryLinkLocalService);
-
-		ReflectionTestUtil.setFieldValue(
-			portletSharedSearchRequest, "_portletRegistry", _portletRegistry);
-
-		Mockito.doReturn(
-			List.of(
-				_mockFragmentEntryLink("portletA"),
-				_mockFragmentEntryLink("portletB"))
-		).when(
-			fragmentEntryLinkLocalService
-		).getFragmentEntryLinksBySegmentsExperienceId(
-			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong()
-		);
-
 		Assert.assertEquals(
 			Set.of("portletA_INSTANCE_rdna", "portletB_INSTANCE_rdna"),
 			ReflectionTestUtil.<Set<String>>invoke(
-				portletSharedSearchRequest, "_getSegmentExperiencePortletIds",
+				_mockPortletSharedSearchRequest(),
+				"_getSegmentExperiencePortletIds",
 				new Class<?>[] {Layout.class, long.class},
 				Mockito.mock(Layout.class), RandomTestUtil.randomLong()));
 	}
@@ -82,6 +60,37 @@ public class PortletSharedSearchRequestImplTest {
 		);
 
 		return fragmentEntryLink;
+	}
+
+	private FragmentEntryLinkLocalService _mockFragmentEntryLinkLocalService() {
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService =
+			Mockito.mock(FragmentEntryLinkLocalService.class);
+
+		Mockito.doReturn(
+			List.of(
+				_mockFragmentEntryLink("portletA"),
+				_mockFragmentEntryLink("portletB"))
+		).when(
+			fragmentEntryLinkLocalService
+		).getFragmentEntryLinksBySegmentsExperienceId(
+			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong()
+		);
+
+		return fragmentEntryLinkLocalService;
+	}
+
+	private PortletSharedSearchRequest _mockPortletSharedSearchRequest() {
+		PortletSharedSearchRequest portletSharedSearchRequest =
+			new PortletSharedSearchRequestImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			portletSharedSearchRequest, "_fragmentEntryLinkLocalService",
+			_mockFragmentEntryLinkLocalService());
+
+		ReflectionTestUtil.setFieldValue(
+			portletSharedSearchRequest, "_portletRegistry", _portletRegistry);
+
+		return portletSharedSearchRequest;
 	}
 
 	private final PortletRegistry _portletRegistry = Mockito.mock(

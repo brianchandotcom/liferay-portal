@@ -15,6 +15,7 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
+import com.liferay.exportimport.internal.lar.ExportImportDescriptorThreadLocal;
 import com.liferay.exportimport.internal.lar.PortletDataContextImpl;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
@@ -324,7 +325,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		try (SafeCloseable safeCloseable =
+		try (SafeCloseable safeCloseable1 =
 				PortletDataContextThreadLocal.
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
@@ -345,34 +346,41 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					continue;
 				}
 
-				BatchEngineExportTaskExecutor.Result result =
-					_executeExportTask(
-						Integer.MAX_VALUE, portletDataContext, registration);
+				try (SafeCloseable safeCloseable2 =
+						ExportImportDescriptorThreadLocal.
+							setExportImportDescriptorWithSafeCloseable(
+								exportImportDescriptor)) {
 
-				if (result == null) {
-					continue;
+					BatchEngineExportTaskExecutor.Result result =
+						_executeExportTask(
+							Integer.MAX_VALUE, portletDataContext,
+							registration);
+
+					if (result == null) {
+						continue;
+					}
+
+					BatchEngineExportTask batchEngineExportTask =
+						result.getBatchEngineExportTask();
+
+					if (batchEngineExportTask.getTotalItemsCount() == 0) {
+						continue;
+					}
+
+					portletDataContext.addZipEntry(
+						_normalize(
+							registration.getFileName(),
+							portletDataContext.getScopeGroupId()),
+						result.getInputStream());
+
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					manifestSummary.addModelAdditionCount(
+						new StagedModelType(
+							exportImportDescriptor.getResourceClassName()),
+						batchEngineExportTask.getProcessedItemsCount());
 				}
-
-				BatchEngineExportTask batchEngineExportTask =
-					result.getBatchEngineExportTask();
-
-				if (batchEngineExportTask.getTotalItemsCount() == 0) {
-					continue;
-				}
-
-				portletDataContext.addZipEntry(
-					_normalize(
-						registration.getFileName(),
-						portletDataContext.getScopeGroupId()),
-					result.getInputStream());
-
-				ManifestSummary manifestSummary =
-					portletDataContext.getManifestSummary();
-
-				manifestSummary.addModelAdditionCount(
-					new StagedModelType(
-						exportImportDescriptor.getResourceClassName()),
-					batchEngineExportTask.getProcessedItemsCount());
 			}
 
 			portletDataContext.setValidateExistingDataHandler(true);
@@ -431,7 +439,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						_stagingGroupHelper),
 					registration.getTaskItemDelegateName());
 
-			try (SafeCloseable safeCloseable =
+			try (SafeCloseable safeCloseable1 =
+					ExportImportDescriptorThreadLocal.
+						setExportImportDescriptorWithSafeCloseable(
+							exportImportDescriptor);
+				SafeCloseable safeCloseable2 =
 					PortletDataContextThreadLocal.
 						setPortletDataContextWithSafeCloseable(
 							portletDataContext)) {
@@ -467,7 +479,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		for (Registration registration :
 				_getActiveRegistrations(portletDataContext)) {
 
-			try (SafeCloseable safeCloseable =
+			try (SafeCloseable safeCloseable1 =
+					ExportImportDescriptorThreadLocal.
+						setExportImportDescriptorWithSafeCloseable(
+							registration.getExportImportDescriptor());
+				SafeCloseable safeCloseable2 =
 					PortletDataContextThreadLocal.
 						setPortletDataContextWithSafeCloseable(
 							portletDataContext)) {

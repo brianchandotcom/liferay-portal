@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -543,6 +544,44 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Comment getByExternalReferenceCodeComment(
+			String externalReferenceCode, String commentExternalReferenceCode)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
+
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
+			_fetchComment(
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				commentExternalReferenceCode,
+				_getNonzeroGroupId(objectEntry.getId()));
+
+		if (serviceBuilderComment == null) {
+			throw new NoSuchModelException(
+				StringBundler.concat(
+					"No comment exists with object entry ERC ",
+					externalReferenceCode, " and ERC ",
+					commentExternalReferenceCode));
+		}
+
+		_discussionPermission.checkViewPermission(
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getCompanyId(), serviceBuilderComment.getGroupId(),
+			serviceBuilderComment.getClassName(),
+			serviceBuilderComment.getClassPK());
+
+		return CommentUtil.toComment(
+			serviceBuilderComment, _commentManager, PortalUtil.getPortal());
+	}
+
+	@Override
 	public Page<Comment> getByExternalReferenceCodeCommentsPage(
 			String externalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
@@ -926,6 +965,45 @@ public class ObjectEntryResourceImpl
 		return defaultObjectEntryManager.getObjectEntryByVersion(
 			_getDTOConverterContext(null), externalReferenceCode,
 			_objectDefinition, scopeKey, version);
+	}
+
+	@Override
+	public Comment getScopeScopeKeyByExternalReferenceCodeComment(
+			String scopeKey, String externalReferenceCode,
+			String commentExternalReferenceCode)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(
+			externalReferenceCode, scopeKey);
+
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
+			_fetchComment(
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				commentExternalReferenceCode, objectEntry.getScopeId());
+
+		if (serviceBuilderComment == null) {
+			throw new NoSuchModelException(
+				StringBundler.concat(
+					"No comment exists with scopeKey ", scopeKey,
+					", object entry ERC ", externalReferenceCode, " and ERC ",
+					commentExternalReferenceCode));
+		}
+
+		_discussionPermission.checkViewPermission(
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getCompanyId(), serviceBuilderComment.getGroupId(),
+			serviceBuilderComment.getClassName(),
+			serviceBuilderComment.getClassPK());
+
+		return CommentUtil.toComment(
+			serviceBuilderComment, _commentManager, PortalUtil.getPortal());
 	}
 
 	@Override

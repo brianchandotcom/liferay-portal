@@ -390,6 +390,17 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition,
 			GetterUtil.getInteger(serviceContext.getAttribute("status")));
 
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			if (status == WorkflowConstants.STATUS_DRAFT) {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+			}
+			else {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_PUBLISH);
+			}
+		}
+
 		int workflowAction = serviceContext.getWorkflowAction();
 
 		_validateWorkflowAction(

@@ -81,7 +81,9 @@ test(
 
 		await modal.getByRole('button', {exact: true, name: 'Save'}).click();
 
-		await expect(modal.getByText('The rule is incomplete')).toBeVisible();
+		await expect(
+			modal.getByText('Review the next fields in order to save the rule')
+		).toBeVisible();
 
 		// Start adding a condition
 

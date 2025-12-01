@@ -298,22 +298,28 @@ public class MarketplaceRestController extends BaseRestController {
 				order.getId(), Pagination.of(1, 10)
 			);
 
+		String orderTypeExternalReferenceCode =
+			order.getOrderTypeExternalReferenceCode();
+
+		if (Objects.equals(orderTypeExternalReferenceCode, "ADDONS")) {
+			_setUpAddOns(jwt, order);
+
+			_marketplaceService.updateOrder(
+				null, order.getId(),
+				MarketplaceConstants.ORDER_STATUS_COMPLETED);
+		}
+
 		if (Objects.equals(
-				order.getOrderTypeExternalReferenceCode(),
-				"CLIENT_EXTENSION") ||
-			Objects.equals(
-				order.getOrderTypeExternalReferenceCode(), "CLOUDAPP")) {
+				orderTypeExternalReferenceCode, "CLIENT_EXTENSION") ||
+			Objects.equals(orderTypeExternalReferenceCode, "CLOUDAPP")) {
 
 			_setUpCloudProductPurchase(order, orderItemPage);
 		}
 
-		if (Objects.equals(
-				order.getOrderTypeExternalReferenceCode(), "COMPOSITE_APP") ||
+		if (Objects.equals(orderTypeExternalReferenceCode, "COMPOSITE_APP") ||
 			Objects.equals(
-				order.getOrderTypeExternalReferenceCode(),
-				"LOW_CODE_CONFIGURATION") ||
-			Objects.equals(
-				order.getOrderTypeExternalReferenceCode(), "OTHER")) {
+				orderTypeExternalReferenceCode, "LOW_CODE_CONFIGURATION") ||
+			Objects.equals(orderTypeExternalReferenceCode, "OTHER")) {
 
 			_marketplaceService.updateOrder(
 				null, order.getId(),
@@ -646,6 +652,49 @@ public class MarketplaceRestController extends BaseRestController {
 			).toString());
 	}
 
+	private void _setUpAddOns(Jwt jwt, Order order) throws Exception {
+		if (!order.getAccountExternalReferenceCode(
+			).startsWith(
+				"KOR-"
+			)) {
+
+			return;
+		}
+
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		JSONObject orderMetadataJSONObject = new JSONObject(
+			customFields.getOrDefault("order-metadata", "{}"));
+
+		if (_koroneikiService.hasEntitlement(
+				"Liferay Analytics Cloud",
+				_koroneikiService.getKoroneikiAccount(
+					order.getAccountExternalReferenceCode()))) {
+
+			_koroneikiService.linkProductPurchaseToOpportunity(
+				jwt, String.valueOf(order.getId()),
+				orderMetadataJSONObject.getString("productPurchaseKey"));
+
+			return;
+		}
+
+		for (OrderItem orderItem : order.getOrderItems()) {
+			if (!Objects.equals(
+					orderItem.getSkuExternalReferenceCode(),
+					orderMetadataJSONObject.getString("productKey"))) {
+
+				return;
+			}
+
+			_koroneikiService.postAccountAccountKeyProductPurchase(
+				order.getAccountExternalReferenceCode(), jwt, "Subscription",
+				MarketplaceUtil.getSkuOptionValue(
+					"base-license-usage-type", orderItem.getOptions()),
+				orderItem);
+		}
+	}
+
 	private void _setUpCloudProductPurchase(
 			Order order, Page<OrderItem> orderItemPage)
 		throws Exception {
@@ -707,9 +756,10 @@ public class MarketplaceRestController extends BaseRestController {
 			for (OrderItem orderItem : orderItemPage.getItems()) {
 				_koroneikiService.postAccountAccountKeyProductPurchase(
 					account.getExternalReferenceCode(), jwt,
-					_marketplaceService.getSkuOptionValue(
+					productSpecificationsMap.get("license-type"),
+					MarketplaceUtil.getSkuOptionValue(
 						"dxp-license-usage-type", orderItem.getOptions()),
-					orderItem, productSpecificationsMap);
+					orderItem);
 			}
 
 			_marketplaceService.updateOrder(

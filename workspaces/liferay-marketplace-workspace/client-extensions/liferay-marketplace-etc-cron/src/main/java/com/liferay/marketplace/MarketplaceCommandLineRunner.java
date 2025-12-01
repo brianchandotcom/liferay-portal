@@ -364,17 +364,19 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private Collection<UserAccount> _getUserAccounts(
-			String userFilter, String userGroupFilter)
+			String userAccountFilterString, String userGroupFilterString)
 		throws Exception {
 
 		UserGroupResource userGroupResource = _getUserGroupResource();
 
-		UserGroup userGroup = userGroupResource.getUserGroupsPage(
-			"", userGroupFilter,
-			com.liferay.headless.admin.user.client.pagination.Pagination.of(
-				-1, -1),
-			""
-		).fetchFirstItem();
+		com.liferay.headless.admin.user.client.pagination.Page<UserGroup>
+			userGroupsPage = userGroupResource.getUserGroupsPage(
+				"", userGroupFilterString,
+				com.liferay.headless.admin.user.client.pagination.Pagination.of(
+					-1, -1),
+				"");
+
+		UserGroup userGroup = userGroupsPage.fetchFirstItem();
 
 		if (userGroup == null) {
 			return Collections.emptyList();
@@ -383,13 +385,13 @@ public class MarketplaceCommandLineRunner
 		UserAccountResource userAccountResource = _getUserAccountResource();
 
 		com.liferay.headless.admin.user.client.pagination.Page<UserAccount>
-			userAccountPage = userAccountResource.getUserGroupUsersPage(
-				userGroup.getId(), "", userFilter,
+			userAccountsPage = userAccountResource.getUserGroupUsersPage(
+				userGroup.getId(), "", userAccountFilterString,
 				com.liferay.headless.admin.user.client.pagination.Pagination.of(
 					-1, -1),
 				"");
 
-		return userAccountPage.getItems();
+		return userAccountsPage.getItems();
 	}
 
 	private UserGroupResource _getUserGroupResource() throws Exception {

@@ -1,6 +1,5 @@
 locals {
 	argocd_eso_custom_resources_chart="custom-resources"
-	argocd_namespace="argocd"
 	argocd_repo_credentials_secret_name="argocd-repo-credentials"
 	secret_store_name="eso-default-store"
 }
@@ -11,14 +10,14 @@ resource "helm_release" "argocd_eso_custom_resources" {
 		kubernetes_role_binding.eso_secret_writer_binding,
 	]
 	name="argocd-secrets"
-	namespace=local.argocd_namespace
+	namespace=var.argocd_namespace
 	values=[
 		yamlencode(
 			{
 				argocdSecretName=local.argocd_repo_credentials_secret_name
 				gitTokenProperty=var.git_token_property
 				gitUsernameProperty=var.git_username_property
-				namespace=local.argocd_namespace
+				namespace=var.argocd_namespace
 				remoteSecretKey=var.remote_secret_key
 				secretStoreName=local.secret_store_name
 				secretStoreProviderYaml=var.secret_store_provider_yaml_spec
@@ -99,7 +98,7 @@ resource "helm_release" "external_secrets_crds" {
 resource "kubernetes_role" "eso_secret_writer" {
 	metadata {
 		name="eso-${local.argocd_repo_credentials_secret_name}-writer"
-		namespace=local.argocd_namespace
+		namespace=var.argocd_namespace
 	}
 	rule {
 		api_groups=[
@@ -120,7 +119,7 @@ resource "kubernetes_role" "eso_secret_writer" {
 resource "kubernetes_role_binding" "eso_secret_writer_binding" {
 	metadata {
 		name="eso-${local.argocd_repo_credentials_secret_name}-binding"
-		namespace=local.argocd_namespace
+		namespace=var.argocd_namespace
 	}
 	role_ref {
 		api_group="rbac.authorization.k8s.io"

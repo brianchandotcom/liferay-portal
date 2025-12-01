@@ -1185,21 +1185,21 @@ public class BatchEngineBrokerTest {
 			List<String> csvRecordStrings = TransformUtil.transform(
 				csvRecord.toList(),
 				csvRecordString -> {
-					if (!Validator.isBlank(csvRecordString) &&
-						_htmlTagPattern.matcher(
+					if (Validator.isBlank(csvRecordString) ||
+						!_htmlTagPattern.matcher(
 							csvRecordString
 						).find()) {
 
-						csvRecordString = _htmlBreakPattern.matcher(
-							csvRecordString
-						).replaceAll(
-							StringBundler.concat(
-								"$1", System.lineSeparator(),
-								System.lineSeparator(), "$3")
-						);
+						return csvRecordString;
 					}
 
-					return csvRecordString;
+					return _htmlBreakPattern.matcher(
+						csvRecordString
+					).replaceAll(
+						StringBundler.concat(
+							"$1", System.lineSeparator(),
+							System.lineSeparator(), "$3")
+					);
 				});
 
 			csvRecordStringsList.add(csvRecordStrings);

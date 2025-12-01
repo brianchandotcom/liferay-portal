@@ -288,8 +288,7 @@ public class DBUpgraderTest {
 
 		ComponentDescriptionDTO componentDescriptionDTO =
 			_serviceComponentRuntime.getComponentDescriptionDTO(
-				_getBundle(_DATA_CLEANUP_BUNDLE_NAME),
-				_DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME);
+				_getBundle(), _DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME);
 
 		Promise<Void> voidPromise = _serviceComponentRuntime.disableComponent(
 			componentDescriptionDTO);
@@ -410,13 +409,15 @@ public class DBUpgraderTest {
 		}
 	}
 
-	private Bundle _getBundle(String symbolicName) throws Exception {
+	private Bundle _getBundle() throws Exception {
 		Bundle currentBundle = FrameworkUtil.getBundle(DBUpgraderTest.class);
 
 		BundleContext bundleContext = currentBundle.getBundleContext();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(bundle.getSymbolicName(), symbolicName)) {
+			if (Objects.equals(
+					bundle.getSymbolicName(), _DATA_CLEANUP_BUNDLE_NAME)) {
+
 				return bundle;
 			}
 		}
@@ -449,7 +450,7 @@ public class DBUpgraderTest {
 	}
 
 	private Bundle _uninstallBundle() throws Exception {
-		Bundle bundle = _getBundle(_DATA_CLEANUP_BUNDLE_NAME);
+		Bundle bundle = _getBundle();
 
 		if ((bundle != null) && (bundle.getState() == Bundle.ACTIVE)) {
 			bundle.uninstall();

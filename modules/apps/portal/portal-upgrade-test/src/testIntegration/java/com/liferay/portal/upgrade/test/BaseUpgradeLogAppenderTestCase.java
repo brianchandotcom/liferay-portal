@@ -747,7 +747,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testPostUpgradeDataCleanupMessages() throws Exception {
 		Thread currentThread = Thread.currentThread();
 
-		String classNameValue =
+		String value =
 			"com.liferay.test." + RandomTestUtil.randomString();
 
 		ClassName className = null;
@@ -758,7 +758,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 					currentThread.getContextClassLoader());
 			Connection connection = DataAccess.getConnection()) {
 
-			className = _classNameLocalService.addClassName(classNameValue);
+			className = _classNameLocalService.addClassName(value);
 
 			_appender.start();
 
@@ -768,7 +768,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_assertLogContextDiagnostics(
 				"upgrade.report.data.clean.up",
-				"Class name " + classNameValue +
+				"Class name " + value +
 					" has been deleted because it is not in use");
 		}
 		finally {

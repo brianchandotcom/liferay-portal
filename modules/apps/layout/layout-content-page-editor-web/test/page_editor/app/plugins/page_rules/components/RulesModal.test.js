@@ -162,9 +162,19 @@ describe('RulesSidebar', () => {
 
 		await userEvent.click(screen.getByText('save'));
 
-		expect(screen.getByLabelText('rule-name')).toHaveAccessibleDescription(
+		const nameInput = screen.getByLabelText('rule-name');
+
+		await expect(nameInput).toHaveAccessibleDescription(
 			'this-field-is-required'
 		);
+
+		const nameErrorLink = screen.getByRole('link', {
+			name: 'the-rule-name-field-is-required',
+		});
+
+		await userEvent.click(nameErrorLink);
+
+		await expect(nameInput).toHaveFocus();
 	});
 
 	it('does allow completing a condition', async () => {
@@ -298,5 +308,65 @@ describe('RulesSidebar', () => {
 		expect(
 			screen.queryByText('select-fragment-for-the-action')
 		).not.toBeInTheDocument();
+	});
+
+	it('shows all errors in the error summary with links', async () => {
+		const getLink = (name) => screen.queryByRole('link', {name});
+
+		renderComponent();
+
+		await userEvent.click(screen.getByText('save'));
+
+		const firstConditionPicker = getLink('select-item-for-the-condition');
+
+		await expect(firstConditionPicker).toBeInTheDocument();
+		await expect(getLink('select-action')).toBeInTheDocument();
+
+		await userEvent.click(firstConditionPicker);
+
+		await expect(
+			screen.getByRole('combobox', {
+				name: 'select-item-for-the-condition',
+			})
+		).toHaveFocus();
+
+		await selectPickerOption('select-item-for-the-condition', 'user');
+
+		await userEvent.click(screen.getByText('save'));
+
+		await expect(firstConditionPicker).not.toBeInTheDocument();
+		await expect(getLink('select-condition')).toBeInTheDocument();
+		await expect(getLink('select-action')).toBeInTheDocument();
+
+		await selectPickerOption('select-condition', 'is-the-user');
+
+		await userEvent.click(screen.getByText('save'));
+
+		await expect(getLink('select-condition')).not.toBeInTheDocument();
+		await expect(getLink('select-user')).toBeInTheDocument();
+
+		await selectPickerOption('select-user', 'user1');
+
+		await userEvent.click(screen.getByText('save'));
+
+		await expect(getLink('select-user')).not.toBeInTheDocument();
+
+		await selectPickerOption('select-action', 'hide');
+
+		await userEvent.click(screen.getByText('save'));
+
+		await expect(getLink('select-action')).not.toBeInTheDocument();
+		await expect(
+			getLink('select-fragment-for-the-action')
+		).toBeInTheDocument();
+
+		await selectPickerOption(
+			'select-fragment-for-the-action',
+			'containercillo'
+		);
+
+		await userEvent.click(screen.getByText('save'));
+
+		await expect(addRule).toBeCalled();
 	});
 });

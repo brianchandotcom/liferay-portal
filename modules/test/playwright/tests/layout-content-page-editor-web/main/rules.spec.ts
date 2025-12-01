@@ -708,9 +708,11 @@ test(
 			trigger: page.getByLabel(`View ${ruleName} Options`),
 		});
 
-		await expect(
-			page.locator('input[value="No Options Available"]')
-		).toBeAttached();
+		const noOptionsSelect = page.locator(
+			'input[value="No Options Available"]'
+		);
+
+		await expect(noOptionsSelect).toBeAttached();
 
 		const fragmentSelector = page.getByLabel(
 			'Select Fragment for the Action'
@@ -723,6 +725,33 @@ test(
 		await expect(
 			page.getByRole('option', {name: 'Heading'})
 		).not.toBeAttached();
+
+		// Check the errors when trying to save the rule
+
+		await page.getByText('Save', {exact: true}).click();
+
+		await expect(noOptionsSelect.locator('..')).toHaveText(
+			/Select Fragment for the Condition/
+		);
+		await expect(fragmentSelector.locator('..')).toHaveText(
+			/Select Fragment for the Action/
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {name: 'Form Container'}),
+			trigger: fragmentSelector,
+		});
+
+		await expect(fragmentSelector.locator('..')).not.toHaveText(
+			/Select Fragment for the Action/
+		);
+
+		await expect(
+			page
+				.getByRole('combobox', {name: 'Select Fragment for the Action'})
+				.locator('..')
+		).not.toHaveText(/Select Fragment for the Action/);
 
 		await page.getByText('Cancel', {exact: true}).click();
 

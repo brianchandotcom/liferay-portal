@@ -684,7 +684,7 @@ public class MarketplaceRestController extends BaseRestController {
 					orderItem.getSkuExternalReferenceCode(),
 					orderMetadataJSONObject.getString("productKey"))) {
 
-				return;
+				continue;
 			}
 
 			_koroneikiService.postAccountAccountKeyProductPurchase(

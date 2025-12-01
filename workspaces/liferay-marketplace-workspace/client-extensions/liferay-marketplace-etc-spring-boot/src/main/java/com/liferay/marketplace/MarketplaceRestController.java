@@ -668,9 +668,9 @@ public class MarketplaceRestController extends BaseRestController {
 			customFields.getOrDefault("order-metadata", "{}"));
 
 		if (_koroneikiService.hasEntitlement(
-				"Liferay Analytics Cloud",
 				_koroneikiService.getKoroneikiAccount(
-					order.getAccountExternalReferenceCode()))) {
+					order.getAccountExternalReferenceCode()),
+				"Liferay Analytics Cloud")) {
 
 			_koroneikiService.linkProductPurchaseToOpportunity(
 				jwt, String.valueOf(order.getId()),

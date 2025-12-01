@@ -115,11 +115,9 @@ public class MarketplaceUtil {
 
 			String value = skuOption.getValue();
 
-			String firstCharUpperCase = value.substring(
-				0, 1
-			).toUpperCase();
+			String firstChar = value.substring(0, 1);
 
-			return firstCharUpperCase + value.substring(1);
+			return firstChar.toUpperCase() + value.substring(1);
 		}
 
 		return null;

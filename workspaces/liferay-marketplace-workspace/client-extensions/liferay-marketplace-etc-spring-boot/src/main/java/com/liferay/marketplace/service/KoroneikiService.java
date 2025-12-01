@@ -114,7 +114,7 @@ public class KoroneikiService {
 	}
 
 	public Boolean hasEntitlement(
-		String entitlementName, Account koroneikiAccount) {
+		Account koroneikiAccount, String entitlementName) {
 
 		for (Entitlement entitlement : koroneikiAccount.getEntitlements()) {
 			if (Objects.equals(entitlement.getName(), entitlementName)) {

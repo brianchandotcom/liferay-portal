@@ -325,13 +325,13 @@ export default function ViewWorkflowTasks({
 	};
 
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid-max">
 			<div className="align-items-center d-flex justify-content-between mb-4">
-				<div className="align-items-xl-center d-flex flex-column flex-xl-row justify-content-between">
-					<span className="font-weight-semi-bold mr-3 text-4">
-						{Liferay.Language.get('my-workflow-tasks')}
-					</span>
+				<span className="font-weight-semi-bold mr-3 text-4">
+					{Liferay.Language.get('my-workflow-tasks')}
+				</span>
 
+				<div className="align-items-xl-center d-flex flex-column flex-xl-row">
 					<ClayDropdown
 						className="filter-dropdown"
 						closeOnClick
@@ -366,34 +366,39 @@ export default function ViewWorkflowTasks({
 							</ClayDropdown.Item>
 						))}
 					</ClayDropdown>
-				</div>
 
-				<ClayTooltipProvider>
-					<ClayButton
-						aria-label={sub(
-							Liferay.Language.get('open-x'),
-							`${Liferay.Language.get('my-workflow-tasks')}: ${selectedItem.label}`
-						)}
-						borderless
-						className="btn btn-secondary btn-sm cms-btn-icon-only cms-btn-secondary ml-2"
-						displayType="secondary"
-						onClick={() =>
-							window.open(
-								selectedItem.value === 'assigned-to-me'
-									? myWorkflowTasksURL
-									: myRolesWorkflowTasksURL,
-								'_blank'
-							)
-						}
-						title={sub(
-							Liferay.Language.get('open-x-in-full-page-view'),
-							`"${selectedItem.label}"`
-						)}
-						type="button"
-					>
-						<ClayIcon symbol="shortcut" />
-					</ClayButton>
-				</ClayTooltipProvider>
+					<ClayTooltipProvider>
+						<ClayButton
+							aria-label={sub(
+								Liferay.Language.get('open-x'),
+								`${Liferay.Language.get('my-workflow-tasks')}: ${selectedItem.label}`
+							)}
+							borderless
+							className="btn-sm cms-btn-icon-only cms-btn-secondary ml-2"
+							displayType="secondary"
+							onClick={() =>
+								window.open(
+									selectedItem.value === 'assigned-to-me'
+										? myWorkflowTasksURL
+										: myRolesWorkflowTasksURL,
+									'_blank'
+								)
+							}
+							title={sub(
+								Liferay.Language.get(
+									'open-x-in-full-page-view'
+								),
+								`"${selectedItem.label}"`
+							)}
+							type="button"
+						>
+							<ClayIcon
+								className="text-primary"
+								symbol="shortcut"
+							/>
+						</ClayButton>
+					</ClayTooltipProvider>
+				</div>
 			</div>
 
 			<div className="cms-fds-fluid cms-section home-custom-empty-state">
@@ -402,6 +407,7 @@ export default function ViewWorkflowTasks({
 				{workflowTasks.totalCount > 0 && (
 					<ClayPaginationBarWithBasicItems
 						activeDelta={pagination.pageSize}
+						className="mt-3"
 						deltas={[8, 20, 40, 60].map((size) => ({
 							label: size,
 						}))}

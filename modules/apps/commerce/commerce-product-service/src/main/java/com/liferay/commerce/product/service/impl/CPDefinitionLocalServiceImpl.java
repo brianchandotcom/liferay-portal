@@ -1481,8 +1481,8 @@ public class CPDefinitionLocalServiceImpl
 			return cpDefinition;
 		}
 
-		return cpDefinitionPersistence.fetchByC_V(
-			cProduct.getCProductId(), cProduct.getLatestVersion());
+		return cpDefinitionPersistence.fetchByC_V_First(
+			cProduct.getCProductId(), cProduct.getLatestVersion(), null);
 	}
 
 	@Override
@@ -1500,8 +1500,8 @@ public class CPDefinitionLocalServiceImpl
 			return cpDefinition;
 		}
 
-		return cpDefinitionPersistence.fetchByC_V(
-			cProduct.getCProductId(), cProduct.getLatestVersion());
+		return cpDefinitionPersistence.fetchByC_V_First(
+			cProduct.getCProductId(), cProduct.getLatestVersion(), null);
 	}
 
 	@Override
@@ -1534,8 +1534,8 @@ public class CPDefinitionLocalServiceImpl
 			return cpDefinition;
 		}
 
-		return cpDefinitionPersistence.findByC_V(
-			cProduct.getCProductId(), cProduct.getLatestVersion());
+		return cpDefinitionPersistence.findByC_V_First(
+			cProduct.getCProductId(), cProduct.getLatestVersion(), null);
 	}
 
 	@Override
@@ -1760,7 +1760,8 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition getCProductCPDefinition(long cProductId, int version)
 		throws PortalException {
 
-		return cpDefinitionPersistence.findByC_V(cProductId, version);
+		return cpDefinitionPersistence.findByC_V_First(
+			cProductId, version, null);
 	}
 
 	@Override

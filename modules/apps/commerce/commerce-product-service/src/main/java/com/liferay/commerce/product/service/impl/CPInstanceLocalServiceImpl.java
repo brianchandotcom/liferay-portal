@@ -602,8 +602,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cProduct.getPublishedCPDefinitionId());
 
 		if (cpDefinition == null) {
-			cpDefinition = _cpDefinitionPersistence.fetchByC_V(
-				cProduct.getCProductId(), cProduct.getLatestVersion());
+			cpDefinition = _cpDefinitionPersistence.fetchByC_V_First(
+				cProduct.getCProductId(), cProduct.getLatestVersion(), null);
 
 			if (cpDefinition == null) {
 				return null;

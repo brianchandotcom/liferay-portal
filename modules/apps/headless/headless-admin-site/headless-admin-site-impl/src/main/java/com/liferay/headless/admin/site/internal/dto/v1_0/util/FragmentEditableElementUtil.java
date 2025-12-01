@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeSet;
 
 /**
  * @author Rubén Pulido
@@ -150,7 +151,7 @@ public class FragmentEditableElementUtil {
 		long scopeGroupId) {
 
 		return TransformUtil.transformToArray(
-			jsonObject.keySet(),
+			new TreeSet<>(jsonObject.keySet()),
 			fieldId -> {
 				FragmentEditableElementValue fragmentEditableElementValue =
 					_getFragmentEditableElementValue(

@@ -22,6 +22,7 @@ import analyticsOAuth2 from '../../../../services/oauth/Analytics';
 import {formatDate} from '../../../../utils/date';
 import {removeHTMLTags} from '../../../../utils/string';
 import TrialAlert from '../../components/Solution/TrialAlert';
+import {safeJSONParse} from '../../../../utils/util';
 
 const NEXT_TO_EXPIRE_LEFT_DAYS = 2;
 
@@ -182,8 +183,12 @@ const Solution = () => {
 		OrderTypes.SOLUTIONS30,
 	].includes(placedOrder.orderTypeExternalReferenceCode as OrderTypes);
 
-	const analyticsGroupId =
-		placedOrder.customFields[OrderCustomFields.ANALYTICS_GROUP_ID];
+	const orderMetadata = safeJSONParse(
+		placedOrder.customFields[OrderCustomFields.ORDER_METADATA],
+		{analyticsProject: {groupId: ''}}
+	);
+
+	const analyticsGroupId = orderMetadata.analyticsProject.groupId;
 
 	const getOrderDetails = () => {
 		if (

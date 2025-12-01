@@ -1,4 +1,0 @@
-apiVersion: v2
-name: liferay-aws-gitops-external-secrets-custom-resources
-type: application
-version: 0.1.0

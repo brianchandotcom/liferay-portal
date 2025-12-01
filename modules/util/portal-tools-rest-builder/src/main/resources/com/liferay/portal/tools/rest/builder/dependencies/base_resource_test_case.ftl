@@ -1799,7 +1799,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 
 					${schemaName} get${schemaName} =
-						<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("put", "get", "f"))! />
+						<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("put", "get", "f"))!"" />
 
 						<#if getJavaMethodSignature?has_content && getJavaMethodSignature.returnType?ends_with(schemaName)>
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}(
@@ -1875,7 +1875,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						get${schemaName} =
 
-						<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("put", "get", "f"))! />
+						<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("put", "get", "f"))!"" />
 
 						<#if getJavaMethodSignature?has_content && getJavaMethodSignature.returnType?ends_with(schemaName)>
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}(

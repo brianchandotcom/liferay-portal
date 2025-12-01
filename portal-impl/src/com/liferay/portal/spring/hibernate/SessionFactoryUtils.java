@@ -57,21 +57,14 @@ public class SessionFactoryUtils {
 			String message = _getJDBCExceptionMessage(jdbcException);
 
 			if (hibernateException instanceof ConstraintViolationException) {
-				ConstraintViolationException constraintViolationException =
-					(ConstraintViolationException)hibernateException;
-
 				return new DataIntegrityViolationException(
-					StringBundler.concat(
-						hibernateException.getMessage(), "; SQL [",
-						constraintViolationException.getSQL(),
-						"]; constraint [",
-						constraintViolationException.getConstraintName(), "]"),
-					hibernateException);
+					message, hibernateException);
 			}
 			else if (hibernateException instanceof DataException) {
 				return new DataIntegrityViolationException(
 					message, hibernateException);
 			}
+
 			if (hibernateException instanceof JDBCConnectionException) {
 				return new DataAccessResourceFailureException(
 					message, hibernateException);
@@ -93,14 +86,7 @@ public class SessionFactoryUtils {
 					message, hibernateException);
 			}
 
-			return new UncategorizedDataAccessException(
-				StringBundler.concat(
-					"JDBC exception on Hibernate data access: ",
-					"SQLException for SQL [", jdbcException.getSQL(),
-					"]; SQL state [", jdbcException.getSQLState(),
-					"]; error code [", jdbcException.getErrorCode(), "]; ",
-					jdbcException.getMessage()),
-				jdbcException) {
+			return new UncategorizedDataAccessException("", jdbcException) {
 			};
 		}
 		else if (hibernateException instanceof NonUniqueObjectException) {

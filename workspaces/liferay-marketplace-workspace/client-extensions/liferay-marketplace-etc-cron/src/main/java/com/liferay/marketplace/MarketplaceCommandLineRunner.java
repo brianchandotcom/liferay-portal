@@ -178,35 +178,6 @@ public class MarketplaceCommandLineRunner
 		return localDate.getYear() + " Q" + quarter;
 	}
 
-	private Collection<UserAccount> _getCustomerUserAccounts()
-		throws Exception {
-
-		UserGroupResource userGroupResource = _getUserGroupResource();
-
-		UserGroup userGroup = userGroupResource.getUserGroupsPage(
-			"", "name eq 'Customers'",
-			com.liferay.headless.admin.user.client.pagination.Pagination.of(
-				-1, -1),
-			""
-		).fetchFirstItem();
-
-		if (userGroup == null) {
-			return Collections.emptyList();
-		}
-
-		UserAccountResource userAccountResource = _getUserAccountResource();
-
-		com.liferay.headless.admin.user.client.pagination.Page<UserAccount>
-			userAccountPage = userAccountResource.getUserGroupUsersPage(
-				userGroup.getId(), "",
-				"not contains(emailAddress, '@liferay.com')",
-				com.liferay.headless.admin.user.client.pagination.Pagination.of(
-					-1, -1),
-				"");
-
-		return userAccountPage.getItems();
-	}
-
 	private String _getKoroneikiProject(Order order) {
 		JSONArray jsonArray = new JSONArray();
 
@@ -356,6 +327,35 @@ public class MarketplaceCommandLineRunner
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
+	}
+
+	private Collection<UserAccount> _getUserAccounts(
+			String userFilter, String userGroupFilter)
+		throws Exception {
+
+		UserGroupResource userGroupResource = _getUserGroupResource();
+
+		UserGroup userGroup = userGroupResource.getUserGroupsPage(
+			"", userGroupFilter,
+			com.liferay.headless.admin.user.client.pagination.Pagination.of(
+				-1, -1),
+			""
+		).fetchFirstItem();
+
+		if (userGroup == null) {
+			return Collections.emptyList();
+		}
+
+		UserAccountResource userAccountResource = _getUserAccountResource();
+
+		com.liferay.headless.admin.user.client.pagination.Page<UserAccount>
+			userAccountPage = userAccountResource.getUserGroupUsersPage(
+				userGroup.getId(), "", userFilter,
+				com.liferay.headless.admin.user.client.pagination.Pagination.of(
+					-1, -1),
+				"");
+
+		return userAccountPage.getItems();
 	}
 
 	private UserGroupResource _getUserGroupResource() throws Exception {
@@ -624,7 +624,10 @@ public class MarketplaceCommandLineRunner
 		Map<String, JSONObject> projectsUsingMarketplace = new HashMap<>();
 
 		OrderResource orderResource = _getOrderResource();
-		Collection<UserAccount> userAccounts = _getCustomerUserAccounts();
+
+		Collection<UserAccount> userAccounts = _getUserAccounts(
+			"not contains(emailAddress, '@liferay.com')",
+			"name eq 'Customers'");
 
 		_forEachOrder(
 			StringBundler.concat(

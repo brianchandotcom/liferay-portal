@@ -709,23 +709,6 @@ public class CPConfigurationListPersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(cpConfigurationList.getParentCPConfigurationListId()),
-			ReflectionTestUtil.<Long>invoke(
-				cpConfigurationList, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "parentCPConfigurationListId"));
-
-		Assert.assertEquals(
-			Long.valueOf(cpConfigurationList.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				cpConfigurationList, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
-			Boolean.valueOf(cpConfigurationList.getMaster()),
-			ReflectionTestUtil.<Boolean>invoke(
-				cpConfigurationList, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "master"));
-
-		Assert.assertEquals(
 			cpConfigurationList.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				cpConfigurationList, "getColumnOriginalValue",

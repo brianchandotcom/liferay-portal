@@ -27,6 +27,7 @@ create index IX_4B11FAD8 on CommerceOrder (shippingAddressId);
 create index IX_EFAA753 on CommerceOrder (userId);
 create index IX_35A4137B on CommerceOrder (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_654BB574 on CommerceOrderItem (CIBookedQuantityId);
 create index IX_2E1BB39D on CommerceOrderItem (CPInstanceId);
 create index IX_F9E8D927 on CommerceOrderItem (CProductId);
 create index IX_415AF3E3 on CommerceOrderItem (commerceOrderId, CPInstanceId);

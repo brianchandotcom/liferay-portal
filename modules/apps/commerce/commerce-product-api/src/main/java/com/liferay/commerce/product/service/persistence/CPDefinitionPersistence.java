@@ -1470,45 +1470,149 @@ public interface CPDefinitionPersistence
 	public int filterCountByG_S(long groupId, int status);
 
 	/**
-	 * Returns the cp definition where CProductId = &#63; and version = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
+	 * Returns all the cp definitions where CProductId = &#63; and version = &#63;.
 	 *
 	 * @param CProductId the c product ID
 	 * @param version the version
-	 * @return the matching cp definition
+	 * @return the matching cp definitions
+	 */
+	public java.util.List<CPDefinition> findByC_V(long CProductId, int version);
+
+	/**
+	 * Returns a range of all the cp definitions where CProductId = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @param start the lower bound of the range of cp definitions
+	 * @param end the upper bound of the range of cp definitions (not inclusive)
+	 * @return the range of matching cp definitions
+	 */
+	public java.util.List<CPDefinition> findByC_V(
+		long CProductId, int version, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cp definitions where CProductId = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @param start the lower bound of the range of cp definitions
+	 * @param end the upper bound of the range of cp definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definitions
+	 */
+	public java.util.List<CPDefinition> findByC_V(
+		long CProductId, int version, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cp definitions where CProductId = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @param start the lower bound of the range of cp definitions
+	 * @param end the upper bound of the range of cp definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp definitions
+	 */
+	public java.util.List<CPDefinition> findByC_V(
+		long CProductId, int version, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cp definition in the ordered set where CProductId = &#63; and version = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition
 	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	 */
-	public CPDefinition findByC_V(long CProductId, int version)
+	public CPDefinition findByC_V_First(
+			long CProductId, int version,
+			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
+				orderByComparator)
 		throws NoSuchCPDefinitionException;
 
 	/**
-	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first cp definition in the ordered set where CProductId = &#63; and version = &#63;.
 	 *
 	 * @param CProductId the c product ID
 	 * @param version the version
-	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
-	public CPDefinition fetchByC_V(long CProductId, int version);
+	public CPDefinition fetchByC_V_First(
+		long CProductId, int version,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
+			orderByComparator);
 
 	/**
-	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last cp definition in the ordered set where CProductId = &#63; and version = &#63;.
 	 *
 	 * @param CProductId the c product ID
 	 * @param version the version
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition
+	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	 */
-	public CPDefinition fetchByC_V(
-		long CProductId, int version, boolean useFinderCache);
-
-	/**
-	 * Removes the cp definition where CProductId = &#63; and version = &#63; from the database.
-	 *
-	 * @param CProductId the c product ID
-	 * @param version the version
-	 * @return the cp definition that was removed
-	 */
-	public CPDefinition removeByC_V(long CProductId, int version)
+	public CPDefinition findByC_V_Last(
+			long CProductId, int version,
+			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
+				orderByComparator)
 		throws NoSuchCPDefinitionException;
+
+	/**
+	 * Returns the last cp definition in the ordered set where CProductId = &#63; and version = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	 */
+	public CPDefinition fetchByC_V_Last(
+		long CProductId, int version,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
+			orderByComparator);
+
+	/**
+	 * Returns the cp definitions before and after the current cp definition in the ordered set where CProductId = &#63; and version = &#63;.
+	 *
+	 * @param CPDefinitionId the primary key of the current cp definition
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp definition
+	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
+	 */
+	public CPDefinition[] findByC_V_PrevAndNext(
+			long CPDefinitionId, long CProductId, int version,
+			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
+				orderByComparator)
+		throws NoSuchCPDefinitionException;
+
+	/**
+	 * Removes all the cp definitions where CProductId = &#63; and version = &#63; from the database.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 */
+	public void removeByC_V(long CProductId, int version);
 
 	/**
 	 * Returns the number of cp definitions where CProductId = &#63; and version = &#63;.

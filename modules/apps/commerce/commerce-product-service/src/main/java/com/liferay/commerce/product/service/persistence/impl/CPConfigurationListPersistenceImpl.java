@@ -1974,101 +1974,511 @@ public class CPConfigurationListPersistenceImpl
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"cpConfigurationList.companyId = ?";
 
-	private FinderPath _finderPathFetchByParentCPConfigurationListId;
+	private FinderPath
+		_finderPathWithPaginationFindByParentCPConfigurationListId;
+	private FinderPath
+		_finderPathWithoutPaginationFindByParentCPConfigurationListId;
+	private FinderPath _finderPathCountByParentCPConfigurationListId;
 
 	/**
-	 * Returns the cp configuration list where parentCPConfigurationListId = &#63; or throws a <code>NoSuchCPConfigurationListException</code> if it could not be found.
+	 * Returns all the cp configuration lists where parentCPConfigurationListId = &#63;.
 	 *
 	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @return the matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 * @return the matching cp configuration lists
 	 */
 	@Override
-	public CPConfigurationList findByParentCPConfigurationListId(
-			long parentCPConfigurationListId)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList =
-			fetchByParentCPConfigurationListId(parentCPConfigurationListId);
-
-		if (cpConfigurationList == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("parentCPConfigurationListId=");
-			sb.append(parentCPConfigurationListId);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchCPConfigurationListException(sb.toString());
-		}
-
-		return cpConfigurationList;
-	}
-
-	/**
-	 * Returns the cp configuration list where parentCPConfigurationListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByParentCPConfigurationListId(
+	public List<CPConfigurationList> findByParentCPConfigurationListId(
 		long parentCPConfigurationListId) {
 
-		return fetchByParentCPConfigurationListId(
-			parentCPConfigurationListId, true);
+		return findByParentCPConfigurationListId(
+			parentCPConfigurationListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns the cp configuration list where parentCPConfigurationListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns a range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
 	 */
 	@Override
-	public CPConfigurationList fetchByParentCPConfigurationListId(
-		long parentCPConfigurationListId, boolean useFinderCache) {
+	public List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId, int start, int end) {
+
+		return findByParentCPConfigurationListId(
+			parentCPConfigurationListId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	@Override
+	public List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return findByParentCPConfigurationListId(
+			parentCPConfigurationListId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	@Override
+	public List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator,
+		boolean useFinderCache) {
 
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPConfigurationList.class)) {
 
+			FinderPath finderPath = null;
 			Object[] finderArgs = null;
 
-			if (useFinderCache) {
-				finderArgs = new Object[] {parentCPConfigurationListId};
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath =
+						_finderPathWithoutPaginationFindByParentCPConfigurationListId;
+					finderArgs = new Object[] {parentCPConfigurationListId};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath =
+					_finderPathWithPaginationFindByParentCPConfigurationListId;
+				finderArgs = new Object[] {
+					parentCPConfigurationListId, start, end, orderByComparator
+				};
 			}
 
-			Object result = null;
+			List<CPConfigurationList> list = null;
 
 			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByParentCPConfigurationListId, finderArgs,
-					this);
-			}
+				list = (List<CPConfigurationList>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if (result instanceof CPConfigurationList) {
-				CPConfigurationList cpConfigurationList =
-					(CPConfigurationList)result;
+				if ((list != null) && !list.isEmpty()) {
+					for (CPConfigurationList cpConfigurationList : list) {
+						if (parentCPConfigurationListId !=
+								cpConfigurationList.
+									getParentCPConfigurationListId()) {
 
-				if (parentCPConfigurationListId !=
-						cpConfigurationList.getParentCPConfigurationListId()) {
+							list = null;
 
-					result = null;
+							break;
+						}
+					}
 				}
 			}
 
-			if (result == null) {
-				StringBundler sb = new StringBundler(3);
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
 				sb.append(_SQL_SELECT_CPCONFIGURATIONLIST_WHERE);
+
+				sb.append(
+					_FINDER_COLUMN_PARENTCPCONFIGURATIONLISTID_PARENTCPCONFIGURATIONLISTID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(CPConfigurationListModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(parentCPConfigurationListId);
+
+					list = (List<CPConfigurationList>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 */
+	@Override
+	public CPConfigurationList findByParentCPConfigurationListId_First(
+			long parentCPConfigurationListId,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws NoSuchCPConfigurationListException {
+
+		CPConfigurationList cpConfigurationList =
+			fetchByParentCPConfigurationListId_First(
+				parentCPConfigurationListId, orderByComparator);
+
+		if (cpConfigurationList != null) {
+			return cpConfigurationList;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("parentCPConfigurationListId=");
+		sb.append(parentCPConfigurationListId);
+
+		sb.append("}");
+
+		throw new NoSuchCPConfigurationListException(sb.toString());
+	}
+
+	/**
+	 * Returns the first cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	@Override
+	public CPConfigurationList fetchByParentCPConfigurationListId_First(
+		long parentCPConfigurationListId,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		List<CPConfigurationList> list = findByParentCPConfigurationListId(
+			parentCPConfigurationListId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 */
+	@Override
+	public CPConfigurationList findByParentCPConfigurationListId_Last(
+			long parentCPConfigurationListId,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws NoSuchCPConfigurationListException {
+
+		CPConfigurationList cpConfigurationList =
+			fetchByParentCPConfigurationListId_Last(
+				parentCPConfigurationListId, orderByComparator);
+
+		if (cpConfigurationList != null) {
+			return cpConfigurationList;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("parentCPConfigurationListId=");
+		sb.append(parentCPConfigurationListId);
+
+		sb.append("}");
+
+		throw new NoSuchCPConfigurationListException(sb.toString());
+	}
+
+	/**
+	 * Returns the last cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	@Override
+	public CPConfigurationList fetchByParentCPConfigurationListId_Last(
+		long parentCPConfigurationListId,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		int count = countByParentCPConfigurationListId(
+			parentCPConfigurationListId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPConfigurationList> list = findByParentCPConfigurationListId(
+			parentCPConfigurationListId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param CPConfigurationListId the primary key of the current cp configuration list
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
+	 */
+	@Override
+	public CPConfigurationList[] findByParentCPConfigurationListId_PrevAndNext(
+			long CPConfigurationListId, long parentCPConfigurationListId,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws NoSuchCPConfigurationListException {
+
+		CPConfigurationList cpConfigurationList = findByPrimaryKey(
+			CPConfigurationListId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPConfigurationList[] array = new CPConfigurationListImpl[3];
+
+			array[0] = getByParentCPConfigurationListId_PrevAndNext(
+				session, cpConfigurationList, parentCPConfigurationListId,
+				orderByComparator, true);
+
+			array[1] = cpConfigurationList;
+
+			array[2] = getByParentCPConfigurationListId_PrevAndNext(
+				session, cpConfigurationList, parentCPConfigurationListId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPConfigurationList getByParentCPConfigurationListId_PrevAndNext(
+		Session session, CPConfigurationList cpConfigurationList,
+		long parentCPConfigurationListId,
+		OrderByComparator<CPConfigurationList> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_CPCONFIGURATIONLIST_WHERE);
+
+		sb.append(
+			_FINDER_COLUMN_PARENTCPCONFIGURATIONLISTID_PARENTCPCONFIGURATIONLISTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CPConfigurationListModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(parentCPConfigurationListId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						cpConfigurationList)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CPConfigurationList> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cp configuration lists where parentCPConfigurationListId = &#63; from the database.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 */
+	@Override
+	public void removeByParentCPConfigurationListId(
+		long parentCPConfigurationListId) {
+
+		for (CPConfigurationList cpConfigurationList :
+				findByParentCPConfigurationListId(
+					parentCPConfigurationListId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(cpConfigurationList);
+		}
+	}
+
+	/**
+	 * Returns the number of cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @return the number of matching cp configuration lists
+	 */
+	@Override
+	public int countByParentCPConfigurationListId(
+		long parentCPConfigurationListId) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CPConfigurationList.class)) {
+
+			FinderPath finderPath =
+				_finderPathCountByParentCPConfigurationListId;
+
+			Object[] finderArgs = new Object[] {parentCPConfigurationListId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
+
+				sb.append(_SQL_COUNT_CPCONFIGURATIONLIST_WHERE);
 
 				sb.append(
 					_FINDER_COLUMN_PARENTCPCONFIGURATIONLISTID_PARENTCPCONFIGURATIONLISTID_2);
@@ -2086,39 +2496,9 @@ public class CPConfigurationListPersistenceImpl
 
 					queryPos.add(parentCPConfigurationListId);
 
-					List<CPConfigurationList> list = query.list();
+					count = (Long)query.uniqueResult();
 
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByParentCPConfigurationListId,
-								finderArgs, list);
-						}
-					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
-
-							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {
-										parentCPConfigurationListId
-									};
-								}
-
-								_log.warn(
-									"CPConfigurationListPersistenceImpl.fetchByParentCPConfigurationListId(long, boolean) with parameters (" +
-										StringUtil.merge(finderArgs) +
-											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-							}
-						}
-
-						CPConfigurationList cpConfigurationList = list.get(0);
-
-						result = cpConfigurationList;
-
-						cacheResult(cpConfigurationList);
-					}
+					finderCache.putResult(finderPath, finderArgs, count);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -2128,50 +2508,8 @@ public class CPConfigurationListPersistenceImpl
 				}
 			}
 
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (CPConfigurationList)result;
-			}
+			return count.intValue();
 		}
-	}
-
-	/**
-	 * Removes the cp configuration list where parentCPConfigurationListId = &#63; from the database.
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @return the cp configuration list that was removed
-	 */
-	@Override
-	public CPConfigurationList removeByParentCPConfigurationListId(
-			long parentCPConfigurationListId)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList =
-			findByParentCPConfigurationListId(parentCPConfigurationListId);
-
-		return remove(cpConfigurationList);
-	}
-
-	/**
-	 * Returns the number of cp configuration lists where parentCPConfigurationListId = &#63;.
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @return the number of matching cp configuration lists
-	 */
-	@Override
-	public int countByParentCPConfigurationListId(
-		long parentCPConfigurationListId) {
-
-		CPConfigurationList cpConfigurationList =
-			fetchByParentCPConfigurationListId(parentCPConfigurationListId);
-
-		if (cpConfigurationList == null) {
-			return 0;
-		}
-
-		return 1;
 	}
 
 	private static final String
@@ -3023,101 +3361,516 @@ public class CPConfigurationListPersistenceImpl
 	private static final String _FINDER_COLUMN_G_C_COMPANYID_2 =
 		"cpConfigurationList.companyId = ?";
 
-	private FinderPath _finderPathFetchByG_M;
+	private FinderPath _finderPathWithPaginationFindByG_M;
+	private FinderPath _finderPathWithoutPaginationFindByG_M;
+	private FinderPath _finderPathCountByG_M;
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or throws a <code>NoSuchCPConfigurationListException</code> if it could not be found.
+	 * Returns all the cp configuration lists where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param master the master
-	 * @return the matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 * @return the matching cp configuration lists
 	 */
 	@Override
-	public CPConfigurationList findByG_M(long groupId, boolean master)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByG_M(groupId, master);
-
-		if (cpConfigurationList == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", master=");
-			sb.append(master);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchCPConfigurationListException(sb.toString());
-		}
-
-		return cpConfigurationList;
+	public List<CPConfigurationList> findByG_M(long groupId, boolean master) {
+		return findByG_M(
+			groupId, master, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param master the master
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
 	 */
 	@Override
-	public CPConfigurationList fetchByG_M(long groupId, boolean master) {
-		return fetchByG_M(groupId, master, true);
+	public List<CPConfigurationList> findByG_M(
+		long groupId, boolean master, int start, int end) {
+
+		return findByG_M(groupId, master, start, end, null);
 	}
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param master the master
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	@Override
+	public List<CPConfigurationList> findByG_M(
+		long groupId, boolean master, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return findByG_M(groupId, master, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 * @return the ordered range of matching cp configuration lists
 	 */
 	@Override
-	public CPConfigurationList fetchByG_M(
-		long groupId, boolean master, boolean useFinderCache) {
+	public List<CPConfigurationList> findByG_M(
+		long groupId, boolean master, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator,
+		boolean useFinderCache) {
 
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPConfigurationList.class)) {
 
+			FinderPath finderPath = null;
 			Object[] finderArgs = null;
 
-			if (useFinderCache) {
-				finderArgs = new Object[] {groupId, master};
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_M;
+					finderArgs = new Object[] {groupId, master};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_M;
+				finderArgs = new Object[] {
+					groupId, master, start, end, orderByComparator
+				};
 			}
 
-			Object result = null;
+			List<CPConfigurationList> list = null;
 
 			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByG_M, finderArgs, this);
-			}
+				list = (List<CPConfigurationList>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if (result instanceof CPConfigurationList) {
-				CPConfigurationList cpConfigurationList =
-					(CPConfigurationList)result;
+				if ((list != null) && !list.isEmpty()) {
+					for (CPConfigurationList cpConfigurationList : list) {
+						if ((groupId != cpConfigurationList.getGroupId()) ||
+							(master != cpConfigurationList.isMaster())) {
 
-				if ((groupId != cpConfigurationList.getGroupId()) ||
-					(master != cpConfigurationList.isMaster())) {
+							list = null;
 
-					result = null;
+							break;
+						}
+					}
 				}
 			}
 
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
 
 				sb.append(_SQL_SELECT_CPCONFIGURATIONLIST_WHERE);
+
+				sb.append(_FINDER_COLUMN_G_M_GROUPID_2);
+
+				sb.append(_FINDER_COLUMN_G_M_MASTER_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(CPConfigurationListModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(groupId);
+
+					queryPos.add(master);
+
+					list = (List<CPConfigurationList>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 */
+	@Override
+	public CPConfigurationList findByG_M_First(
+			long groupId, boolean master,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws NoSuchCPConfigurationListException {
+
+		CPConfigurationList cpConfigurationList = fetchByG_M_First(
+			groupId, master, orderByComparator);
+
+		if (cpConfigurationList != null) {
+			return cpConfigurationList;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", master=");
+		sb.append(master);
+
+		sb.append("}");
+
+		throw new NoSuchCPConfigurationListException(sb.toString());
+	}
+
+	/**
+	 * Returns the first cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	@Override
+	public CPConfigurationList fetchByG_M_First(
+		long groupId, boolean master,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		List<CPConfigurationList> list = findByG_M(
+			groupId, master, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
+	 */
+	@Override
+	public CPConfigurationList findByG_M_Last(
+			long groupId, boolean master,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws NoSuchCPConfigurationListException {
+
+		CPConfigurationList cpConfigurationList = fetchByG_M_Last(
+			groupId, master, orderByComparator);
+
+		if (cpConfigurationList != null) {
+			return cpConfigurationList;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", master=");
+		sb.append(master);
+
+		sb.append("}");
+
+		throw new NoSuchCPConfigurationListException(sb.toString());
+	}
+
+	/**
+	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	@Override
+	public CPConfigurationList fetchByG_M_Last(
+		long groupId, boolean master,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		int count = countByG_M(groupId, master);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPConfigurationList> list = findByG_M(
+			groupId, master, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
+	 *
+	 * @param CPConfigurationListId the primary key of the current cp configuration list
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp configuration list
+	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
+	 */
+	@Override
+	public CPConfigurationList[] findByG_M_PrevAndNext(
+			long CPConfigurationListId, long groupId, boolean master,
+			OrderByComparator<CPConfigurationList> orderByComparator)
+		throws NoSuchCPConfigurationListException {
+
+		CPConfigurationList cpConfigurationList = findByPrimaryKey(
+			CPConfigurationListId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPConfigurationList[] array = new CPConfigurationListImpl[3];
+
+			array[0] = getByG_M_PrevAndNext(
+				session, cpConfigurationList, groupId, master,
+				orderByComparator, true);
+
+			array[1] = cpConfigurationList;
+
+			array[2] = getByG_M_PrevAndNext(
+				session, cpConfigurationList, groupId, master,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPConfigurationList getByG_M_PrevAndNext(
+		Session session, CPConfigurationList cpConfigurationList, long groupId,
+		boolean master,
+		OrderByComparator<CPConfigurationList> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_CPCONFIGURATIONLIST_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_M_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_M_MASTER_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CPConfigurationListModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		queryPos.add(master);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						cpConfigurationList)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CPConfigurationList> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cp configuration lists where groupId = &#63; and master = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 */
+	@Override
+	public void removeByG_M(long groupId, boolean master) {
+		for (CPConfigurationList cpConfigurationList :
+				findByG_M(
+					groupId, master, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(cpConfigurationList);
+		}
+	}
+
+	/**
+	 * Returns the number of cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @return the number of matching cp configuration lists
+	 */
+	@Override
+	public int countByG_M(long groupId, boolean master) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CPConfigurationList.class)) {
+
+			FinderPath finderPath = _finderPathCountByG_M;
+
+			Object[] finderArgs = new Object[] {groupId, master};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_CPCONFIGURATIONLIST_WHERE);
 
 				sb.append(_FINDER_COLUMN_G_M_GROUPID_2);
 
@@ -3138,36 +3891,9 @@ public class CPConfigurationListPersistenceImpl
 
 					queryPos.add(master);
 
-					List<CPConfigurationList> list = query.list();
+					count = (Long)query.uniqueResult();
 
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByG_M, finderArgs, list);
-						}
-					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
-
-							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {groupId, master};
-								}
-
-								_log.warn(
-									"CPConfigurationListPersistenceImpl.fetchByG_M(long, boolean, boolean) with parameters (" +
-										StringUtil.merge(finderArgs) +
-											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-							}
-						}
-
-						CPConfigurationList cpConfigurationList = list.get(0);
-
-						result = cpConfigurationList;
-
-						cacheResult(cpConfigurationList);
-					}
+					finderCache.putResult(finderPath, finderArgs, count);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -3177,47 +3903,8 @@ public class CPConfigurationListPersistenceImpl
 				}
 			}
 
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (CPConfigurationList)result;
-			}
+			return count.intValue();
 		}
-	}
-
-	/**
-	 * Removes the cp configuration list where groupId = &#63; and master = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @return the cp configuration list that was removed
-	 */
-	@Override
-	public CPConfigurationList removeByG_M(long groupId, boolean master)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = findByG_M(groupId, master);
-
-		return remove(cpConfigurationList);
-	}
-
-	/**
-	 * Returns the number of cp configuration lists where groupId = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @return the number of matching cp configuration lists
-	 */
-	@Override
-	public int countByG_M(long groupId, boolean master) {
-		CPConfigurationList cpConfigurationList = fetchByG_M(groupId, master);
-
-		if (cpConfigurationList == null) {
-			return 0;
-		}
-
-		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_M_GROUPID_2 =
@@ -5842,21 +6529,6 @@ public class CPConfigurationListPersistenceImpl
 				cpConfigurationList);
 
 			finderCache.putResult(
-				_finderPathFetchByParentCPConfigurationListId,
-				new Object[] {
-					cpConfigurationList.getParentCPConfigurationListId()
-				},
-				cpConfigurationList);
-
-			finderCache.putResult(
-				_finderPathFetchByG_M,
-				new Object[] {
-					cpConfigurationList.getGroupId(),
-					cpConfigurationList.isMaster()
-				},
-				cpConfigurationList);
-
-			finderCache.putResult(
 				_finderPathFetchByERC_C,
 				new Object[] {
 					cpConfigurationList.getExternalReferenceCode(),
@@ -5956,22 +6628,6 @@ public class CPConfigurationListPersistenceImpl
 
 			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, cpConfigurationListModelImpl);
-
-			args = new Object[] {
-				cpConfigurationListModelImpl.getParentCPConfigurationListId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByParentCPConfigurationListId, args,
-				cpConfigurationListModelImpl);
-
-			args = new Object[] {
-				cpConfigurationListModelImpl.getGroupId(),
-				cpConfigurationListModelImpl.isMaster()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_M, args, cpConfigurationListModelImpl);
 
 			args = new Object[] {
 				cpConfigurationListModelImpl.getExternalReferenceCode(),
@@ -6862,10 +7518,28 @@ public class CPConfigurationListPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathFetchByParentCPConfigurationListId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByParentCPConfigurationListId",
+		_finderPathWithPaginationFindByParentCPConfigurationListId =
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByParentCPConfigurationListId",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"parentCPConfigurationListId"}, true);
+
+		_finderPathWithoutPaginationFindByParentCPConfigurationListId =
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByParentCPConfigurationListId",
+				new String[] {Long.class.getName()},
+				new String[] {"parentCPConfigurationListId"}, true);
+
+		_finderPathCountByParentCPConfigurationListId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByParentCPConfigurationListId",
 			new String[] {Long.class.getName()},
-			new String[] {"parentCPConfigurationListId"}, true);
+			new String[] {"parentCPConfigurationListId"}, false);
 
 		_finderPathWithPaginationFindByG_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
@@ -6891,10 +7565,24 @@ public class CPConfigurationListPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "companyId"}, false);
 
-		_finderPathFetchByG_M = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_M",
+		_finderPathWithPaginationFindByG_M = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "master"}, true);
+
+		_finderPathWithoutPaginationFindByG_M = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "master"}, true);
+
+		_finderPathCountByG_M = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"groupId", "master"}, false);
 
 		_finderPathWithPaginationFindByLtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",

@@ -31,10 +31,12 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
+		writer.write("\"@liferay/language/\": \"");
+
 		String cdnHost = _getCDNHost(httpServletRequest);
 
-		writer.write("\"@liferay/language/\": \"");
 		writer.write(cdnHost);
+
 		writer.write(_portal.getPathContext(httpServletRequest));
 		writer.write("/o/js/language/\"");
 

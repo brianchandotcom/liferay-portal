@@ -31,6 +31,8 @@ public class OAuth2ClientDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
+		writer.write("\"@liferay/oauth2-provider-web/client\": \"");
+
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
@@ -39,8 +41,8 @@ public class OAuth2ClientDynamicJSImportMapsContributor
 			absolutePortalURLBuilder.forESModule(
 				"oauth2-provider-web", "client.js");
 
-		writer.write("\"@liferay/oauth2-provider-web/client\" : \"");
 		writer.write(esModuleAbsolutePortalURLBuilder.build());
+
 		writer.write(StringPool.QUOTE);
 	}
 

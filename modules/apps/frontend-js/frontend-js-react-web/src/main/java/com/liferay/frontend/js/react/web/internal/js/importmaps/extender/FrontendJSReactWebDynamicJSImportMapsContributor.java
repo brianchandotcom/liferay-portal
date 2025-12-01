@@ -33,21 +33,13 @@ public class FrontendJSReactWebDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
+		boolean first = true;
+
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
 
-		boolean first = true;
-
 		for (String moduleName : _MODULE_NAMES) {
-			String escapedModuleName = StringUtil.replace(
-				moduleName, CharPool.FORWARD_SLASH, CharPool.DOLLAR);
-
-			ESModuleAbsolutePortalURLBuilder esModuleAbsolutePortalURLBuilder =
-				absolutePortalURLBuilder.forESModule(
-					"frontend-js-react-web",
-					"exports/" + escapedModuleName + ".js");
-
 			if (!first) {
 				writer.write(", ");
 			}
@@ -58,7 +50,17 @@ public class FrontendJSReactWebDynamicJSImportMapsContributor
 			writer.write(StringPool.QUOTE);
 			writer.write(moduleName);
 			writer.write("\": \"");
+
+			String escapedModuleName = StringUtil.replace(
+				moduleName, CharPool.FORWARD_SLASH, CharPool.DOLLAR);
+
+			ESModuleAbsolutePortalURLBuilder esModuleAbsolutePortalURLBuilder =
+				absolutePortalURLBuilder.forESModule(
+					"frontend-js-react-web",
+					"exports/" + escapedModuleName + ".js");
+
 			writer.write(esModuleAbsolutePortalURLBuilder.build());
+
 			writer.write(StringPool.QUOTE);
 		}
 	}

@@ -5,12 +5,12 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ScreenReaderAnnouncerContextProvider} from '@liferay/layout-js-components-web';
-import classNames from 'classnames';
 import {openToast, useId} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
@@ -40,6 +40,7 @@ export default function RulesModal() {
 
 	const dispatch = useDispatch();
 	const nameId = useId();
+	const nameInputRef = useRef<HTMLInputElement | null>(null);
 
 	const [nameError, setNameError] = useState(false);
 	const [ruleErrors, setRuleErrors] = useState<RuleError[]>([]);
@@ -52,13 +53,19 @@ export default function RulesModal() {
 	});
 
 	const onSave = useCallback(() => {
+		const errors: RuleError[] = [];
+
 		if (!editingRule.name) {
 			setNameError(true);
 
-			return;
+			errors.push({
+				field: nameInputRef.current!,
+				label: sub(
+					Liferay.Language.get('the-x-field-is-required'),
+					Liferay.Language.get('rule-name')
+				),
+			});
 		}
-
-		const errors: RuleError[] = [];
 
 		[...editingRule.conditions, ...editingRule.actions].forEach((item) => {
 			if (item.error) {
@@ -154,6 +161,7 @@ export default function RulesModal() {
 					</label>
 
 					<ClayInput
+						aria-describedby={`${nameId}-error`}
 						id={nameId}
 						onChange={(event) => {
 							if (event.target.value) {
@@ -162,6 +170,7 @@ export default function RulesModal() {
 
 							updateEditingRule({name: event.target.value});
 						}}
+						ref={nameInputRef}
 						value={editingRule.name}
 					/>
 				</RuleField>

@@ -252,7 +252,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public AssetEntry fetchEntry(String className, long classPK) {
-		return assetEntryLocalService.fetchEntry(
+		return assetEntryPersistence.fetchByC_C(
 			_classNameLocalService.getClassNameId(className), classPK);
 	}
 

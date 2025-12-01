@@ -654,7 +654,7 @@ public class HttpImpl implements Http {
 					maxConnectionsPerHost);
 			}
 
-			CloseableHttpClient httpClient =
+			CloseableHttpClient closeableHttpClient =
 				_closeableHttpClientDCLSingleton.getSingleton(
 					() -> _createCloseableHttpClient(
 						poolingHttpClientConnectionManager));
@@ -798,7 +798,7 @@ public class HttpImpl implements Http {
 
 			requestBuilder.setConfig(requestConfigBuilder.build());
 
-			closeableHttpResponse = httpClient.execute(
+			closeableHttpResponse = closeableHttpClient.execute(
 				targetHttpHost, requestBuilder.build(), httpClientContext);
 
 			httpEntity = closeableHttpResponse.getEntity();

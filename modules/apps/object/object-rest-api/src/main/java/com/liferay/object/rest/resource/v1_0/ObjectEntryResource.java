@@ -95,6 +95,15 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public Page<com.liferay.headless.delivery.dto.v1_0.Comment>
+			getByExternalReferenceCodeCommentsPage(
+				String externalReferenceCode, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
 			String externalReferenceCode, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -141,6 +150,15 @@ public interface ObjectEntryResource {
 
 	public ObjectEntry getScopeScopeKeyByExternalReferenceCodeByVersion(
 			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public Page<com.liferay.headless.delivery.dto.v1_0.Comment>
+			getScopeScopeKeyByExternalReferenceCodeCommentsPage(
+				String scopeKey, String externalReferenceCode, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Page<ObjectEntry>

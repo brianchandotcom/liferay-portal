@@ -654,22 +654,10 @@ public class HttpImpl implements Http {
 					maxConnectionsPerHost);
 			}
 
-			RequestConfig requestConfig = requestConfigBuilder.build();
-
-			CloseableHttpClient httpClient = null;
-
-			if ((requestConfig.getProxy() != null) && hasProxyConfig() &&
-				Validator.isNotNull(_PROXY_USERNAME)) {
-
-				httpClient = _proxyCloseableHttpClientDCLSingleton.getSingleton(
+			CloseableHttpClient httpClient =
+				_closeableHttpClientDCLSingleton.getSingleton(
 					() -> _createCloseableHttpClient(
 						poolingHttpClientConnectionManager));
-			}
-			else {
-				httpClient = _closeableHttpClientDCLSingleton.getSingleton(
-					() -> _createCloseableHttpClient(
-						poolingHttpClientConnectionManager));
-			}
 
 			HttpClientContext httpClientContext = HttpClientContext.create();
 
@@ -1128,8 +1116,6 @@ public class HttpImpl implements Http {
 	private final DCLSingleton<PoolingHttpClientConnectionManager>
 		_poolingHttpClientConnectionManagerDCLSingleton = new DCLSingleton<>();
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();
-	private final DCLSingleton<CloseableHttpClient>
-		_proxyCloseableHttpClientDCLSingleton = new DCLSingleton<>();
 	private Credentials _proxyCredentials;
 
 }

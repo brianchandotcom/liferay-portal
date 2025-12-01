@@ -123,6 +123,14 @@ export function RuleBuilderActionSection({
 		sendMessage(Liferay.Language.get('action-deleted'));
 	};
 
+	const onActionChange = (action: Action, index: number) => {
+		const newActions = [...actions];
+
+		newActions[index] = action;
+
+		setActions(newActions);
+	};
+
 	const setActionRef = (
 		condition: Action,
 		element: HTMLDivElement | null
@@ -159,13 +167,9 @@ export function RuleBuilderActionSection({
 							inputFragmentItems={inputFragmentItems}
 							key={action.id}
 							layoutDataItems={layoutDataItems}
-							onActionChange={(action) => {
-								const newActions = [...actions];
-
-								newActions[index] = action;
-
-								setActions(newActions);
-							}}
+							onActionChange={(action) =>
+								onActionChange(action, index)
+							}
 							onDeleteAction={() => {
 								onDeleteAction(action, index);
 							}}
@@ -278,6 +282,14 @@ export function RuleBuilderConditionSection({
 		sendMessage(Liferay.Language.get('condition-deleted'));
 	};
 
+	const onConditionChange = (condition: Condition, index: number) => {
+		const newConditions = [...conditions];
+
+		newConditions[index] = condition;
+
+		setConditions(newConditions);
+	};
+
 	const setConditionRef = (
 		condition: Condition,
 		element: HTMLDivElement | null
@@ -373,13 +385,9 @@ export function RuleBuilderConditionSection({
 							condition={condition}
 							inputFragmentItems={inputFragmentItems}
 							key={condition.id}
-							onConditionChange={(condition) => {
-								const newConditions = [...conditions];
-
-								newConditions[index] = condition;
-
-								setConditions(newConditions);
-							}}
+							onConditionChange={(condition) =>
+								onConditionChange(condition, index)
+							}
 							onDeleteCondition={() =>
 								onDeleteCondition(condition, index)
 							}

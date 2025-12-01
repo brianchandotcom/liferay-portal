@@ -1,3 +1,7 @@
+variable "argocd_namespace" {
+	default="argocd"
+	type=string
+}
 variable "git_token_property" {
 	type=string
 }

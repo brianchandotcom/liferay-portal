@@ -1698,6 +1698,10 @@ defaultValueTest.describe(
 				});
 
 				await test.step('set default value to true for boolean field and check in object entry', async () => {
+					await objectFieldsPage.goto(
+						objectDefinition.label['en_US']
+					);
+
 					await objectFieldsPage.setDefaultValue({
 						defaultValue: 'True',
 						objectFieldBusinessType: 'Boolean',
@@ -1718,13 +1722,9 @@ defaultValueTest.describe(
 				await test.step('untoggle default value for boolean field and check in object entry', async () => {
 					await objectFieldsPage.goto(objectDefinition.name);
 
-					await objectFieldsPage.openObjectField(booleanFieldName);
-
-					await objectFieldsPage.advancedTab.click();
-
-					await objectFieldsPage.useDefaultValueToggle.uncheck();
-
-					await objectFieldsPage.editFieldSaveButton.click();
+					await objectFieldsPage.disableDefaultValue(
+						booleanFieldName
+					);
 
 					await viewObjectEntriesPage.goto(objectClassName);
 
@@ -2008,9 +2008,13 @@ defaultValueTest.describe(
 					objectDefinition.label['en_US']
 				);
 
-				await expect(
-					page.getByText('defaultValueRichText')
-				).toBeVisible();
+				const richTextEditor = page.frameLocator(
+					'iframe[title="editor"]'
+				);
+
+				await expect(richTextEditor.getByRole('paragraph')).toHaveText(
+					'defaultValueRichText'
+				);
 
 				await objectFieldsPage.goto(objectDefinition.label['en_US']);
 
@@ -2027,9 +2031,9 @@ defaultValueTest.describe(
 					objectDefinition.label['en_US']
 				);
 
-				await expect(
-					page.getByText('defaultValueRichTextEdited')
-				).toBeVisible();
+				await expect(richTextEditor.getByRole('paragraph')).toHaveText(
+					'defaultValueRichTextEdited'
+				);
 
 				await objectFieldsPage.goto(objectDefinition.label['en_US']);
 
@@ -2040,10 +2044,63 @@ defaultValueTest.describe(
 					objectDefinition.label['en_US']
 				);
 
-				await expect(page.getByRole('paragraph')).toHaveAttribute(
-					'data-placeholder',
-					'Start writing content...'
+				await expect(richTextEditor.getByRole('paragraph')).toHaveText(
+					''
 				);
+			}
+		);
+
+		defaultValueTest(
+			'default value fields are required',
+			{tag: ['@LPD-48612']},
+			async ({apiHelpers, objectFieldsPage, page}) => {
+				const objectFields = generateObjectFields({
+					objectFieldBusinessTypes: [
+						'Boolean',
+						'Date',
+						'DateTime',
+						'Decimal',
+						'Integer',
+						'LongInteger',
+						'LongText',
+						'PrecisionDecimal',
+						'RichText',
+						'Text',
+					],
+				});
+
+				const objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+
+				await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+				for (const {label} of objectFields) {
+					const fieldLabel = label.en_US;
+
+					await objectFieldsPage.openObjectField(fieldLabel);
+
+					await objectFieldsPage.advancedTab.click();
+
+					await objectFieldsPage.useDefaultValueToggle.check();
+
+					await objectFieldsPage.editFieldSaveButton.click();
+
+					await expect(page.getByText('required')).toBeVisible();
+
+					await waitForAlert(
+						page,
+						'Error:Please fill out all required fields.',
+						{type: 'danger'}
+					);
+				}
 			}
 		);
 	}

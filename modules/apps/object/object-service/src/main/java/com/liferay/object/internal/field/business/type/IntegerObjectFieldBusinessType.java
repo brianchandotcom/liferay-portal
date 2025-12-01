@@ -40,6 +40,8 @@ public class IntegerObjectFieldBusinessType
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
 		return SetUtil.fromArray(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES);
 	}
 

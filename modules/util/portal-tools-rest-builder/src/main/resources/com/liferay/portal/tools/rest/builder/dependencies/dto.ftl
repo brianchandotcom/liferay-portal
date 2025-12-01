@@ -410,6 +410,31 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 			return null;
 		}
 
+		public void setPropertyValue(String propertyName, Object propertyValue) {
+			<#list properties?keys as propertyName>
+				<#if jsonMapPropertyNames?seq_contains(propertyName)>
+					<#continue>
+				</#if>
+
+				<#assign capitalizedPropertyName = propertyName?cap_first />
+
+				<#if enumSchemas?keys?seq_contains(propertyType)>
+					<#assign capitalizedPropertyName = propertyType />
+				</#if>
+
+				if (Objects.equals(propertyName, "${propertyName}")) {
+					set${capitalizedPropertyName}((${properties[propertyName]}) propertyValue);
+				}
+				else
+			</#list>
+
+			{
+				<#list jsonMapPropertyNames as propertyName>
+					${propertyName}.put(propertyName, propertyValue);
+				</#list>
+			}
+		}
+
 		private final class CachedUnsafeSupplier<T, E extends Throwable> implements UnsafeSupplier<T, E> {
 
 			public CachedUnsafeSupplier(UnsafeSupplier<T, E> unsafeSupplier) {

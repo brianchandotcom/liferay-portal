@@ -197,7 +197,7 @@ public class LayoutServiceUpgradeStepRegistrator
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.layout.page.template.service)(release.schema.version>=3.4.0))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.layout.page.template.service)(release.schema.version>=5.7.0))"
 	)
 	private Release _layoutPageTemplateServiceRelease;
 

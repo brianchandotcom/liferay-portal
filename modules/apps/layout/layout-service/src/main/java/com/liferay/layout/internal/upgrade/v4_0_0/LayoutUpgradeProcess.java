@@ -21,18 +21,12 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String columnName = "externalReferenceCode";
-
-		if (!hasColumn("LayoutPageTemplateEntry", columnName)) {
-			columnName = "uuid_";
-		}
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select Layout.ctCollectionId, LayoutPageTemplateEntry.",
-					columnName, ", Layout.plid from Layout inner join ",
-					"LayoutPageTemplateEntry on Layout.masterLayoutPlid = ",
-					"LayoutPageTemplateEntry.plid and ",
+					"select LayoutPageTemplateEntry.externalReferenceCode, ",
+					"Layout.ctCollectionId, Layout.plid from Layout inner ",
+					"join LayoutPageTemplateEntry on Layout.masterLayoutPlid ",
+					"= LayoutPageTemplateEntry.plid and ",
 					"(LayoutPageTemplateEntry.ctCollectionId = ",
 					"Layout.ctCollectionId or ",
 					"LayoutPageTemplateEntry.ctCollectionId = 0) where ",
@@ -41,17 +35,13 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update Layout set masterLPTEERC = ? where plid = ? and " +
-						"ctCollectionId = ?")) {
+					"update Layout set masterLPTEERC = ? where " +
+						"ctCollectionId = ? and plid = ? ")) {
 
 			while (resultSet.next()) {
-				long ctCollectionId = resultSet.getLong(1);
-				String externalReferenceCode = resultSet.getString(2);
-				long plid = resultSet.getLong(3);
-
-				preparedStatement2.setString(1, externalReferenceCode);
-				preparedStatement2.setLong(2, plid);
-				preparedStatement2.setLong(3, ctCollectionId);
+				preparedStatement2.setString(1, resultSet.getString(1));
+				preparedStatement2.setLong(2, resultSet.getLong(2));
+				preparedStatement2.setLong(3, resultSet.getLong(3));
 
 				preparedStatement2.addBatch();
 			}

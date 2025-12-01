@@ -1389,7 +1389,6 @@ information.
 				<jvmarg line="${app.server.jvm.args}" />
 				<jvmarg line="${junit.java.gc}" />
 				<jvmarg line="${whip.agent}" />
-				<jvmarg value="-Xss2m" />
 				<jvmarg value="-Dexternal-properties=${test.properties}" />
 				<jvmarg value="-Dfixed.issues=${fixed.issues}" />
 				<jvmarg value="-Djava.locale.providers=CLDR" />
@@ -1400,6 +1399,7 @@ information.
 				<jvmarg value="-DsocksProxyHost=127.0.0.1" />
 				<jvmarg value="-DsocksProxyPort=8888" />
 				<jvmarg value="-Dsun.zip.disableMemoryMapping=true" />
+				<jvmarg value="-Xss2m" />
 				<misc />
 				<classpath location="test-coverage" />
 				<classpath refid="test.classpath" />

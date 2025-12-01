@@ -25,6 +25,7 @@ import {
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
 } from './RuleBuilderSection';
+import RuleField from './RuleField';
 
 export type RuleError = {
 	field: HTMLButtonElement | HTMLInputElement;
@@ -136,8 +137,10 @@ export default function RulesModal() {
 					onClose={() => setRuleErrors([])}
 				/>
 
-				<ClayForm.Group
-					className={classNames({'has-error': nameError})}
+				<RuleField
+					error={nameError}
+					errorLabel={Liferay.Language.get('this-field-is-required')}
+					fieldId={nameId}
 				>
 					<label htmlFor={nameId}>
 						{Liferay.Language.get('rule-name')}
@@ -161,17 +164,7 @@ export default function RulesModal() {
 						}}
 						value={editingRule.name}
 					/>
-
-					{nameError && (
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								{Liferay.Language.get('this-field-is-required')}
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
-					)}
-				</ClayForm.Group>
+				</RuleField>
 
 				<p className="py-3">
 					{Liferay.Language.get(

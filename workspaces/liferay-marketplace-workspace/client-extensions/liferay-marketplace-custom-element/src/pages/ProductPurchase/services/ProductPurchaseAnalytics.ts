@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {OrderTypes} from '../../../enums/Order';
+import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
 import zodSchema, {z} from '../../../schema/zod';
-import analyticsOAuth2 from '../../../services/oauth/Analytics';
+import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
+import {getSiteURL} from '../../../utils/site';
 import {sanitizeStringForURL} from '../../../utils/string';
 import ProductPurchase from './ProductPurchase';
 
@@ -17,25 +18,55 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 	private form?: AnalyticsProvisioningForm;
 	protected orderTypeExternalReferenceCode = OrderTypes.ADDONS;
 
-	private async startProvisioning(
-		form: z.infer<typeof zodSchema.analyticsProvisioning>,
-		orderId: number
-	) {
-		return analyticsOAuth2.provisioning(orderId, {
-			corpProjectName: form.workspaceName,
-			corpProjectUuid: this.account.externalReferenceCode,
-			emailAddressDomains: form.allowedEmailDomains,
-			friendlyURL: form.friendlyWorkspaceURL
-				? `/${sanitizeStringForURL(form.friendlyWorkspaceURL)}`
-				: 'TBD',
-			incidentReportEmailAddresses: form.incidentReportContacts,
-			name: form.workspaceName,
-			ownerEmailAddress: form.workspaceOwnerEmail,
-		});
-	}
-
 	setForm(form: AnalyticsProvisioningForm) {
 		this.form = form;
+	}
+
+	protected getCart() {
+		const {productKey, productName, productPurchaseKey} = this.form ?? {};
+
+		const sku = this.product.skus.find(
+			({externalReferenceCode}) => externalReferenceCode === productKey
+		);
+
+		const baseCart = super.getCart();
+		const cartItems = super.getCartItems(sku?.id);
+
+		return {
+			...baseCart,
+			cartItems,
+			customFields: {
+				...baseCart?.customFields,
+				[OrderCustomFields.TRIAL_SETTINGS]: JSON.stringify({
+					analyticsForm: {
+						corpProjectName: this.form?.workspaceName,
+						corpProjectUuid: this.account.externalReferenceCode,
+						emailAddressDomains: this.form?.allowedEmailDomains,
+						friendlyURL: this.form?.friendlyWorkspaceURL
+							? `/${sanitizeStringForURL(this.form?.friendlyWorkspaceURL)}`
+							: 'TBD',
+						incidentReportEmailAddresses:
+							this.form?.incidentReportContacts,
+						name: this.form?.workspaceName,
+						ownerEmailAddress: this.form?.workspaceOwnerEmail,
+					},
+					productKey,
+					productName,
+					productPurchaseKey,
+				}),
+			},
+		} as Cart;
+	}
+
+	public async getNextStepsLink(cart: Cart) {
+		const callback = `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
+
+		const url = await HeadlessCommerceDeliveryCart.getPaymentMethodURL(
+			cart.id,
+			callback
+		);
+
+		return url || callback;
 	}
 
 	public async createOrder() {
@@ -44,8 +75,6 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 		}
 
 		const order = await super.createOrder();
-
-		await this.startProvisioning(this.form, order.id);
 
 		return order;
 	}

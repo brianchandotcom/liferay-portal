@@ -90,7 +90,7 @@ const AnalyticsProvisioning = () => {
 		},
 		{
 			onSuccess: (response) => {
-				if (response?.plan?.includes('Basic')) {
+				if (response?.productName?.includes('Basic')) {
 					setAlert(
 						<span>
 							The basic plan supports up to 1,000 known
@@ -115,19 +115,22 @@ const AnalyticsProvisioning = () => {
 			allowedEmailDomains: [],
 			dataCenterLocation: acRegions[0]?.externalReferenceCode,
 			incidentReportContacts: [],
-			subscriptionType: 'Basic Plan',
+			productName: 'Basic Plan',
 			workspaceOwnerEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
 		},
 		mode: 'all',
 		resolver: zodResolver(zodSchema.analyticsProvisioning),
 	});
 
-	const subscriptionType = useMemo(() => {
-		if (!analyticsPlan?.plan) {
+	const subscriptionName = useMemo(() => {
+		if (!analyticsPlan?.productName) {
 			return 'Basic Plan';
 		}
 
-		const name = analyticsPlan?.plan?.replace('Analytics Cloud ', '');
+		const name = analyticsPlan?.productName?.replace(
+			'Analytics Cloud ',
+			''
+		);
 
 		return `${name} Plan`;
 	}, [analyticsPlan]);
@@ -142,7 +145,7 @@ const AnalyticsProvisioning = () => {
 			product
 		);
 
-		productPurchase.setForm(form);
+		productPurchase.setForm({...form, ...analyticsPlan});
 
 		await handlePurchase(productPurchase);
 	};
@@ -194,10 +197,10 @@ const AnalyticsProvisioning = () => {
 			<h3 className="sheet-subtitle">General</h3>
 
 			<Input
-				label="Subscription Type"
+				label="Subscription Name"
 				readOnly
 				required
-				value={subscriptionType}
+				value={subscriptionName}
 			/>
 
 			<Input

@@ -13,7 +13,11 @@ class AnalyticsOAuth2 extends MarketplaceSpringBootOAuth2 {
 	}
 
 	async getPlan(accountId: string) {
-		return this.get<{key?: string; plan: string}>(`/plan/${accountId}`);
+		return this.get<{
+			productKey?: string;
+			productName: string;
+			productPurchaseKey?: string;
+		}>(`/plan/${accountId}`);
 	}
 
 	async getProject(projectId: string) {

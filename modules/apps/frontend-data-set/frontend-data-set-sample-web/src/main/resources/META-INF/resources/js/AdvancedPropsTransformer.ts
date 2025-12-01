@@ -21,7 +21,7 @@ import type {
 } from '@liferay/frontend-data-set-web';
 
 export default function propsTransformer({
-	additionalProps: {enableItemsActionsGroups, greeting},
+	additionalProps: {greeting},
 	itemsActions,
 	selectedItemsKey,
 	...otherProps
@@ -134,81 +134,18 @@ export default function propsTransformer({
 		fileDropSettings,
 		filtersGroups,
 		infoPanelComponent: SampleInfoPanel,
-		itemsActions: enableItemsActionsGroups
-			? [
-					{
-						items: itemActionsWithStyling,
-						separator: true,
-						type: 'group',
-					},
-					{
-						items: [
-							{
-								data: {
-									id: 'emptyGroupTest',
-									permissionKey: 'nonexistentPermissionKey',
-								},
-								icon: 'hidden',
-								label: 'Empty Group Test',
-							},
-						],
-						separator: true,
-						type: 'group',
-					},
-					{
-						items: [
-							{
-								data: {
-									id: 'groupItem',
-								},
-								icon: 'separator',
-								label: 'Group Item',
-								onClick: () => {
-									alert('You clicked on an item in a group');
-								},
-							},
-							{
-								data: {
-									id: 'groupPermissionTest',
-									permissionKey: 'nonexistentPermissionKey',
-								},
-								icon: 'hidden',
-								label: 'Group Permission Test',
-							},
-							{
-								data: {
-									id: 'contextualGroupItem',
-								},
-								icon: 'nodes',
-								items: [
-									{
-										data: {
-											id: 'contextualGroupSubItem1',
-										},
-										icon: 'exclamation-circle',
-										label: 'Contextual Sub Item 1',
-										onClick: () => {
-											alert(
-												'You clicked on an item in a contextual group'
-											);
-										},
-									},
-									{
-										data: {
-											id: 'contextualGroupSubItem2',
-										},
-										label: 'Contextual Sub Item 2',
-									},
-								],
-								label: 'Contextual Item',
-								type: 'contextual',
-							},
-						],
-						separator: true,
-						type: 'group',
-					},
-				]
-			: itemActionsWithStyling,
+		itemsActions: itemsActions.map((action: IItemsActions) => {
+			const key = action?.data?.id as string;
+
+			if (!key || key !== 'sampleDeleteMessage') {
+				return action;
+			}
+
+			return {
+				...action,
+				className: 'text-danger',
+			};
+		}),
 		onActionDropdownItemClick({
 			action,
 			itemData,

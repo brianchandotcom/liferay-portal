@@ -1090,6 +1090,9 @@ public class HttpImpl implements Http {
 
 			requestConfigBuilder =
 				requestConfigBuilder.setConnectionRequestTimeout(timeout);
+
+			requestConfigBuilder = requestConfigBuilder.setSocketTimeout(
+				timeout);
 		}
 
 		return requestConfigBuilder;

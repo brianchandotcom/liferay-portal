@@ -1875,12 +1875,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						get${schemaName} =
 
-						<#assign getJavaMethodSignatureMethodName = javaMethodSignature.methodName?replace("put", "get", "f") />
+						<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("put", "get", "f"))! />
 
-						<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)>
-							${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
+						<#if getJavaMethodSignature?has_content && getJavaMethodSignature.returnType?ends_with(schemaName)>
+							${schemaVarName}Resource.${getJavaMethodSignature.methodName}(
 								<@getRESTMethodParameters
-									javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
+									javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignature.methodName)
 									setNullQueryParameters = true
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = "put" + schemaName

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -10,16 +11,20 @@ import ClayPanel from '@clayui/panel';
 import {dateUtils, sub} from 'frontend-js-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
+import SpaceService from '../../../common/services/SpaceService';
 import {
 	IAssetObjectEntry,
 	ISearchAssetObjectEntry,
 } from '../../../common/types/AssetType';
+import {Space} from '../../../common/types/Space';
+import {getScopeExternalReferenceCode} from '../../../common/utils/getScopeExternalReferenceCode';
+import {SpaceSticker} from '../../../index';
 import {
 	AssetTypeInfoPanelContext,
 	IAssetTypeInfoPanelContext,
 } from '../context';
 import ObjectEntryService from '../services/ObjectEntryService';
-import {ASSET_TYPE} from '../util/constants';
+import {ASSET_TYPE, L_FILES} from '../util/constants';
 
 const getAssetLanguages = (title_i18n: {[key: string]: string} = {}) => {
 	const assetLanguages = Object.keys(title_i18n);
@@ -62,6 +67,7 @@ const AssetMetadata = () => {
 
 	const [objectEntryWithNestedFields, setObjectEntryWithNestedFields] =
 		useState<IAssetObjectEntry>(objectEntry as IAssetObjectEntry);
+	const [space, setSpace] = useState<Space>({} as Space);
 
 	useEffect(() => {
 		if (type === ASSET_TYPE.FOLDER && actions?.get?.href) {
@@ -77,6 +83,16 @@ const AssetMetadata = () => {
 			});
 		}
 	}, [actions?.get?.href, type]);
+
+	useEffect(() => {
+		SpaceService.getSpace(
+			getScopeExternalReferenceCode(objectEntries[0])
+		).then((space) => {
+			if (space) {
+				setSpace(space);
+			}
+		});
+	}, [objectEntries]);
 
 	return (
 		<ClayPanel
@@ -99,7 +115,7 @@ const AssetMetadata = () => {
 							{Liferay.Language.get('url')}
 						</p>
 
-						<ClayInput.Group className="mt-1">
+						<ClayInput.Group className="mb-3 mt-1">
 							<ClayInput.GroupItem prepend>
 								<ClayInput
 									disabled={true}
@@ -138,8 +154,43 @@ const AssetMetadata = () => {
 					</div>
 				)}
 
+				<div className="asset-metadata-section">
+					<p className="d-block font-weight-bold mb-2">
+						{Liferay.Language.get('location')}
+					</p>
+
+					<div className="d-flex space-breadcrumb">
+						<SpaceSticker
+							className="mr-2"
+							displayType={space.settings?.logoColor}
+							hideName={true}
+							name={Liferay.Language.get(`${space.name}`)}
+							size="sm"
+						/>
+
+						<ClayBreadcrumb
+							className="p-0"
+							items={[
+								{
+									active: false,
+									label: Liferay.Language.get(
+										`${space.name}`
+									),
+								},
+								{
+									label:
+										objectEntry.objectEntryFolderExternalReferenceCode ===
+										L_FILES
+											? Liferay.Language.get('files')
+											: Liferay.Language.get('content'),
+								},
+							]}
+						/>
+					</div>
+				</div>
+
 				<div className="asset-metadata-section mt-3">
-					<p className="d-block font-weight-bold mb-0">
+					<p className="d-block font-weight-bold mb-0 mt-3">
 						{Liferay.Language.get('author')}
 					</p>
 

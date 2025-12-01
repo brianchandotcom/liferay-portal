@@ -32,6 +32,17 @@
 
 .c-slideout .sidebar {
 	.asset-metadata-section {
+		.breadcrumb {
+			&-item {
+				margin-right: 0;
+			}
+
+			&-link {
+				font-size: 0.875rem;
+				text-decoration: none !important;
+			}
+		}
+
 		p {
 			font-size: 0.875rem;
 		}
@@ -69,6 +80,10 @@
 		.asset-icon-files {
 			color: $red-l1;
 		}
+	}
+
+	.space-breadcrumb {
+		margin-top: 0.375rem;
 	}
 
 	.tab-content {

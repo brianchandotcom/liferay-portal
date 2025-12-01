@@ -131,7 +131,9 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			}
 
 			liferayOSGiExtension.bundleDefaultInstructions(
-				Collections.singletonMap("-javaee-package", javaeePackage));
+				Collections.singletonMap(
+					"-antbnd.jspanalyzer.fallback-javaee-package",
+					javaeePackage));
 
 			if (!JakartaCompatibilityUtil.isUseJakarta(project)) {
 				GradleUtil.applyPlugin(

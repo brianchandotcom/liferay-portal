@@ -261,10 +261,11 @@ public class ClusterGeneralTest implements Serializable {
 		ClusterNode restartClusterNode = restartTomcatNode.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);
 
+		Assert.assertNotNull(restartClusterNode);
+
 		ClusterNode verifierClusterNode = verifierTomcatNode.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);
 
-		Assert.assertNotNull(restartClusterNode);
 		Assert.assertNotNull(verifierClusterNode);
 
 		// Stop restart node

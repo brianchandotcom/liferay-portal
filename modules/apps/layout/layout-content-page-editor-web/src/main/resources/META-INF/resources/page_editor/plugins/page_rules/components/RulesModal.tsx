@@ -258,8 +258,28 @@ function ErrorAlert({
 				title={Liferay.Language.get('error')}
 			>
 				{Liferay.Language.get(
-					'the-rule-is-incomplete.-please-check-that-the-conditions-and-actions-are-completed-before-saving'
+					'please-review-the-following-fields-before-saving'
 				)}
+
+				{errors.length ? (
+					<ul className="mb-0">
+						{errors.map((error) => (
+							<li key={error.field.id}>
+								<a
+									className="text-danger text-underline"
+									href={`#${error.field.id}`}
+									onClick={(event) => {
+										event.preventDefault();
+
+										error.field?.focus();
+									}}
+								>
+									{error.label}
+								</a>
+							</li>
+						))}
+					</ul>
+				) : null}
 			</ClayAlert>
 		</div>
 	);

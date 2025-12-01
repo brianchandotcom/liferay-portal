@@ -159,7 +159,7 @@ public class KoroneikiService {
 		externalLink.setEntityId(opportunity);
 		externalLink.setEntityName("opportunity");
 
-		externalLinks[externalLinks.length] = externalLink;
+		externalLinks[externalLinks.length - 1] = externalLink;
 
 		productPurchase.setExternalLinks(externalLinks);
 

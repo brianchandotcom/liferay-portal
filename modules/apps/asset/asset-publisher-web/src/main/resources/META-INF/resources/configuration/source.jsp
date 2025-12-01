@@ -19,19 +19,11 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	<%
 	Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetPublisherDisplayContext.getAvailableClassNameIds());
 
-	// Right list
-
-	List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
-
-	long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
-
-	for (long classNameId : classNameIds) {
-		typesRightList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId))));
-	}
-
 	// Left list
 
 	List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
+
+	long[] classNameIds = ArrayUtil.clone(assetPublisherDisplayContext.getClassNameIds());
 
 	Arrays.sort(classNameIds);
 	%>
@@ -64,6 +56,14 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 	<%
 	typesLeftList = ListUtil.sort(typesLeftList, new KeyValuePairComparator(false, true));
+
+	// Right list
+
+	List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
+
+	for (long classNameId : assetPublisherDisplayContext.getClassNameIds()) {
+		typesRightList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId))));
+	}
 	%>
 
 	<div class="<%= assetPublisherDisplayContext.isAnyAssetType() ? "hide" : "" %>" id="<portlet:namespace />classNamesBoxes">
@@ -94,27 +94,13 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 		String className = assetPublisherWebHelper.getClassName(assetRendererFactory);
 
-		Long[] assetSelectedClassTypeIds = assetPublisherWebHelper.getClassTypeIds(portletPreferences, className, classTypes);
-
-		// Right list
-
-		List<KeyValuePair> subtypesRightList = new ArrayList<KeyValuePair>();
-
-		for (long subtypeId : assetSelectedClassTypeIds) {
-			try {
-				ClassType classType = classTypeReader.getClassType(subtypeId, locale);
-
-				subtypesRightList.add(new KeyValuePair(String.valueOf(subtypeId), HtmlUtil.escape(classType.getName())));
-			}
-			catch (NoSuchModelException nsme) {
-			}
-		}
-
 		// Left list
 
 		List<KeyValuePair> subtypesLeftList = new ArrayList<KeyValuePair>();
 
 		boolean anyAssetSubtype = GetterUtil.getBoolean(portletPreferences.getValue("anyClassType" + className, Boolean.TRUE.toString()));
+
+		Long[] assetSelectedClassTypeIds = ArrayUtil.clone(assetPublisherWebHelper.getClassTypeIds(portletPreferences, className, classTypes));
 
 		Arrays.sort(assetSelectedClassTypeIds);
 	%>
@@ -191,6 +177,23 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 				</div>
 			</c:if>
+
+			<%
+
+			// Right list
+
+			List<KeyValuePair> subtypesRightList = new ArrayList<KeyValuePair>();
+
+			for (long subtypeId : assetPublisherWebHelper.getClassTypeIds(portletPreferences, className, classTypes)) {
+				try {
+					ClassType classType = classTypeReader.getClassType(subtypeId, locale);
+
+					subtypesRightList.add(new KeyValuePair(String.valueOf(subtypeId), HtmlUtil.escape(classType.getName())));
+				}
+				catch (NoSuchModelException nsme) {
+				}
+			}
+			%>
 
 			<div class="<%= (assetSelectedClassTypeIds.length > 1) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
 				<liferay-ui:input-move-boxes

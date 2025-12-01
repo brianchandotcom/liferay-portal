@@ -58,33 +58,17 @@
 			<%
 			Set<String> currentVisibleNodes = new HashSet<String>(wikiPortletInstanceSettingsHelper.getAllNodeNames());
 
-			// Right list
-
-			List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
-
-			String[] visibleNodeNames = wikiPortletInstanceSettingsHelper.getVisibleNodeNames();
-
-			for (String folderColumn : visibleNodeNames) {
-				if (currentVisibleNodes.contains(folderColumn)) {
-					rightList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
-				}
-			}
-
-			Arrays.sort(visibleNodeNames);
-
-			String[] hiddenNodes = wikiPortletInstanceSettingsHelper.getHiddenNodes();
-
-			Arrays.sort(hiddenNodes);
-
-			for (String folderColumn : currentVisibleNodes) {
-				if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {
-					rightList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
-				}
-			}
-
 			// Left list
 
 			List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+
+			String[] hiddenNodes = ArrayUtil.clone(wikiPortletInstanceSettingsHelper.getHiddenNodes());
+
+			Arrays.sort(hiddenNodes);
+
+			String[] visibleNodeNames = ArrayUtil.clone(wikiPortletInstanceSettingsHelper.getVisibleNodeNames());
+
+			Arrays.sort(visibleNodeNames);
 
 			for (String folderColumn : hiddenNodes) {
 				if (currentVisibleNodes.contains(folderColumn) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {
@@ -93,6 +77,22 @@
 			}
 
 			leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
+
+			// Right list
+
+			List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+
+			for (String folderColumn : wikiPortletInstanceSettingsHelper.getVisibleNodeNames()) {
+				if (currentVisibleNodes.contains(folderColumn)) {
+					rightList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
+				}
+			}
+
+			for (String folderColumn : currentVisibleNodes) {
+				if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {
+					rightList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
+				}
+			}
 			%>
 
 			<liferay-ui:input-move-boxes

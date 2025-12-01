@@ -49,5 +49,6 @@
 	export {PageObjectRelationship} from './models/PageObjectRelationship';
 	export {PageObjectValidationRule} from './models/PageObjectValidationRule';
 	export {PageObjectView} from './models/PageObjectView';
+	export {Permission} from './models/Permission';
 	export {Status} from './models/Status';
 	export {WorkflowDefinitionLink} from './models/WorkflowDefinitionLink';

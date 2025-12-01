@@ -202,7 +202,7 @@ public class ResourceActionPostUpgradeDataCleanupProcessTest
 				Bundle bundle = bundleAtomicReference.get();
 
 				if (bundle != null) {
-					installBundle(SystemBundleUtil.getBundleContext(), bundle);
+					installBundle(bundle, SystemBundleUtil.getBundleContext());
 				}
 			},
 			() -> bundleAtomicReference.set(

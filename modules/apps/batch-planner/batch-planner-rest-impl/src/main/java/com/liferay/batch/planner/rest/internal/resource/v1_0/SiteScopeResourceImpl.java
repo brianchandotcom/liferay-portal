@@ -22,7 +22,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -77,24 +76,18 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 	private List<SiteScope> _getSiteScopes(List<String> entityScopes)
 		throws Exception {
 
-		List<SiteScope> siteScopes = new ArrayList<>();
-
-		if (entityScopes.contains("site")) {
-			for (Group group :
-					_groupService.getUserSitesGroups(
-						_CLASS_NAMES, QueryUtil.ALL_POS)) {
-
-				siteScopes.add(
-					new SiteScope() {
-						{
-							setLabel(group::getDescriptiveName);
-							setValue(group::getGroupId);
-						}
-					});
-			}
+		if (!entityScopes.contains("site")) {
+			return Collections.emptyList();
 		}
 
-		return siteScopes;
+		return transform(
+			_groupService.getUserSitesGroups(_CLASS_NAMES, QueryUtil.ALL_POS),
+			group -> new SiteScope() {
+				{
+					setLabel(group::getDescriptiveName);
+					setValue(group::getGroupId);
+				}
+			});
 	}
 
 	private static final String[] _CLASS_NAMES = {

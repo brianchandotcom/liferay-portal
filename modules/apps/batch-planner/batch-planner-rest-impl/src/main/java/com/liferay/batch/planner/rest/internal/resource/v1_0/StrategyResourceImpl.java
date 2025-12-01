@@ -41,29 +41,25 @@ public class StrategyResourceImpl extends BaseStrategyResourceImpl {
 				TaskItemUtil.getInternalClassName(internalClassNameKey),
 				TaskItemUtil.getTaskItemDelegateName(internalClassNameKey));
 
-		for (String createStrategy :
-				batchEngineTaskItemDelegate.getAvailableCreateStrategies()) {
-
-			strategies.add(
-				new Strategy() {
+		strategies.addAll(
+			transform(
+				batchEngineTaskItemDelegate.getAvailableCreateStrategies(),
+				createStrategy -> new Strategy() {
 					{
 						setName(() -> createStrategy);
 						setType(() -> "create");
 					}
-				});
-		}
+				}));
 
-		for (String updateStrategy :
-				batchEngineTaskItemDelegate.getAvailableUpdateStrategies()) {
-
-			strategies.add(
-				new Strategy() {
+		strategies.addAll(
+			transform(
+				batchEngineTaskItemDelegate.getAvailableUpdateStrategies(),
+				updateStrategy -> new Strategy() {
 					{
 						setName(() -> updateStrategy);
 						setType(() -> "update");
 					}
-				});
-		}
+				}));
 
 		return Page.of(strategies);
 	}

@@ -235,51 +235,54 @@ public class AnalyticsRestController extends BaseRestController {
 		JSONObject analyticsFormJSONObject =
 			orderMetadataJSONObject.optJSONObject("analyticsForm");
 
-		String analyticsProject = post(
-			BodyInserters.fromFormData(
-				"corpProjectName",
-				analyticsFormJSONObject.getString("corpProjectName")
-			).with(
-				"corpProjectUuid",
-				analyticsFormJSONObject.getString("corpProjectUuid")
-			).with(
-				"emailAddressDomains",
-				analyticsFormJSONObject.getJSONArray(
-					"emailAddressDomains"
-				).toString()
-			).with(
-				"friendlyURL", analyticsFormJSONObject.getString("friendlyURL")
-			).with(
-				"incidentReportEmailAddresses",
-				analyticsFormJSONObject.getJSONArray(
-					"incidentReportEmailAddresses"
-				).toString()
-			).with(
-				"name", analyticsFormJSONObject.getString("name")
-			).with(
-				"serverLocation", "us-west1-ac-uat-c1"
-			).with(
-				"sharedCluster", "false"
-			).with(
-				"timeZoneId", analyticsFormJSONObject.optString("timeZoneId")
-			).with(
-				"trial", "true"
-			).with(
-				"ownerEmailAddress",
-				analyticsFormJSONObject.getString("ownerEmailAddress")
-			).toString(),
-			HashMapBuilder.put(
-				HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic
-			).put(
-				HttpHeaders.CONTENT_TYPE,
-				MediaType.APPLICATION_FORM_URLENCODED_VALUE
-			).build(),
-			UriComponentsBuilder.fromUriString(
-				_analyticsAuthUrl
-			).path(
-				"/o/faro/main/project/unprovisioned"
-			).build(
-			).toUri());
+		JSONObject analyticsProjectJSONObject = new JSONObject(
+			post(
+				BodyInserters.fromFormData(
+					"corpProjectName",
+					analyticsFormJSONObject.getString("corpProjectName")
+				).with(
+					"corpProjectUuid",
+					analyticsFormJSONObject.getString("corpProjectUuid")
+				).with(
+					"emailAddressDomains",
+					analyticsFormJSONObject.getJSONArray(
+						"emailAddressDomains"
+					).toString()
+				).with(
+					"friendlyURL",
+					analyticsFormJSONObject.getString("friendlyURL")
+				).with(
+					"incidentReportEmailAddresses",
+					analyticsFormJSONObject.getJSONArray(
+						"incidentReportEmailAddresses"
+					).toString()
+				).with(
+					"name", analyticsFormJSONObject.getString("name")
+				).with(
+					"serverLocation", "us-west1-ac-uat-c1"
+				).with(
+					"sharedCluster", "false"
+				).with(
+					"timeZoneId",
+					analyticsFormJSONObject.optString("timeZoneId")
+				).with(
+					"trial", "true"
+				).with(
+					"ownerEmailAddress",
+					analyticsFormJSONObject.getString("ownerEmailAddress")
+				).toString(),
+				HashMapBuilder.put(
+					HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic
+				).put(
+					HttpHeaders.CONTENT_TYPE,
+					MediaType.APPLICATION_FORM_URLENCODED_VALUE
+				).build(),
+				UriComponentsBuilder.fromUriString(
+					_analyticsAuthUrl
+				).path(
+					"/o/faro/main/project/unprovisioned"
+				).build(
+				).toUri()));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Analytics project created for order " + order.getId());
@@ -289,7 +292,7 @@ public class AnalyticsRestController extends BaseRestController {
 			HashMapBuilder.put(
 				"order-metadata",
 				orderMetadataJSONObject.put(
-					"analyticsProject", new JSONObject(analyticsProject)
+					"analyticsProject", analyticsProjectJSONObject
 				).toString()
 			).build(),
 			order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);

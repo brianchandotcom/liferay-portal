@@ -143,8 +143,7 @@ public class KoroneikiService {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Salesforce opportunity already exists for order " +
-							opportunity);
+						"Salesforce opportunity already exists " + opportunity);
 				}
 
 				return;

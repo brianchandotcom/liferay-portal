@@ -95,6 +95,12 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public com.liferay.headless.delivery.dto.v1_0.Comment
+			getByExternalReferenceCodeComment(
+				String externalReferenceCode,
+				String commentExternalReferenceCode)
+		throws Exception;
+
 	public Page<com.liferay.headless.delivery.dto.v1_0.Comment>
 			getByExternalReferenceCodeCommentsPage(
 				String externalReferenceCode, String search,
@@ -150,6 +156,12 @@ public interface ObjectEntryResource {
 
 	public ObjectEntry getScopeScopeKeyByExternalReferenceCodeByVersion(
 			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public com.liferay.headless.delivery.dto.v1_0.Comment
+			getScopeScopeKeyByExternalReferenceCodeComment(
+				String scopeKey, String externalReferenceCode,
+				String commentExternalReferenceCode)
 		throws Exception;
 
 	public Page<com.liferay.headless.delivery.dto.v1_0.Comment>

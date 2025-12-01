@@ -5,18 +5,80 @@
 
 import {STATUS} from './constants';
 
-export interface ElementDefinitionBase {
+export interface IAssetSubtype {
+	assetSubtypeExternalReferenceCode: string;
+	assetSubtypeLocalizedName: string;
+	entryClassName: string;
+	groupExternalReferenceCode: string;
+	groupLocalizedName: string;
+	label: string;
+	value: string;
+}
+
+export interface ISelectedSubtype {
+	label: string;
+	value: string;
+}
+
+export interface ISelectedItem {
+	subtypes: ISelectedSubtype[];
+	type: string;
+}
+
+export interface IElementDefinition {
 	category?: string;
 	configuration?: {[key: string]: any};
 	icon?: string;
 	uiConfiguration?: {[key: string]: any}[];
 }
 
+export interface IElementInstances {
+	configurationEntry?: {[key: string]: any};
+	id?: number;
+	sxpElement: SxpElement;
+	uiConfigurationValues: {[key: string]: any};
+}
+
+export interface IFrameworkConfiguration {
+	clauseContributorsExcludes?: string[];
+	clauseContributorsIncludes?: string[];
+	collectionProvider?: boolean;
+	collectionProviderType?: string;
+	scope?: IScope[];
+	searchableAssetTypes?: string[];
+}
+
+export interface IIndexFields {
+	languageIdPosition: number;
+	name: string;
+	type: string;
+}
+
+export interface IScope {
+	externalReferenceCode: string;
+	name: string;
+	status: Status;
+	type: string;
+}
+
+export interface ISearchableTypes {
+	className: string;
+	displayName: string;
+	hasSubtype: boolean;
+}
+
+export interface ISorting {
+	column: React.Key;
+	direction: 'ascending' | 'descending';
+}
+
+export type Status = STATUS.ACTIVE | STATUS.INACTIVE;
+
 export type SxpElement = {
 	createDate?: string;
 	description: string;
 	description_i18n?: {[key: string]: string};
-	elementDefinition: ElementDefinitionBase & {[key: string]: any};
+	elementDefinition: IElementDefinition & {[key: string]: any};
 	externalReferenceCode: string;
 	id: number;
 	modifiedDate?: string;
@@ -28,36 +90,3 @@ export type SxpElement = {
 	userName?: string;
 	version?: string;
 };
-
-export type ElementInstances = {
-	configurationEntry?: {[key: string]: any};
-	id?: number;
-	sxpElement: SxpElement;
-	uiConfigurationValues: {[key: string]: any};
-};
-
-export type IndexFields = {
-	languageIdPosition: number;
-	name: string;
-	type: string;
-};
-
-export type Scope = {
-	externalReferenceCode: string;
-	name: string;
-	status: Status;
-	type: string;
-};
-
-export type SearchableTypes = {
-	className: string;
-	displayName: string;
-	hasSubtype: boolean;
-};
-
-export type Sorting = {
-	column: React.Key;
-	direction: 'ascending' | 'descending';
-};
-
-export type Status = STATUS.ACTIVE | STATUS.INACTIVE;

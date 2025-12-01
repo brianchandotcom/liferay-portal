@@ -92,6 +92,251 @@ public class EditableValuesExportImportContentProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-72840")
+	public void testCategoryTreeNodeSelectorEditableValues() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"filterKey", "category"
+					).put(
+						"source",
+						JSONUtil.put(
+							"categoryTreeNodeId",
+							assetVocabulary.getVocabularyId()
+						).put(
+							"categoryTreeNodeType", "Vocabulary"
+						)
+					)
+				).toString(),
+				StringPool.BLANK, StringPool.BLANK, null, null,
+				StringPool.BLANK, StringPool.BLANK, _draftLayout,
+				"com.liferay.fragment.renderer.collection.filter.internal." +
+					"CollectionFilterFragmentRenderer",
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()),
+				FragmentConstants.TYPE_COMPONENT);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		_publishLayouts();
+
+		assetVocabulary =
+			_assetVocabularyLocalService.getAssetVocabularyByUuidAndGroupId(
+				assetVocabulary.getUuid(), _liveGroup.getGroupId());
+
+		_assertCategoryTreeNodeSelectorEditableValues(
+			"Vocabulary", assetVocabulary.getVocabularyId(), null,
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			null);
+
+		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		fragmentEntryLink = _setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"filterKey", "category"
+				).put(
+					"source",
+					JSONUtil.put(
+						"categoryTreeNodeType", "Vocabulary"
+					).put(
+						"externalReferenceCode",
+						assetVocabulary.getExternalReferenceCode()
+					)
+				)
+			).toString(),
+			fragmentEntryLink);
+
+		_publishLayouts();
+
+		assetVocabulary =
+			_assetVocabularyLocalService.getAssetVocabularyByUuidAndGroupId(
+				assetVocabulary.getUuid(), _liveGroup.getGroupId());
+
+		_assertCategoryTreeNodeSelectorEditableValues(
+			"Vocabulary", 0, assetVocabulary.getExternalReferenceCode(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			null);
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			group.getGroupId());
+
+		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		fragmentEntryLink = _setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"filterKey", "category"
+				).put(
+					"source",
+					JSONUtil.put(
+						"categoryTreeNodeType", "Vocabulary"
+					).put(
+						"externalReferenceCode",
+						assetVocabulary.getExternalReferenceCode()
+					).put(
+						"scopeExternalReferenceCode",
+						group.getExternalReferenceCode()
+					)
+				)
+			).toString(),
+			fragmentEntryLink);
+
+		_publishLayouts();
+
+		_assertCategoryTreeNodeSelectorEditableValues(
+			"Vocabulary", 0, assetVocabulary.getExternalReferenceCode(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			group.getExternalReferenceCode());
+
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			_stagingGroup.getGroupId());
+
+		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		fragmentEntryLink = _setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"filterKey", "category"
+				).put(
+					"source",
+					JSONUtil.put(
+						"categoryTreeNodeId", assetCategory.getCategoryId()
+					).put(
+						"categoryTreeNodeType", "Category"
+					)
+				)
+			).toString(),
+			fragmentEntryLink);
+
+		_publishLayouts();
+
+		assetCategory =
+			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				assetCategory.getUuid(), _liveGroup.getGroupId());
+
+		_assertCategoryTreeNodeSelectorEditableValues(
+			"Category", assetCategory.getCategoryId(), null,
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			null);
+
+		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		fragmentEntryLink = _setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"filterKey", "category"
+				).put(
+					"source",
+					JSONUtil.put(
+						"categoryTreeNodeType", "Category"
+					).put(
+						"externalReferenceCode",
+						assetCategory.getExternalReferenceCode()
+					)
+				)
+			).toString(),
+			fragmentEntryLink);
+
+		_publishLayouts();
+
+		assetCategory =
+			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				assetCategory.getUuid(), _liveGroup.getGroupId());
+
+		_assertCategoryTreeNodeSelectorEditableValues(
+			"Category", 0, assetCategory.getExternalReferenceCode(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			null);
+
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			group.getGroupId());
+
+		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		fragmentEntryLink = _setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"filterKey", "category"
+				).put(
+					"source",
+					JSONUtil.put(
+						"categoryTreeNodeType", "Category"
+					).put(
+						"externalReferenceCode",
+						assetCategory.getExternalReferenceCode()
+					).put(
+						"scopeExternalReferenceCode",
+						group.getExternalReferenceCode()
+					)
+				)
+			).toString(),
+			fragmentEntryLink);
+
+		_publishLayouts();
+
+		_assertCategoryTreeNodeSelectorEditableValues(
+			"Category", 0, assetCategory.getExternalReferenceCode(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
+			group.getExternalReferenceCode());
+	}
+
+	@Test
 	public void testEditableValuesWithAssetVocabulary() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -839,6 +1084,45 @@ public class EditableValuesExportImportContentProcessorTest {
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		return fragmentEntryLink;
+	}
+
+	private void _assertCategoryTreeNodeSelectorEditableValues(
+		String assetCategoryTreeNodeType, long categoryTreeNodeId,
+		String externalReferenceCode, FragmentEntryLink fragmentEntryLink,
+		String scopeExternalReferenceCode) {
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject fragmentEntryProcessorJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject sourceJSONObject =
+			fragmentEntryProcessorJSONObject.getJSONObject("source");
+
+		Assert.assertEquals(
+			assetCategoryTreeNodeType,
+			sourceJSONObject.getString("categoryTreeNodeType"));
+
+		if (categoryTreeNodeId > 0) {
+			Assert.assertEquals(
+				categoryTreeNodeId,
+				sourceJSONObject.getLong("categoryTreeNodeId"));
+		}
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			Assert.assertEquals(
+				externalReferenceCode,
+				sourceJSONObject.getString("externalReferenceCode"));
+		}
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			Assert.assertEquals(
+				scopeExternalReferenceCode,
+				sourceJSONObject.getString("scopeExternalReferenceCode"));
+		}
 	}
 
 	private void _assertDeletedLayoutJSONObject(JSONObject layoutJSONObject) {

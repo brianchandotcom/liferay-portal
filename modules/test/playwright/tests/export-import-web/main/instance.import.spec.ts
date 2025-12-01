@@ -675,6 +675,7 @@ test(
 		let exportFilePath;
 		let objectDefinition;
 		let objectEntryId;
+		let textFieldContent;
 		let user: TUserAccount;
 
 		await test.step('Create object definition and enable it in the Applications Menu', async () => {
@@ -729,11 +730,13 @@ test(
 		});
 
 		await test.step('Create object entry as the new user', async () => {
+			textFieldContent = `${objectDefinition.name} entry by ${user.alternateName}`;
+
 			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 				{
 					externalReferenceCode: '',
 					name: 'test',
-					textField: `${objectDefinition.name} entry by ${user.alternateName}`,
+					textField: textFieldContent,
 				},
 				`c/${objectDefinition.name.toLowerCase()}s`
 			);
@@ -759,16 +762,22 @@ test(
 			);
 		});
 
-		await test.step('Import the file and verify the authorship of the imported entry', async () => {
+		await test.step('Import the file and check the imported entry authorship', async () => {
 			await companyExportImportPage.import(exportFilePath);
 
 			await applicationsMenuPage.goToObjectDefinition(
 				objectDefinition.name
 			);
 
-			await expect(
-				page.getByRole('cell', {name: 'Test Test'})
-			).toBeVisible();
+			const row = page.locator('tr', {
+				hasText: textFieldContent,
+			});
+
+			// Check authorship fallback to the current user after the original user is deleted
+
+			await expect(row).toContainText(
+				`${userData.test.name} ${userData.test.surname}`
+			);
 		});
 	}
 );

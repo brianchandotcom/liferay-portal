@@ -37,7 +37,7 @@ public class PortletSharedSearchRequestImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetSegmentExperiencePortletIdsWithPortletFragments() {
+	public void testGetSegmentExperiencePortletIds() {
 		Assert.assertEquals(
 			Set.of("portletA_INSTANCE_rdna", "portletB_INSTANCE_rdna"),
 			ReflectionTestUtil.<Set<String>>invoke(

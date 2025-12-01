@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 	service = ObjectFieldBusinessType.class
 )
-public class DecimalObjectFieldBusinessType implements ObjectFieldBusinessType {
+public class DecimalObjectFieldBusinessType
+	extends BaseObjectFieldBusinessType {
 
 	@Override
 	public String getDBType() {
@@ -66,8 +67,7 @@ public class DecimalObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return HashMapBuilder.<String, Object>put(
 			FieldConstants.DATA_TYPE, FieldConstants.DOUBLE
 		).putAll(
-			ObjectFieldBusinessType.super.getProperties(
-				objectField, objectFieldRenderingContext)
+			super.getProperties(objectField, objectFieldRenderingContext)
 		).build();
 	}
 

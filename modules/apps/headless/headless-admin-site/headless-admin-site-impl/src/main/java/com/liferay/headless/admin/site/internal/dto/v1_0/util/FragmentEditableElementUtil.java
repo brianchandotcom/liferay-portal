@@ -19,6 +19,7 @@ import com.liferay.headless.admin.site.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextInlineFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextMappedFragmentValue;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -121,15 +122,30 @@ public class FragmentEditableElementUtil {
 
 				jsonObject.put(
 					fragmentEditableElement.getId(),
-					() -> _getTextFragmentEditableElementJSONObject(
-						companyId, infoItemServiceRegistry, scopeGroupId,
-						(TextFragmentEditableElementValue)
-							fragmentEditableElementValue));
+					() -> _getJSONObject(
+						() -> _getTextFragmentEditableElementJSONObject(
+							companyId, infoItemServiceRegistry, scopeGroupId,
+							(TextFragmentEditableElementValue)
+								fragmentEditableElementValue)));
 			}
 		}
 
 		return jsonObject;
 	}
+
+	private static JSONObject _getJSONObject(
+			UnsafeSupplier<JSONObject, Exception> unsafeSupplier)
+		throws Exception {
+
+		JSONObject jsonObject = unsafeSupplier.get();
+
+		if (JSONUtil.isEmpty(jsonObject)) {
+			return null;
+		}
+
+		return jsonObject;
+	}
+
 
 	private static JSONObject _getTextFragmentEditableElementJSONObject(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,

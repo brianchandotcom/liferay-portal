@@ -16,12 +16,14 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.time.Duration;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -122,10 +124,18 @@ public class AnalyticsRestController extends BaseRestController {
 				Pagination.of(1, 20), "");
 
 		if (productPurchasePage.getTotalCount() == 0) {
+			ProductResource productResource =
+				_koroneikiService.getProductResource();
+
+			Product product = productResource.getProductByNameProductName(
+				"Analytics%20Cloud%20Basic");
+
 			return ResponseEntity.ok(
 				new JSONObject(
 				).put(
-					"plan", "Analytics Cloud Basic"
+					"productKey", product.getKey()
+				).put(
+					"productName", product.getName()
 				).toString());
 		}
 
@@ -150,9 +160,11 @@ public class AnalyticsRestController extends BaseRestController {
 					return ResponseEntity.ok(
 						new JSONObject(
 						).put(
-							"key", productPurchase.getKey()
+							"productKey", product.getKey()
 						).put(
-							"plan", product.getName()
+							"productName", product.getName()
+						).put(
+							"productPurchaseKey", productPurchase.getKey()
 						).toString());
 				}
 
@@ -203,42 +215,58 @@ public class AnalyticsRestController extends BaseRestController {
 			).toUri());
 	}
 
-	@PostMapping("provisioning/{orderId}")
-	public String postProvisioning(
-			@PathVariable("orderId") long orderId, @RequestBody String json)
-		throws Exception {
+	@PostMapping("provisioning")
+	public void postProvisioning(@RequestBody String json) throws Exception {
+		JSONObject commerceOrderJSONObject = new JSONObject(
+			json
+		).getJSONObject(
+			"commerceOrder"
+		);
 
-		JSONObject jsonObject = new JSONObject(json);
+		Order order = _marketplaceService.getOrder(
+			commerceOrderJSONObject.getLong("id"));
 
-		String projectJSON = post(
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		JSONObject orderMetadataJSONObject = new JSONObject(
+			customFields.getOrDefault("order-metadata", "{}"));
+
+		JSONObject analyticsFormJSONObject =
+			orderMetadataJSONObject.optJSONObject("analyticsForm");
+
+		String analyticsProject = post(
 			BodyInserters.fromFormData(
-				"corpProjectName", jsonObject.getString("corpProjectName")
+				"corpProjectName",
+				analyticsFormJSONObject.getString("corpProjectName")
 			).with(
-				"corpProjectUuid", jsonObject.getString("corpProjectUuid")
+				"corpProjectUuid",
+				analyticsFormJSONObject.getString("corpProjectUuid")
 			).with(
 				"emailAddressDomains",
-				jsonObject.getJSONArray(
+				analyticsFormJSONObject.getJSONArray(
 					"emailAddressDomains"
 				).toString()
 			).with(
-				"friendlyURL", jsonObject.getString("friendlyURL")
+				"friendlyURL", analyticsFormJSONObject.getString("friendlyURL")
 			).with(
 				"incidentReportEmailAddresses",
-				jsonObject.getJSONArray(
+				analyticsFormJSONObject.getJSONArray(
 					"incidentReportEmailAddresses"
 				).toString()
 			).with(
-				"name", jsonObject.getString("name")
+				"name", analyticsFormJSONObject.getString("name")
 			).with(
 				"serverLocation", "us-west1-ac-uat-c1"
 			).with(
 				"sharedCluster", "false"
 			).with(
-				"timeZoneId", jsonObject.optString("timeZoneId")
+				"timeZoneId", analyticsFormJSONObject.optString("timeZoneId")
 			).with(
 				"trial", "true"
 			).with(
-				"ownerEmailAddress", jsonObject.getString("ownerEmailAddress")
+				"ownerEmailAddress",
+				analyticsFormJSONObject.getString("ownerEmailAddress")
 			).toString(),
 			HashMapBuilder.put(
 				HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic
@@ -249,40 +277,22 @@ public class AnalyticsRestController extends BaseRestController {
 			UriComponentsBuilder.fromUriString(
 				_analyticsAuthUrl
 			).path(
-				"/o/faro/main/project/provisioned"
+				"/o/faro/main/project/unprovisioned"
 			).build(
 			).toUri());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Analytics project created for order " + orderId);
+			_log.info("Analytics project created for order " + order.getId());
 		}
-
-		Order order = _marketplaceService.getOrder(orderId);
-
-		if (Objects.equals(
-				order.getOrderStatus(),
-				MarketplaceConstants.ORDER_STATUS_OPEN)) {
-
-			_marketplaceService.updateOrder(
-				null, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
-		}
-
-		_marketplaceService.updateOrder(
-			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
 		_marketplaceService.updateOrder(
 			HashMapBuilder.put(
-				"analytics-group-id",
-				String.valueOf(
-					new JSONObject(
-						projectJSON
-					).getLong(
-						"groupId"
-					))
+				"order-metadata",
+				orderMetadataJSONObject.put(
+					"analyticsProject", new JSONObject(analyticsProject)
+				).toString()
 			).build(),
-			orderId, MarketplaceConstants.ORDER_STATUS_COMPLETED);
-
-		return projectJSON;
+			order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
 	}
 
 	@Override

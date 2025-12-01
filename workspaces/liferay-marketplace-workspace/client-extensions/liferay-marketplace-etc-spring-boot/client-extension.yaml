@@ -1,5 +1,10 @@
 assemble:
     -   fromTask: bootJar
+liferay-marketplace-etc-spring-boot-analytics-provisioning:
+    name: Liferay Marketplace Etc Spring Boot Analytics Provisioning
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua
+    resourcePath: /analytics/provisioning
+    type: objectAction
 liferay-marketplace-etc-spring-boot-marketplace-product-purchase:
     name: Liferay Marketplace Etc Spring Boot Marketplace Product Purchase
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua

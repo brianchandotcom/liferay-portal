@@ -6,15 +6,19 @@
 package com.liferay.asset.internal.search;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -23,6 +27,9 @@ import com.liferay.view.count.service.ViewCountEntryLocalService;
 import java.text.ParseException;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,7 +81,8 @@ public class AssetEntryDocumentContributor
 			long classPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			assetEntry = _assetEntryLocalService.fetchEntry(className, classPK);
+			assetEntry = _getAssetEntry(
+				_classNameLocalService.getClassNameId(className), classPK);
 		}
 
 		if (assetEntry == null) {
@@ -121,6 +129,58 @@ public class AssetEntryDocumentContributor
 				_classNameLocalService.getClassNameId(AssetEntry.class),
 				assetEntry.getPrimaryKey()));
 		document.addKeyword("visible", assetEntry.isVisible());
+	}
+
+	private AssetEntry _getAssetEntry(long classNameId, long classPK) {
+		Map<Long, AssetEntry> assetEntries =
+			ReindexCacheThreadLocal.getScopeReindexCache(
+				AssetEntryDocumentContributor.class.getName(),
+				String.valueOf(classNameId),
+				() -> _assetEntryLocalService.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						AssetEntryTable.INSTANCE
+					),
+					false),
+				() -> _assetEntryLocalService.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						AssetEntryTable.INSTANCE
+					).where(
+						AssetEntryTable.INSTANCE.classNameId.eq(classNameId)
+					),
+					false),
+				count -> {
+					Map<Long, AssetEntry> localAssetEntries = new HashMap<>();
+
+					if (count == 0) {
+						return localAssetEntries;
+					}
+
+					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+						AssetEntryTable.INSTANCE
+					).from(
+						AssetEntryTable.INSTANCE
+					).where(
+						AssetEntryTable.INSTANCE.classNameId.eq(classNameId)
+					);
+
+					for (AssetEntry assetEntry :
+							(List<AssetEntry>)_assetEntryLocalService.dslQuery(
+								dslQuery, false)) {
+
+						localAssetEntries.put(
+							assetEntry.getClassPK(), assetEntry);
+					}
+
+					return localAssetEntries;
+				});
+
+		if (assetEntries == null) {
+			return _assetEntryLocalService.fetchEntry(classNameId, classPK);
+		}
+
+		return assetEntries.get(classPK);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -16,12 +16,13 @@ import java.util.Map;
 public class FDSActionDropdownItem extends DropdownItem {
 
 	public FDSActionDropdownItem(
-		String id, String label, boolean separator, String type) {
+		String icon, String id, String label, boolean separator, String type) {
 
+		setIcon(icon);
 		setId(id);
 		setLabel(label);
 		setSeparator(separator);
-		super.setType(type);
+		setType(type);
 	}
 
 	public FDSActionDropdownItem(
@@ -178,7 +179,7 @@ public class FDSActionDropdownItem extends DropdownItem {
 	}
 
 	public void setType(String type) {
-		putData("type", type);
+		put("type", type);
 	}
 
 	public void setVisibilityFilters(Map<String, Object> visibilityFilters) {

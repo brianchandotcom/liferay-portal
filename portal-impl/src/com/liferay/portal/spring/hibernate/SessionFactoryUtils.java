@@ -56,6 +56,22 @@ public class SessionFactoryUtils {
 
 			String message = _getJDBCExceptionMessage(jdbcException);
 
+			if (hibernateException instanceof ConstraintViolationException) {
+				ConstraintViolationException constraintViolationException =
+					(ConstraintViolationException)hibernateException;
+
+				return new DataIntegrityViolationException(
+					StringBundler.concat(
+						hibernateException.getMessage(), "; SQL [",
+						constraintViolationException.getSQL(),
+						"]; constraint [",
+						constraintViolationException.getConstraintName(), "]"),
+					hibernateException);
+			}
+			else if (hibernateException instanceof DataException) {
+				return new DataIntegrityViolationException(
+					message, hibernateException);
+			}
 			if (hibernateException instanceof JDBCConnectionException) {
 				return new DataAccessResourceFailureException(
 					message, hibernateException);
@@ -74,24 +90,6 @@ public class SessionFactoryUtils {
 			}
 			else if (hibernateException instanceof SQLGrammarException) {
 				return new InvalidDataAccessResourceUsageException(
-					message, hibernateException);
-			}
-			else if (hibernateException instanceof
-						ConstraintViolationException) {
-
-				ConstraintViolationException constraintViolationException =
-					(ConstraintViolationException)hibernateException;
-
-				return new DataIntegrityViolationException(
-					StringBundler.concat(
-						hibernateException.getMessage(), "; SQL [",
-						constraintViolationException.getSQL(),
-						"]; constraint [",
-						constraintViolationException.getConstraintName(), "]"),
-					hibernateException);
-			}
-			else if (hibernateException instanceof DataException) {
-				return new DataIntegrityViolationException(
 					message, hibernateException);
 			}
 			else if (hibernateException instanceof JDBCException) {

@@ -80,12 +80,15 @@ export default function RulesModal() {
 			return;
 		}
 
-		// Remove readOnly prop so it's not persisted
+		// Remove readOnly and error props so it's not persisted
 
 		const rule = {
 			...editingRule,
 			actions: editingRule.actions.map(
-				({readOnly: _, ...action}) => action
+				({error: _error, readOnly: _readOnly, ...action}) => action
+			),
+			conditions: editingRule.conditions.map(
+				({error: _error, ...condition}) => condition
 			),
 		};
 

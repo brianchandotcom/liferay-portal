@@ -18030,13 +18030,13 @@ public class ObjectEntryResourceTest {
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 
-		String comment = RandomTestUtil.randomString();
+		String text = RandomTestUtil.randomString();
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		JSONObject bodyJSONObject = JSONUtil.put(
 			"externalReferenceCode", externalReferenceCode
 		).put(
-			"text", comment
+			"text", text
 		);
 
 		String endpoint = StringBundler.concat(
@@ -18056,7 +18056,7 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertEquals(
 			externalReferenceCode, jsonObject.get("externalReferenceCode"));
-		Assert.assertEquals("<p>" + comment + "</p>", jsonObject.get("text"));
+		Assert.assertEquals("<p>" + text + "</p>", jsonObject.get("text"));
 	}
 
 	private void _testPostByExternalReferenceCodeCommentReplyComment(

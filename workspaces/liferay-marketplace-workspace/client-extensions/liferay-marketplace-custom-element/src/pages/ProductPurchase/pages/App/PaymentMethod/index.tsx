@@ -5,7 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 import {useSelector} from '@xstate/store/react';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
@@ -38,6 +38,7 @@ const PaymentMethodFlows = {
 };
 
 export default function PaymentMethod() {
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
 	const payment = useSelector(
@@ -99,34 +100,41 @@ export default function PaymentMethod() {
 		];
 
 	const onClickContinue = async () => {
-		if (licenseType === 'TRIAL') {
-			return handlePurchase(ProductPurchaseApp, undefined, {
-				isTrialSKU: true,
+		setLoading(true);
+
+		try {
+			if (licenseType === 'TRIAL') {
+				return handlePurchase(ProductPurchaseApp, undefined, {
+					isTrialSKU: true,
+				});
+			}
+
+			await productPurchaseCart.updateCart(productPurchaseCart.cart.id, {
+				billingAddress: payment.billingAddress,
 			});
-		}
 
-		await productPurchaseCart.updateCart(productPurchaseCart.cart.id, {
-			billingAddress: payment.billingAddress,
-		});
+			if (licenseType === 'PAID') {
+				await marketplaceOAuth2.taxCalculate(productPurchaseCart.cart.id);
+			}
 
-		if (licenseType === 'PAID') {
-			await marketplaceOAuth2.taxCalculate(productPurchaseCart.cart.id);
-		}
+			if (payment.taxId && !selectedAccount.taxId) {
+				await HeadlessAdminUser.updateAccount(selectedAccount.id, {
+					taxId: payment.taxId,
+				});
+			}
 
-		if (payment.taxId && !selectedAccount.taxId) {
-			await HeadlessAdminUser.updateAccount(selectedAccount.id, {
-				taxId: payment.taxId,
+			cartStore.send({
+				cart: await HeadlessCommerceDeliveryCart.getCart(
+					productPurchaseCart.cart.id
+				),
+				type: 'setCart',
 			});
+
+			nextStep();
 		}
-
-		cartStore.send({
-			cart: await HeadlessCommerceDeliveryCart.getCart(
-				productPurchaseCart.cart.id
-			),
-			type: 'setCart',
-		});
-
-		nextStep();
+		finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -138,7 +146,7 @@ export default function PaymentMethod() {
 				},
 				continueButtonProps: {
 					children: actionMessage,
-					disabled: !isPrimaryButtonActive,
+					disabled: !isPrimaryButtonActive || loading,
 					onClick: onClickContinue,
 				},
 				termsAndConditions: (

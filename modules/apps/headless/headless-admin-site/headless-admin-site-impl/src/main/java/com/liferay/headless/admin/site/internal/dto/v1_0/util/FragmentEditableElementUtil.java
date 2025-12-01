@@ -153,61 +153,71 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
+	private static JSONObject _getFragmentInlineValueJSONObject(
+		FragmentInlineValue fragmentInlineValue) {
+
+		if (fragmentInlineValue == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		Map<String, String> languageIdMap = LocalizedMapUtil.getLanguageIdMap(
+			LocalizedMapUtil.getLocalizedMap(
+				fragmentInlineValue.getValue_i18n()));
+
+		for (Map.Entry<String, String> entry : languageIdMap.entrySet()) {
+			jsonObject.put(entry.getKey(), entry.getValue());
+		}
+
+		return jsonObject;
+	}
+
+	private static JSONObject _getFragmentMappedValueJSONObject(
+			long companyId, FragmentMappedValue fragmentMappedValue,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws Exception {
+
+		if (fragmentMappedValue == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
+			companyId, infoItemServiceRegistry,
+			fragmentMappedValue.getMapping(), scopeGroupId);
+	}
+
 	private static JSONObject _getHTMLFragmentEditableElementJSONObject(
 			long companyId,
 			HTMLFragmentEditableElementValue htmlFragmentEditableElementValue,
 			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		HTMLFragmentValue htmlFragmentValue =
 			htmlFragmentEditableElementValue.getHtmlFragmentValue();
 
 		if (htmlFragmentValue == null) {
-			return jsonObject;
+			return null;
 		}
 
 		if (htmlFragmentValue instanceof HTMLInlineFragmentValue) {
 			HTMLInlineFragmentValue htmlInlineFragmentValue =
 				(HTMLInlineFragmentValue)htmlFragmentValue;
 
-			FragmentInlineValue fragmentInlineValue =
-				htmlInlineFragmentValue.getFragmentInlineValue();
-
-			if (fragmentInlineValue == null) {
-				return jsonObject;
-			}
-
-			Map<String, String> languageIdMap =
-				LocalizedMapUtil.getLanguageIdMap(
-					LocalizedMapUtil.getLocalizedMap(
-						fragmentInlineValue.getValue_i18n()));
-
-			for (Map.Entry<String, String> entry : languageIdMap.entrySet()) {
-				jsonObject.put(entry.getKey(), entry.getValue());
-			}
-
-			return jsonObject;
+			return _getFragmentInlineValueJSONObject(
+				htmlInlineFragmentValue.getFragmentInlineValue());
 		}
 
 		if (!(htmlFragmentValue instanceof HTMLMappedFragmentValue)) {
-			return jsonObject;
+			return null;
 		}
 
 		HTMLMappedFragmentValue htmlMappedFragmentValue =
 			(HTMLMappedFragmentValue)htmlFragmentValue;
 
-		FragmentMappedValue fragmentMappedValue =
-			htmlMappedFragmentValue.getFragmentMappedValue();
-
-		if (fragmentMappedValue == null) {
-			return jsonObject;
-		}
-
-		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
-			companyId, infoItemServiceRegistry,
-			fragmentMappedValue.getMapping(), scopeGroupId);
+		return _getFragmentMappedValueJSONObject(
+			companyId, htmlMappedFragmentValue.getFragmentMappedValue(),
+			infoItemServiceRegistry, scopeGroupId);
 	}
 
 	private static JSONObject _getJSONObject(
@@ -285,23 +295,10 @@ public class FragmentEditableElementUtil {
 			TextInlineFragmentValue textInlineFragmentValue =
 				(TextInlineFragmentValue)textFragmentValue;
 
-			FragmentInlineValue fragmentInlineValue =
-				textInlineFragmentValue.getFragmentInlineValue();
-
-			if (fragmentInlineValue == null) {
-				return jsonObject;
-			}
-
-			Map<String, String> languageIdMap =
-				LocalizedMapUtil.getLanguageIdMap(
-					LocalizedMapUtil.getLocalizedMap(
-						fragmentInlineValue.getValue_i18n()));
-
-			for (Map.Entry<String, String> entry : languageIdMap.entrySet()) {
-				jsonObject.put(entry.getKey(), entry.getValue());
-			}
-
-			return jsonObject;
+			return JSONUtil.merge(
+				_getFragmentInlineValueJSONObject(
+					textInlineFragmentValue.getFragmentInlineValue()),
+				jsonObject);
 		}
 
 		if (!(textFragmentValue instanceof TextMappedFragmentValue)) {
@@ -311,17 +308,10 @@ public class FragmentEditableElementUtil {
 		TextMappedFragmentValue textMappedFragmentValue =
 			(TextMappedFragmentValue)textFragmentValue;
 
-		FragmentMappedValue fragmentMappedValue =
-			textMappedFragmentValue.getFragmentMappedValue();
-
-		if (fragmentMappedValue == null) {
-			return jsonObject;
-		}
-
 		return JSONUtil.merge(
-			FragmentMappingUtil.getFragmentMappedValueJSONObject(
-				companyId, infoItemServiceRegistry,
-				fragmentMappedValue.getMapping(), scopeGroupId),
+			_getFragmentMappedValueJSONObject(
+				companyId, textMappedFragmentValue.getFragmentMappedValue(),
+				infoItemServiceRegistry, scopeGroupId),
 			jsonObject);
 	}
 

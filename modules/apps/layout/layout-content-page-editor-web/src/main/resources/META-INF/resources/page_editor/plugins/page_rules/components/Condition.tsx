@@ -14,8 +14,10 @@ import useCache from '../../../app/utils/useCache';
 import useConditionValues from '../../../app/utils/useConditionValues';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
+import {RuleError} from './RulesModal';
 
 export interface Condition {
+	error?: RuleError | null;
 	field?: 'user' | 'role' | 'segment' | string;
 	id: string;
 	options?: {
@@ -128,6 +130,12 @@ export default function Condition({
 
 	const completeCondition = !!condition.options?.value;
 
+	const onErrorChange = (error: RuleError | null) => {
+		if (condition.error?.field.id !== error?.field.id) {
+			onConditionChange({...condition, error});
+		}
+	};
+
 	return (
 		<RuleBuilderItem
 			aria-label={
@@ -149,6 +157,7 @@ export default function Condition({
 					'select-item-for-the-condition'
 				)}
 				items={CONDITION_TYPE_ITEMS}
+				onErrorChange={onErrorChange}
 				onSelectionChange={(type) =>
 					onConditionChange({...condition, type})
 				}
@@ -160,6 +169,7 @@ export default function Condition({
 				<UserTypeSelectors
 					condition={condition}
 					onConditionChange={onConditionChange}
+					onErrorChange={onErrorChange}
 					sendMessage={sendMessage}
 				/>
 			) : null}
@@ -169,6 +179,7 @@ export default function Condition({
 					condition={condition}
 					inputFragmentItems={inputFragmentItems}
 					onConditionChange={onConditionChange}
+					onErrorChange={onErrorChange}
 					sendMessage={sendMessage}
 				/>
 			) : null}
@@ -180,11 +191,13 @@ function FormFragmentTypeSelectors({
 	condition,
 	inputFragmentItems,
 	onConditionChange,
+	onErrorChange,
 	sendMessage,
 }: {
 	condition: Condition;
 	inputFragmentItems: {label: string; value: string}[];
 	onConditionChange: (condition: Condition) => void;
+	onErrorChange: (error: RuleError | null) => void;
 	sendMessage: (message: string) => void;
 }) {
 	const selectedKey = inputFragmentItems.some(
@@ -201,6 +214,7 @@ function FormFragmentTypeSelectors({
 					Liferay.Language.get('fragment')
 				)}
 				items={inputFragmentItems}
+				onErrorChange={onErrorChange}
 				onSelectionChange={(selectedFragment) => {
 					onConditionChange({
 						...condition,
@@ -218,6 +232,7 @@ function FormFragmentTypeSelectors({
 						Liferay.Language.get('type')
 					)}
 					items={FORM_FRAGMENT_CONDITION_ITEMS}
+					onErrorChange={onErrorChange}
 					onSelectionChange={(type) => {
 						onConditionChange({
 							...condition,
@@ -242,6 +257,7 @@ function FormFragmentTypeSelectors({
 							value: 'value',
 						},
 					]}
+					onErrorChange={onErrorChange}
 					onSelectionChange={() => {}}
 					selectedKey="value"
 				/>
@@ -260,6 +276,7 @@ function FormFragmentTypeSelectors({
 							value: 'false',
 						},
 					]}
+					onErrorChange={onErrorChange}
 					onSelectionChange={(value) => {
 						onConditionChange({
 							...condition,
@@ -283,10 +300,12 @@ function FormFragmentTypeSelectors({
 function UserTypeSelectors({
 	condition,
 	onConditionChange,
+	onErrorChange,
 	sendMessage,
 }: {
 	condition: Condition;
 	onConditionChange: (condition: Condition) => void;
+	onErrorChange: (error: RuleError | null) => void;
 	sendMessage: (message: string) => void;
 }) {
 	const ValueSelectorComponent: FC<SelectorProps> | null =
@@ -302,6 +321,7 @@ function UserTypeSelectors({
 					Liferay.Language.get('condition')
 				)}
 				items={USER_CONDITION_ITEMS}
+				onErrorChange={onErrorChange}
 				onSelectionChange={(selectedCondition) => {
 					onConditionChange({
 						...condition,
@@ -313,6 +333,7 @@ function UserTypeSelectors({
 
 			{ValueSelectorComponent ? (
 				<ValueSelectorComponent
+					onErrorChange={onErrorChange}
 					onValueChanged={(value) => {
 						onConditionChange({
 							...condition,
@@ -334,11 +355,12 @@ function UserTypeSelectors({
 }
 
 interface SelectorProps {
+	onErrorChange: (error: RuleError | null) => void;
 	onValueChanged: (value: string) => void;
 	value: string | undefined;
 }
 
-function RolesSelector({onValueChanged, value}: SelectorProps) {
+function RolesSelector({onErrorChange, onValueChanged, value}: SelectorProps) {
 	const roles = useCache({
 		fetcher: () => RulesService.getRoles(),
 		key: [CACHE_KEYS.roles],
@@ -358,6 +380,7 @@ function RolesSelector({onValueChanged, value}: SelectorProps) {
 				label: role.name,
 				value: role.roleId,
 			}))}
+			onErrorChange={onErrorChange}
 			onSelectionChange={(value: React.Key) =>
 				onValueChanged(value as string)
 			}
@@ -366,7 +389,7 @@ function RolesSelector({onValueChanged, value}: SelectorProps) {
 	);
 }
 
-function UserSelector({onValueChanged, value}: SelectorProps) {
+function UserSelector({onErrorChange, onValueChanged, value}: SelectorProps) {
 	const users = useCache({
 		fetcher: () => RulesService.getUsers(),
 		key: [CACHE_KEYS.users],
@@ -386,6 +409,7 @@ function UserSelector({onValueChanged, value}: SelectorProps) {
 				label: user.screenName,
 				value: user.userId,
 			}))}
+			onErrorChange={onErrorChange}
 			onSelectionChange={(value: React.Key) =>
 				onValueChanged(value as string)
 			}
@@ -394,7 +418,11 @@ function UserSelector({onValueChanged, value}: SelectorProps) {
 	);
 }
 
-function SegmentsSelector({onValueChanged, value}: SelectorProps) {
+function SegmentsSelector({
+	onErrorChange,
+	onValueChanged,
+	value,
+}: SelectorProps) {
 	return (
 		<RuleSelect
 			aria-label={sub(
@@ -407,6 +435,7 @@ function SegmentsSelector({onValueChanged, value}: SelectorProps) {
 					value: segmentsEntry.segmentsEntryId,
 				})
 			)}
+			onErrorChange={onErrorChange}
 			onSelectionChange={(value: React.Key) =>
 				onValueChanged(value as string)
 			}

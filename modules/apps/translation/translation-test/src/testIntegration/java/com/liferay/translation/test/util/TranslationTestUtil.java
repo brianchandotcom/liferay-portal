@@ -5,7 +5,15 @@
 
 package com.liferay.translation.test.util;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -25,6 +33,27 @@ import java.io.InputStream;
  * @author Alejandro Tardín
  */
 public class TranslationTestUtil {
+
+	public static JournalArticle getJournalArticle(
+			Group group, DDMFormDeserializer ddmFormDeserializer)
+		throws Exception {
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				readFileToString("test-ddm-form.json"));
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), JournalArticle.class.getName(),
+			ddmFormDeserializerDeserializeResponse.getDDMForm());
+
+		return JournalTestUtil.addArticleWithXMLContent(
+			group.getGroupId(), readFileToString("test-journal-content.xml"),
+			ddmStructure.getStructureKey(), null);
+	}
 
 	public static InputStream readFileToInputStream(String fileName)
 		throws Exception {

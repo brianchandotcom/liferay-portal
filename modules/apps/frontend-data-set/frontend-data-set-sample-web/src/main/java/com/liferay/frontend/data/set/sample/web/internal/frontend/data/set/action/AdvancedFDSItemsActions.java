@@ -96,6 +96,30 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 
 		fdsActionDropdownItem3.putData("disableHeader", true);
 
+		FDSActionDropdownItem fdsActionDropdownItem4 =
+			new FDSActionDropdownItem(
+				"nodes", "contextualItem", "Contextual Item", false,
+				"contextual");
+
+		fdsActionDropdownItem4.setFDSActionDropdownItems(
+			Arrays.asList(
+				new FDSActionDropdownItem(
+					null, "exclamation-circle", "sampleMessage",
+					"Contextual Sub Item 1", null, null, "link"),
+				new FDSActionDropdownItem(
+					null, "exclamation-circle", "sampleMessage",
+					"Contextual Sub Item 2", null, null, "link")));
+
+		FDSActionDropdownItem fdsActionDropdownItem5 =
+			new FDSActionDropdownItem(null, "groupItems", null, true, "group");
+
+		fdsActionDropdownItem5.setFDSActionDropdownItems(
+			Arrays.asList(
+				new FDSActionDropdownItem(
+					null, "separator", "sampleMessage", "Group Item", null,
+					null, "link"),
+				fdsActionDropdownItem4));
+
 		return Arrays.asList(
 			new FDSActionDropdownItem(
 				"#test-visibility-filter", "sun",
@@ -145,7 +169,8 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 				null, "reload", "reload", "Reload Data", null, null, "link"),
 			new FDSActionDropdownItem(
 				null, "rectangle-split", "openSidePanel", "Open Side Panel",
-				null, null, "link"));
+				null, null, "link"),
+			fdsActionDropdownItem5);
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 
 	protected abstract String getPostUpgradeDataCleanupProcessClassName();
 
-	protected void installBundle(BundleContext bundleContext, Bundle bundle)
+	protected void installBundle(Bundle bundle, BundleContext bundleContext)
 		throws Exception {
 
 		com.liferay.osgi.util.BundleUtil.installBundle(

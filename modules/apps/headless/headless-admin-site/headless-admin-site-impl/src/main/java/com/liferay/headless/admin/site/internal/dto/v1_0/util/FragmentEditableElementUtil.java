@@ -153,6 +153,19 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
+	private static FragmentEditableElementValue
+		_getFragmentEditableElementValue(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId, String type) {
+
+		if (Objects.equals(type, "text")) {
+			return _toTextFragmentEditableElementValue(
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+		}
+
+		return null;
+	}
+
 	private static JSONObject _getFragmentInlineValueJSONObject(
 		FragmentInlineValue fragmentInlineValue) {
 
@@ -324,16 +337,11 @@ public class FragmentEditableElementUtil {
 		return TransformUtil.transform(
 			jsonObject.keySet(),
 			textId -> {
-				String type = editableTypes.getOrDefault(textId, "text");
-
-				if (!Objects.equals(type, "text")) {
-					return null;
-				}
-
 				FragmentEditableElementValue fragmentEditableElementValue =
-					_toTextFragmentEditableElementValue(
+					_getFragmentEditableElementValue(
 						companyId, infoItemServiceRegistry,
-						jsonObject.getJSONObject(textId), scopeGroupId);
+						jsonObject.getJSONObject(textId), scopeGroupId,
+						editableTypes.getOrDefault(textId, "text"));
 
 				if (fragmentEditableElementValue == null) {
 					return null;

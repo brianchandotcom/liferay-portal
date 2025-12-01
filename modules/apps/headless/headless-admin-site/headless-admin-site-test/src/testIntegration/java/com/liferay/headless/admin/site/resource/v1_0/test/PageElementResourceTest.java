@@ -575,6 +575,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return _addFragmentEntry(
 			configuration, groupId,
 			StringBundler.concat(
+				"<div data-lfr-editable-id=\"element-html\" ",
+				"data-lfr-editable-type=\"html\">",
+				RandomTestUtil.randomString(), "</div>",
 				"<h1 data-lfr-editable-id=\"element-text\" ",
 				"data-lfr-editable-type=\"text\">",
 				RandomTestUtil.randomString(), "</h1>"),
@@ -617,7 +620,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	private void _assertDefaultValues(
 			FragmentInstancePageElementDefinition
 				fragmentInstancePageElementDefinition,
-			String key)
+			String... keys)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -636,26 +639,28 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		JSONObject defaultElementTextJSONObject =
-			defaultEditableJSONObject.getJSONObject(key);
-
-		Object defaultValue = defaultElementTextJSONObject.get("defaultValue");
-
-		Assert.assertTrue(
-			defaultElementTextJSONObject.toString(),
-			Validator.isNotNull(defaultValue));
-
 		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject editableJSONObject = jsonObject.getJSONObject(
 			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		JSONObject elementTextJSONObject = editableJSONObject.getJSONObject(
-			key);
+		for (String key : keys) {
+			JSONObject defaultElementJSONObject =
+				defaultEditableJSONObject.getJSONObject(key);
 
-		Assert.assertEquals(
-			defaultValue, elementTextJSONObject.get("defaultValue"));
+			Object defaultValue = defaultElementJSONObject.get("defaultValue");
+
+			Assert.assertTrue(
+				defaultElementJSONObject.toString(),
+				Validator.isNotNull(defaultValue));
+
+			JSONObject elementJSONObject = editableJSONObject.getJSONObject(
+				key);
+
+			Assert.assertEquals(
+				defaultValue, elementJSONObject.get("defaultValue"));
+		}
 	}
 
 	private void _assertProblemException(
@@ -3055,7 +3060,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_assertDefaultValues(
 			(FragmentInstancePageElementDefinition)
 				pageElement.getPageElementDefinition(),
-			"element-text");
+			"element-html", "element-text");
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement()

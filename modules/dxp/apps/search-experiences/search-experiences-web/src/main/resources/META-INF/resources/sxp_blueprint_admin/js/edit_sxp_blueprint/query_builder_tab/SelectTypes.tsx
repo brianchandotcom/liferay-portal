@@ -13,6 +13,7 @@ import React, {useContext, useState} from 'react';
 // @ts-ignore
 
 import ThemeContext from '../../shared/ThemeContext';
+import {ISelectedItem, ISelectedSubtype} from '../../utils/types';
 
 // @ts-ignore
 
@@ -21,16 +22,6 @@ import SearchableTypesModal from './SearchableTypesModal';
 // @ts-ignore
 
 import SelectSubtypes from './SelectSubtypes';
-
-export interface ISelectedSubtype {
-	label: string;
-	value: string;
-}
-
-interface ISelectedItem {
-	subtypes: ISelectedSubtype[];
-	type: string;
-}
 
 /**
  * Checks whether the subtype is missing. Since missing subtypes resort to

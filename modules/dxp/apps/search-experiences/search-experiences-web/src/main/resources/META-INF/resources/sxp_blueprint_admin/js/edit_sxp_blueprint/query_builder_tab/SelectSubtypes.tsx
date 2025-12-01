@@ -39,17 +39,8 @@ import removeDuplicates from '../../utils/functions/remove_duplicates';
 // @ts-ignore
 
 import sub from '../../utils/language/sub';
-import {ISelectedSubtype, isMissing} from './SelectTypes';
-
-interface IAssetSubtype {
-	assetSubtypeExternalReferenceCode: string;
-	assetSubtypeLocalizedName: string;
-	entryClassName: string;
-	groupExternalReferenceCode: string;
-	groupLocalizedName: string;
-	label: string;
-	value: string;
-}
+import {IAssetSubtype, ISelectedSubtype} from './../../utils/types';
+import {isMissing} from './SelectTypes';
 
 export function SearchableSubtypesModal({
 	className,

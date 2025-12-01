@@ -12,10 +12,12 @@ import {
 	getStorageAddSXPElementSidebar,
 } from '../../utils/sessionStorage';
 import {
-	ElementInstances,
-	IndexFields,
-	Scope,
-	SearchableTypes,
+	IElementInstances,
+	IFrameworkConfiguration,
+	IIndexFields,
+	IScope,
+	ISearchableTypes,
+	ISelectedSubtype,
 } from '../../utils/types';
 import {SIDEBAR_TYPES} from '../../utils/types/sidebarTypes';
 import QuerySettings from '../query_builder_tab/QuerySettings';
@@ -53,28 +55,34 @@ function QueryBuilderTab({
 	applyIndexerClauses: boolean;
 	assetSubtypesMap: {[key: string]: string};
 	clauseContributorsList: string[];
-	elementInstances: ElementInstances[];
+	elementInstances: IElementInstances[];
 	entityJSON: {[key: string]: any};
-	errors: {[key: string]: any}[];
-	frameworkConfig: {[key: string]: any};
-	indexFields: IndexFields[];
+	errors: (
+		| {[uiConfigurationValues: string]: {[field: string]: string}}
+		| undefined
+	)[];
+	frameworkConfig: IFrameworkConfiguration;
+	indexFields: IIndexFields[];
 	isIndexCompany: boolean;
 	isSubmitting: boolean;
-	onApplyIndexerClausesChange: (value: object) => void;
-	onAssetSubtypesMapChange: (value: object) => void;
+	onApplyIndexerClausesChange: (value: boolean) => void;
+	onAssetSubtypesMapChange: (subtypes: ISelectedSubtype[]) => void;
 	onBlur: (event: React.FocusEvent<any>) => void;
 	onChange: (event: React.ChangeEvent<any>) => void;
 	onDeleteSXPElement: (id: number) => void;
 	onFetchSearchableTypes: () => void;
-	onFrameworkConfigChange: (value: object) => void;
+	onFrameworkConfigChange: (value: IFrameworkConfiguration) => void;
 	openSidebar: keyof typeof SIDEBAR_TYPES | '';
-	scope: Scope[];
-	searchableTypes: SearchableTypes[];
+	scope: IScope[];
+	searchableTypes: ISearchableTypes[];
 	setFieldTouched: (field: string, touched?: boolean) => void;
 	setFieldValue: (field: string, value: any) => void;
 	setOpenSidebar: (sidebarType: keyof typeof SIDEBAR_TYPES) => void;
-	setScope: (scope: Scope[]) => void;
-	touched: ({[key: string]: any} | undefined)[];
+	setScope: (scope: IScope[]) => void;
+	touched: (
+		| {[uiConfigurationValues: string]: {[field: string]: boolean}}
+		| undefined
+	)[];
 }) {
 
 	/**

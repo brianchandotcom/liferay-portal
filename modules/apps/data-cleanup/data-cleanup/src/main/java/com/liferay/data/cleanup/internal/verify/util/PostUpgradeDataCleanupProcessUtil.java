@@ -15,7 +15,7 @@ import org.osgi.framework.BundleContext;
  */
 public class PostUpgradeDataCleanupProcessUtil {
 
-	public static boolean allLiferayBundlesStarted() {
+	public static boolean isEveryLiferayBundleResolved() {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		for (Bundle bundle : bundleContext.getBundles()) {

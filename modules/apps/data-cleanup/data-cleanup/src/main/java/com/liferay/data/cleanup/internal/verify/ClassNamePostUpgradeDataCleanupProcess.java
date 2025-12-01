@@ -44,7 +44,7 @@ public class ClassNamePostUpgradeDataCleanupProcess
 
 	@Override
 	public void cleanUp() throws Exception {
-		if (!PostUpgradeDataCleanupProcessUtil.allLiferayBundlesStarted()) {
+		if (!PostUpgradeDataCleanupProcessUtil.isEveryLiferayBundleResolved()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(

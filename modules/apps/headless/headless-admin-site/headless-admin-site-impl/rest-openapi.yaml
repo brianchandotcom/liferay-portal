@@ -1076,12 +1076,6 @@ components:
         FormStepPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
-                -   properties:
-                        formStepConfig:
-                            # @review
-                            description:
-                                The form step's configuration.
-                            type: object
             # @review
             description:
                 The page element definition of a form step.

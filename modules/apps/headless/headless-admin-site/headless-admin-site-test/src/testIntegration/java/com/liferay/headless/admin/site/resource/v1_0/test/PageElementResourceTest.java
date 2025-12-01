@@ -49,6 +49,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValueFragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
@@ -1086,9 +1088,68 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		formContainerPageElementDefinition.setType(
 			PageElementDefinition.Type.FORM_CONTAINER);
 
+		if (Objects.equals(
+				formContainerType,
+				FormContainerConfig.FormContainerType.MULTISTEP)) {
+
+			PageElement[] pageElements = new PageElement[1];
+
+			pageElements[0] = _getFormStepContainerPageElement(
+				numberOfSteps, pageElementExternalReferenceCode);
+
+			return _getPageElement(
+				formContainerPageElementDefinition,
+				pageElementExternalReferenceCode, pageElements);
+		}
+
 		return _getPageElement(
 			formContainerPageElementDefinition,
 			pageElementExternalReferenceCode);
+	}
+
+	private PageElement _getFormStepContainerPageElement(
+			int numberOfSteps, String parentExternalReferenceCode)
+		throws Exception {
+
+		FormStepContainerPageElementDefinition
+			formStepContainerPageElementDefinition =
+				new FormStepContainerPageElementDefinition();
+
+		formStepContainerPageElementDefinition.setCssClasses(
+			RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)));
+		formStepContainerPageElementDefinition.setCustomCSS(
+			RandomTestUtil.randomString());
+		formStepContainerPageElementDefinition.setFragmentViewports(
+			_getFragmentViewports());
+		formStepContainerPageElementDefinition.setType(
+			PageElementDefinition.Type.FORM_STEP_CONTAINER);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		PageElement[] pageElements = new PageElement[numberOfSteps];
+
+		for (int i = 0; i < numberOfSteps; i++) {
+			pageElements[i] = _getFormStepPageElement(externalReferenceCode, i);
+		}
+
+		return _getPageElement(
+			formStepContainerPageElementDefinition, externalReferenceCode,
+			parentExternalReferenceCode, pageElements);
+	}
+
+	private PageElement _getFormStepPageElement(
+			String parentExternalReferenceCode, int position)
+		throws Exception {
+
+		FormStepPageElementDefinition formStepPageElementDefinition =
+			new FormStepPageElementDefinition();
+
+		formStepPageElementDefinition.setType(
+			PageElementDefinition.Type.FORM_STEP);
+
+		return _getPageElement(
+			formStepPageElementDefinition, StringUtil.randomString(),
+			parentExternalReferenceCode, position);
 	}
 
 	private PageElement _getFragmentInstancePageElement(
@@ -1492,15 +1553,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			String pageElementExternalReferenceCode)
 		throws Exception {
 
-		PageElement pageElement = super.randomPageElement();
-
-		pageElement.setExternalReferenceCode(pageElementExternalReferenceCode);
-		pageElement.setPageElementDefinition(pageElementDefinition);
-		pageElement.setPageElements(new PageElement[0]);
-		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
-		pageElement.setPosition(0);
-
-		return pageElement;
+		return _getPageElement(
+			pageElementDefinition, pageElementExternalReferenceCode,
+			StringPool.BLANK, new PageElement[0]);
 	}
 
 	private PageElement _getPageElement(
@@ -1527,6 +1582,23 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		pageElement.setParentExternalReferenceCode(parentExternalReferenceCode);
 		pageElement.setPosition(position);
+
+		return pageElement;
+	}
+
+	private PageElement _getPageElement(
+			PageElementDefinition pageElementDefinition,
+			String pageElementExternalReferenceCode,
+			String parentExternalReferenceCode, PageElement[] pageElements)
+		throws Exception {
+
+		PageElement pageElement = super.randomPageElement();
+
+		pageElement.setExternalReferenceCode(pageElementExternalReferenceCode);
+		pageElement.setPageElementDefinition(pageElementDefinition);
+		pageElement.setPageElements(pageElements);
+		pageElement.setParentExternalReferenceCode(parentExternalReferenceCode);
+		pageElement.setPosition(0);
 
 		return pageElement;
 	}
@@ -2053,6 +2125,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				FormContainerConfig.FormContainerType.SIMPLE, false, 1,
 				RandomTestUtil.randomString(),
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(),
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, "url",
+				FormContainerConfig.FormContainerType.MULTISTEP, false,
+				RandomTestUtil.randomInt(2, 10), RandomTestUtil.randomString(),
+				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
 	}
 
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithFragmentPageElement()
@@ -2318,6 +2398,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				RandomTestUtil.randomString(), false, "url",
 				FormContainerConfig.FormContainerType.SIMPLE, false, 1,
 				externalReferenceCode,
+				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(),
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, "url",
+				FormContainerConfig.FormContainerType.MULTISTEP, false,
+				RandomTestUtil.randomInt(2, 10), externalReferenceCode,
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getPageElement(

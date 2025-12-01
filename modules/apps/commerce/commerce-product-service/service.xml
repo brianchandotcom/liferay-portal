@@ -84,7 +84,7 @@
 		<finder name="AccountEntryId" return-type="Collection">
 			<finder-column name="accountEntryId" />
 		</finder>
-		<finder name="SiteGroupId" return-type="CommerceChannel">
+		<finder name="SiteGroupId" return-type="Collection">
 			<finder-column name="siteGroupId" />
 		</finder>
 	</entity>
@@ -408,7 +408,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="C_T" return-type="CPConfigurationEntrySetting">
+		<finder name="C_T" return-type="CPConfigurationEntrySetting" unique="true">
 			<finder-column name="CPConfigurationEntryId" />
 			<finder-column name="type" />
 		</finder>
@@ -458,14 +458,14 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="ParentCPConfigurationListId" return-type="CPConfigurationList">
+		<finder name="ParentCPConfigurationListId" return-type="Collection">
 			<finder-column name="parentCPConfigurationListId" />
 		</finder>
 		<finder name="G_C" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="G_M" return-type="CPConfigurationList">
+		<finder name="G_M" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="master" />
 		</finder>
@@ -624,7 +624,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_V" return-type="CPDefinition">
+		<finder name="C_V" return-type="Collection">
 			<finder-column name="CProductId" />
 			<finder-column name="version" />
 		</finder>
@@ -1135,7 +1135,7 @@
 			<finder-column name="CPDefinitionOptionRelId" />
 			<finder-column name="CPInstanceId" />
 		</finder>
-		<finder name="CDOVRI_CII" return-type="CPInstanceOptionValueRel">
+		<finder name="CDOVRI_CII" return-type="CPInstanceOptionValueRel" unique="true">
 			<finder-column name="CPDefinitionOptionValueRelId" />
 			<finder-column name="CPInstanceId" />
 		</finder>
@@ -1477,7 +1477,7 @@
 		<finder name="ListTypeDefinitionId" return-type="Collection">
 			<finder-column name="listTypeDefinitionId" />
 		</finder>
-		<finder name="C_L" return-type="CPSpecificationOptionListTypeDefinitionRel">
+		<finder name="C_L" return-type="CPSpecificationOptionListTypeDefinitionRel" unique="true">
 			<finder-column name="CPSpecificationOptionId" />
 			<finder-column name="listTypeDefinitionId" />
 		</finder>

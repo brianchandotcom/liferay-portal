@@ -8,9 +8,11 @@ import {Option, Picker} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {MutableRefObject, useEffect} from 'react';
+import {useId} from 'frontend-js-components-web';
+import React, {MutableRefObject, useEffect, useRef} from 'react';
 
 import {getSelectOptions} from '../../../common/getSelectOptions';
+import {RuleError} from './RulesModal';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	(
@@ -30,7 +32,7 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 		return (
 			<ClayButton
 				className={classNames(
-					'page-editor__rule-builder-select form-control form-control-select form-control-sm'
+					'form-control form-control-select form-control-sm'
 				)}
 				displayType="secondary"
 				onClick={onClick}
@@ -47,6 +49,7 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 interface RuleSelectProps<T> {
 	'aria-label'?: string;
 	'items': ReadonlyArray<{label: string; value: T}>;
+	'onErrorChange': (error: RuleError | null) => void;
 	'onSelectionChange': (selection: T) => void;
 	'readOnly'?: boolean;
 	'selectedKey'?: string;
@@ -54,19 +57,34 @@ interface RuleSelectProps<T> {
 }
 
 export default function RuleSelect<T extends string>({
+	'aria-label': label = '',
 	items,
+	onErrorChange,
 	onSelectionChange,
 	readOnly,
 	selectedKey,
 	triggerRef,
 	...otherProps
 }: RuleSelectProps<T>) {
+	const id = useId();
+	const inputRef = useRef<HTMLInputElement | null>(null);
 	const previousSelectedKey = usePrevious(selectedKey);
+
+	const fieldRef = inputRef || triggerRef;
+
+	useEffect(() => {
+		if (!previousSelectedKey && fieldRef?.current) {
+			onErrorChange(
+				selectedKey ? null : {field: fieldRef.current, label}
+			);
+		}
+	}, [label, id, fieldRef, onErrorChange, previousSelectedKey, selectedKey]);
 
 	if (!items.length) {
 		return (
 			<ClayInput
 				className="w-auto"
+				id={id}
 				readOnly
 				sizing="sm"
 				value={Liferay.Language.get('no-options-available')}
@@ -89,7 +107,9 @@ export default function RuleSelect<T extends string>({
 
 	return (
 		<Picker
+			aria-label={label}
 			as={TriggerLabel}
+			id={id}
 			items={getSelectOptions(items)}
 			key={selectedKey === undefined && previousSelectedKey ? 0 : 1}
 			messages={{

@@ -25,6 +25,11 @@ import {
 	RuleBuilderConditionSection,
 } from './RuleBuilderSection';
 
+export type RuleError = {
+	field: HTMLButtonElement | HTMLInputElement;
+	label: string;
+};
+
 export default function RulesModal() {
 	const {editingRule, visible} = useRulesModalState();
 

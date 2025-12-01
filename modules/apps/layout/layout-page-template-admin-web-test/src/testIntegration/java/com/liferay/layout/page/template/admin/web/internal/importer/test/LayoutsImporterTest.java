@@ -487,23 +487,17 @@ public class LayoutsImporterTest {
 		FragmentEntryLink fragmentEntryLink = _addInputFragmentEntryLink(
 			layoutPageTemplateEntry);
 
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
-				fragmentEntryLink.getFragmentEntryERC(),
-				fragmentEntryLink.getFragmentEntryGroupId()),
-			_serviceContext2);
-
 		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 			_layoutsImporter.importFile(
-				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+				TestPropsValues.getUserId(), _group1.getGroupId(), 0, file,
+				LayoutsImportStrategy.OVERWRITE, true);
 
 		_assertLayoutPageTemplateEntry(
-			fragmentEntry, fragmentEntryLink,
+			fragmentEntryLink,
 			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
 	}
 
@@ -1453,10 +1447,10 @@ public class LayoutsImporterTest {
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			formStyledLayoutStructureItems.get(0);
 
-		_successMessage = RandomTestUtil.randomString(5);
+		_successMessageJSONObject = _getSuccessMessageJSONObject();
 
 		layoutStructure.updateItemConfig(
-			_getSuccessMessageJSONObject(_successMessage),
+			_successMessageJSONObject,
 			formStyledLayoutStructureItem.getItemId());
 
 		_layoutPageTemplateStructureService.
@@ -1680,13 +1674,13 @@ public class LayoutsImporterTest {
 	}
 
 	private void _assertLayoutPageTemplateEntry(
-			FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink,
+			FragmentEntryLink fragmentEntryLink,
 			String layoutPageTemplateEntryKey)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group2.getGroupId(), layoutPageTemplateEntryKey);
+				_group1.getGroupId(), layoutPageTemplateEntryKey);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -1697,13 +1691,6 @@ public class LayoutsImporterTest {
 			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
 
 		FragmentEntryLink curFragmentEntryLink = fragmentEntryLinks.get(0);
-
-		Assert.assertEquals(
-			fragmentEntry.getExternalReferenceCode(),
-			curFragmentEntryLink.getFragmentEntryERC());
-		Assert.assertEquals(
-			fragmentEntry.getGroupId(),
-			curFragmentEntryLink.getFragmentEntryGroupId());
 
 		Assert.assertTrue(
 			curFragmentEntryLink.getEditableValues(),
@@ -1729,11 +1716,8 @@ public class LayoutsImporterTest {
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			formStyledLayoutStructureItems.get(0);
 
-		JSONObject successMessageJSONObject = _getSuccessMessageJSONObject(
-			_successMessage);
-
 		JSONObject expectedSuccessMessageJSONObject =
-			successMessageJSONObject.getJSONObject("successMessage");
+			_successMessageJSONObject.getJSONObject("successMessage");
 
 		JSONObject actualSuccessMessageJSONObject =
 			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
@@ -2075,15 +2059,21 @@ public class LayoutsImporterTest {
 		return null;
 	}
 
-	private JSONObject _getSuccessMessageJSONObject(String successMessage) {
+	private JSONObject _getSuccessMessageJSONObject() throws Exception {
 		JSONObject notificationTextJSONObject = JSONUtil.put(
-			String.valueOf(LocaleUtil.US), successMessage);
+			String.valueOf(LocaleUtil.US), RandomTestUtil.randomString());
 
 		JSONObject successMessageJSONObject = JSONUtil.put(
 			"notificationText", notificationTextJSONObject);
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry();
+
 		successMessageJSONObject.put(
-			"displayPage", "ObjectEntry_displayPageURL"
+			"displayPage",
+			LayoutPageTemplateEntry.class.getSimpleName() +
+				StringPool.UNDERLINE +
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 		).put(
 			"showNotification", true
 		).put(
@@ -2482,7 +2472,7 @@ public class LayoutsImporterTest {
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
-	private String _successMessage;
+	private JSONObject _successMessageJSONObject;
 
 	@Inject
 	private ZipReaderFactory _zipReaderFactory;

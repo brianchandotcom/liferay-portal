@@ -21,17 +21,11 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String columnName = "externalReferenceCode";
-
-		if (!hasColumn("DLFileEntry", columnName)) {
-			columnName = "uuid_";
-		}
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 			StringBundler.concat(
-				"select DLFileEntry.", columnName,
-				", Layout.ctCollectionId, Layout.plid, Layout.groupId,  ",
-				"DLFileEntry.groupId, Group_.externalReferenceCode from ",
+				"select DLFileEntry.externalReferenceCode, ",
+				"DLFileEntry.groupId, Group_.externalReferenceCode, ",
+				"Layout.ctCollectionId, Layout.plid, Layout.groupId from ",
 				"Layout inner join DLFileEntry on (DLFileEntry.ctCollectionId ",
 				"= Layout.ctCollectionId or DLFileEntry.ctCollectionId = 0) ",
 				"and DLFileEntry.fileEntryId = Layout.faviconFileEntryId left ",
@@ -49,20 +43,19 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					 "and plid = ?")) {
 
 			while (resultSet.next()) {
-				String faviconFileEntryERC = resultSet.getString(1);
-				long ctCollectionId = resultSet.getLong(2);
-				long plid = resultSet.getLong(3);
+				String dlFileEntryERC = resultSet.getString(1);
+				long dlFileEntryGroupId = resultSet.getLong(2);
+				String dlFileEntryScopeERC = resultSet.getString(3);
+				long ctCollectionId = resultSet.getLong(4);
+				long plid = resultSet.getLong(5);
+				long layoutGroupId = resultSet.getLong(6);
 
-				long groupId1 = resultSet.getLong(4);
-				long groupId2 = resultSet.getLong(5);
-				String faviconFileEntryScopeERC = resultSet.getString(6);
-
-				if (groupId1 == groupId2) {
-					faviconFileEntryScopeERC = null;
+				if (dlFileEntryGroupId == layoutGroupId) {
+					dlFileEntryScopeERC = null;
 				}
 
-				preparedStatement2.setString(1, faviconFileEntryERC);
-				preparedStatement2.setString(2, faviconFileEntryScopeERC);
+				preparedStatement2.setString(1, dlFileEntryERC);
+				preparedStatement2.setString(2, dlFileEntryScopeERC);
 				preparedStatement2.setLong(3, ctCollectionId);
 				preparedStatement2.setLong(4, plid);
 

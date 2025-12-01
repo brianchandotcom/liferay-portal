@@ -356,6 +356,19 @@ public class JSONMapAttributeTestEntity implements Serializable {
 		return null;
 	}
 
+	public void setPropertyValue(String propertyName, Object propertyValue) {
+		if (Objects.equals(propertyName, "description")) {
+			setDescription((String)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "name")) {
+			setName((String)propertyValue);
+		}
+		else {
+			properties1.put(propertyName, propertyValue);
+			properties2.put(propertyName, propertyValue);
+		}
+	}
+
 	private final class CachedUnsafeSupplier<T, E extends Throwable>
 		implements UnsafeSupplier<T, E> {
 

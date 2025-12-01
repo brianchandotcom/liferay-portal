@@ -422,7 +422,7 @@ test(
 				spaceName
 			);
 
-			await test.step('Go to All Assets and open the Info Panel Comments', async () => {
+			await test.step('Go to All Assets, check the Location in Details tab and open the Info Panel Comments', async () => {
 				await assetsPage.gotoAll();
 
 				await assetsPage.execItemAction({
@@ -432,6 +432,30 @@ test(
 
 				await expect(
 					page.getByRole('heading', {name: file1Title})
+				).toBeVisible();
+
+				await expect(
+					page
+						.locator('.asset-metadata-section')
+						.getByText('Location')
+				).toBeVisible();
+
+				await expect(
+					page.locator('div .space-breadcrumb').filter({
+						hasText: 'Content',
+					})
+				).toBeVisible();
+
+				await expect(
+					page.locator('div .space-breadcrumb').filter({
+						hasText: 'S',
+					})
+				).toBeVisible();
+
+				await expect(
+					page.locator('div .space-breadcrumb').filter({
+						hasText: spaceName,
+					})
 				).toBeVisible();
 
 				await infoPanelPage.selectTab('More').click();

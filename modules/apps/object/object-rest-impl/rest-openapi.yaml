@@ -854,6 +854,29 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["ObjectEntry"]
+        get:
+            operationId: getByExternalReferenceCodeComment
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: commentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["ObjectEntry"]
         put:
             operationId: putByExternalReferenceCodeComment
             parameters:
@@ -1662,6 +1685,34 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+            tags: ["ObjectEntry"]
+        get:
+            operationId: getScopeScopeKeyByExternalReferenceCodeComment
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: commentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
             tags: ["ObjectEntry"]
         put:
             operationId: putScopeScopeKeyByExternalReferenceCodeComment

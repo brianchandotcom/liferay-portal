@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.exportimport.content.processor.constants.ExportImportContentParserConstants;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectEntryValidationException;
@@ -72,6 +73,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -490,6 +492,22 @@ public class ObjectEntryResourceImpl
 			}
 
 			@Override
+			public Map<String, String> getReferences() {
+				Map<String, String> references = new HashMap<>();
+
+				for (ObjectField objectField :
+						_objectFieldLocalService.getObjectFieldsByBusinessType(
+							_objectDefinition.getObjectDefinitionId(),
+							ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+
+					references.put(
+						objectField.getName(),
+						ExportImportContentParserConstants.DOCUMENT_LIBRARY);
+				}
+
+				return references;
+			}
+
 			public String getResourceClassName() {
 				return _objectDefinition.getClassName();
 			}

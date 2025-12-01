@@ -174,6 +174,11 @@ public class ClusterGeneralTest implements Serializable {
 			).build());
 	}
 
+	private static String _getLocalClusterNodeId() {
+		return ClusterExecutorUtil.getLocalClusterNode(
+		).getClusterNodeId();
+	}
+
 	private void _assertNodesVisibleToEachOther(
 			TomcatNode tomcatNode1, TomcatNode tomcatNode2)
 		throws Exception {
@@ -247,11 +252,6 @@ public class ClusterGeneralTest implements Serializable {
 			editServerMVCActionCommandServiceReference);
 	}
 
-	private String _getLocalClusterNodeId() {
-		return ClusterExecutorUtil.getLocalClusterNode(
-		).getClusterNodeId();
-	}
-
 	private void _restartAndVerifyNode(
 			TomcatNode restartTomcatNode, TomcatNode verifierTomcatNode)
 		throws Exception {
@@ -276,7 +276,8 @@ public class ClusterGeneralTest implements Serializable {
 
 		Assert.assertEquals(
 			verifierClusterNode.getClusterNodeId(),
-			verifierTomcatNode.syncExecute(() -> _getLocalClusterNodeId()));
+			verifierTomcatNode.syncExecute(
+				ClusterGeneralTest::_getLocalClusterNodeId));
 
 		// Assert verifier node cannot see restart node
 
@@ -302,7 +303,8 @@ public class ClusterGeneralTest implements Serializable {
 
 		Assert.assertEquals(
 			verifierClusterNode.getClusterNodeId(),
-			verifierTomcatNode.syncExecute(() -> _getLocalClusterNodeId()));
+			verifierTomcatNode.syncExecute(
+				ClusterGeneralTest::_getLocalClusterNodeId));
 
 		// Assert mutual visibility with the NEW restart node
 
@@ -442,10 +444,12 @@ public class ClusterGeneralTest implements Serializable {
 		// Assert nodes can get their cluster node IDs successfully
 
 		Assert.assertNotNull(
-			tomcatNode3.syncExecute(() -> _getLocalClusterNodeId()));
+			tomcatNode3.syncExecute(
+				ClusterGeneralTest::_getLocalClusterNodeId));
 
 		Assert.assertNotNull(
-			tomcatNode4.syncExecute(() -> _getLocalClusterNodeId()));
+			tomcatNode4.syncExecute(
+				ClusterGeneralTest::_getLocalClusterNodeId));
 	}
 
 	private static transient TomcatNode _tomcatNode1;

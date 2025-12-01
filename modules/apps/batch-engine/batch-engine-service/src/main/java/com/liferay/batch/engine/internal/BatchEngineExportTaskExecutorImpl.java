@@ -11,6 +11,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.ItemClassRegistry;
+import com.liferay.batch.engine.action.ExportTaskPostAction;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriter;
@@ -19,6 +20,8 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
@@ -65,7 +68,10 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -181,6 +187,19 @@ public class BatchEngineExportTaskExecutorImpl
 		return null;
 	}
 
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_exportTaskPostActions = ServiceTrackerListFactory.open(
+			bundleContext, ExportTaskPostAction.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_exportTaskPostActions.close();
+	}
+
 	private InputStream _exportItems(
 			BatchEngineExportTask batchEngineExportTask, Settings settings)
 		throws Exception {
@@ -256,6 +275,25 @@ public class BatchEngineExportTaskExecutorImpl
 			Collection<?> items = page.getItems();
 
 			while (!items.isEmpty()) {
+				BatchEngineExportTask finalBatchEngineExportTask =
+					batchEngineExportTask;
+
+				for (ExportTaskPostAction exportTaskPostAction :
+						_exportTaskPostActions) {
+
+					items.forEach(
+						item -> {
+							try {
+								exportTaskPostAction.run(
+									finalBatchEngineExportTask,
+									batchEngineTaskItemDelegate, item);
+							}
+							catch (Exception exception) {
+								throw new RuntimeException(exception);
+							}
+						});
+				}
+
 				batchEngineExportTaskItemWriter.write(items);
 
 				batchEngineExportTask.setProcessedItemsCount(
@@ -544,6 +582,8 @@ public class BatchEngineExportTaskExecutorImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private ServiceTrackerList<ExportTaskPostAction> _exportTaskPostActions;
 
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"

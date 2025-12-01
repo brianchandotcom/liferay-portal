@@ -147,6 +147,10 @@ public class PortalHibernateConfiguration
 
 		properties = configuration.getProperties();
 
+		properties.put(
+			"hibernate.classLoaders",
+			Collections.singleton(ClassUtils.getDefaultClassLoader()));
+
 		if (_dataSource != null) {
 			properties.put("hibernate.connection.datasource", _dataSource);
 		}
@@ -154,10 +158,6 @@ public class PortalHibernateConfiguration
 		properties.put(
 			"hibernate.connection.handling_mode",
 			PhysicalConnectionHandlingMode.DELAYED_ACQUISITION_AND_HOLD);
-
-		properties.put(
-			"hibernate.classLoaders",
-			Collections.singleton(ClassUtils.getDefaultClassLoader()));
 
 		_sessionFactory = _buildSessionFactory(configuration);
 	}

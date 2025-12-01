@@ -38,8 +38,6 @@ public class SpringSessionSynchronization
 		_sessionHolder = sessionHolder;
 		_sessionFactory = sessionFactory;
 		_newSession = newSession;
-
-		_holderActive = true;
 	}
 
 	@Override
@@ -140,7 +138,7 @@ public class SpringSessionSynchronization
 				}
 			}
 			catch (Throwable throwable) {
-				_log.error("Failed to release Hibernate Session", throwable);
+				_log.error("Unable to release Hibernate session", throwable);
 			}
 		}
 	}
@@ -151,13 +149,13 @@ public class SpringSessionSynchronization
 		if (synch) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Flushing Hibernate Session on transaction " +
+					"Flushing Hibernate session on transaction " +
 						"synchronization");
 			}
 		}
 		else {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Flushing Hibernate Session on explicit request");
+				_log.debug("Flushing Hibernate session on explicit request");
 			}
 		}
 
@@ -183,7 +181,7 @@ public class SpringSessionSynchronization
 	private static final Log _log = LogFactoryUtil.getLog(
 		SpringSessionSynchronization.class);
 
-	private boolean _holderActive;
+	private boolean _holderActive = true;
 	private final boolean _newSession;
 	private final SessionFactory _sessionFactory;
 	private final SessionHolder _sessionHolder;

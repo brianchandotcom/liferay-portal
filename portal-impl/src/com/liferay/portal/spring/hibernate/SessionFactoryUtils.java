@@ -60,20 +60,20 @@ public class SessionFactoryUtils {
 				return new DataAccessResourceFailureException(
 					message, hibernateException);
 			}
-			else if (hibernateException instanceof SQLGrammarException) {
-				return new InvalidDataAccessResourceUsageException(
-					message, hibernateException);
-			}
-			else if (hibernateException instanceof QueryTimeoutException) {
-				return new org.springframework.dao.QueryTimeoutException(
-					message, hibernateException);
-			}
 			else if (hibernateException instanceof LockAcquisitionException) {
 				return new CannotAcquireLockException(
 					message, hibernateException);
 			}
 			else if (hibernateException instanceof PessimisticLockException) {
 				return new PessimisticLockingFailureException(
+					message, hibernateException);
+			}
+			else if (hibernateException instanceof QueryTimeoutException) {
+				return new org.springframework.dao.QueryTimeoutException(
+					message, hibernateException);
+			}
+			else if (hibernateException instanceof SQLGrammarException) {
+				return new InvalidDataAccessResourceUsageException(
 					message, hibernateException);
 			}
 			else if (hibernateException instanceof
@@ -106,52 +106,24 @@ public class SessionFactoryUtils {
 				};
 			}
 		}
-		else if (hibernateException instanceof QueryException) {
-			return new InvalidDataAccessResourceUsageException(
+		else if (hibernateException instanceof NonUniqueObjectException) {
+			return new DuplicateKeyException(
 				hibernateException.getMessage(), hibernateException);
 		}
 		else if (hibernateException instanceof NonUniqueResultException) {
 			return new IncorrectResultSizeDataAccessException(
 				hibernateException.getMessage(), 1, hibernateException);
 		}
-		else if (hibernateException instanceof NonUniqueObjectException) {
-			return new DuplicateKeyException(
-				hibernateException.getMessage(), hibernateException);
-		}
-		else if (hibernateException instanceof PropertyValueException) {
-			return new DataIntegrityViolationException(
-				hibernateException.getMessage(), hibernateException);
-		}
-		else if (hibernateException instanceof PersistentObjectException) {
-			return new InvalidDataAccessApiUsageException(
-				hibernateException.getMessage(), hibernateException);
-		}
-		else if (hibernateException instanceof TransientObjectException) {
-			return new InvalidDataAccessApiUsageException(
-				hibernateException.getMessage(), hibernateException);
-		}
 		else if (hibernateException instanceof ObjectDeletedException) {
 			return new InvalidDataAccessApiUsageException(
 				hibernateException.getMessage(), hibernateException);
 		}
-		else if (hibernateException instanceof UnresolvableObjectException) {
-			return new DataRetrievalFailureException(
-				hibernateException.getMessage(), hibernateException);
-		}
-		else if (hibernateException instanceof WrongClassException) {
-			return new DataRetrievalFailureException(
-				hibernateException.getMessage(), hibernateException);
-		}
-		else if (hibernateException instanceof StaleObjectStateException) {
-			return new OptimisticLockingFailureException(
-				hibernateException.getMessage(), hibernateException);
-		}
-		else if (hibernateException instanceof StaleStateException) {
-			return new OptimisticLockingFailureException(
-				hibernateException.getMessage(), hibernateException);
-		}
 		else if (hibernateException instanceof OptimisticEntityLockException) {
 			return new OptimisticLockingFailureException(
+				hibernateException.getMessage(), hibernateException);
+		}
+		else if (hibernateException instanceof PersistentObjectException) {
+			return new InvalidDataAccessApiUsageException(
 				hibernateException.getMessage(), hibernateException);
 		}
 		else if (hibernateException instanceof PessimisticEntityLockException) {
@@ -164,6 +136,34 @@ public class SessionFactoryUtils {
 			}
 
 			return new PessimisticLockingFailureException(
+				hibernateException.getMessage(), hibernateException);
+		}
+		else if (hibernateException instanceof PropertyValueException) {
+			return new DataIntegrityViolationException(
+				hibernateException.getMessage(), hibernateException);
+		}
+		else if (hibernateException instanceof QueryException) {
+			return new InvalidDataAccessResourceUsageException(
+				hibernateException.getMessage(), hibernateException);
+		}
+		else if (hibernateException instanceof StaleObjectStateException) {
+			return new OptimisticLockingFailureException(
+				hibernateException.getMessage(), hibernateException);
+		}
+		else if (hibernateException instanceof StaleStateException) {
+			return new OptimisticLockingFailureException(
+				hibernateException.getMessage(), hibernateException);
+		}
+		else if (hibernateException instanceof TransientObjectException) {
+			return new InvalidDataAccessApiUsageException(
+				hibernateException.getMessage(), hibernateException);
+		}
+		else if (hibernateException instanceof UnresolvableObjectException) {
+			return new DataRetrievalFailureException(
+				hibernateException.getMessage(), hibernateException);
+		}
+		else if (hibernateException instanceof WrongClassException) {
+			return new DataRetrievalFailureException(
 				hibernateException.getMessage(), hibernateException);
 		}
 

@@ -23,8 +23,8 @@ public class SessionHolder extends ResourceHolderSupport {
 	public void clear() {
 		super.clear();
 
-		_transaction = null;
 		_previousFlushMode = null;
+		_transaction = null;
 	}
 
 	public FlushMode getPreviousFlushMode() {

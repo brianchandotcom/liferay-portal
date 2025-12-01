@@ -307,7 +307,7 @@ public interface ElasticsearchConfiguration {
 	public String[] sidecarModuleNames();
 
 	@Meta.AD(
-		deflt = "-Xms1g|-Xmx1g|-XX:+AlwaysPreTouch",
+		deflt = "-XX:+AlwaysPreTouch|-Xms1g|-Xmx1g",
 		description = "sidecar-jvm-options-help", name = "sidecar-jvm-options",
 		required = false
 	)

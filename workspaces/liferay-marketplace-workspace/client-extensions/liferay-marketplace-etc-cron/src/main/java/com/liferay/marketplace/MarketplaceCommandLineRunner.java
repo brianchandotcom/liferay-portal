@@ -66,13 +66,13 @@ public class MarketplaceCommandLineRunner
 
 		_invoke(this::_processOnHoldTrials, "On Hold Trials");
 
-		_invoke(
-				this::_processProjectsUsingMarketplaceApps,
-				"Projects Using Marketplace Apps");
+		_invoke(this::_processOrdersTotalAmount, "Orders Total Amount");
 
 		_invoke(this::_processPendingOrders, "Pending Orders");
 
-		_invoke(this::_processOrdersTotalAmount, "Orders Total Amount");
+		_invoke(
+			this::_processProjectsUsingMarketplaceApps,
+			"Projects Using Marketplace Apps");
 
 		_invoke(this::_processPublisherSalesSummary, "Publisher Sales Summary");
 	}

@@ -37,11 +37,14 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -68,13 +71,18 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.NestedFieldsContextResource;
 import com.liferay.portal.vulcan.util.NestedFieldsContextUtil;
+import com.liferay.translation.manager.TranslationManager;
 
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
 
+import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -108,6 +116,7 @@ public class ObjectEntryResourceImpl
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry,
+		TranslationManager translationManager,
 		UserLocalService userLocalService) {
 
 		_commentManager = commentManager;
@@ -125,6 +134,7 @@ public class ObjectEntryResourceImpl
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_systemObjectDefinitionManagerRegistry =
 			systemObjectDefinitionManagerRegistry;
+		_translationManager = translationManager;
 		_userLocalService = userLocalService;
 	}
 
@@ -692,6 +702,83 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Response getObjectEntryTranslation(
+			Long objectEntryId, String sourceLanguageId,
+			String targetLanguageIds, String version)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		String className = _objectDefinition.getClassName();
+
+		String exportMimeType = _DEFAULT_XLIFF_MIMETYPE_VERSION;
+
+		if (version != null) {
+			exportMimeType = _versionXLIFFMimeType.getOrDefault(
+				version, _DEFAULT_XLIFF_MIMETYPE_VERSION);
+		}
+
+		File zipFile = _translationManager.exportXLIFFZipFile(
+			className, objectEntryId, exportMimeType,
+			contextAcceptLanguage.getPreferredLocale(), sourceLanguageId,
+			StringUtil.split(targetLanguageIds, CharPool.COMMA), contextUser);
+
+		String zipFileName = _translationManager.getZipFileName(
+			className, objectEntryId,
+			LanguageUtil.get(
+				contextAcceptLanguage.getPreferredLocale(),
+				"model.resource." + className),
+			false, sourceLanguageId,
+			contextAcceptLanguage.getPreferredLocale());
+
+		return Response.ok(
+			zipFile
+		).header(
+			"content-disposition",
+			"attachment; filename=\"" + zipFileName + "\""
+		).build();
+	}
+
+	@Override
+	public Response getObjectEntryTranslationLanguage(
+			Long objectEntryId, String languageId, String targetLanguageId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		String exportMimeType = contextHttpServletRequest.getHeader(
+			HttpHeaders.ACCEPT);
+
+		String className = _objectDefinition.getClassName();
+
+		InputStream xliffInputStream = _translationManager.getXLIFFInputStream(
+			className, objectEntryId, exportMimeType, languageId,
+			targetLanguageId);
+
+		StreamingOutput streamingOutput = outputStream -> StreamUtil.transfer(
+			xliffInputStream, outputStream);
+
+		String xliffFileName = _translationManager.getXLIFFFileName(
+			className, objectEntryId, languageId, targetLanguageId,
+			contextAcceptLanguage.getPreferredLocale());
+
+		return Response.ok(
+			streamingOutput
+		).header(
+			"content-disposition",
+			"attachment; filename=\"" + xliffFileName + "\""
+		).build();
+	}
+
+	@Override
 	public String getResourceName() {
 		return _objectDefinition.getShortName();
 	}
@@ -763,6 +850,44 @@ public class ObjectEntryResourceImpl
 		return defaultObjectEntryManager.getObjectEntryByVersion(
 			_getDTOConverterContext(null), externalReferenceCode,
 			_objectDefinition, scopeKey, version);
+	}
+
+	@Override
+	public Response getScopeScopeKeyByExternalReferenceCodeTranslation(
+			String scopeKey, String externalReferenceCode,
+			String sourceLanguageId, String targetLanguageIds, String version)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = getScopeScopeKeyByExternalReferenceCode(
+			scopeKey, externalReferenceCode);
+
+		return getObjectEntryTranslation(
+			objectEntry.getId(), sourceLanguageId, targetLanguageIds, version);
+	}
+
+	@Override
+	public Response getScopeScopeKeyByExternalReferenceCodeTranslationLanguage(
+			String scopeKey, String externalReferenceCode, String languageId,
+			String targetLanguageId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = getScopeScopeKeyByExternalReferenceCode(
+			scopeKey, externalReferenceCode);
+
+		return getObjectEntryTranslationLanguage(
+			objectEntry.getId(), languageId, targetLanguageId);
 	}
 
 	@Override
@@ -944,7 +1069,9 @@ public class ObjectEntryResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -963,7 +1090,9 @@ public class ObjectEntryResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -1256,7 +1385,9 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -1275,7 +1406,9 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -1391,7 +1524,9 @@ public class ObjectEntryResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -1558,7 +1693,9 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -1875,8 +2012,14 @@ public class ObjectEntryResourceImpl
 		return new ValidationResponse();
 	}
 
+	private static final String _DEFAULT_XLIFF_MIMETYPE_VERSION =
+		"application/xliff+xml";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryResourceImpl.class);
+
+	private static final Map<String, String> _versionXLIFFMimeType = Map.of(
+		"1.2", "application/x-xliff+xml", "2.0", "application/xliff+xml");
 
 	private final CommentManager _commentManager;
 	private final DiscussionPermission _discussionPermission;
@@ -1897,6 +2040,7 @@ public class ObjectEntryResourceImpl
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+	private final TranslationManager _translationManager;
 	private final UserLocalService _userLocalService;
 
 }

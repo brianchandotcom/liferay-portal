@@ -86,7 +86,6 @@ public class PortletSharedSearchRequestImplTest {
 		ReflectionTestUtil.setFieldValue(
 			portletSharedSearchRequest, "_fragmentEntryLinkLocalService",
 			_mockFragmentEntryLinkLocalService());
-
 		ReflectionTestUtil.setFieldValue(
 			portletSharedSearchRequest, "_portletRegistry", _portletRegistry);
 

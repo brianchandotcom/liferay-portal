@@ -50,26 +50,6 @@ public class FormStepPageElementDefinitionSerDes {
 
 		sb.append("{");
 
-		if (formStepPageElementDefinition.getFormStepConfig() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formStepConfig\": ");
-
-			if (formStepPageElementDefinition.getFormStepConfig() instanceof
-					String) {
-
-				sb.append("\"");
-				sb.append(
-					(String)formStepPageElementDefinition.getFormStepConfig());
-				sb.append("\"");
-			}
-			else {
-				sb.append(formStepPageElementDefinition.getFormStepConfig());
-			}
-		}
-
 		if (formStepPageElementDefinition.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -104,16 +84,6 @@ public class FormStepPageElementDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (formStepPageElementDefinition.getFormStepConfig() == null) {
-			map.put("formStepConfig", null);
-		}
-		else {
-			map.put(
-				"formStepConfig",
-				String.valueOf(
-					formStepPageElementDefinition.getFormStepConfig()));
-		}
-
 		if (formStepPageElementDefinition.getType() == null) {
 			map.put("type", null);
 		}
@@ -141,10 +111,7 @@ public class FormStepPageElementDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "formStepConfig")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
+			if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -156,13 +123,7 @@ public class FormStepPageElementDefinitionSerDes {
 			FormStepPageElementDefinition formStepPageElementDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "formStepConfig")) {
-				if (jsonParserFieldValue != null) {
-					formStepPageElementDefinition.setFormStepConfig(
-						(Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
+			if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					formStepPageElementDefinition.setType(
 						FormStepPageElementDefinition.Type.create(

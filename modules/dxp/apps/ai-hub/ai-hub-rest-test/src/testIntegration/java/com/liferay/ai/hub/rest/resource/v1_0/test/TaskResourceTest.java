@@ -11,10 +11,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -66,6 +68,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_classNameLocalService.invalidate();
+
 		_originalName = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
@@ -77,21 +81,19 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		_group = GroupTestUtil.addGroup();
 
-		ObjectDefinition objectDefinition =
+		_objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_MCP_SERVER", TestPropsValues.getCompanyId());
 
 		_objectEntryLocalService.addObjectEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), 0,
+			_objectDefinition.getObjectDefinitionId(), 0,
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 			HashMapBuilder.<String, Serializable>put(
 				"authArguments",
 				JSONUtil.put(
 					"password", PropsValues.DEFAULT_ADMIN_PASSWORD
-				).put(
-					"type", "basic"
 				).put(
 					"userName", "test@liferay.com"
 				).toString()
@@ -124,7 +126,10 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws PortalException {
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
 		PrincipalThreadLocal.setName(_originalName);
 	}
 
@@ -362,7 +367,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			});
 	}
 
+	@Inject
+	private static ClassNameLocalService _classNameLocalService;
+
 	private static Group _group;
+	private static ObjectDefinition _objectDefinition;
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -9,13 +9,15 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
 
+import java.net.URI;
+
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.ConnectionReuseStrategy;
@@ -25,6 +27,7 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.ConnectionKeepAliveStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -96,11 +99,40 @@ public class HttpImplTest {
 		_closeableHttpClient = closeableHttpClientDCLSingleton.getSingleton(
 			() -> ReflectionTestUtil.invoke(
 				_httpImpl, "_createCloseableHttpClient",
-				new Class<?>[] {
-					PoolingHttpClientConnectionManager.class, HttpHost.class,
-					List.class
-				},
-				_poolingHttpClientConnectionManager, null, null));
+				new Class<?>[] {PoolingHttpClientConnectionManager.class},
+				_poolingHttpClientConnectionManager));
+	}
+
+	@Test
+	public void testGetRequestConfigBuilderTimeout() {
+		RequestConfig.Builder requestConfigBuilder = ReflectionTestUtil.invoke(
+			_httpImpl, "_getRequestConfigBuilder",
+			new Class<?>[] {URI.class, int.class},
+			URI.create("http://" + RandomTestUtil.randomString()), 1000);
+
+		RequestConfig requestConfig = requestConfigBuilder.build();
+
+		Assert.assertEquals(1000, requestConfig.getSocketTimeout());
+		Assert.assertEquals(1000, requestConfig.getConnectionRequestTimeout());
+		Assert.assertEquals(1000, requestConfig.getConnectTimeout());
+	}
+
+	@Test
+	public void testGetRequestConfigBuilderTimeoutWithDefault() {
+		RequestConfig.Builder requestConfigBuilder = ReflectionTestUtil.invoke(
+			_httpImpl, "_getRequestConfigBuilder",
+			new Class<?>[] {URI.class, int.class},
+			URI.create("http://" + RandomTestUtil.randomString()), 0);
+
+		RequestConfig requestConfig = requestConfigBuilder.build();
+
+		int defaultTimeout = ReflectionTestUtil.getFieldValue(
+			_httpImpl, "_TIMEOUT");
+
+		Assert.assertEquals(defaultTimeout, requestConfig.getSocketTimeout());
+		Assert.assertEquals(
+			defaultTimeout, requestConfig.getConnectionRequestTimeout());
+		Assert.assertEquals(defaultTimeout, requestConfig.getConnectTimeout());
 	}
 
 	@Test

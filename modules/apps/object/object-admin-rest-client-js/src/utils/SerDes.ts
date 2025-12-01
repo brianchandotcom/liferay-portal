@@ -35,6 +35,7 @@
 	import {PageObjectRelationship} from '../models/PageObjectRelationship';
 	import {PageObjectValidationRule} from '../models/PageObjectValidationRule';
 	import {PageObjectView} from '../models/PageObjectView';
+	import {Permission} from '../models/Permission';
 	import {Status} from '../models/Status';
 	import {WorkflowDefinitionLink} from '../models/WorkflowDefinitionLink';
 
@@ -103,6 +104,7 @@ const typeMap: {[index: string]: any} = {
 	PageObjectRelationship,
 	PageObjectValidationRule,
 	PageObjectView,
+	Permission,
 	Status,
 	WorkflowDefinitionLink,
 };

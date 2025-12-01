@@ -789,6 +789,51 @@ test.describe('Manage object fields through Model Builder', () => {
 			})
 		).toBeVisible();
 	});
+
+	test('read only configuration is displayed in the fields advanced tab', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
+		modelBuilderObjectDefinitionNodePage,
+		modelBuilderRightSidebarPage,
+		page,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderLeftSidebarPage.sidebarItems
+			.filter({hasText: objectDefinition.label['en_US']})
+			.click();
+
+		await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+			objectDefinition.label['en_US'],
+			modelBuilderDiagramPage.objectDefinitionNodes
+		);
+
+		await page
+			.getByText(objectFields[0].label.en_US, {exact: true})
+			.click();
+
+		await modelBuilderRightSidebarPage.advancedTab.click();
+
+		await expect(
+			page.getByRole('button', {name: 'Read Only'})
+		).toBeVisible();
+	});
 });
 
 test.describe('Manage objectFields through Objects Admin UI', () => {

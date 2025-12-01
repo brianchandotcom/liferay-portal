@@ -1069,11 +1069,6 @@ components:
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
-                        name:
-                            # @review
-                            description:
-                                The custom name of a form step container page element.
-                            type: string
             # @review
             description:
                 The page element definition of a form step container.

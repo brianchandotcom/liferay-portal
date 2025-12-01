@@ -157,7 +157,6 @@ import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -1178,11 +1177,9 @@ public class BatchEngineBrokerTest {
 	}
 
 	private List<List<String>> _normalize(List<CSVRecord> csvRecords) {
-		List<List<String>> csvRecordStringsList = new ArrayList<>(
-			csvRecords.size());
-
-		for (CSVRecord csvRecord : csvRecords) {
-			List<String> csvRecordStrings = TransformUtil.transform(
+		return TransformUtil.transform(
+			csvRecords,
+			csvRecord -> TransformUtil.transform(
 				csvRecord.toList(),
 				csvRecordString -> {
 					if (Validator.isBlank(csvRecordString) ||
@@ -1200,12 +1197,7 @@ public class BatchEngineBrokerTest {
 							"$1", System.lineSeparator(),
 							System.lineSeparator(), "$3")
 					);
-				});
-
-			csvRecordStringsList.add(csvRecordStrings);
-		}
-
-		return csvRecordStringsList;
+				}));
 	}
 
 	private ObjectDefinition _publishObjectDefinition(

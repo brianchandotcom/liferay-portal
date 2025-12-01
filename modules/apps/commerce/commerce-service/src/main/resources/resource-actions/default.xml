@@ -13,6 +13,7 @@
 				<action-key>MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL</action-key>
 				<action-key>MANAGE_CHANNEL_DEFAULTS</action-key>
 				<action-key>VIEW_CHANNEL_DEFAULTS</action-key>
+				<action-key>VIEW_CHANNELS_ACCOUNTS</action-key>
 			</supports>
 		</permissions>
 	</model-resource>

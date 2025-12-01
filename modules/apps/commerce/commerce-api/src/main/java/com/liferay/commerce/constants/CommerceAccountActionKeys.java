@@ -19,4 +19,7 @@ public class CommerceAccountActionKeys {
 
 	public static final String VIEW_CHANNEL_DEFAULTS = "VIEW_CHANNEL_DEFAULTS";
 
+	public static final String VIEW_CHANNELS_ACCOUNTS =
+		"VIEW_CHANNELS_ACCOUNTS";
+
 }

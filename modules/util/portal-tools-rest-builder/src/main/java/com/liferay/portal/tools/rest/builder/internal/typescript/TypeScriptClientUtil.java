@@ -165,7 +165,8 @@ public class TypeScriptClientUtil {
 
 					if (StringUtil.equals(
 							"com.liferay.portal.vulcan.permission.Permission",
-							returnType)) {
+							returnType) &&
+						processedSchemaNames.add("Permission")) {
 
 						yamlString = _addSchema(
 							FreeMarkerUtil.processTemplate(
@@ -201,6 +202,27 @@ public class TypeScriptClientUtil {
 				yamlString = StringUtil.replace(
 					yamlString, oldYAMLString, newYAMLString);
 			}
+		}
+
+		Set<String> dataTypes = new HashSet<>();
+
+		for (Schema schema : schemas.values()) {
+			Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+			if (propertySchemas != null) {
+				for (Schema propertySchema : propertySchemas.values()) {
+					_getDataType(dataTypes, propertySchema);
+				}
+			}
+		}
+
+		if (dataTypes.contains("Permission")) {
+			yamlString = _addSchema(
+				FreeMarkerUtil.processTemplate(
+					null, null, "permission_yaml", null),
+				yamlString);
+
+			processedSchemaNames.add("Permission");
 		}
 
 		return yamlString;
@@ -713,9 +735,7 @@ public class TypeScriptClientUtil {
 		}
 	}
 
-	private static String _getDataType(
-		Set<String> importClasses, Schema schema) {
-
+	private static String _getDataType(Set<String> dataTypes, Schema schema) {
 		if (schema == null) {
 			return "any";
 		}
@@ -734,7 +754,7 @@ public class TypeScriptClientUtil {
 					schemaReference.lastIndexOf('#') + 1);
 			}
 
-			importClasses.add(dataType);
+			dataTypes.add(dataType);
 
 			return dataType;
 		}
@@ -744,8 +764,7 @@ public class TypeScriptClientUtil {
 		if (type.equals("array")) {
 			Items items = schema.getItems();
 
-			return "Array<" + _getDataType(importClasses, items.toSchema()) +
-				">";
+			return "Array<" + _getDataType(dataTypes, items.toSchema()) + ">";
 		}
 		else if (type.equals("boolean")) {
 			return "boolean";
@@ -765,17 +784,17 @@ public class TypeScriptClientUtil {
 					null) {
 
 				String dataType = _getDataType(
-					importClasses,
+					dataTypes,
 					additionalPropertySchema.getAdditionalPropertySchema());
 
 				return "{[key: string]: {[key: string]: " + dataType + ";};}";
 			}
 
 			return "{[key: string]: " +
-				_getDataType(importClasses, additionalPropertySchema) + ";}";
+				_getDataType(dataTypes, additionalPropertySchema) + ";}";
 		}
 		else if (type.equals("permission")) {
-			importClasses.add("Permission");
+			dataTypes.add("Permission");
 
 			return "Permission";
 		}

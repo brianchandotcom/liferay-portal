@@ -113,8 +113,8 @@ public class CounterLocalServiceProcessTest {
 			arguments.add("-D" + property);
 		}
 
-		arguments.add("-Xmx1024m");
 		arguments.add("-XX:MaxMetaspaceSize=200m");
+		arguments.add("-Xmx1024m");
 
 		ProcessConfig portalProcessConfig =
 			PortalClassPathUtil.getPortalProcessConfig();

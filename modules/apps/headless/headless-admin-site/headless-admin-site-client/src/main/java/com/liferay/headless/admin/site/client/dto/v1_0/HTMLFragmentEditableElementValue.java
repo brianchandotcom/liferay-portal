@@ -26,24 +26,27 @@ public class HTMLFragmentEditableElementValue
 		return HTMLFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
-	public Object getHtml() {
-		return html;
+	public HTMLFragmentValue getHtmlFragmentValue() {
+		return htmlFragmentValue;
 	}
 
-	public void setHtml(Object html) {
-		this.html = html;
+	public void setHtmlFragmentValue(HTMLFragmentValue htmlFragmentValue) {
+		this.htmlFragmentValue = htmlFragmentValue;
 	}
 
-	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
+	public void setHtmlFragmentValue(
+		UnsafeSupplier<HTMLFragmentValue, Exception>
+			htmlFragmentValueUnsafeSupplier) {
+
 		try {
-			html = htmlUnsafeSupplier.get();
+			htmlFragmentValue = htmlFragmentValueUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object html;
+	protected HTMLFragmentValue htmlFragmentValue;
 
 	@Override
 	public HTMLFragmentEditableElementValue clone()

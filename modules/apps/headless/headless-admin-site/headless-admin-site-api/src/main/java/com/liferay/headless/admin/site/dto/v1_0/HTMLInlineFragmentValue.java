@@ -36,52 +36,53 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment editable element value of type HTML.",
-	value = "HTMLFragmentEditableElementValue"
+	description = "An inline value of a fragment HTML element.",
+	value = "HTMLInlineFragmentValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "HTMLFragmentEditableElementValue")
-public class HTMLFragmentEditableElementValue
-	extends FragmentEditableElementValue implements Serializable {
+@XmlRootElement(name = "HTMLInlineFragmentValue")
+public class HTMLInlineFragmentValue
+	extends HTMLFragmentValue implements Serializable {
 
-	public static HTMLFragmentEditableElementValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			HTMLFragmentEditableElementValue.class, json);
+	public static HTMLInlineFragmentValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(HTMLInlineFragmentValue.class, json);
 	}
 
-	public static HTMLFragmentEditableElementValue unsafeToDTO(String json) {
+	public static HTMLInlineFragmentValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			HTMLFragmentEditableElementValue.class, json);
+			HTMLInlineFragmentValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's HTML. Can be inline or mapped to an external value."
+		description = "The fragment inline value."
 	)
 	@Valid
-	public HTMLFragmentValue getHtmlFragmentValue() {
-		if (_htmlFragmentValueSupplier != null) {
-			htmlFragmentValue = _htmlFragmentValueSupplier.get();
+	public FragmentInlineValue getFragmentInlineValue() {
+		if (_fragmentInlineValueSupplier != null) {
+			fragmentInlineValue = _fragmentInlineValueSupplier.get();
 
-			_htmlFragmentValueSupplier = null;
+			_fragmentInlineValueSupplier = null;
 		}
 
-		return htmlFragmentValue;
+		return fragmentInlineValue;
 	}
 
-	public void setHtmlFragmentValue(HTMLFragmentValue htmlFragmentValue) {
-		this.htmlFragmentValue = htmlFragmentValue;
+	public void setFragmentInlineValue(
+		FragmentInlineValue fragmentInlineValue) {
 
-		_htmlFragmentValueSupplier = null;
+		this.fragmentInlineValue = fragmentInlineValue;
+
+		_fragmentInlineValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setHtmlFragmentValue(
-		UnsafeSupplier<HTMLFragmentValue, Exception>
-			htmlFragmentValueUnsafeSupplier) {
+	public void setFragmentInlineValue(
+		UnsafeSupplier<FragmentInlineValue, Exception>
+			fragmentInlineValueUnsafeSupplier) {
 
-		_htmlFragmentValueSupplier = () -> {
+		_fragmentInlineValueSupplier = () -> {
 			try {
-				return htmlFragmentValueUnsafeSupplier.get();
+				return fragmentInlineValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -92,14 +93,12 @@ public class HTMLFragmentEditableElementValue
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment editable element's HTML. Can be inline or mapped to an external value."
-	)
+	@GraphQLField(description = "The fragment inline value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected HTMLFragmentValue htmlFragmentValue;
+	protected FragmentInlineValue fragmentInlineValue;
 
 	@JsonIgnore
-	private Supplier<HTMLFragmentValue> _htmlFragmentValueSupplier;
+	private Supplier<FragmentInlineValue> _fragmentInlineValueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -107,15 +106,14 @@ public class HTMLFragmentEditableElementValue
 			return true;
 		}
 
-		if (!(object instanceof HTMLFragmentEditableElementValue)) {
+		if (!(object instanceof HTMLInlineFragmentValue)) {
 			return false;
 		}
 
-		HTMLFragmentEditableElementValue htmlFragmentEditableElementValue =
-			(HTMLFragmentEditableElementValue)object;
+		HTMLInlineFragmentValue htmlInlineFragmentValue =
+			(HTMLInlineFragmentValue)object;
 
-		return Objects.equals(
-			toString(), htmlFragmentEditableElementValue.toString());
+		return Objects.equals(toString(), htmlInlineFragmentValue.toString());
 	}
 
 	@Override
@@ -130,16 +128,16 @@ public class HTMLFragmentEditableElementValue
 
 		sb.append("{");
 
-		HTMLFragmentValue htmlFragmentValue = getHtmlFragmentValue();
+		FragmentInlineValue fragmentInlineValue = getFragmentInlineValue();
 
-		if (htmlFragmentValue != null) {
+		if (fragmentInlineValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"htmlFragmentValue\": ");
+			sb.append("\"fragmentInlineValue\": ");
 
-			sb.append(String.valueOf(htmlFragmentValue));
+			sb.append(String.valueOf(fragmentInlineValue));
 		}
 
 		Type type = getType();
@@ -163,7 +161,7 @@ public class HTMLFragmentEditableElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentEditableElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLInlineFragmentValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

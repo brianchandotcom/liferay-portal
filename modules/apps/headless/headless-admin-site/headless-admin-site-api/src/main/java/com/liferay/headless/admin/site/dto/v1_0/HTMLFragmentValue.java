@@ -5,9 +5,14 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -36,52 +41,72 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment editable element value of type HTML.",
-	value = "HTMLFragmentEditableElementValue"
+	description = "The value of a fragment HTML element.",
+	value = "HTMLFragmentValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "HTMLFragmentEditableElementValue")
-public class HTMLFragmentEditableElementValue
-	extends FragmentEditableElementValue implements Serializable {
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(
+			name = "Inline", value = HTMLInlineFragmentValue.class
+		),
+		@JsonSubTypes.Type(
+			name = "Mapped", value = HTMLMappedFragmentValue.class
+		)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.PROPERTY, property = "type",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
+@XmlRootElement(name = "HTMLFragmentValue")
+public abstract class HTMLFragmentValue implements Serializable {
 
-	public static HTMLFragmentEditableElementValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			HTMLFragmentEditableElementValue.class, json);
+	public static HTMLFragmentValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(HTMLFragmentValue.class, json);
 	}
 
-	public static HTMLFragmentEditableElementValue unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			HTMLFragmentEditableElementValue.class, json);
+	public static HTMLFragmentValue unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(HTMLFragmentValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's HTML. Can be inline or mapped to an external value."
+		description = "Whether the value is set inline or mapped."
 	)
+	@JsonGetter("type")
 	@Valid
-	public HTMLFragmentValue getHtmlFragmentValue() {
-		if (_htmlFragmentValueSupplier != null) {
-			htmlFragmentValue = _htmlFragmentValueSupplier.get();
+	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
 
-			_htmlFragmentValueSupplier = null;
+			_typeSupplier = null;
 		}
 
-		return htmlFragmentValue;
-	}
-
-	public void setHtmlFragmentValue(HTMLFragmentValue htmlFragmentValue) {
-		this.htmlFragmentValue = htmlFragmentValue;
-
-		_htmlFragmentValueSupplier = null;
+		return type;
 	}
 
 	@JsonIgnore
-	public void setHtmlFragmentValue(
-		UnsafeSupplier<HTMLFragmentValue, Exception>
-			htmlFragmentValueUnsafeSupplier) {
+	public String getTypeAsString() {
+		Type type = getType();
 
-		_htmlFragmentValueSupplier = () -> {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
 			try {
-				return htmlFragmentValueUnsafeSupplier.get();
+				return typeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -92,14 +117,12 @@ public class HTMLFragmentEditableElementValue
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment editable element's HTML. Can be inline or mapped to an external value."
-	)
+	@GraphQLField(description = "Whether the value is set inline or mapped.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected HTMLFragmentValue htmlFragmentValue;
+	protected Type type;
 
 	@JsonIgnore
-	private Supplier<HTMLFragmentValue> _htmlFragmentValueSupplier;
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -107,15 +130,13 @@ public class HTMLFragmentEditableElementValue
 			return true;
 		}
 
-		if (!(object instanceof HTMLFragmentEditableElementValue)) {
+		if (!(object instanceof HTMLFragmentValue)) {
 			return false;
 		}
 
-		HTMLFragmentEditableElementValue htmlFragmentEditableElementValue =
-			(HTMLFragmentEditableElementValue)object;
+		HTMLFragmentValue htmlFragmentValue = (HTMLFragmentValue)object;
 
-		return Objects.equals(
-			toString(), htmlFragmentEditableElementValue.toString());
+		return Objects.equals(toString(), htmlFragmentValue.toString());
 	}
 
 	@Override
@@ -129,18 +150,6 @@ public class HTMLFragmentEditableElementValue
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		HTMLFragmentValue htmlFragmentValue = getHtmlFragmentValue();
-
-		if (htmlFragmentValue != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"htmlFragmentValue\": ");
-
-			sb.append(String.valueOf(htmlFragmentValue));
-		}
 
 		Type type = getType();
 
@@ -163,10 +172,48 @@ public class HTMLFragmentEditableElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentEditableElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentValue",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		INLINE("Inline"), MAPPED("Mapped");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

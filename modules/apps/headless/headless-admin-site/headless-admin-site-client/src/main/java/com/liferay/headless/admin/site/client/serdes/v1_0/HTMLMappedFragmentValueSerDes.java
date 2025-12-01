@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.HTMLMappedFragmentValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,28 +21,26 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class HTMLFragmentEditableElementValueSerDes {
+public class HTMLMappedFragmentValueSerDes {
 
-	public static HTMLFragmentEditableElementValue toDTO(String json) {
-		HTMLFragmentEditableElementValueJSONParser
-			htmlFragmentEditableElementValueJSONParser =
-				new HTMLFragmentEditableElementValueJSONParser();
+	public static HTMLMappedFragmentValue toDTO(String json) {
+		HTMLMappedFragmentValueJSONParser htmlMappedFragmentValueJSONParser =
+			new HTMLMappedFragmentValueJSONParser();
 
-		return htmlFragmentEditableElementValueJSONParser.parseToDTO(json);
+		return htmlMappedFragmentValueJSONParser.parseToDTO(json);
 	}
 
-	public static HTMLFragmentEditableElementValue[] toDTOs(String json) {
-		HTMLFragmentEditableElementValueJSONParser
-			htmlFragmentEditableElementValueJSONParser =
-				new HTMLFragmentEditableElementValueJSONParser();
+	public static HTMLMappedFragmentValue[] toDTOs(String json) {
+		HTMLMappedFragmentValueJSONParser htmlMappedFragmentValueJSONParser =
+			new HTMLMappedFragmentValueJSONParser();
 
-		return htmlFragmentEditableElementValueJSONParser.parseToDTOs(json);
+		return htmlMappedFragmentValueJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		HTMLFragmentEditableElementValue htmlFragmentEditableElementValue) {
+		HTMLMappedFragmentValue htmlMappedFragmentValue) {
 
-		if (htmlFragmentEditableElementValue == null) {
+		if (htmlMappedFragmentValue == null) {
 			return "null";
 		}
 
@@ -50,19 +48,19 @@ public class HTMLFragmentEditableElementValueSerDes {
 
 		sb.append("{");
 
-		if (htmlFragmentEditableElementValue.getHtmlFragmentValue() != null) {
+		if (htmlMappedFragmentValue.getFragmentMappedValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"htmlFragmentValue\": ");
+			sb.append("\"fragmentMappedValue\": ");
 
 			sb.append(
 				String.valueOf(
-					htmlFragmentEditableElementValue.getHtmlFragmentValue()));
+					htmlMappedFragmentValue.getFragmentMappedValue()));
 		}
 
-		if (htmlFragmentEditableElementValue.getType() != null) {
+		if (htmlMappedFragmentValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -70,7 +68,7 @@ public class HTMLFragmentEditableElementValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-			sb.append(htmlFragmentEditableElementValue.getType());
+			sb.append(htmlMappedFragmentValue.getType());
 			sb.append("\"");
 		}
 
@@ -80,60 +78,57 @@ public class HTMLFragmentEditableElementValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		HTMLFragmentEditableElementValueJSONParser
-			htmlFragmentEditableElementValueJSONParser =
-				new HTMLFragmentEditableElementValueJSONParser();
+		HTMLMappedFragmentValueJSONParser htmlMappedFragmentValueJSONParser =
+			new HTMLMappedFragmentValueJSONParser();
 
-		return htmlFragmentEditableElementValueJSONParser.parseToMap(json);
+		return htmlMappedFragmentValueJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		HTMLFragmentEditableElementValue htmlFragmentEditableElementValue) {
+		HTMLMappedFragmentValue htmlMappedFragmentValue) {
 
-		if (htmlFragmentEditableElementValue == null) {
+		if (htmlMappedFragmentValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (htmlFragmentEditableElementValue.getHtmlFragmentValue() == null) {
-			map.put("htmlFragmentValue", null);
+		if (htmlMappedFragmentValue.getFragmentMappedValue() == null) {
+			map.put("fragmentMappedValue", null);
 		}
 		else {
 			map.put(
-				"htmlFragmentValue",
+				"fragmentMappedValue",
 				String.valueOf(
-					htmlFragmentEditableElementValue.getHtmlFragmentValue()));
+					htmlMappedFragmentValue.getFragmentMappedValue()));
 		}
 
-		if (htmlFragmentEditableElementValue.getType() == null) {
+		if (htmlMappedFragmentValue.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put(
-				"type",
-				String.valueOf(htmlFragmentEditableElementValue.getType()));
+			map.put("type", String.valueOf(htmlMappedFragmentValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class HTMLFragmentEditableElementValueJSONParser
-		extends BaseJSONParser<HTMLFragmentEditableElementValue> {
+	public static class HTMLMappedFragmentValueJSONParser
+		extends BaseJSONParser<HTMLMappedFragmentValue> {
 
 		@Override
-		protected HTMLFragmentEditableElementValue createDTO() {
-			return new HTMLFragmentEditableElementValue();
+		protected HTMLMappedFragmentValue createDTO() {
+			return new HTMLMappedFragmentValue();
 		}
 
 		@Override
-		protected HTMLFragmentEditableElementValue[] createDTOArray(int size) {
-			return new HTMLFragmentEditableElementValue[size];
+		protected HTMLMappedFragmentValue[] createDTOArray(int size) {
+			return new HTMLMappedFragmentValue[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "htmlFragmentValue")) {
+			if (Objects.equals(jsonParserFieldName, "fragmentMappedValue")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -145,20 +140,20 @@ public class HTMLFragmentEditableElementValueSerDes {
 
 		@Override
 		protected void setField(
-			HTMLFragmentEditableElementValue htmlFragmentEditableElementValue,
+			HTMLMappedFragmentValue htmlMappedFragmentValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "htmlFragmentValue")) {
+			if (Objects.equals(jsonParserFieldName, "fragmentMappedValue")) {
 				if (jsonParserFieldValue != null) {
-					htmlFragmentEditableElementValue.setHtmlFragmentValue(
-						HTMLFragmentValueSerDes.toDTO(
+					htmlMappedFragmentValue.setFragmentMappedValue(
+						FragmentMappedValueSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					htmlFragmentEditableElementValue.setType(
-						HTMLFragmentEditableElementValue.Type.create(
+					htmlMappedFragmentValue.setType(
+						HTMLMappedFragmentValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

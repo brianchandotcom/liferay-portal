@@ -102,8 +102,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				!javaeePackage.equals("javax")) {
 
 				throw new RuntimeException(
-					"Invalid value was provided for -javaee-package property;" +
-						"valid values are either javax or jakarta");
+					"Invalid value was provided for -javaee-package " +
+						"property. Valid values are either javax or jakarta");
 			}
 
 			String[] requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAKARTA;
@@ -581,7 +581,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		}
 
 		throw new RuntimeException(
-			"Could not infer required javaee package; no fallback value was " +
+			"Could not infer required javaee package. No fallback value was " +
 				"provided");
 	}
 

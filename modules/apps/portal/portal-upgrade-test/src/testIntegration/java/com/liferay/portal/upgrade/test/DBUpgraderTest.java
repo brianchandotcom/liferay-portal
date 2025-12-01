@@ -248,7 +248,7 @@ public class DBUpgraderTest {
 	public void testUpgradeModuleGeneratesUpgradeReportWhenDataCleanupModuleIsNotAvailable()
 		throws Exception {
 
-		Bundle bundle = _uninstallBundle();
+		Bundle bundle = _uninstallBundle(_getBundle());
 
 		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.upgrade.internal.report.UpgradeReport",
@@ -449,9 +449,7 @@ public class DBUpgraderTest {
 		DBUpgrader.stopUpgradeLogAppender();
 	}
 
-	private Bundle _uninstallBundle() throws Exception {
-		Bundle bundle = _getBundle();
-
+	private Bundle _uninstallBundle(Bundle bundle) throws Exception {
 		if ((bundle != null) && (bundle.getState() == Bundle.ACTIVE)) {
 			bundle.uninstall();
 

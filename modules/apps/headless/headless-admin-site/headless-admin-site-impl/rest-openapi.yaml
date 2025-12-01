@@ -1076,11 +1076,6 @@ components:
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
-                        layout:
-                            $ref: "#/components/schemas/Layout"
-                            # @review
-                            description:
-                                The form step container page element's layout.
                         name:
                             # @review
                             description:

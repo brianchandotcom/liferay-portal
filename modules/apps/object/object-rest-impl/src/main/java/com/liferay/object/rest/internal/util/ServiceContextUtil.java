@@ -101,6 +101,8 @@ public class ServiceContextUtil {
 			serviceContext.setAssetTagNames(objectEntry.getKeywords());
 		}
 
+		serviceContext.setAttribute(
+			"status", _getStatusCode(objectEntry.getStatus()));
 		serviceContext.setUserId(userId);
 
 		if (_isObjectEntryDraft(objectEntry.getStatus())) {
@@ -141,6 +143,14 @@ public class ServiceContextUtil {
 		}
 
 		return group.getGroupId();
+	}
+
+	private static int _getStatusCode(Status status) {
+		if (status == null) {
+			return WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return status.getCode();
 	}
 
 	private static boolean _isObjectEntryDraft(Status status) {

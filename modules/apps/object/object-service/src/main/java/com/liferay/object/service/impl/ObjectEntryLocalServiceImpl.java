@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.list.type.exception.NoSuchListTypeEntryException;
@@ -385,6 +386,10 @@ public class ObjectEntryLocalServiceImpl
 
 		_validateObjectEntryFolderId(groupId, objectEntryFolderId);
 
+		int status = _getStatus(
+			objectDefinition,
+			GetterUtil.getInteger(serviceContext.getAttribute("status")));
+
 		int workflowAction = serviceContext.getWorkflowAction();
 
 		_validateWorkflowAction(
@@ -445,7 +450,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getCompanyId(), objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
-		objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		objectEntry.setStatus(status);
 		objectEntry.setStatusByUserId(user.getUserId());
 		objectEntry.setStatusDate(serviceContext.getModifiedDate(null));
 
@@ -4812,6 +4817,32 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return status;
+	}
+
+	private int _getStatus(ObjectDefinition objectDefinition, int status) {
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			return WorkflowConstants.STATUS_DRAFT;
+		}
+
+		if (status == WorkflowConstants.STATUS_EMPTY) {
+			return status;
+		}
+
+		if (objectDefinition.isEnableObjectEntryDraft() &&
+			((status == WorkflowConstants.STATUS_DRAFT) ||
+			 (status == WorkflowConstants.STATUS_PENDING))) {
+
+			return WorkflowConstants.STATUS_DRAFT;
+		}
+
+		if (objectDefinition.isEnableObjectEntrySchedule() &&
+			((status == WorkflowConstants.STATUS_EXPIRED) ||
+			 (status == WorkflowConstants.STATUS_SCHEDULED))) {
+
+			return status;
+		}
+
+		return WorkflowConstants.STATUS_APPROVED;
 	}
 
 	private List<ObjectValuePair<Long, Integer>> _getStatusOVPs(

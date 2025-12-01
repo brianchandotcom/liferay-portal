@@ -18,7 +18,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.message.boards.exception.MessageSubjectException;
-import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -26,17 +25,12 @@ import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -44,13 +38,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.ClientErrorException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
-import java.util.Map;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
@@ -154,7 +146,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();
 
-		return _getComments(
+		return CommentResourceUtil.getComments(
 			HashMapBuilder.put(
 				"add-discussion",
 				addAction(
@@ -174,8 +166,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					"getBlogPostingCommentsPage", blogsEntry.getUserId(),
 					BlogsEntry.class.getName(), blogsEntry.getGroupId())
 			).build(),
-			rootDiscussionComment.getCommentId(), search, aggregation, filter,
-			pagination, sorts);
+			rootDiscussionComment.getCommentId(), contextCompany.getCompanyId(),
+			_commentManager, search, aggregation, filter, pagination, _portal,
+			sorts);
 	}
 
 	@Override
@@ -202,7 +195,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getComments(
+		return CommentResourceUtil.getComments(
 			HashMapBuilder.put(
 				"deleteBatch",
 				addAction(
@@ -214,7 +207,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					ActionKeys.UPDATE, "putCommentBatch",
 					Comment.class.getName(), null)
 			).build(),
-			parentCommentId, search, aggregation, filter, pagination, sorts);
+			parentCommentId, contextCompany.getCompanyId(), _commentManager,
+			search, aggregation, filter, pagination, _portal, sorts);
 	}
 
 	@Override
@@ -233,7 +227,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();
 
-		return _getComments(
+		return CommentResourceUtil.getComments(
 			HashMapBuilder.put(
 				"add-discussion",
 				addAction(
@@ -253,8 +247,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					dlFileEntry.getUserId(), DLFileEntry.class.getName(),
 					dlFileEntry.getGroupId())
 			).build(),
-			rootDiscussionComment.getCommentId(), search, aggregation, filter,
-			pagination, sorts);
+			rootDiscussionComment.getCommentId(), contextCompany.getCompanyId(),
+			_commentManager, search, aggregation, filter, pagination, _portal,
+			sorts);
 	}
 
 	@Override
@@ -366,7 +361,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();
 
-		return _getComments(
+		return CommentResourceUtil.getComments(
 			HashMapBuilder.put(
 				"add-discussion",
 				addAction(
@@ -388,8 +383,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					journalArticle.getUserId(), JournalArticle.class.getName(),
 					journalArticle.getGroupId())
 			).build(),
-			rootDiscussionComment.getCommentId(), search, aggregation, filter,
-			pagination, sorts);
+			rootDiscussionComment.getCommentId(), contextCompany.getCompanyId(),
+			_commentManager, search, aggregation, filter, pagination, _portal,
+			sorts);
 	}
 
 	@Override
@@ -665,41 +661,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return comment;
-	}
-
-	private Page<Comment> _getComments(
-			Map<String, Map<String, String>> actions, Long commentId,
-			String search, Aggregation aggregation, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		return SearchUtil.search(
-			actions,
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				booleanFilter.add(
-					new TermFilter(
-						"parentMessageId", String.valueOf(commentId)),
-					BooleanClauseOccur.MUST);
-			},
-			filter, MBMessage.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.addVulcanAggregation(aggregation);
-				searchContext.setAttribute("discussion", Boolean.TRUE);
-				searchContext.setAttribute(
-					"searchPermissionContext", StringPool.BLANK);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setVulcanCheckPermissions(false);
-			},
-			sorts,
-			document -> CommentUtil.toComment(
-				_commentManager.fetchComment(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				_commentManager, _portal));
 	}
 
 	private long _getUserId() {

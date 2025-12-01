@@ -12,7 +12,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {InternalDispatch, useControlledState} from '@clayui/shared';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch, getObjectValueFromPath} from 'frontend-js-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import ItemSelectorModal, {IItemSelectorModalProps} from './ItemSelectorModal';
 
@@ -294,6 +294,22 @@ function ItemSelector<T extends Record<string, any>>({
 		variables: {search: value},
 	});
 
+	const selectedKeys = useMemo(() => {
+		if (!items || !items.length) {
+			return [];
+		}
+		const selectedItemsKeys = items.map((item) =>
+			String(
+				getObjectValueFromPath({
+					object: item,
+					path: locator.value,
+				})
+			)
+		);
+
+		return selectedItemsKeys.length ? [...selectedItemsKeys] : [];
+	}, [items, locator.value]);
+
 	const memoizedChildren = useCallback(
 		(item: T) => {
 			const child = children(item) as React.ReactElement<
@@ -417,6 +433,7 @@ function ItemSelector<T extends Record<string, any>>({
 					setValue(value);
 				}}
 				onLoadMore={async () => loadMore()}
+				selectedKeys={selectedKeys}
 				value={value}
 			>
 				{memoizedChildren}

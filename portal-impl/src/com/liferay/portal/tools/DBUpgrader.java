@@ -353,7 +353,7 @@ public class DBUpgrader {
 					FrameworkUtil.createFilter(
 						StringBundler.concat(
 							"(&(component.name=",
-							_POST_UPGRADE_DATA_CLEANUP_CLASS_NAME,
+							_CLASS_NAME,
 							")(objectClass=",
 							VerifyProcess.class.getName(), "))")),
 					null);
@@ -367,7 +367,7 @@ public class DBUpgrader {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						_POST_UPGRADE_DATA_CLEANUP_CLASS_NAME +
+						_CLASS_NAME +
 							" did not activate successfully. The verify " +
 								"process will not be executed.");
 				}
@@ -615,7 +615,7 @@ public class DBUpgrader {
 		db.runSQL("update CompanyInfo set key_ = null");
 	}
 
-	private static final String _POST_UPGRADE_DATA_CLEANUP_CLASS_NAME =
+	private static final String _CLASS_NAME =
 		"com.liferay.data.cleanup.internal.verify." +
 			"PostUpgradeDataCleanupVerifyProcess";
 

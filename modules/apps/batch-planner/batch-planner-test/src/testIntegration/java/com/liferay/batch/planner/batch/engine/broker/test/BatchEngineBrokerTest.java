@@ -92,6 +92,7 @@ import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -1181,25 +1182,25 @@ public class BatchEngineBrokerTest {
 			csvRecords.size());
 
 		for (CSVRecord csvRecord : csvRecords) {
-			List<String> csvRecordStrings = new ArrayList<>();
+			List<String> csvRecordStrings = TransformUtil.transform(
+				csvRecord.toList(),
+				csvRecordString -> {
+					if (!Validator.isBlank(csvRecordString) &&
+						_htmlTagPattern.matcher(
+							csvRecordString
+						).find()) {
 
-			for (String csvRecordString : csvRecord.toList()) {
-				if (!Validator.isBlank(csvRecordString) &&
-					_htmlTagPattern.matcher(
-						csvRecordString
-					).find()) {
+						csvRecordString = _htmlBreakPattern.matcher(
+							csvRecordString
+						).replaceAll(
+							StringBundler.concat(
+								"$1", System.lineSeparator(),
+								System.lineSeparator(), "$3")
+						);
+					}
 
-					csvRecordString = _htmlBreakPattern.matcher(
-						csvRecordString
-					).replaceAll(
-						StringBundler.concat(
-							"$1", System.lineSeparator(),
-							System.lineSeparator(), "$3")
-					);
-				}
-
-				csvRecordStrings.add(csvRecordString);
-			}
+					return csvRecordString;
+				});
 
 			csvRecordStringsList.add(csvRecordStrings);
 		}

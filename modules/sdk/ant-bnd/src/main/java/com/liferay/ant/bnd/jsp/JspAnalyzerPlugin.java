@@ -96,14 +96,16 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		}
 
 		if (matches) {
-			String javaeePackage = analyzer.getProperty("-javaee-package");
+			String javaeePackage = analyzer.getProperty(
+				"-antbnd.jspanalyzer.fallback-javaee-package");
 
 			if ((javaeePackage != null) && !javaeePackage.equals("jakarta") &&
 				!javaeePackage.equals("javax")) {
 
 				throw new RuntimeException(
-					"Invalid value was provided for -javaee-package " +
-						"property. Valid values are either javax or jakarta");
+					"Invalid value was provided for -antbnd.jspanalyzer." +
+						"fallback-javaee-package property. Valid values are " +
+							"either javax or jakarta");
 			}
 
 			String[] requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAKARTA;

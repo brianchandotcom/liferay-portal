@@ -274,7 +274,9 @@ public class JspAnalyzerPluginTest {
 			builder.setProperty("-jsp", "*.jsp");
 
 			if (javaeePackage != null) {
-				builder.setProperty("-javaee-package", javaeePackage);
+				builder.setProperty(
+					"-antbnd.jspanalyzer.fallback-javaee-package",
+					javaeePackage);
 			}
 
 			JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();

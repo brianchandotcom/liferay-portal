@@ -60,8 +60,8 @@ import java.util.function.Supplier;
 	}
 )
 @JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "navigationMenuType",
-	use = JsonTypeInfo.Id.NAME, visible = true
+	include = JsonTypeInfo.As.EXISTING_PROPERTY,
+	property = "navigationMenuType", use = JsonTypeInfo.Id.NAME, visible = true
 )
 @XmlRootElement(name = "NavigationMenuValue")
 public abstract class NavigationMenuValue implements Serializable {

@@ -42,9 +42,8 @@ import java.util.TreeSet;
 public class FragmentEditableElementUtil {
 
 	public static JSONObject getEditableFragmentEntryProcessorJSONObject(
-			long companyId, FragmentEditableElement[] fragmentEditableElements,
-			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
-		throws Exception {
+		long companyId, FragmentEditableElement[] fragmentEditableElements,
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
 
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			_getEditableFragmentEntryProcessorJSONObject(

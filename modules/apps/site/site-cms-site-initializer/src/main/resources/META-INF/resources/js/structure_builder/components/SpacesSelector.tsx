@@ -123,7 +123,7 @@ export default function SpacesSelector({
 					>
 						{(item: Space) => (
 							<ItemSelector.Item
-								key={item.id}
+								key={item.externalReferenceCode}
 								textValue={item.name}
 							>
 								<SpaceSticker name={item.name} size="sm" />

@@ -5,6 +5,7 @@
 		"@clayui/badge": "^3.144.1",
 		"@clayui/button": "3.144.1",
 		"@clayui/card": "3.144.1",
+		"@clayui/core": "^3.151.0",
 		"@clayui/date-picker": "3.144.1",
 		"@clayui/drop-down": "3.144.1",
 		"@clayui/empty-state": "3.144.1",
@@ -65,7 +66,7 @@
 	"name": "@liferay/liferay-marketplace-custom-element",
 	"private": true,
 	"scripts": {
-		"build": "tsc && vite build",
+		"build": "vite build",
 		"dev": "vite",
 		"format": "liferay-npm-scripts format --experimental-standalone 'src/**'",
 		"lint": "liferay-npm-scripts lint:fix --experimental-standalone 'src/**'",

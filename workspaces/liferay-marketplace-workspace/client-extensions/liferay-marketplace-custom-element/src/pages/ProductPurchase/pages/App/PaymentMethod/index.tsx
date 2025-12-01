@@ -114,7 +114,9 @@ export default function PaymentMethod() {
 			});
 
 			if (licenseType === 'PAID') {
-				await marketplaceOAuth2.taxCalculate(productPurchaseCart.cart.id);
+				await marketplaceOAuth2.taxCalculate(
+					productPurchaseCart.cart.id
+				);
 			}
 
 			if (payment.taxId && !selectedAccount.taxId) {

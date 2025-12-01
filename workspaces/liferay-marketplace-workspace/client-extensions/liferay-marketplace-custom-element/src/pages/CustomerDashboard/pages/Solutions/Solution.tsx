@@ -21,8 +21,8 @@ import i18n from '../../../../i18n';
 import analyticsOAuth2 from '../../../../services/oauth/Analytics';
 import {formatDate} from '../../../../utils/date';
 import {removeHTMLTags} from '../../../../utils/string';
-import TrialAlert from '../../components/Solution/TrialAlert';
 import {safeJSONParse} from '../../../../utils/util';
+import TrialAlert from '../../components/Solution/TrialAlert';
 
 const NEXT_TO_EXPIRE_LEFT_DAYS = 2;
 

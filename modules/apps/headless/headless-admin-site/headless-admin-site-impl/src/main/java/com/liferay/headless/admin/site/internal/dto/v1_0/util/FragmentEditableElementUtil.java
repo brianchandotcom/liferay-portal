@@ -121,7 +121,7 @@ public class FragmentEditableElementUtil {
 
 				jsonObject.put(
 					fragmentEditableElement.getId(),
-					() -> _getFragmentEditableElementJSONObject(
+					() -> _getTextFragmentEditableElementJSONObject(
 						companyId, infoItemServiceRegistry, scopeGroupId,
 						(TextFragmentEditableElementValue)
 							fragmentEditableElementValue));
@@ -131,7 +131,7 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
-	private static JSONObject _getFragmentEditableElementJSONObject(
+	private static JSONObject _getTextFragmentEditableElementJSONObject(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 			long scopeGroupId,
 			TextFragmentEditableElementValue textFragmentEditableElementValue)

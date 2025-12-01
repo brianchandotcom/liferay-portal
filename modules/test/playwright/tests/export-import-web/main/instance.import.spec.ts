@@ -675,9 +675,9 @@ test(
 		let exportFilePath;
 		let objectDefinition;
 		let objectEntryId;
-		let user;
+		let user: TUserAccount;
 
-		await test.step('Create object definition and initial API entry', async () => {
+		await test.step('Create object definition and enable it in the Applications Menu', async () => {
 			objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					objectFolderExternalReferenceCode: 'default',
@@ -689,14 +689,16 @@ test(
 				type: 'objectDefinition',
 			});
 
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					externalReferenceCode: '',
-					name: 'test',
-					textField:
-						'objectDefinitionCreatedViaAPI by default test user',
-				},
-				`c/${objectDefinition.name.toLowerCase()}s`
+			await applicationsMenuPage.goToObjects();
+			await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+				objectDefinition.name
+			);
+			await page.getByLabel('Panel Link', {exact: true}).click();
+			await page.getByRole('option', {name: 'Object'}).click();
+			await page.getByRole('button', {name: 'Save'}).click();
+			await waitForAlert(
+				page,
+				'Success:The object was saved successfully.'
 			);
 		});
 
@@ -726,50 +728,25 @@ test(
 			await performLogin(page, user.alternateName);
 		});
 
-		await test.step('Create object entry via UI as the new user', async () => {
-			await applicationsMenuPage.goToObjects();
-
-			await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-				objectDefinition.name
+		await test.step('Create object entry as the new user', async () => {
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					externalReferenceCode: '',
+					name: 'test',
+					textField: `${objectDefinition.name} entry by ${user.alternateName}`,
+				},
+				`c/${objectDefinition.name.toLowerCase()}s`
 			);
 
-			await page.getByLabel('Panel Link', {exact: true}).click();
-			await page.getByRole('option', {name: 'Object'}).click();
-			await page.getByRole('button', {name: 'Save'}).click();
-
-			await page.waitForTimeout(2000);
-
-			await applicationsMenuPage.goToObjectDefinition(
-				objectDefinition.name
-			);
-
-			await page
-				.locator('[data-testid="fdsCreationActionButton"]')
-				.click();
-			await page
-				.getByLabel('textField')
-				.fill(`objectDefinitionCreatedViaUI by ${user.alternateName}`);
-			await page.getByRole('button', {name: 'Save'}).click();
-
-			await waitForAlert(page);
+			objectEntryId = objectEntry.id;
 		});
 
-		await test.step("Export entries and delete the new user's entry and account", async () => {
-			await applicationsMenuPage.goToObjectDefinition(
-				objectDefinition.name
-			);
-
-			objectEntryId = await page
-				.locator('table tr:first-child td:first-child')
-				.innerText();
-
+		await test.step('Export the entry, delete it, and remove the new user', async () => {
 			exportFilePath = await companyExportImportPage.export([
-				`${objectDefinition.name} 2 Items`,
+				`${objectDefinition.name} 1 Items`,
 			]);
 
-			const applicationName =
-				'c/' + objectDefinition.name.toLowerCase() + 's';
-
+			const applicationName = `c/${objectDefinition.name.toLowerCase()}s`;
 			await apiHelpers.delete(
 				`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
 			);
@@ -782,7 +759,7 @@ test(
 			);
 		});
 
-		await test.step('Import the file and verify the imported entry', async () => {
+		await test.step('Import the file and verify the authorship of the imported entry', async () => {
 			await companyExportImportPage.import(exportFilePath);
 
 			await applicationsMenuPage.goToObjectDefinition(

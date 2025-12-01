@@ -2098,6 +2098,155 @@
 				]
 			}
 		},
+		"/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}": {
+			"delete": {
+				"operationId": "deleteByExternalReferenceCodeComment",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "commentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+							},
+							"application/xml": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			},
+			"put": {
+				"operationId": "putByExternalReferenceCodeComment",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "commentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Comment"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Comment"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Comment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Comment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
+		"/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}/reply-comments": {
+			"post": {
+				"operationId": "postByExternalReferenceCodeCommentReplyComment",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "commentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Comment"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Comment"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Comment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Comment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
 		"/by-external-reference-code/{externalReferenceCode}/object-actions/objectAction": {
 			"put": {
 				"operationId": "putObject1ObjectAction",
@@ -2272,155 +2421,6 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/PageObject1"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Object1"
-				]
-			}
-		},
-		"/by-external-reference-code/{object1ExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}": {
-			"delete": {
-				"operationId": "deleteByExternalReferenceCodeObject1ExternalReferenceCodeCommentByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "object1ExternalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-							},
-							"application/xml": {
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Object1"
-				]
-			},
-			"put": {
-				"operationId": "putByExternalReferenceCodeObject1ExternalReferenceCodeCommentByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "object1ExternalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Comment"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Comment"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Comment"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Comment"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Object1"
-				]
-			}
-		},
-		"/by-external-reference-code/{object1ExternalReferenceCode}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments": {
-			"post": {
-				"operationId": "postByExternalReferenceCodeObject1ExternalReferenceCodeCommentByExternalReferenceCodeParentCommentExternalReferenceCodeComment",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "object1ExternalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "parentCommentExternalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Comment"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Comment"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Comment"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Comment"
 								}
 							}
 						},

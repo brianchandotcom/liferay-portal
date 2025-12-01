@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -75,7 +75,7 @@ public class LayoutGetFaviconURLTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
@@ -84,14 +84,14 @@ public class LayoutGetFaviconURLTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
 
-		_serviceContext.setRequest(_getHttpServletRequest());
+		_serviceContext.setRequest(_getHttpServletRequest(_group));
 	}
 
 	@Test
 	public void testLayout() throws Exception {
 		byte[] expectedBytes = _getExpectedBytes();
 
-		FileEntry fileEntry = _addFileEntry(expectedBytes);
+		FileEntry fileEntry = _addFileEntry(expectedBytes, _group);
 
 		_layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
 
@@ -105,7 +105,7 @@ public class LayoutGetFaviconURLTest {
 	public void testLayoutAfterClear() throws Exception {
 		byte[] expectedBytes = _getExpectedBytes();
 
-		FileEntry fileEntry = _addFileEntry(expectedBytes);
+		FileEntry fileEntry = _addFileEntry(expectedBytes, _group);
 
 		_layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
 
@@ -134,7 +134,7 @@ public class LayoutGetFaviconURLTest {
 
 		byte[] expectedBytes = _getExpectedBytes();
 
-		FileEntry fileEntry = _addFileEntry(expectedBytes);
+		FileEntry fileEntry = _addFileEntry(expectedBytes, _group);
 
 		_layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
 
@@ -175,7 +175,7 @@ public class LayoutGetFaviconURLTest {
 		LayoutSet layoutSet = _layout.getLayoutSet();
 
 		FileEntry layoutSetFaviconFileEntry = _addFileEntry(
-			_getExpectedBytes("classic_logo.png"));
+			_getExpectedBytes("classic_logo.png"), _group);
 
 		layoutSet.setFaviconFileEntryId(
 			layoutSetFaviconFileEntry.getFileEntryId());
@@ -184,7 +184,8 @@ public class LayoutGetFaviconURLTest {
 
 		byte[] layoutFaviconBytes = _getExpectedBytes("dxp_logo.png");
 
-		FileEntry layoutFaviconFileEntry = _addFileEntry(layoutFaviconBytes);
+		FileEntry layoutFaviconFileEntry = _addFileEntry(
+			layoutFaviconBytes, _group);
 
 		_layout.setFaviconFileEntryERC(
 			layoutFaviconFileEntry.getExternalReferenceCode());
@@ -209,7 +210,7 @@ public class LayoutGetFaviconURLTest {
 			masterLayoutPageTemplateEntry.getPlid());
 
 		FileEntry masterLayoutFaviconFileEntry = _addFileEntry(
-			_getExpectedBytes("classic_logo.png"));
+			_getExpectedBytes("classic_logo.png"), _group);
 
 		masterLayout.setFaviconFileEntryERC(
 			masterLayoutFaviconFileEntry.getExternalReferenceCode());
@@ -223,7 +224,8 @@ public class LayoutGetFaviconURLTest {
 
 		byte[] layoutFaviconBytes = _getExpectedBytes("dxp_logo.png");
 
-		FileEntry layoutFaviconFileEntry = _addFileEntry(layoutFaviconBytes);
+		FileEntry layoutFaviconFileEntry = _addFileEntry(
+			layoutFaviconBytes, _group);
 
 		_layout.setFaviconFileEntryERC(
 			layoutFaviconFileEntry.getExternalReferenceCode());
@@ -234,12 +236,38 @@ public class LayoutGetFaviconURLTest {
 			layoutFaviconBytes, _getBytes(_layout.getFaviconURL()));
 	}
 
-	private FileEntry _addFileEntry(byte[] bytes) throws Exception {
+	@Test
+	@TestInfo("LPD-68134")
+	public void testLayoutWithGlobalScopeERC() throws Exception {
+		byte[] expectedBytes = _getExpectedBytes();
+
+		Group globalGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		FileEntry fileEntry = _addFileEntry(expectedBytes, globalGroup);
+
+		_layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
+
+		_layout.setFaviconFileEntryScopeERC(
+			globalGroup.getExternalReferenceCode());
+
+		Assert.assertArrayEquals(
+			expectedBytes, _getBytes(_layout.getFaviconURL()));
+	}
+
+	private FileEntry _addFileEntry(byte[] bytes, Group group)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setRequest(_getHttpServletRequest(group));
+
 		return _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_PNG, bytes, null,
-			null, null, _serviceContext);
+			null, null, serviceContext);
 	}
 
 	private byte[] _getBytes(String favicon) throws Exception {
@@ -264,15 +292,19 @@ public class LayoutGetFaviconURLTest {
 		return FileUtil.getBytes(getClass(), "dependencies/" + fileName);
 	}
 
-	private HttpServletRequest _getHttpServletRequest() {
+	private HttpServletRequest _getHttpServletRequest(Group group)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(group.getCompanyId()));
 		themeDisplay.setRequest(mockHttpServletRequest);
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setSiteGroupId(group.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -294,8 +326,10 @@ public class LayoutGetFaviconURLTest {
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private Layout _layout;
 

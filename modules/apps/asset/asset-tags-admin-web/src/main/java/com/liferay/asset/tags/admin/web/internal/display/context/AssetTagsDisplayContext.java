@@ -174,7 +174,7 @@ public class AssetTagsDisplayContext {
 			return _mergeTagNames;
 		}
 
-		List<String> mergeTagNames = TransformUtil.transformToList(
+		_mergeTagNames = TransformUtil.transformToList(
 			StringUtil.split(
 				ParamUtil.getString(_renderRequest, "mergeTagIds"), 0L),
 			mergeTagId -> {
@@ -187,8 +187,6 @@ public class AssetTagsDisplayContext {
 
 				return tag.getName();
 			});
-
-		_mergeTagNames = mergeTagNames;
 
 		return _mergeTagNames;
 	}

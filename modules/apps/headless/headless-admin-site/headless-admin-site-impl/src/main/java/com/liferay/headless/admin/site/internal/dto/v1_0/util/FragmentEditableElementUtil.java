@@ -90,9 +90,8 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static JSONObject _getEditableFragmentEntryProcessorJSONObject(
-			long companyId, FragmentEditableElement[] fragmentEditableElements,
-			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
-		throws Exception {
+		long companyId, FragmentEditableElement[] fragmentEditableElements,
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -112,26 +111,21 @@ public class FragmentEditableElementUtil {
 			FragmentEditableElementValue fragmentEditableElementValue =
 				fragmentEditableElement.getFragmentEditableElementValue();
 
-			if ((fragmentEditableElementValue == null) ||
-				(fragmentEditableElementValue.getType() !=
+			if (fragmentEditableElementValue == null) {
+				continue;
+			}
+
+			if (Objects.equals(
+					fragmentEditableElementValue.getType(),
 					FragmentEditableElementValue.Type.TEXT)) {
 
-				continue;
+				jsonObject.put(
+					fragmentEditableElement.getId(),
+					() -> _getFragmentEditableElementJSONObject(
+						companyId, infoItemServiceRegistry, scopeGroupId,
+						(TextFragmentEditableElementValue)
+							fragmentEditableElementValue));
 			}
-
-			JSONObject fragmentEditableElementJSONObject =
-				_getFragmentEditableElementJSONObject(
-					companyId, infoItemServiceRegistry, scopeGroupId,
-					(TextFragmentEditableElementValue)
-						fragmentEditableElementValue);
-
-			if (JSONUtil.isEmpty(fragmentEditableElementJSONObject)) {
-				continue;
-			}
-
-			jsonObject.put(
-				fragmentEditableElement.getId(),
-				fragmentEditableElementJSONObject);
 		}
 
 		return jsonObject;

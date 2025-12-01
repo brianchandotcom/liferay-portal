@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -70,28 +68,21 @@ public class FragmentEditableElementUtil {
 			return null;
 		}
 
-		List<FragmentEditableElement> fragmentEditableElements =
-			new ArrayList<>();
-
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (editableFragmentEntryProcessorJSONObject == null) {
-			return fragmentEditableElements.toArray(
-				new FragmentEditableElement[0]);
+			return new FragmentEditableElement[0];
 		}
 
-		fragmentEditableElements.addAll(
-			_getFragmentEditableElements(
-				companyId,
-				EditableFragmentEntryProcessorUtil.getEditableTypes(
-					fragmentEntryLink.getHtml()),
-				infoItemServiceRegistry,
-				editableFragmentEntryProcessorJSONObject, scopeGroupId));
-
-		return fragmentEditableElements.toArray(new FragmentEditableElement[0]);
+		return _getFragmentEditableElements(
+			companyId,
+			EditableFragmentEntryProcessorUtil.getEditableTypes(
+				fragmentEntryLink.getHtml()),
+			infoItemServiceRegistry, editableFragmentEntryProcessorJSONObject,
+			scopeGroupId);
 	}
 
 	private static JSONObject _getEditableFragmentEntryProcessorJSONObject(
@@ -153,12 +144,12 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
-	private static List<FragmentEditableElement> _getFragmentEditableElements(
+	private static FragmentEditableElement[] _getFragmentEditableElements(
 		long companyId, Map<String, String> editableTypes,
 		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
 		long scopeGroupId) {
 
-		return TransformUtil.transform(
+		return TransformUtil.transformToArray(
 			jsonObject.keySet(),
 			fieldId -> {
 				FragmentEditableElementValue fragmentEditableElementValue =
@@ -179,7 +170,8 @@ public class FragmentEditableElementUtil {
 				fragmentEditableElement.setId(() -> fieldId);
 
 				return fragmentEditableElement;
-			});
+			},
+			FragmentEditableElement.class);
 	}
 
 	private static FragmentEditableElementValue

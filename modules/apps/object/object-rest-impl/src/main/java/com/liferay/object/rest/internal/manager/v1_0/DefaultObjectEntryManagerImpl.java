@@ -3372,7 +3372,7 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.ADD_ENTRY,
+						ActionKeys.UPDATE,
 						"postObjectEntryByObjectEntryFolderCopy",
 						serviceBuilderObjectEntry,
 						dtoConverterContext.getUriInfo());
@@ -3388,7 +3388,7 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.ADD_ENTRY,
+						ActionKeys.UPDATE,
 						"postObjectEntryByObjectEntryFolderCopyReplace",
 						serviceBuilderObjectEntry,
 						dtoConverterContext.getUriInfo());
@@ -3456,7 +3456,7 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.ADD_ENTRY,
+						ActionKeys.UPDATE,
 						"postObjectEntryByObjectEntryFolderMove",
 						serviceBuilderObjectEntry,
 						dtoConverterContext.getUriInfo());
@@ -3472,7 +3472,7 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.ADD_ENTRY,
+						ActionKeys.UPDATE,
 						"postObjectEntryByObjectEntryFolderMoveReplace",
 						serviceBuilderObjectEntry,
 						dtoConverterContext.getUriInfo());

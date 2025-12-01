@@ -269,7 +269,7 @@ public class DBUpgraderTest {
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
-					_DATA_CLEANUP_VERIFY_PROCESS +
+					_CLASS_NAME +
 						" did not activate successfully. The verify process " +
 							"will not be executed."));
 		}
@@ -288,7 +288,7 @@ public class DBUpgraderTest {
 
 		ComponentDescriptionDTO componentDescriptionDTO =
 			_serviceComponentRuntime.getComponentDescriptionDTO(
-				_getBundle(), _DATA_CLEANUP_VERIFY_PROCESS);
+				_getBundle(), _CLASS_NAME);
 
 		Promise<Void> voidPromise = _serviceComponentRuntime.disableComponent(
 			componentDescriptionDTO);
@@ -314,7 +314,7 @@ public class DBUpgraderTest {
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
-					_DATA_CLEANUP_VERIFY_PROCESS +
+					_CLASS_NAME +
 						" did not activate successfully. The verify process " +
 							"will not be executed."));
 		}
@@ -416,7 +416,7 @@ public class DBUpgraderTest {
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			if (Objects.equals(
-					bundle.getSymbolicName(), _DATA_CLEANUP_BUNDLE_NAME)) {
+					bundle.getSymbolicName(), "com.liferay.data.cleanup")) {
 
 				return bundle;
 			}
@@ -504,10 +504,7 @@ public class DBUpgraderTest {
 		dclSingleton.destroy(null);
 	}
 
-	private static final String _DATA_CLEANUP_BUNDLE_NAME =
-		"com.liferay.data.cleanup";
-
-	private static final String _DATA_CLEANUP_VERIFY_PROCESS =
+	private static final String _CLASS_NAME =
 		"com.liferay.data.cleanup.internal.verify." +
 			"PostUpgradeDataCleanupVerifyProcess";
 

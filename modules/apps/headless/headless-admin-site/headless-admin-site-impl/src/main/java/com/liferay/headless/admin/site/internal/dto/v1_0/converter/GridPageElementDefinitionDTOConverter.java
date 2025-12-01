@@ -89,7 +89,7 @@ public class GridPageElementDefinitionDTOConverter
 				setNumberOfModules(
 					rowStyledLayoutStructureItem::getNumberOfColumns);
 				setReverseOrder(rowStyledLayoutStructureItem::isReverseOrder);
-				setType(PageElementDefinition.Type.GRID);
+				setType(() -> PageElementDefinition.Type.GRID);
 				setVerticalAlignment(
 					() -> {
 						String itemVerticalAlignment =

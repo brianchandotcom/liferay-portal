@@ -26,6 +26,7 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -900,13 +901,10 @@ public class BatchEngineImportTaskExecutorTest
 			batchEngineImportTaskErrors.toString(),
 			invalidItemRowNumbers.size(), batchEngineImportTaskErrors.size());
 
-		List<Integer> failedItemIndexes = new ArrayList<>();
-
-		for (BatchEngineImportTaskError batchEngineImportTaskError :
-				batchEngineImportTaskErrors) {
-
-			failedItemIndexes.add(batchEngineImportTaskError.getItemIndex());
-		}
+		List<Integer> failedItemIndexes = TransformUtil.transform(
+			batchEngineImportTaskErrors,
+			batchEngineImportTaskError ->
+				batchEngineImportTaskError.getItemIndex());
 
 		Assert.assertTrue(failedItemIndexes.containsAll(invalidItemRowNumbers));
 	}

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -36,8 +37,6 @@ import com.liferay.portal.kernel.test.portlet.MockActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -92,7 +91,7 @@ public class EditLayoutDesignMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
 	}
 
 	@Test
@@ -174,7 +173,7 @@ public class EditLayoutDesignMVCActionCommandTest {
 	}
 
 	@Test
-	@TestInfo("LPS-121979")
+	@TestInfo({"LPD-68134", "LPS-121979"})
 	public void testEditLayoutDesignDoesntChangeWithNotEditedValues()
 		throws Exception {
 
@@ -185,20 +184,6 @@ public class EditLayoutDesignMVCActionCommandTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				serviceContext);
-
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_PNG,
-			FileUtil.getBytes(getClass(), "dependencies/dxp_logo.png"), null,
-			null, null, serviceContext);
-
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
@@ -206,54 +191,22 @@ public class EditLayoutDesignMVCActionCommandTest {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		draftLayout = _layoutLocalService.updateLayout(
-			_group.getGroupId(), draftLayout.isPrivateLayout(),
-			draftLayout.getLayoutId(), draftLayout.getParentLayoutId(),
-			draftLayout.getNameMap(), draftLayout.getTitleMap(),
-			draftLayout.getDescriptionMap(), draftLayout.getKeywordsMap(),
-			draftLayout.getRobotsMap(), draftLayout.getType(),
-			draftLayout.isHidden(), draftLayout.getFriendlyURLMap(), false,
-			null, styleBookEntry.getExternalReferenceCode(),
-			fileEntry.getExternalReferenceCode(), null,
-			masterLayoutPageTemplateEntry.getExternalReferenceCode(),
-			serviceContext);
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				serviceContext);
 
-		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
-			new MockMultipartHttpServletRequest();
+		Group globalGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
 
-		mockMultipartHttpServletRequest.setContentType(
-			"multipart/form-data;boundary=" + System.currentTimeMillis());
+		_testEditLayoutDesignDoesntChangeWithNotEditedValues(
+			draftLayout, globalGroup, masterLayoutPageTemplateEntry,
+			styleBookEntry);
 
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_updateLayout",
-			new Class<?>[] {
-				ActionRequest.class, ActionResponse.class,
-				UploadPortletRequest.class
-			},
-			_getMockActionRequest(draftLayout), new MockActionResponse(),
-			UploadTestUtil.createUploadPortletRequest(
-				UploadTestUtil.createUploadServletRequest(
-					mockMultipartHttpServletRequest, null, null),
-				null, RandomTestUtil.randomString()));
-
-		Layout updatedDraftLayout = _layoutLocalService.fetchLayout(
-			draftLayout.getPlid());
-
-		Assert.assertEquals(
-			draftLayout.getFaviconFileEntryERC(),
-			updatedDraftLayout.getFaviconFileEntryERC());
-		Assert.assertEquals(
-			draftLayout.getFaviconFileEntryScopeERC(),
-			updatedDraftLayout.getFaviconFileEntryScopeERC());
-		Assert.assertEquals(
-			draftLayout.getFaviconFileEntryGroupId(),
-			updatedDraftLayout.getFaviconFileEntryGroupId());
-		Assert.assertEquals(
-			draftLayout.getMasterLayoutPlid(),
-			updatedDraftLayout.getMasterLayoutPlid());
-		Assert.assertEquals(
-			draftLayout.getStyleBookEntryERC(),
-			updatedDraftLayout.getStyleBookEntryERC());
+		_testEditLayoutDesignDoesntChangeWithNotEditedValues(
+			draftLayout, _group, masterLayoutPageTemplateEntry, styleBookEntry);
 	}
 
 	@Test
@@ -416,6 +369,86 @@ public class EditLayoutDesignMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
+	private void _testEditLayoutDesignDoesntChangeWithNotEditedValues(
+			Layout draftLayout, Group group,
+			LayoutPageTemplateEntry masterLayoutPageTemplateEntry,
+			StyleBookEntry styleBookEntry)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_PNG,
+			FileUtil.getBytes(getClass(), "dependencies/dxp_logo.png"), null,
+			null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		String faviconFileEntryScopeERC = null;
+
+		if (fileEntry.getGroupId() != draftLayout.getGroupId()) {
+			faviconFileEntryScopeERC = group.getExternalReferenceCode();
+		}
+
+		draftLayout = _layoutLocalService.updateLayout(
+			_group.getGroupId(), draftLayout.isPrivateLayout(),
+			draftLayout.getLayoutId(), draftLayout.getParentLayoutId(),
+			draftLayout.getNameMap(), draftLayout.getTitleMap(),
+			draftLayout.getDescriptionMap(), draftLayout.getKeywordsMap(),
+			draftLayout.getRobotsMap(), draftLayout.getType(),
+			draftLayout.isHidden(), draftLayout.getFriendlyURLMap(), false,
+			null, styleBookEntry.getExternalReferenceCode(),
+			fileEntry.getExternalReferenceCode(), faviconFileEntryScopeERC,
+			masterLayoutPageTemplateEntry.getExternalReferenceCode(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_updateLayout",
+			new Class<?>[] {
+				ActionRequest.class, ActionResponse.class,
+				UploadPortletRequest.class
+			},
+			_getMockActionRequest(draftLayout), new MockActionResponse(),
+			UploadTestUtil.createUploadPortletRequest(
+				UploadTestUtil.createUploadServletRequest(
+					mockMultipartHttpServletRequest, null, null),
+				null, RandomTestUtil.randomString()));
+
+		Layout updatedDraftLayout = _layoutLocalService.fetchLayout(
+			draftLayout.getPlid());
+
+		if (fileEntry.getGroupId() != updatedDraftLayout.getGroupId()) {
+			Assert.assertNotNull(
+				updatedDraftLayout.getFaviconFileEntryScopeERC());
+		}
+		else {
+			Assert.assertTrue(
+				Validator.isNull(
+					updatedDraftLayout.getFaviconFileEntryScopeERC()));
+		}
+
+		Assert.assertEquals(
+			draftLayout.getFaviconFileEntryERC(),
+			updatedDraftLayout.getFaviconFileEntryERC());
+		Assert.assertEquals(
+			draftLayout.getFaviconFileEntryScopeERC(),
+			updatedDraftLayout.getFaviconFileEntryScopeERC());
+		Assert.assertEquals(
+			draftLayout.getFaviconFileEntryGroupId(),
+			updatedDraftLayout.getFaviconFileEntryGroupId());
+		Assert.assertEquals(
+			draftLayout.getMasterLayoutPlid(),
+			updatedDraftLayout.getMasterLayoutPlid());
+		Assert.assertEquals(
+			draftLayout.getStyleBookEntryERC(),
+			updatedDraftLayout.getStyleBookEntryERC());
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -425,8 +458,10 @@ public class EditLayoutDesignMVCActionCommandTest {
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

@@ -40,10 +40,10 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 		return ListUtil.fromArray(
 			new ClassNamePostUpgradeDataCleanupProcess(
 				_classNameLocalService, connection),
-			new ServiceComponentPostUpgradeDataCleanupProcess(
-				connection, _serviceComponentLocalService),
 			new ResourceActionPostUpgradeDataCleanupProcess(
-				connection, _resourceActionLocalService));
+				connection, _resourceActionLocalService),
+			new ServiceComponentPostUpgradeDataCleanupProcess(
+				connection, _serviceComponentLocalService));
 	}
 
 	@Reference

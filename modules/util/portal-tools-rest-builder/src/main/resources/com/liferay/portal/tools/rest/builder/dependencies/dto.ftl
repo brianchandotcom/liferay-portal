@@ -77,7 +77,7 @@ import java.util.function.Supplier;
 	)
 
 	@JsonTypeInfo(
-		include= JsonTypeInfo.As.PROPERTY, property="${schema.discriminator.propertyName}",
+		include= JsonTypeInfo.As.EXISTING_PROPERTY, property="${schema.discriminator.propertyName}",
 		use= JsonTypeInfo.Id.NAME, visible = true
 	)
 </#if>

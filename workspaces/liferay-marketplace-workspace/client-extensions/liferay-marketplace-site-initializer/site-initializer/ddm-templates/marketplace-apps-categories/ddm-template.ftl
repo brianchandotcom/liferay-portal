@@ -86,7 +86,9 @@
 
 <#assign
 	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=categories")
+
 	categories = product.categories![]
+
 	marketplaceAppCategories = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == "MARKETPLACE-APP-CATEGORY")
 	marketplaceCategory = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == "MARKETPLACE-CATEGORY")?first!""
 />

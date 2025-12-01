@@ -1375,6 +1375,91 @@ public class ObjectEntry implements Serializable {
 		return null;
 	}
 
+	public void setPropertyValue(String propertyName, Object propertyValue) {
+		if (Objects.equals(propertyName, "actions")) {
+			setActions((Map<String, Map<String, String>>)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "auditEvents")) {
+			setAuditEvents((AuditEvent[])propertyValue);
+		}
+		else if (Objects.equals(propertyName, "creator")) {
+			setCreator((Creator)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "dateCreated")) {
+			setDateCreated((Date)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "dateModified")) {
+			setDateModified((Date)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "defaultLanguageId")) {
+			setDefaultLanguageId((String)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "displayDate")) {
+			setDisplayDate((Date)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "expirationDate")) {
+			setExpirationDate((Date)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "externalReferenceCode")) {
+			setExternalReferenceCode((String)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "friendlyUrlPath")) {
+			setFriendlyUrlPath((String)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "friendlyUrlPath_i18n")) {
+			setFriendlyUrlPath_i18n((Map<String, String>)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "id")) {
+			setId((Long)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "keywords")) {
+			setKeywords((String[])propertyValue);
+		}
+		else if (Objects.equals(
+					propertyName, "objectEntryFolderExternalReferenceCode")) {
+
+			setObjectEntryFolderExternalReferenceCode((String)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "objectEntryFolderId")) {
+			setObjectEntryFolderId((Long)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "permissions")) {
+			setPermissions(
+				(com.liferay.portal.vulcan.permission.Permission[])
+					propertyValue);
+		}
+		else if (Objects.equals(propertyName, "removedBy")) {
+			setRemovedBy((Creator)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "removedDate")) {
+			setRemovedDate((Date)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "reviewDate")) {
+			setReviewDate((Date)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "scopeId")) {
+			setScopeId((Long)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "scopeKey")) {
+			setScopeKey((String)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "status")) {
+			setStatus((Status)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "systemProperties")) {
+			setSystemProperties((SystemProperties)propertyValue);
+		}
+		else if (Objects.equals(propertyName, "taxonomyCategoryBriefs")) {
+			setTaxonomyCategoryBriefs((TaxonomyCategoryBrief[])propertyValue);
+		}
+		else if (Objects.equals(propertyName, "taxonomyCategoryIds")) {
+			setTaxonomyCategoryIds((Long[])propertyValue);
+		}
+		else {
+			properties.put(propertyName, propertyValue);
+		}
+	}
+
 	private final class CachedUnsafeSupplier<T, E extends Throwable>
 		implements UnsafeSupplier<T, E> {
 

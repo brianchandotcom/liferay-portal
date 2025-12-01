@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectFieldBusinessType.class
 )
 public class LongIntegerObjectFieldBusinessType
-	implements ObjectFieldBusinessType {
+	extends BaseObjectFieldBusinessType {
 
 	@Override
 	public String getDBType() {
@@ -66,8 +66,7 @@ public class LongIntegerObjectFieldBusinessType
 		return HashMapBuilder.<String, Object>put(
 			FieldConstants.DATA_TYPE, FieldConstants.INTEGER
 		).putAll(
-			ObjectFieldBusinessType.super.getProperties(
-				objectField, objectFieldRenderingContext)
+			super.getProperties(objectField, objectFieldRenderingContext)
 		).build();
 	}
 

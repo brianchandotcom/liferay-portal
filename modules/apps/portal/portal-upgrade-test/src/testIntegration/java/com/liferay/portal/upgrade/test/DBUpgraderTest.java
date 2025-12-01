@@ -269,7 +269,7 @@ public class DBUpgraderTest {
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
-					_DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME +
+					_DATA_CLEANUP_VERIFY_PROCESS +
 						" did not activate successfully. The verify process " +
 							"will not be executed."));
 		}
@@ -288,7 +288,7 @@ public class DBUpgraderTest {
 
 		ComponentDescriptionDTO componentDescriptionDTO =
 			_serviceComponentRuntime.getComponentDescriptionDTO(
-				_getBundle(), _DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME);
+				_getBundle(), _DATA_CLEANUP_VERIFY_PROCESS);
 
 		Promise<Void> voidPromise = _serviceComponentRuntime.disableComponent(
 			componentDescriptionDTO);
@@ -314,7 +314,7 @@ public class DBUpgraderTest {
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
-					_DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME +
+					_DATA_CLEANUP_VERIFY_PROCESS +
 						" did not activate successfully. The verify process " +
 							"will not be executed."));
 		}
@@ -507,7 +507,7 @@ public class DBUpgraderTest {
 	private static final String _DATA_CLEANUP_BUNDLE_NAME =
 		"com.liferay.data.cleanup";
 
-	private static final String _DATA_CLEANUP_VERIFY_PROCESS_SERVICE_NAME =
+	private static final String _DATA_CLEANUP_VERIFY_PROCESS =
 		"com.liferay.data.cleanup.internal.verify." +
 			"PostUpgradeDataCleanupVerifyProcess";
 

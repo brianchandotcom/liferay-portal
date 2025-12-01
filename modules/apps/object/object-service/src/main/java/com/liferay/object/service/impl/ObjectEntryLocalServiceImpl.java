@@ -486,7 +486,8 @@ public class ObjectEntryLocalServiceImpl
 
 		_addResourcePermissions(objectDefinition, objectEntry);
 
-		if (objectEntry.isRootDescendantNode() ||
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			objectEntry.isRootDescendantNode() ||
 			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 			try {
@@ -6179,7 +6180,9 @@ public class ObjectEntryLocalServiceImpl
 			boolean skipModelListener)
 		throws PortalException {
 
-		if (objectEntry.isInTrash()) {
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			objectEntry.isInTrash()) {
+
 			return;
 		}
 

@@ -6,20 +6,13 @@
 package com.liferay.headless.admin.site.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
-
-import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -29,7 +22,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Supplier;
 
 /**
  * @author Rubén Pulido
@@ -54,50 +46,6 @@ public class FormStepPageElementDefinition
 		return ObjectMapperUtil.unsafeReadValue(
 			FormStepPageElementDefinition.class, json);
 	}
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The form step's configuration."
-	)
-	@Valid
-	public Object getFormStepConfig() {
-		if (_formStepConfigSupplier != null) {
-			formStepConfig = _formStepConfigSupplier.get();
-
-			_formStepConfigSupplier = null;
-		}
-
-		return formStepConfig;
-	}
-
-	public void setFormStepConfig(Object formStepConfig) {
-		this.formStepConfig = formStepConfig;
-
-		_formStepConfigSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFormStepConfig(
-		UnsafeSupplier<Object, Exception> formStepConfigUnsafeSupplier) {
-
-		_formStepConfigSupplier = () -> {
-			try {
-				return formStepConfigUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The form step's configuration.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object formStepConfig;
-
-	@JsonIgnore
-	private Supplier<Object> _formStepConfigSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -127,30 +75,6 @@ public class FormStepPageElementDefinition
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		Object formStepConfig = getFormStepConfig();
-
-		if (formStepConfig != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formStepConfig\": ");
-
-			if (formStepConfig instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject(
-						(Map<?, ?>)formStepConfig));
-			}
-			else if (formStepConfig instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)formStepConfig));
-				sb.append("\"");
-			}
-			else {
-				sb.append(formStepConfig);
-			}
-		}
 
 		Type type = getType();
 

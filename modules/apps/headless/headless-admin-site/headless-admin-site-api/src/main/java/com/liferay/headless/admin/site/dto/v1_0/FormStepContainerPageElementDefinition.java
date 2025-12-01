@@ -147,53 +147,6 @@ public class FormStepContainerPageElementDefinition
 	private Supplier<String> _customCSSSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom CSS viewports of the form step container page element."
-	)
-	@Valid
-	public CustomCSSViewport[] getCustomCSSViewports() {
-		if (_customCSSViewportsSupplier != null) {
-			customCSSViewports = _customCSSViewportsSupplier.get();
-
-			_customCSSViewportsSupplier = null;
-		}
-
-		return customCSSViewports;
-	}
-
-	public void setCustomCSSViewports(CustomCSSViewport[] customCSSViewports) {
-		this.customCSSViewports = customCSSViewports;
-
-		_customCSSViewportsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCustomCSSViewports(
-		UnsafeSupplier<CustomCSSViewport[], Exception>
-			customCSSViewportsUnsafeSupplier) {
-
-		_customCSSViewportsSupplier = () -> {
-			try {
-				return customCSSViewportsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The custom CSS viewports of the form step container page element."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected CustomCSSViewport[] customCSSViewports;
-
-	@JsonIgnore
-	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment style of a form step container page element."
 	)
 	@Valid
@@ -286,95 +239,6 @@ public class FormStepContainerPageElementDefinition
 	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The form step container page element's layout."
-	)
-	@Valid
-	public Layout getLayout() {
-		if (_layoutSupplier != null) {
-			layout = _layoutSupplier.get();
-
-			_layoutSupplier = null;
-		}
-
-		return layout;
-	}
-
-	public void setLayout(Layout layout) {
-		this.layout = layout;
-
-		_layoutSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLayout(
-		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
-
-		_layoutSupplier = () -> {
-			try {
-				return layoutUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The form step container page element's layout."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Layout layout;
-
-	@JsonIgnore
-	private Supplier<Layout> _layoutSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of a form step container page element."
-	)
-	public String getName() {
-		if (_nameSupplier != null) {
-			name = _nameSupplier.get();
-
-			_nameSupplier = null;
-		}
-
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-
-		_nameSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		_nameSupplier = () -> {
-			try {
-				return nameUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The custom name of a form step container page element."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
-
-	@JsonIgnore
-	private Supplier<String> _nameSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -447,28 +311,6 @@ public class FormStepContainerPageElementDefinition
 			sb.append("\"");
 		}
 
-		CustomCSSViewport[] customCSSViewports = getCustomCSSViewports();
-
-		if (customCSSViewports != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customCSSViewports\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < customCSSViewports.length; i++) {
-				sb.append(String.valueOf(customCSSViewports[i]));
-
-				if ((i + 1) < customCSSViewports.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		FragmentStyle fragmentStyle = getFragmentStyle();
 
 		if (fragmentStyle != null) {
@@ -501,34 +343,6 @@ public class FormStepContainerPageElementDefinition
 			}
 
 			sb.append("]");
-		}
-
-		Layout layout = getLayout();
-
-		if (layout != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"layout\": ");
-
-			sb.append(String.valueOf(layout));
-		}
-
-		String name = getName();
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
 		}
 
 		Type type = getType();

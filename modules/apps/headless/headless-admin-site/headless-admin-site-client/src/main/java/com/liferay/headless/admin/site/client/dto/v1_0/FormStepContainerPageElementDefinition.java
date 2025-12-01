@@ -68,28 +68,6 @@ public class FormStepContainerPageElementDefinition
 
 	protected String customCSS;
 
-	public CustomCSSViewport[] getCustomCSSViewports() {
-		return customCSSViewports;
-	}
-
-	public void setCustomCSSViewports(CustomCSSViewport[] customCSSViewports) {
-		this.customCSSViewports = customCSSViewports;
-	}
-
-	public void setCustomCSSViewports(
-		UnsafeSupplier<CustomCSSViewport[], Exception>
-			customCSSViewportsUnsafeSupplier) {
-
-		try {
-			customCSSViewports = customCSSViewportsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected CustomCSSViewport[] customCSSViewports;
-
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;
 	}
@@ -132,46 +110,6 @@ public class FormStepContainerPageElementDefinition
 	}
 
 	protected FragmentViewport[] fragmentViewports;
-
-	public Layout getLayout() {
-		return layout;
-	}
-
-	public void setLayout(Layout layout) {
-		this.layout = layout;
-	}
-
-	public void setLayout(
-		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
-
-		try {
-			layout = layoutUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Layout layout;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String name;
 
 	@Override
 	public FormStepContainerPageElementDefinition clone()

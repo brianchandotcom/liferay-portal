@@ -5,7 +5,6 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.CustomCSSViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
@@ -100,37 +99,6 @@ public class FormStepContainerPageElementDefinitionSerDes {
 			sb.append("\"");
 		}
 
-		if (formStepContainerPageElementDefinition.getCustomCSSViewports() !=
-				null) {
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customCSSViewports\": ");
-
-			sb.append("[");
-
-			for (int i = 0;
-				 i < formStepContainerPageElementDefinition.
-					 getCustomCSSViewports().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(
-						formStepContainerPageElementDefinition.
-							getCustomCSSViewports()[i]));
-
-				if ((i + 1) < formStepContainerPageElementDefinition.
-						getCustomCSSViewports().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (formStepContainerPageElementDefinition.getFragmentStyle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -172,33 +140,6 @@ public class FormStepContainerPageElementDefinitionSerDes {
 			}
 
 			sb.append("]");
-		}
-
-		if (formStepContainerPageElementDefinition.getLayout() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"layout\": ");
-
-			sb.append(
-				String.valueOf(
-					formStepContainerPageElementDefinition.getLayout()));
-		}
-
-		if (formStepContainerPageElementDefinition.getName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				_escape(formStepContainerPageElementDefinition.getName()));
-
-			sb.append("\"");
 		}
 
 		if (formStepContainerPageElementDefinition.getType() != null) {
@@ -257,19 +198,6 @@ public class FormStepContainerPageElementDefinitionSerDes {
 					formStepContainerPageElementDefinition.getCustomCSS()));
 		}
 
-		if (formStepContainerPageElementDefinition.getCustomCSSViewports() ==
-				null) {
-
-			map.put("customCSSViewports", null);
-		}
-		else {
-			map.put(
-				"customCSSViewports",
-				String.valueOf(
-					formStepContainerPageElementDefinition.
-						getCustomCSSViewports()));
-		}
-
 		if (formStepContainerPageElementDefinition.getFragmentStyle() == null) {
 			map.put("fragmentStyle", null);
 		}
@@ -291,26 +219,6 @@ public class FormStepContainerPageElementDefinitionSerDes {
 				String.valueOf(
 					formStepContainerPageElementDefinition.
 						getFragmentViewports()));
-		}
-
-		if (formStepContainerPageElementDefinition.getLayout() == null) {
-			map.put("layout", null);
-		}
-		else {
-			map.put(
-				"layout",
-				String.valueOf(
-					formStepContainerPageElementDefinition.getLayout()));
-		}
-
-		if (formStepContainerPageElementDefinition.getName() == null) {
-			map.put("name", null);
-		}
-		else {
-			map.put(
-				"name",
-				String.valueOf(
-					formStepContainerPageElementDefinition.getName()));
 		}
 
 		if (formStepContainerPageElementDefinition.getType() == null) {
@@ -349,21 +257,10 @@ public class FormStepContainerPageElementDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customCSS")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "customCSSViewports")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentViewports")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "layout")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -391,26 +288,6 @@ public class FormStepContainerPageElementDefinitionSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "customCSSViewports")) {
-
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					CustomCSSViewport[] customCSSViewportsArray =
-						new CustomCSSViewport[jsonParserFieldValues.length];
-
-					for (int i = 0; i < customCSSViewportsArray.length; i++) {
-						customCSSViewportsArray[i] =
-							CustomCSSViewportSerDes.toDTO(
-								(String)jsonParserFieldValues[i]);
-					}
-
-					formStepContainerPageElementDefinition.
-						setCustomCSSViewports(customCSSViewportsArray);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
 				if (jsonParserFieldValue != null) {
 					formStepContainerPageElementDefinition.setFragmentStyle(
@@ -434,18 +311,6 @@ public class FormStepContainerPageElementDefinitionSerDes {
 
 					formStepContainerPageElementDefinition.setFragmentViewports(
 						fragmentViewportsArray);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "layout")) {
-				if (jsonParserFieldValue != null) {
-					formStepContainerPageElementDefinition.setLayout(
-						LayoutSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					formStepContainerPageElementDefinition.setName(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

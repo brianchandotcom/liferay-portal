@@ -5,7 +5,6 @@
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
-import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
 import com.liferay.headless.admin.site.client.serdes.v1_0.FormStepPageElementDefinitionSerDes;
 
 import jakarta.annotation.Generated;
@@ -25,27 +24,6 @@ public class FormStepPageElementDefinition
 	public static FormStepPageElementDefinition toDTO(String json) {
 		return FormStepPageElementDefinitionSerDes.toDTO(json);
 	}
-
-	public Object getFormStepConfig() {
-		return formStepConfig;
-	}
-
-	public void setFormStepConfig(Object formStepConfig) {
-		this.formStepConfig = formStepConfig;
-	}
-
-	public void setFormStepConfig(
-		UnsafeSupplier<Object, Exception> formStepConfigUnsafeSupplier) {
-
-		try {
-			formStepConfig = formStepConfigUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object formStepConfig;
 
 	@Override
 	public FormStepPageElementDefinition clone()

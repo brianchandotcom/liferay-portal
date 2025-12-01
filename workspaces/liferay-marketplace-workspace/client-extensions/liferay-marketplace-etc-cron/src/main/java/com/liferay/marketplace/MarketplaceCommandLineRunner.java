@@ -68,12 +68,12 @@ public class MarketplaceCommandLineRunner
 	extends BaseRestController implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
-		_invoke(
-			this::_processLiferayStaffUserGroups, "Liferay Staff User Groups");
-
 		_invoke(this::_processInProgressTrials, "In Progress Trials");
 
-		_invoke(this::_processOnHoldTrials, "On Hold Trials");
+        _invoke(
+                this::_processLiferayStaffUserGroups, "Liferay Staff User Groups");
+
+        _invoke(this::_processOnHoldTrials, "On Hold Trials");
 
 		_invoke(this::_processOrdersTotalAmount, "Orders Total Amount");
 

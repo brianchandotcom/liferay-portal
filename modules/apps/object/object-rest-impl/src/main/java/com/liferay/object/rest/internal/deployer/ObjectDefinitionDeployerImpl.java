@@ -96,6 +96,7 @@ import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
+import com.liferay.translation.manager.TranslationManager;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Application;
@@ -225,7 +226,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_objectEntryManagerRegistry, _objectFieldLocalService,
 			_objectRelationshipLocalService, _objectRelationshipService,
 			_objectScopeProviderRegistry,
-			_systemObjectDefinitionManagerRegistry, _userLocalService);
+			_systemObjectDefinitionManagerRegistry, _translationManager,
+			_userLocalService);
 	}
 
 	private List<ServiceRegistration<?>> _deploy(
@@ -1177,6 +1179,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	@Reference
+	private TranslationManager _translationManager;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

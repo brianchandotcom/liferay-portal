@@ -457,8 +457,18 @@ public class ObjectEntryLocalServiceImpl
 		_setExternalReferenceCode(objectEntry, values);
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
-		_setExpirationDate(
-			objectDefinition.getCompanyId(), objectEntry, values);
+
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			if (status == WorkflowConstants.STATUS_EXPIRED) {
+				objectEntry.setExpirationDate(
+					(Date)values.get("expirationDate"));
+			}
+		}
+		else {
+			_setExpirationDate(
+				objectDefinition.getCompanyId(), objectEntry, values);
+		}
+
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
 		objectEntry.setStatus(status);

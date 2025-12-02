@@ -46,6 +46,9 @@ const BREAKDOWN_FRAGMENT_RECURSIVE = gql`
 					...BreakdownFields
 					breakdownItems {
 						...BreakdownFields
+						breakdownItems {
+							...BreakdownFields
+						}
 					}
 				}
 			}

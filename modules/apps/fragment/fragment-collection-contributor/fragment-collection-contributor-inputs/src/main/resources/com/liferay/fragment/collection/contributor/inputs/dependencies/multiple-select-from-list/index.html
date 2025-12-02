@@ -9,9 +9,9 @@
 		</span>
 
 		<div class="d-flex">
-			<div aria-describedby="${fragmentElementId}-multiselect-list-help-text" aria-labelledby="${fragmentElementId}-multiselect-list-label [#if  input.errorMessage?has_content]${fragmentElementId}-multiselect-list-error-message[/#if]" class="multiselect-list-fieldset" role="group">
+			<div aria-describedby="${fragmentElementId}-multiselect-list-help-text" aria-labelledby="${fragmentElementId}-multiselect-list-label [#if input.errorMessage?has_content]${fragmentElementId}-multiselect-list-error-message[/#if]" class="multiselect-list-fieldset" role="group">
 				[#assign options=(input.attributes.options)![]]
-				[#assign values=(input.value?split(","))]
+				[#assign values=((input.value!"")?split(","))]
 
 				[#list options as option]
 					[#if option?index == configuration.numberOfOptions && !configuration.showAllOptions]

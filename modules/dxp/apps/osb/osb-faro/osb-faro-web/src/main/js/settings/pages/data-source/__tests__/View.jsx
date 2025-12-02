@@ -74,19 +74,6 @@ describe('View', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render a Liferay data-source old page', () => {
-		const {container} = render(
-			<DefaultComponent
-				dataSource={data.getImmutableMock(
-					DataSource,
-					data.mockLiferayDataSource
-				)}
-			/>
-		);
-
-		expect(container).toMatchSnapshot();
-	});
-
 	it('should render a Salesforce data-source page', async () => {
 		const {container} = render(
 			<DefaultComponent

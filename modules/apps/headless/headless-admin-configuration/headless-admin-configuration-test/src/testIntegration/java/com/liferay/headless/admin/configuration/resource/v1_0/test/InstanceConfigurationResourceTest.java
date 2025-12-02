@@ -63,30 +63,52 @@ public class InstanceConfigurationResourceTest
 	public void testGetInstanceConfiguration() throws Exception {
 		super.testGetInstanceConfiguration();
 
-		PropsUtil.set(
-			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");
+		_testGetInstanceConfigurationFromConfigurationScreen();
+		_testGetInstanceConfigurationWithPasswordKey();
+	}
 
-		InstanceConfiguration instanceConfiguration =
-			testGetInstanceConfiguration_addInstanceConfiguration();
+	@Override
+	@Test
+	public void testPostInstanceConfiguration() throws Exception {
+		super.testPostInstanceConfiguration();
 
-		instanceConfiguration =
+		InstanceConfiguration randomInstanceConfiguration =
+			_randomInstanceConfigurationFromConfigurationScreen();
+
+		InstanceConfiguration postInstanceConfiguration =
+			testPostInstanceConfiguration_addInstanceConfiguration(
+				randomInstanceConfiguration);
+
+		assertEquals(randomInstanceConfiguration, postInstanceConfiguration);
+		assertValid(postInstanceConfiguration);
+	}
+
+	@Override
+	@Test
+	public void testPutInstanceConfiguration() throws Exception {
+		super.testPutInstanceConfiguration();
+
+		InstanceConfiguration postInstanceConfiguration =
+			instanceConfigurationResource.postInstanceConfiguration(
+				_randomInstanceConfigurationFromConfigurationScreen());
+
+		InstanceConfiguration randomInstanceConfiguration =
+			_randomInstanceConfigurationFromConfigurationScreen();
+
+		InstanceConfiguration putInstanceConfiguration =
+			instanceConfigurationResource.putInstanceConfiguration(
+				postInstanceConfiguration.getExternalReferenceCode(),
+				randomInstanceConfiguration);
+
+		assertEquals(randomInstanceConfiguration, putInstanceConfiguration);
+		assertValid(putInstanceConfiguration);
+
+		InstanceConfiguration getInstanceConfiguration =
 			instanceConfigurationResource.getInstanceConfiguration(
-				instanceConfiguration.getExternalReferenceCode());
+				putInstanceConfiguration.getExternalReferenceCode());
 
-		Map<String, Object> properties = instanceConfiguration.getProperties();
-
-		Assert.assertNotNull(properties.get("passwordStringKey"));
-
-		PropsUtil.set(
-			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "false");
-
-		instanceConfiguration =
-			instanceConfigurationResource.getInstanceConfiguration(
-				instanceConfiguration.getExternalReferenceCode());
-
-		properties = instanceConfiguration.getProperties();
-
-		Assert.assertNull(properties.get("passwordStringKey"));
+		assertEquals(randomInstanceConfiguration, getInstanceConfiguration);
+		assertValid(getInstanceConfiguration);
 	}
 
 	@Override
@@ -155,6 +177,65 @@ public class InstanceConfigurationResourceTest
 
 		return instanceConfigurationResource.postInstanceConfiguration(
 			randomInstanceConfiguration());
+	}
+
+	private InstanceConfiguration
+			_randomInstanceConfigurationFromConfigurationScreen()
+		throws Exception {
+
+		return new InstanceConfiguration() {
+			{
+				externalReferenceCode = "company-configuration-key";
+				properties =
+					ConfigurationTestUtil.
+						getRandomConfigurationScreenProperties(
+							"companyWebId", testCompany.getWebId());
+			}
+		};
+	}
+
+	private void _testGetInstanceConfigurationFromConfigurationScreen()
+		throws Exception {
+
+		InstanceConfiguration postInstanceConfiguration =
+			instanceConfigurationResource.postInstanceConfiguration(
+				_randomInstanceConfigurationFromConfigurationScreen());
+
+		InstanceConfiguration getInstanceConfiguration =
+			instanceConfigurationResource.getInstanceConfiguration(
+				postInstanceConfiguration.getExternalReferenceCode());
+
+		assertEquals(postInstanceConfiguration, getInstanceConfiguration);
+		assertValid(getInstanceConfiguration);
+	}
+
+	private void _testGetInstanceConfigurationWithPasswordKey()
+		throws Exception {
+
+		PropsUtil.set(
+			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");
+
+		InstanceConfiguration instanceConfiguration =
+			testGetInstanceConfiguration_addInstanceConfiguration();
+
+		instanceConfiguration =
+			instanceConfigurationResource.getInstanceConfiguration(
+				instanceConfiguration.getExternalReferenceCode());
+
+		Map<String, Object> properties = instanceConfiguration.getProperties();
+
+		Assert.assertNotNull(properties.get("passwordStringKey"));
+
+		PropsUtil.set(
+			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "false");
+
+		instanceConfiguration =
+			instanceConfigurationResource.getInstanceConfiguration(
+				instanceConfiguration.getExternalReferenceCode());
+
+		properties = instanceConfiguration.getProperties();
+
+		Assert.assertNull(properties.get("passwordStringKey"));
 	}
 
 	private static final List<SafeCloseable> _safeCloseables =

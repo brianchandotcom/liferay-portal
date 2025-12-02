@@ -382,8 +382,8 @@ public class LayoutLocalServiceWrapper
 
 	private void _copyLayoutPageTemplateStructure(
 			Map<String, String> instanceIdsMap, boolean masterLayoutCopy,
-			long[] sourceSegmentsExperiencesIds, Layout sourceLayout,
-			long[] targetSegmentsExperiencesIds, Layout targetLayout, User user)
+			Layout sourceLayout, long[] sourceSegmentsExperiencesIds,
+			Layout targetLayout, long[] targetSegmentsExperiencesIds, User user)
 		throws Exception {
 
 		Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
@@ -431,8 +431,8 @@ public class LayoutLocalServiceWrapper
 			}
 
 			JSONObject dataJSONObject = _processDataJSONObject(
-				LayoutStructure.of(data), sourceLayout, targetLayout,
-				fragmentEntryLinksMap, instanceIdsMap, masterLayoutCopy,
+				instanceIdsMap, LayoutStructure.of(data), masterLayoutCopy,
+				sourceLayout, fragmentEntryLinksMap, targetLayout,
 				targetFragmentEntryLinkIds, entry.getValue(), user);
 
 			_layoutPageTemplateStructureLocalService.
@@ -954,11 +954,10 @@ public class LayoutLocalServiceWrapper
 	}
 
 	private JSONObject _processDataJSONObject(
-			LayoutStructure layoutStructure, Layout sourceLayout,
-			Layout targetLayout,
+			Map<String, String> instanceIdsMap, LayoutStructure layoutStructure,
+			boolean masterLayoutCopy, Layout sourceLayout,
 			Map<Long, FragmentEntryLink> sourceFragmentEntryLinksMap,
-			Map<String, String> instanceIdsMap, boolean masterLayoutCopy,
-			Set<Long> targetFragmentEntryLinkIds,
+			Layout targetLayout, Set<Long> targetFragmentEntryLinkIds,
 			long targetSegmentsExperienceId, User user)
 		throws Exception {
 
@@ -1158,11 +1157,11 @@ public class LayoutLocalServiceWrapper
 		}
 
 		JSONObject dataJSONObject = _processDataJSONObject(
-			layoutStructure, sourceLayout, targetLayout,
+			instanceIdsMap, layoutStructure, masterLayoutCopy, sourceLayout,
 			_getFragmentEntryLinksMap(
 				sourceLayout, new long[] {sourceSegmentsExperienceId},
 				targetLayout),
-			instanceIdsMap, masterLayoutCopy, targetFragmentEntryLinkIds,
+			targetLayout, targetFragmentEntryLinkIds,
 			targetSegmentsExperienceId, user);
 
 		_layoutPageTemplateStructureLocalService.
@@ -1285,9 +1284,9 @@ public class LayoutLocalServiceWrapper
 				}
 				else {
 					_copyLayoutPageTemplateStructure(
-						instanceIdsMap, masterLayoutCopy,
-						_sourceSegmentsExperiencesIds, _sourceLayout,
-						_targetSegmentsExperiencesIds, _targetLayout, _user);
+						instanceIdsMap, masterLayoutCopy, _sourceLayout,
+						_sourceSegmentsExperiencesIds, _targetLayout,
+						_targetSegmentsExperiencesIds, _user);
 				}
 
 				List<String> portletIds = _getLayoutPortletIds(

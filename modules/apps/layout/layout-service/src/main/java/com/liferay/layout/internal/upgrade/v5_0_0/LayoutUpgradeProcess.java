@@ -43,21 +43,18 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					 "and plid = ?")) {
 
 			while (resultSet.next()) {
-				String dlFileEntryERC = resultSet.getString(1);
 				long dlFileEntryGroupId = resultSet.getLong(2);
 				String dlFileEntryScopeERC = resultSet.getString(3);
-				long ctCollectionId = resultSet.getLong(4);
-				long plid = resultSet.getLong(5);
 				long layoutGroupId = resultSet.getLong(6);
 
 				if (dlFileEntryGroupId == layoutGroupId) {
 					dlFileEntryScopeERC = null;
 				}
 
-				preparedStatement2.setString(1, dlFileEntryERC);
+				preparedStatement2.setString(1, resultSet.getString(1));
 				preparedStatement2.setString(2, dlFileEntryScopeERC);
-				preparedStatement2.setLong(3, ctCollectionId);
-				preparedStatement2.setLong(4, plid);
+				preparedStatement2.setLong(3, resultSet.getLong(4));
+				preparedStatement2.setLong(4, resultSet.getLong(5));
 
 				preparedStatement2.addBatch();
 			}

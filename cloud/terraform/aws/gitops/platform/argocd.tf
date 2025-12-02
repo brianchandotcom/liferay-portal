@@ -1,0 +1,33 @@
+locals {
+	argocd_release_name="argocd"
+}
+resource "helm_release" "argocd" {
+	chart="argo-cd"
+	create_namespace=true
+	name=local.argocd_release_name
+	namespace=var.argocd_namespace
+	repository="https://argoproj.github.io/argo-helm"
+	values=[
+		yamlencode(
+			{
+				installCRDs=true 
+				server={
+					resources={
+						requests={
+							cpu="100m"
+							memory="128Mi"
+						}
+						limits={
+							cpu="200m"
+							memory="256Mi"
+						}
+					}
+					service={
+						type="ClusterIP"
+					}
+				}
+			})
+	]
+	version="9.1.5"
+	wait=true
+}

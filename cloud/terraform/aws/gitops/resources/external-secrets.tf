@@ -6,17 +6,14 @@ resource "kubernetes_manifest" "external_secret" {
 	depends_on=[
 		kubernetes_manifest.secret_store,
 	]
+	field_manager {
+		force_conflicts=true
+		name="terraform-external-secrets-manager"
+	}
 	manifest={
 		apiVersion="external-secrets.io/v1"
 		kind="ExternalSecret"
 		metadata={
-			annotations={
-				"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
-				"argocd.argoproj.io/sync-options"="Prune=false"
-			}
-			labels={
-				"argocd.argoproj.io/secret-type"="repository"
-			}
 			name=local.argocd_repo_credentials_secret_name
 			namespace=var.argocd_namespace
 		}
@@ -25,17 +22,17 @@ resource "kubernetes_manifest" "external_secret" {
 				{
 					remoteRef={
 						key=var.remote_secret_key
-						property=var.git_token_property
+						property=var.git_username_property
 					}
-					secretKey="password"
+					secretKey="username"
 				},
 				{
 					remoteRef={
 						key=var.remote_secret_key
-						property=var.git_username_property
+						property=var.git_token_property
 					}
-					secretKey="username"
-				}
+					secretKey="password"
+				},
 			]
 			refreshInterval="1h"
 			secretStoreRef={
@@ -46,6 +43,18 @@ resource "kubernetes_manifest" "external_secret" {
 				creationPolicy="Owner"
 				name=local.argocd_repo_credentials_secret_name
 				template={
+					data={
+						"insecure"="true"
+						"password"="{{ .password }}"
+						"type"="git"
+						"url"=var.git_repo_url
+						"username"="{{ .username }}"
+					}
+					metadata = {
+						labels = {
+							"argocd.argoproj.io/secret-type"="repository"
+						}
+					}
 					type="Opaque"
 				}
 			}

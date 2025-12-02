@@ -19,6 +19,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -53,21 +54,30 @@ public class ModulePageElementDefinitionDTOConverter
 		};
 	}
 
-	private ModuleViewport _toModuleViewport(
-		Map<String, JSONObject> columnViewportConfigurationJSONObjects,
-		ModuleViewport.Id moduleViewportId) {
+	private JSONObject _getViewportJSONObject(
+		JSONObject jsonObject, ModuleViewport.Id moduleViewportId) {
+
+		if (Objects.equals(moduleViewportId, ModuleViewport.Id.DESKTOP)) {
+			return jsonObject;
+		}
 
 		String viewportId = ViewportIdUtil.toInternalValue(
 			moduleViewportId.getValue());
 
-		if (!columnViewportConfigurationJSONObjects.containsKey(viewportId)) {
+		if (!jsonObject.has(viewportId)) {
 			return null;
 		}
 
-		JSONObject columnViewportConfigurationJSONObject =
-			columnViewportConfigurationJSONObjects.get(viewportId);
+		return jsonObject.getJSONObject(viewportId);
+	}
 
-		if (JSONUtil.isEmpty(columnViewportConfigurationJSONObject)) {
+	private ModuleViewport _toModuleViewport(
+		JSONObject jsonObject, ModuleViewport.Id moduleViewportId) {
+
+		JSONObject viewportJSONObject = _getViewportJSONObject(
+			jsonObject, moduleViewportId);
+
+		if (JSONUtil.isEmpty(viewportJSONObject)) {
 			return null;
 		}
 
@@ -75,8 +85,7 @@ public class ModulePageElementDefinitionDTOConverter
 			{
 				setId(() -> moduleViewportId);
 				setModuleViewportDefinition(
-					() -> _toModuleViewportDefinition(
-						columnViewportConfigurationJSONObject));
+					() -> _toModuleViewportDefinition(viewportJSONObject));
 			}
 		};
 	}
@@ -114,7 +123,15 @@ public class ModulePageElementDefinitionDTOConverter
 		List<ModuleViewport> moduleViewports = new ArrayList<>() {
 			{
 				ModuleViewport moduleViewport = _toModuleViewport(
-					columnViewportConfigurationJSONObjects,
+					columnLayoutStructureItem.getItemConfigJSONObject(),
+					ModuleViewport.Id.DESKTOP);
+
+				if (moduleViewport != null) {
+					add(moduleViewport);
+				}
+
+				moduleViewport = _toModuleViewport(
+					columnLayoutStructureItem.getItemConfigJSONObject(),
 					ModuleViewport.Id.LANDSCAPE_MOBILE);
 
 				if (moduleViewport != null) {
@@ -122,7 +139,7 @@ public class ModulePageElementDefinitionDTOConverter
 				}
 
 				moduleViewport = _toModuleViewport(
-					columnViewportConfigurationJSONObjects,
+					columnLayoutStructureItem.getItemConfigJSONObject(),
 					ModuleViewport.Id.PORTRAIT_MOBILE);
 
 				if (moduleViewport != null) {
@@ -130,7 +147,7 @@ public class ModulePageElementDefinitionDTOConverter
 				}
 
 				moduleViewport = _toModuleViewport(
-					columnViewportConfigurationJSONObjects,
+					columnLayoutStructureItem.getItemConfigJSONObject(),
 					ModuleViewport.Id.TABLET);
 
 				if (moduleViewport != null) {

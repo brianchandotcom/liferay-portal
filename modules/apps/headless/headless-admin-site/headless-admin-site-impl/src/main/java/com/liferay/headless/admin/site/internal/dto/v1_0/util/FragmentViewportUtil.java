@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Mikel Lorza
@@ -31,6 +32,13 @@ public class FragmentViewportUtil {
 		List<FragmentViewport> fragmentViewports = new ArrayList<>() {
 			{
 				FragmentViewport fragmentViewport = _toFragmentViewport(
+					FragmentViewport.Id.DESKTOP, jsonObject);
+
+				if (fragmentViewport != null) {
+					add(fragmentViewport);
+				}
+
+				fragmentViewport = _toFragmentViewport(
 					FragmentViewport.Id.LANDSCAPE_MOBILE, jsonObject);
 
 				if (fragmentViewport != null) {
@@ -95,11 +103,28 @@ public class FragmentViewportUtil {
 		return jsonObject;
 	}
 
+	private static JSONObject _getViewportJSONObject(
+		FragmentViewport.Id fragmentViewportId, JSONObject jsonObject) {
+
+		if (Objects.equals(fragmentViewportId, FragmentViewport.Id.DESKTOP)) {
+			return jsonObject;
+		}
+
+		String viewportId = ViewportIdUtil.toInternalValue(
+			fragmentViewportId.getValue());
+
+		if (!jsonObject.has(viewportId)) {
+			return null;
+		}
+
+		return jsonObject.getJSONObject(viewportId);
+	}
+
 	private static FragmentViewport _toFragmentViewport(
 		FragmentViewport.Id fragmentViewportId, JSONObject jsonObject) {
 
-		JSONObject viewportJSONObject = jsonObject.getJSONObject(
-			ViewportIdUtil.toInternalValue(fragmentViewportId.getValue()));
+		JSONObject viewportJSONObject = _getViewportJSONObject(
+			fragmentViewportId, jsonObject);
 
 		if (JSONUtil.isEmpty(viewportJSONObject) ||
 			(Validator.isNull(

@@ -153,6 +153,13 @@ components:
                         $ref: "#/components/schemas/AuditEvent"
                     readOnly: true
                     type: array
+                comments:
+                    description:
+                        Optional field with the comments associated with this object entry, can be embedded with
+                        nestedFields
+                    items:
+                        $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Comment
+                    type: array
                 creator:
                     $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
                     readOnly: true

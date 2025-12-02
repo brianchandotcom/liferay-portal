@@ -503,25 +503,6 @@ components:
                     required:
                         -   contextualMenuType
                     type: object
-        CustomCSSViewport:
-            # @review
-            description:
-                A custom CSS viewport.
-            properties:
-                customCSS:
-                    # @review
-                    description:
-                        The definition of the custom CSS viewport.
-                    type: string
-                id:
-                    # @review
-                    description:
-                        The custom CSS viewport's ID.
-                    type: string
-            required:
-                -   id
-                -   customCSS
-            type: object
         CustomMetaTag:
             # @review
             description:
@@ -1358,13 +1339,6 @@ components:
                                 A list of CSS classes that are applied to the fragment instance.
                             items:
                                 type: string
-                            type: array
-                        customCSSViewports:
-                            # @review
-                            description:
-                                The custom CSS viewports of the fragment instance.
-                            items:
-                                $ref: "#/components/schemas/CustomCSSViewport"
                             type: array
                         datePropagated:
                             description:

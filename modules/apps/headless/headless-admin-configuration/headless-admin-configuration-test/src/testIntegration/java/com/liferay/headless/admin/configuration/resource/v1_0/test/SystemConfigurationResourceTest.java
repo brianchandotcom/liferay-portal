@@ -63,30 +63,52 @@ public class SystemConfigurationResourceTest
 	public void testGetSystemConfiguration() throws Exception {
 		super.testGetSystemConfiguration();
 
-		PropsUtil.set(
-			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");
+		_testGetSystemConfigurationFromConfigurationScreen();
+		_testGetSystemConfigurationWithPasswordKey();
+	}
 
-		SystemConfiguration systemConfiguration =
-			testGetSystemConfiguration_addSystemConfiguration();
+	@Override
+	@Test
+	public void testPostSystemConfiguration() throws Exception {
+		super.testPostSystemConfiguration();
 
-		systemConfiguration =
+		SystemConfiguration randomSystemConfiguration =
+			_randomSystemConfigurationFromConfigurationScreen();
+
+		SystemConfiguration postSystemConfiguration =
+			testPostSystemConfiguration_addSystemConfiguration(
+				randomSystemConfiguration);
+
+		assertEquals(randomSystemConfiguration, postSystemConfiguration);
+		assertValid(postSystemConfiguration);
+	}
+
+	@Override
+	@Test
+	public void testPutSystemConfiguration() throws Exception {
+		super.testPutSystemConfiguration();
+
+		SystemConfiguration postSystemConfiguration =
+			systemConfigurationResource.postSystemConfiguration(
+				_randomSystemConfigurationFromConfigurationScreen());
+
+		SystemConfiguration randomSystemConfiguration =
+			_randomSystemConfigurationFromConfigurationScreen();
+
+		SystemConfiguration putSystemConfiguration =
+			systemConfigurationResource.putSystemConfiguration(
+				postSystemConfiguration.getExternalReferenceCode(),
+				randomSystemConfiguration);
+
+		assertEquals(randomSystemConfiguration, putSystemConfiguration);
+		assertValid(putSystemConfiguration);
+
+		SystemConfiguration getSystemConfiguration =
 			systemConfigurationResource.getSystemConfiguration(
-				systemConfiguration.getExternalReferenceCode());
+				putSystemConfiguration.getExternalReferenceCode());
 
-		Map<String, Object> properties = systemConfiguration.getProperties();
-
-		Assert.assertNotNull(properties.get("passwordStringKey"));
-
-		PropsUtil.set(
-			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "false");
-
-		systemConfiguration =
-			systemConfigurationResource.getSystemConfiguration(
-				systemConfiguration.getExternalReferenceCode());
-
-		properties = systemConfiguration.getProperties();
-
-		Assert.assertNull(properties.get("passwordStringKey"));
+		assertEquals(randomSystemConfiguration, getSystemConfiguration);
+		assertValid(getSystemConfiguration);
 	}
 
 	@Override
@@ -119,8 +141,7 @@ public class SystemConfigurationResourceTest
 						ConfigurationTestUtil.TEST_CONFIGURATION_PID;
 					properties =
 						ConfigurationTestUtil.
-							getRandomTestConfigurationProperties(
-								"companyWebId", testCompany.getWebId());
+							getRandomTestConfigurationProperties(null, null);
 				}
 			});
 	}
@@ -152,6 +173,62 @@ public class SystemConfigurationResourceTest
 
 		return systemConfigurationResource.postSystemConfiguration(
 			randomSystemConfiguration());
+	}
+
+	private SystemConfiguration
+			_randomSystemConfigurationFromConfigurationScreen()
+		throws Exception {
+
+		return new SystemConfiguration() {
+			{
+				externalReferenceCode = "system-configuration-key";
+				properties =
+					ConfigurationTestUtil.
+						getRandomConfigurationScreenProperties(null, null);
+			}
+		};
+	}
+
+	private void _testGetSystemConfigurationFromConfigurationScreen()
+		throws Exception {
+
+		SystemConfiguration postSystemConfiguration =
+			systemConfigurationResource.postSystemConfiguration(
+				_randomSystemConfigurationFromConfigurationScreen());
+
+		SystemConfiguration getSystemConfiguration =
+			systemConfigurationResource.getSystemConfiguration(
+				postSystemConfiguration.getExternalReferenceCode());
+
+		assertEquals(postSystemConfiguration, getSystemConfiguration);
+		assertValid(getSystemConfiguration);
+	}
+
+	private void _testGetSystemConfigurationWithPasswordKey() throws Exception {
+		PropsUtil.set(
+			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");
+
+		SystemConfiguration systemConfiguration =
+			testGetSystemConfiguration_addSystemConfiguration();
+
+		systemConfiguration =
+			systemConfigurationResource.getSystemConfiguration(
+				systemConfiguration.getExternalReferenceCode());
+
+		Map<String, Object> properties = systemConfiguration.getProperties();
+
+		Assert.assertNotNull(properties.get("passwordStringKey"));
+
+		PropsUtil.set(
+			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "false");
+
+		systemConfiguration =
+			systemConfigurationResource.getSystemConfiguration(
+				systemConfiguration.getExternalReferenceCode());
+
+		properties = systemConfiguration.getProperties();
+
+		Assert.assertNull(properties.get("passwordStringKey"));
 	}
 
 	private static final List<SafeCloseable> _safeCloseables =

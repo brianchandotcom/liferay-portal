@@ -29,11 +29,8 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.io.File;
-
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,10 +38,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Fábio Alves
@@ -64,29 +57,9 @@ public class DepotEntryModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Bundle testBundle = FrameworkUtil.getBundle(
-			DepotEntryModelListenerTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.site.initializer.cms")) {
-
-				_deleteFile(bundle, "00.list.type.definition");
-				_deleteFile(bundle, "01.object.folder");
-				_deleteFile(bundle, "02.object.definition");
-
-				CompletableFuture<Void> completableFuture =
-					_batchEngineUnitProcessor.processBatchEngineUnits(
-						_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-				completableFuture.join();
-
-				break;
-			}
-		}
+		CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			DepotEntryModelListenerTest.class, _siteInitializerRegistry);
 	}
 
 	@Test
@@ -117,16 +90,6 @@ public class DepotEntryModelListenerTest {
 				TempFileEntryUtil.class.getName()));
 	}
 
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
 	@Inject
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
@@ -150,5 +113,8 @@ public class DepotEntryModelListenerTest {
 
 	@Inject
 	private RepositoryLocalService _repositoryLocalService;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

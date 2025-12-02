@@ -93,10 +93,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.Serializable;
 
 import java.util.Collections;
@@ -104,8 +105,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -113,10 +112,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Alejandro Tardín
@@ -142,39 +137,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		if (!_isCMSSiteInitialized()) {
-
-			// These tests require the instance to be created with the feature
-			// flag LPD-17564 enabled. On CI, feature flags are enabled on
-			// demand for each test, but not during instance initialization.
-			// Until the feature flag LPD-17564 is removed, run the batch
-			// engine unit processor manually so that the object definitions
-			// are created.
-
-			Bundle testBundle = FrameworkUtil.getBundle(
-				BulkActionResourceTest.class);
-
-			BundleContext bundleContext = testBundle.getBundleContext();
-
-			for (Bundle bundle : bundleContext.getBundles()) {
-				if (!Objects.equals(
-						bundle.getSymbolicName(),
-						"com.liferay.site.initializer.cms")) {
-
-					continue;
-				}
-
-				_deleteFile(bundle, "00.list.type.definition");
-				_deleteFile(bundle, "01.object.folder");
-				_deleteFile(bundle, "02.object.definition");
-
-				CompletableFuture<Void> completableFuture =
-					_batchEngineUnitProcessor.processBatchEngineUnits(
-						_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-				completableFuture.join();
-			}
-		}
+		CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			BulkActionResourceTest.class, _siteInitializerRegistry);
 
 		_cmsAdministratorRole = _getOrAddCMSAdministratorRole(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
@@ -299,16 +264,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertEquals(expectedName, bulkActionItem.getName());
 	}
 
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
 	private JSONObject _getDefaultPermissionsJSONObject(
 			ObjectDefinition objectDefinition,
 			ObjectEntryFolder objectEntryFolder)
@@ -359,19 +314,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		return _roleLocalService.addRole(
 			null, userId, null, 0, RoleConstants.CMS_ADMINISTRATOR, null, null,
 			RoleConstants.TYPE_REGULAR, null, null);
-	}
-
-	private boolean _isCMSSiteInitialized() throws Exception {
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-				TestPropsValues.getCompanyId());
-
-		if (objectFolder != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _postBulkAction(BulkAction bulkAction) throws Exception {
@@ -1410,6 +1352,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private RoleLocalService _roleLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
+
 	private User _user;
 
 }

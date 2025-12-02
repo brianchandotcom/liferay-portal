@@ -50,7 +50,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
@@ -84,16 +84,16 @@ public class ObjectEntryModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			ObjectEntryModelListenerTest.class, _siteInitializerRegistry);
+
 		_cmsAdministratorRole = _getOrAddCMSAdministratorRole(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 		_ownerRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.OWNER);
 		_userRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
-
-		_group = CMSGroupTestUtil.getCMSGroup(
-			ObjectEntryModelListenerTest.class, _batchEngineUnitProcessor,
-			_batchEngineUnitReader, _siteInitializerRegistry);
 	}
 
 	@Test
@@ -554,8 +554,6 @@ public class ObjectEntryModelListenerTest {
 		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 	)
 	private FilterFactory<Predicate> _filterFactory;
-
-	private Group _group;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

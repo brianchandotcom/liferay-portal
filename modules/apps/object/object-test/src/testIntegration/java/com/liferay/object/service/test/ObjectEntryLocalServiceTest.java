@@ -181,7 +181,6 @@ import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -239,14 +238,13 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
-import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
-import java.io.File;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -275,10 +273,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -1366,7 +1362,9 @@ public class ObjectEntryLocalServiceTest {
 	)
 	@Test
 	public void testAddObjectEntryWithAssetTag() throws Exception {
-		_setUpCMSContext();
+		CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			ObjectEntryLocalServiceTest.class, _siteInitializerRegistry);
 
 		ObjectFolder objectFolder =
 			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
@@ -7548,16 +7546,6 @@ public class ObjectEntryLocalServiceTest {
 		return listTypeEntries;
 	}
 
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
 	private void _enableObjectEntryVersioning() {
 		_objectDefinition.setEnableObjectEntryVersioning(true);
 
@@ -7707,61 +7695,6 @@ public class ObjectEntryLocalServiceTest {
 				null);
 
 		return serviceRegistration::unregister;
-	}
-
-	private void _setUpCMSContext() throws Exception {
-		Group group = _groupLocalService.fetchGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.CMS);
-
-		if (group != null) {
-			return;
-		}
-
-		group = GroupTestUtil.addGroup();
-
-		group.setGroupKey(GroupConstants.CMS);
-
-		group = _groupLocalService.updateGroup(group);
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
-		try {
-
-			// Manually initialize the CMS site initializer until the feature
-			// flag LPD-17564 is removed
-
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.cms");
-
-			siteInitializer.initialize(group.getGroupId());
-
-			Bundle testBundle = FrameworkUtil.getBundle(
-				ObjectDefinitionServiceTest.class);
-
-			BundleContext bundleContext = testBundle.getBundleContext();
-
-			for (Bundle bundle : bundleContext.getBundles()) {
-				if (Objects.equals(
-						bundle.getSymbolicName(),
-						"com.liferay.site.initializer.cms")) {
-
-					_deleteFile(bundle, "00.list.type.definition");
-					_deleteFile(bundle, "01.object.folder");
-					_deleteFile(bundle, "02.object.definition");
-
-					CompletableFuture<Void> completableFuture =
-						_batchEngineUnitProcessor.processBatchEngineUnits(
-							_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-					completableFuture.join();
-				}
-			}
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
 	}
 
 	private void _testAddObjectEntryAsDraft() throws Exception {

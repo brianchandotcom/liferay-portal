@@ -51,7 +51,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import jakarta.servlet.Servlet;
@@ -92,9 +92,9 @@ public class DownloadObjectEntryFolderServletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = CMSGroupTestUtil.getCMSGroup(
-			DownloadObjectEntryFolderServletTest.class,
+		_group = CMSTestUtil.getOrAddGroup(
 			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			DownloadObjectEntryFolderServletTest.class,
 			_siteInitializerRegistry);
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(

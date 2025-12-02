@@ -35,7 +35,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.util.Collections;
@@ -66,9 +66,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = CMSGroupTestUtil.getCMSGroup(
-			ObjectEntryLocalServiceTest.class, _batchEngineUnitProcessor,
-			_batchEngineUnitReader, _siteInitializerRegistry);
+		_group = CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			ObjectEntryLocalServiceTest.class, _siteInitializerRegistry);
 	}
 
 	@Test

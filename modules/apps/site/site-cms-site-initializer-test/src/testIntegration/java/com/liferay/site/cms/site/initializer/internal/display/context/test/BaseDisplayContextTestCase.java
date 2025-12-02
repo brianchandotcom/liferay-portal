@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,9 +47,9 @@ public abstract class BaseDisplayContextTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		group = CMSGroupTestUtil.getCMSGroup(
-			BaseDisplayContextTestCase.class, _batchEngineUnitProcessor,
-			_batchEngineUnitReader, _siteInitializerRegistry);
+		group = CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			BaseDisplayContextTestCase.class, _siteInitializerRegistry);
 
 		mockHttpServletRequest = getMockHttpServletRequest();
 

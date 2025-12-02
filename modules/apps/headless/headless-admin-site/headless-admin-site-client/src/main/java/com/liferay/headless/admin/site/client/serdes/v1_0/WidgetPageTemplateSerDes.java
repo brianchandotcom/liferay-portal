@@ -835,7 +835,8 @@ public class WidgetPageTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				if (jsonParserFieldValue != null) {
 					widgetPageTemplate.setThumbnail(
-						URLReferenceSerDes.toDTO((String)jsonParserFieldValue));
+						ThumbnailURLReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

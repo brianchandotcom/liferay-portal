@@ -693,7 +693,8 @@ public class ContentPageTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				if (jsonParserFieldValue != null) {
 					contentPageTemplate.setThumbnail(
-						URLReferenceSerDes.toDTO((String)jsonParserFieldValue));
+						ThumbnailURLReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

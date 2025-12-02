@@ -5,11 +5,14 @@
 
 package com.liferay.headless.admin.configuration.internal.resource.v1_0;
 
+import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.exportimport.ConfigurationExportImportProcessor;
 import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.headless.admin.configuration.dto.v1_0.SystemConfiguration;
+import com.liferay.headless.admin.configuration.internal.util.ConfigurationScreenUtil;
 import com.liferay.headless.admin.configuration.internal.util.ConfigurationUtil;
 import com.liferay.headless.admin.configuration.resource.v1_0.SystemConfigurationResource;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -18,6 +21,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -25,6 +29,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
@@ -34,9 +39,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -60,6 +68,23 @@ public class SystemConfigurationResourceImpl
 		_checkPermission();
 
 		_validateDefaultCompany();
+
+		ConfigurationScreen configurationScreen = _serviceTrackerMap.getService(
+			systemConfigurationExternalReferenceCode);
+
+		if (configurationScreen != null) {
+			SystemConfiguration systemConfiguration = _toSystemConfiguration(
+				configurationScreen);
+
+			if (systemConfiguration == null) {
+				throw new InternalServerErrorException(
+					"Export capability is not implemented for system " +
+						"configuration with external reference code " +
+							systemConfigurationExternalReferenceCode);
+			}
+
+			return systemConfiguration;
+		}
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			ConfigurationFilterStringUtil.getSystemScopedFilterString(
@@ -119,6 +144,19 @@ public class SystemConfigurationResourceImpl
 			systemConfigurations.add(systemConfiguration);
 		}
 
+		for (ConfigurationScreen configurationScreen :
+				_serviceTrackerMap.values()) {
+
+			SystemConfiguration systemConfiguration = _toSystemConfiguration(
+				configurationScreen);
+
+			if (systemConfiguration == null) {
+				continue;
+			}
+
+			systemConfigurations.add(systemConfiguration);
+		}
+
 		return Page.of(systemConfigurations);
 	}
 
@@ -143,6 +181,25 @@ public class SystemConfigurationResourceImpl
 		_checkPermission();
 
 		_validateDefaultCompany();
+
+		ConfigurationScreen configurationScreen = _serviceTrackerMap.getService(
+			systemConfigurationExternalReferenceCode);
+
+		if (configurationScreen != null) {
+			try {
+				ConfigurationScreenUtil.importProperties(
+					_configurationExportImportProcessor, configurationScreen,
+					HashMapDictionaryBuilder.putAll(
+						systemConfiguration.getProperties()
+					).build(),
+					ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+			}
+			catch (Exception exception) {
+				throw new BadRequestException(exception.getMessage());
+			}
+
+			return _toSystemConfiguration(configurationScreen);
+		}
 
 		systemConfiguration.setExternalReferenceCode(
 			() -> systemConfigurationExternalReferenceCode);
@@ -172,6 +229,17 @@ public class SystemConfigurationResourceImpl
 		catch (ValidationException validationException) {
 			throw new BadRequestException(validationException.getMessage());
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ConfigurationScreenUtil.createServiceTracker(
+			bundleContext, ExtendedObjectClassDefinition.Scope.SYSTEM);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private void _checkFeatureFlag() {
@@ -211,6 +279,27 @@ public class SystemConfigurationResourceImpl
 		return systemConfiguration;
 	}
 
+	private SystemConfiguration _toSystemConfiguration(
+			ConfigurationScreen configurationScreen)
+		throws Exception {
+
+		Map<String, Object> properties = ConfigurationScreenUtil.getProperties(
+			_configurationExportImportProcessor, configurationScreen,
+			ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+
+		if ((properties == null) || properties.isEmpty()) {
+			return null;
+		}
+
+		SystemConfiguration systemConfiguration = new SystemConfiguration();
+
+		systemConfiguration.setExternalReferenceCode(
+			configurationScreen::getKey);
+		systemConfiguration.setProperties(() -> properties);
+
+		return systemConfiguration;
+	}
+
 	private void _validateDefaultCompany() {
 		if (contextCompany.getCompanyId() != _portal.getDefaultCompanyId()) {
 			throw new BadRequestException(
@@ -228,6 +317,8 @@ public class SystemConfigurationResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap<String, ConfigurationScreen> _serviceTrackerMap;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

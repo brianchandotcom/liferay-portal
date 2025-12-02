@@ -10,7 +10,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {FieldFeedback, useId} from 'frontend-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {
 	ObjectDefinition,
@@ -18,7 +18,7 @@ import {
 } from '../../common/types/ObjectDefinition';
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import {useCache} from '../contexts/CacheContext';
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import {useSelector} from '../contexts/StateContext';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import {ReferencedStructure, Structure} from '../types/Structure';
@@ -42,32 +42,15 @@ export default function ReferencedStructureModal({
 		onClose: () => onCloseModal(),
 	});
 
-	const dispatch = useStateDispatch();
-
 	const structureUuid = useSelector(selectStructureUuid);
 	const structureERC = useSelector(selectStructureERC);
 
-	const {
-		data: objectDefinitions,
-		load,
-		status,
-	} = useCache('object-definitions');
+	const {data: objectDefinitions, status} = useCache('object-definitions');
 
 	const [selection, setSelection] = useState<Item[]>([]);
 	const [hasError, setHasError] = useState(false);
 
 	const id = useId();
-
-	useEffect(() => {
-		if (status === 'stale') {
-			load().then((objectDefinitions) =>
-				dispatch({
-					objectDefinitions,
-					type: 'refresh-referenced-structures',
-				})
-			);
-		}
-	}, [dispatch, load, status]);
 
 	return (
 		<ClayModal observer={observer}>

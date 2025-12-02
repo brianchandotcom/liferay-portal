@@ -9,11 +9,11 @@ import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {openToast} from 'frontend-js-components-web';
 import {addParams, navigate} from 'frontend-js-web';
-import React, {Dispatch} from 'react';
+import React, {Dispatch, useEffect} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
 import {config} from '../config';
-import {CacheKey, useStaleCache} from '../contexts/CacheContext';
+import {CacheKey, useCache, useStaleCache} from '../contexts/CacheContext';
 import {
 	Action,
 	State,
@@ -41,6 +41,22 @@ import AsyncButton from './AsyncButton';
 export default function StructureBuilderToolbar() {
 	const label = useSelector(selectStructureLocalizedLabel);
 	const status = useSelector(selectStructureStatus);
+
+	const dispatch = useStateDispatch();
+
+	const {load, status: objectDefinitionStatus} =
+		useCache('object-definitions');
+
+	useEffect(() => {
+		if (objectDefinitionStatus === 'stale') {
+			load().then((objectDefinitions) =>
+				dispatch({
+					objectDefinitions,
+					type: 'refresh-referenced-structures',
+				})
+			);
+		}
+	}, [dispatch, load, objectDefinitionStatus]);
 
 	return (
 		<Toolbar

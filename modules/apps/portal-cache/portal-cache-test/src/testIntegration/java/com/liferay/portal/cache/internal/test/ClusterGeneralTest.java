@@ -7,6 +7,8 @@ package com.liferay.portal.cache.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.process.local.LocalProcessLauncher;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
@@ -16,7 +18,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
@@ -26,11 +27,19 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.io.Serializable;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -160,23 +169,50 @@ public class ClusterGeneralTest implements Serializable {
 	@Test
 	public void testTCPControlChannelProperties() throws Exception {
 		_testControlChannelProperties(
-			Collections.singletonMap(
-				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, "tcp.xml"));
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
 	}
 
 	@Test
 	public void testUDPControlChannelProperties() throws Exception {
 		_testControlChannelProperties(
-			HashMapBuilder.put(
-				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, "udp.xml"
-			).put(
-				"cluster.link.channel.properties.transport.0", "udp.xml"
-			).build());
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",
+			"cluster.link.channel.properties.transport.0=udp.xml");
 	}
 
 	private static String _getLocalClusterNodeId() {
 		return ClusterExecutorUtil.getLocalClusterNode(
 		).getClusterNodeId();
+	}
+
+	private Closeable _applyPortalExtLines(
+			TomcatNode tomcatNode, String... portalExtLines)
+		throws Exception {
+
+		tomcatNode.stop();
+
+		Path path = tomcatNode.getPortalExtPropertiesPath();
+
+		byte[] bytes = Files.readAllBytes(path);
+
+		Files.write(
+			path, Arrays.asList(portalExtLines), StandardOpenOption.APPEND);
+
+		tomcatNode.start(true);
+
+		return () -> {
+			try {
+				tomcatNode.stop();
+
+				Files.write(
+					path, bytes, StandardOpenOption.TRUNCATE_EXISTING,
+					StandardOpenOption.WRITE);
+
+				tomcatNode.start(true);
+			}
+			catch (Exception exception) {
+				throw new IOException(exception);
+			}
+		};
 	}
 
 	private void _assertNodesVisibleToEachOther(
@@ -210,26 +246,6 @@ public class ClusterGeneralTest implements Serializable {
 				).contains(
 					clusterNode1
 				)));
-	}
-
-	private TomcatNode _createAndStartTomcatNodeWithProperties(
-			Collection<String> properties)
-		throws Exception {
-
-		TomcatCluster.Builder builder = tomcatClusterTestRule.buildTomcatNode();
-
-		builder.configureCopyPropertyKeys(
-			copyPropertyKeys -> {
-				for (String property : properties) {
-					copyPropertyKeys.add(property);
-				}
-			});
-
-		TomcatNode tomcatNode = builder.build();
-
-		tomcatNode.start(true);
-
-		return tomcatNode;
 	}
 
 	private MVCActionCommand _getEditServerMVCActionCommand()
@@ -406,50 +422,44 @@ public class ClusterGeneralTest implements Serializable {
 				}));
 	}
 
-	private void _testControlChannelProperties(Map<String, String> properties)
+	private void _testControlChannelProperties(String... portalExtLines)
 		throws Exception {
 
-		// Set these properties globally
+		// Apply properties to nodes
 
-		for (Map.Entry<String, String> property : properties.entrySet()) {
-			PropsUtil.set(property.getKey(), property.getValue());
+		try (Closeable closeable1 = _applyPortalExtLines(
+				_tomcatNode1, portalExtLines);
+			Closeable closeable2 = _applyPortalExtLines(
+				_tomcatNode2, portalExtLines)) {
+
+			// Assert properties are set correctly on both nodes
+
+			for (String portalExtLine : portalExtLines) {
+				List<String> parts = StringUtil.split(
+					portalExtLine, CharPool.EQUAL);
+
+				String key = parts.get(0);
+				String expectedValue = parts.get(1);
+
+				Assert.assertEquals(
+					expectedValue,
+					_tomcatNode1.syncExecute(() -> PropsUtil.get(key)));
+
+				Assert.assertEquals(
+					expectedValue,
+					_tomcatNode2.syncExecute(() -> PropsUtil.get(key)));
+			}
+
+			// Assert nodes can get their cluster node IDs successfully
+
+			Assert.assertNotNull(
+				_tomcatNode1.syncExecute(
+					ClusterGeneralTest::_getLocalClusterNodeId));
+
+			Assert.assertNotNull(
+				_tomcatNode2.syncExecute(
+					ClusterGeneralTest::_getLocalClusterNodeId));
 		}
-
-		// Create nodes with properties
-
-		TomcatNode tomcatNode3 = _createAndStartTomcatNodeWithProperties(
-			properties.keySet());
-		TomcatNode tomcatNode4 = _createAndStartTomcatNodeWithProperties(
-			properties.keySet());
-
-		// Assert properties are set correctly on both nodes
-
-		for (Map.Entry<String, String> property : properties.entrySet()) {
-			String key = property.getKey();
-			String expectedValue = property.getValue();
-
-			// Assert Node 3
-
-			Assert.assertEquals(
-				expectedValue,
-				tomcatNode3.syncExecute(() -> PropsUtil.get(key)));
-
-			// Assert Node 4
-
-			Assert.assertEquals(
-				expectedValue,
-				tomcatNode4.syncExecute(() -> PropsUtil.get(key)));
-		}
-
-		// Assert nodes can get their cluster node IDs successfully
-
-		Assert.assertNotNull(
-			tomcatNode3.syncExecute(
-				ClusterGeneralTest::_getLocalClusterNodeId));
-
-		Assert.assertNotNull(
-			tomcatNode4.syncExecute(
-				ClusterGeneralTest::_getLocalClusterNodeId));
 	}
 
 	private static transient TomcatNode _tomcatNode1;

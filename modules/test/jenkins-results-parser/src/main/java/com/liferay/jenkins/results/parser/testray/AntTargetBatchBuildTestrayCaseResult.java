@@ -13,6 +13,7 @@ import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.test.clazz.ServiceBuilderAntTargetTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.util.Objects;
@@ -21,12 +22,16 @@ import java.util.Objects;
  * @author Michael Hashimoto
  */
 public class AntTargetBatchBuildTestrayCaseResult
-	extends BatchBuildTestrayCaseResult {
+	extends BatchBuildTestrayCaseResult
+		<ServiceBuilderAntTargetTestClass, TestClassMethod> {
 
 	@Override
 	public String getComponentName() {
+		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
+			getTestClass();
+
 		String componentName =
-			_serviceBuilderAntTargetTestClass.getTestrayMainComponentName();
+			serviceBuilderAntTargetTestClass.getTestrayMainComponentName();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
 			return super.getComponentName();
@@ -112,12 +117,15 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 	@Override
 	public String getName() {
-		if (_serviceBuilderAntTargetTestClass == null) {
+		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
+			getTestClass();
+
+		if (serviceBuilderAntTargetTestClass == null) {
 			return super.getName();
 		}
 
 		return JenkinsResultsParserUtil.combine(
-			getBatchName(), "[", _serviceBuilderAntTargetTestClass.getName(),
+			getBatchName(), "[", serviceBuilderAntTargetTestClass.getName(),
 			"]");
 	}
 
@@ -155,9 +163,12 @@ public class AntTargetBatchBuildTestrayCaseResult
 			return _testClassReport;
 		}
 
-		if (_serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
+		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
+			getTestClass();
+
+		if (serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
 			TestClassReport cachedTestClassReport =
-				_serviceBuilderAntTargetTestClass.getCachedTestClassReport();
+				serviceBuilderAntTargetTestClass.getCachedTestClassReport();
 
 			if (cachedTestClassReport != null) {
 				_testClassReport = cachedTestClassReport;
@@ -190,9 +201,12 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 	@Override
 	public void initBuildReport() {
-		if (_serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
+		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
+			getTestClass();
+
+		if (serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
-				_serviceBuilderAntTargetTestClass.
+				serviceBuilderAntTargetTestClass.
 					getCachedDownstreamBuildReport();
 
 			if (cachedDownstreamBuildReport != null) {
@@ -209,22 +223,18 @@ public class AntTargetBatchBuildTestrayCaseResult
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
-
-		_serviceBuilderAntTargetTestClass =
-			(ServiceBuilderAntTargetTestClass)testClass;
-
-		initBuildReport();
+		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
 	}
 
 	private String _getTestClassName() {
-		String testClassName = _serviceBuilderAntTargetTestClass.getName();
+		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
+			getTestClass();
+
+		String testClassName = serviceBuilderAntTargetTestClass.getName();
 
 		return testClassName.replaceAll("/", ".");
 	}
 
-	private final ServiceBuilderAntTargetTestClass
-		_serviceBuilderAntTargetTestClass;
 	private TestClassReport _testClassReport;
 
 }

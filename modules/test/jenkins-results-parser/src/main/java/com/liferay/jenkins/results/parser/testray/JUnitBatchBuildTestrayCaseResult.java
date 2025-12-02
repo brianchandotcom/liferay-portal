@@ -26,22 +26,20 @@ import java.util.Map;
  * @author Michael Hashimoto
  */
 public class JUnitBatchBuildTestrayCaseResult
-	extends BatchBuildTestrayCaseResult {
+	extends BatchBuildTestrayCaseResult<JUnitTestClass, TestClassMethod> {
 
 	public JUnitBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
-
-		_jUnitTestClass = (JUnitTestClass)testClass;
-
-		initBuildReport();
+		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
 	}
 
 	@Override
 	public String getComponentName() {
-		String componentName = _jUnitTestClass.getTestrayMainComponentName();
+		JUnitTestClass jUnitTestClass = getTestClass();
+
+		String componentName = jUnitTestClass.getTestrayMainComponentName();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
 			return super.getComponentName();
@@ -187,8 +185,10 @@ public class JUnitBatchBuildTestrayCaseResult
 	public String getIssues() {
 		List<String> testClassIssues = new ArrayList<>();
 
+		JUnitTestClass jUnitTestClass = getTestClass();
+
 		for (TestClassMethod testClassMethod :
-				_jUnitTestClass.getTestClassMethods()) {
+				jUnitTestClass.getTestClassMethods()) {
 
 			testClassIssues.add(testClassMethod.getIssues());
 		}
@@ -197,8 +197,10 @@ public class JUnitBatchBuildTestrayCaseResult
 	}
 
 	public String getMethodIssues(String testName) {
+		JUnitTestClass jUnitTestClass = getTestClass();
+
 		for (TestClassMethod testClassMethod :
-				_jUnitTestClass.getTestClassMethods()) {
+				jUnitTestClass.getTestClassMethods()) {
 
 			String testClassMethodName = testClassMethod.getName();
 
@@ -213,8 +215,10 @@ public class JUnitBatchBuildTestrayCaseResult
 	public List<String> getMethodNames() {
 		List<String> testClassMethodNames = new ArrayList<>();
 
+		JUnitTestClass jUnitTestClass = getTestClass();
+
 		for (TestClassMethod testClassMethod :
-				_jUnitTestClass.getTestClassMethods()) {
+				jUnitTestClass.getTestClassMethods()) {
 
 			testClassMethodNames.add(testClassMethod.getName());
 		}
@@ -238,8 +242,10 @@ public class JUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public String getName() {
+		JUnitTestClass jUnitTestClass = getTestClass();
+
 		String testClassName = JenkinsResultsParserUtil.getCanonicalPath(
-			_jUnitTestClass.getTestClassFile());
+			jUnitTestClass.getTestClassFile());
 
 		testClassName = testClassName.replaceAll(".*/(com/.*)\\.java", "$1");
 
@@ -300,12 +306,16 @@ public class JUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public void initBuildReport() {
-		if (_jUnitTestClass.isBuildCachingEnabled()) {
+		JUnitTestClass jUnitTestClass = getTestClass();
+
+		if (jUnitTestClass.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
-				_jUnitTestClass.getCachedDownstreamBuildReport();
+				jUnitTestClass.getCachedDownstreamBuildReport();
 
 			if (cachedDownstreamBuildReport != null) {
 				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
 			}
 		}
 
@@ -357,9 +367,11 @@ public class JUnitBatchBuildTestrayCaseResult
 			return _testClassReports;
 		}
 
-		if (_jUnitTestClass.isBuildCachingEnabled()) {
+		JUnitTestClass jUnitTestClass = getTestClass();
+
+		if (jUnitTestClass.isBuildCachingEnabled()) {
 			List<TestClassReport> cachedTestClassReports =
-				_jUnitTestClass.getCachedTestClassReports();
+				jUnitTestClass.getCachedTestClassReports();
 
 			if ((cachedTestClassReports != null) &&
 				!cachedTestClassReports.isEmpty()) {
@@ -452,7 +464,6 @@ public class JUnitBatchBuildTestrayCaseResult
 		return false;
 	}
 
-	private final JUnitTestClass _jUnitTestClass;
 	private List<TestClassReport> _testClassReports;
 
 }

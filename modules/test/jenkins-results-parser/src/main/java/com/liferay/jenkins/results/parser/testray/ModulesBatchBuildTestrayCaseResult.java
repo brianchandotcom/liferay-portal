@@ -13,6 +13,7 @@ import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.test.clazz.ModulesTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.util.Objects;
@@ -21,11 +22,13 @@ import java.util.Objects;
  * @author Michael Hashimoto
  */
 public class ModulesBatchBuildTestrayCaseResult
-	extends BatchBuildTestrayCaseResult {
+	extends BatchBuildTestrayCaseResult<ModulesTestClass, TestClassMethod> {
 
 	@Override
 	public String getComponentName() {
-		String componentName = _modulesTestClass.getTestrayMainComponentName();
+		ModulesTestClass modulesTestClass = getTestClass();
+
+		String componentName = modulesTestClass.getTestrayMainComponentName();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
 			return super.getComponentName();
@@ -111,11 +114,13 @@ public class ModulesBatchBuildTestrayCaseResult
 
 	@Override
 	public String getName() {
-		if (_modulesTestClass == null) {
+		ModulesTestClass modulesTestClass = getTestClass();
+
+		if (modulesTestClass == null) {
 			return super.getName();
 		}
 
-		return getBatchName() + "[" + _modulesTestClass.getName() + "]";
+		return getBatchName() + "[" + modulesTestClass.getName() + "]";
 	}
 
 	@Override
@@ -152,9 +157,11 @@ public class ModulesBatchBuildTestrayCaseResult
 			return _testClassReport;
 		}
 
-		if (_modulesTestClass.isBuildCachingEnabled()) {
+		ModulesTestClass modulesTestClass = getTestClass();
+
+		if (modulesTestClass.isBuildCachingEnabled()) {
 			TestClassReport cachedTestClassReport =
-				_modulesTestClass.getCachedTestClassReport();
+				modulesTestClass.getCachedTestClassReport();
 
 			if (cachedTestClassReport != null) {
 				_testClassReport = cachedTestClassReport;
@@ -187,12 +194,16 @@ public class ModulesBatchBuildTestrayCaseResult
 
 	@Override
 	public void initBuildReport() {
-		if (_modulesTestClass.isBuildCachingEnabled()) {
+		ModulesTestClass modulesTestClass = getTestClass();
+
+		if (modulesTestClass.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
-				_modulesTestClass.getCachedDownstreamBuildReport();
+				modulesTestClass.getCachedDownstreamBuildReport();
 
 			if (cachedDownstreamBuildReport != null) {
 				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
 			}
 		}
 
@@ -203,21 +214,18 @@ public class ModulesBatchBuildTestrayCaseResult
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
-
-		_modulesTestClass = (ModulesTestClass)testClass;
-
-		initBuildReport();
+		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
 	}
 
 	private String _getTestClassName() {
-		String testClassName = _modulesTestClass.getName();
+		ModulesTestClass modulesTestClass = getTestClass();
+
+		String testClassName = modulesTestClass.getName();
 
 		return JenkinsResultsParserUtil.combine(
 			testClassName.replaceAll("/", "."));
 	}
 
-	private final ModulesTestClass _modulesTestClass;
 	private TestClassReport _testClassReport;
 
 }

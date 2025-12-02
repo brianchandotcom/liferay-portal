@@ -32,9 +32,9 @@ import com.liferay.portal.store.test.util.BaseStoreTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
-
 import jakarta.annotation.Generated;
+
+import java.util.Dictionary;
 
 import org.junit.Assert;
 import org.junit.Assume;

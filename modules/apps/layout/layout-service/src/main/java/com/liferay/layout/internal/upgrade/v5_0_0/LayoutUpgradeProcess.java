@@ -31,7 +31,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 				"and DLFileEntry.fileEntryId = Layout.faviconFileEntryId left ",
 				"join Group_ on (Group_.ctCollectionId = ",
 				"Layout.ctCollectionId or Group_.ctCollectionId = 0) and ",
-				"Group_.groupId = DLFileEntry.groupId where ",
+				"DLFileEntry.groupId = Group_.groupId where ",
 				"Layout.faviconFileEntryId > 0"));
 
 			 ResultSet resultSet = preparedStatement1.executeQuery();

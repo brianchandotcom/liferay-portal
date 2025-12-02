@@ -5,6 +5,7 @@
 
 package com.liferay.bean.portlet.spring.extension.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -12,7 +13,6 @@ import java.beans.PropertyDescriptor;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -148,27 +148,24 @@ public class JSR330BeanPortletPostProcessor
 
 		while ((curClass != null) && (curClass != Object.class)) {
 			List<InjectionMetadata.InjectedElement> injectedElements2 =
-				new ArrayList<>();
+				TransformUtil.transformToList(
+					curClass.getDeclaredFields(),
+					field -> {
+						MergedAnnotation<?> mergedAnnotation =
+							_getMergedAnnotation(field);
 
-			Field[] fields = curClass.getDeclaredFields();
+						if ((mergedAnnotation == null) ||
+							Modifier.isStatic(field.getModifiers())) {
 
-			for (Field field : fields) {
-				MergedAnnotation<?> mergedAnnotation = _getMergedAnnotation(
-					field);
+							return null;
+						}
 
-				if (mergedAnnotation != null) {
-					if (Modifier.isStatic(field.getModifiers())) {
-						continue;
-					}
+						boolean required = determineRequiredStatus(
+							mergedAnnotation);
 
-					boolean required = determineRequiredStatus(
-						mergedAnnotation);
-
-					injectedElements2.add(
-						new JSR330InjectedFieldElement(
-							_configurableListableBeanFactory, field, required));
-				}
-			}
+						return new JSR330InjectedFieldElement(
+							_configurableListableBeanFactory, field, required);
+					});
 
 			Method[] methods = curClass.getDeclaredMethods();
 

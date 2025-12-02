@@ -226,10 +226,8 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 			otherFiltersSB.append(String.format("(%s=%s)", key, value));
 		}
 
-		String finalFilter = String.format(
-			"(&%s%s)", deploymentFilter, otherFiltersSB);
-
-			return _configurationAdmin.listConfigurations(finalFilter);
+		return _configurationAdmin.listConfigurations(
+			String.format("(&%s%s)", deploymentFilter, otherFiltersSB));
 	}
 
 	private String _getConfigurationTableRow(

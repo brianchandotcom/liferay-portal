@@ -90,7 +90,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponse(
 				response -> _completeResponse(
-					response, executionContext,
+					response, executionContext, currentKaleoNode,
 					vertexAiGeminiStreamingChatModel)
 			).onError(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
@@ -134,6 +134,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 	private void _completeResponse(
 		ChatResponse chatResponse, ExecutionContext executionContext,
+		KaleoNode kaleoNode,
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel) {
 
 		try {
@@ -152,11 +153,16 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			KaleoInstanceToken kaleoInstanceToken =
 				executionContext.getKaleoInstanceToken();
 
+			List<KaleoTransition> kaleoTransitions =
+				kaleoNode.getKaleoTransitions();
+
+			KaleoTransition kaleoTransition = kaleoTransitions.get(0);
+
 			_workflowNodeManager.completeWorkflowNode(
 				kaleoInstanceToken.getCompanyId(),
 				kaleoInstanceToken.getUserId(),
-				kaleoInstanceToken.getKaleoInstanceTokenId(), "end",
-				workflowContext, false);
+				kaleoInstanceToken.getKaleoInstanceTokenId(),
+				kaleoTransition.getName(), workflowContext, false);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

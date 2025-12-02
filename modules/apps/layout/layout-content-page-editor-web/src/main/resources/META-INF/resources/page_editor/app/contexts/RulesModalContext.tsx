@@ -21,15 +21,19 @@ import {useSelector} from './StoreContext';
 const RulesModalContext = React.createContext<{
 	editingRule: Rule;
 	setEditingRule: Dispatch<SetStateAction<Rule>>;
+	setShouldValidate: Dispatch<SetStateAction<boolean>>;
 	setTrigger: Dispatch<SetStateAction<HTMLButtonElement | null>>;
 	setVisible: Dispatch<SetStateAction<boolean>>;
+	shouldValidate: boolean;
 	trigger: HTMLElement | null;
 	visible: boolean;
 }>({
 	editingRule: getDefaultRule([]),
 	setEditingRule: () => {},
+	setShouldValidate: () => false,
 	setTrigger: () => {},
 	setVisible: () => {},
+	shouldValidate: false,
 	trigger: null,
 	visible: false,
 });
@@ -37,6 +41,7 @@ const RulesModalContext = React.createContext<{
 function RulesModalContextProvider({children}: {children: ReactNode}) {
 	const rules = useSelector(selectPageRules);
 
+	const [shouldValidate, setShouldValidate] = useState<boolean>(false);
 	const [visible, setVisible] = useState<boolean>(false);
 	const [editingRule, setEditingRule] = useState<Rule>(getDefaultRule(rules));
 	const [trigger, setTrigger] = useState<HTMLButtonElement | null>(null);
@@ -46,8 +51,10 @@ function RulesModalContextProvider({children}: {children: ReactNode}) {
 			value={{
 				editingRule,
 				setEditingRule,
+				setShouldValidate,
 				setTrigger,
 				setVisible,
+				shouldValidate,
 				trigger,
 				visible,
 			}}

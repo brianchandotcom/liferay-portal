@@ -14,7 +14,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.client.dto.v1_0.URLReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.ThumbnailURLReference;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.MasterPageResource;
@@ -169,7 +169,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		String thumbnailURL = RandomTestUtil.randomString();
 
 		randomMasterPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
@@ -190,7 +190,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					masterPage.getExternalReferenceCode(),
 					postMasterPage.getExternalReferenceCode())) {
 
-				URLReference thumbnail = masterPage.getThumbnail();
+				ThumbnailURLReference thumbnail = masterPage.getThumbnail();
 
 				_assertThumbnailURLReference(
 					false, postMasterPage.getExternalReferenceCode(),
@@ -600,7 +600,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		if (thumbnailExternalReferenceCode != null) {
 			masterPage.setThumbnail(
-				() -> new URLReference() {
+				() -> new ThumbnailURLReference() {
 					{
 						setExternalReferenceCode(
 							thumbnailExternalReferenceCode);
@@ -858,7 +858,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		String thumbnailURL = RandomTestUtil.randomString();
 
 		masterPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
@@ -881,7 +881,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			repository.getDlFolderId());
 
 		masterPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						newFileEntry.getExternalReferenceCode());
@@ -1050,7 +1050,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		String thumbnailURL = RandomTestUtil.randomString();
 
 		masterPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
@@ -1229,7 +1229,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		String thumbnailURL = RandomTestUtil.randomString();
 
 		masterPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry1.getExternalReferenceCode());
@@ -1248,7 +1248,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
 
 		putMasterPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry2.getExternalReferenceCode());

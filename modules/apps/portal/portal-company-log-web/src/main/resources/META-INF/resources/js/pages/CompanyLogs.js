@@ -8,91 +8,97 @@ import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import {fetch} from 'frontend-js-web';
 import React, {Fragment, useCallback, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router';
 
-const Logs = ({companiesLog, history}) => (
-	<ClayList className="mt-3">
-		{companiesLog.map(({companyId, companyLogs, webId}, index) => (
-			<Fragment key={index}>
-				<ClayList.Header>{`${webId} - ${companyId}`}</ClayList.Header>
+const Logs = ({logs}) => {
+	const navigate = useNavigate();
 
-				{companyLogs.map(({fileName, fileSize}, companyIndex) => (
-					<ClayList.Item flex key={companyIndex}>
-						<ClayList.ItemField>
-							<ClayIcon
-								className="mt-1"
-								fontSize={18}
-								symbol="document"
-							/>
-						</ClayList.ItemField>
+	return (
+		<ClayList className="mt-3">
+			{logs.map(({companyId, companyLogs, webId}, index) => (
+				<Fragment key={index}>
+					<ClayList.Header>{`${webId} - ${companyId}`}</ClayList.Header>
 
-						<ClayList.ItemField expand>
-							<ClayList.ItemTitle>
-								<Link to={`/${companyId}/${fileName}`}>
-									{fileName}
-
-									{companyIndex === 0 && (
-										<ClayLabel
-											className="ml-2"
-											displayType="info"
-										>
-											{Liferay.Language.get('newest')}
-										</ClayLabel>
-									)}
-								</Link>
-							</ClayList.ItemTitle>
-
-							<ClayList.ItemText>{fileSize}</ClayList.ItemText>
-						</ClayList.ItemField>
-
-						<ClayList.ItemField>
-							<ClayList.QuickActionMenu>
-								<ClayList.QuickActionMenu.Item
-									onClick={() =>
-										history.push(
-											`/${companyId}/${fileName}`
-										)
-									}
-									symbol="view"
-									title={Liferay.Language.get('view')}
+					{companyLogs.map(({fileName, fileSize}, companyIndex) => (
+						<ClayList.Item flex key={companyIndex}>
+							<ClayList.ItemField>
+								<ClayIcon
+									className="mt-1"
+									fontSize={18}
+									symbol="document"
 								/>
+							</ClayList.ItemField>
 
-								<ClayList.QuickActionMenu.Item
-									onClick={() =>
-										window.open(
-											`/o/company-log/${companyId}/${fileName}`,
-											'_blank'
-										)
-									}
-									symbol="download"
-									title={Liferay.Language.get('download')}
-								/>
-							</ClayList.QuickActionMenu>
-						</ClayList.ItemField>
-					</ClayList.Item>
-				))}
-			</Fragment>
-		))}
-	</ClayList>
-);
+							<ClayList.ItemField expand>
+								<ClayList.ItemTitle>
+									<Link to={`/${companyId}/${fileName}`}>
+										{fileName}
 
-const CompanyLogs = ({history}) => {
-	const [{companiesLog, loading}, setState] = useState({
-		companiesLog: [],
+										{companyIndex === 0 && (
+											<ClayLabel
+												className="ml-2"
+												displayType="info"
+											>
+												{Liferay.Language.get('newest')}
+											</ClayLabel>
+										)}
+									</Link>
+								</ClayList.ItemTitle>
+
+								<ClayList.ItemText>
+									{fileSize}
+								</ClayList.ItemText>
+							</ClayList.ItemField>
+
+							<ClayList.ItemField>
+								<ClayList.QuickActionMenu>
+									<ClayList.QuickActionMenu.Item
+										onClick={() =>
+											navigate(
+												`/${companyId}/${fileName}`
+											)
+										}
+										symbol="view"
+										title={Liferay.Language.get('view')}
+									/>
+
+									<ClayList.QuickActionMenu.Item
+										onClick={() =>
+											window.open(
+												`/o/company-log/${companyId}/${fileName}`,
+												'_blank'
+											)
+										}
+										symbol="download"
+										title={Liferay.Language.get('download')}
+									/>
+								</ClayList.QuickActionMenu>
+							</ClayList.ItemField>
+						</ClayList.Item>
+					))}
+				</Fragment>
+			))}
+		</ClayList>
+	);
+};
+
+const CompanyLogs = () => {
+	const [{loading, logs}, setState] = useState({
 		loading: true,
+		logs: [],
 	});
 
-	const getCompaniesLog = useCallback(async () => {
+	const getCompanyLog = useCallback(async () => {
 		const response = await fetch('/o/company-log');
 
 		const data = await response.json();
 
-		setState({companiesLog: data, loading: false});
+		setState({loading: false, logs: data});
 	}, []);
 
 	useEffect(() => {
-		getCompaniesLog();
-	}, [getCompaniesLog]);
+		getCompanyLog();
+	}, [getCompanyLog]);
 
 	return (
 		<div>
@@ -104,7 +110,7 @@ const CompanyLogs = ({history}) => {
 					className="loading-animation loading-animation-secondary loading-animation-sm"
 				/>
 			) : (
-				<Logs companiesLog={companiesLog} history={history} />
+				<Logs logs={logs} />
 			)}
 		</div>
 	);

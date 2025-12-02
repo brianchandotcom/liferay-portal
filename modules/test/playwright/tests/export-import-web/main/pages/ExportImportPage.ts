@@ -250,7 +250,7 @@ export class ExportImportPage {
 
 	async clickTaskAction(
 		taskName: string,
-		action: 'Clear' | 'View Details' | 'Export Report Entries'
+		action: 'Clear' | 'View Report Entries' | 'Export Report Entries'
 	) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -418,7 +418,7 @@ export class ExportImportPage {
 	}
 
 	async goToImportDetails(exportName: string) {
-		await this.clickTaskAction(exportName, 'View Details');
+		await this.clickTaskAction(exportName, 'View Report Entries');
 	}
 
 	async goToImportOptions(

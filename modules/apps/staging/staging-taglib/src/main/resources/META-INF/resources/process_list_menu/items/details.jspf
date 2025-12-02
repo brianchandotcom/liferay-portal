@@ -13,7 +13,7 @@
 <c:if test="<%= !backgroundTask.isInProgress() && (backgroundTask.getStatus() != BackgroundTaskConstants.STATUS_SUCCESSFUL) %>">
 	<li>
 		<a class="dropdown-item" href="<%= importErrorsList %>">
-			<liferay-ui:message key="view-details" />
+			<liferay-ui:message key="view-report-entries" />
 		</a>
 	</li>
 	<li>

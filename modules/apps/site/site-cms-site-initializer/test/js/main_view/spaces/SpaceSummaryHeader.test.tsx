@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -13,6 +13,18 @@ import manageMembersAction from '../../../../src/main/resources/META-INF/resourc
 import SpaceSummaryHeader, {
 	SpaceSummaryHeaderActions,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceSummaryHeader';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper',
+	() => ({
+		get: jest.fn(() => {
+			return Promise.resolve({
+				data: {totalCount: 1},
+				error: null,
+			});
+		}),
+	})
+);
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageMembersAction',
@@ -36,20 +48,23 @@ describe('SpaceSummaryHeader', () => {
 		jest.clearAllMocks();
 	});
 
-	it('renders a title and a link when a url is provided', () => {
+	it('renders a title and a link when a url is provided', async () => {
 		render(<SpaceSummaryHeader {...defaultProps} url="/some-url" />);
 
 		expect(
 			screen.getByRole('heading', {name: defaultProps.title})
 		).toBeInTheDocument();
 
-		const link = screen.getByRole('link', {name: defaultProps.label});
+		const link = await waitFor(() =>
+			screen.getByRole('link', {name: defaultProps.label})
+		);
+
 		expect(link).toBeInTheDocument();
 		expect(link).toHaveAttribute('href', '/some-url');
 		expect(screen.queryByRole('button')).not.toBeInTheDocument();
 	});
 
-	it('renders a button instead of a link when modal props are provided and url is null', () => {
+	it('renders a button instead of a link when modal props are provided and url is null', async () => {
 		const props = {
 			...defaultProps,
 			spaceModalProps: {
@@ -65,9 +80,12 @@ describe('SpaceSummaryHeader', () => {
 		expect(
 			screen.getByRole('heading', {name: defaultProps.title})
 		).toBeInTheDocument();
-		expect(
-			screen.getByRole('button', {name: defaultProps.label})
-		).toBeInTheDocument();
+
+		const button = await screen.findByRole('button', {
+			name: defaultProps.label,
+		});
+
+		expect(button).toBeInTheDocument();
 		expect(screen.queryByRole('link')).not.toBeInTheDocument();
 	});
 
@@ -102,9 +120,9 @@ describe('SpaceSummaryHeader', () => {
 
 				render(<SpaceSummaryHeader {...props} />);
 
-				const button = screen.getByRole('button', {
-					name: defaultProps.label,
-				});
+				const button = await waitFor(() =>
+					screen.getByRole('button', {name: defaultProps.label})
+				);
 
 				await userEvent.click(button);
 
@@ -157,9 +175,9 @@ describe('SpaceSummaryHeader', () => {
 
 				render(<SpaceSummaryHeader {...props} />);
 
-				const button = screen.getByRole('button', {
-					name: defaultProps.label,
-				});
+				const button = await waitFor(() =>
+					screen.getByRole('button', {name: defaultProps.label})
+				);
 
 				await userEvent.click(button);
 
@@ -189,7 +207,10 @@ describe('SpaceSummaryHeader', () => {
 
 		render(<SpaceSummaryHeader {...props} />);
 
-		const button = screen.getByRole('button', {name: defaultProps.label});
+		const button = await waitFor(() =>
+			screen.getByRole('button', {name: defaultProps.label})
+		);
+
 		await userEvent.click(button);
 
 		expect(manageMembersAction).not.toHaveBeenCalled();

@@ -20,7 +20,7 @@
 					"dataType": "string",
 					"defaultValue": {
 						"specificationValue": "What is new",
-						"title": "What's New"
+						"title": "What is new"
 					},
 					"label": "Featured Section 2",
 					"name": "featuredSection2",

@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.site.initializer.internal.mcp.tool.provider;
 
-import com.liferay.ai.hub.site.initializer.mcp.tool.provider.McpToolProviderFactory;
+import com.liferay.ai.hub.site.initializer.mcp.tool.provider.MCPToolProviderFactory;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -47,8 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author João Victor Alves
  */
-@Component(service = McpToolProviderFactory.class)
-public class McpToolProviderFactoryImpl implements McpToolProviderFactory {
+@Component(service = MCPToolProviderFactory.class)
+public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 
 	public McpToolProvider create(
 		long companyId, long groupId, Locale locale,

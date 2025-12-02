@@ -116,39 +116,39 @@ public class ExportImportContentProcessorUtil {
 		PortletDataContext portletDataContext, String referenceKey,
 		Object referenceObject, StagedModel stagedModel) {
 
-		if (exportReferencedContent) {
-			try {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, stagedModel,
-					(StagedModel)referenceObject,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					String errorMessage = StringBundler.concat(
-						"Staged model with class name ",
-						stagedModel.getModelClassName(), " and primary key ",
-						stagedModel.getPrimaryKeyObj(),
-						" references asset entry with class name ", className,
-						" and reference key ", referenceKey,
-						" that could not be exported due to ", exception);
-
-					if (Validator.isNotNull(exception.getMessage())) {
-						errorMessage = StringBundler.concat(
-							errorMessage, ": ", exception.getMessage());
-					}
-
-					_log.debug(errorMessage, exception);
-				}
-			}
-		}
-		else {
+		if (!exportReferencedContent) {
 			Element entityElement = portletDataContext.getExportDataElement(
 				stagedModel);
 
 			portletDataContext.addReferenceElement(
 				stagedModel, entityElement, (ClassedModel)referenceObject,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+
+			return;
+		}
+
+		try {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, (StagedModel)referenceObject,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				String errorMessage = StringBundler.concat(
+					"Staged model with class name ",
+					stagedModel.getModelClassName(), " and primary key ",
+					stagedModel.getPrimaryKeyObj(),
+					" references asset entry with class name ", className,
+					" and reference key ", referenceKey,
+					" that could not be exported due to ", exception);
+
+				if (Validator.isNotNull(exception.getMessage())) {
+					errorMessage = StringBundler.concat(
+						errorMessage, ": ", exception.getMessage());
+				}
+
+				_log.debug(errorMessage, exception);
+			}
 		}
 	}
 

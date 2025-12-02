@@ -1116,7 +1116,9 @@ public abstract class BaseWorkspaceGitRepository
 
 				String jobVariant = System.getenv("JOB_VARIANT");
 
-				if (jobVariant.contains("service-builder")) {
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
+					jobVariant.contains("service-builder")) {
+
 					GitWorkingDirectory gitWorkingDirectory =
 						getGitWorkingDirectory();
 

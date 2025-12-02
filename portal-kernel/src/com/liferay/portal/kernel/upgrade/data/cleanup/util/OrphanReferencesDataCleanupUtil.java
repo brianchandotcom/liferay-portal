@@ -252,7 +252,7 @@ public class OrphanReferencesDataCleanupUtil {
 		String targetTableName) {
 
 		StringBundler sb = new StringBundler(
-			(15 * targetColumnNames.length) + 1);
+			(17 * targetColumnNames.length) + 1);
 
 		for (String targetColumnName : targetColumnNames) {
 			String aliasTableName =
@@ -262,7 +262,6 @@ public class OrphanReferencesDataCleanupUtil {
 			sb.append(targetTableName);
 			sb.append(StringPool.SPACE);
 			sb.append(aliasTableName);
-			sb.append(StringPool.SPACE);
 			sb.append(" on ");
 			sb.append(aliasTableName);
 			sb.append(StringPool.PERIOD);

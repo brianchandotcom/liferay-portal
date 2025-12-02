@@ -108,7 +108,7 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 
 	private String _formatProperties(Dictionary<String, Object> properties) {
 		if (properties.isEmpty()) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		List<String> sortedKeys = Collections.list(properties.keys());

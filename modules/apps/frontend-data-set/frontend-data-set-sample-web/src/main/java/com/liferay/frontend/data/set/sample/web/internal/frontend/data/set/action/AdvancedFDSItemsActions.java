@@ -8,6 +8,7 @@ package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.acti
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -176,7 +177,7 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 					null, "link"),
 				fdsActionDropdownItem5));
 
-		return Arrays.asList(
+		return FDSActionDropdownItemList.of(
 			fdsActionDropdownItem4,
 			new FDSActionDropdownItem(
 				"hidden", "groupPermissionTest", null, false, "group"),

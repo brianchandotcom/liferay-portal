@@ -126,7 +126,7 @@ public class LayoutUtil {
 			throw new UnsupportedOperationException();
 		}
 
-		ContentPageSpecification draftContentPageSpecification = null;
+		ContentPageSpecification draftContentPageSpecification;
 		ContentPageSpecification publishedContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
 
@@ -458,7 +458,7 @@ public class LayoutUtil {
 			throw new UnsupportedOperationException();
 		}
 
-		ContentPageSpecification draftContentPageSpecification = null;
+		ContentPageSpecification draftContentPageSpecification;
 		ContentPageSpecification publishedContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
 
@@ -539,9 +539,8 @@ public class LayoutUtil {
 			cetManager, layout, nameMap, titleMap, descriptionMap, keywordsMap,
 			robotsMap, friendlyURLMap, pageSpecification, serviceContext);
 
-		if (pageSpecification instanceof ContentPageSpecification) {
-			ContentPageSpecification contentPageSpecification =
-				(ContentPageSpecification)pageSpecification;
+		if (pageSpecification instanceof
+				ContentPageSpecification contentPageSpecification) {
 
 			_updatePageExperiences(
 				fragmentEntryProcessorRegistry, infoItemServiceRegistry, layout,
@@ -670,12 +669,11 @@ public class LayoutUtil {
 
 		FavIcon favIcon = settings.getFavIcon();
 
-		if (!(favIcon instanceof FavIconItemExternalReference)) {
+		if (!(favIcon instanceof
+				FavIconItemExternalReference favIconItemExternalReference)) {
+
 			return null;
 		}
-
-		FavIconItemExternalReference favIconItemExternalReference =
-			(FavIconItemExternalReference)favIcon;
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -925,18 +923,13 @@ public class LayoutUtil {
 
 		FavIcon favIcon = settings.getFavIcon();
 
-		if (favIcon instanceof FavIconClientExtension) {
-			FavIconClientExtension favIconClientExtension =
-				(FavIconClientExtension)favIcon;
-
+		if (favIcon instanceof FavIconClientExtension favIconClientExtension) {
 			clientExtension = new ClientExtension() {
 				{
 					setClientExtensionConfig(
-						() ->
-							favIconClientExtension.getClientExtensionConfig());
+						favIconClientExtension::getClientExtensionConfig);
 					setExternalReferenceCode(
-						() ->
-							favIconClientExtension.getExternalReferenceCode());
+						favIconClientExtension::getExternalReferenceCode);
 				}
 			};
 		}

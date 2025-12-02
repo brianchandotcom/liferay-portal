@@ -143,15 +143,6 @@ public class ContainerLayoutStructureItemImporter
 		containerStyledLayoutStructureItem.setName(
 			containerPageElementDefinition.getName());
 
-		JSONObject fragmentViewportsJSONObject =
-			FragmentViewportUtil.toFragmentViewportsJSONObject(
-				containerPageElementDefinition.getFragmentViewports());
-
-		if (fragmentViewportsJSONObject != null) {
-			containerStyledLayoutStructureItem.updateItemConfig(
-				fragmentViewportsJSONObject);
-		}
-
 		JSONObject fragmentLinkJSONObject = JSONUtil.put(
 			"link",
 			FragmentLinkUtil.toJSONObject(
@@ -167,6 +158,15 @@ public class ContainerLayoutStructureItemImporter
 		else {
 			containerStyledLayoutStructureItem.updateItemConfig(
 				JSONUtil.put("link", JSONFactoryUtil.createJSONObject()));
+		}
+
+		JSONObject fragmentViewportsJSONObject =
+			FragmentViewportUtil.toFragmentViewportsJSONObject(
+				containerPageElementDefinition.getFragmentViewports());
+
+		if (fragmentViewportsJSONObject != null) {
+			containerStyledLayoutStructureItem.updateItemConfig(
+				fragmentViewportsJSONObject);
 		}
 
 		return containerStyledLayoutStructureItem;

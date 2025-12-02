@@ -11,9 +11,11 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -53,12 +55,18 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
+		Group group = _groupLocalService.getGroup(fileEntry.getGroupId());
+
 		return JSONUtil.put(
 			"classNameId", _portal.getClassNameId(FileEntry.class)
 		).put(
 			"extension", fileEntry.getExtension()
 		).put(
+			"externalReferenceCode", fileEntry.getExternalReferenceCode()
+		).put(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
+		).put(
+			"groupExternalReferenceCode", group.getExternalReferenceCode()
 		).put(
 			"groupId", String.valueOf(fileEntry.getGroupId())
 		).put(
@@ -116,6 +124,9 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

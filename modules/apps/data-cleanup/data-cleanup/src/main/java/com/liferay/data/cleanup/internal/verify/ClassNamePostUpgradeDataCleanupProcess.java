@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,7 +40,10 @@ public class ClassNamePostUpgradeDataCleanupProcess
 		ClassNameLocalService classNameLocalService, Connection connection) {
 
 		_classNameLocalService = classNameLocalService;
+
 		_connection = connection;
+
+		_dbInspector = new DBInspector(_connection);
 	}
 
 	@Override
@@ -134,13 +138,12 @@ public class ClassNamePostUpgradeDataCleanupProcess
 			if (usedTableNames.isEmpty()) {
 				_classNameLocalService.deleteClassName(className);
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Class name ", value,
-							" is not defined in any deployed module and is ",
-							"not in use"));
-				}
+				DataCleanupLoggingUtil.logDelete(
+					_log, 1, _dbInspector.normalizeName("ClassName_"),
+					StringBundler.concat(
+						"'", value,
+						"' is not defined in any deployed module and is not ",
+						"in use"));
 			}
 			else if (_log.isInfoEnabled()) {
 				_log.info(
@@ -158,5 +161,6 @@ public class ClassNamePostUpgradeDataCleanupProcess
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final Connection _connection;
+	private final DBInspector _dbInspector;
 
 }

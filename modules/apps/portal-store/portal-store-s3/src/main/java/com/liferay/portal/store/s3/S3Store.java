@@ -8,7 +8,6 @@ package com.liferay.portal.store.s3;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.StorageClass;
 import com.amazonaws.services.s3.transfer.TransferManager;
@@ -69,9 +68,11 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
 import software.amazon.awssdk.services.s3.model.DeleteObjectResponse;
+import software.amazon.awssdk.services.s3.model.DeleteObjectsResponse;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
+import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
 import software.amazon.awssdk.services.s3.model.S3Object;
 import software.amazon.awssdk.services.s3.paginators.ListObjectsV2Publisher;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
@@ -154,40 +155,44 @@ public class S3Store implements Store {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
+		List<ObjectIdentifier> objectIdentifiers = new ArrayList<>(_DELETE_MAX);
+
+		List<S3Object> s3Objects = _getS3Objects(
+			S3KeyTransformerUtil.getDirectoryKey(
+				companyId, repositoryId, dirName));
+
+		Iterator<S3Object> iterator = s3Objects.iterator();
+
 		try {
-			String[] keys = new String[_DELETE_MAX];
-
-			List<S3Object> s3Objects = _getS3Objects(
-				S3KeyTransformerUtil.getDirectoryKey(
-					companyId, repositoryId, dirName));
-
-			Iterator<S3Object> iterator = s3Objects.iterator();
-
 			while (iterator.hasNext()) {
-				DeleteObjectsRequest deleteObjectsRequest =
-					new DeleteObjectsRequest(
-						_s3StoreConfiguration.bucketName());
-
-				for (int i = 0; i < keys.length; i++) {
+				for (int i = 0; i < _DELETE_MAX; i++) {
 					if (iterator.hasNext()) {
 						S3Object s3Object = iterator.next();
 
-						keys[i] = s3Object.key();
-					}
-					else {
-						keys = Arrays.copyOfRange(keys, 0, i);
-
-						break;
+						objectIdentifiers.add(
+							ObjectIdentifier.builder(
+							).key(
+								s3Object.key()
+							).build());
 					}
 				}
 
-				deleteObjectsRequest.withKeys(keys);
+				CompletableFuture<DeleteObjectsResponse> completableFuture =
+					_s3AsyncClient.deleteObjects(
+						builder -> {
+							builder.bucket(_s3StoreConfiguration.bucketName());
+							builder.delete(
+								deleteBuilder -> deleteBuilder.objects(
+									objectIdentifiers));
+						});
 
-				_amazonS3.deleteObjects(deleteObjectsRequest);
+				completableFuture.join();
+
+				objectIdentifiers.clear();
 			}
 		}
-		catch (AmazonClientException amazonClientException) {
-			throw _transform(amazonClientException);
+		catch (CompletionException completionException) {
+			throw _transform(completionException.getCause());
 		}
 	}
 

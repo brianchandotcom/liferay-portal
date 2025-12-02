@@ -92,8 +92,7 @@ export const DataSourceName: React.FC<IDataSourceNameProps> = ({
 
 export const StatusRenderer: React.FC<ICellProps> = ({data}) => {
 	const {display, label} = getDataSourceDisplayObject(
-		new DataSource(fromJS(data)),
-		true
+		new DataSource(fromJS(data))
 	);
 
 	return (

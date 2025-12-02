@@ -183,15 +183,9 @@ export function validateUniqueName({groupId, value}) {
  * Utility for getting the display object for a dataSource state in order
  * to display its status.
  */
-export function getDataSourceDisplayObject(
-	dataSource: DataSource,
-	showActionNeededStatus: boolean = false
-) {
+export function getDataSourceDisplayObject(dataSource: DataSource) {
 	if (!dataSource) {
 		return STATUS_DISPLAY.default;
-	}
-	if (showActionNeededStatus && hasLegacyDXPConnection(dataSource)) {
-		return STATUS_DISPLAY[DataSourceStates.ActionNeeded];
 	}
 
 	const {state, status} = dataSource;
@@ -251,24 +245,10 @@ export function getIdsFromConfiguration(configIMap, key) {
 }
 
 /**
- * Check if a DataSource is considered legacy (DXP and not token authentication)
- */
-export const hasLegacyDXPConnection = (dataSource: DataSource) =>
-	dataSource.providerType === DataSourceTypes.Liferay &&
-	dataSource.getIn(['credentials', 'type']) !== CredentialTypes.Token;
-
-/**
  * Helper function for checking validity of a DataSource's analyticsConfiguration.
  */
 export function validAnalyticsConfig(dataSource: DataSource): boolean {
 	const {provider, providerType} = dataSource;
-
-	if (
-		providerType === DataSourceTypes.Liferay &&
-		!hasLegacyDXPConnection(dataSource)
-	) {
-		return dataSource.sitesSelected;
-	}
 
 	const analyticsConfiguration =
 		provider && provider.get('analyticsConfiguration');
@@ -295,13 +275,6 @@ export function validAnalyticsConfig(dataSource: DataSource): boolean {
  */
 export function validContactsConfig(dataSource: DataSource): boolean {
 	const {provider, providerType, status} = dataSource;
-
-	if (
-		providerType === DataSourceTypes.Liferay &&
-		!hasLegacyDXPConnection(dataSource)
-	) {
-		return dataSource.contactsSelected;
-	}
 
 	const contactsConfiguration =
 		provider && provider.get('contactsConfiguration');

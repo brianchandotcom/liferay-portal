@@ -10,10 +10,7 @@ import {connect} from 'react-redux';
 import {DataSource, User} from 'shared/util/records';
 import {deleteDataSource} from 'shared/actions/data-sources';
 import {ENABLE_DELETE_DATA_SOURCE_BUTTON} from 'shared/util/constants';
-import {
-	getDataSourceDisplayObject,
-	hasLegacyDXPConnection
-} from 'shared/util/data-sources';
+import {getDataSourceDisplayObject} from 'shared/util/data-sources';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {truncate} from 'lodash';
@@ -153,12 +150,9 @@ const BaseDataSourcePage: React.FC<IBaseDataSourcePageProps> = ({
 				<div className='content-main'>{passedChildren}</div>
 
 				<div className='content-side'>
-					{((dataSource && !hasLegacyDXPConnection(dataSource)) ||
-						!dataSource) && (
-						<DataSourceStatus
-							{...getDataSourceDisplayObject(dataSource)}
-						/>
-					)}
+					<DataSourceStatus
+						{...getDataSourceDisplayObject(dataSource)}
+					/>
 				</div>
 			</div>
 		</BasePage>

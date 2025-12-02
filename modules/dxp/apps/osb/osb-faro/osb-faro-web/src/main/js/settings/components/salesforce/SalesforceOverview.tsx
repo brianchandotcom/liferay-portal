@@ -234,7 +234,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 		[dataSource.name, groupId]
 	);
 
-	const {display, label} = getDataSourceDisplayObject(dataSource, true);
+	const {display, label} = getDataSourceDisplayObject(dataSource);
 
 	const channelDatasources = useRequest({
 		dataSourceFn: fetchChannelDatasources,

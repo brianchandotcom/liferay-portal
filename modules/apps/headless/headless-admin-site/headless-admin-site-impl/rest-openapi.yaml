@@ -211,11 +211,6 @@ components:
                             type: boolean
                         emptyCollectionConfig:
                             $ref: "#/components/schemas/EmptyCollectionConfig"
-                        hidden:
-                            # @review
-                            description:
-                                Specifies if the collection display is hidden to the user.
-                            type: boolean
                         name:
                             # @review
                             description:
@@ -276,7 +271,7 @@ components:
                         The definition of the collection display viewport.
                     type: object
                 id:
-                    enum: [LandscapeMobile, PortraitMobile, Tablet]
+                    enum: [Desktop, LandscapeMobile, PortraitMobile, Tablet]
                     type: string
             required:
                 -   collectionDisplayViewportDefinition
@@ -1801,11 +1796,6 @@ components:
                             description:
                                 A flag that indicates whether the row page element is indexed or not.
                             type: boolean
-                        modulesPerRow:
-                            # @review
-                            description:
-                                The row page element's modules per row.
-                            type: integer
                         name:
                             # @review
                             description:
@@ -1821,11 +1811,6 @@ components:
                             description:
                                 A flag that indicates whether the row page element has reverse order.
                             type: boolean
-                        verticalAlignment:
-                            description:
-                                The vertical alignment property of the row page element.
-                            enum: [Bottom, Middle, Top]
-                            type: string
             # @review
             description:
                 The page element definition of a row.
@@ -1865,7 +1850,7 @@ components:
                     # @review
                     description:
                         The grid viewport's ID.
-                    enum: [LandscapeMobile, PortraitMobile, Tablet]
+                    enum: [Desktop, LandscapeMobile, PortraitMobile, Tablet]
                     type: string
             required:
                 -   gridViewportDefinition
@@ -2202,12 +2187,6 @@ components:
                             items:
                                 $ref: "#/components/schemas/ModuleViewport"
                             type: array
-                        size:
-                            description:
-                                The module's size.
-                            maximum: 12
-                            minimum: 1
-                            type: integer
             # @review
             description:
                 The page element definition of a Column.
@@ -2218,7 +2197,7 @@ components:
                 A module in a viewport.
             properties:
                 id:
-                    enum: [LandscapeMobile, PortraitMobile, Tablet]
+                    enum: [Desktop, LandscapeMobile, PortraitMobile, Tablet]
                     type: string
                 moduleViewportDefinition:
                     properties:

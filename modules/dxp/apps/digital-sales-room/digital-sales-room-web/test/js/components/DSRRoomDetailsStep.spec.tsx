@@ -12,7 +12,6 @@ import {
 	screen,
 	waitFor,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import React, {useState} from 'react';
 
 import {DSRContext} from '../../../src/main/resources/META-INF/resources/js/components/DSRInitializer';
@@ -21,43 +20,7 @@ import {
 	TDSRDataContext,
 	TDSRRoomDetailsStepProps,
 } from '../../../src/main/resources/META-INF/resources/js/components/DSRTypes';
-
-export async function setFieldValue(
-	field: HTMLInputElement | HTMLSelectElement,
-	value: null | number | string,
-	checkValue = true
-) {
-	if (field === null) {
-		return;
-	}
-
-	if (field instanceof HTMLSelectElement) {
-		userEvent.selectOptions(field, String(value));
-	}
-	else {
-		if (String(value).length) {
-			await userEvent.clear(field);
-			await userEvent.type(field, String(value));
-			field.value = String(value);
-		}
-		else {
-			await userEvent.clear(field);
-			field.value = '';
-		}
-	}
-	act(() => {
-		fireEvent.change(field);
-	});
-
-	if (checkValue) {
-		if (field.type === 'number' && (value === '' || value === 0)) {
-			expect(field).not.toHaveValue();
-		}
-		else {
-			expect(field).toHaveValue(value);
-		}
-	}
-}
+import {setFieldValue} from '../utils';
 
 let {result: useStateHookResult} = renderHook(() =>
 	useState<TDSRDataContext>({

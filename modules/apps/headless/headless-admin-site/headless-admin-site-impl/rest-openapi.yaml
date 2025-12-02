@@ -2029,22 +2029,20 @@ components:
                 -   $ref: "#/components/schemas/CollectionDisplayListStyle"
                 -   properties:
                         listStyleDefinition:
-                            allOf:
-                                -   $ref: "#/components/schemas/BasicLayout"
-                                -   properties:
-                                        gutters:
-                                            # @review
-                                            description:
-                                                A flag that indicates whether the collection display page element has
-                                                gutters if a grid list style is selected.
-                                            type: boolean
-                                        verticalAlignment:
-                                            # @review
-                                            description:
-                                                The vertical alignment property of the collection display page element
-                                                if a grid list style is selected.
-                                            enum: [Bottom, Middle, Top]
-                                            type: string
+                            properties:
+                                gutters:
+                                    # @review
+                                    description:
+                                        A flag that indicates whether the collection display page element has gutters if
+                                        a grid list style is selected.
+                                    type: boolean
+                                verticalAlignment:
+                                    # @review
+                                    description:
+                                        The vertical alignment property of the collection display page element if a grid
+                                        list style is selected.
+                                    enum: [Bottom, Middle, Top]
+                                    type: string
                             type: object
                         listStyleType:
                             enum: [Grid, FlexColumn, FlexRow]

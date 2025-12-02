@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
@@ -13,6 +14,8 @@ type UserOrUserGroupType = 'groups' | 'users';
 export class SpaceSummaryPage {
 	readonly page: Page;
 
+	readonly addContentButton: Locator;
+	readonly addFileButton: Locator;
 	readonly closeButton: Locator;
 	readonly galleryPreview: Locator;
 	readonly userGroupsTab: Locator;
@@ -24,6 +27,10 @@ export class SpaceSummaryPage {
 
 	constructor(page: Page) {
 		this.page = page;
+
+		this.addContentButton = page.getByRole('button', {name: `Add Content`});
+
+		this.addFileButton = page.getByRole('button', {name: `Add Files`});
 
 		this.closeButton = this.page
 			.locator('.modal-header')
@@ -55,7 +62,7 @@ export class SpaceSummaryPage {
 	async goto(spaceName: string) {
 		await this.page.goto(PORTLET_URLS.cms);
 		await this.page.getByRole('menuitem', {name: spaceName}).click();
-		await this.viewAllContentLink.waitFor();
+		await this.addContentButton.waitFor();
 	}
 
 	async addUserOrUserGroup(name: string, type: UserOrUserGroupType) {
@@ -104,8 +111,44 @@ export class SpaceSummaryPage {
 		await this.closeButton.click();
 	}
 
+	async createContentFolder(name: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Folder'}),
+			trigger: this.addContentButton,
+		});
+
+		const dialog = this.page.getByRole('dialog', {name: 'New Folder'});
+
+		await dialog.waitFor();
+
+		await dialog.getByLabel('Name').fill(name);
+
+		await dialog.getByRole('button', {name: 'Save'}).click();
+
+		await this.page.getByRole('link', {name}).waitFor();
+	}
+
+	async createFileFolder(name: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Folder'}),
+			trigger: this.addFileButton,
+		});
+
+		const dialog = this.page.getByRole('dialog', {name: 'New Folder'});
+
+		await dialog.waitFor();
+
+		await dialog.getByLabel('Name').fill(name);
+
+		await dialog.getByRole('button', {name: 'Save'}).click();
+
+		await this.page.getByRole('link', {name}).waitFor();
+	}
+
 	async connectSite(siteName: string) {
-		await this.viewAllSitesLink.click();
+		await this.page.getByRole('button', {name: 'Connect Sites'}).click();
 
 		this.page.getByRole('dialog').waitFor();
 		await this.page.getByLabel('Site', {exact: true}).click();

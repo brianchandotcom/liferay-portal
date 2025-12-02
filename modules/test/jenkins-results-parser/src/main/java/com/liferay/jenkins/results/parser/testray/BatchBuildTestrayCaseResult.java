@@ -16,6 +16,8 @@ import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.io.File;
@@ -39,16 +41,38 @@ import org.dom4j.Element;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BatchBuildTestrayCaseResult
-	extends BuildTestrayCaseResult {
+public class BatchBuildTestrayCaseResult
+	<A extends TestClass, B extends TestClassMethod>
+		extends BuildTestrayCaseResult {
 
 	public BatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup) {
 
+		this(testrayBuild, topLevelBuildReport, axisTestClassGroup, null, null);
+	}
+
+	public BatchBuildTestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
+
+		this(
+			testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass,
+			null);
+	}
+
+	public BatchBuildTestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
+		TestClassMethod testClassMethod) {
+
 		super(testrayBuild, topLevelBuildReport);
 
 		_axisTestClassGroup = axisTestClassGroup;
+		_testClass = (A)testClass;
+		_testClassMethod = (B)testClassMethod;
+
+		initBuildReport();
 	}
 
 	public String getAxisName() {
@@ -210,6 +234,14 @@ public abstract class BatchBuildTestrayCaseResult
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	public A getTestClass() {
+		return _testClass;
+	}
+
+	public B getTestClassMethod() {
+		return _testClassMethod;
 	}
 
 	@Override
@@ -739,6 +771,8 @@ public abstract class BatchBuildTestrayCaseResult
 		"https?://.+/(?<key>jstacks/(?<fileName>[^/]+.log).txt.gz)");
 
 	private final AxisTestClassGroup _axisTestClassGroup;
+	private A _testClass;
+	private B _testClassMethod;
 	private TopLevelStandaloneBuildTestrayCaseResult
 		_topLevelStandaloneBuildTestrayCaseResult;
 

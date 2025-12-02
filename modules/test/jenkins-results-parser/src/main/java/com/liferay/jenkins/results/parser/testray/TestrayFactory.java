@@ -115,7 +115,7 @@ public class TestrayFactory {
 				testrayBuild, topLevelBuildReport, axisTestClassGroup);
 		}
 
-		return new DefaultBatchBuildTestrayCaseResult(
+		return new BatchBuildTestrayCaseResult<>(
 			testrayBuild, topLevelBuildReport, axisTestClassGroup);
 	}
 

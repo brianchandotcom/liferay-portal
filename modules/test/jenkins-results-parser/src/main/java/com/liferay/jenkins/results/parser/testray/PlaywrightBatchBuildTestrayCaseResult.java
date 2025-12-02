@@ -32,25 +32,25 @@ import java.util.regex.Pattern;
  * @author Kenji Heigel
  */
 public class PlaywrightBatchBuildTestrayCaseResult
-	extends BatchBuildTestrayCaseResult {
+	extends BatchBuildTestrayCaseResult
+		<PlaywrightJUnitTestClass, PlaywrightTestClassMethod> {
 
 	public PlaywrightBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
 		TestClassMethod testClassMethod) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
-
-		_playwrightJUnitTestClass = (PlaywrightJUnitTestClass)testClass;
-		_playwrightTestClassMethod = (PlaywrightTestClassMethod)testClassMethod;
-
-		initBuildReport();
+		super(
+			testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass,
+			testClassMethod);
 	}
 
 	@Override
 	public String getComponentName() {
+		PlaywrightJUnitTestClass playwrightJUnitTestClass = getTestClass();
+
 		String componentName =
-			_playwrightJUnitTestClass.getTestrayMainComponentName();
+			playwrightJUnitTestClass.getTestrayMainComponentName();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
 			return super.getComponentName();
@@ -103,7 +103,10 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		}
 
 		if (testReport.isSkipped()) {
-			if (_playwrightTestClassMethod.isIgnored()) {
+			PlaywrightTestClassMethod playwrightTestClassMethod =
+				getTestClassMethod();
+
+			if (playwrightTestClassMethod.isIgnored()) {
 				return "Test run skipped on CI";
 			}
 
@@ -147,16 +150,24 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	@Override
 	public String getIssues() {
-		return _playwrightTestClassMethod.getIssues();
+		PlaywrightTestClassMethod playwrightTestClassMethod =
+			getTestClassMethod();
+
+		return playwrightTestClassMethod.getIssues();
 	}
 
 	@Override
 	public String getName() {
-		if (_playwrightJUnitTestClass == null) {
+		PlaywrightJUnitTestClass playwrightJUnitTestClass = getTestClass();
+
+		if (playwrightJUnitTestClass == null) {
 			return super.getName();
 		}
 
-		return _playwrightTestClassMethod.getName();
+		PlaywrightTestClassMethod playwrightTestClassMethod =
+			getTestClassMethod();
+
+		return playwrightTestClassMethod.getName();
 	}
 
 	@Override
@@ -181,9 +192,12 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	@Override
 	public TestReport getTestReport() {
-		if (_playwrightTestClassMethod.isBuildCachingEnabled()) {
+		PlaywrightTestClassMethod playwrightTestClassMethod =
+			getTestClassMethod();
+
+		if (playwrightTestClassMethod.isBuildCachingEnabled()) {
 			TestReport cachedTestReport =
-				_playwrightTestClassMethod.getCachedTestReport();
+				playwrightTestClassMethod.getCachedTestReport();
 
 			if (cachedTestReport != null) {
 				return cachedTestReport;
@@ -199,11 +213,13 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 		TestClassReport playwrightTestClassReport = null;
 
+		PlaywrightJUnitTestClass playwrightJUnitTestClass = getTestClass();
+
 		for (TestClassReport testClassReport :
 				downstreamBuildReport.getTestClassReports()) {
 
 			if (Objects.equals(
-					_playwrightJUnitTestClass.getSpecFilePath(),
+					playwrightJUnitTestClass.getSpecFilePath(),
 					testClassReport.getTestClassName())) {
 
 				playwrightTestClassReport = testClassReport;
@@ -232,12 +248,17 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	@Override
 	public void initBuildReport() {
-		if (_playwrightTestClassMethod.isBuildCachingEnabled()) {
+		PlaywrightTestClassMethod playwrightTestClassMethod =
+			getTestClassMethod();
+
+		if (playwrightTestClassMethod.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
-				_playwrightTestClassMethod.getCachedDownstreamBuildReport();
+				playwrightTestClassMethod.getCachedDownstreamBuildReport();
 
 			if (cachedDownstreamBuildReport != null) {
 				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
 			}
 		}
 
@@ -314,8 +335,5 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	private static final Pattern _traceZipPattern = Pattern.compile(
 		"npx playwright show-trace " +
 			"(?<traceZipFilePath>test-results/[^/]+/trace.zip)");
-
-	private final PlaywrightJUnitTestClass _playwrightJUnitTestClass;
-	private final PlaywrightTestClassMethod _playwrightTestClassMethod;
 
 }

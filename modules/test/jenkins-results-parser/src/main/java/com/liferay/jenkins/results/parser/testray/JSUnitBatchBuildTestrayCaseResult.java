@@ -13,6 +13,7 @@ import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.util.ArrayList;
@@ -25,23 +26,22 @@ import java.util.Objects;
  * @author Michael Hashimoto
  */
 public class JSUnitBatchBuildTestrayCaseResult
-	extends BatchBuildTestrayCaseResult {
+	extends BatchBuildTestrayCaseResult
+		<JSUnitModulesTestClass, TestClassMethod> {
 
 	public JSUnitBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
-
-		_jsUnitModulesTestClass = (JSUnitModulesTestClass)testClass;
-
-		initBuildReport();
+		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
 	}
 
 	@Override
 	public String getComponentName() {
+		JSUnitModulesTestClass jsUnitModulesTestClass = getTestClass();
+
 		String componentName =
-			_jsUnitModulesTestClass.getTestrayMainComponentName();
+			jsUnitModulesTestClass.getTestrayMainComponentName();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
 			return super.getComponentName();
@@ -145,7 +145,9 @@ public class JSUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public String getName() {
-		return _jsUnitModulesTestClass.getTestTaskName();
+		JSUnitModulesTestClass jsUnitModulesTestClass = getTestClass();
+
+		return jsUnitModulesTestClass.getTestTaskName();
 	}
 
 	@Override
@@ -180,9 +182,11 @@ public class JSUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public void initBuildReport() {
-		if (_jsUnitModulesTestClass.isBuildCachingEnabled()) {
+		JSUnitModulesTestClass jsUnitModulesTestClass = getTestClass();
+
+		if (jsUnitModulesTestClass.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
-				_jsUnitModulesTestClass.getCachedDownstreamBuildReport();
+				jsUnitModulesTestClass.getCachedDownstreamBuildReport();
 
 			if (cachedDownstreamBuildReport != null) {
 				setBuildReport(cachedDownstreamBuildReport);
@@ -199,9 +203,11 @@ public class JSUnitBatchBuildTestrayCaseResult
 			return _testClassReport;
 		}
 
-		if (_jsUnitModulesTestClass.isBuildCachingEnabled()) {
+		JSUnitModulesTestClass jsUnitModulesTestClass = getTestClass();
+
+		if (jsUnitModulesTestClass.isBuildCachingEnabled()) {
 			TestClassReport cachedTestClassReport =
-				_jsUnitModulesTestClass.getCachedTestClassReport();
+				jsUnitModulesTestClass.getCachedTestClassReport();
 
 			if (cachedTestClassReport != null) {
 				_testClassReport = cachedTestClassReport;
@@ -240,7 +246,6 @@ public class JSUnitBatchBuildTestrayCaseResult
 		return false;
 	}
 
-	private final JSUnitModulesTestClass _jsUnitModulesTestClass;
 	private TestClassReport _testClassReport;
 
 }

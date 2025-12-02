@@ -251,20 +251,12 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 	private String _getConfigurationTableRow(
 		Configuration configuration, String format) {
 
+		Dictionary<String, Object> properties = configuration.getProperties();
+
 		return String.format(
-			format, configuration.getPid(),
-			configuration.getProperties(
-			).get(
-				"name"
-			),
-			configuration.getProperties(
-			).get(
-				"type"
-			),
-			configuration.getProperties(
-			).get(
-				"dxp.lxc.liferay.com.virtualInstanceId"
-			));
+			format, configuration.getPid(), properties.get("name"),
+			properties.get("type"),
+			properties.get("dxp.lxc.liferay.com.virtualInstanceId"));
 	}
 
 	private String _printConfiguration(Configuration cxConfiguration) {

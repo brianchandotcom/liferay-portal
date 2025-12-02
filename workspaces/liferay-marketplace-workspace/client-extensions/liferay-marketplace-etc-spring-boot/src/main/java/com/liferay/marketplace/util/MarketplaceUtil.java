@@ -8,6 +8,7 @@ package com.liferay.marketplace.util;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -113,11 +114,7 @@ public class MarketplaceUtil {
 				continue;
 			}
 
-			String value = skuOption.getValue();
-
-			String firstChar = value.substring(0, 1);
-
-			return firstChar.toUpperCase() + value.substring(1);
+			return StringUtil.upperCaseFirstLetter(skuOption.getValue());
 		}
 
 		return null;

@@ -12,6 +12,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -53,22 +54,41 @@ public class ItemSelectorEditableValuesConfigurationExportImportContentProcessor
 			boolean exportReferencedContent)
 		throws Exception {
 
+		String className = configurationValueJSONObject.getString("className");
 		long classNameId = configurationValueJSONObject.getLong("classNameId");
 		long classPK = configurationValueJSONObject.getLong("classPK");
+		String externalReferenceCode = configurationValueJSONObject.getString(
+			"externalReferenceCode");
 
-		if ((classNameId == 0) || (classPK == 0)) {
+		if (Validator.isNull(className) && (classNameId > 0)) {
+			className = _portal.fetchClassName(classNameId);
+		}
+
+		if (Validator.isNull(className) && (classPK <= 0) &&
+			Validator.isNull(externalReferenceCode)) {
+
 			return;
 		}
+
+		configurationValueJSONObject.put("className", className);
 
 		_exportDDMTemplateReference(
 			portletDataContext, stagedModel, configurationValueJSONObject);
 
-		String className = _portal.fetchClassName(classNameId);
+		if (classPK > 0) {
+			ExportImportContentProcessorUtil.exportContentReference(
+				className, classPK, exportReferencedContent,
+				_infoItemServiceRegistry, portletDataContext, stagedModel);
 
-		configurationValueJSONObject.put("className", className);
+			return;
+		}
 
 		ExportImportContentProcessorUtil.exportContentReference(
-			className, classPK, exportReferencedContent,
+			className, exportReferencedContent,
+			new ERCInfoItemIdentifier(
+				externalReferenceCode,
+				configurationValueJSONObject.getString(
+					"scopeExternalReferenceCode")),
 			_infoItemServiceRegistry, portletDataContext, stagedModel);
 	}
 

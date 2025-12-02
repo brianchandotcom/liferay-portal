@@ -6,17 +6,27 @@
 package com.liferay.layout.content.page.editor.web.internal.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.layout.manager.ContentManager;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -28,6 +38,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
@@ -124,6 +136,79 @@ public class ContentManagerTest {
 		Assert.assertEquals(1, jsonArray.length());
 	}
 
+	@Test
+	@TestInfo("LPD-72807")
+	public void testGetPageContentsJSONArrayWithoutPermissions()
+		throws Exception {
+
+		User user = UserTestUtil.addGroupUser(
+			_group, RoleConstants.SITE_MEMBER);
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addCollectionDisplayToLayout(
+			JSONUtil.put(
+				"classPK", assetListEntry.getAssetListEntryId()
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			),
+			draftLayout, _layoutStructureProvider, null, null, 0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
+
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()),
+			_group, _layout);
+
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.getPermissionCheckerFactory(
+			).create(
+				user
+			));
+		themeDisplay.setUser(user);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_RESPONSE,
+			new MockLiferayResourceResponse());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		JSONArray jsonArray = ReflectionTestUtil.invoke(
+			_contentManager, "getPageContentsJSONArray",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class, long.class,
+				long.class
+			},
+			mockHttpServletRequest, new MockHttpServletResponse(),
+			_layout.getPlid(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()));
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+
+		Assert.assertFalse(actionsJSONObject.has("editURL"));
+	}
+
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -141,6 +226,9 @@ public class ContentManagerTest {
 	@Inject
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject
 	private Portal _portal;

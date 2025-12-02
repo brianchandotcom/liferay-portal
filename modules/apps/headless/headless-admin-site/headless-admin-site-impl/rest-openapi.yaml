@@ -744,7 +744,7 @@ components:
                         type: permission
                     type: array
                 thumbnail:
-                    $ref: "#/components/schemas/URLReference"
+                    $ref: "#/components/schemas/ThumbnailURLReference"
                     # @review
                     description:
                         The display page template's thumbnail.
@@ -2294,7 +2294,7 @@ components:
                         $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 thumbnail:
-                    $ref: "#/components/schemas/URLReference"
+                    $ref: "#/components/schemas/ThumbnailURLReference"
                     # @review
                     description:
                         The master page's thumbnail.
@@ -3076,7 +3076,7 @@ components:
                         $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 thumbnail:
-                    $ref: "#/components/schemas/URLReference"
+                    $ref: "#/components/schemas/ThumbnailURLReference"
                     # @review
                     description:
                         The display page template's thumbnail.
@@ -3970,7 +3970,7 @@ components:
                 Whether the target URL will open in a new tab instead of the same tab.
               type: boolean
           type: object
-        URLReference:
+        ThumbnailURLReference:
             # @review
             description:
                 A unique reference to a URL which remains constant across environments.
@@ -4067,7 +4067,7 @@ components:
                         type: permission
                     type: array
                 thumbnail:
-                    $ref: "#/components/schemas/URLReference"
+                    $ref: "#/components/schemas/ThumbnailURLReference"
                     # @review
                     description:
                         The utility page's thumbnail.

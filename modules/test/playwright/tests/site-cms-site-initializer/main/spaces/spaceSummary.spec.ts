@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 
@@ -99,12 +100,15 @@ test(
 );
 
 test(
-	'Can access to View All Files page',
+	'Can access to View All Files page if file is available',
 	{tag: '@LPD-62706'},
 	async ({page, spaceSummaryPage}) => {
 		const spaceName = 'Default';
 
 		await spaceSummaryPage.goto(spaceName);
+
+		await spaceSummaryPage.createFileFolder('Folder' + getRandomInt());
+
 		await spaceSummaryPage.viewAllFilesLink.click();
 
 		await expect(page.getByRole('link', {name: spaceName})).toBeVisible();
@@ -146,12 +150,15 @@ test(
 );
 
 test(
-	'Can access to View All Content page',
+	'Can access to View All Content page if content is available',
 	{tag: '@LPD-62706'},
 	async ({page, spaceSummaryPage}) => {
 		const spaceName = 'Default';
 
 		await spaceSummaryPage.goto(spaceName);
+
+		await spaceSummaryPage.createContentFolder('Folder' + getRandomInt());
+
 		await spaceSummaryPage.viewAllContentLink.click();
 
 		await expect(page.getByRole('link', {name: spaceName})).toBeVisible();

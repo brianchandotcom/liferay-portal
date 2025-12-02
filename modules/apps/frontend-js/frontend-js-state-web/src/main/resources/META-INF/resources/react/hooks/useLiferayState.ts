@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {deepClone} from 'frontend-js-web';
 import {useCallback, useEffect, useState} from 'react';
 
 import {Atom, Immutable, Selector, State} from '../../main/index';
@@ -19,6 +20,7 @@ import {Atom, Immutable, Selector, State} from '../../main/index';
  * (Note, however, that actually trying to update a selector will throw
  * an error because selectors are read-only.)
  */
+
 export default function useLiferayState<T>(
 	atomOrSelector: Atom<T> | Selector<T>
 ): [value: Immutable<T>, setValue: (newValue: T) => void] {
@@ -35,7 +37,7 @@ export default function useLiferayState<T>(
 	return [
 		currentValue,
 		useCallback(
-			(newValue) => State.write(atomOrSelector, newValue),
+			(newValue) => State.write(atomOrSelector, deepClone(newValue)),
 			[atomOrSelector]
 		),
 	];

@@ -1,5 +1,5 @@
 {
-	"@generated": "64f82ed64774881a01c00c505372bbeb97b23cb3",
+	"@generated": "772adc59adbf2190e0c43d84b2f7bc5dffaf9b39",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -13,6 +13,12 @@
 		"paths": {
 			"@liferay/frontend-js-state-web/react": [
 				"./react/index.ts"
+			],
+			"frontend-js-web": [
+				"../../../../../../frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
+			],
+			"frontend-js-web/legacy": [
+				"../../../../../../frontend-js-web/src/main/resources/META-INF/resources/legacy/index.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",
@@ -31,5 +37,8 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
 	]
 }

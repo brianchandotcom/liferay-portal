@@ -5,14 +5,14 @@
  */
 --%>
 
-<portlet:renderURL var="importErrorsList">
+<portlet:renderURL var="importReportEntriesList">
 	<portlet:param name="mvcRenderCommandName" value="/export_import/view_import_report_entries" />
 	<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 </portlet:renderURL>
 
 <c:if test="<%= !backgroundTask.isInProgress() && (backgroundTask.getStatus() != BackgroundTaskConstants.STATUS_SUCCESSFUL) %>">
 	<li>
-		<a class="dropdown-item" href="<%= importErrorsList %>">
+		<a class="dropdown-item" href="<%= importReportEntriesList %>">
 			<liferay-ui:message key="view-report-entries" />
 		</a>
 	</li>

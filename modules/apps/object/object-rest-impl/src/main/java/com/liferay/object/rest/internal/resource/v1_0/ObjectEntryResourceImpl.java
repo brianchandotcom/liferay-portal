@@ -568,12 +568,51 @@ public class ObjectEntryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getLabelLanguageKey() {
-				String modelResourceNamePrefix =
-					ResourceActionsUtil.getModelResourceNamePrefix();
+			public List<String> getChildLabelLanguageKeys() {
+				if (!_objectDefinition.isRootNode()) {
+					return null;
+				}
 
-				return modelResourceNamePrefix.concat(
-					_objectDefinition.getResourceName());
+				try {
+					List<String> childLabelLanguageKeys = new ArrayList<>();
+
+					ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+						new ObjectDefinitionTreeFactory(
+							_objectDefinitionLocalService,
+							_objectRelationshipLocalService);
+
+					Tree tree = objectDefinitionTreeFactory.create(
+						_objectDefinition.getObjectDefinitionId());
+
+					Iterator<Node> iterator = tree.iterator();
+
+					while (iterator.hasNext()) {
+						Node node = iterator.next();
+
+						if (node.isRoot()) {
+							continue;
+						}
+
+						childLabelLanguageKeys.add(
+							_getLabelLanguageKey(
+								_objectDefinitionLocalService.
+									getObjectDefinition(node.getPrimaryKey())));
+					}
+
+					return childLabelLanguageKeys;
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+
+					return null;
+				}
+			}
+
+			@Override
+			public String getLabelLanguageKey() {
+				return _getLabelLanguageKey(_objectDefinition);
 			}
 
 			@Override
@@ -617,6 +656,15 @@ public class ObjectEntryResourceImpl
 				}
 
 				return Scope.SITE;
+			}
+
+			@Override
+			public String getTagLabelLanguageKey() {
+				if (!_objectDefinition.isRootNode()) {
+					return null;
+				}
+
+				return "root-object";
 			}
 
 		};
@@ -1769,6 +1817,14 @@ public class ObjectEntryResourceImpl
 
 		return StringBundler.concat(
 			"(", filterString, ") and ", assigneeFilterString);
+	}
+
+	private String _getLabelLanguageKey(ObjectDefinition objectDefinition) {
+		String modelResourceNamePrefix =
+			ResourceActionsUtil.getModelResourceNamePrefix();
+
+		return modelResourceNamePrefix.concat(
+			objectDefinition.getResourceName());
 	}
 
 	private long _getNonzeroGroupId(long objectEntryId) throws Exception {

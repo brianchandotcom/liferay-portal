@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.net.URI;
 
 import java.time.Duration;
+import java.time.Instant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,14 +66,17 @@ import software.amazon.awssdk.http.nio.netty.ProxyConfiguration;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
+import software.amazon.awssdk.services.s3.model.AbortMultipartUploadResponse;
 import software.amazon.awssdk.services.s3.model.DeleteObjectResponse;
 import software.amazon.awssdk.services.s3.model.DeleteObjectsResponse;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
+import software.amazon.awssdk.services.s3.model.MultipartUpload;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
 import software.amazon.awssdk.services.s3.model.S3Object;
 import software.amazon.awssdk.services.s3.model.StorageClass;
+import software.amazon.awssdk.services.s3.paginators.ListMultipartUploadsPublisher;
 import software.amazon.awssdk.services.s3.paginators.ListObjectsV2Publisher;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 import software.amazon.awssdk.transfer.s3.model.CompletedFileUpload;
@@ -96,8 +100,49 @@ import software.amazon.awssdk.transfer.s3.model.FileUpload;
 public class S3Store implements Store {
 
 	public void abortMultipartUploads(Date date) {
-		_transferManager.abortMultipartUploads(
-			_s3StoreConfiguration.bucketName(), date);
+		ListMultipartUploadsPublisher listMultipartUploadsPublisher =
+			_s3AsyncClient.listMultipartUploadsPaginator(
+				builder -> builder.bucket(_s3StoreConfiguration.bucketName()));
+
+		List<MultipartUpload> multipartUploads = new ArrayList<>();
+
+		try {
+			CompletableFuture<Void> completableFuture =
+				listMultipartUploadsPublisher.subscribe(
+					response -> {
+						for (MultipartUpload multipartUpload :
+								response.uploads()) {
+
+							Instant initiated = multipartUpload.initiated();
+
+							if (initiated.isBefore(date.toInstant())) {
+								multipartUploads.add(multipartUpload);
+							}
+						}
+					});
+
+			completableFuture.join();
+		}
+		catch (CompletionException completionException) {
+			throw _transform(completionException.getCause());
+		}
+
+		try {
+			for (MultipartUpload multipartUpload : multipartUploads) {
+				CompletableFuture<AbortMultipartUploadResponse>
+					completableFuture = _s3AsyncClient.abortMultipartUpload(
+						builder -> {
+							builder.bucket(_s3StoreConfiguration.bucketName());
+							builder.key(multipartUpload.key());
+							builder.uploadId(multipartUpload.uploadId());
+						});
+
+				completableFuture.join();
+			}
+		}
+		catch (CompletionException completionException) {
+			throw _transform(completionException.getCause());
+		}
 	}
 
 	@Override

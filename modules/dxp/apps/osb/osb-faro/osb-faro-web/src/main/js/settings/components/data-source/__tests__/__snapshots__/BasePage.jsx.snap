@@ -328,7 +328,43 @@ exports[`BaseDataSourcePage should render 1`] = `
               />
               <div
                 class="content-side"
-              />
+              >
+                <div
+                  class="panel-root data-source-status-root"
+                >
+                  <div
+                    class="panel-header"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <div
+                      class="panel-title"
+                    >
+                      <div>
+                        Current Status:
+                      </div>
+                    </div>
+                    <div
+                      class="panel-title-label"
+                    >
+                      <div
+                        class="label label-root label-info label-lg label-uppercase"
+                      >
+                        <span
+                          class="label-item"
+                        >
+                          Authenticated
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="panel-body"
+                  >
+                    You have successfully authenticated your client id and secret with you data source. You can now configure your data.
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

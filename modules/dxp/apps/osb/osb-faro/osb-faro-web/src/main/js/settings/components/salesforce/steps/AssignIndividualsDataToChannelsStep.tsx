@@ -6,15 +6,15 @@ import ClaySticker from '@clayui/sticker';
 import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'shared/types';
-import {ButtonGroup} from './ButtonGroup';
 import {ClayCheckbox} from '@clayui/form';
 import {modalTypes} from 'shared/actions/modals';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {updateSalesforce} from 'shared/api/data-source';
-import {useConnectSalesforce} from 'settings/components/salesforce/ConnectSalesforceContext';
 import {useHistory, useParams} from 'react-router-dom';
+import {useWizardPage} from 'settings/components/base-page/WizardPageContext';
+import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
 const AssignIndividualsDatatoPropertiesStep = ({
 	addAlert,
@@ -26,7 +26,7 @@ const AssignIndividualsDatatoPropertiesStep = ({
 	const {groupId} = useParams();
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [allChannelsSelected, setAllChannelsSelected] = useState(false);
-	const {dataSource} = useConnectSalesforce();
+	const {dataSource} = useWizardPage();
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -195,7 +195,7 @@ const AssignIndividualsDatatoPropertiesStep = ({
 				</label>
 			</div>
 
-			<ButtonGroup
+			<WizardPageButtonGroup
 				nextButtonLabel={Liferay.Language.get('finish-setup')}
 				nextButtonLoading={loading}
 				onCancel={onPrev}

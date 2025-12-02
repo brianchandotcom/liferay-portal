@@ -1,14 +1,14 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-interface IButtonGroupProps {
+interface IWizardPageButtonGroupProps {
 	nextButtonLoading?: boolean;
 	nextButtonLabel: string;
 	onCancel: () => void;
 	prevButtonLabel: string;
 }
 
-export const ButtonGroup: React.FC<IButtonGroupProps> = ({
+export const WizardPageButtonGroup: React.FC<IWizardPageButtonGroupProps> = ({
 	nextButtonLabel,
 	nextButtonLoading,
 	onCancel,

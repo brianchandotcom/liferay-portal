@@ -3,15 +3,15 @@ import React, {useEffect, useState} from 'react';
 import SalesforceAccountsAndIndividuals from 'settings/components/salesforce/SalesforceAccountsAndIndividuals';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
-import {ButtonGroup} from './ButtonGroup';
 import {fetch, updateSalesforce} from 'shared/api/data-source';
 import {Text} from '@clayui/core';
-import {useConnectSalesforce} from '../ConnectSalesforceContext';
 import {useParams} from 'react-router-dom';
+import {useWizardPage} from '../../base-page/WizardPageContext';
+import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
 const SyncSalesforceDataStep = ({onNext, onPrev}) => {
 	const [loading, setLoading] = useState(false);
-	const {dataSource, setDataSource} = useConnectSalesforce();
+	const {dataSource, setDataSource} = useWizardPage();
 	const {groupId} = useParams();
 	const [enabledAccount, setEnabledAccount] = useState(false);
 	const [enabledIndividual, setEnabledIndividual] = useState(false);
@@ -94,7 +94,7 @@ const SyncSalesforceDataStep = ({onNext, onPrev}) => {
 				/>
 			)}
 
-			<ButtonGroup
+			<WizardPageButtonGroup
 				nextButtonLabel={Liferay.Language.get('continue')}
 				nextButtonLoading={loading}
 				onCancel={onPrev}

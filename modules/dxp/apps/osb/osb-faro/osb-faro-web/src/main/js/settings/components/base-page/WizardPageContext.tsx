@@ -1,23 +1,23 @@
 import React, {createContext, useContext, useState} from 'react';
 import {DataSource} from 'shared/util/records';
 
-interface IConnectSalesforceContext {
+interface IWizardPageContext {
 	dataSource: DataSource | null;
 	setDataSource: (dataSource: DataSource) => void;
 }
 
-const ConnectSalesforceContext = createContext<IConnectSalesforceContext>({
+const WizardPageContext = createContext<IWizardPageContext>({
 	dataSource: null,
 	setDataSource: () => {}
 });
 
-export const useConnectSalesforce = () => useContext(ConnectSalesforceContext);
+export const useWizardPage = () => useContext(WizardPageContext);
 
-export const ConnectSalesforceProvider = ({children}) => {
+export const WizardPageProvider = ({children}) => {
 	const [dataSource, setDataSource] = useState<DataSource | null>(null);
 
 	return (
-		<ConnectSalesforceContext.Provider
+		<WizardPageContext.Provider
 			value={{
 				dataSource,
 				setDataSource: dataSource =>
@@ -27,6 +27,6 @@ export const ConnectSalesforceProvider = ({children}) => {
 			}}
 		>
 			{children}
-		</ConnectSalesforceContext.Provider>
+		</WizardPageContext.Provider>
 	);
 };

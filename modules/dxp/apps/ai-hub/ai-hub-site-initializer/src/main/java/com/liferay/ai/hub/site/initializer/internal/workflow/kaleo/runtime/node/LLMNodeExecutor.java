@@ -67,6 +67,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			List<PathElement> remainingPathElements)
 		throws PortalException {
 
+		KaleoInstanceToken kaleoInstanceToken =
+			executionContext.getKaleoInstanceToken();
+
 		Map<String, String> kaleoNodeSettingValues = new HashMap<>();
 
 		List<KaleoNodeSetting> kaleoNodeSettings =
@@ -92,9 +95,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
-
-		KaleoInstanceToken kaleoInstanceToken =
-			executionContext.getKaleoInstanceToken();
 
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(

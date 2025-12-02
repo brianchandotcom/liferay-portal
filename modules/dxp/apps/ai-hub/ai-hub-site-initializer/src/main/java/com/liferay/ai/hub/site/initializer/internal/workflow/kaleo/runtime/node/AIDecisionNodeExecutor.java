@@ -58,7 +58,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			"Complete the workflow node by proceeding to the chosen transition"
 		)
 		public void completeWorkflowNode(
-				InvocationParameters parameters,
+				InvocationParameters invocationParameters,
 				@P(
 					"A brief, one-sentence justification for the chosen transition."
 				)
@@ -66,7 +66,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				@P("Transition name") String transitionName)
 			throws PortalException {
 
-			ExecutionContext executionContext = parameters.get(
+			ExecutionContext executionContext = invocationParameters.get(
 				"executionContext");
 
 			Map<String, Serializable> workflowContext =
@@ -75,7 +75,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			workflowContext.put("reason", reason);
 
 			PermissionThreadLocal.setPermissionChecker(
-				parameters.get("permissionChecker"));
+				invocationParameters.get("permissionChecker"));
 
 			KaleoInstanceToken kaleoInstanceToken =
 				executionContext.getKaleoInstanceToken();

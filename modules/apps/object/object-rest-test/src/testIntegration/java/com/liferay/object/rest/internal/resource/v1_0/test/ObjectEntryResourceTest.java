@@ -5310,6 +5310,19 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1);
 	}
 
+	@FeatureFlag("LPD-69419")
+	@Test
+	public void testGetByExternalReferenceCodeComment() throws Exception {
+
+		// Company scope
+
+		_testGetCommentsEndpoints(0L, _objectDefinition1);
+
+		// Site scope
+
+		_testGetCommentsEndpoints(_testGroupId, _siteScopedObjectDefinition1);
+	}
+
 	@Test
 	public void testGetCreatorExternalReferenceCode() throws Exception {
 		ObjectDefinition objectDefinition =
@@ -16387,6 +16400,19 @@ public class ObjectEntryResourceTest {
 			endpoint, httpMethod);
 	}
 
+	private JSONObject _postComment(
+			String endpoint, String externalReferenceCode, String text)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"text", text
+			).toString(),
+			endpoint, Http.Method.POST);
+	}
+
 	private JSONObject _postCustomObjectEntryWithAssigneeObjectField(
 			ObjectDefinition objectDefinition, User user)
 		throws Exception {
@@ -16624,6 +16650,183 @@ public class ObjectEntryResourceTest {
 			"Filtering is not supported for system objects",
 			jsonObject.getString("title"));
 		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
+	}
+
+	private void _testGetCommentsEndpoints(
+			long groupId, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		_enableComments(objectDefinition);
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		// Parent Comment
+
+		String endpoint = StringBundler.concat(
+			_getEndpoint(objectDefinition, groupId),
+			"/by-external-reference-code/",
+			objectEntry.getExternalReferenceCode(), "/comments");
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		String text = RandomTestUtil.randomString();
+
+		JSONObject commentJSONObject1 = _postComment(
+			endpoint, externalReferenceCode, text);
+
+		JSONObject commentJSONObject2 = _postComment(
+			endpoint, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		JSONObject getCommentJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, StringPool.SLASH, externalReferenceCode),
+			Http.Method.GET);
+
+		Assert.assertEquals(
+			commentJSONObject1.getString("externalReferenceCode"),
+			getCommentJSONObject.getString("externalReferenceCode"));
+		Assert.assertEquals(
+			"<p>" + text + "</p>", getCommentJSONObject.getString("text"));
+
+		// Filter
+
+		String filter = URLCodec.encodeURL(
+			"dateCreated eq " + commentJSONObject1.getString("dateCreated"));
+
+		JSONObject filteredCommentsJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint + "?filter=" + filter, Http.Method.GET);
+
+		JSONArray itemsJSONArray = filteredCommentsJSONObject.getJSONArray(
+			"items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			"<p>" + text + "</p>", itemJSONObject.getString("text"));
+		Assert.assertEquals(
+			commentJSONObject1.getString("dateCreated"),
+			itemJSONObject.getString("dateCreated"));
+
+		// Search
+
+		JSONObject searchedCommentsJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, "?search=", URLCodec.encodeURL(text)),
+			Http.Method.GET);
+
+		JSONArray searchedItemsJSONArray =
+			searchedCommentsJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(1, searchedItemsJSONArray.length());
+
+		JSONObject searchedItemJSONObject =
+			searchedItemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			searchedItemJSONObject.getString("externalReferenceCode"));
+
+		// Sort
+
+		JSONObject sortedCommentsJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint + "?sort=dateCreated:desc", Http.Method.GET);
+
+		JSONArray sortedItemsJSONArray = sortedCommentsJSONObject.getJSONArray(
+			"items");
+
+		JSONObject sortedItemJSONObject1 = sortedItemsJSONArray.getJSONObject(
+			0);
+
+		JSONObject sortedItemJSONObject2 = sortedItemsJSONArray.getJSONObject(
+			1);
+
+		Assert.assertEquals(
+			commentJSONObject1.getString("externalReferenceCode"),
+			sortedItemJSONObject2.getString("externalReferenceCode"));
+
+		Assert.assertEquals(
+			commentJSONObject2.getString("externalReferenceCode"),
+			sortedItemJSONObject1.getString("externalReferenceCode"));
+
+		// Child Comment
+
+		endpoint = StringBundler.concat(
+			endpoint, StringPool.SLASH,
+			commentJSONObject1.getString("externalReferenceCode"),
+			"/child-comments");
+
+		String childExternalReferenceCode = RandomTestUtil.randomString();
+		String childText = RandomTestUtil.randomString();
+
+		commentJSONObject1 = _postComment(
+			endpoint, childExternalReferenceCode, childText);
+
+		commentJSONObject2 = _postComment(
+			endpoint, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		// Filter
+
+		filter = URLCodec.encodeURL(
+			"dateCreated eq " + commentJSONObject1.getString("dateCreated"));
+
+		filteredCommentsJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint + "?filter=" + filter, Http.Method.GET);
+
+		itemsJSONArray = filteredCommentsJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			"<p>" + childText + "</p>", itemJSONObject.getString("text"));
+		Assert.assertEquals(
+			commentJSONObject1.getString("dateCreated"),
+			itemJSONObject.getString("dateCreated"));
+
+		// Search
+
+		searchedCommentsJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, "?search=", URLCodec.encodeURL(childText)),
+			Http.Method.GET);
+
+		searchedItemsJSONArray = searchedCommentsJSONObject.getJSONArray(
+			"items");
+
+		Assert.assertEquals(1, searchedItemsJSONArray.length());
+
+		searchedItemJSONObject = searchedItemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			childExternalReferenceCode,
+			searchedItemJSONObject.getString("externalReferenceCode"));
+
+		// Sort
+
+		sortedCommentsJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint + "?sort=dateCreated:desc", Http.Method.GET);
+
+		sortedItemsJSONArray = sortedCommentsJSONObject.getJSONArray("items");
+
+		sortedItemJSONObject1 = sortedItemsJSONArray.getJSONObject(0);
+
+		sortedItemJSONObject2 = sortedItemsJSONArray.getJSONObject(1);
+
+		Assert.assertEquals(
+			commentJSONObject1.getString("externalReferenceCode"),
+			sortedItemJSONObject2.getString("externalReferenceCode"));
+
+		Assert.assertEquals(
+			commentJSONObject2.getString("externalReferenceCode"),
+			sortedItemJSONObject1.getString("externalReferenceCode"));
 	}
 
 	private void _testGetNestedFieldDetailsInRelationships(
@@ -18243,7 +18446,7 @@ public class ObjectEntryResourceTest {
 				"/by-external-reference-code/",
 				objectEntry.getExternalReferenceCode(), "/comments/",
 				jsonObject.getString("externalReferenceCode"),
-				"/reply-comments"),
+				"/child-comments"),
 			Http.Method.POST);
 
 		Assert.assertEquals(

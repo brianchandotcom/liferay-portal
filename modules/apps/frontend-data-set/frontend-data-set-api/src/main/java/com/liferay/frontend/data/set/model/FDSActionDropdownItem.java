@@ -15,6 +15,9 @@ import java.util.Map;
  */
 public class FDSActionDropdownItem extends DropdownItem {
 
+	public FDSActionDropdownItem() {
+	}
+
 	public FDSActionDropdownItem(
 		String icon, String id, String label, boolean separator, String type) {
 

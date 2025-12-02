@@ -100,15 +100,19 @@ public class CollectionLayoutStructureItemImporter
 				getCollectionDisplayViewports();
 
 		if (ArrayUtil.isNotEmpty(collectionDisplayViewports)) {
-			_setViewportConfiguration(
+			_updateItemConfig(
+				CollectionDisplayViewport.Id.DESKTOP,
+				collectionDisplayViewports,
+				collectionStyledLayoutStructureItem);
+			_updateItemConfig(
 				CollectionDisplayViewport.Id.LANDSCAPE_MOBILE,
 				collectionDisplayViewports,
 				collectionStyledLayoutStructureItem);
-			_setViewportConfiguration(
+			_updateItemConfig(
 				CollectionDisplayViewport.Id.PORTRAIT_MOBILE,
 				collectionDisplayViewports,
 				collectionStyledLayoutStructureItem);
-			_setViewportConfiguration(
+			_updateItemConfig(
 				CollectionDisplayViewport.Id.TABLET, collectionDisplayViewports,
 				collectionStyledLayoutStructureItem);
 		}
@@ -238,25 +242,6 @@ public class CollectionLayoutStructureItemImporter
 		}
 	}
 
-	private void _setViewportConfiguration(
-		CollectionDisplayViewport.Id collectionDisplayViewportId,
-		CollectionDisplayViewport[] collectionDisplayViewports,
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem) {
-
-		CollectionDisplayViewport collectionDisplayViewport =
-			_getCollectionDisplayViewport(
-				collectionDisplayViewportId, collectionDisplayViewports);
-
-		String viewportId = ViewportIdUtil.toInternalValue(
-			collectionDisplayViewportId.getValue());
-
-		if (collectionDisplayViewport != null) {
-			collectionStyledLayoutStructureItem.setViewportConfiguration(
-				viewportId, _toViewportJSONObject(collectionDisplayViewport));
-		}
-	}
-
 	private EmptyCollectionOptions _toEmptyCollectionOptions(
 		EmptyCollectionConfig emptyCollectionConfig) {
 
@@ -346,6 +331,30 @@ public class CollectionLayoutStructureItemImporter
 			() -> _toStylesJSONObject(
 				collectionDisplayViewportDefinition.getHidden())
 		);
+	}
+
+	private void _updateItemConfig(
+		CollectionDisplayViewport.Id collectionDisplayViewportId,
+		CollectionDisplayViewport[] collectionDisplayViewports,
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
+
+		JSONObject viewportJSONObject = _toViewportJSONObject(
+			_getCollectionDisplayViewport(
+				collectionDisplayViewportId, collectionDisplayViewports));
+
+		if (!Objects.equals(
+				collectionDisplayViewportId,
+				CollectionDisplayViewport.Id.DESKTOP)) {
+
+			viewportJSONObject = JSONUtil.put(
+				ViewportIdUtil.toInternalValue(
+					collectionDisplayViewportId.getValue()),
+				viewportJSONObject);
+		}
+
+		collectionStyledLayoutStructureItem.updateItemConfig(
+			viewportJSONObject);
 	}
 
 }

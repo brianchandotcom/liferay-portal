@@ -24,14 +24,14 @@ const test = mergeTests(
 );
 
 const TAB_NAME = {
-	ADVANCED: 'Advanced'
+	ADVANCED: 'Advanced',
 };
 
 const TABS = [
 	{
 		actionsCount: 16,
 		name: TAB_NAME.ADVANCED,
-	}
+	},
 ];
 
 for (const tab of TABS) {
@@ -491,13 +491,9 @@ for (const tab of TABS) {
 				});
 
 				await test.step('Assert that "Group Permission Test" does not appear in the actions dropdown menu', async () => {
-					await fdsSamplePage.table.itemActionButtons
-						.first()
-						.click();
+					await fdsSamplePage.table.itemActionButtons.first().click();
 
-					const dropdownMenu = page.locator(
-						'.dropdown-menu.show'
-					);
+					const dropdownMenu = page.locator('.dropdown-menu.show');
 					await dropdownMenu.waitFor();
 
 					await expect(
@@ -516,13 +512,9 @@ for (const tab of TABS) {
 				});
 
 				await test.step('Assert that a separator is not shown in the first group', async () => {
-					await fdsSamplePage.table.itemActionButtons
-						.first()
-						.click();
+					await fdsSamplePage.table.itemActionButtons.first().click();
 
-					const dropdownMenu = page.locator(
-						'.dropdown-menu.show'
-					);
+					const dropdownMenu = page.locator('.dropdown-menu.show');
 					await dropdownMenu.waitFor();
 
 					const firstGroup = dropdownMenu
@@ -537,13 +529,9 @@ for (const tab of TABS) {
 				});
 
 				await test.step('Assert that 2 separators in a row do not display', async () => {
-					await fdsSamplePage.table.itemActionButtons
-						.first()
-						.click();
+					await fdsSamplePage.table.itemActionButtons.first().click();
 
-					const dropdownMenu = page.locator(
-						'.dropdown-menu.show'
-					);
+					const dropdownMenu = page.locator('.dropdown-menu.show');
 					await dropdownMenu.waitFor();
 
 					await expect(
@@ -556,13 +544,9 @@ for (const tab of TABS) {
 				});
 
 				await test.step('Assert that "Contextual Item" and its nested items are visible', async () => {
-					await fdsSamplePage.table.itemActionButtons
-						.first()
-						.click();
+					await fdsSamplePage.table.itemActionButtons.first().click();
 
-					const dropdownMenu = page.locator(
-						'.dropdown-menu.show'
-					);
+					const dropdownMenu = page.locator('.dropdown-menu.show');
 					await dropdownMenu.waitFor();
 
 					const contextualMenuItem = dropdownMenu.getByRole(

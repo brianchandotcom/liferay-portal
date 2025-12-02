@@ -10,6 +10,7 @@ import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -34,15 +35,11 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Roberto Díaz
+ * @author Stefano Motta
  */
-public class CMSGroupTestUtil {
+public class CMSTestUtil {
 
-	public static Group getCMSGroup(
-			Class<?> clazz, BatchEngineUnitProcessor batchEngineUnitProcessor,
-			BatchEngineUnitReader batchEngineUnitReader,
-			SiteInitializerRegistry siteInitializerRegistry)
-		throws Exception {
-
+	public static Group getOrAddGroup(Class<?> clazz) throws Exception {
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.CMS);
 
@@ -79,11 +76,19 @@ public class CMSGroupTestUtil {
 				// run the instance lifecycle initializer manually so that the
 				// role is created.
 
+				SiteInitializerRegistry siteInitializerRegistry =
+					_siteInitializerRegistrySnapshot.get();
+
 				SiteInitializer siteInitializer =
 					siteInitializerRegistry.getSiteInitializer(
 						"com.liferay.site.initializer.cms");
 
 				siteInitializer.initialize(group.getGroupId());
+
+				BatchEngineUnitProcessor batchEngineUnitProcessor =
+					_batchEngineUnitProcessorSnapshot.get();
+				BatchEngineUnitReader batchEngineUnitReader =
+					_batchEngineUnitReaderSnapshot.get();
 
 				Bundle testBundle = FrameworkUtil.getBundle(clazz);
 
@@ -129,5 +134,15 @@ public class CMSGroupTestUtil {
 			file.delete();
 		}
 	}
+
+	private static final Snapshot<BatchEngineUnitProcessor>
+		_batchEngineUnitProcessorSnapshot = new Snapshot<>(
+			CMSTestUtil.class, BatchEngineUnitProcessor.class);
+	private static final Snapshot<BatchEngineUnitReader>
+		_batchEngineUnitReaderSnapshot = new Snapshot<>(
+			CMSTestUtil.class, BatchEngineUnitReader.class);
+	private static final Snapshot<SiteInitializerRegistry>
+		_siteInitializerRegistrySnapshot = new Snapshot<>(
+			CMSTestUtil.class, SiteInitializerRegistry.class);
 
 }

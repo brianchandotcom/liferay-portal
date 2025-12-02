@@ -129,6 +129,14 @@ public class TomcatNode {
 			new ClusterExecutableProcessCallable<>(clusterExecutable));
 	}
 
+	public String getLiferayHome() {
+		return _liferayHome;
+	}
+
+	public Path getPortalExtPropertiesPath() {
+		return _portalExtPropertiesPath;
+	}
+
 	public ProcessChannel<String> start(boolean loadHomePage) throws Exception {
 		if (_destroyed) {
 			throw new IllegalStateException(
@@ -352,10 +360,15 @@ public class TomcatNode {
 			sb.append(PropsUtil.get(copyPropertyKey));
 		}
 
+		sb.append(StringPool.NEW_LINE);
+
 		String portalExtPropertiesContent = sb.toString();
 
+		_portalExtPropertiesPath = Paths.get(
+			_liferayHome, "portal-ext.properties");
+
 		Files.write(
-			Paths.get(_liferayHome, "portal-ext.properties"),
+			_portalExtPropertiesPath,
 			portalExtPropertiesContent.getBytes(StringPool.UTF8),
 			StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 
@@ -480,6 +493,7 @@ public class TomcatNode {
 	private final String _jvmArgs;
 	private final String _liferayHome;
 	private final int _nodeId;
+	private final Path _portalExtPropertiesPath;
 	private volatile ProcessChannel<String> _processChannel;
 	private final int _shutdownPort;
 

@@ -6,13 +6,11 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router';
 
-const LogPreview = ({
-	history,
-	match: {
-		params: {companyId, fileName},
-	},
-}) => {
+const LogPreview = () => {
+	const navigate = useNavigate();
+	const {companyId, fileName} = useParams();
 	const [{loading, logs}, setState] = useState({
 		loading: true,
 		logs: '',
@@ -39,7 +37,7 @@ const LogPreview = ({
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('back')}
 						displayType="unstyled"
-						onClick={() => history.push('/')}
+						onClick={() => navigate('/')}
 						size="sm"
 						symbol="angle-left"
 						title={Liferay.Language.get('back')}

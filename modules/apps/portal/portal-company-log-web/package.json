@@ -6,7 +6,7 @@
 		"@clayui/list": "3.155.0",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
-		"react-router-dom": "^5.0.1"
+		"react-router": "7.9.6"
 	},
 	"description": "",
 	"main": "js/index.js",

@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {HashRouter, Route, Switch} from 'react-router-dom';
+import {HashRouter, Route, Routes} from 'react-router';
 
 import CompanyLogs from './pages/CompanyLogs';
 import LogPreview from './pages/LogPreview';
@@ -13,15 +13,14 @@ export function App() {
 	return (
 		<div className="bg-white container mt-4 p-4">
 			<HashRouter>
-				<Switch>
-					<Route component={CompanyLogs} exact path="/" />
+				<Routes>
+					<Route element={<CompanyLogs />} path="/" />
 
 					<Route
-						component={LogPreview}
-						exact
+						element={<LogPreview />}
 						path="/:companyId/:fileName"
 					/>
-				</Switch>
+				</Routes>
 			</HashRouter>
 		</div>
 	);

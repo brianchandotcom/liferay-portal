@@ -10,7 +10,7 @@
 	<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 </portlet:renderURL>
 
-<c:if test="<%= !backgroundTask.isInProgress() %>">
+<c:if test="<%= !backgroundTask.isInProgress() && (backgroundTask.getStatus() != BackgroundTaskConstants.STATUS_SUCCESSFUL) %>">
 	<li>
 		<a class="dropdown-item" href="<%= importErrorsList %>">
 			<liferay-ui:message key="view-details" />

@@ -1390,3 +1390,66 @@ test(
 		});
 	}
 );
+
+// Create a structure with a multiselect field, save content only adding text and then edit it again
+
+test(
+	'Create a structure with a multiselect field, save content only adding text and then edit it again',
+	{tag: '@LPD-73147'},
+	async ({contentsPage, page, picklistBuilderPage, structureBuilderPage}) => {
+
+		// Create picklist
+
+		await picklistBuilderPage.goto();
+
+		const picklistName = getRandomString();
+
+		await picklistBuilderPage.nameInput.fill(picklistName);
+
+		await picklistBuilderPage.addOption('Option 1');
+		await picklistBuilderPage.addOption('Option 2');
+		await picklistBuilderPage.addOption('Option 3');
+
+		await picklistBuilderPage.savePicklist();
+
+		// Create structure
+
+		await structureBuilderPage.goToCreateStructure();
+
+		const structureLabel = `StructureMultiSelect${getRandomInt()}`;
+
+		await structureBuilderPage.changeStructureSettings({
+			label: structureLabel,
+			name: structureLabel,
+		});
+
+		// Add multiselect field
+
+		await structureBuilderPage.addField('Multiselect');
+
+		await structureBuilderPage.changeFieldSettings({
+			label: 'Multiselect',
+			picklist: picklistName,
+		});
+
+		await structureBuilderPage.publishStructure();
+
+		// Create a content, only fill the title
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel);
+
+		const title = getRandomString();
+
+		await page.getByPlaceholder(`New ${structureLabel}`).fill(title);
+
+		await contentsPage.publishButton.click();
+
+		// Edit the created content
+
+		await contentsPage.editContent(title);
+
+		await expect(page.getByText('Option 1')).toBeVisible();
+	}
+);

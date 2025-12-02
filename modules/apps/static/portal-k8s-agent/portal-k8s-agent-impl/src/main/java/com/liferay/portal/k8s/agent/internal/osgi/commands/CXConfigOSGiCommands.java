@@ -197,37 +197,33 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 			String key = splitFilter[0];
 			String value = splitFilter[1];
 
-					if (key.equals("deploymentType")) {
-						if (!deploymentFilterIsSet) {
-							if (value.equals("agent")) {
-								deploymentFilter = "(.k8s.config.key=*)";
-								deploymentFilterIsSet = true;
-							}
-							else if (value.equals("bundle")) {
-								deploymentFilter = "(.cx.config.key=*)";
-								deploymentFilterIsSet = true;
-							}
-						}
-			}
-			else if (key.equals("webId")) {
-				String defaultCompanyWebId = PropsValues.COMPANY_DEFAULT_WEB_ID;
+			if (key.equals("deploymentType")) {
+				if (deploymentFilterIsSet) {
+					continue;
+				}
 
-				otherFiltersSB.append(
-					"(dxp.lxc.liferay.com.virtualInstanceId=");
+				if (value.equals("agent")) {
+					deploymentFilter = "(.k8s.config.key=*)";
+					deploymentFilterIsSet = true;
+				}
 
-						if (value.equals(defaultCompanyWebId)) {
-							value = "default";
-						}
+				if (value.equals("bundle")) {
+					deploymentFilter = "(.cx.config.key=*)";
+					deploymentFilterIsSet = true;
+				}
 
-						otherFiltersSB.append(
-							value
-						).append(
-							")"
-						);
+				continue;
 			}
-			else {
-				otherFiltersSB.append(String.format("(%s=%s)", key, value));
+
+			if (key.equals("webId")) {
+				key = "dxp.lxc.liferay.com.virtualInstanceId";
+
+				if (Objects.equals(PropsValues.COMPANY_DEFAULT_WEB_ID, value)) {
+					value = "default";
+				}
 			}
+
+			otherFiltersSB.append(String.format("(%s=%s)", key, value));
 		}
 
 		String finalFilter = String.format(

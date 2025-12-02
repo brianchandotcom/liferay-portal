@@ -295,14 +295,14 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		if (classNameId > 0) {
 			className = _portal.fetchClassName(classNameId);
+
+			editableJSONObject.put("className", className);
 		}
 
 		String scopeExternalReferenceCode = editableJSONObject.getString(
 			"scopeExternalReferenceCode", null);
 
 		if (Validator.isNotNull(className) && (classPK > 0)) {
-			editableJSONObject.put("className", className);
-
 			ExportImportContentProcessorUtil.exportContentReference(
 				className, classPK, exportReferencedContent,
 				_infoItemServiceRegistry, portletDataContext, stagedModel);

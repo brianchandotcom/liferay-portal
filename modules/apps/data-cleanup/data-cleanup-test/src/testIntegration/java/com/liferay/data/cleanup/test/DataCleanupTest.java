@@ -162,7 +162,7 @@ public class DataCleanupTest {
 	@Test
 	public void testDeprecatedModulesUpgradeImageEditor() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"cleanUpImageEditorModuleData",
+			"cleanUpFrontendImageEditorModuleData",
 			"com.liferay.frontend.image.editor.web", null,
 			"com_liferay_image_editor_web_portlet_ImageEditorPortlet", null);
 	}
@@ -247,7 +247,7 @@ public class DataCleanupTest {
 		throws Exception {
 
 		_testDeprecatedModulesUpgrade(
-			"cleanUpPrivateMessagingModuleData",
+			"cleanUpSocialPrivateMessagingModuleData",
 			"com.liferay.social.privatemessaging.service",
 			"dependencies/private-messaging-tables.sql",
 			"com_liferay_social_privatemessaging_web_portlet_" +
@@ -303,8 +303,8 @@ public class DataCleanupTest {
 	@Test
 	public void testDeprecatedModulesUpgradeSocialRequest() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"cleanUpSocialRequestModuleData", "com.liferay.social.requests.web",
-			null,
+			"cleanUpSocialRequestsModuleData",
+			"com.liferay.social.requests.web", null,
 			"com_liferay_social_requests_web_portlet_SocialRequestsPortlet",
 			null);
 	}

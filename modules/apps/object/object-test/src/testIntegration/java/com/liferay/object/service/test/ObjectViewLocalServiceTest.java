@@ -42,6 +42,7 @@ import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -436,7 +437,8 @@ public class ObjectViewLocalServiceTest {
 				Collections.singletonList(
 					ListTypeEntryUtil.createListTypeEntry(
 						StringUtil.randomId(),
-						Collections.singletonMap(LocaleUtil.US, "Brazil"))));
+						Collections.singletonMap(LocaleUtil.US, "Brazil"))),
+				new ServiceContext());
 
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
@@ -461,7 +463,8 @@ public class ObjectViewLocalServiceTest {
 				Collections.singletonList(
 					ListTypeEntryUtil.createListTypeEntry(
 						StringUtil.randomId(),
-						Collections.singletonMap(LocaleUtil.US, "Brazil"))));
+						Collections.singletonMap(LocaleUtil.US, "Brazil"))),
+				new ServiceContext());
 
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,

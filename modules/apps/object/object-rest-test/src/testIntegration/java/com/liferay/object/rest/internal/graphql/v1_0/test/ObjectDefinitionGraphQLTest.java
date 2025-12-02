@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -131,7 +132,7 @@ public class ObjectDefinitionGraphQLTest {
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(_LIST_FIELD_NAME), false,
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		_addListTypeEntry(listTypeDefinition, StringUtil.randomId());
 		_addListTypeEntry(listTypeDefinition, StringUtil.randomId());
@@ -349,7 +350,7 @@ public class ObjectDefinitionGraphQLTest {
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(StringUtil.randomId()), false,
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 		String listTypeEntryKey1 = StringUtil.randomId();
 
 		_addListTypeEntry(listTypeDefinition, listTypeEntryKey1);

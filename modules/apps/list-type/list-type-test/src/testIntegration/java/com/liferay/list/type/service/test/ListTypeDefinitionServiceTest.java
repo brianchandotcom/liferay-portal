@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -147,7 +148,7 @@ public class ListTypeDefinitionServiceTest {
 			null, user.getUserId(),
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			false, Collections.emptyList());
+			false, Collections.emptyList(), new ServiceContext());
 	}
 
 	private void _setUser(User user) {
@@ -168,7 +169,7 @@ public class ListTypeDefinitionServiceTest {
 					null,
 					Collections.singletonMap(
 						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-					false, Collections.emptyList());
+					false, Collections.emptyList(), new ServiceContext());
 		}
 		finally {
 			if (listTypeDefinition != null) {
@@ -238,7 +239,7 @@ public class ListTypeDefinitionServiceTest {
 					listTypeDefinition.getListTypeDefinitionId(),
 					Collections.singletonMap(
 						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-					Collections.emptyList());
+					Collections.emptyList(), new ServiceContext());
 		}
 		finally {
 			if (listTypeDefinition != null) {

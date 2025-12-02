@@ -12,6 +12,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -93,7 +94,8 @@ public class ListTypeEntryUpgradeProcessTest {
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			system,
 			Collections.singletonList(
-				ListTypeEntryUtil.createListTypeEntry(key)));
+				ListTypeEntryUtil.createListTypeEntry(key)),
+			new ServiceContext());
 	}
 
 	private static final String _CLASS_NAME =

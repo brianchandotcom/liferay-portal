@@ -117,7 +117,8 @@ public class ListTypeDefinitionModelListenerTest {
 			false,
 			Collections.singletonList(
 				ListTypeEntryUtil.createListTypeEntry(
-					RandomTestUtil.randomString())));
+					RandomTestUtil.randomString())),
+			new ServiceContext());
 	}
 
 	private static User _user;

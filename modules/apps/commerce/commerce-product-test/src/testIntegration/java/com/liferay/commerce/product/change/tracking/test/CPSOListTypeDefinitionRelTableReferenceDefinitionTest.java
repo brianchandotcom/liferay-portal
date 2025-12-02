@@ -16,6 +16,7 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -82,7 +83,8 @@ public class CPSOListTypeDefinitionRelTableReferenceDefinitionTest
 				false,
 				Collections.singletonList(
 					ListTypeEntryUtil.createListTypeEntry(
-						RandomTestUtil.randomString())));
+						RandomTestUtil.randomString())),
+				new ServiceContext());
 	}
 
 	@Override

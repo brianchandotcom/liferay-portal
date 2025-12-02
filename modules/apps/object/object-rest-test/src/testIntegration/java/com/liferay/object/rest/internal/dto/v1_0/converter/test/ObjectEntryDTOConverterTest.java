@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -75,8 +76,8 @@ public class ObjectEntryDTOConverterTest {
 				RandomTestUtil.randomLocaleStringMap(), false,
 				Arrays.asList(
 					ListTypeEntryUtil.createListTypeEntry("listTypeEntryKey1"),
-					ListTypeEntryUtil.createListTypeEntry(
-						"listTypeEntryKey2")));
+					ListTypeEntryUtil.createListTypeEntry("listTypeEntryKey2")),
+				new ServiceContext());
 
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			false, false, true,

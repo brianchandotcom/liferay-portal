@@ -35,6 +35,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -90,7 +91,8 @@ public class ObjectDDMStorageAdapterTest {
 					ListTypeEntryUtil.createListTypeEntry(
 						"ListTypeEntry2",
 						Collections.singletonMap(
-							LocaleUtil.US, "ListTypeEntry2"))));
+							LocaleUtil.US, "ListTypeEntry2"))),
+				new ServiceContext());
 
 		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			ListUtil.fromArray(

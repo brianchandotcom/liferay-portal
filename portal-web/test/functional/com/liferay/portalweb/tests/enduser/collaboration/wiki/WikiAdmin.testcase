@@ -43,6 +43,8 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
 		WikiPage.addCP(
 			contentImageName = "Document_2.jpg",
 			groupName = "Guest",

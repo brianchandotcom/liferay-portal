@@ -24,6 +24,7 @@ import com.liferay.bean.portlet.registration.portlet.filter.BeanFilterImpl;
 import com.liferay.bean.portlet.registration.portlet.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.registration.portlet.util.PortletQNameUtil;
 import com.liferay.bean.portlet.registration.portlet.util.PortletScannerUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -229,18 +230,13 @@ public class PortletDescriptorParser {
 			QName qName = PortletQNameUtil.getQName(
 				defaultNamespace, qNameElement, nameElement);
 
-			String valueType = eventDefinitionElement.elementText("value-type");
-
-			List<Element> aliases = eventDefinitionElement.elements("alias");
-
-			List<QName> aliasQNames = new ArrayList<>(aliases.size());
-
-			for (Element alias : aliases) {
-				aliasQNames.add(
-					PortletQNameUtil.getQName(defaultNamespace, alias, null));
-			}
-
-			events.add(new EventImpl(aliasQNames, qName, valueType));
+			events.add(
+				new EventImpl(
+					TransformUtil.transform(
+						eventDefinitionElement.elements("alias"),
+						alias -> PortletQNameUtil.getQName(
+							defaultNamespace, alias, null)),
+					qName, eventDefinitionElement.elementText("value-type")));
 		}
 
 		Map<String, PublicRenderParameter> publicRenderParameters =
@@ -270,18 +266,12 @@ public class PortletDescriptorParser {
 		for (Element containerRuntimeOptionElement :
 				rootElement.elements("container-runtime-option")) {
 
-			String name = GetterUtil.getString(
-				containerRuntimeOptionElement.elementText("name"));
-
-			List<String> values = new ArrayList<>();
-
-			for (Element valueElement :
-					containerRuntimeOptionElement.elements("value")) {
-
-				values.add(valueElement.getTextTrim());
-			}
-
-			containerRuntimeOptions.put(name, values);
+			containerRuntimeOptions.put(
+				GetterUtil.getString(
+					containerRuntimeOptionElement.elementText("name")),
+				TransformUtil.transform(
+					containerRuntimeOptionElement.elements("value"),
+					valueElement -> valueElement.getTextTrim()));
 		}
 
 		Set<String> validCustomPortletModes = new HashSet<>();
@@ -465,25 +455,14 @@ public class PortletDescriptorParser {
 			for (Element preferenceElement :
 					portletPreferencesElement.elements("preference")) {
 
-				String name = preferenceElement.elementText("name");
-
-				List<String> values = new ArrayList<>();
-
-				List<Element> valueElements = preferenceElement.elements(
-					"value");
-
-				if (valueElements != null) {
-					for (Element valueElement : valueElements) {
-						values.add(valueElement.getText());
-					}
-				}
-
 				preferences.put(
-					name,
+					preferenceElement.elementText("name"),
 					new Preference(
 						GetterUtil.getBoolean(
 							preferenceElement.elementText("read-only")),
-						values));
+						TransformUtil.transform(
+							preferenceElement.elements("value"),
+							valueElement -> valueElement.getText())));
 			}
 
 			String xmlPreferencesValidator =
@@ -568,18 +547,12 @@ public class PortletDescriptorParser {
 		for (Element containerRuntimeOptionElement :
 				portletElement.elements("container-runtime-option")) {
 
-			String name = GetterUtil.getString(
-				containerRuntimeOptionElement.elementText("name"));
-
-			List<String> values = new ArrayList<>();
-
-			for (Element valueElement :
-					containerRuntimeOptionElement.elements("value")) {
-
-				values.add(valueElement.getTextTrim());
-			}
-
-			containerRuntimeOptions.put(name, values);
+			containerRuntimeOptions.put(
+				GetterUtil.getString(
+					containerRuntimeOptionElement.elementText("name")),
+				TransformUtil.transform(
+					containerRuntimeOptionElement.elements("value"),
+					valueElement -> valueElement.getTextTrim()));
 		}
 
 		Set<PortletDependency> portletDependencies = new HashSet<>();

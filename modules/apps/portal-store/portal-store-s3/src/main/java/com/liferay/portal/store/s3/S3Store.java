@@ -71,6 +71,8 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
+import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
+import software.amazon.awssdk.awscore.exception.AwsServiceException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -575,40 +577,43 @@ public class S3Store implements Store {
 		return false;
 	}
 
-	private SystemException _transform(
-		AmazonClientException amazonClientException) {
+	private SystemException _transform(Throwable throwable) {
+		if (throwable instanceof AwsServiceException) {
+			AwsServiceException awsServiceException =
+				(AwsServiceException)throwable;
 
-		if (amazonClientException instanceof AmazonServiceException) {
-			AmazonServiceException amazonServiceException =
-				(AmazonServiceException)amazonClientException;
+			AwsErrorDetails awsErrorDetails =
+				awsServiceException.awsErrorDetails();
 
-			StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(10);
 
-			sb.append("{errorCode=");
+			String errorCode = awsErrorDetails.errorCode();
 
-			String errorCode = amazonServiceException.getErrorCode();
+			if (errorCode != null) {
+				sb.append("{errorCode=");
+				sb.append(errorCode);
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+			else {
+				sb.append("{");
+			}
 
-			sb.append(errorCode);
-
-			sb.append(", errorType=");
-			sb.append(amazonServiceException.getErrorType());
-			sb.append(", message=");
-			sb.append(amazonServiceException.getMessage());
+			sb.append("message=");
+			sb.append(awsServiceException.getMessage());
 			sb.append(", requestId=");
-			sb.append(amazonServiceException.getRequestId());
+			sb.append(awsServiceException.requestId());
 			sb.append(", statusCode=");
-			sb.append(amazonServiceException.getStatusCode());
+			sb.append(awsServiceException.statusCode());
 			sb.append("}");
 
-			if (errorCode.equals("AccessDenied")) {
+			if (Objects.equals(errorCode, "AccessDenied")) {
 				return new AccessDeniedException(sb.toString());
 			}
 
 			return new SystemException(sb.toString());
 		}
 
-		return new SystemException(
-			amazonClientException.getMessage(), amazonClientException);
+		return new SystemException(throwable.getMessage(), throwable);
 	}
 
 	private static final int _DELETE_MAX = 1000;

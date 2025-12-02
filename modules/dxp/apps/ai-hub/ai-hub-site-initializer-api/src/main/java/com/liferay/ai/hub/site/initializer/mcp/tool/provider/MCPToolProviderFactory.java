@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * @author João Victor Alves
  */
-public interface McpToolProviderFactory {
+public interface MCPToolProviderFactory {
 
 	public McpToolProvider create(
 		long companyId, long groupId, Locale locale,

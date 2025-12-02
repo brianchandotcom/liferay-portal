@@ -5,13 +5,23 @@
 
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
-import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectFieldSettingTable;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,13 +51,52 @@ public class ObjectFieldModelDocumentContributor
 		document.addKeyword("objectFieldId", objectField.getObjectFieldId());
 		document.addKeyword("state", objectField.isState());
 		document.addKeyword(
-			"unique",
-			ObjectFieldSettingUtil.isUnique(
-				_objectFieldSettingLocalService.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId())));
+			"unique", _isUnique(objectField.getObjectFieldId()));
 
 		document.remove(Field.USER_NAME);
+	}
+
+	private boolean _isUnique(long objectFieldId) {
+		Set<Long> uniqueObjectFieldIds =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
+
+				// There should be only limited number of unique
+				// ObjectFieldSettings, skip size checking.
+
+				() -> -1,
+				ObjectFieldModelDocumentContributor.class.getName(),
+				count -> new HashSet<>(
+					_objectFieldSettingLocalService.dslQuery(
+						DSLQueryFactoryUtil.select(
+							ObjectFieldSettingTable.INSTANCE.objectFieldId
+						).from(
+							ObjectFieldSettingTable.INSTANCE
+						).where(
+							ObjectFieldSettingTable.INSTANCE.name.eq(
+								ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+							).and(
+								DSLFunctionFactoryUtil.lower(
+									ObjectFieldSettingTable.INSTANCE.value
+								).eq(
+									StringPool.TRUE
+								)
+							)
+						))));
+
+		if (uniqueObjectFieldIds == null) {
+			ObjectFieldSetting objectFieldSetting =
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					objectFieldId,
+					ObjectFieldSettingConstants.NAME_UNIQUE_VALUES);
+
+			if (objectFieldSetting == null) {
+				return false;
+			}
+
+			return GetterUtil.getBoolean(objectFieldSetting.getValue());
+		}
+
+		return uniqueObjectFieldIds.contains(objectFieldId);
 	}
 
 	@Reference

@@ -152,11 +152,18 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			KaleoInstanceToken kaleoInstanceToken =
 				executionContext.getKaleoInstanceToken();
 
+			KaleoNode kaleoNode = kaleoInstanceToken.getCurrentKaleoNode();
+
+			List<KaleoTransition> kaleoTransitions =
+				kaleoNode.getKaleoTransitions();
+
+			KaleoTransition kaleoTransition = kaleoTransitions.get(0);
+
 			_workflowNodeManager.completeWorkflowNode(
 				kaleoInstanceToken.getCompanyId(),
 				kaleoInstanceToken.getUserId(),
-				kaleoInstanceToken.getKaleoInstanceTokenId(), "end",
-				workflowContext, false);
+				kaleoInstanceToken.getKaleoInstanceTokenId(),
+				kaleoTransition.getName(), workflowContext, false);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

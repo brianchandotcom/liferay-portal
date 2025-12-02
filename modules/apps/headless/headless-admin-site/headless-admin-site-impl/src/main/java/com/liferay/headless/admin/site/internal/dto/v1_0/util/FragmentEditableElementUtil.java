@@ -153,6 +153,35 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
+	private static List<FragmentEditableElement> _getFragmentEditableElements(
+		long companyId, Map<String, String> editableTypes,
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
+
+		return TransformUtil.transform(
+			jsonObject.keySet(),
+			fieldId -> {
+				FragmentEditableElementValue fragmentEditableElementValue =
+					_getFragmentEditableElementValue(
+						companyId, infoItemServiceRegistry,
+						jsonObject.getJSONObject(fieldId), scopeGroupId,
+						editableTypes.getOrDefault(fieldId, "text"));
+
+				if (fragmentEditableElementValue == null) {
+					return null;
+				}
+
+				FragmentEditableElement fragmentEditableElement =
+					new FragmentEditableElement();
+
+				fragmentEditableElement.setFragmentEditableElementValue(
+					() -> fragmentEditableElementValue);
+				fragmentEditableElement.setId(() -> fieldId);
+
+				return fragmentEditableElement;
+			});
+	}
+
 	private static FragmentEditableElementValue
 		_getFragmentEditableElementValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
@@ -326,35 +355,6 @@ public class FragmentEditableElementUtil {
 				companyId, textMappedFragmentValue.getFragmentMappedValue(),
 				infoItemServiceRegistry, scopeGroupId),
 			jsonObject);
-	}
-
-	private static List<FragmentEditableElement> _getFragmentEditableElements(
-			long companyId, Map<String, String> editableTypes,
-			InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId) {
-
-		return TransformUtil.transform(
-			jsonObject.keySet(),
-			fieldId -> {
-				FragmentEditableElementValue fragmentEditableElementValue =
-					_getFragmentEditableElementValue(
-						companyId, infoItemServiceRegistry,
-						jsonObject.getJSONObject(fieldId), scopeGroupId,
-						editableTypes.getOrDefault(fieldId, "text"));
-
-				if (fragmentEditableElementValue == null) {
-					return null;
-				}
-
-				FragmentEditableElement fragmentEditableElement =
-					new FragmentEditableElement();
-
-				fragmentEditableElement.setFragmentEditableElementValue(
-					() -> fragmentEditableElementValue);
-				fragmentEditableElement.setId(() -> fieldId);
-
-				return fragmentEditableElement;
-			});
 	}
 
 	private static FragmentEditableElementValueFragmentLink

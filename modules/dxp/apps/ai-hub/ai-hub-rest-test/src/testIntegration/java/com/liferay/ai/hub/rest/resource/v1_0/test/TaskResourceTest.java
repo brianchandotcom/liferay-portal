@@ -146,130 +146,16 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				List.of(), new ArrayList<>(), "tasks/subscribe"));
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testPostByExternalReferenceCodeTask() throws Exception {
 		_testPostByExternalReferenceCodeTask();
 		_testPostByExternalReferenceCodeTaskWithScope();
-	}
-
-	@Ignore
-	@Test
-	public void testPostTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition()
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"context",
-				JSONUtil.put(
-					"question", "Is the \"get_openapis\" tool available?")
-			).put(
-				"scope",
-				JSONUtil.put(
-					"externalReferenceCode", _group.getExternalReferenceCode())
-			).put(
-				"type", "AI Decision Node With Tool Workflow Definition"
-			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" +
-				RandomTestUtil.randomString() + "/tasks",
-			Http.Method.POST);
-
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
-			() -> {
-				WorkflowInstance workflowInstance =
-					_workflowInstanceManager.getWorkflowInstance(
-						TestPropsValues.getCompanyId(),
-						jsonObject.getLong("externalReferenceCode"));
-
-				List<WorkflowNode> workflowNodes =
-					workflowInstance.getCurrentWorkflowNodes();
-
-				WorkflowNode workflowNode = workflowNodes.get(0);
-
-				Assert.assertEquals("approved", workflowNode.getName());
-
-				return null;
-			});
-	}
-
-	@Ignore
-	@Test
-	public void testPostTaskWithTypeAIDecisionWorkflowDefinition()
-		throws Exception {
-
-		_testPostTaskWithTypeAIDecisionWorkflowDefinition(
-			"Blue banana, or Blue Java, is a variety of a banana that grows " +
-				"in Brazil.",
-			"approved");
-		_testPostTaskWithTypeAIDecisionWorkflowDefinition(
-			"Innovative technology transforms everyday life with smarter " +
-				"digital solutions.",
-			"rejected");
-	}
-
-	@Ignore
-	@Test
-	public void testPostTaskWithTypeFixSpellingAndGrammar() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(4);
-		List<String> lines = new ArrayList<>();
-
-		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch), lines, "tasks/subscribe");
-
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"context", JSONUtil.put("text", "Thi text ix wrong.")
-			).put(
-				"type",
-				WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR
-			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" + sseEventSinkKey +
-				"/tasks",
-			Http.Method.POST);
-
-		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
-
-		Assert.assertEquals(lines.toString(), 4, lines.size());
-		Assert.assertEquals("event: Fix Spelling and Grammar", lines.get(2));
-		Assert.assertEquals(
-			"data: {\"data\":\"This text is wrong.\"}", lines.get(3));
-	}
-
-	@Ignore
-	@Test
-	public void testPostTaskWithTypeLLMNodeWithToolWorkflowDefinition()
-		throws Exception {
-
-		CountDownLatch countDownLatch = new CountDownLatch(4);
-		List<String> lines = new ArrayList<>();
-
-		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch), lines, "tasks/subscribe");
-
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"context",
-				JSONUtil.put(
-					"userMessage", "Is the \"get_openapi\" tool available?")
-			).put(
-				"scope",
-				JSONUtil.put(
-					"externalReferenceCode", _group.getExternalReferenceCode())
-			).put(
-				"type", "LLM Node With Tool Workflow Definition"
-			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" + sseEventSinkKey +
-				"/tasks",
-			Http.Method.POST);
-
-		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
-
-		Assert.assertEquals(lines.toString(), 4, lines.size());
-
-		String response = StringUtil.toLowerCase(lines.get(3));
-
-		Assert.assertTrue(response, response.contains("yes"));
+		_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition();
+		_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition();
+		_testPostByExternalReferenceCodeTaskWithTypeFixSpellingAndGrammar();
+		_testPostByExternalReferenceCodeTaskWithTypeLLMNodeWithToolWorkflowDefinition();
 	}
 
 	private static byte[] _getContentBytes(String fileName) throws Exception {
@@ -330,8 +216,60 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			workflowInstance.getWorkflowDefinitionName());
 	}
 
-	private void _testPostTaskWithTypeAIDecisionWorkflowDefinition(
-			String content, String workflowNodeName)
+	private void _testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition()
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"context",
+				JSONUtil.put(
+					"question", "Is the \"get_openapis\" tool available?")
+			).put(
+				"scope",
+				JSONUtil.put(
+					"externalReferenceCode", _group.getExternalReferenceCode())
+			).put(
+				"type", "AI Decision Node With Tool Workflow Definition"
+			).toString(),
+			"ai-hub/v1.0/by-external-reference-code/" +
+				RandomTestUtil.randomString() + "/tasks",
+			Http.Method.POST);
+
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				WorkflowInstance workflowInstance =
+					_workflowInstanceManager.getWorkflowInstance(
+						TestPropsValues.getCompanyId(),
+						jsonObject.getLong("externalReferenceCode"));
+
+				List<WorkflowNode> workflowNodes =
+					workflowInstance.getCurrentWorkflowNodes();
+
+				WorkflowNode workflowNode = workflowNodes.get(0);
+
+				Assert.assertEquals("approved", workflowNode.getName());
+
+				return null;
+			});
+	}
+
+	private void _testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition()
+		throws Exception {
+
+		_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition(
+			"Blue banana, or Blue Java, is a variety of a banana that grows " +
+				"in Brazil.",
+			"approved");
+		_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition(
+			"Innovative technology transforms everyday life with smarter " +
+				"digital solutions.",
+			"rejected");
+	}
+
+	private void
+			_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition(
+				String content, String workflowNodeName)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -365,6 +303,68 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 				return null;
 			});
+	}
+
+	private void _testPostByExternalReferenceCodeTaskWithTypeFixSpellingAndGrammar()
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(4);
+		List<String> lines = new ArrayList<>();
+
+		String sseEventSinkKey = SseEventSourceTestUtil.open(
+			List.of(countDownLatch), lines, "tasks/subscribe");
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"context", JSONUtil.put("text", "Thi text ix wrong.")
+			).put(
+				"type",
+				WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR
+			).toString(),
+			"ai-hub/v1.0/by-external-reference-code/" + sseEventSinkKey +
+				"/tasks",
+			Http.Method.POST);
+
+		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+		Assert.assertEquals("event: Fix Spelling and Grammar", lines.get(2));
+		Assert.assertEquals(
+			"data: {\"data\":\"This text is wrong.\"}", lines.get(3));
+	}
+
+	private void _testPostByExternalReferenceCodeTaskWithTypeLLMNodeWithToolWorkflowDefinition()
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(4);
+		List<String> lines = new ArrayList<>();
+
+		String sseEventSinkKey = SseEventSourceTestUtil.open(
+			List.of(countDownLatch), lines, "tasks/subscribe");
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"context",
+				JSONUtil.put(
+					"userMessage", "Is the \"get_openapi\" tool available?")
+			).put(
+				"scope",
+				JSONUtil.put(
+					"externalReferenceCode", _group.getExternalReferenceCode())
+			).put(
+				"type", "LLM Node With Tool Workflow Definition"
+			).toString(),
+			"ai-hub/v1.0/by-external-reference-code/" + sseEventSinkKey +
+				"/tasks",
+			Http.Method.POST);
+
+		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+
+		String response = StringUtil.toLowerCase(lines.get(3));
+
+		Assert.assertTrue(response, response.contains("yes"));
 	}
 
 	@Inject

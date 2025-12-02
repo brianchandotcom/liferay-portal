@@ -160,17 +160,14 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 	private Configuration _getConfiguration(String pid)
 		throws InvalidSyntaxException, IOException {
 
-		Configuration[] cxConfigurations = _getConfigurations();
+		Configuration[] cxConfigurations = _getConfigurations(
+			"service.pid=" + pid);
 
-		if (cxConfigurations != null) {
-			for (Configuration cxConfiguration : cxConfigurations) {
-				if (Objects.equals(cxConfiguration.getPid(), pid)) {
-					return cxConfiguration;
-				}
-			}
+		if (ArrayUtil.isEmpty(cxConfigurations)) {
+			return null;
 		}
 
-		return null;
+		return cxConfigurations[0];
 	}
 
 	private Configuration[] _getConfigurations(String... filters)

@@ -400,7 +400,9 @@ public class DigitalSalesRoomResourceImpl
 						() -> {
 							FileEntry fileEntry = digitalSalesRoom.getBanner();
 
-							if (fileEntry == null) {
+							if ((fileEntry == null) ||
+								Validator.isBlank(fileEntry.getFileBase64())) {
+
 								return null;
 							}
 
@@ -421,7 +423,9 @@ public class DigitalSalesRoomResourceImpl
 							FileEntry fileEntry =
 								digitalSalesRoom.getClientLogo();
 
-							if (fileEntry == null) {
+							if ((fileEntry == null) ||
+								Validator.isBlank(fileEntry.getFileBase64())) {
+
 								return null;
 							}
 

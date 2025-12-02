@@ -28,9 +28,9 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 				"Layout.ctCollectionId, Layout.plid, Layout.groupId from ",
 				"Layout inner join DLFileEntry on (DLFileEntry.ctCollectionId ",
 				"= Layout.ctCollectionId or DLFileEntry.ctCollectionId = 0) ",
-				"and DLFileEntry.fileEntryId = Layout.faviconFileEntryId left ",
-				"join Group_ on (Group_.ctCollectionId = ",
-				"Layout.ctCollectionId or Group_.ctCollectionId = 0) and ",
+				"and DLFileEntry.fileEntryId = Layout.faviconFileEntryId ",
+				"inner join Group_ on (DLFileEntry.ctCollectionId = ",
+				"Group_.ctCollectionId or Group_.ctCollectionId = 0) and ",
 				"DLFileEntry.groupId = Group_.groupId where ",
 				"Layout.faviconFileEntryId > 0"));
 

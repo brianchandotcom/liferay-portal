@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.FragmentViewport;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -69,7 +70,8 @@ public class FragmentViewportUtil {
 	}
 
 	public static JSONObject toFragmentViewportsJSONObject(
-		FragmentViewport[] fragmentViewports) {
+			FragmentViewport[] fragmentViewports)
+		throws JSONException {
 
 		if (ArrayUtil.isEmpty(fragmentViewports)) {
 			return null;
@@ -87,17 +89,26 @@ public class FragmentViewportUtil {
 				continue;
 			}
 
-			jsonObject.put(
-				ViewportIdUtil.toInternalValue(
-					fragmentViewport.getId(
-					).getValue()),
-				JSONUtil.put(
-					"customCSS", customCSS
-				).put(
-					"styles",
-					FragmentViewportStyleUtil.toJSONObject(
-						fragmentViewport.getFragmentViewportStyle())
-				));
+			JSONObject viewportJSONObject = JSONUtil.put(
+				"customCSS", customCSS
+			).put(
+				"styles",
+				FragmentViewportStyleUtil.toJSONObject(
+					fragmentViewport.getFragmentViewportStyle())
+			);
+
+			if (Objects.equals(
+					fragmentViewport.getId(), FragmentViewport.Id.DESKTOP)) {
+
+				jsonObject = JSONUtil.merge(jsonObject, viewportJSONObject);
+			}
+			else {
+				jsonObject.put(
+					ViewportIdUtil.toInternalValue(
+						fragmentViewport.getId(
+						).getValue()),
+					viewportJSONObject);
+			}
 		}
 
 		return jsonObject;

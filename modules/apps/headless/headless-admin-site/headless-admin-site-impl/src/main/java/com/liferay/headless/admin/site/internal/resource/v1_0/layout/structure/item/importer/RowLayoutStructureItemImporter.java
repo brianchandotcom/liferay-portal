@@ -85,6 +85,9 @@ public class RowLayoutStructureItemImporter
 		}
 		else {
 			_updateItemConfig(
+				JSONUtil.put("modulesPerRow", 1), GridViewport.Id.DESKTOP,
+				gridViewports, rowStyledLayoutStructureItem);
+			_updateItemConfig(
 				JSONUtil.put("modulesPerRow", 1),
 				GridViewport.Id.LANDSCAPE_MOBILE, gridViewports,
 				rowStyledLayoutStructureItem);
@@ -186,17 +189,19 @@ public class RowLayoutStructureItemImporter
 		GridViewport gridViewport = _getGridViewport(
 			gridViewportId, gridViewports);
 
-		String viewportId = ViewportIdUtil.toInternalValue(
-			gridViewportId.getValue());
+		JSONObject viewportJSONObject = defaultViewportJSONObject;
 
 		if (gridViewport != null) {
-			rowStyledLayoutStructureItem.updateItemConfig(
-				JSONUtil.put(viewportId, _toViewportJSONObject(gridViewport)));
+			viewportJSONObject = _toViewportJSONObject(gridViewport);
 		}
-		else {
-			rowStyledLayoutStructureItem.updateItemConfig(
-				JSONUtil.put(viewportId, defaultViewportJSONObject));
+
+		if (!Objects.equals(gridViewportId, GridViewport.Id.DESKTOP)) {
+			viewportJSONObject = JSONUtil.put(
+				ViewportIdUtil.toInternalValue(gridViewportId.getValue()),
+				viewportJSONObject);
 		}
+
+		rowStyledLayoutStructureItem.updateItemConfig(viewportJSONObject);
 	}
 
 }

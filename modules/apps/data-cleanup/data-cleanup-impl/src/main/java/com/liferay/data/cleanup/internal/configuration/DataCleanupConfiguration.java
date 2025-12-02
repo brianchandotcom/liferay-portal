@@ -86,7 +86,7 @@ public interface DataCleanupConfiguration {
 		deflt = "false", name = "clean-up-frontend-image-editor-module-data",
 		required = false
 	)
-	public boolean cleanUpImageEditorModuleData();
+	public boolean cleanUpFrontendImageEditorModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "clean-up-invitation-module-data",
@@ -140,7 +140,7 @@ public interface DataCleanupConfiguration {
 		deflt = "false", name = "clean-up-social-private-messaging-module-data",
 		required = false
 	)
-	public boolean cleanUpPrivateMessagingModuleData();
+	public boolean cleanUpSocialPrivateMessagingModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "clean-up-quick-note-module-data",
@@ -170,7 +170,7 @@ public interface DataCleanupConfiguration {
 		deflt = "false", name = "clean-up-social-requests-module-data",
 		required = false
 	)
-	public boolean cleanUpSocialRequestModuleData();
+	public boolean cleanUpSocialRequestsModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "clean-up-social-user-statistics-module-data",

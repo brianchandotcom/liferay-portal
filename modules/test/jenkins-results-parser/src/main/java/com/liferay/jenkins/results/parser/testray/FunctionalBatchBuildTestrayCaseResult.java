@@ -5,7 +5,6 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.BuildReport;
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestReport;
@@ -37,20 +36,8 @@ public class FunctionalBatchBuildTestrayCaseResult
 		}
 
 		_functionalTestClass = (FunctionalTestClass)testClass;
-	}
 
-	@Override
-	public BuildReport getBuildReport() {
-		if (_functionalTestClass.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				_functionalTestClass.getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				return cachedDownstreamBuildReport;
-			}
-		}
-
-		return super.getBuildReport();
+		initBuildReport();
 	}
 
 	@Override
@@ -153,6 +140,22 @@ public class FunctionalBatchBuildTestrayCaseResult
 		}
 
 		return null;
+	}
+
+	@Override
+	public void initBuildReport() {
+		if (_functionalTestClass.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_functionalTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
+			}
+		}
+
+		super.initBuildReport();
 	}
 
 	@Override

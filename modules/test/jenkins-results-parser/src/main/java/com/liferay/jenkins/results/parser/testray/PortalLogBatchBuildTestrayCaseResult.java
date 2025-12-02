@@ -25,6 +25,8 @@ public class PortalLogBatchBuildTestrayCaseResult
 		AxisTestClassGroup axisTestClassGroup) {
 
 		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
+
+		initBuildReport();
 	}
 
 	@Override

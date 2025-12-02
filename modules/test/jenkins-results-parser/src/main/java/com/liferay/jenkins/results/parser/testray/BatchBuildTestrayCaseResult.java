@@ -39,7 +39,8 @@ import org.dom4j.Element;
 /**
  * @author Michael Hashimoto
  */
-public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
+public abstract class BatchBuildTestrayCaseResult
+	extends BuildTestrayCaseResult {
 
 	public BatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
@@ -56,13 +57,6 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 	public String getBatchName() {
 		return _axisTestClassGroup.getBatchName();
-	}
-
-	@Override
-	public BuildReport getBuildReport() {
-		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
-
-		return topLevelBuildReport.getDownstreamBuildReport(getAxisName());
 	}
 
 	@Override
@@ -294,6 +288,14 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void initBuildReport() {
+		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
+
+		setBuildReport(
+			topLevelBuildReport.getDownstreamBuildReport(getAxisName()));
 	}
 
 	protected AxisTestClassGroup getAxisTestClassGroup() {

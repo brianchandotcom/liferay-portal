@@ -121,3 +121,52 @@ test('Can see error report and details', async ({
 		exportImportPage.page.getByText(objectEntry.externalReferenceCode)
 	).toBeVisible();
 });
+
+test('Report entries actions are not visible for a successful import', async ({
+	apiHelpers,
+	companyExportImportPage,
+	exportImportPage,
+}) => {
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{externalReferenceCode: '', name: 'test'},
+		'c/tests'
+	);
+
+	const exportFilePath = await companyExportImportPage.export(
+		['Tests 1 Items'],
+		false
+	);
+
+	await companyExportImportPage.import({
+		filePath: exportFilePath,
+		includePermissions: true,
+	});
+
+	const exportName = exportFilePath.slice(
+		exportFilePath.lastIndexOf('/') + 1
+	);
+
+	await exportImportPage.taskActionsMenu(exportName).click();
+
+	await expect(
+		exportImportPage.page.getByRole('menuitem', {
+			name: 'View Report Entries',
+		})
+	).not.toBeVisible();
+
+	await expect(
+		exportImportPage.page.getByRole('menuitem', {
+			name: 'Export Report Entries',
+		})
+	).not.toBeVisible();
+});

@@ -241,10 +241,10 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 							value
 						).append(
 							")"
-						);
-					}
-					else {
-						return new Configuration[0];
+				);
+			}
+			else {
+				otherFiltersSB.append(String.format("(%s=%s)", key, value));
 			}
 		}
 

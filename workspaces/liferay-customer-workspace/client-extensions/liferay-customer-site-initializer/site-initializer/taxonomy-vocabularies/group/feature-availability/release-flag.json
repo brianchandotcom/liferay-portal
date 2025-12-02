@@ -1,6 +1,6 @@
 {
 	"description": "Fully supported feature, disabled by default. Customers can activate it proactively.",
-	"externalReferenceCode": "FA_RF",
+	"externalReferenceCode": "T_FA_RELEASE_FLAG_OPTIN",
 	"name": "Release Flag (opt-in)",
 	"viewableBy": "Anyone"
 }

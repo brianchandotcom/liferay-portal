@@ -11,7 +11,7 @@
 			"type": "StructuredContent"
 		}
 	],
-	"externalReferenceCode": "PC",
+	"externalReferenceCode": "T_PC",
 	"name": "Product Capabilities",
 	"name_i18n": {
 		"en_US": "Product Capabilities"

@@ -1,6 +1,6 @@
 {
 	"description": "Non supported, experimental feature, that may be disabled by default, so that customers can activate it proactively.",
-	"externalReferenceCode": "RSP_BETA",
+	"externalReferenceCode": "T_RSP_BETA",
 	"name": "Beta",
 	"viewableBy": "Anyone"
 }

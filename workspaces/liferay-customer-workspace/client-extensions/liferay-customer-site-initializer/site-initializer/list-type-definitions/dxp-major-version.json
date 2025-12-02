@@ -1,5 +1,5 @@
 {
-	"externalReferenceCode": "DXP_MAJOR_VERSION",
+	"externalReferenceCode": "LT_DXP_MAJOR_VERSION",
 	"name": "DXP Major Version",
 	"name_i18n": {
 		"en-US": "DXP Major Version"

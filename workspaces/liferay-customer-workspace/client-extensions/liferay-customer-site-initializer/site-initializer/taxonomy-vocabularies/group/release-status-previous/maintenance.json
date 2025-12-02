@@ -1,6 +1,6 @@
 {
 	"description": "Supported feature, available OOTB, that is not being actively evolved or improved.",
-	"externalReferenceCode": "RSP_MAINTENANCE",
+	"externalReferenceCode": "T_RSP_MAINTENANCE",
 	"name": "Maintenance",
 	"viewableBy": "Anyone"
 }

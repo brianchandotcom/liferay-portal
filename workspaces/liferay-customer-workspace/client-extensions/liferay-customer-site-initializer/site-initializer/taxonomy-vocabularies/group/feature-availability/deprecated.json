@@ -1,6 +1,6 @@
 {
 	"description": "Partially supported, enabled for existing customers, disabled by default for new customers and users.",
-	"externalReferenceCode": "FA_DEPRECATED",
+	"externalReferenceCode": "T_FA_DEPRECATED",
 	"name": "Deprecated",
 	"viewableBy": "Anyone"
 }

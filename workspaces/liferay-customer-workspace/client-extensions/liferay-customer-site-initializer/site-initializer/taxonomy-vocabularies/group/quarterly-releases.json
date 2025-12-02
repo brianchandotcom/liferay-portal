@@ -16,7 +16,7 @@
 			"type": "StructuredContent"
 		}
 	],
-	"externalReferenceCode": "QR",
+	"externalReferenceCode": "T_QR",
 	"name": "Quarterly Releases",
 	"name_i18n": {
 		"en_US": "Quarterly Releases"

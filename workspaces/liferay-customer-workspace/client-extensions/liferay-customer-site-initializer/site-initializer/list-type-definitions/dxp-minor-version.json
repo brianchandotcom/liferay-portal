@@ -1,5 +1,5 @@
 {
-	"externalReferenceCode": "DXP_MINOR_VERSION",
+	"externalReferenceCode": "LT_DXP_MINOR_VERSION",
 	"name": "DXP Minor Version",
 	"name_i18n": {
 		"en-US": "DXP Minor Version"

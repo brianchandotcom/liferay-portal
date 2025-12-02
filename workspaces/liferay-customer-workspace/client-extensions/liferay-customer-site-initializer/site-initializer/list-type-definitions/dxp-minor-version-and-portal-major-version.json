@@ -1,5 +1,5 @@
 {
-	"externalReferenceCode": "DXP_MINOR_VERSION_AND_PORTAL_MAJOR_VERSION",
+	"externalReferenceCode": "LT_DXP_MINOR_VERSION_AND_PORTAL_MAJOR_VERSION",
 	"name": "DXP Minor Version and Portal Major Version",
 	"name_i18n": {
 		"en-US": "DXP Minor Version and Portal Major Version"

@@ -23,6 +23,23 @@ public class ConfigurationTestUtil {
 		"com.liferay.headless.admin.configuration.sample.configuration." +
 			"TestFactoryConfiguration";
 
+	public static Map<String, Object> getRandomConfigurationScreenProperties(
+		String scopeKey, String scopeValue) {
+
+		return HashMapBuilder.<String, Object>put(
+			scopeKey,
+			() -> {
+				if (scopeKey != null) {
+					return scopeValue;
+				}
+
+				return scopeValue;
+			}
+		).put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		).build();
+	}
+
 	public static Map<String, Object> getRandomTestConfigurationProperties(
 		String scopeKey, String scopeValue) {
 

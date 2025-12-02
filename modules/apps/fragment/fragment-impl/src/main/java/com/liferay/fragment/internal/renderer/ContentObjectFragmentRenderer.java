@@ -30,7 +30,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -231,14 +230,8 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		long classPK = _getClassPK(infoItemReference, jsonObject);
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-39437") ||
-			!fragmentRendererContext.isViewMode() || (classPK <= 0)) {
-
+		if (!fragmentRendererContext.isViewMode() || (classPK <= 0)) {
 			_render(
 				displayObject, httpServletRequest, httpServletResponse,
 				(InfoItemRenderer<Object>)tuple.getObject(0), tuple);

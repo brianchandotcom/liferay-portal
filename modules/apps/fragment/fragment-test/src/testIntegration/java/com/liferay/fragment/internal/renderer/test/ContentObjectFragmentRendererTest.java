@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -118,7 +117,6 @@ public class ContentObjectFragmentRendererTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
-	@FeatureFlag("LPD-39437")
 	@Test
 	public void testRenderAssertAnalyticsAttributesInEditMode()
 		throws Exception {
@@ -129,7 +127,6 @@ public class ContentObjectFragmentRendererTest {
 		Assert.assertFalse(content.contains("data-analytics-asset-action"));
 	}
 
-	@FeatureFlag("LPD-39437")
 	@Test
 	public void testRenderAssertAnalyticsAttributesInViewMode()
 		throws Exception {

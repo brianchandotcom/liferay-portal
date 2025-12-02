@@ -54,8 +54,8 @@ public class ExportImportContentProcessorUtil {
 		}
 
 		_exportReference(
-			className, infoItemIdentifier.toString(), exportReferencedContent,
-			portletDataContext, stagedModel, object);
+			className, exportReferencedContent, portletDataContext,
+			infoItemIdentifier.toString(), object, stagedModel);
 	}
 
 	public static void exportContentReference(
@@ -71,8 +71,8 @@ public class ExportImportContentProcessorUtil {
 		}
 
 		_exportReference(
-			className, String.valueOf(classPK), exportReferencedContent,
-			portletDataContext, stagedModel, object);
+			className, exportReferencedContent, portletDataContext,
+			String.valueOf(classPK), object, stagedModel);
 	}
 
 	public static void replaceImportContentReferences(
@@ -112,9 +112,9 @@ public class ExportImportContentProcessorUtil {
 	}
 
 	private static void _exportReference(
-		String className, String referenceKey, boolean exportReferencedContent,
-		PortletDataContext portletDataContext, StagedModel stagedModel,
-		Object referenceObject) {
+		String className, boolean exportReferencedContent,
+		PortletDataContext portletDataContext, String referenceKey,
+		Object referenceObject, StagedModel stagedModel) {
 
 		if (exportReferencedContent) {
 			try {

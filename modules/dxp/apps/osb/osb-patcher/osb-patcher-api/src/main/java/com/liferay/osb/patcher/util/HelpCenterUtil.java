@@ -270,6 +270,10 @@ public class HelpCenterUtil {
 	protected static String getAuthenticationToken(long companyId)
 		throws Exception {
 
+		if (System.currentTimeMillis() < _tokenExpirationTime) {
+			return _accessToken;
+		}
+
 		Http.Options options = new Http.Options();
 
 		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
@@ -312,7 +316,16 @@ public class HelpCenterUtil {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			responseString);
 
-		return jsonObject.getString("access_token", StringPool.BLANK);
+		String accessToken = jsonObject.getString(
+			"access_token", StringPool.BLANK);
+
+		long expiresIn = jsonObject.getLong("expires_in", 0);
+
+		_accessToken = accessToken;
+		_tokenExpirationTime =
+			System.currentTimeMillis() + ((expiresIn - 60) * 1000);
+
+		return accessToken;
 	}
 
 	protected static String getMD5Checksum(InputStream fileInputStream) {
@@ -359,5 +372,8 @@ public class HelpCenterUtil {
 	private static final String _PATCHER_USER_AGENT = "OSB Patcher Portal/7.4";
 
 	private static final Log _log = LogFactoryUtil.getLog(HelpCenterUtil.class);
+
+	private static String _accessToken;
+	private static long _tokenExpirationTime;
 
 }

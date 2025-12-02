@@ -97,29 +97,29 @@ public class JspAnalyzerPluginTest {
 			"javax.servlet", "javax.servlet.http");
 
 		_testImplicitImports(
-			"dependencies/imports_without_comments_with_javax.jsp", null,
-			javaxFQNs, jakartaFQNs);
-		_testImplicitImports(
 			"dependencies/imports_without_comments.jsp", null, jakartaFQNs,
 			javaxFQNs);
 		_testImplicitImports(
-			"dependencies/imports_without_packages.jsp", "javax", javaxFQNs,
-			jakartaFQNs);
-		_testImplicitImports(
-			"dependencies/imports_without_packages.jsp", "jakarta", jakartaFQNs,
-			javaxFQNs);
-		_testImplicitImports(
-			"dependencies/imports_without_javaee_packages.jsp", "javax",
+			"dependencies/imports_without_comments_with_javax.jsp", null,
 			javaxFQNs, jakartaFQNs);
 		_testImplicitImports(
 			"dependencies/imports_without_javaee_packages.jsp", "jakarta",
 			jakartaFQNs, javaxFQNs);
-
 		_testImplicitImports(
-			"dependencies/imports_without_packages.jsp", "test", null, null);
+			"dependencies/imports_without_javaee_packages.jsp", "javax",
+			javaxFQNs, jakartaFQNs);
+		_testImplicitImports(
+			"dependencies/imports_without_packages.jsp", "jakarta", jakartaFQNs,
+			javaxFQNs);
+		_testImplicitImports(
+			"dependencies/imports_without_packages.jsp", "javax", javaxFQNs,
+			jakartaFQNs);
+
 		_testImplicitImports(
 			"dependencies/imports_without_javaee_packages.jsp", "test", null,
 			null);
+		_testImplicitImports(
+			"dependencies/imports_without_packages.jsp", "test", null, null);
 	}
 
 	@Test

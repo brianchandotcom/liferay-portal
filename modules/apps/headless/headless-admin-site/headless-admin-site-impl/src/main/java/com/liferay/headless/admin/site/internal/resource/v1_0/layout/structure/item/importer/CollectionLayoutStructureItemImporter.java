@@ -255,10 +255,6 @@ public class CollectionLayoutStructureItemImporter
 			collectionStyledLayoutStructureItem.setViewportConfiguration(
 				viewportId, _toViewportJSONObject(collectionDisplayViewport));
 		}
-		else {
-			collectionStyledLayoutStructureItem.setViewportConfiguration(
-				viewportId, JSONFactoryUtil.createJSONObject());
-		}
 	}
 
 	private EmptyCollectionOptions _toEmptyCollectionOptions(

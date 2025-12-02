@@ -5,12 +5,14 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -18,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileVersionServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
@@ -27,6 +30,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
@@ -181,8 +186,71 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public DLFileVersion getFileVersion(String version) throws PortalException {
-		return DLFileVersionLocalServiceUtil.getFileVersion(
-			getFileEntryId(), version);
+		Map<String, DLFileVersion> dlFileVersions =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
+				() -> {
+					DLFileVersionLocalService dlFileVersionLocalService =
+						DLFileVersionLocalServiceUtil.getService();
+
+					return dlFileVersionLocalService.dslQueryCount(
+						DSLQueryFactoryUtil.count(
+						).from(
+							DLFileVersionTable.INSTANCE
+						),
+						false);
+				},
+				DLFileEntryImpl.class.getName(),
+				count -> {
+					Map<String, DLFileVersion> localDLFileVersions =
+						new HashMap<>();
+
+					if (count == 0) {
+						return localDLFileVersions;
+					}
+
+					DLFileVersionLocalService dlFileVersionLocalService =
+						DLFileVersionLocalServiceUtil.getService();
+
+					for (DLFileVersion dlFileVersion :
+							dlFileVersionLocalService.
+								<List<DLFileVersion>>dslQuery(
+									DSLQueryFactoryUtil.select(
+										DLFileVersionTable.INSTANCE
+									).from(
+										DLFileVersionTable.INSTANCE
+									),
+									false)) {
+
+						localDLFileVersions.put(
+							dlFileVersion.getFileEntryId() + StringPool.POUND +
+								dlFileVersion.getVersion(),
+							dlFileVersion);
+					}
+
+					return localDLFileVersions;
+				});
+
+		if (dlFileVersions == null) {
+			return DLFileVersionLocalServiceUtil.getFileVersion(
+				getFileEntryId(), version);
+		}
+
+		DLFileVersion dlFileVersion = dlFileVersions.get(
+			getFileEntryId() + StringPool.POUND + version);
+
+		if (dlFileVersion == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("No DLFileVersion exists with the key {fileEntryId=");
+			sb.append(getFileEntryId());
+			sb.append(", version=");
+			sb.append(version);
+			sb.append("}");
+
+			throw new NoSuchFileVersionException(sb.toString());
+		}
+
+		return dlFileVersion;
 	}
 
 	@Override

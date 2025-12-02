@@ -13,15 +13,18 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -106,6 +109,42 @@ public class IntegerObjectFieldBusinessType
 			objectField.getName(),
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
 			getObjectFieldSettingsValues(objectFieldSettings));
+	}
+
+	@Override
+	public void validateObjectFieldSettingsDefaultValue(
+			ObjectField objectField,
+			Map<String, String> objectFieldSettingsValuesMap)
+		throws PortalException {
+
+		if (objectFieldSettingsValuesMap.isEmpty()) {
+			return;
+		}
+
+		super.validateObjectFieldSettingsDefaultValue(
+			objectField, objectFieldSettingsValuesMap);
+
+		if (Objects.equals(
+				objectFieldSettingsValuesMap.get(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE),
+				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER)) {
+
+			return;
+		}
+
+		String defaultValue = objectFieldSettingsValuesMap.get(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
+
+		if (Validator.isNull(defaultValue)) {
+			return;
+		}
+
+		if (defaultValue.startsWith(StringPool.MINUS)) {
+			defaultValue = defaultValue.substring(1);
+		}
+
+		validateMaxLength(
+			9, ObjectFieldSettingConstants.NAME_DEFAULT_VALUE, defaultValue);
 	}
 
 	@Reference

@@ -183,7 +183,6 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 		}
 
 		StringBundler otherFiltersSB = new StringBundler();
-		boolean deploymentFilterIsSet = false;
 
 		for (String filter : filters) {
 			String[] splitFilter = filter.split("=", 2);
@@ -198,18 +197,12 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 			String value = splitFilter[1];
 
 			if (key.equals("deploymentType")) {
-				if (deploymentFilterIsSet) {
-					continue;
-				}
-
 				if (value.equals("agent")) {
 					deploymentFilter = "(.k8s.config.key=*)";
-					deploymentFilterIsSet = true;
 				}
 
 				if (value.equals("bundle")) {
 					deploymentFilter = "(.cx.config.key=*)";
-					deploymentFilterIsSet = true;
 				}
 
 				continue;

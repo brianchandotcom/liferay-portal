@@ -6,8 +6,6 @@
 package com.liferay.headless.cms.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -38,7 +36,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
@@ -64,8 +61,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
-import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
@@ -75,7 +71,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -104,11 +99,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_originalTestGroupId = testGroup.getGroupId();
-
-		testGroup = CMSGroupTestUtil.getCMSGroup(
-			AssetUsageResourceTest.class, _batchEngineUnitProcessor,
-			_batchEngineUnitReader, _siteInitializerRegistry);
+		CMSTestUtil.getOrAddGroup(AssetUsageResourceTest.class);
 
 		_cmsBasicDocumentObjectDefinition =
 			_objectDefinitionLocalService.
@@ -139,14 +130,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 					testCompany.getCompanyId());
 
 		_themeDisplay = _getThemeDisplay();
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		testGroup = _groupLocalService.getGroup(_originalTestGroupId);
-
-		super.tearDown();
 	}
 
 	@Override
@@ -374,12 +357,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 	private static final String _LANGUAGE_ID = "en_US";
 
-	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
-
 	private ObjectDefinition _cmsBasicDocumentObjectDefinition;
 	private ObjectDefinition _cmsBasicWebContentObjectDefinition;
 
@@ -391,9 +368,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService
@@ -423,17 +397,11 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
-	private long _originalTestGroupId;
-
 	@Inject
 	private Portal _portal;
 
 	private ObjectField _relationshipObjectField;
 	private ServiceContext _serviceContext;
-
-	@Inject
-	private SiteInitializerRegistry _siteInitializerRegistry;
-
 	private ThemeDisplay _themeDisplay;
 
 }

@@ -6,8 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -34,8 +32,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
-import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -63,9 +60,7 @@ public class ObjectEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = CMSGroupTestUtil.getCMSGroup(
-			ObjectEntryLocalServiceTest.class, _batchEngineUnitProcessor,
-			_batchEngineUnitReader, _siteInitializerRegistry);
+		_group = CMSTestUtil.getOrAddGroup(ObjectEntryLocalServiceTest.class);
 	}
 
 	@Test
@@ -176,12 +171,6 @@ public class ObjectEntryLocalServiceTest {
 		return ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES;
 	}
 
-	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
-
 	private Group _group;
 
 	@Inject
@@ -195,8 +184,5 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

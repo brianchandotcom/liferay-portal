@@ -6,8 +6,6 @@
 package com.liferay.site.cms.site.initializer.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -33,9 +31,8 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
-import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.io.Serializable;
 
@@ -64,6 +61,8 @@ public class CMSDefaultPermissionUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CMSTestUtil.getOrAddGroup(CMSDefaultPermissionUtilTest.class);
+
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -73,10 +72,6 @@ public class CMSDefaultPermissionUtilTest {
 			).build(),
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
-
-		_group = CMSGroupTestUtil.getCMSGroup(
-			CMSDefaultPermissionUtilTest.class, _batchEngineUnitProcessor,
-			_batchEngineUnitReader, _siteInitializerRegistry);
 	}
 
 	@Test
@@ -186,12 +181,6 @@ public class CMSDefaultPermissionUtilTest {
 		Assert.assertEquals(2, jsonArray.length());
 	}
 
-	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
-
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
 
@@ -202,10 +191,5 @@ public class CMSDefaultPermissionUtilTest {
 		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 	)
 	private FilterFactory<Predicate> _filterFactory;
-
-	private Group _group;
-
-	@Inject
-	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

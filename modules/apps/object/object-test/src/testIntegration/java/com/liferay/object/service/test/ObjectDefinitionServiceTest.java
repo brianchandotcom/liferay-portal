@@ -6,8 +6,6 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -20,12 +18,9 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -36,9 +31,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -46,10 +39,8 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,15 +49,10 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.initializer.SiteInitializerRegistry;
-
-import java.io.File;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.After;
 import org.junit.Before;
@@ -74,10 +60,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Gabriel Albuquerque
@@ -160,7 +142,7 @@ public class ObjectDefinitionServiceTest {
 	public void testAddCustomObjectDefinitionByCMSAdministratorRole()
 		throws Exception {
 
-		_setUpCMSContext();
+		CMSTestUtil.getOrAddGroup(ObjectDefinitionServiceTest.class);
 
 		User user = UserTestUtil.addUser();
 
@@ -300,7 +282,7 @@ public class ObjectDefinitionServiceTest {
 	public void testPublishCustomObjectDefinitionByCMSAdministratorRole()
 		throws Exception {
 
-		_setUpCMSContext();
+		CMSTestUtil.getOrAddGroup(ObjectDefinitionServiceTest.class);
 
 		User user = UserTestUtil.addUser();
 
@@ -450,71 +432,6 @@ public class ObjectDefinitionServiceTest {
 					ObjectFieldConstants.DB_TYPE_STRING,
 					RandomTestUtil.randomString(), StringUtil.randomId())),
 			Collections.emptyList());
-	}
-
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
-	private void _setUpCMSContext() throws Exception {
-		Group group = _groupLocalService.fetchGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.CMS);
-
-		if (group != null) {
-			return;
-		}
-
-		group = GroupTestUtil.addGroup();
-
-		group.setGroupKey(GroupConstants.CMS);
-
-		group = _groupLocalService.updateGroup(group);
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
-		try {
-
-			// Manually initialize the CMS site initializer until the feature
-			// flag LPD-17564 is removed
-
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.cms");
-
-			siteInitializer.initialize(group.getGroupId());
-
-			Bundle testBundle = FrameworkUtil.getBundle(
-				ObjectDefinitionServiceTest.class);
-
-			BundleContext bundleContext = testBundle.getBundleContext();
-
-			for (Bundle bundle : bundleContext.getBundles()) {
-				if (Objects.equals(
-						bundle.getSymbolicName(),
-						"com.liferay.site.initializer.cms")) {
-
-					_deleteFile(bundle, "00.list.type.definition");
-					_deleteFile(bundle, "01.object.folder");
-					_deleteFile(bundle, "02.object.definition");
-
-					CompletableFuture<Void> completableFuture =
-						_batchEngineUnitProcessor.processBatchEngineUnits(
-							_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-					completableFuture.join();
-				}
-			}
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
 	}
 
 	private void _setUser(User user) {
@@ -746,22 +663,10 @@ public class ObjectDefinitionServiceTest {
 	private User _adminUser;
 
 	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
-
-	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectDefinitionService _objectDefinitionService;
-
-	@Inject
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectFolder _objectFolder;
@@ -771,10 +676,6 @@ public class ObjectDefinitionServiceTest {
 
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
-
-	@Inject
-	private SiteInitializerRegistry _siteInitializerRegistry;
-
 	private User _user1;
 	private User _user2;
 

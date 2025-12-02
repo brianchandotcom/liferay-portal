@@ -3,45 +3,82 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-components-web';
+import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import ApiHelper from '../../../common/services/ApiHelper';
 import {ObjectDefinition} from '../../../common/types/ObjectDefinition';
 import DeleteStructureModalContent from '../../modal/DeleteStructureModalContent';
-import {executeAsyncItemAction} from '../utils/executeAsyncItemAction';
 
 const REPEATABLE_GROUPS_FOLDER_ERC = 'L_CMS_STRUCTURE_REPEATABLE_GROUPS';
 
 export default async function deleteStructureAction({
-	deleteAction,
 	getObjectDefinitionDeleteInfoURL,
 	loadData,
 	name,
 	relationships,
 	status,
+	structureId,
 }: {
-	deleteAction: {href: string; method: string};
 	getObjectDefinitionDeleteInfoURL: string;
 	loadData: () => {};
 	name: string;
 	relationships: ObjectDefinition['objectRelationships'];
 	status: number;
+	structureId: number;
 }) {
-	const deleteStructureToast = async () => {
-		await executeAsyncItemAction({
-			method: deleteAction.method,
-			refreshData: loadData,
-			successMessage: sub(
-				Liferay.Language.get('x-was-deleted-successfully'),
-				`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
-			),
-			url: deleteAction.href,
-		});
+	const deleteStructure = async ({
+		repeatableGroupIds,
+	}: {
+		repeatableGroupIds?: number[];
+	} = {}) => {
+		let promise;
+
+		// If the structure does not have repeatable groups, just delete it
+
+		if (!repeatableGroupIds?.length) {
+			promise = ApiHelper.delete(
+				`/o/object-admin/v1.0/object-definitions/${structureId}`
+			);
+		}
+
+		// Otherwise perform a batch request to remove also the groups
+
+		else {
+			const data = [...repeatableGroupIds, structureId].map((id) => ({
+				id,
+			}));
+
+			promise = ApiHelper.batch({
+				data,
+				method: 'DELETE',
+				url: '/o/object-admin/v1.0/object-definitions/batch',
+			});
+		}
+
+		const response = await promise;
+
+		if (response?.error) {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+		}
+		else {
+			openToast({
+				message: sub(
+					Liferay.Language.get('x-was-deleted-successfully'),
+					`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
+				),
+				type: 'success',
+			});
+
+			loadData();
+		}
 	};
 
 	if (status !== 0) {
-		await deleteStructureToast();
+		await deleteStructure();
 
 		return;
 	}
@@ -96,7 +133,7 @@ export default async function deleteStructureAction({
 			DeleteStructureModalContent({
 				closeModal,
 				name,
-				onDelete: deleteStructureToast,
+				onDelete: () => deleteStructure({repeatableGroupIds}),
 				usesCount: objectEntriesCount,
 			}),
 		size: 'md',

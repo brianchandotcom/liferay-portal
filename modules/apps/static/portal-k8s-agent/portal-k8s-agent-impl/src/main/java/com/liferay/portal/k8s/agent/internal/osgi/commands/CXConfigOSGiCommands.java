@@ -260,33 +260,11 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 	}
 
 	private String _printConfiguration(Configuration cxConfiguration) {
-		StringBundler sb = new StringBundler(1);
-
-		sb.append(
-			StringPool.NEW_LINE
-		).append(
-			"PID: "
-		).append(
-			cxConfiguration.getPid()
-		).append(
-			StringPool.NEW_LINE
-		).append(
-			"Factory PID: "
-		).append(
-			cxConfiguration.getFactoryPid()
-		).append(
-			StringPool.NEW_LINE
-		).append(
-			"Bundle location: "
-		).append(
-			cxConfiguration.getBundleLocation()
-		).append(
-			StringPool.NEW_LINE
-		).append(
-			_formatProperties(cxConfiguration.getProperties())
-		);
-
-		return sb.toString();
+		return String.format(
+			"\nPID: %s\nFactoryPID: %s\n Bundle location: %s\n%s",
+			cxConfiguration.getPid(), cxConfiguration.getFactoryPid(),
+			cxConfiguration.getBundleLocation(),
+			_formatProperties(cxConfiguration.getProperties()));
 	}
 
 	private void _printConfigurations(Configuration[] configurations) {

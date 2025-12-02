@@ -108,8 +108,8 @@ public class StyleSheetFrontendResourceRequestHandler
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Handling request ", requestURI, " [static file: ",
-					hashedFileURI, StringPool.CLOSE_BRACKET));
+					"Handling request ", requestURI, " with static file ",
+					hashedFileURI));
 		}
 
 		return _createFrontendResource(

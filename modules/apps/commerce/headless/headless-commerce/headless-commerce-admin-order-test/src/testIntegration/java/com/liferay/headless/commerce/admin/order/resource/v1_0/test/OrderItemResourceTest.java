@@ -126,20 +126,6 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 	}
 
 	@Test
-	public void testGetdOrderItemWithURL() throws Exception {
-		String url = "https://liferay.com/myfiles/download";
-
-		OrderItem postOrderItem = _addCommerceOrderItem(_getOrderItem(0, url));
-
-		OrderItem getOrderItem = orderItemResource.getOrderItem(
-			postOrderItem.getId());
-
-		String[] virtualItemURLs = {url};
-
-		Assert.assertEquals(virtualItemURLs, getOrderItem.getVirtualItemURLs());
-	}
-
-	@Test
 	public void testGetOrderItemWithFileEntry() throws Exception {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, _user.getUserId(), testGroup.getGroupId(),
@@ -169,6 +155,20 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				CommerceMediaConstants.URL_SEPARATOR_FILE,
 				fileEntry.getFileEntryId())
 		};
+
+		Assert.assertEquals(virtualItemURLs, getOrderItem.getVirtualItemURLs());
+	}
+
+	@Test
+	public void testGetOrderItemWithURL() throws Exception {
+		String url = "https://liferay.com/myfiles/download";
+
+		OrderItem postOrderItem = _addCommerceOrderItem(_getOrderItem(0, url));
+
+		OrderItem getOrderItem = orderItemResource.getOrderItem(
+			postOrderItem.getId());
+
+		String[] virtualItemURLs = {url};
 
 		Assert.assertEquals(virtualItemURLs, getOrderItem.getVirtualItemURLs());
 	}
@@ -205,7 +205,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"quantity"};
+		return new String[] {"externalReferenceCode", "quantity"};
 	}
 
 	@Override

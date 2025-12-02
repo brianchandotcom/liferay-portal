@@ -869,12 +869,20 @@ public class EditableValuesExportImportContentProcessorTest {
 				elementTextJSONObject.getLong("classNameId"));
 			Assert.assertEquals(
 				classPK, elementTextJSONObject.getLong("classPK"));
+		} else {
+			Assert.assertFalse(
+				elementTextJSONObject.has("classNameId"));
+			Assert.assertFalse(
+				elementTextJSONObject.has("classPK"));
 		}
 
 		if (Validator.isNotNull(scopeExternalReferenceCode)) {
 			Assert.assertEquals(
 				scopeExternalReferenceCode,
 				elementTextJSONObject.getString("scopeExternalReferenceCode"));
+		} else {
+			Assert.assertFalse(
+				elementTextJSONObject.has("scopeExternalReferenceCode"));
 		}
 	}
 
@@ -902,6 +910,9 @@ public class EditableValuesExportImportContentProcessorTest {
 				externalReferenceCode,
 				jsonObject.getString("externalReferenceCode"));
 		}
+		else {
+			Assert.assertFalse(jsonObject.has("externalReferenceCode"));
+		}
 
 		Assert.assertEquals(groupId, jsonObject.getLong("groupId"));
 		Assert.assertEquals(layoutId, jsonObject.getLong("layoutId"));
@@ -910,6 +921,9 @@ public class EditableValuesExportImportContentProcessorTest {
 			Assert.assertEquals(
 				scopeExternalReferenceCode,
 				jsonObject.getString("scopeExternalReferenceCode"));
+		}
+		else {
+			Assert.assertFalse(jsonObject.has("scopeExternalReferenceCode"));
 		}
 	}
 

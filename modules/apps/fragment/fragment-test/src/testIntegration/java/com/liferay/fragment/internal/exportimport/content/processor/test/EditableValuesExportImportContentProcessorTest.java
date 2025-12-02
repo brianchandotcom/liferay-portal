@@ -281,7 +281,7 @@ public class EditableValuesExportImportContentProcessorTest {
 
 	@Test
 	@TestInfo("LPD-67532")
-	public void testInfoItemFieldMapped() throws Exception {
+	public void testEditableValuesWithInfoItemFieldMapped() throws Exception {
 		FragmentEntry fragmentEntry =
 			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-heading");
@@ -404,7 +404,7 @@ public class EditableValuesExportImportContentProcessorTest {
 
 	@Test
 	@TestInfo({"LPD-34189", "LPD-67532", "LPS-120198"})
-	public void testLinkedLayoutMapping() throws Exception {
+	public void testEditableValuesWithLinkedLayoutMapping() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -503,7 +503,7 @@ public class EditableValuesExportImportContentProcessorTest {
 
 	@Test
 	@TestInfo({"LPD-34189", "LPD-67532"})
-	public void testLinkedLayoutMappingWithDeletedLayout() throws Exception {
+	public void testEditableValuesWithLinkedLayoutMappingWithDeletedLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -554,7 +554,7 @@ public class EditableValuesExportImportContentProcessorTest {
 
 	@Test
 	@TestInfo({"LPD-34189", "LPD-67532"})
-	public void testURLEditableValues() throws Exception {
+	public void testEditableValuesWithURL() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -643,7 +643,7 @@ public class EditableValuesExportImportContentProcessorTest {
 
 	@Test
 	@TestInfo({"LPD-34189", "LPD-67532"})
-	public void testURLEditableValuesWithDeletedLayout() throws Exception {
+	public void testEditableValuesWithURLWithDeletedLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
 		FragmentEntryLink fragmentEntryLink =

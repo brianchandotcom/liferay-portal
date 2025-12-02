@@ -120,9 +120,9 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 			Validator.isNull(
 				masterLayout3.getMasterLayoutPageTemplateEntryERC()));
 
+		Assert.assertTrue(_dbInspector.hasColumn("Layout", "masterLPTEERC"));
 		Assert.assertFalse(
 			_dbInspector.hasColumn("Layout", "masterLayoutPlid"));
-		Assert.assertTrue(_dbInspector.hasColumn("Layout", "masterLPTEERC"));
 	}
 
 	@Override

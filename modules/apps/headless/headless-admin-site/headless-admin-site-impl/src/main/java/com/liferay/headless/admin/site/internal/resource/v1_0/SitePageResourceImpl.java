@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -345,7 +344,7 @@ public class SitePageResourceImpl
 				long plid = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
-				return _toSitePage(_layoutLocalService.getLayout(plid));
+				return _toSitePage(_layoutService.getLayout(plid));
 			});
 	}
 
@@ -1000,9 +999,6 @@ public class SitePageResourceImpl
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

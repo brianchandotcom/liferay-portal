@@ -18,7 +18,6 @@ import jakarta.ws.rs.ext.Providers;
 /**
  * Converts any {@code NoSuchModelException} to a {@code 404} error.
  *
- *
  * @author Alejandro Hernández
  * @review
  */

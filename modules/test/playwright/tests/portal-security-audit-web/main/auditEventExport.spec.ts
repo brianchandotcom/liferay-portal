@@ -8,7 +8,6 @@ import {readFileSync, statSync} from 'fs';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getTempDir} from '../../../utils/temp';
 
 export const test = mergeTests(loginTest(), applicationsMenuPageTest);
@@ -206,7 +205,9 @@ test('LPD-40224: Check if the audit events filtered by date are being exported',
 
 	await page.locator('#startDate').fill('01/01/2001');
 
-	await fillAndClickOutside(page, page.locator('#endDate'), '01/01/2001');
+	await page.locator('#endDate').fill('01/01/2001');
+
+	await page.locator('#endDate').press('Tab');
 
 	await page.locator('.lexicon-icon-search').click();
 

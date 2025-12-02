@@ -19,16 +19,20 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.nio.channels.ScatteringByteChannel;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -66,31 +70,10 @@ public class FileEntryUtil {
 			URLReference urlReference, User user)
 		throws Exception {
 
-		URL url = ExportImportAttachmentManagerUtil.getURL(
-			urlReference.getUrl());
+		File file = FileUtil.createTempFile(
+			HttpUtil.URLtoInputStream(urlReference.getUrl()));
 
-		URLConnection urlConnection = url.openConnection();
-
-		if ((urlConnection instanceof HttpURLConnection httpURLConnection) &&
-			(httpURLConnection.getResponseCode() !=
-				HttpURLConnection.HTTP_OK)) {
-
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"Unable to download file from ", urlReference.getUrl(),
-					", unexpected HTTP code: ",
-					httpURLConnection.getResponseCode()));
-		}
-
-		InputStream fileInputStream = urlConnection.getInputStream();
-
-		byte[] fileBytes = StreamUtil.toByteArray(fileInputStream);
-
-		File tempFile = FileUtil.createTempFile(fileBytes);
-
-		String mimeType = MimeTypesUtil.getContentType(tempFile);
-
-		FileUtil.delete(tempFile);
+		String mimeType = MimeTypesUtil.getContentType(file);
 
 		Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
 
@@ -106,18 +89,22 @@ public class FileEntryUtil {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setIndexingEnabled(false);
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId, LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
+		Repository repository =
+			PortletFileRepositoryUtil.addPortletRepository(
+				groupId, LayoutAdminPortletKeys.GROUP_PAGES,
+				serviceContext);
 
 		String fileName =
-			urlReference.getExternalReferenceCode() + "_preview" + extension;
+			urlReference.getExternalReferenceCode() + "_preview" +
+			extension;
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			urlReference.getExternalReferenceCode(), user.getUserId(),
 			repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			resourceName + "_" + fileName, mimeType, fileName, null, null, null,
-			fileBytes, null, null, null, serviceContext);
-	}
+			resourceName + "_" + fileName, mimeType, fileName, null, null,
+			null,
+			file, null, null, null, serviceContext);
 
+	}
 }

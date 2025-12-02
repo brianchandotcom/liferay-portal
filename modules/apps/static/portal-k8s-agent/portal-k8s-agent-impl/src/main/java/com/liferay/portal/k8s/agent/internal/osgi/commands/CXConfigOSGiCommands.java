@@ -49,12 +49,13 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 
 		Configuration[] cxConfigurations = _getConfigurations(filters);
 
-		if ((cxConfigurations != null) && (cxConfigurations.length > 0)) {
-			_printConfigurations(cxConfigurations);
-		}
-		else {
+		if (ArrayUtil.isEmpty(cxConfigurations)) {
 			System.out.println("No configurations found.");
+
+			return;
 		}
+
+		_printConfigurations(cxConfigurations);
 	}
 
 	public void reload(String... args)
@@ -62,27 +63,31 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 
 		if (ArrayUtil.isEmpty(args)) {
 			System.out.println("No PID provided.");
+
+			return;
 		}
-		else if (args.length > 1) {
+
+		if (args.length > 1) {
 			System.out.println("Too many arguments.");
+
+			return;
 		}
-		else {
-			String pid = args[0];
 
-			Configuration cxConfiguration = _getConfiguration(pid);
+		String pid = args[0];
 
-			if (cxConfiguration != null) {
-				Configuration reloadedCxConfiguration = _reloadConfiguration(
-					cxConfiguration);
+		Configuration cxConfiguration = _getConfiguration(pid);
 
-				System.out.println(
-					"Reloaded configuration for " +
-						reloadedCxConfiguration.getPid());
-			}
-			else {
-				System.out.println("No configuration found.");
-			}
+		if (cxConfiguration == null) {
+			System.out.println("No configuration found.");
+
+			return;
 		}
+
+		Configuration reloadedCxConfiguration = _reloadConfiguration(
+			cxConfiguration);
+
+		System.out.println(
+			"Reloaded configuration for " + reloadedCxConfiguration.getPid());
 	}
 
 	public void show(String... args)
@@ -90,22 +95,27 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 
 		if (ArrayUtil.isEmpty(args)) {
 			System.out.println("No PID provided.");
+
+			return;
 		}
-		else if (args.length > 1) {
+
+		if (args.length > 1) {
 			System.out.println("Too many arguments.");
-		}
-		else {
-			String pid = args[0];
 
-			Configuration configuration = _getConfiguration(pid);
-
-			if (configuration != null) {
-				System.out.println(_printConfiguration(configuration));
-			}
-			else {
-				System.out.println("No configuration found.");
-			}
+			return;
 		}
+
+		String pid = args[0];
+
+		Configuration configuration = _getConfiguration(pid);
+
+		if (configuration == null) {
+			System.out.println("No configuration found.");
+
+			return;
+		}
+
+		System.out.println(_printConfiguration(configuration));
 	}
 
 	private String _formatProperties(Dictionary<String, Object> properties) {

@@ -14,9 +14,9 @@ import java.sql.ResultSet;
 /**
  * @author Alejandro Tardín
  */
-public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
+public class SocialPrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 
-	public PrivateMessagingUpgradeProcess(
+	public SocialPrivateMessagingUpgradeProcess(
 		MBThreadLocalService mbThreadLocalService) {
 
 		_mbThreadLocalService = mbThreadLocalService;

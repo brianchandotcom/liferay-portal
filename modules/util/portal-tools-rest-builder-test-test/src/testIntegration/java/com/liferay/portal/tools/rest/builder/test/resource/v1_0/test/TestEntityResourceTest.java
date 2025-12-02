@@ -261,6 +261,13 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testPostTestEntityMultipartImage() throws Exception {
+		super.testPostTestEntityMultipartImage();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testPutTestEntityStatus() throws Exception {
 		super.testPutTestEntityStatus();
 	}

@@ -22,20 +22,19 @@ import type {
 
 function applyStyles(itemsActions: any) {
 	return itemsActions.map((action: IItemsActions) => {
-		const nestedItemsActions = action?.items;
+		const newItems = action.items ? applyStyles(action.items) : undefined;
+		const itemsChanged = newItems !== action.items;
 
-		if (nestedItemsActions) {
-			action.items = applyStyles(nestedItemsActions);
-		}
+		const needsStyling = action?.data?.id === 'sampleDeleteMessage';
 
-		const key = action?.data?.id as string;
-		if (!key || key !== 'sampleDeleteMessage') {
+		if (!itemsChanged && !needsStyling) {
 			return action;
 		}
 
 		return {
 			...action,
-			className: 'text-danger',
+			...(itemsChanged && {items: newItems}),
+			...(needsStyling && {className: 'text-danger'}),
 		};
 	});
 }

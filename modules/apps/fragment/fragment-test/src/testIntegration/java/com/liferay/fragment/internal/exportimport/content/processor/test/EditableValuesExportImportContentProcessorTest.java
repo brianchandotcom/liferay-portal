@@ -235,7 +235,7 @@ public class EditableValuesExportImportContentProcessorTest {
 				journalArticle.getUuid(), _liveGroup.getGroupId());
 
 		_assertInfoItemFieldMappedEditableValues(
-			JournalArticle.class.getName(), journalArticle.getResourcePrimKey(),
+			journalArticle.getResourcePrimKey(),
 			journalArticle.getExternalReferenceCode(),
 			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
 				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
@@ -268,8 +268,7 @@ public class EditableValuesExportImportContentProcessorTest {
 				journalArticle.getUuid(), _liveGroup.getGroupId());
 
 		_assertInfoItemFieldMappedEditableValues(
-			JournalArticle.class.getName(), 0,
-			journalArticle.getExternalReferenceCode(),
+			0, journalArticle.getExternalReferenceCode(),
 			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
 				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
 			null);
@@ -302,8 +301,7 @@ public class EditableValuesExportImportContentProcessorTest {
 		_publishLayouts();
 
 		_assertInfoItemFieldMappedEditableValues(
-			JournalArticle.class.getName(), 0,
-			journalArticle.getExternalReferenceCode(),
+			0, journalArticle.getExternalReferenceCode(),
 			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
 				fragmentEntryLink.getUuid(), _liveGroup.getGroupId()),
 			group.getExternalReferenceCode());
@@ -849,7 +847,7 @@ public class EditableValuesExportImportContentProcessorTest {
 	}
 
 	private void _assertInfoItemFieldMappedEditableValues(
-		String className, long classPK, String externalReferenceCode,
+		long classPK, String externalReferenceCode,
 		FragmentEntryLink fragmentEntryLink,
 		String scopeExternalReferenceCode) {
 
@@ -864,14 +862,15 @@ public class EditableValuesExportImportContentProcessorTest {
 			"element-text");
 
 		Assert.assertEquals(
-			className, elementTextJSONObject.getString("className"));
+			JournalArticle.class.getName(),
+			elementTextJSONObject.getString("className"));
 		Assert.assertEquals(
 			externalReferenceCode,
 			elementTextJSONObject.getString("externalReferenceCode"));
 
 		if (classPK > 0) {
 			Assert.assertEquals(
-				_portal.getClassNameId(className),
+				_portal.getClassNameId(JournalArticle.class.getName()),
 				elementTextJSONObject.getLong("classNameId"));
 			Assert.assertEquals(
 				classPK, elementTextJSONObject.getLong("classPK"));

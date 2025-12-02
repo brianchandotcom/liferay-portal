@@ -4,7 +4,7 @@ exports[`data-sources getDataSourceDisplayObject should return the disconnected 
 Object {
   "display": "secondary",
   "label": "Disconnected",
-  "message": "The Data Source is disconnected. Data is no longer being synced from DXP, but you can reconnect to resume syncing.",
+  "message": "The data source is disconnected. Data is no longer being synced from DXP, but you can reconnect to resume syncing.",
 }
 `;
 

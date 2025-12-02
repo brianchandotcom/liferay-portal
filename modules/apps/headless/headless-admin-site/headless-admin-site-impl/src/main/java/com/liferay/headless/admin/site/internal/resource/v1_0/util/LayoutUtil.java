@@ -252,11 +252,11 @@ public class LayoutUtil {
 			serviceContext.setAttribute("published", Boolean.FALSE.toString());
 		}
 
-		Layout layout = LayoutLocalServiceUtil.addLayout(
+		Layout layout = LayoutServiceUtil.addLayout(
 			publishedContentPageSpecification.getExternalReferenceCode(),
-			serviceContext.getUserId(), groupId, privateLayout, parentLayoutId,
-			0, 0, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
-			type, typeSettingsUnicodeProperties.toString(), hidden, system,
+			groupId, privateLayout, parentLayoutId, 0, 0, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type,
+			typeSettingsUnicodeProperties.toString(), hidden, system,
 			friendlyURLMap, masterLayoutPageTemplateEntryERC, serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();

@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
 
+import {useRuleValidation} from '../../../app/contexts/RulesModalContext';
 import {getSelectOptions} from '../../../common/getSelectOptions';
 import RuleField from './RuleField';
 import {RuleError} from './RulesModal';
@@ -81,6 +82,8 @@ export default function RuleSelect<T extends string>({
 			);
 		}
 	}, [label, id, fieldRef, onErrorChange, previousSelectedKey, selectedKey]);
+
+	useRuleValidation(() => setError(!selectedKey && !previousSelectedKey));
 
 	if (readOnly) {
 		const item = items.find(({value}) => value === selectedKey);

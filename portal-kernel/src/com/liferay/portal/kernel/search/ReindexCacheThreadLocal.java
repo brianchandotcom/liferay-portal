@@ -10,8 +10,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
@@ -104,7 +104,7 @@ public class ReindexCacheThreadLocal {
 	}
 
 	public static SafeCloseable openReindexMode() {
-		return _reindexCacheMap.setWithSafeCloseable(new HashMap<>());
+		return _reindexCacheMap.setWithSafeCloseable(new ConcurrentHashMap<>());
 	}
 
 	public static SafeCloseable openReindexMode(

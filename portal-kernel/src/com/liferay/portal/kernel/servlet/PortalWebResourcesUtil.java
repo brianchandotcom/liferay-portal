@@ -149,6 +149,12 @@ public class PortalWebResourcesUtil {
 		return portalWebResources.getServletContext();
 	}
 
+	public static String getServletContextName(String resourceType) {
+		ServletContext servletContext = getServletContext(resourceType);
+
+		return servletContext.getServletContextName();
+	}
+
 	public static boolean hasContextPath(String requestURI) {
 		for (String contextPath : _contextPathServiceTrackerMap.keySet()) {
 			if (requestURI.startsWith(contextPath)) {

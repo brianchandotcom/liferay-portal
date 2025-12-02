@@ -8,9 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String ckEditorServletContextName = PortalWebResourcesUtil.getServletContext(
-	PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR
-).getServletContextName();
+String ckEditorServletContextName = PortalWebResourcesUtil.getServletContextName(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
 String editorName = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":editorName");
 boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":inlineEdit"));
 String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":inlineEditSaveURL"));

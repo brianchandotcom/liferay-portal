@@ -617,10 +617,15 @@ test(
 			key: 'BASIC_COMPONENT-heading',
 		});
 
+		const submitFragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'INPUTS-submit-button',
+		});
+
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
 			objectDefinitionClassName,
-			pageElements: [checkboxDefinition],
+			pageElements: [checkboxDefinition, submitFragmentDefinition],
 		});
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -662,7 +667,7 @@ test(
 			name: ruleName,
 		});
 
-		// Try to delete the heading and cancel the action
+		// Try to delete the checkbox and cancel the action
 
 		await pageEditorPage.deleteFragment(checkboxId);
 
@@ -708,52 +713,51 @@ test(
 			trigger: page.getByLabel(`View ${ruleName} Options`),
 		});
 
-		const noOptionsSelect = page.locator(
-			'input[value="No Options Available"]'
-		);
-
-		await expect(noOptionsSelect).toBeAttached();
-
-		const fragmentSelector = page.getByLabel(
+		const actionFragmentSelector = page.getByLabel(
 			'Select Fragment for the Action'
 		);
 
-		await expect(fragmentSelector).toHaveText('Select');
+		const conditionFragmentSelect = page.locator(
+			'input[value="No Options Available"]'
+		);
 
-		await fragmentSelector.click();
+		await expect(conditionFragmentSelect).toBeAttached();
+		await expect(actionFragmentSelector).toHaveText('Select');
+
+		await actionFragmentSelector.click();
 
 		await expect(
 			page.getByRole('option', {name: 'Heading'})
+		).not.toBeAttached();
+
+		await expect(
+			page.getByRole('option', {name: 'Checkbox'})
 		).not.toBeAttached();
 
 		// Check the errors when trying to save the rule
 
 		await page.getByText('Save', {exact: true}).click();
 
-		await expect(noOptionsSelect.locator('..')).toHaveText(
+		await expect(conditionFragmentSelect.locator('..')).toHaveText(
 			/Select Fragment for the Condition/
 		);
-		await expect(fragmentSelector.locator('..')).toHaveText(
+		await expect(actionFragmentSelector.locator('..')).toHaveText(
 			/Select Fragment for the Action/
 		);
+
+		// Change the action to Hide and check the form fragments
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByRole('option', {name: 'Form Container'}),
-			trigger: fragmentSelector,
+			target: page.getByRole('option', {name: 'Disable'}),
+			trigger: page.getByLabel('Select Action'),
 		});
 
-		await expect(fragmentSelector.locator('..')).not.toHaveText(
-			/Select Fragment for the Action/
-		);
+		await actionFragmentSelector.click();
 
 		await expect(
-			page
-				.getByRole('combobox', {name: 'Select Fragment for the Action'})
-				.locator('..')
-		).not.toHaveText(/Select Fragment for the Action/);
-
-		await page.getByText('Cancel', {exact: true}).click();
+			page.getByRole('option', {name: 'Checkbox'})
+		).not.toBeAttached();
 
 		// Refresh the page and check that the rule is still disabled
 

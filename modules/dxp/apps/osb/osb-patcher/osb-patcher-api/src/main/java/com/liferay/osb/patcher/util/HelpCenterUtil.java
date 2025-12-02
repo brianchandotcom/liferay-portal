@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -124,11 +126,15 @@ public class HelpCenterUtil {
 
 		Http.Response response = options.getResponse();
 
-		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new Exception(
+		int responseCode = response.getResponseCode();
+
+		if (responseCode != HttpURLConnection.HTTP_OK) {
+			_log.error(
 				StringBundler.concat(
-					"Response code ", response.getResponseCode(), ": ",
-					responseString));
+					"Response code ", responseCode, ": ", responseString));
+
+			throw new PortalException(
+				"failed-to-connect-to-the-large-file-uploader");
 		}
 
 		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
@@ -250,11 +256,14 @@ public class HelpCenterUtil {
 
 		Http.Response response = options.getResponse();
 
-		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new Exception(
+		int responseCode = response.getResponseCode();
+
+		if (responseCode != HttpURLConnection.HTTP_OK) {
+			_log.error(
 				StringBundler.concat(
-					"Response code ", response.getResponseCode(), ": ",
-					responseString));
+					"Response code ", responseCode, ": ", responseString));
+
+			throw new PortalException("failed-to-upload-file");
 		}
 	}
 
@@ -289,11 +298,15 @@ public class HelpCenterUtil {
 
 		Http.Response response = options.getResponse();
 
-		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new Exception(
+		int responseCode = response.getResponseCode();
+
+		if (responseCode != HttpURLConnection.HTTP_OK) {
+			_log.error(
 				StringBundler.concat(
-					"Response code ", response.getResponseCode(), ": ",
-					responseString));
+					"Response code ", responseCode, ": ", responseString));
+
+			throw new PortalException(
+				"failed-to-connect-to-the-authentication-service");
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -333,15 +346,18 @@ public class HelpCenterUtil {
 			responseInputStream, StringPool.UTF8);
 
 		if (responseCode != HttpURLConnection.HTTP_OK) {
-			throw new Exception(
+			_log.error(
 				StringBundler.concat(
-					"File upload failed. Response code ", responseCode, ": ",
-					responseBody));
+					"Response code ", responseCode, ": ", responseBody));
+
+			throw new PortalException("failed-to-upload-file");
 		}
 
 		httpURLConnection.disconnect();
 	}
 
 	private static final String _PATCHER_USER_AGENT = "OSB Patcher Portal/7.4";
+
+	private static final Log _log = LogFactoryUtil.getLog(HelpCenterUtil.class);
 
 }

@@ -143,8 +143,8 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 					messages.contains(
 						StringBundler.concat(
 							"Table ", dbInspector.normalizeName("ClassName_"),
-							", 1 row deleted because '", classNameValue,
-							"' is not defined in any deployed module and is ",
+							", 1 row deleted because \"", classNameValue,
+							"\" is not defined in any deployed module and is ",
 							"not in use")));
 
 				ClassName className = _classNameLocalService.fetchClassName(

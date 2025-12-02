@@ -141,8 +141,8 @@ public class ClassNamePostUpgradeDataCleanupProcess
 				DataCleanupLoggingUtil.logDelete(
 					_log, 1, _dbInspector.normalizeName("ClassName_"),
 					StringBundler.concat(
-						"'", value,
-						"' is not defined in any deployed module and is not ",
+						"\"", value,
+						"\" is not defined in any deployed module and is not ",
 						"in use"));
 			}
 			else if (_log.isInfoEnabled()) {

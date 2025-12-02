@@ -15691,8 +15691,7 @@ public class ObjectEntryResourceTest {
 		return jsonArray;
 	}
 
-	private ObjectDefinition _enableComments(
-			ObjectDefinition objectDefinition)
+	private ObjectDefinition _enableComments(ObjectDefinition objectDefinition)
 		throws Exception {
 
 		objectDefinition.setEnableComments(true);

@@ -707,11 +707,7 @@ public class ObjectEntryResourceImpl
 			String targetLanguageIds, String version)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		String className = _objectDefinition.getClassName();
 
@@ -748,11 +744,7 @@ public class ObjectEntryResourceImpl
 			Long objectEntryId, String languageId, String targetLanguageId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		String exportMimeType = null;
 
@@ -872,11 +864,7 @@ public class ObjectEntryResourceImpl
 			String sourceLanguageId, String targetLanguageIds, String version)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		ObjectEntry objectEntry = getScopeScopeKeyByExternalReferenceCode(
 			scopeKey, externalReferenceCode);
@@ -891,11 +879,7 @@ public class ObjectEntryResourceImpl
 			String targetLanguageId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		ObjectEntry objectEntry = getScopeScopeKeyByExternalReferenceCode(
 			scopeKey, externalReferenceCode);
@@ -1083,11 +1067,7 @@ public class ObjectEntryResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -1104,11 +1084,7 @@ public class ObjectEntryResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -1399,11 +1375,7 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -1420,11 +1392,7 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -1538,11 +1506,7 @@ public class ObjectEntryResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -1707,11 +1671,7 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkFeatureFlag();
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -1819,6 +1779,14 @@ public class ObjectEntryResourceImpl
 					StringBundler.concat("<p>", text, "</p>"),
 					_createServiceContextFunction())),
 			_commentManager, PortalUtil.getPortal());
+	}
+
+	private void _checkFeatureFlag() {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private Function<String, ServiceContext> _createServiceContextFunction() {

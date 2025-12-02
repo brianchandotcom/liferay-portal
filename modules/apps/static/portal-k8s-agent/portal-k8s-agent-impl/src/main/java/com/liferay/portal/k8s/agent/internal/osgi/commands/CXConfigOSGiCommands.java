@@ -178,16 +178,22 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 
 		String deploymentFilter = "(|(.cx.config.key=*)(.k8s.config.key=*))";
 
-		if (filters.length > 0) {
-			StringBundler otherFiltersSB = new StringBundler();
-			boolean deploymentFilterIsSet = false;
+		if (filters.length <= 0) {
+			return _configurationAdmin.listConfigurations(deploymentFilter);
+		}
 
-			for (String filter : filters) {
-				String[] splitFilter = filter.split("=", 2);
+		StringBundler otherFiltersSB = new StringBundler();
+		boolean deploymentFilterIsSet = false;
 
-				if (splitFilter.length == 2) {
-					String key = splitFilter[0];
-					String value = splitFilter[1];
+		for (String filter : filters) {
+			String[] splitFilter = filter.split("=", 2);
+
+			if (splitFilter.length != 2) {
+				return new Configuration[0];
+			}
+
+			String key = splitFilter[0];
+			String value = splitFilter[1];
 
 					if (key.equals("deploymentType")) {
 						if (!deploymentFilterIsSet) {
@@ -200,13 +206,12 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 								deploymentFilterIsSet = true;
 							}
 						}
-					}
-					else if (key.equals("webId")) {
-						String defaultCompanyWebId =
-							PropsValues.COMPANY_DEFAULT_WEB_ID;
+			}
+			else if (key.equals("webId")) {
+				String defaultCompanyWebId = PropsValues.COMPANY_DEFAULT_WEB_ID;
 
-						otherFiltersSB.append(
-							"(dxp.lxc.liferay.com.virtualInstanceId=");
+				otherFiltersSB.append(
+					"(dxp.lxc.liferay.com.virtualInstanceId=");
 
 						if (value.equals(defaultCompanyWebId)) {
 							value = "default";
@@ -238,20 +243,13 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 					}
 					else {
 						return new Configuration[0];
-					}
-				}
-				else {
-					return new Configuration[0];
-				}
 			}
-
-			String finalFilter = String.format(
-				"(&%s%s)", deploymentFilter, otherFiltersSB);
-
-			return _configurationAdmin.listConfigurations(finalFilter);
 		}
 
-		return _configurationAdmin.listConfigurations(deploymentFilter);
+		String finalFilter = String.format(
+			"(&%s%s)", deploymentFilter, otherFiltersSB);
+
+			return _configurationAdmin.listConfigurations(finalFilter);
 	}
 
 	private String _getConfigurationTableRow(

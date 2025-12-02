@@ -41,3 +41,8 @@ export type TDSRRoomDetailsStepProps = {
 	): void;
 	numberOfSteps: number;
 };
+
+export type TDSRInitializerProps = {
+	closeModal: () => void;
+	numberOfSteps: number;
+};

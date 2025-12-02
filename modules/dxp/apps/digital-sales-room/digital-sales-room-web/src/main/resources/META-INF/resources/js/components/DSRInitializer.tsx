@@ -5,15 +5,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
+import {openToast} from 'frontend-js-components-web';
 import React, {SetStateAction, useCallback, useState} from 'react';
 
+import DigitalSalesRoomService from '../commons/DigitalSalesRoomService';
 import DSRRoomDetailsStep from './DSRRoomDetailsStep';
-import {TDSRContext, TDSRDataContext} from './DSRTypes';
-
-type TProps = {
-	closeModal: () => void;
-	numberOfSteps: number;
-};
+import {TDSRContext, TDSRDataContext, TDSRInitializerProps} from './DSRTypes';
 
 const DEFAULT_DATA_CONTEXT: TDSRDataContext = {
 	banner: {},
@@ -30,6 +27,34 @@ export const DSRContext = React.createContext<TDSRContext>({
 	dataContext: DEFAULT_DATA_CONTEXT,
 	setDataContext: () => {},
 });
+
+function getColor(color: string) {
+	if (!color) {
+		return '';
+	}
+
+	if (color.startsWith('#')) {
+		return color;
+	}
+
+	if (/^([0-9A-F]{3}){1,2}$/i.test(color)) {
+		return `#${color}`;
+	}
+
+	return color;
+}
+
+function getFriendlyURL(friendlyURL: string) {
+	if (!friendlyURL) {
+		return '';
+	}
+
+	if (friendlyURL.startsWith('/')) {
+		return friendlyURL;
+	}
+
+	return `/${friendlyURL}`;
+}
 
 function StepLoader({
 	numberOfSteps,
@@ -54,7 +79,7 @@ function StepLoader({
 	return <div></div>;
 }
 
-function DSRInitializer({closeModal, numberOfSteps = 3}: TProps) {
+function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
 	const [dataContext, setDataContext] = useState(DEFAULT_DATA_CONTEXT);
 	const [handleStepSubmit, setHandleStepSubmit] = useState(
 		() =>
@@ -64,7 +89,7 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TProps) {
 				return false;
 			}
 	);
-	const [loading] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [step, setStep] = useState(1);
 
 	const handleBack = useCallback(() => {
@@ -79,12 +104,19 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TProps) {
 
 	const handleNext = useCallback(
 		async (event: any) => {
-			const stepValid = await handleStepSubmit(event);
+			setLoading(true);
 
-			if (stepValid) {
-				setStep((prevState) => {
-					return prevState + 1;
-				});
+			try {
+				const stepValid = await handleStepSubmit(event);
+
+				if (stepValid) {
+					setStep((prevState) => {
+						return prevState + 1;
+					});
+				}
+			}
+			finally {
+				setLoading(false);
 			}
 		},
 		[handleStepSubmit]
@@ -92,13 +124,53 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TProps) {
 
 	const handleSave = useCallback(
 		async (event: any) => {
-			const stepValid = await handleStepSubmit(event);
+			setLoading(true);
 
-			if (stepValid) {
-				closeModal();
+			try {
+				const stepValid = await handleStepSubmit(event);
+
+				if (stepValid) {
+					const digitalSalesRoom =
+						await DigitalSalesRoomService.postDigitalSalesRoom({
+							accountId: 0,
+							banner: {
+								fileBase64:
+									(dataContext.banner.base64 || '')
+										.split(',')
+										.pop() || '',
+							},
+							channelId: 0,
+							clientLogo: {
+								fileBase64:
+									(dataContext.clientLogo.base64 || '')
+										.split(',')
+										.pop() || '',
+							},
+							clientName: dataContext.clientName,
+							friendlyUrlPath: getFriendlyURL(
+								dataContext.friendlyURL
+							),
+							name: dataContext.roomName,
+							primaryColor: getColor(dataContext.primaryColor),
+							secondaryColor: getColor(
+								dataContext.secondaryColor
+							),
+						});
+
+					window.location.href = `/web${digitalSalesRoom.friendlyUrlPath}?p_l_mode=edit`;
+				}
+			}
+			catch (error) {
+				openToast({
+					message: (error as Error).message,
+					type: 'danger',
+				});
+			}
+			finally {
+				setLoading(false);
 			}
 		},
-		[closeModal, handleStepSubmit]
+		[dataContext, handleStepSubmit]
 	);
 
 	return (

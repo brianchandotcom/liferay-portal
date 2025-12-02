@@ -100,6 +100,23 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	@Test
+	public void testControlChannelProperties() throws Exception {
+
+		// tcp.xml
+
+		_testControlChannelProperties(
+			false,
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
+
+		// udp.xml
+
+		_testControlChannelProperties(
+			true,
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",
+			"cluster.link.channel.properties.transport.0=udp.xml");
+	}
+
+	@Test
 	public void testShutdownAndStartupNodes() throws Exception {
 
 		// Assert node 1 and node 2 can see each others
@@ -166,26 +183,14 @@ public class ClusterGeneralTest implements Serializable {
 			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
 	}
 
-	@Test
-	public void testTCPControlChannelProperties() throws Exception {
-		_testControlChannelProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
-	}
-
-	@Test
-	public void testUDPControlChannelProperties() throws Exception {
-		_testControlChannelProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",
-			"cluster.link.channel.properties.transport.0=udp.xml");
-	}
-
 	private static String _getLocalClusterNodeId() {
 		return ClusterExecutorUtil.getLocalClusterNode(
 		).getClusterNodeId();
 	}
 
 	private Closeable _applyPortalExtLines(
-			TomcatNode tomcatNode, String... portalExtLines)
+			boolean keepStarted, TomcatNode tomcatNode,
+			String... portalExtLines)
 		throws Exception {
 
 		tomcatNode.stop();
@@ -207,7 +212,9 @@ public class ClusterGeneralTest implements Serializable {
 					path, bytes, StandardOpenOption.TRUNCATE_EXISTING,
 					StandardOpenOption.WRITE);
 
-				tomcatNode.start(true);
+				if (keepStarted) {
+					tomcatNode.start(true);
+				}
 			}
 			catch (Exception exception) {
 				throw new IOException(exception);
@@ -422,15 +429,16 @@ public class ClusterGeneralTest implements Serializable {
 				}));
 	}
 
-	private void _testControlChannelProperties(String... portalExtLines)
+	private void _testControlChannelProperties(
+			boolean keepStarted, String... portalExtLines)
 		throws Exception {
 
 		// Apply properties to nodes
 
 		try (Closeable closeable1 = _applyPortalExtLines(
-				_tomcatNode1, portalExtLines);
+				keepStarted, _tomcatNode1, portalExtLines);
 			Closeable closeable2 = _applyPortalExtLines(
-				_tomcatNode2, portalExtLines)) {
+				keepStarted, _tomcatNode2, portalExtLines)) {
 
 			// Assert properties are set correctly on both nodes
 

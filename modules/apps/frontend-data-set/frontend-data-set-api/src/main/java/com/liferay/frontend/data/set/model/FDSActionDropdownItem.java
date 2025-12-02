@@ -178,10 +178,6 @@ public class FDSActionDropdownItem extends DropdownItem {
 		putData("title", title);
 	}
 
-	public void setType(String type) {
-		put("type", type);
-	}
-
 	public void setVisibilityFilters(Map<String, Object> visibilityFilters) {
 		putData("visibilityFilters", visibilityFilters);
 	}

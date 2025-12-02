@@ -64,30 +64,55 @@ public class SiteConfigurationResourceTest
 	public void testGetSiteSiteConfiguration() throws Exception {
 		super.testGetSiteSiteConfiguration();
 
-		PropsUtil.set(
-			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");
+		_testGetSiteSiteConfigurationFromConfigurationScreen();
+		_testGetSiteSiteConfigurationWithPasswordKey();
+	}
 
-		SiteConfiguration siteConfiguration =
-			testGetSiteSiteConfiguration_addSiteConfiguration();
+	@Override
+	@Test
+	public void testPostSiteSiteConfiguration() throws Exception {
+		super.testPostSiteSiteConfiguration();
 
-		siteConfiguration = siteConfigurationResource.getSiteSiteConfiguration(
-			testGroup.getExternalReferenceCode(),
-			siteConfiguration.getExternalReferenceCode());
+		SiteConfiguration randomSiteConfiguration =
+			_randomSiteConfigurationFromConfigurationScreen();
 
-		Map<String, Object> properties = siteConfiguration.getProperties();
+		SiteConfiguration postSiteConfiguration =
+			testPostSiteSiteConfiguration_addSiteConfiguration(
+				randomSiteConfiguration);
 
-		Assert.assertNotNull(properties.get("passwordStringKey"));
+		assertEquals(randomSiteConfiguration, postSiteConfiguration);
+		assertValid(postSiteConfiguration);
+	}
 
-		PropsUtil.set(
-			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "false");
+	@Override
+	@Test
+	public void testPutSiteSiteConfiguration() throws Exception {
+		super.testPutSiteSiteConfiguration();
 
-		siteConfiguration = siteConfigurationResource.getSiteSiteConfiguration(
-			testGroup.getExternalReferenceCode(),
-			siteConfiguration.getExternalReferenceCode());
+		SiteConfiguration postSiteConfiguration =
+			siteConfigurationResource.postSiteSiteConfiguration(
+				testGroup.getExternalReferenceCode(),
+				_randomSiteConfigurationFromConfigurationScreen());
 
-		properties = siteConfiguration.getProperties();
+		SiteConfiguration randomSiteConfiguration =
+			_randomSiteConfigurationFromConfigurationScreen();
 
-		Assert.assertNull(properties.get("passwordStringKey"));
+		SiteConfiguration putSiteConfiguration =
+			siteConfigurationResource.putSiteSiteConfiguration(
+				testGroup.getExternalReferenceCode(),
+				postSiteConfiguration.getExternalReferenceCode(),
+				randomSiteConfiguration);
+
+		assertEquals(randomSiteConfiguration, putSiteConfiguration);
+		assertValid(putSiteConfiguration);
+
+		SiteConfiguration getSiteConfiguration =
+			siteConfigurationResource.getSiteSiteConfiguration(
+				testGroup.getExternalReferenceCode(),
+				putSiteConfiguration.getExternalReferenceCode());
+
+		assertEquals(randomSiteConfiguration, getSiteConfiguration);
+		assertValid(getSiteConfiguration);
 	}
 
 	@Override
@@ -126,7 +151,10 @@ public class SiteConfigurationResourceTest
 					properties =
 						ConfigurationTestUtil.
 							getRandomTestConfigurationProperties(
-								"companyWebId", testCompany.getWebId());
+								"groupKey",
+								StringBundler.concat(
+									testCompany.getWebId(), "--",
+									testGroup.getGroupKey()));
 				}
 			});
 	}
@@ -139,6 +167,69 @@ public class SiteConfigurationResourceTest
 
 		return siteConfigurationResource.postSiteSiteConfiguration(
 			testGroup.getExternalReferenceCode(), siteConfiguration);
+	}
+
+	private SiteConfiguration _randomSiteConfigurationFromConfigurationScreen()
+		throws Exception {
+
+		return new SiteConfiguration() {
+			{
+				externalReferenceCode = "group-configuration-key";
+				properties =
+					ConfigurationTestUtil.
+						getRandomConfigurationScreenProperties(
+							"groupKey",
+							StringBundler.concat(
+								testCompany.getWebId(), "--",
+								testGroup.getGroupKey()));
+			}
+		};
+	}
+
+	private void _testGetSiteSiteConfigurationFromConfigurationScreen()
+		throws Exception {
+
+		SiteConfiguration postSiteConfiguration =
+			siteConfigurationResource.postSiteSiteConfiguration(
+				testGroup.getExternalReferenceCode(),
+				_randomSiteConfigurationFromConfigurationScreen());
+
+		SiteConfiguration getSiteConfiguration =
+			siteConfigurationResource.getSiteSiteConfiguration(
+				testGroup.getExternalReferenceCode(),
+				postSiteConfiguration.getExternalReferenceCode());
+
+		assertEquals(postSiteConfiguration, getSiteConfiguration);
+		assertValid(getSiteConfiguration);
+	}
+
+	private void _testGetSiteSiteConfigurationWithPasswordKey()
+		throws Exception {
+
+		PropsUtil.set(
+			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "true");
+
+		SiteConfiguration siteConfiguration =
+			testGetSiteSiteConfiguration_addSiteConfiguration();
+
+		siteConfiguration = siteConfigurationResource.getSiteSiteConfiguration(
+			testGroup.getExternalReferenceCode(),
+			siteConfiguration.getExternalReferenceCode());
+
+		Map<String, Object> properties = siteConfiguration.getProperties();
+
+		Assert.assertNotNull(properties.get("passwordStringKey"));
+
+		PropsUtil.set(
+			PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES, "false");
+
+		siteConfiguration = siteConfigurationResource.getSiteSiteConfiguration(
+			testGroup.getExternalReferenceCode(),
+			siteConfiguration.getExternalReferenceCode());
+
+		properties = siteConfiguration.getProperties();
+
+		Assert.assertNull(properties.get("passwordStringKey"));
 	}
 
 	private static final List<SafeCloseable> _safeCloseables =

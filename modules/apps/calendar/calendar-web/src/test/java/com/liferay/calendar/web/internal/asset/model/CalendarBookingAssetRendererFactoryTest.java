@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -35,94 +36,97 @@ public class CalendarBookingAssetRendererFactoryTest {
 
 	@Before
 	public void setUp() {
-		_calendarBookingAssetRendererFactory =
-			new CalendarBookingAssetRendererFactory();
-
-		_modelResourcePermission = Mockito.mock(ModelResourcePermission.class);
+		_calendarResourceUtilMockedStatic.when(
+			() -> CalendarResourceUtil.getScopeGroupCalendarResource(
+				Mockito.anyLong(), Mockito.any(ServiceContext.class))
+		).thenReturn(
+			_calendarResource
+		);
 
 		ReflectionTestUtil.setFieldValue(
 			_calendarBookingAssetRendererFactory,
 			"_calendarModelResourcePermission", _modelResourcePermission);
 	}
 
+	@After
+	public void tearDown() {
+		_calendarResourceUtilMockedStatic.close();
+	}
+
 	@Test
 	public void testHasAddPermission() throws Exception {
-		PermissionChecker permissionChecker = Mockito.mock(
-			PermissionChecker.class);
-
+		long calendarId = RandomTestUtil.randomLong();
 		long companyId = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
+
+		_mockPermissionChecker(companyId);
+
+		Assert.assertFalse(
+			_calendarBookingAssetRendererFactory.hasAddPermission(
+				_permissionChecker, groupId, 0));
+
+		Calendar calendar = Mockito.mock(Calendar.class);
+
+		_mockCalendarResource(calendar, calendarId);
+
+		_mockManageBookingsPermission(calendarId);
+
+		Assert.assertTrue(
+			_calendarBookingAssetRendererFactory.hasAddPermission(
+				_permissionChecker, groupId, 0));
+
+		Mockito.verify(
+			_modelResourcePermission
+		).contains(
+			_permissionChecker, calendarId, CalendarActionKeys.MANAGE_BOOKINGS
+		);
+	}
+
+	private void _mockCalendarResource(Calendar calendar, long calendarId) {
+		Mockito.when(
+			calendar.getCalendarId()
+		).thenReturn(
+			calendarId
+		);
 
 		Mockito.when(
-			permissionChecker.getCompanyId()
+			_calendarResource.getDefaultCalendar()
+		).thenReturn(
+			calendar
+		);
+	}
+
+	private void _mockManageBookingsPermission(long calendarId)
+		throws Exception {
+
+		Mockito.when(
+			_modelResourcePermission.contains(
+				Mockito.eq(_permissionChecker), Mockito.eq(calendarId),
+				Mockito.eq(CalendarActionKeys.MANAGE_BOOKINGS))
+		).thenReturn(
+			true
+		);
+	}
+
+	private void _mockPermissionChecker(long companyId) {
+		Mockito.when(
+			_permissionChecker.getCompanyId()
 		).thenReturn(
 			companyId
 		);
-
-		CalendarResource calendarResource = Mockito.mock(
-			CalendarResource.class);
-
-		Mockito.when(
-			calendarResource.getDefaultCalendar()
-		).thenReturn(
-			null
-		);
-
-		try (MockedStatic<CalendarResourceUtil>
-				calendarResourceUtilMockedStatic = Mockito.mockStatic(
-					CalendarResourceUtil.class)) {
-
-			calendarResourceUtilMockedStatic.when(
-				() -> CalendarResourceUtil.getScopeGroupCalendarResource(
-					Mockito.anyLong(), Mockito.any(ServiceContext.class))
-			).thenReturn(
-				calendarResource
-			);
-
-			long groupId = RandomTestUtil.randomLong();
-
-			Assert.assertFalse(
-				_calendarBookingAssetRendererFactory.hasAddPermission(
-					permissionChecker, groupId, 0));
-
-			Calendar calendar = Mockito.mock(Calendar.class);
-
-			long calendarId = RandomTestUtil.randomLong();
-
-			Mockito.when(
-				calendar.getCalendarId()
-			).thenReturn(
-				calendarId
-			);
-
-			Mockito.when(
-				calendarResource.getDefaultCalendar()
-			).thenReturn(
-				calendar
-			);
-
-			Mockito.when(
-				_modelResourcePermission.contains(
-					Mockito.eq(permissionChecker), Mockito.eq(calendarId),
-					Mockito.anyString())
-			).thenReturn(
-				true
-			);
-
-			Assert.assertTrue(
-				_calendarBookingAssetRendererFactory.hasAddPermission(
-					permissionChecker, groupId, 0));
-
-			Mockito.verify(
-				_modelResourcePermission
-			).contains(
-				permissionChecker, calendarId,
-				CalendarActionKeys.MANAGE_BOOKINGS
-			);
-		}
 	}
 
-	private CalendarBookingAssetRendererFactory
-		_calendarBookingAssetRendererFactory;
-	private ModelResourcePermission<Calendar> _modelResourcePermission;
+	private final CalendarBookingAssetRendererFactory
+		_calendarBookingAssetRendererFactory =
+			new CalendarBookingAssetRendererFactory();
+	private final CalendarResource _calendarResource = Mockito.mock(
+		CalendarResource.class);
+	private final MockedStatic<CalendarResourceUtil>
+		_calendarResourceUtilMockedStatic = Mockito.mockStatic(
+			CalendarResourceUtil.class);
+	private final ModelResourcePermission<Calendar> _modelResourcePermission =
+		Mockito.mock(ModelResourcePermission.class);
+	private final PermissionChecker _permissionChecker = Mockito.mock(
+		PermissionChecker.class);
 
 }

@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.URLReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.ThumbnailURLReference;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,24 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class URLReferenceSerDes {
+public class ThumbnailURLReferenceSerDes {
 
-	public static URLReference toDTO(String json) {
-		URLReferenceJSONParser urlReferenceJSONParser =
-			new URLReferenceJSONParser();
+	public static ThumbnailURLReference toDTO(String json) {
+		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
+			new ThumbnailURLReferenceJSONParser();
 
-		return urlReferenceJSONParser.parseToDTO(json);
+		return thumbnailURLReferenceJSONParser.parseToDTO(json);
 	}
 
-	public static URLReference[] toDTOs(String json) {
-		URLReferenceJSONParser urlReferenceJSONParser =
-			new URLReferenceJSONParser();
+	public static ThumbnailURLReference[] toDTOs(String json) {
+		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
+			new ThumbnailURLReferenceJSONParser();
 
-		return urlReferenceJSONParser.parseToDTOs(json);
+		return thumbnailURLReferenceJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(URLReference urlReference) {
-		if (urlReference == null) {
+	public static String toJSON(ThumbnailURLReference thumbnailURLReference) {
+		if (thumbnailURLReference == null) {
 			return "null";
 		}
 
@@ -46,7 +46,7 @@ public class URLReferenceSerDes {
 
 		sb.append("{");
 
-		if (urlReference.getExternalReferenceCode() != null) {
+		if (thumbnailURLReference.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -55,12 +55,13 @@ public class URLReferenceSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(urlReference.getExternalReferenceCode()));
+			sb.append(
+				_escape(thumbnailURLReference.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
 
-		if (urlReference.getUrl() != null) {
+		if (thumbnailURLReference.getUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -69,7 +70,7 @@ public class URLReferenceSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(urlReference.getUrl()));
+			sb.append(_escape(thumbnailURLReference.getUrl()));
 
 			sb.append("\"");
 		}
@@ -80,49 +81,52 @@ public class URLReferenceSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		URLReferenceJSONParser urlReferenceJSONParser =
-			new URLReferenceJSONParser();
+		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
+			new ThumbnailURLReferenceJSONParser();
 
-		return urlReferenceJSONParser.parseToMap(json);
+		return thumbnailURLReferenceJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(URLReference urlReference) {
-		if (urlReference == null) {
+	public static Map<String, String> toMap(
+		ThumbnailURLReference thumbnailURLReference) {
+
+		if (thumbnailURLReference == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (urlReference.getExternalReferenceCode() == null) {
+		if (thumbnailURLReference.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
-				String.valueOf(urlReference.getExternalReferenceCode()));
+				String.valueOf(
+					thumbnailURLReference.getExternalReferenceCode()));
 		}
 
-		if (urlReference.getUrl() == null) {
+		if (thumbnailURLReference.getUrl() == null) {
 			map.put("url", null);
 		}
 		else {
-			map.put("url", String.valueOf(urlReference.getUrl()));
+			map.put("url", String.valueOf(thumbnailURLReference.getUrl()));
 		}
 
 		return map;
 	}
 
-	public static class URLReferenceJSONParser
-		extends BaseJSONParser<URLReference> {
+	public static class ThumbnailURLReferenceJSONParser
+		extends BaseJSONParser<ThumbnailURLReference> {
 
 		@Override
-		protected URLReference createDTO() {
-			return new URLReference();
+		protected ThumbnailURLReference createDTO() {
+			return new ThumbnailURLReference();
 		}
 
 		@Override
-		protected URLReference[] createDTOArray(int size) {
-			return new URLReference[size];
+		protected ThumbnailURLReference[] createDTOArray(int size) {
+			return new ThumbnailURLReference[size];
 		}
 
 		@Override
@@ -139,18 +143,18 @@ public class URLReferenceSerDes {
 
 		@Override
 		protected void setField(
-			URLReference urlReference, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			ThumbnailURLReference thumbnailURLReference,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				if (jsonParserFieldValue != null) {
-					urlReference.setExternalReferenceCode(
+					thumbnailURLReference.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "url")) {
 				if (jsonParserFieldValue != null) {
-					urlReference.setUrl((String)jsonParserFieldValue);
+					thumbnailURLReference.setUrl((String)jsonParserFieldValue);
 				}
 			}
 		}

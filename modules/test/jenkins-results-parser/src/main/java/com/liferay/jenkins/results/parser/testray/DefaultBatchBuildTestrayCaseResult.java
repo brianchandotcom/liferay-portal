@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,22 +9,16 @@ import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 /**
- * @author Michael Hashimoto
+ * @author Kenji Heigel
  */
-public class SFBatchBuildTestrayCaseResult extends BatchBuildTestrayCaseResult {
+public class DefaultBatchBuildTestrayCaseResult
+	extends BatchBuildTestrayCaseResult {
 
-	public SFBatchBuildTestrayCaseResult(
+	public DefaultBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup) {
 
 		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
-
-		initBuildReport();
-	}
-
-	@Override
-	public void initBuildReport() {
-		setBuildReport(getTopLevelBuildReport());
 	}
 
 }

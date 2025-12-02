@@ -24,20 +24,6 @@ public class ModulesBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult {
 
 	@Override
-	public BuildReport getBuildReport() {
-		if (_modulesTestClass.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				_modulesTestClass.getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				return cachedDownstreamBuildReport;
-			}
-		}
-
-		return super.getBuildReport();
-	}
-
-	@Override
 	public String getComponentName() {
 		String componentName = _modulesTestClass.getTestrayMainComponentName();
 
@@ -199,6 +185,20 @@ public class ModulesBatchBuildTestrayCaseResult
 		return _testClassReport;
 	}
 
+	@Override
+	public void initBuildReport() {
+		if (_modulesTestClass.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_modulesTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+			}
+		}
+
+		super.initBuildReport();
+	}
+
 	protected ModulesBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
@@ -206,6 +206,8 @@ public class ModulesBatchBuildTestrayCaseResult
 		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
 
 		_modulesTestClass = (ModulesTestClass)testClass;
+
+		initBuildReport();
 	}
 
 	private String _getTestClassName() {

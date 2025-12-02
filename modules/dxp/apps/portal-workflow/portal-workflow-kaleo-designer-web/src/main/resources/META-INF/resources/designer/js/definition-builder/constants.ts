@@ -6,9 +6,4 @@
 const contextUrl = Liferay.ThemeDisplay.getPathContext();
 const defaultLanguageId = Liferay.ThemeDisplay.getLanguageId();
 
-const editorConfig = {
-	tabSpaces: 4,
-	toolbar: [['Source']],
-};
-
-export {contextUrl, defaultLanguageId, editorConfig};
+export {contextUrl, defaultLanguageId};

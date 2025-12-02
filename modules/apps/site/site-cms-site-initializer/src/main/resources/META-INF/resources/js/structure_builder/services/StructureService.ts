@@ -4,6 +4,8 @@
  */
 
 import ApiHelper from '../../common/services/ApiHelper';
+import {ObjectDefinitions} from '../../common/types/ObjectDefinition';
+import {State} from '../contexts/StateContext';
 import {Structure} from '../types/Structure';
 import buildGroupObjectDefinitions from '../utils/buildGroupObjectDefinitions';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
@@ -68,28 +70,58 @@ async function createStructure({
 async function updateStructure({
 	children,
 	erc,
+	history,
 	id,
 	label,
 	name,
+	objectDefinitions,
 	spaces,
 	status,
 	workflows,
 }: {
 	children: Structure['children'];
 	erc: Structure['erc'];
+	history: State['history'];
 	id: Structure['id'];
 	label: Structure['label'];
 	name: Structure['name'];
+	objectDefinitions: ObjectDefinitions;
 	spaces: Structure['spaces'];
 	status: Structure['status'];
 	workflows: Structure['workflows'];
 }) {
 
+	// Delete object definitions of deleted repeatable groups
+
+	if (history.deletedGroupERCs.length) {
+		const ids = history.deletedGroupERCs.map((erc) => {
+			const objectDefinition = objectDefinitions[erc];
+
+			return objectDefinition.id!;
+		});
+
+		const response = await ApiHelper.batch({
+			data: ids.map((id) => ({
+				id,
+			})),
+			method: 'DELETE',
+			url: '/o/object-admin/v1.0/object-definitions/batch',
+		});
+
+		if (response?.error) {
+			return {
+				error: Liferay.Language.get(
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
+				),
+			};
+		}
+	}
+
 	// Publish object definitions for repeatable groups
 
-	const objectDefinitions = buildGroupObjectDefinitions({children});
+	const groupObjectDefinitions = buildGroupObjectDefinitions({children});
 
-	for (const objectDefinition of objectDefinitions) {
+	for (const objectDefinition of groupObjectDefinitions) {
 		const {error} = await ApiHelper.put(
 			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinition.externalReferenceCode}`,
 			objectDefinition

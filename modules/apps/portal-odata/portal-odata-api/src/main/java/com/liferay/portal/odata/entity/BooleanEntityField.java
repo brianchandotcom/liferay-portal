@@ -35,4 +35,13 @@ public class BooleanEntityField extends EntityField {
 			filterableAndSortableFieldNameFunction, String::valueOf);
 	}
 
+	public BooleanEntityField(
+		String name, Function<Locale, String> sortableFieldNameFunction,
+		Function<Locale, String> filterableFieldNameFunction) {
+
+		super(
+			name, Type.BOOLEAN, sortableFieldNameFunction,
+			filterableFieldNameFunction, String::valueOf);
+	}
+
 }

@@ -20,10 +20,13 @@ import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.normalizer.Normalizer;
+import com.liferay.portal.odata.sort.InvalidSortException;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.function.Function;
 
 /**
  * @author Javier Gamarra
@@ -71,8 +74,15 @@ public class EntityFieldsUtil {
 		String internalName = expandoBridgeIndexer.encodeFieldName(
 			expandoColumn);
 
+		Function<Locale, String> unsortableFieldNameFunction = locale -> {
+			throw new InvalidSortException(
+				"Unable to sort by property: " + externalName);
+		};
+
 		if (type == ExpandoColumnConstants.BOOLEAN) {
-			return new BooleanEntityField(externalName, locale -> internalName);
+			return new BooleanEntityField(
+				externalName, unsortableFieldNameFunction,
+				locale -> internalName);
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
 			return new DateTimeEntityField(
@@ -82,12 +92,12 @@ public class EntityFieldsUtil {
 		}
 		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
 			return new StringEntityField(
-				externalName,
+				externalName, unsortableFieldNameFunction,
 				locale -> Field.getLocalizedName(locale, internalName));
 		}
 
 		return new StringEntityField(
-			externalName,
+			externalName, unsortableFieldNameFunction,
 			locale -> {
 				String numericSuffix = expandoBridgeIndexer.getNumericSuffix(
 					type);

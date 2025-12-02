@@ -754,8 +754,22 @@ public class ObjectEntryResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		String exportMimeType = contextHttpServletRequest.getHeader(
+		String exportMimeType = null;
+
+		String acceptHeader = contextHttpServletRequest.getHeader(
 			HttpHeaders.ACCEPT);
+
+		if (!Validator.isBlank(acceptHeader)) {
+			for (Map.Entry<String, String> entry :
+					_versionXLIFFMimeType.entrySet()) {
+
+				if (acceptHeader.contains(entry.getValue())) {
+					exportMimeType = entry.getValue();
+
+					break;
+				}
+			}
+		}
 
 		String className = _objectDefinition.getClassName();
 

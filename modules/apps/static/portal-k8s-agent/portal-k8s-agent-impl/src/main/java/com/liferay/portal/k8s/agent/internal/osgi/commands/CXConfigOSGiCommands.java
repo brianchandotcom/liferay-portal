@@ -107,48 +107,48 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 	}
 
 	private String _formatProperties(Dictionary<String, Object> properties) {
-		if (!properties.isEmpty()) {
-			List<String> sortedKeys = Collections.list(properties.keys());
+		if (properties.isEmpty()) {
+			return "";
+		}
 
-			Collections.sort(sortedKeys);
+		List<String> sortedKeys = Collections.list(properties.keys());
 
-			StringBundler sb = new StringBundler();
+		Collections.sort(sortedKeys);
 
-			for (String key : sortedKeys) {
-				sb.append(key);
+		StringBundler sb = new StringBundler();
 
-				sb.append(StringPool.COLON);
-				sb.append(StringPool.SPACE);
+		for (String key : sortedKeys) {
+			sb.append(key);
 
-				Object value = properties.get(key);
+			sb.append(StringPool.COLON);
+			sb.append(StringPool.SPACE);
 
-				if (value instanceof String[]) {
-					sb.append(StringPool.NEW_LINE);
+			Object value = properties.get(key);
 
-					for (String element : (String[])value) {
-						sb.append(StringPool.TAB);
-						sb.append(element);
-						sb.append(StringPool.NEW_LINE);
-					}
-				}
-				else {
-					String valueString = value.toString();
+			if (value instanceof String[]) {
+				sb.append(StringPool.NEW_LINE);
 
-					if (key.equals("baseURL")) {
-						valueString = valueString.replaceAll(
-							Pattern.quote("${portalURL}"),
-							_portal.getPathContext());
-					}
-
-					sb.append(valueString);
+				for (String element : (String[])value) {
+					sb.append(StringPool.TAB);
+					sb.append(element);
 					sb.append(StringPool.NEW_LINE);
 				}
 			}
+			else {
+				String valueString = value.toString();
 
-			return sb.toString();
+				if (key.equals("baseURL")) {
+					valueString = valueString.replaceAll(
+						Pattern.quote("${portalURL}"),
+						_portal.getPathContext());
+				}
+
+				sb.append(valueString);
+				sb.append(StringPool.NEW_LINE);
+			}
 		}
 
-		return "";
+		return sb.toString();
 	}
 
 	private Configuration _getConfiguration(String pid)

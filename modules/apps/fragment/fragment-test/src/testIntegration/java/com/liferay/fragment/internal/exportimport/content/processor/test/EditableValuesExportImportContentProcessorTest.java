@@ -188,98 +188,6 @@ public class EditableValuesExportImportContentProcessorTest {
 	}
 
 	@Test
-	@TestInfo("LPD-63158")
-	public void testEditableValuesWithItemSelectorWithTemplateWithoutTemplateKey()
-		throws Exception {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_stagingGroup.getGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			"BASIC-WEB-CONTENT", true);
-
-		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
-			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(), 0,
-			RandomTestUtil.randomLocaleStringMap(), null,
-			DDMStructureTestUtil.getSampleStructuredContent(),
-			ddmStructure.getStructureId(), "BASIC-WEB-CONTENT",
-			ServiceContextTestUtil.getServiceContext(
-				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		FragmentEntryLink draftFragmentEntryLink =
-			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"itemSelector",
-						JSONUtil.put(
-							"className", JournalArticle.class.getName()
-						).put(
-							"classNameId",
-							_portal.getClassNameId(JournalArticle.class)
-						).put(
-							"classPK",
-							String.valueOf(journalArticle.getResourcePrimKey())
-						).put(
-							"classTypeId",
-							String.valueOf(journalArticle.getDDMStructureId())
-						).put(
-							"externalReferenceCode",
-							journalArticle.getExternalReferenceCode()
-						).put(
-							"template",
-							JSONUtil.put(
-								"infoItemRendererKey",
-								"com.liferay.template.internal.info.item." +
-									"renderer." +
-										"TemplateInfoItemTemplatedRenderer")
-						))
-				).toString(),
-				_fragmentRendererRegistry.getFragmentRenderer(
-					"com.liferay.fragment.internal.renderer." +
-						"ContentObjectFragmentRenderer"),
-				_draftLayout, null, 0,
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
-
-		_assertItemSelectorClassPK(
-			journalArticle.getResourcePrimKey(), draftFragmentEntryLink);
-
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				_layout.getGroupId(),
-				draftFragmentEntryLink.getExternalReferenceCode(),
-				_layout.getPlid());
-
-		_assertItemSelectorClassPK(
-			journalArticle.getResourcePrimKey(), fragmentEntryLink);
-
-		_publishLayouts();
-
-		JournalArticle importedJournalArticle =
-			_journalArticleLocalService.getJournalArticleByUuidAndGroupId(
-				journalArticle.getUuid(), _liveGroup.getGroupId());
-
-		FragmentEntryLink importedDraftFragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
-				fragmentEntryLink.getUuid(), _liveGroup.getGroupId());
-
-		_assertItemSelectorClassPK(
-			importedJournalArticle.getResourcePrimKey(),
-			importedDraftFragmentEntryLink);
-
-		FragmentEntryLink importedFragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
-				fragmentEntryLink.getUuid(), _liveGroup.getGroupId());
-
-		_assertItemSelectorClassPK(
-			importedJournalArticle.getResourcePrimKey(),
-			importedFragmentEntryLink);
-	}
-
-	@Test
 	@TestInfo("LPD-67532")
 	public void testEditableValuesWithInfoItemFieldMapped() throws Exception {
 		FragmentEntry fragmentEntry =
@@ -403,6 +311,98 @@ public class EditableValuesExportImportContentProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-63158")
+	public void testEditableValuesWithItemSelectorWithTemplateWithoutTemplateKey()
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_stagingGroup.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			"BASIC-WEB-CONTENT", true);
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(), 0,
+			RandomTestUtil.randomLocaleStringMap(), null,
+			DDMStructureTestUtil.getSampleStructuredContent(),
+			ddmStructure.getStructureId(), "BASIC-WEB-CONTENT",
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		FragmentEntryLink draftFragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"itemSelector",
+						JSONUtil.put(
+							"className", JournalArticle.class.getName()
+						).put(
+							"classNameId",
+							_portal.getClassNameId(JournalArticle.class)
+						).put(
+							"classPK",
+							String.valueOf(journalArticle.getResourcePrimKey())
+						).put(
+							"classTypeId",
+							String.valueOf(journalArticle.getDDMStructureId())
+						).put(
+							"externalReferenceCode",
+							journalArticle.getExternalReferenceCode()
+						).put(
+							"template",
+							JSONUtil.put(
+								"infoItemRendererKey",
+								"com.liferay.template.internal.info.item." +
+									"renderer." +
+										"TemplateInfoItemTemplatedRenderer")
+						))
+				).toString(),
+				_fragmentRendererRegistry.getFragmentRenderer(
+					"com.liferay.fragment.internal.renderer." +
+						"ContentObjectFragmentRenderer"),
+				_draftLayout, null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
+
+		_assertItemSelectorClassPK(
+			journalArticle.getResourcePrimKey(), draftFragmentEntryLink);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				_layout.getGroupId(),
+				draftFragmentEntryLink.getExternalReferenceCode(),
+				_layout.getPlid());
+
+		_assertItemSelectorClassPK(
+			journalArticle.getResourcePrimKey(), fragmentEntryLink);
+
+		_publishLayouts();
+
+		JournalArticle importedJournalArticle =
+			_journalArticleLocalService.getJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), _liveGroup.getGroupId());
+
+		FragmentEntryLink importedDraftFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId());
+
+		_assertItemSelectorClassPK(
+			importedJournalArticle.getResourcePrimKey(),
+			importedDraftFragmentEntryLink);
+
+		FragmentEntryLink importedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId());
+
+		_assertItemSelectorClassPK(
+			importedJournalArticle.getResourcePrimKey(),
+			importedFragmentEntryLink);
+	}
+
+	@Test
 	@TestInfo({"LPD-34189", "LPD-67532", "LPS-120198"})
 	public void testEditableValuesWithLinkedLayoutMapping() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
@@ -503,7 +503,9 @@ public class EditableValuesExportImportContentProcessorTest {
 
 	@Test
 	@TestInfo({"LPD-34189", "LPD-67532"})
-	public void testEditableValuesWithLinkedLayoutMappingWithDeletedLayout() throws Exception {
+	public void testEditableValuesWithLinkedLayoutMappingWithDeletedLayout()
+		throws Exception {
+
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
 		FragmentEntryLink fragmentEntryLink =

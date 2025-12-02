@@ -54,6 +54,10 @@ export function RuleBuilderActionSection({
 		const inputFragments: {label: string; value: string}[] = [];
 
 		Object.values(layoutData.items).forEach((item) => {
+			if (isLayoutDataItemDeleted(layoutData, item.itemId)) {
+				return;
+			}
+
 			if (isAllowedInRules(item, layoutData)) {
 				layoutItems.push({
 					label: selectLayoutDataItemLabel(
@@ -221,10 +225,11 @@ export function RuleBuilderConditionSection({
 		const inputFragments: {label: string; value: string}[] = [];
 
 		Object.values(layoutData.items).forEach((item) => {
-			if (
-				item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
-				!isLayoutDataItemDeleted(layoutData, item.itemId)
-			) {
+			if (isLayoutDataItemDeleted(layoutData, item.itemId)) {
+				return;
+			}
+
+			if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 				const fragment =
 					fragmentEntryLinks[item.config.fragmentEntryLinkId];
 

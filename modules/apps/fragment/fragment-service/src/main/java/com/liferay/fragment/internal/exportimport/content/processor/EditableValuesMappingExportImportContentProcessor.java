@@ -299,22 +299,27 @@ public class EditableValuesMappingExportImportContentProcessor
 			editableJSONObject.put("className", className);
 		}
 
-		if (Validator.isNotNull(className) && (classPK > 0)) {
+		if (Validator.isNull(className) ||
+			((classPK <= 0) && Validator.isNull(externalReferenceCode))) {
+
+			return;
+		}
+
+		if (classPK > 0) {
 			ExportImportContentProcessorUtil.exportContentReference(
 				className, classPK, exportReferencedContent,
 				_infoItemServiceRegistry, portletDataContext, stagedModel);
-		}
-		else if (Validator.isNotNull(className) &&
-				 Validator.isNotNull(externalReferenceCode)) {
 
-			ExportImportContentProcessorUtil.exportContentReference(
-				className, exportReferencedContent,
-				new ERCInfoItemIdentifier(
-					externalReferenceCode,
-					editableJSONObject.getString(
-						"scopeExternalReferenceCode", null)),
-				_infoItemServiceRegistry, portletDataContext, stagedModel);
+			return;
 		}
+
+		ExportImportContentProcessorUtil.exportContentReference(
+			className, exportReferencedContent,
+			new ERCInfoItemIdentifier(
+				externalReferenceCode,
+				editableJSONObject.getString(
+					"scopeExternalReferenceCode", null)),
+			_infoItemServiceRegistry, portletDataContext, stagedModel);
 	}
 
 	private void _replaceMappedFieldImportContentReferences(

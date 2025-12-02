@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -88,6 +89,14 @@ public class RESTClientHttpServletRequestWrapper
 		).build();
 		_httpServletRequest = httpServletRequest;
 		_pathInfo = pathInfo;
+
+		int questionMarkIndex = pathInfo.indexOf('?');
+
+		_queryString =
+			(questionMarkIndex > -1) ?
+				pathInfo.substring(questionMarkIndex + 1) : null;
+
+		_parameterMap = HttpComponentsUtil.getParameterMap(_queryString);
 	}
 
 	@Override
@@ -135,27 +144,34 @@ public class RESTClientHttpServletRequestWrapper
 
 	@Override
 	public String getParameter(String name) {
-		return null;
+		String[] value = _parameterMap.get(name);
+
+		return ((value != null) && (value.length > 0)) ? value[0] : null;
 	}
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		return Collections.emptyMap();
+		return _parameterMap;
 	}
 
 	@Override
 	public Enumeration<String> getParameterNames() {
-		return Collections.emptyEnumeration();
+		return Collections.enumeration(_parameterMap.keySet());
 	}
 
 	@Override
 	public String[] getParameterValues(String name) {
-		return new String[0];
+		return _parameterMap.get(name);
 	}
 
 	@Override
 	public String getPathInfo() {
 		return _pathInfo;
+	}
+
+	@Override
+	public String getQueryString() {
+		return _queryString;
 	}
 
 	@Override
@@ -175,6 +191,8 @@ public class RESTClientHttpServletRequestWrapper
 	private final Map<String, Object> _attributes;
 	private final Map<String, String> _headers;
 	private final HttpServletRequest _httpServletRequest;
+	private final Map<String, String[]> _parameterMap;
 	private final String _pathInfo;
+	private final String _queryString;
 
 }

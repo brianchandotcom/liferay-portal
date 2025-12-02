@@ -35,20 +35,8 @@ public class JUnitBatchBuildTestrayCaseResult
 		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
 
 		_jUnitTestClass = (JUnitTestClass)testClass;
-	}
 
-	@Override
-	public BuildReport getBuildReport() {
-		if (_jUnitTestClass.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				_jUnitTestClass.getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				return cachedDownstreamBuildReport;
-			}
-		}
-
-		return super.getBuildReport();
+		initBuildReport();
 	}
 
 	@Override
@@ -308,6 +296,20 @@ public class JUnitBatchBuildTestrayCaseResult
 		testrayAttachments.removeAll(Collections.singleton(null));
 
 		return testrayAttachments;
+	}
+
+	@Override
+	public void initBuildReport() {
+		if (_jUnitTestClass.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_jUnitTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+			}
+		}
+
+		super.initBuildReport();
 	}
 
 	protected TestrayAttachment getFailureMessagesTestrayAttachment() {

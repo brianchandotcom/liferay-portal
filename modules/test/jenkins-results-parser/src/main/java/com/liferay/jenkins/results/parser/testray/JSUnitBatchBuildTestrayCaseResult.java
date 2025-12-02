@@ -34,20 +34,8 @@ public class JSUnitBatchBuildTestrayCaseResult
 		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
 
 		_jsUnitModulesTestClass = (JSUnitModulesTestClass)testClass;
-	}
 
-	@Override
-	public BuildReport getBuildReport() {
-		if (_jsUnitModulesTestClass.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				_jsUnitModulesTestClass.getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				return cachedDownstreamBuildReport;
-			}
-		}
-
-		return super.getBuildReport();
+		initBuildReport();
 	}
 
 	@Override
@@ -188,6 +176,22 @@ public class JSUnitBatchBuildTestrayCaseResult
 		}
 
 		return Status.PASSED;
+	}
+
+	@Override
+	public void initBuildReport() {
+		if (_jsUnitModulesTestClass.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_jsUnitModulesTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
+			}
+		}
+
+		super.initBuildReport();
 	}
 
 	private TestClassReport _getTestClassReport() {

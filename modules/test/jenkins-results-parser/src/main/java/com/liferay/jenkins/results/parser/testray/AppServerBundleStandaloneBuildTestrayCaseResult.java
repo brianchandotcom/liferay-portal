@@ -31,13 +31,8 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 		super(testrayBuild, topLevelBuildReport);
 
 		_appServerType = appServerType;
-	}
 
-	@Override
-	public BuildReport getBuildReport() {
-		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
-
-		return topLevelBuildReport.getDownstreamBuildReport(_getAxisName());
+		initBuildReport();
 	}
 
 	@Override
@@ -66,6 +61,14 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 		testrayAttachments.removeAll(Collections.singleton(null));
 
 		return testrayAttachments;
+	}
+
+	@Override
+	public void initBuildReport() {
+		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
+
+		setBuildReport(
+			topLevelBuildReport.getDownstreamBuildReport(_getAxisName()));
 	}
 
 	@Override

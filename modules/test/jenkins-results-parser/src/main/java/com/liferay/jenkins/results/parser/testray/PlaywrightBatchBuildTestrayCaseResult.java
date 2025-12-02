@@ -43,20 +43,8 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 		_playwrightJUnitTestClass = (PlaywrightJUnitTestClass)testClass;
 		_playwrightTestClassMethod = (PlaywrightTestClassMethod)testClassMethod;
-	}
 
-	@Override
-	public BuildReport getBuildReport() {
-		if (_playwrightTestClassMethod.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				_playwrightTestClassMethod.getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				return cachedDownstreamBuildReport;
-			}
-		}
-
-		return super.getBuildReport();
+		initBuildReport();
 	}
 
 	@Override
@@ -240,6 +228,20 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		System.out.println("Unable to find test result for: " + getName());
 
 		return null;
+	}
+
+	@Override
+	public void initBuildReport() {
+		if (_playwrightTestClassMethod.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_playwrightTestClassMethod.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+			}
+		}
+
+		super.initBuildReport();
 	}
 
 	protected TestrayAttachment getPlaywrightReportTestrayAttachment() {

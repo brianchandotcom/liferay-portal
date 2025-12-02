@@ -24,21 +24,6 @@ public class AntTargetBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult {
 
 	@Override
-	public BuildReport getBuildReport() {
-		if (_serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				_serviceBuilderAntTargetTestClass.
-					getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				return cachedDownstreamBuildReport;
-			}
-		}
-
-		return super.getBuildReport();
-	}
-
-	@Override
 	public String getComponentName() {
 		String componentName =
 			_serviceBuilderAntTargetTestClass.getTestrayMainComponentName();
@@ -203,6 +188,23 @@ public class AntTargetBatchBuildTestrayCaseResult
 		return _testClassReport;
 	}
 
+	@Override
+	public void initBuildReport() {
+		if (_serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_serviceBuilderAntTargetTestClass.
+					getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
+			}
+		}
+
+		super.initBuildReport();
+	}
+
 	protected AntTargetBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
@@ -211,6 +213,8 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 		_serviceBuilderAntTargetTestClass =
 			(ServiceBuilderAntTargetTestClass)testClass;
+
+		initBuildReport();
 	}
 
 	private String _getTestClassName() {

@@ -75,7 +75,9 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			"testray/" + JenkinsResultsParserUtil.getDistinctTimeStamp());
 	}
 
-	protected abstract BuildReport getBuildReport();
+	protected BuildReport getBuildReport() {
+		return _buildReport;
+	}
 
 	protected TestrayAttachment getTestrayAttachment(
 		BuildReport buildReport, String name, String key) {
@@ -230,6 +232,12 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			getTopLevelJobSummaryKey());
 	}
 
+	protected abstract void initBuildReport();
+
+	protected void setBuildReport(BuildReport buildReport) {
+		_buildReport = buildReport;
+	}
+
 	protected TestrayAttachment uploadTestrayAttachment(
 		String name, String key, Callable<File> callable) {
 
@@ -278,6 +286,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		}
 	}
 
+	private BuildReport _buildReport;
 	private final Map<String, TestrayAttachment> _testrayAttachments =
 		new HashMap<>();
 	private final File _testrayUploadBaseDir;

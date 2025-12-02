@@ -97,11 +97,67 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 		fdsActionDropdownItem3.putData("disableHeader", true);
 
 		FDSActionDropdownItem fdsActionDropdownItem4 =
+			new FDSActionDropdownItem(null, "groupItems4", null, true, "group");
+
+		fdsActionDropdownItem4.setFDSActionDropdownItems(
+			Arrays.asList(
+				new FDSActionDropdownItem(
+					"#test-visibility-filter", "sun",
+					"sampleVisibilityFilterMessage", "Sample Visibility Filter",
+					null, null, "link",
+					HashMapBuilder.<String, Object>put(
+						"color", "Yellow"
+					).build()),
+				new FDSActionDropdownItem(
+					null, "view", "infoPanel", "View Details", null, null,
+					"infoPanel"),
+				new FDSActionDropdownItem(
+					null, "view", "sampleMessage", "Sample View", null, null,
+					"link"),
+				new FDSActionDropdownItem(
+					"#test-pencil", "pencil", "sampleEditMessage",
+					"Sample Edit", null, null, "link"),
+				new FDSActionDropdownItem(
+					"#test-delete", "times-circle", "sampleDeleteMessage",
+					"Sample Delete", null, null, "link"),
+				new FDSActionDropdownItem(
+					"#test-copy", "copy", "sampleMoveFolderMessage",
+					"Sample Copy", null, null, "link"),
+				new FDSActionDropdownItem(
+					href, "truck", "asyncSuccess", "Async Success", "get", null,
+					"async"),
+				new FDSActionDropdownItem(
+					"http://localhost", "times-circle",
+					"asyncErrorConnectionRefused", "Async Connection Refused",
+					"get", null, "async"),
+				fdsActionDropdownItem1, fdsActionDropdownItem2,
+				fdsActionDropdownItem3,
+				new FDSActionDropdownItem(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/side_panel/empty"
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString(),
+					"rectangle-split", "open-side-panel-without-title",
+					"Side Panel With No Title", null, null, "sidePanel"),
+				new FDSActionDropdownItem(
+					href + "/abc", "staging", "asyncErrorResourceNotFound",
+					"Async Resource Not Found", "get", null, "async"),
+				new FDSActionDropdownItem(
+					null, "reload", "reload", "Reload Data", null, null,
+					"link"),
+				new FDSActionDropdownItem(
+					null, "rectangle-split", "openSidePanel", "Open Side Panel",
+					null, null, "link")));
+
+		FDSActionDropdownItem fdsActionDropdownItem5 =
 			new FDSActionDropdownItem(
 				"nodes", "contextualItem", "Contextual Item", false,
 				"contextual");
 
-		fdsActionDropdownItem4.setFDSActionDropdownItems(
+		fdsActionDropdownItem5.setFDSActionDropdownItems(
 			Arrays.asList(
 				new FDSActionDropdownItem(
 					null, "exclamation-circle", "sampleMessage",
@@ -110,67 +166,21 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 					null, "exclamation-circle", "sampleMessage",
 					"Contextual Sub Item 2", null, null, "link")));
 
-		FDSActionDropdownItem fdsActionDropdownItem5 =
-			new FDSActionDropdownItem(null, "groupItems", null, true, "group");
+		FDSActionDropdownItem fdsActionDropdownItem6 =
+			new FDSActionDropdownItem(null, "groupItems6", null, true, "group");
 
-		fdsActionDropdownItem5.setFDSActionDropdownItems(
+		fdsActionDropdownItem6.setFDSActionDropdownItems(
 			Arrays.asList(
 				new FDSActionDropdownItem(
 					null, "separator", "sampleMessage", "Group Item", null,
 					null, "link"),
-				fdsActionDropdownItem4));
+				fdsActionDropdownItem5));
 
 		return Arrays.asList(
+			fdsActionDropdownItem4,
 			new FDSActionDropdownItem(
-				"#test-visibility-filter", "sun",
-				"sampleVisibilityFilterMessage", "Sample Visibility Filter",
-				null, null, "link",
-				HashMapBuilder.<String, Object>put(
-					"color", "Yellow"
-				).build()),
-			new FDSActionDropdownItem(
-				null, "view", "infoPanel", "View Details", null, null,
-				"infoPanel"),
-			new FDSActionDropdownItem(
-				null, "view", "sampleMessage", "Sample View", null, null,
-				"link"),
-			new FDSActionDropdownItem(
-				"#test-pencil", "pencil", "sampleEditMessage", "Sample Edit",
-				null, null, "link"),
-			new FDSActionDropdownItem(
-				"#test-delete", "times-circle", "sampleDeleteMessage",
-				"Sample Delete", null, null, "link"),
-			new FDSActionDropdownItem(
-				"#test-copy", "copy", "sampleMoveFolderMessage", "Sample Copy",
-				null, null, "link"),
-			new FDSActionDropdownItem(
-				href, "truck", "asyncSuccess", "Async Success", "get", null,
-				"async"),
-			new FDSActionDropdownItem(
-				"http://localhost", "times-circle",
-				"asyncErrorConnectionRefused", "Async Connection Refused",
-				"get", null, "async"),
-			fdsActionDropdownItem1, fdsActionDropdownItem2,
-			fdsActionDropdownItem3,
-			new FDSActionDropdownItem(
-				PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/side_panel/empty"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"rectangle-split", "open-side-panel-without-title",
-				"Side Panel With No Title", null, null, "sidePanel"),
-			new FDSActionDropdownItem(
-				href + "/abc", "staging", "asyncErrorResourceNotFound",
-				"Async Resource Not Found", "get", null, "async"),
-			new FDSActionDropdownItem(
-				null, "reload", "reload", "Reload Data", null, null, "link"),
-			new FDSActionDropdownItem(
-				null, "rectangle-split", "openSidePanel", "Open Side Panel",
-				null, null, "link"),
-			fdsActionDropdownItem5);
+				"hidden", "groupPermissionTest", null, false, "group"),
+			fdsActionDropdownItem6);
 	}
 
 	@Override

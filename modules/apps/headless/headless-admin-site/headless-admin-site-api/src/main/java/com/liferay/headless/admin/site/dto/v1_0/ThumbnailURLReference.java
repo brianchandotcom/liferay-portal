@@ -37,22 +37,23 @@ import java.util.function.Supplier;
 @Generated("")
 @GraphQLName(
 	description = "A unique reference to a URL which remains constant across environments.",
-	value = "URLReference"
+	value = "ThumbnailURLReference"
 )
 @io.swagger.v3.oas.annotations.media.Schema(
 	description = "A unique reference to a URL which remains constant across environments.",
 	requiredProperties = {"url"}
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "URLReference")
-public class URLReference implements Serializable {
+@XmlRootElement(name = "ThumbnailURLReference")
+public class ThumbnailURLReference implements Serializable {
 
-	public static URLReference toDTO(String json) {
-		return ObjectMapperUtil.readValue(URLReference.class, json);
+	public static ThumbnailURLReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(ThumbnailURLReference.class, json);
 	}
 
-	public static URLReference unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(URLReference.class, json);
+	public static ThumbnailURLReference unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			ThumbnailURLReference.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -142,13 +143,14 @@ public class URLReference implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof URLReference)) {
+		if (!(object instanceof ThumbnailURLReference)) {
 			return false;
 		}
 
-		URLReference urlReference = (URLReference)object;
+		ThumbnailURLReference thumbnailURLReference =
+			(ThumbnailURLReference)object;
 
-		return Objects.equals(toString(), urlReference.toString());
+		return Objects.equals(toString(), thumbnailURLReference.toString());
 	}
 
 	@Override
@@ -202,7 +204,7 @@ public class URLReference implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.URLReference",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -24,7 +24,6 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -32,10 +31,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,17 +44,12 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.site.cms.site.initializer.internal.display.context.test.BaseDisplayContextTestCase;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
-import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
-
-import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,10 +57,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Adolfo Pérez
@@ -86,7 +74,9 @@ public class GroupModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_cmsGroup = _getGroup();
+		_cmsGroup = CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			GroupModelListenerTest.class, _siteInitializerRegistry);
 	}
 
 	@Test
@@ -303,76 +293,6 @@ public class GroupModelListenerTest {
 		_depotEntries.add(depotEntry);
 
 		return depotEntry;
-	}
-
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
-	private Group _getGroup() throws Exception {
-		Group group = _groupLocalService.fetchGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.CMS);
-
-		if (group != null) {
-			return group;
-		}
-
-		group = GroupTestUtil.addGroup();
-
-		group.setGroupKey(GroupConstants.CMS);
-
-		group = _groupLocalService.updateGroup(group);
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
-		try {
-
-			// These tests require the instance to be created with the feature
-			// flag LPD-17564 enabled. On CI, feature flags are enabled on
-			// demand for each test, but not during instance initialization.
-			// Until the feature flag LPD-17564 is removed, run the instance
-			// lifecycle initializer manually so that the role is created.
-
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.cms");
-
-			siteInitializer.initialize(group.getGroupId());
-
-			Bundle testBundle = FrameworkUtil.getBundle(
-				BaseDisplayContextTestCase.class);
-
-			BundleContext bundleContext = testBundle.getBundleContext();
-
-			for (Bundle bundle : bundleContext.getBundles()) {
-				if (Objects.equals(
-						bundle.getSymbolicName(),
-						"com.liferay.site.initializer.cms")) {
-
-					_deleteFile(bundle, "00.list.type.definition");
-					_deleteFile(bundle, "01.object.folder");
-					_deleteFile(bundle, "02.object.definition");
-
-					CompletableFuture<Void> completableFuture =
-						_batchEngineUnitProcessor.processBatchEngineUnits(
-							_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-					completableFuture.join();
-				}
-			}
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-
-		return group;
 	}
 
 	private Layout _getRecycleBinLayout(Group group) throws Exception {

@@ -23,10 +23,8 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
@@ -40,23 +38,18 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
-import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Rachael Koestartyo
@@ -137,55 +130,10 @@ public class InventoryAnalysisResourceTest
 		Assert.assertEquals("My Category", inventoryAnalysisItem.getTitle());
 	}
 
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
-	private boolean _isCMSSiteInitialized() throws Exception {
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-				TestPropsValues.getCompanyId());
-
-		if (objectFolder != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _setUpCMSContext() throws Exception {
-		if (!_isCMSSiteInitialized()) {
-			Bundle testBundle = FrameworkUtil.getBundle(
-				OverviewResourceTest.class);
-
-			BundleContext bundleContext = testBundle.getBundleContext();
-
-			for (Bundle bundle : bundleContext.getBundles()) {
-				if (Objects.equals(
-						bundle.getSymbolicName(),
-						"com.liferay.site.initializer.cms")) {
-
-					_deleteFile(bundle, "00.list.type.definition");
-					_deleteFile(bundle, "01.object.folder");
-					_deleteFile(bundle, "02.object.definition");
-
-					CompletableFuture<Void> completableFuture =
-						_batchEngineUnitProcessor.processBatchEngineUnits(
-							_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-					completableFuture.join();
-
-					break;
-				}
-			}
-		}
+		CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			InventoryAnalysisResourceTest.class, _siteInitializerRegistry);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testGroup.getGroupId(), TestPropsValues.getUserId());
@@ -293,5 +241,8 @@ public class InventoryAnalysisResourceTest
 	private ObjectFolderLocalService _objectFolderLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

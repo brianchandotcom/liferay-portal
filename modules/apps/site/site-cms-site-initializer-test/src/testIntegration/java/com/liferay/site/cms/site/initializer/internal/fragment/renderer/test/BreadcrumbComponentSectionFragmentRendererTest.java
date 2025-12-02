@@ -36,15 +36,12 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.io.File;
-
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,10 +49,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -75,7 +68,10 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpCMSContext();
+		CMSTestUtil.getOrAddGroup(
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			BreadcrumbComponentSectionFragmentRendererTest.class,
+			_siteInitializerRegistry);
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -118,42 +114,6 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 
 			Assert.assertEquals(
 				expectedLabels[i], jsonObject.getString("label"));
-		}
-	}
-
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
-	private void _setUpCMSContext() throws Exception {
-		Bundle testBundle = FrameworkUtil.getBundle(
-			BreadcrumbComponentSectionFragmentRendererTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.site.initializer.cms")) {
-
-				_deleteFile(bundle, "00.list.type.definition");
-				_deleteFile(bundle, "01.object.folder");
-				_deleteFile(bundle, "02.object.definition");
-
-				CompletableFuture<Void> completableFuture =
-					_batchEngineUnitProcessor.processBatchEngineUnits(
-						_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-				completableFuture.join();
-
-				break;
-			}
 		}
 	}
 

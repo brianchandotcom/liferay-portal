@@ -15,7 +15,7 @@ function setCookie(name, value, expirationDays) {
 	setCookieUtil(name, value, COOKIE_TYPES.FUNCTIONAL, {
 		'max-age': expirationDate,
 		'path': themeDisplay.getPathContext() || '/',
-		'secure': true
+		'secure': true,
 	});
 }
 

@@ -14,6 +14,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Map;
@@ -51,18 +52,40 @@ public class
 			boolean exportReferencedContent)
 		throws Exception {
 
-		if (!configurationValueJSONObject.has("classPK")) {
+		String className = configurationValueJSONObject.getString("className");
+		long classNameId = configurationValueJSONObject.getLong("classNameId");
+		long classPK = configurationValueJSONObject.getLong("classPK");
+		String externalReferenceCode = configurationValueJSONObject.getString(
+			"externalReferenceCode");
+
+		if (Validator.isNull(className) && (classNameId > 0)) {
+			className = _portal.fetchClassName(classNameId);
+		}
+
+		if (Validator.isNull(className) && (classPK <= 0) &&
+			Validator.isNull(externalReferenceCode)) {
+
 			return;
 		}
 
-		configurationValueJSONObject.put(
-			"className",
-			_portal.fetchClassName(
-				configurationValueJSONObject.getLong("classNameId")));
+		configurationValueJSONObject.put("className", className);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.fetchAssetListEntry(
 				configurationValueJSONObject.getLong("classPK"));
+
+		if ((assetListEntry == null) &&
+			Validator.isNotNull(externalReferenceCode)) {
+
+			assetListEntry =
+				_assetListEntryLocalService.
+					fetchAssetListEntryByExternalReferenceCode(
+						externalReferenceCode,
+						getScopeGroupId(
+							portletDataContext,
+							configurationValueJSONObject.getString(
+								"scopeExternalReferenceCode")));
+		}
 
 		if (assetListEntry == null) {
 			return;

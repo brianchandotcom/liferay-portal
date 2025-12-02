@@ -120,8 +120,6 @@ public class WidgetInstanceLayoutStructureItemImporter
 		fragmentStyledLayoutStructureItem.setCssClasses(
 			_getCssClasses(
 				widgetInstancePageElementDefinition.getCssClasses()));
-		fragmentStyledLayoutStructureItem.setCustomCSS(
-			widgetInstancePageElementDefinition.getCustomCSS());
 		fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(
 			fragmentEntryLink.getFragmentEntryLinkId());
 		fragmentStyledLayoutStructureItem.setIndexed(

@@ -90,16 +90,6 @@ public class FormContainerPageElementDefinitionDTOConverter
 				return ArrayUtil.toStringArray(
 					formStyledLayoutStructureItem.getCssClasses());
 			});
-		formContainerPageElementDefinition.setCustomCSS(
-			() -> {
-				String customCSS = formStyledLayoutStructureItem.getCustomCSS();
-
-				if (Validator.isNotNull(customCSS)) {
-					return customCSS;
-				}
-
-				return null;
-			});
 		formContainerPageElementDefinition.setFormContainerConfig(
 			() -> _toFormContainerConfig(
 				companyId, formStyledLayoutStructureItem, scopeGroupId));

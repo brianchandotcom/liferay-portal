@@ -84,8 +84,6 @@ public class FormContainerLayoutStructureItemImporter
 
 		formStyledLayoutStructureItem.setCssClasses(
 			_getCssClasses(formContainerPageElementDefinition.getCssClasses()));
-		formStyledLayoutStructureItem.setCustomCSS(
-			formContainerPageElementDefinition.getCustomCSS());
 		formStyledLayoutStructureItem.setIndexed(
 			GetterUtil.getBoolean(
 				formContainerPageElementDefinition.getIndexed(), true));

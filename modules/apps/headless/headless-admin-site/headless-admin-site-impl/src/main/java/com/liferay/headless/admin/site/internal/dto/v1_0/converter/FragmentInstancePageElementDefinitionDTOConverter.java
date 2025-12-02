@@ -97,7 +97,6 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						return ArrayUtil.toStringArray(
 							fragmentStyledLayoutStructureItem.getCssClasses());
 					});
-				setCustomCSS(fragmentStyledLayoutStructureItem::getCustomCSS);
 				setDatePropagated(fragmentEntryLink::getLastPropagationDate);
 				setDraftFragmentInstanceExternalReferenceCode(
 					() -> _getDraftFragmentInstanceExternalReferenceCode(

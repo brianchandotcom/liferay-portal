@@ -75,8 +75,6 @@ public class ContainerLayoutStructureItemImporter
 
 		containerStyledLayoutStructureItem.setCssClasses(
 			_getCssClasses(containerPageElementDefinition.getCssClasses()));
-		containerStyledLayoutStructureItem.setCustomCSS(
-			containerPageElementDefinition.getCustomCSS());
 
 		HtmlProperties htmlProperties =
 			containerPageElementDefinition.getHtmlProperties();

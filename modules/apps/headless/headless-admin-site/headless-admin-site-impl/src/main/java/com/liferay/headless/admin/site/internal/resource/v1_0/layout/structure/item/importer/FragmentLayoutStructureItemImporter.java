@@ -173,8 +173,6 @@ public class FragmentLayoutStructureItemImporter
 		fragmentStyledLayoutStructureItem.setCssClasses(
 			SetUtil.fromArray(
 				fragmentInstancePageElementDefinition.getCssClasses()));
-		fragmentStyledLayoutStructureItem.setCustomCSS(
-			fragmentInstancePageElementDefinition.getCustomCSS());
 		fragmentStyledLayoutStructureItem.setIndexed(
 			GetterUtil.getBoolean(
 				fragmentInstancePageElementDefinition.getIndexed(), true));

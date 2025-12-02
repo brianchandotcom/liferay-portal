@@ -30,6 +30,7 @@ import {isValidDate} from '~/utils/validations.form';
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
 import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useAccountsTickets from '../../../hooks/useAccountsTickets';
+import usecanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 import {containsOption} from '../../../utils/containsOption';
@@ -131,6 +132,11 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		true,
 		false
 	);
+
+	const {
+		canViewTickets: canViewTickets,
+		loading: loadingJiraAccountChecking,
+	} = usecanViewTickets(project?.accountKey || '');
 
 	const {
 		dxpMinorVersionsAndPortalMajorVersions,
@@ -253,6 +259,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	};
 
 	const loading =
+		loadingJiraAccountChecking ||
 		loadingBusinessEventTypesList ||
 		loadingLiferayVersions ||
 		loadingUTCTimeZonesList;
@@ -451,384 +458,406 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	]);
 
 	return !loading ? (
-		hasAllEventsPermissions ? (
-			<div className="be-edit-page">
-				<div className="be-breadcrumbs font-weight-semi-bold mb-4">
-					<span className="mx-2">
-						<Link to={`/${project?.accountKey}/business-events/`}>
-							<ClayIcon
-								className="mr-1"
-								symbol="order-arrow-left"
-							/>
+		canViewTickets ? (
+			hasAllEventsPermissions ? (
+				<div className="be-edit-page">
+					<div className="be-breadcrumbs font-weight-semi-bold mb-4">
+						<span className="mx-2">
+							<Link
+								to={`/${project?.accountKey}/business-events/`}
+							>
+								<ClayIcon
+									className="mr-1"
+									symbol="order-arrow-left"
+								/>
 
-							{i18n.translate('back-to-business-events')}
-						</Link>
-					</span>
-				</div>
-
-				<div>
-					<div
-						className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
-					>
-						{i18n.translate(
-							getKebabCase(
-								businessEvent?.eventStatus?.key as string
-							) as string
-						)}
+								{i18n.translate('back-to-business-events')}
+							</Link>
+						</span>
 					</div>
 
-					<div className="align-items-center d-flex justify-content-between mb-4 mt-2">
-						<div className="flex-fill font-weight-bold pr-4 text-neutral-10">
-							<h3 className="mb-0 text-break">
-								{businessEvent.name}
-							</h3>
+					<div>
+						<div
+							className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
+						>
+							{i18n.translate(
+								getKebabCase(
+									businessEvent?.eventStatus?.key as string
+								) as string
+							)}
 						</div>
-						<div className="flex-shrink-0">
-							<Button
-								displayType="secondary"
-								onClick={() => {
-									navigate(
-										`/${project?.accountKey}/business-events/${businessEvent.id}`
-									);
-								}}
-							>
-								{i18n.translate('cancel')}
-							</Button>
 
-							<Button
-								className="ml-3"
-								disabled={
-									baseButtonDisabled || isLoadingSubmitButton
-								}
-								displayType="primary"
-								isLoading={isLoadingSubmitButton}
-								onClick={() => {
-									const newTargetGoLiveDateTime =
-										getFormattedGoLiveDateTime(
-											businessEvent.targetGoLiveDate,
-											businessEvent.targetGoLiveTime
+						<div className="align-items-center d-flex justify-content-between mb-4 mt-2">
+							<div className="flex-fill font-weight-bold pr-4 text-neutral-10">
+								<h3 className="mb-0 text-break">
+									{businessEvent.name}
+								</h3>
+							</div>
+
+							<div className="flex-shrink-0">
+								<Button
+									displayType="secondary"
+									onClick={() => {
+										navigate(
+											`/${project?.accountKey}/business-events/${businessEvent.id}`
 										);
-									if (
-										businessEvent.timeZone?.key !==
-											originalBusinessEvent.timeZone
-												?.key ||
-										newTargetGoLiveDateTime !==
-											originalBusinessEvent.targetGoLiveDateTime
-									) {
-										setIsModalOpen(true);
+									}}
+								>
+									{i18n.translate('cancel')}
+								</Button>
+
+								<Button
+									className="ml-3"
+									disabled={
+										baseButtonDisabled ||
+										isLoadingSubmitButton
 									}
-									else {
-										handleSubmit();
-									}
-								}}
-							>
-								{i18n.translate('save-changes')}
-							</Button>
+									displayType="primary"
+									isLoading={isLoadingSubmitButton}
+									onClick={() => {
+										const newTargetGoLiveDateTime =
+											getFormattedGoLiveDateTime(
+												businessEvent.targetGoLiveDate,
+												businessEvent.targetGoLiveTime
+											);
+										if (
+											businessEvent.timeZone?.key !==
+												originalBusinessEvent.timeZone
+													?.key ||
+											newTargetGoLiveDateTime !==
+												originalBusinessEvent.targetGoLiveDateTime
+										) {
+											setIsModalOpen(true);
+										}
+										else {
+											handleSubmit();
+										}
+									}}
+								>
+									{i18n.translate('save-changes')}
+								</Button>
+							</div>
 						</div>
 					</div>
-				</div>
 
-				{isModalOpen && (
-					<BusinessEventsConfirmationPage
-						handleSubmit={handleSubmit}
-						headerTitle={businessEvent.name!}
-						isLoadingSubmitButton={isLoadingSubmitButton}
-						message={i18n.translate(
-							'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
-						)}
-						observer={observer}
-						onClose={onClose}
-						reason={reason}
-						setReason={setReason}
-					/>
-				)}
+					{isModalOpen && (
+						<BusinessEventsConfirmationPage
+							handleSubmit={handleSubmit}
+							headerTitle={businessEvent.name!}
+							isLoadingSubmitButton={isLoadingSubmitButton}
+							message={i18n.translate(
+								'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
+							)}
+							observer={observer}
+							onClose={onClose}
+							reason={reason}
+							setReason={setReason}
+						/>
+					)}
 
-				<div className="mb-4">
-					<NavigationBar
-						fluidSize={false}
-						triggerLabel={i18n.translate('event-details')}
-					>
-						<Nav.Item>
-							<Nav.Link
-								active={true}
-								aria-label={`Switch to ${i18n.translate(
-									'event-details'
-								)}`}
-								className="be-nav-link text-neutral-10"
-							>
-								{i18n.translate('event-details')}
-							</Nav.Link>
-						</Nav.Item>
-					</NavigationBar>
-				</div>
-				<div className="event-edit-container">
-					<FieldArray
-						name="businessEvent"
-						render={() => (
-							<>
-								<div className="event-edit-field mb-4">
-									<Input
-										badgeClassName="mt-1 mx-3"
-										label={i18n.translate('event-name')}
-										name="businessEvent.name"
-										required
-										type="text"
-									/>
-								</div>
-
-								<div className="event-edit-field mb-4">
-									<Select
-										className="mx-3"
-										groupStyle="pb-1"
-										label={i18n.translate('event-type')}
-										link="https://support.liferay.com/w/business-events"
-										name="businessEvent.eventType.key"
-										onChange={(value: string) =>
-											handleOptionChange(
-												'businessEvent.eventType.name',
-												value,
-												businessEventTypesList
-											)
-										}
-										options={businessEventTypesList}
-										required
-										showPopover
-										text="to-learn-more-about-types-of-business-events-please-click-x-here-x"
-									/>
-								</div>
-
-								{subscriptionGroups && !isSaasOnly && (
-									<div className="event-edit-field mb-4">
-										<Select
-											className="mx-3"
-											groupStyle="pb-1"
-											label={i18n.translate(
-												'your-current-liferay-version'
-											)}
-											name="businessEvent.currentLiferayVersion.key"
-											onChange={(value: string) =>
-												handleOptionChange(
-													'businessEvent.currentLiferayVersion.name',
-													value,
-													dxpMinorVersionsAndPortalMajorVersions
-												)
-											}
-											options={[
-												emptyOption,
-												...dxpMinorVersionsAndPortalMajorVersions,
-											]}
-											required
-										/>
-									</div>
-								)}
-
-								{isNewLiferayVersionRequired && (
-									<div className="event-edit-field mb-4">
-										<Select
-											badgeClassName="mx-3"
-											className="mx-3"
-											groupStyle="pb-1"
-											label={i18n.translate(
-												'new-version'
-											)}
-											name="businessEvent.newLiferayVersion.key"
-											onChange={(value: string) =>
-												handleOptionChange(
-													'businessEvent.newLiferayVersion.name',
-													value,
-													newLiferayVersionOptions
-												)
-											}
-											options={[
-												emptyOption,
-												...newLiferayVersionOptions,
-											]}
-											required
-										/>
-									</div>
-								)}
-
-								{isDescriptionRequired && (
+					<div className="mb-4">
+						<NavigationBar
+							fluidSize={false}
+							triggerLabel={i18n.translate('event-details')}
+						>
+							<Nav.Item>
+								<Nav.Link
+									active={true}
+									aria-label={`Switch to ${i18n.translate(
+										'event-details'
+									)}`}
+									className="be-nav-link text-neutral-10"
+								>
+									{i18n.translate('event-details')}
+								</Nav.Link>
+							</Nav.Item>
+						</NavigationBar>
+					</div>
+					<div className="event-edit-container">
+						<FieldArray
+							name="businessEvent"
+							render={() => (
+								<>
 									<div className="event-edit-field mb-4">
 										<Input
-											badgeClassName="mx-3"
-											component="textarea"
-											groupStyle="pb-1"
-											label={i18n.translate(
-												'event-description'
-											)}
-											name="businessEvent.description"
-											placeholder={i18n.translate(
-												'event-description'
-											)}
+											badgeClassName="mt-1 mx-3"
+											label={i18n.translate('event-name')}
+											name="businessEvent.name"
 											required
 											type="text"
 										/>
 									</div>
-								)}
 
-								<div className="event-edit-field mb-4">
-									<ClayInput.Group className="m-0">
-										<ClayInput.GroupItem className="m-0">
-											<DatePicker
-												badgeClassName="mx-3"
-												className="mx-3"
-												dateFormat="MM-dd-yyyy"
-												groupStyle="pb-1"
-												label={i18n.translate(
-													'target-go-live-date'
-												)}
-												name="businessEvent.targetGoLiveDate"
-												onChange={(value: string) => {
-													setFieldValue(
-														'businessEvent.targetGoLiveDate',
-														value
-													);
-												}}
-												placeholder={i18n.translate(
-													'mm-dd-yyyy'
-												)}
-												required
-												validations={[
-													(value) =>
-														isValidDate(
-															value,
-															years
-														),
-												]}
-												years={years}
-												yearsCheck
-											/>
-										</ClayInput.GroupItem>
+									<div className="event-edit-field mb-4">
+										<Select
+											className="mx-3"
+											groupStyle="pb-1"
+											label={i18n.translate('event-type')}
+											link="https://support.liferay.com/w/business-events"
+											name="businessEvent.eventType.key"
+											onChange={(value: string) =>
+												handleOptionChange(
+													'businessEvent.eventType.name',
+													value,
+													businessEventTypesList
+												)
+											}
+											options={businessEventTypesList}
+											required
+											showPopover
+											text="to-learn-more-about-types-of-business-events-please-click-x-here-x"
+										/>
+									</div>
 
-										<ClayInput.GroupItem className="m-0">
+									{subscriptionGroups && !isSaasOnly && (
+										<div className="event-edit-field mb-4">
 											<Select
+												className="mx-3"
 												groupStyle="pb-1"
-												id="select-businessEvent.timeZone"
 												label={i18n.translate(
-													'time-zone'
+													'your-current-liferay-version'
 												)}
-												name="businessEvent.timeZone.key"
+												name="businessEvent.currentLiferayVersion.key"
 												onChange={(value: string) =>
 													handleOptionChange(
-														'businessEvent.timeZone.name',
+														'businessEvent.currentLiferayVersion.name',
 														value,
-														utcTimeZonesList
+														dxpMinorVersionsAndPortalMajorVersions
 													)
 												}
 												options={[
-													{
-														...emptyOption,
-														disabled: false,
-													},
-													...utcTimeZonesList,
+													emptyOption,
+													...dxpMinorVersionsAndPortalMajorVersions,
 												]}
 												required
 											/>
-										</ClayInput.GroupItem>
+										</div>
+									)}
 
-										<ClayInput.GroupItem className="m-0">
-											<TimePicker
+									{isNewLiferayVersionRequired && (
+										<div className="event-edit-field mb-4">
+											<Select
+												badgeClassName="mx-3"
+												className="mx-3"
 												groupStyle="pb-1"
-												label={i18n.translate('time')}
-												name="businessEvent.targetGoLiveTime"
-												onChange={(value) =>
-													setFieldValue(
-														'businessEvent.targetGoLiveTime',
-														value
+												label={i18n.translate(
+													'new-version'
+												)}
+												name="businessEvent.newLiferayVersion.key"
+												onChange={(value: string) =>
+													handleOptionChange(
+														'businessEvent.newLiferayVersion.name',
+														value,
+														newLiferayVersionOptions
 													)
 												}
+												options={[
+													emptyOption,
+													...newLiferayVersionOptions,
+												]}
 												required
-												showPopover
-												text="if-unsure-please-provide-an-estimated-time"
 											/>
-										</ClayInput.GroupItem>
-									</ClayInput.Group>
-								</div>
+										</div>
+									)}
 
-								<div className="event-edit-field mx-3 pb-3">
-									<label>
-										{i18n.translate(
-											'are-there-any-support-tickets-impacting-this-event'
-										)}
-									</label>
-
-									<div className="ml-1">
-										<ClayRadio
-											checked={
-												hasImpactingEvents === 'no'
-											}
-											label={i18n.translate('no')}
-											onChange={() =>
-												handleRadioChange('no')
-											}
-											value="no"
-										/>
-
-										<ClayRadio
-											checked={
-												hasImpactingEvents === 'yes'
-											}
-											label={i18n.translate('yes')}
-											onChange={() =>
-												handleRadioChange('yes')
-											}
-											value="yes"
-										/>
-									</div>
-								</div>
-
-								{hasImpactingEvents === 'yes' && (
-									<div className="event-edit-field mx-3 pb-3">
-										{loadingTickets ? (
-											<ClayLoadingIndicator size="sm" />
-										) : !!ticketOptions.length ||
-										  !!selectedTicketOptions.length ? (
-											<>
-												<label>
-													{i18n.translate(
-														'please-select-the-tickets-that-are-impacting-this-event'
-													)}
-												</label>
-
-												<div className="mr-3">
-													<AssociatedTicketsContainer
-														editing
-														handleRemove={
-															handleRemove
-														}
-														handleSelect={
-															handleSelect
-														}
-														selectedTickets={
-															selectedTicketOptions
-														}
-														ticketOptions={
-															ticketOptions
-														}
-													/>
-												</div>
-											</>
-										) : (
-											<div className="mx-3 pb-3">
-												{i18n.translate(
-													'there-are-currently-no-open-tickets-under-this-project'
+									{isDescriptionRequired && (
+										<div className="event-edit-field mb-4">
+											<Input
+												badgeClassName="mx-3"
+												component="textarea"
+												groupStyle="pb-1"
+												label={i18n.translate(
+													'event-description'
 												)}
-											</div>
-										)}
+												name="businessEvent.description"
+												placeholder={i18n.translate(
+													'event-description'
+												)}
+												required
+												type="text"
+											/>
+										</div>
+									)}
+
+									<div className="event-edit-field mb-4">
+										<ClayInput.Group className="m-0">
+											<ClayInput.GroupItem className="m-0">
+												<DatePicker
+													badgeClassName="mx-3"
+													className="mx-3"
+													dateFormat="MM-dd-yyyy"
+													groupStyle="pb-1"
+													label={i18n.translate(
+														'target-go-live-date'
+													)}
+													name="businessEvent.targetGoLiveDate"
+													onChange={(
+														value: string
+													) => {
+														setFieldValue(
+															'businessEvent.targetGoLiveDate',
+															value
+														);
+													}}
+													placeholder={i18n.translate(
+														'mm-dd-yyyy'
+													)}
+													required
+													validations={[
+														(value) =>
+															isValidDate(
+																value,
+																years
+															),
+													]}
+													years={years}
+													yearsCheck
+												/>
+											</ClayInput.GroupItem>
+
+											<ClayInput.GroupItem className="m-0">
+												<Select
+													groupStyle="pb-1"
+													id="select-businessEvent.timeZone"
+													label={i18n.translate(
+														'time-zone'
+													)}
+													name="businessEvent.timeZone.key"
+													onChange={(value: string) =>
+														handleOptionChange(
+															'businessEvent.timeZone.name',
+															value,
+															utcTimeZonesList
+														)
+													}
+													options={[
+														{
+															...emptyOption,
+															disabled: false,
+														},
+														...utcTimeZonesList,
+													]}
+													required
+												/>
+											</ClayInput.GroupItem>
+
+											<ClayInput.GroupItem className="m-0">
+												<TimePicker
+													groupStyle="pb-1"
+													label={i18n.translate(
+														'time'
+													)}
+													name="businessEvent.targetGoLiveTime"
+													onChange={(value) =>
+														setFieldValue(
+															'businessEvent.targetGoLiveTime',
+															value
+														)
+													}
+													required
+													showPopover
+													text="if-unsure-please-provide-an-estimated-time"
+												/>
+											</ClayInput.GroupItem>
+										</ClayInput.Group>
 									</div>
-								)}
-							</>
-						)}
-					/>
+
+									<div className="event-edit-field mx-3 pb-3">
+										<label>
+											{i18n.translate(
+												'are-there-any-support-tickets-impacting-this-event'
+											)}
+										</label>
+
+										<div className="ml-1">
+											<ClayRadio
+												checked={
+													hasImpactingEvents === 'no'
+												}
+												label={i18n.translate('no')}
+												onChange={() =>
+													handleRadioChange('no')
+												}
+												value="no"
+											/>
+
+											<ClayRadio
+												checked={
+													hasImpactingEvents === 'yes'
+												}
+												label={i18n.translate('yes')}
+												onChange={() =>
+													handleRadioChange('yes')
+												}
+												value="yes"
+											/>
+										</div>
+									</div>
+
+									{hasImpactingEvents === 'yes' && (
+										<div className="event-edit-field mx-3 pb-3">
+											{loadingTickets ? (
+												<ClayLoadingIndicator size="sm" />
+											) : !!ticketOptions.length ||
+											  !!selectedTicketOptions.length ? (
+												<>
+													<label>
+														{i18n.translate(
+															'please-select-the-tickets-that-are-impacting-this-event'
+														)}
+													</label>
+
+													<div className="mr-3">
+														<AssociatedTicketsContainer
+															editing
+															handleRemove={
+																handleRemove
+															}
+															handleSelect={
+																handleSelect
+															}
+															selectedTickets={
+																selectedTicketOptions
+															}
+															ticketOptions={
+																ticketOptions
+															}
+														/>
+													</div>
+												</>
+											) : (
+												<div className="mx-3 pb-3">
+													{i18n.translate(
+														'there-are-currently-no-open-tickets-under-this-project'
+													)}
+												</div>
+											)}
+										</div>
+									)}
+								</>
+							)}
+						/>
+					</div>
 				</div>
-			</div>
+			) : (
+				<p>
+					{i18n.translate(
+						'make-sure-the-project-link-is-correct-and-that-you-have-access-to-this-project'
+					)}
+				</p>
+			)
 		) : (
-			<p>
-				{i18n.translate(
-					'make-sure-the-project-link-is-correct-and-that-you-have-access-to-this-project'
-				)}
-			</p>
+			<p
+				dangerouslySetInnerHTML={{
+					__html: i18n.sub(
+						'we-apologize-for-the-inconvenience-but-we-ve-detected-a-system-error-with-this-project',
+						[
+							'<a href="https://liferay.atlassian.net/servicedesk/customer/portals">',
+							'</a>',
+						]
+					),
+				}}
+			/>
 		)
 	) : (
 		<div className="w-25">

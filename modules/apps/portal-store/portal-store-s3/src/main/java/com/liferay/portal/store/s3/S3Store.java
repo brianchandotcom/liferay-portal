@@ -8,10 +8,7 @@ package com.liferay.portal.store.s3;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.StorageClass;
 import com.amazonaws.services.s3.transfer.TransferManager;
-import com.amazonaws.services.s3.transfer.Upload;
 
 import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
@@ -46,6 +43,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
@@ -74,8 +72,11 @@ import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
 import software.amazon.awssdk.services.s3.model.S3Object;
+import software.amazon.awssdk.services.s3.model.StorageClass;
 import software.amazon.awssdk.services.s3.paginators.ListObjectsV2Publisher;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
+import software.amazon.awssdk.transfer.s3.model.CompletedFileUpload;
+import software.amazon.awssdk.transfer.s3.model.FileUpload;
 
 /**
  * @author Brian Wing Shun Chan
@@ -108,46 +109,44 @@ public class S3Store implements Store {
 			deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
 
-		File file = null;
-
 		try {
-			file = FileUtil.createTempFile(inputStream);
+			File file = FileUtil.createTempFile(inputStream);
 
-			Upload upload = null;
+			String key = S3KeyTransformerUtil.getFileVersionKey(
+				companyId, repositoryId, fileName, versionLabel);
 
 			try {
-				String key = S3KeyTransformerUtil.getFileVersionKey(
-					companyId, repositoryId, fileName, versionLabel);
+				FileUpload fileUpload = _s3TransferManager.uploadFile(
+					uploadFileBuilder -> {
+						uploadFileBuilder.putObjectRequest(
+							putObjectBuilder -> {
+								putObjectBuilder.bucket(
+									_s3StoreConfiguration.bucketName());
+								putObjectBuilder.key(key);
+								putObjectBuilder.storageClass(_storageClass);
+							});
+						uploadFileBuilder.source(file);
+					});
 
-				PutObjectRequest putObjectRequest = new PutObjectRequest(
-					_s3StoreConfiguration.bucketName(), key, file);
+				CompletableFuture<CompletedFileUpload> completableFuture =
+					fileUpload.completionFuture();
 
-				putObjectRequest.withStorageClass(_storageClass);
-
-				upload = _transferManager.upload(putObjectRequest);
-
-				upload.waitForCompletion();
+				completableFuture.join();
 			}
-			catch (AmazonClientException amazonClientException) {
-				throw _transform(amazonClientException);
-			}
-			catch (InterruptedException interruptedException) {
+			catch (CancellationException cancellationException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException);
+					_log.debug(cancellationException);
 				}
-
-				upload.abort();
-
-				Thread thread = Thread.currentThread();
-
-				thread.interrupt();
+			}
+			catch (CompletionException completionException) {
+				throw _transform(completionException.getCause());
+			}
+			finally {
+				FileUtil.delete(file);
 			}
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
-		}
-		finally {
-			FileUtil.delete(file);
 		}
 	}
 
@@ -495,7 +494,7 @@ public class S3Store implements Store {
 				_s3StoreConfiguration.s3StorageClass());
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
-			_storageClass = StorageClass.Standard;
+			_storageClass = StorageClass.STANDARD;
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(

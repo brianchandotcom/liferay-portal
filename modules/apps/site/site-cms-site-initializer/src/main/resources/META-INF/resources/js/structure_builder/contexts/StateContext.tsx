@@ -57,6 +57,7 @@ type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
 
 type History = {
 	deletedChildren: boolean;
+	deletedGroupERCs: Array<RepeatableGroup['erc']>;
 	modifiedNames: Set<Uuid>;
 };
 
@@ -72,6 +73,7 @@ export type State = {
 const INITIAL_STATE: State = {
 	history: {
 		deletedChildren: false,
+		deletedGroupERCs: [],
 		modifiedNames: new Set(),
 	},
 	invalids: new Map(),
@@ -465,6 +467,19 @@ function reducer(state: State, action: Action): State {
 					...nextState,
 					history: {...nextState.history, deletedChildren: true},
 				};
+
+				if (child.type === 'repeatable-group') {
+					nextState = {
+						...nextState,
+						history: {
+							...nextState.history,
+							deletedGroupERCs: [
+								...nextState.history.deletedGroupERCs,
+								child.erc,
+							],
+						},
+					};
+				}
 			}
 
 			return nextState;
@@ -494,7 +509,7 @@ function reducer(state: State, action: Action): State {
 				uuids: selection.filter((uuid) => !undeletables.has(uuid)),
 			});
 
-			return {
+			let nextState = {
 				...state,
 				selection: [...undeletables.keys()],
 				structure: {
@@ -502,6 +517,36 @@ function reducer(state: State, action: Action): State {
 					children: nextChildren,
 				},
 			};
+
+			for (const uuid of selection) {
+				const child = findChild({root: structure, uuid});
+
+				if (!child) {
+					continue;
+				}
+
+				if (state.publishedChildren.has(uuid)) {
+					nextState = {
+						...nextState,
+						history: {...nextState.history, deletedChildren: true},
+					};
+
+					if (child.type === 'repeatable-group') {
+						nextState = {
+							...nextState,
+							history: {
+								...nextState.history,
+								deletedGroupERCs: [
+									...nextState.history.deletedGroupERCs,
+									child.erc,
+								],
+							},
+						};
+					}
+				}
+			}
+
+			return nextState;
 		}
 		case 'publish-structure': {
 			const {structure} = state;

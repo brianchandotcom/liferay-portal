@@ -70,10 +70,10 @@ public class MarketplaceCommandLineRunner
 	public void run(String... args) throws Exception {
 		_invoke(this::_processInProgressTrials, "In Progress Trials");
 
-        _invoke(
-                this::_processLiferayStaffUserGroups, "Liferay Staff User Groups");
+		_invoke(
+			this::_processLiferayStaffUserGroups, "Liferay Staff User Groups");
 
-        _invoke(this::_processOnHoldTrials, "On Hold Trials");
+		_invoke(this::_processOnHoldTrials, "On Hold Trials");
 
 		_invoke(this::_processOrdersTotalAmount, "Orders Total Amount");
 
@@ -549,13 +549,13 @@ public class MarketplaceCommandLineRunner
 
 		com.liferay.headless.admin.user.client.pagination.Page<Role> rolesPage =
 			roleResource.getRolesPage(
-				null, null, "name eq '" + _LIFERAY_STAFF_USER_ROLE + "'",
+				null, null, "name eq '" + _LIFERAY_STAFF_ROLE + "'",
 				com.liferay.headless.admin.user.client.pagination.Pagination.of(
 					-1, -1));
 
-		Role liferayUserRole = rolesPage.fetchFirstItem();
+		Role role = rolesPage.fetchFirstItem();
 
-		if (liferayUserRole == null) {
+		if (role == null) {
 			return;
 		}
 
@@ -577,9 +577,7 @@ public class MarketplaceCommandLineRunner
 			boolean hasSSAAccount = false;
 
 			for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
-				if (Objects.equals(
-						roleBrief.getName(), _LIFERAY_STAFF_USER_ROLE)) {
-
+				if (Objects.equals(roleBrief.getName(), _LIFERAY_STAFF_ROLE)) {
 					hasLiferayStaffRole = true;
 
 					break;
@@ -599,7 +597,7 @@ public class MarketplaceCommandLineRunner
 
 			if (!hasLiferayStaffRole) {
 				roleResource.postRoleUserAccountAssociation(
-					liferayUserRole.getId(), userAccount.getId());
+					role.getId(), userAccount.getId());
 			}
 
 			if (!hasSSAAccount) {
@@ -903,7 +901,7 @@ public class MarketplaceCommandLineRunner
 		orderResource.patchOrder(orderId, order);
 	}
 
-	private static final String _LIFERAY_STAFF_USER_ROLE = "Liferay Staff";
+	private static final String _LIFERAY_STAFF_ROLE = "Liferay Staff";
 
 	private static final int _ORDER_PAYMENT_STATUS_COMPLETED = 0;
 

@@ -95,17 +95,17 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		Group globalGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
+		DLFileEntry dlFileEntry = _addFileEntry(group.getGroupId());
+		DLFileEntry globalDLFileEntry = _addFileEntry(globalGroup.getGroupId());
+
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
 		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
 
-		DLFileEntry dlFileEntry1 = _addFileEntry(group.getGroupId());
-		DLFileEntry dlFileEntry2 = _addFileEntry(globalGroup.getGroupId());
-
 		_updateFaviconFileEntryId(
-			layout1.getCtCollectionId(), dlFileEntry1.getFileEntryId(),
+			layout1.getCtCollectionId(), dlFileEntry.getFileEntryId(),
 			layout1.getPlid());
 		_updateFaviconFileEntryId(
-			layout2.getCtCollectionId(), dlFileEntry2.getFileEntryId(),
+			layout2.getCtCollectionId(), globalDLFileEntry.getFileEntryId(),
 			layout2.getPlid());
 
 		runUpgrade();
@@ -114,13 +114,13 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		layout2 = _layoutLocalService.fetchLayout(layout2.getPlid());
 
 		Assert.assertEquals(
-			dlFileEntry1.getExternalReferenceCode(),
+			dlFileEntry.getExternalReferenceCode(),
 			layout1.getFaviconFileEntryERC());
 		Assert.assertTrue(
 			Validator.isNull(layout1.getFaviconFileEntryScopeERC()));
 
 		Assert.assertEquals(
-			dlFileEntry2.getExternalReferenceCode(),
+			globalDLFileEntry.getExternalReferenceCode(),
 			layout2.getFaviconFileEntryERC());
 		Assert.assertEquals(
 			globalGroup.getExternalReferenceCode(),
@@ -128,10 +128,10 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 		Assert.assertTrue(
 			_dbInspector.hasColumn("Layout", "faviconFileEntryERC"));
-		Assert.assertTrue(
-			_dbInspector.hasColumn("Layout", "faviconFileEntryScopeERC"));
 		Assert.assertFalse(
 			_dbInspector.hasColumn("Layout", "faviconFileEntryId"));
+		Assert.assertTrue(
+			_dbInspector.hasColumn("Layout", "faviconFileEntryScopeERC"));
 	}
 
 	@Override
@@ -204,13 +204,13 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"update Layout set faviconFileEntryId = ?, " +
-					"faviconFileEntryERC = null, faviconFileEntryScopeERC = " +
-						"null where plid = ? and ctCollectionId = ?")) {
+				"update Layout set faviconFileEntryERC = ?, " +
+					"faviconFileEntryId = null, faviconFileEntryScopeERC = " +
+						"null where ctCollectionId = ? and plid = ?")) {
 
 			preparedStatement.setLong(1, faviconFileEntryId);
-			preparedStatement.setLong(2, plid);
-			preparedStatement.setLong(3, ctCollectionId);
+			preparedStatement.setLong(2, ctCollectionId);
+			preparedStatement.setLong(3, plid);
 
 			preparedStatement.executeUpdate();
 		}

@@ -1094,8 +1094,19 @@ public class FriendlyURLServlet extends HttpServlet {
 			return null;
 		}
 
-		return new Redirect(
-			redirect.getDestinationURL(), true, redirect.isPermanent());
+		String destinationURL = redirect.getDestinationURL();
+
+		String doAsUserId = ParamUtil.getString(
+			httpServletRequest, "doAsUserId");
+
+		if (Validator.isHex(doAsUserId) &&
+			ChecksumUtil.isValid(StringUtil.hexStringToBytes(doAsUserId))) {
+
+			destinationURL = HttpComponentsUtil.setParameter(
+				destinationURL, "doAsUserId", doAsUserId);
+		}
+
+		return new Redirect(destinationURL, true, redirect.isPermanent());
 	}
 
 	private String _getRequestURI(HttpServletRequest httpServletRequest) {

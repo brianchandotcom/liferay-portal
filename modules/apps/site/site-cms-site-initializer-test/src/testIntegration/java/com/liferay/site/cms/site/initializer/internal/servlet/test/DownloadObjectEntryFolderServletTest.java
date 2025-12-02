@@ -6,8 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -51,8 +49,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
-import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletResponse;
@@ -89,10 +86,8 @@ public class DownloadObjectEntryFolderServletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = CMSGroupTestUtil.getCMSGroup(
-			DownloadObjectEntryFolderServletTest.class,
-			_batchEngineUnitProcessor, _batchEngineUnitReader,
-			_siteInitializerRegistry);
+		_group = CMSTestUtil.getOrAddGroup(
+			DownloadObjectEntryFolderServletTest.class);
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
@@ -382,12 +377,6 @@ public class DownloadObjectEntryFolderServletTest {
 	}
 
 	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
@@ -420,8 +409,5 @@ public class DownloadObjectEntryFolderServletTest {
 		filter = "osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.DownloadObjectEntryFolderServlet"
 	)
 	private Servlet _servlet;
-
-	@Inject
-	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

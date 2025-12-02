@@ -5,8 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -28,8 +26,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
-import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -47,9 +44,7 @@ public abstract class BaseDisplayContextTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		group = CMSGroupTestUtil.getCMSGroup(
-			BaseDisplayContextTestCase.class, _batchEngineUnitProcessor,
-			_batchEngineUnitReader, _siteInitializerRegistry);
+		group = CMSTestUtil.getOrAddGroup(BaseDisplayContextTestCase.class);
 
 		mockHttpServletRequest = getMockHttpServletRequest();
 
@@ -193,14 +188,5 @@ public abstract class BaseDisplayContextTestCase {
 	protected Portal portal;
 
 	protected ThemeDisplay themeDisplay;
-
-	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
-
-	@Inject
-	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

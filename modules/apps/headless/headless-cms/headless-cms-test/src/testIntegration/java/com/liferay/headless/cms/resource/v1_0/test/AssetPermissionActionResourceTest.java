@@ -6,8 +6,6 @@
 package com.liferay.headless.cms.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -34,8 +32,6 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,16 +47,14 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
-import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import java.util.HashMap;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -87,24 +81,12 @@ public class AssetPermissionActionResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		CMSTestUtil.getOrAddGroup(AssetPermissionActionResourceTest.class);
+
 		_cmsAdministratorRole = _getOrAddCMSAdministratorRole(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 		_userRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
-
-		_originalTestGroupId = testGroup.getGroupId();
-
-		testGroup = CMSGroupTestUtil.getCMSGroup(
-			AssetPermissionActionResourceTest.class, _batchEngineUnitProcessor,
-			_batchEngineUnitReader, _siteInitializerRegistry);
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		testGroup = _groupLocalService.getGroup(_originalTestGroupId);
-
-		super.tearDown();
 	}
 
 	@Override
@@ -354,16 +336,7 @@ public class AssetPermissionActionResourceTest
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.SUBSCRIBE));
 	}
 
-	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
-
 	private Role _cmsAdministratorRole;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
@@ -377,9 +350,6 @@ public class AssetPermissionActionResourceTest
 	private FilterFactory<Predicate> _filterFactory;
 
 	@Inject
-	private GroupLocalService _groupLocalService;
-
-	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
@@ -388,16 +358,11 @@ public class AssetPermissionActionResourceTest
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
-	private long _originalTestGroupId;
-
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private SiteInitializerRegistry _siteInitializerRegistry;
 
 	private Role _userRole;
 

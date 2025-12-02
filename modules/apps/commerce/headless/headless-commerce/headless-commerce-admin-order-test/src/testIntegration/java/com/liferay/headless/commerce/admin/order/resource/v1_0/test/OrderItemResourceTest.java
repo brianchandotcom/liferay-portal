@@ -125,52 +125,13 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 		super.testDeleteOrderItemByExternalReferenceCode();
 	}
 
+	@Override
 	@Test
-	public void testGetdOrderItemWithURL() throws Exception {
-		String url = "https://liferay.com/myfiles/download";
+	public void testGetOrderItem() throws Exception {
+		super.testGetOrderItem();
 
-		OrderItem postOrderItem = _addCommerceOrderItem(_getOrderItem(0, url));
-
-		OrderItem getOrderItem = orderItemResource.getOrderItem(
-			postOrderItem.getId());
-
-		String[] virtualItemURLs = {url};
-
-		Assert.assertEquals(virtualItemURLs, getOrderItem.getVirtualItemURLs());
-	}
-
-	@Test
-	public void testGetOrderItemWithFileEntry() throws Exception {
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, _user.getUserId(), testGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(
-				OrderItemResourceTest.class, "dependencies/image.jpg"),
-			null, null, null, _serviceContext);
-
-		OrderItem postOrderItem = _addCommerceOrderItem(
-			_getOrderItem(fileEntry.getFileEntryId(), null));
-
-		OrderItem getOrderItem = orderItemResource.getOrderItem(
-			postOrderItem.getId());
-
-		CommerceVirtualOrderItem commerceVirtualOrderItem =
-			_commerceVirtualOrderItemLocalService.
-				fetchCommerceVirtualOrderItemByCommerceOrderItemId(
-					getOrderItem.getId());
-
-		String[] virtualItemURLs = {
-			StringBundler.concat(
-				_portal.getPathModule(), StringPool.SLASH,
-				CommerceMediaConstants.SERVLET_PATH,
-				CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_ORDER_ITEM,
-				commerceVirtualOrderItem.getCommerceVirtualOrderItemId(),
-				CommerceMediaConstants.URL_SEPARATOR_FILE,
-				fileEntry.getFileEntryId())
-		};
-
-		Assert.assertEquals(virtualItemURLs, getOrderItem.getVirtualItemURLs());
+		_testGetOrderItemWithFileEntry();
+		_testGetOrderItemWithURL();
 	}
 
 	@Ignore
@@ -205,7 +166,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"quantity"};
+		return new String[] {"externalReferenceCode", "quantity"};
 	}
 
 	@Override
@@ -450,6 +411,52 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 					RandomTestUtil.randomString());
 			}
 		};
+	}
+
+	private void _testGetOrderItemWithFileEntry() throws Exception {
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, _user.getUserId(), testGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				OrderItemResourceTest.class, "dependencies/image.jpg"),
+			null, null, null, _serviceContext);
+
+		OrderItem postOrderItem = _addCommerceOrderItem(
+			_getOrderItem(fileEntry.getFileEntryId(), null));
+
+		OrderItem getOrderItem = orderItemResource.getOrderItem(
+			postOrderItem.getId());
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			_commerceVirtualOrderItemLocalService.
+				fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+					getOrderItem.getId());
+
+		String[] virtualItemURLs = {
+			StringBundler.concat(
+				_portal.getPathModule(), StringPool.SLASH,
+				CommerceMediaConstants.SERVLET_PATH,
+				CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_ORDER_ITEM,
+				commerceVirtualOrderItem.getCommerceVirtualOrderItemId(),
+				CommerceMediaConstants.URL_SEPARATOR_FILE,
+				fileEntry.getFileEntryId())
+		};
+
+		Assert.assertEquals(virtualItemURLs, getOrderItem.getVirtualItemURLs());
+	}
+
+	private void _testGetOrderItemWithURL() throws Exception {
+		String url = "https://liferay.com/myfiles/download";
+
+		OrderItem postOrderItem = _addCommerceOrderItem(_getOrderItem(0, url));
+
+		OrderItem getOrderItem = orderItemResource.getOrderItem(
+			postOrderItem.getId());
+
+		String[] virtualItemURLs = {url};
+
+		Assert.assertEquals(virtualItemURLs, getOrderItem.getVirtualItemURLs());
 	}
 
 	private void _testPatchOrderItemById() throws Exception {

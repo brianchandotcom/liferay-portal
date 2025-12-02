@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"frontend-js-web": "*",
 		"react": "18.2.0"
 	},
 	"main": "main/index.ts",

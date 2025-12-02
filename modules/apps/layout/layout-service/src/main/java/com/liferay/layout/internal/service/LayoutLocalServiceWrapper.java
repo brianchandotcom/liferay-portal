@@ -977,21 +977,21 @@ public class LayoutLocalServiceWrapper
 				fragmentStyledLayoutStructureItem =
 					(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
-			FragmentEntryLink sourceLayoutfragmentEntryLink =
+			FragmentEntryLink sourceLayoutFragmentEntryLink =
 				sourceLayoutFragmentEntryLinksMap.get(
 					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
-			if (sourceLayoutfragmentEntryLink == null) {
+			if (sourceLayoutFragmentEntryLink == null) {
 				continue;
 			}
 
-			String namespace = sourceLayoutfragmentEntryLink.getNamespace();
+			String namespace = sourceLayoutFragmentEntryLink.getNamespace();
 
 			JSONObject editableValuesJSONObject =
-				sourceLayoutfragmentEntryLink.getEditableValuesJSONObject();
+				sourceLayoutFragmentEntryLink.getEditableValuesJSONObject();
 
 			if (masterLayoutCopy &&
-				sourceLayoutfragmentEntryLink.isTypePortlet() &&
+				sourceLayoutFragmentEntryLink.isTypePortlet() &&
 				Validator.isNotNull(
 					editableValuesJSONObject.getString("instanceId"))) {
 
@@ -1002,7 +1002,7 @@ public class LayoutLocalServiceWrapper
 					namespace = StringUtil.randomId();
 
 					instanceIdsMap.put(
-						sourceLayoutfragmentEntryLink.getNamespace(),
+						sourceLayoutFragmentEntryLink.getNamespace(),
 						namespace);
 				}
 
@@ -1034,7 +1034,7 @@ public class LayoutLocalServiceWrapper
 				if (sourceLayout.getClassPK() == targetLayout.getPlid()) {
 					targetLayoutFragmentEntryLink.
 						setOriginalFragmentEntryLinkERC(
-							sourceLayoutfragmentEntryLink.
+							sourceLayoutFragmentEntryLink.
 								getExternalReferenceCode());
 				}
 				else {
@@ -1048,18 +1048,18 @@ public class LayoutLocalServiceWrapper
 					targetLayout.getPlid());
 				targetLayoutFragmentEntryLink.setPlid(targetLayout.getPlid());
 				targetLayoutFragmentEntryLink.setCss(
-					sourceLayoutfragmentEntryLink.getCss());
+					sourceLayoutFragmentEntryLink.getCss());
 				targetLayoutFragmentEntryLink.setHtml(
-					sourceLayoutfragmentEntryLink.getHtml());
+					sourceLayoutFragmentEntryLink.getHtml());
 				targetLayoutFragmentEntryLink.setJs(
-					sourceLayoutfragmentEntryLink.getJs());
+					sourceLayoutFragmentEntryLink.getJs());
 				targetLayoutFragmentEntryLink.setConfiguration(
-					sourceLayoutfragmentEntryLink.getConfiguration());
+					sourceLayoutFragmentEntryLink.getConfiguration());
 				targetLayoutFragmentEntryLink.setEditableValues(
 					editableValuesJSONObject.toString());
 				targetLayoutFragmentEntryLink.setNamespace(namespace);
 				targetLayoutFragmentEntryLink.setLastPropagationDate(
-					sourceLayoutfragmentEntryLink.getLastPropagationDate());
+					sourceLayoutFragmentEntryLink.getLastPropagationDate());
 
 				newFragmentEntryLink =
 					_fragmentEntryLinkLocalService.updateFragmentEntryLink(
@@ -1074,7 +1074,7 @@ public class LayoutLocalServiceWrapper
 			}
 			else {
 				newFragmentEntryLink =
-					(FragmentEntryLink)sourceLayoutfragmentEntryLink.clone();
+					(FragmentEntryLink)sourceLayoutFragmentEntryLink.clone();
 
 				newFragmentEntryLink.setUuid(serviceContext.getUuid());
 				newFragmentEntryLink.setExternalReferenceCode(null);
@@ -1089,7 +1089,7 @@ public class LayoutLocalServiceWrapper
 
 				if (sourceLayout.getClassPK() == targetLayout.getPlid()) {
 					newFragmentEntryLink.setOriginalFragmentEntryLinkERC(
-						sourceLayoutfragmentEntryLink.
+						sourceLayoutFragmentEntryLink.
 							getExternalReferenceCode());
 				}
 				else {
@@ -1106,7 +1106,7 @@ public class LayoutLocalServiceWrapper
 					editableValuesJSONObject.toString());
 				newFragmentEntryLink.setNamespace(namespace);
 				newFragmentEntryLink.setLastPropagationDate(
-					sourceLayoutfragmentEntryLink.getLastPropagationDate());
+					sourceLayoutFragmentEntryLink.getLastPropagationDate());
 
 				newFragmentEntryLink =
 					_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -1122,7 +1122,7 @@ public class LayoutLocalServiceWrapper
 			_commentManager.copyDiscussion(
 				user.getUserId(), targetLayout.getGroupId(),
 				FragmentEntryLink.class.getName(),
-				sourceLayoutfragmentEntryLink.getFragmentEntryLinkId(),
+				sourceLayoutFragmentEntryLink.getFragmentEntryLinkId(),
 				newFragmentEntryLink.getFragmentEntryLinkId(),
 				className -> serviceContext);
 		}

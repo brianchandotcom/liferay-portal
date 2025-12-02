@@ -8,7 +8,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
-import com.liferay.headless.admin.site.dto.v1_0.URLReference;
+import com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
@@ -43,11 +43,11 @@ public class FileEntryUtil {
 
 	public static long getPreviewFileEntryId(
 			long groupId, String resourceName, ServiceContext serviceContext,
-			URLReference urlReference, User user)
+			ThumbnailURLReference thumbnailURLReference, User user)
 		throws Exception {
 
-		if ((urlReference == null) ||
-			Validator.isNull(urlReference.getExternalReferenceCode())) {
+		if ((thumbnailURLReference == null) ||
+			Validator.isNull(thumbnailURLReference.getExternalReferenceCode())) {
 
 			return 0;
 		}
@@ -55,11 +55,11 @@ public class FileEntryUtil {
 		FileEntry fileEntry =
 			PortletFileRepositoryUtil.
 				fetchPortletFileEntryByExternalReferenceCode(
-					urlReference.getExternalReferenceCode(), groupId);
+					thumbnailURLReference.getExternalReferenceCode(), groupId);
 
 		if (fileEntry == null) {
 			fileEntry = _getFileEntry(
-				groupId, resourceName, serviceContext, urlReference, user);
+				groupId, resourceName, serviceContext, thumbnailURLReference, user);
 		}
 
 		return fileEntry.getFileEntryId();
@@ -67,11 +67,11 @@ public class FileEntryUtil {
 
 	private static FileEntry _getFileEntry(
 			long groupId, String resourceName, ServiceContext serviceContext,
-			URLReference urlReference, User user)
+			ThumbnailURLReference thumbnailURLReference, User user)
 		throws Exception {
 
 		File file = FileUtil.createTempFile(
-			HttpUtil.URLtoInputStream(urlReference.getUrl()));
+			HttpUtil.URLtoInputStream(thumbnailURLReference.getUrl()));
 
 		String mimeType = MimeTypesUtil.getContentType(file);
 
@@ -95,11 +95,11 @@ public class FileEntryUtil {
 				serviceContext);
 
 		String fileName =
-			urlReference.getExternalReferenceCode() + "_preview" +
+			thumbnailURLReference.getExternalReferenceCode() + "_preview" +
 			extension;
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			urlReference.getExternalReferenceCode(), user.getUserId(),
+			thumbnailURLReference.getExternalReferenceCode(), user.getUserId(),
 			repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			resourceName + "_" + fileName, mimeType, fileName, null, null,

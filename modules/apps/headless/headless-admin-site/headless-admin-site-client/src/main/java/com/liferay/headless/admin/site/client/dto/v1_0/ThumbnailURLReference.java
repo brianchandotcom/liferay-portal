@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.URLReferenceSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.ThumbnailURLReferenceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class URLReference implements Cloneable, Serializable {
+public class ThumbnailURLReference implements Cloneable, Serializable {
 
-	public static URLReference toDTO(String json) {
-		return URLReferenceSerDes.toDTO(json);
+	public static ThumbnailURLReference toDTO(String json) {
+		return ThumbnailURLReferenceSerDes.toDTO(json);
 	}
 
 	public String getExternalReferenceCode() {
@@ -66,8 +66,8 @@ public class URLReference implements Cloneable, Serializable {
 	protected String url;
 
 	@Override
-	public URLReference clone() throws CloneNotSupportedException {
-		return (URLReference)super.clone();
+	public ThumbnailURLReference clone() throws CloneNotSupportedException {
+		return (ThumbnailURLReference)super.clone();
 	}
 
 	@Override
@@ -76,13 +76,14 @@ public class URLReference implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof URLReference)) {
+		if (!(object instanceof ThumbnailURLReference)) {
 			return false;
 		}
 
-		URLReference urlReference = (URLReference)object;
+		ThumbnailURLReference thumbnailURLReference =
+			(ThumbnailURLReference)object;
 
-		return Objects.equals(toString(), urlReference.toString());
+		return Objects.equals(toString(), thumbnailURLReference.toString());
 	}
 
 	@Override
@@ -93,7 +94,7 @@ public class URLReference implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return URLReferenceSerDes.toJSON(this);
+		return ThumbnailURLReferenceSerDes.toJSON(this);
 	}
 
 }

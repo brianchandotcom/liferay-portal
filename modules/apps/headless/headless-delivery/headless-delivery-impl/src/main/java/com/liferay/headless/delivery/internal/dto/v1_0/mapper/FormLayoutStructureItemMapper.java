@@ -276,14 +276,17 @@ public class FormLayoutStructureItemMapper
 					displayPageFormSubmissionResult.setDefaultDisplayPage(
 						() -> Boolean.TRUE);
 				}
-
-				displayPageFormSubmissionResult.setMapping(
-					() -> new Mapping() {
-						{
-							setItemReference(
-								() -> displayPageClassFieldsReference);
-						}
-					});
+				else {
+					displayPageFormSubmissionResult.setMapping(
+						() -> new Mapping() {
+							{
+								setItemReference(
+									() -> displayPageClassFieldsReference);
+							}
+						});
+					displayPageFormSubmissionResult.setDefaultDisplayPage(
+						() -> Boolean.FALSE);
+				}
 
 				displayPageFormSubmissionResult.
 					setNotificationTextFragmentInlineValue(

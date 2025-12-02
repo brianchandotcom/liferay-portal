@@ -9,6 +9,7 @@ import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.k8s.agent.internal.util.ConfigurationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
@@ -111,27 +113,20 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 			return StringPool.BLANK;
 		}
 
+		List<String> lines = new ArrayList<>();
+
 		List<String> sortedKeys = Collections.list(properties.keys());
 
 		Collections.sort(sortedKeys);
 
-		StringBundler sb = new StringBundler();
-
 		for (String key : sortedKeys) {
-			sb.append(key);
-
-			sb.append(StringPool.COLON);
-			sb.append(StringPool.SPACE);
-
 			Object value = properties.get(key);
 
 			if (value instanceof String[]) {
-				sb.append(StringPool.NEW_LINE);
+				lines.add(key + ": ");
 
 				for (String element : (String[])value) {
-					sb.append(StringPool.TAB);
-					sb.append(element);
-					sb.append(StringPool.NEW_LINE);
+					lines.add("\t" + element);
 				}
 
 				continue;
@@ -144,11 +139,12 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 					Pattern.quote("${portalURL}"), _portal.getPathContext());
 			}
 
-			sb.append(valueString);
-			sb.append(StringPool.NEW_LINE);
+			lines.add(StringBundler.concat(key, ": ", valueString));
 		}
 
-		return sb.toString();
+		lines.add(StringPool.BLANK);
+
+		return StringUtil.merge(lines, StringPool.NEW_LINE);
 	}
 
 	private Configuration _getConfiguration(String pid)

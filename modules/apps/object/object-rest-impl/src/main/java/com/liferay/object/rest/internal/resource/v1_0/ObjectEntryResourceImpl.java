@@ -582,6 +582,50 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Page<Comment> getByExternalReferenceCodeCommentChildCommentsPage(
+			String externalReferenceCode, String commentExternalReferenceCode,
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
+
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
+			_fetchComment(
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				commentExternalReferenceCode,
+				_getNonzeroGroupId(objectEntry.getId()));
+
+		if (serviceBuilderComment == null) {
+			throw new NotFoundException();
+		}
+
+		return CommentResourceUtil.getComments(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_DISCUSSION,
+					"postByExternalReferenceCodeCommentChildComment",
+					ObjectEntry.class.getName(), null)
+			).put(
+				"delete",
+				addAction(
+					ActionKeys.DELETE, "deleteByExternalReferenceCodeComment",
+					ObjectEntry.class.getName(), null)
+			).build(),
+			serviceBuilderComment.getCommentId(), contextCompany.getCompanyId(),
+			_commentManager, search, aggregation, filter, pagination,
+			PortalUtil.getPortal(), sorts);
+	}
+
+	@Override
 	public Page<Comment> getByExternalReferenceCodeCommentsPage(
 			String externalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
@@ -1007,6 +1051,53 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Page<Comment>
+			getScopeScopeKeyByExternalReferenceCodeCommentChildCommentsPage(
+				String scopeKey, String externalReferenceCode,
+				String commentExternalReferenceCode, String search,
+				Aggregation aggregation, Filter filter, Pagination pagination,
+				Sort[] sorts)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(
+			externalReferenceCode, scopeKey);
+
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
+			_fetchComment(
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				commentExternalReferenceCode, objectEntry.getScopeId());
+
+		if (serviceBuilderComment == null) {
+			throw new NotFoundException();
+		}
+
+		return CommentResourceUtil.getComments(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_DISCUSSION,
+					"postScopeScopeKeyByExternalReferenceCodeComment" +
+						"ChildComment",
+					ObjectEntry.class.getName(), null)
+			).put(
+				"delete",
+				addAction(
+					ActionKeys.DELETE, "deleteByExternalReferenceCodeComment",
+					ObjectEntry.class.getName(), null)
+			).build(),
+			serviceBuilderComment.getCommentId(), contextCompany.getCompanyId(),
+			_commentManager, search, aggregation, filter, pagination,
+			PortalUtil.getPortal(), sorts);
+	}
+
+	@Override
 	public Response getScopeScopeKeyByExternalReferenceCodeTranslation(
 			String scopeKey, String externalReferenceCode,
 			String sourceLanguageId, String targetLanguageIds, String version)
@@ -1179,7 +1270,7 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public Comment postByExternalReferenceCodeCommentReplyComment(
+	public Comment postByExternalReferenceCodeCommentChildComment(
 			String externalReferenceCode, String commentExternalReferenceCode,
 			Comment comment)
 		throws Exception {
@@ -1471,7 +1562,7 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public Comment postScopeScopeKeyByExternalReferenceCodeCommentReplyComment(
+	public Comment postScopeScopeKeyByExternalReferenceCodeCommentChildComment(
 			String scopeKey, String externalReferenceCode,
 			String commentExternalReferenceCode, Comment comment)
 		throws Exception {

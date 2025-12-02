@@ -29,7 +29,7 @@ const TAB_NAME = {
 
 const TABS = [
 	{
-		actionsCount: 14,
+		actionsCount: 16,
 		name: TAB_NAME.ADVANCED,
 	}
 ];

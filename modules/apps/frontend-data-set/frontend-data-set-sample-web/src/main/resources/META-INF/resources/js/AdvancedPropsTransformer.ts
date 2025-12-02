@@ -20,6 +20,26 @@ import type {
 	IView,
 } from '@liferay/frontend-data-set-web';
 
+function applyStyles(itemsActions: any) {
+	return itemsActions.map((action: IItemsActions) => {
+		const nestedItemsActions = action?.items;
+
+		if (nestedItemsActions) {
+			action.items = applyStyles(nestedItemsActions);
+		}
+
+		const key = action?.data?.id as string;
+		if (!key || key !== 'sampleDeleteMessage') {
+			return action;
+		}
+
+		return {
+			...action,
+			className: 'text-danger',
+		};
+	});
+}
+
 export default function propsTransformer({
 	additionalProps: {greeting},
 	itemsActions,
@@ -107,19 +127,6 @@ export default function propsTransformer({
 		return props;
 	};
 
-	const itemActionsWithStyling = itemsActions.map((action: IItemsActions) => {
-		const key = action?.data?.id as string;
-
-		if (!key || key !== 'sampleDeleteMessage') {
-			return action;
-		}
-
-		return {
-			...action,
-			className: 'text-danger',
-		};
-	});
-
 	const filtersGroups = [
 		{filters: ['date', 'color'], label: 'Group 1'},
 		{filters: ['invalid', 'size'], label: 'Group 2'},
@@ -134,18 +141,7 @@ export default function propsTransformer({
 		fileDropSettings,
 		filtersGroups,
 		infoPanelComponent: SampleInfoPanel,
-		itemsActions: itemsActions.map((action: IItemsActions) => {
-			const key = action?.data?.id as string;
-
-			if (!key || key !== 'sampleDeleteMessage') {
-				return action;
-			}
-
-			return {
-				...action,
-				className: 'text-danger',
-			};
-		}),
+		itemsActions: applyStyles(itemsActions),
 		onActionDropdownItemClick({
 			action,
 			itemData,

@@ -15,15 +15,15 @@ const SourceCode = () => {
 
 	const scriptLanguage = selectedItem.data?.assignments?.scriptLanguage;
 
-	const updateSelectedItem = (editor) => {
-		if (editor.getData().trim() !== '') {
+	const updateSelectedItem = (value) => {
+		if (value.trim() !== '') {
 			setSelectedItem((previousValue) => ({
 				...previousValue,
 				data: {
 					...previousValue.data,
 					assignments: {
 						assignmentType: ['scriptedAssignment'],
-						script: [editor.getData()],
+						script: [value],
 						scriptLanguage,
 					},
 				},

@@ -3,40 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Editor} from 'frontend-editor-ckeditor-web';
+import {CodeMirrorEditor} from '@liferay/object-js-components-web';
 import React, {useRef} from 'react';
-
-import {editorConfig} from '../../../../../constants';
 
 const BaseSourceCode = ({scriptSourceCode, updateSelectedItem}) => {
 	const editorRef = useRef();
 
 	return (
-		<Editor
-			config={editorConfig}
-			onInstanceReady={({editor}) => {
-				editor.setMode('source');
-
-				if (scriptSourceCode) {
-					editor.setData(scriptSourceCode[0]);
-				}
-
-				document
-					.querySelector('div.sidebar-body')
-					.addEventListener('keyup', () => {
-						updateSelectedItem(editor);
-					});
-
-				return () => {
-					document
-						.querySelector('div.sidebar-body')
-						.removeEventListener(
-							'keyup',
-							updateSelectedItem(editor)
-						);
-				};
+		<CodeMirrorEditor
+			lineWrapping={true}
+			mode="xml"
+			onChange={(value) => {
+				updateSelectedItem(value);
 			}}
+			readOnly={false}
 			ref={editorRef}
+			value={scriptSourceCode ? scriptSourceCode[0] : ''}
 		/>
 	);
 };

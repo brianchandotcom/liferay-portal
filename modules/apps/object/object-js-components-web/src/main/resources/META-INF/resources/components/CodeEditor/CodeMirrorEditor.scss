@@ -3,6 +3,7 @@
 
 html#{$cadmin-selector} .cadmin .lfr-objects__editor,
 .lfr-objects__editor {
+	position: relative;
 	width: 100%;
 
 	.CodeMirror {

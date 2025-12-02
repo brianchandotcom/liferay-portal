@@ -18,8 +18,8 @@ const TimerSourceCode = () => {
 			scriptedReassignmentTimerIndex
 		]?.script;
 
-	const updateTimer = (editor) => {
-		if (editor.getData().trim() !== '') {
+	const updateTimer = (value) => {
+		if (value.trim() !== '') {
 			setSelectedItem((previousValue) => ({
 				...previousValue,
 				data: {
@@ -36,7 +36,7 @@ const TimerSourceCode = () => {
 											assignmentType: [
 												'scriptedAssignment',
 											],
-											script: [editor.getData()],
+											script: [value],
 											scriptLanguage: [DEFAULT_LANGUAGE],
 										};
 									}

@@ -175,31 +175,6 @@ public class ExportImportContentProcessorUtil {
 		return null;
 	}
 
-	private static Object _getInfoItem(
-		String className, long classPK,
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
-
-		if (infoItemObjectProvider == null) {
-			return null;
-		}
-
-		try {
-			return infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(classPK));
-		}
-		catch (NoSuchInfoItemException noSuchInfoItemException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchInfoItemException);
-			}
-		}
-
-		return null;
-	}
-
 	private static Object _getReferenceObject(
 		String className, long classPK,
 		InfoItemServiceRegistry infoItemServiceRegistry,
@@ -210,7 +185,10 @@ public class ExportImportContentProcessorUtil {
 			classPK);
 
 		if (assetEntry == null) {
-			return _getInfoItem(className, classPK, infoItemServiceRegistry);
+			return _getInfoItem(
+				className, portletDataContext.getScopeGroupId(),
+				new ClassPKInfoItemIdentifier(classPK),
+				infoItemServiceRegistry);
 		}
 
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();

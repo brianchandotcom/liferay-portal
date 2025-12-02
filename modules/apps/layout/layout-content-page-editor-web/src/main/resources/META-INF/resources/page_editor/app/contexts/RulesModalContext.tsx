@@ -10,6 +10,7 @@ import React, {
 	SetStateAction,
 	useCallback,
 	useContext,
+	useEffect,
 	useState,
 } from 'react';
 import {v4 as uuidv4} from 'uuid';
@@ -143,6 +144,25 @@ function useRulesModalState() {
 	return {editingRule, visible};
 }
 
+function useRuleValidation(onValidate: () => void) {
+	const {setShouldValidate, shouldValidate} = useContext(RulesModalContext);
+
+	useEffect(() => {
+		if (!shouldValidate) {
+			return;
+		}
+
+		onValidate();
+		setShouldValidate(false);
+	}, [onValidate, setShouldValidate, shouldValidate]);
+}
+
+function useTriggerRuleValidation() {
+	const {setShouldValidate} = useContext(RulesModalContext);
+
+	return () => setShouldValidate(true);
+}
+
 function getDefaultRule(rules: Rule[]): Rule {
 	const nameIsUsed = (rules: Rule[], name: string) =>
 		rules.some((rule) => rule.name === name);
@@ -169,4 +189,6 @@ export {
 	RulesModalContextProvider,
 	useRulesModal,
 	useRulesModalState,
+	useRuleValidation,
+	useTriggerRuleValidation,
 };

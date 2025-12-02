@@ -16,6 +16,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
 	useRulesModal,
 	useRulesModalState,
+	useTriggerRuleValidation,
 } from '../../../app/contexts/RulesModalContext';
 import {useDispatch} from '../../../app/contexts/StoreContext';
 import addRule from '../../../app/thunks/addRule';
@@ -32,18 +33,22 @@ export type RuleError = {
 
 export default function RulesModal() {
 	const {editingRule, visible} = useRulesModalState();
+	const triggerRuleValidation = useTriggerRuleValidation();
 
 	const {closeRulesModal, updateEditingRule} = useRulesModal();
-
-	const {observer, onClose} = useModal({
-		onClose: () => closeRulesModal(),
-	});
 
 	const dispatch = useDispatch();
 	const nameId = useId();
 
 	const [nameError, setNameError] = useState(false);
-	const [ruleError, setRuleError] = useState(false);
+	const [ruleErrors, setRuleErrors] = useState<RuleError[]>([]);
+
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			setRuleErrors([]);
+			closeRulesModal();
+		},
+	});
 
 	const onSave = useCallback(() => {
 		if (!editingRule.name) {
@@ -52,13 +57,17 @@ export default function RulesModal() {
 			return;
 		}
 
-		if (
-			editingRule.actions.some((action) => !action.itemId) ||
-			editingRule.conditions.some(
-				(condition) => !condition.options?.value
-			)
-		) {
-			setRuleError(true);
+		const errors: RuleError[] = [];
+
+		[...editingRule.conditions, ...editingRule.actions].forEach((item) => {
+			if (item.error) {
+				errors.push(item.error);
+			}
+		});
+
+		if (errors.length) {
+			setRuleErrors(errors);
+			triggerRuleValidation();
 
 			return;
 		}
@@ -99,7 +108,7 @@ export default function RulesModal() {
 		}
 
 		onClose();
-	}, [dispatch, editingRule, onClose]);
+	}, [dispatch, editingRule, onClose, triggerRuleValidation]);
 
 	const title = editingRule.id
 		? Liferay.Language.get('edit-rule')
@@ -122,7 +131,10 @@ export default function RulesModal() {
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<ErrorAlert setVisible={setRuleError} visible={ruleError} />
+				<ErrorAlert
+					errors={ruleErrors}
+					onClose={() => setRuleErrors([])}
+				/>
 
 				<ClayForm.Group
 					className={classNames({'has-error': nameError})}
@@ -179,8 +191,6 @@ export default function RulesModal() {
 								updateEditingRule({conditionType})
 							}
 							setConditions={(conditions) => {
-								setRuleError(false);
-
 								updateEditingRule({conditions});
 							}}
 						/>
@@ -193,8 +203,6 @@ export default function RulesModal() {
 						<RuleBuilderActionSection
 							actions={editingRule.actions}
 							setActions={(actions) => {
-								setRuleError(false);
-
 								updateEditingRule({actions});
 							}}
 						/>
@@ -220,24 +228,24 @@ export default function RulesModal() {
 }
 
 function ErrorAlert({
-	setVisible,
-	visible,
+	errors,
+	onClose,
 }: {
-	setVisible: (visible: boolean) => void;
-	visible: boolean;
+	errors: RuleError[];
+	onClose: () => void;
 }) {
 	const alertRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (visible) {
+		if (errors.length) {
 			alertRef.current?.scrollIntoView?.({
 				behavior: 'smooth',
 				block: 'center',
 			});
 		}
-	}, [visible]);
+	}, [errors]);
 
-	if (!visible) {
+	if (!errors.length) {
 		return null;
 	}
 
@@ -246,7 +254,7 @@ function ErrorAlert({
 			<ClayAlert
 				displayType="danger"
 				hideCloseIcon={false}
-				onClose={() => setVisible(false)}
+				onClose={onClose}
 				title={Liferay.Language.get('error')}
 			>
 				{Liferay.Language.get(

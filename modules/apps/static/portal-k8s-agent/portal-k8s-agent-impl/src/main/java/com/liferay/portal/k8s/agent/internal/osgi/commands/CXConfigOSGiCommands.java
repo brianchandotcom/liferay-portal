@@ -189,7 +189,9 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 			String[] splitFilter = filter.split("=", 2);
 
 			if (splitFilter.length != 2) {
-				return new Configuration[0];
+				System.out.println("Invalid filter: " + filter);
+
+				return null;
 			}
 
 			String key = splitFilter[0];

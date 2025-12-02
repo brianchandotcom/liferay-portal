@@ -32,7 +32,7 @@ import jakarta.ws.rs.core.Configuration;
 
 import java.lang.annotation.Annotation;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -183,8 +183,6 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 	}
 
 	private List<ViewEngine> _getViewEngines(BeanManager beanManager) {
-		List<ViewEngine> viewEngines = new ArrayList<>();
-
 		Set<Bean<?>> beans = beanManager.getBeans(
 			_viewEnginesTypeLiteral.getType(), _viewEngines);
 
@@ -196,19 +194,19 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 		Object reference = beanManager.getReference(
 			bean, _viewEnginesTypeLiteral.getType(), creationalContext);
 
-		if (reference instanceof List) {
-			viewEngines = TransformUtil.transform(
-				(List)reference,
-				object -> {
-					if (object instanceof ViewEngine) {
-						return (ViewEngine)object;
-					}
-
-					return null;
-				});
+		if (!(reference instanceof List)) {
+			return Collections.emptyList();
 		}
 
-		return viewEngines;
+		return TransformUtil.transform(
+			(List)reference,
+			object -> {
+				if (object instanceof ViewEngine) {
+					return (ViewEngine)object;
+				}
+
+				return null;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

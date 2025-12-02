@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -38,6 +37,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -127,6 +127,27 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 		return collectionDisplayPageElementDefinition;
 	}
 
+	private JSONObject _getViewportJSONObject(
+		CollectionDisplayViewport.Id collectionDisplayViewportId,
+		JSONObject jsonObject) {
+
+		if (Objects.equals(
+				collectionDisplayViewportId,
+				CollectionDisplayViewport.Id.DESKTOP)) {
+
+			return jsonObject;
+		}
+
+		String viewportId = ViewportIdUtil.toInternalValue(
+			collectionDisplayViewportId.getValue());
+
+		if (!jsonObject.has(viewportId)) {
+			return null;
+		}
+
+		return jsonObject.getJSONObject(viewportId);
+	}
+
 	private Map<String, Object> _toCollectionConfig(
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
@@ -167,31 +188,18 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 
 	private CollectionDisplayViewport _toCollectionDisplayViewport(
 		CollectionDisplayViewport.Id collectionDisplayViewportId,
-		Map<String, JSONObject>
-			collectionDisplayViewportConfigurationJSONObjects) {
+		JSONObject jsonObject) {
 
-		String viewportId = ViewportIdUtil.toInternalValue(
-			collectionDisplayViewportId.getValue());
+		JSONObject viewportJSONObject = _getViewportJSONObject(
+			collectionDisplayViewportId, jsonObject);
 
-		if (!collectionDisplayViewportConfigurationJSONObjects.containsKey(
-				viewportId)) {
-
-			return null;
-		}
-
-		JSONObject collectionDisplayViewportConfigurationJSONObject =
-			collectionDisplayViewportConfigurationJSONObjects.get(viewportId);
-
-		if (JSONUtil.isEmpty(
-				collectionDisplayViewportConfigurationJSONObject)) {
-
+		if (JSONUtil.isEmpty(viewportJSONObject)) {
 			return null;
 		}
 
 		CollectionDisplayViewportDefinition
 			collectionDisplayViewportDefinition =
-				_toCollectionDisplayViewportDefinition(
-					collectionDisplayViewportConfigurationJSONObject);
+				_toCollectionDisplayViewportDefinition(viewportJSONObject);
 
 		if (collectionDisplayViewportDefinition == null) {
 			return null;
@@ -217,11 +225,14 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 		String flexWrap =
 			collectionDisplayViewportConfigurationJSONObject.getString(
 				"flexWrap", null);
+		String justify =
+			collectionDisplayViewportConfigurationJSONObject.getString(
+				"justify", null);
 		String numberOfColumns =
 			collectionDisplayViewportConfigurationJSONObject.getString(
 				"numberOfColumns", null);
 
-		if ((align == null) && (flexWrap == null) &&
+		if ((align == null) && (flexWrap == null) && (justify == null) &&
 			(numberOfColumns == null) &&
 			JSONUtil.isEmpty(
 				collectionDisplayViewportConfigurationJSONObject.getJSONObject(
@@ -258,10 +269,6 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 					"styles")));
 		collectionDisplayViewportDefinition.setJustify(
 			() -> {
-				String justify =
-					collectionDisplayViewportConfigurationJSONObject.getString(
-						"justify", null);
-
 				if (Validator.isNull(justify)) {
 					return null;
 				}
@@ -271,9 +278,7 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 			});
 		collectionDisplayViewportDefinition.setNumberOfColumns(
 			() -> {
-				if (!collectionDisplayViewportConfigurationJSONObject.has(
-						"numberOfColumns")) {
-
+				if (Validator.isNull(numberOfColumns)) {
 					return null;
 				}
 
@@ -288,24 +293,23 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
 
-		Map<String, JSONObject>
-			collectionDisplayViewportConfigurationJSONObjects =
-				collectionStyledLayoutStructureItem.
-					getViewportConfigurationJSONObjects();
-
-		if (MapUtil.isEmpty(
-				collectionDisplayViewportConfigurationJSONObjects)) {
-
-			return null;
-		}
-
 		List<CollectionDisplayViewport> collectionDisplayViewports =
 			new ArrayList<>() {
 				{
 					CollectionDisplayViewport collectionDisplayViewport =
 						_toCollectionDisplayViewport(
-							CollectionDisplayViewport.Id.LANDSCAPE_MOBILE,
-							collectionDisplayViewportConfigurationJSONObjects);
+							CollectionDisplayViewport.Id.DESKTOP,
+							collectionStyledLayoutStructureItem.
+								getItemConfigJSONObject());
+
+					if (collectionDisplayViewport != null) {
+						add(collectionDisplayViewport);
+					}
+
+					collectionDisplayViewport = _toCollectionDisplayViewport(
+						CollectionDisplayViewport.Id.LANDSCAPE_MOBILE,
+						collectionStyledLayoutStructureItem.
+							getItemConfigJSONObject());
 
 					if (collectionDisplayViewport != null) {
 						add(collectionDisplayViewport);
@@ -313,7 +317,8 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 
 					collectionDisplayViewport = _toCollectionDisplayViewport(
 						CollectionDisplayViewport.Id.PORTRAIT_MOBILE,
-						collectionDisplayViewportConfigurationJSONObjects);
+						collectionStyledLayoutStructureItem.
+							getItemConfigJSONObject());
 
 					if (collectionDisplayViewport != null) {
 						add(collectionDisplayViewport);
@@ -321,7 +326,8 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 
 					collectionDisplayViewport = _toCollectionDisplayViewport(
 						CollectionDisplayViewport.Id.TABLET,
-						collectionDisplayViewportConfigurationJSONObjects);
+						collectionStyledLayoutStructureItem.
+							getItemConfigJSONObject());
 
 					if (collectionDisplayViewport != null) {
 						add(collectionDisplayViewport);

@@ -224,24 +224,6 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 						).append(
 							")"
 						);
-					}
-					else if (key.equals("type")) {
-						otherFiltersSB.append(
-							"(type="
-						).append(
-							value
-						).append(
-							")"
-						);
-					}
-					else if (key.equals("name")) {
-						otherFiltersSB.append(
-							"(name="
-						).append(
-							value
-						).append(
-							")"
-				);
 			}
 			else {
 				otherFiltersSB.append(String.format("(%s=%s)", key, value));

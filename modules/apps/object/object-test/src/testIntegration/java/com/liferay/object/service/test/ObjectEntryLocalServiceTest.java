@@ -8650,14 +8650,12 @@ public class ObjectEntryLocalServiceTest {
 		Map<String, Serializable> values = objectEntry1.getValues();
 
 		Assert.assertEquals("Charles", values.get("firstName"));
-		Assert.assertEquals(
-			StringPool.BLANK,
+		Assert.assertNull(
 			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			0L,
 			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
-		Assert.assertEquals(
-			StringPool.BLANK,
+		Assert.assertNull(
 			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			0L,
@@ -8746,8 +8744,7 @@ public class ObjectEntryLocalServiceTest {
 		values = objectEntry1.getValues();
 
 		Assert.assertEquals("Zape", values.get("firstName"));
-		Assert.assertEquals(
-			StringPool.BLANK,
+		Assert.assertNull(
 			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			0L,
@@ -9185,14 +9182,12 @@ public class ObjectEntryLocalServiceTest {
 		Map<String, Serializable> values = objectEntry1.getValues();
 
 		Assert.assertEquals("Charles", values.get("firstName"));
-		Assert.assertEquals(
-			StringPool.BLANK,
+		Assert.assertNull(
 			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			0L,
 			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
-		Assert.assertEquals(
-			StringPool.BLANK,
+		Assert.assertNull(
 			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			0L,
@@ -9287,8 +9282,7 @@ public class ObjectEntryLocalServiceTest {
 		values = objectEntry1.getValues();
 
 		Assert.assertEquals("Zape", values.get("firstName"));
-		Assert.assertEquals(
-			StringPool.BLANK,
+		Assert.assertNull(
 			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			0L,

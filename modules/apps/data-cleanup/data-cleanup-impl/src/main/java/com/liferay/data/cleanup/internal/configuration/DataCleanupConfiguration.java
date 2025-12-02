@@ -83,7 +83,7 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpHTMLPreviewModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "clean-up-image-editor-module-data",
+		deflt = "false", name = "clean-up-frontend-image-editor-module-data",
 		required = false
 	)
 	public boolean cleanUpImageEditorModuleData();
@@ -137,7 +137,7 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpPortalSecurityWedeployAuthModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "clean-up-private-messaging-module-data",
+		deflt = "false", name = "clean-up-social-private-messaging-module-data",
 		required = false
 	)
 	public boolean cleanUpPrivateMessagingModuleData();
@@ -167,7 +167,7 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpSocialGroupStatisticsModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "clean-up-social-request-module-data",
+		deflt = "false", name = "clean-up-social-requests-module-data",
 		required = false
 	)
 	public boolean cleanUpSocialRequestModuleData();

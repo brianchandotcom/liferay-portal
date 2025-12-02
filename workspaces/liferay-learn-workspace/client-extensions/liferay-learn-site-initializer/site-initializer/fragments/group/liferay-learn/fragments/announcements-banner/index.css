@@ -55,6 +55,7 @@
 .announcements-banner-info {
 	align-items: center;
 	display: flex;
+	z-index: 1;
 }
 
 .announcements-button {

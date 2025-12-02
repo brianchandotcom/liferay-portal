@@ -55,8 +55,6 @@ public class FormStepContainerPageElementDefinitionDTOConverter
 							formStepContainerStyledLayoutStructureItem.
 								getCssClasses());
 					});
-				setCustomCSS(
-					formStepContainerStyledLayoutStructureItem::getCustomCSS);
 				setFragmentViewports(
 					() -> FragmentViewportUtil.toFragmentViewports(
 						formStepContainerStyledLayoutStructureItem.

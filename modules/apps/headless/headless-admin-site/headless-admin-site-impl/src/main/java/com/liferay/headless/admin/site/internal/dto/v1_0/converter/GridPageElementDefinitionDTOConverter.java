@@ -69,41 +69,15 @@ public class GridPageElementDefinitionDTOConverter
 
 						return ArrayUtil.toStringArray(cssClasses);
 					});
-				setCustomCSS(
-					() -> {
-						String customCSS =
-							rowStyledLayoutStructureItem.getCustomCSS();
-
-						if (Validator.isNotNull(customCSS)) {
-							return customCSS;
-						}
-
-						return null;
-					});
 				setGridViewports(
 					() -> _toGridViewports(rowStyledLayoutStructureItem));
 				setGutters(rowStyledLayoutStructureItem::isGutters);
 				setIndexed(rowStyledLayoutStructureItem::isIndexed);
-				setModulesPerRow(
-					rowStyledLayoutStructureItem::getModulesPerRow);
 				setName(rowStyledLayoutStructureItem::getName);
 				setNumberOfModules(
 					rowStyledLayoutStructureItem::getNumberOfColumns);
 				setReverseOrder(rowStyledLayoutStructureItem::isReverseOrder);
 				setType(() -> PageElementDefinition.Type.GRID);
-				setVerticalAlignment(
-					() -> {
-						String itemVerticalAlignment =
-							rowStyledLayoutStructureItem.getVerticalAlignment();
-
-						if (Validator.isNull(itemVerticalAlignment)) {
-							return null;
-						}
-
-						return VerticalAlignment.create(
-							VerticalAlignmentConverter.convertToExternalValue(
-								itemVerticalAlignment));
-					});
 			}
 		};
 	}

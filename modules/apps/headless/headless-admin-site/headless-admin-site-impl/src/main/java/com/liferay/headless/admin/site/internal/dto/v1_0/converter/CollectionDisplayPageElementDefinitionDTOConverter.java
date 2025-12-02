@@ -94,9 +94,6 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 		collectionDisplayPageElementDefinition.setEmptyCollectionConfig(
 			() -> _toEmptyCollectionOption(
 				collectionStyledLayoutStructureItem));
-		collectionDisplayPageElementDefinition.setHidden(
-			() -> _toHidden(
-				collectionStyledLayoutStructureItem.getStylesJSONObject()));
 		collectionDisplayPageElementDefinition.setName(
 			collectionStyledLayoutStructureItem::getName);
 		collectionDisplayPageElementDefinition.setNumberOfItems(
@@ -424,45 +421,7 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 
 		return new ListStyleDefinition() {
 			{
-				setAlign(
-					() -> {
-						String align =
-							collectionStyledLayoutStructureItem.getAlign();
-
-						if (Validator.isNull(align)) {
-							return null;
-						}
-
-						return Align.create(
-							AlignConverter.convertToExternalValue(align));
-					});
-				setFlexWrap(
-					() -> {
-						String flexWrap =
-							collectionStyledLayoutStructureItem.getFlexWrap();
-
-						if (Validator.isNull(flexWrap)) {
-							return null;
-						}
-
-						return FlexWrap.create(
-							FlexWrapConverter.convertToExternalValue(flexWrap));
-					});
 				setGutters(collectionStyledLayoutStructureItem::isGutters);
-				setJustify(
-					() -> {
-						String justify =
-							collectionStyledLayoutStructureItem.getJustify();
-
-						if (Validator.isNull(justify)) {
-							return null;
-						}
-
-						return Justify.create(
-							JustifyConverter.convertToExternalValue(justify));
-					});
-				setNumberOfColumns(
-					collectionStyledLayoutStructureItem::getNumberOfColumns);
 				setVerticalAlignment(
 					() -> {
 						String verticalAlignment =

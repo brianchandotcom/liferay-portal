@@ -140,11 +140,6 @@ public class CollectionLayoutStructureItemImporter
 				collectionDisplayPageElementDefinition.getPaginationType()));
 		collectionStyledLayoutStructureItem.setName(
 			collectionDisplayPageElementDefinition.getName());
-		collectionStyledLayoutStructureItem.updateItemConfig(
-			JSONUtil.put(
-				"styles",
-				_toStylesJSONObject(
-					collectionDisplayPageElementDefinition.getHidden())));
 
 		return collectionStyledLayoutStructureItem;
 	}
@@ -205,16 +200,13 @@ public class CollectionLayoutStructureItemImporter
 				TemplateListStyle templateListStyle =
 					(TemplateListStyle)collectionDisplayListStyle;
 
-				collectionStyledLayoutStructureItem.setAlign(null);
-				collectionStyledLayoutStructureItem.setFlexWrap(null);
-				collectionStyledLayoutStructureItem.setJustify(null);
 				collectionStyledLayoutStructureItem.setListItemStyle(
 					templateListStyle.getListItemStyleClassName());
 				collectionStyledLayoutStructureItem.setListStyle(
 					templateListStyle.getListStyleClassName());
-				collectionStyledLayoutStructureItem.setNumberOfColumns(1);
 				collectionStyledLayoutStructureItem.setTemplateKey(
 					templateListStyle.getTemplateKey());
+
 				collectionStyledLayoutStructureItem.setVerticalAlignment(null);
 			}
 			else {
@@ -223,46 +215,12 @@ public class CollectionLayoutStructureItemImporter
 				ListStyleDefinition listStyleDefinition =
 					listStyle.getListStyleDefinition();
 
-				String align = listStyleDefinition.getAlignAsString();
-
-				if (align != null) {
-					collectionStyledLayoutStructureItem.setAlign(
-						AlignConverter.convertToInternalValue(align));
-				}
-				else {
-					collectionStyledLayoutStructureItem.setAlign(null);
-				}
-
-				String flexWrap = listStyleDefinition.getFlexWrapAsString();
-
-				if (flexWrap != null) {
-					collectionStyledLayoutStructureItem.setFlexWrap(
-						FlexWrapConverter.convertToInternalValue(flexWrap));
-				}
-				else {
-					collectionStyledLayoutStructureItem.setFlexWrap(null);
-				}
-
 				collectionStyledLayoutStructureItem.setGutters(
 					listStyleDefinition.getGutters());
-
-				String justify = listStyleDefinition.getJustifyAsString();
-
-				if (justify != null) {
-					collectionStyledLayoutStructureItem.setJustify(
-						JustifyConverter.convertToInternalValue(justify));
-				}
-				else {
-					collectionStyledLayoutStructureItem.setJustify(null);
-				}
 
 				collectionStyledLayoutStructureItem.setListStyle(
 					CollectionDisplayListStyleUtil.toInternalValue(
 						listStyle.getListStyleTypeAsString()));
-
-				collectionStyledLayoutStructureItem.setNumberOfColumns(
-					GetterUtil.getInteger(
-						listStyleDefinition.getNumberOfColumns(), 1));
 
 				collectionStyledLayoutStructureItem.setVerticalAlignment(
 					VerticalAlignmentConverter.convertToInternalValue(
@@ -272,13 +230,9 @@ public class CollectionLayoutStructureItemImporter
 			}
 		}
 		else {
-			collectionStyledLayoutStructureItem.setAlign(null);
-			collectionStyledLayoutStructureItem.setFlexWrap(null);
 			collectionStyledLayoutStructureItem.setGutters(true);
-			collectionStyledLayoutStructureItem.setJustify(null);
 			collectionStyledLayoutStructureItem.setListItemStyle(null);
 			collectionStyledLayoutStructureItem.setListStyle(null);
-			collectionStyledLayoutStructureItem.setNumberOfColumns(1);
 			collectionStyledLayoutStructureItem.setTemplateKey(null);
 			collectionStyledLayoutStructureItem.setVerticalAlignment(null);
 		}

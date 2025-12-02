@@ -9,13 +9,13 @@ import com.liferay.headless.admin.site.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportStyleUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.converter.VerticalAlignmentConverter;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
-import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
@@ -62,17 +62,12 @@ public class RowLayoutStructureItemImporter
 
 		rowStyledLayoutStructureItem.setCssClasses(
 			_getCssClasses(gridPageElementDefinition.getCssClasses()));
-		rowStyledLayoutStructureItem.setCustomCSS(
-			gridPageElementDefinition.getCustomCSS());
 		rowStyledLayoutStructureItem.setGutters(
 			GetterUtil.getBoolean(
 				gridPageElementDefinition.getGutters(), Boolean.TRUE));
 		rowStyledLayoutStructureItem.setIndexed(
 			GetterUtil.getBoolean(
 				gridPageElementDefinition.getIndexed(), Boolean.TRUE));
-		rowStyledLayoutStructureItem.setModulesPerRow(
-			GetterUtil.getInteger(
-				gridPageElementDefinition.getModulesPerRow(), 1));
 		rowStyledLayoutStructureItem.setName(
 			gridPageElementDefinition.getName());
 		rowStyledLayoutStructureItem.setNumberOfColumns(
@@ -101,12 +96,6 @@ public class RowLayoutStructureItemImporter
 				JSONFactoryUtil.createJSONObject(), GridViewport.Id.TABLET,
 				gridViewports, rowStyledLayoutStructureItem);
 		}
-
-		rowStyledLayoutStructureItem.setVerticalAlignment(
-			VerticalAlignmentConverter.convertToInternalValue(
-				GetterUtil.getString(
-					gridPageElementDefinition.getVerticalAlignmentAsString(),
-					StyledLayoutStructureConstants.VERTICAL_ALIGNMENT_TOP)));
 
 		return rowStyledLayoutStructureItem;
 	}

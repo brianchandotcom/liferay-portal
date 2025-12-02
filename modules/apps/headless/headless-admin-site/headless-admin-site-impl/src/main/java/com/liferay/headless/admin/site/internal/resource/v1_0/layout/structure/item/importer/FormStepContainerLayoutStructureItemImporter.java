@@ -54,8 +54,6 @@ public class FormStepContainerLayoutStructureItemImporter
 		formStepContainerStyledLayoutStructureItem.setCssClasses(
 			_getCssClasses(
 				formStepContainerPageElementDefinition.getCssClasses()));
-		formStepContainerStyledLayoutStructureItem.setCustomCSS(
-			formStepContainerPageElementDefinition.getCustomCSS());
 
 		JSONObject fragmentViewportsJSONObject =
 			FragmentViewportUtil.toFragmentViewportsJSONObject(

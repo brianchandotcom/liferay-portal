@@ -85,17 +85,6 @@ public class ContainerPageElementDefinitionDTOConverter
 
 						return ArrayUtil.toStringArray(cssClasses);
 					});
-				setCustomCSS(
-					() -> {
-						String customCSS =
-							containerStyledLayoutStructureItem.getCustomCSS();
-
-						if (Validator.isNotNull(customCSS)) {
-							return customCSS;
-						}
-
-						return null;
-					});
 				setFragmentLink(
 					() -> FragmentLinkUtil.toFragmentLink(
 						companyId, _infoItemServiceRegistry,

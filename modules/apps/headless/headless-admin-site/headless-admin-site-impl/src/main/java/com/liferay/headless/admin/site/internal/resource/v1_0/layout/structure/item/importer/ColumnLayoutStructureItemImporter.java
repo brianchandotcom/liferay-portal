@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Objects;
 
@@ -52,9 +51,6 @@ public class ColumnLayoutStructureItemImporter
 		if (modulePageElementDefinition == null) {
 			return columnLayoutStructureItem;
 		}
-
-		columnLayoutStructureItem.setSize(
-			GetterUtil.getInteger(modulePageElementDefinition.getSize()));
 
 		ModuleViewport[] moduleViewports =
 			modulePageElementDefinition.getModuleViewports();

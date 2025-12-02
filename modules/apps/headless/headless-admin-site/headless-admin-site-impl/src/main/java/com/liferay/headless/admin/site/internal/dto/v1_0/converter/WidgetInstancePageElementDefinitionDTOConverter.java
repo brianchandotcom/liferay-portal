@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -72,17 +71,6 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 				}
 
 				return ArrayUtil.toStringArray(cssClasses);
-			});
-		widgetInstancePageElementDefinition.setCustomCSS(
-			() -> {
-				String customCSS =
-					fragmentStyledLayoutStructureItem.getCustomCSS();
-
-				if (Validator.isNotNull(customCSS)) {
-					return customCSS;
-				}
-
-				return null;
 			});
 		widgetInstancePageElementDefinition.
 			setDraftWidgetInstanceExternalReferenceCode(

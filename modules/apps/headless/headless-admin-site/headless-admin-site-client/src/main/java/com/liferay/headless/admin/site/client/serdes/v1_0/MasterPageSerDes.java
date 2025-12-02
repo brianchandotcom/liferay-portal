@@ -608,7 +608,8 @@ public class MasterPageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				if (jsonParserFieldValue != null) {
 					masterPage.setThumbnail(
-						URLReferenceSerDes.toDTO((String)jsonParserFieldValue));
+						ThumbnailURLReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {

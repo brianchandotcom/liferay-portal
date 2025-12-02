@@ -269,16 +269,17 @@ public class UtilityPage implements Cloneable, Serializable {
 	protected com.liferay.headless.admin.site.client.permission.Permission[]
 		permissions;
 
-	public URLReference getThumbnail() {
+	public ThumbnailURLReference getThumbnail() {
 		return thumbnail;
 	}
 
-	public void setThumbnail(URLReference thumbnail) {
+	public void setThumbnail(ThumbnailURLReference thumbnail) {
 		this.thumbnail = thumbnail;
 	}
 
 	public void setThumbnail(
-		UnsafeSupplier<URLReference, Exception> thumbnailUnsafeSupplier) {
+		UnsafeSupplier<ThumbnailURLReference, Exception>
+			thumbnailUnsafeSupplier) {
 
 		try {
 			thumbnail = thumbnailUnsafeSupplier.get();
@@ -288,7 +289,7 @@ public class UtilityPage implements Cloneable, Serializable {
 		}
 	}
 
-	protected URLReference thumbnail;
+	protected ThumbnailURLReference thumbnail;
 
 	public Type getType() {
 		return type;

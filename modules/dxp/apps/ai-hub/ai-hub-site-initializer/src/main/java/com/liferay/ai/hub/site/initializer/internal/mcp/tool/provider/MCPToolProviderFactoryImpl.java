@@ -54,7 +54,7 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		long companyId, long groupId, Locale locale,
 		List<String> mcpServerExternalReferenceCodes, long userId) {
 
-		List<ObjectEntry> objectEntries = _getMcpServerObjectEntries(
+		List<ObjectEntry> objectEntries = _getMCPServerObjectEntries(
 			companyId, groupId, locale, mcpServerExternalReferenceCodes,
 			userId);
 
@@ -128,7 +128,7 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		return true;
 	}
 
-	private List<ObjectEntry> _getMcpServerObjectEntries(
+	private List<ObjectEntry> _getMCPServerObjectEntries(
 		long companyId, long groupId, Locale locale,
 		List<String> mcpServerExternalReferenceCodes, long userId) {
 

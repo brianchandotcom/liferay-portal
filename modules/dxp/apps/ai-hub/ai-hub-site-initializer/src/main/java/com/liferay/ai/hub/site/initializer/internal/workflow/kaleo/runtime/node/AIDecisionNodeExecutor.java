@@ -149,7 +149,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				_mcpToolProviderFactory.create(
 					kaleoInstanceToken.getCompanyId(),
 					kaleoInstanceToken.getGroupId(), serviceContext.getLocale(),
-					ToolsUtil.getMcpServerExternalReferenceCodes(
+					ToolsUtil.getMCPServerExternalReferenceCodes(
 						_jsonFactory, kaleoNodeSettingValues),
 					serviceContext.getUserId())
 			).userMessage(

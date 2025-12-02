@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class ToolsUtil {
 
-	public static List<String> getMcpServerExternalReferenceCodes(
+	public static List<String> getMCPServerExternalReferenceCodes(
 			JSONFactory jsonFactory, Map<String, String> kaleoNodeSettingValues)
 		throws JSONException {
 

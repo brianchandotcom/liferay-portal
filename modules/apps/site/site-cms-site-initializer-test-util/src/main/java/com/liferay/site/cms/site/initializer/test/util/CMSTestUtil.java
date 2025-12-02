@@ -34,12 +34,13 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Roberto Díaz
+ * @author Stefano Motta
  */
-public class CMSGroupTestUtil {
+public class CMSTestUtil {
 
-	public static Group getCMSGroup(
-			Class<?> clazz, BatchEngineUnitProcessor batchEngineUnitProcessor,
-			BatchEngineUnitReader batchEngineUnitReader,
+	public static Group getOrAddGroup(
+			BatchEngineUnitProcessor batchEngineUnitProcessor,
+			BatchEngineUnitReader batchEngineUnitReader, Class<?> clazz,
 			SiteInitializerRegistry siteInitializerRegistry)
 		throws Exception {
 

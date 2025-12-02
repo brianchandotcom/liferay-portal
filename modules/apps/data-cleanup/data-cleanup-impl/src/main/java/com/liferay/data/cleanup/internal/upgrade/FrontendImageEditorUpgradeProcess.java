@@ -8,7 +8,7 @@ package com.liferay.data.cleanup.internal.upgrade;
 /**
  * @author Adolfo Pérez
  */
-public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
+public class FrontendImageEditorUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

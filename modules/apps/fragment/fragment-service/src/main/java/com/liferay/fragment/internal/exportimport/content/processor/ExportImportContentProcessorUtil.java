@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
@@ -117,11 +116,10 @@ public class ExportImportContentProcessorUtil {
 		Object referenceObject, StagedModel stagedModel) {
 
 		if (!exportReferencedContent) {
-			Element entityElement = portletDataContext.getExportDataElement(
-				stagedModel);
-
 			portletDataContext.addReferenceElement(
-				stagedModel, entityElement, (ClassedModel)referenceObject,
+				stagedModel,
+				portletDataContext.getExportDataElement(stagedModel),
+				(ClassedModel)referenceObject,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
 			return;

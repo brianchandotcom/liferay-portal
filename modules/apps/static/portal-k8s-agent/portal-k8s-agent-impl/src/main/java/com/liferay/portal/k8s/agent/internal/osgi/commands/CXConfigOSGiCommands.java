@@ -133,19 +133,19 @@ public class CXConfigOSGiCommands implements OSGiCommands {
 					sb.append(element);
 					sb.append(StringPool.NEW_LINE);
 				}
-			}
-			else {
-				String valueString = value.toString();
 
-				if (key.equals("baseURL")) {
-					valueString = valueString.replaceAll(
-						Pattern.quote("${portalURL}"),
-						_portal.getPathContext());
-				}
-
-				sb.append(valueString);
-				sb.append(StringPool.NEW_LINE);
+				continue;
 			}
+
+			String valueString = value.toString();
+
+			if (key.equals("baseURL")) {
+				valueString = valueString.replaceAll(
+					Pattern.quote("${portalURL}"), _portal.getPathContext());
+			}
+
+			sb.append(valueString);
+			sb.append(StringPool.NEW_LINE);
 		}
 
 		return sb.toString();

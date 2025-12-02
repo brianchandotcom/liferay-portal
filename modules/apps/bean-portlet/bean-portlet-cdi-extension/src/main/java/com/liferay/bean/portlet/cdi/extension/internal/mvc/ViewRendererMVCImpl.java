@@ -6,6 +6,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal.mvc;
 
 import com.liferay.bean.portlet.extension.ViewRenderer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -196,13 +197,15 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 			bean, _viewEnginesTypeLiteral.getType(), creationalContext);
 
 		if (reference instanceof List) {
-			List<?> list = (List)reference;
+			viewEngines = TransformUtil.transform(
+				(List)reference,
+				object -> {
+					if (object instanceof ViewEngine) {
+						return (ViewEngine)object;
+					}
 
-			for (Object object : list) {
-				if (object instanceof ViewEngine) {
-					viewEngines.add((ViewEngine)object);
-				}
-			}
+					return null;
+				});
 		}
 
 		return viewEngines;

@@ -5,13 +5,14 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.mvc;
 
+import com.liferay.petra.function.transform.TransformUtil;
+
 import jakarta.mvc.binding.BindingError;
 import jakarta.mvc.binding.ParamError;
 import jakarta.mvc.binding.ValidationError;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -48,15 +49,13 @@ public class BindingResultImpl implements MutableBindingResult, Serializable {
 	public List<String> getAllMessages() {
 		_consulted = true;
 
-		List<String> allMessages = new ArrayList<>();
+		List<String> allMessages = TransformUtil.transform(
+			_bindingErrors, bindingError -> bindingError.getMessage());
 
-		for (BindingError bindingError : _bindingErrors) {
-			allMessages.add(bindingError.getMessage());
-		}
-
-		for (ValidationError validationError : _validationErrors) {
-			allMessages.add(validationError.getMessage());
-		}
+		allMessages.addAll(
+			TransformUtil.transform(
+				_validationErrors,
+				validationError -> validationError.getMessage()));
 
 		return allMessages;
 	}

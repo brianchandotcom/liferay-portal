@@ -765,10 +765,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
+			DBInspector dbInspector = new DBInspector(connection);
+
 			_assertLogContextDiagnostics(
 				"upgrade.report.data.clean.up",
-				"Class name " + value +
-					" has been deleted because it is not in use");
+				StringBundler.concat(
+					"Table ", dbInspector.normalizeName("ClassName_"),
+					", 1 row deleted because '", value,
+					"' is not defined in any deployed module and is not in ",
+					"use"));
 		}
 		finally {
 			if (className != null) {

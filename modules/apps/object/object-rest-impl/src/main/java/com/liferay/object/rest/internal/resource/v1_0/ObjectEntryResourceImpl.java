@@ -366,7 +366,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode,
 				_getNonzeroGroupId(objectEntry.getId()));
 
@@ -465,7 +465,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode, objectEntry.getScopeId());
 
 		if (serviceBuilderComment == null) {
@@ -559,7 +559,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode,
 				_getNonzeroGroupId(objectEntry.getId()));
 
@@ -599,7 +599,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode,
 				_getNonzeroGroupId(objectEntry.getId()));
 
@@ -613,12 +613,12 @@ public class ObjectEntryResourceImpl
 				addAction(
 					ActionKeys.ADD_DISCUSSION,
 					"postByExternalReferenceCodeCommentChildComment",
-					ObjectEntry.class.getName(), null)
+					_objectDefinition.getClassName(), null)
 			).put(
 				"delete",
 				addAction(
 					ActionKeys.DELETE, "deleteByExternalReferenceCodeComment",
-					ObjectEntry.class.getName(), null)
+					_objectDefinition.getClassName(), null)
 			).build(),
 			serviceBuilderComment.getCommentId(), contextCompany.getCompanyId(),
 			_commentManager, search, aggregation, filter, pagination,
@@ -647,7 +647,7 @@ public class ObjectEntryResourceImpl
 
 		Discussion discussion = _commentManager.getDiscussion(
 			PrincipalThreadLocal.getUserId(), groupId,
-			ObjectEntry.class.getName(), objectEntry.getId(),
+			_objectDefinition.getClassName(), objectEntry.getId(),
 			_createServiceContextFunction());
 
 		DiscussionComment rootDiscussionComment =
@@ -661,13 +661,13 @@ public class ObjectEntryResourceImpl
 				addAction(
 					ActionKeys.ADD_DISCUSSION, objectEntryId,
 					"postByExternalReferenceCodeComment", creator.getId(),
-					ObjectEntry.class.getName(), groupId)
+					_objectDefinition.getClassName(), groupId)
 			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, objectEntryId,
 					"getByExternalReferenceCodeCommentsPage", creator.getId(),
-					ObjectEntry.class.getName(), groupId)
+					_objectDefinition.getClassName(), groupId)
 			).build(),
 			rootDiscussionComment.getCommentId(), contextCompany.getCompanyId(),
 			_commentManager, search, aggregation, filter, pagination,
@@ -1029,7 +1029,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode, objectEntry.getScopeId());
 
 		if (serviceBuilderComment == null) {
@@ -1071,7 +1071,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode, objectEntry.getScopeId());
 
 		if (serviceBuilderComment == null) {
@@ -1085,12 +1085,12 @@ public class ObjectEntryResourceImpl
 					ActionKeys.ADD_DISCUSSION,
 					"postScopeScopeKeyByExternalReferenceCodeComment" +
 						"ChildComment",
-					ObjectEntry.class.getName(), null)
+					_objectDefinition.getClassName(), null)
 			).put(
 				"delete",
 				addAction(
 					ActionKeys.DELETE, "deleteByExternalReferenceCodeComment",
-					ObjectEntry.class.getName(), null)
+					_objectDefinition.getClassName(), null)
 			).build(),
 			serviceBuilderComment.getCommentId(), contextCompany.getCompanyId(),
 			_commentManager, search, aggregation, filter, pagination,
@@ -1286,7 +1286,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode,
 				_getNonzeroGroupId(objectEntry.getId()));
 
@@ -1579,7 +1579,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode, objectEntry.getScopeId());
 
 		if (serviceBuilderComment == null) {
@@ -1712,7 +1712,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode, groupId);
 
 		if (serviceBuilderComment != null) {
@@ -1874,7 +1874,7 @@ public class ObjectEntryResourceImpl
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				ObjectEntry.class.getName(), objectEntry.getId(),
+				_objectDefinition.getClassName(), objectEntry.getId(),
 				commentExternalReferenceCode, objectEntry.getScopeId());
 
 		if (serviceBuilderComment != null) {
@@ -1994,15 +1994,15 @@ public class ObjectEntryResourceImpl
 
 		_discussionPermission.checkAddPermission(
 			PermissionThreadLocal.getPermissionChecker(),
-			contextCompany.getCompanyId(), groupId, ObjectEntry.class.getName(),
-			objectEntryId);
+			contextCompany.getCompanyId(), groupId,
+			_objectDefinition.getClassName(), objectEntryId);
 
 		if (parentCommentId != null) {
 			return CommentUtil.toComment(
 				() -> _commentManager.fetchComment(
 					_commentManager.addComment(
 						externalReferenceCode, PrincipalThreadLocal.getUserId(),
-						ObjectEntry.class.getName(), objectEntryId,
+						_objectDefinition.getClassName(), objectEntryId,
 						StringPool.BLANK, parentCommentId, StringPool.BLANK,
 						StringBundler.concat("<p>", text, "</p>"),
 						_createServiceContextFunction())),
@@ -2013,7 +2013,7 @@ public class ObjectEntryResourceImpl
 			() -> _commentManager.fetchComment(
 				_commentManager.addComment(
 					externalReferenceCode, PrincipalThreadLocal.getUserId(),
-					groupId, ObjectEntry.class.getName(), objectEntryId,
+					groupId, _objectDefinition.getClassName(), objectEntryId,
 					StringPool.BLANK, StringPool.BLANK,
 					StringBundler.concat("<p>", text, "</p>"),
 					_createServiceContextFunction())),
@@ -2202,7 +2202,7 @@ public class ObjectEntryResourceImpl
 			() -> _commentManager.fetchComment(
 				_commentManager.updateComment(
 					PrincipalThreadLocal.getUserId(),
-					ObjectEntry.class.getName(),
+					_objectDefinition.getClassName(),
 					serviceBuilderComment.getClassPK(),
 					serviceBuilderComment.getCommentId(), StringPool.BLANK,
 					StringBundler.concat("<p>", comment.getText(), "</p>"),

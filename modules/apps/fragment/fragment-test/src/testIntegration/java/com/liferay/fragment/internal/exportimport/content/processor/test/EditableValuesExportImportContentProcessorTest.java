@@ -190,13 +190,35 @@ public class EditableValuesExportImportContentProcessorTest {
 	@Test
 	@TestInfo("LPD-67532")
 	public void testEditableValuesWithInfoItemFieldMapped() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_stagingGroup.getGroupId(), 0);
+
 		FragmentEntry fragmentEntry =
 			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-heading");
 
 		FragmentEntryLink fragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"className", JournalArticle.class.getName()
+						).put(
+							"classNameId",
+							_portal.getClassNameId(JournalArticle.class)
+						).put(
+							"classPK", journalArticle.getResourcePrimKey()
+						).put(
+							"externalReferenceCode",
+							journalArticle.getExternalReferenceCode()
+						).put(
+							"fieldId", "JournalArticle_title"
+						))
+				).toString(),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 				fragmentEntry.getExternalReferenceCode(), null,
 				fragmentEntry.getHtml(), fragmentEntry.getJs(), _draftLayout,
 				fragmentEntry.getFragmentEntryKey(),
@@ -204,30 +226,7 @@ public class EditableValuesExportImportContentProcessorTest {
 					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()),
 				fragmentEntry.getType());
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_stagingGroup.getGroupId(), 0);
-
-		fragmentEntryLink = _setEditableValues(
-			fragmentEntryLink,
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"element-text",
-					JSONUtil.put(
-						"className", JournalArticle.class.getName()
-					).put(
-						"classNameId",
-						_portal.getClassNameId(JournalArticle.class)
-					).put(
-						"classPK", journalArticle.getResourcePrimKey()
-					).put(
-						"externalReferenceCode",
-						journalArticle.getExternalReferenceCode()
-					).put(
-						"fieldId", "JournalArticle_title"
-					))
-			).toString());
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		_publishLayouts();
 

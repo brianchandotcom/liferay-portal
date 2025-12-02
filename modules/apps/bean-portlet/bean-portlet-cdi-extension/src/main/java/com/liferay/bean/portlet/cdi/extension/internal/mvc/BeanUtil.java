@@ -5,6 +5,7 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.mvc;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -20,9 +21,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Neil Griffin
@@ -32,23 +31,15 @@ public class BeanUtil {
 	public static <T> List<T> getBeanInstances(
 		BeanManager beanManager, Class<T> clazz, Annotation... qualifiers) {
 
-		List<T> beanInstances = new ArrayList<>();
-
 		if (qualifiers == null) {
 			qualifiers = new Annotation[0];
 		}
 
-		Set<Bean<?>> beans = beanManager.getBeans(clazz, qualifiers);
-
-		for (Bean<?> bean : beans) {
-			beanInstances.add(
-				clazz.cast(
-					beanManager.getReference(
-						bean, clazz,
-						beanManager.createCreationalContext(bean))));
-		}
-
-		return beanInstances;
+		return TransformUtil.transform(
+			beanManager.getBeans(clazz, qualifiers),
+			bean -> clazz.cast(
+				beanManager.getReference(
+					bean, clazz, beanManager.createCreationalContext(bean))));
 	}
 
 	public static MutableBindingResult getMutableBindingResult(

@@ -556,7 +556,7 @@ public class UtilityPage implements Serializable {
 		description = "The utility page's thumbnail."
 	)
 	@Valid
-	public URLReference getThumbnail() {
+	public ThumbnailURLReference getThumbnail() {
 		if (_thumbnailSupplier != null) {
 			thumbnail = _thumbnailSupplier.get();
 
@@ -566,7 +566,7 @@ public class UtilityPage implements Serializable {
 		return thumbnail;
 	}
 
-	public void setThumbnail(URLReference thumbnail) {
+	public void setThumbnail(ThumbnailURLReference thumbnail) {
 		this.thumbnail = thumbnail;
 
 		_thumbnailSupplier = null;
@@ -574,7 +574,8 @@ public class UtilityPage implements Serializable {
 
 	@JsonIgnore
 	public void setThumbnail(
-		UnsafeSupplier<URLReference, Exception> thumbnailUnsafeSupplier) {
+		UnsafeSupplier<ThumbnailURLReference, Exception>
+			thumbnailUnsafeSupplier) {
 
 		_thumbnailSupplier = () -> {
 			try {
@@ -591,10 +592,10 @@ public class UtilityPage implements Serializable {
 
 	@GraphQLField(description = "The utility page's thumbnail.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected URLReference thumbnail;
+	protected ThumbnailURLReference thumbnail;
 
 	@JsonIgnore
-	private Supplier<URLReference> _thumbnailSupplier;
+	private Supplier<ThumbnailURLReference> _thumbnailSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The utility page's type."
@@ -943,7 +944,7 @@ public class UtilityPage implements Serializable {
 			sb.append("]");
 		}
 
-		URLReference thumbnail = getThumbnail();
+		ThumbnailURLReference thumbnail = getThumbnail();
 
 		if (thumbnail != null) {
 			if (sb.length() > 1) {

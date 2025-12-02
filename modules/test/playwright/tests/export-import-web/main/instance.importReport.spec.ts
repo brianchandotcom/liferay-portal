@@ -79,6 +79,20 @@ test('Can see error report and details', async ({
 		exportFilePath.lastIndexOf('/') + 1
 	);
 
+	await exportImportPage.taskActionsMenu(exportName).click();
+
+	await expect(
+		exportImportPage.page.getByRole('menuitem', {
+			name: 'View Report Entries',
+		})
+	).toBeVisible();
+
+	await expect(
+		exportImportPage.page.getByRole('menuitem', {
+			name: 'Export Report Entries',
+		})
+	).toBeVisible();
+
 	await exportImportPage.goToImportDetails(exportName);
 
 	await expect(

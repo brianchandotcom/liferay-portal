@@ -8,6 +8,7 @@ import React from 'react';
 
 import useDisabledDiscardDraft from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/useDisabledDiscardDraft';
 import {config} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import selectHasAnyUpdatePermission from '../../../../src/main/resources/META-INF/resources/page_editor/app/selectors/selectHasAnyUpdatePermission';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 jest.mock(
@@ -17,6 +18,10 @@ jest.mock(
 			isConversionDraft: false,
 		},
 	})
+);
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/selectors/selectHasAnyUpdatePermission',
+	() => jest.fn()
 );
 
 const INITIAL_STATE = {
@@ -31,6 +36,21 @@ const wrapper = ({children, state = INITIAL_STATE}) => (
 );
 
 describe('useDisabledDiscardDraft', () => {
+	beforeEach(() => {
+		selectHasAnyUpdatePermission.mockReturnValue(true);
+		config.isConversionDraft = false;
+	});
+
+	it('returns true when the user does not have update permission', () => {
+		selectHasAnyUpdatePermission.mockReturnValue(false);
+
+		const {result} = renderHook(() => useDisabledDiscardDraft(), {
+			wrapper,
+		});
+
+		expect(result.current).toEqual(true);
+	});
+
 	it('returns true when when the main condition is not met', () => {
 		const {result} = renderHook(() => useDisabledDiscardDraft(), {wrapper});
 

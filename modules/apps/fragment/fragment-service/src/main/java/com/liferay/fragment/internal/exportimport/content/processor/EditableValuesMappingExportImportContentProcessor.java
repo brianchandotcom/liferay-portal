@@ -299,9 +299,6 @@ public class EditableValuesMappingExportImportContentProcessor
 			editableJSONObject.put("className", className);
 		}
 
-		String scopeExternalReferenceCode = editableJSONObject.getString(
-			"scopeExternalReferenceCode", null);
-
 		if (Validator.isNotNull(className) && (classPK > 0)) {
 			ExportImportContentProcessorUtil.exportContentReference(
 				className, classPK, exportReferencedContent,
@@ -313,7 +310,9 @@ public class EditableValuesMappingExportImportContentProcessor
 			ExportImportContentProcessorUtil.exportContentReference(
 				className, exportReferencedContent,
 				new ERCInfoItemIdentifier(
-					externalReferenceCode, scopeExternalReferenceCode),
+					externalReferenceCode,
+					editableJSONObject.getString(
+						"scopeExternalReferenceCode", null)),
 				_infoItemServiceRegistry, portletDataContext, stagedModel);
 		}
 	}

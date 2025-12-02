@@ -670,7 +670,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				false, _listTypeEntries);
+				false, _listTypeEntries, new ServiceContext());
 
 		ObjectField myRichTextObjectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,

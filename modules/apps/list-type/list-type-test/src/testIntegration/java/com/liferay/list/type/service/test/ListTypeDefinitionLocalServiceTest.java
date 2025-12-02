@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -75,7 +76,7 @@ public class ListTypeDefinitionLocalServiceTest {
 			() -> _listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.US, ""), false,
-				Collections.emptyList()));
+				Collections.emptyList(), new ServiceContext()));
 		AssertUtils.assertFailure(
 			ListTypeDefinitionSystemException.class, false,
 			"Only allowed bundles can add system list type definitions",
@@ -94,7 +95,8 @@ public class ListTypeDefinitionLocalServiceTest {
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				false,
 				Collections.singletonList(
-					ListTypeEntryUtil.createListTypeEntry(key)));
+					ListTypeEntryUtil.createListTypeEntry(key)),
+				new ServiceContext());
 
 		Assert.assertEquals(
 			1,
@@ -108,7 +110,8 @@ public class ListTypeDefinitionLocalServiceTest {
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				Collections.singletonList(
-					ListTypeEntryUtil.createListTypeEntry(key)));
+					ListTypeEntryUtil.createListTypeEntry(key)),
+				new ServiceContext());
 
 		Assert.assertEquals(
 			1,
@@ -179,7 +182,8 @@ public class ListTypeDefinitionLocalServiceTest {
 					ListTypeEntryUtil.createListTypeEntry(
 						RandomTestUtil.randomString()),
 					ListTypeEntryUtil.createListTypeEntry(
-						RandomTestUtil.randomString())));
+						RandomTestUtil.randomString())),
+				new ServiceContext());
 
 		Assert.assertEquals(
 			externalReferenceCode,
@@ -196,7 +200,7 @@ public class ListTypeDefinitionLocalServiceTest {
 				StringPool.BLANK, listTypeDefinition.getListTypeDefinitionId(),
 				TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.getDefault(), name),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		externalReferenceCode = listTypeDefinition.getExternalReferenceCode();
 
@@ -224,7 +228,8 @@ public class ListTypeDefinitionLocalServiceTest {
 					TestPropsValues.getUserId(),
 					Collections.singletonMap(LocaleUtil.getDefault(), name),
 					_listTypeEntryLocalService.getListTypeEntries(
-						systemListTypeDefinition.getListTypeDefinitionId()));
+						systemListTypeDefinition.getListTypeDefinitionId()),
+					new ServiceContext());
 		}
 		finally {
 			SystemProperties.set("liferay.mode", liferayMode);
@@ -246,7 +251,8 @@ public class ListTypeDefinitionLocalServiceTest {
 			false,
 			Collections.singletonList(
 				ListTypeEntryUtil.createListTypeEntry(
-					RandomTestUtil.randomString())));
+					RandomTestUtil.randomString())),
+			new ServiceContext());
 	}
 
 	private ListTypeDefinition _addSystemListTypeDefinition() throws Exception {
@@ -257,7 +263,8 @@ public class ListTypeDefinitionLocalServiceTest {
 			true,
 			Collections.singletonList(
 				ListTypeEntryUtil.createListTypeEntry(
-					RandomTestUtil.randomString())));
+					RandomTestUtil.randomString())),
+			new ServiceContext());
 	}
 
 	private void _testDeleteListTypeDefinition(long listTypeDefinitionId)

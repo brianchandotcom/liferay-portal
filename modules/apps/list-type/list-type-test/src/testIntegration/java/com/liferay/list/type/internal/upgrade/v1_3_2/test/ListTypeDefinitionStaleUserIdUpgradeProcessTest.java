@@ -11,6 +11,7 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -51,7 +52,8 @@ public class ListTypeDefinitionStaleUserIdUpgradeProcessTest
 			false,
 			Collections.singletonList(
 				ListTypeEntryUtil.createListTypeEntry(
-					RandomTestUtil.randomString())));
+					RandomTestUtil.randomString())),
+			new ServiceContext());
 	}
 
 	@Override

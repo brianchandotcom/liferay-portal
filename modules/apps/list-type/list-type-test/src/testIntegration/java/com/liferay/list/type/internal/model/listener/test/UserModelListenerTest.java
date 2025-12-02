@@ -12,6 +12,7 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -55,7 +56,8 @@ public class UserModelListenerTest {
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				false,
 				Collections.singletonList(
-					ListTypeEntryUtil.createListTypeEntry(listTypeEntryKey)));
+					ListTypeEntryUtil.createListTypeEntry(listTypeEntryKey)),
+				new ServiceContext());
 
 		_userLocalService.deleteUser(user);
 

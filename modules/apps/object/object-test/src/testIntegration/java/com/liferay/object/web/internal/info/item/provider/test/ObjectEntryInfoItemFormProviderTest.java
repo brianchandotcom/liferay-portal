@@ -119,7 +119,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, Collections.emptyList());
+				false, Collections.emptyList(), new ServiceContext());
 
 		_listTypeEntry1 = _addListTypeEntry();
 		_listTypeEntry2 = _addListTypeEntry();

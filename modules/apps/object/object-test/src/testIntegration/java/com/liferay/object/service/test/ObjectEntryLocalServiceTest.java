@@ -357,7 +357,8 @@ public class ObjectEntryLocalServiceTest {
 						"listTypeEntryKey", "List Type Entry Key ", 4),
 					_createListTypeEntries(
 						"multipleListTypeEntryKey",
-						"Multiple List Type Entry Key ", 6)));
+						"Multiple List Type Entry Key ", 6)),
+				new ServiceContext());
 
 		_objectDefinition = _publishCustomObjectDefinition(
 			Arrays.asList(
@@ -2623,7 +2624,8 @@ public class ObjectEntryLocalServiceTest {
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				false,
 				_createListTypeEntries(
-					prefixKey, RandomTestUtil.randomString(), 100));
+					prefixKey, RandomTestUtil.randomString(), 100),
+				new ServiceContext());
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(

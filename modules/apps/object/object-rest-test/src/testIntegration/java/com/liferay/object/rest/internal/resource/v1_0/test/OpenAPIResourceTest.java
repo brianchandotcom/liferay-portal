@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -127,7 +128,8 @@ public class OpenAPIResourceTest {
 					listTypeValue -> ListTypeEntryUtil.createListTypeEntry(
 						listTypeValue,
 						Collections.singletonMap(
-							LocaleUtil.US, listTypeValue))));
+							LocaleUtil.US, listTypeValue))),
+				new ServiceContext());
 
 		ObjectDefinition relatedObjectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(

@@ -369,4 +369,27 @@ describe('RulesSidebar', () => {
 
 		await expect(addRule).toBeCalled();
 	});
+
+	it('resets the fragment when the action changes', async () => {
+		renderComponent({
+			editingRule: {
+				...DEFAULT_RULE,
+				actions: [{id: 'action-1', itemId: 'item1', type: 'show'}],
+			},
+		});
+
+		await expect(
+			screen.getByRole('combobox', {
+				name: 'select-fragment-for-the-action',
+			})
+		).toHaveTextContent('containercillo');
+
+		await selectPickerOption('select-action', 'hide');
+
+		await expect(
+			screen.getByRole('combobox', {
+				name: 'select-fragment-for-the-action',
+			})
+		).toHaveTextContent('select');
+	});
 });

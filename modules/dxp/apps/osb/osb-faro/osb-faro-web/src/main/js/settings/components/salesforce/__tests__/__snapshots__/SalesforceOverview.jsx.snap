@@ -706,7 +706,7 @@ exports[`SalesforceOverview should render 1`] = `
                   <p
                     class="text-4 text-secondary"
                   >
-                    Properties allow you to aggregate data from your users and DXP sites and channels. Data source information is available in any property they are assigned to.
+                    Properties allow you to aggregate data on your users and DXP sites and channels. The data source data will be available in any property they are assigned to.
                   </p>
                   <span
                     class="text-3 text-secondary font-weight-semi-bold"

@@ -538,6 +538,7 @@ const ALLOWED_NON_GLOBAL_DEPENDENCIES = [
 	'path-browserify',
 	'path-to-regexp',
 	'react-dnd-test-utils',
+	'react-router',
 	'react-router-dom',
 	'recharts',
 	'request',

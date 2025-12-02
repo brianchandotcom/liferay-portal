@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.client.dto.v1_0.URLReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.ThumbnailURLReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPageSEOSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPageSettings;
@@ -304,14 +304,14 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		URLReference urlReference = new URLReference() {
+		ThumbnailURLReference thumbnailURLReference = new ThumbnailURLReference() {
 			{
 				setExternalReferenceCode(fileEntry.getExternalReferenceCode());
 				setUrl(() -> RandomTestUtil.randomString());
 			}
 		};
 
-		utilityPage.setThumbnail(urlReference);
+		utilityPage.setThumbnail(thumbnailURLReference);
 
 		UtilityPage postUtilityPage = testPostSiteUtilityPage_addUtilityPage(
 			utilityPage);
@@ -610,7 +610,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		if (fileEntry != null) {
 			utilityPage.setThumbnail(
-				() -> new URLReference() {
+				() -> new ThumbnailURLReference() {
 					{
 						setExternalReferenceCode(
 							fileEntry::getExternalReferenceCode);
@@ -718,7 +718,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		randomUtilityPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
@@ -739,7 +739,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					postUtilityPage.getExternalReferenceCode(),
 					utilityPage.getExternalReferenceCode())) {
 
-				URLReference thumbnail = utilityPage.getThumbnail();
+				ThumbnailURLReference thumbnail = utilityPage.getThumbnail();
 
 				_assertThumbnailURLReference(
 					false, postUtilityPage.getExternalReferenceCode(),
@@ -896,7 +896,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		utilityPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
@@ -921,7 +921,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			repository.getDlFolderId());
 
 		utilityPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						newFileEntry.getExternalReferenceCode());
@@ -1121,7 +1121,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		String thumbnailURL = RandomTestUtil.randomString();
 
 		utilityPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry1.getExternalReferenceCode());
@@ -1140,7 +1140,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
 
 		putUtilityPage.setThumbnail(
-			() -> new URLReference() {
+			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry2.getExternalReferenceCode());

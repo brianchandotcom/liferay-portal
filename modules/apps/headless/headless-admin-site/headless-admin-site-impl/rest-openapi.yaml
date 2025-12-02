@@ -265,7 +265,8 @@ components:
                                 numberOfColumns:
                                     # @review
                                     description:
-                                        The number of columns of the collection viewport.
+                                        The number of columns of the collection viewport if a grid list style is
+                                        selected.
                                     type: integer
                     description:
                         The definition of the collection display viewport.
@@ -2037,16 +2038,11 @@ components:
                                                 A flag that indicates whether the collection display page element has
                                                 gutters if a grid list style is selected.
                                             type: boolean
-                                        numberOfColumns:
-                                            # @review
-                                            description:
-                                                The number of columns in the collection display page element.
-                                            type: integer
                                         verticalAlignment:
                                             # @review
                                             description:
                                                 The vertical alignment property of the collection display page element
-                                                if a grid list style is selected..
+                                                if a grid list style is selected.
                                             enum: [Bottom, Middle, Top]
                                             type: string
                             type: object

@@ -8,6 +8,7 @@ package com.liferay.bean.portlet.registration.portlet;
 import com.liferay.bean.portlet.extension.BeanPortletMethod;
 import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 import com.liferay.bean.portlet.registration.portlet.app.BeanApp;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
@@ -308,14 +309,11 @@ public class BeanPortletImpl implements BeanPortlet {
 		Set<PortletDependency> portletDependencies = getPortletDependencies();
 
 		if (!portletDependencies.isEmpty()) {
-			List<String> tokenizedPortletDependencies = new ArrayList<>();
-
-			for (PortletDependency portletDependency : portletDependencies) {
-				tokenizedPortletDependencies.add(portletDependency.toString());
-			}
-
 			dictionary.put(
-				"jakarta.portlet.dependency", tokenizedPortletDependencies);
+				"jakarta.portlet.dependency",
+				TransformUtil.transform(
+					portletDependencies,
+					portletDependency -> portletDependency.toString()));
 		}
 
 		// jakarta.portlet.event-definition
@@ -549,21 +547,16 @@ public class BeanPortletImpl implements BeanPortlet {
 				"jakarta.portlet.supported-locale", getSupportedLocales());
 		}
 
-		List<String> supportedPublicRenderParameters = new ArrayList<>();
-
-		for (String identifier : getSupportedPublicRenderParameters()) {
-			supportedPublicRenderParameters.add(
-				_toNameValuePair(
-					identifier,
-					_getPublicRenderParameterNamespaceURI(
-						beanApp, identifier)));
-		}
-
 		// jakarta.portlet.supported-public-render-parameter
 
 		dictionary.put(
 			"jakarta.portlet.supported-public-render-parameter",
-			supportedPublicRenderParameters);
+			TransformUtil.transform(
+				getSupportedPublicRenderParameters(),
+				identifier -> _toNameValuePair(
+					identifier,
+					_getPublicRenderParameterNamespaceURI(
+						beanApp, identifier))));
 
 		List<String> supportedWindowStates = new ArrayList<>();
 
@@ -637,16 +630,10 @@ public class BeanPortletImpl implements BeanPortlet {
 
 		// jakarta.portlet.listener
 
-		List<String> portletListeners = new ArrayList<>();
-
-		for (Map.Entry<Integer, String> entry : beanApp.getPortletListeners()) {
-			String listenerClassName = entry.getValue();
-
-			String listener = StringBundler.concat(
-				listenerClassName, StringPool.SEMICOLON, entry.getKey());
-
-			portletListeners.add(listener);
-		}
+		List<String> portletListeners = TransformUtil.transform(
+			beanApp.getPortletListeners(),
+			entry -> StringBundler.concat(
+				entry.getValue(), StringPool.SEMICOLON, entry.getKey()));
 
 		if (!portletListeners.isEmpty()) {
 			dictionary.put("jakarta.portlet.listener", portletListeners);

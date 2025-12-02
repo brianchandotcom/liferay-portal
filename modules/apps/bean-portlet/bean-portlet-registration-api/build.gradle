@@ -6,6 +6,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:bean-portlet:bean-portlet-api")
 	compileOnly project(":apps:bean-portlet:bean-portlet-extension-api")
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

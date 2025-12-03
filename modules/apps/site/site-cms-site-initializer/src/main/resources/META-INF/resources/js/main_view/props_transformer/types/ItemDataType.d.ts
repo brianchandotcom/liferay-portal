@@ -28,8 +28,11 @@ interface ItemData {
 		externalReferenceCode: string;
 		file?: any;
 		id: number;
+		objectEntryFolderExternalReferenceCode?: string;
 		objectEntryFolderId: number;
+		parentObjectEntryFolderExternalReferenceCode?: string;
 		scopeId: number;
+		systemProperties?: any;
 		title: string;
 	};
 	entryClassName: string;

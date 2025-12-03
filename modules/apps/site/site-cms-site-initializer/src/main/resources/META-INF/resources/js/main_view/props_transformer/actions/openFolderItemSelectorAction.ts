@@ -13,7 +13,8 @@ export default function openFolderItemSelectorAction(
 	assetLibraries: AssetLibrary[],
 	itemData: ItemData,
 	loadData: () => {},
-	objectEntryFolderExternalReferenceCode: string
+	objectEntryFolderExternalReferenceCode: string,
+	rootObjectEntryFolderExternalReferenceCode: string
 ) {
 	return render(
 
@@ -26,6 +27,7 @@ export default function openFolderItemSelectorAction(
 			itemData,
 			loadData,
 			objectEntryFolderExternalReferenceCode,
+			rootObjectEntryFolderExternalReferenceCode,
 		},
 		document.createElement('div')
 	);

@@ -26,6 +26,7 @@ export type TFolderItemSelectorModalContent = {
 	itemData: ItemData;
 	loadData: () => {};
 	objectEntryFolderExternalReferenceCode: string | undefined;
+	rootObjectEntryFolderExternalReferenceCode: string;
 };
 
 export type Action = 'copy' | 'move';
@@ -55,8 +56,8 @@ const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 	selectionType: 'single',
 };
 
-const getSpaceFoldersURL = (scopeId: number) => {
-	return `${window.location.origin}/o/headless-object/v1.0/scopes/${scopeId}/object-entry-folders`;
+const getSpaceFoldersURL = (cmsSection: string, scopeId: number) => {
+	return `${window.location.origin}/o/search/v1.0/search?emptySearch=true&entryClassNames=${OBJECT_ENTRY_FOLDER_CLASS_NAME}&filter=(cmsSection eq '${cmsSection}' or title eq '${cmsSection}') and (status in (0, 2, 3))&nestedFields=description,embedded,file.thumbnailURL&scope=${scopeId}`;
 };
 
 const displayInfoToast = (
@@ -91,7 +92,7 @@ const displayToast = (
 	message: string
 ) => {
 	if (error) {
-		let errorMessage = error?.error;
+		let errorMessage = error;
 
 		if (error?.status === 'BAD_REQUEST') {
 			errorMessage = sub(
@@ -139,12 +140,18 @@ function executeFolderAction(
 			: FolderService.moveFolder(itemData.embedded.id, folder.id);
 	}
 
-	promise.then((error: any) => {
-		if (!error) {
+	promise.then((result: any) => {
+		if (!result.error) {
 			loadData();
 		}
 
-		displayToast(action, error, folder, itemData, SUCCESS_MESSAGES[action]);
+		displayToast(
+			action,
+			result.error,
+			folder,
+			itemData,
+			SUCCESS_MESSAGES[action]
+		);
 	});
 }
 
@@ -162,12 +169,18 @@ function executeAssetAction(
 			'{objectEntryFolderId}',
 			String(folder.id)
 		)
-	).then((error: any) => {
-		if (!error) {
+	).then((result: any) => {
+		if (!result.error) {
 			loadData();
 		}
 
-		displayToast(action, error, folder, itemData, SUCCESS_MESSAGES[action]);
+		displayToast(
+			action,
+			result.error,
+			folder,
+			itemData,
+			SUCCESS_MESSAGES[action]
+		);
 	});
 }
 
@@ -194,13 +207,26 @@ function FolderItemSelectorModalContent({
 	itemData,
 	loadData,
 	objectEntryFolderExternalReferenceCode,
+	rootObjectEntryFolderExternalReferenceCode,
 }: TFolderItemSelectorModalContent) {
 	const [selectedItemType, setSelectedItemType] = useState<
 		'folder' | 'space'
 	>(objectEntryFolderExternalReferenceCode ? 'folder' : 'space');
+
+	const objectFolderExternalReferenceCode =
+		itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
+			? ''
+			: itemData.embedded.systemProperties?.objectDefinitionBrief
+					?.objectFolderExternalReferenceCode;
+
+	const cmsSection =
+		objectFolderExternalReferenceCode === 'L_CMS_CONTENT_STRUCTURES' ||
+		rootObjectEntryFolderExternalReferenceCode === 'L_CONTENTS'
+			? 'contents'
+			: 'files';
 	const [url, setURL] = useState<string>(
 		objectEntryFolderExternalReferenceCode
-			? getSpaceFoldersURL(itemData.embedded.scopeId)
+			? getSpaceFoldersURL(cmsSection, itemData.embedded.scopeId)
 			: SPACES_URL
 	);
 	const [schemaKey, setSchemaKey] = useState(0);
@@ -212,7 +238,7 @@ function FolderItemSelectorModalContent({
 		setCurrentSpace(space);
 		setSchemaKey((prev) => prev + 1);
 		setSelectedItemType('folder');
-		setURL(getSpaceFoldersURL(space.scopeId));
+		setURL(getSpaceFoldersURL(cmsSection, space.scopeId));
 	}
 
 	const setItemComponentProps = ({item, props}: {item: any; props: any}) => {
@@ -343,7 +369,7 @@ function FolderItemSelectorModalContent({
 					breadcrumbsLabel={false}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
-						id: `itemSelectorModal-users-${itemData.id}`,
+						id: `itemSelectorModal-users-${selectedItemType === 'folder' ? itemData.embedded.id : itemData.id}`,
 						views: [
 							{
 								contentRenderer: 'cards',
@@ -402,9 +428,9 @@ function FolderItemSelectorModalContent({
 					locator={
 						selectedItemType === 'folder'
 							? {
-									id: 'id',
+									id: 'embedded.id',
 									label: 'title',
-									value: 'id',
+									value: 'embedded.id',
 								}
 							: {
 									id: 'id',
@@ -428,9 +454,15 @@ function FolderItemSelectorModalContent({
 						</Alert>
 					}
 					observer={observer}
-					onItemsChange={(items: Folder[]) => {
+					onItemsChange={(items: any[]) => {
 						if (items.length) {
-							handleOnItemsChange(items[0]);
+							handleOnItemsChange({
+								id:
+									selectedItemType === 'folder'
+										? items[0].embedded.id
+										: items[0].id,
+								title: items[0].title,
+							});
 						}
 					}}
 					onOpenChange={onOpenChange}

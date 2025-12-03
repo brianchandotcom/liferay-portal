@@ -22,9 +22,9 @@ import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
 
 import isCustomJSONSXPElement from '../../utils/sxp_element/is_custom_json_sxp_element';
 import {
-	IElementInstances,
-	IIndexFields,
-	ISearchableTypes,
+	IElementInstance,
+	IIndexField,
+	ISearchableType,
 } from '../../utils/types';
 import CustomPanel from './shared/CustomPanel';
 
@@ -44,20 +44,20 @@ function QuerySXPElements({
 	setFieldValue,
 	touched = [],
 }: {
-	elementInstances: IElementInstances[];
+	elementInstances: IElementInstance[];
 	entityJSON: {[key: string]: any};
 	errors: (
 		| {[uiConfigurationValues: string]: {[field: string]: string}}
 		| undefined
 	)[];
-	indexFields: IIndexFields[];
+	indexFields: IIndexField[];
 	isIndexCompany: boolean;
 	isSubmitting: boolean;
 	onBlur: (event: React.FocusEvent<any>) => void;
 	onChange: (event: React.ChangeEvent<any>) => void;
 	onChangeAddSXPElementVisibility: (visible?: boolean) => void;
 	onDeleteSXPElement: (id: number) => void;
-	searchableTypes: ISearchableTypes[];
+	searchableTypes: ISearchableType[];
 	setFieldTouched: (field: string, touched?: boolean) => void;
 	setFieldValue: (field: string, value: any) => void;
 	touched: (

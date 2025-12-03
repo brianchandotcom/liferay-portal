@@ -41,7 +41,7 @@ export default function ScopeSelector({
 			// Sort using Intl.Collator JS object to handle string and
 			// numeric comparison, keeping in mind of current locale.
 
-			let scopeCollator = new Intl.Collator(
+			let comparisonResult = new Intl.Collator(
 				Liferay.ThemeDisplay.getBCP47LanguageId(),
 				{numeric: true}
 			).compare(
@@ -52,10 +52,10 @@ export default function ScopeSelector({
 			// If the sorting direction is descending, invert the value
 
 			if (sort.direction === 'descending') {
-				scopeCollator *= -1;
+				comparisonResult *= -1;
 			}
 
-			return scopeCollator;
+			return comparisonResult;
 		});
 	}, [sort, scope]);
 

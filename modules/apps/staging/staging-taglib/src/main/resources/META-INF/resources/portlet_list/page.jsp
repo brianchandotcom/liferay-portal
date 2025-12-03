@@ -80,17 +80,29 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			}
 		}
 
+		List<String> controlChildLabels = null;
+		String controlTagLabel = null;
+
+		if (exportControls.length == 1) {
+			PortletDataHandlerControl exportControl = exportControls[0];
+
+			controlChildLabels = exportControl.getControlChildLabels();
+			controlTagLabel = exportControl.getControlTagLabel();
+		}
+
 		boolean showPortletDataInput = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
 	%>
 
 		<li class="tree-item <%= ((exportModelCount > 0) || showAllPortlets) ? StringPool.BLANK : "deletions" %> <%= !portletDataHandler.isHidden() ? StringPool.BLANK : "hide" %>">
 			<liferay-staging:checkbox
 				checked="<%= showPortletDataInput %>"
+				childLabels="<%= controlChildLabels %>"
 				deletions="<%= modelDeletionCount %>"
 				disabled="<%= disableInputs %>"
 				items="<%= exportModelCount %>"
 				label="<%= portletTitle %>"
 				name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>"
+				tagLabel="<%= controlTagLabel %>"
 			/>
 
 			<%
@@ -133,7 +145,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				<ul class="lfr-tree list-unstyled">
 					<li class="tree-item">
 						<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
-							<c:if test="<%= exportControls != null %>">
+							<c:if test="<%= (exportControls != null) && !portletDataHandler.isEmptyControlsAllowed() %>">
 								<c:choose>
 									<c:when test="<%= type.equals(Constants.EXPORT) %>">
 

@@ -295,19 +295,16 @@ function ItemSelector<T extends Record<string, any>>({
 	});
 
 	const selectedKeys = useMemo(() => {
-		if (!items || !items.length) {
-			return [];
-		}
-		const selectedItemsKeys = items.map((item) =>
+		return (
+			items?.map((item) =>
 			String(
 				getObjectValueFromPath({
 					object: item,
 					path: locator.value,
 				})
 			)
+			) ?? []
 		);
-
-		return selectedItemsKeys.length ? [...selectedItemsKeys] : [];
 	}, [items, locator.value]);
 
 	const memoizedChildren = useCallback(

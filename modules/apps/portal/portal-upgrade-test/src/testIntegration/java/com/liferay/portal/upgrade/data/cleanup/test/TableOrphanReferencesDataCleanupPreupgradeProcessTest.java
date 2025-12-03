@@ -85,8 +85,8 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 	@Override
 	protected UpgradeProcess getUpgradeProcess() {
 		return new TableOrphanReferencesDataCleanupPreupgradeProcess(
-			"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY, "ownerId",
-			"PortletPreferences", "companyId", "Company");
+			null, "ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			"ownerId", "PortletPreferences", "companyId", "Company");
 	}
 
 	private void _insert(long companyId, int ownerType) throws Exception {

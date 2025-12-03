@@ -292,7 +292,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				LoggerTestUtil.INFO)) {
 
 			OrphanReferencesDataCleanupUtil.cleanUpTable(
-				_connection, sourceAdditionalWhereClause,
+				_connection, null, sourceAdditionalWhereClause,
 				_dbInspector.normalizeName(sourceColumnName),
 				_dbInspector.normalizeName(sourceTableName),
 				new String[] {_dbInspector.normalizeName(targetColumnName)},

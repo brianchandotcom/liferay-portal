@@ -331,10 +331,6 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		String siteExternalReferenceCode = RandomTestUtil.randomString();
 		long siteId = RandomTestUtil.randomLong();
 
-		String expectedSiteExternalReferenceCode =
-			companyGroup ? null : siteExternalReferenceCode;
-		Long expectedSiteId = companyGroup ? null : siteId;
-
 		Group group = _mockGroup(siteExternalReferenceCode, siteId);
 
 		Map<String, Serializable> parameters =
@@ -343,9 +339,15 @@ public class BatchEnginePortletDataHandlerUtilTest {
 				_mockPortletDataContext(null, null, null),
 				_getStagingGroupHelper(companyGroup));
 
+		String expectedSiteExternalReferenceCode =
+			companyGroup ? null : siteExternalReferenceCode;
+
 		Assert.assertEquals(
 			expectedSiteExternalReferenceCode,
 			parameters.get("siteExternalReferenceCode"));
+
+		Long expectedSiteId = companyGroup ? null : siteId;
+
 		Assert.assertEquals(expectedSiteId, parameters.get("siteId"));
 
 		parameters = BatchEnginePortletDataHandlerUtil.buildImportParameters(

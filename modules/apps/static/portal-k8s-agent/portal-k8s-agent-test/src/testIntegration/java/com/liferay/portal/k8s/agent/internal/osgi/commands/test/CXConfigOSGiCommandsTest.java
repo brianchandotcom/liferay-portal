@@ -114,7 +114,7 @@ public class CXConfigOSGiCommandsTest {
 		String configurationPid3 =
 			ConfigurationTestUtil.createFactoryConfiguration(
 				AccountEntryEmailConfiguration.class.getName(),
-				"liferay-sample-cx-3/liferay.com",
+				"liferay-sample-cx-3/" + _companyWebId,
 				HashMapDictionaryBuilder.<String, Object>put(
 					".k8s.config.key",
 					AccountEntryEmailConfiguration.class.getName() +

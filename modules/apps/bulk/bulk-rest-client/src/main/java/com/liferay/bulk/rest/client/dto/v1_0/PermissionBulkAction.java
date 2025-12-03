@@ -74,6 +74,27 @@ public class PermissionBulkAction
 
 	protected com.liferay.bulk.rest.client.permission.Permission[] permissions;
 
+	public String getRoleKey() {
+		return roleKey;
+	}
+
+	public void setRoleKey(String roleKey) {
+		this.roleKey = roleKey;
+	}
+
+	public void setRoleKey(
+		UnsafeSupplier<String, Exception> roleKeyUnsafeSupplier) {
+
+		try {
+			roleKey = roleKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String roleKey;
+
 	@Override
 	public PermissionBulkAction clone() throws CloneNotSupportedException {
 		return (PermissionBulkAction)super.clone();

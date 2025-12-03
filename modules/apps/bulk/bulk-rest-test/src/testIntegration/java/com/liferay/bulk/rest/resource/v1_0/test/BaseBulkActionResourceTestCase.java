@@ -425,6 +425,18 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("roleKey", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof PermissionBulkAction)) {
+					continue;
+				}
+
+				if (((PermissionBulkAction)bulkAction).getRoleKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!(bulkAction instanceof StatusBulkAction)) {
 					continue;
@@ -889,6 +901,23 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("roleKey", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof PermissionBulkAction) ||
+					!(bulkAction2 instanceof PermissionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((PermissionBulkAction)bulkAction1).getRoleKey(),
+						((PermissionBulkAction)bulkAction2).getRoleKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!(bulkAction1 instanceof StatusBulkAction) ||
 					!(bulkAction2 instanceof StatusBulkAction)) {
@@ -1293,6 +1322,8 @@ public abstract class BaseBulkActionResourceTestCase {
 				PermissionBulkAction bulkAction = new PermissionBulkAction();
 
 				bulkAction.setConfiguration(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				bulkAction.setRoleKey(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 				bulkAction.setType(

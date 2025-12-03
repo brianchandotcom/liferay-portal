@@ -83,6 +83,20 @@ public class PermissionBulkActionSerDes {
 			sb.append("]");
 		}
 
+		if (permissionBulkAction.getRoleKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(permissionBulkAction.getRoleKey()));
+
+			sb.append("\"");
+		}
+
 		if (permissionBulkAction.getBulkActionItems() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -170,6 +184,14 @@ public class PermissionBulkActionSerDes {
 				String.valueOf(permissionBulkAction.getPermissions()));
 		}
 
+		if (permissionBulkAction.getRoleKey() == null) {
+			map.put("roleKey", null);
+		}
+		else {
+			map.put(
+				"roleKey", String.valueOf(permissionBulkAction.getRoleKey()));
+		}
+
 		if (permissionBulkAction.getBulkActionItems() == null) {
 			map.put("bulkActionItems", null);
 		}
@@ -219,6 +241,9 @@ public class PermissionBulkActionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "roleKey")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
 				return false;
 			}
@@ -261,6 +286,12 @@ public class PermissionBulkActionSerDes {
 					}
 
 					permissionBulkAction.setPermissions(permissionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleKey")) {
+				if (jsonParserFieldValue != null) {
+					permissionBulkAction.setRoleKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {

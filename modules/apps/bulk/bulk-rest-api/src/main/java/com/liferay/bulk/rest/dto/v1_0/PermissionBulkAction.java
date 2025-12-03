@@ -137,6 +137,47 @@ public class PermissionBulkAction extends BulkAction implements Serializable {
 	private Supplier<com.liferay.portal.vulcan.permission.Permission[]>
 		_permissionsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getRoleKey() {
+		if (_roleKeySupplier != null) {
+			roleKey = _roleKeySupplier.get();
+
+			_roleKeySupplier = null;
+		}
+
+		return roleKey;
+	}
+
+	public void setRoleKey(String roleKey) {
+		this.roleKey = roleKey;
+
+		_roleKeySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRoleKey(
+		UnsafeSupplier<String, Exception> roleKeyUnsafeSupplier) {
+
+		_roleKeySupplier = () -> {
+			try {
+				return roleKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String roleKey;
+
+	@JsonIgnore
+	private Supplier<String> _roleKeySupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -202,6 +243,22 @@ public class PermissionBulkAction extends BulkAction implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		String roleKey = getRoleKey();
+
+		if (roleKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(roleKey));
+
+			sb.append("\"");
 		}
 
 		BulkActionItem[] bulkActionItems = getBulkActionItems();

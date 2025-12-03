@@ -9,6 +9,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -173,6 +174,14 @@ public class DBResourceUtil {
 		}
 
 		return tableNames;
+	}
+
+	public interface DBResourceProvider {
+
+		public Map<String, String[]> getTablesPrimaryKeyColumnNames(
+				long companyId)
+			throws PortalException;
+
 	}
 
 	private static Map<String, List<String>>

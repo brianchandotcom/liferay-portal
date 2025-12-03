@@ -126,14 +126,19 @@ public class StyleBookEntryLocalServiceImpl
 			}
 		}
 
-		styleBookEntry = publishDraft(styleBookEntry);
-
 		if (defaultStyleBookEntry) {
-			return updateDefaultStyleBookEntry(
-				styleBookEntry.getStyleBookEntryId(), true);
+			StyleBookEntry oldDefaultStyleBookEntry =
+				fetchDefaultStyleBookEntry(groupId, themeId);
+
+			if (oldDefaultStyleBookEntry != null) {
+				updateDefaultStyleBookEntry(
+					oldDefaultStyleBookEntry.getStyleBookEntryId(), false);
+			}
+
+			styleBookEntry.setDefaultStyleBookEntry(true);
 		}
 
-		return styleBookEntry;
+		return publishDraft(styleBookEntry);
 	}
 
 	@Override
@@ -497,14 +502,20 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setPreviewFileEntryId(previewFileEntryId);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
 
-		styleBookEntry = styleBookEntryPersistence.update(styleBookEntry);
-
 		if (defaultStylebookEntry) {
-			return updateDefaultStyleBookEntry(
-				styleBookEntry.getStyleBookEntryId(), true);
+			StyleBookEntry oldDefaultStyleBookEntry =
+				fetchDefaultStyleBookEntry(
+					styleBookEntry.getGroupId(), styleBookEntry.getThemeId());
+
+			if (oldDefaultStyleBookEntry != null) {
+				updateDefaultStyleBookEntry(
+					oldDefaultStyleBookEntry.getStyleBookEntryId(), false);
+			}
+
+			styleBookEntry.setDefaultStyleBookEntry(true);
 		}
 
-		return styleBookEntry;
+		return styleBookEntryPersistence.update(styleBookEntry);
 	}
 
 	@Override

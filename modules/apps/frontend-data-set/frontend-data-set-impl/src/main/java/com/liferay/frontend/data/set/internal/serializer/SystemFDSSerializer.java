@@ -17,6 +17,8 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
+import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
+import com.liferay.frontend.data.set.filter.FDSFiltersGroupsRegistry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -170,6 +173,53 @@ public class SystemFDSSerializer
 
 		return serializeFilters(
 			Collections.emptyList(), fdsName, httpServletRequest);
+	}
+
+	@Override
+	public JSONArray serializeFiltersGroups(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		JSONArray jsonArray = JSONUtil.putAll();
+
+		FDSFiltersGroups fdsFiltersGroups =
+			fdsFiltersGroupsRegistry.getFDSFiltersGroups(fdsName);
+
+		if (fdsFiltersGroups == null) {
+			return jsonArray;
+		}
+
+		LinkedHashMap<String, List<FDSFilter>> filtersGroups =
+			fdsFiltersGroups.getFiltersGroups(httpServletRequest);
+
+		for (Map.Entry<String, List<FDSFilter>> filtersGroupsEntry :
+				filtersGroups.entrySet()) {
+
+			jsonArray.put(
+				JSONUtil.put(
+					"filters",
+					() -> {
+						JSONArray filtersJSONArray = JSONUtil.putAll();
+
+						List<FDSFilter> fdsFilters =
+							filtersGroupsEntry.getValue();
+
+						if (ListUtil.isNotEmpty(fdsFilters)) {
+							for (FDSFilter filter : fdsFilters) {
+								if (filter != null) {
+									filtersJSONArray.put(
+										String.valueOf(filter.getId()));
+								}
+							}
+						}
+
+						return filtersJSONArray;
+					}
+				).put(
+					"label", filtersGroupsEntry.getKey()
+				));
+		}
+
+		return jsonArray;
 	}
 
 	@Override
@@ -368,6 +418,9 @@ public class SystemFDSSerializer
 
 	@Reference
 	protected FDSFilterRegistry fdsFilterRegistry;
+
+	@Reference
+	protected FDSFiltersGroupsRegistry fdsFiltersGroupsRegistry;
 
 	@Reference
 	protected FDSItemsActionsRegistry fdsItemsActionsRegistry;

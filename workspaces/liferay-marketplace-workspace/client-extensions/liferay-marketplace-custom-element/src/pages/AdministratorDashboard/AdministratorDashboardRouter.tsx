@@ -9,10 +9,13 @@ import {HashRouter, Route, Routes, useParams} from 'react-router-dom';
 
 import DropDown from '../../components/DropDown';
 import NewAppContextProvider from '../../context/NewAppContext';
+import SolutionContextProvider from '../../context/SolutionContext';
 import withProviders from '../../hoc/withProviders';
+import {useCatalogs} from '../../hooks/data/useCatalogs';
 import {Liferay} from '../../liferay/liferay';
 import koroneikiOAuth2 from '../../services/oauth/Koroneiki';
 import App from '../PublisherDashboard/pages/Apps/App';
+import SolutionsDetails from '../PublisherDashboard/pages/Solutions/Solution';
 import AdministratorDashboardOutlet from './AdministratorDashboardOutlet';
 import AdministrationSummary from './pages';
 import Apps from './pages/Apps';
@@ -68,45 +71,67 @@ const AppWithActions = () => {
 	);
 };
 
-const AdministratorDashboardRouter = () => (
-	<HashRouter>
-		<Routes>
-			<Route element={<AdministratorDashboardOutlet />}>
-				<Route element={<AdministrationSummary />} index />
-				<Route element={<Orders />} path="orders" />
-				<Route
-					element={<PublisherRequest />}
-					path="publisher-request"
-				/>
-				<Route element={<Publishers />} path="publishers" />
-				<Route element={<Trial />} path="trial" />
+const AdministratorDashboardRouter = () => {
+	const {accountId} = Liferay.CommerceContext.account || {};
+	const {data: catalogs = [], isLoading} = useCatalogs();
 
-				<Route path="apps">
-					<Route element={<Apps />} index />
+	const catalog = catalogs.find((catalog) => catalog.accountId === accountId);
 
-					<Route path=":productId">
-						<Route
-							element={
-								<NewAppContextProvider>
-									<AppWithActions />
-								</NewAppContextProvider>
-							}
-							index
-						/>
+	const catalogId = catalog?.id;
+
+	if (isLoading) {
+		return null;
+	}
+
+	return (
+		<HashRouter>
+			<Routes>
+				<Route element={<AdministratorDashboardOutlet />}>
+					<Route element={<AdministrationSummary />} index />
+					<Route element={<Orders />} path="orders" />
+					<Route
+						element={<PublisherRequest />}
+						path="publisher-request"
+					/>
+					<Route element={<Publishers />} path="publishers" />
+					<Route element={<Trial />} path="trial" />
+
+					<Route path="apps">
+						<Route element={<Apps />} index />
+
+						<Route path=":productId">
+							<Route
+								element={
+									<NewAppContextProvider>
+										<AppWithActions />
+									</NewAppContextProvider>
+								}
+								index
+							/>
+						</Route>
+					</Route>
+
+					<Route path="solutions">
+						<Route element={<Solutions />} index />
+
+						<Route path=":productId">
+							<Route
+								element={
+									<SolutionContextProvider
+										catalogId={catalogId as number}
+									>
+										<SolutionsDetails />
+									</SolutionContextProvider>
+								}
+								index
+							/>
+						</Route>
 					</Route>
 				</Route>
-
-				<Route path="solutions">
-					<Route element={<Solutions />} index />
-
-					<Route path=":productId">
-						<Route element={<App />} index />
-					</Route>
-				</Route>
-			</Route>
-		</Routes>
-	</HashRouter>
-);
+			</Routes>
+		</HashRouter>
+	);
+};
 
 export default withProviders(AdministratorDashboardRouter, {
 	withErrorBoundary: true,

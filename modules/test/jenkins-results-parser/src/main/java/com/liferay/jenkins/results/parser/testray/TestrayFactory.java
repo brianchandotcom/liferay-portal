@@ -38,26 +38,9 @@ import org.json.JSONObject;
 public class TestrayFactory {
 
 	public static TestrayCaseResult newBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup) {
-
-		return newBuildTestrayCaseResult(
-			testrayBuild, topLevelBuildReport, axisTestClassGroup, null, null);
-	}
-
-	public static TestrayCaseResult newBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
-
-		return newBuildTestrayCaseResult(
-			testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass,
-			null);
-	}
-
-	public static TestrayCaseResult newBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
-		TestClassMethod testClassMethod) {
+		TestClassMethod testClassMethod, TestrayBuild testrayBuild,
+		TopLevelBuildReport topLevelBuildReport) {
 
 		if (testrayBuild == null) {
 			throw new RuntimeException("Testray build is null");
@@ -119,6 +102,23 @@ public class TestrayFactory {
 			axisTestClassGroup, testrayBuild, topLevelBuildReport);
 	}
 
+	public static TestrayCaseResult newBuildTestrayCaseResult(
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport) {
+
+		return newBuildTestrayCaseResult(
+			axisTestClassGroup, testClass, null, testrayBuild,
+			topLevelBuildReport);
+	}
+
+	public static TestrayCaseResult newBuildTestrayCaseResult(
+		AxisTestClassGroup axisTestClassGroup, TestrayBuild testrayBuild,
+		TopLevelBuildReport topLevelBuildReport) {
+
+		return newBuildTestrayCaseResult(
+			axisTestClassGroup, null, null, testrayBuild, topLevelBuildReport);
+	}
+
 	public static TestrayCaseResult newJSONObjectTestrayCaseResult(
 		TestrayBuild testrayBuild, JSONObject jsonObject) {
 
@@ -133,11 +133,11 @@ public class TestrayFactory {
 
 	public static PortalLogBatchBuildTestrayCaseResult
 		newPortalLogTestrayCaseResult(
-			TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-			AxisTestClassGroup axisTestClassGroup) {
+			AxisTestClassGroup axisTestClassGroup, TestrayBuild testrayBuild,
+			TopLevelBuildReport topLevelBuildReport) {
 
 		return new PortalLogBatchBuildTestrayCaseResult(
-			testrayBuild, topLevelBuildReport, axisTestClassGroup);
+			axisTestClassGroup, testrayBuild, topLevelBuildReport);
 	}
 
 	public static TestrayAttachment newTestrayAttachment(

@@ -23,8 +23,8 @@ public class PortalLogBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult<TestClass, TestClassMethod> {
 
 	public PortalLogBatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup) {
+		AxisTestClassGroup axisTestClassGroup, TestrayBuild testrayBuild,
+		TopLevelBuildReport topLevelBuildReport) {
 
 		super(axisTestClassGroup, testrayBuild, topLevelBuildReport);
 	}

@@ -25,8 +25,8 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 	extends BaseStandaloneBuildTestrayCaseResult {
 
 	public AppServerBundleStandaloneBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		String appServerType) {
+		String appServerType, TestrayBuild testrayBuild,
+		TopLevelBuildReport topLevelBuildReport) {
 
 		super(testrayBuild, topLevelBuildReport);
 

@@ -84,7 +84,7 @@ public class HelpCenterUtil {
 		}
 		catch (Exception exception) {
 			throw new Exception(
-				"Error processing GCS file for MD5 calculation", exception);
+				"Unable to calculate MD5 checksum for GCS file", exception);
 		}
 
 		String body = JSONUtil.put(
@@ -102,18 +102,13 @@ public class HelpCenterUtil {
 		Http.Options options = new Http.Options();
 
 		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-
 		options.addHeader(
 			"Authorization",
 			"Bearer " + getAuthenticationToken(patcherBuild.getCompanyId()));
-
 		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-
 		options.addHeader(
 			"Origin", patcherConfiguration.supportLiferayLfuURL());
-
 		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
 		options.setLocation(
 			StringBundler.concat(
 				patcherConfiguration.supportLiferayLfuURL(),
@@ -149,7 +144,7 @@ public class HelpCenterUtil {
 			uploadAttachment(fileInputStream, fileSize, gcsSessionURL);
 		}
 		catch (Exception exception) {
-			throw new Exception("Error processing GCS file", exception);
+			throw new Exception("Unable to process GCS file", exception);
 		}
 
 		long ticketAttachmentId = responseJSONObject.getLong(
@@ -167,9 +162,7 @@ public class HelpCenterUtil {
 		Http.Options options = new Http.Options();
 
 		options.addHeader(HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
-
 		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-
 		options.addHeader(
 			"Authorization", "Bearer " + getAuthenticationToken(companyId));
 
@@ -232,12 +225,9 @@ public class HelpCenterUtil {
 		Http.Options options = new Http.Options();
 
 		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-
 		options.addHeader(
 			"Authorization", "Bearer " + getAuthenticationToken(companyId));
-
 		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-
 		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		PatcherConfiguration patcherConfiguration =
@@ -277,7 +267,6 @@ public class HelpCenterUtil {
 		Http.Options options = new Http.Options();
 
 		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-
 		options.addHeader(
 			"Content-Type", ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
 
@@ -292,10 +281,8 @@ public class HelpCenterUtil {
 			patcherConfiguration.supportLiferayApiClientSecret());
 
 		options.addPart("grant_type", "client_credentials");
-
 		options.setLocation(
 			patcherConfiguration.supportLiferayURL() + "/o/oauth2/token");
-
 		options.setPost(true);
 
 		String responseString = HttpUtil.URLtoString(options);

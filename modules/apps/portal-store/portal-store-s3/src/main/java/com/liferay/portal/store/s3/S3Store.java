@@ -8,7 +8,6 @@ package com.liferay.portal.store.s3;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.GetObjectMetadataRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -55,6 +54,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -70,6 +71,7 @@ import software.amazon.awssdk.http.nio.netty.ProxyConfiguration;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
+import software.amazon.awssdk.services.s3.model.DeleteObjectResponse;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
@@ -194,15 +196,20 @@ public class S3Store implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
+		CompletableFuture<DeleteObjectResponse> completableFuture =
+			_s3AsyncClient.deleteObject(
+				builder -> {
+					builder.bucket(_s3StoreConfiguration.bucketName());
+					builder.key(
+						S3KeyTransformerUtil.getFileVersionKey(
+							companyId, repositoryId, fileName, versionLabel));
+				});
+
 		try {
-			_amazonS3.deleteObject(
-				new DeleteObjectRequest(
-					_s3StoreConfiguration.bucketName(),
-					S3KeyTransformerUtil.getFileVersionKey(
-						companyId, repositoryId, fileName, versionLabel)));
+			completableFuture.join();
 		}
-		catch (AmazonClientException amazonClientException) {
-			throw _transform(amazonClientException);
+		catch (CompletionException completionException) {
+			throw _transform(completionException.getCause());
 		}
 	}
 

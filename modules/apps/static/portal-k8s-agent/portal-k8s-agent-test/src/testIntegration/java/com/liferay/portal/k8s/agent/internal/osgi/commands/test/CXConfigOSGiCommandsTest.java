@@ -232,9 +232,8 @@ public class CXConfigOSGiCommandsTest {
 				new String[] {"deploymentType=prod", "name=Non Existing Name"},
 				null
 			},
-			{new String[] {"nonExistentFilter=foo"}, new HashSet<>()},
-			{new String[] {"foo"}, new HashSet<>()},
-			{new String[] {"foo", "bar"}, new HashSet<>()}
+			{new String[] {"nonExistentFilter=foo"}, null},
+			{new String[] {"foo"}, null}, {new String[] {"foo", "bar"}, null}
 		};
 
 		for (Object[] testCase : testCasesIncorrectParameters) {

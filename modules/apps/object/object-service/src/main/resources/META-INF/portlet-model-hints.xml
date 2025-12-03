@@ -218,7 +218,7 @@
 		<field name="objectFieldId" type="long" />
 		<field name="name" type="String" />
 		<field name="value" type="String">
-			<hint name="max-length">255</hint>
+			<hint-collection name="CLOB" />
 		</field>
 	</model>
 	<model name="com.liferay.object.model.ObjectFilter">

@@ -230,6 +230,19 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public boolean isHiddenRepository(long repositoryId)
+		throws PortalException {
+
+		Repository repository = repositoryPersistence.findByPrimaryKey(
+			repositoryId);
+
+		DLFolder dlFolder = _dlFolderPersistence.findByPrimaryKey(
+			repository.getDlFolderId());
+
+		return dlFolder.isHidden();
+	}
+
+	@Override
 	public void updateRepository(
 			long repositoryId, String name, String description)
 		throws PortalException {

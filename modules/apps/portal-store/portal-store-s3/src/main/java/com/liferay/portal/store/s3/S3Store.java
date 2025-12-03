@@ -483,20 +483,11 @@ public class S3Store implements Store {
 
 		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
 
-		if (proxyAuthType.equals("ntlm") ||
-			proxyAuthType.equals("username-password")) {
-
+		if (proxyAuthType.equals("username-password")) {
 			clientConfiguration.setProxyPassword(
 				_s3StoreConfiguration.proxyPassword());
 			clientConfiguration.setProxyUsername(
 				_s3StoreConfiguration.proxyUsername());
-
-			if (proxyAuthType.equals("ntlm")) {
-				clientConfiguration.setProxyDomain(
-					_s3StoreConfiguration.ntlmProxyDomain());
-				clientConfiguration.setProxyWorkstation(
-					_s3StoreConfiguration.ntlmProxyWorkstation());
-			}
 		}
 	}
 

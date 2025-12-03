@@ -1305,6 +1305,11 @@ components:
                     description:
                         The localized fragment image's descriptions.
                     type: object
+                fragmentImageValue:
+                    $ref: "#/components/schemas/FragmentImageValue"
+                    # @review
+                    description:
+                        The fragment image's value.
                 fragmentImageViewports:
                     # @review
                     description:
@@ -1312,21 +1317,12 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentImageViewport"
                     type: array
-                itemExternalReference:
-                    $ref: "#/components/schemas/ItemExternalReference"
                 resolution:
                     # @review
                     description:
                         The fragment image's resolution.
                     enum: [Auto, Preview, Thumbnail]
                     type: string
-                url:
-                    # @review
-                    description:
-                        The fragment image's url. Can be inline or mapped to an external value.
-                    oneOf:
-                        -   $ref: "#/components/schemas/FragmentInlineValue"
-                        -   $ref: "#/components/schemas/FragmentMappedValue"
             type: object
         FragmentImageValue:
             # @review

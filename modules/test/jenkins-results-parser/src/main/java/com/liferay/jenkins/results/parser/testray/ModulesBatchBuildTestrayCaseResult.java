@@ -25,10 +25,10 @@ public class ModulesBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult<ModulesTestClass, TestClassMethod> {
 
 	public ModulesBatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
+		super(axisTestClassGroup, testClass, testrayBuild, topLevelBuildReport);
 	}
 
 	@Override

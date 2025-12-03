@@ -304,12 +304,14 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		ThumbnailURLReference thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(fileEntry.getExternalReferenceCode());
-				setUrl(() -> RandomTestUtil.randomString());
-			}
-		};
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(
+						fileEntry.getExternalReferenceCode());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
 
 		utilityPage.setThumbnail(thumbnailURLReference);
 
@@ -322,6 +324,55 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		_assertThumbnailURLReference(
 			false, postUtilityPage.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
+
+		UtilityPage utilityPageError = randomUtilityPage();
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(RandomTestUtil.randomString());
+			}
+		};
+
+		utilityPageError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			testPostSiteUtilityPage_addUtilityPage(utilityPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		utilityPageError.setThumbnail(thumbnailURLReference);
+
+		try {
+			testPostSiteUtilityPage_addUtilityPage(utilityPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 
 		_testPostSiteUtilityPageWithPageSpecifications();
 	}
@@ -614,7 +665,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					{
 						setExternalReferenceCode(
 							fileEntry::getExternalReferenceCode);
-						setUrl(() -> RandomTestUtil.randomString());
+						setUrl(RandomTestUtil.randomString());
 					}
 				});
 		}
@@ -937,6 +988,60 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		_assertThumbnailURLReference(
 			false, utilityPage.getExternalReferenceCode(),
 			newFileEntry.getExternalReferenceCode());
+
+		UtilityPage utilityPageError = randomUtilityPage();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
+
+		utilityPageError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			utilityPageResource.patchSiteUtilityPage(
+				testGroup.getExternalReferenceCode(),
+				utilityPage.getExternalReferenceCode(), utilityPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		utilityPageError.setThumbnail(thumbnailURLReference);
+
+		try {
+			utilityPageResource.patchSiteUtilityPage(
+				testGroup.getExternalReferenceCode(),
+				utilityPage.getExternalReferenceCode(), utilityPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 	}
 
 	private void _testPostSiteUtilityPageWithPageSpecifications()
@@ -1164,6 +1269,60 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		_assertThumbnailURLReference(
 			true, putUtilityPage.getExternalReferenceCode(), null);
+
+		UtilityPage utilityPageError = randomUtilityPage();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
+
+		utilityPageError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			utilityPageResource.putSiteUtilityPage(
+				testGroup.getExternalReferenceCode(),
+				putUtilityPage.getExternalReferenceCode(), utilityPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		utilityPageError.setThumbnail(thumbnailURLReference);
+
+		try {
+			utilityPageResource.putSiteUtilityPage(
+				testGroup.getExternalReferenceCode(),
+				putUtilityPage.getExternalReferenceCode(), utilityPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 	}
 
 	@Inject

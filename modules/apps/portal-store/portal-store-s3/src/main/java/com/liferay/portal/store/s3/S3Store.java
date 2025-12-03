@@ -55,6 +55,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +81,10 @@ import org.osgi.service.component.annotations.Deactivate;
 	service = Store.class
 )
 public class S3Store implements Store {
+
+	public void abortMultipartUploads(Date date) {
+		_transferManager.abortMultipartUploads(_bucketName, date);
+	}
 
 	@Override
 	public void addFile(
@@ -132,10 +137,6 @@ public class S3Store implements Store {
 		catch (AmazonClientException amazonClientException) {
 			throw transform(amazonClientException);
 		}
-	}
-
-	public String getBucketName() {
-		return _bucketName;
 	}
 
 	@Override
@@ -255,10 +256,6 @@ public class S3Store implements Store {
 		Arrays.sort(versions, DLUtil::compareVersions);
 
 		return versions;
-	}
-
-	public TransferManager getTransferManager() {
-		return _transferManager;
 	}
 
 	@Override

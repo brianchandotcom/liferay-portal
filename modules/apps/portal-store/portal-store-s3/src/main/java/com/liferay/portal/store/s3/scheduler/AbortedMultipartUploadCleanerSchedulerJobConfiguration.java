@@ -5,8 +5,6 @@
 
 package com.liferay.portal.store.s3.scheduler;
 
-import com.amazonaws.services.s3.transfer.TransferManager;
-
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
@@ -37,10 +35,7 @@ public class AbortedMultipartUploadCleanerSchedulerJobConfiguration
 		return () -> {
 			S3Store s3Store = (S3Store)_store;
 
-			TransferManager transferManager = s3Store.getTransferManager();
-
-			transferManager.abortMultipartUploads(
-				s3Store.getBucketName(), _computeStartDate());
+			s3Store.abortMultipartUploads(_computeStartDate());
 		};
 	}
 

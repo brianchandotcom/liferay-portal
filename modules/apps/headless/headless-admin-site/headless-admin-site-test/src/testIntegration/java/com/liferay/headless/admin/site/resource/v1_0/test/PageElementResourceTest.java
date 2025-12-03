@@ -905,6 +905,25 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		};
 	}
 
+	private CollectionDisplayViewport[]
+		_getCollectionDisplayViewportsDefaultValues() {
+
+		return new CollectionDisplayViewport[] {
+			new CollectionDisplayViewport() {
+				{
+					setCollectionDisplayViewportDefinition(
+						() -> new CollectionDisplayViewportDefinition() {
+							{
+								setHidden(false);
+								setNumberOfColumns(1);
+							}
+						});
+					setId(Id.DESKTOP);
+				}
+			}
+		};
+	}
+
 	private PageElement _getCollectionItemPageElement(
 			String pageElementExternalReferenceCode,
 			String parentPageElementExternalReferenceCode,
@@ -2280,7 +2299,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getCollectionDisplayPageElement(
 					_getCollectionDisplayListStyle(
 						null, null, ListStyle.ListStyleType.GRID, null),
-					null, null, true, true, null, RandomTestUtil.randomString(),
+					_getCollectionDisplayViewportsDefaultValues(), null, true,
+					true, null, RandomTestUtil.randomString(),
 					RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
 					RandomTestUtil.randomInt(),
 					CollectionDisplayPageElementDefinition.PaginationType.

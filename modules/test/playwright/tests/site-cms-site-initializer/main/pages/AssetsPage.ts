@@ -13,6 +13,7 @@ import {DataSetPage} from './DataSetPage';
 
 interface ExecItemActionArgs {
 	action:
+		| 'Copy To'
 		| 'Delete'
 		| 'Download'
 		| 'Edit'

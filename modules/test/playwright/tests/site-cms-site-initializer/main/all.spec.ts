@@ -96,6 +96,86 @@ test(
 );
 
 test(
+	'Only content folders will be displayed when copying content',
+	{tag: '@LPD-72879'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const file1Title = `Content ${getRandomString()}`;
+		const file2Title = `File ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		await test.step('Create a new Space', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a content for that space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: file1Title,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+		});
+
+		await test.step('Create a file for that space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: `file_${getRandomString()}.png`,
+					},
+					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					title: file2Title,
+				},
+				'cms/basic-documents',
+				spaceName
+			);
+		});
+
+		await test.step('Copy content', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.execItemAction({
+				action: 'Copy To',
+				filter: file1Title,
+			});
+		});
+
+		await test.step('Check content folders', async () => {
+			await page.getByLabel(spaceName).click();
+			await expect(
+				page.getByText('Showing 1 to 1 of 1 entries.')
+			).toBeVisible();
+
+			await expect(page.getByLabel('contents')).toBeVisible();
+		});
+
+		await test.step('Copy file', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.execItemAction({
+				action: 'Copy To',
+				filter: file2Title,
+			});
+		});
+
+		await test.step('Check file folders', async () => {
+			await page.getByLabel(spaceName).click();
+			await expect(
+				page.getByText('Showing 1 to 1 of 1 entries.')
+			).toBeVisible();
+
+			await expect(page.getByLabel('files')).toBeVisible();
+		});
+	}
+);
+
+test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
 	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {

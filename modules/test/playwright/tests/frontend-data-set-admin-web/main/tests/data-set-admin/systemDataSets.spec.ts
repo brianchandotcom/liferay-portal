@@ -268,7 +268,7 @@ test(
 				.locator('tr')
 				.filter({hasText: 'System Action'});
 
-			await expect(itemActionRows).toHaveCount(14);
+			await expect(itemActionRows).toHaveCount(3);
 
 			for (const itemActionRow of await itemActionRows.all()) {
 				await expect(

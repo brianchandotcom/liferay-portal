@@ -426,6 +426,9 @@
 					"$ref": "#/definitions/FragmentFieldBackgroundImage"
 				},
 				{
+					"$ref": "#/definitions/FragmentFieldDate"
+				},
+				{
 					"$ref": "#/definitions/FragmentFieldHTML"
 				},
 				{
@@ -519,6 +522,27 @@
 				}
 			},
 			"title": "The FragmentFieldBackgroundImage Schema",
+			"type": "object"
+		},
+		"FragmentFieldDate": {
+			"additionalProperties": false,
+			"properties": {
+				"date": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/FragmentMappedValue"
+						}
+					]
+				},
+				"dateFormat": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/FragmentInlineValue"
+						}
+					]
+				}
+			},
+			"title": "The FragmentFieldDate Schema",
 			"type": "object"
 		},
 		"FragmentFieldHTML": {

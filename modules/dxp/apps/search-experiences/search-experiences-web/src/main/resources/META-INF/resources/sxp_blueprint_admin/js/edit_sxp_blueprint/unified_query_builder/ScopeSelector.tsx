@@ -10,19 +10,21 @@ import ClayLabel from '@clayui/label';
 import {openSelectionModal} from 'frontend-js-components-web';
 import React, {useContext, useMemo, useState} from 'react';
 
+// @ts-ignore
+
 import ThemeContext from '../../shared/ThemeContext';
 import {ACTIVE, INACTIVE, STATUS} from '../../utils/constants';
-import {Scope, Sorting} from '../../utils/types';
+import {IScope, ISorting} from '../../utils/types';
 import CustomPanel from './shared/CustomPanel';
 
 export default function ScopeSelector({
 	scope,
 	setScope,
 }: {
-	scope: Scope[];
-	setScope: (scope: Scope[]) => void;
+	scope: IScope[];
+	setScope: (scope: IScope[]) => void;
 }) {
-	const [sort, setSort] = useState<Sorting | null>();
+	const [sort, setSort] = useState<ISorting | null>();
 
 	const {
 		namespace,
@@ -43,8 +45,8 @@ export default function ScopeSelector({
 				Liferay.ThemeDisplay.getBCP47LanguageId(),
 				{numeric: true}
 			).compare(
-				a[sort.column as keyof Scope],
-				b[sort.column as keyof Scope]
+				a[sort.column as keyof IScope],
+				b[sort.column as keyof IScope]
 			);
 
 			// If the sorting direction is descending, invert the value

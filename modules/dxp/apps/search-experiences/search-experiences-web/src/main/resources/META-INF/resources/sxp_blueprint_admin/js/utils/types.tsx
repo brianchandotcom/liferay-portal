@@ -57,7 +57,7 @@ export interface IIndexFields {
 export interface IScope {
 	externalReferenceCode: string;
 	name: string;
-	status: Status;
+	status: (typeof STATUS)[keyof typeof STATUS];
 	type: string;
 }
 
@@ -71,8 +71,6 @@ export interface ISorting {
 	column: React.Key;
 	direction: 'ascending' | 'descending';
 }
-
-export type Status = STATUS.ACTIVE | STATUS.INACTIVE;
 
 export type SxpElement = {
 	createDate?: string;

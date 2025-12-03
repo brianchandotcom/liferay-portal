@@ -4,7 +4,6 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import {PropTypes} from 'prop-types';
 import React, {useEffect} from 'react';
 
 import {
@@ -20,6 +19,9 @@ import {
 	ISelectedSubtype,
 } from '../../utils/types';
 import {SIDEBAR_TYPES} from '../../utils/types/sidebarTypes';
+
+// @ts-ignore
+
 import QuerySettings from '../query_builder_tab/QuerySettings';
 import QuerySXPElements from './QuerySXPElements';
 import ScopeSelector from './ScopeSelector';
@@ -72,12 +74,14 @@ function QueryBuilderTab({
 	onDeleteSXPElement: (id: number) => void;
 	onFetchSearchableTypes: () => void;
 	onFrameworkConfigChange: (value: IFrameworkConfiguration) => void;
-	openSidebar: keyof typeof SIDEBAR_TYPES | '';
+	openSidebar: (typeof SIDEBAR_TYPES)[keyof typeof SIDEBAR_TYPES] | '';
 	scope: IScope[];
 	searchableTypes: ISearchableTypes[];
 	setFieldTouched: (field: string, touched?: boolean) => void;
 	setFieldValue: (field: string, value: any) => void;
-	setOpenSidebar: (sidebarType: keyof typeof SIDEBAR_TYPES) => void;
+	setOpenSidebar: (
+		sidebarType: (typeof SIDEBAR_TYPES)[keyof typeof SIDEBAR_TYPES] | ''
+	) => void;
 	setScope: (scope: IScope[]) => void;
 	touched: (
 		| {[uiConfigurationValues: string]: {[field: string]: boolean}}
@@ -104,7 +108,7 @@ function QueryBuilderTab({
 	 * @param {visible} boolean Defaults to false if sidebar is open.
 	 */
 	const _handleChangeSidebarVisibility =
-		(type: string) =>
+		(type: (typeof SIDEBAR_TYPES)[keyof typeof SIDEBAR_TYPES] | '') =>
 		(visible = openSidebar !== type) => {
 			if (visible) {
 				setOpenSidebar(type);
@@ -174,33 +178,5 @@ function QueryBuilderTab({
 		</ClayLayout.ContainerFluid>
 	);
 }
-
-QueryBuilderTab.propTypes = {
-	applyIndexerClauses: PropTypes.bool,
-	assetSubtypesMap: PropTypes.object,
-	clauseContributorsList: PropTypes.arrayOf(PropTypes.string),
-	elementInstances: PropTypes.arrayOf(PropTypes.object),
-	entityJSON: PropTypes.object,
-	errors: PropTypes.arrayOf(PropTypes.object),
-	frameworkConfig: PropTypes.object,
-	indexFields: PropTypes.arrayOf(PropTypes.object),
-	isIndexCompany: PropTypes.bool,
-	isSubmitting: PropTypes.bool,
-	onApplyIndexerClausesChange: PropTypes.func,
-	onAssetSubtypesMapChange: PropTypes.func,
-	onBlur: PropTypes.func,
-	onChange: PropTypes.func,
-	onDeleteSXPElement: PropTypes.func,
-	onFetchSearchableTypes: PropTypes.func,
-	onFrameworkConfigChange: PropTypes.func,
-	openSidebar: PropTypes.string,
-	scope: PropTypes.arrayOf(PropTypes.object),
-	searchableTypes: PropTypes.arrayOf(PropTypes.object),
-	setFieldTouched: PropTypes.func,
-	setFieldValue: PropTypes.func,
-	setOpenSidebar: PropTypes.func,
-	setScope: PropTypes.func,
-	touched: PropTypes.arrayOf(PropTypes.object),
-};
 
 export default React.memo(QueryBuilderTab);

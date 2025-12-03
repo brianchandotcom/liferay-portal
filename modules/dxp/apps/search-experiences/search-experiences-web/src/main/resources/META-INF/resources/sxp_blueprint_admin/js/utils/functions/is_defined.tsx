@@ -16,9 +16,9 @@
  * isDefined(null)
  * => true
  *
- * @param {String|object} item Item to check
+ * @param {String|object|undefined} item Item to check
  * @return {boolean}
  */
-export default function isDefined(item) {
+export default function isDefined(item: string | object | undefined): boolean {
 	return typeof item !== 'undefined';
 }

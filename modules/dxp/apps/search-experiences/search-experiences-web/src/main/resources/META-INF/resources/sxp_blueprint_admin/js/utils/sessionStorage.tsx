@@ -39,12 +39,14 @@ export function getStorageAddSXPElementSidebar() {
  * Toggles the state if `state` is undefined.
  * @param {String} state Either 'open' or 'closed'.
  */
-export function setStorageAddSXPElementSidebar(state) {
+export function setStorageAddSXPElementSidebar(state?: string | undefined) {
 	if (!isDefined(state)) {
 		sessionStorage.setItem(
 			SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR,
-			sessionStorage.getItem(SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR) ===
-				SIDEBAR_STATE.OPEN
+			sessionStorage.getItem(
+				SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR,
+				sessionStorage.TYPES.FUNCTIONAL
+			) === SIDEBAR_STATE.OPEN
 				? SIDEBAR_STATE.CLOSED
 				: SIDEBAR_STATE.OPEN,
 			sessionStorage.TYPES.FUNCTIONAL
@@ -53,7 +55,7 @@ export function setStorageAddSXPElementSidebar(state) {
 	else {
 		sessionStorage.setItem(
 			SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR,
-			state,
+			state as string,
 			sessionStorage.TYPES.FUNCTIONAL
 		);
 	}

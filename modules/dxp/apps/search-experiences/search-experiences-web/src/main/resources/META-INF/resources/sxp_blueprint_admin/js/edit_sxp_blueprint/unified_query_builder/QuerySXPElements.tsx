@@ -8,10 +8,18 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
+// @ts-ignore
+
 import JSONSXPElement from '../../shared/JSONSXPElement';
+
+// @ts-ignore
+
 import SXPElement from '../../shared/sxp_element/index';
 import {SXP_ELEMENT_PREFIX} from '../../utils/constants';
 import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
+
+// @ts-ignore
+
 import isCustomJSONSXPElement from '../../utils/sxp_element/is_custom_json_sxp_element';
 import {
 	IElementInstances,

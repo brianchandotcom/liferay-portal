@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "LEARN-LESSON-NAVIGATION",
+	"infoItemClassName": "com.liferay.portal.kernel.repository.model.FileEntry",
+	"name": "Learn Lesson Navigation",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

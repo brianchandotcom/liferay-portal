@@ -160,11 +160,9 @@ public class JSR330BeanPortletPostProcessor
 							return null;
 						}
 
-						boolean required = determineRequiredStatus(
-							mergedAnnotation);
-
 						return new JSR330InjectedFieldElement(
-							_configurableListableBeanFactory, field, required);
+							_configurableListableBeanFactory, field,
+							determineRequiredStatus(mergedAnnotation));
 					});
 
 			Method[] methods = curClass.getDeclaredMethods();

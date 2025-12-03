@@ -304,24 +304,6 @@ public class JUnitBatchBuildTestrayCaseResult
 		return testrayAttachments;
 	}
 
-	@Override
-	public void initBuildReport() {
-		JUnitTestClass jUnitTestClass = getTestClass();
-
-		if (jUnitTestClass.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				jUnitTestClass.getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				setBuildReport(cachedDownstreamBuildReport);
-
-				return;
-			}
-		}
-
-		super.initBuildReport();
-	}
-
 	protected TestrayAttachment getFailureMessagesTestrayAttachment() {
 		List<TestClassReport> testClassReports = getTestClassReports();
 
@@ -442,6 +424,24 @@ public class JUnitBatchBuildTestrayCaseResult
 		}
 
 		return testReports;
+	}
+
+	@Override
+	protected void initBuildReport() {
+		JUnitTestClass jUnitTestClass = getTestClass();
+
+		if (jUnitTestClass.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				jUnitTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
+			}
+		}
+
+		super.initBuildReport();
 	}
 
 	private boolean _isTestClassReportsFailing() {

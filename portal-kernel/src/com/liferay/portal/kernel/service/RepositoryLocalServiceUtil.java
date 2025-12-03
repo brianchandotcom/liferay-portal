@@ -414,6 +414,12 @@ public class RepositoryLocalServiceUtil {
 		return getService().getTypeSettingsProperties(repositoryId);
 	}
 
+	public static boolean isHiddenRepository(long repositoryId)
+		throws PortalException {
+
+		return getService().isHiddenRepository(repositoryId);
+	}
+
 	public static void updateRepository(
 			long repositoryId, String name, String description)
 		throws PortalException {

@@ -463,6 +463,13 @@ public class RepositoryLocalServiceWrapper
 	}
 
 	@Override
+	public boolean isHiddenRepository(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _repositoryLocalService.isHiddenRepository(repositoryId);
+	}
+
+	@Override
 	public void updateRepository(
 			long repositoryId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {

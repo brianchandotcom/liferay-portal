@@ -362,6 +362,9 @@ public interface RepositoryLocalService
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isHiddenRepository(long repositoryId) throws PortalException;
+
 	public void updateRepository(
 			long repositoryId, String name, String description)
 		throws PortalException;

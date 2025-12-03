@@ -398,7 +398,53 @@ public class S3Store implements Store {
 			awsCredentialsProvider = new DefaultAWSCredentialsProviderChain();
 		}
 
-		_amazonS3 = getAmazonS3(awsCredentialsProvider);
+		ClientConfiguration clientConfiguration = new ClientConfiguration();
+
+		clientConfiguration.setConnectionTimeout(
+			_s3StoreConfiguration.connectionTimeout());
+		clientConfiguration.setMaxConnections(
+			_s3StoreConfiguration.httpClientMaxConnections());
+		clientConfiguration.setMaxErrorRetry(
+			_s3StoreConfiguration.httpClientMaxErrorRetry());
+
+		configureConnectionProtocol(clientConfiguration);
+		configureProxySettings(clientConfiguration);
+		configureSignerOverride(clientConfiguration);
+
+		if (Validator.isNotNull(_s3StoreConfiguration.s3Endpoint()) &&
+			Validator.isNotNull(_s3StoreConfiguration.s3Region())) {
+
+			_amazonS3 = AmazonS3ClientBuilder.standard(
+			).withCredentials(
+				awsCredentialsProvider
+			).withClientConfiguration(
+				clientConfiguration
+			).withEndpointConfiguration(
+				new AwsClientBuilder.EndpointConfiguration(
+					_s3StoreConfiguration.s3Endpoint(),
+					_s3StoreConfiguration.s3Region())
+			).withPathStyleAccessEnabled(
+				_s3StoreConfiguration.s3PathStyle()
+			).build();
+		}
+		else {
+			AmazonS3ClientBuilder amazonS3ClientBuilder =
+				AmazonS3ClientBuilder.standard(
+				).withCredentials(
+					awsCredentialsProvider
+				).withClientConfiguration(
+					clientConfiguration
+				).withPathStyleAccessEnabled(
+					_s3StoreConfiguration.s3PathStyle()
+				);
+
+			if (Validator.isNotNull(_s3StoreConfiguration.s3Region())) {
+				amazonS3ClientBuilder.setRegion(
+					_s3StoreConfiguration.s3Region());
+			}
+
+			_amazonS3 = amazonS3ClientBuilder.build();
+		}
 
 		_threadPoolExecutor = new ThreadPoolExecutor(
 			_s3StoreConfiguration.corePoolSize(),
@@ -503,56 +549,6 @@ public class S3Store implements Store {
 	@Deactivate
 	protected void deactivate() {
 		_threadPoolExecutor.close();
-	}
-
-	protected AmazonS3 getAmazonS3(
-		AWSCredentialsProvider awsCredentialsProvider) {
-
-		ClientConfiguration clientConfiguration = new ClientConfiguration();
-
-		clientConfiguration.setConnectionTimeout(
-			_s3StoreConfiguration.connectionTimeout());
-		clientConfiguration.setMaxConnections(
-			_s3StoreConfiguration.httpClientMaxConnections());
-		clientConfiguration.setMaxErrorRetry(
-			_s3StoreConfiguration.httpClientMaxErrorRetry());
-
-		configureConnectionProtocol(clientConfiguration);
-		configureProxySettings(clientConfiguration);
-		configureSignerOverride(clientConfiguration);
-
-		if (Validator.isNotNull(_s3StoreConfiguration.s3Endpoint()) &&
-			Validator.isNotNull(_s3StoreConfiguration.s3Region())) {
-
-			return AmazonS3ClientBuilder.standard(
-			).withCredentials(
-				awsCredentialsProvider
-			).withClientConfiguration(
-				clientConfiguration
-			).withEndpointConfiguration(
-				new AwsClientBuilder.EndpointConfiguration(
-					_s3StoreConfiguration.s3Endpoint(),
-					_s3StoreConfiguration.s3Region())
-			).withPathStyleAccessEnabled(
-				_s3StoreConfiguration.s3PathStyle()
-			).build();
-		}
-
-		AmazonS3ClientBuilder amazonS3ClientBuilder =
-			AmazonS3ClientBuilder.standard(
-			).withCredentials(
-				awsCredentialsProvider
-			).withClientConfiguration(
-				clientConfiguration
-			).withPathStyleAccessEnabled(
-				_s3StoreConfiguration.s3PathStyle()
-			);
-
-		if (Validator.isNotNull(_s3StoreConfiguration.s3Region())) {
-			amazonS3ClientBuilder.setRegion(_s3StoreConfiguration.s3Region());
-		}
-
-		return amazonS3ClientBuilder.build();
 	}
 
 	protected String getHeadVersionLabel(

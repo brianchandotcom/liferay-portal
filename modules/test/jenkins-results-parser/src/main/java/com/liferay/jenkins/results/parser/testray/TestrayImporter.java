@@ -962,7 +962,7 @@ public class TestrayImporter {
 			AppServerBundleStandaloneBuildTestrayCaseResult
 				portalAppServerBundleStandaloneBuildTestrayCaseResult =
 					new AppServerBundleStandaloneBuildTestrayCaseResult(
-						testrayBuild, _topLevelBuildReport, "portal");
+						"portal", testrayBuild, _topLevelBuildReport);
 
 			BuildReport portalAppServerBundleBuildReport =
 				portalAppServerBundleStandaloneBuildTestrayCaseResult.
@@ -976,7 +976,7 @@ public class TestrayImporter {
 			AppServerBundleStandaloneBuildTestrayCaseResult
 				analyticsCloudAppServerBundleStandaloneBuildTestrayCaseResult =
 					new AppServerBundleStandaloneBuildTestrayCaseResult(
-						testrayBuild, _topLevelBuildReport, "analytics.cloud");
+						"analytics.cloud", testrayBuild, _topLevelBuildReport);
 
 			BuildReport analyticsCloudAppServerBundleBuildReport =
 				analyticsCloudAppServerBundleStandaloneBuildTestrayCaseResult.
@@ -1432,7 +1432,7 @@ public class TestrayImporter {
 			PortalLogBatchBuildTestrayCaseResult
 				portalLogBatchBuildTestrayCaseResult =
 					TestrayFactory.newPortalLogTestrayCaseResult(
-						testrayBuild, _topLevelBuildReport, axisTestClassGroup);
+						axisTestClassGroup, testrayBuild, _topLevelBuildReport);
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(
 					portalLogBatchBuildTestrayCaseResult.getErrors())) {
@@ -1443,8 +1443,8 @@ public class TestrayImporter {
 			for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
 				testrayCaseResults.add(
 					TestrayFactory.newBuildTestrayCaseResult(
-						testrayBuild, _topLevelBuildReport, axisTestClassGroup,
-						testClass));
+						axisTestClassGroup, testClass, testrayBuild,
+						_topLevelBuildReport));
 			}
 		}
 		else if (axisTestClassGroup instanceof PlaywrightAxisTestClassGroup) {
@@ -1454,15 +1454,15 @@ public class TestrayImporter {
 
 					testrayCaseResults.add(
 						TestrayFactory.newBuildTestrayCaseResult(
-							testrayBuild, _topLevelBuildReport,
-							axisTestClassGroup, testClass, testClassMethod));
+							axisTestClassGroup, testClass, testClassMethod,
+							testrayBuild, _topLevelBuildReport));
 				}
 			}
 		}
 		else {
 			testrayCaseResults.add(
 				TestrayFactory.newBuildTestrayCaseResult(
-					testrayBuild, _topLevelBuildReport, axisTestClassGroup));
+					axisTestClassGroup, testrayBuild, _topLevelBuildReport));
 		}
 
 		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {

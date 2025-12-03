@@ -49,7 +49,6 @@ compileJava {
 }
 
 dependencies {
-	testIntegrationImplementation group: "com.amazonaws", name: "aws-java-sdk-s3", version: "1.12.719"
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation group: "jakarta.annotation", name: "jakarta.annotation-api", version: "2.1.1"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"

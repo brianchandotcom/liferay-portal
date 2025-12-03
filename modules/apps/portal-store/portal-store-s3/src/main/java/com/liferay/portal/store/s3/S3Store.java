@@ -101,7 +101,35 @@ public class S3Store implements Store {
 		try {
 			file = FileUtil.createTempFile(inputStream);
 
-			putObject(companyId, repositoryId, fileName, versionLabel, file);
+			Upload upload = null;
+
+			try {
+				String key = S3KeyTransformerUtil.getFileVersionKey(
+					companyId, repositoryId, fileName, versionLabel);
+
+				PutObjectRequest putObjectRequest = new PutObjectRequest(
+					_s3StoreConfiguration.bucketName(), key, file);
+
+				putObjectRequest.withStorageClass(_storageClass);
+
+				upload = _transferManager.upload(putObjectRequest);
+
+				upload.waitForCompletion();
+			}
+			catch (AmazonClientException amazonClientException) {
+				throw transform(amazonClientException);
+			}
+			catch (InterruptedException interruptedException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(interruptedException);
+				}
+
+				upload.abort();
+
+				Thread thread = Thread.currentThread();
+
+				thread.interrupt();
+			}
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
@@ -636,41 +664,6 @@ public class S3Store implements Store {
 		}
 
 		return false;
-	}
-
-	protected void putObject(
-		long companyId, long repositoryId, String fileName, String versionLabel,
-		File file) {
-
-		Upload upload = null;
-
-		try {
-			String key = S3KeyTransformerUtil.getFileVersionKey(
-				companyId, repositoryId, fileName, versionLabel);
-
-			PutObjectRequest putObjectRequest = new PutObjectRequest(
-				_s3StoreConfiguration.bucketName(), key, file);
-
-			putObjectRequest.withStorageClass(_storageClass);
-
-			upload = _transferManager.upload(putObjectRequest);
-
-			upload.waitForCompletion();
-		}
-		catch (AmazonClientException amazonClientException) {
-			throw transform(amazonClientException);
-		}
-		catch (InterruptedException interruptedException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(interruptedException);
-			}
-
-			upload.abort();
-
-			Thread thread = Thread.currentThread();
-
-			thread.interrupt();
-		}
 	}
 
 	protected SystemException transform(

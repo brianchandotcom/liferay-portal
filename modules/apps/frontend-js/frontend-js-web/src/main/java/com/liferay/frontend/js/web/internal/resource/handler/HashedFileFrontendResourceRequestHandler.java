@@ -8,7 +8,6 @@ package com.liferay.frontend.js.web.internal.resource.handler;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.HashedFileFrontendResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;

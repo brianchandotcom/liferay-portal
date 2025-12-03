@@ -226,8 +226,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	};
 
 	const loading =
-		loadingJiraAccountChecking ||
 		loadingBusinessEventTypesList ||
+		loadingJiraAccountChecking ||
 		loadingLiferayVersions ||
 		loadingUTCTimeZonesList;
 

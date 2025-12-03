@@ -43,7 +43,7 @@
 			}
 		}
 	});
- </@>
+</@liferay_aui.script>
  
 <#assign
 	journalArticleId = .vars["reserved-article-id"].data

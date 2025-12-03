@@ -409,9 +409,9 @@ public class CXConfigOSGiCommandsTest {
 			"Failures: " + String.join("", failures), failures.isEmpty());
 	}
 
-	private String _assertListDataOutput(Object[] testCase) throws Exception {
-		String[] filter = (String[])testCase[0];
-		HashSet<String> expectedOutput = (HashSet<String>)testCase[1];
+	private String _assertListDataOutput(
+			String[] filter, HashSet<String> expectedOutput)
+		throws Exception {
 
 		String result = "";
 

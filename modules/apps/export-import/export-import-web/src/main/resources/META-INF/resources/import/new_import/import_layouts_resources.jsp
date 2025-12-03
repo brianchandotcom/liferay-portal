@@ -240,9 +240,49 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 												<c:if test="<%= (importModelCount > 0) || (modelDeletionCount > 0) %>">
 													<li class="tree-item">
+
+														<%
+														PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();
+
+														String controlChildLabels = null;
+														String controlTagLabel = null;
+
+														if (importControls.length == 1) {
+															PortletDataHandlerControl importControl = importControls[0];
+
+															List<String> controlChildLabelKeys = importControl.getControlChildLabels();
+
+															if (ListUtil.isNotEmpty(controlChildLabelKeys)) {
+																StringBundler sb = new StringBundler();
+
+																for (String controlChildLabelKey : controlChildLabelKeys) {
+																	sb.append(LanguageUtil.get(request, controlChildLabelKey));
+																	sb.append(", ");
+																}
+
+																if (sb.index() > 1) {
+																	sb.setIndex(sb.index() - 1);
+																}
+
+																controlChildLabels = sb.toString();
+															}
+
+															controlTagLabel = importControl.getControlTagLabel();
+														}
+
+														PortletDataHandlerControl[] importMetadataControls = portletDataHandler.getImportMetadataControls();
+														%>
+
 														<liferay-util:buffer
 															var="badgeHTML"
 														>
+															<c:if test="<%= Validator.isNotNull(controlTagLabel) %>">
+																<clay:label
+																	displayType="primary"
+																	label="<%= HtmlUtil.escape(LanguageUtil.get(request, controlTagLabel)) %>"
+																/>
+															</c:if>
+
 															<span class="badge badge-info"><%= (importModelCount > 0) ? importModelCount : StringPool.BLANK %></span>
 															<span class="badge badge-warning deletions"><%= (modelDeletionCount > 0) ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 														</liferay-util:buffer>
@@ -251,12 +291,17 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 														String rootControlId = PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId();
 														%>
 
-														<aui:input checked="<%= true %>" label="<%= portletTitle + badgeHTML %>" name="<%= rootControlId %>" type="checkbox" />
+														<div class="input-checkbox">
+															<aui:input checked="<%= true %>" label="<%= portletTitle + badgeHTML %>" name="<%= rootControlId %>" type="checkbox" />
 
-														<%
-														PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();
-														PortletDataHandlerControl[] importMetadataControls = portletDataHandler.getImportMetadataControls();
-														%>
+															<c:if test="<%= Validator.isNotNull(controlChildLabels) %>">
+																<ul class="lfr-tree list-unstyled">
+																	<li>
+																		<span class="selected-labels"><%= controlChildLabels %></span>
+																	</li>
+																</ul>
+															</c:if>
+														</div>
 
 														<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getRootPortletId() %>">
 															<li>
@@ -284,7 +329,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 															</li>
 														</ul>
 
-														<c:if test="<%= ArrayUtil.isNotEmpty(importControls) || ArrayUtil.isNotEmpty(importMetadataControls) %>">
+														<c:if test="<%= (ArrayUtil.isNotEmpty(importControls) && !portletDataHandler.isEmptyControlsAllowed()) || ArrayUtil.isNotEmpty(importMetadataControls) %>">
 															<div class="hide" id="<portlet:namespace />content_<%= portlet.getRootPortletId() %>">
 																<ul class="lfr-tree list-unstyled">
 																	<li class="tree-item">

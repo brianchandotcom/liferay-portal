@@ -1107,7 +1107,8 @@ public class DisplayPageTemplateResourceTest
 					displayPageTemplate.getExternalReferenceCode(),
 					postDisplayPageTemplate.getExternalReferenceCode())) {
 
-				ThumbnailURLReference thumbnail = displayPageTemplate.getThumbnail();
+				ThumbnailURLReference thumbnail =
+					displayPageTemplate.getThumbnail();
 
 				_assertThumbnailURLReference(
 					false, postDisplayPageTemplate.getExternalReferenceCode(),
@@ -1319,6 +1320,63 @@ public class DisplayPageTemplateResourceTest
 		_assertThumbnailURLReference(
 			false, displayPageTemplate.getExternalReferenceCode(),
 			newFileEntry.getExternalReferenceCode());
+
+		DisplayPageTemplate displayPageTemplateError =
+			randomDisplayPageTemplate();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
+
+		displayPageTemplateError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			displayPageTemplateResource.patchSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				displayPageTemplate.getExternalReferenceCode(),
+				displayPageTemplateError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		displayPageTemplateError.setThumbnail(thumbnailURLReference);
+
+		try {
+			displayPageTemplateResource.patchSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				displayPageTemplate.getExternalReferenceCode(),
+				displayPageTemplateError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 	}
 
 	private void _testPostSiteDisplayPageTemplateWithKey() throws Exception {
@@ -1612,6 +1670,59 @@ public class DisplayPageTemplateResourceTest
 		_assertThumbnailURLReference(
 			false, postDisplayPageTemplate.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
+
+		DisplayPageTemplate displayPageTemplateError =
+			randomDisplayPageTemplate();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
+
+		displayPageTemplateError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
+				displayPageTemplateError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		displayPageTemplateError.setThumbnail(thumbnailURLReference);
+
+		try {
+			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
+				displayPageTemplateError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 	}
 
 	private void _testPutSiteDisplayPageTemplate(
@@ -1945,6 +2056,63 @@ public class DisplayPageTemplateResourceTest
 
 		_assertThumbnailURLReference(
 			true, putDisplayPageTemplate.getExternalReferenceCode(), null);
+
+		DisplayPageTemplate displayPageTemplateError =
+			randomDisplayPageTemplate();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
+
+		displayPageTemplateError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			displayPageTemplateResource.putSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				putDisplayPageTemplate.getExternalReferenceCode(),
+				displayPageTemplateError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		displayPageTemplateError.setThumbnail(thumbnailURLReference);
+
+		try {
+			displayPageTemplateResource.putSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				putDisplayPageTemplate.getExternalReferenceCode(),
+				displayPageTemplateError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

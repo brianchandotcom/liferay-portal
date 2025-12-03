@@ -232,6 +232,17 @@ export class ObjectFieldsPage {
 		}
 
 		if (
+			objectFieldBusinessType === 'Decimal' ||
+			objectFieldBusinessType === 'Integer' ||
+			objectFieldBusinessType === 'LongInteger' ||
+			objectFieldBusinessType === 'PrecisionDecimal'
+		) {
+			await this.iframeLocator
+				.getByPlaceholder('Enter a default value.')
+				.fill(defaultValue);
+		}
+
+		if (
 			objectFieldBusinessType === 'LongText' ||
 			objectFieldBusinessType === 'Text'
 		) {

@@ -1740,6 +1740,126 @@ defaultValueTest.describe(
 		);
 
 		defaultValueTest(
+			'can create, read, update and delete the default value of decimal, integer, longInteger, and precisionDecimal fields',
+			{tag: ['@LPD-49589']},
+			async ({
+				apiHelpers,
+				objectFieldsPage,
+				page,
+				viewObjectEntriesPage,
+			}) => {
+				const FIELDS: Array<{
+					businessType:
+						| 'Decimal'
+						| 'Integer'
+						| 'LongInteger'
+						| 'PrecisionDecimal';
+					editedValue: string;
+					initialValue: string;
+					label?: string;
+				}> = [
+					{
+						businessType: 'Decimal',
+						editedValue: '456.456',
+						initialValue: '123.123',
+					},
+					{
+						businessType: 'Integer',
+						editedValue: '456',
+						initialValue: '123',
+					},
+					{
+						businessType: 'LongInteger',
+						editedValue: '456',
+						initialValue: '123',
+					},
+					{
+						businessType: 'PrecisionDecimal',
+						editedValue: '456.456',
+						initialValue: '123.123',
+					},
+				];
+
+				const objectFields = generateObjectFields({
+					objectFieldBusinessTypes: FIELDS.map(
+						({businessType, initialValue}) => ({
+							businessType,
+							objectFieldSettings: [
+								{
+									name: 'defaultValueType',
+									value: 'inputAsValue',
+								},
+								{name: 'defaultValue', value: initialValue},
+							],
+						})
+					),
+				});
+
+				const objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+
+				FIELDS.forEach((field, index) => {
+					field.label = objectFields[index].label['en_US'];
+				});
+
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+
+				for (const {initialValue, label} of FIELDS) {
+					await expect(page.getByLabel(label)).toHaveValue(
+						initialValue
+					);
+				}
+
+				await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+				for (const {businessType, editedValue, label} of FIELDS) {
+					await objectFieldsPage.setDefaultValue({
+						defaultValue: editedValue,
+						objectFieldBusinessType: businessType,
+						objectFieldName: label,
+					});
+				}
+
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+
+				for (const {editedValue, label} of FIELDS) {
+					await expect(page.getByLabel(label)).toHaveValue(
+						editedValue
+					);
+				}
+
+				await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+				for (const {label} of FIELDS) {
+					await objectFieldsPage.disableDefaultValue(label);
+				}
+
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+
+				for (const {label} of FIELDS) {
+					await expect(page.getByLabel(label)).toHaveValue('');
+				}
+			}
+		);
+
+		defaultValueTest(
 			'can create, read, update and delete the default value of long text and text fields',
 			{tag: ['@LPD-48612']},
 			async ({

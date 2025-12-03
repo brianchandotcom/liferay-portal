@@ -34,11 +34,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.io.InputStream;
 
 import java.net.HttpURLConnection;
-import java.net.URL;
 
 import java.nio.channels.Channels;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * @author Zsolt Balogh
@@ -141,7 +138,8 @@ public class HelpCenterUtil {
 		try (InputStream fileInputStream = Channels.newInputStream(
 				blob.reader())) {
 
-			uploadAttachment(fileInputStream, fileSize, gcsSessionURL);
+			uploadAttachment(
+				fileInputStream, fileName, fileSize, gcsSessionURL);
 		}
 		catch (Exception exception) {
 			throw new Exception("Unable to process GCS file", exception);
@@ -320,40 +318,35 @@ public class HelpCenterUtil {
 	}
 
 	protected static void uploadAttachment(
-			InputStream fileInputStream, String fileSize, String gcsSessionURL)
+			InputStream fileInputStream, String fileName, String fileSize,
+			String gcsSessionURL)
 		throws Exception {
 
-		URL url = new URL(gcsSessionURL);
+		Http.Options options = new Http.Options();
 
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
+		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
+		options.addHeader("Content-Length", fileSize);
+		options.addHeader(
+			"Content-Type", ContentTypes.APPLICATION_OCTET_STREAM);
+		options.addInputStreamPart(
+			"file", fileName, fileInputStream,
+			ContentTypes.APPLICATION_OCTET_STREAM);
+		options.setLocation(gcsSessionURL);
+		options.setPut(true);
 
-		httpURLConnection.setDoInput(true);
-		httpURLConnection.setDoOutput(true);
-		httpURLConnection.setRequestMethod("PUT");
-		httpURLConnection.setRequestProperty("User-Agent", _PATCHER_USER_AGENT);
-		httpURLConnection.setRequestProperty("Content-Length", fileSize);
-		httpURLConnection.setRequestProperty(
-			"Content-Type", "application/octet-stream");
+		String responseString = HttpUtil.URLtoString(options);
 
-		IOUtils.copy(fileInputStream, httpURLConnection.getOutputStream());
+		Http.Response response = options.getResponse();
 
-		int responseCode = httpURLConnection.getResponseCode();
-
-		InputStream responseInputStream = httpURLConnection.getInputStream();
-
-		String responseBody = IOUtils.toString(
-			responseInputStream, StringPool.UTF8);
+		int responseCode = response.getResponseCode();
 
 		if (responseCode != HttpURLConnection.HTTP_OK) {
 			_log.error(
 				StringBundler.concat(
-					"Response code ", responseCode, ": ", responseBody));
+					"Response code ", responseCode, ": ", responseString));
 
 			throw new PortalException("failed-to-upload-file");
 		}
-
-		httpURLConnection.disconnect();
 	}
 
 	private static final String _PATCHER_USER_AGENT = "OSB Patcher Portal/7.4";

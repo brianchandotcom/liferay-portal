@@ -5,10 +5,14 @@
 
 package com.liferay.portal.db;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -91,6 +95,27 @@ public class DBResourceUtil {
 
 	public static String getModuleTablesSQL(Bundle bundle) {
 		return _read(bundle, "/META-INF/sql/tables.sql");
+	}
+
+	public static Map<String, String[]>
+			getNonserviceBuilderPrimaryKeyColumnNames(long companyId)
+		throws PortalException {
+
+		ServiceTrackerList<DBResourceProvider> serviceTrackerList =
+			_serviceTrackerListDCLSingleton.getSingleton(
+				() -> ServiceTrackerListFactory.open(
+					SystemBundleUtil.getBundleContext(),
+					DBResourceProvider.class));
+
+		Map<String, String[]> nonserviceBuildPrimaryKeyColumnNames =
+			new HashMap<>();
+
+		for (DBResourceProvider dbResourceProvider : serviceTrackerList) {
+			nonserviceBuildPrimaryKeyColumnNames.putAll(
+				dbResourceProvider.getTablesPrimaryKeyColumnNames(companyId));
+		}
+
+		return nonserviceBuildPrimaryKeyColumnNames;
 	}
 
 	public static String getPortalIndexesSQL() {
@@ -326,5 +351,7 @@ public class DBResourceUtil {
 			"(?:\\s+\\w+)*\\s+primary key\\b",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	private static volatile Set<String> _portalTableNames;
+	private static final DCLSingleton<ServiceTrackerList<DBResourceProvider>>
+		_serviceTrackerListDCLSingleton = new DCLSingleton<>();
 
 }

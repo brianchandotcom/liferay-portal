@@ -3923,6 +3923,18 @@ components:
                     enum: [Inline, Mapped]
                     type: string
             type: object
+        ThumbnailURLReference:
+            # @review
+            description:
+                A unique reference to a URL which remains constant across environments.
+            properties:
+                externalReferenceCode:
+                    type: string
+                url:
+                    type: string
+            required:
+                -   url
+            type: object
         URLActionExecutionResult:
             # @review
             description:

@@ -169,76 +169,72 @@ public class CXConfigOSGiCommandsTest {
 		Object[][] testCasesCorrectParameters = {
 			{
 				new String[0],
-				new HashSet<>(
-					Arrays.asList(
-						_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2,
-						_CONFIGURATION_NAME_3))
+				Arrays.asList(
+					_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2,
+					_CONFIGURATION_NAME_3)
 			},
 			{
 				new String[] {"deploymentType=bundle"},
-				new HashSet<>(Arrays.asList(_CONFIGURATION_NAME_1))
+				Arrays.asList(_CONFIGURATION_NAME_1)
 			},
 			{
 				new String[] {"deploymentType=agent"},
-				new HashSet<>(
-					Arrays.asList(_CONFIGURATION_NAME_2, _CONFIGURATION_NAME_3))
+				Arrays.asList(_CONFIGURATION_NAME_2, _CONFIGURATION_NAME_3)
 			},
 			{
 				new String[] {"webId=default"},
-				new HashSet<>(
-					Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2))
+				Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2)
 			},
 			{
 				new String[] {"webId=liferay.com"},
-				new HashSet<>(
-					Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2))
+				Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2)
 			},
 			{
 				new String[] {"webId=" + _companyWebId},
-				new HashSet<>(Arrays.asList(_CONFIGURATION_NAME_3))
+				Arrays.asList(_CONFIGURATION_NAME_3)
 			},
 			{
 				new String[] {"type=customElement"},
-				new HashSet<>(
-					Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2))
+				Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2)
 			},
 			{
 				new String[] {"type=instanceSettings"},
-				new HashSet<>(Arrays.asList(_CONFIGURATION_NAME_3))
+				Arrays.asList(_CONFIGURATION_NAME_3)
 			},
 			{
 				new String[] {"deploymentType=bundle", "type=customElement"},
-				new HashSet<>(Arrays.asList(_CONFIGURATION_NAME_1))
+				Arrays.asList(_CONFIGURATION_NAME_1)
 			},
 			{
 				new String[] {
 					"deploymentType=agent", "webId=" + _companyWebId,
 					"type=instanceSettings"
 				},
-				new HashSet<>(Arrays.asList(_CONFIGURATION_NAME_3))
+				Arrays.asList(_CONFIGURATION_NAME_3)
 			}
 		};
 
 		for (Object[] testCase : testCasesCorrectParameters) {
-			String result = _assertListDataOutput(testCase);
+			String[] filter = (String[])testCase[0];
+
+			List<String> expectedOutput = (List<String>)testCase[1];
+
+			String result = _assertListDataOutput(
+				filter, new HashSet<>(expectedOutput));
 
 			if (!result.isEmpty()) {
 				failures.add(result);
 			}
 		}
 
-		Object[][] testCasesIncorrectParameters = {
-			{new String[] {"name=Non Existing Name"}, null},
-			{
-				new String[] {"deploymentType=prod", "name=Non Existing Name"},
-				null
-			},
-			{new String[] {"nonExistentFilter=foo"}, null},
-			{new String[] {"foo"}, null}, {new String[] {"foo", "bar"}, null}
+		String[][] testCasesIncorrectParameters = {
+			{"name=Non Existing Name"},
+			{"deploymentType=prod", "name=Non Existing Name"},
+			{"nonExistentFilter=foo"}, {"foo"}, {"foo", "bar"}
 		};
 
-		for (Object[] testCase : testCasesIncorrectParameters) {
-			String result = _assertListDataOutput(testCase);
+		for (String[] testCase : testCasesIncorrectParameters) {
+			String result = _assertListDataOutput(testCase, null);
 
 			if (!result.isEmpty()) {
 				failures.add(result);

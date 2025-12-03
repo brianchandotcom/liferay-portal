@@ -1289,6 +1289,12 @@ components:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
                 itemExternalReference:
                     $ref: "#/components/schemas/ItemExternalReference"
+                resolution:
+                    # @review
+                    description:
+                        The fragment image's resolution.
+                    enum: [Auto, Preview, Thumbnail]
+                    type: string
                 title:
                     # @review
                     description:

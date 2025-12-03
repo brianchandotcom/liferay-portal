@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -22,6 +23,21 @@ public class PortletDataHandlerControl {
 
 		return StringBundler.concat(
 			StringPool.UNDERLINE, namespace, StringPool.UNDERLINE, controlName);
+	}
+
+	public PortletDataHandlerControl(
+		String namespace, List<String> controlChildLabels, String controlName,
+		String controlLabel, String controlTagLabel, boolean disabled,
+		String className, String referrerClassName) {
+
+		_namespace = namespace;
+		_controlChildLabels = controlChildLabels;
+		_controlName = controlName;
+		_controlLabel = controlLabel;
+		_controlTagLabel = controlTagLabel;
+		_disabled = disabled;
+		_className = className;
+		_referrerClassName = referrerClassName;
 	}
 
 	public PortletDataHandlerControl(String namespace, String controlName) {
@@ -60,10 +76,17 @@ public class PortletDataHandlerControl {
 		_disabled = disabled;
 		_className = className;
 		_referrerClassName = referrerClassName;
+
+		_controlChildLabels = null;
+		_controlTagLabel = null;
 	}
 
 	public String getClassName() {
 		return _className;
+	}
+
+	public List<String> getControlChildLabels() {
+		return _controlChildLabels;
 	}
 
 	public String getControlLabel() {
@@ -72,6 +95,10 @@ public class PortletDataHandlerControl {
 
 	public String getControlName() {
 		return _controlName;
+	}
+
+	public String getControlTagLabel() {
+		return _controlTagLabel;
 	}
 
 	public String getHelpMessage(Locale locale, String action) {
@@ -109,8 +136,10 @@ public class PortletDataHandlerControl {
 	}
 
 	private final String _className;
+	private final List<String> _controlChildLabels;
 	private final String _controlLabel;
 	private final String _controlName;
+	private final String _controlTagLabel;
 	private final boolean _disabled;
 	private String _namespace;
 	private final String _referrerClassName;

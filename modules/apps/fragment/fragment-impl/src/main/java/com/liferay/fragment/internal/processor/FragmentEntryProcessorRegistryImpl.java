@@ -164,66 +164,64 @@ public class FragmentEntryProcessorRegistryImpl
 		JSONObject defaultEditableValuesJSONObject =
 			getDefaultEditableValuesJSONObject(html, configurationJSONObject);
 
-		for (String fragmentEntryProcessorKey :
-				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
+		JSONObject defaultEditableFragmentEntryProcessorJSONObject =
+			defaultEditableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-			JSONObject editableFragmentEntryProcessorJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					fragmentEntryProcessorKey);
-
-			if (editableFragmentEntryProcessorJSONObject == null) {
-				editableFragmentEntryProcessorJSONObject =
-					_jsonFactory.createJSONObject();
-			}
-
-			JSONObject defaultEditableFragmentEntryProcessorJSONObject =
-				defaultEditableValuesJSONObject.getJSONObject(
-					fragmentEntryProcessorKey);
-
-			if (defaultEditableFragmentEntryProcessorJSONObject == null) {
-				continue;
-			}
-
-			Iterator<String> defaultEditableValuesIterator =
-				defaultEditableFragmentEntryProcessorJSONObject.keys();
-
-			while (defaultEditableValuesIterator.hasNext()) {
-				String key = defaultEditableValuesIterator.next();
-
-				if (editableFragmentEntryProcessorJSONObject.has(key)) {
-					JSONObject editableValueJSONObject =
-						editableFragmentEntryProcessorJSONObject.getJSONObject(
-							key);
-
-					JSONObject defaultEditableValueJSONObject =
-						defaultEditableFragmentEntryProcessorJSONObject.
-							getJSONObject(key);
-
-					editableValueJSONObject.put(
-						"defaultValue",
-						defaultEditableValueJSONObject.get("defaultValue"));
-
-					defaultEditableFragmentEntryProcessorJSONObject.put(
-						key, editableValueJSONObject);
-				}
-			}
-
-			Iterator<String> editableValuesIterator =
-				editableFragmentEntryProcessorJSONObject.keys();
-
-			while (editableValuesIterator.hasNext()) {
-				String key = editableValuesIterator.next();
-
-				if (!defaultEditableFragmentEntryProcessorJSONObject.has(key)) {
-					defaultEditableFragmentEntryProcessorJSONObject.put(
-						key, editableFragmentEntryProcessorJSONObject.get(key));
-				}
-			}
-
-			editableValuesJSONObject.put(
-				fragmentEntryProcessorKey,
-				defaultEditableFragmentEntryProcessorJSONObject);
+		if (defaultEditableFragmentEntryProcessorJSONObject == null) {
+			return editableValuesJSONObject.toString();
 		}
+
+		JSONObject editableFragmentEntryProcessorJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (editableFragmentEntryProcessorJSONObject == null) {
+			editableFragmentEntryProcessorJSONObject =
+				_jsonFactory.createJSONObject();
+		}
+
+		Iterator<String> defaultEditableValuesIterator =
+			defaultEditableFragmentEntryProcessorJSONObject.keys();
+
+		while (defaultEditableValuesIterator.hasNext()) {
+			String key = defaultEditableValuesIterator.next();
+
+			if (editableFragmentEntryProcessorJSONObject.has(key)) {
+				JSONObject editableValueJSONObject =
+					editableFragmentEntryProcessorJSONObject.getJSONObject(key);
+
+				JSONObject defaultEditableValueJSONObject =
+					defaultEditableFragmentEntryProcessorJSONObject.
+						getJSONObject(key);
+
+				editableValueJSONObject.put(
+					"defaultValue",
+					defaultEditableValueJSONObject.get("defaultValue"));
+
+				defaultEditableFragmentEntryProcessorJSONObject.put(
+					key, editableValueJSONObject);
+			}
+		}
+
+		Iterator<String> editableValuesIterator =
+			editableFragmentEntryProcessorJSONObject.keys();
+
+		while (editableValuesIterator.hasNext()) {
+			String key = editableValuesIterator.next();
+
+			if (!defaultEditableFragmentEntryProcessorJSONObject.has(key)) {
+				defaultEditableFragmentEntryProcessorJSONObject.put(
+					key, editableFragmentEntryProcessorJSONObject.get(key));
+			}
+		}
+
+		editableValuesJSONObject.put(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			defaultEditableFragmentEntryProcessorJSONObject);
 
 		return editableValuesJSONObject.toString();
 	}
@@ -437,10 +435,6 @@ public class FragmentEntryProcessorRegistryImpl
 	private static final String _DOCUMENT_PORTAL_CACHE_NAME =
 		FragmentEntryProcessorRegistryImpl.class.getName() +
 			"#_documentPortalCache";
-
-	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
-		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-	};
 
 	private static final ThreadLocal<Set<String>> _validHTMLs =
 		new CentralizedThreadLocal(

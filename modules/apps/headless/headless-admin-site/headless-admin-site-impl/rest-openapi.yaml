@@ -1283,33 +1283,19 @@ components:
             description:
                 A fragment image.
             properties:
-                config:
-                    # @review
-                    description:
-                        Represents the Adaptive Media fragment image configuration for different viewports.
-                    properties:
-                        landscapeMobile:
-                            # @review
-                            description:
-                                The landscape mobile configuration of the fragment image.
-                            type: string
-                        portraitMobile:
-                            # @review
-                            description:
-                                The portrait mobile configuration of the fragment image.
-                            type: string
-                        tablet:
-                            # @review
-                            description:
-                                The tablet configuration of the fragment image.
-                            type: string
-                    type: object
                 description:
                     # @review
                     description:
                         The fragment image's description.
                     oneOf:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
+                fragmentImageViewports:
+                  # @review
+                  description:
+                    A list of viewports configuration of the fragment image.
+                  items:
+                    $ref: "#/components/schemas/FragmentImageViewport"
+                  type: array
                 itemExternalReference:
                     $ref: "#/components/schemas/ItemExternalReference"
                 resolution:

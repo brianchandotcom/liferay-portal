@@ -51,6 +51,18 @@ components:
             description:
                 A fragment editable element value of type action.
             type: object
+        AnalyticsConfiguration:
+            description:
+                Contains all analytics configuration properties.
+            properties:
+                googleAnalyticsConfiguration:
+                    $ref: "#/components/schemas/GoogleAnalyticsConfiguration"
+                matomoAnalyticsScript:
+                    description:
+                        Set the script for Matomo that is used for this set of pages. Enter the full script code
+                        including the script start and end tags.
+                    type: string
+            type: object
         BackgroundImageFragmentEditableElementValue:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
@@ -1739,6 +1751,33 @@ components:
                         The old localized relative URLs to the page's rendered content.
                     type: object
             type: object
+        GoogleAnalyticsConfiguration:
+            description:
+                Contains the configuration properties for Google Analytics (UA/GA3 and GA4).
+            properties:
+                googleAnalytics4CustomConfig:
+                    description:
+                        Set the Google Analytics 4 (GA4) custom options that are used for this set of pages. This is a
+                        JSON configuration for gtag().
+                    type: string
+                googleAnalytics4Id:
+                    description:
+                        Set the Google Analytics 4 ID (GA4) that is used for this set of pages.
+                    type: string
+                googleAnalyticsCreateCustomConfig:
+                    description:
+                        Set the Google Analytics (UA/GA3) create method's custom options that are used for this set of
+                        pages.
+                    type: string
+                googleAnalyticsCustomConfig:
+                    description:
+                        Set the Google Analytics (UA/GA3) custom options that are used for this set of pages.
+                    type: string
+                googleAnalyticsId:
+                    description:
+                        Set the Google Analytics ID (UA/GA3) that is used for this set of pages.
+                    type: string
+            type: object
         GridPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
@@ -2941,6 +2980,56 @@ components:
                         -   WidgetPageTemplateSettings
                     type: string
             type: object
+        RatingsTypes:
+            description:
+                Site applications where the default rating system can be modified to a desired ratings type.
+            properties:
+                blogPosting:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+                bookmarksEntry:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+                comment:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+                document:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+                knowledgeBaseArticle:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+                messageBoardMessage:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+                sitePage:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+                structuredContent:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+                wikiPage:
+                    description:
+                        The type of rating system to use
+                    enum: [like, stacked-stars, stars, thumbs]
+                    type: string
+            type: object
         SEOSettings:
             # @review
             description:
@@ -3084,6 +3173,25 @@ components:
             properties:
                 active:
                     type: boolean
+                analyticsConfiguration:
+                    $ref: "#/components/schemas/AnalyticsConfiguration"
+                assetAutoTaggingEnabled:
+                    description:
+                        Whether to enable auto tagging of assets on this site.
+                    type: boolean
+                availableLanguages:
+                    description:
+                        A list of languages for which the role has a translation.
+                    items:
+                        type: string
+                    type: array
+                contentSharingWithChildrenEnabled:
+                    description:
+                        Whether to allow subsites to display content from this site.
+                    type: boolean
+                defaultLanguageId:
+                    example: en_US
+                    type: string
                 description:
                     type: string
                 description_i18n:
@@ -3098,6 +3206,10 @@ components:
                         type: string
                     readOnly: true
                     type: object
+                directoryIndexingEnabled:
+                    description:
+                        Whether directory indexing is enabled.
+                    type: boolean
                 externalReferenceCode:
                     description:
                         The site's external reference code.
@@ -3113,6 +3225,11 @@ components:
                     type: string
                 manualMembership:
                     type: boolean
+                mapProviderKey:
+                    description:
+                        Sets the maps API provider to use when displaying geolocalized assets.
+                    enum: [GoogleMaps, OpenStreetMap]
+                    type: string
                 membershipRestriction:
                     format: int32
                     type: integer
@@ -3124,6 +3241,10 @@ components:
                         -   private
                         -   restricted
                     type: string
+                mentionsEnabled:
+                    description:
+                        Whether to allow users to mention other users.
+                    type: boolean
                 name:
                     type: string
                 name_i18n:
@@ -3136,6 +3257,12 @@ components:
                     items:
                         type: permission
                     type: array
+                ratingsTypes:
+                    $ref: "#/components/schemas/RatingsTypes"
+                sharingEnabled:
+                    description:
+                        Whether to allow users to share items with other users.
+                    type: boolean
                 templateKey:
                     type: string
                     writeOnly: true
@@ -3145,10 +3272,20 @@ components:
                         -   site-template
                     type: string
                     writeOnly: true
-                typeSettings:
-                    additionalProperties:
-                        type: string
-                    type: object
+                trashEnabled:
+                    description:
+                        Whether to enable the Recycle Bin.
+                    type: boolean
+                trashEntriesMaxAge:
+                    description:
+                        The time, in minutes, that entries are kept in the Recycle Bin. Entries that have been in the
+                        Recycle Bin for more than this time are automatically deleted.
+                    format: int32
+                    type: integer
+                useDefaultLanguages:
+                    description:
+                        Whether to use the default language set by defaultLanguageId.
+                    type: boolean
             required:
                 -   name
             type: object

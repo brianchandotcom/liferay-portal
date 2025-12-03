@@ -335,42 +335,17 @@ public class CXConfigOSGiCommandsTest {
 
 	@Test
 	public void testShow() throws Exception {
-		Object[][] testCases = {
-			{
-				new String[] {
-					"com.liferay.client.extension.type.configuration." +
-						"CETConfiguration~liferay-sample-cx-1/liferay.com"
-				},
-				"projectName: liferay-sample-cx-1"
-			},
-			{new String[] {"non-existing-pid"}, "No configuration found."},
-			{new String[] {"pid-1", "pid-2"}, "Too many arguments."},
-			{new String[0], "No PID provided."}
-		};
-
 		List<String> failures = new ArrayList<>();
 
-		PrintStream printStream = System.out;
-
-		for (Object[] testCase : testCases) {
-			String[] params = (String[])testCase[0];
-			String expectedOutput = (String)testCase[1];
-
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-
-			System.setOut(new PrintStream(byteArrayOutputStream));
-
-			_show(params);
-
-			String output = byteArrayOutputStream.toString();
-
-			if (!output.contains(expectedOutput)) {
-				failures.add("FAILURE: " + Arrays.toString(params) + "\n");
-			}
-
-			System.setOut(printStream);
-		}
+		_testShow(
+			List.of(
+				"com.liferay.client.extension.type.configuration." +
+					"CETConfiguration~liferay-sample-cx-1/liferay.com"),
+			"projectName: liferay-sample-cx-1", failures);
+		_testShow(
+			List.of("non-existing-pid"), "No configuration found.", failures);
+		_testShow(List.of("pid-1", "pid-2"), "Too many arguments.", failures);
+		_testShow(List.of(), "No PID provided.", failures);
 
 		Assert.assertTrue(
 			"Failures: " + String.join("", failures), failures.isEmpty());
@@ -451,6 +426,33 @@ public class CXConfigOSGiCommandsTest {
 					"FAILURE: ", Arrays.toString(filtersArray),
 					"\nexpected output: ", expectedConfigurationNames,
 					"\nactual output: ", namesFound, "\n"));
+		}
+	}
+
+	private void _testShow(
+		List<String> inputPids, String expectedOutput,
+		List<String> failures)
+		throws Exception {
+
+		String[] inputPidsArray = inputPids.toArray(new String[0]);
+
+		try {
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			System.setOut(new PrintStream(byteArrayOutputStream));
+
+			_show(inputPidsArray);
+
+			String output = byteArrayOutputStream.toString();
+
+			if (!output.contains(expectedOutput)) {
+				failures.add(
+					"FAILURE: " + Arrays.toString(inputPidsArray) + "\n");
+			}
+		}
+		finally {
+			System.setOut(System.out);
 		}
 	}
 

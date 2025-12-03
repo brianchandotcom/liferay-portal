@@ -76,14 +76,14 @@ function deleteRule({
  * Get roles
  */
 function getRoles(): Promise<Array<{name: string; roleId: string}>> {
-	return serviceFetch(config.getRolesURL, {});
+	return serviceFetch(config.getRolesURL, {method: 'GET'});
 }
 
 /**
  * Get users
  */
 function getUsers(): Promise<Array<{screenName: string; userId: string}>> {
-	return serviceFetch(config.getUsersURL, {});
+	return serviceFetch(config.getUsersURL, {method: 'GET'});
 }
 
 /**

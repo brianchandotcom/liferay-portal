@@ -86,7 +86,7 @@ export default {
 	getCollectionFilters() {
 		return serviceFetch<Record<string, CollectionFilter>>(
 			config.getCollectionFiltersURL,
-			{}
+			{method: 'GET'}
 		);
 	},
 

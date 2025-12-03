@@ -250,7 +250,9 @@ public class CXConfigOSGiCommandsTest {
 
 		System.setOut(printStream);
 
-		Assert.assertTrue(dataRow.matches(expectedDataPattern));
+		Assert.assertTrue(
+			"Row did not match pattern: \n" + dataRow,
+			dataRow.matches(expectedDataPattern));
 	}
 
 	@Test

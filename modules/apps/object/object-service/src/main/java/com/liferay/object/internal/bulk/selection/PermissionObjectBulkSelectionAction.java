@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
 
@@ -156,43 +157,63 @@ public class PermissionObjectBulkSelectionAction
 								_resourcePermissionLocalService,
 								_roleLocalService);
 
-						Collection<String> roleNames =
-							modelPermissions.getRoleNames();
+						String roleKey = (String)inputMap.get("roleKey");
 
-						for (ResourcePermission resourcePermission :
-								_resourcePermissionLocalService.
-									getResourcePermissions(
-										companyId, resourceName,
-										ResourceConstants.SCOPE_INDIVIDUAL,
-										String.valueOf(resourceId))) {
+						if (Validator.isBlank(roleKey)) {
+							Collection<String> roleNames =
+								modelPermissions.getRoleNames();
 
-							Role role = _roleLocalService.fetchRole(
-								resourcePermission.getRoleId());
+							for (ResourcePermission resourcePermission :
+									_resourcePermissionLocalService.
+										getResourcePermissions(
+											companyId, resourceName,
+											ResourceConstants.SCOPE_INDIVIDUAL,
+											String.valueOf(resourceId))) {
 
-							if ((role == null) ||
-								roleNames.contains(role.getName())) {
+								Role role = _roleLocalService.fetchRole(
+									resourcePermission.getRoleId());
 
-								continue;
+								if ((role == null) ||
+									roleNames.contains(role.getName())) {
+
+									continue;
+								}
+
+								for (ResourceAction resourceAction :
+										_resourceActionLocalService.
+											getResourceActions(resourceName)) {
+
+									_resourcePermissionLocalService.
+										removeResourcePermission(
+											companyId, resourceName,
+											ResourceConstants.SCOPE_INDIVIDUAL,
+											String.valueOf(resourceId),
+											role.getRoleId(),
+											resourceAction.getActionId());
+								}
 							}
 
-							for (ResourceAction resourceAction :
-									_resourceActionLocalService.
-										getResourceActions(resourceName)) {
+							_resourcePermissionLocalService.
+								updateResourcePermissions(
+									companyId, groupId, resourceName,
+									String.valueOf(resourceId),
+									modelPermissions);
+						}
+						else {
+							Role role = _roleLocalService.fetchRole(
+								companyId, roleKey);
 
+							if (role != null) {
 								_resourcePermissionLocalService.
-									removeResourcePermission(
+									setResourcePermissions(
 										companyId, resourceName,
 										ResourceConstants.SCOPE_INDIVIDUAL,
 										String.valueOf(resourceId),
 										role.getRoleId(),
-										resourceAction.getActionId());
+										modelPermissions.getActionIds(
+											role.getName()));
 							}
 						}
-
-						_resourcePermissionLocalService.
-							updateResourcePermissions(
-								companyId, groupId, resourceName,
-								String.valueOf(resourceId), modelPermissions);
 
 						numberOfSuccessfulItems.getAndIncrement();
 					}

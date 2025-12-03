@@ -454,18 +454,18 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).build();
 		}
 		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
+			PermissionBulkAction permissionBulkAction =
+				(PermissionBulkAction)bulkAction;
+
 			return hashMapWrapper.put(
 				"permissions",
-				() -> {
-					PermissionBulkAction permissionBulkAction =
-						(PermissionBulkAction)bulkAction;
-
-					return _getPermissions(
-						_jsonFactory.createJSONObject(
-							GetterUtil.get(
-								permissionBulkAction.getConfiguration(), "{}")),
-						permissionBulkAction.getPermissions());
-				}
+				() -> _getPermissions(
+					_jsonFactory.createJSONObject(
+						GetterUtil.get(
+							permissionBulkAction.getConfiguration(), "{}")),
+					permissionBulkAction.getPermissions())
+			).put(
+				"roleKey", permissionBulkAction.getRoleKey()
 			).build();
 		}
 		else if (BulkAction.Type.RESET_PERMISSION_BULK_ACTION.equals(type)) {

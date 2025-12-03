@@ -254,44 +254,21 @@ public class CXConfigOSGiCommandsTest {
 
 	@Test
 	public void testReload() throws Exception {
-		Object[][] testCases = {
-			{
-				new String[] {
-					"com.liferay.client.extension.type.configuration." +
-						"CETConfiguration~liferay-sample-cx-1/liferay.com"
-				},
-				"Reloaded configuration for " +
-					"com.liferay.client.extension.type.configuration." +
-						"CETConfiguration~liferay-sample-cx-1/liferay.com"
-			},
-			{new String[] {"non-existing-pid"}, "No configuration found."},
-			{new String[] {"pid-1", "pid-2"}, "Too many arguments."},
-			{new String[0], "No PID provided."}
-		};
-
 		List<String> failures = new ArrayList<>();
 
-		PrintStream printStream = System.out;
+		String basePid = CETConfiguration.class.getName();
 
-		for (Object[] testCase : testCases) {
-			String[] params = (String[])testCase[0];
-			String expectedOutput = (String)testCase[1];
+		_testReload(
+			List.of(basePid + "~liferay-sample-cx-1/liferay.com"),
+			StringBundler.concat(
+				"Reloaded configuration for ", basePid,
+				"~liferay-sample-cx-1/liferay.com"),
+			failures);
 
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-
-			System.setOut(new PrintStream(byteArrayOutputStream));
-
-			_reload(params);
-
-			String output = byteArrayOutputStream.toString();
-
-			if (!output.contains(expectedOutput)) {
-				failures.add("FAILURE: " + Arrays.toString(params) + "\n");
-			}
-
-			System.setOut(printStream);
-		}
+		_testReload(
+			List.of("non-existing-pid"), "No configuration found.", failures);
+		_testReload(List.of("pid-1", "pid-2"), "Too many arguments.", failures);
+		_testReload(List.of(), "No PID provided.", failures);
 
 		Assert.assertTrue(
 			"Failures: " + String.join("", failures), failures.isEmpty());
@@ -423,6 +400,33 @@ public class CXConfigOSGiCommandsTest {
 					"FAILURE: ", Arrays.toString(filtersArray),
 					"\nexpected output: ", expectedConfigurationNames,
 					"\nactual output: ", namesFound, "\n"));
+		}
+	}
+
+	private void _testReload(
+			List<String> inputParams, String expectedOutput,
+			List<String> failures)
+		throws Exception {
+
+		try {
+			String[] inputParamsArray = inputParams.toArray(new String[0]);
+
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			System.setOut(new PrintStream(byteArrayOutputStream));
+
+			_reload(inputParamsArray);
+
+			String output = byteArrayOutputStream.toString();
+
+			if (!output.contains(expectedOutput)) {
+				failures.add(
+					"FAILURE: " + Arrays.toString(inputParamsArray) + "\n");
+			}
+		}
+		finally {
+			System.setOut(System.out);
 		}
 	}
 

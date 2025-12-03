@@ -243,28 +243,39 @@ public class AgentPortalK8sConfigMapModifier
 			return;
 		}
 
-		Configuration[] configurations = null;
+		try (SafeCloseable safeCloseable =
+				InMemoryOnlyConfigurationThreadLocal.
+					setInMemoryOnlyWithSafeCloseable(true)) {
 
-		try {
+			Configuration[] configurations = null;
+
 			ObjectMeta objectMeta = configMap.getMetadata();
 
-			configurations = _configurationAdmin.listConfigurations(
-				"(.k8s.config.uid=" + objectMeta.getUid() + ")");
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		if (configurations == null) {
-			return;
-		}
-
-		for (Configuration configuration : configurations) {
 			try {
-				configuration.delete();
+				configurations = _configurationAdmin.listConfigurations(
+					"(.k8s.config.uid=" + objectMeta.getUid() + ")");
 			}
 			catch (Exception exception) {
-				_log.error(exception);
+				_log.error(
+					"Unable to list configurations from ConfigMap " +
+						objectMeta.getUid(),
+					exception);
+			}
+
+			if (configurations == null) {
+				return;
+			}
+
+			for (Configuration configuration : configurations) {
+				try {
+					configuration.delete();
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to delete configuration " +
+							configuration.getPid(),
+						exception);
+				}
 			}
 		}
 	}

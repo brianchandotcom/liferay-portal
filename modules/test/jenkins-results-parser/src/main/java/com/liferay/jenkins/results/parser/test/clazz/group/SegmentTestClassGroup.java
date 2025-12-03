@@ -104,6 +104,31 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return _batchTestClassGroup.getMinimumSlaveRAM();
 	}
 
+	public String getOSArchitecture() {
+		try {
+			String osArchitecture;
+
+			if (isTestAnalyticsCloud()) {
+				osArchitecture = JenkinsResultsParserUtil.getBuildProperty(
+					"test.batch.os.architecture", "analytics-cloud",
+					getBatchName());
+			}
+			else {
+				osArchitecture = JenkinsResultsParserUtil.getBuildProperty(
+					"test.batch.os.architecture", getBatchName());
+			}
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(osArchitecture)) {
+				return osArchitecture;
+			}
+
+			return _batchTestClassGroup.getOSArchitecture();
+		}
+		catch (IOException ioException) {
+			return _batchTestClassGroup.getOSArchitecture();
+		}
+	}
+
 	public String getSegmentName() {
 		return JenkinsResultsParserUtil.combine(
 			getBatchName(), "/", String.valueOf(getBatchIndex()));

@@ -193,6 +193,14 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return _batchTestClassGroup.getMinimumSlaveRAM();
 	}
 
+	public String getOSArchitecture() {
+		if (_segmentTestClassGroup != null) {
+			return _segmentTestClassGroup.getOSArchitecture();
+		}
+
+		return _batchTestClassGroup.getOSArchitecture();
+	}
+
 	public String getSegmentName() {
 		if (_segmentTestClassGroup != null) {
 			return _segmentTestClassGroup.getSegmentName();

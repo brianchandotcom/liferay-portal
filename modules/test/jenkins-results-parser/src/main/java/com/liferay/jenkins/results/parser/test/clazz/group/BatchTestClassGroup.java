@@ -406,6 +406,22 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return JenkinsMaster.getSlaveRAMMinimumDefault();
 	}
 
+	public String getOSArchitecture() {
+		try {
+			String osArchitecture = JenkinsResultsParserUtil.getBuildProperty(
+				"test.batch.os.architecture", getBatchName());
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(osArchitecture)) {
+				return osArchitecture;
+			}
+
+			return _OS_ARCHITECTURE_DEFAULT;
+		}
+		catch (IOException ioException) {
+			return _OS_ARCHITECTURE_DEFAULT;
+		}
+	}
+
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return portalGitWorkingDirectory;
 	}
@@ -1741,6 +1757,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		testRelevantJUnitTestsOnlyInStable = false;
 	}
+
+	private static final String _OS_ARCHITECTURE_DEFAULT = "x86";
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
 

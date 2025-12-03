@@ -103,7 +103,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			if ((javaeePackage != null) && !javaeePackage.equals("jakarta") &&
 				!javaeePackage.equals("javax")) {
 
-				throw new RuntimeException(
+				throw new IllegalArgumentException(
 					"Invalid value was provided for -antbnd.jspanalyzer." +
 						"fallback-javaee-package property. Valid values are " +
 							"either javax or jakarta");
@@ -584,7 +584,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			return false;
 		}
 
-		throw new RuntimeException(
+		throw new IllegalArgumentException(
 			"Could not infer required javaee package. No fallback value was " +
 				"provided.");
 	}

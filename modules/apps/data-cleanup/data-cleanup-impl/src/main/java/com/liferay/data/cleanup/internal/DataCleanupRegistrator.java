@@ -159,10 +159,10 @@ public class DataCleanupRegistrator {
 
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
-				"clean-up-document-library-file-rank-module-data",
+				"clean-up-currency-converter-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
-				new DocumentLibraryFileRankServiceUpgradeProcess()),
-			"com.liferay.document.library.file.rank.service");
+				new CurrencyConverterUpgradeProcess()),
+			"com.liferay.currency.converter.web");
 
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
@@ -173,16 +173,16 @@ public class DataCleanupRegistrator {
 
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
-				"clean-up-currency-converter-module-data",
-				DataCleanup.MODULE_DATA_CLEANUP,
-				new CurrencyConverterUpgradeProcess()),
-			"com.liferay.currency.converter.web");
-
-		_registerDataCleanup(
-			DataCleanupAdapter.create(
 				"clean-up-directory-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP, new DirectoryUpgradeProcess()),
 			"com.liferay.directory.web");
+
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
+				"clean-up-document-library-file-rank-module-data",
+				DataCleanup.MODULE_DATA_CLEANUP,
+				new DocumentLibraryFileRankServiceUpgradeProcess()),
+			"com.liferay.document.library.file.rank.service");
 
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
@@ -251,6 +251,13 @@ public class DataCleanupRegistrator {
 				"clean-up-oauth-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new OAuthUpgradeProcess()),
 			"com.liferay.oauth.service");
+
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
+				"clean-up-open-social-module-data",
+				DataCleanup.MODULE_DATA_CLEANUP,
+				new OpenSocialUpgradeProcess(_expandoTableLocalService)),
+			"opensocial-portlet");
 
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
@@ -393,16 +400,27 @@ public class DataCleanupRegistrator {
 				"clean-up-youtube-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new YoutubeUpgradeProcess()),
 			"com.liferay.youtube.web");
-
-		_registerDataCleanup(
-			DataCleanupAdapter.create(
-				"clean-up-open-social-module-data",
-				DataCleanup.MODULE_DATA_CLEANUP,
-				new OpenSocialUpgradeProcess(_expandoTableLocalService)),
-			"opensocial-portlet");
 	}
 
 	private void _registerSystemDataCleanups() {
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
+				"remove-class-name-orphan-data",
+				DataCleanup.SYSTEM_DATA_CLEANUP,
+				new VerifyProcess() {
+
+					@Override
+					protected void doVerify() throws Exception {
+						PostUpgradeDataCleanupProcess
+							postUpgradeDataCleanupProcess =
+								new ClassNamePostUpgradeDataCleanupProcess(
+									_classNameLocalService, connection);
+
+						postUpgradeDataCleanupProcess.cleanUp();
+					}
+
+				}));
+
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"remove-dl-preview-cts-content-data",
@@ -410,22 +428,6 @@ public class DataCleanupRegistrator {
 				new DLPreviewCTSContentDataUpgradeProcess(
 					_ctCollectionLocalService, _ctEntryLocalService, _portal)),
 			"com.liferay.change.tracking.service");
-
-		_registerDataCleanup(
-			DataCleanupAdapter.create(
-				"remove-publications-older-than-6-months",
-				DataCleanup.SYSTEM_DATA_CLEANUP,
-				new OutdatedPublishedCTCollectionUpgradeProcess(
-					_ctCollectionLocalService)),
-			"com.liferay.change.tracking.service");
-
-		_registerDataCleanup(
-			DataCleanupAdapter.create(
-				"remove-published-cts-content-data",
-				DataCleanup.SYSTEM_DATA_CLEANUP,
-				new PublishedCTSContentDataUpgradeProcess(
-					_ctsContentLocalService, _portal)),
-			"com.liferay.change.tracking.store.service");
 
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
@@ -446,6 +448,40 @@ public class DataCleanupRegistrator {
 					_layoutPageTemplateStructureLocalService,
 					_layoutPageTemplateStructureRelLocalService)),
 			"com.liferay.layout.service");
+
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
+				"remove-publications-older-than-6-months",
+				DataCleanup.SYSTEM_DATA_CLEANUP,
+				new OutdatedPublishedCTCollectionUpgradeProcess(
+					_ctCollectionLocalService)),
+			"com.liferay.change.tracking.service");
+
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
+				"remove-published-cts-content-data",
+				DataCleanup.SYSTEM_DATA_CLEANUP,
+				new PublishedCTSContentDataUpgradeProcess(
+					_ctsContentLocalService, _portal)),
+			"com.liferay.change.tracking.store.service");
+
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
+				"remove-service-component-orphan-data",
+				DataCleanup.SYSTEM_DATA_CLEANUP,
+				new VerifyProcess() {
+
+					@Override
+					protected void doVerify() throws Exception {
+						PostUpgradeDataCleanupProcess
+							postUpgradeDataCleanupProcess =
+								new ServiceComponentPostUpgradeDataCleanupProcess(
+									connection, _serviceComponentLocalService);
+
+						postUpgradeDataCleanupProcess.cleanUp();
+					}
+
+				}));
 
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
@@ -474,42 +510,6 @@ public class DataCleanupRegistrator {
 					dataCleanupLabel, DataCleanup.SYSTEM_DATA_CLEANUP,
 					dataCleanupPreupgradeProcess));
 		}
-
-		_registerDataCleanup(
-			DataCleanupAdapter.create(
-				"remove-class-name-orphan-data",
-				DataCleanup.SYSTEM_DATA_CLEANUP,
-				new VerifyProcess() {
-
-					@Override
-					protected void doVerify() throws Exception {
-						PostUpgradeDataCleanupProcess
-							postUpgradeDataCleanupProcess =
-								new ClassNamePostUpgradeDataCleanupProcess(
-									_classNameLocalService, connection);
-
-						postUpgradeDataCleanupProcess.cleanUp();
-					}
-
-				}));
-
-		_registerDataCleanup(
-			DataCleanupAdapter.create(
-				"remove-service-component-orphan-data",
-				DataCleanup.SYSTEM_DATA_CLEANUP,
-				new VerifyProcess() {
-
-					@Override
-					protected void doVerify() throws Exception {
-						PostUpgradeDataCleanupProcess
-							postUpgradeDataCleanupProcess =
-								new ServiceComponentPostUpgradeDataCleanupProcess(
-									connection, _serviceComponentLocalService);
-
-						postUpgradeDataCleanupProcess.cleanUp();
-					}
-
-				}));
 	}
 
 	private static final Map<Class<?>, String> _dataCleanupLabels =

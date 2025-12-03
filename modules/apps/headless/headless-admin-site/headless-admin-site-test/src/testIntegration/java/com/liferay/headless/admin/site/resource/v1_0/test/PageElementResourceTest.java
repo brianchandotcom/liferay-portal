@@ -869,10 +869,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					setCollectionDisplayViewportDefinition(
 						() -> new CollectionDisplayViewportDefinition() {
 							{
-								setAlign(Align.START);
-								setFlexWrap(FlexWrap.WRAP_REVERSE);
 								setHidden(RandomTestUtil.randomBoolean());
-								setJustify(Justify.CENTER);
 								setNumberOfColumns(
 									RandomTestUtil.randomInt(1, 12));
 							}
@@ -885,10 +882,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					setCollectionDisplayViewportDefinition(
 						() -> new CollectionDisplayViewportDefinition() {
 							{
-								setAlign(Align.CENTER);
-								setFlexWrap(FlexWrap.NO_WRAP);
 								setHidden(RandomTestUtil.randomBoolean());
-								setJustify(Justify.SPACE_AROUND);
 								setNumberOfColumns(
 									RandomTestUtil.randomInt(1, 12));
 							}
@@ -901,10 +895,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					setCollectionDisplayViewportDefinition(
 						() -> new CollectionDisplayViewportDefinition() {
 							{
-								setAlign(Align.STRETCH);
-								setFlexWrap(FlexWrap.WRAP);
-								setHidden(false);
-								setJustify(Justify.SPACE_BETWEEN);
+								setHidden(RandomTestUtil.randomBoolean());
 								setNumberOfColumns(12);
 							}
 						});

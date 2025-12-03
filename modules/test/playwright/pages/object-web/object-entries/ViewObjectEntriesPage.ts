@@ -332,10 +332,15 @@ export class ViewObjectEntriesPage {
 		for (const objectField of objectFields) {
 			switch (objectField.businessType) {
 				case 'Assignee': {
-					await this.selectDropdownItem(
-						objectField.label['en_US'],
-						objectEntry[objectField.name]
-					);
+					await this.page
+						.getByLabel(objectField.label['en_US'], {exact: true})
+						.fill(objectEntry[objectField.name]);
+
+					await this.page
+						.getByRole('option', {
+							name: objectEntry[objectField.name],
+						})
+						.click();
 
 					objectEntries.push({
 						businessType: objectField.businessType,

@@ -313,7 +313,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			upgradeProcess.upgrade();
 
 			OrphanReferencesDataCleanupUtil.cleanUpTable(
-				connection, null, "companyId", "Portlet",
+				connection, null, null, "companyId", "Portlet",
 				new String[] {"companyId"}, "Company");
 
 			_appender.stop();

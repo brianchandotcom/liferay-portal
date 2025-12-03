@@ -55,11 +55,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
                 -   properties:
-                        backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
+                        backgroundFragmentImageValue:
+                            $ref: "#/components/schemas/FragmentImageValue"
                             # @review
                             description:
-                                The fragment editable element's background image.
+                                The fragment editable element's background image value.
             # @review
             description:
                 A fragment editable element value of type background image.

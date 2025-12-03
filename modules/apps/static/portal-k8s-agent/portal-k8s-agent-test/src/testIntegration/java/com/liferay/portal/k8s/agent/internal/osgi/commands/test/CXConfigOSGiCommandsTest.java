@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -407,16 +408,12 @@ public class CXConfigOSGiCommandsTest {
 
 		Set<String> namesFound = new HashSet<>();
 
-		if (configurations == null) {
-			namesFound = null;
-		}
-		else {
+		if (configurations != null) {
 			for (Configuration configuration : configurations) {
-				namesFound.add(
-					configuration.getProperties(
-					).get(
-						"name"
-					).toString());
+				Dictionary<String, Object> properties =
+					configuration.getProperties();
+
+				namesFound.add(String.valueOf(properties.get("name")));
 			}
 		}
 

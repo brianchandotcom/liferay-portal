@@ -175,8 +175,23 @@ public class S3Store implements Store {
 		throws PortalException {
 
 		try {
-			S3Object s3Object = getS3Object(
+			if (Validator.isNull(versionLabel)) {
+				versionLabel = getHeadVersionLabel(
+					companyId, repositoryId, fileName);
+			}
+
+			String key = S3KeyTransformerUtil.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
+
+			GetObjectRequest getObjectRequest = new GetObjectRequest(
+				_s3StoreConfiguration.bucketName(), key);
+
+			S3Object s3Object = _amazonS3.getObject(getObjectRequest);
+
+			if (s3Object == null) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, versionLabel);
+			}
 
 			InputStream s3InputStream = s3Object.getObjectContent();
 
@@ -194,6 +209,14 @@ public class S3Store implements Store {
 				}
 
 			};
+		}
+		catch (AmazonClientException amazonClientException) {
+			if (isFileNotFound(amazonClientException)) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, versionLabel);
+			}
+
+			throw transform(amazonClientException);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
@@ -556,42 +579,6 @@ public class S3Store implements Store {
 		}
 
 		throw new NoSuchFileException(companyId, repositoryId, fileName);
-	}
-
-	protected S3Object getS3Object(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws NoSuchFileException {
-
-		try {
-			if (Validator.isNull(versionLabel)) {
-				versionLabel = getHeadVersionLabel(
-					companyId, repositoryId, fileName);
-			}
-
-			String key = S3KeyTransformerUtil.getFileVersionKey(
-				companyId, repositoryId, fileName, versionLabel);
-
-			GetObjectRequest getObjectRequest = new GetObjectRequest(
-				_s3StoreConfiguration.bucketName(), key);
-
-			S3Object s3Object = _amazonS3.getObject(getObjectRequest);
-
-			if (s3Object == null) {
-				throw new NoSuchFileException(
-					companyId, repositoryId, fileName, versionLabel);
-			}
-
-			return s3Object;
-		}
-		catch (AmazonClientException amazonClientException) {
-			if (isFileNotFound(amazonClientException)) {
-				throw new NoSuchFileException(
-					companyId, repositoryId, fileName, versionLabel);
-			}
-
-			throw transform(amazonClientException);
-		}
 	}
 
 	protected List<S3ObjectSummary> getS3ObjectSummaries(String prefix) {

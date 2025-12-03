@@ -86,6 +86,40 @@ public class MarketplaceCommandLineRunner
 		_invoke(this::_processPublisherSalesSummary, "Publisher Sales Summary");
 	}
 
+	private void _assignRoleToUserAccount(Role role, UserAccount userAccount)
+		throws Exception {
+
+		for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
+			if (Objects.equals(roleBrief.getName(), role.getName())) {
+				return;
+			}
+		}
+
+		RoleResource roleResource = _getRoleResource();
+
+		roleResource.postRoleUserAccountAssociation(
+			role.getId(), userAccount.getId());
+	}
+
+	private void _assignUserAccountToAccount(
+			Account account, UserAccount userAccount)
+		throws Exception {
+
+		for (AccountBrief accountBrief : userAccount.getAccountBriefs()) {
+			if (Objects.equals(
+					accountBrief.getExternalReferenceCode(),
+					account.getExternalReferenceCode())) {
+
+				return;
+			}
+		}
+
+		UserAccountResource userAccountResource = _getUserAccountResource();
+
+		userAccountResource.postAccountUserAccountByEmailAddress(
+			account.getId(), userAccount.getEmailAddress());
+	}
+
 	private JSONObject _createPublisherSalesSummary(
 		Catalog catalog, String quarter) {
 
@@ -545,11 +579,20 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processLiferayStaffUserGroups() throws Exception {
+		AccountResource accountResource = _getAccountResource();
+
+		Account account = accountResource.getAccountByExternalReferenceCode(
+			"SSA-ACCOUNT");
+
+		if (account == null) {
+			return;
+		}
+
 		RoleResource roleResource = _getRoleResource();
 
 		com.liferay.headless.admin.user.client.pagination.Page<Role> rolesPage =
 			roleResource.getRolesPage(
-				null, null, "name eq '" + _LIFERAY_STAFF_ROLE + "'",
+				null, null, "name eq 'Liferay Staff'",
 				com.liferay.headless.admin.user.client.pagination.Pagination.of(
 					-1, -1));
 
@@ -559,51 +602,11 @@ public class MarketplaceCommandLineRunner
 			return;
 		}
 
-		AccountResource accountResource = _getAccountResource();
-
-		Account account = accountResource.getAccountByExternalReferenceCode(
-			_SSA_ACCOUNT_ERC);
-
-		if (account == null) {
-			return;
-		}
-
-		UserAccountResource userAccountResource = _getUserAccountResource();
-
 		for (UserAccount userAccount :
 				_getUserAccounts(null, "name eq 'Employees'")) {
 
-			boolean hasLiferayStaffRole = false;
-			boolean hasSSAAccount = false;
-
-			for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
-				if (Objects.equals(roleBrief.getName(), _LIFERAY_STAFF_ROLE)) {
-					hasLiferayStaffRole = true;
-
-					break;
-				}
-			}
-
-			for (AccountBrief accountBrief : userAccount.getAccountBriefs()) {
-				if (Objects.equals(
-						accountBrief.getExternalReferenceCode(),
-						_SSA_ACCOUNT_ERC)) {
-
-					hasSSAAccount = true;
-
-					break;
-				}
-			}
-
-			if (!hasLiferayStaffRole) {
-				roleResource.postRoleUserAccountAssociation(
-					role.getId(), userAccount.getId());
-			}
-
-			if (!hasSSAAccount) {
-				userAccountResource.postAccountUserAccountByEmailAddress(
-					account.getId(), userAccount.getEmailAddress());
-			}
+			_assignRoleToUserAccount(role, userAccount);
+			_assignUserAccountToAccount(account, userAccount);
 		}
 	}
 
@@ -901,8 +904,6 @@ public class MarketplaceCommandLineRunner
 		orderResource.patchOrder(orderId, order);
 	}
 
-	private static final String _LIFERAY_STAFF_ROLE = "Liferay Staff";
-
 	private static final int _ORDER_PAYMENT_STATUS_COMPLETED = 0;
 
 	private static final int _ORDER_STATUS_COMPLETED = 0;
@@ -914,8 +915,6 @@ public class MarketplaceCommandLineRunner
 	private static final int _ORDER_STATUS_PENDING = 1;
 
 	private static final int _ORDER_STATUS_PROCESSING = 10;
-
-	private static final String _SSA_ACCOUNT_ERC = "SSA-ACCOUNT";
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceCommandLineRunner.class);

@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Types;
 
@@ -32,6 +33,10 @@ public class DynamicObjectDefinitionLocalizationTable
 
 		_objectDefinition = objectDefinition;
 		_objectFields = objectFields;
+
+		_primaryKeyColumnNames = new String[] {
+			objectDefinition.getPKObjectFieldDBColumnName(), "languageId"
+		};
 
 		createColumn(
 			objectDefinition.getPKObjectFieldDBColumnName(), Long.class,
@@ -81,8 +86,8 @@ public class DynamicObjectDefinitionLocalizationTable
 		}
 
 		sb.append(", primary key (");
-		sb.append(_objectDefinition.getPKObjectFieldDBColumnName());
-		sb.append(", languageId));");
+		sb.append(StringUtil.merge(_primaryKeyColumnNames));
+		sb.append("));");
 
 		String sql = sb.toString();
 
@@ -128,6 +133,10 @@ public class DynamicObjectDefinitionLocalizationTable
 		return _objectFields;
 	}
 
+	public String[] getPrimaryKeyColumnNames() {
+		return _primaryKeyColumnNames;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicObjectDefinitionLocalizationTable.class);
 
@@ -135,5 +144,6 @@ public class DynamicObjectDefinitionLocalizationTable
 	private final List<Column<DynamicObjectDefinitionLocalizationTable, ?>>
 		_objectFieldColumns;
 	private final List<ObjectField> _objectFields;
+	private final String[] _primaryKeyColumnNames;
 
 }

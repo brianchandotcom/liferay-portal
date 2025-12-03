@@ -543,8 +543,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor = registration.getExportImportDescriptor();
 
 		return new PortletDataHandlerBoolean(
-			getPortletId(), exportImportDescriptor.getResourceClassName(),
-			exportImportDescriptor.getLabelLanguageKey(), true, false, null,
+			getPortletId(), exportImportDescriptor.getChildLabelLanguageKeys(),
+			exportImportDescriptor.getResourceClassName(),
+			exportImportDescriptor.getLabelLanguageKey(),
+			exportImportDescriptor.getTagLabelLanguageKey(), true, false, null,
 			exportImportDescriptor.getResourceClassName(), null);
 	}
 
@@ -587,8 +589,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			setEmptyControlsAllowed(false);
 		}
 		else {
+			if (_registrations.size() == 1) {
+				setExportControls(
+					_getPortletDataHandlerControl(_registrations.get(0)));
+			}
+			else {
+				setExportControls();
+			}
+
 			setEmptyControlsAllowed(true);
-			setExportControls();
 		}
 	}
 

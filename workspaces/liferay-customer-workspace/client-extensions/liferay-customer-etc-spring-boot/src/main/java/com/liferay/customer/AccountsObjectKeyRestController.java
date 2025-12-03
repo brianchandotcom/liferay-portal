@@ -39,7 +39,7 @@ public class AccountsObjectKeyRestController extends BaseRestController {
 				jwt, externalReferenceCode, ActionKeys.VIEW);
 
 			return new ResponseEntity<>(
-				_jiraService.getSupportAccountObjectKey(externalReferenceCode),
+				_jiraService.getAccountObjectKey(externalReferenceCode),
 				HttpStatus.OK);
 		}
 		catch (Exception exception) {

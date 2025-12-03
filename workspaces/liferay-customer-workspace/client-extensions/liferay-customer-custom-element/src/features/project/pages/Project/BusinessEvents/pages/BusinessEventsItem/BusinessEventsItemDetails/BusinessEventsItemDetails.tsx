@@ -32,9 +32,11 @@ import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermission
 const BusinessEventsItemDetails = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();
 
-	const {businessEvent, fetchBusinessEvent, loading} = useGetBusinessEvent(
-		id || ''
-	);
+	const {
+		businessEvent,
+		fetchBusinessEvent,
+		loading: loadingBusinessEvents,
+	} = useGetBusinessEvent(id || '');
 
 	const {client} = useAppPropertiesContext();
 
@@ -44,7 +46,7 @@ const BusinessEventsItemDetails = () => {
 	const {loading: loadingTickets, tickets} = useAccountsTickets(
 		businessEvent,
 		accountKey,
-		loading ||
+		loadingBusinessEvents ||
 			!businessEvent?.associatedTickets ||
 			businessEvent?.associatedTickets === '[]'
 	);
@@ -53,6 +55,8 @@ const BusinessEventsItemDetails = () => {
 		canViewTickets: canViewTickets,
 		loading: loadingJiraAccountChecking,
 	} = usecanViewTickets(accountKey || '');
+
+	const loading = loadingBusinessEvents || loadingJiraAccountChecking;
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -141,7 +145,7 @@ const BusinessEventsItemDetails = () => {
 		}
 	}, [businessEvent, location.search, onOpenChange, tickets]);
 
-	if (loading || loadingJiraAccountChecking) {
+	if (loading) {
 		return (
 			<div className="mx-auto">
 				<ClayLoadingIndicator size="sm" />

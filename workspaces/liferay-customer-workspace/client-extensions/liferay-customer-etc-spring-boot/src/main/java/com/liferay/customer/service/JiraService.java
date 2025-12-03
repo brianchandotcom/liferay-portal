@@ -62,6 +62,18 @@ public class JiraService extends BaseService {
 		return (page - 1) * pageSize;
 	}
 
+	public String getAccountObjectKey(String externalKey) throws Exception {
+		JSONObject accountResponseJSONObject = _searchAccountByExternalKey(
+			externalKey);
+
+		JSONArray valuesJSONArray = accountResponseJSONObject.getJSONArray(
+			"values");
+
+		JSONObject accountJSONObject = valuesJSONArray.getJSONObject(0);
+
+		return accountJSONObject.getString("objectKey");
+	}
+
 	@Cacheable("affectedVersions")
 	public JSONArray getAffectedVersionsJSONArray() throws Exception {
 		try {
@@ -219,20 +231,6 @@ public class JiraService extends BaseService {
 		}
 
 		return null;
-	}
-
-	public String getSupportAccountObjectKey(String externalKey)
-		throws Exception {
-
-		JSONObject accountResponseJSONObject = _searchAccountByExternalKey(
-			externalKey);
-
-		JSONArray valuesJSONArray = accountResponseJSONObject.getJSONArray(
-			"values");
-
-		JSONObject accountJSONObject = valuesJSONArray.getJSONObject(0);
-
-		return accountJSONObject.getString("objectKey");
 	}
 
 	@CacheEvict(allEntries = true, value = "affectedVersions")

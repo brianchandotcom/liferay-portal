@@ -1552,7 +1552,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		pageTemplateError.setThumbnail(thumbnailURLReference);
 
-		String expectedTitle = "Unable to download file from ";
+		String expectedProblemTitle = "Unable to download file from ";
 
 		try {
 			pageTemplateResource.patchSitePageTemplate(
@@ -1564,7 +1564,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 
@@ -1590,7 +1590,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -1814,7 +1814,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		pageTemplateError.setThumbnail(thumbnailURLReference);
 
-		String expectedTitle = "Unable to download file from ";
+		String expectedProblemTitle = "Unable to download file from ";
 
 		try {
 			testPostSitePageTemplateSetPageTemplate_addPageTemplate(
@@ -1825,7 +1825,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 
@@ -1850,7 +1850,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -2116,7 +2116,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		pageTemplateError.setThumbnail(thumbnailURLReference);
 
-		String expectedTitle = "Unable to download file from ";
+		String expectedProblemTitle = "Unable to download file from ";
 
 		try {
 			pageTemplateResource.putSitePageTemplate(
@@ -2128,7 +2128,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 
@@ -2154,7 +2154,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}

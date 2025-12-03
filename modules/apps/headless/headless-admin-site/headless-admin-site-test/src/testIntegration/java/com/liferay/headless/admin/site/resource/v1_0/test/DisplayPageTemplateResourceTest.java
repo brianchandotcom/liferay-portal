@@ -1334,7 +1334,7 @@ public class DisplayPageTemplateResourceTest
 
 		displayPageTemplateError.setThumbnail(thumbnailURLReference);
 
-		String expectedTitle = "Unable to download file from ";
+		String expectedProblemTitle = "Unable to download file from ";
 
 		try {
 			displayPageTemplateResource.patchSiteDisplayPageTemplate(
@@ -1347,7 +1347,7 @@ public class DisplayPageTemplateResourceTest
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 
@@ -1374,7 +1374,7 @@ public class DisplayPageTemplateResourceTest
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -1684,7 +1684,7 @@ public class DisplayPageTemplateResourceTest
 
 		displayPageTemplateError.setThumbnail(thumbnailURLReference);
 
-		String expectedTitle = "Unable to download file from ";
+		String expectedProblemTitle = "Unable to download file from ";
 
 		try {
 			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
@@ -1695,7 +1695,7 @@ public class DisplayPageTemplateResourceTest
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 
@@ -1720,7 +1720,7 @@ public class DisplayPageTemplateResourceTest
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -2070,7 +2070,7 @@ public class DisplayPageTemplateResourceTest
 
 		displayPageTemplateError.setThumbnail(thumbnailURLReference);
 
-		String expectedTitle = "Unable to download file from ";
+		String expectedProblemTitle = "Unable to download file from ";
 
 		try {
 			displayPageTemplateResource.putSiteDisplayPageTemplate(
@@ -2083,7 +2083,7 @@ public class DisplayPageTemplateResourceTest
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 
@@ -2110,7 +2110,7 @@ public class DisplayPageTemplateResourceTest
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedTitle + thumbnailURLReference.getUrl(),
+				expectedProblemTitle + thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}

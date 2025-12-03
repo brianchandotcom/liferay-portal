@@ -21,7 +21,25 @@ public class FragmentViewportTestUtil {
 					setFragmentViewportStyle(
 						FragmentViewportStyleTestUtil.
 							getFragmentViewportStyle());
+					setId(Id.DESKTOP);
+				}
+			},
+			new FragmentViewport() {
+				{
+					setCustomCSS(RandomTestUtil.randomString());
+					setFragmentViewportStyle(
+						FragmentViewportStyleTestUtil.
+							getFragmentViewportStyle());
 					setId(Id.LANDSCAPE_MOBILE);
+				}
+			},
+			new FragmentViewport() {
+				{
+					setCustomCSS(RandomTestUtil.randomString());
+					setFragmentViewportStyle(
+						FragmentViewportStyleTestUtil.
+							getFragmentViewportStyle());
+					setId(Id.PORTRAIT_MOBILE);
 				}
 			},
 			new FragmentViewport() {

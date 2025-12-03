@@ -75,9 +75,10 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
-<%@  page import="java.text.DecimalFormat" %><%@
- page import="java.text.DecimalFormatSymbols" %><%@
- page import="java.util.Objects" %>
+<%@ page import="java.text.DecimalFormat" %><%@
+page import="java.text.DecimalFormatSymbols" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

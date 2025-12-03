@@ -22,6 +22,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetVocabularyConstants" %><%@
+page import="com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil" %><%@
 page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.list.type.model.ListTypeDefinition" %><%@
 page import="com.liferay.object.constants.ObjectLayoutBoxConstants" %><%@
@@ -74,7 +75,9 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
-<%@ page import="java.util.Objects" %>
+<%@  page import="java.text.DecimalFormat" %><%@
+ page import="java.text.DecimalFormatSymbols" %><%@
+ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

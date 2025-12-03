@@ -297,6 +297,7 @@ export function updateCSV({fieldMappingMaps, groupId, id, name, status}) {
 
 export function updateLiferay({
 	analyticsConfiguration,
+	channelsConfiguration,
 	contactsConfiguration,
 	credentials,
 	fieldMappingMaps,
@@ -309,6 +310,7 @@ export function updateLiferay({
 	const data = pickBy(
 		{
 			analyticsConfiguration,
+			channelsConfiguration,
 			contactsConfiguration,
 			credentials: get(
 				credentials,

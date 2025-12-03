@@ -779,9 +779,7 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		const pagePromise = page.waitForEvent('popup');
 
-		await page
-			.getByRole('link', {name: 'Learn more. (Opens a new window)'})
-			.click();
+		await page.getByRole('link', {name: 'Learn more.'}).click();
 
 		const newPage = await pagePromise;
 
@@ -1419,7 +1417,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		objectFieldsPage,
 		page,
 	}) => {
-		const objectFields = await generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Encrypted'],
 		});
 
@@ -1442,7 +1440,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 		await page
 			.frameLocator('iframe')
-			.getByRole('link', {name: 'Learn more. (Opens a new window)'})
+			.getByRole('link', {name: 'Learn more.'})
 			.click();
 
 		const newPage = await pagePromise;

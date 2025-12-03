@@ -12,9 +12,9 @@ import com.liferay.bookmarks.exception.EntryURLException;
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryService;
 import com.liferay.bookmarks.service.BookmarksFolderService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -37,7 +37,6 @@ import com.liferay.trash.service.TrashEntryService;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -175,34 +174,32 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "rowIdsBookmarksEntry");
 		}
 
-		List<TrashedModel> trashedModels = new ArrayList<>();
+		List<TrashedModel> trashedModels = TransformUtil.transformToList(
+			deleteEntryIds,
+			deleteEntryId -> {
+				if (moveToTrash) {
+					return _bookmarksEntryService.moveEntryToTrash(
+						deleteEntryId);
+				}
 
-		for (long deleteEntryId : deleteEntryIds) {
-			if (moveToTrash) {
-				BookmarksEntry entry = _bookmarksEntryService.moveEntryToTrash(
-					deleteEntryId);
-
-				trashedModels.add(entry);
-			}
-			else {
 				_bookmarksEntryService.deleteEntry(deleteEntryId);
-			}
-		}
 
-		long[] deleteFolderIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsBookmarksFolder");
+				return null;
+			});
 
-		for (long deleteFolderId : deleteFolderIds) {
-			if (moveToTrash) {
-				BookmarksFolder folder =
-					_bookmarksFolderService.moveFolderToTrash(deleteFolderId);
+		trashedModels.addAll(
+			TransformUtil.transformToList(
+				ParamUtil.getLongValues(actionRequest, "rowIdsBookmarksFolder"),
+				deleteFolderId -> {
+					if (moveToTrash) {
+						return _bookmarksFolderService.moveFolderToTrash(
+							deleteFolderId);
+					}
 
-				trashedModels.add(folder);
-			}
-			else {
-				_bookmarksFolderService.deleteFolder(deleteFolderId);
-			}
-		}
+					_bookmarksFolderService.deleteFolder(deleteFolderId);
+
+					return null;
+				}));
 
 		if (moveToTrash && !trashedModels.isEmpty()) {
 			addDeleteSuccessData(

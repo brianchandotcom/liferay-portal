@@ -13,6 +13,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.bookmarks.web.internal.security.permission.resource.BookmarksResourcePermission;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,7 +24,6 @@ import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,19 +32,11 @@ import java.util.List;
 public class ActionUtil {
 
 	public static List<BookmarksEntry> getEntries(
-			HttpServletRequest httpServletRequest)
-		throws Exception {
+		HttpServletRequest httpServletRequest) {
 
-		List<BookmarksEntry> entries = new ArrayList<>();
-
-		long[] entryIds = ParamUtil.getLongValues(
-			httpServletRequest, "rowIdsBookmarksEntry");
-
-		for (long entryId : entryIds) {
-			entries.add(BookmarksEntryServiceUtil.getEntry(entryId));
-		}
-
-		return entries;
+		return TransformUtil.transformToList(
+			ParamUtil.getLongValues(httpServletRequest, "rowIdsBookmarksEntry"),
+			entryId -> BookmarksEntryServiceUtil.getEntry(entryId));
 	}
 
 	public static List<BookmarksEntry> getEntries(PortletRequest portletRequest)
@@ -114,24 +106,21 @@ public class ActionUtil {
 	}
 
 	public static List<BookmarksFolder> getFolders(
-			HttpServletRequest httpServletRequest)
-		throws Exception {
+		HttpServletRequest httpServletRequest) {
 
-		List<BookmarksFolder> folders = new ArrayList<>();
+		return TransformUtil.transformToList(
+			ParamUtil.getLongValues(
+				httpServletRequest, "rowIdsBookmarksFolder"),
+			folderId -> {
+				if ((folderId > 0) &&
+					(folderId !=
+						BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-		long[] folderIds = ParamUtil.getLongValues(
-			httpServletRequest, "rowIdsBookmarksFolder");
+					return BookmarksFolderServiceUtil.getFolder(folderId);
+				}
 
-		for (long folderId : folderIds) {
-			if ((folderId > 0) &&
-				(folderId !=
-					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-				folders.add(BookmarksFolderServiceUtil.getFolder(folderId));
-			}
-		}
-
-		return folders;
+				return null;
+			});
 	}
 
 	public static List<BookmarksFolder> getFolders(

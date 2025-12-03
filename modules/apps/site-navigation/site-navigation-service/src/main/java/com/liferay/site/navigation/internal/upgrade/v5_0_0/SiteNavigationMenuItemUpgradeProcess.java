@@ -74,7 +74,7 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 			UnicodeProperties typeSettingsUnicodeProperties)
 		throws Exception {
 
-		PersistedModel persistedModel;
+		PersistedModel persistedModel = null;
 
 		if (Objects.equals(type, JournalArticle.class.getName())) {
 			persistedModel = _journalArticleLocalService.getLatestArticle(

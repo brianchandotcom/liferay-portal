@@ -602,7 +602,6 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 					"en_US", RandomTestUtil.randomString()
 				).build()
 			).build());
-
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_group2.getGroupId(), siteScopedObjectDefinition,
 			HashMapBuilder.<String, Serializable>put(

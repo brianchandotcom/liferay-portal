@@ -32,10 +32,10 @@ export interface IElementDefinition {
 	uiConfiguration?: {[key: string]: any}[];
 }
 
-export interface IElementInstances {
+export interface IElementInstance {
 	configurationEntry?: {[key: string]: any};
 	id?: number;
-	sxpElement: SxpElement;
+	sxpElement: SXPElement;
 	uiConfigurationValues: {[key: string]: any};
 }
 
@@ -48,7 +48,7 @@ export interface IFrameworkConfiguration {
 	searchableAssetTypes?: string[];
 }
 
-export interface IIndexFields {
+export interface IIndexField {
 	languageIdPosition: number;
 	name: string;
 	type: string;
@@ -61,7 +61,7 @@ export interface IScope {
 	type: string;
 }
 
-export interface ISearchableTypes {
+export interface ISearchableType {
 	className: string;
 	displayName: string;
 	hasSubtype: boolean;
@@ -72,7 +72,7 @@ export interface ISorting {
 	direction: 'ascending' | 'descending';
 }
 
-export type SxpElement = {
+export type SXPElement = {
 	createDate?: string;
 	description: string;
 	description_i18n?: {[key: string]: string};

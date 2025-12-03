@@ -11,11 +11,11 @@ import {
 	getStorageAddSXPElementSidebar,
 } from '../../utils/sessionStorage';
 import {
-	IElementInstances,
+	IElementInstance,
 	IFrameworkConfiguration,
-	IIndexFields,
+	IIndexField,
 	IScope,
-	ISearchableTypes,
+	ISearchableType,
 	ISelectedSubtype,
 } from '../../utils/types';
 import {SIDEBAR_TYPES} from '../../utils/types/sidebarTypes';
@@ -57,14 +57,14 @@ function QueryBuilderTab({
 	applyIndexerClauses: boolean;
 	assetSubtypesMap: {[key: string]: string};
 	clauseContributorsList: string[];
-	elementInstances: IElementInstances[];
+	elementInstances: IElementInstance[];
 	entityJSON: {[key: string]: any};
 	errors: (
 		| {[uiConfigurationValues: string]: {[field: string]: string}}
 		| undefined
 	)[];
 	frameworkConfig: IFrameworkConfiguration;
-	indexFields: IIndexFields[];
+	indexFields: IIndexField[];
 	isIndexCompany: boolean;
 	isSubmitting: boolean;
 	onApplyIndexerClausesChange: (value: boolean) => void;
@@ -76,7 +76,7 @@ function QueryBuilderTab({
 	onFrameworkConfigChange: (value: IFrameworkConfiguration) => void;
 	openSidebar: (typeof SIDEBAR_TYPES)[keyof typeof SIDEBAR_TYPES] | '';
 	scope: IScope[];
-	searchableTypes: ISearchableTypes[];
+	searchableTypes: ISearchableType[];
 	setFieldTouched: (field: string, touched?: boolean) => void;
 	setFieldValue: (field: string, value: any) => void;
 	setOpenSidebar: (

@@ -57,7 +57,6 @@ import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -233,16 +232,10 @@ public class BlogsViewEntriesDisplayContext {
 			SearchContainerResults<AssetEntry> searchContainerResults =
 				BlogsUtil.getSearchContainerResults(searchContainer);
 
-			List<AssetEntry> assetEntries = searchContainerResults.getResults();
-
-			List<BlogsEntry> blogsEntries = new ArrayList<>(
-				assetEntries.size());
-
-			for (AssetEntry assetEntry : assetEntries) {
-				blogsEntries.add(
-					BlogsEntryLocalServiceUtil.getEntry(
-						assetEntry.getClassPK()));
-			}
+			List<BlogsEntry> blogsEntries = TransformUtil.transform(
+				searchContainerResults.getResults(),
+				assetEntry -> BlogsEntryLocalServiceUtil.getEntry(
+					assetEntry.getClassPK()));
 
 			searchContainer.setResultsAndTotal(
 				() -> blogsEntries, searchContainerResults.getTotal());

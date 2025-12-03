@@ -15,6 +15,7 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -63,8 +63,6 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(collectionQuery);
 
 		try {
-			List<BlogsEntry> blogsEntries = new ArrayList<>();
-
 			AssetCategory assetCategory = (AssetCategory)relatedItem;
 
 			SearchContext searchContext = _getSearchContext(assetCategory);
@@ -73,19 +71,10 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				searchContext, assetEntryQuery, assetEntryQuery.getStart(),
 				assetEntryQuery.getEnd());
 
-			List<SearchResult> searchResults =
+			List<BlogsEntry> blogsEntries = TransformUtil.transform(
 				SearchResultUtil.getSearchResults(
-					hits, LocaleUtil.getDefault());
-
-			for (SearchResult searchResult : searchResults) {
-				BlogsEntry blogsEntry = _toBlogsEntry(searchResult);
-
-				if (blogsEntry == null) {
-					continue;
-				}
-
-				blogsEntries.add(blogsEntry);
-			}
+					hits, LocaleUtil.getDefault()),
+				searchResult -> _toBlogsEntry(searchResult));
 
 			Long count = _assetHelper.searchCount(
 				searchContext, assetEntryQuery);

@@ -73,7 +73,7 @@ public class CXConfigOSGiCommandsTest {
 
 		_configurationPids = new ArrayList<>();
 
-		String configurationPid1 =
+		_configurationPids.add(
 			ConfigurationTestUtil.createFactoryConfiguration(
 				CETConfiguration.class.getName(),
 				"liferay-sample-cx-1/liferay.com",
@@ -93,9 +93,8 @@ public class CXConfigOSGiCommandsTest {
 					"test.only", "true"
 				).put(
 					"type", "customElement"
-				).build());
-
-		String configurationPid2 =
+				).build()));
+		_configurationPids.add(
 			ConfigurationTestUtil.createFactoryConfiguration(
 				CETConfiguration.class.getName(),
 				"liferay-sample-cx-2/liferay.com",
@@ -114,9 +113,8 @@ public class CXConfigOSGiCommandsTest {
 					"test.only", "true"
 				).put(
 					"type", "customElement"
-				).build());
-
-		String configurationPid3 =
+				).build()));
+		_configurationPids.add(
 			ConfigurationTestUtil.createFactoryConfiguration(
 				AccountEntryEmailConfiguration.class.getName(),
 				"liferay-sample-cx-3/" + _companyWebId,
@@ -136,11 +134,7 @@ public class CXConfigOSGiCommandsTest {
 					"test.only", "true"
 				).put(
 					"type", "instanceSettings"
-				).build());
-
-		_configurationPids.add(configurationPid1);
-		_configurationPids.add(configurationPid2);
-		_configurationPids.add(configurationPid3);
+				).build()));
 	}
 
 	@AfterClass

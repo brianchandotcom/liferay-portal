@@ -3,5 +3,7 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="ERROR" name="com.ibm.cloud.objectstorage.util.Base64" />
+		<Logger level="ERROR" name="software.amazon.awssdk.profiles.internal.ProfileFileReader" />
+		<Logger level="ERROR" name="software.amazon.awssdk.transfer.s3.S3TransferManager" />
 	</Loggers>
 </Configuration>

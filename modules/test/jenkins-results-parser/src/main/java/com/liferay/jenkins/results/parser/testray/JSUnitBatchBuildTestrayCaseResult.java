@@ -181,7 +181,7 @@ public class JSUnitBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public void initBuildReport() {
+	protected void initBuildReport() {
 		JSUnitModulesTestClass jsUnitModulesTestClass = getTestClass();
 
 		if (jsUnitModulesTestClass.isBuildCachingEnabled()) {

@@ -64,14 +64,6 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 	}
 
 	@Override
-	public void initBuildReport() {
-		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
-
-		setBuildReport(
-			topLevelBuildReport.getDownstreamBuildReport(_getAxisName()));
-	}
-
-	@Override
 	protected String getBatchName() {
 		return "app-server-bundle-builder";
 	}
@@ -87,6 +79,14 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 			topLevelBuildReport.getJobName(), "_",
 			String.valueOf(topLevelBuildReport.getBuildNumber()), "_",
 			getBatchName(), "_", _appServerType, ".xml");
+	}
+
+	@Override
+	protected void initBuildReport() {
+		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
+
+		setBuildReport(
+			topLevelBuildReport.getDownstreamBuildReport(_getAxisName()));
 	}
 
 	private String _getAxisName() {

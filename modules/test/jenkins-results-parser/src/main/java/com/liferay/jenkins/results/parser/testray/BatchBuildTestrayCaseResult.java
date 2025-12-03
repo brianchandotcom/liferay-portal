@@ -236,14 +236,6 @@ public class BatchBuildTestrayCaseResult
 		}
 	}
 
-	public A getTestClass() {
-		return _testClass;
-	}
-
-	public B getTestClassMethod() {
-		return _testClassMethod;
-	}
-
 	@Override
 	public List<TestrayAttachment> getTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
@@ -322,14 +314,6 @@ public class BatchBuildTestrayCaseResult
 		return null;
 	}
 
-	@Override
-	public void initBuildReport() {
-		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
-
-		setBuildReport(
-			topLevelBuildReport.getDownstreamBuildReport(getAxisName()));
-	}
-
 	protected AxisTestClassGroup getAxisTestClassGroup() {
 		return _axisTestClassGroup;
 	}
@@ -390,6 +374,14 @@ public class BatchBuildTestrayCaseResult
 		}
 
 		return testrayAttachments;
+	}
+
+	protected A getTestClass() {
+		return _testClass;
+	}
+
+	protected B getTestClassMethod() {
+		return _testClassMethod;
 	}
 
 	protected TestReport getTestReport() {
@@ -575,6 +567,14 @@ public class BatchBuildTestrayCaseResult
 				getTestrayBuild(), getTopLevelBuildReport());
 
 		return _topLevelStandaloneBuildTestrayCaseResult;
+	}
+
+	@Override
+	protected void initBuildReport() {
+		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
+
+		setBuildReport(
+			topLevelBuildReport.getDownstreamBuildReport(getAxisName()));
 	}
 
 	private List<TestrayAttachment> _getDockerLogsTestrayAttachments() {

@@ -7,19 +7,17 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,11 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-
-import java.nio.channels.ScatteringByteChannel;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -47,7 +40,8 @@ public class FileEntryUtil {
 		throws Exception {
 
 		if ((thumbnailURLReference == null) ||
-			Validator.isNull(thumbnailURLReference.getExternalReferenceCode())) {
+			Validator.isNull(
+				thumbnailURLReference.getExternalReferenceCode())) {
 
 			return 0;
 		}
@@ -59,7 +53,8 @@ public class FileEntryUtil {
 
 		if (fileEntry == null) {
 			fileEntry = _getFileEntry(
-				groupId, resourceName, serviceContext, thumbnailURLReference, user);
+				groupId, resourceName, serviceContext, thumbnailURLReference,
+				user);
 		}
 
 		return fileEntry.getFileEntryId();
@@ -70,8 +65,38 @@ public class FileEntryUtil {
 			ThumbnailURLReference thumbnailURLReference, User user)
 		throws Exception {
 
-		File file = FileUtil.createTempFile(
-			HttpUtil.URLtoInputStream(thumbnailURLReference.getUrl()));
+		InputStream inputStream = null;
+
+		try {
+			inputStream = HttpUtil.URLtoInputStream(
+				thumbnailURLReference.getUrl());
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to download file from " +
+						thumbnailURLReference.getUrl());
+				_log.warn(ioException);
+			}
+
+			throw new IllegalArgumentException(
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl());
+		}
+
+		if (inputStream.available() == 0) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to download file from " +
+						thumbnailURLReference.getUrl());
+			}
+
+			throw new IllegalArgumentException(
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl());
+		}
+
+		File file = FileUtil.createTempFile(inputStream);
 
 		String mimeType = MimeTypesUtil.getContentType(file);
 
@@ -89,22 +114,21 @@ public class FileEntryUtil {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setIndexingEnabled(false);
 
-		Repository repository =
-			PortletFileRepositoryUtil.addPortletRepository(
-				groupId, LayoutAdminPortletKeys.GROUP_PAGES,
-				serviceContext);
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			groupId, LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
 
 		String fileName =
 			thumbnailURLReference.getExternalReferenceCode() + "_preview" +
-			extension;
+				extension;
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			thumbnailURLReference.getExternalReferenceCode(), user.getUserId(),
 			repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			resourceName + "_" + fileName, mimeType, fileName, null, null,
-			null,
+			resourceName + "_" + fileName, mimeType, fileName, null, null, null,
 			file, null, null, null, serviceContext);
-
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(FileEntryUtil.class);
+
 }

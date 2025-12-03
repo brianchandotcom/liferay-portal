@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -52,7 +53,7 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		long companyId, long groupId, Locale locale,
 		List<String> mcpServerExternalReferenceCodes, long userId) {
 
-		if (mcpServerExternalReferenceCodes.isEmpty()) {
+		if (ListUtil.isEmpty(mcpServerExternalReferenceCodes)) {
 			return null;
 		}
 

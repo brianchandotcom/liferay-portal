@@ -1309,6 +1309,27 @@ components:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
                         -   $ref: "#/components/schemas/FragmentMappedValue"
             type: object
+        FragmentImageViewport:
+            # @review
+            description:
+                A fragment image viewport.
+            properties:
+                id:
+                    # @review
+                    description:
+                        The fragment image viewport's ID.
+                    enum: [LandscapeMobile, PortraitMobile, Tablet]
+                    type: string
+                resolution:
+                    # @review
+                    description:
+                        The resolution of the fragment image viewport.
+                    enum: [Auto, Preview, Thumbnail]
+                    type: string
+            required:
+                -   id
+                -   resolution
+            type: object
         FragmentInlineValue:
             # @review
             description:

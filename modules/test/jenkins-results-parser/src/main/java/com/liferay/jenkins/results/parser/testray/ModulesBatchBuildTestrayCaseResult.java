@@ -24,6 +24,13 @@ import java.util.Objects;
 public class ModulesBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult<ModulesTestClass, TestClassMethod> {
 
+	public ModulesBatchBuildTestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
+
+		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
+	}
+
 	@Override
 	public String getComponentName() {
 		ModulesTestClass modulesTestClass = getTestClass();
@@ -208,13 +215,6 @@ public class ModulesBatchBuildTestrayCaseResult
 		}
 
 		super.initBuildReport();
-	}
-
-	protected ModulesBatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
-
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
 	}
 
 	private String _getTestClassName() {

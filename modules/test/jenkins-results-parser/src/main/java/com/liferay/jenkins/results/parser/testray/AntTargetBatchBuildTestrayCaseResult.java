@@ -25,6 +25,13 @@ public class AntTargetBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult
 		<ServiceBuilderAntTargetTestClass, TestClassMethod> {
 
+	public AntTargetBatchBuildTestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
+
+		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
+	}
+
 	@Override
 	public String getComponentName() {
 		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
@@ -217,13 +224,6 @@ public class AntTargetBatchBuildTestrayCaseResult
 		}
 
 		super.initBuildReport();
-	}
-
-	protected AntTargetBatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
-
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
 	}
 
 	private String _getTestClassName() {

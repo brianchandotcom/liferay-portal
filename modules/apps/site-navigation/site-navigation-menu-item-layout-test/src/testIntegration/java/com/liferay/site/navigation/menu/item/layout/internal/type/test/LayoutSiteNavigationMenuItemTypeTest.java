@@ -72,12 +72,12 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setScopeGroupId(_group.getGroupId());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

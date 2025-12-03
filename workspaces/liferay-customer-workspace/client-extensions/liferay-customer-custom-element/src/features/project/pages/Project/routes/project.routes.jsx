@@ -20,6 +20,7 @@ import Commerce from '../ActivationKeys/Commerce';
 import EnterpriseSearch from '../ActivationKeys/EnterpriseSearch';
 import AnalyticsCloud from '../AnalyticsCloud';
 import Attachments from '../Attachments';
+import CloudNative from '../CloudNative';
 import DXP from '../DXP';
 import DXPCloud from '../DXPCloud';
 import LiferayExperienceCloud from '../LiferayExperienceCloud';
@@ -268,6 +269,23 @@ const ProjectRoutes = () => {
 							path={getKebabCase(PRODUCT_TYPES.analyticsCloud)}
 						>
 							<Route element={<AnalyticsCloud />} index />
+						</Route>
+
+						<Route
+							element={
+								<ProductOutlet
+									product={
+										PRODUCT_TYPES.cloudNative
+									}
+								/>
+							}
+						>
+							<Route
+								element={<CloudNative />}
+								path={getKebabCase(
+									PRODUCT_TYPES.cloudNative
+								)}
+							/>
 						</Route>
 
 						<Route

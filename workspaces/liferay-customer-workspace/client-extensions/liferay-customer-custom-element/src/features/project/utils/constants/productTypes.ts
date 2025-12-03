@@ -5,6 +5,7 @@
 
 export const PRODUCT_TYPES = {
 	analyticsCloud: 'Analytics Cloud',
+	cloudNative: 'Cloud Native',
 	commerce: 'Commerce',
 	commerceCloud: 'Commerce for Cloud',
 	dxp: 'DXP',

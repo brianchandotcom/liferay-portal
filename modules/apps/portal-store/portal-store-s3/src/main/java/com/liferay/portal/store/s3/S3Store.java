@@ -395,7 +395,6 @@ public class S3Store implements Store {
 			_s3StoreConfiguration.httpClientMaxErrorRetry());
 
 		_configureProxySettings(clientConfiguration);
-		_configureSignerOverride(clientConfiguration);
 
 		if (Validator.isNotNull(_s3StoreConfiguration.s3Endpoint()) &&
 			Validator.isNotNull(_s3StoreConfiguration.s3Region())) {
@@ -499,18 +498,6 @@ public class S3Store implements Store {
 					_s3StoreConfiguration.ntlmProxyWorkstation());
 			}
 		}
-	}
-
-	private void _configureSignerOverride(
-		ClientConfiguration clientConfiguration) {
-
-		String signerOverride = _s3StoreConfiguration.signerOverride();
-
-		if (Validator.isNull(signerOverride)) {
-			return;
-		}
-
-		clientConfiguration.setSignerOverride(signerOverride);
 	}
 
 	private String _getHeadVersionLabel(

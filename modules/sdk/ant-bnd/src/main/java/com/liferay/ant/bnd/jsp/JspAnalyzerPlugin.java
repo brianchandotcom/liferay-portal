@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.jar.Manifest;
@@ -575,10 +576,11 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	private boolean _isJavaeePackageJavax(String javaeePackage) {
-		if (javaeePackage.equals("javax")) {
+		if (Objects.equals(javaeePackage, "javax")) {
 			return true;
 		}
-		else if (javaeePackage.equals("jakarta")) {
+
+		if (Objects.equals(javaeePackage, "jakarta")) {
 			return false;
 		}
 

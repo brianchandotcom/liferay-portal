@@ -19,6 +19,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
@@ -126,8 +127,6 @@ public class PageElementsTestUtil {
 		fragmentInstancePageElementDefinition.setCss(fragmentEntry::getCss);
 		fragmentInstancePageElementDefinition.setCssClasses(
 			() -> new String[] {RandomTestUtil.randomString()});
-		fragmentInstancePageElementDefinition.setCustomCSS(
-			RandomTestUtil::randomString);
 		fragmentInstancePageElementDefinition.setDatePropagated(
 			RandomTestUtil::nextDate);
 		fragmentInstancePageElementDefinition.
@@ -183,7 +182,6 @@ public class PageElementsTestUtil {
 				setCss(() -> StringPool.BLANK);
 				setCssClasses(
 					() -> new String[] {RandomTestUtil.randomString()});
-				setCustomCSS(RandomTestUtil::randomString);
 				setDatePropagated(RandomTestUtil::nextDate);
 				setFragmentConfigurationFieldValues(
 					() ->
@@ -261,7 +259,23 @@ public class PageElementsTestUtil {
 					setCollectionDisplayListStyle(
 						_getCollectionDisplayListStyle());
 					setCollectionDisplayViewports(
-						new CollectionDisplayViewport[0]);
+						new CollectionDisplayViewport[] {
+							new CollectionDisplayViewport() {
+								{
+									setCollectionDisplayViewportDefinition(
+										() ->
+											new CollectionDisplayViewportDefinition() {
+												{
+													setHidden(
+														RandomTestUtil.
+															randomBoolean());
+													setNumberOfColumns(1);
+												}
+											});
+									setId(Id.DESKTOP);
+								}
+							}
+						});
 					setCollectionSettings(
 						() -> new CollectionSettings() {
 							{
@@ -271,7 +285,6 @@ public class PageElementsTestUtil {
 						});
 					setDisplayAllItems(Boolean.FALSE);
 					setDisplayAllPages(Boolean.TRUE);
-					setHidden(Boolean.FALSE);
 					setNumberOfItems(5);
 					setNumberOfItemsPerPage(5);
 					setNumberOfPages(20);
@@ -353,7 +366,6 @@ public class PageElementsTestUtil {
 		if (Objects.equals(type, PageElementDefinition.Type.MODULE)) {
 			return new ModulePageElementDefinition() {
 				{
-					setSize(1);
 					setType(Type.MODULE);
 				}
 			};
@@ -364,11 +376,9 @@ public class PageElementsTestUtil {
 				{
 					setGutters(Boolean.TRUE);
 					setIndexed(Boolean.TRUE);
-					setModulesPerRow(0);
 					setNumberOfModules(0);
 					setReverseOrder(Boolean.FALSE);
 					setType(Type.GRID);
-					setVerticalAlignment(VerticalAlignment.TOP);
 				}
 			};
 		}
@@ -564,6 +574,17 @@ public class PageElementsTestUtil {
 		ModuleViewport[] moduleViewports = {
 			new ModuleViewport() {
 				{
+					setId(Id.DESKTOP);
+					setModuleViewportDefinition(
+						() -> new ModuleViewportDefinition() {
+							{
+								setSize(4);
+							}
+						});
+				}
+			},
+			new ModuleViewport() {
+				{
 					setId(Id.LANDSCAPE_MOBILE);
 					setModuleViewportDefinition(
 						() -> new ModuleViewportDefinition() {
@@ -583,6 +604,9 @@ public class PageElementsTestUtil {
 						new GridViewport[] {
 							_getGridViewport(
 								GridViewportDefinition.VerticalAlignment.BOTTOM,
+								GridViewport.Id.DESKTOP),
+							_getGridViewport(
+								GridViewportDefinition.VerticalAlignment.BOTTOM,
 								GridViewport.Id.LANDSCAPE_MOBILE),
 							_getGridViewport(
 								GridViewportDefinition.VerticalAlignment.TOP,
@@ -593,11 +617,9 @@ public class PageElementsTestUtil {
 						});
 					setGutters(Boolean.TRUE);
 					setIndexed(Boolean.TRUE);
-					setModulesPerRow(3);
 					setNumberOfModules(1);
 					setReverseOrder(Boolean.FALSE);
 					setType(Type.GRID);
-					setVerticalAlignment(VerticalAlignment.TOP);
 				}
 			},
 			new PageElement[] {
@@ -642,7 +664,6 @@ public class PageElementsTestUtil {
 			new ModulePageElementDefinition();
 
 		modulePageElementDefinition.setModuleViewports(moduleViewports);
-		modulePageElementDefinition.setSize(4);
 		modulePageElementDefinition.setType(PageElementDefinition.Type.MODULE);
 
 		return modulePageElementDefinition;

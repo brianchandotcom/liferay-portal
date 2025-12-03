@@ -166,80 +166,51 @@ public class CXConfigOSGiCommandsTest {
 	public void testGetConfigurations() throws Exception {
 		List<String> failures = new ArrayList<>();
 
-		Object[][] testCasesCorrectParameters = {
-			{
-				new String[0],
-				Arrays.asList(
-					_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2,
-					_CONFIGURATION_NAME_3)
-			},
-			{
-				new String[] {"deploymentType=bundle"},
-				Arrays.asList(_CONFIGURATION_NAME_1)
-			},
-			{
-				new String[] {"deploymentType=agent"},
-				Arrays.asList(_CONFIGURATION_NAME_2, _CONFIGURATION_NAME_3)
-			},
-			{
-				new String[] {"webId=default"},
-				Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2)
-			},
-			{
-				new String[] {"webId=liferay.com"},
-				Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2)
-			},
-			{
-				new String[] {"webId=" + _companyWebId},
-				Arrays.asList(_CONFIGURATION_NAME_3)
-			},
-			{
-				new String[] {"type=customElement"},
-				Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2)
-			},
-			{
-				new String[] {"type=instanceSettings"},
-				Arrays.asList(_CONFIGURATION_NAME_3)
-			},
-			{
-				new String[] {"deploymentType=bundle", "type=customElement"},
-				Arrays.asList(_CONFIGURATION_NAME_1)
-			},
-			{
-				new String[] {
-					"deploymentType=agent", "webId=" + _companyWebId,
-					"type=instanceSettings"
-				},
-				Arrays.asList(_CONFIGURATION_NAME_3)
-			}
-		};
+		_testGetConfigurations(
+			List.of(),
+			List.of(
+				_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2,
+				_CONFIGURATION_NAME_3),
+			failures);
+		_testGetConfigurations(
+			List.of("deploymentType=bundle"), List.of(_CONFIGURATION_NAME_1),
+			failures);
+		_testGetConfigurations(
+			List.of("deploymentType=agent"),
+			List.of(_CONFIGURATION_NAME_2, _CONFIGURATION_NAME_3), failures);
+		_testGetConfigurations(
+			List.of("webId=default"),
+			List.of(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2), failures);
+		_testGetConfigurations(
+			List.of("webId=liferay.com"),
+			List.of(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2), failures);
+		_testGetConfigurations(
+			List.of("webId=" + _companyWebId), List.of(_CONFIGURATION_NAME_3),
+			failures);
+		_testGetConfigurations(
+			List.of("type=customElement"),
+			List.of(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2), failures);
+		_testGetConfigurations(
+			List.of("type=instanceSettings"), List.of(_CONFIGURATION_NAME_3),
+			failures);
+		_testGetConfigurations(
+			List.of("deploymentType=bundle", "type=customElement"),
+			List.of(_CONFIGURATION_NAME_1), failures);
+		_testGetConfigurations(
+			List.of(
+				"deploymentType=agent", "webId=" + _companyWebId,
+				"type=instanceSettings"),
+			List.of(_CONFIGURATION_NAME_3), failures);
 
-		for (Object[] testCase : testCasesCorrectParameters) {
-			String[] filter = (String[])testCase[0];
-
-			List<String> expectedOutput = (List<String>)testCase[1];
-
-			String result = _assertListDataOutput(
-				filter, new HashSet<>(expectedOutput));
-
-			if (!result.isEmpty()) {
-				failures.add(result);
-			}
-		}
-
-		String[][] testCasesIncorrectParameters = {
-			{"name=Non Existing Name"},
-			{"deploymentType=prod", "name=Non Existing Name"},
-			{"nonExistentFilter=foo"}, {"foo"}, {"foo", "bar"}
-		};
-
-		for (String[] testCase : testCasesIncorrectParameters) {
-			String result = _assertListDataOutput(testCase, null);
-
-			if (!result.isEmpty()) {
-				failures.add(result);
-			}
-		}
+		_testGetConfigurations(
+			List.of("name=Non Existing Name"), List.of(), failures);
+		_testGetConfigurations(
+			List.of("deploymentType=prod", "name=Non Existing Name"), List.of(),
+			failures);
+		_testGetConfigurations(
+			List.of("nonExistentFilter=foo"), List.of(), failures);
+		_testGetConfigurations(List.of("foo"), List.of(), failures);
+		_testGetConfigurations(List.of("foo", "bar"), List.of(), failures);
 
 		Assert.assertTrue(
 			"Failures: " + String.join("", failures), failures.isEmpty());
@@ -405,39 +376,6 @@ public class CXConfigOSGiCommandsTest {
 			"Failures: " + String.join("", failures), failures.isEmpty());
 	}
 
-	private String _assertListDataOutput(
-			String[] filter, HashSet<String> expectedOutput)
-		throws Exception {
-
-		String result = "";
-
-		Configuration[] configurations = _getConfigurations(
-			ArrayUtil.append(filter, "test.only=true"));
-
-		Set<String> namesFound = new HashSet<>();
-
-		if (configurations == null) {
-			namesFound = null;
-		}
-		else {
-			for (Configuration configuration : configurations) {
-				namesFound.add(
-					configuration.getProperties(
-					).get(
-						"name"
-					).toString());
-			}
-		}
-
-		if (!Objects.equals(expectedOutput, namesFound)) {
-			result = StringBundler.concat(
-				"FAILURE: ", Arrays.toString(filter), "\nexpected output: ",
-				expectedOutput, "\nactual output: ", namesFound, "\n");
-		}
-
-		return result;
-	}
-
 	private Configuration _getConfiguration(String pid) {
 		return ReflectionTestUtil.invoke(
 			_osgiCommands, "_getConfiguration", new Class<?>[] {String.class},
@@ -478,6 +416,42 @@ public class CXConfigOSGiCommandsTest {
 		Method method = clazz.getMethod("show", String[].class);
 
 		method.invoke(_osgiCommands, (Object)args);
+	}
+
+	private void _testGetConfigurations(
+		List<String> filters, List<String> expectedConfigurationNames,
+		List<String> failures) {
+
+		String[] filtersArray = filters.toArray(new String[0]);
+
+		Set<String> expectedConfigurationNamesSet = new HashSet<>(
+			expectedConfigurationNames);
+
+		Configuration[] configurations = _getConfigurations(
+			ArrayUtil.append(filtersArray, "test.only=true"));
+
+		Set<String> namesFound = new HashSet<>();
+
+		if (configurations == null) {
+			namesFound = null;
+		}
+		else {
+			for (Configuration configuration : configurations) {
+				namesFound.add(
+					configuration.getProperties(
+					).get(
+						"name"
+					).toString());
+			}
+		}
+
+		if (!Objects.equals(expectedConfigurationNamesSet, namesFound)) {
+			failures.add(
+				StringBundler.concat(
+					"FAILURE: ", Arrays.toString(filtersArray),
+					"\nexpected output: ", expectedConfigurationNames,
+					"\nactual output: ", namesFound, "\n"));
+		}
 	}
 
 	private static final String _CONFIGURATION_NAME_1 = "Liferay Sample CX 1";

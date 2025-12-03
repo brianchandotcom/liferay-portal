@@ -50,8 +50,11 @@ public class ObjectFieldModelDocumentContributor
 			"objectDefinitionId", objectField.getObjectDefinitionId());
 		document.addKeyword("objectFieldId", objectField.getObjectFieldId());
 		document.addKeyword("state", objectField.isState());
-		document.addKeyword(
-			"unique", _isUnique(objectField.getObjectFieldId()));
+
+		if (objectField.hasUniqueValues()) {
+			document.addKeyword(
+				"unique", _isUnique(objectField.getObjectFieldId()));
+		}
 
 		document.remove(Field.USER_NAME);
 	}
@@ -76,7 +79,9 @@ public class ObjectFieldModelDocumentContributor
 								ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
 							).and(
 								DSLFunctionFactoryUtil.lower(
-									ObjectFieldSettingTable.INSTANCE.value
+									DSLFunctionFactoryUtil.castClobText(
+										ObjectFieldSettingTable.INSTANCE.value
+									)
 								).eq(
 									StringPool.TRUE
 								)

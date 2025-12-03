@@ -74,36 +74,36 @@ public class TestrayFactory {
 		if (testClass != null) {
 			if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
 				return new FunctionalBatchBuildTestrayCaseResult(
-					testrayBuild, topLevelBuildReport, axisTestClassGroup,
-					testClass);
+					axisTestClassGroup, testClass, testrayBuild,
+					topLevelBuildReport);
 			}
 			else if (axisTestClassGroup instanceof JSUnitAxisTestClassGroup) {
 				return new JSUnitBatchBuildTestrayCaseResult(
-					testrayBuild, topLevelBuildReport, axisTestClassGroup,
-					testClass);
+					axisTestClassGroup, testClass, testrayBuild,
+					topLevelBuildReport);
 			}
 			else if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 				return new JUnitBatchBuildTestrayCaseResult(
-					testrayBuild, topLevelBuildReport, axisTestClassGroup,
-					testClass);
+					axisTestClassGroup, testClass, testrayBuild,
+					topLevelBuildReport);
 			}
 			else if (axisTestClassGroup instanceof ModulesAxisTestClassGroup) {
 				if (testClass instanceof ServiceBuilderAntTargetTestClass) {
 					return new AntTargetBatchBuildTestrayCaseResult(
-						testrayBuild, topLevelBuildReport, axisTestClassGroup,
-						testClass);
+						axisTestClassGroup, testClass, testrayBuild,
+						topLevelBuildReport);
 				}
 
 				return new ModulesBatchBuildTestrayCaseResult(
-					testrayBuild, topLevelBuildReport, axisTestClassGroup,
-					testClass);
+					axisTestClassGroup, testClass, testrayBuild,
+					topLevelBuildReport);
 			}
 			else if (axisTestClassGroup instanceof
 						PlaywrightAxisTestClassGroup) {
 
 				return new PlaywrightBatchBuildTestrayCaseResult(
-					testrayBuild, topLevelBuildReport, axisTestClassGroup,
-					testClass, testClassMethod);
+					axisTestClassGroup, testClass, testClassMethod,
+					testrayBuild, topLevelBuildReport);
 			}
 		}
 
@@ -112,11 +112,11 @@ public class TestrayFactory {
 				"test-portal-source-format")) {
 
 			return new SFBatchBuildTestrayCaseResult(
-				testrayBuild, topLevelBuildReport, axisTestClassGroup);
+				axisTestClassGroup, testrayBuild, topLevelBuildReport);
 		}
 
 		return new BatchBuildTestrayCaseResult<>(
-			testrayBuild, topLevelBuildReport, axisTestClassGroup);
+			axisTestClassGroup, testrayBuild, topLevelBuildReport);
 	}
 
 	public static TestrayCaseResult newJSONObjectTestrayCaseResult(

@@ -46,25 +46,9 @@ public class BatchBuildTestrayCaseResult
 		extends BuildTestrayCaseResult {
 
 	public BatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup) {
-
-		this(testrayBuild, topLevelBuildReport, axisTestClassGroup, null, null);
-	}
-
-	public BatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
-
-		this(
-			testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass,
-			null);
-	}
-
-	public BatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
-		TestClassMethod testClassMethod) {
+		TestClassMethod testClassMethod, TestrayBuild testrayBuild,
+		TopLevelBuildReport topLevelBuildReport) {
 
 		super(testrayBuild, topLevelBuildReport);
 
@@ -73,6 +57,22 @@ public class BatchBuildTestrayCaseResult
 		_testClassMethod = (B)testClassMethod;
 
 		initBuildReport();
+	}
+
+	public BatchBuildTestrayCaseResult(
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport) {
+
+		this(
+			axisTestClassGroup, testClass, null, testrayBuild,
+			topLevelBuildReport);
+	}
+
+	public BatchBuildTestrayCaseResult(
+		AxisTestClassGroup axisTestClassGroup, TestrayBuild testrayBuild,
+		TopLevelBuildReport topLevelBuildReport) {
+
+		this(axisTestClassGroup, null, null, testrayBuild, topLevelBuildReport);
 	}
 
 	public String getAxisName() {

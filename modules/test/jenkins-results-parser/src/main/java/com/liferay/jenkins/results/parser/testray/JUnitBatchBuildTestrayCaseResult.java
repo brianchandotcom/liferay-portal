@@ -29,10 +29,10 @@ public class JUnitBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult<JUnitTestClass, TestClassMethod> {
 
 	public JUnitBatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
+		super(axisTestClassGroup, testClass, testrayBuild, topLevelBuildReport);
 	}
 
 	@Override

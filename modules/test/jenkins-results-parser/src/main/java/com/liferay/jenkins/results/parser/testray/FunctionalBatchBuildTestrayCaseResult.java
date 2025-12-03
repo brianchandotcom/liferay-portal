@@ -26,10 +26,10 @@ public class FunctionalBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult<FunctionalTestClass, TestClassMethod> {
 
 	public FunctionalBatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass);
+		super(axisTestClassGroup, testClass, testrayBuild, topLevelBuildReport);
 
 		if (!(testClass instanceof FunctionalTestClass)) {
 			throw new RuntimeException(

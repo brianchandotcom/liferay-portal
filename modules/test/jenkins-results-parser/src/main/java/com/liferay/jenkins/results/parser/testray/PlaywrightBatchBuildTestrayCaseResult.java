@@ -36,13 +36,13 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		<PlaywrightJUnitTestClass, PlaywrightTestClassMethod> {
 
 	public PlaywrightBatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
-		TestClassMethod testClassMethod) {
+		TestClassMethod testClassMethod, TestrayBuild testrayBuild,
+		TopLevelBuildReport topLevelBuildReport) {
 
 		super(
-			testrayBuild, topLevelBuildReport, axisTestClassGroup, testClass,
-			testClassMethod);
+			axisTestClassGroup, testClass, testClassMethod, testrayBuild,
+			topLevelBuildReport);
 	}
 
 	@Override

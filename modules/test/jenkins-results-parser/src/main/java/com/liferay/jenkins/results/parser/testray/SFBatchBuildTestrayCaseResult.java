@@ -17,10 +17,10 @@ public class SFBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult<TestClass, TestClassMethod> {
 
 	public SFBatchBuildTestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup) {
+		AxisTestClassGroup axisTestClassGroup, TestrayBuild testrayBuild,
+		TopLevelBuildReport topLevelBuildReport) {
 
-		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
+		super(axisTestClassGroup, testrayBuild, topLevelBuildReport);
 	}
 
 	@Override

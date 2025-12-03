@@ -8,6 +8,8 @@ package com.liferay.frontend.data.set.model;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.function.UnsafeSupplier;
 
+import jakarta.portlet.PortletURL;
+
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,47 @@ public class FDSActionDropdownItemBuilder {
 		return fdsActionDropdownItemStep.setActive(activeUnsafeSupplier);
 	}
 
+	public static AfterConfirmationMessageStep setConfirmationMessage(
+		String confirmationMessage) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setConfirmationMessage(
+			confirmationMessage);
+	}
+
+	public static AfterConfirmationMessageStep setConfirmationMessage(
+		UnsafeSupplier<String, Exception> confirmationMessageUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setConfirmationMessage(
+			confirmationMessageUnsafeSupplier);
+	}
+
+	public static AfterConfirmationMessageTypeStep setConfirmationMessageType(
+		String confirmationMessageType) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setConfirmationMessageType(
+			confirmationMessageType);
+	}
+
+	public static AfterConfirmationMessageTypeStep setConfirmationMessageType(
+		UnsafeSupplier<String, Exception>
+			confirmationMessageTypeUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setConfirmationMessageType(
+			confirmationMessageTypeUnsafeSupplier);
+	}
+
 	public static AfterSetDataStep setData(Map<String, Object> data) {
 		FDSActionDropdownItemStep fdsActionDropdownItemStep =
 			new FDSActionDropdownItemStep();
@@ -78,6 +121,50 @@ public class FDSActionDropdownItemBuilder {
 			new FDSActionDropdownItemStep();
 
 		return fdsActionDropdownItemStep.setDropdownItems(dropdownItems);
+	}
+
+	public static AfterErrorMessageStep setErrorMessage(String errorMessage) {
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setErrorMessage(errorMessage);
+	}
+
+	public static AfterErrorMessageStep setErrorMessage(
+		UnsafeSupplier<String, Exception> errorMessageUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setErrorMessage(
+			errorMessageUnsafeSupplier);
+	}
+
+	public static AfterFDSActionDropdownItemsStep setFDSActionDropdownItems(
+		List<FDSActionDropdownItem> fdsActionDropdownItems) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setFDSActionDropdownItems(
+			fdsActionDropdownItems);
+	}
+
+	public static AfterHighlightedStep setHighlighted(boolean highlighted) {
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setHighlighted(highlighted);
+	}
+
+	public static AfterHighlightedStep setHighlighted(
+		UnsafeSupplier<Boolean, Exception> highlightedUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setHighlighted(
+			highlightedUnsafeSupplier);
 	}
 
 	public static AfterHrefStep setHref(Object href) {
@@ -121,6 +208,22 @@ public class FDSActionDropdownItemBuilder {
 		return fdsActionDropdownItemStep.setIcon(iconUnsafeSupplier);
 	}
 
+	public static AfterIdStep setId(String id) {
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setId(id);
+	}
+
+	public static AfterIdStep setId(
+		UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setId(idUnsafeSupplier);
+	}
+
 	public static AfterLabelStep setLabel(String label) {
 		FDSActionDropdownItemStep fdsActionDropdownItemStep =
 			new FDSActionDropdownItemStep();
@@ -135,6 +238,57 @@ public class FDSActionDropdownItemBuilder {
 			new FDSActionDropdownItemStep();
 
 		return fdsActionDropdownItemStep.setLabel(labelUnsafeSupplier);
+	}
+
+	public static AfterMethodStep setMethod(String method) {
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setMethod(method);
+	}
+
+	public static AfterMethodStep setMethod(
+		UnsafeSupplier<String, Exception> methodUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setMethod(methodUnsafeSupplier);
+	}
+
+	public static AfterModalSizeStep setModalSize(String modalSize) {
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setModalSize(modalSize);
+	}
+
+	public static AfterModalSizeStep setModalSize(
+		UnsafeSupplier<String, Exception> modalSizeUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setModalSize(modalSizeUnsafeSupplier);
+	}
+
+	public static AfterPermissionKeyStep setPermissionKey(
+		String permissionKey) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setPermissionKey(permissionKey);
+	}
+
+	public static AfterPermissionKeyStep setPermissionKey(
+		UnsafeSupplier<String, Exception> permissionKeyUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setPermissionKey(
+			permissionKeyUnsafeSupplier);
 	}
 
 	public static AfterQuickActionStep setQuickAction(boolean quickAction) {
@@ -154,11 +308,21 @@ public class FDSActionDropdownItemBuilder {
 			quickActionUnsafeSupplier);
 	}
 
-	public static AfterSeparatorStep setSeparator(boolean separator) {
+	public static AfterRequestBodyStep setRequestBody(String requestBody) {
 		FDSActionDropdownItemStep fdsActionDropdownItemStep =
 			new FDSActionDropdownItemStep();
 
-		return fdsActionDropdownItemStep.setSeparator(separator);
+		return fdsActionDropdownItemStep.setRequestBody(requestBody);
+	}
+
+	public static AfterRequestBodyStep setRequestBody(
+		UnsafeSupplier<String, Exception> requestBodyUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setRequestBody(
+			requestBodyUnsafeSupplier);
 	}
 
 	public static AfterSeparatorStep setSeparator(
@@ -168,6 +332,25 @@ public class FDSActionDropdownItemBuilder {
 			new FDSActionDropdownItemStep();
 
 		return fdsActionDropdownItemStep.setSeparator(separatorUnsafeSupplier);
+	}
+
+	public static AfterSuccessMessageStep setSuccessMessage(
+		String successMessage) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setSuccessMessage(successMessage);
+	}
+
+	public static AfterSuccessMessageStep setSuccessMessage(
+		UnsafeSupplier<String, Exception> successMessageUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setSuccessMessage(
+			successMessageUnsafeSupplier);
 	}
 
 	public static AfterTargetStep setTarget(String target) {
@@ -186,6 +369,22 @@ public class FDSActionDropdownItemBuilder {
 		return fdsActionDropdownItemStep.setTarget(targetUnsafeSupplier);
 	}
 
+	public static AfterTitleStep setTitle(String title) {
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setTitle(title);
+	}
+
+	public static AfterTitleStep setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setTitle(titleUnsafeSupplier);
+	}
+
 	public static AfterTypeStep setType(String type) {
 		FDSActionDropdownItemStep fdsActionDropdownItemStep =
 			new FDSActionDropdownItemStep();
@@ -202,18 +401,49 @@ public class FDSActionDropdownItemBuilder {
 		return fdsActionDropdownItemStep.setType(typeUnsafeSupplier);
 	}
 
+	public static AfterVisibilityFiltersStep setVisibilityFilters(
+		Map<String, Object> visibilityFilters) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setVisibilityFilters(
+			visibilityFilters);
+	}
+
+	public static AfterVisibilityFiltersStep setVisibilityFilters(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			visibilityFiltersUnsafeSupplier) {
+
+		FDSActionDropdownItemStep fdsActionDropdownItemStep =
+			new FDSActionDropdownItemStep();
+
+		return fdsActionDropdownItemStep.setVisibilityFilters(
+			visibilityFiltersUnsafeSupplier);
+	}
+
 	public static class FDSActionDropdownItemStep
-		implements ActiveStep, AfterActiveStep, AfterDisabledStep,
-				   AfterDropdownItemsStep, AfterHrefStep, AfterIconStep,
-				   AfterKeyStep, AfterLabelStep, AfterPutDataStep,
-				   AfterQuickActionStep, AfterSeparatorStep, AfterSetDataStep,
-				   AfterTargetStep, AfterTypeStep, BuildStep, DisabledStep,
-				   DropdownItemsStep, HrefStep, IconStep, LabelStep,
-				   PutDataStep, QuickActionStep, SeparatorStep, SetDataStep,
-				   TargetStep, TypeStep {
+		implements ActiveStep, AfterActiveStep, AfterConfirmationMessageStep,
+				   AfterConfirmationMessageTypeStep, AfterDisabledStep,
+				   AfterDropdownItemsStep, AfterErrorMessageStep,
+				   AfterFDSActionDropdownItemsStep, AfterHighlightedStep,
+				   AfterHrefStep, AfterIconStep, AfterIdStep, AfterKeyStep,
+				   AfterLabelStep, AfterMethodStep, AfterModalSizeStep,
+				   AfterPermissionKeyStep, AfterPutDataStep,
+				   AfterQuickActionStep, AfterRequestBodyStep,
+				   AfterSeparatorStep, AfterSetDataStep,
+				   AfterSuccessMessageStep, AfterTargetStep, AfterTitleStep,
+				   AfterTypeStep, AfterVisibilityFiltersStep, BuildStep,
+				   ConfirmationMessageStep, ConfirmationMessageTypeStep,
+				   DisabledStep, DropdownItemsStep, ErrorMessageStep,
+				   HighlightedStep, HrefStep, IconStep, IdStep, LabelStep,
+				   MethodStep, ModalSizeStep, PermissionKeyStep, PutDataStep,
+				   QuickActionStep, RequestBodyStep, SeparatorStep, SetDataStep,
+				   SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				   VisibilityFiltersStep {
 
 		@Override
-		public DropdownItem build() {
+		public FDSActionDropdownItem build() {
 			return _fdsActionDropdownItem;
 		}
 
@@ -268,6 +498,67 @@ public class FDSActionDropdownItemBuilder {
 		}
 
 		@Override
+		public AfterConfirmationMessageStep setConfirmationMessage(
+			String confirmationMessage) {
+
+			_fdsActionDropdownItem.setConfirmationMessage(confirmationMessage);
+
+			return this;
+		}
+
+		@Override
+		public AfterConfirmationMessageStep setConfirmationMessage(
+			UnsafeSupplier<String, Exception>
+				confirmationMessageUnsafeSupplier) {
+
+			try {
+				String confirmationMessage =
+					confirmationMessageUnsafeSupplier.get();
+
+				if (confirmationMessage != null) {
+					_fdsActionDropdownItem.setConfirmationMessage(
+						confirmationMessage);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
+		public AfterConfirmationMessageTypeStep setConfirmationMessageType(
+			String confirmationMessageType) {
+
+			_fdsActionDropdownItem.setConfirmationMessageType(
+				confirmationMessageType);
+
+			return this;
+		}
+
+		@Override
+		public AfterConfirmationMessageTypeStep setConfirmationMessageType(
+			UnsafeSupplier<String, Exception>
+				confirmationMessageTypeUnsafeSupplier) {
+
+			try {
+				String confirmationMessageType =
+					confirmationMessageTypeUnsafeSupplier.get();
+
+				if (confirmationMessageType != null) {
+					_fdsActionDropdownItem.setConfirmationMessageType(
+						confirmationMessageType);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
 		public AfterSetDataStep setData(Map<String, Object> data) {
 			_fdsActionDropdownItem.setData(data);
 
@@ -306,6 +597,67 @@ public class FDSActionDropdownItemBuilder {
 			_fdsActionDropdownItem.setDropdownItems(dropdownItems);
 
 			return this;
+		}
+
+		@Override
+		public AfterErrorMessageStep setErrorMessage(String errorMessage) {
+			_fdsActionDropdownItem.setErrorMessage(errorMessage);
+
+			return this;
+		}
+
+		@Override
+		public AfterErrorMessageStep setErrorMessage(
+			UnsafeSupplier<String, Exception> errorMessageUnsafeSupplier) {
+
+			try {
+				String errorMessage = errorMessageUnsafeSupplier.get();
+
+				if (errorMessage != null) {
+					_fdsActionDropdownItem.setErrorMessage(errorMessage);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
+		public AfterFDSActionDropdownItemsStep setFDSActionDropdownItems(
+			List<FDSActionDropdownItem> fdsActionDropdownItems) {
+
+			_fdsActionDropdownItem.setFDSActionDropdownItems(
+				fdsActionDropdownItems);
+
+			return this;
+		}
+
+		@Override
+		public AfterHighlightedStep setHighlighted(boolean highlighted) {
+			_fdsActionDropdownItem.setHighlighted(highlighted);
+
+			return this;
+		}
+
+		@Override
+		public AfterHighlightedStep setHighlighted(
+			UnsafeSupplier<Boolean, Exception> highlightedUnsafeSupplier) {
+
+			try {
+				Boolean highlighted = highlightedUnsafeSupplier.get();
+
+				if (highlighted != null) {
+					_fdsActionDropdownItem.setHighlighted(
+						highlighted.booleanValue());
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 
 		@Override
@@ -368,6 +720,31 @@ public class FDSActionDropdownItemBuilder {
 		}
 
 		@Override
+		public AfterIdStep setId(String id) {
+			_fdsActionDropdownItem.setId(id);
+
+			return this;
+		}
+
+		@Override
+		public AfterIdStep setId(
+			UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+
+			try {
+				String id = idUnsafeSupplier.get();
+
+				if (id != null) {
+					_fdsActionDropdownItem.setId(id);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
 		public AfterKeyStep setKey(String key) {
 			_fdsActionDropdownItem.setKey(key);
 
@@ -418,6 +795,81 @@ public class FDSActionDropdownItemBuilder {
 		}
 
 		@Override
+		public AfterMethodStep setMethod(String method) {
+			_fdsActionDropdownItem.setMethod(method);
+
+			return this;
+		}
+
+		@Override
+		public AfterMethodStep setMethod(
+			UnsafeSupplier<String, Exception> methodUnsafeSupplier) {
+
+			try {
+				String method = methodUnsafeSupplier.get();
+
+				if (method != null) {
+					_fdsActionDropdownItem.setMethod(method);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
+		public AfterModalSizeStep setModalSize(String modalSize) {
+			_fdsActionDropdownItem.setModalSize(modalSize);
+
+			return this;
+		}
+
+		@Override
+		public AfterModalSizeStep setModalSize(
+			UnsafeSupplier<String, Exception> modalSizeUnsafeSupplier) {
+
+			try {
+				String modalSize = modalSizeUnsafeSupplier.get();
+
+				if (modalSize != null) {
+					_fdsActionDropdownItem.setModalSize(modalSize);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
+		public AfterPermissionKeyStep setPermissionKey(String permissionKey) {
+			_fdsActionDropdownItem.setPermissionKey(permissionKey);
+
+			return this;
+		}
+
+		@Override
+		public AfterPermissionKeyStep setPermissionKey(
+			UnsafeSupplier<String, Exception> permissionKeyUnsafeSupplier) {
+
+			try {
+				String permissionKey = permissionKeyUnsafeSupplier.get();
+
+				if (permissionKey != null) {
+					_fdsActionDropdownItem.setPermissionKey(permissionKey);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
 		public AfterQuickActionStep setQuickAction(boolean quickAction) {
 			_fdsActionDropdownItem.setQuickAction(quickAction);
 
@@ -434,6 +886,31 @@ public class FDSActionDropdownItemBuilder {
 				if (quickAction != null) {
 					_fdsActionDropdownItem.setQuickAction(
 						quickAction.booleanValue());
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
+		public AfterRequestBodyStep setRequestBody(String requestBody) {
+			_fdsActionDropdownItem.setRequestBody(requestBody);
+
+			return this;
+		}
+
+		@Override
+		public AfterRequestBodyStep setRequestBody(
+			UnsafeSupplier<String, Exception> requestBodyUnsafeSupplier) {
+
+			try {
+				String requestBody = requestBodyUnsafeSupplier.get();
+
+				if (requestBody != null) {
+					_fdsActionDropdownItem.setRequestBody(requestBody);
 				}
 
 				return this;
@@ -470,6 +947,33 @@ public class FDSActionDropdownItemBuilder {
 		}
 
 		@Override
+		public AfterSuccessMessageStep setSuccessMessage(
+			String successMessage) {
+
+			_fdsActionDropdownItem.setSuccessMessage(successMessage);
+
+			return this;
+		}
+
+		@Override
+		public AfterSuccessMessageStep setSuccessMessage(
+			UnsafeSupplier<String, Exception> successMessageUnsafeSupplier) {
+
+			try {
+				String successMessage = successMessageUnsafeSupplier.get();
+
+				if (successMessage != null) {
+					_fdsActionDropdownItem.setSuccessMessage(successMessage);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
 		public AfterTargetStep setTarget(String target) {
 			_fdsActionDropdownItem.setTarget(target);
 
@@ -485,6 +989,31 @@ public class FDSActionDropdownItemBuilder {
 
 				if (target != null) {
 					_fdsActionDropdownItem.setTarget(target);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		@Override
+		public AfterTitleStep setTitle(String title) {
+			_fdsActionDropdownItem.setTitle(title);
+
+			return this;
+		}
+
+		@Override
+		public AfterTitleStep setTitle(
+			UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
+			try {
+				String title = titleUnsafeSupplier.get();
+
+				if (title != null) {
+					_fdsActionDropdownItem.setTitle(title);
 				}
 
 				return this;
@@ -519,6 +1048,36 @@ public class FDSActionDropdownItemBuilder {
 			}
 		}
 
+		@Override
+		public AfterVisibilityFiltersStep setVisibilityFilters(
+			Map<String, Object> visibilityFilters) {
+
+			_fdsActionDropdownItem.setVisibilityFilters(visibilityFilters);
+
+			return this;
+		}
+
+		@Override
+		public AfterVisibilityFiltersStep setVisibilityFilters(
+			UnsafeSupplier<Map<String, Object>, Exception>
+				visibilityFiltersUnsafeSupplier) {
+
+			try {
+				Map<String, Object> visibilityFilters =
+					visibilityFiltersUnsafeSupplier.get();
+
+				if (visibilityFilters != null) {
+					_fdsActionDropdownItem.setVisibilityFilters(
+						visibilityFilters);
+				}
+
+				return this;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
 		private final FDSActionDropdownItem _fdsActionDropdownItem =
 			new FDSActionDropdownItem();
 
@@ -533,72 +1092,214 @@ public class FDSActionDropdownItemBuilder {
 
 	}
 
+	public interface After extends BuildStep {
+	}
+
 	public interface AfterActiveStep
-		extends BuildStep, DisabledStep, DropdownItemsStep, HrefStep, IconStep,
-				LabelStep, QuickActionStep, SeparatorStep, SetDataStep,
-				TargetStep, TypeStep {
+		extends BuildStep, ConfirmationMessageStep, ConfirmationMessageTypeStep,
+				DisabledStep, DropdownItemsStep, ErrorMessageStep,
+				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
+				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterConfirmationMessageStep
+		extends BuildStep, ConfirmationMessageTypeStep, DisabledStep,
+				DropdownItemsStep, ErrorMessageStep, FDSActionDropdownItemsStep,
+				HighlightedStep, HrefStep, IconStep, IdStep, LabelStep,
+				MethodStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep, SetDataStep,
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
+	}
+
+	public interface AfterConfirmationMessageTypeStep
+		extends BuildStep, DisabledStep, DropdownItemsStep, ErrorMessageStep,
+				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
+				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterDisabledStep
-		extends BuildStep, DropdownItemsStep, HrefStep, IconStep, LabelStep,
-				QuickActionStep, SeparatorStep, TargetStep, TypeStep {
+		extends BuildStep, DropdownItemsStep, ErrorMessageStep,
+				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
+				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterDropdownItemsStep
-		extends BuildStep, IconStep, KeyStep, LabelStep, QuickActionStep,
-				SeparatorStep, TargetStep, TypeStep {
+		extends BuildStep, ErrorMessageStep, FDSActionDropdownItemsStep,
+				HighlightedStep, IconStep, IdStep, KeyStep, LabelStep,
+				MethodStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
+	}
+
+	public interface AfterErrorMessageStep
+		extends BuildStep, FDSActionDropdownItemsStep, HighlightedStep,
+				HrefStep, IconStep, IdStep, LabelStep, MethodStep,
+				ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterFDSActionDropdownItemsStep
+		extends BuildStep, HighlightedStep, HrefStep, IconStep, IdStep,
+				LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterHighlightedStep
+		extends BuildStep, IconStep, IdStep, LabelStep, MethodStep,
+				ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterHrefStep
-		extends BuildStep, DropdownItemsStep, IconStep, KeyStep, LabelStep,
-				QuickActionStep, SeparatorStep, TargetStep, TypeStep {
+		extends BuildStep, DropdownItemsStep, HighlightedStep, IconStep, IdStep,
+				KeyStep, LabelStep, MethodStep, ModalSizeStep,
+				PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterIconStep
-		extends BuildStep, DropdownItemsStep, KeyStep, LabelStep,
-				QuickActionStep, SeparatorStep, TargetStep, TypeStep {
+		extends BuildStep, DropdownItemsStep, IdStep, KeyStep, LabelStep,
+				MethodStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
+	}
+
+	public interface AfterIdStep
+		extends BuildStep, DropdownItemsStep, KeyStep, LabelStep, MethodStep,
+				ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterKeyStep
-		extends BuildStep, LabelStep, QuickActionStep, SeparatorStep,
-				TargetStep, TypeStep {
+		extends BuildStep, LabelStep, MethodStep, ModalSizeStep,
+				PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterLabelStep
-		extends BuildStep, QuickActionStep, SeparatorStep, TargetStep,
-				TypeStep {
+		extends BuildStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterMethodStep
+		extends BuildStep, ModalSizeStep, PermissionKeyStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
+	}
+
+	public interface AfterModalSizeStep
+		extends BuildStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterPermissionKeyStep
+		extends BuildStep, QuickActionStep, RequestBodyStep,
+				SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterPutDataStep
-		extends ActiveStep, BuildStep, DisabledStep, DropdownItemsStep,
-				HrefStep, IconStep, KeyStep, LabelStep, PutDataStep,
-				QuickActionStep, SeparatorStep, SetDataStep, TargetStep,
-				TypeStep {
+		extends ActiveStep, BuildStep, ConfirmationMessageStep, ConfirmationMessageTypeStep,
+				DisabledStep, DropdownItemsStep, ErrorMessageStep,
+				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
+				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				PutDataStep, QuickActionStep, RequestBodyStep, SeparatorStep,
+				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterQuickActionStep
-		extends BuildStep, SeparatorStep, TargetStep, TypeStep {
+		extends BuildStep, RequestBodyStep, SeparatorStep,
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
+	}
+
+	public interface AfterRequestBodyStep
+		extends BuildStep, SeparatorStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterSeparatorStep
-		extends BuildStep, TargetStep, TypeStep {
+		extends BuildStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterSetDataStep
-		extends BuildStep, DisabledStep, DropdownItemsStep, HrefStep, IconStep,
-				LabelStep, QuickActionStep, SeparatorStep, TargetStep,
-				TypeStep {
+		extends BuildStep, DisabledStep, DropdownItemsStep, ErrorMessageStep,
+				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
+				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep, PutDataStep,
+				QuickActionStep, RequestBodyStep, SeparatorStep,
+				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
 	}
 
-	public interface AfterTargetStep extends BuildStep, TypeStep {
+	public interface AfterSuccessMessageStep
+		extends BuildStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
 	}
 
-	public interface AfterTypeStep extends BuildStep {
+	public interface AfterTargetStep
+		extends BuildStep, TitleStep, TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterTitleStep
+		extends BuildStep, TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterTypeStep extends BuildStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterVisibilityFiltersStep extends BuildStep {
 	}
 
 	public interface BuildStep {
 
-		public DropdownItem build();
+		public FDSActionDropdownItem build();
+
+	}
+
+	public interface ConfirmationMessageStep {
+
+		public AfterConfirmationMessageStep setConfirmationMessage(
+			String confirmationMessage);
+
+		public AfterConfirmationMessageStep setConfirmationMessage(
+			UnsafeSupplier<String, Exception>
+				confirmationMessageUnsafeSupplier);
+
+	}
+
+	public interface ConfirmationMessageTypeStep {
+
+		public AfterConfirmationMessageTypeStep setConfirmationMessageType(
+			String confirmationMessageType);
+
+		public AfterConfirmationMessageTypeStep setConfirmationMessageType(
+			UnsafeSupplier<String, Exception>
+				confirmationMessageTypeUnsafeSupplier);
 
 	}
 
@@ -615,6 +1316,31 @@ public class FDSActionDropdownItemBuilder {
 
 		public AfterDropdownItemsStep setDropdownItems(
 			List<DropdownItem> dropdownItems);
+
+	}
+
+	public interface ErrorMessageStep {
+
+		public AfterErrorMessageStep setErrorMessage(String errorMessage);
+
+		public AfterErrorMessageStep setErrorMessage(
+			UnsafeSupplier<String, Exception> errorMessageUnsafeSupplier);
+
+	}
+
+	public interface FDSActionDropdownItemsStep {
+
+		public AfterFDSActionDropdownItemsStep setFDSActionDropdownItems(
+			List<FDSActionDropdownItem> fdsActionDropdownItems);
+
+	}
+
+	public interface HighlightedStep {
+
+		public AfterHighlightedStep setHighlighted(boolean highlighted);
+
+		public AfterHighlightedStep setHighlighted(
+			UnsafeSupplier<Boolean, Exception> highlightedUnsafeSupplier);
 
 	}
 
@@ -639,6 +1365,15 @@ public class FDSActionDropdownItemBuilder {
 
 	}
 
+	public interface IdStep {
+
+		public AfterIdStep setId(String id);
+
+		public AfterIdStep setId(
+			UnsafeSupplier<String, Exception> idUnsafeSupplier);
+
+	}
+
 	public interface KeyStep {
 
 		public AfterKeyStep setKey(String key);
@@ -654,6 +1389,33 @@ public class FDSActionDropdownItemBuilder {
 
 		public AfterLabelStep setLabel(
 			UnsafeSupplier<String, Exception> labelUnsafeSupplier);
+
+	}
+
+	public interface MethodStep {
+
+		public AfterMethodStep setMethod(String method);
+
+		public AfterMethodStep setMethod(
+			UnsafeSupplier<String, Exception> methodUnsafeSupplier);
+
+	}
+
+	public interface ModalSizeStep {
+
+		public AfterModalSizeStep setModalSize(String modalSize);
+
+		public AfterModalSizeStep setModalSize(
+			UnsafeSupplier<String, Exception> modalSizeUnsafeSupplier);
+
+	}
+
+	public interface PermissionKeyStep {
+
+		public AfterPermissionKeyStep setPermissionKey(String permissionKey);
+
+		public AfterPermissionKeyStep setPermissionKey(
+			UnsafeSupplier<String, Exception> permissionKeyUnsafeSupplier);
 
 	}
 
@@ -675,6 +1437,15 @@ public class FDSActionDropdownItemBuilder {
 
 	}
 
+	public interface RequestBodyStep {
+
+		public AfterRequestBodyStep setRequestBody(String requestBody);
+
+		public AfterRequestBodyStep setRequestBody(
+			UnsafeSupplier<String, Exception> requestBodyUnsafeSupplier);
+
+	}
+
 	public interface SeparatorStep {
 
 		public AfterSeparatorStep setSeparator(boolean separator);
@@ -690,6 +1461,15 @@ public class FDSActionDropdownItemBuilder {
 
 	}
 
+	public interface SuccessMessageStep {
+
+		public AfterSuccessMessageStep setSuccessMessage(String successMessage);
+
+		public AfterSuccessMessageStep setSuccessMessage(
+			UnsafeSupplier<String, Exception> successMessageUnsafeSupplier);
+
+	}
+
 	public interface TargetStep {
 
 		public AfterTargetStep setTarget(String target);
@@ -699,12 +1479,32 @@ public class FDSActionDropdownItemBuilder {
 
 	}
 
+	public interface TitleStep {
+
+		public AfterTitleStep setTitle(String title);
+
+		public AfterTitleStep setTitle(
+			UnsafeSupplier<String, Exception> titleUnsafeSupplier);
+
+	}
+
 	public interface TypeStep {
 
 		public AfterTypeStep setType(String type);
 
 		public AfterTypeStep setType(
 			UnsafeSupplier<String, Exception> typeUnsafeSupplier);
+
+	}
+
+	public interface VisibilityFiltersStep {
+
+		public AfterVisibilityFiltersStep setVisibilityFilters(
+			Map<String, Object> visibilityFilters);
+
+		public AfterVisibilityFiltersStep setVisibilityFilters(
+			UnsafeSupplier<Map<String, Object>, Exception>
+				visibilityFiltersUnsafeSupplier);
 
 	}
 

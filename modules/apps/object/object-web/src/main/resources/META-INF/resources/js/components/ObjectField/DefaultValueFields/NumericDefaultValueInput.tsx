@@ -15,6 +15,7 @@ const NumericDefaultValueInput: React.FC<
 	{children?: React.ReactNode | undefined} & InputAsValueFieldComponentProps
 > = ({
 	dataType,
+	decimalSeparator,
 	defaultValue,
 	error,
 	label,
@@ -31,7 +32,7 @@ const NumericDefaultValueInput: React.FC<
 			allowLeadingZeroes: true,
 			allowNegative: true,
 			decimalLimit: null,
-			decimalSymbol: '.',
+			decimalSeparator: decimalSeparator ?? '.',
 			includeThousandsSeparator: false,
 			prefix: '',
 		};

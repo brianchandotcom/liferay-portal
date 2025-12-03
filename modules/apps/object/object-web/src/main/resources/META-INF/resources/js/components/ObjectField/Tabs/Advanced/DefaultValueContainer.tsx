@@ -36,6 +36,7 @@ import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 interface DefaultValueContainerProps {
 	ckEditor5Config?: object;
 	creationLanguageId: Liferay.Language.Locale;
+	decimalSeparator: string;
 	errors: ObjectFieldErrors;
 	learnResources: ILearnResourceContext;
 	modelBuilder?: boolean;
@@ -49,6 +50,7 @@ export interface InputAsValueFieldComponentProps {
 	ckEditor5Config?: object;
 	creationLanguageId: Liferay.Language.Locale;
 	dataType?: string;
+	decimalSeparator?: string;
 	defaultValue?: ObjectFieldSettingValue;
 	error?: string;
 	id?: string;
@@ -81,6 +83,7 @@ const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
 export function DefaultValueContainer({
 	ckEditor5Config,
 	creationLanguageId,
+	decimalSeparator,
 	errors,
 	learnResources,
 	modelBuilder = false,
@@ -236,6 +239,7 @@ export function DefaultValueContainer({
 						ckEditor5Config={ckEditor5Config}
 						creationLanguageId={creationLanguageId}
 						dataType={dataType}
+						decimalSeparator={decimalSeparator}
 						defaultValue={
 							defaultValueType === 'inputAsValue' && defaultValue
 						}

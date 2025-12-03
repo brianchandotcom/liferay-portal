@@ -36,6 +36,7 @@ export function RightSidebarObjectFieldDetails() {
 		{
 			baseResourceURL,
 			ckEditor5Config,
+			decimalSeparator,
 			filterOperators,
 			forbiddenChars,
 			forbiddenLastChars,
@@ -208,6 +209,7 @@ export function RightSidebarObjectFieldDetails() {
 							creationLanguageId={
 								objectDefinitionNodeData.defaultLanguageId
 							}
+							decimalSeparator={decimalSeparator}
 							errors={errors}
 							filterOperators={filterOperators}
 							handleChange={handleChange}

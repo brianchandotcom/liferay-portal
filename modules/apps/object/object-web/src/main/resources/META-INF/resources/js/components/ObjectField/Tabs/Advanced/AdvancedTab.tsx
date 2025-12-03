@@ -16,6 +16,7 @@ interface AdvancedTabProps {
 	ckEditor5Config?: object;
 	containerWrapper: ElementType;
 	creationLanguageId: Liferay.Language.Locale;
+	decimalSeparator: string;
 	errors: ObjectFieldErrors;
 	isDefaultStorageType: boolean;
 	isRootDescendantNode: boolean;
@@ -32,6 +33,7 @@ export function AdvancedTab({
 	ckEditor5Config,
 	containerWrapper: ContainerWrapper,
 	creationLanguageId,
+	decimalSeparator,
 	errors,
 	isDefaultStorageType,
 	isRootDescendantNode,
@@ -93,6 +95,7 @@ export function AdvancedTab({
 					<DefaultValueContainer
 						ckEditor5Config={ckEditor5Config}
 						creationLanguageId={creationLanguageId}
+						decimalSeparator={decimalSeparator}
 						errors={errors}
 						learnResources={learnResources}
 						modelBuilder={modelBuilder}

@@ -15,6 +15,7 @@ interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
 	ckEditor5Config?: object;
 	companies: Scope[];
+	decimalSeparator?: string;
 	editObjectDefinitionURL: string;
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
@@ -37,6 +38,7 @@ export default function CustomObjectFolderWrapper({
 	baseResourceURL,
 	ckEditor5Config,
 	companies,
+	decimalSeparator,
 	editObjectDefinitionURL,
 	filterOperators,
 	forbiddenChars,
@@ -56,6 +58,7 @@ export default function CustomObjectFolderWrapper({
 				value={{
 					baseResourceURL,
 					ckEditor5Config,
+					decimalSeparator,
 					editObjectDefinitionURL,
 					filterOperators,
 					forbiddenChars,

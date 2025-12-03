@@ -11,6 +11,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.BookmarksFolderService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -38,7 +39,6 @@ import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -186,11 +186,8 @@ public class BookmarksEntryIndexerReindexTest {
 
 		_bookmarksFixture.createBookmarksEntry(folderId);
 
-		List<String> searchTerms = new ArrayList<>(2);
-
-		for (BookmarksEntry bookmark : _bookmarksEntries) {
-			searchTerms.add(bookmark.getName());
-		}
+		List<String> searchTerms = TransformUtil.transform(
+			_bookmarksEntries, bookmark -> bookmark.getName());
 
 		searchAndAssertLength(searchTerms.toString(), 2);
 

@@ -5,19 +5,15 @@ import React, {useEffect, useState} from 'react';
 import Toolbar from './Toolbar';
 import URLConstants from 'shared/util/url-constants';
 import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
 import {close, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
-import {DataSource} from 'shared/util/records';
-import {fetch} from 'shared/api/data-source';
 import {Heading, Text} from '@clayui/core';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useHistory} from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import {useQueryParams} from 'shared/hooks/useQueryParams';
-import {useWizardPage} from 'settings/components/base-page/WizardPageContext';
-import {WizardPageProvider} from './WizardPageContext';
+import {useWizardPage, WizardPageProvider} from './WizardPageContext';
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -58,10 +54,10 @@ function updateSearchParams(history, key: string, value: any) {
 }
 
 const WizardSteps = ({addAlert, close, open, steps}) => {
-	const {dataSource, setDataSource} = useWizardPage();
 	const {groupId} = useParams();
 	const history = useHistory();
 	const params = useQueryParams();
+	const {loadingContext, refetchDataSource} = useWizardPage();
 
 	const [stepIndex, setStepIndex] = useState(
 		getSafeStepFromURL(steps, params.stepIndex)
@@ -69,34 +65,15 @@ const WizardSteps = ({addAlert, close, open, steps}) => {
 
 	const currentStep = steps[stepIndex];
 
-	const handleSetStep = (newStepIndex: number) => {
+	const handleSetStep = async (newStepIndex: number) => {
 		updateSearchParams(history, 'stepIndex', newStepIndex);
+
+		if (params.dataSourceId) {
+			refetchDataSource(params.dataSourceId);
+		}
 
 		setStepIndex(newStepIndex);
 	};
-
-	useEffect(() => {
-		async function fetchFn() {
-			try {
-				const dataSource = await fetch({
-					groupId,
-					id: params.dataSourceId
-				});
-
-				setDataSource(new DataSource(dataSource));
-			} catch (error) {
-				addAlert({
-					alertType: Alert.Types.Error,
-					message: error.message,
-					timeout: false
-				});
-			}
-		}
-
-		if (params.dataSourceId && !dataSource) {
-			fetchFn();
-		}
-	}, [groupId, params.dataSourceId]);
 
 	return (
 		<div className='w-100'>
@@ -139,22 +116,24 @@ const WizardSteps = ({addAlert, close, open, steps}) => {
 			</ClayLink>
 
 			<div className='mt-5'>
-				<currentStep.content
-					addAlert={addAlert}
-					close={close}
-					groupId={groupId}
-					onNext={() => {
-						if (stepIndex < steps.length - 1) {
-							handleSetStep(stepIndex + 1);
-						}
-					}}
-					onPrev={() => {
-						if (stepIndex > 0) {
-							handleSetStep(stepIndex - 1);
-						}
-					}}
-					open={open}
-				/>
+				{!loadingContext && (
+					<currentStep.content
+						addAlert={addAlert}
+						close={close}
+						groupId={groupId}
+						onNext={() => {
+							if (stepIndex < steps.length - 1) {
+								handleSetStep(stepIndex + 1);
+							}
+						}}
+						onPrev={() => {
+							if (stepIndex > 0) {
+								handleSetStep(stepIndex - 1);
+							}
+						}}
+						open={open}
+					/>
+				)}
 			</div>
 		</div>
 	);

@@ -3,15 +3,15 @@ import React, {useEffect, useState} from 'react';
 import SalesforceAccountsAndIndividuals from 'settings/components/salesforce/SalesforceAccountsAndIndividuals';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
-import {fetch, updateSalesforce} from 'shared/api/data-source';
 import {Text} from '@clayui/core';
+import {updateSalesforce} from 'shared/api/data-source';
 import {useParams} from 'react-router-dom';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
 const SyncSalesforceDataStep = ({onNext, onPrev}) => {
 	const [loading, setLoading] = useState(false);
-	const {dataSource, setDataSource} = useWizardPage();
+	const {dataSource} = useWizardPage();
 	const {groupId} = useParams();
 	const [enabledAccount, setEnabledAccount] = useState(false);
 	const [enabledIndividual, setEnabledIndividual] = useState(false);
@@ -55,13 +55,6 @@ const SyncSalesforceDataStep = ({onNext, onPrev}) => {
 						groupId,
 						id: dataSource.id
 					} as any);
-
-					const updatedDataSource = await fetch({
-						groupId,
-						id: dataSource.id
-					});
-
-					setDataSource(updatedDataSource);
 				} catch (error) {
 					addAlert({
 						alertType: Alert.Types.Error,

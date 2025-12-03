@@ -7,17 +7,18 @@ import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'shared/types';
 import {DataSourceStatuses} from 'shared/util/constants';
-import {disconnect, fetch, fetchToken} from 'shared/api/data-source';
+import {disconnect, fetchToken} from 'shared/api/data-source';
 import {modalTypes} from 'shared/actions/modals';
 import {Routes, toRoute} from 'shared/util/router';
 import {Text} from '@clayui/core';
+import {updateSearchParams} from 'settings/components/base-page/utis';
 import {useHistory} from 'react-router-dom';
 import {useQueryParams} from 'shared/hooks/useQueryParams';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
 const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
-	const {dataSource, setDataSource} = useWizardPage();
+	const {dataSource, refetchDataSource} = useWizardPage();
 	const {dataSourceId} = useQueryParams();
 	const history = useHistory();
 
@@ -38,29 +39,7 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 			}
 		};
 
-		async function fetchDataSourceFn() {
-			try {
-				const dataSource = await fetch({
-					groupId,
-					id: dataSourceId
-				});
-
-				setDataSource(dataSource);
-			} catch (error) {
-				addAlert({
-					alertType: Alert.Types.Error,
-					message: Liferay.Language.get(
-						'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-					)
-				});
-			}
-		}
-
 		fetchTokenFn();
-
-		if (dataSourceId) {
-			fetchDataSourceFn();
-		}
 	}, [groupId]);
 
 	if (
@@ -164,12 +143,16 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 									id: dataSourceId
 								});
 
-								const dataSource = await fetch({
-									groupId,
-									id: dataSourceId
-								});
+								updateSearchParams(history, 'dataSourceId', '');
 
-								setDataSource(dataSource);
+								refetchDataSource(dataSourceId);
+
+								addAlert({
+									alertType: Alert.Types.Success,
+									message: Liferay.Language.get(
+										'data-source-disconnected'
+									)
+								});
 							} catch (error) {
 								addAlert({
 									alertType: Alert.Types.Error,

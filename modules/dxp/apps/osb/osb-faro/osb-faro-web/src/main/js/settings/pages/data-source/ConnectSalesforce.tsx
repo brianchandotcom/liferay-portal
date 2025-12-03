@@ -3,6 +3,7 @@ import WizardPage, {Step} from 'settings/components/base-page/WizardPage';
 import {AssignIndividualsDatatoPropertiesStep} from 'settings/components/salesforce/steps/AssignIndividualsDataToChannelsStep';
 import {ConnectSalesforceStep} from 'settings/components/salesforce/steps/ConnectSalesforceStep';
 import {SyncSalesforceDataStep} from 'settings/components/salesforce/steps/SyncSalesforceDataStep';
+import {updateSalesforce} from 'shared/api/data-source';
 
 const steps: Step[] = [
 	{
@@ -20,7 +21,12 @@ const steps: Step[] = [
 		title: Liferay.Language.get('sync-Salesforce-data')
 	},
 	{
-		content: props => <AssignIndividualsDatatoPropertiesStep {...props} />,
+		content: props => (
+			<AssignIndividualsDatatoPropertiesStep
+				{...props}
+				updateDataSourceFn={updateSalesforce}
+			/>
+		),
 		description: Liferay.Language.get(
 			'properties-allow-you-to-aggregate-data-on-your-users,-sites-and-dxp-commerce-channels.-individuals-data-will-be-available-in-any-property-they-are-assigned-to'
 		),

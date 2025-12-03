@@ -278,6 +278,7 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 const DxpSyncTable: FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [dataSource, setDataSources] = useState<DataSource>({
 		contactsSyncDetails: {selected: false},
+		id: '',
 		sitesSyncDetails: {selected: false}
 	});
 	const [getDataSources, {data}] = useLazyQuery<DataSourceSyncData>(

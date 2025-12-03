@@ -1,3 +1,4 @@
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
@@ -14,6 +15,8 @@ import {
 	OrderByDirections
 } from 'shared/util/constants';
 import {Text} from '@clayui/core';
+import {updateSearchParams} from 'settings/components/base-page/utis';
+import {useHistory} from 'react-router-dom';
 import {useInterval} from 'shared/hooks/useInterval';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
@@ -31,9 +34,11 @@ const DATA_SOURCE_STATUSES = {
 	}
 };
 
-const ReviewSyncedDataStep = ({onPrev}) => {
-	const [dataSource, setDataSources] = useState<DataSource>({
+const ReviewSyncedDataStep = ({onNext, onPrev}) => {
+	const history = useHistory();
+	const [dataSource, setDataSource] = useState<DataSource>({
 		contactsSyncDetails: {selected: false},
+		id: '',
 		sitesSyncDetails: {selected: false}
 	});
 	const [getDataSources, {data}] = useLazyQuery<DataSourceSyncData>(
@@ -69,7 +74,9 @@ const ReviewSyncedDataStep = ({onPrev}) => {
 
 	useEffect(() => {
 		if (data) {
-			setDataSources(data.dataSources[0]);
+			const dataSource = data.dataSources[0];
+
+			setDataSource(dataSource);
 		}
 	}, [data]);
 
@@ -78,7 +85,15 @@ const ReviewSyncedDataStep = ({onPrev}) => {
 	}, []);
 
 	return (
-		<div>
+		<ClayForm
+			onSubmit={async event => {
+				event.preventDefault();
+
+				updateSearchParams(history, 'dataSourceId', dataSource.id);
+
+				onNext();
+			}}
+		>
 			<div className='mb-2'>
 				<Text size={2} weight='semi-bold'>
 					{Liferay.Language.get('connection-status').toUpperCase()}
@@ -173,10 +188,14 @@ const ReviewSyncedDataStep = ({onPrev}) => {
 
 			<WizardPageButtonGroup
 				nextButtonLabel={Liferay.Language.get('continue')}
-				onCancel={onPrev}
+				onCancel={() => {
+					updateSearchParams(history, 'dataSourceId', dataSource.id);
+
+					onPrev();
+				}}
 				prevButtonLabel={Liferay.Language.get('previous')}
 			/>
-		</div>
+		</ClayForm>
 	);
 };
 

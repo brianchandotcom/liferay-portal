@@ -11,7 +11,6 @@ import {modalTypes} from 'shared/actions/modals';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
-import {updateSalesforce} from 'shared/api/data-source';
 import {useHistory, useParams} from 'react-router-dom';
 import {useWizardPage} from 'settings/components/base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
@@ -20,7 +19,8 @@ const AssignIndividualsDatatoPropertiesStep = ({
 	addAlert,
 	close,
 	onPrev,
-	open
+	open,
+	updateDataSourceFn
 }) => {
 	const history = useHistory();
 	const {groupId} = useParams();
@@ -67,7 +67,7 @@ const AssignIndividualsDatatoPropertiesStep = ({
 				try {
 					setLoading(true);
 
-					await updateSalesforce(updatedDataSource);
+					await updateDataSourceFn(updatedDataSource);
 
 					const accountsEnabled = dataSource.provider.getIn([
 						'accountsConfiguration',

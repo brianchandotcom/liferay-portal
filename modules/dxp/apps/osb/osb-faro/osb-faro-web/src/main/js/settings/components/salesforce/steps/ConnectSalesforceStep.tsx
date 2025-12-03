@@ -4,24 +4,18 @@ import React from 'react';
 import {Alert} from 'shared/types';
 import {ConnectSalesforceAuth} from 'settings/components/salesforce/ConnectSalesforceAuth';
 import {DataSourceStatuses} from 'shared/util/constants';
-import {disconnect, fetch} from 'shared/api/data-source';
+import {disconnect} from 'shared/api/data-source';
 import {modalTypes} from 'shared/actions/modals';
 import {Routes, toRoute} from 'shared/util/router';
 import {Text} from '@clayui/core';
-import {updateSearchParams} from '../../base-page/utis';
+import {updateSearchParams} from 'settings/components/base-page/utis';
 import {useHistory} from 'react-router-dom';
-import {useQueryParams} from 'shared/hooks/useQueryParams';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
 const ConnectSalesforceStep = ({addAlert, close, groupId, onNext, open}) => {
 	const history = useHistory();
-	const {dataSource, setDataSource} = useWizardPage();
-	const {dataSourceId} = useQueryParams();
-
-	if (dataSourceId && !dataSource) {
-		return null;
-	}
+	const {dataSource, refetchDataSource} = useWizardPage();
 
 	if (!dataSource) {
 		return (
@@ -37,8 +31,6 @@ const ConnectSalesforceStep = ({addAlert, close, groupId, onNext, open}) => {
 				}}
 				onSubmit={dataSource => {
 					updateSearchParams(history, 'dataSourceId', dataSource.id);
-
-					setDataSource(dataSource);
 
 					onNext();
 				}}
@@ -92,19 +84,14 @@ const ConnectSalesforceStep = ({addAlert, close, groupId, onNext, open}) => {
 										id: dataSource.id
 									});
 
+									refetchDataSource(dataSource.id);
+
 									addAlert({
 										alertType: Alert.Types.Success,
 										message: Liferay.Language.get(
 											'data-source-disconnected'
 										)
 									});
-
-									const updatedDataSource = await fetch({
-										groupId,
-										id: dataSource.id
-									});
-
-									setDataSource(updatedDataSource);
 
 									close();
 								} catch (error) {

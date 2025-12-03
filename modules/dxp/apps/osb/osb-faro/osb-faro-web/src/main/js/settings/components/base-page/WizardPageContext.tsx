@@ -1,29 +1,82 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import {addAlert} from 'shared/actions/alerts';
+import {Alert} from 'shared/types';
 import {DataSource} from 'shared/util/records';
+import {fetch} from 'shared/api/data-source';
+import {useParams} from 'react-router-dom';
+import {useQueryParams} from 'shared/hooks/useQueryParams';
 
 interface IWizardPageContext {
 	dataSource: DataSource | null;
-	setDataSource: (dataSource: DataSource) => void;
+	loadingContext: boolean;
+	refetchDataSource: (dataSourceId: string) => void;
 }
 
 const WizardPageContext = createContext<IWizardPageContext>({
 	dataSource: null,
-	setDataSource: () => {}
+	loadingContext: false,
+	refetchDataSource: () => {}
 });
+
+async function fetchDataSource({
+	dataSourceId,
+	groupId,
+	setDataSource,
+	setLoading
+}) {
+	setLoading(true);
+
+	try {
+		const dataSource = await fetch({
+			groupId,
+			id: dataSourceId
+		});
+
+		setDataSource(new DataSource(dataSource));
+	} catch (error) {
+		addAlert({
+			alertType: Alert.Types.Error,
+			message: Liferay.Language.get(
+				'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists-please-contact-support'
+			)
+		});
+	} finally {
+		setLoading(false);
+	}
+}
 
 export const useWizardPage = () => useContext(WizardPageContext);
 
 export const WizardPageProvider = ({children}) => {
+	const {groupId} = useParams();
+	const {dataSourceId} = useQueryParams();
 	const [dataSource, setDataSource] = useState<DataSource | null>(null);
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		if (dataSourceId && !dataSource) {
+			fetchDataSource({
+				dataSourceId,
+				groupId,
+				setDataSource,
+				setLoading
+			});
+		}
+	}, [groupId, dataSourceId]);
 
 	return (
 		<WizardPageContext.Provider
 			value={{
 				dataSource,
-				setDataSource: dataSource =>
-					setDataSource(
-						dataSource ? new DataSource(dataSource) : null
-					)
+				loadingContext: loading,
+				refetchDataSource: dataSourceId => {
+					fetchDataSource({
+						dataSourceId,
+						groupId,
+						setDataSource,
+						setLoading
+					});
+				}
 			}}
 		>
 			{children}

@@ -35,60 +35,47 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "A fragment editable element value of type background image.",
-	value = "BackgroundImageFragmentEditableElementValue"
-)
+@GraphQLName(description = "A item image value.", value = "ItemImageValue")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BackgroundImageFragmentEditableElementValue")
-public class BackgroundImageFragmentEditableElementValue
-	extends FragmentEditableElementValue implements Serializable {
+@XmlRootElement(name = "ItemImageValue")
+public class ItemImageValue extends ImageValue implements Serializable {
 
-	public static BackgroundImageFragmentEditableElementValue toDTO(
-		String json) {
-
-		return ObjectMapperUtil.readValue(
-			BackgroundImageFragmentEditableElementValue.class, json);
+	public static ItemImageValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(ItemImageValue.class, json);
 	}
 
-	public static BackgroundImageFragmentEditableElementValue unsafeToDTO(
-		String json) {
-
-		return ObjectMapperUtil.unsafeReadValue(
-			BackgroundImageFragmentEditableElementValue.class, json);
+	public static ItemImageValue unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ItemImageValue.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's background image value."
-	)
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public FragmentImageValue getBackgroundFragmentImageValue() {
-		if (_backgroundFragmentImageValueSupplier != null) {
-			backgroundFragmentImageValue =
-				_backgroundFragmentImageValueSupplier.get();
+	public ItemExternalReference getItemExternalReference() {
+		if (_itemExternalReferenceSupplier != null) {
+			itemExternalReference = _itemExternalReferenceSupplier.get();
 
-			_backgroundFragmentImageValueSupplier = null;
+			_itemExternalReferenceSupplier = null;
 		}
 
-		return backgroundFragmentImageValue;
+		return itemExternalReference;
 	}
 
-	public void setBackgroundFragmentImageValue(
-		FragmentImageValue backgroundFragmentImageValue) {
+	public void setItemExternalReference(
+		ItemExternalReference itemExternalReference) {
 
-		this.backgroundFragmentImageValue = backgroundFragmentImageValue;
+		this.itemExternalReference = itemExternalReference;
 
-		_backgroundFragmentImageValueSupplier = null;
+		_itemExternalReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setBackgroundFragmentImageValue(
-		UnsafeSupplier<FragmentImageValue, Exception>
-			backgroundFragmentImageValueUnsafeSupplier) {
+	public void setItemExternalReference(
+		UnsafeSupplier<ItemExternalReference, Exception>
+			itemExternalReferenceUnsafeSupplier) {
 
-		_backgroundFragmentImageValueSupplier = () -> {
+		_itemExternalReferenceSupplier = () -> {
 			try {
-				return backgroundFragmentImageValueUnsafeSupplier.get();
+				return itemExternalReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -99,14 +86,12 @@ public class BackgroundImageFragmentEditableElementValue
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment editable element's background image value."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImageValue backgroundFragmentImageValue;
+	protected ItemExternalReference itemExternalReference;
 
 	@JsonIgnore
-	private Supplier<FragmentImageValue> _backgroundFragmentImageValueSupplier;
+	private Supplier<ItemExternalReference> _itemExternalReferenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,16 +99,13 @@ public class BackgroundImageFragmentEditableElementValue
 			return true;
 		}
 
-		if (!(object instanceof BackgroundImageFragmentEditableElementValue)) {
+		if (!(object instanceof ItemImageValue)) {
 			return false;
 		}
 
-		BackgroundImageFragmentEditableElementValue
-			backgroundImageFragmentEditableElementValue =
-				(BackgroundImageFragmentEditableElementValue)object;
+		ItemImageValue itemImageValue = (ItemImageValue)object;
 
-		return Objects.equals(
-			toString(), backgroundImageFragmentEditableElementValue.toString());
+		return Objects.equals(toString(), itemImageValue.toString());
 	}
 
 	@Override
@@ -138,17 +120,17 @@ public class BackgroundImageFragmentEditableElementValue
 
 		sb.append("{");
 
-		FragmentImageValue backgroundFragmentImageValue =
-			getBackgroundFragmentImageValue();
+		ItemExternalReference itemExternalReference =
+			getItemExternalReference();
 
-		if (backgroundFragmentImageValue != null) {
+		if (itemExternalReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImageValue\": ");
+			sb.append("\"itemExternalReference\": ");
 
-			sb.append(String.valueOf(backgroundFragmentImageValue));
+			sb.append(String.valueOf(itemExternalReference));
 		}
 
 		Type type = getType();
@@ -172,7 +154,7 @@ public class BackgroundImageFragmentEditableElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ItemImageValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

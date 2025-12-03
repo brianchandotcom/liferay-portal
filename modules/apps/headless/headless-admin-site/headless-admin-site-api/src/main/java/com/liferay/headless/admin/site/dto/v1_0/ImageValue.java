@@ -5,9 +5,14 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -35,60 +40,66 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "A fragment editable element value of type background image.",
-	value = "BackgroundImageFragmentEditableElementValue"
-)
+@GraphQLName(description = "The image value.", value = "ImageValue")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BackgroundImageFragmentEditableElementValue")
-public class BackgroundImageFragmentEditableElementValue
-	extends FragmentEditableElementValue implements Serializable {
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(name = "Item", value = ItemImageValue.class),
+		@JsonSubTypes.Type(name = "URL", value = URLImageValue.class)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
+@XmlRootElement(name = "ImageValue")
+public abstract class ImageValue implements Serializable {
 
-	public static BackgroundImageFragmentEditableElementValue toDTO(
-		String json) {
-
-		return ObjectMapperUtil.readValue(
-			BackgroundImageFragmentEditableElementValue.class, json);
+	public static ImageValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(ImageValue.class, json);
 	}
 
-	public static BackgroundImageFragmentEditableElementValue unsafeToDTO(
-		String json) {
-
-		return ObjectMapperUtil.unsafeReadValue(
-			BackgroundImageFragmentEditableElementValue.class, json);
+	public static ImageValue unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ImageValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's background image value."
+		description = "The image value's type."
 	)
+	@JsonGetter("type")
 	@Valid
-	public FragmentImageValue getBackgroundFragmentImageValue() {
-		if (_backgroundFragmentImageValueSupplier != null) {
-			backgroundFragmentImageValue =
-				_backgroundFragmentImageValueSupplier.get();
+	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
 
-			_backgroundFragmentImageValueSupplier = null;
+			_typeSupplier = null;
 		}
 
-		return backgroundFragmentImageValue;
-	}
-
-	public void setBackgroundFragmentImageValue(
-		FragmentImageValue backgroundFragmentImageValue) {
-
-		this.backgroundFragmentImageValue = backgroundFragmentImageValue;
-
-		_backgroundFragmentImageValueSupplier = null;
+		return type;
 	}
 
 	@JsonIgnore
-	public void setBackgroundFragmentImageValue(
-		UnsafeSupplier<FragmentImageValue, Exception>
-			backgroundFragmentImageValueUnsafeSupplier) {
+	public String getTypeAsString() {
+		Type type = getType();
 
-		_backgroundFragmentImageValueSupplier = () -> {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
 			try {
-				return backgroundFragmentImageValueUnsafeSupplier.get();
+				return typeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -99,14 +110,12 @@ public class BackgroundImageFragmentEditableElementValue
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment editable element's background image value."
-	)
+	@GraphQLField(description = "The image value's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImageValue backgroundFragmentImageValue;
+	protected Type type;
 
 	@JsonIgnore
-	private Supplier<FragmentImageValue> _backgroundFragmentImageValueSupplier;
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,16 +123,13 @@ public class BackgroundImageFragmentEditableElementValue
 			return true;
 		}
 
-		if (!(object instanceof BackgroundImageFragmentEditableElementValue)) {
+		if (!(object instanceof ImageValue)) {
 			return false;
 		}
 
-		BackgroundImageFragmentEditableElementValue
-			backgroundImageFragmentEditableElementValue =
-				(BackgroundImageFragmentEditableElementValue)object;
+		ImageValue imageValue = (ImageValue)object;
 
-		return Objects.equals(
-			toString(), backgroundImageFragmentEditableElementValue.toString());
+		return Objects.equals(toString(), imageValue.toString());
 	}
 
 	@Override
@@ -137,19 +143,6 @@ public class BackgroundImageFragmentEditableElementValue
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		FragmentImageValue backgroundFragmentImageValue =
-			getBackgroundFragmentImageValue();
-
-		if (backgroundFragmentImageValue != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"backgroundFragmentImageValue\": ");
-
-			sb.append(String.valueOf(backgroundFragmentImageValue));
-		}
 
 		Type type = getType();
 
@@ -172,10 +165,48 @@ public class BackgroundImageFragmentEditableElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ImageValue",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		ITEM("Item"), URL("URL");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

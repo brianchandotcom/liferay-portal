@@ -12,6 +12,7 @@ import jakarta.annotation.Generated;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -25,111 +26,123 @@ public class FragmentImage implements Cloneable, Serializable {
 		return FragmentImageSerDes.toDTO(json);
 	}
 
-	public Config getConfig() {
-		return config;
+	public Map<String, String> getDescription_i18n() {
+		return description_i18n;
 	}
 
-	public void setConfig(Config config) {
-		this.config = config;
+	public void setDescription_i18n(Map<String, String> description_i18n) {
+		this.description_i18n = description_i18n;
 	}
 
-	public void setConfig(
-		UnsafeSupplier<Config, Exception> configUnsafeSupplier) {
+	public void setDescription_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			description_i18nUnsafeSupplier) {
 
 		try {
-			config = configUnsafeSupplier.get();
+			description_i18n = description_i18nUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Config config;
+	protected Map<String, String> description_i18n;
 
-	public Object getDescription() {
-		return description;
+	public FragmentImageValue getFragmentImageValue() {
+		return fragmentImageValue;
 	}
 
-	public void setDescription(Object description) {
-		this.description = description;
+	public void setFragmentImageValue(FragmentImageValue fragmentImageValue) {
+		this.fragmentImageValue = fragmentImageValue;
 	}
 
-	public void setDescription(
-		UnsafeSupplier<Object, Exception> descriptionUnsafeSupplier) {
+	public void setFragmentImageValue(
+		UnsafeSupplier<FragmentImageValue, Exception>
+			fragmentImageValueUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			fragmentImageValue = fragmentImageValueUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object description;
+	protected FragmentImageValue fragmentImageValue;
 
-	public ItemExternalReference getItemExternalReference() {
-		return itemExternalReference;
+	public FragmentImageViewport[] getFragmentImageViewports() {
+		return fragmentImageViewports;
 	}
 
-	public void setItemExternalReference(
-		ItemExternalReference itemExternalReference) {
+	public void setFragmentImageViewports(
+		FragmentImageViewport[] fragmentImageViewports) {
 
-		this.itemExternalReference = itemExternalReference;
+		this.fragmentImageViewports = fragmentImageViewports;
 	}
 
-	public void setItemExternalReference(
-		UnsafeSupplier<ItemExternalReference, Exception>
-			itemExternalReferenceUnsafeSupplier) {
+	public void setFragmentImageViewports(
+		UnsafeSupplier<FragmentImageViewport[], Exception>
+			fragmentImageViewportsUnsafeSupplier) {
 
 		try {
-			itemExternalReference = itemExternalReferenceUnsafeSupplier.get();
+			fragmentImageViewports = fragmentImageViewportsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ItemExternalReference itemExternalReference;
+	protected FragmentImageViewport[] fragmentImageViewports;
 
-	public Object getTitle() {
-		return title;
+	public Boolean getLazyLoading() {
+		return lazyLoading;
 	}
 
-	public void setTitle(Object title) {
-		this.title = title;
+	public void setLazyLoading(Boolean lazyLoading) {
+		this.lazyLoading = lazyLoading;
 	}
 
-	public void setTitle(
-		UnsafeSupplier<Object, Exception> titleUnsafeSupplier) {
+	public void setLazyLoading(
+		UnsafeSupplier<Boolean, Exception> lazyLoadingUnsafeSupplier) {
 
 		try {
-			title = titleUnsafeSupplier.get();
+			lazyLoading = lazyLoadingUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object title;
+	protected Boolean lazyLoading;
 
-	public Object getUrl() {
-		return url;
+	public Resolution getResolution() {
+		return resolution;
 	}
 
-	public void setUrl(Object url) {
-		this.url = url;
+	public String getResolutionAsString() {
+		if (resolution == null) {
+			return null;
+		}
+
+		return resolution.toString();
 	}
 
-	public void setUrl(UnsafeSupplier<Object, Exception> urlUnsafeSupplier) {
+	public void setResolution(Resolution resolution) {
+		this.resolution = resolution;
+	}
+
+	public void setResolution(
+		UnsafeSupplier<Resolution, Exception> resolutionUnsafeSupplier) {
+
 		try {
-			url = urlUnsafeSupplier.get();
+			resolution = resolutionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object url;
+	protected Resolution resolution;
 
 	@Override
 	public FragmentImage clone() throws CloneNotSupportedException {
@@ -160,6 +173,39 @@ public class FragmentImage implements Cloneable, Serializable {
 
 	public String toString() {
 		return FragmentImageSerDes.toJSON(this);
+	}
+
+	public static enum Resolution {
+
+		AUTO("Auto"), PREVIEW("Preview"), THUMBNAIL("Thumbnail");
+
+		public static Resolution create(String value) {
+			for (Resolution resolution : values()) {
+				if (Objects.equals(resolution.getValue(), value) ||
+					Objects.equals(resolution.name(), value)) {
+
+					return resolution;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Resolution(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

@@ -1317,6 +1317,8 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentImageViewport"
                     type: array
+                lazyLoading:
+                    type: boolean
                 resolution:
                     # @review
                     description:

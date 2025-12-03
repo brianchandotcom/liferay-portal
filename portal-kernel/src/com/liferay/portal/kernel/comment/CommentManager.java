@@ -97,6 +97,10 @@ public interface CommentManager {
 	public Comment getComment(long groupId, String externalReferenceCode)
 		throws PortalException;
 
+	public List<Comment> getComments(
+			String className, long classPK, int status, int start, int end)
+		throws PortalException;
+
 	public int getCommentsCount(String className, long classPK);
 
 	public Discussion getDiscussion(

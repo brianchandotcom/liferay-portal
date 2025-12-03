@@ -36,59 +36,51 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment editable element value of type background image.",
-	value = "BackgroundImageFragmentEditableElementValue"
+	description = "A fragment image value of type direct.",
+	value = "FragmentDirectImageValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BackgroundImageFragmentEditableElementValue")
-public class BackgroundImageFragmentEditableElementValue
-	extends FragmentEditableElementValue implements Serializable {
+@XmlRootElement(name = "FragmentDirectImageValue")
+public class FragmentDirectImageValue
+	extends FragmentImageValue implements Serializable {
 
-	public static BackgroundImageFragmentEditableElementValue toDTO(
-		String json) {
-
-		return ObjectMapperUtil.readValue(
-			BackgroundImageFragmentEditableElementValue.class, json);
+	public static FragmentDirectImageValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentDirectImageValue.class, json);
 	}
 
-	public static BackgroundImageFragmentEditableElementValue unsafeToDTO(
-		String json) {
-
+	public static FragmentDirectImageValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			BackgroundImageFragmentEditableElementValue.class, json);
+			FragmentDirectImageValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's background image value."
+		description = "The localized value of the direct fragment image."
 	)
 	@Valid
-	public FragmentImageValue getBackgroundFragmentImageValue() {
-		if (_backgroundFragmentImageValueSupplier != null) {
-			backgroundFragmentImageValue =
-				_backgroundFragmentImageValueSupplier.get();
+	public Map<String, ImageValue> getValue_i18n() {
+		if (_value_i18nSupplier != null) {
+			value_i18n = _value_i18nSupplier.get();
 
-			_backgroundFragmentImageValueSupplier = null;
+			_value_i18nSupplier = null;
 		}
 
-		return backgroundFragmentImageValue;
+		return value_i18n;
 	}
 
-	public void setBackgroundFragmentImageValue(
-		FragmentImageValue backgroundFragmentImageValue) {
+	public void setValue_i18n(Map<String, ImageValue> value_i18n) {
+		this.value_i18n = value_i18n;
 
-		this.backgroundFragmentImageValue = backgroundFragmentImageValue;
-
-		_backgroundFragmentImageValueSupplier = null;
+		_value_i18nSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setBackgroundFragmentImageValue(
-		UnsafeSupplier<FragmentImageValue, Exception>
-			backgroundFragmentImageValueUnsafeSupplier) {
+	public void setValue_i18n(
+		UnsafeSupplier<Map<String, ImageValue>, Exception>
+			value_i18nUnsafeSupplier) {
 
-		_backgroundFragmentImageValueSupplier = () -> {
+		_value_i18nSupplier = () -> {
 			try {
-				return backgroundFragmentImageValueUnsafeSupplier.get();
+				return value_i18nUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -100,13 +92,13 @@ public class BackgroundImageFragmentEditableElementValue
 	}
 
 	@GraphQLField(
-		description = "The fragment editable element's background image value."
+		description = "The localized value of the direct fragment image."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImageValue backgroundFragmentImageValue;
+	protected Map<String, ImageValue> value_i18n;
 
 	@JsonIgnore
-	private Supplier<FragmentImageValue> _backgroundFragmentImageValueSupplier;
+	private Supplier<Map<String, ImageValue>> _value_i18nSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,16 +106,14 @@ public class BackgroundImageFragmentEditableElementValue
 			return true;
 		}
 
-		if (!(object instanceof BackgroundImageFragmentEditableElementValue)) {
+		if (!(object instanceof FragmentDirectImageValue)) {
 			return false;
 		}
 
-		BackgroundImageFragmentEditableElementValue
-			backgroundImageFragmentEditableElementValue =
-				(BackgroundImageFragmentEditableElementValue)object;
+		FragmentDirectImageValue fragmentDirectImageValue =
+			(FragmentDirectImageValue)object;
 
-		return Objects.equals(
-			toString(), backgroundImageFragmentEditableElementValue.toString());
+		return Objects.equals(toString(), fragmentDirectImageValue.toString());
 	}
 
 	@Override
@@ -138,17 +128,16 @@ public class BackgroundImageFragmentEditableElementValue
 
 		sb.append("{");
 
-		FragmentImageValue backgroundFragmentImageValue =
-			getBackgroundFragmentImageValue();
+		Map<String, ImageValue> value_i18n = getValue_i18n();
 
-		if (backgroundFragmentImageValue != null) {
+		if (value_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImageValue\": ");
+			sb.append("\"value_i18n\": ");
 
-			sb.append(String.valueOf(backgroundFragmentImageValue));
+			sb.append(_toJSON(value_i18n));
 		}
 
 		Type type = getType();
@@ -172,7 +161,7 @@ public class BackgroundImageFragmentEditableElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentDirectImageValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

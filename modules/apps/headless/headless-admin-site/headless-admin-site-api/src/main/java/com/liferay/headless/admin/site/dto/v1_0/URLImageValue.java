@@ -18,8 +18,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
-import jakarta.validation.Valid;
-
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -35,60 +33,41 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "A fragment editable element value of type background image.",
-	value = "BackgroundImageFragmentEditableElementValue"
-)
+@GraphQLName(description = "A URL image value.", value = "URLImageValue")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BackgroundImageFragmentEditableElementValue")
-public class BackgroundImageFragmentEditableElementValue
-	extends FragmentEditableElementValue implements Serializable {
+@XmlRootElement(name = "URLImageValue")
+public class URLImageValue extends ImageValue implements Serializable {
 
-	public static BackgroundImageFragmentEditableElementValue toDTO(
-		String json) {
-
-		return ObjectMapperUtil.readValue(
-			BackgroundImageFragmentEditableElementValue.class, json);
+	public static URLImageValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(URLImageValue.class, json);
 	}
 
-	public static BackgroundImageFragmentEditableElementValue unsafeToDTO(
-		String json) {
-
-		return ObjectMapperUtil.unsafeReadValue(
-			BackgroundImageFragmentEditableElementValue.class, json);
+	public static URLImageValue unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(URLImageValue.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's background image value."
-	)
-	@Valid
-	public FragmentImageValue getBackgroundFragmentImageValue() {
-		if (_backgroundFragmentImageValueSupplier != null) {
-			backgroundFragmentImageValue =
-				_backgroundFragmentImageValueSupplier.get();
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getUrl() {
+		if (_urlSupplier != null) {
+			url = _urlSupplier.get();
 
-			_backgroundFragmentImageValueSupplier = null;
+			_urlSupplier = null;
 		}
 
-		return backgroundFragmentImageValue;
+		return url;
 	}
 
-	public void setBackgroundFragmentImageValue(
-		FragmentImageValue backgroundFragmentImageValue) {
+	public void setUrl(String url) {
+		this.url = url;
 
-		this.backgroundFragmentImageValue = backgroundFragmentImageValue;
-
-		_backgroundFragmentImageValueSupplier = null;
+		_urlSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setBackgroundFragmentImageValue(
-		UnsafeSupplier<FragmentImageValue, Exception>
-			backgroundFragmentImageValueUnsafeSupplier) {
-
-		_backgroundFragmentImageValueSupplier = () -> {
+	public void setUrl(UnsafeSupplier<String, Exception> urlUnsafeSupplier) {
+		_urlSupplier = () -> {
 			try {
-				return backgroundFragmentImageValueUnsafeSupplier.get();
+				return urlUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -99,14 +78,12 @@ public class BackgroundImageFragmentEditableElementValue
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment editable element's background image value."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImageValue backgroundFragmentImageValue;
+	protected String url;
 
 	@JsonIgnore
-	private Supplier<FragmentImageValue> _backgroundFragmentImageValueSupplier;
+	private Supplier<String> _urlSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,16 +91,13 @@ public class BackgroundImageFragmentEditableElementValue
 			return true;
 		}
 
-		if (!(object instanceof BackgroundImageFragmentEditableElementValue)) {
+		if (!(object instanceof URLImageValue)) {
 			return false;
 		}
 
-		BackgroundImageFragmentEditableElementValue
-			backgroundImageFragmentEditableElementValue =
-				(BackgroundImageFragmentEditableElementValue)object;
+		URLImageValue urlImageValue = (URLImageValue)object;
 
-		return Objects.equals(
-			toString(), backgroundImageFragmentEditableElementValue.toString());
+		return Objects.equals(toString(), urlImageValue.toString());
 	}
 
 	@Override
@@ -138,17 +112,20 @@ public class BackgroundImageFragmentEditableElementValue
 
 		sb.append("{");
 
-		FragmentImageValue backgroundFragmentImageValue =
-			getBackgroundFragmentImageValue();
+		String url = getUrl();
 
-		if (backgroundFragmentImageValue != null) {
+		if (url != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImageValue\": ");
+			sb.append("\"url\": ");
 
-			sb.append(String.valueOf(backgroundFragmentImageValue));
+			sb.append("\"");
+
+			sb.append(_escape(url));
+
+			sb.append("\"");
 		}
 
 		Type type = getType();
@@ -172,7 +149,7 @@ public class BackgroundImageFragmentEditableElementValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.URLImageValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

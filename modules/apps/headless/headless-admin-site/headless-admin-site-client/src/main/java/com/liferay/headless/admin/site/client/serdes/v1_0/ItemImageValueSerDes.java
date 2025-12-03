@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.Config;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemImageValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,22 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class ConfigSerDes {
+public class ItemImageValueSerDes {
 
-	public static Config toDTO(String json) {
-		ConfigJSONParser configJSONParser = new ConfigJSONParser();
+	public static ItemImageValue toDTO(String json) {
+		ItemImageValueJSONParser itemImageValueJSONParser =
+			new ItemImageValueJSONParser();
 
-		return configJSONParser.parseToDTO(json);
+		return itemImageValueJSONParser.parseToDTO(json);
 	}
 
-	public static Config[] toDTOs(String json) {
-		ConfigJSONParser configJSONParser = new ConfigJSONParser();
+	public static ItemImageValue[] toDTOs(String json) {
+		ItemImageValueJSONParser itemImageValueJSONParser =
+			new ItemImageValueJSONParser();
 
-		return configJSONParser.parseToDTOs(json);
+		return itemImageValueJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Config config) {
-		if (config == null) {
+	public static String toJSON(ItemImageValue itemImageValue) {
+		if (itemImageValue == null) {
 			return "null";
 		}
 
@@ -44,45 +46,26 @@ public class ConfigSerDes {
 
 		sb.append("{");
 
-		if (config.getLandscapeMobile() != null) {
+		if (itemImageValue.getItemExternalReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"landscapeMobile\": ");
+			sb.append("\"itemExternalReference\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(config.getLandscapeMobile()));
-
-			sb.append("\"");
+			sb.append(
+				String.valueOf(itemImageValue.getItemExternalReference()));
 		}
 
-		if (config.getPortraitMobile() != null) {
+		if (itemImageValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"portraitMobile\": ");
+			sb.append("\"type\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(config.getPortraitMobile()));
-
-			sb.append("\"");
-		}
-
-		if (config.getTablet() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"tablet\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(config.getTablet()));
-
+			sb.append(itemImageValue.getType());
 			sb.append("\"");
 		}
 
@@ -92,65 +75,57 @@ public class ConfigSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ConfigJSONParser configJSONParser = new ConfigJSONParser();
+		ItemImageValueJSONParser itemImageValueJSONParser =
+			new ItemImageValueJSONParser();
 
-		return configJSONParser.parseToMap(json);
+		return itemImageValueJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Config config) {
-		if (config == null) {
+	public static Map<String, String> toMap(ItemImageValue itemImageValue) {
+		if (itemImageValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (config.getLandscapeMobile() == null) {
-			map.put("landscapeMobile", null);
+		if (itemImageValue.getItemExternalReference() == null) {
+			map.put("itemExternalReference", null);
 		}
 		else {
 			map.put(
-				"landscapeMobile", String.valueOf(config.getLandscapeMobile()));
+				"itemExternalReference",
+				String.valueOf(itemImageValue.getItemExternalReference()));
 		}
 
-		if (config.getPortraitMobile() == null) {
-			map.put("portraitMobile", null);
+		if (itemImageValue.getType() == null) {
+			map.put("type", null);
 		}
 		else {
-			map.put(
-				"portraitMobile", String.valueOf(config.getPortraitMobile()));
-		}
-
-		if (config.getTablet() == null) {
-			map.put("tablet", null);
-		}
-		else {
-			map.put("tablet", String.valueOf(config.getTablet()));
+			map.put("type", String.valueOf(itemImageValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class ConfigJSONParser extends BaseJSONParser<Config> {
+	public static class ItemImageValueJSONParser
+		extends BaseJSONParser<ItemImageValue> {
 
 		@Override
-		protected Config createDTO() {
-			return new Config();
+		protected ItemImageValue createDTO() {
+			return new ItemImageValue();
 		}
 
 		@Override
-		protected Config[] createDTOArray(int size) {
-			return new Config[size];
+		protected ItemImageValue[] createDTOArray(int size) {
+			return new ItemImageValue[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "landscapeMobile")) {
+			if (Objects.equals(jsonParserFieldName, "itemExternalReference")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "portraitMobile")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "tablet")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -159,22 +134,21 @@ public class ConfigSerDes {
 
 		@Override
 		protected void setField(
-			Config config, String jsonParserFieldName,
+			ItemImageValue itemImageValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "landscapeMobile")) {
+			if (Objects.equals(jsonParserFieldName, "itemExternalReference")) {
 				if (jsonParserFieldValue != null) {
-					config.setLandscapeMobile((String)jsonParserFieldValue);
+					itemImageValue.setItemExternalReference(
+						ItemExternalReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "portraitMobile")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					config.setPortraitMobile((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "tablet")) {
-				if (jsonParserFieldValue != null) {
-					config.setTablet((String)jsonParserFieldValue);
+					itemImageValue.setType(
+						ItemImageValue.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

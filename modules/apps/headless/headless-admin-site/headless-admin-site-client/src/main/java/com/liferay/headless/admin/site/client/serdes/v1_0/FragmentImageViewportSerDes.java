@@ -1,0 +1,237 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.headless.admin.site.client.serdes.v1_0;
+
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImageViewport;
+import com.liferay.headless.admin.site.client.json.BaseJSONParser;
+
+import jakarta.annotation.Generated;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
+
+/**
+ * @author Rubén Pulido
+ * @generated
+ */
+@Generated("")
+public class FragmentImageViewportSerDes {
+
+	public static FragmentImageViewport toDTO(String json) {
+		FragmentImageViewportJSONParser fragmentImageViewportJSONParser =
+			new FragmentImageViewportJSONParser();
+
+		return fragmentImageViewportJSONParser.parseToDTO(json);
+	}
+
+	public static FragmentImageViewport[] toDTOs(String json) {
+		FragmentImageViewportJSONParser fragmentImageViewportJSONParser =
+			new FragmentImageViewportJSONParser();
+
+		return fragmentImageViewportJSONParser.parseToDTOs(json);
+	}
+
+	public static String toJSON(FragmentImageViewport fragmentImageViewport) {
+		if (fragmentImageViewport == null) {
+			return "null";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		if (fragmentImageViewport.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+			sb.append(fragmentImageViewport.getId());
+			sb.append("\"");
+		}
+
+		if (fragmentImageViewport.getResolution() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"resolution\": ");
+
+			sb.append("\"");
+			sb.append(fragmentImageViewport.getResolution());
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	public static Map<String, Object> toMap(String json) {
+		FragmentImageViewportJSONParser fragmentImageViewportJSONParser =
+			new FragmentImageViewportJSONParser();
+
+		return fragmentImageViewportJSONParser.parseToMap(json);
+	}
+
+	public static Map<String, String> toMap(
+		FragmentImageViewport fragmentImageViewport) {
+
+		if (fragmentImageViewport == null) {
+			return null;
+		}
+
+		Map<String, String> map = new TreeMap<>();
+
+		if (fragmentImageViewport.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(fragmentImageViewport.getId()));
+		}
+
+		if (fragmentImageViewport.getResolution() == null) {
+			map.put("resolution", null);
+		}
+		else {
+			map.put(
+				"resolution",
+				String.valueOf(fragmentImageViewport.getResolution()));
+		}
+
+		return map;
+	}
+
+	public static class FragmentImageViewportJSONParser
+		extends BaseJSONParser<FragmentImageViewport> {
+
+		@Override
+		protected FragmentImageViewport createDTO() {
+			return new FragmentImageViewport();
+		}
+
+		@Override
+		protected FragmentImageViewport[] createDTOArray(int size) {
+			return new FragmentImageViewport[size];
+		}
+
+		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "resolution")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
+		protected void setField(
+			FragmentImageViewport fragmentImageViewport,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					fragmentImageViewport.setId(
+						FragmentImageViewport.Id.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "resolution")) {
+				if (jsonParserFieldValue != null) {
+					fragmentImageViewport.setResolution(
+						FragmentImageViewport.Resolution.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+		}
+
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		for (String[] strings : BaseJSONParser.JSON_ESCAPE_STRINGS) {
+			string = string.replace(strings[0], strings[1]);
+		}
+
+		return string;
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\": ");
+
+			Object value = entry.getValue();
+
+			sb.append(_toJSON(value));
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value == null) {
+			return "null";
+		}
+
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+
+		Class<?> clazz = value.getClass();
+
+		if (clazz.isArray()) {
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+
+		return String.valueOf(value);
+	}
+
+}

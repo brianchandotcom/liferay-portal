@@ -58,18 +58,18 @@ public class BackgroundImageFragmentEditableElementValueSerDes {
 		sb.append("{");
 
 		if (backgroundImageFragmentEditableElementValue.
-				getBackgroundFragmentImage() != null) {
+				getBackgroundFragmentImageValue() != null) {
 
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImage\": ");
+			sb.append("\"backgroundFragmentImageValue\": ");
 
 			sb.append(
 				String.valueOf(
 					backgroundImageFragmentEditableElementValue.
-						getBackgroundFragmentImage()));
+						getBackgroundFragmentImageValue()));
 		}
 
 		if (backgroundImageFragmentEditableElementValue.getType() != null) {
@@ -109,16 +109,16 @@ public class BackgroundImageFragmentEditableElementValueSerDes {
 		Map<String, String> map = new TreeMap<>();
 
 		if (backgroundImageFragmentEditableElementValue.
-				getBackgroundFragmentImage() == null) {
+				getBackgroundFragmentImageValue() == null) {
 
-			map.put("backgroundFragmentImage", null);
+			map.put("backgroundFragmentImageValue", null);
 		}
 		else {
 			map.put(
-				"backgroundFragmentImage",
+				"backgroundFragmentImageValue",
 				String.valueOf(
 					backgroundImageFragmentEditableElementValue.
-						getBackgroundFragmentImage()));
+						getBackgroundFragmentImageValue()));
 		}
 
 		if (backgroundImageFragmentEditableElementValue.getType() == null) {
@@ -152,7 +152,7 @@ public class BackgroundImageFragmentEditableElementValueSerDes {
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
 			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
+					jsonParserFieldName, "backgroundFragmentImageValue")) {
 
 				return false;
 			}
@@ -170,12 +170,12 @@ public class BackgroundImageFragmentEditableElementValueSerDes {
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
+					jsonParserFieldName, "backgroundFragmentImageValue")) {
 
 				if (jsonParserFieldValue != null) {
 					backgroundImageFragmentEditableElementValue.
-						setBackgroundFragmentImage(
-							FragmentImageSerDes.toDTO(
+						setBackgroundFragmentImageValue(
+							FragmentImageValueSerDes.toDTO(
 								(String)jsonParserFieldValue));
 				}
 			}

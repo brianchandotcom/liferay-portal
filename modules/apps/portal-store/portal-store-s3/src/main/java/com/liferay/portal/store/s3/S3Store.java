@@ -372,7 +372,18 @@ public class S3Store implements Store {
 			_s3StoreConfiguration.corePoolSize(),
 			_s3StoreConfiguration.maxPoolSize());
 
-		_transferManager = getTransferManager(_amazonS3);
+		_transferManager = TransferManagerBuilder.standard(
+		).withS3Client(
+			_amazonS3
+		).withExecutorFactory(
+			() -> _threadPoolExecutor
+		).withMinimumUploadPartSize(
+			(long)_s3StoreConfiguration.minimumUploadPartSize()
+		).withMultipartUploadThreshold(
+			(long)_s3StoreConfiguration.multipartUploadThreshold()
+		).withShutDownThreadPools(
+			false
+		).build();
 
 		try {
 			_storageClass = StorageClass.fromValue(
@@ -612,21 +623,6 @@ public class S3Store implements Store {
 		catch (AmazonClientException amazonClientException) {
 			throw transform(amazonClientException);
 		}
-	}
-
-	protected TransferManager getTransferManager(AmazonS3 amazonS3) {
-		return TransferManagerBuilder.standard(
-		).withS3Client(
-			amazonS3
-		).withExecutorFactory(
-			() -> _threadPoolExecutor
-		).withMinimumUploadPartSize(
-			(long)_s3StoreConfiguration.minimumUploadPartSize()
-		).withMultipartUploadThreshold(
-			(long)_s3StoreConfiguration.multipartUploadThreshold()
-		).withShutDownThreadPools(
-			false
-		).build();
 	}
 
 	protected boolean isFileNotFound(

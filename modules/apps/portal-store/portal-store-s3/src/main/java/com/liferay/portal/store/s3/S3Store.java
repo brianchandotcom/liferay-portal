@@ -83,7 +83,8 @@ import org.osgi.service.component.annotations.Deactivate;
 public class S3Store implements Store {
 
 	public void abortMultipartUploads(Date date) {
-		_transferManager.abortMultipartUploads(_bucketName, date);
+		_transferManager.abortMultipartUploads(
+			_s3StoreConfiguration.bucketName(), date);
 	}
 
 	@Override
@@ -130,7 +131,7 @@ public class S3Store implements Store {
 				companyId, repositoryId, fileName, versionLabel);
 
 			DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(
-				_bucketName, key);
+				_s3StoreConfiguration.bucketName(), key);
 
 			_amazonS3.deleteObject(deleteObjectRequest);
 		}
@@ -217,7 +218,8 @@ public class S3Store implements Store {
 			companyId, repositoryId, fileName, versionLabel);
 
 		GetObjectMetadataRequest getObjectMetadataRequest =
-			new GetObjectMetadataRequest(_bucketName, key);
+			new GetObjectMetadataRequest(
+				_s3StoreConfiguration.bucketName(), key);
 
 		ObjectMetadata objectMetadata = _amazonS3.getObjectMetadata(
 			getObjectMetadataRequest);
@@ -272,7 +274,8 @@ public class S3Store implements Store {
 			String key = S3KeyTransformerUtil.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
-			return _amazonS3.doesObjectExist(_bucketName, key);
+			return _amazonS3.doesObjectExist(
+				_s3StoreConfiguration.bucketName(), key);
 		}
 		catch (AmazonClientException amazonClientException) {
 			if (isFileNotFound(amazonClientException)) {
@@ -314,7 +317,6 @@ public class S3Store implements Store {
 
 		_amazonS3 = getAmazonS3(awsCredentialsProvider);
 
-		_bucketName = _s3StoreConfiguration.bucketName();
 		_transferManager = getTransferManager(_amazonS3);
 
 		try {
@@ -398,7 +400,6 @@ public class S3Store implements Store {
 	@Deactivate
 	protected void deactivate() {
 		_amazonS3 = null;
-		_bucketName = null;
 		_s3StoreConfiguration = null;
 	}
 
@@ -413,7 +414,8 @@ public class S3Store implements Store {
 
 			while (iterator.hasNext()) {
 				DeleteObjectsRequest deleteObjectsRequest =
-					new DeleteObjectsRequest(_bucketName);
+					new DeleteObjectsRequest(
+						_s3StoreConfiguration.bucketName());
 
 				for (int i = 0; i < keys.length; i++) {
 					if (iterator.hasNext()) {
@@ -539,7 +541,7 @@ public class S3Store implements Store {
 				companyId, repositoryId, fileName, versionLabel);
 
 			GetObjectRequest getObjectRequest = new GetObjectRequest(
-				_bucketName, key);
+				_s3StoreConfiguration.bucketName(), key);
 
 			S3Object s3Object = _amazonS3.getObject(getObjectRequest);
 
@@ -564,7 +566,8 @@ public class S3Store implements Store {
 		try {
 			ListObjectsRequest listObjectsRequest = new ListObjectsRequest();
 
-			listObjectsRequest.withBucketName(_bucketName);
+			listObjectsRequest.withBucketName(
+				_s3StoreConfiguration.bucketName());
 			listObjectsRequest.withPrefix(prefix);
 
 			ObjectListing objectListing = _amazonS3.listObjects(
@@ -640,7 +643,7 @@ public class S3Store implements Store {
 				companyId, repositoryId, fileName, versionLabel);
 
 			PutObjectRequest putObjectRequest = new PutObjectRequest(
-				_bucketName, key, file);
+				_s3StoreConfiguration.bucketName(), key, file);
 
 			putObjectRequest.withStorageClass(_storageClass);
 
@@ -711,7 +714,6 @@ public class S3Store implements Store {
 	private static volatile S3StoreConfiguration _s3StoreConfiguration;
 
 	private AmazonS3 _amazonS3;
-	private String _bucketName;
 	private StorageClass _storageClass;
 	private TransferManager _transferManager;
 

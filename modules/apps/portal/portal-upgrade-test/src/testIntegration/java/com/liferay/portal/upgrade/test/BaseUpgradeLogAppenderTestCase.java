@@ -771,8 +771,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				"upgrade.report.data.clean.up",
 				StringBundler.concat(
 					"Table ", dbInspector.normalizeName("ClassName_"),
-					", 1 row deleted because '", value,
-					"' is not defined in any deployed module and is not in ",
+					", 1 row deleted because \"", value,
+					"\" is not defined in any deployed module and is not in ",
 					"use"));
 		}
 		finally {

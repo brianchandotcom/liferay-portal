@@ -101,7 +101,7 @@ public class MarketplaceCommandLineRunner
 			role.getId(), userAccount.getId());
 	}
 
-	private void _assignUserAccountToAccount(
+	private void _assignAccountToUserAccount(
 			Account account, UserAccount userAccount)
 		throws Exception {
 
@@ -606,7 +606,7 @@ public class MarketplaceCommandLineRunner
 				_getUserAccounts(null, "name eq 'Employees'")) {
 
 			_assignRoleToUserAccount(role, userAccount);
-			_assignUserAccountToAccount(account, userAccount);
+			_assignAccountToUserAccount(account, userAccount);
 		}
 	}
 

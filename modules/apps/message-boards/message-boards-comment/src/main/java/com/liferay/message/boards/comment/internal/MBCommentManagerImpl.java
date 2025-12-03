@@ -278,6 +278,19 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public List<Comment> getComments(
+		String className, long classPK, int status, int start, int end) {
+
+		MBDiscussion discussion = _mbDiscussionLocalService.fetchDiscussion(
+			className, classPK);
+
+		return TransformUtil.transform(
+			_mbMessageLocalService.getThreadMessages(
+				discussion.getThreadId(), status, start, end),
+			MBCommentImpl::new);
+	}
+
+	@Override
 	public int getCommentsCount(String className, long classPK) {
 		return _mbMessageLocalService.getDiscussionMessagesCount(
 			_portal.getClassNameId(className), classPK,

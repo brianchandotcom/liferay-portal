@@ -118,6 +118,11 @@ public class JspAnalyzerPluginTest {
 			jakartaFQNs);
 
 		_assertThrows(
+			IllegalArgumentException.class,
+			"Could not infer required javaee package",
+			() -> _testImplicitImports(
+				"dependencies/imports_without_packages.jsp", null, null, null));
+		_assertThrows(
 			IllegalArgumentException.class, "Invalid value was provided for",
 			() -> _testImplicitImports(
 				"dependencies/imports_without_javaee_packages.jsp", "test",

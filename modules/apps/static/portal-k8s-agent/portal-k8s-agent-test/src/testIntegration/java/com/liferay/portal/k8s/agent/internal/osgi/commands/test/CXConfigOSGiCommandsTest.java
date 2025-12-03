@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -89,6 +90,8 @@ public class CXConfigOSGiCommandsTest {
 				).put(
 					"projectName", "liferay-sample-cx-1"
 				).put(
+					"test.only", "true"
+				).put(
 					"type", "customElement"
 				).build());
 
@@ -107,6 +110,8 @@ public class CXConfigOSGiCommandsTest {
 					"name", _CONFIGURATION_NAME_2
 				).put(
 					"projectName", "liferay-sample-cx-2"
+				).put(
+					"test.only", "true"
 				).put(
 					"type", "customElement"
 				).build());
@@ -127,6 +132,8 @@ public class CXConfigOSGiCommandsTest {
 					"name", _CONFIGURATION_NAME_3
 				).put(
 					"projectName", "liferay-sample-cx-3"
+				).put(
+					"test.only", "true"
 				).put(
 					"type", "instanceSettings"
 				).build());
@@ -414,7 +421,8 @@ public class CXConfigOSGiCommandsTest {
 
 		String result = "";
 
-		Configuration[] configurations = _getConfigurations(filter);
+		Configuration[] configurations = _getConfigurations(
+			ArrayUtil.append(filter, "test.only=true"));
 
 		Set<String> namesFound = new HashSet<>();
 

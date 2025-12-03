@@ -437,35 +437,16 @@ public class FriendlyURLServletTest {
 	public void testGetRedirectOnLinkToURLLayoutWithDoAsUserId()
 		throws Throwable {
 
-		_doAsUser = UserTestUtil.addUser();
-		_user = UserTestUtil.addUser();
-
 		Layout linkToURLLayout = LayoutTestUtil.addTypeLinkToURLLayout(
 			_group.getGroupId(), _layout.getFriendlyURL());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.USER_ID, _doAsUser.getUserId());
-
-		HttpSession httpSession = mockHttpServletRequest.getSession();
-
-		httpSession.setAttribute(WebKeys.USER_ID, _user.getUserId());
-
 		String path = getPath(_group, linkToURLLayout);
 
-		Company company = _companyLocalService.getCompany(
-			_doAsUser.getCompanyId());
-
-		byte[] doAsUserIdBytes = new byte[Long.BYTES];
-
-		BigEndianCodec.putLong(doAsUserIdBytes, 0, _doAsUser.getUserId());
-
-		String encryptedDoAsUserId = StringUtil.bytesToHexString(
-			ChecksumUtil.appendChecksum(
-				_encryptor.encryptUnencoded(
-					company.getKeyObj(), doAsUserIdBytes)));
+		String encryptedDoAsUserId = _getEncryptedDoAsUserId(
+			mockHttpServletRequest);
 
 		Object expectedRedirect = _redirectConstructor1.newInstance(
 			HttpComponentsUtil.setParameter(
@@ -541,6 +522,40 @@ public class FriendlyURLServletTest {
 		testGetRedirect(
 			mockHttpServletRequest, getPath(userGroup, _layout),
 			_redirectConstructor1.newInstance(getURL(_layout)));
+	}
+
+	@Test
+	public void testGetRedirectWithRedirectEntryAndDoAsUserId()
+		throws Throwable {
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		String sourceURL = RandomTestUtil.randomString();
+
+		_redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), layout.getName(LocaleUtil.US), null, false,
+			sourceURL, ServiceContextTestUtil.getServiceContext());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo(CharPool.SLASH + sourceURL);
+
+		String encryptedDoAsUserId = _getEncryptedDoAsUserId(
+			mockHttpServletRequest);
+
+		mockHttpServletRequest.setParameter("doAsUserId", encryptedDoAsUserId);
+
+		Object expectedRedirect = _redirectConstructor2.newInstance(
+			HttpComponentsUtil.setParameter(
+				layout.getName(LocaleUtil.US), "doAsUserId",
+				encryptedDoAsUserId),
+			true, false);
+
+		testGetRedirect(
+			mockHttpServletRequest,
+			_group.getFriendlyURL() + CharPool.SLASH + sourceURL,
+			expectedRedirect);
 	}
 
 	@Test
@@ -965,6 +980,33 @@ public class FriendlyURLServletTest {
 		testGetRedirect(
 			httpServletRequest, new MockHttpServletResponse(), path,
 			expectedRedirect);
+	}
+
+	private String _getEncryptedDoAsUserId(
+			MockHttpServletRequest mockHttpServletRequest)
+		throws Exception {
+
+		_doAsUser = UserTestUtil.addUser();
+		_user = UserTestUtil.addUser();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER_ID, _doAsUser.getUserId());
+
+		HttpSession httpSession = mockHttpServletRequest.getSession();
+
+		httpSession.setAttribute(WebKeys.USER_ID, _user.getUserId());
+
+		Company company = _companyLocalService.getCompany(
+			_doAsUser.getCompanyId());
+
+		byte[] doAsUserIdBytes = new byte[Long.BYTES];
+
+		BigEndianCodec.putLong(doAsUserIdBytes, 0, _doAsUser.getUserId());
+
+		return StringUtil.bytesToHexString(
+			ChecksumUtil.appendChecksum(
+				_encryptor.encryptUnencoded(
+					company.getKeyObj(), doAsUserIdBytes)));
 	}
 
 	private String _getLocalizedPath(

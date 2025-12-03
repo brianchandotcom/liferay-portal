@@ -118,11 +118,11 @@ public class CXConfigOSGiCommandsTest {
 				HashMapDictionaryBuilder.<String, Object>put(
 					".k8s.config.key",
 					AccountEntryEmailConfiguration.class.getName() +
-						"~liferay-sample-cx-3/vi.localtest.me"
+						"~liferay-sample-cx-3/" + _companyWebId
 				).put(
 					"baseURL", "${portalURL}/o/liferay-sample-cx-3"
 				).put(
-					"dxp.lxc.liferay.com.virtualInstanceId", "vi.localtest.me"
+					"dxp.lxc.liferay.com.virtualInstanceId", _companyWebId
 				).put(
 					"name", _CONFIGURATION_NAME_3
 				).put(
@@ -193,7 +193,7 @@ public class CXConfigOSGiCommandsTest {
 					Arrays.asList(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2))
 			},
 			{
-				new String[] {"webId=vi.localtest.me"},
+				new String[] {"webId=" + _companyWebId},
 				new HashSet<>(Arrays.asList(_CONFIGURATION_NAME_3))
 			},
 			{
@@ -211,7 +211,7 @@ public class CXConfigOSGiCommandsTest {
 			},
 			{
 				new String[] {
-					"deploymentType=agent", "webId=vi.localtest.me",
+					"deploymentType=agent", "webId=" + _companyWebId,
 					"type=instanceSettings"
 				},
 				new HashSet<>(Arrays.asList(_CONFIGURATION_NAME_3))
@@ -488,8 +488,6 @@ public class CXConfigOSGiCommandsTest {
 	private static final String _CONFIGURATION_NAME_2 = "Liferay Sample CX 2";
 
 	private static final String _CONFIGURATION_NAME_3 = "Liferay Sample CX 3";
-
-	private static final String _VIRTUAL_HOSTNAME = "vi.localtest.me";
 
 	private static BundleContext _bundleContext;
 	private static String _companyWebId;

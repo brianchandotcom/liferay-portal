@@ -11,6 +11,10 @@ import {config} from '../config/index';
  * Returns a new FormData built from the given object.
  */
 function getFormData(body: Record<string, string>) {
+	if (!body || !Object.keys(body).length) {
+		return null;
+	}
+
 	const formData = new FormData();
 
 	Object.entries(body).forEach(([key, value]) => {

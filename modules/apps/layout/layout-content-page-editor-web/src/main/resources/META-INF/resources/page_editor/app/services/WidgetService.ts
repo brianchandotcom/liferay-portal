@@ -47,7 +47,9 @@ export default {
 	},
 
 	getWidgets() {
-		return serviceFetch<WidgetSet[]>(config.getPortletsURL, {});
+		return serviceFetch<WidgetSet[]>(config.getPortletsURL, {
+			method: 'GET',
+		});
 	},
 
 	toggleWidgetHighlighted({

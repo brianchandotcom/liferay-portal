@@ -146,7 +146,39 @@ public class S3Store implements Store {
 		String key = S3KeyTransformerUtil.getDirectoryKey(
 			companyId, repositoryId, dirName);
 
-		deleteObjects(key);
+		try {
+			String[] keys = new String[_DELETE_MAX];
+
+			List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(key);
+
+			Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
+
+			while (iterator.hasNext()) {
+				DeleteObjectsRequest deleteObjectsRequest =
+					new DeleteObjectsRequest(
+						_s3StoreConfiguration.bucketName());
+
+				for (int i = 0; i < keys.length; i++) {
+					if (iterator.hasNext()) {
+						S3ObjectSummary s3ObjectSummary = iterator.next();
+
+						keys[i] = s3ObjectSummary.getKey();
+					}
+					else {
+						keys = Arrays.copyOfRange(keys, 0, i);
+
+						break;
+					}
+				}
+
+				deleteObjectsRequest.withKeys(keys);
+
+				_amazonS3.deleteObjects(deleteObjectsRequest);
+			}
+		}
+		catch (AmazonClientException amazonClientException) {
+			throw transform(amazonClientException);
+		}
 	}
 
 	@Override
@@ -471,43 +503,6 @@ public class S3Store implements Store {
 	@Deactivate
 	protected void deactivate() {
 		_threadPoolExecutor.close();
-	}
-
-	protected void deleteObjects(String prefix) {
-		try {
-			String[] keys = new String[_DELETE_MAX];
-
-			List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(
-				prefix);
-
-			Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
-
-			while (iterator.hasNext()) {
-				DeleteObjectsRequest deleteObjectsRequest =
-					new DeleteObjectsRequest(
-						_s3StoreConfiguration.bucketName());
-
-				for (int i = 0; i < keys.length; i++) {
-					if (iterator.hasNext()) {
-						S3ObjectSummary s3ObjectSummary = iterator.next();
-
-						keys[i] = s3ObjectSummary.getKey();
-					}
-					else {
-						keys = Arrays.copyOfRange(keys, 0, i);
-
-						break;
-					}
-				}
-
-				deleteObjectsRequest.withKeys(keys);
-
-				_amazonS3.deleteObjects(deleteObjectsRequest);
-			}
-		}
-		catch (AmazonClientException amazonClientException) {
-			throw transform(amazonClientException);
-		}
 	}
 
 	protected AmazonS3 getAmazonS3(

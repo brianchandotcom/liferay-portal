@@ -9,6 +9,7 @@ import com.liferay.account.configuration.AccountEntryEmailConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -329,6 +330,24 @@ public class CXConfigOSGiCommandsTest {
 			"Failures: " + String.join("", failures), failures.isEmpty());
 	}
 
+	private String _captureStout(UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			System.setOut(new PrintStream(byteArrayOutputStream));
+
+			unsafeRunnable.run();
+
+			return byteArrayOutputStream.toString();
+		}
+		finally {
+			System.setOut(System.out);
+		}
+	}
+
 	private Configuration _getConfiguration(String pid) {
 		return ReflectionTestUtil.invoke(
 			_osgiCommands, "_getConfiguration", new Class<?>[] {String.class},
@@ -408,52 +427,28 @@ public class CXConfigOSGiCommandsTest {
 			List<String> failures)
 		throws Exception {
 
-		try {
-			String[] inputParamsArray = inputParams.toArray(new String[0]);
+		String[] inputParamsArray = inputParams.toArray(new String[0]);
 
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
+		String output = _captureStout(() -> _reload(inputParamsArray));
 
-			System.setOut(new PrintStream(byteArrayOutputStream));
-
-			_reload(inputParamsArray);
-
-			String output = byteArrayOutputStream.toString();
-
-			if (!output.contains(expectedOutput)) {
-				failures.add(
-					"FAILURE: " + Arrays.toString(inputParamsArray) + "\n");
-			}
-		}
-		finally {
-			System.setOut(System.out);
+		if (!output.contains(expectedOutput)) {
+			failures.add(
+				"FAILURE: " + Arrays.toString(inputParamsArray) + "\n");
 		}
 	}
 
 	private void _testShow(
-		List<String> inputPids, String expectedOutput,
-		List<String> failures)
+			List<String> inputParams, String expectedOutput,
+			List<String> failures)
 		throws Exception {
 
-		String[] inputPidsArray = inputPids.toArray(new String[0]);
+		String[] inputParamsArray = inputParams.toArray(new String[0]);
 
-		try {
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
+		String output = _captureStout(() -> _show(inputParamsArray));
 
-			System.setOut(new PrintStream(byteArrayOutputStream));
-
-			_show(inputPidsArray);
-
-			String output = byteArrayOutputStream.toString();
-
-			if (!output.contains(expectedOutput)) {
-				failures.add(
-					"FAILURE: " + Arrays.toString(inputPidsArray) + "\n");
-			}
-		}
-		finally {
-			System.setOut(System.out);
+		if (!output.contains(expectedOutput)) {
+			failures.add(
+				"FAILURE: " + Arrays.toString(inputParamsArray) + "\n");
 		}
 	}
 

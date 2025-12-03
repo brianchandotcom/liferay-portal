@@ -5,7 +5,7 @@
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import {useCallback, useLayoutEffect} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router';
 
 import {useBack} from '../hooks/useBack.es';
 

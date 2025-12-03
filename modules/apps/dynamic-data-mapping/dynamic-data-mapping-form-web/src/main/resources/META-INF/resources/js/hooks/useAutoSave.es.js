@@ -14,7 +14,7 @@ import {
 } from 'data-engine-js-components-web';
 import objectHash from 'object-hash';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router';
 
 import {useStateSync} from './useStateSync.es';
 import {useValidateFormWithObjects} from './useValidateFormWithObjects';

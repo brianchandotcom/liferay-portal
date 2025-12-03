@@ -13,7 +13,7 @@ import {
 } from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo} from 'react';
-import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import {Route, Routes, useLocation, useNavigate} from 'react-router';
 
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
 import {EVENT_TYPES} from '../eventTypes.es';

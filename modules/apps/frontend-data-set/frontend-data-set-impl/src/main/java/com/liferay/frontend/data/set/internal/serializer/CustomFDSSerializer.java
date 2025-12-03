@@ -895,6 +895,23 @@ public class CustomFDSSerializer
 		);
 	}
 
+	private Object _getIntegerKey(
+		String entityFieldType, ListTypeEntry listTypeEntry) {
+
+		if (Objects.equals(entityFieldType, FDSEntityFieldTypes.INTEGER)) {
+			try {
+				return Integer.valueOf(listTypeEntry.getKey());
+			}
+			catch (NumberFormatException numberFormatException) {
+				throw new IllegalArgumentException(
+					"Invalid integer key: " + listTypeEntry.getKey(),
+					numberFormatException);
+			}
+		}
+
+		return listTypeEntry.getKey();
+	}
+
 	private ObjectDefinition _getObjectDefinition(
 		HttpServletRequest httpServletRequest) {
 
@@ -1150,9 +1167,6 @@ public class CustomFDSSerializer
 			Map<String, Object> properties, String sourceType)
 		throws Exception {
 
-		String entityFieldType = String.valueOf(
-			properties.get("entityFieldType"));
-
 		if (Objects.equals(
 				sourceType, FDSEntryItemImportPolicy.ITEM_PROXY.toString())) {
 
@@ -1171,6 +1185,9 @@ public class CustomFDSSerializer
 			}
 		}
 
+		String entityFieldType = String.valueOf(
+			properties.get("entityFieldType"));
+
 		JSONObject jsonObject = JSONUtil.put(
 			"autocompleteEnabled", true
 		).put(
@@ -1185,22 +1202,24 @@ public class CustomFDSSerializer
 		).put(
 			"entityFieldTypeCollection",
 			() -> {
-				if(_isCollection(
+				if (_isCollection(
 						String.valueOf(properties.get("fieldName")),
 						sourceType) ||
 					(!(boolean)properties.get("entityFieldTypeCollection") &&
 					 !Objects.equals(
-						 properties.get("entityFieldType"),
-						 FDSEntityFieldTypes.BOOLEAN))) {
+						 entityFieldType, FDSEntityFieldTypes.BOOLEAN))) {
 
 					return FDSEntityFieldTypes.COLLECTION;
 				}
+
 				return (boolean)properties.get("entityFieldTypeCollection");
 			}
 		).put(
 			"id",
 			() -> {
-				if (!Objects.equals(sourceType, "OBJECT_PICKLIST") || Validator.isNotNull(entityFieldType)) {
+				if (!Objects.equals(sourceType, "OBJECT_PICKLIST") ||
+					Validator.isNotNull(entityFieldType)) {
+
 					return fieldName;
 				}
 
@@ -1277,16 +1296,7 @@ public class CustomFDSSerializer
 						PortalUtil.getLocale(httpServletRequest))
 				).put(
 					"value",
-					() -> {
-						if (Validator.isNotNull(entityFieldType) &&
-							StringUtil.equalsIgnoreCase(
-								entityFieldType, FDSEntityFieldTypes.INTEGER)) {
-
-							return Integer.valueOf(listTypeEntry.getKey());
-						}
-
-						return listTypeEntry.getKey();
-					}
+					() -> _getIntegerKey(entityFieldType, listTypeEntry)
 				))
 		).put(
 			"preloadedData",
@@ -1318,18 +1328,8 @@ public class CustomFDSSerializer
 									PortalUtil.getLocale(httpServletRequest))
 							).put(
 								"value",
-								() -> {
-									if (Validator.isNotNull(entityFieldType) &&
-										StringUtil.equalsIgnoreCase(
-											entityFieldType,
-											FDSEntityFieldTypes.INTEGER)) {
-
-										return Integer.valueOf(
-											listTypeEntry.getKey());
-									}
-
-									return listTypeEntry.getKey();
-								}
+								() -> _getIntegerKey(
+									entityFieldType, listTypeEntry)
 							));
 					}
 				}

@@ -1100,28 +1100,27 @@ public class FDSActionDropdownItemBuilder {
 				DisabledStep, DropdownItemsStep, ErrorMessageStep,
 				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
 				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
-				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
-				TypeStep, VisibilityFiltersStep {
+				QuickActionStep, RequestBodyStep, SeparatorStep, SetDataStep,
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
 	}
 
 	public interface AfterConfirmationMessageStep
 		extends BuildStep, ConfirmationMessageTypeStep, DisabledStep,
 				DropdownItemsStep, ErrorMessageStep, FDSActionDropdownItemsStep,
 				HighlightedStep, HrefStep, IconStep, IdStep, LabelStep,
-				MethodStep, ModalSizeStep, PermissionKeyStep,
-				QuickActionStep, RequestBodyStep, SeparatorStep, SetDataStep,
-				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
-				VisibilityFiltersStep {
+				MethodStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SetDataStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterConfirmationMessageTypeStep
 		extends BuildStep, DisabledStep, DropdownItemsStep, ErrorMessageStep,
 				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
 				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
-				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
-				TypeStep, VisibilityFiltersStep {
+				QuickActionStep, RequestBodyStep, SeparatorStep, SetDataStep,
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
 	}
 
 	public interface AfterDisabledStep
@@ -1129,129 +1128,125 @@ public class FDSActionDropdownItemBuilder {
 				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
 				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
 				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SuccessMessageStep, TargetStep, TitleStep,
-				TypeStep, VisibilityFiltersStep {
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
 	}
 
 	public interface AfterDropdownItemsStep
 		extends BuildStep, ErrorMessageStep, FDSActionDropdownItemsStep,
 				HighlightedStep, IconStep, IdStep, KeyStep, LabelStep,
-				MethodStep, ModalSizeStep, PermissionKeyStep,
-				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
-				VisibilityFiltersStep {
+				MethodStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterErrorMessageStep
 		extends BuildStep, FDSActionDropdownItemsStep, HighlightedStep,
 				HrefStep, IconStep, IdStep, LabelStep, MethodStep,
 				ModalSizeStep, PermissionKeyStep, QuickActionStep,
-				RequestBodyStep, SeparatorStep, SuccessMessageStep,
-				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
+				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterFDSActionDropdownItemsStep
 		extends BuildStep, HighlightedStep, HrefStep, IconStep, IdStep,
 				LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
 				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SuccessMessageStep, TargetStep, TitleStep,
-				TypeStep, VisibilityFiltersStep {
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
 	}
 
 	public interface AfterHighlightedStep
 		extends BuildStep, IconStep, IdStep, LabelStep, MethodStep,
 				ModalSizeStep, PermissionKeyStep, QuickActionStep,
-				RequestBodyStep, SeparatorStep, SuccessMessageStep,
-				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
+				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterHrefStep
 		extends BuildStep, DropdownItemsStep, HighlightedStep, IconStep, IdStep,
 				KeyStep, LabelStep, MethodStep, ModalSizeStep,
-				PermissionKeyStep, QuickActionStep,
-				RequestBodyStep, SeparatorStep, SuccessMessageStep,
-				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
+				PermissionKeyStep, QuickActionStep, RequestBodyStep,
+				SeparatorStep, SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterIconStep
 		extends BuildStep, DropdownItemsStep, IdStep, KeyStep, LabelStep,
-				MethodStep, ModalSizeStep, PermissionKeyStep,
-				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
-				VisibilityFiltersStep {
+				MethodStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterIdStep
 		extends BuildStep, DropdownItemsStep, KeyStep, LabelStep, MethodStep,
 				ModalSizeStep, PermissionKeyStep, QuickActionStep,
-				RequestBodyStep, SeparatorStep, SuccessMessageStep,
-				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
+				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterKeyStep
 		extends BuildStep, LabelStep, MethodStep, ModalSizeStep,
-				PermissionKeyStep, QuickActionStep,
-				RequestBodyStep, SeparatorStep, SuccessMessageStep,
-				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
+				PermissionKeyStep, QuickActionStep, RequestBodyStep,
+				SeparatorStep, SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterLabelStep
 		extends BuildStep, MethodStep, ModalSizeStep, PermissionKeyStep,
 				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SuccessMessageStep, TargetStep, TitleStep,
-				TypeStep, VisibilityFiltersStep {
+				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
 	}
 
 	public interface AfterMethodStep
-		extends BuildStep, ModalSizeStep, PermissionKeyStep,
-				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
-				VisibilityFiltersStep {
+		extends BuildStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterModalSizeStep
-		extends BuildStep, PermissionKeyStep, QuickActionStep,
-				RequestBodyStep, SeparatorStep, SuccessMessageStep,
-				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
-	}
-
-	public interface AfterPermissionKeyStep
-		extends BuildStep, QuickActionStep, RequestBodyStep,
-				SeparatorStep, SuccessMessageStep, TargetStep,
-				TitleStep, TypeStep, VisibilityFiltersStep {
-	}
-
-	public interface AfterPutDataStep
-		extends ActiveStep, BuildStep, ConfirmationMessageStep, ConfirmationMessageTypeStep,
-				DisabledStep, DropdownItemsStep, ErrorMessageStep,
-				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
-				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
-				PutDataStep, QuickActionStep, RequestBodyStep, SeparatorStep,
-				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
+		extends BuildStep, PermissionKeyStep, QuickActionStep, RequestBodyStep,
+				SeparatorStep, SuccessMessageStep, TargetStep, TitleStep,
 				TypeStep, VisibilityFiltersStep {
 	}
 
-	public interface AfterQuickActionStep
-		extends BuildStep, RequestBodyStep, SeparatorStep,
+	public interface AfterPermissionKeyStep
+		extends BuildStep, QuickActionStep, RequestBodyStep, SeparatorStep,
 				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
 				VisibilityFiltersStep {
 	}
 
-	public interface AfterRequestBodyStep
-		extends BuildStep, SeparatorStep, SuccessMessageStep,
+	public interface AfterPutDataStep
+		extends ActiveStep, BuildStep, ConfirmationMessageStep,
+				ConfirmationMessageTypeStep, DisabledStep, DropdownItemsStep,
+				ErrorMessageStep, FDSActionDropdownItemsStep, HighlightedStep,
+				HrefStep, IconStep, IdStep, LabelStep, MethodStep,
+				ModalSizeStep, PermissionKeyStep, PutDataStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SetDataStep, SuccessMessageStep,
 				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
-	public interface AfterSeparatorStep
-		extends BuildStep, SuccessMessageStep, TargetStep,
+	public interface AfterQuickActionStep
+		extends BuildStep, RequestBodyStep, SeparatorStep, SuccessMessageStep,
+				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterRequestBodyStep
+		extends BuildStep, SeparatorStep, SuccessMessageStep, TargetStep,
 				TitleStep, TypeStep, VisibilityFiltersStep {
+	}
+
+	public interface AfterSeparatorStep
+		extends BuildStep, SuccessMessageStep, TargetStep, TitleStep, TypeStep,
+				VisibilityFiltersStep {
 	}
 
 	public interface AfterSetDataStep
 		extends BuildStep, DisabledStep, DropdownItemsStep, ErrorMessageStep,
 				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
-				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep, PutDataStep,
-				QuickActionStep, RequestBodyStep, SeparatorStep,
+				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				PutDataStep, QuickActionStep, RequestBodyStep, SeparatorStep,
 				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
 				TypeStep, VisibilityFiltersStep {
 	}

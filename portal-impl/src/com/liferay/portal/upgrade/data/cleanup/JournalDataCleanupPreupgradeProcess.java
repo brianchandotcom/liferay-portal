@@ -36,11 +36,11 @@ public class JournalDataCleanupPreupgradeProcess
 				"JournalFeed"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "articlePK", "JournalArticleLocalization", "id_",
+				null, null, "articlePK", "JournalArticleLocalization", "id_",
 				"JournalArticle"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "resourcePrimKey", "JournalArticleResource",
+				null, null, "resourcePrimKey", "JournalArticleResource",
 				"resourcePrimKey", "JournalArticle"));
 	}
 

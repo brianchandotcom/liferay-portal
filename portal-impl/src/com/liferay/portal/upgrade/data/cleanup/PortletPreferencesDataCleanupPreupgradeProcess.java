@@ -18,13 +18,14 @@ public class PortletPreferencesDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				"not exists (select 1 from LayoutRevision where " +
 					"layoutRevisionId = [$SOURCE_TABLE_ALIAS$].plid)",
 				"plid", "PortletPreferences", "plid", "Layout"));
 
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "portletPreferencesId", "PortletPreferenceValue",
+				null, null, "portletPreferencesId", "PortletPreferenceValue",
 				"portletPreferencesId", "PortletPreferences"));
 	}
 

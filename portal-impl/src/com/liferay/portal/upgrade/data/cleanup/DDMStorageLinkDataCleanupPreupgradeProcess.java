@@ -18,13 +18,15 @@ public class DDMStorageLinkDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "contentId", "DDMContent", "classPK", "DDMStorageLink"));
+				null, null, "contentId", "DDMContent", "classPK",
+				"DDMStorageLink"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "storageId", "DDMField", "classPK", "DDMStorageLink"));
+				null, null, "storageId", "DDMField", "classPK",
+				"DDMStorageLink"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "storageId", "DDMFieldAttribute", "classPK",
+				null, null, "storageId", "DDMFieldAttribute", "classPK",
 				"DDMStorageLink"));
 	}
 

@@ -26,21 +26,25 @@ public class GroupDataCleanupPreupgradeProcess
 				"groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				"[$SOURCE_TABLE_ALIAS$].ownerType = " +
 					PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				"ownerId", "PortalPreferences", "groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				"[$SOURCE_TABLE_ALIAS$].ownerType = " +
 					PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				"ownerId", "PortletPreferences", "groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				"[$SOURCE_TABLE_ALIAS$].scope = " +
 					ResourceConstants.SCOPE_GROUP,
 				"primKeyId", "ResourcePermission", "groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].scope = ",
 					ResourceConstants.SCOPE_INDIVIDUAL, " and ",

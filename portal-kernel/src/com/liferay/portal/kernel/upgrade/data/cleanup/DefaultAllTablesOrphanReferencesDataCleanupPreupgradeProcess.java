@@ -26,7 +26,7 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 		throws Exception {
 
 		OrphanReferencesDataCleanupUtil.cleanUpTable(
-			connection, null, sourceColumnName, sourceTableName,
+			connection, null, null, sourceColumnName, sourceTableName,
 			targetColumnNames, targetTableName);
 	}
 

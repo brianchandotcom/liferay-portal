@@ -76,7 +76,8 @@ public class DDMDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "fieldId", "DDMFieldAttribute", "fieldId", "DDMField"));
+				null, null, "fieldId", "DDMFieldAttribute", "fieldId",
+				"DDMField"));
 	}
 
 	private DataCleanupPreupgradeProcess
@@ -84,16 +85,16 @@ public class DDMDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "formInstanceId", "DDMFormInstanceRecord",
+				null, null, "formInstanceId", "DDMFormInstanceRecord",
 				"formInstanceId", "DDMFormInstance"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "formInstanceId", "DDMFormInstanceRecordVersion",
+				null, null, "formInstanceId", "DDMFormInstanceRecordVersion",
 				"formInstanceId", "DDMFormInstance"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "formInstanceId", "DDMFormInstanceReport",
+				null, null, "formInstanceId", "DDMFormInstanceReport",
 				"formInstanceId", "DDMFormInstance"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "formInstanceId", "DDMFormInstanceReportVersion",
+				null, null, "formInstanceId", "DDMFormInstanceReportVersion",
 				"formInstanceId", "DDMFormInstance"));
 	}
 
@@ -109,16 +110,16 @@ public class DDMDataCleanupPreupgradeProcess
 				new String[] {"classNameId"}, "classPK",
 				new String[] {"structureId"}, "DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "DDMFormInstance", "structureId",
+				null, null, "structureId", "DDMFormInstance", "structureId",
 				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "DDMStorageLink", "structureId",
+				null, null, "structureId", "DDMStorageLink", "structureId",
 				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "DDMStructureLink", "structureId",
+				null, null, "structureId", "DDMStructureLink", "structureId",
 				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "DDMStructureVersion", "structureId",
+				null, null, "structureId", "DDMStructureVersion", "structureId",
 				"DDMStructure"));
 	}
 
@@ -127,10 +128,10 @@ public class DDMDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureVersionId", "DDMField", "structureVersionId",
-				"DDMStructureVersion"),
+				null, null, "structureVersionId", "DDMField",
+				"structureVersionId", "DDMStructureVersion"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureVersionId", "DDMStructureLayout",
+				null, null, "structureVersionId", "DDMStructureLayout",
 				"structureVersionId", "DDMStructureVersion"));
 	}
 
@@ -146,10 +147,10 @@ public class DDMDataCleanupPreupgradeProcess
 				new String[] {"classNameId"}, "classPK",
 				new String[] {"templateId"}, "DDMTemplate"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "templateId", "DDMTemplateLink", "templateId",
+				null, null, "templateId", "DDMTemplateLink", "templateId",
 				"DDMTemplate"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "templateId", "DDMTemplateVersion", "templateId",
+				null, null, "templateId", "DDMTemplateVersion", "templateId",
 				"DDMTemplate"));
 	}
 
@@ -158,10 +159,10 @@ public class DDMDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "JournalArticle", "structureKey",
+				null, null, "structureId", "JournalArticle", "structureKey",
 				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "JournalFeed", "structureKey",
+				null, null, "structureId", "JournalFeed", "structureKey",
 				"DDMStructure"));
 	}
 
@@ -170,10 +171,10 @@ public class DDMDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "DDMStructureKey", "JournalArticle", "structureKey",
+				null, null, "DDMStructureKey", "JournalArticle", "structureKey",
 				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "DDMStructureKey", "JournalFeed", "structureKey",
+				null, null, "DDMStructureKey", "JournalFeed", "structureKey",
 				"DDMStructure"));
 	}
 
@@ -182,10 +183,10 @@ public class DDMDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "DDMStructureId", "JournalArticle", "structureId",
+				null, null, "DDMStructureId", "JournalArticle", "structureId",
 				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "DDMStructureId", "JournalFeed", "structureId",
+				null, null, "DDMStructureId", "JournalFeed", "structureId",
 				"DDMStructure"));
 	}
 

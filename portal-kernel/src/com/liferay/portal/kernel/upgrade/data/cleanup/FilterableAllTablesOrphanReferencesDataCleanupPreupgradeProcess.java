@@ -44,7 +44,7 @@ public class FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 		}
 
 		OrphanReferencesDataCleanupUtil.cleanUpTable(
-			connection, _sourceAdditionalWhereClause, sourceColumnName,
+			connection, null, _sourceAdditionalWhereClause, sourceColumnName,
 			sourceTableName, targetColumnNames, targetTableName);
 	}
 

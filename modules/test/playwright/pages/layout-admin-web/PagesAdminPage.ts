@@ -372,11 +372,10 @@ export class PagesAdminPage {
 	}
 
 	async clickOnTab(name: string) {
-		await expect(async () => {
-			await this.page.getByRole('link', {name}).click();
-
-			await expect(this.page.getByRole('heading', {name})).toBeVisible();
-		}).toPass({timeout: 4000});
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('heading', {name}),
+			trigger: this.page.getByRole('link', {name}),
+		});
 	}
 
 	async deletePage(name: string) {

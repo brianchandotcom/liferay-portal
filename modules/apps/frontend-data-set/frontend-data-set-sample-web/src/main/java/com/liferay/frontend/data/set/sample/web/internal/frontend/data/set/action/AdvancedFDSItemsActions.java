@@ -8,6 +8,7 @@ package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.acti
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.language.Language;
@@ -22,7 +23,6 @@ import jakarta.portlet.PortletResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,138 +50,279 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(portletResponse);
 
-		FDSActionDropdownItem fdsActionDropdownItem1 =
-			new FDSActionDropdownItem(
-				PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/side_panel/empty"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"rectangle-split", "open-side-panel-no-title",
-				"Side Panel With Action Title", null, null, "sidePanel");
-
-		fdsActionDropdownItem1.putData("disableHeader", false);
-		fdsActionDropdownItem1.putData(
-			"title", "Side Panel Title Provided by Action");
-
-		FDSActionDropdownItem fdsActionDropdownItem2 =
-			new FDSActionDropdownItem(
-				PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/side_panel/full"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"rectangle-split", "open-side-panel-title",
-				"Side Panel With Action and Content Title", null, null,
-				"sidePanel");
-
-		fdsActionDropdownItem2.putData("disableHeader", false);
-		fdsActionDropdownItem2.putData(
-			"title", "Side Panel Title Provided by Action");
-
-		FDSActionDropdownItem fdsActionDropdownItem3 =
-			new FDSActionDropdownItem(
-				PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/side_panel/full"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"rectangle-split", "open-side-panel-title",
-				"Side Panel With Content Title", null, null, "sidePanel");
-
-		fdsActionDropdownItem3.putData("disableHeader", true);
-
-		FDSActionDropdownItem fdsActionDropdownItem4 =
-			new FDSActionDropdownItem(null, "groupItems4", null, true, "group");
-
-		fdsActionDropdownItem4.setFDSActionDropdownItems(
-			Arrays.asList(
-				new FDSActionDropdownItem(
-					"#test-visibility-filter", "sun",
-					"sampleVisibilityFilterMessage", "Sample Visibility Filter",
-					null, null, "link",
-					HashMapBuilder.<String, Object>put(
-						"color", "Yellow"
-					).build()),
-				new FDSActionDropdownItem(
-					null, "view", "infoPanel", "View Details", null, null,
-					"infoPanel"),
-				new FDSActionDropdownItem(
-					null, "view", "sampleMessage", "Sample View", null, null,
-					"link"),
-				new FDSActionDropdownItem(
-					"#test-pencil", "pencil", "sampleEditMessage",
-					"Sample Edit", null, null, "link"),
-				new FDSActionDropdownItem(
-					"#test-delete", "times-circle", "sampleDeleteMessage",
-					"Sample Delete", null, null, "link"),
-				new FDSActionDropdownItem(
-					"#test-copy", "copy", "sampleMoveFolderMessage",
-					"Sample Copy", null, null, "link"),
-				new FDSActionDropdownItem(
-					href, "truck", "asyncSuccess", "Async Success", "get", null,
-					"async"),
-				new FDSActionDropdownItem(
-					"http://localhost", "times-circle",
-					"asyncErrorConnectionRefused", "Async Connection Refused",
-					"get", null, "async"),
-				fdsActionDropdownItem1, fdsActionDropdownItem2,
-				fdsActionDropdownItem3,
-				new FDSActionDropdownItem(
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCRenderCommandName(
-						"/side_panel/empty"
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString(),
-					"rectangle-split", "open-side-panel-without-title",
-					"Side Panel With No Title", null, null, "sidePanel"),
-				new FDSActionDropdownItem(
-					href + "/abc", "staging", "asyncErrorResourceNotFound",
-					"Async Resource Not Found", "get", null, "async"),
-				new FDSActionDropdownItem(
-					null, "reload", "reload", "Reload Data", null, null,
-					"link"),
-				new FDSActionDropdownItem(
-					null, "rectangle-split", "openSidePanel", "Open Side Panel",
-					null, null, "link")));
-
-		FDSActionDropdownItem fdsActionDropdownItem5 =
-			new FDSActionDropdownItem(
-				"nodes", "contextualItem", "Contextual Item", false,
-				"contextual");
-
-		fdsActionDropdownItem5.setFDSActionDropdownItems(
-			Arrays.asList(
-				new FDSActionDropdownItem(
-					null, "exclamation-circle", "sampleMessage",
-					"Contextual Sub Item 1", null, null, "link"),
-				new FDSActionDropdownItem(
-					null, "exclamation-circle", "sampleMessage",
-					"Contextual Sub Item 2", null, null, "link")));
-
-		FDSActionDropdownItem fdsActionDropdownItem6 =
-			new FDSActionDropdownItem(null, "groupItems6", null, true, "group");
-
-		fdsActionDropdownItem6.setFDSActionDropdownItems(
-			Arrays.asList(
-				new FDSActionDropdownItem(
-					null, "separator", "sampleMessage", "Group Item", null,
-					null, "link"),
-				fdsActionDropdownItem5));
-
 		return FDSActionDropdownItemList.of(
-			fdsActionDropdownItem4,
-			new FDSActionDropdownItem(
-				"hidden", "groupPermissionTest", null, false, "group"),
-			fdsActionDropdownItem6);
+			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+				FDSActionDropdownItemList.of(
+					FDSActionDropdownItemBuilder.setHref(
+						"#test-visibility-filter"
+					).setIcon(
+						"sun"
+					).setId(
+						"sampleVisibilityFilterMessage"
+					).setLabel(
+						"Sample Visibility Filter"
+					).setTarget(
+						"link"
+					).setVisibilityFilters(
+						HashMapBuilder.<String, Object>put(
+							"color", "Yellow"
+						).build()
+					).build(),
+					FDSActionDropdownItemBuilder.setIcon(
+						"view"
+					).setId(
+						"infoPanel"
+					).setLabel(
+						"View Details"
+					).setTarget(
+						"infoPanel"
+					).build(),
+					FDSActionDropdownItemBuilder.setIcon(
+						"view"
+					).setId(
+						"sampleMessage"
+					).setLabel(
+						"Sample View"
+					).setTarget(
+						"link"
+					).build(),
+					FDSActionDropdownItemBuilder.setHref(
+						"#test-pencil"
+					).setIcon(
+						"pencil"
+					).setId(
+						"sampleEditMessage"
+					).setLabel(
+						"Sample Edit"
+					).setTarget(
+						"link"
+					).build(),
+					FDSActionDropdownItemBuilder.setHref(
+						"#test-delete"
+					).setIcon(
+						"times-circle"
+					).setId(
+						"sampleDeleteMessage"
+					).setLabel(
+						"Sample Delete"
+					).setTarget(
+						"link"
+					).build(),
+					FDSActionDropdownItemBuilder.setHref(
+						"#test-copy"
+					).setIcon(
+						"copy"
+					).setId(
+						"sampleMoveFolderMessage"
+					).setLabel(
+						"Sample Copy"
+					).setTarget(
+						"link"
+					).build(),
+					FDSActionDropdownItemBuilder.setHref(
+						href
+					).setIcon(
+						"truck"
+					).setId(
+						"asyncSuccess"
+					).setLabel(
+						"Async Success"
+					).setMethod(
+						"get"
+					).setTarget(
+						"async"
+					).build(),
+					FDSActionDropdownItemBuilder.setHref(
+						"http://localhost"
+					).setIcon(
+						"times-circle"
+					).setId(
+						"asyncErrorConnectionRefused"
+					).setLabel(
+						"Async Connection Refused"
+					).setMethod(
+						"get"
+					).setTarget(
+						"async"
+					).build(),
+					FDSActionDropdownItemBuilder.setData(
+						HashMapBuilder.<String, Object>put(
+							"disableHeader", false
+						).build()
+					).putData(
+						"title", "Side Panel Title Provided by Action"
+					).setHref(
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCRenderCommandName(
+							"/side_panel/empty"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					).setIcon(
+						"rectangle-split"
+					).setId(
+						"open-side-panel-no-title"
+					).setLabel(
+						"Side Panel With Action Title"
+					).setTarget(
+						"sidePanel"
+					).build(),
+					FDSActionDropdownItemBuilder.setData(
+						HashMapBuilder.<String, Object>put(
+							"disableHeader", false
+						).build()
+					).putData(
+						"title", "Side Panel Title Provided by Action"
+					).setHref(
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCRenderCommandName(
+							"/side_panel/full"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					).setIcon(
+						"rectangle-split"
+					).setId(
+						"open-side-panel-no-title"
+					).setLabel(
+						"Side Panel With Action and Content Title"
+					).setTarget(
+						"sidePanel"
+					).build(),
+					FDSActionDropdownItemBuilder.putData(
+						"disableHeader", "true"
+					).setHref(
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCRenderCommandName(
+							"/side_panel/full"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					).setIcon(
+						"rectangle-split"
+					).setId(
+						"open-side-panel-no-title"
+					).setLabel(
+						"Side Panel With Content Title"
+					).setTarget(
+						"sidePanel"
+					).build(),
+					FDSActionDropdownItemBuilder.setHref(
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCRenderCommandName(
+							"/side_panel/empty"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					).setIcon(
+						"rectangle-split"
+					).setId(
+						"open-side-panel-without-title"
+					).setLabel(
+						"Side Panel With No Title"
+					).setTarget(
+						"sidePanel"
+					).build(),
+					FDSActionDropdownItemBuilder.setHref(
+						href + "/abc"
+					).setIcon(
+						"staging"
+					).setId(
+						"asyncErrorResourceNotFound"
+					).setLabel(
+						"Async Resource Not Found"
+					).setMethod(
+						"get"
+					).setTarget(
+						"async"
+					).build(),
+					FDSActionDropdownItemBuilder.setIcon(
+						"reload"
+					).setId(
+						"reload"
+					).setLabel(
+						"Reload Data"
+					).setTarget(
+						"link"
+					).build(),
+					FDSActionDropdownItemBuilder.setIcon(
+						"rectangle-split"
+					).setId(
+						"openSidePanel"
+					).setLabel(
+						"Open Side Panel"
+					).setTarget(
+						"link"
+					).build())
+			).setId(
+				"groupItems"
+			).setSeparator(
+				true
+			).setType(
+				"group"
+			).build(),
+			FDSActionDropdownItemBuilder.setIcon(
+				"hidden"
+			).setId(
+				"groupPermissionTest"
+			).setSeparator(
+				false
+			).setType(
+				"group"
+			).build(),
+			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+				FDSActionDropdownItemList.of(
+					FDSActionDropdownItemBuilder.setIcon(
+						"separator"
+					).setId(
+						"sampleMessage"
+					).setLabel(
+						"Group Item"
+					).setTarget(
+						"link"
+					).build(),
+					FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+						FDSActionDropdownItemList.of(
+							FDSActionDropdownItemBuilder.setIcon(
+								"exclamation-circle"
+							).setId(
+								"sampleMessage"
+							).setLabel(
+								"Contextual Sub Item 1"
+							).setTarget(
+								"link"
+							).build(),
+							FDSActionDropdownItemBuilder.setIcon(
+								"exclamation-circle"
+							).setId(
+								"sampleMessage"
+							).setLabel(
+								"Contextual Sub Item 2"
+							).setTarget(
+								"link"
+							).build())
+					).setIcon(
+						"nodes"
+					).setId(
+						"contextualItem"
+					).setLabel(
+						"Contextual Item"
+					).setSeparator(
+						false
+					).setType(
+						"contextual"
+					).build())
+			).setId(
+				"groupItems"
+			).setSeparator(
+				true
+			).setType(
+				"group"
+			).build());
 	}
 
 	@Override

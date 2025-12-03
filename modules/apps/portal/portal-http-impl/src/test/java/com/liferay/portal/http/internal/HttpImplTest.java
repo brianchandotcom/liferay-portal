@@ -104,7 +104,7 @@ public class HttpImplTest {
 	}
 
 	@Test
-	public void testGetRequestConfigBuilderTimeout() {
+	public void testGetRequestConfigBuilder() {
 		RequestConfig.Builder requestConfigBuilder = ReflectionTestUtil.invoke(
 			_httpImpl, "_getRequestConfigBuilder",
 			new Class<?>[] {URI.class, int.class},
@@ -112,27 +112,24 @@ public class HttpImplTest {
 
 		RequestConfig requestConfig = requestConfigBuilder.build();
 
-		Assert.assertEquals(1000, requestConfig.getSocketTimeout());
-		Assert.assertEquals(1000, requestConfig.getConnectionRequestTimeout());
 		Assert.assertEquals(1000, requestConfig.getConnectTimeout());
-	}
+		Assert.assertEquals(1000, requestConfig.getConnectionRequestTimeout());
+		Assert.assertEquals(1000, requestConfig.getSocketTimeout());
 
-	@Test
-	public void testGetRequestConfigBuilderTimeoutWithDefault() {
-		RequestConfig.Builder requestConfigBuilder = ReflectionTestUtil.invoke(
+		requestConfigBuilder = ReflectionTestUtil.invoke(
 			_httpImpl, "_getRequestConfigBuilder",
 			new Class<?>[] {URI.class, int.class},
 			URI.create("http://" + RandomTestUtil.randomString()), 0);
 
-		RequestConfig requestConfig = requestConfigBuilder.build();
+		requestConfig = requestConfigBuilder.build();
 
 		int defaultTimeout = ReflectionTestUtil.getFieldValue(
 			_httpImpl, "_TIMEOUT");
 
-		Assert.assertEquals(defaultTimeout, requestConfig.getSocketTimeout());
 		Assert.assertEquals(
 			defaultTimeout, requestConfig.getConnectionRequestTimeout());
 		Assert.assertEquals(defaultTimeout, requestConfig.getConnectTimeout());
+		Assert.assertEquals(defaultTimeout, requestConfig.getSocketTimeout());
 	}
 
 	@Test

@@ -1393,7 +1393,7 @@ public class ObjectEntryDTOConverter
 				}
 
 				return TransformUtil.transformToArray(
-					_commentManager.getRootComments(
+					_commentManager.getComments(
 						objectDefinition.getClassName(),
 						objectEntry.getObjectEntryId(),
 						WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,

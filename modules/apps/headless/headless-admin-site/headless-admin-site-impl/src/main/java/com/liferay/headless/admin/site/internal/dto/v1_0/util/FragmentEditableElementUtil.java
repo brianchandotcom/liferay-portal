@@ -268,7 +268,6 @@ public class FragmentEditableElementUtil {
 
 				fragmentEditableElement.setFragmentEditableElementValue(
 					() -> fragmentEditableElementValue);
-
 				fragmentEditableElement.setId(() -> textId);
 
 				return fragmentEditableElement;

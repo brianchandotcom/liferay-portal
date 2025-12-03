@@ -63,7 +63,6 @@ public class FragmentEditableElementTestUtil {
 
 		textFragmentEditableElementValue.setTextFragmentValue(
 			() -> textFragmentValue);
-
 		textFragmentEditableElementValue.setType(
 			() -> FragmentEditableElementValue.Type.TEXT);
 

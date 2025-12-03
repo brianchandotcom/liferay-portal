@@ -325,7 +325,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoItemItemSelectorReturnType());
 		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
-		itemSelectorCriterion.setMultiSelection(true);
 
 		return PortletURLBuilder.create(
 			itemSelector.getItemSelectorURL(

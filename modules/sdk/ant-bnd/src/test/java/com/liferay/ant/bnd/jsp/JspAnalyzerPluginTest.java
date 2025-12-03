@@ -14,6 +14,8 @@ import aQute.bnd.osgi.Resource;
 
 import aQute.lib.io.IO;
 
+import com.liferay.petra.function.UnsafeRunnable;
+
 import java.io.InputStream;
 
 import java.net.URL;
@@ -219,6 +221,28 @@ public class JspAnalyzerPluginTest {
 		Class<?> clazz = getClass();
 
 		return clazz.getResource(path);
+	}
+
+	private void _assertThrows(
+		Class<? extends Exception> exceptionClass,
+		String expectedMessageContains, UnsafeRunnable<Exception> runnable) {
+
+		try {
+			runnable.run();
+
+			Assert.fail("Exception was not thrown");
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"Wrong exception type was thrown", exceptionClass,
+				exception.getClass());
+
+			String message = exception.getMessage();
+
+			Assert.assertTrue(
+				"Unexpected exception message: " + message,
+				message.contains(expectedMessageContains));
+		}
 	}
 
 	private void _testAddTaglibRequirements(

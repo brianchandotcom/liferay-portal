@@ -168,7 +168,9 @@ export class DataTablePage {
 			return null;
 		};
 		this.searchButton = page.getByLabel('Search for', {exact: true});
-		this.searchInput = page.getByPlaceholder('Search for', {exact: true});
+		this.searchInput = page
+			.getByPlaceholder('Search for', {exact: true})
+			.or(page.getByPlaceholder('Search', {exact: true}));
 		this.selectAllItemsCheckbox = page.getByLabel(
 			'Select All Items on the Page'
 		);

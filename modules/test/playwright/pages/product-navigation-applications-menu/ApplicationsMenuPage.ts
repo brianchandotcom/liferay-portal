@@ -41,6 +41,7 @@ export class ApplicationsMenuPage {
 	private readonly dataMigrationCenterMenuItem: Locator;
 	private readonly dataSetManagerMenuItem: Locator;
 	private readonly defaultPermissionsLink: Locator;
+	private readonly digitalSalesRoomsMenuItem: Locator;
 	readonly exportMenuItem: Locator;
 	private readonly gogoShellItem: Locator;
 	private readonly homePage: HomePage;
@@ -203,6 +204,10 @@ export class ApplicationsMenuPage {
 		this.defaultPermissionsLink = page.getByRole('link', {
 			exact: true,
 			name: 'Default Permissions',
+		});
+		this.digitalSalesRoomsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Digital Sales Rooms',
 		});
 		this.exportMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -524,6 +529,11 @@ export class ApplicationsMenuPage {
 	async goToDefaultPermissions() {
 		await this.goToInstanceSettings();
 		await this.defaultPermissionsLink.click();
+	}
+
+	async goToDigitalSalesRooms() {
+		await this.goToCommercePanel();
+		await this.digitalSalesRoomsMenuItem.click();
 	}
 
 	async goToExport() {

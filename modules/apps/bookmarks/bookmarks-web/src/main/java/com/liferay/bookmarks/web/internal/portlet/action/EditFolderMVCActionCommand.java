@@ -116,8 +116,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _deleteFolders(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
+		ActionRequest actionRequest, boolean moveToTrash) {
 
 		long[] deleteFolderIds = null;
 

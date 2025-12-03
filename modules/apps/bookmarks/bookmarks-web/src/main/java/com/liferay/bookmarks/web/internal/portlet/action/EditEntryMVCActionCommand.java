@@ -159,8 +159,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _deleteEntry(ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
+	private void _deleteEntry(
+		ActionRequest actionRequest, boolean moveToTrash) {
 
 		long[] deleteEntryIds = null;
 

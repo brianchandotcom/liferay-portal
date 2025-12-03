@@ -408,9 +408,6 @@ public class S3Store implements Store {
 
 	@Deactivate
 	protected void deactivate() {
-		_amazonS3 = null;
-		_s3StoreConfiguration = null;
-
 		_threadPoolExecutor.close();
 	}
 
@@ -720,9 +717,8 @@ public class S3Store implements Store {
 
 	private static final Log _log = LogFactoryUtil.getLog(S3Store.class);
 
-	private static volatile S3StoreConfiguration _s3StoreConfiguration;
-
 	private AmazonS3 _amazonS3;
+	private S3StoreConfiguration _s3StoreConfiguration;
 	private StorageClass _storageClass;
 	private ThreadPoolExecutor _threadPoolExecutor;
 	private TransferManager _transferManager;

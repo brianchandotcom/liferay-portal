@@ -52,6 +52,10 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		long companyId, long groupId, Locale locale,
 		List<String> mcpServerExternalReferenceCodes, long userId) {
 
+		if (mcpServerExternalReferenceCodes.isEmpty()) {
+			return null;
+		}
+
 		return McpToolProvider.builder(
 		).mcpClients(
 			TransformUtil.transform(

@@ -22,6 +22,14 @@ import {
 	expectAllCookiesDeclined,
 } from './utils/cookies';
 
+export const disabledTest = mergeTests(
+	accountSettingsPagesTest,
+	featureFlagsTest({
+		'LPD-51356': {enabled: false},
+	}),
+	loginTest()
+);
+
 export const test = mergeTests(
 	accountSettingsPagesTest,
 	featureFlagsTest({
@@ -39,6 +47,40 @@ test.afterEach(async ({page}) => {
 		await clearProductAnalyticsCookies(page);
 	});
 });
+
+disabledTest(
+	'Data and Privacy tab is not visible',
+	{tag: '@LPD-72749'},
+	async ({accountSettingsPage}) => {
+		await accountSettingsPage.goToAccountSettings();
+
+		const dataAndPrivacyTab = await accountSettingsPage.page.locator(
+			'.nav-link',
+			{
+				hasText: 'Data And Privacy',
+			}
+		);
+
+		await expect(await dataAndPrivacyTab).not.toBeVisible();
+	}
+);
+
+test(
+	'Data and Privacy tab is visible',
+	{tag: '@LPD-72749'},
+	async ({accountSettingsPage}) => {
+		await accountSettingsPage.goToAccountSettings();
+
+		const dataAndPrivacyTab = await accountSettingsPage.page.locator(
+			'.nav-link',
+			{
+				hasText: 'Data And Privacy',
+			}
+		);
+
+		await expect(await dataAndPrivacyTab).toBeVisible();
+	}
+);
 
 test(
 	'Verify Product Analytics Consent Panel buttons and order from Account Settings',

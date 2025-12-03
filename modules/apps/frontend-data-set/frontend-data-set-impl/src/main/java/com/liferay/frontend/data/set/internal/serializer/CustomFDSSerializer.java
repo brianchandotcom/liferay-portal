@@ -320,6 +320,16 @@ public class CustomFDSSerializer
 	}
 
 	@Override
+	public JSONArray serializeFiltersGroups(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		// rely on system serializer until filters groups are supported by DSM
+
+		return _systemFDSSerializer.serializeFiltersGroups(
+			fdsName, httpServletRequest);
+	}
+
+	@Override
 	public boolean serializeHideManagementBarInEmptyState(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

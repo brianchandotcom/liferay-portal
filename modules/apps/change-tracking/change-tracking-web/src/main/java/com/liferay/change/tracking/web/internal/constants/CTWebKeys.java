@@ -23,11 +23,11 @@ public interface CTWebKeys {
 
 	public static final String CT_ENTRY_DIFF_DISPLAY = "CT_ENTRY_DIFF_DISPLAY";
 
+	public static final String CT_HIDE_CMS_POPOVER = "CT_HIDE_CMS_POPOVER";
+
 	public static final String CT_LAST_GROUP_ID = "CT_LAST_GROUP_ID";
 
 	public static final String CT_REMOTE = "CT_REMOTE";
-
-	public static final String CT_SHOW_POPOVER = "CT_SHOW_POPOVER";
 
 	public static final String DEFAULT_CT_COLLECTION_TEMPLATE =
 		"DEFAULT_CT_COLLECTION_TEMPLATE";
@@ -46,6 +46,9 @@ public interface CTWebKeys {
 
 	public static final String RESCHEDULE_PUBLICATION_DISPLAY_CONTEXT =
 		"RESCHEDULE_PUBLICATION_DISPLAY_CONTEXT";
+
+	public static final String SELECTED_CT_COLLECTION_ID =
+		"SELECTED_CT_COLLECTION_ID";
 
 	public static final String VIEW_CHANGES_DISPLAY_CONTEXT =
 		"VIEW_CHANGES_DISPLAY_CONTEXT";

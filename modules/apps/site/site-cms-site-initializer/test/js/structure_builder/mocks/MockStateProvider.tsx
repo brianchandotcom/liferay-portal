@@ -26,7 +26,11 @@ const DEFAULT_STRUCTURE: Structure = {
 };
 
 const DEFAULT_STATE: State = {
-	history: {deletedChildren: false, modifiedNames: new Set()},
+	history: {
+		deletedChildren: false,
+		deletedGroupERCs: [],
+		modifiedNames: new Set(),
+	},
 	invalids: new Map(),
 	publishedChildren: new Set(),
 	selection: [],

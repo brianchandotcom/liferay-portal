@@ -8,12 +8,13 @@ import {render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import StructureService from '../../../../src/main/resources/META-INF/resources/js/common/services/StructureService';
 import StructureBuilderToolbar from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/StructureBuilderToolbar';
-import StructureService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/StructureService';
 import {Structure} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 import {addParams, mockNavigate} from '../../__mocks__/frontend-js-web';
+import {MockCacheProvider} from '../mocks/MockCacheProvider';
 import {MockState, MockStateProvider} from '../mocks/MockStateProvider';
 
 jest.mock('@liferay/layout-js-components-web', () => {
@@ -49,9 +50,11 @@ const renderComponent = (state: MockState) => {
 	};
 
 	return render(
-		<MockStateProvider state={{...state, structure}}>
-			<StructureBuilderToolbar />
-		</MockStateProvider>
+		<MockCacheProvider objectDefinitions={{}}>
+			<MockStateProvider state={{...state, structure}}>
+				<StructureBuilderToolbar />
+			</MockStateProvider>{' '}
+		</MockCacheProvider>
 	);
 };
 
@@ -150,7 +153,11 @@ describe('StructureBuilderToolbar', () => {
 
 	it('Shows warning modal when a published field has been deleted', async () => {
 		renderComponent({
-			history: {deletedChildren: true, modifiedNames: new Set()},
+			history: {
+				deletedChildren: true,
+				deletedGroupERCs: [],
+				modifiedNames: new Set(),
+			},
 			structure: {status: 'published'},
 		});
 
@@ -225,7 +232,11 @@ describe('StructureBuilderToolbar', () => {
 
 	it('Shows modal to publish when trying to customize experience and the structure is published and some fields have been deleted', async () => {
 		renderComponent({
-			history: {deletedChildren: true, modifiedNames: new Set()},
+			history: {
+				deletedChildren: true,
+				deletedGroupERCs: [],
+				modifiedNames: new Set(),
+			},
 			structure: {status: 'published'},
 		});
 

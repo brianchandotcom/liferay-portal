@@ -11,6 +11,13 @@
 			<%= HtmlUtil.escape(label) %><%= separator %>
 		</strong>
 
+		<c:if test="<%= Validator.isNotNull(tagLabel) %>">
+			<clay:label
+				displayType="primary"
+				label="<%= HtmlUtil.escape(tagLabel) %>"
+			/>
+		</c:if>
+
 		<liferay-staging:popover
 			id="<%= popoverName %>"
 			text="<%= popoverText %>"

@@ -16,7 +16,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -145,13 +144,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 				return false;
 			}
 
-			Repository repository = RepositoryLocalServiceUtil.getRepository(
-				repositoryId);
-
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-				repository.getDlFolderId());
-
-			return dlFolder.isHidden();
+			return RepositoryLocalServiceUtil.isHiddenRepository(repositoryId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

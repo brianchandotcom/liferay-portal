@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
@@ -397,13 +396,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 				return false;
 			}
 
-			Repository repository = RepositoryLocalServiceUtil.getRepository(
-				repositoryId);
-
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-				repository.getDlFolderId());
-
-			return dlFolder.isHidden();
+			return RepositoryLocalServiceUtil.isHiddenRepository(repositoryId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

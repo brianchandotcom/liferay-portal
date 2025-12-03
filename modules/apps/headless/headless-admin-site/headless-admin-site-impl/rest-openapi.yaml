@@ -1211,6 +1211,21 @@ components:
             required:
                 -   type
             type: object
+        FragmentDirectImageValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentImageValue"
+                -   properties:
+                        value_i18n:
+                            additionalProperties:
+                                $ref: "#/components/schemas/ImageValue"
+                            # @review
+                            description:
+                                The localized value of the direct fragment image.
+                            type: object
+            # @review
+            description:
+                A fragment image value of type direct.
+            type: object
         FragmentDropZonePageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
@@ -1313,6 +1328,22 @@ components:
                         -   $ref: "#/components/schemas/FragmentInlineValue"
                         -   $ref: "#/components/schemas/FragmentMappedValue"
             type: object
+        FragmentImageValue:
+            # @review
+            description:
+                The fragment image value.
+            discriminator:
+                mapping:
+                    Direct: "#/components/schemas/FragmentDirectImageValue"
+                    Mapped: "#/components/schemas/FragmentMappedImageValue"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        The fragment image's type.
+                    enum: [Direct, Mapped]
+                    type: string
         FragmentImageViewport:
             # @review
             description:
@@ -1534,6 +1565,16 @@ components:
                         value.
                     enum: [FragmentInlineValue, FragmentMappedValue]
                     type: string
+            type: object
+        FragmentMappedImageValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentImageValue"
+                -   properties:
+                        fragmentMappedValue:
+                            $ref: "#/components/schemas/FragmentMappedValue"
+            # @review
+            description:
+                A mapped fragment image value.
             type: object
         FragmentMappedValue:
             description:
@@ -2126,6 +2167,22 @@ components:
             description:
                 A fragment editable element value of type image.
             type: object
+        ImageValue:
+            # @review
+            description:
+                The image value.
+            discriminator:
+                mapping:
+                    Item: "#/components/schemas/ItemImageValue"
+                    URL: "#/components/schemas/URLImageValue"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        The image value's type.
+                    enum: [Item, URL]
+                    type: string
         ItemExternalReference:
             # @review
             description:
@@ -2159,6 +2216,16 @@ components:
             # @review
             description:
                 The value of a fragment configuration field of type item.
+            type: object
+        ItemImageValue:
+            allOf:
+                -   $ref: "#/components/schemas/ImageValue"
+                -   properties:
+                        itemExternalReference:
+                            $ref: "#/components/schemas/ItemExternalReference"
+            # @review
+            description:
+                A item image value.
             type: object
         ItemValue:
             # @review
@@ -3809,6 +3876,16 @@ components:
             # @review
             description:
                 The value of a fragment configuration field of type URL.
+            type: object
+        URLImageValue:
+            allOf:
+                -   $ref: "#/components/schemas/ImageValue"
+                -   properties:
+                        url:
+                            type: string
+            # @review
+            description:
+                A URL image value.
             type: object
         URLValue:
             # @review

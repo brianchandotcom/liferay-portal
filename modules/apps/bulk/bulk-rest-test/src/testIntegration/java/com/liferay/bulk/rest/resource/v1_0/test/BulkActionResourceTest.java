@@ -200,6 +200,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		_testPostBulkActionWithTypeDelete();
 		_testPostBulkActionWithTypeKeyword();
 		_testPostBulkActionWithTypePermission();
+		_testPostBulkActionWithTypePermissionSingleRole();
 		_testPostBulkActionWithTypeResetPermission();
 		_testPostBulkActionWithTypeTaxonomyCategory();
 	}
@@ -962,6 +963,151 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntry2.getObjectEntryId()),
 				role.getRoleId());
 
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+	}
+
+	private void _testPostBulkActionWithTypePermissionSingleRole()
+		throws Exception {
+
+		PermissionBulkAction permissionBulkAction = new PermissionBulkAction();
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addGroupRole(
+			testGroup.getGroupId(), role1.getRoleId());
+		_roleLocalService.addGroupRole(
+			testGroup.getGroupId(), role2.getRoleId());
+
+		ObjectEntryFolder objectEntryFolder1 =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					_depotEntry2.getGroupId(), _depotEntry2.getCompanyId());
+
+		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
+			_depotEntry2.getGroupId(), _depotEntry2.getUserId(),
+			_cmsBasicWebContentObjectDefinition.getObjectDefinitionId(),
+			objectEntryFolder1.getObjectEntryFolderId(), "en_US",
+			_getObjectEntryValues(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntryFolder objectEntryFolder2 =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), _depotEntry2.getGroupId(),
+				_depotEntry2.getUserId(),
+				objectEntryFolder1.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_depotEntry2.getCompanyId(), objectEntry1.getModelClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry1.getObjectEntryId()), role1.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+		_resourcePermissionLocalService.setResourcePermissions(
+			_depotEntry2.getCompanyId(), objectEntry1.getModelClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry1.getObjectEntryId()), role2.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+		_resourcePermissionLocalService.setResourcePermissions(
+			_depotEntry2.getCompanyId(), objectEntryFolder2.getModelClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder2.getObjectEntryFolderId()),
+			role1.getRoleId(), new String[] {ActionKeys.VIEW});
+		_resourcePermissionLocalService.setResourcePermissions(
+			_depotEntry2.getCompanyId(), objectEntryFolder2.getModelClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder2.getObjectEntryFolderId()),
+			role2.getRoleId(), new String[] {ActionKeys.VIEW});
+
+		permissionBulkAction.setBulkActionItems(
+			new BulkActionItem[] {
+				_toBulkActionItem(
+					_cmsBasicWebContentObjectDefinition.getClassName(),
+					objectEntry1),
+				_toBulkActionItem(objectEntryFolder2)
+			});
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		permissionBulkAction.setConfiguration(
+			jsonObject.put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+				JSONUtil.put(
+					role1.getName(),
+					JSONUtil.putAll(
+						ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW))
+			).put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+				JSONUtil.put(role1.getName(), JSONUtil.putAll(ActionKeys.VIEW))
+			).put(
+				"OBJECT_ENTRY_FOLDERS",
+				JSONUtil.put(
+					role1.getName(),
+					JSONUtil.putAll(
+						ActionKeys.ADD_ENTRY, ActionKeys.PERMISSIONS,
+						ActionKeys.SUBSCRIBE))
+			).toString());
+
+		permissionBulkAction.setRoleKey(role1.getName());
+		permissionBulkAction.setType(BulkAction.Type.PERMISSION_BULK_ACTION);
+
+		_postBulkAction(permissionBulkAction);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_depotEntry2.getCompanyId(), objectEntry1.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry1.getObjectEntryId()),
+				role1.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_depotEntry2.getCompanyId(), objectEntry1.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry1.getObjectEntryId()),
+				role2.getRoleId());
+
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_depotEntry2.getCompanyId(),
+				objectEntryFolder2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntryFolder2.getObjectEntryFolderId()),
+				role1.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.ADD_ENTRY));
+		Assert.assertTrue(
+			resourcePermission.hasActionId(ActionKeys.PERMISSIONS));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.SUBSCRIBE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_depotEntry2.getCompanyId(),
+				objectEntryFolder2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntryFolder2.getObjectEntryFolderId()),
+				role2.getRoleId());
+
+		Assert.assertFalse(
+			resourcePermission.hasActionId(ActionKeys.ADD_ENTRY));
+		Assert.assertFalse(
+			resourcePermission.hasActionId(ActionKeys.PERMISSIONS));
+		Assert.assertFalse(
+			resourcePermission.hasActionId(ActionKeys.SUBSCRIBE));
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 

@@ -94,8 +94,9 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 	}
 
 	private static final String _SCRIPT_TAG =
-		"<script id=\"Cookiebot\" src=\"https://consent.cookiebot.com" +
-			"/uc.js\" data-cbid=\"000000\" type=\"text/javascript\"></script>";
+		"<script data-cbid=\"000000\" id=\"Cookiebot\" " +
+			"src=\"https://consent.cookiebot.com/uc.js\" " +
+				"type=\"text/javascript\"></script>";
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

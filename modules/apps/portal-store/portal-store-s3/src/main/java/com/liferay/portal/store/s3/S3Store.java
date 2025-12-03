@@ -143,13 +143,12 @@ public class S3Store implements Store {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		String key = S3KeyTransformerUtil.getDirectoryKey(
-			companyId, repositoryId, dirName);
-
 		try {
 			String[] keys = new String[_DELETE_MAX];
 
-			List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(key);
+			List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(
+				S3KeyTransformerUtil.getDirectoryKey(
+					companyId, repositoryId, dirName));
 
 			Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
 
@@ -187,13 +186,11 @@ public class S3Store implements Store {
 		String versionLabel) {
 
 		try {
-			String key = S3KeyTransformerUtil.getFileVersionKey(
-				companyId, repositoryId, fileName, versionLabel);
-
-			DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(
-				_s3StoreConfiguration.bucketName(), key);
-
-			_amazonS3.deleteObject(deleteObjectRequest);
+			_amazonS3.deleteObject(
+				new DeleteObjectRequest(
+					_s3StoreConfiguration.bucketName(),
+					S3KeyTransformerUtil.getFileVersionKey(
+						companyId, repositoryId, fileName, versionLabel)));
 		}
 		catch (AmazonClientException amazonClientException) {
 			throw transform(amazonClientException);
@@ -212,13 +209,11 @@ public class S3Store implements Store {
 					companyId, repositoryId, fileName);
 			}
 
-			String key = S3KeyTransformerUtil.getFileVersionKey(
-				companyId, repositoryId, fileName, versionLabel);
-
-			GetObjectRequest getObjectRequest = new GetObjectRequest(
-				_s3StoreConfiguration.bucketName(), key);
-
-			S3Object s3Object = _amazonS3.getObject(getObjectRequest);
+			S3Object s3Object = _amazonS3.getObject(
+				new GetObjectRequest(
+					_s3StoreConfiguration.bucketName(),
+					S3KeyTransformerUtil.getFileVersionKey(
+						companyId, repositoryId, fileName, versionLabel)));
 
 			if (s3Object == null) {
 				throw new NoSuchFileException(
@@ -297,15 +292,11 @@ public class S3Store implements Store {
 				companyId, repositoryId, fileName);
 		}
 
-		String key = S3KeyTransformerUtil.getFileVersionKey(
-			companyId, repositoryId, fileName, versionLabel);
-
-		GetObjectMetadataRequest getObjectMetadataRequest =
-			new GetObjectMetadataRequest(
-				_s3StoreConfiguration.bucketName(), key);
-
 		ObjectMetadata objectMetadata = _amazonS3.getObjectMetadata(
-			getObjectMetadataRequest);
+			new GetObjectMetadataRequest(
+				_s3StoreConfiguration.bucketName(),
+				S3KeyTransformerUtil.getFileVersionKey(
+					companyId, repositoryId, fileName, versionLabel)));
 
 		if (objectMetadata == null) {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
@@ -318,10 +309,8 @@ public class S3Store implements Store {
 	public String[] getFileVersions(
 		long companyId, long repositoryId, String fileName) {
 
-		String key = S3KeyTransformerUtil.getFileKey(
-			companyId, repositoryId, fileName);
-
-		List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(key);
+		List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(
+			S3KeyTransformerUtil.getFileKey(companyId, repositoryId, fileName));
 
 		if (s3ObjectSummaries.isEmpty()) {
 			return StringPool.EMPTY_ARRAY;
@@ -354,11 +343,10 @@ public class S3Store implements Store {
 					companyId, repositoryId, fileName);
 			}
 
-			String key = S3KeyTransformerUtil.getFileVersionKey(
-				companyId, repositoryId, fileName, versionLabel);
-
 			return _amazonS3.doesObjectExist(
-				_s3StoreConfiguration.bucketName(), key);
+				_s3StoreConfiguration.bucketName(),
+				S3KeyTransformerUtil.getFileVersionKey(
+					companyId, repositoryId, fileName, versionLabel));
 		}
 		catch (AmazonClientException amazonClientException) {
 			if (isFileNotFound(amazonClientException)) {
@@ -555,10 +543,8 @@ public class S3Store implements Store {
 			long companyId, long repositoryId, String fileName)
 		throws NoSuchFileException {
 
-		String key = S3KeyTransformerUtil.getFileKey(
-			companyId, repositoryId, fileName);
-
-		List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(key);
+		List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(
+			S3KeyTransformerUtil.getFileKey(companyId, repositoryId, fileName));
 
 		Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
 

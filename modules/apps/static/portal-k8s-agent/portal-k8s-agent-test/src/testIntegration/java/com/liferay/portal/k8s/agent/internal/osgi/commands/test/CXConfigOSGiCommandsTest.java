@@ -11,9 +11,10 @@ import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -65,9 +66,9 @@ public class CXConfigOSGiCommandsTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		CompanyLocalServiceUtil.addCompany(
-			null, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, 0,
-			true, true, null, null, null, null, null, null);
+		Company company = CompanyTestUtil.addCompany();
+
+		_companyWebId = company.getWebId();
 
 		_configurationPids = new ArrayList<>();
 
@@ -491,6 +492,7 @@ public class CXConfigOSGiCommandsTest {
 	private static final String _VIRTUAL_HOSTNAME = "vi.localtest.me";
 
 	private static BundleContext _bundleContext;
+	private static String _companyWebId;
 	private static List<String> _configurationPids;
 
 	@Inject(filter = "osgi.command.scope=cxconfig")

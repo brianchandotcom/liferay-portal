@@ -6,12 +6,21 @@
 package com.liferay.portal.db.index.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.db.index.PrimaryKeyUpdaterUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -19,6 +28,7 @@ import java.sql.Connection;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -70,6 +80,34 @@ public class PrimaryKeyUpdaterUtilTest {
 		bundleTracker.open();
 
 		countDownLatch.await(10, TimeUnit.SECONDS);
+
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition();
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, _objectDefinition1,
+			_objectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			StringUtil.randomId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		if (_objectRelationship != null) {
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				_objectRelationship.getObjectRelationshipId());
+		}
+
+		if (_objectDefinition1 != null) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				_objectDefinition1.getObjectDefinitionId());
+		}
+
+		if (_objectDefinition2 != null) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				_objectDefinition2.getObjectDefinitionId());
+		}
 	}
 
 	@Test
@@ -79,6 +117,12 @@ public class PrimaryKeyUpdaterUtilTest {
 		try (Connection connection = DataAccess.getConnection()) {
 			db.removePrimaryKey(connection, "Counter");
 			db.removePrimaryKey(connection, "Lock_");
+			db.removePrimaryKey(
+				connection, _objectDefinition1.getDBTableName());
+			db.removePrimaryKey(
+				connection, _objectDefinition2.getDBTableName());
+			db.removePrimaryKey(
+				connection, _objectRelationship.getDBTableName());
 
 			PrimaryKeyUpdaterUtil.updateAllPrimaryKeys();
 
@@ -88,7 +132,31 @@ public class PrimaryKeyUpdaterUtilTest {
 			Assert.assertTrue(
 				ArrayUtil.isNotEmpty(
 					db.getPrimaryKeyColumnNames(connection, "Lock_")));
+			Assert.assertTrue(
+				ArrayUtil.isNotEmpty(
+					db.getPrimaryKeyColumnNames(
+						connection, _objectDefinition1.getDBTableName())));
+			Assert.assertTrue(
+				ArrayUtil.isNotEmpty(
+					db.getPrimaryKeyColumnNames(
+						connection, _objectDefinition2.getDBTableName())));
+			Assert.assertTrue(
+				ArrayUtil.isNotEmpty(
+					db.getPrimaryKeyColumnNames(
+						connection, _objectRelationship.getDBTableName())));
 		}
 	}
+
+	private static ObjectDefinition _objectDefinition1;
+	private static ObjectDefinition _objectDefinition2;
+
+	@Inject
+	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private static ObjectRelationship _objectRelationship;
+
+	@Inject
+	private static ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 
 }

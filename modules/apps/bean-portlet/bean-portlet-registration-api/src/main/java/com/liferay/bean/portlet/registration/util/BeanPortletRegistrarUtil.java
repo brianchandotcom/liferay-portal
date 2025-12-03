@@ -484,25 +484,26 @@ public class BeanPortletRegistrarUtil {
 
 		List<Event> events = new ArrayList<>(beanApp.getEvents());
 
-		for (EventDefinition eventDefinition : portletApplication.events()) {
-			String valueType = null;
+		events.addAll(
+			TransformUtil.transformToList(
+				portletApplication.events(),
+				eventDefinition -> {
+					String valueType = null;
 
-			Class<?> payloadClass = eventDefinition.payloadType();
+					Class<?> payloadClass = eventDefinition.payloadType();
 
-			if (payloadClass != null) {
-				valueType = payloadClass.getName();
-			}
+					if (payloadClass != null) {
+						valueType = payloadClass.getName();
+					}
 
-			List<QName> aliasQNames = TransformUtil.transformToList(
-				eventDefinition.alias(),
-				portletQName -> PortletQNameUtil.toQName(portletQName));
-
-			events.add(
-				new EventImpl(
-					aliasQNames,
-					PortletQNameUtil.toQName(eventDefinition.qname()),
-					valueType));
-		}
+					return new EventImpl(
+						TransformUtil.transformToList(
+							eventDefinition.alias(),
+							portletQName -> PortletQNameUtil.toQName(
+								portletQName)),
+						PortletQNameUtil.toQName(eventDefinition.qname()),
+						valueType);
+				}));
 
 		Map<String, PublicRenderParameter> publicRenderParameters =
 			new HashMap<>();

@@ -7,14 +7,7 @@ package com.liferay.portal.store.s3;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.GetObjectMetadataRequest;
@@ -27,7 +20,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.StorageClass;
 import com.amazonaws.services.s3.transfer.TransferManager;
-import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
 
 import com.liferay.document.library.kernel.exception.AccessDeniedException;
@@ -52,17 +44,33 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URI;
+
+import java.time.Duration;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
+
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient;
+import software.amazon.awssdk.http.nio.netty.ProxyConfiguration;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
+import software.amazon.awssdk.transfer.s3.S3TransferManager;
 
 /**
  * @author Brian Wing Shun Chan
@@ -371,81 +379,93 @@ public class S3Store implements Store {
 		_s3StoreConfiguration = ConfigurableUtil.createConfigurable(
 			S3StoreConfiguration.class, properties);
 
-		AWSCredentialsProvider awsCredentialsProvider = null;
+		AwsCredentialsProvider awsCredentialsProvider = null;
 
 		if (Validator.isNotNull(_s3StoreConfiguration.accessKey()) &&
 			Validator.isNotNull(_s3StoreConfiguration.secretKey())) {
 
-			awsCredentialsProvider = new AWSStaticCredentialsProvider(
-				new BasicAWSCredentials(
+			awsCredentialsProvider = StaticCredentialsProvider.create(
+				AwsBasicCredentials.create(
 					_s3StoreConfiguration.accessKey(),
 					_s3StoreConfiguration.secretKey()));
 		}
 		else {
-			awsCredentialsProvider = new DefaultAWSCredentialsProviderChain();
+			awsCredentialsProvider = DefaultCredentialsProvider.create();
 		}
 
-		ClientConfiguration clientConfiguration = new ClientConfiguration();
+		NettyNioAsyncHttpClient.Builder asyncHttpClientBuilder =
+			NettyNioAsyncHttpClient.builder();
 
-		clientConfiguration.setConnectionTimeout(
-			_s3StoreConfiguration.connectionTimeout());
-		clientConfiguration.setMaxConnections(
+		asyncHttpClientBuilder.connectionTimeout(
+			Duration.ofMillis(_s3StoreConfiguration.connectionTimeout()));
+		asyncHttpClientBuilder.maxConcurrency(
 			_s3StoreConfiguration.httpClientMaxConnections());
-		clientConfiguration.setMaxErrorRetry(
-			_s3StoreConfiguration.httpClientMaxErrorRetry());
 
-		_configureProxySettings(clientConfiguration);
+		String proxyHost = _s3StoreConfiguration.proxyHost();
 
-		if (Validator.isNotNull(_s3StoreConfiguration.s3Endpoint()) &&
-			Validator.isNotNull(_s3StoreConfiguration.s3Region())) {
+		if (Validator.isNotNull(proxyHost)) {
+			ProxyConfiguration.Builder proxyConfigurationBuilder =
+				ProxyConfiguration.builder();
 
-			_amazonS3 = AmazonS3ClientBuilder.standard(
-			).withCredentials(
-				awsCredentialsProvider
-			).withClientConfiguration(
-				clientConfiguration
-			).withEndpointConfiguration(
-				new AwsClientBuilder.EndpointConfiguration(
-					_s3StoreConfiguration.s3Endpoint(),
-					_s3StoreConfiguration.s3Region())
-			).withPathStyleAccessEnabled(
-				_s3StoreConfiguration.s3PathStyle()
-			).build();
-		}
-		else {
-			AmazonS3ClientBuilder amazonS3ClientBuilder =
-				AmazonS3ClientBuilder.standard(
-				).withCredentials(
-					awsCredentialsProvider
-				).withClientConfiguration(
-					clientConfiguration
-				).withPathStyleAccessEnabled(
-					_s3StoreConfiguration.s3PathStyle()
-				);
+			proxyConfigurationBuilder.host(proxyHost);
+			proxyConfigurationBuilder.port(_s3StoreConfiguration.proxyPort());
 
-			if (Validator.isNotNull(_s3StoreConfiguration.s3Region())) {
-				amazonS3ClientBuilder.setRegion(
-					_s3StoreConfiguration.s3Region());
+			String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
+
+			if (Objects.equals(proxyAuthType, "username-password")) {
+				proxyConfigurationBuilder.password(
+					_s3StoreConfiguration.proxyPassword());
+				proxyConfigurationBuilder.username(
+					_s3StoreConfiguration.proxyUsername());
 			}
 
-			_amazonS3 = amazonS3ClientBuilder.build();
+			asyncHttpClientBuilder.proxyConfiguration(
+				proxyConfigurationBuilder.build());
 		}
+
+		S3AsyncClientBuilder s3AsyncClientBuilder = S3AsyncClient.builder(
+		).credentialsProvider(
+			awsCredentialsProvider
+		).forcePathStyle(
+			_s3StoreConfiguration.s3PathStyle()
+		).httpClientBuilder(
+			asyncHttpClientBuilder
+		).multipartEnabled(
+			true
+		).multipartConfiguration(
+			builder -> {
+				builder.minimumPartSizeInBytes(
+					(long)_s3StoreConfiguration.minimumUploadPartSize());
+				builder.thresholdInBytes(
+					(long)_s3StoreConfiguration.multipartUploadThreshold());
+			}
+		).overrideConfiguration(
+			overrideBuilder -> overrideBuilder.retryPolicy(
+				retryBuilder -> retryBuilder.numRetries(
+					_s3StoreConfiguration.httpClientMaxErrorRetry()))
+		);
+
+		if (Validator.isNotNull(_s3StoreConfiguration.s3Endpoint())) {
+			s3AsyncClientBuilder.endpointOverride(
+				URI.create(_s3StoreConfiguration.s3Endpoint()));
+		}
+
+		if (Validator.isNotNull(_s3StoreConfiguration.s3Region())) {
+			s3AsyncClientBuilder.region(
+				Region.of(_s3StoreConfiguration.s3Region()));
+		}
+
+		_s3AsyncClient = s3AsyncClientBuilder.build();
 
 		_threadPoolExecutor = new ThreadPoolExecutor(
 			_s3StoreConfiguration.corePoolSize(),
 			_s3StoreConfiguration.maxPoolSize());
 
-		_transferManager = TransferManagerBuilder.standard(
-		).withS3Client(
-			_amazonS3
-		).withExecutorFactory(
-			() -> _threadPoolExecutor
-		).withMinimumUploadPartSize(
-			(long)_s3StoreConfiguration.minimumUploadPartSize()
-		).withMultipartUploadThreshold(
-			(long)_s3StoreConfiguration.multipartUploadThreshold()
-		).withShutDownThreadPools(
-			false
+		_s3TransferManager = S3TransferManager.builder(
+		).executor(
+			_threadPoolExecutor
+		).s3Client(
+			_s3AsyncClient
 		).build();
 
 		try {
@@ -466,29 +486,10 @@ public class S3Store implements Store {
 
 	@Deactivate
 	protected void deactivate() {
+		_s3TransferManager.close();
+		_s3AsyncClient.close();
+
 		_threadPoolExecutor.shutdown();
-	}
-
-	private void _configureProxySettings(
-		ClientConfiguration clientConfiguration) {
-
-		String proxyHost = _s3StoreConfiguration.proxyHost();
-
-		if (Validator.isNull(proxyHost)) {
-			return;
-		}
-
-		clientConfiguration.setProxyHost(proxyHost);
-		clientConfiguration.setProxyPort(_s3StoreConfiguration.proxyPort());
-
-		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
-
-		if (proxyAuthType.equals("username-password")) {
-			clientConfiguration.setProxyPassword(
-				_s3StoreConfiguration.proxyPassword());
-			clientConfiguration.setProxyUsername(
-				_s3StoreConfiguration.proxyUsername());
-		}
 	}
 
 	private String _getHeadVersionLabel(
@@ -619,7 +620,9 @@ public class S3Store implements Store {
 	private static final Log _log = LogFactoryUtil.getLog(S3Store.class);
 
 	private AmazonS3 _amazonS3;
+	private S3AsyncClient _s3AsyncClient;
 	private S3StoreConfiguration _s3StoreConfiguration;
+	private S3TransferManager _s3TransferManager;
 	private StorageClass _storageClass;
 	private ThreadPoolExecutor _threadPoolExecutor;
 	private TransferManager _transferManager;

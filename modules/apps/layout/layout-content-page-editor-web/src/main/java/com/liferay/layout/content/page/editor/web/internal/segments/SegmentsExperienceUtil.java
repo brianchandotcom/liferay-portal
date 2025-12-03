@@ -21,13 +21,17 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -202,7 +206,52 @@ public class SegmentsExperienceUtil {
 				dataJSONObject.toString());
 	}
 
-	private static void _copyPortletPreferences(
+	private static void _copyPortletPermissions(
+		long companyId, String namespace, String newNamespace, String portletId,
+		long sourcePlid, long targetPlid) {
+
+		String sourcePortletId = _getNewPortletId(
+			newNamespace, namespace, portletId);
+
+		String targetPortletId = _getNewPortletId(
+			namespace, newNamespace, portletId);
+
+		String rootPortletId = PortletIdCodec.decodePortletName(
+			sourcePortletId);
+
+		String sourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			sourcePlid, sourcePortletId);
+
+		String targetPrimKey = PortletPermissionUtil.getPrimaryKey(
+			targetPlid, targetPortletId);
+
+		List<ResourcePermission> resourcePermissions =
+			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
+				sourcePrimKey);
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			long resourcePermissionId = CounterLocalServiceUtil.increment(
+				ResourcePermission.class.getName());
+
+			ResourcePermission newPermission =
+				ResourcePermissionLocalServiceUtil.createResourcePermission(
+					resourcePermissionId);
+
+			newPermission.setCompanyId(companyId);
+			newPermission.setName(rootPortletId);
+			newPermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+			newPermission.setPrimKey(targetPrimKey);
+			newPermission.setRoleId(resourcePermission.getRoleId());
+			newPermission.setActionIds(resourcePermission.getActionIds());
+			newPermission.setViewActionId(resourcePermission.isViewActionId());
+
+			ResourcePermissionLocalServiceUtil.addResourcePermission(
+				newPermission);
+		}
+	}
+
+	private static void _copyPortlets(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentEntryLink newFragmentEntryLink, long plid,
 		PortletRegistry portletRegistry) {
@@ -214,6 +263,12 @@ public class SegmentsExperienceUtil {
 			_getNewPortletPreferences(
 				fragmentEntryLink.getNamespace(),
 				newFragmentEntryLink.getNamespace(), plid, portletId);
+
+			_copyPortletPermissions(
+				fragmentEntryLink.getCompanyId(),
+				fragmentEntryLink.getNamespace(),
+				newFragmentEntryLink.getNamespace(), portletId,
+				fragmentEntryLink.getPlid(), newFragmentEntryLink.getPlid());
 		}
 	}
 
@@ -394,7 +449,7 @@ public class SegmentsExperienceUtil {
 				newFragmentEntryLink.getFragmentEntryLinkId(),
 				serviceContextFunction);
 
-			_copyPortletPreferences(
+			_copyPortlets(
 				fragmentEntryLink, newFragmentEntryLink, layout.getPlid(),
 				portletRegistry);
 		}

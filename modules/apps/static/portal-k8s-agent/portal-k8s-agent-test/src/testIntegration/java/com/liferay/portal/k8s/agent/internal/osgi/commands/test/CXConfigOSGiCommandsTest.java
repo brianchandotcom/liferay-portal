@@ -140,9 +140,6 @@ public class CXConfigOSGiCommandsTest {
 		for (String configurationPid : _configurationPids) {
 			ConfigurationTestUtil.deleteConfiguration(configurationPid);
 		}
-
-		CompanyLocalServiceUtil.deleteCompany(
-			CompanyLocalServiceUtil.getCompanyByWebId(_VIRTUAL_HOSTNAME));
 	}
 
 	@Test

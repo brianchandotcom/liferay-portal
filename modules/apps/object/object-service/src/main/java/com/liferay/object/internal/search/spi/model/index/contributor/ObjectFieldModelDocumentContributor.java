@@ -60,8 +60,8 @@ public class ObjectFieldModelDocumentContributor
 		Set<Long> uniqueObjectFieldIds =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
 
-				// There should be only limited number of unique
-				// ObjectFieldSettings, skip size checking.
+				// Skip size check because there are only a limited number of
+				// unique object field settings
 
 				() -> -1,
 				ObjectFieldModelDocumentContributor.class.getName(),

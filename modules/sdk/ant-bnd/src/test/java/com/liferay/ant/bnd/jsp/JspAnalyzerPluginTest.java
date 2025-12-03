@@ -117,11 +117,16 @@ public class JspAnalyzerPluginTest {
 			"dependencies/imports_without_packages.jsp", "javax", javaxFQNs,
 			jakartaFQNs);
 
-		_testImplicitImports(
-			"dependencies/imports_without_javaee_packages.jsp", "test", null,
-			null);
-		_testImplicitImports(
-			"dependencies/imports_without_packages.jsp", "test", null, null);
+		_assertThrows(
+			IllegalArgumentException.class, "Invalid value was provided for",
+			() -> _testImplicitImports(
+				"dependencies/imports_without_javaee_packages.jsp", "test",
+				null, null));
+		_assertThrows(
+			IllegalArgumentException.class, "Invalid value was provided for",
+			() -> _testImplicitImports(
+				"dependencies/imports_without_packages.jsp", "test", null,
+				null));
 	}
 
 	@Test
@@ -304,16 +309,6 @@ public class JspAnalyzerPluginTest {
 			}
 
 			JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
-
-			if ((javaeePackage != null) && !javaeePackage.equals("jakarta") &&
-				!javaeePackage.equals("javax")) {
-
-				Assert.assertThrows(
-					RuntimeException.class,
-					() -> jspAnalyzerPlugin.analyzeJar(builder));
-
-				return;
-			}
 
 			jspAnalyzerPlugin.analyzeJar(builder);
 

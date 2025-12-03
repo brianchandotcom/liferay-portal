@@ -12,7 +12,7 @@
 <%
 PublicationsConfigurationDisplayContext publicationsConfigurationDisplayContext = (PublicationsConfigurationDisplayContext)request.getAttribute(CTWebKeys.PUBLICATIONS_CONFIGURATION_DISPLAY_CONTEXT);
 
-renderResponse.setTitle(LanguageUtil.get(request, "settings"));
+renderResponse.setTitle(LanguageUtil.get(request, "publications"));
 
 if (publicationsConfigurationDisplayContext.isPublicationsEnabled()) {
 	portletDisplay.setURLBack(backURL);

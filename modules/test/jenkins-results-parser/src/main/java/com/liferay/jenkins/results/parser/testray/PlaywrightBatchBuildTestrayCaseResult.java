@@ -246,25 +246,6 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		return null;
 	}
 
-	@Override
-	public void initBuildReport() {
-		PlaywrightTestClassMethod playwrightTestClassMethod =
-			getTestClassMethod();
-
-		if (playwrightTestClassMethod.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				playwrightTestClassMethod.getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				setBuildReport(cachedDownstreamBuildReport);
-
-				return;
-			}
-		}
-
-		super.initBuildReport();
-	}
-
 	protected TestrayAttachment getPlaywrightReportTestrayAttachment() {
 		return getTestrayAttachment(
 			getBuildReport(), "Playwright Report",
@@ -330,6 +311,25 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
 		}
+	}
+
+	@Override
+	protected void initBuildReport() {
+		PlaywrightTestClassMethod playwrightTestClassMethod =
+			getTestClassMethod();
+
+		if (playwrightTestClassMethod.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				playwrightTestClassMethod.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
+			}
+		}
+
+		super.initBuildReport();
 	}
 
 	private static final Pattern _traceZipPattern = Pattern.compile(

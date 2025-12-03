@@ -29,11 +29,6 @@ public class TopLevelStandaloneBuildTestrayCaseResult
 	}
 
 	@Override
-	public void initBuildReport() {
-		setBuildReport(getTopLevelBuildReport());
-	}
-
-	@Override
 	protected String getBatchName() {
 		return "top-level-build";
 	}
@@ -49,6 +44,11 @@ public class TopLevelStandaloneBuildTestrayCaseResult
 			topLevelBuildReport.getJobName(), "_",
 			String.valueOf(topLevelBuildReport.getBuildNumber()), "_",
 			getBatchName(), ".xml");
+	}
+
+	@Override
+	protected void initBuildReport() {
+		setBuildReport(getTopLevelBuildReport());
 	}
 
 }

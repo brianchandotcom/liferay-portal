@@ -24,7 +24,7 @@ public class SFBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public void initBuildReport() {
+	protected void initBuildReport() {
 		setBuildReport(getTopLevelBuildReport());
 	}
 

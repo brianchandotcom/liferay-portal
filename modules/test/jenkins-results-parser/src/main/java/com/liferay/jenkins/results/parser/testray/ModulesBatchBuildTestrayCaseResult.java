@@ -200,7 +200,7 @@ public class ModulesBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public void initBuildReport() {
+	protected void initBuildReport() {
 		ModulesTestClass modulesTestClass = getTestClass();
 
 		if (modulesTestClass.isBuildCachingEnabled()) {

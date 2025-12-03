@@ -207,7 +207,7 @@ public class AntTargetBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public void initBuildReport() {
+	protected void initBuildReport() {
 		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
 			getTestClass();
 

@@ -150,24 +150,6 @@ public class FunctionalBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public void initBuildReport() {
-		FunctionalTestClass functionalTestClass = getTestClass();
-
-		if (functionalTestClass.isBuildCachingEnabled()) {
-			DownstreamBuildReport cachedDownstreamBuildReport =
-				functionalTestClass.getCachedDownstreamBuildReport();
-
-			if (cachedDownstreamBuildReport != null) {
-				setBuildReport(cachedDownstreamBuildReport);
-
-				return;
-			}
-		}
-
-		super.initBuildReport();
-	}
-
-	@Override
 	protected List<TestrayAttachment> getLiferayLogTestrayAttachments() {
 		if (getTestReport() == null) {
 			return new ArrayList<>();
@@ -183,6 +165,24 @@ public class FunctionalBatchBuildTestrayCaseResult
 		}
 
 		return super.getLiferayOSGiLogTestrayAttachments();
+	}
+
+	@Override
+	protected void initBuildReport() {
+		FunctionalTestClass functionalTestClass = getTestClass();
+
+		if (functionalTestClass.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				functionalTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				setBuildReport(cachedDownstreamBuildReport);
+
+				return;
+			}
+		}
+
+		super.initBuildReport();
 	}
 
 	private TestrayAttachment _getPoshiConsoleTestrayAttachment() {

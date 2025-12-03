@@ -1305,12 +1305,6 @@ components:
                         The fragment image's resolution.
                     enum: [Auto, Preview, Thumbnail]
                     type: string
-                title:
-                    # @review
-                    description:
-                        The fragment image's title.
-                    oneOf:
-                        -   $ref: "#/components/schemas/FragmentInlineValue"
                 url:
                     # @review
                     description:

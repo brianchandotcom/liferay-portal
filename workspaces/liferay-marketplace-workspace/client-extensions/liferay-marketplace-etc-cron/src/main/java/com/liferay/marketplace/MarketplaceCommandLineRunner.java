@@ -86,21 +86,6 @@ public class MarketplaceCommandLineRunner
 		_invoke(this::_processPublisherSalesSummary, "Publisher Sales Summary");
 	}
 
-	private void _assignRoleToUserAccount(Role role, UserAccount userAccount)
-		throws Exception {
-
-		for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
-			if (Objects.equals(roleBrief.getName(), role.getName())) {
-				return;
-			}
-		}
-
-		RoleResource roleResource = _getRoleResource();
-
-		roleResource.postRoleUserAccountAssociation(
-			role.getId(), userAccount.getId());
-	}
-
 	private void _assignAccountToUserAccount(
 			Account account, UserAccount userAccount)
 		throws Exception {
@@ -118,6 +103,21 @@ public class MarketplaceCommandLineRunner
 
 		userAccountResource.postAccountUserAccountByEmailAddress(
 			account.getId(), userAccount.getEmailAddress());
+	}
+
+	private void _assignRoleToUserAccount(Role role, UserAccount userAccount)
+		throws Exception {
+
+		for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
+			if (Objects.equals(roleBrief.getName(), role.getName())) {
+				return;
+			}
+		}
+
+		RoleResource roleResource = _getRoleResource();
+
+		roleResource.postRoleUserAccountAssociation(
+			role.getId(), userAccount.getId());
 	}
 
 	private JSONObject _createPublisherSalesSummary(

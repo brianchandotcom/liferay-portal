@@ -273,7 +273,10 @@ public class OrphanReferencesDataCleanupUtil {
 			if ((customJoinClauses != null) &&
 				(customJoinClauses[index] != null)) {
 
-				sb.append(customJoinClauses[index]);
+				sb.append(
+					StringUtil.replace(
+						customJoinClauses[index], "[$TARGET_TABLE_ALIAS$]",
+						aliasTableName));
 			}
 			else {
 				sb.append(_SOURCE_TABLE_ALIAS);
@@ -336,7 +339,10 @@ public class OrphanReferencesDataCleanupUtil {
 			if ((customJoinClauses != null) &&
 				(customJoinClauses[index] != null)) {
 
-				sb.append(customJoinClauses[index]);
+				sb.append(
+					StringUtil.replace(
+						customJoinClauses[index], "[$TARGET_TABLE_ALIAS$]",
+						targetTableName));
 			}
 			else {
 				sb.append(_SOURCE_TABLE_ALIAS);

@@ -12,13 +12,13 @@ import org.json.JSONObject;
  */
 public class JSONObjectTestrayCaseResult extends TestrayCaseResult {
 
-	protected JSONObjectTestrayCaseResult(
+	public JSONObjectTestrayCaseResult(
 		TestrayBuild testrayBuild, JSONObject jsonObject) {
 
 		super(testrayBuild, jsonObject);
 	}
 
-	protected JSONObjectTestrayCaseResult(
+	public JSONObjectTestrayCaseResult(
 		TestrayServer testrayServer, JSONObject jsonObject) {
 
 		super(testrayServer, jsonObject);

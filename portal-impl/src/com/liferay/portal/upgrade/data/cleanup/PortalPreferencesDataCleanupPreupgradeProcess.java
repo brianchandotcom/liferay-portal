@@ -18,7 +18,7 @@ public class PortalPreferencesDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "portalPreferencesId", "PortalPreferenceValue",
+				null, null, "portalPreferencesId", "PortalPreferenceValue",
 				"portalPreferencesId", "PortalPreferences"));
 	}
 

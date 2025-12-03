@@ -57,8 +57,8 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					".companyId, count(1) from ", sourceTableName, " ",
 					OrphanReferencesDataCleanupUtil.getSourceTableAlias(),
 					OrphanReferencesDataCleanupUtil.getWhereClause(
-						connection, null, sourceColumnName, sourceTableName,
-						targetColumnNames, targetTableName),
+						connection, null, null, sourceColumnName,
+						sourceTableName, targetColumnNames, targetTableName),
 					" group by ",
 					OrphanReferencesDataCleanupUtil.getSourceTableAlias(),
 					StringPool.PERIOD, sourceColumnName, ", ",

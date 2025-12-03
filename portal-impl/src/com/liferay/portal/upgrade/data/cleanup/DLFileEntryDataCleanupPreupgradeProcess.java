@@ -81,18 +81,19 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "fileEntryId", "DLFileEntryMetadata", "fileEntryId",
+				null, null, "fileEntryId", "DLFileEntryMetadata", "fileEntryId",
 				"DLFileEntry"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "fileEntryId", "DLFileVersion", "fileEntryId",
+				null, null, "fileEntryId", "DLFileVersion", "fileEntryId",
 				"DLFileEntry"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "fileEntryId", "DLFileVersionPreview", "fileEntryId",
+				null, null, "fileEntryId", "DLFileVersionPreview",
+				"fileEntryId", "DLFileEntry"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, null, "toFileEntryId", "DLFileShortcut", "fileEntryId",
 				"DLFileEntry"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "toFileEntryId", "DLFileShortcut", "fileEntryId",
-				"DLFileEntry"),
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].name = '",
 					DLFileEntry.class.getName(), "'"),
@@ -169,6 +170,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].structureId in (",
 					String.join(", ", structureIds), ")"),
@@ -188,6 +190,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 				new String[] {"classNameId"}, "classPK",
 				new String[] {"fileShortcutId"}, "DLFileShortcut"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].name = '",
 					DLFileShortcut.class.getName(), "'"),

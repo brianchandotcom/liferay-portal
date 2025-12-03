@@ -25,6 +25,7 @@ public class UserDataCleanupPreupgradeProcess
 			new UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess());
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].classNameId = (select classNameId ",
 					"from ClassName_ where value = '", User.class.getName(),
@@ -32,6 +33,7 @@ public class UserDataCleanupPreupgradeProcess
 				"classPK", "AssetEntry", "userId", "User_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].classNameId = (select classNameId ",
 					"from ClassName_ where value = '", User.class.getName(),
@@ -39,6 +41,7 @@ public class UserDataCleanupPreupgradeProcess
 				"classPK", "Contact_", "userId", "User_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].classNameId = (select classNameId ",
 					"from ClassName_ where value = '", User.class.getName(),
@@ -46,16 +49,19 @@ public class UserDataCleanupPreupgradeProcess
 				"classPK", "Group_", "userId", "User_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				"[$SOURCE_TABLE_ALIAS$].ownerType = " +
 					PortletKeys.PREFS_OWNER_TYPE_USER,
 				"ownerId", "PortalPreferences", "userId", "User_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				"[$SOURCE_TABLE_ALIAS$].ownerType = " +
 					PortletKeys.PREFS_OWNER_TYPE_USER,
 				"ownerId", "PortletPreferences", "userId", "User_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].scope = ",
 					ResourceConstants.SCOPE_INDIVIDUAL, " and ",

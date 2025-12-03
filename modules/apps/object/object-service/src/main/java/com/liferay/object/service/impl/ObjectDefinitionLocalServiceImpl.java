@@ -1204,6 +1204,27 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public ObjectDefinition updateClassName(long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		String className = _getClassName(
+			objectDefinition.getClassName(), objectDefinition.isModifiable(),
+			objectDefinition.isSystem());
+
+		if (StringUtil.equals(objectDefinition.getClassName(), className)) {
+			return objectDefinition;
+		}
+
+		objectDefinition.setClassName(className);
+
+		return objectDefinitionPersistence.update(objectDefinition);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
 			String externalReferenceCode, long objectDefinitionId,
 			long accountEntryRestrictedObjectFieldId,

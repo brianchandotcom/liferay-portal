@@ -1283,19 +1283,20 @@ components:
             description:
                 A fragment image.
             properties:
-                description:
+                description_i18n:
+                    additionalProperties:
+                        type: string
                     # @review
                     description:
-                        The fragment image's description.
-                    oneOf:
-                        -   $ref: "#/components/schemas/FragmentInlineValue"
+                        The localized fragment image's descriptions.
+                    type: object
                 fragmentImageViewports:
-                  # @review
-                  description:
-                    A list of viewports configuration of the fragment image.
-                  items:
-                    $ref: "#/components/schemas/FragmentImageViewport"
-                  type: array
+                    # @review
+                    description:
+                        A list of viewports configuration of the fragment image.
+                    items:
+                        $ref: "#/components/schemas/FragmentImageViewport"
+                    type: array
                 itemExternalReference:
                     $ref: "#/components/schemas/ItemExternalReference"
                 resolution:

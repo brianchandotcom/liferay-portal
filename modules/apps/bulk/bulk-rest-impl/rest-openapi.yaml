@@ -155,6 +155,8 @@ components:
                             items:
                                 type: permission
                             type: array
+                        roleKey:
+                            type: string
         ResetPermissionBulkAction:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"

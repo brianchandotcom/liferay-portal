@@ -8,7 +8,6 @@ package com.liferay.portal.store.s3;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
-import com.amazonaws.Protocol;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -395,7 +394,6 @@ public class S3Store implements Store {
 		clientConfiguration.setMaxErrorRetry(
 			_s3StoreConfiguration.httpClientMaxErrorRetry());
 
-		_configureConnectionProtocol(clientConfiguration);
 		_configureProxySettings(clientConfiguration);
 		_configureSignerOverride(clientConfiguration);
 
@@ -470,25 +468,6 @@ public class S3Store implements Store {
 	@Deactivate
 	protected void deactivate() {
 		_threadPoolExecutor.shutdown();
-	}
-
-	private void _configureConnectionProtocol(
-		ClientConfiguration clientConfiguration) {
-
-		String connectionProtocol = _s3StoreConfiguration.connectionProtocol();
-
-		if (Validator.isNull(connectionProtocol) ||
-			connectionProtocol.equals("DEFAULT")) {
-
-			return;
-		}
-
-		if (connectionProtocol.equals("HTTP")) {
-			clientConfiguration.setProtocol(Protocol.HTTP);
-		}
-		else {
-			clientConfiguration.setProtocol(Protocol.HTTPS);
-		}
 	}
 
 	private void _configureProxySettings(

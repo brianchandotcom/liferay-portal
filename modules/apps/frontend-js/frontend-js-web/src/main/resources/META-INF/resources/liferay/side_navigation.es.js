@@ -813,7 +813,7 @@ SideNavigation.prototype = {
 
 		import(
 			themeDisplay.getPathContext() +
-				'/o/frontend-js-web/__liferay__/index.js'
+				'/o/accessibility-settings-state-web/__liferay__/index.js'
 		).then(({isReducedMotion}) => {
 			instance.isReducedMotion = isReducedMotion;
 		});

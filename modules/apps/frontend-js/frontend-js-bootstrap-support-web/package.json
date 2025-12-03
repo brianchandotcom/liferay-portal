@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/accessibility-settings-state-web": "*",
 		"dom-align": "1.12.2",
 		"frontend-js-web": "*"
 	},

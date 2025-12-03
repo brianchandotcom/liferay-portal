@@ -1,5 +1,5 @@
 {
-	"@generated": "4ad585b84aba3a08ed5fa0cd181f229c85f87be0",
+	"@generated": "972f20e6a338efd4838d8468eebf5b33d9203e00",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/accessibility-settings-state-web": [
+				"../../../../../../../accessibility/accessibility-settings-state-web/src/main/resources/META-INF/resources/index.ts"
+			],
 			"frontend-js-web": [
 				"../../../../../../frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
 			],
@@ -34,6 +37,9 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../../accessibility/accessibility-settings-state-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
 		{
 			"path": "../../../../../../frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
 		}

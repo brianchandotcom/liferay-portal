@@ -896,6 +896,60 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_assertThumbnailURLReference(
 			false, masterPage.getExternalReferenceCode(),
 			newFileEntry.getExternalReferenceCode());
+
+		MasterPage masterPageError = randomMasterPage();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
+
+		masterPageError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			masterPageResource.patchSiteMasterPage(
+				testGroup.getExternalReferenceCode(),
+				masterPage.getExternalReferenceCode(), masterPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		masterPageError.setThumbnail(thumbnailURLReference);
+
+		try {
+			masterPageResource.patchSiteMasterPage(
+				testGroup.getExternalReferenceCode(),
+				masterPage.getExternalReferenceCode(), masterPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 	}
 
 	private void _testPostSiteMasterPageWithDropZonePageElement()
@@ -1066,6 +1120,56 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_assertThumbnailURLReference(
 			false, postMasterPage.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
+
+		MasterPage masterPageError = randomMasterPage();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
+
+		masterPageError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			testPostSiteMasterPage_addMasterPage(masterPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		masterPageError.setThumbnail(thumbnailURLReference);
+
+		try {
+			testPostSiteMasterPage_addMasterPage(masterPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 	}
 
 	private void _testPutSiteMasterPage(MasterPage masterPage)
@@ -1272,6 +1376,60 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		_assertThumbnailURLReference(
 			true, putMasterPage.getExternalReferenceCode(), null);
+
+		MasterPage masterPageError = randomMasterPage();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setUrl(RandomTestUtil.randomString());
+				}
+			};
+
+		masterPageError.setThumbnail(thumbnailURLReference);
+
+		String expectedTitle = "Unable to download file from ";
+
+		try {
+			masterPageResource.putSiteMasterPage(
+				testGroup.getExternalReferenceCode(),
+				putMasterPage.getExternalReferenceCode(), masterPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
+
+		thumbnailURLReference = new ThumbnailURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setUrl(
+					() ->
+						"http://localhost:8080/" +
+							RandomTestUtil.randomString());
+			}
+		};
+
+		masterPageError.setThumbnail(thumbnailURLReference);
+
+		try {
+			masterPageResource.putSiteMasterPage(
+				testGroup.getExternalReferenceCode(),
+				putMasterPage.getExternalReferenceCode(), masterPageError);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				expectedTitle + thumbnailURLReference.getUrl(),
+				problem.getTitle());
+		}
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

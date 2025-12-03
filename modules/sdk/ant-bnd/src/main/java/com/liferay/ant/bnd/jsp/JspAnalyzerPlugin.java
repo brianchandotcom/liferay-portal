@@ -100,8 +100,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			String javaeePackage = analyzer.getProperty(
 				"-antbnd.jspanalyzer.fallback-javaee-package");
 
-			if ((javaeePackage != null) && !javaeePackage.equals("jakarta") &&
-				!javaeePackage.equals("javax")) {
+			if ((javaeePackage != null) &&
+				!(javaeePackage.equals("jakarta") ||
+				  javaeePackage.equals("javax"))) {
 
 				throw new IllegalArgumentException(
 					"Invalid value was provided for -antbnd.jspanalyzer." +

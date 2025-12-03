@@ -7,9 +7,11 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.document.library.kernel.exception.RepositoryNameException;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
@@ -18,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.RepositoryEntryPersistence;
@@ -36,7 +40,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alexander Chow
@@ -233,13 +239,40 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	public boolean isHiddenRepository(long repositoryId)
 		throws PortalException {
 
-		Repository repository = repositoryPersistence.findByPrimaryKey(
-			repositoryId);
+		Set<Long> hiddenRepositoryIds =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
 
-		DLFolder dlFolder = _dlFolderPersistence.findByPrimaryKey(
-			repository.getDlFolderId());
+				// Skip size check because there are only a limited number of
+				// hidden repositories
 
-		return dlFolder.isHidden();
+				() -> -1, RepositoryLocalServiceImpl.class.getName(),
+				count ->
+
+					new HashSet<>(
+						repositoryPersistence.dslQuery(DSLQueryFactoryUtil.select(
+						RepositoryTable.INSTANCE.repositoryId
+					).from(
+						RepositoryTable.INSTANCE
+					).innerJoinON(
+						DLFolderTable.INSTANCE,
+						RepositoryTable.INSTANCE.dlFolderId.eq(
+							DLFolderTable.INSTANCE.folderId)
+					).where(
+						DLFolderTable.INSTANCE.hidden.eq(Boolean.TRUE)
+					), false))
+				);
+
+		if (hiddenRepositoryIds == null) {
+			Repository repository = repositoryPersistence.findByPrimaryKey(
+				repositoryId);
+
+			DLFolder dlFolder = _dlFolderPersistence.findByPrimaryKey(
+				repository.getDlFolderId());
+
+			return dlFolder.isHidden();
+		}
+
+		return hiddenRepositoryIds.contains(repositoryId);
 	}
 
 	@Override

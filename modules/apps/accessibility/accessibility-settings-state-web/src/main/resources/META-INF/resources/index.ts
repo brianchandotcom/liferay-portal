@@ -29,3 +29,5 @@ type AccessibilityMenuSetting = {
 export const accessibilityMenuAtom = State.atom<
 	Record<KEYS, AccessibilityMenuSetting>
 >('accessibility-menu', {} as any);
+
+export {isReducedMotion} from './isReducedMotion';

@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"@liferay/accessibility-settings-state-web": "*",
-		"@liferay/frontend-js-state-web": "*",
 		"@liferay/js-api": "0.6.2",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",

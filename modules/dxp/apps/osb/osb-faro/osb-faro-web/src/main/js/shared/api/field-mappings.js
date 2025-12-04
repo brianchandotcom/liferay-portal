@@ -48,6 +48,7 @@ export function create({groupId, name, type}) {
 
 export function search(params) {
 	const {
+		channelId = '',
 		context,
 		delta = DEFAULT_DELTA,
 		fieldMappingFieldName = '',
@@ -60,6 +61,7 @@ export function search(params) {
 
 	return sendRequest({
 		data: {
+			channelId,
 			context,
 			cur: page,
 			delta,

@@ -54,6 +54,7 @@ const fetchPropertyGroups = ({
 			ownerType: FieldOwnerTypes.Individual
 		}),
 		API.fieldMappings.search({
+			channelId,
 			context: FieldContexts.Account,
 			delta: MAX_DELTA,
 			groupId,

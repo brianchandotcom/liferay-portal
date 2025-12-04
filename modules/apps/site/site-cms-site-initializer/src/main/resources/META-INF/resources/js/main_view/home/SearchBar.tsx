@@ -29,7 +29,7 @@ export default function SearchBar({
 	};
 
 	return (
-		<div className="align-items-center d-flex flex-column home-section p-4">
+		<div className="align-items-center d-flex flex-column home-section p-2 p-sm-3">
 			<h1>Welcome, {userFirstName}!</h1>
 
 			<div className="container mt-5">

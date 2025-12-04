@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
-import jakarta.annotation.Generated;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -82,7 +80,6 @@ import org.osgi.service.component.annotations.Deactivate;
 	property = "store.type=com.liferay.portal.store.s3.IBMS3Store",
 	service = Store.class
 )
-@Generated("")
 public class IBMS3Store implements Store {
 
 	public void abortMultipartUploads(Date date) {

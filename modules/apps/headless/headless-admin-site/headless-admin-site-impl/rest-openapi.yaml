@@ -2042,23 +2042,6 @@ components:
             description:
                 A fragment editable element value of type HTML.
             type: object
-        HTMLFragmentValue:
-            # @review
-            description:
-                The value of a fragment HTML element.
-            discriminator:
-                mapping:
-                    Inline: "#/components/schemas/HTMLFragmentInlineValue"
-                    Mapped: "#/components/schemas/HTMLFragmentMappedValue"
-                propertyName: type
-            properties:
-                type:
-                    # @review
-                    description:
-                        Whether the value is set inline or mapped.
-                    enum: [Inline, Mapped]
-                    type: string
-            type: object
         HTMLFragmentInlineValue:
             # @review
             allOf:
@@ -2086,6 +2069,23 @@ components:
             # @review
             description:
                 A mapped value of a fragment HTML element.
+            type: object
+        HTMLFragmentValue:
+            # @review
+            description:
+                The value of a fragment HTML element.
+            discriminator:
+                mapping:
+                    Inline: "#/components/schemas/HTMLFragmentInlineValue"
+                    Mapped: "#/components/schemas/HTMLFragmentMappedValue"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        Whether the value is set inline or mapped.
+                    enum: [Inline, Mapped]
+                    type: string
             type: object
         HrefURLValue:
             allOf:
@@ -3713,23 +3713,6 @@ components:
             description:
                 A fragment editable element of type text.
             type: object
-        TextFragmentValue:
-            # @review
-            description:
-                The value of a fragment text element.
-            discriminator:
-                mapping:
-                    Inline: "#/components/schemas/TextFragmentInlineValue"
-                    Mapped: "#/components/schemas/TextFragmentMappedValue"
-                propertyName: type
-            properties:
-                type:
-                    # @review
-                    description:
-                        Whether the value is set inline or mapped.
-                    enum: [Inline, Mapped]
-                    type: string
-            type: object
         TextFragmentInlineValue:
             # @review
             allOf:
@@ -3757,6 +3740,23 @@ components:
             # @review
             description:
                 A mapped value of a fragment text element.
+            type: object
+        TextFragmentValue:
+            # @review
+            description:
+                The value of a fragment text element.
+            discriminator:
+                mapping:
+                    Inline: "#/components/schemas/TextFragmentInlineValue"
+                    Mapped: "#/components/schemas/TextFragmentMappedValue"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        Whether the value is set inline or mapped.
+                    enum: [Inline, Mapped]
+                    type: string
             type: object
         URLActionExecutionResult:
             # @review

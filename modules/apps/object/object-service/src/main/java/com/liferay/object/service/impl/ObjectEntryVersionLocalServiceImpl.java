@@ -89,6 +89,10 @@ public class ObjectEntryVersionLocalServiceImpl
 			_configurationProvider.getCompanyConfiguration(
 				ObjectEntryVersionConfiguration.class, companyId);
 
+		if (objectEntryVersionConfiguration.maximumRetentionPeriod() <= 0) {
+			return;
+		}
+
 		Date endDate = Date.from(
 			LocalDate.now(
 			).minusMonths(

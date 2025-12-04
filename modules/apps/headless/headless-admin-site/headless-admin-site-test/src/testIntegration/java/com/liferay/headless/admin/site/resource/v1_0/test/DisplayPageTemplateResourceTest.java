@@ -1308,7 +1308,7 @@ public class DisplayPageTemplateResourceTest
 				{
 					setExternalReferenceCode(
 						newFileEntry.getExternalReferenceCode());
-					setUrl(url);
+					setUrl(RandomTestUtil.randomString());
 				}
 			});
 

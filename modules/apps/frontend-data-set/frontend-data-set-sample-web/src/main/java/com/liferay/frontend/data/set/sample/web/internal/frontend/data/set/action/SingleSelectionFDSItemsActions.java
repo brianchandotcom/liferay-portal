@@ -7,11 +7,12 @@ package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.acti
 
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,10 +30,16 @@ public class SingleSelectionFDSItemsActions implements FDSItemsActions {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
-		return Arrays.asList(
-			new FDSActionDropdownItem(
-				null, "info-circle-open", "showDetails", "Show Details", null,
-				null, "infoPanel"));
+		return FDSActionDropdownItemList.of(
+			FDSActionDropdownItemBuilder.setIcon(
+				"info-circle-open"
+			).setLabel(
+				"Show Details"
+			).setTarget(
+				"infoPanel"
+			).build(
+				"showDetails"
+			));
 	}
 
 }

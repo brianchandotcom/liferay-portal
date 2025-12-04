@@ -8,10 +8,11 @@ package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.acti
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.action.FDSBulkActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -33,19 +34,48 @@ public class AdvancedFDSBulkActions implements FDSBulkActions {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				null, null, null, true, "#", "document", "sampleBulkAction",
-				LanguageUtil.get(httpServletRequest, "label"), null, "lg", null,
-				null, null, "modal", null, null, null),
-			new FDSActionDropdownItem(
-				null, null, null, false, "#", "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), null, "lg",
-				null, null, null, "modal", null, null, null),
-			new FDSActionDropdownItem(
-				"/o/c/fdssamples/", "check", "testBulkAction",
-				LanguageUtil.get(httpServletRequest, "test"), "POST", null,
-				null));
+		return FDSActionDropdownItemList.of(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"document"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "label")
+			).setModalSize(
+				"lg"
+			).setTarget(
+				"modal"
+			).build(
+				"sampleBulkAction"
+			),
+			FDSActionDropdownItemBuilder.setHighlighted(
+				false
+			).setHref(
+				"#"
+			).setIcon(
+				"trash"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "delete")
+			).setModalSize(
+				"lg"
+			).setTarget(
+				"modal"
+			).build(
+				"delete"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				"/o/c/fdssamples/"
+			).setIcon(
+				"check"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "test")
+			).setMethod(
+				"POST"
+			).build(
+				"testBulkAction"
+			));
 	}
 
 	@Override

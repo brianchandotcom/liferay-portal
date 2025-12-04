@@ -8,12 +8,13 @@ package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.acti
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.language.Language;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,18 +33,46 @@ public class CustomInternalViewFDSItemsActions implements FDSItemsActions {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
-		return Arrays.asList(
-			new FDSActionDropdownItem(
-				null, null, null, "#", "code", "openCode",
-				_language.get(httpServletRequest, "code"), null, null, null,
-				null, null, "link", null, "item"),
-			new FDSActionDropdownItem(
-				null, null, null, "#", "document", "openDocument",
-				_language.get(httpServletRequest, "document"), null, null, null,
-				null, null, "link", null, "item"),
-			new FDSActionDropdownItem(
-				null, null, null, "#", "cog", "turnGreen", "Turn Green", null,
-				null, null, null, null, "link", null, "item"));
+		return FDSActionDropdownItemList.of(
+			FDSActionDropdownItemBuilder.setHref(
+				"#"
+			).setIcon(
+				"code"
+			).setLabel(
+				_language.get(httpServletRequest, "code")
+			).setTarget(
+				"link"
+			).setType(
+				"item"
+			).build(
+				"openCode"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				"#"
+			).setIcon(
+				"document"
+			).setLabel(
+				_language.get(httpServletRequest, "document")
+			).setTarget(
+				"link"
+			).setType(
+				"item"
+			).build(
+				"openDocument"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				"#"
+			).setIcon(
+				"cog"
+			).setLabel(
+				"Turn Green"
+			).setTarget(
+				"link"
+			).setType(
+				"item"
+			).build(
+				"turnGreen"
+			));
 	}
 
 	@Override

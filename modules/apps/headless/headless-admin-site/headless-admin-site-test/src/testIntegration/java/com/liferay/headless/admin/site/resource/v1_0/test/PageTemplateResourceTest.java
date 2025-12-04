@@ -1175,7 +1175,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		String thumbnailURL = RandomTestUtil.randomString();
 
-		randomPageTemplate.setThumbnail(
+		randomPageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1197,7 +1197,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					pageTemplate.getExternalReferenceCode(),
 					postPageTemplate.getExternalReferenceCode())) {
 
-				ThumbnailURLReference thumbnail = pageTemplate.getThumbnail();
+				ThumbnailURLReference thumbnail =
+					pageTemplate.getThumbnailURLReference();
 
 				_assertThumbnailFileEntryId(
 					false, postPageTemplate.getExternalReferenceCode(),
@@ -1213,7 +1214,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					httpURLConnection.getResponseCode());
 			}
 			else {
-				Assert.assertNull(pageTemplate.getThumbnail());
+				Assert.assertNull(pageTemplate.getThumbnailURLReference());
 			}
 		}
 	}
@@ -1502,7 +1503,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		String thumbnailURL = RandomTestUtil.randomString();
 
-		pageTemplate.setThumbnail(
+		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1523,7 +1524,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		FileEntry newFileEntry = _addPortletFileEntry(
 			repository.getDlFolderId());
 
-		pageTemplate.setThumbnail(
+		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1553,7 +1554,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				}
 			};
 
-		pageTemplateError.setThumbnail(thumbnailURLReference);
+		pageTemplateError.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			pageTemplateResource.patchSitePageTemplate(
@@ -1761,7 +1762,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		String thumbnailURL = RandomTestUtil.randomString();
 
-		pageTemplate.setThumbnail(
+		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1791,7 +1792,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				}
 			};
 
-		pageTemplateError.setThumbnail(thumbnailURLReference);
+		pageTemplateError.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			testPostSitePageTemplateSetPageTemplate_addPageTemplate(
@@ -2012,7 +2013,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		String thumbnailURL = RandomTestUtil.randomString();
 
-		pageTemplate.setThumbnail(
+		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -2031,7 +2032,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
 
-		putPageTemplate.setThumbnail(
+		putPageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -2048,7 +2049,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			false, putPageTemplate.getExternalReferenceCode(),
 			fileEntry2.getExternalReferenceCode());
 
-		putPageTemplate.setThumbnail(() -> null);
+		putPageTemplate.setThumbnailURLReference(() -> null);
 
 		putPageTemplate = pageTemplateResource.putSitePageTemplate(
 			testGroup.getExternalReferenceCode(),
@@ -2070,7 +2071,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				}
 			};
 
-		pageTemplateError.setThumbnail(thumbnailURLReference);
+		pageTemplateError.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			pageTemplateResource.putSitePageTemplate(

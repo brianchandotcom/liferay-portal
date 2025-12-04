@@ -406,6 +406,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return JenkinsMaster.getSlaveRAMMinimumDefault();
 	}
 
+	@Override
 	public String getOSArchitecture() {
 		try {
 			String osArchitecture = JenkinsResultsParserUtil.getBuildProperty(
@@ -419,31 +420,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 		catch (IOException ioException) {
 			return _OS_ARCHITECTURE_DEFAULT;
-		}
-	}
-
-	public String getOSSlaveLabel() {
-		String slaveLabel = getSlaveLabel();
-
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return slaveLabel;
-		}
-
-		try {
-			if (Objects.equals(getOSArchitecture(), "x86")) {
-				String x86SlaveLabel =
-					JenkinsResultsParserUtil.getBuildProperty(
-						"slave.label.x86[" + slaveLabel + "]");
-
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(x86SlaveLabel)) {
-					return x86SlaveLabel;
-				}
-			}
-
-			return slaveLabel;
-		}
-		catch (IOException ioException) {
-			return slaveLabel;
 		}
 	}
 
@@ -467,6 +443,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _segmentTestClassGroups;
 	}
 
+	@Override
 	public String getSlaveLabel() {
 		JobProperty jobProperty = getJobProperty("test.batch.slave.label");
 

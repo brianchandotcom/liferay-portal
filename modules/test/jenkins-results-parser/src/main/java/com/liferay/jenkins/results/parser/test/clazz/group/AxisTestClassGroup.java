@@ -193,6 +193,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return _batchTestClassGroup.getMinimumSlaveRAM();
 	}
 
+	@Override
 	public String getOSArchitecture() {
 		if (_segmentTestClassGroup != null) {
 			return _segmentTestClassGroup.getOSArchitecture();
@@ -213,6 +214,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return _segmentTestClassGroup;
 	}
 
+	@Override
 	public String getSlaveLabel() {
 		if (!JenkinsResultsParserUtil.isCloudCINode()) {
 			return _getSlaveLabel();

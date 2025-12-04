@@ -15,7 +15,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -105,6 +104,7 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return _batchTestClassGroup.getMinimumSlaveRAM();
 	}
 
+	@Override
 	public String getOSArchitecture() {
 		try {
 			String osArchitecture;
@@ -130,36 +130,12 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		}
 	}
 
-	public String getOSSlaveLabel() {
-		String slaveLabel = getSlaveLabel();
-
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return slaveLabel;
-		}
-
-		try {
-			if (Objects.equals(getOSArchitecture(), "x86")) {
-				String x86SlaveLabel =
-					JenkinsResultsParserUtil.getBuildProperty(
-						"slave.label.x86[" + slaveLabel + "]");
-
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(x86SlaveLabel)) {
-					return x86SlaveLabel;
-				}
-			}
-
-			return slaveLabel;
-		}
-		catch (IOException ioException) {
-			return slaveLabel;
-		}
-	}
-
 	public String getSegmentName() {
 		return JenkinsResultsParserUtil.combine(
 			getBatchName(), "/", String.valueOf(getBatchIndex()));
 	}
 
+	@Override
 	public String getSlaveLabel() {
 		if (!JenkinsResultsParserUtil.isCloudCINode()) {
 			return _getSlaveLabel();

@@ -700,15 +700,17 @@ public class DisplayPageTemplateResourceTest
 		}
 	}
 
-	private void _assertThumbnailURLReference(
-			Boolean defaultValue, String expectedExternalReferenceCode,
+	private void _assertThumbnailFileEntryId(
+			Boolean defaultValue,
+			String displayPageTemplateExternalReferenceCode,
 			String thumbnailExternalReferenceCode)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplate =
 			_layoutPageTemplateEntryLocalService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
-					expectedExternalReferenceCode, testGroup.getGroupId());
+					displayPageTemplateExternalReferenceCode,
+					testGroup.getGroupId());
 
 		long fileEntryId = 0;
 
@@ -1110,7 +1112,7 @@ public class DisplayPageTemplateResourceTest
 				ThumbnailURLReference thumbnail =
 					displayPageTemplate.getThumbnail();
 
-				_assertThumbnailURLReference(
+				_assertThumbnailFileEntryId(
 					false, postDisplayPageTemplate.getExternalReferenceCode(),
 					thumbnail.getExternalReferenceCode());
 
@@ -1296,7 +1298,7 @@ public class DisplayPageTemplateResourceTest
 		Assert.assertEquals(
 			displayPageTemplate.getKey(), postDisplayPageTemplate.getKey());
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, displayPageTemplate.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
@@ -1317,7 +1319,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplate.getExternalReferenceCode(),
 			displayPageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, displayPageTemplate.getExternalReferenceCode(),
 			newFileEntry.getExternalReferenceCode());
 
@@ -1643,7 +1645,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(), displayPageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, postDisplayPageTemplate.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
@@ -1975,7 +1977,7 @@ public class DisplayPageTemplateResourceTest
 				displayPageTemplate.getExternalReferenceCode(),
 				displayPageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, putDisplayPageTemplate.getExternalReferenceCode(),
 			fileEntry1.getExternalReferenceCode());
 
@@ -1996,7 +1998,7 @@ public class DisplayPageTemplateResourceTest
 				putDisplayPageTemplate.getExternalReferenceCode(),
 				putDisplayPageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, putDisplayPageTemplate.getExternalReferenceCode(),
 			fileEntry2.getExternalReferenceCode());
 
@@ -2008,7 +2010,7 @@ public class DisplayPageTemplateResourceTest
 				putDisplayPageTemplate.getExternalReferenceCode(),
 				putDisplayPageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			true, putDisplayPageTemplate.getExternalReferenceCode(), null);
 
 		DisplayPageTemplate displayPageTemplateError =

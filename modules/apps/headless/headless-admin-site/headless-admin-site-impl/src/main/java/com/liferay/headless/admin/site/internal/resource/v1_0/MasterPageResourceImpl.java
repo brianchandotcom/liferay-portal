@@ -282,7 +282,7 @@ public class MasterPageResourceImpl
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, getResourceName(), serviceContext,
-			masterPage.getThumbnail(), contextUser);
+			masterPage.getThumbnailURLReference(), contextUser);
 
 		if (previewFileEntryId !=
 				layoutPageTemplateEntry.getPreviewFileEntryId()) {
@@ -374,8 +374,9 @@ public class MasterPageResourceImpl
 				masterPage::getTaxonomyCategoryItemExternalReferences);
 		}
 
-		if (masterPage.getThumbnail() != null) {
-			existingMasterPage.setThumbnail(masterPage::getThumbnail);
+		if (masterPage.getThumbnailURLReference() != null) {
+			existingMasterPage.setThumbnailURLReference(
+				masterPage::getThumbnailURLReference);
 		}
 	}
 
@@ -399,7 +400,7 @@ public class MasterPageResourceImpl
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, getResourceName(), serviceContext,
-					masterPage.getThumbnail(), contextUser),
+					masterPage.getThumbnailURLReference(), contextUser),
 				defaultTemplate, 0,
 				_getLayoutPlid(groupId, masterPage, serviceContext), 0,
 				PageSpecificationUtil.getPublishedStatus(

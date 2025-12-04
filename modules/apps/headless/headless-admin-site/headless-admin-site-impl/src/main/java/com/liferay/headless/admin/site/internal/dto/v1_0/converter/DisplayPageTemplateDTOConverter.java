@@ -130,7 +130,7 @@ public class DisplayPageTemplateDTOConverter
 						return _displayPageTemplateFolderDTOConverter.toDTO(
 							layoutPageTemplateCollection);
 					});
-				setThumbnail(
+				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->

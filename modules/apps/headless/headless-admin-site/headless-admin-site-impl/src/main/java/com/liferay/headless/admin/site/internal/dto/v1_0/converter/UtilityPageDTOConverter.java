@@ -80,7 +80,7 @@ public class UtilityPageDTOConverter
 				setMarkedAsDefault(
 					layoutUtilityPageEntry::isDefaultLayoutUtilityPageEntry);
 				setName(layoutUtilityPageEntry::getName);
-				setThumbnail(
+				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->

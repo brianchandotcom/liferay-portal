@@ -410,7 +410,7 @@ public class PageTemplateResourceImpl
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, getResourceName(), serviceContext,
-			pageTemplate.getThumbnail(), contextUser);
+			pageTemplate.getThumbnailURLReference(), contextUser);
 
 		if (previewFileEntryId !=
 				layoutPageTemplateEntry.getPreviewFileEntryId()) {
@@ -478,8 +478,9 @@ public class PageTemplateResourceImpl
 				pageTemplate::getTaxonomyCategoryItemExternalReferences);
 		}
 
-		if (pageTemplate.getThumbnail() != null) {
-			existingPageTemplate.setThumbnail(pageTemplate::getThumbnail);
+		if (pageTemplate.getThumbnailURLReference() != null) {
+			existingPageTemplate.setThumbnailURLReference(
+				pageTemplate::getThumbnailURLReference);
 		}
 
 		if (Objects.equals(
@@ -516,7 +517,8 @@ public class PageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.BASIC,
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, getResourceName(), serviceContext,
-					contentPageTemplate.getThumbnail(), contextUser),
+					contentPageTemplate.getThumbnailURLReference(),
+					contextUser),
 				false, 0,
 				_getLayoutPlid(contentPageTemplate, groupId, serviceContext), 0,
 				PageSpecificationUtil.getPublishedStatus(
@@ -609,11 +611,12 @@ public class PageTemplateResourceImpl
 				widgetPageTemplate.getExternalReferenceCode());
 		}
 
-		if (widgetPageTemplate.getThumbnail() != null) {
+		if (widgetPageTemplate.getThumbnailURLReference() != null) {
 			layoutPageTemplateEntry.setPreviewFileEntryId(
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, getResourceName(), serviceContext,
-					widgetPageTemplate.getThumbnail(), contextUser));
+					widgetPageTemplate.getThumbnailURLReference(),
+					contextUser));
 		}
 
 		layoutPageTemplateEntry.setGroupId(groupId);

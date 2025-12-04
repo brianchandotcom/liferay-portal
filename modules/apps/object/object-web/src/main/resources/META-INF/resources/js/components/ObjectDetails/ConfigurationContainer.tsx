@@ -10,6 +10,7 @@ import React from 'react';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
+	isApproved: boolean;
 	isEnableObjectEntrySchedule: boolean;
 	isLinkedObjectDefinition?: boolean;
 	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
@@ -19,6 +20,7 @@ interface ConfigurationContainerProps {
 
 export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
+	isApproved,
 	isEnableObjectEntrySchedule,
 	isLinkedObjectDefinition,
 	onSubmit,
@@ -104,7 +106,7 @@ export function ConfigurationContainer({
 
 			<ClayForm.Group>
 				<Toggle
-					disabled={disabled || values.active}
+					disabled={disabled || isApproved}
 					label={sub(
 						Liferay.Language.get('enable-x'),
 						Liferay.Language.get('indexed-search')
@@ -181,7 +183,7 @@ export function ConfigurationContainer({
 						<Toggle
 							disabled={
 								disabled ||
-								(isEnableObjectEntrySchedule && values.active)
+								(isEnableObjectEntrySchedule && isApproved)
 							}
 							label={Liferay.Language.get(
 								'allow-users-to-schedule-a-display-expiration-and-review-date-for-entries'

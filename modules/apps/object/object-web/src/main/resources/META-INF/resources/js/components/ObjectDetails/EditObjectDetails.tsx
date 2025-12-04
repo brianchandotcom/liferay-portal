@@ -380,6 +380,7 @@ export default function EditObjectDetails({
 								hasUpdateObjectDefinitionPermission={
 									hasUpdateObjectDefinitionPermission
 								}
+								isApproved={isApproved}
 								isEnableObjectEntrySchedule={
 									isEnableObjectEntrySchedule
 								}

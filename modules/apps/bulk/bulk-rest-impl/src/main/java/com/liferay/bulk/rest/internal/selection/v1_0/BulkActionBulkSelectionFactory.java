@@ -459,47 +459,46 @@ public class BulkActionBulkSelectionFactory {
 			return new String[0];
 		}
 
-		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
+		if (!BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
 				_bulkAction.getType())) {
 
-			BulkActionItem bulkActionItem = bulkActionItems[0];
-
-			String filterString = StringBundler.concat(
-				"(className eq '", bulkActionItem.getClassName(), "') and (",
-				StringUtil.merge(
-					TransformUtil.transform(
-						bulkActionItems,
-						item ->
-							"(classExternalReferenceCode eq '" +
-								item.getClassExternalReferenceCode() + "')",
-						String.class),
-					" or "),
-				")");
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_CMS_DEFAULT_PERMISSION", _company.getCompanyId());
-
-			Predicate predicate = _filterFactory.create(
-				filterString, objectDefinition);
-
-			return TransformUtil.transformToArray(
-				_objectEntryLocalService.getPrimaryKeys(
-					new Long[0], _company.getCompanyId(), _user.getUserId(),
-					objectDefinition.getObjectDefinitionId(), predicate, false,
-					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-				primaryKey ->
-					objectDefinition.getClassName() + StringPool.SPACE +
-						primaryKey,
+			return TransformUtil.transform(
+				bulkActionItems,
+				bulkActionItem -> StringBundler.concat(
+					bulkActionItem.getClassName(), StringPool.SPACE,
+					bulkActionItem.getClassPK()),
 				String.class);
 		}
 
-		return TransformUtil.transform(
-			bulkActionItems,
-			bulkActionItem -> StringBundler.concat(
-				bulkActionItem.getClassName(), StringPool.SPACE,
-				bulkActionItem.getClassPK()),
+		BulkActionItem bulkActionItem = bulkActionItems[0];
+
+		String filterString = StringBundler.concat(
+			"(className eq '", bulkActionItem.getClassName(), "') and (",
+			StringUtil.merge(
+				TransformUtil.transform(
+					bulkActionItems,
+					item ->
+						"(classExternalReferenceCode eq '" +
+							item.getClassExternalReferenceCode() + "')",
+					String.class),
+				" or "),
+			")");
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION", _company.getCompanyId());
+
+		Predicate predicate = _filterFactory.create(
+			filterString, objectDefinition);
+
+		return TransformUtil.transformToArray(
+			_objectEntryLocalService.getPrimaryKeys(
+				new Long[0], _company.getCompanyId(), _user.getUserId(),
+				objectDefinition.getObjectDefinitionId(), predicate, false,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			primaryKey ->
+				objectDefinition.getClassName() + StringPool.SPACE + primaryKey,
 			String.class);
 	}
 

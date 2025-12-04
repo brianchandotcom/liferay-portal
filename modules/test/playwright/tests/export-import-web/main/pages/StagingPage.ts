@@ -24,7 +24,7 @@ export class StagingPage {
 			await dialog.accept().catch();
 		});
 
-		if (stagedPortlets.length) {
+		if (stagedPortlets?.length > 0) {
 			await this.page
 				.locator('.custom-checkbox')
 				.filter({hasText: 'Select All'})
@@ -90,9 +90,9 @@ export class StagingPage {
 	}
 
 	async publish({
-		includeIfModified,
+		includeIfModified = [],
 		rangeAll,
-		selectedEntities,
+		selectedEntities = [],
 		title,
 	}: {
 		includeIfModified?: string[];

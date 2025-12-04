@@ -59,7 +59,6 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String externalReferenceCode = ParamUtil.getString(
 			actionRequest, "externalReferenceCode");
@@ -68,8 +67,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 		String siteNavigationMenuItemType = ParamUtil.getString(
 			actionRequest, "siteNavigationMenuItemType");
 
-		if ((classNameId > 0) && (classPK > 0) &&
-			Validator.isNotNull(externalReferenceCode) &&
+		if ((classPK > 0) && Validator.isNotNull(externalReferenceCode) &&
 			(siteNavigationMenuId > 0) &&
 			Validator.isNotNull(siteNavigationMenuItemType)) {
 
@@ -92,8 +90,6 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 							true
 						).put(
 							"className", siteNavigationMenuItemType
-						).put(
-							"classNameId", String.valueOf(classNameId)
 						).put(
 							"classPK", String.valueOf(classPK)
 						).put(
@@ -124,7 +120,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				InfoItemDetailsProvider<?> infoItemDetailsProvider =
 					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemDetailsProvider.class,
-						_portal.getClassName(classNameId));
+						siteNavigationMenuItemType);
 
 				InfoItemClassDetails infoItemClassDetails =
 					infoItemDetailsProvider.getInfoItemClassDetails();
@@ -156,11 +152,11 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to add site navigation menu item for class ",
-						"name ID ", classNameId, ", class PK ", classPK,
-						", external reference code ", externalReferenceCode,
-						" site navigation menu ID ", siteNavigationMenuId,
-						" and type ", siteNavigationMenuItemType));
+						"Unable to add site navigation menu item for class PK ",
+						classPK, ", external reference code ",
+						externalReferenceCode, " site navigation menu ID ",
+						siteNavigationMenuId, " and type ",
+						siteNavigationMenuItemType));
 			}
 
 			jsonObject.put(

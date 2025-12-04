@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
@@ -64,9 +63,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
-
-		String className = _portal.getClassName(classNameId);
+		String className = ParamUtil.getString(resourceRequest, "className");
 
 		String externalReferenceCode = ParamUtil.getString(
 			resourceRequest, "externalReferenceCode");
@@ -257,8 +254,5 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private LayoutDisplayPageProviderRegistry
 		_layoutDisplayPageProviderRegistry;
-
-	@Reference
-	private Portal _portal;
 
 }

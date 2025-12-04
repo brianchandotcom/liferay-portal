@@ -207,9 +207,6 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				UnicodePropertiesBuilder.put(
 					"className", JournalArticle.class.getName()
 				).put(
-					"classNameId",
-					_portal.getClassNameId(JournalArticle.class.getName())
-				).put(
 					"classPK", journalArticle1.getResourcePrimKey()
 				).put(
 					"externalReferenceCode",
@@ -322,9 +319,6 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				AssetCategory.class.getName(),
 				UnicodePropertiesBuilder.put(
 					"className", JournalArticle.class.getName()
-				).put(
-					"classNameId",
-					_portal.getClassNameId(JournalArticle.class.getName())
 				).put(
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
@@ -442,10 +436,6 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 			UnicodePropertiesBuilder.put(
 				"className", AssetCategory.class.getName()
 			).put(
-				"classNameId",
-				String.valueOf(
-					_portal.getClassNameId(AssetCategory.class.getName()))
-			).put(
 				"externalReferenceCode",
 				_assetCategory.getExternalReferenceCode()
 			).build();
@@ -467,9 +457,8 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 		String friendlyURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				new InfoItemReference(
-					_portal.getClassName(
-						GetterUtil.getLong(
-							typeSettingsUnicodeProperties.get("classNameId"))),
+					GetterUtil.getString(
+						typeSettingsUnicodeProperties.get("className")),
 					new ERCInfoItemIdentifier(
 						typeSettingsUnicodeProperties.get(
 							"externalReferenceCode"),
@@ -641,9 +630,7 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				AssetCategory.class.getName(),
 				UnicodePropertiesBuilder.put(
-					"classNameId",
-					String.valueOf(
-						_portal.getClassNameId(AssetCategory.class.getName()))
+					"className", AssetCategory.class.getName()
 				).buildString(),
 				_serviceContext);
 
@@ -693,10 +680,6 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				LocaleUtil.toLanguageId(defaultLocale)
 			).put(
 				"className", AssetCategory.class.getName()
-			).put(
-				"classNameId",
-				String.valueOf(
-					_portal.getClassNameId(AssetCategory.class.getName()))
 			).put(
 				"externalReferenceCode",
 				_assetCategory.getExternalReferenceCode()

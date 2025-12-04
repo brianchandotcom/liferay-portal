@@ -463,11 +463,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			UnicodePropertiesBuilder.fastLoad(
 				siteNavigationMenuItem.getTypeSettings()
 			).put(
-				"classNameId",
-				String.valueOf(
-					_portal.getClassNameId(
-						_displayPageTypeContext.getClassName()))
-			).put(
 				"classPK",
 				String.valueOf(
 					MapUtil.getLong(

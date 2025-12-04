@@ -93,8 +93,8 @@ export default function ScheduleOptions({
 					value={displayDate || ''}
 					weekdaysShort={dateUtils.getWeekdaysShort()}
 					years={{
-						end: 9999,
-						start: new Date().getFullYear(),
+						end: new Date().getFullYear() + 25,
+						start: new Date().getFullYear() - 50,
 					}}
 				/>
 

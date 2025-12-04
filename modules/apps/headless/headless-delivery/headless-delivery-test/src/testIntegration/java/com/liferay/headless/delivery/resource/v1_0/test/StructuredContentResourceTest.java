@@ -598,12 +598,12 @@ public class StructuredContentResourceTest
 	public void testPostSiteStructuredContent() throws Exception {
 		super.testPostSiteStructuredContent();
 
-		// Localized structured content with the default language
+		// Localized structured content populating just the default language
 
 		Locale locale = LocaleUtil.getDefault();
 
 		StructuredContent randomLocalizedStructuredContent1 =
-			_randomStructuredContent(locale, true);
+			_randomStructuredContent(locale, false);
 
 		StructuredContentResource englishStructuredContentResource =
 			_buildStructureContentResource(locale);
@@ -613,8 +613,7 @@ public class StructuredContentResourceTest
 				testGetSiteStructuredContentsPage_getSiteId(),
 				randomLocalizedStructuredContent1);
 
-		_assertLocalizedValues(
-			postStructuredContent1, LocaleUtil.toW3cLanguageId(locale));
+		Assert.assertNotNull(postStructuredContent1.getTitle_i18n());
 		assertEquals(randomLocalizedStructuredContent1, postStructuredContent1);
 		assertValid(postStructuredContent1);
 
@@ -639,19 +638,20 @@ public class StructuredContentResourceTest
 		assertEquals(randomLocalizedStructuredContent2, postStructuredContent2);
 		assertValid(postStructuredContent2);
 
-		// Localized structured content populating just the default language
+		// Localized structured content with the default language
 
 		locale = LocaleUtil.getDefault();
 
 		StructuredContent randomLocalizedStructuredContent3 =
-			_randomStructuredContent(locale, false);
+			_randomStructuredContent(locale, true);
 
 		StructuredContent postStructuredContent3 =
 			englishStructuredContentResource.postSiteStructuredContent(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				randomLocalizedStructuredContent3);
 
-		Assert.assertNotNull(postStructuredContent3.getTitle_i18n());
+		_assertLocalizedValues(
+			postStructuredContent3, LocaleUtil.toW3cLanguageId(locale));
 		assertEquals(randomLocalizedStructuredContent3, postStructuredContent3);
 		assertValid(postStructuredContent3);
 

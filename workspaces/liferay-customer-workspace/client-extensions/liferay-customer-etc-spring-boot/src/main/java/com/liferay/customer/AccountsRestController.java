@@ -66,7 +66,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class AccountsRestController extends BaseRestController {
 
-	@GetMapping("/{externalReferenceCode}/object-key")
+	@GetMapping("/{externalReferenceCode}/jira/object-key")
 	public ResponseEntity<String> getObjectKey(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode)
@@ -81,7 +81,9 @@ public class AccountsRestController extends BaseRestController {
 				HttpStatus.OK);
 		}
 		catch (Exception exception) {
-			_log.error("Error checking objectKey", exception);
+			_log.error(
+				"Error getting JIRA object key for " + externalReferenceCode,
+				exception);
 
 			return new ResponseEntity<>(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

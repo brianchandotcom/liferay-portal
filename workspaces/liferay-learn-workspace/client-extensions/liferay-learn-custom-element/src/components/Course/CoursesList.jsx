@@ -53,7 +53,7 @@ const CoursesList = () => {
 									}
 									index={index}
 									key={course.r_module_c_course.id}
-									link={`/l/${course.lesson[0].id}`}
+									link={`/course/${course.lesson[0].id}`}
 									personas={course.r_module_c_course.audience}
 									title={
 										!course.r_module_c_course.title

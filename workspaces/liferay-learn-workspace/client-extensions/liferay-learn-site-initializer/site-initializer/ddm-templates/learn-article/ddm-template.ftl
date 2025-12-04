@@ -181,7 +181,7 @@
 
 									<div class="how-to-cards-container" id="how-to-cards-container">
 										<#list knowledgeArticles.items as knowledgeArticle>
-											<a class="how-to-card" href="${themeDisplay.getPortalURL()}/l/${knowledgeArticle.id}/">
+											<a class="how-to-card" href="${themeDisplay.getPortalURL()}/kb-article/${knowledgeArticle.id}/">
 												<div class="how-to-card-header">
 													${knowledgeArticle.title}
 												</div>

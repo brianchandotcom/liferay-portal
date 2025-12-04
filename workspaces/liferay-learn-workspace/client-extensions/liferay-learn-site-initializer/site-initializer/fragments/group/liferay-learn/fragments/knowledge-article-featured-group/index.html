@@ -63,7 +63,7 @@
 
 			[#if (knowledgeArticles.totalCount)?has_content]
 				[#list knowledgeArticles.items as knowledgeArticle]
-					<a class="article-entry" href="${themeDisplay.getCDNBaseURL()}/l/${knowledgeArticle.id}">
+					<a class="article-entry" href="${themeDisplay.getCDNBaseURL()}/kb-article/${knowledgeArticle.id}">
 						<div class="article-entry-title">
 							${knowledgeArticle.title}
 						</div>

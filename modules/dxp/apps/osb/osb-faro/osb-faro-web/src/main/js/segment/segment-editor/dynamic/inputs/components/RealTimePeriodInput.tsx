@@ -10,7 +10,9 @@ import {
 import {Option, Picker} from '@clayui/core';
 
 interface IRealTimePeriodInputProps {
+	initialInterval?: number;
 	onChange: (interval: number, timeWindow: string) => void;
+	initialTimeWindow?: string;
 }
 
 const DEFAULT_OPTIONS = {
@@ -19,10 +21,12 @@ const DEFAULT_OPTIONS = {
 };
 
 const RealTimePeriodInput: React.FC<IRealTimePeriodInputProps> = ({
-	onChange
+	initialInterval = DEFAULT_OPTIONS.interval,
+	onChange,
+	initialTimeWindow = DEFAULT_OPTIONS.timeWindow
 }) => {
-	const [interval, setInterval] = useState<number>(1);
-	const [timeWindow, setTimeWindow] = useState(DEFAULT_OPTIONS.timeWindow);
+	const [interval, setInterval] = useState<number>(initialInterval);
+	const [timeWindow, setTimeWindow] = useState(initialTimeWindow);
 
 	const INTERVAL_OPTIONS = useMemo(() => {
 		const max = timeWindow === HOURS ? HOURS_IN_A_DAY : MAX_DAYS;

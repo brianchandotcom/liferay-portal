@@ -98,8 +98,11 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		Layout masterLayout3 = LayoutTestUtil.addTypeContentLayout(group);
 
 		_updateLayout(
+			masterLayout1.getCtCollectionId(),
 			masterLayoutPageTemplateEntry.getPlid(), masterLayout1.getPlid());
-		_updateLayout(RandomTestUtil.nextLong(), masterLayout2.getPlid());
+		_updateLayout(
+			masterLayout2.getCtCollectionId(), RandomTestUtil.nextLong(),
+			masterLayout2.getPlid());
 
 		runUpgrade();
 
@@ -177,14 +180,17 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		return _layoutLocalService.updateLayout((Layout)ctModel);
 	}
 
-	private void _updateLayout(long masterLayoutPlid, long plid)
+	private void _updateLayout(
+			long ctCollectionId, long masterLayoutPlid, long plid)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"update Layout set masterLayoutPlid = ? where plid = ?")) {
+				"update Layout set masterLayoutPlid = ? where ctCollectionId " +
+					"= ? and plid = ? ")) {
 
 			preparedStatement.setLong(1, masterLayoutPlid);
-			preparedStatement.setLong(2, plid);
+			preparedStatement.setLong(2, ctCollectionId);
+			preparedStatement.setLong(3, plid);
 
 			preparedStatement.executeUpdate();
 		}

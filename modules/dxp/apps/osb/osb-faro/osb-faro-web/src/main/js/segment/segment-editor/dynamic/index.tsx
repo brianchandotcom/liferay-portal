@@ -47,7 +47,13 @@ export function validateSegmentEditor(criteria) {
 }
 
 const CriteriaBuilderForm = withField(
-	({channelId, field: {name, value}, groupId, ...fieldProps}) => {
+	({
+		channelId,
+		field: {name, value},
+		groupId,
+		segmentType,
+		...fieldProps
+	}) => {
 		const handleChange = criteria => {
 			const {
 				form: {setFieldValue}
@@ -63,6 +69,7 @@ const CriteriaBuilderForm = withField(
 				criteria={value}
 				groupId={groupId}
 				onChange={handleChange}
+				segmentType={segmentType}
 			/>
 		);
 	}
@@ -265,6 +272,9 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 																}
 																id={id}
 																name='criteria'
+																segmentType={
+																	type
+																}
 																validate={
 																	validateSegmentEditor
 																}

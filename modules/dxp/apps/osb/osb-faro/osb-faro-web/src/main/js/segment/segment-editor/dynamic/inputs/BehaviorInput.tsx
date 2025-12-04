@@ -90,6 +90,7 @@ interface IBehaviorInputProps extends ISegmentEditorCustomInputBase {
 	channelId: string;
 	close: Modal.close;
 	open: Modal.open;
+	segmentType: SegmentTypes;
 	touched: Touched;
 	valid: Valid;
 }
@@ -371,6 +372,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 			groupId,
 			operatorRenderer: OperatorDropdown,
 			property,
+			segmentType,
 			touched,
 			valid,
 			value
@@ -390,8 +392,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 			Map({propertyName: 'day'})
 		).toJS();
 
-		const isRealTime =
-			this.getSegmentTypeFromProps(this.props) === SegmentTypes.RealTime;
+		const isRealTime = segmentType === SegmentTypes.RealTime;
 
 		return (
 			<div className='criteria-statement'>

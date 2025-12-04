@@ -129,10 +129,10 @@ public abstract class BaseLayoutStructureItemImporter {
 			return _getDefaultDisplayPageJSONObject();
 		}
 
+		String externalReferenceCode = null;
+
 		List<Map<String, String>> fields =
 			(List<Map<String, String>>)itemReferenceMap.get("fields");
-
-		String externalReferenceCode = null;
 
 		for (Map<String, String> field : fields) {
 			if (Objects.equals(

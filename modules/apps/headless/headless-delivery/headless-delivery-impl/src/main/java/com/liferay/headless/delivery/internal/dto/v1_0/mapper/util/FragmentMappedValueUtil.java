@@ -93,22 +93,24 @@ public class FragmentMappedValueUtil {
 		}
 
 		try {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					getLayoutPageTemplateEntry(
-						GetterUtil.getLong(matcher.group(1)));
-
-			Field field = new Field();
-
-			field.setFieldName(() -> "externalReferenceCode");
-			field.setFieldValue(
-				layoutPageTemplateEntry::getExternalReferenceCode);
-
 			ClassFieldsReference classFieldsReference =
 				new ClassFieldsReference();
 
 			classFieldsReference.setClassName(
 				LayoutPageTemplateEntry.class::getName);
+
+			Field field = new Field();
+
+			field.setFieldName(() -> "externalReferenceCode");
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					getLayoutPageTemplateEntry(
+						GetterUtil.getLong(matcher.group(1)));
+
+			field.setFieldValue(
+				layoutPageTemplateEntry::getExternalReferenceCode);
+
 			classFieldsReference.setFields(() -> new Field[] {field});
 
 			return classFieldsReference;

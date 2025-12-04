@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -79,6 +80,7 @@ public class SegmentsExperienceUtilTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		_portletLocalServiceUtilMockedStatic.close();
 		_portletPreferencesLocalServiceUtilMockedStatic.close();
 		_segmentsExperimentLocalServiceUtilMockedStatic.close();
 	}
@@ -464,7 +466,10 @@ public class SegmentsExperienceUtilTest {
 					segmentsExperience)));
 	}
 
-	private static MockedStatic<PortletPreferencesLocalServiceUtil>
+	private static final MockedStatic<PortletLocalServiceUtil>
+		_portletLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			PortletLocalServiceUtil.class);
+	private static final MockedStatic<PortletPreferencesLocalServiceUtil>
 		_portletPreferencesLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			PortletPreferencesLocalServiceUtil.class);
 	private static final MockedStatic<SegmentsExperimentLocalServiceUtil>

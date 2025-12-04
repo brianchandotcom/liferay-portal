@@ -4,7 +4,7 @@
  */
 
 import {useEffect} from 'react';
-import {HashRouter, Outlet, Route, Routes} from 'react-router-dom';
+import {Outlet, Route, Routes} from 'react-router-dom';
 
 import NewAppContextProvider from '../../context/NewAppContext';
 import SolutionContextProvider from '../../context/SolutionContext';

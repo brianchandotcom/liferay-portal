@@ -4,12 +4,12 @@
  */
 
 import {Component, ComponentProps, Fragment} from 'react';
+import {HashRouter} from 'react-router-dom';
 
+import {Breadcrumbs} from '../components/Breadcrumb/Breadcrumb';
 import ErrorBoundary from '../components/ErrorBoundary';
 import Providers from '../providers';
 import {MarketplaceProperties} from '../utils/attributes';
-import {HashRouter} from 'react-router-dom';
-import {Breadcrumbs} from '../components/Breadcrumb/Breadcrumb';
 
 /**
  * @description due the lazy rendering, the context needs to be initialized

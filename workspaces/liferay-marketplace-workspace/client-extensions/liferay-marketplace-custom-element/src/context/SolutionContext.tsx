@@ -12,6 +12,7 @@ import {
 } from 'react';
 import {useParams} from 'react-router-dom';
 
+import {breadcrumbStore} from '../components/Breadcrumb/BreadcrumbStore';
 import {UploadedFile} from '../components/FileList/FileList';
 import Loading from '../components/Loading';
 import {
@@ -22,7 +23,6 @@ import {
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalog from '../services/rest/HeadlessCommerceAdminCatalog';
 import {safeJSONParse} from '../utils/util';
-import {breadcrumbStore} from '../components/Breadcrumb/BreadcrumbStore';
 
 export enum BlockDirections {
 	DELETE,

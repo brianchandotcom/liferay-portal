@@ -8,6 +8,7 @@ import {ReactNode, createContext, useContext, useReducer} from 'react';
 import {useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
+import {breadcrumbStore} from '../components/Breadcrumb/BreadcrumbStore';
 import {UploadedFile} from '../components/FileList/FileList';
 import Loading from '../components/Loading';
 import SearchBuilder from '../core/SearchBuilder';
@@ -26,7 +27,6 @@ import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceA
 import HeadlessDelivery from '../services/rest/HeadlessDelivery';
 import HeadlessPublisherAsset from '../services/rest/HeadlessPublisherAsset';
 import {useMarketplaceContext} from './MarketplaceContext';
-import {breadcrumbStore} from '../components/Breadcrumb/BreadcrumbStore';
 
 export type LicensePrice = {key: number; value: number};
 export type LicenseType = 'Perpetual' | 'Subscription';

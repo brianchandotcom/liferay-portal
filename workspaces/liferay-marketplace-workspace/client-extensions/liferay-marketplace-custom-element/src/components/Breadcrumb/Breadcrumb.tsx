@@ -7,9 +7,9 @@ import {useSelector} from '@xstate/store/react';
 import React, {useMemo} from 'react';
 import {useLocation} from 'react-router-dom';
 
-import {breadcrumbStore} from './BreadcrumbStore';
 import i18n, {Word} from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
+import {breadcrumbStore} from './BreadcrumbStore';
 import Item from './Item';
 
 import './Breadcrumb.scss';
@@ -65,7 +65,7 @@ export function Breadcrumbs({
 						)
 				),
 		];
-	}, [basePath, pathname]);
+	}, [basePath, hiddenPaths, pathname, replacements]);
 
 	return (
 		<nav aria-label="Breadcrumb" className="breadcrumb-bar">

@@ -5,6 +5,7 @@
 
 import {useOutletContext, useParams} from 'react-router-dom';
 
+import {breadcrumbStore} from '../../../../../components/Breadcrumb/BreadcrumbStore';
 import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
 import QATable from '../../../../../components/QATable';
 import {ProductSpecificationKey} from '../../../../../enums/Product';
@@ -17,7 +18,6 @@ import {
 	isCloudProduct,
 } from '../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../utils/util';
-import {breadcrumbStore} from '../../../../../components/Breadcrumb/BreadcrumbStore';
 
 import './App.scss';
 

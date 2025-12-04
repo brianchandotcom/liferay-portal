@@ -11,6 +11,7 @@ import {useMemo} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
+import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
 import {
 	ProductWorkflowStatusCode,
 	ProductWorkflowStatusLabel,
@@ -23,7 +24,7 @@ import {
 	showAppImage,
 } from '../../../../utils/util';
 import AppDetail from './AppDetail';
-import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
+
 import './App.scss';
 
 type AppProps = {

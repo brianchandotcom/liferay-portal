@@ -9,10 +9,10 @@ import {differenceInDays, format} from 'date-fns';
 import {useOutletContext, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
+import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import Loading from '../../../../components/Loading';
 import QATable from '../../../../components/QATable';
-import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
 import {
 	OrderCustomFields,
 	OrderTypes,

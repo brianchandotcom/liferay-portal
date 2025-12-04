@@ -47,6 +47,100 @@ public class Site implements Cloneable, Serializable {
 
 	protected Boolean active;
 
+	public AnalyticsConfiguration getAnalyticsConfiguration() {
+		return analyticsConfiguration;
+	}
+
+	public void setAnalyticsConfiguration(
+		AnalyticsConfiguration analyticsConfiguration) {
+
+		this.analyticsConfiguration = analyticsConfiguration;
+	}
+
+	public void setAnalyticsConfiguration(
+		UnsafeSupplier<AnalyticsConfiguration, Exception>
+			analyticsConfigurationUnsafeSupplier) {
+
+		try {
+			analyticsConfiguration = analyticsConfigurationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AnalyticsConfiguration analyticsConfiguration;
+
+	public Boolean getAssetAutoTaggingEnabled() {
+		return assetAutoTaggingEnabled;
+	}
+
+	public void setAssetAutoTaggingEnabled(Boolean assetAutoTaggingEnabled) {
+		this.assetAutoTaggingEnabled = assetAutoTaggingEnabled;
+	}
+
+	public void setAssetAutoTaggingEnabled(
+		UnsafeSupplier<Boolean, Exception>
+			assetAutoTaggingEnabledUnsafeSupplier) {
+
+		try {
+			assetAutoTaggingEnabled =
+				assetAutoTaggingEnabledUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean assetAutoTaggingEnabled;
+
+	public Boolean getContentSharingWithChildrenEnabled() {
+		return contentSharingWithChildrenEnabled;
+	}
+
+	public void setContentSharingWithChildrenEnabled(
+		Boolean contentSharingWithChildrenEnabled) {
+
+		this.contentSharingWithChildrenEnabled =
+			contentSharingWithChildrenEnabled;
+	}
+
+	public void setContentSharingWithChildrenEnabled(
+		UnsafeSupplier<Boolean, Exception>
+			contentSharingWithChildrenEnabledUnsafeSupplier) {
+
+		try {
+			contentSharingWithChildrenEnabled =
+				contentSharingWithChildrenEnabledUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean contentSharingWithChildrenEnabled;
+
+	public String getDefaultLanguageId() {
+		return defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		this.defaultLanguageId = defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(
+		UnsafeSupplier<String, Exception> defaultLanguageIdUnsafeSupplier) {
+
+		try {
+			defaultLanguageId = defaultLanguageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String defaultLanguageId;
+
 	public String getDescription() {
 		return description;
 	}
@@ -135,6 +229,29 @@ public class Site implements Cloneable, Serializable {
 
 	protected Map<String, String> descriptiveName_i18n;
 
+	public Boolean getDirectoryIndexingEnabled() {
+		return directoryIndexingEnabled;
+	}
+
+	public void setDirectoryIndexingEnabled(Boolean directoryIndexingEnabled) {
+		this.directoryIndexingEnabled = directoryIndexingEnabled;
+	}
+
+	public void setDirectoryIndexingEnabled(
+		UnsafeSupplier<Boolean, Exception>
+			directoryIndexingEnabledUnsafeSupplier) {
+
+		try {
+			directoryIndexingEnabled =
+				directoryIndexingEnabledUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean directoryIndexingEnabled;
+
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -196,6 +313,27 @@ public class Site implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Boolean getInheritLocales() {
+		return inheritLocales;
+	}
+
+	public void setInheritLocales(Boolean inheritLocales) {
+		this.inheritLocales = inheritLocales;
+	}
+
+	public void setInheritLocales(
+		UnsafeSupplier<Boolean, Exception> inheritLocalesUnsafeSupplier) {
+
+		try {
+			inheritLocales = inheritLocalesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean inheritLocales;
+
 	public String getKey() {
 		return key;
 	}
@@ -214,6 +352,27 @@ public class Site implements Cloneable, Serializable {
 	}
 
 	protected String key;
+
+	public String[] getLocales() {
+		return locales;
+	}
+
+	public void setLocales(String[] locales) {
+		this.locales = locales;
+	}
+
+	public void setLocales(
+		UnsafeSupplier<String[], Exception> localesUnsafeSupplier) {
+
+		try {
+			locales = localesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] locales;
 
 	public Boolean getManualMembership() {
 		return manualMembership;
@@ -235,6 +394,36 @@ public class Site implements Cloneable, Serializable {
 	}
 
 	protected Boolean manualMembership;
+
+	public MapProviderKey getMapProviderKey() {
+		return mapProviderKey;
+	}
+
+	public String getMapProviderKeyAsString() {
+		if (mapProviderKey == null) {
+			return null;
+		}
+
+		return mapProviderKey.toString();
+	}
+
+	public void setMapProviderKey(MapProviderKey mapProviderKey) {
+		this.mapProviderKey = mapProviderKey;
+	}
+
+	public void setMapProviderKey(
+		UnsafeSupplier<MapProviderKey, Exception>
+			mapProviderKeyUnsafeSupplier) {
+
+		try {
+			mapProviderKey = mapProviderKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected MapProviderKey mapProviderKey;
 
 	public Integer getMembershipRestriction() {
 		return membershipRestriction;
@@ -287,6 +476,27 @@ public class Site implements Cloneable, Serializable {
 	}
 
 	protected MembershipType membershipType;
+
+	public Boolean getMentionsEnabled() {
+		return mentionsEnabled;
+	}
+
+	public void setMentionsEnabled(Boolean mentionsEnabled) {
+		this.mentionsEnabled = mentionsEnabled;
+	}
+
+	public void setMentionsEnabled(
+		UnsafeSupplier<Boolean, Exception> mentionsEnabledUnsafeSupplier) {
+
+		try {
+			mentionsEnabled = mentionsEnabledUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean mentionsEnabled;
 
 	public String getName() {
 		return name;
@@ -383,6 +593,48 @@ public class Site implements Cloneable, Serializable {
 	protected com.liferay.headless.admin.site.client.permission.Permission[]
 		permissions;
 
+	public RatingsTypes getRatingsTypes() {
+		return ratingsTypes;
+	}
+
+	public void setRatingsTypes(RatingsTypes ratingsTypes) {
+		this.ratingsTypes = ratingsTypes;
+	}
+
+	public void setRatingsTypes(
+		UnsafeSupplier<RatingsTypes, Exception> ratingsTypesUnsafeSupplier) {
+
+		try {
+			ratingsTypes = ratingsTypesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected RatingsTypes ratingsTypes;
+
+	public Boolean getSharingEnabled() {
+		return sharingEnabled;
+	}
+
+	public void setSharingEnabled(Boolean sharingEnabled) {
+		this.sharingEnabled = sharingEnabled;
+	}
+
+	public void setSharingEnabled(
+		UnsafeSupplier<Boolean, Exception> sharingEnabledUnsafeSupplier) {
+
+		try {
+			sharingEnabled = sharingEnabledUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean sharingEnabled;
+
 	public String getTemplateKey() {
 		return templateKey;
 	}
@@ -433,27 +685,47 @@ public class Site implements Cloneable, Serializable {
 
 	protected TemplateType templateType;
 
-	public Map<String, String> getTypeSettings() {
-		return typeSettings;
+	public Boolean getTrashEnabled() {
+		return trashEnabled;
 	}
 
-	public void setTypeSettings(Map<String, String> typeSettings) {
-		this.typeSettings = typeSettings;
+	public void setTrashEnabled(Boolean trashEnabled) {
+		this.trashEnabled = trashEnabled;
 	}
 
-	public void setTypeSettings(
-		UnsafeSupplier<Map<String, String>, Exception>
-			typeSettingsUnsafeSupplier) {
+	public void setTrashEnabled(
+		UnsafeSupplier<Boolean, Exception> trashEnabledUnsafeSupplier) {
 
 		try {
-			typeSettings = typeSettingsUnsafeSupplier.get();
+			trashEnabled = trashEnabledUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, String> typeSettings;
+	protected Boolean trashEnabled;
+
+	public Integer getTrashEntriesMaxAge() {
+		return trashEntriesMaxAge;
+	}
+
+	public void setTrashEntriesMaxAge(Integer trashEntriesMaxAge) {
+		this.trashEntriesMaxAge = trashEntriesMaxAge;
+	}
+
+	public void setTrashEntriesMaxAge(
+		UnsafeSupplier<Integer, Exception> trashEntriesMaxAgeUnsafeSupplier) {
+
+		try {
+			trashEntriesMaxAge = trashEntriesMaxAgeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer trashEntriesMaxAge;
 
 	@Override
 	public Site clone() throws CloneNotSupportedException {
@@ -484,6 +756,39 @@ public class Site implements Cloneable, Serializable {
 
 	public String toString() {
 		return SiteSerDes.toJSON(this);
+	}
+
+	public static enum MapProviderKey {
+
+		GOOGLE_MAPS("GoogleMaps"), OPEN_STREET_MAP("OpenStreetMap");
+
+		public static MapProviderKey create(String value) {
+			for (MapProviderKey mapProviderKey : values()) {
+				if (Objects.equals(mapProviderKey.getValue(), value) ||
+					Objects.equals(mapProviderKey.name(), value)) {
+
+					return mapProviderKey;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private MapProviderKey(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 	public static enum MembershipType {

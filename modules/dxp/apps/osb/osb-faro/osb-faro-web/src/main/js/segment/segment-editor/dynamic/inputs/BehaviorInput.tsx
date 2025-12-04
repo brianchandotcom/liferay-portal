@@ -349,6 +349,24 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		});
 	}
 
+	getRealTimePeriodFromCriterion(): {
+		interval: number;
+		timeWindow: string;
+	} | null {
+		const {value} = this.props;
+
+		const dayValue = value.getIn(['criterionGroup', 'items', 1, 'value']);
+
+		if (!dayValue || typeof dayValue !== 'string') return null;
+
+		const [intervalStr, timeWindow] = dayValue.split('_');
+		const interval = Number(intervalStr);
+
+		if (!timeWindow || Number.isNaN(interval)) return null;
+
+		return {interval, timeWindow};
+	}
+
 	invalidateAsset() {
 		const {onChange, touched, valid} = this.props;
 
@@ -393,6 +411,8 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		).toJS();
 
 		const isRealTime = segmentType === SegmentTypes.RealTime;
+
+		const initialPeriod = this.getRealTimePeriodFromCriterion();
 
 		return (
 			<div className='criteria-statement'>
@@ -446,6 +466,8 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 					{isRealTime ? (
 						<RealTimePeriodInput
+							initialInterval={initialPeriod?.interval}
+							initialTimeWindow={initialPeriod?.timeWindow}
 							onChange={this.handleRealTimePeriodChange}
 						/>
 					) : (

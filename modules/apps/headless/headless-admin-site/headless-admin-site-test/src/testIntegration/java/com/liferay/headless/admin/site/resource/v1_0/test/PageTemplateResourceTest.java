@@ -793,12 +793,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		long fileEntryId = 0;
 
 		if (!defaultValue) {
-			FileEntry thumbnailFile =
+			FileEntry fileEntry =
 				_portletFileRepository.
 					getPortletFileEntryByExternalReferenceCode(
 						thumbnailExternalReferenceCode, testGroup.getGroupId());
 
-			fileEntryId = thumbnailFile.getFileEntryId();
+			fileEntryId = fileEntry.getFileEntryId();
 		}
 
 		Assert.assertEquals(

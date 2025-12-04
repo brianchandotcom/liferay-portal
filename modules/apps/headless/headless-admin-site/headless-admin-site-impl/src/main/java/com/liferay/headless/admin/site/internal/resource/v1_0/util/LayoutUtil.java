@@ -44,13 +44,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CustomizedPages;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -659,44 +657,6 @@ public class LayoutUtil {
 		}
 	}
 
-	private static DLFileEntry _getFaviconFileEntry(
-			Settings settings, ServiceContext serviceContext)
-		throws Exception {
-
-		if ((settings == null) || (settings.getFavIcon() == null)) {
-			return null;
-		}
-
-		FavIcon favIcon = settings.getFavIcon();
-
-		if (!(favIcon instanceof
-				FavIconItemExternalReference favIconItemExternalReference)) {
-
-			return null;
-		}
-
-		long groupId = serviceContext.getScopeGroupId();
-
-		Scope scope = favIconItemExternalReference.getScope();
-
-		if (scope != null) {
-			groupId = GroupUtil.getGroupId(
-				true, true, serviceContext.getCompanyId(),
-				scope.getExternalReferenceCode());
-		}
-
-		DLFileEntry dlFileEntry =
-			DLFileEntryServiceUtil.fetchFileEntryByExternalReferenceCode(
-				groupId,
-				favIconItemExternalReference.getExternalReferenceCode());
-
-		if (dlFileEntry == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		return dlFileEntry;
-	}
-
 	private static String _getMasterLayoutPageTemplateEntryERC(
 			long groupId, Layout layout, Settings settings)
 		throws Exception {
@@ -975,21 +935,40 @@ public class LayoutUtil {
 
 		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
 
-		DLFileEntry dlFileEntry = _getFaviconFileEntry(
-			settings, serviceContext);
-
 		String faviconFileEntryERC = null;
 		String faviconFileEntryScopeERC = null;
 
-		if (dlFileEntry != null) {
-			faviconFileEntryERC = dlFileEntry.getExternalReferenceCode();
+		if ((settings != null) && (settings.getFavIcon() != null)) {
+			FavIcon favIcon = settings.getFavIcon();
 
-			if (layout.getGroupId() != dlFileEntry.getGroupId()) {
-				Group dlFileEntryGroup = GroupLocalServiceUtil.fetchGroup(
-					dlFileEntry.getGroupId());
+			if (favIcon instanceof
+					FavIconItemExternalReference favIconItemExternalReference) {
 
-				faviconFileEntryScopeERC =
-					dlFileEntryGroup.getExternalReferenceCode();
+				faviconFileEntryERC =
+					favIconItemExternalReference.getExternalReferenceCode();
+
+				long groupId = serviceContext.getScopeGroupId();
+
+				Scope scope = favIconItemExternalReference.getScope();
+
+				if (scope != null) {
+					faviconFileEntryScopeERC = scope.getExternalReferenceCode();
+
+					groupId = GroupUtil.getGroupId(
+						true, true, serviceContext.getCompanyId(),
+						faviconFileEntryScopeERC);
+				}
+
+				DLFileEntry dlFileEntry =
+					DLFileEntryServiceUtil.
+						fetchFileEntryByExternalReferenceCode(
+							groupId, faviconFileEntryERC);
+
+				if (dlFileEntry == null) {
+					LogUtil.logOptionalReference(
+						DLFileEntry.class.getName(), faviconFileEntryERC, scope,
+						groupId);
+				}
 			}
 		}
 

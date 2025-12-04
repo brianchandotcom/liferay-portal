@@ -63,8 +63,6 @@ import jakarta.validation.ValidationException;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -374,16 +372,15 @@ public class BulkActionBulkSelectionFactory {
 			Predicate predicate = _filterFactory.create(
 				filterString, objectDefinition);
 
-			List<String> rowIds = TransformUtil.transform(
+			return TransformUtil.transformToArray(
 				_objectEntryLocalService.getPrimaryKeys(
 					new Long[0], _company.getCompanyId(), _user.getUserId(),
 					objectDefinition.getObjectDefinitionId(), predicate, false,
 					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 				primaryKey ->
 					objectDefinition.getClassName() + StringPool.SPACE +
-						primaryKey);
-
-			return rowIds.toArray(new String[0]);
+						primaryKey,
+				String.class);
 		}
 
 		SearchRequestBody searchRequestBody = new SearchRequestBody();
@@ -444,16 +441,15 @@ public class BulkActionBulkSelectionFactory {
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
-		List<String> searchResults = TransformUtil.transform(
+		return TransformUtil.transformToArray(
 			searchHits.getSearchHits(),
 			searchHit -> {
 				Document document = searchHit.getDocument();
 
 				return _getEntryClassName(document) + StringPool.SPACE +
 					_getEntryClassPK(document);
-			});
-
-		return searchResults.toArray(new String[0]);
+			},
+			String.class);
 	}
 
 	private String[] _getSelectedItemsRowIds() throws PortalException {
@@ -462,8 +458,6 @@ public class BulkActionBulkSelectionFactory {
 		if (ArrayUtil.isEmpty(bulkActionItems)) {
 			return new String[0];
 		}
-
-		List<String> rowIds = new ArrayList<>(bulkActionItems.length);
 
 		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
 				_bulkAction.getType())) {
@@ -490,24 +484,23 @@ public class BulkActionBulkSelectionFactory {
 			Predicate predicate = _filterFactory.create(
 				filterString, objectDefinition);
 
-			rowIds = TransformUtil.transform(
+			return TransformUtil.transformToArray(
 				_objectEntryLocalService.getPrimaryKeys(
 					new Long[0], _company.getCompanyId(), _user.getUserId(),
 					objectDefinition.getObjectDefinitionId(), predicate, false,
 					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 				primaryKey ->
 					objectDefinition.getClassName() + StringPool.SPACE +
-						primaryKey);
-		}
-		else {
-			rowIds = TransformUtil.transformToList(
-				bulkActionItems,
-				bulkActionItem -> StringBundler.concat(
-					bulkActionItem.getClassName(), StringPool.SPACE,
-					bulkActionItem.getClassPK()));
+						primaryKey,
+				String.class);
 		}
 
-		return rowIds.toArray(new String[0]);
+		return TransformUtil.transform(
+			bulkActionItems,
+			bulkActionItem -> StringBundler.concat(
+				bulkActionItem.getClassName(), StringPool.SPACE,
+				bulkActionItem.getClassPK()),
+			String.class);
 	}
 
 	private boolean _isAllowedSearchContextAttribute(String key) {
@@ -577,7 +570,7 @@ public class BulkActionBulkSelectionFactory {
 	}
 
 	private long[] _toGroupIds(long companyId, String scope) {
-		List<Long> groupIds = TransformUtil.transformToList(
+		return TransformUtil.transformToLongArray(
 			_toArray(scope),
 			part -> {
 				Group group =
@@ -597,8 +590,6 @@ public class BulkActionBulkSelectionFactory {
 						numberFormatException);
 				}
 			});
-
-		return ArrayUtil.toLongArray(groupIds);
 	}
 
 	private void _validate() {

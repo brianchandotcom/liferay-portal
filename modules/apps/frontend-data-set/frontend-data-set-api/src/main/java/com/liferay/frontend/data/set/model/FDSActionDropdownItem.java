@@ -19,16 +19,6 @@ public class FDSActionDropdownItem extends DropdownItem {
 	}
 
 	public FDSActionDropdownItem(
-		String icon, String id, String label, boolean separator, String type) {
-
-		setIcon(icon);
-		setId(id);
-		setLabel(label);
-		setSeparator(separator);
-		setType(type);
-	}
-
-	public FDSActionDropdownItem(
 		String confirmationMessage, String confirmationMessageType,
 		String errorMessage, boolean highlighted, String href, String icon,
 		String id, String label, String method, String modalSize,

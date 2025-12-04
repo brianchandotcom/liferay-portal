@@ -311,6 +311,7 @@ export function RightSidebarObjectDefinitionDetails({
 					hasUpdateObjectDefinitionPermission={
 						!!values.actions?.update
 					}
+					isApproved={values?.status?.label === 'approved'}
 					isEnableObjectEntrySchedule={
 						!!values.enableObjectEntrySchedule
 					}

@@ -14,7 +14,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -88,7 +87,6 @@ public class SegmentsExperienceUtilTest {
 	@Test
 	public void testCopySegmentsExperienceData() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
-		long copiedResourcePermissionId = RandomTestUtil.randomLong();
 		long groupId = RandomTestUtil.randomLong();
 		long resourceActionIds = RandomTestUtil.randomLong();
 		long roleId = RandomTestUtil.randomLong();
@@ -101,11 +99,7 @@ public class SegmentsExperienceUtilTest {
 
 		String sourcePortletId = PortletIdCodec.encode(portletId, oldNamespace);
 
-		String sourcePrimaryKey = RandomTestUtil.randomString();
-
 		String targetPortletId = PortletIdCodec.encode(portletId, newNamespace);
-
-		String targetPrimaryKey = RandomTestUtil.randomString();
 
 		CommentManager commentManager = Mockito.mock(CommentManager.class);
 		PortletRegistry portletRegistry = Mockito.mock(PortletRegistry.class);
@@ -147,9 +141,6 @@ public class SegmentsExperienceUtilTest {
 				resourcePermissionLocalServiceUtilMockedStatic =
 					Mockito.mockStatic(
 						ResourcePermissionLocalServiceUtil.class);
-			MockedStatic<PortletPermissionUtil>
-				portletPermissionUtilMockedStatic = Mockito.mockStatic(
-					PortletPermissionUtil.class);
 			MockedStatic<CounterLocalServiceUtil>
 				counterLocalServiceUtilMockedStatic = Mockito.mockStatic(
 					CounterLocalServiceUtil.class)) {
@@ -224,22 +215,16 @@ public class SegmentsExperienceUtilTest {
 			resourcePermissionLocalServiceUtilMockedStatic.when(
 				() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
 					companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
-					sourcePrimaryKey)
+					PortletPermissionUtil.getPrimaryKey(
+						layout.getPlid(), sourcePortletId))
 			).thenReturn(
 				Collections.singletonList(resourcePermission)
-			);
-
-			counterLocalServiceUtilMockedStatic.when(
-				() -> CounterLocalServiceUtil.increment(
-					ResourcePermission.class.getName())
-			).thenReturn(
-				copiedResourcePermissionId
 			);
 
 			resourcePermissionLocalServiceUtilMockedStatic.when(
 				() ->
 					ResourcePermissionLocalServiceUtil.createResourcePermission(
-						copiedResourcePermissionId)
+						Mockito.anyLong())
 			).thenReturn(
 				Mockito.mock(ResourcePermission.class)
 			);
@@ -252,25 +237,6 @@ public class SegmentsExperienceUtilTest {
 					addedPermission.capture())
 			).thenReturn(
 				null
-			);
-
-			portletPermissionUtilMockedStatic.when(
-				() -> PortletPermissionUtil.getPrimaryKey(
-					Mockito.anyLong(), Mockito.anyString())
-			).thenAnswer(
-				inv -> {
-					String portletIdArg = inv.getArgument(1);
-
-					if (portletIdArg.equals(sourcePortletId)) {
-						return sourcePrimaryKey;
-					}
-
-					if (portletIdArg.equals(targetPortletId)) {
-						return targetPrimaryKey;
-					}
-
-					return StringPool.BLANK;
-				}
 			);
 
 			SegmentsExperienceUtil.copySegmentsExperienceData(
@@ -306,7 +272,8 @@ public class SegmentsExperienceUtilTest {
 			Mockito.verify(
 				copiedResourcePermission
 			).setPrimKey(
-				targetPrimaryKey
+				PortletPermissionUtil.getPrimaryKey(
+					layout.getPlid(), targetPortletId)
 			);
 
 			Mockito.verify(

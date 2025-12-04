@@ -308,6 +308,9 @@ export default function AssetsFDSPropsTransformer({
 					url: replaceTokens(action.href, itemData),
 				});
 			}
+			else if (action?.data?.id === 'import-translation-multiple') {
+				ACTIONS.importTranslation(itemData, loadData);
+			}
 			else if (action?.data?.id === 'reset-to-default-permissions') {
 				openResetAssetPermissionModal({
 					className: itemData.entryClassName,

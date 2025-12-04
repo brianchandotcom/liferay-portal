@@ -1,4 +1,5 @@
 import AttributeConjunctionInput from './components/attribute-conjunction-input';
+import ClayIcon from '@clayui/icon';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 import EventPropertiesQuery, {
 	EventPropertiesData,
@@ -7,6 +8,7 @@ import EventPropertiesQuery, {
 import Form from 'shared/components/form';
 import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
 import React from 'react';
+import RealTimePeriodInput from './components/RealTimePeriodInput';
 import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {CustomValue} from 'shared/util/records';
 import {fromJS, Map} from 'immutable';
@@ -17,8 +19,9 @@ import {
 } from '../utils/custom-inputs';
 import {isBoolean, isNil} from 'lodash';
 import {NAME} from 'shared/util/pagination';
-import {OrderByDirections} from 'shared/util/constants';
+import {OrderByDirections, SegmentTypes} from 'shared/util/constants';
 import {SafeResults} from 'shared/hoc/util';
+import {useLocation} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
 
 type Touched = {
@@ -172,6 +175,12 @@ const EventInput: React.FC<IEventInputProps> = ({
 		}
 	);
 
+	const segmentType = new URLSearchParams(useLocation().search).get(
+		'type'
+	) as SegmentTypes;
+
+	const isRealTime = segmentType === SegmentTypes.RealTime;
+
 	return (
 		<div className='criteria-statement'>
 			<SafeResults {...result} page={false} pageDisplay={false}>
@@ -221,12 +230,18 @@ const EventInput: React.FC<IEventInputProps> = ({
 									value={valueIMap.get('value')}
 								/>
 
-								<DateFilterConjunctionInput
-									conjunctionCriterion={
-										dateFilterConjunctionCriterion
-									}
-									onChange={handleDateFilterConjunctionChange}
-								/>
+								{isRealTime ? (
+									<RealTimePeriodInput />
+								) : (
+									<DateFilterConjunctionInput
+										conjunctionCriterion={
+											dateFilterConjunctionCriterion
+										}
+										onChange={
+											handleDateFilterConjunctionChange
+										}
+									/>
+								)}
 							</Form.Group>
 
 							{!!attributes.length && (
@@ -261,6 +276,16 @@ const EventInput: React.FC<IEventInputProps> = ({
 										}}
 									/>
 								</Form.Group>
+							)}
+							{isRealTime && (
+								<div className='text-info'>
+									<ClayIcon symbol='info-circle' />
+									<span className='ml-1'>
+										{
+											'Info: Event date attributes may create time conflicts and reduce matching users. Review your criteria to ensure the segment behaves as expected.'
+										}
+									</span>
+								</div>
 							)}
 						</>
 					);

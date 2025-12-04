@@ -44,13 +44,12 @@ test(
 		// Add fields
 
 		await structureBuilderPage.addField('Text');
-		await structureBuilderPage.addField('Date');
 		await structureBuilderPage.addField('Decimal');
 
 		// Create repeatable group with two of them
 
 		await structureBuilderPage.createRepeatableGroup({
-			fields: [{label: 'Text'}, {label: 'Date'}],
+			fields: [{label: 'Text'}],
 			label: 'Repeatable Group 1',
 		});
 
@@ -60,9 +59,11 @@ test(
 			page.locator('.treeview-link', {hasText: 'Text'})
 		).toBeVisible();
 
-		await expect(
-			page.locator('.treeview-link', {hasText: 'Date'})
-		).toBeVisible();
+		// Add another field directly inside the group
+
+		await structureBuilderPage.addField('Date', {
+			label: 'Repeatable Group 1',
+		});
 
 		// Create another group inside the first one
 

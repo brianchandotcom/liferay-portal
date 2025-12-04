@@ -107,12 +107,12 @@ public class ObjectDefinitionUtil {
 			return null;
 		}
 
-		String restContextPath = StringPool.BLANK;
-
 		SystemObjectDefinitionManager systemObjectDefinitionManager =
 			systemObjectDefinitionManagerRegistry.
 				getSystemObjectDefinitionManager(
 					serviceBuilderObjectDefinition.getName());
+
+		String restContextPath = StringPool.BLANK;
 
 		if (serviceBuilderObjectDefinition.isUnmodifiableSystemObject()) {
 			if (systemObjectDefinitionManager != null) {

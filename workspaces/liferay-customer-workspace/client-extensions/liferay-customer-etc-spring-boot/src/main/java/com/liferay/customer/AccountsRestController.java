@@ -67,13 +67,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AccountsRestController extends BaseRestController {
 
 	@GetMapping("/{externalReferenceCode}/usage")
-	public ResponseEntity<String> get(
+	public ResponseEntity<String> getUsage(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
 		try {
-			_checkPermission(jwt, externalReferenceCode);
+			_checkViewPermission(jwt, externalReferenceCode);
 
 			List<ProductPurchase> productPurchases =
 				_koroneikiService.searchProductPurchases(
@@ -109,11 +109,22 @@ public class AccountsRestController extends BaseRestController {
 				ticketIds)
 		throws Exception {
 
-		return _getJSMTickets(jwt, externalReferenceCode, ticketIds);
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			return _getJSMTickets(externalReferenceCode, ticketIds);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
 	}
 
 	@PostMapping("/{externalReferenceCode}/sync-business-events")
-	public ResponseEntity<String> post(
+	public ResponseEntity<String> postSyncBusinessEvents(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
 			@RequestBody String json)
@@ -188,7 +199,7 @@ public class AccountsRestController extends BaseRestController {
 		}
 	}
 
-	private void _checkPermission(Jwt jwt, String externalReferenceCode)
+	private void _checkViewPermission(Jwt jwt, String externalReferenceCode)
 		throws Exception {
 
 		AccountResource accountResource = AccountResource.builder(
@@ -338,53 +349,42 @@ public class AccountsRestController extends BaseRestController {
 	}
 
 	private ResponseEntity<String> _getJSMTickets(
-			Jwt jwt, String externalReferenceCode, String[] ticketIds)
+			String externalReferenceCode, String[] ticketIds)
 		throws Exception {
 
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
+		StringBundler sb = new StringBundler(12);
 
-			StringBundler sb = new StringBundler(12);
+		sb.append("Organization in aqlFunction('\"External Key\" = \"");
+		sb.append(externalReferenceCode);
+		sb.append("\"') and (status not in ('");
+		sb.append(
+			StringUtil.merge(
+				JiraIssueConstants.STATUSES_SOLVED_AND_CLOSED, "','"));
+		sb.append("')) and ");
+		sb.append(
+			JiraIssueConstants.toJQLCustomField(
+				_jiraSupportHCFieldRequestType));
+		sb.append(" = '");
+		sb.append(JiraIssueConstants.TYPE_GENERAL_REQUEST);
+		sb.append("'");
 
-			sb.append("Organization in aqlFunction('\"External Key\" = \"");
-			sb.append(externalReferenceCode);
-			sb.append("\"') and (status not in ('");
-			sb.append(
-				StringUtil.merge(
-					JiraIssueConstants.STATUSES_SOLVED_AND_CLOSED, "','"));
-			sb.append("')) and ");
-			sb.append(
-				JiraIssueConstants.toJQLCustomField(
-					_jiraSupportHCFieldRequestType));
-			sb.append(" = '");
-			sb.append(JiraIssueConstants.TYPE_GENERAL_REQUEST);
-			sb.append("'");
-
-			if (ArrayUtil.isNotEmpty(ticketIds)) {
-				sb.append(" or key in ('");
-				sb.append(StringUtil.merge(ticketIds, "','"));
-				sb.append("')");
-			}
-
-			List<JiraSupportIssue> jiraSupportIssues = _jiraService.search(
-				sb.toString(),
-				new String[] {"key", "labels", "status", "summary"});
-
-			JSONArray jsonArray = new JSONArray();
-
-			for (JiraSupportIssue jiraSupportIssue : jiraSupportIssues) {
-				jsonArray.put(_toJSONObject(jiraSupportIssue));
-			}
-
-			return new ResponseEntity<>(jsonArray.toString(), HttpStatus.OK);
+		if (ArrayUtil.isNotEmpty(ticketIds)) {
+			sb.append(" or key in ('");
+			sb.append(StringUtil.merge(ticketIds, "','"));
+			sb.append("')");
 		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
 
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		List<JiraSupportIssue> jiraSupportIssues = _jiraService.search(
+			sb.toString(),
+			new String[] {"key", "labels", "status", "summary"});
+
+		JSONArray jsonArray = new JSONArray();
+
+		for (JiraSupportIssue jiraSupportIssue : jiraSupportIssues) {
+			jsonArray.put(_toJSONObject(jiraSupportIssue));
 		}
+
+		return new ResponseEntity<>(jsonArray.toString(), HttpStatus.OK);
 	}
 
 	private JSONObject _toJSONObject(JiraSupportIssue jiraSupportIssue) {

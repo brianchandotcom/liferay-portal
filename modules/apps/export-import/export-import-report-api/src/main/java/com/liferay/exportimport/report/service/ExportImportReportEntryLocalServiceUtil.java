@@ -39,23 +39,23 @@ public class ExportImportReportEntryLocalServiceUtil {
 	public static ExportImportReportEntry addEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId,
-		String modelNameLanguageKey, int origin) {
+		String modelNameLanguageKey) {
 
 		return getService().addEmptyExportImportReportEntry(
 			groupId, companyId, classExternalReferenceCode, classNameId,
-			exportImportConfigurationId, modelNameLanguageKey, origin);
+			exportImportConfigurationId, modelNameLanguageKey);
 	}
 
 	public static ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long classPK, long exportImportConfigurationId,
 		String errorMessage, String errorStacktrace,
-		String modelNameLanguageKey, int origin) {
+		String modelNameLanguageKey) {
 
 		return getService().addErrorExportImportReportEntry(
 			groupId, companyId, classExternalReferenceCode, classNameId,
 			classPK, exportImportConfigurationId, errorMessage, errorStacktrace,
-			modelNameLanguageKey, origin);
+			modelNameLanguageKey);
 	}
 
 	/**

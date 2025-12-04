@@ -207,8 +207,7 @@ public class SegmentsExperienceUtil {
 	}
 
 	private static void _copyPortletPermissions(
-		long companyId, String newNamespace, String portletId,
-		long sourcePlid, long targetPlid) {
+		long companyId, String newNamespace, String portletId, long plid) {
 
 		String targetPortletId = _getNewPortletId(newNamespace, portletId);
 
@@ -216,10 +215,10 @@ public class SegmentsExperienceUtil {
 			portletId);
 
 		String sourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-			sourcePlid, portletId);
+			plid, portletId);
 
 		String targetPrimKey = PortletPermissionUtil.getPrimaryKey(
-			targetPlid, targetPortletId);
+			plid, targetPortletId);
 
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.getResourcePermissions(
@@ -261,8 +260,7 @@ public class SegmentsExperienceUtil {
 
 			_copyPortletPermissions(
 				fragmentEntryLink.getCompanyId(),
-				newFragmentEntryLink.getNamespace(), portletId,
-				fragmentEntryLink.getPlid(), newFragmentEntryLink.getPlid());
+				newFragmentEntryLink.getNamespace(), portletId, plid);
 		}
 	}
 

@@ -327,8 +327,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage utilityPageError = randomUtilityPage();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		thumbnailURLReference = new ThumbnailURLReference() {
 			{
 				setExternalReferenceCode(RandomTestUtil.randomString());
@@ -349,7 +347,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 
@@ -969,8 +968,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage utilityPageError = randomUtilityPage();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
@@ -994,7 +991,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -1227,8 +1225,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage utilityPageError = randomUtilityPage();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
@@ -1252,7 +1248,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}

@@ -101,15 +101,9 @@ public class ClusterGeneralTest implements Serializable {
 
 	@Test
 	public void testControlChannelProperties() throws Exception {
-
-		// Test control channel properties with tcp.xml
-
 		_testControlChannelProperties(
 			false,
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
-
-		// Test control channel properties with  udp.xml
-
 		_testControlChannelProperties(
 			true,
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",

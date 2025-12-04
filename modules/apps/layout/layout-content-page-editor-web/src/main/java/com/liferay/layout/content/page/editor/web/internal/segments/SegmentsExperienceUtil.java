@@ -301,12 +301,13 @@ public class SegmentsExperienceUtil {
 	private static String _getNewPortletId(
 		String namespace, String newNamespace, String portletId) {
 
-		if (!portletId.contains(namespace)) {
-			return PortletIdCodec.encode(
-				PortletIdCodec.decodePortletName(portletId), newNamespace);
+		String instanceId = PortletIdCodec.decodeInstanceId(portletId);
+
+		if (Validator.isNull(instanceId)) {
+			return portletId;
 		}
 
-		return StringUtil.replace(portletId, namespace, newNamespace);
+		return StringUtil.replace(portletId, instanceId, newNamespace);
 	}
 
 	private static PortletPreferences _getNewPortletPreferences(

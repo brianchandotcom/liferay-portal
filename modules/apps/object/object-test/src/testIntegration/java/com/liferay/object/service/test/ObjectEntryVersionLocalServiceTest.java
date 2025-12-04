@@ -652,6 +652,19 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
+					_getCompanyConfigurationTemporarySwapper(0, 0)) {
+
+			_objectEntryVersionLocalService.checkObjectEntryVersions(
+				objectEntry.getCompanyId());
+		}
+
+		Assert.assertEquals(
+			3,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper(1, 0)) {
 
 			_objectEntryVersionLocalService.checkObjectEntryVersions(

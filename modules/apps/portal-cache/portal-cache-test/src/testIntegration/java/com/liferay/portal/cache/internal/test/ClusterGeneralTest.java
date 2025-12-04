@@ -299,7 +299,7 @@ public class ClusterGeneralTest implements Serializable {
 
 		restartTomcatNode.stop();
 
-		// Assert the verify node still retains the same cluster node ID
+		// Assert the verifier node still retains the same cluster node ID
 
 		Assert.assertEquals(
 			verifierClusterNode.getClusterNodeId(),
@@ -317,25 +317,25 @@ public class ClusterGeneralTest implements Serializable {
 					return clusterNodes.contains(restartClusterNode);
 				}));
 
-		// Restart restartTomcatNode
+		// Restart restart node
 
 		restartTomcatNode.start(true);
 
-		// Assert restartTomcatNode has a new valid cluster node ID
+		// Assert restart node has a new valid cluster node ID
 
 		ClusterNode newRestartClusterNode = restartTomcatNode.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);
 
 		Assert.assertNotNull(newRestartClusterNode);
 
-		// Assert verifierTomcatNode still retains the same cluster node ID
+		// Assert verifier node still retains the same cluster node ID
 
 		Assert.assertEquals(
 			verifierClusterNode.getClusterNodeId(),
 			verifierTomcatNode.syncExecute(
 				ClusterGeneralTest::_getLocalClusterNodeId));
 
-		// Assert mutual visibility with the new restartTomcatNode
+		// Assert mutual visibility with the new restart node
 
 		_assertNodesVisibleToEachOther(restartTomcatNode, verifierTomcatNode);
 	}
@@ -345,22 +345,22 @@ public class ClusterGeneralTest implements Serializable {
 			boolean senderTomcatNodeIsMaster)
 		throws Exception {
 
-		// Assert senderTomcatNode is the master node when
-		// senderTomcatNodeIsMasterNode is true
+		// Assert sender node is the master node when
+		// senderTomcatNodeIsMaster is true
 
 		Assert.assertEquals(
 			senderTomcatNodeIsMaster,
 			senderTomcatNode.syncExecute(ClusterMasterExecutorUtil::isMaster));
 
-		// Assert receiverTomcatNode is the master node when
-		// senderTomcatNodeIsMasterNode is false
+		// Assert receiver node is the master node when
+		// senderTomcatNodeIsMaster is false
 
 		Assert.assertEquals(
 			!senderTomcatNodeIsMaster,
 			receiverTomcatNode.syncExecute(
 				ClusterMasterExecutorUtil::isMaster));
 
-		// Register listener for receiverTomcatNode
+		// Register listener for receiver node
 
 		receiverTomcatNode.syncExecute(
 			() -> {
@@ -369,7 +369,7 @@ public class ClusterGeneralTest implements Serializable {
 				return null;
 			});
 
-		// Update properties in senderTomcatNode and assert change
+		// Update properties in sender node and assert change
 
 		Assert.assertEquals(
 			"DEBUG",
@@ -385,7 +385,7 @@ public class ClusterGeneralTest implements Serializable {
 						ClusterGeneralTest.class.getName());
 				}));
 
-		// Assert the change in receiverTomcatNode
+		// Assert the change in receiver node
 
 		Assert.assertEquals(
 			"DEBUG",
@@ -397,7 +397,7 @@ public class ClusterGeneralTest implements Serializable {
 						ClusterGeneralTest.class.getName());
 				}));
 
-		// Register listener for receiverTomcatNode
+		// Register listener for receiver node
 
 		receiverTomcatNode.syncExecute(
 			() -> {
@@ -406,7 +406,7 @@ public class ClusterGeneralTest implements Serializable {
 				return null;
 			});
 
-		// Update properties in senderTomcatNode and assert change
+		// Update properties in sender node and assert change
 
 		Assert.assertEquals(
 			"ERROR",
@@ -422,7 +422,7 @@ public class ClusterGeneralTest implements Serializable {
 						ClusterGeneralTest.class.getName());
 				}));
 
-		// Assert the change in receiverTomcatNode
+		// Assert the change in receiver node
 
 		Assert.assertEquals(
 			"ERROR",

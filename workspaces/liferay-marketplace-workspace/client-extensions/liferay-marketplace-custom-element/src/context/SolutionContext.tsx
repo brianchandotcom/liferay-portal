@@ -22,6 +22,7 @@ import {
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalog from '../services/rest/HeadlessCommerceAdminCatalog';
 import {safeJSONParse} from '../utils/util';
+import {breadcrumbStore} from '../components/Breadcrumb/BreadcrumbStore';
 
 export enum BlockDirections {
 	DELETE,
@@ -538,12 +539,12 @@ export const SolutionContext = createContext<
 >([solutionInitialState, () => null]);
 
 type SolutionContextProviderProps = {
-	catalogId: number;
+	catalogId?: number;
 	children: ReactNode;
 };
 
 export default function SolutionContextProvider({
-	catalogId,
+	catalogId = 0,
 	children,
 }: SolutionContextProviderProps) {
 	const [state, dispatch] = useReducer(reducer, solutionInitialState);
@@ -565,9 +566,15 @@ export default function SolutionContextProvider({
 				nestedFields: 'attachments,images,productSpecifications',
 			})
 		)
-			.then((response) =>
-				dispatch({payload: response, type: SolutionTypes.SET_CONTEXT})
-			)
+			.then((response) => {
+				dispatch({payload: response, type: SolutionTypes.SET_CONTEXT});
+				breadcrumbStore.send({
+					replacements: {
+						[productId]: response.name?.en_US,
+					},
+					type: 'setReplacements',
+				});
+			})
 			.catch(console.error);
 	}, [productId]);
 

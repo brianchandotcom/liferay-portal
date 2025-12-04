@@ -12,6 +12,7 @@ import useSWR from 'swr';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import Loading from '../../../../components/Loading';
 import QATable from '../../../../components/QATable';
+import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
 import {
 	OrderCustomFields,
 	OrderTypes,
@@ -171,6 +172,11 @@ const Solution = () => {
 		placedOrder: PlacedOrder;
 		product: DeliveryProduct;
 	}>();
+
+	breadcrumbStore.send({
+		replacements: {[orderId as string]: product.name},
+		type: 'setReplacements',
+	});
 
 	const orderStatusCode = placedOrder.orderStatusInfo
 		?.code as OrderWorkflowStatusCode;

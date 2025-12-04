@@ -26,6 +26,7 @@ import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceA
 import HeadlessDelivery from '../services/rest/HeadlessDelivery';
 import HeadlessPublisherAsset from '../services/rest/HeadlessPublisherAsset';
 import {useMarketplaceContext} from './MarketplaceContext';
+import {breadcrumbStore} from '../components/Breadcrumb/BreadcrumbStore';
 
 export type LicensePrice = {key: number; value: number};
 export type LicenseType = 'Perpetual' | 'Subscription';
@@ -671,6 +672,7 @@ export default function NewAppContextProvider({
 		properties: {featurePreview},
 	} = useMarketplaceContext();
 	const [state, dispatch] = useReducer(reducer, newAppInitialState);
+
 	const {productId} = useParams();
 	const {data = {}, isLoading: isLoadingVocabularies} =
 		useGetVocabulariesAndCategories([
@@ -693,6 +695,11 @@ export default function NewAppContextProvider({
 			),
 		{
 			onSuccess: (data) => {
+				breadcrumbStore.send({
+					replacements: {[productId as string]: data.name.en_US},
+					type: 'setReplacements',
+				});
+
 				dispatch({
 					payload: data,
 					type: NewAppTypes.SET_CONTEXT,

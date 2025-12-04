@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {HashRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 import withProviders from '../../hoc/withProviders';
 import SSADashboardOutlet from './SSADashboardOutlet';
@@ -15,19 +15,24 @@ import TrialDetails from './pages/TrialDetails';
 import './index.scss';
 
 const SSADashboardRouter = () => (
-	<HashRouter>
-		<Routes>
-			<Route element={<SSADashboardOutlet />}>
-				<Route element={<MySaaSTrials />} index />
+	<Routes>
+		<Route element={<SSADashboardOutlet />}>
+			<Route element={<MySaaSTrials />} index />
 
-				<Route element={<SaaSTrials />} path="saas-trials" />
+			<Route element={<SaaSTrials />} path="saas-trials" />
 
-				<Route element={<TrialDetails />} path="details/:orderId" />
+			<Route element={<TrialDetails />} path="details/:orderId" />
 
-				<Route element={<ManageUsers />} path="manage-users" />
-			</Route>
-		</Routes>
-	</HashRouter>
+			<Route element={<ManageUsers />} path="manage-users" />
+		</Route>
+	</Routes>
 );
 
-export default withProviders(SSADashboardRouter, {withErrorBoundary: true});
+export default withProviders(SSADashboardRouter, {
+	breadcrumbProps: {
+		hiddenPaths: ['ssa-dashboard#/details'],
+	},
+	withBreadcrumbs: true,
+	withErrorBoundary: true,
+	withHashRouter: true,
+});

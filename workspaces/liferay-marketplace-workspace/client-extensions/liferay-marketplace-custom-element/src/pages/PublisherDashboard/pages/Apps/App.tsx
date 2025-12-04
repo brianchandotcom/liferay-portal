@@ -23,7 +23,7 @@ import {
 	showAppImage,
 } from '../../../../utils/util';
 import AppDetail from './AppDetail';
-
+import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
 import './App.scss';
 
 type AppProps = {
@@ -57,6 +57,11 @@ const App: React.FC<AppProps> = ({header}) => {
 	if (isLoading || !product) {
 		return null;
 	}
+
+	breadcrumbStore.send({
+		replacements: {[productId as string]: product.name.en_US},
+		type: 'setReplacements',
+	});
 
 	const thumbnail = getThumbnailByProductAttachment(product?.images);
 

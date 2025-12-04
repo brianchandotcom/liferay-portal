@@ -181,7 +181,7 @@ public class ClusterGeneralTest implements Serializable {
 		ClusterNode localClusterNode =
 			ClusterExecutorUtil.getLocalClusterNode();
 
-		return ClocalClusterNode.getClusterNodeId();
+		return localClusterNode.getClusterNodeId();
 	}
 
 	private Closeable _applyPortalExtLines(

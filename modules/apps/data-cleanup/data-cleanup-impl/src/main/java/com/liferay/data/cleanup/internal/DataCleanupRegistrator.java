@@ -238,12 +238,6 @@ public class DataCleanupRegistrator {
 			"com.liferay.oauth.service");
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
-				"clean-up-open-social-module-data",
-				DataCleanup.MODULE_DATA_CLEANUP,
-				new OpenSocialUpgradeProcess(_expandoTableLocalService)),
-			"opensocial-portlet");
-		_registerDataCleanup(
-			DataCleanupAdapter.create(
 				"clean-up-password-generator-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new PasswordGeneratorUpgradeProcess()),
@@ -363,6 +357,12 @@ public class DataCleanupRegistrator {
 				"clean-up-youtube-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new YoutubeUpgradeProcess()),
 			"com.liferay.youtube.web");
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
+				"clean-up-open-social-module-data",
+				DataCleanup.MODULE_DATA_CLEANUP,
+				new OpenSocialUpgradeProcess(_expandoTableLocalService)),
+			"opensocial-portlet");
 	}
 
 	private void _registerSystemDataCleanups() {

@@ -162,13 +162,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		return `${property.entityType}#${property.name}#${asset.id}`;
 	}
 
-	getSegmentTypeFromProps(props: any): SegmentTypes {
-		const propSearch = props?.location?.search || window.location.search;
-		if (propSearch) {
-			return new URLSearchParams(propSearch).get('type') as SegmentTypes;
-		}
-	}
-
 	getAssetFromContext(): Asset | undefined {
 		const {
 			context: {referencedEntities}

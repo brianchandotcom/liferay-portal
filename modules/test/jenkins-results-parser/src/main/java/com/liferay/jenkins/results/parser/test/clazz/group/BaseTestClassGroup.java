@@ -11,9 +11,11 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -22,6 +24,44 @@ import java.util.TreeSet;
  * @author Peter Yoo
  */
 public abstract class BaseTestClassGroup implements TestClassGroup {
+
+	public abstract String getOSArchitecture();
+
+	public String getOSSlaveLabel() {
+		String slaveLabel = getSlaveLabel();
+
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return slaveLabel;
+		}
+
+		try {
+			String osArchitecture = getOSArchitecture();
+
+			if (Objects.equals(osArchitecture, "arm")) {
+				String osSlaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"slave.label.arm[" + slaveLabel + "]");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(osSlaveLabel)) {
+					return osSlaveLabel;
+				}
+			}
+			else if (Objects.equals(osArchitecture, "x86")) {
+				String osSlaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"slave.label.x86[" + slaveLabel + "]");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(osSlaveLabel)) {
+					return osSlaveLabel;
+				}
+			}
+
+			return slaveLabel;
+		}
+		catch (IOException ioException) {
+			return slaveLabel;
+		}
+	}
+
+	public abstract String getSlaveLabel();
 
 	@Override
 	public List<TestClass> getTestClasses() {

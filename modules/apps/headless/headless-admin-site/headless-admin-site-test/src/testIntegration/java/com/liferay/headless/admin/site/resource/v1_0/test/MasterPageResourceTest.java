@@ -569,12 +569,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		long fileEntryId = 0;
 
 		if (!defaultValue) {
-			FileEntry thumbnailFile =
+			FileEntry fileEntry =
 				_portletFileRepository.
 					getPortletFileEntryByExternalReferenceCode(
 						thumbnailExternalReferenceCode, testGroup.getGroupId());
 
-			fileEntryId = thumbnailFile.getFileEntryId();
+			fileEntryId = fileEntry.getFileEntryId();
 		}
 
 		Assert.assertEquals(

@@ -321,7 +321,7 @@ public class ClusterGeneralTest implements Serializable {
 
 		restartTomcatNode.start(true);
 
-		// Assert restart node has a new valid cluster node ID
+		// Assert restart node has a new valid cluster node
 
 		ClusterNode newRestartClusterNode = restartTomcatNode.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);

@@ -217,25 +217,6 @@ public class BatchEngineExportTaskExecutorImpl
 					batchEngineExportTask, parameters, settings,
 					unsyncByteArrayOutputStream)) {
 
-			oldNestedFieldsContext =
-				NestedFieldsContextThreadLocal.getNestedFieldsContext();
-
-			NestedFieldsContextThreadLocal.setNestedFieldsContext(
-				new NestedFieldsContext(
-					NestedFieldsContextUtil.limitDepth(
-						GetterUtil.getInteger(
-							parameters.get("batchNestedFieldsDepth"))),
-					NestedFieldsContextUtil.toList(
-						MapUtil.getString(parameters, "batchNestedFields"))));
-
-			int maxItems = settings.getMaxItems();
-
-			int exportBatchSize = Math.min(
-				maxItems,
-				_getExportBatchSize(batchEngineExportTask.getCompanyId()));
-
-			batchEngineExportTask.setProcessedItemsCount(0);
-
 			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
 				_batchEngineTaskItemDelegateRegistry.
 					getBatchEngineTaskItemDelegate(
@@ -248,6 +229,26 @@ public class BatchEngineExportTaskExecutorImpl
 					"No batch engine delegate available for class name " +
 						batchEngineExportTask.getClassName());
 			}
+
+			oldNestedFieldsContext =
+				NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				new NestedFieldsContext(
+					NestedFieldsContextUtil.limitDepth(
+						GetterUtil.getInteger(
+							parameters.get("batchNestedFieldsDepth"))),
+					NestedFieldsContextUtil.toList(
+						MapUtil.getString(parameters, "batchNestedFields")),
+					batchEngineTaskItemDelegate.getVersion()));
+
+			int maxItems = settings.getMaxItems();
+
+			int exportBatchSize = Math.min(
+				maxItems,
+				_getExportBatchSize(batchEngineExportTask.getCompanyId()));
+
+			batchEngineExportTask.setProcessedItemsCount(0);
 
 			User user = _userLocalService.getUser(
 				batchEngineExportTask.getUserId());

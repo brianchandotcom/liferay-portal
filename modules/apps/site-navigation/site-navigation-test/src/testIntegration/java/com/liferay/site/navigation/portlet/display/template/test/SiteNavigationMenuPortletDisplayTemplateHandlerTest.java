@@ -119,8 +119,6 @@ public class SiteNavigationMenuPortletDisplayTemplateHandlerTest {
 				).put(
 					"externalReferenceCode", layout.getExternalReferenceCode()
 				).put(
-					"layoutUuid", layout.getUuid()
-				).put(
 					"privateLayout", String.valueOf(layout.isPrivateLayout())
 				).put(
 					"title", layout.getName()

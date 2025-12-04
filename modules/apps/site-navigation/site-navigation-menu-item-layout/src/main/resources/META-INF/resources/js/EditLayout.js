@@ -11,11 +11,13 @@ export default function ({namespace}) {
 		`${namespace}layoutNameInput`
 	);
 
-	const layoutUuidInput = document.getElementById(`${namespace}layoutUuid`);
+	const externalReferenceCodeInput = document.getElementById(
+		`${namespace}externalReferenceCode`
+	);
 
 	const onLayoutItemRemoveButtonClick = () => {
 		layoutNameInput.textContent = Liferay.Language.get('none');
-		layoutUuidInput.value = '';
+		externalReferenceCodeInput.value = '';
 
 		layoutItemRemoveButton.classList.add('hide');
 	};

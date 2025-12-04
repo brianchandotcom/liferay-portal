@@ -114,8 +114,6 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 						).put(
 							"externalReferenceCode", externalReferenceCode
 						).put(
-							"layoutUuid", itemJSONObject.getString("id")
-						).put(
 							"privateLayout",
 							String.valueOf(
 								itemJSONObject.getBoolean("privateLayout"))

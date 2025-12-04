@@ -28,10 +28,6 @@ export default function propsTransformer({
 				`${portletNamespace}layoutNameInput`
 			);
 
-			const layoutUuidInput = document.getElementById(
-				`${portletNamespace}layoutUuid`
-			);
-
 			const privateLayoutInput = document.getElementById(
 				`${portletNamespace}privateLayout`
 			);
@@ -44,15 +40,14 @@ export default function propsTransformer({
 					if (selectedItem) {
 						externalReferenceCodeInput.value =
 							selectedItem.externalReferenceCode;
-						layoutUuidInput.value = selectedItem.id;
 						layoutNameInput.textContent = selectedItem.name;
 						privateLayoutInput.value = selectedItem.privateLayout;
 
 						url.searchParams.set(
 							`${getPortletNamespace(
 								Liferay.PortletKeys.ITEM_SELECTOR
-							)}layoutUuid`,
-							selectedItem.id
+							)}externalReferenceCode`,
+							selectedItem.externalReferenceCode
 						);
 
 						layoutItemRemoveButton.classList.remove('hide');

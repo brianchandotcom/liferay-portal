@@ -45,8 +45,6 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletRespons
 	</div>
 
 	<aui:input id="externalReferenceCode" name="TypeSettingsProperties--externalReferenceCode--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.getExternalReferenceCode() : StringPool.BLANK %>" />
-
-	<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>" />
 </div>
 
 <%

@@ -45,9 +45,9 @@ test(
 
 		await contentsPage.goto();
 
-		// Create new Basic Content
+		// Create new Basic Web Content
 
-		await contentsPage.createContent('Basic Content');
+		await contentsPage.createContent('Basic Web Content');
 
 		// Fill data and save
 
@@ -84,7 +84,7 @@ test(
 
 		// Create new Knowledge Base content
 
-		await contentsPage.createContent('Basic Content');
+		await contentsPage.createContent('Basic Web Content');
 
 		// Fill data
 
@@ -267,7 +267,7 @@ test(
 
 		await contentsPage.goto();
 
-		// Create new Folder and a Basic Content
+		// Create new Folder and a Basic Web Content
 
 		const folderName = getRandomString();
 
@@ -275,7 +275,7 @@ test(
 
 		await folderPage.clickOption(folderName, 'View Folder');
 
-		await contentsPage.createContent('Basic Content');
+		await contentsPage.createContent('Basic Web Content');
 
 		// Fill data and save
 
@@ -531,7 +531,7 @@ test.describe('Schedule Panel', () => {
 
 			await contentsPage.goto();
 
-			await contentsPage.createContent('Basic Content');
+			await contentsPage.createContent('Basic Web Content');
 
 			await contentsPage.openSidePanel('Schedule');
 
@@ -667,7 +667,7 @@ test.describe('Categorization Panel', () => {
 
 			await contentsPage.goto();
 
-			await contentsPage.createContent('Basic Content');
+			await contentsPage.createContent('Basic Web Content');
 
 			const title = getRandomString();
 
@@ -795,7 +795,7 @@ test(
 
 		await contentsPage.goto();
 
-		await contentsPage.createContent('Basic Content');
+		await contentsPage.createContent('Basic Web Content');
 
 		const title = getRandomString();
 
@@ -830,7 +830,7 @@ test.describe('Schedule Publication', () => {
 
 			await contentsPage.goto();
 
-			await contentsPage.createContent('Basic Content');
+			await contentsPage.createContent('Basic Web Content');
 
 			const title = getRandomString();
 
@@ -923,7 +923,7 @@ test.describe('Schedule Publication', () => {
 
 			await contentsPage.goto();
 
-			await contentsPage.createContent('Basic Content');
+			await contentsPage.createContent('Basic Web Content');
 
 			await contentsPage.openSidePanel('Schedule');
 

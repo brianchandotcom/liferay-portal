@@ -52,7 +52,7 @@ public class ViewAllSectionDisplayContextTest
 		throws PortalException {
 
 		return LinkedHashMapBuilder.put(
-			"basic-content",
+			"basic-web-content",
 			getRedirect(
 				"L_CMS_BASIC_WEB_CONTENT",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
@@ -69,7 +69,7 @@ public class ViewAllSectionDisplayContextTest
 				"L_CMS_BLOG",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
 		).put(
-			"external-video-shortcut",
+			"external-video",
 			getRedirect(
 				"L_CMS_EXTERNAL_VIDEO",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)

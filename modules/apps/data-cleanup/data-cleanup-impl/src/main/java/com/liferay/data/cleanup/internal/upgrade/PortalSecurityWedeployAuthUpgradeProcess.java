@@ -18,9 +18,9 @@ public class PortalSecurityWedeployAuthUpgradeProcess
 			null,
 			new String[] {
 				"com_liferay_portal_security_wedeploy_auth_web_internal_" +
-					"portlet_WeDeployAuthPortlet",
+					"portlet_WeDeployAuthAdminPortlet",
 				"com_liferay_portal_security_wedeploy_auth_web_internal_" +
-					"portlet_WeDeployAuthAdminPortlet"
+					"portlet_WeDeployAuthPortlet"
 			});
 
 		removeServiceData(

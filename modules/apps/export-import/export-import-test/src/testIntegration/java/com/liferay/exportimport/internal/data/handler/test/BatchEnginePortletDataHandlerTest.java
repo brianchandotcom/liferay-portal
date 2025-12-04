@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -48,10 +49,13 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
@@ -71,6 +75,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -91,6 +96,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -703,6 +709,77 @@ public class BatchEnginePortletDataHandlerTest {
 				file, group.getGroupId()
 			).toString(),
 			JSONCompareMode.STRICT);
+	}
+
+	@FeatureFlag("LPD-34594")
+	@Test
+	public void testGetExportControlsWithRootModelHierarchy() throws Exception {
+		try {
+			Tree tree = TreeTestUtil.createObjectDefinitionTree(
+				_objectDefinitionLocalService, _objectRelationshipLocalService,
+				true,
+				LinkedHashMapBuilder.put(
+					"A", new String[] {"AA"}
+				).put(
+					"AA", new String[] {"AAA"}
+				).put(
+					"AAA", new String[0]
+				).build());
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					TestPropsValues.getCompanyId(), "C_A");
+
+			PortletDataHandler portletDataHandler =
+				_portletDataHandlerProvider.provide(
+					TestPropsValues.getCompanyId(),
+					objectDefinition.getPortletId());
+
+			PortletDataHandlerControl[] portletDataHandlerControls =
+				portletDataHandler.getExportControls();
+
+			Assert.assertEquals(
+				Arrays.toString(portletDataHandlerControls), 1,
+				portletDataHandlerControls.length);
+
+			PortletDataHandlerControl portletDataHandlerControl =
+				portletDataHandlerControls[0];
+
+			List<String> controlChildLabels =
+				portletDataHandlerControl.getControlChildLabels();
+
+			Assert.assertEquals(
+				controlChildLabels.toString(), 2, controlChildLabels.size());
+
+			TreeTestUtil.forEachNodeObjectDefinition(
+				tree.iterator(), _objectDefinitionLocalService,
+				nodeObjectDefinition -> {
+					if (nodeObjectDefinition.isRootNode()) {
+						return;
+					}
+
+					String modelResourceNamePrefix =
+						ResourceActionsUtil.getModelResourceNamePrefix();
+
+					String label = modelResourceNamePrefix.concat(
+						nodeObjectDefinition.getResourceName());
+
+					Assert.assertTrue(
+						ListUtil.exists(
+							controlChildLabels,
+							controlChildLabel -> StringUtil.equals(
+								controlChildLabel, label)));
+				});
+
+			Assert.assertEquals(
+				"root-object", portletDataHandlerControl.getControlTagLabel());
+		}
+		finally {
+			TreeTestUtil.deleteObjectDefinitionHierarchy(
+				_objectDefinitionLocalService,
+				new String[] {"C_A", "C_AA", "C_AAA"}, _objectEntryLocalService,
+				_objectRelationshipLocalService);
+		}
 	}
 
 	@Test
@@ -1822,6 +1899,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

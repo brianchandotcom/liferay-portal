@@ -69,6 +69,7 @@ describe('The ConfigurationContainer', () => {
 		render(
 			<ConfigurationContainer
 				hasUpdateObjectDefinitionPermission
+				isApproved={true}
 				isEnableObjectEntrySchedule={false}
 				setValues={result.current.setValues}
 				values={result.current.values}
@@ -77,8 +78,10 @@ describe('The ConfigurationContainer', () => {
 		);
 	};
 
-	it('allows enableIndexSearch toggle to be checked and unchecked when definition is not active', async () => {
-		renderConfigurationContainer({active: false});
+	it('allows enableIndexSearch toggle to be checked and unchecked when definition is not published', async () => {
+		renderConfigurationContainer(initialValues, {
+			isApproved: false,
+		});
 
 		const toggle = screen.getByRole('switch', {
 			name: 'enable-indexed-search',
@@ -91,7 +94,7 @@ describe('The ConfigurationContainer', () => {
 		expect(toggle).not.toBeChecked();
 	});
 
-	it('disables enableIndexSearch toggle when definition is active', () => {
+	it('disables enableIndexSearch toggle when definition is published', () => {
 		renderConfigurationContainer();
 
 		expect(
@@ -99,7 +102,15 @@ describe('The ConfigurationContainer', () => {
 		).toBeDisabled();
 	});
 
-	it('disables enableObjectEntrySchedule toggle when definition is active and isEnableObjectEntrySchedule is true', () => {
+	it('disables enableIndexSearch toggle when definition is published and inactive', () => {
+		renderConfigurationContainer({active: false});
+
+		expect(
+			screen.getByRole('switch', {name: 'enable-indexed-search'})
+		).toBeDisabled();
+	});
+
+	it('disables enableObjectEntrySchedule toggle when definition is published and isEnableObjectEntrySchedule is true', () => {
 		renderConfigurationContainer(initialValues, {
 			isEnableObjectEntrySchedule: true,
 		});
@@ -112,7 +123,7 @@ describe('The ConfigurationContainer', () => {
 	});
 
 	it.each(ALL_TOGGLES.filter((label) => label !== 'enable-indexed-search'))(
-		'"%s" toggle can be checked and unchecked correctly when the setting is active',
+		'"%s" toggle can be checked and unchecked correctly when definition is published',
 		async (label) => {
 			renderConfigurationContainer();
 			const toggle = screen.getByRole('switch', {name: label});

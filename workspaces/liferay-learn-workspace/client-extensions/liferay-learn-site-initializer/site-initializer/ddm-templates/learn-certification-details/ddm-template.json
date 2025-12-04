@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "LEARN-CERTIFICATION-DETAILS",
+	"infoItemClassName": "com.liferay.portal.kernel.repository.model.FileEntry",
+	"name": "Learn Certification Details",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

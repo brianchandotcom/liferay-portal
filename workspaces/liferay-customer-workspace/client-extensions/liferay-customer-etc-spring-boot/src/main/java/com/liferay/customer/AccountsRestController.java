@@ -66,6 +66,28 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class AccountsRestController extends BaseRestController {
 
+	@GetMapping("/{externalReferenceCode}/tickets")
+	public ResponseEntity<String> getTickets(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@RequestParam(defaultValue = "", required = false) String[]
+				ticketIds)
+		throws Exception {
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			return _getJSMTickets(externalReferenceCode, ticketIds);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@GetMapping("/{externalReferenceCode}/usage")
 	public ResponseEntity<String> getUsage(
 			@AuthenticationPrincipal Jwt jwt,
@@ -99,28 +121,6 @@ public class AccountsRestController extends BaseRestController {
 			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
-
-	@GetMapping("/{externalReferenceCode}/tickets")
-	public ResponseEntity<String> getTickets(
-			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("externalReferenceCode") String externalReferenceCode,
-			@RequestParam(defaultValue = "", required = false) String[]
-				ticketIds)
-		throws Exception {
-
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
-
-			return _getJSMTickets(externalReferenceCode, ticketIds);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}	
 	}
 
 	@PostMapping("/{externalReferenceCode}/sync-business-events")
@@ -375,8 +375,7 @@ public class AccountsRestController extends BaseRestController {
 		}
 
 		List<JiraSupportIssue> jiraSupportIssues = _jiraService.search(
-			sb.toString(),
-			new String[] {"key", "labels", "status", "summary"});
+			sb.toString(), new String[] {"key", "labels", "status", "summary"});
 
 		JSONArray jsonArray = new JSONArray();
 

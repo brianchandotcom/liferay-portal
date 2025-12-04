@@ -11,6 +11,7 @@
 DecimalFormat decimalFormat = NumericDDMFormFieldUtil.getDecimalFormat(LocaleUtil.getDefault());
 
 DecimalFormatSymbols decimalFormatSymbols = decimalFormat.getDecimalFormatSymbols();
+
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 ObjectDefinitionsFieldsDisplayContext objectDefinitionsFieldsDisplayContext = (ObjectDefinitionsFieldsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD);

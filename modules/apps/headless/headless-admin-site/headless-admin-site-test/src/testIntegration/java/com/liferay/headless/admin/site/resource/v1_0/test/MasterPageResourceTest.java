@@ -885,7 +885,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						newFileEntry.getExternalReferenceCode());
-					setUrl(url);
+					setUrl(RandomTestUtil.randomString());
 				}
 			});
 

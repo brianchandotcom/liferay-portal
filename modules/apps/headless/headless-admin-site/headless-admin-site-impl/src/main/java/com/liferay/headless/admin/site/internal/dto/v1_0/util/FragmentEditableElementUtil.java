@@ -15,13 +15,13 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentEditableElementValue;
+import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentInlineValue;
+import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentValue;
-import com.liferay.headless.admin.site.dto.v1_0.HTMLInlineFragmentValue;
-import com.liferay.headless.admin.site.dto.v1_0.HTMLMappedFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentEditableElementValue;
+import com.liferay.headless.admin.site.dto.v1_0.TextFragmentInlineValue;
+import com.liferay.headless.admin.site.dto.v1_0.TextFragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentValue;
-import com.liferay.headless.admin.site.dto.v1_0.TextInlineFragmentValue;
-import com.liferay.headless.admin.site.dto.v1_0.TextMappedFragmentValue;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -258,23 +258,23 @@ public class FragmentEditableElementUtil {
 			return null;
 		}
 
-		if (htmlFragmentValue instanceof HTMLInlineFragmentValue) {
-			HTMLInlineFragmentValue htmlInlineFragmentValue =
-				(HTMLInlineFragmentValue)htmlFragmentValue;
+		if (htmlFragmentValue instanceof HTMLFragmentInlineValue) {
+			HTMLFragmentInlineValue htmlFragmentInlineValue =
+				(HTMLFragmentInlineValue)htmlFragmentValue;
 
 			return _getFragmentInlineValueJSONObject(
-				htmlInlineFragmentValue.getFragmentInlineValue());
+				htmlFragmentInlineValue.getFragmentInlineValue());
 		}
 
-		if (!(htmlFragmentValue instanceof HTMLMappedFragmentValue)) {
+		if (!(htmlFragmentValue instanceof HTMLFragmentMappedValue)) {
 			return null;
 		}
 
-		HTMLMappedFragmentValue htmlMappedFragmentValue =
-			(HTMLMappedFragmentValue)htmlFragmentValue;
+		HTMLFragmentMappedValue htmlFragmentMappedValue =
+			(HTMLFragmentMappedValue)htmlFragmentValue;
 
 		return _getFragmentMappedValueJSONObject(
-			companyId, htmlMappedFragmentValue.getFragmentMappedValue(),
+			companyId, htmlFragmentMappedValue.getFragmentMappedValue(),
 			infoItemServiceRegistry, scopeGroupId);
 	}
 
@@ -349,26 +349,26 @@ public class FragmentEditableElementUtil {
 			return jsonObject;
 		}
 
-		if (textFragmentValue instanceof TextInlineFragmentValue) {
-			TextInlineFragmentValue textInlineFragmentValue =
-				(TextInlineFragmentValue)textFragmentValue;
+		if (textFragmentValue instanceof TextFragmentInlineValue) {
+			TextFragmentInlineValue textFragmentInlineValue =
+				(TextFragmentInlineValue)textFragmentValue;
 
 			return JSONUtil.merge(
 				_getFragmentInlineValueJSONObject(
-					textInlineFragmentValue.getFragmentInlineValue()),
+					textFragmentInlineValue.getFragmentInlineValue()),
 				jsonObject);
 		}
 
-		if (!(textFragmentValue instanceof TextMappedFragmentValue)) {
+		if (!(textFragmentValue instanceof TextFragmentMappedValue)) {
 			return jsonObject;
 		}
 
-		TextMappedFragmentValue textMappedFragmentValue =
-			(TextMappedFragmentValue)textFragmentValue;
+		TextFragmentMappedValue textFragmentMappedValue =
+			(TextFragmentMappedValue)textFragmentValue;
 
 		return JSONUtil.merge(
 			_getFragmentMappedValueJSONObject(
-				companyId, textMappedFragmentValue.getFragmentMappedValue(),
+				companyId, textFragmentMappedValue.getFragmentMappedValue(),
 				infoItemServiceRegistry, scopeGroupId),
 			jsonObject);
 	}
@@ -455,16 +455,16 @@ public class FragmentEditableElementUtil {
 		}
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
-			HTMLMappedFragmentValue htmlMappedFragmentValue =
-				new HTMLMappedFragmentValue();
+			HTMLFragmentMappedValue htmlFragmentMappedValue =
+				new HTMLFragmentMappedValue();
 
-			htmlMappedFragmentValue.setFragmentMappedValue(
+			htmlFragmentMappedValue.setFragmentMappedValue(
 				() -> FragmentMappingUtil.toFragmentMappedValue(
 					companyId, infoItemServiceRegistry, jsonObject,
 					scopeGroupId));
-			htmlMappedFragmentValue.setType(HTMLFragmentValue.Type.MAPPED);
+			htmlFragmentMappedValue.setType(HTMLFragmentValue.Type.MAPPED);
 
-			return htmlMappedFragmentValue;
+			return htmlFragmentMappedValue;
 		}
 
 		FragmentInlineValue fragmentInlineValue = _getFragmentInlineValue(
@@ -474,14 +474,14 @@ public class FragmentEditableElementUtil {
 			return null;
 		}
 
-		HTMLInlineFragmentValue htmlInlineFragmentValue =
-			new HTMLInlineFragmentValue();
+		HTMLFragmentInlineValue htmlFragmentInlineValue =
+			new HTMLFragmentInlineValue();
 
-		htmlInlineFragmentValue.setFragmentInlineValue(
+		htmlFragmentInlineValue.setFragmentInlineValue(
 			() -> fragmentInlineValue);
-		htmlInlineFragmentValue.setType(HTMLFragmentValue.Type.INLINE);
+		htmlFragmentInlineValue.setType(HTMLFragmentValue.Type.INLINE);
 
-		return htmlInlineFragmentValue;
+		return htmlFragmentInlineValue;
 	}
 
 	private static TextFragmentEditableElementValue
@@ -531,17 +531,17 @@ public class FragmentEditableElementUtil {
 		}
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
-			TextMappedFragmentValue textMappedFragmentValue =
-				new TextMappedFragmentValue();
+			TextFragmentMappedValue textFragmentMappedValue =
+				new TextFragmentMappedValue();
 
-			textMappedFragmentValue.setFragmentMappedValue(
+			textFragmentMappedValue.setFragmentMappedValue(
 				() -> FragmentMappingUtil.toFragmentMappedValue(
 					companyId, infoItemServiceRegistry, jsonObject,
 					scopeGroupId));
-			textMappedFragmentValue.setType(
+			textFragmentMappedValue.setType(
 				() -> TextFragmentValue.Type.MAPPED);
 
-			return textMappedFragmentValue;
+			return textFragmentMappedValue;
 		}
 
 		FragmentInlineValue fragmentInlineValue = _getFragmentInlineValue(
@@ -551,14 +551,14 @@ public class FragmentEditableElementUtil {
 			return null;
 		}
 
-		TextInlineFragmentValue textInlineFragmentValue =
-			new TextInlineFragmentValue();
+		TextFragmentInlineValue textFragmentInlineValue =
+			new TextFragmentInlineValue();
 
-		textInlineFragmentValue.setFragmentInlineValue(
+		textFragmentInlineValue.setFragmentInlineValue(
 			() -> fragmentInlineValue);
-		textInlineFragmentValue.setType(() -> TextFragmentValue.Type.INLINE);
+		textFragmentInlineValue.setType(() -> TextFragmentValue.Type.INLINE);
 
-		return textInlineFragmentValue;
+		return textFragmentInlineValue;
 	}
 
 }

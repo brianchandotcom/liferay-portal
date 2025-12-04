@@ -3,6 +3,10 @@
 		"pageElements": [
 			{
 				"definition": {
+					"cssClasses": [
+						"p-3",
+						"p-lg-4"
+					],
 					"indexed": true,
 					"layout": {
 					}

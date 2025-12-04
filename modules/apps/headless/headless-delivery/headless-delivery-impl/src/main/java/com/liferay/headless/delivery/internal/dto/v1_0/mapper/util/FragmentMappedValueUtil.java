@@ -118,8 +118,7 @@ public class FragmentMappedValueUtil {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Item reference could not be set: " +
-						exception.getMessage(),
+					"Unable to set item reference: " + exception.getMessage(),
 					exception);
 			}
 		}

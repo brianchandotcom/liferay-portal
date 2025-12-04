@@ -780,15 +780,15 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		}
 	}
 
-	private void _assertThumbnailURLReference(
-			Boolean defaultValue, String expectedExternalReferenceCode,
+	private void _assertThumbnailFileEntryId(
+			Boolean defaultValue, String pageTemplateExternalReferenceCode,
 			String thumbnailExternalReferenceCode)
 		throws Exception {
 
 		LayoutPageTemplateEntry pageTemplateEntry =
 			_layoutPageTemplateEntryService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
-					expectedExternalReferenceCode, testGroup.getGroupId());
+					pageTemplateExternalReferenceCode, testGroup.getGroupId());
 
 		long fileEntryId = 0;
 
@@ -1199,7 +1199,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 				ThumbnailURLReference thumbnail = pageTemplate.getThumbnail();
 
-				_assertThumbnailURLReference(
+				_assertThumbnailFileEntryId(
 					false, postPageTemplate.getExternalReferenceCode(),
 					thumbnail.getExternalReferenceCode());
 
@@ -1516,7 +1516,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		pageTemplateResource.postSitePageTemplate(
 			testGroup.getExternalReferenceCode(), pageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, pageTemplate.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
@@ -1536,7 +1536,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			pageTemplate.getExternalReferenceCode(), pageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, pageTemplate.getExternalReferenceCode(),
 			newFileEntry.getExternalReferenceCode());
 
@@ -1775,7 +1775,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			pageTemplateResource.postSitePageTemplate(
 				testGroup.getExternalReferenceCode(), pageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, postPageTemplate.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
@@ -2027,7 +2027,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			pageTemplate.getExternalReferenceCode(), pageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, putPageTemplate.getExternalReferenceCode(),
 			fileEntry1.getExternalReferenceCode());
 
@@ -2046,7 +2046,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			putPageTemplate.getExternalReferenceCode(), putPageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, putPageTemplate.getExternalReferenceCode(),
 			fileEntry2.getExternalReferenceCode());
 
@@ -2056,7 +2056,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			putPageTemplate.getExternalReferenceCode(), putPageTemplate);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			true, putPageTemplate.getExternalReferenceCode(), null);
 
 		PageTemplate pageTemplateError = randomPageTemplate();

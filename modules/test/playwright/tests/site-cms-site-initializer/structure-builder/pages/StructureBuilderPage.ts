@@ -92,18 +92,21 @@ export class StructureBuilderPage {
 		}).toPass();
 	}
 
-	async addField(type: FieldType) {
-		const hasFields = !(await this.page
-			.getByText('No Fields Yet')
-			.isVisible());
-
+	async addField(type: FieldType, parent?: Field) {
 		let trigger: Locator;
 
-		if (hasFields) {
-			trigger = this.page.getByTitle('Add Field');
+		if (parent) {
+			await this.selectFields([parent]);
+
+			const treeItem = this.page
+				.locator('.treeview-item')
+				.getByLabel(parent.label, {exact: true})
+				.nth(parent.nth || 0);
+
+			trigger = treeItem.getByTitle('Add Field');
 		}
 		else {
-			trigger = this.page.getByText('Add Field');
+			trigger = this.page.getByTitle('Add Field').first();
 		}
 
 		await clickAndExpectToBeVisible({

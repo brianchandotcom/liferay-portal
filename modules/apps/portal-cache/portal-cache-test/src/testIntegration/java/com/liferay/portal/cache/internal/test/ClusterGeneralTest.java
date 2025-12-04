@@ -279,7 +279,7 @@ public class ClusterGeneralTest implements Serializable {
 			TomcatNode restartTomcatNode, TomcatNode verifierTomcatNode)
 		throws Exception {
 
-		// Capture both cluster nodes before stopping the restartTomcatNode
+		// Capture both cluster nodes before stopping the restart node
 
 		ClusterNode restartClusterNode = restartTomcatNode.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);
@@ -291,18 +291,18 @@ public class ClusterGeneralTest implements Serializable {
 
 		Assert.assertNotNull(verifierClusterNode);
 
-		// Stop restartTomcatNode
+		// Stop the restart node
 
 		restartTomcatNode.stop();
 
-		// Assert verifierTomcatNode still retains the same cluster node ID
+		// Assert the verify node still retains the same cluster node ID
 
 		Assert.assertEquals(
 			verifierClusterNode.getClusterNodeId(),
 			verifierTomcatNode.syncExecute(
 				ClusterGeneralTest::_getLocalClusterNodeId));
 
-		// Assert verifierTomcatNode can no longer see restartTomcatNode
+		// Assert verifier node can no longer see the restart node
 
 		Assert.assertFalse(
 			verifierTomcatNode.syncExecute(

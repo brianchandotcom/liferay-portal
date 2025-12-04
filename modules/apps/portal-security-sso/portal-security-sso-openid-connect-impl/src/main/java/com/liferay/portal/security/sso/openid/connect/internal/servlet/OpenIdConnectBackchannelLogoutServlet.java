@@ -74,11 +74,9 @@ public class OpenIdConnectBackchannelLogoutServlet extends HttpServlet {
 
 			JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
 
-			String sessionId = jwtClaimsSet.getClaimAsString("sid");
-
 			OpenIdConnectSession openIdConnectSession;
 
-			if (Validator.isNull(sessionId)) {
+			if (Validator.isNull(jwtClaimsSet.getClaimAsString("sid"))) {
 				OpenIdConnectUser openIdConnectUser =
 					_openIdConnectUserLocalService.getOpenIdConnectUser(
 						CompanyThreadLocal.getCompanyId(),
@@ -93,7 +91,8 @@ public class OpenIdConnectBackchannelLogoutServlet extends HttpServlet {
 			else {
 				openIdConnectSession =
 					_openIdConnectSessionLocalService.getOpenIdConnectSession(
-						jwtClaimsSet.getIssuer(), sessionId);
+						jwtClaimsSet.getIssuer(),
+						jwtClaimsSet.getClaimAsString("sid"));
 			}
 
 			JWSHeader jwsHeader = signedJWT.getHeader();
@@ -114,7 +113,8 @@ public class OpenIdConnectBackchannelLogoutServlet extends HttpServlet {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"OIDC session ", openIdConnectSession.getSessionId(),
+						"OpenId Connect session ",
+						openIdConnectSession.getSessionId(),
 						" has been terminated for user ",
 						openIdConnectSession.getUserId()));
 			}
@@ -144,9 +144,9 @@ public class OpenIdConnectBackchannelLogoutServlet extends HttpServlet {
 				oAuthClientEntry.getMetadataCacheInSeconds(),
 				oAuthClientEntry.getOAuthClientEntryId());
 
-		URI uri = oidcProviderMetadata.getJWKSetURI();
+		URI jwkSetURI = oidcProviderMetadata.getJWKSetURI();
 
-		return uri.toURL();
+		return jwkSetURI.toURL();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

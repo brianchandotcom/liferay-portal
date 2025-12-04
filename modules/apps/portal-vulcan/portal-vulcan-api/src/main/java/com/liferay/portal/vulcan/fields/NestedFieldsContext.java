@@ -7,6 +7,7 @@ package com.liferay.portal.vulcan.fields;
 
 import com.liferay.portal.kernel.util.ListUtil;
 
+import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.List;
@@ -20,6 +21,14 @@ public class NestedFieldsContext implements Cloneable {
 
 	public NestedFieldsContext(int depth, List<String> nestedFields) {
 		this(depth, null, nestedFields, null, null, null);
+	}
+
+	public NestedFieldsContext(
+		int depth, List<String> nestedFields, String resourceVersion) {
+
+		this(
+			depth, null, nestedFields, null, new MultivaluedHashMap<>(),
+			resourceVersion);
 	}
 
 	public NestedFieldsContext(

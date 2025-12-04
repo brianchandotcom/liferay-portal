@@ -51,6 +51,10 @@ public interface BatchEngineTaskItemDelegate<T> {
 		return null;
 	}
 
+	public default String getVersion() {
+		return null;
+	}
+
 	public boolean hasCreateStrategy(String createStrategy);
 
 	public boolean hasUpdateStrategy(String updateStrategy);

@@ -122,6 +122,11 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 	}
 
 	@Override
+	public String getVersion() {
+		return _vulcanBatchEngineTaskItemDelegate.getVersion();
+	}
+
+	@Override
 	public boolean hasCreateStrategy(String createStrategy) {
 		Set<String> createStrategies =
 			_vulcanBatchEngineTaskItemDelegate.getAvailableCreateStrategies();

@@ -54,6 +54,70 @@ public class SiteSerDes {
 			sb.append(site.getActive());
 		}
 
+		if (site.getAnalyticsConfiguration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"analyticsConfiguration\": ");
+
+			sb.append(String.valueOf(site.getAnalyticsConfiguration()));
+		}
+
+		if (site.getAssetAutoTaggingEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetAutoTaggingEnabled\": ");
+
+			sb.append(site.getAssetAutoTaggingEnabled());
+		}
+
+		if (site.getAvailableLanguages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"availableLanguages\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < site.getAvailableLanguages().length; i++) {
+				sb.append(_toJSON(site.getAvailableLanguages()[i]));
+
+				if ((i + 1) < site.getAvailableLanguages().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (site.getContentSharingWithChildrenEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentSharingWithChildrenEnabled\": ");
+
+			sb.append(site.getContentSharingWithChildrenEnabled());
+		}
+
+		if (site.getDefaultLanguageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultLanguageId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(site.getDefaultLanguageId()));
+
+			sb.append("\"");
+		}
+
 		if (site.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -100,6 +164,16 @@ public class SiteSerDes {
 			sb.append("\"descriptiveName_i18n\": ");
 
 			sb.append(_toJSON(site.getDescriptiveName_i18n()));
+		}
+
+		if (site.getDirectoryIndexingEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"directoryIndexingEnabled\": ");
+
+			sb.append(site.getDirectoryIndexingEnabled());
 		}
 
 		if (site.getExternalReferenceCode() != null) {
@@ -164,6 +238,18 @@ public class SiteSerDes {
 			sb.append(site.getManualMembership());
 		}
 
+		if (site.getMapProviderKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mapProviderKey\": ");
+
+			sb.append("\"");
+			sb.append(site.getMapProviderKey());
+			sb.append("\"");
+		}
+
 		if (site.getMembershipRestriction() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -184,6 +270,16 @@ public class SiteSerDes {
 			sb.append("\"");
 			sb.append(site.getMembershipType());
 			sb.append("\"");
+		}
+
+		if (site.getMentionsEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mentionsEnabled\": ");
+
+			sb.append(site.getMentionsEnabled());
 		}
 
 		if (site.getName() != null) {
@@ -224,6 +320,26 @@ public class SiteSerDes {
 			sb.append("\"");
 		}
 
+		if (site.getRatingsTypes() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ratingsTypes\": ");
+
+			sb.append(String.valueOf(site.getRatingsTypes()));
+		}
+
+		if (site.getSharingEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sharingEnabled\": ");
+
+			sb.append(site.getSharingEnabled());
+		}
+
 		if (site.getTemplateKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -250,14 +366,34 @@ public class SiteSerDes {
 			sb.append("\"");
 		}
 
-		if (site.getTypeSettings() != null) {
+		if (site.getTrashEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"typeSettings\": ");
+			sb.append("\"trashEnabled\": ");
 
-			sb.append(_toJSON(site.getTypeSettings()));
+			sb.append(site.getTrashEnabled());
+		}
+
+		if (site.getTrashEntriesMaxAgeInMinutes() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"trashEntriesMaxAgeInMinutes\": ");
+
+			sb.append(site.getTrashEntriesMaxAgeInMinutes());
+		}
+
+		if (site.getUseDefaultLanguages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"useDefaultLanguages\": ");
+
+			sb.append(site.getUseDefaultLanguages());
 		}
 
 		sb.append("}");
@@ -283,6 +419,51 @@ public class SiteSerDes {
 		}
 		else {
 			map.put("active", String.valueOf(site.getActive()));
+		}
+
+		if (site.getAnalyticsConfiguration() == null) {
+			map.put("analyticsConfiguration", null);
+		}
+		else {
+			map.put(
+				"analyticsConfiguration",
+				String.valueOf(site.getAnalyticsConfiguration()));
+		}
+
+		if (site.getAssetAutoTaggingEnabled() == null) {
+			map.put("assetAutoTaggingEnabled", null);
+		}
+		else {
+			map.put(
+				"assetAutoTaggingEnabled",
+				String.valueOf(site.getAssetAutoTaggingEnabled()));
+		}
+
+		if (site.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(site.getAvailableLanguages()));
+		}
+
+		if (site.getContentSharingWithChildrenEnabled() == null) {
+			map.put("contentSharingWithChildrenEnabled", null);
+		}
+		else {
+			map.put(
+				"contentSharingWithChildrenEnabled",
+				String.valueOf(site.getContentSharingWithChildrenEnabled()));
+		}
+
+		if (site.getDefaultLanguageId() == null) {
+			map.put("defaultLanguageId", null);
+		}
+		else {
+			map.put(
+				"defaultLanguageId",
+				String.valueOf(site.getDefaultLanguageId()));
 		}
 
 		if (site.getDescription() == null) {
@@ -315,6 +496,15 @@ public class SiteSerDes {
 			map.put(
 				"descriptiveName_i18n",
 				String.valueOf(site.getDescriptiveName_i18n()));
+		}
+
+		if (site.getDirectoryIndexingEnabled() == null) {
+			map.put("directoryIndexingEnabled", null);
+		}
+		else {
+			map.put(
+				"directoryIndexingEnabled",
+				String.valueOf(site.getDirectoryIndexingEnabled()));
 		}
 
 		if (site.getExternalReferenceCode() == null) {
@@ -356,6 +546,13 @@ public class SiteSerDes {
 				"manualMembership", String.valueOf(site.getManualMembership()));
 		}
 
+		if (site.getMapProviderKey() == null) {
+			map.put("mapProviderKey", null);
+		}
+		else {
+			map.put("mapProviderKey", String.valueOf(site.getMapProviderKey()));
+		}
+
 		if (site.getMembershipRestriction() == null) {
 			map.put("membershipRestriction", null);
 		}
@@ -370,6 +567,14 @@ public class SiteSerDes {
 		}
 		else {
 			map.put("membershipType", String.valueOf(site.getMembershipType()));
+		}
+
+		if (site.getMentionsEnabled() == null) {
+			map.put("mentionsEnabled", null);
+		}
+		else {
+			map.put(
+				"mentionsEnabled", String.valueOf(site.getMentionsEnabled()));
 		}
 
 		if (site.getName() == null) {
@@ -395,6 +600,20 @@ public class SiteSerDes {
 				String.valueOf(site.getParentSiteExternalReferenceCode()));
 		}
 
+		if (site.getRatingsTypes() == null) {
+			map.put("ratingsTypes", null);
+		}
+		else {
+			map.put("ratingsTypes", String.valueOf(site.getRatingsTypes()));
+		}
+
+		if (site.getSharingEnabled() == null) {
+			map.put("sharingEnabled", null);
+		}
+		else {
+			map.put("sharingEnabled", String.valueOf(site.getSharingEnabled()));
+		}
+
 		if (site.getTemplateKey() == null) {
 			map.put("templateKey", null);
 		}
@@ -409,11 +628,29 @@ public class SiteSerDes {
 			map.put("templateType", String.valueOf(site.getTemplateType()));
 		}
 
-		if (site.getTypeSettings() == null) {
-			map.put("typeSettings", null);
+		if (site.getTrashEnabled() == null) {
+			map.put("trashEnabled", null);
 		}
 		else {
-			map.put("typeSettings", String.valueOf(site.getTypeSettings()));
+			map.put("trashEnabled", String.valueOf(site.getTrashEnabled()));
+		}
+
+		if (site.getTrashEntriesMaxAgeInMinutes() == null) {
+			map.put("trashEntriesMaxAgeInMinutes", null);
+		}
+		else {
+			map.put(
+				"trashEntriesMaxAgeInMinutes",
+				String.valueOf(site.getTrashEntriesMaxAgeInMinutes()));
+		}
+
+		if (site.getUseDefaultLanguages() == null) {
+			map.put("useDefaultLanguages", null);
+		}
+		else {
+			map.put(
+				"useDefaultLanguages",
+				String.valueOf(site.getUseDefaultLanguages()));
 		}
 
 		return map;
@@ -436,6 +673,30 @@ public class SiteSerDes {
 			if (Objects.equals(jsonParserFieldName, "active")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "analyticsConfiguration")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "assetAutoTaggingEnabled")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "availableLanguages")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"contentSharingWithChildrenEnabled")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "defaultLanguageId")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
@@ -449,6 +710,11 @@ public class SiteSerDes {
 						jsonParserFieldName, "descriptiveName_i18n")) {
 
 				return true;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "directoryIndexingEnabled")) {
+
+				return false;
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
@@ -467,12 +733,18 @@ public class SiteSerDes {
 			else if (Objects.equals(jsonParserFieldName, "manualMembership")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "mapProviderKey")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "membershipRestriction")) {
 
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "membershipType")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "mentionsEnabled")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -487,14 +759,30 @@ public class SiteSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "ratingsTypes")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "sharingEnabled")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "templateKey")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "templateType")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "typeSettings")) {
-				return true;
+			else if (Objects.equals(jsonParserFieldName, "trashEnabled")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "trashEntriesMaxAgeInMinutes")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "useDefaultLanguages")) {
+
+				return false;
 			}
 
 			return false;
@@ -508,6 +796,45 @@ public class SiteSerDes {
 			if (Objects.equals(jsonParserFieldName, "active")) {
 				if (jsonParserFieldValue != null) {
 					site.setActive((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "analyticsConfiguration")) {
+
+				if (jsonParserFieldValue != null) {
+					site.setAnalyticsConfiguration(
+						AnalyticsConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "assetAutoTaggingEnabled")) {
+
+				if (jsonParserFieldValue != null) {
+					site.setAssetAutoTaggingEnabled(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "availableLanguages")) {
+
+				if (jsonParserFieldValue != null) {
+					site.setAvailableLanguages(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"contentSharingWithChildrenEnabled")) {
+
+				if (jsonParserFieldValue != null) {
+					site.setContentSharingWithChildrenEnabled(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "defaultLanguageId")) {
+				if (jsonParserFieldValue != null) {
+					site.setDefaultLanguageId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
@@ -532,6 +859,14 @@ public class SiteSerDes {
 				if (jsonParserFieldValue != null) {
 					site.setDescriptiveName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "directoryIndexingEnabled")) {
+
+				if (jsonParserFieldValue != null) {
+					site.setDirectoryIndexingEnabled(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -561,6 +896,13 @@ public class SiteSerDes {
 					site.setManualMembership((Boolean)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "mapProviderKey")) {
+				if (jsonParserFieldValue != null) {
+					site.setMapProviderKey(
+						Site.MapProviderKey.create(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "membershipRestriction")) {
 
@@ -574,6 +916,11 @@ public class SiteSerDes {
 					site.setMembershipType(
 						Site.MembershipType.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "mentionsEnabled")) {
+				if (jsonParserFieldValue != null) {
+					site.setMentionsEnabled((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -596,6 +943,17 @@ public class SiteSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "ratingsTypes")) {
+				if (jsonParserFieldValue != null) {
+					site.setRatingsTypes(
+						RatingsTypesSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sharingEnabled")) {
+				if (jsonParserFieldValue != null) {
+					site.setSharingEnabled((Boolean)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "templateKey")) {
 				if (jsonParserFieldValue != null) {
 					site.setTemplateKey((String)jsonParserFieldValue);
@@ -607,10 +965,24 @@ public class SiteSerDes {
 						Site.TemplateType.create((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "typeSettings")) {
+			else if (Objects.equals(jsonParserFieldName, "trashEnabled")) {
 				if (jsonParserFieldValue != null) {
-					site.setTypeSettings(
-						(Map<String, String>)jsonParserFieldValue);
+					site.setTrashEnabled((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "trashEntriesMaxAgeInMinutes")) {
+
+				if (jsonParserFieldValue != null) {
+					site.setTrashEntriesMaxAgeInMinutes(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "useDefaultLanguages")) {
+
+				if (jsonParserFieldValue != null) {
+					site.setUseDefaultLanguages((Boolean)jsonParserFieldValue);
 				}
 			}
 		}

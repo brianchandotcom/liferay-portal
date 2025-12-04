@@ -9,7 +9,6 @@ import com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration;
 import com.liferay.data.cleanup.internal.upgrade.AmazonRankingsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.ChatUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.CurrencyConverterUpgradeProcess;
-import com.liferay.data.cleanup.internal.upgrade.DictionaryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DirectoryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DocumentLibraryFileRankServiceUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.FrontendImageEditorUpgradeProcess;
@@ -91,137 +90,170 @@ public class DataCleanupExecutor {
 			dataCleanupConfiguration::cleanUpAmazonRankingsModuleData,
 			"com.liferay.amazon.rankings.web",
 			AmazonRankingsUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpChatModuleData,
 			"com.liferay.chat.service", ChatUpgradeProcess::new);
-		_cleanUpModuleData(
-			dataCleanupConfiguration::cleanUpDocumentLibraryFileRankModuleData,
-			"com.liferay.document.library.file.rank.service",
-			DocumentLibraryFileRankServiceUpgradeProcess::new);
-		_cleanUpModuleData(
-			dataCleanupConfiguration::cleanUpDictionaryModuleData,
-			"com.liferay.dictionary.web", DictionaryUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpCurrencyConverterModuleData,
 			"com.liferay.currency.converter.web",
 			CurrencyConverterUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpDirectoryModuleData,
 			"com.liferay.directory.web", DirectoryUpgradeProcess::new);
+
+		_cleanUpModuleData(
+			dataCleanupConfiguration::cleanUpDocumentLibraryFileRankModuleData,
+			"com.liferay.document.library.file.rank.service",
+			DocumentLibraryFileRankServiceUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpFrontendImageEditorModuleData,
 			"com.liferay.frontend.image.editor.web",
 			FrontendImageEditorUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpGoogleMapsModuleData,
 			"com.liferay.google.maps.web", GoogleMapsUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpHelloVelocityModuleData,
 			"com.liferay.hello.velocity.web", HelloVelocityUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpHelloWorldModuleData,
 			"com.liferay.hello.world.web", UpgradeHelloWorld::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpHTMLPreviewModuleData,
 			"com.liferay.html.preview.service", HTMLPreviewUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpInvitationModuleData,
 			"com.liferay.invitation.web", InvitationUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpLoanCalculatorModuleData,
 			"com.liferay.loan.calculator.web",
 			LoanCalculatorUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpMailReaderModuleData,
 			"com.liferay.mail.reader.service", MailReaderUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpNetworkUtilitiesModuleData,
 			"com.liferay.network.utilities.web",
 			NetworkUtilitiesUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpOAuthModuleData,
 			"com.liferay.oauth.service", OAuthUpgradeProcess::new);
+
+		_cleanUpModuleData(
+			dataCleanupConfiguration::cleanUpOpenSocialModuleData,
+			"opensocial-portlet",
+			() -> new OpenSocialUpgradeProcess(_expandoTableLocalService));
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpPasswordGeneratorModuleData,
 			"com.liferay.password.generator.web",
 			PasswordGeneratorUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::
 				cleanUpPortalSecurityWedeployAuthModuleData,
 			"com.liferay.portal.security.wedeploy.auth.service",
 			PortalSecurityWedeployAuthUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpQuickNoteModuleData,
 			"com.liferay.quick.note.web", QuickNoteUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpRecentDocumentsModuleData,
 			"com.liferay.recent.documents.web",
 			RecentDocumentsUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpShoppingModuleData,
 			"com.liferay.shopping.service",
 			() -> new ShoppingUpgradeProcess(_imageLocalService));
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpSocialActivityModuleData,
 			"com.liferay.social.activity.web",
 			SocialActivityUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpSocialGroupStatisticsModuleData,
 			"com.liferay.social.group.statistics.web",
 			SocialGroupStatisticsUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpSocialPrivateMessagingModuleData,
 			"com.liferay.social.privatemessaging.service",
 			() -> new SocialPrivateMessagingUpgradeProcess(
 				_mbThreadLocalService));
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpSocialRequestsModuleData,
 			"com.liferay.social.requests.web",
 			SocialRequestsUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpSocialUserStatisticsModuleData,
 			"com.liferay.social.user.statistics.web",
 			SocialUserStatisticsUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpSoftwareCatalogModuleData,
 			"com.liferay.softwarecatalog.service",
 			() -> new SoftwareCatalogUpgradeProcess(
 				_imageLocalService, _mbMessageLocalService,
 				_ratingsStatsLocalService, _subscriptionLocalService));
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpSyncModuleData,
 			"com.liferay.sync.service", SyncUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpTranslatorModuleData,
 			"com.liferay.translator.web", TranslatorUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpTwitterModuleData,
 			"com.liferay.twitter.service", TwitterUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpUnitConverterModuleData,
 			"com.liferay.unit.converter.web", UnitConverterUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpWeatherModuleData,
 			"com.liferay.weather.web", WeatherUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpWebFormModuleData,
 			"com.liferay.web.form.web", WebFormUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpWebProxyModuleData,
 			"com.liferay.web.proxy.web", WebProxyUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpWysiwygModuleData,
 			"com.liferay.wysiwyg.web", WysiwygUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpXSLContentModuleData,
 			"com.liferay.xsl.content.web", XSLContentUpgradeProcess::new);
+
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpYoutubeModuleData,
 			"com.liferay.youtube.web", YoutubeUpgradeProcess::new);
-		_cleanUpModuleData(
-			dataCleanupConfiguration::cleanUpOpenSocialModuleData,
-			"opensocial-portlet",
-			() -> new OpenSocialUpgradeProcess(_expandoTableLocalService));
 	}
 
 	private void _cleanUpModuleData(

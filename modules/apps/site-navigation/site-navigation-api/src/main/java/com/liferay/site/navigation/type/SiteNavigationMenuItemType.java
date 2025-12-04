@@ -179,6 +179,14 @@ public interface SiteNavigationMenuItemType {
 			siteNavigationMenuItem, LocaleUtil.fromLanguageId(languageId));
 	}
 
+	public default boolean hasModel(
+			long companyId, long groupId,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return true;
+	}
+
 	public default boolean hasPermission(
 			PermissionChecker permissionChecker,
 			SiteNavigationMenuItem siteNavigationMenuItem)

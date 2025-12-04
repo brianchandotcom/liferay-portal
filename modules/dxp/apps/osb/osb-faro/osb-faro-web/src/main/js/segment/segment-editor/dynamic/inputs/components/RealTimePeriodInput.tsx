@@ -15,7 +15,7 @@ interface IRealTimePeriodInputProps {
 	initialTimeWindow?: string;
 }
 
-const DEFAULT_OPTIONS = {
+export const DEFAULT_OPTIONS = {
 	interval: 1,
 	timeWindow: DAYS
 };

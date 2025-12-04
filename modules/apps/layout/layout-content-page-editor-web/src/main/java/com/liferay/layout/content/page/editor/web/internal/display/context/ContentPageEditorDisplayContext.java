@@ -789,6 +789,10 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_row_columns")
 			).put(
+				"updateRulesURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/update_rules")
+			).put(
 				"updateRuleURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_rule")

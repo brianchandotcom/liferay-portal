@@ -704,6 +704,11 @@ public class LayoutStructure {
 		return layoutStructureRule;
 	}
 
+	public void deleteLayoutStructureRules() {
+		_layoutStructureRules.clear();
+		_layoutStructureRulesMap.clear();
+	}
+
 	public Map<String, List<LayoutStructureItem>> duplicateLayoutStructureItem(
 		List<String> itemIds) {
 

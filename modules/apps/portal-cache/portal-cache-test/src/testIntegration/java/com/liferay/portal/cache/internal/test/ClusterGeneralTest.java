@@ -240,19 +240,23 @@ public class ClusterGeneralTest implements Serializable {
 
 		Assert.assertTrue(
 			tomcatNode1.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					clusterNode2
-				)));
+				() -> {
+					List<ClusterNode> clusterNodes =
+						ClusterExecutorUtil.getClusterNodes();
+
+					return clusterNodes.contains(clusterNode2);
+				}));
 
 		// Assert node 2 can see node 1
 
 		Assert.assertTrue(
 			tomcatNode2.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					clusterNode1
-				)));
+				() -> {
+					List<ClusterNode> clusterNodes =
+						ClusterExecutorUtil.getClusterNodes();
+
+					return clusterNodes.contains(clusterNode1);
+				}));
 	}
 
 	private MVCActionCommand _getEditServerMVCActionCommand()
@@ -306,10 +310,12 @@ public class ClusterGeneralTest implements Serializable {
 
 		Assert.assertFalse(
 			verifierTomcatNode.syncExecute(
-				() -> ClusterExecutorUtil.getClusterNodes(
-				).contains(
-					restartClusterNode
-				)));
+				() -> {
+					List<ClusterNode> clusterNodes =
+						ClusterExecutorUtil.getClusterNodes();
+
+					return clusterNodes.contains(restartClusterNode);
+				}));
 
 		// Restart restartTomcatNode
 

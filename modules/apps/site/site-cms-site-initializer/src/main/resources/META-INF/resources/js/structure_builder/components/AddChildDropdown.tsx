@@ -9,7 +9,7 @@ import React, {useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {ReferencedStructure} from '../types/Structure';
+import {ReferencedStructure, RepeatableGroup} from '../types/Structure';
 import {
 	FIELD_TYPES,
 	FIELD_TYPE_ICON,
@@ -29,9 +29,11 @@ type Item = {
 export default function AddChildDropdown({
 	className,
 	displayType = 'secondary',
+	parentUuid,
 }: {
 	className?: string;
 	displayType?: 'secondary' | 'unstyled';
+	parentUuid?: RepeatableGroup['uuid'];
 }) {
 	const dispatch = useStateDispatch();
 	const structureUuid = useSelector(selectStructureUuid);
@@ -41,6 +43,7 @@ export default function AddChildDropdown({
 	const addField = (type: Field['type']) =>
 		dispatch({
 			field: getDefaultField({parent: structureUuid, type}),
+			parentUuid,
 			type: 'add-field',
 		});
 

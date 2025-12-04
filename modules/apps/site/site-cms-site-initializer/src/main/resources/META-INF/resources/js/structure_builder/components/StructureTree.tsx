@@ -36,6 +36,7 @@ import {Uuid} from '../types/Uuid';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
+import AddChildDropdown from './AddChildDropdown';
 
 type TreeItem = {
 	actions?: Array<{
@@ -256,25 +257,36 @@ export default function StructureTree({search}: {search: string}) {
 						{(childItem, selectedKeys) => (
 							<ClayTreeView.Item
 								actions={
-									childItem.actions?.length ? (
-										<ClayDropDownWithItems
-											items={childItem.actions}
-											trigger={
-												<ClayButtonWithIcon
-													aria-label={Liferay.Language.get(
-														'field-options'
-													)}
-													borderless
-													disabled={
-														selection.length > 1
-													}
-													displayType="unstyled"
-													size="sm"
-													symbol="ellipsis-v"
-												/>
-											}
-										/>
-									) : undefined
+									<>
+										{childItem.type ===
+										'repeatable-group' ? (
+											<AddChildDropdown
+												className="component-action quick-action-item"
+												displayType="unstyled"
+												parentUuid={childItem.id}
+											/>
+										) : null}
+
+										{childItem.actions?.length ? (
+											<ClayDropDownWithItems
+												items={childItem.actions}
+												trigger={
+													<ClayButtonWithIcon
+														aria-label={Liferay.Language.get(
+															'field-options'
+														)}
+														borderless
+														disabled={
+															selection.length > 1
+														}
+														displayType="unstyled"
+														size="sm"
+														symbol="ellipsis-v"
+													/>
+												}
+											/>
+										) : undefined}
+									</>
 								}
 								className={classNames({
 									active: selectedKeys.has(childItem.id),

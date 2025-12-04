@@ -113,15 +113,15 @@ public class ClusterGeneralTest implements Serializable {
 	@Test
 	public void testShutdownAndStartupNodes() throws Exception {
 
-		// Assert node 1 and node 2 can see each others
+		// Assert node 1 and node 2 can see each other
 
 		_assertNodesVisibleToEachOther(_tomcatNode1, _tomcatNode2);
 
-		// Restart node 1, use node 2 as verifierTomcatNode
+		// Restart node 1, use node 2 as the verifier node
 
 		_restartAndVerifyNode(_tomcatNode1, _tomcatNode2);
 
-		// Restart node 2, use node 1 as verifierTomcatNode
+		// Restart node 2, use node 1 as the verifier node
 
 		_restartAndVerifyNode(_tomcatNode2, _tomcatNode1);
 	}
@@ -178,8 +178,10 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	private static String _getLocalClusterNodeId() {
-		return ClusterExecutorUtil.getLocalClusterNode(
-		).getClusterNodeId();
+		ClusterNode localClusterNode =
+			ClusterExecutorUtil.getLocalClusterNode();
+
+		return ClocalClusterNode.getClusterNodeId();
 	}
 
 	private Closeable _applyPortalExtLines(

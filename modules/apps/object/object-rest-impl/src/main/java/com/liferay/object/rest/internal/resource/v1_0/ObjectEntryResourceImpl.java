@@ -37,7 +37,6 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -82,15 +81,19 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * @author Javier Gamarra
@@ -718,24 +721,20 @@ public class ObjectEntryResourceImpl
 				version, _DEFAULT_XLIFF_MIMETYPE_VERSION);
 		}
 
-		File zipFile = _translationManager.getXLIFFZipFile(
-			className, objectEntryId, exportMimeType,
-			contextAcceptLanguage.getPreferredLocale(), sourceLanguageId,
-			StringUtil.split(targetLanguageIds, CharPool.COMMA), contextUser);
-
-		String zipFileName = _translationManager.getZipFileName(
+		File xliffZipFile = _translationManager.getXLIFFZipFile(
 			className, objectEntryId,
 			LanguageUtil.get(
 				contextAcceptLanguage.getPreferredLocale(),
 				"model.resource." + className),
-			false, sourceLanguageId,
-			contextAcceptLanguage.getPreferredLocale());
+			exportMimeType, contextAcceptLanguage.getPreferredLocale(), false,
+			sourceLanguageId,
+			StringUtil.split(targetLanguageIds, CharPool.COMMA), contextUser);
 
 		return Response.ok(
-			zipFile
+			xliffZipFile
 		).header(
 			"content-disposition",
-			"attachment; filename=\"" + zipFileName + "\""
+			"attachment; filename=\"" + xliffZipFile.getName() + "\""
 		).build();
 	}
 
@@ -746,27 +745,37 @@ public class ObjectEntryResourceImpl
 
 		_checkFeatureFlag();
 
-		String exportMimeType = _getExportMimeType(
-			contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT));
+		File xliffZipFile = _translationManager.getXLIFFZipFile(
+			_objectDefinition.getClassName(), objectEntryId, StringPool.BLANK,
+			_getExportMimeType(
+				contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT)),
+			contextAcceptLanguage.getPreferredLocale(), false, languageId,
+			StringUtil.split(targetLanguageId, CharPool.COMMA), contextUser);
 
-		String className = _objectDefinition.getClassName();
+		StreamingOutput streamingOutput = outputStream -> {
+			try (ZipFile zipFile = new ZipFile(xliffZipFile)) {
+				Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
-		InputStream xliffInputStream = _translationManager.getXLIFFInputStream(
-			className, objectEntryId, exportMimeType, languageId,
-			targetLanguageId);
+				if (!enumeration.hasMoreElements()) {
+					throw new IOException(
+						"Zip file is empty: " + xliffZipFile.getName());
+				}
 
-		StreamingOutput streamingOutput = outputStream -> StreamUtil.transfer(
-			xliffInputStream, outputStream);
+				ZipEntry zipEntry = enumeration.nextElement();
 
-		String xliffFileName = _translationManager.getXLIFFFileName(
-			className, objectEntryId, languageId, targetLanguageId,
-			contextAcceptLanguage.getPreferredLocale());
+				try (InputStream inputStream = zipFile.getInputStream(
+						zipEntry)) {
+
+					inputStream.transferTo(outputStream);
+				}
+			}
+		};
 
 		return Response.ok(
 			streamingOutput
 		).header(
 			"content-disposition",
-			"attachment; filename=\"" + xliffFileName + "\""
+			"attachment; filename=\"" + xliffZipFile.getName() + "\""
 		).build();
 	}
 

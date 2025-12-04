@@ -15,6 +15,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,10 +52,10 @@ public class TranslationManagerImpl implements TranslationManager {
 
 		for (String targetLanguageId : targetLanguageIds) {
 			zipWriter.addEntry(
-				getXLIFFFileName(
+				_getXLIFFFileName(
 					className, classPK, sourceLanguageId, targetLanguageId,
 					locale),
-				getXLIFFInputStream(
+				_getXLIFFInputStream(
 					className, classPK, exportMimeType, sourceLanguageId,
 					targetLanguageId));
 		}
@@ -68,71 +70,37 @@ public class TranslationManagerImpl implements TranslationManager {
 	}
 
 	@Override
-	public String getXLIFFFileName(
-		String className, long classPK, String sourceLanguageId,
-		String targetLanguageId, Locale locale) {
-
-		String title = getEntryTitle(className, classPK, locale);
-
-		if (title == null) {
-			title =
-				_language.get(locale, "model.resource." + className) +
-					StringPool.SPACE + classPK;
-		}
-
-		return StringBundler.concat(
-			StringPool.FORWARD_SLASH,
-			StringUtil.removeSubstrings(title, PropsValues.DL_CHAR_BLACKLIST),
-			StringPool.DASH, sourceLanguageId, StringPool.DASH,
-			targetLanguageId, ".xlf");
-	}
-
-	@Override
-	public InputStream getXLIFFInputStream(
-			String className, long classPK, String exportMimeType,
-			String sourceLanguageId, String targetLanguageId)
-		throws IOException, PortalException {
-
-		if (Validator.isBlank(exportMimeType)) {
-			throw new FileMimeTypeException("Unknown export mime type");
-		}
-
-		TranslationInfoItemFieldValuesExporter
-			translationInfoItemFieldValuesExporter =
-				_translationInfoItemFieldValuesExporterRegistry.
-					getTranslationInfoItemFieldValuesExporter(exportMimeType);
-
-		if (translationInfoItemFieldValuesExporter == null) {
-			throw new FileMimeTypeException(
-				"Unknown export mime type: " + exportMimeType);
-		}
-
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className);
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
-				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-		Object object = infoItemObjectProvider.getInfoItem(
-			new ClassPKInfoItemIdentifier(classPK));
-
-		return translationInfoItemFieldValuesExporter.exportInfoItemFieldValues(
-			infoItemFieldValuesProvider.getInfoItemFieldValues(object),
-			LocaleUtil.fromLanguageId(sourceLanguageId),
-			LocaleUtil.fromLanguageId(targetLanguageId));
-	}
-
-	@Override
 	public File getXLIFFZipFile(
-			String className, long classPK, String exportMimeType,
-			Locale locale, String sourceLanguageId, String[] targetLanguageIds,
-			User user)
+			String className, long classPK, String classNameTitle,
+			String exportMimeType, Locale locale, boolean multipleModels,
+			String sourceLanguageId, String[] targetLanguageIds, User user)
 		throws IOException, PortalException {
 
-		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
+		String fileName;
+
+		if (ArrayUtil.isNotEmpty(targetLanguageIds) &&
+			(targetLanguageIds.length == 1)) {
+
+			fileName = _getXLIFFFileName(
+				className, classPK, sourceLanguageId, targetLanguageIds[0],
+				locale);
+		}
+		else {
+			fileName = getZipFileName(
+				className, classPK, classNameTitle, multipleModels,
+				sourceLanguageId, locale);
+		}
+
+		File dir = FileUtil.createTempFile();
+
+		if (!dir.mkdir()) {
+			throw new IOException(
+				"Unable to create directory " + dir.getPath());
+		}
+
+		File file = new File(dir, fileName);
+
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(file);
 
 		addZipEntry(
 			zipWriter, className, classPK, exportMimeType, sourceLanguageId,
@@ -170,6 +138,62 @@ public class TranslationManagerImpl implements TranslationManager {
 		}
 
 		return classNameTitle + StringPool.SPACE + classPK;
+	}
+
+	private String _getXLIFFFileName(
+		String className, long classPK, String sourceLanguageId,
+		String targetLanguageId, Locale locale) {
+
+		String title = getEntryTitle(className, classPK, locale);
+
+		if (title == null) {
+			title =
+				_language.get(locale, "model.resource." + className) +
+					StringPool.SPACE + classPK;
+		}
+
+		return StringBundler.concat(
+			StringPool.FORWARD_SLASH,
+			StringUtil.removeSubstrings(title, PropsValues.DL_CHAR_BLACKLIST),
+			StringPool.DASH, sourceLanguageId, StringPool.DASH,
+			targetLanguageId, ".xlf");
+	}
+
+	private InputStream _getXLIFFInputStream(
+			String className, long classPK, String exportMimeType,
+			String sourceLanguageId, String targetLanguageId)
+		throws IOException, PortalException {
+
+		if (Validator.isBlank(exportMimeType)) {
+			throw new FileMimeTypeException("Unknown export mime type");
+		}
+
+		TranslationInfoItemFieldValuesExporter
+			translationInfoItemFieldValuesExporter =
+				_translationInfoItemFieldValuesExporterRegistry.
+					getTranslationInfoItemFieldValuesExporter(exportMimeType);
+
+		if (translationInfoItemFieldValuesExporter == null) {
+			throw new FileMimeTypeException(
+				"Unknown export mime type: " + exportMimeType);
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		Object object = infoItemObjectProvider.getInfoItem(
+			new ClassPKInfoItemIdentifier(classPK));
+
+		return translationInfoItemFieldValuesExporter.exportInfoItemFieldValues(
+			infoItemFieldValuesProvider.getInfoItemFieldValues(object),
+			LocaleUtil.fromLanguageId(sourceLanguageId),
+			LocaleUtil.fromLanguageId(targetLanguageId));
 	}
 
 	@Reference

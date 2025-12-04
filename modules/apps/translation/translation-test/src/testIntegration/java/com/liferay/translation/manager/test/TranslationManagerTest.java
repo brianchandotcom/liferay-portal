@@ -8,6 +8,7 @@ package com.liferay.translation.manager.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -56,19 +57,6 @@ public class TranslationManagerTest {
 	}
 
 	@Test
-	public void testGetXLIFFFileName() {
-		String fileName = _translationManager.getXLIFFFileName(
-			JournalArticle.class.getName(),
-			_journalArticle.getResourcePrimKey(),
-			LocaleUtil.toLanguageId(LocaleUtil.US), "es_ES", LocaleUtil.US);
-
-		Assert.assertTrue(fileName.contains(_journalArticle.getTitle()));
-		Assert.assertTrue(
-			fileName.contains(LocaleUtil.toLanguageId(LocaleUtil.US)));
-		Assert.assertTrue(fileName.contains(".xlf"));
-	}
-
-	@Test
 	public void testGetXLIFFZipFile() throws Exception {
 		_validateZipContent(
 			"test-journal-article-v12.xlf", _MIMETYPE_XLIFF_1_2);
@@ -79,13 +67,13 @@ public class TranslationManagerTest {
 	private void _validateZipContent(String fileName, String mimetype)
 		throws Exception {
 
-		File file = _translationManager.getXLIFFZipFile(
+		File xliffZipFile = _translationManager.getXLIFFZipFile(
 			JournalArticle.class.getName(),
-			_journalArticle.getResourcePrimKey(), mimetype, LocaleUtil.US,
-			LocaleUtil.toLanguageId(LocaleUtil.US), _TARGET_LANGUAGE_IDS,
-			TestPropsValues.getUser());
+			_journalArticle.getResourcePrimKey(), StringPool.BLANK, mimetype,
+			LocaleUtil.US, false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_TARGET_LANGUAGE_IDS, TestPropsValues.getUser());
 
-		try (ZipFile zipFile = new ZipFile(file)) {
+		try (ZipFile zipFile = new ZipFile(xliffZipFile)) {
 			int count = 0;
 
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
@@ -107,10 +95,19 @@ public class TranslationManagerTest {
 			}
 
 			Assert.assertEquals(1, count);
+
+			String xliffZipFileName = xliffZipFile.getName();
+
+			Assert.assertTrue(
+				xliffZipFileName.contains(_journalArticle.getTitle()));
+			Assert.assertTrue(
+				xliffZipFileName.contains(
+					LocaleUtil.toLanguageId(LocaleUtil.US)));
+			Assert.assertTrue(xliffZipFileName.contains(".xlf"));
 		}
 		finally {
-			if ((file != null) && file.exists()) {
-				file.delete();
+			if ((xliffZipFile != null) && xliffZipFile.exists()) {
+				xliffZipFile.delete();
 			}
 		}
 	}

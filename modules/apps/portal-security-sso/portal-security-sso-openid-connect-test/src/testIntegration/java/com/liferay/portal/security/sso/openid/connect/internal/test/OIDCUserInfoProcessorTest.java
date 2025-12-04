@@ -131,15 +131,6 @@ public class OIDCUserInfoProcessorTest {
 			_classNameLocalService.getClassNameId(User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-		ExpandoColumn phoneNumberVerifiedExpandoColumn =
-			_expandoColumnLocalService.addColumn(
-				expandoTable.getTableId(), "phoneNumberVerified",
-				ExpandoColumnConstants.BOOLEAN);
-		ExpandoColumn websiteExpandoColumn =
-			_expandoColumnLocalService.addColumn(
-				expandoTable.getTableId(), "website",
-				ExpandoColumnConstants.STRING);
-
 		_pid = ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.portal.security.sso.openid.connect.internal." +
 				"configuration.OpenIdConnectProviderConfiguration",
@@ -147,10 +138,21 @@ public class OIDCUserInfoProcessorTest {
 				"companyId", TestPropsValues.getCompanyId()
 			).put(
 				"customClaim",
-				new String[] {
-					phoneNumberVerifiedExpandoColumn.getName() +
-						"=phone_number_verified",
-					websiteExpandoColumn.getName() + "=website"
+				() -> {
+					ExpandoColumn phoneNumberVerifiedExpandoColumn =
+						_getOrAddExpandoColumn(
+							expandoTable.getTableId(), "phoneNumberVerified",
+							ExpandoColumnConstants.BOOLEAN);
+
+					ExpandoColumn websiteExpandoColumn = _getOrAddExpandoColumn(
+						expandoTable.getTableId(), "website",
+						ExpandoColumnConstants.STRING);
+
+					return new String[] {
+						phoneNumberVerifiedExpandoColumn.getName() +
+							"=phone_number_verified",
+						websiteExpandoColumn.getName() + "=website"
+					};
 				}
 			).put(
 				"discoveryEndpoint", _DISCOVERY_ENDPOINT
@@ -285,6 +287,21 @@ public class OIDCUserInfoProcessorTest {
 	private OAuthClientEntry _getOAuthClientEntry() throws Exception {
 		return _oAuthClientEntryLocalService.getOAuthClientEntry(
 			TestPropsValues.getCompanyId(), _DISCOVERY_ENDPOINT, _CLIENT_ID);
+	}
+
+	private ExpandoColumn _getOrAddExpandoColumn(
+			long tableId, String columnName, int columnType)
+		throws Exception {
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
+			tableId, columnName);
+
+		if (expandoColumn == null) {
+			expandoColumn = _expandoColumnLocalService.addColumn(
+				tableId, columnName, columnType);
+		}
+
+		return expandoColumn;
 	}
 
 	private void _testProcessUserInfo(

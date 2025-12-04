@@ -1528,7 +1528,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				{
 					setExternalReferenceCode(
 						newFileEntry.getExternalReferenceCode());
-					setUrl(url);
+					setUrl(RandomTestUtil.randomString());
 				}
 			});
 

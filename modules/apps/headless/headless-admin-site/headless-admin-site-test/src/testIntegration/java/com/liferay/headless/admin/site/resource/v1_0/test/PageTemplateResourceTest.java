@@ -1542,8 +1542,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate pageTemplateError = randomPageTemplate();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
@@ -1567,7 +1565,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -1781,8 +1780,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate pageTemplateError = randomPageTemplate();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
@@ -1805,7 +1802,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -2061,8 +2059,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate pageTemplateError = randomPageTemplate();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
@@ -2086,7 +2082,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}

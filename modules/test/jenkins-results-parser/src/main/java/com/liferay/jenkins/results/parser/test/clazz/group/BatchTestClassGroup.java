@@ -422,6 +422,31 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 	}
 
+	public String getOSSlaveLabel() {
+		String slaveLabel = getSlaveLabel();
+
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return slaveLabel;
+		}
+
+		try {
+			if (Objects.equals(getOSArchitecture(), "x86")) {
+				String x86SlaveLabel =
+					JenkinsResultsParserUtil.getBuildProperty(
+						"slave.label.x86[" + slaveLabel + "]");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(x86SlaveLabel)) {
+					return x86SlaveLabel;
+				}
+			}
+
+			return slaveLabel;
+		}
+		catch (IOException ioException) {
+			return slaveLabel;
+		}
+	}
+
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return portalGitWorkingDirectory;
 	}

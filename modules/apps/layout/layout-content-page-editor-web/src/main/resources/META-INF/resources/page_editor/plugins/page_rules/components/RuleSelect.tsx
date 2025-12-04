@@ -90,6 +90,7 @@ export default function RuleSelect<T extends string>({
 
 		return (
 			<ClayInput
+				aria-label={item?.label}
 				className="w-auto"
 				readOnly
 				sizing="sm"

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -66,23 +65,11 @@ public class SegmentsExperienceUtilTest {
 
 		languageUtil.setLanguage(new LanguageImpl());
 
-		PortletPreferencesLocalService portletPreferencesLocalService =
-			Mockito.mock(PortletPreferencesLocalService.class);
-
-		_portletPreferencesLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			PortletPreferencesLocalServiceUtil.class);
-
-		_portletPreferencesLocalServiceUtilMockedStatic.when(
-			PortletPreferencesLocalServiceUtil::getService
-		).thenReturn(
-			portletPreferencesLocalService
-		);
-
 		PortletPreferences mockPortletPreferences = Mockito.mock(
 			PortletPreferences.class);
 
-		Mockito.when(
-			portletPreferencesLocalService.fetchPortletPreferences(
+		_portletPreferencesLocalServiceUtilMockedStatic.when(
+			() -> PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
 				Mockito.anyLong(), Mockito.anyInt(), Mockito.anyLong(),
 				Mockito.anyString())
 		).thenReturn(

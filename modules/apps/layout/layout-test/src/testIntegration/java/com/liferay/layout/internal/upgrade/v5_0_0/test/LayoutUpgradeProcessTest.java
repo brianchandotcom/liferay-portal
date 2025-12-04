@@ -204,9 +204,9 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"update Layout set faviconFileEntryERC = ?, " +
-					"faviconFileEntryId = null, faviconFileEntryScopeERC = " +
-						"null where ctCollectionId = ? and plid = ?")) {
+				"update Layout set faviconFileEntryERC = null, " +
+					"faviconFileEntryId = ?, faviconFileEntryScopeERC = null " +
+						"where ctCollectionId = ? and plid = ?")) {
 
 			preparedStatement.setLong(1, faviconFileEntryId);
 			preparedStatement.setLong(2, ctCollectionId);

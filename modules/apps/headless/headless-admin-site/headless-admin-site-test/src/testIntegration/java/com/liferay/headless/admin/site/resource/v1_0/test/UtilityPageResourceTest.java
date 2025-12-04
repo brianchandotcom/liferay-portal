@@ -327,28 +327,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage utilityPageError = randomUtilityPage();
 
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(RandomTestUtil.randomString());
-			}
-		};
-
-		utilityPageError.setThumbnail(thumbnailURLReference);
-
 		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			testPostSiteUtilityPage_addUtilityPage(utilityPageError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
 
 		thumbnailURLReference = new ThumbnailURLReference() {
 			{
@@ -991,41 +970,18 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage utilityPageError = randomUtilityPage();
 
+		String expectedProblemTitle = "Unable to download file from ";
+
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(RandomTestUtil.randomString());
+					setUrl(
+						() ->
+							"http://localhost:8080/" +
+								RandomTestUtil.randomString());
 				}
 			};
-
-		utilityPageError.setThumbnail(thumbnailURLReference);
-
-		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			utilityPageResource.patchSiteUtilityPage(
-				testGroup.getExternalReferenceCode(),
-				utilityPage.getExternalReferenceCode(), utilityPageError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
-
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://localhost:8080/" +
-							RandomTestUtil.randomString());
-			}
-		};
 
 		utilityPageError.setThumbnail(thumbnailURLReference);
 
@@ -1272,41 +1228,18 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage utilityPageError = randomUtilityPage();
 
+		String expectedProblemTitle = "Unable to download file from ";
+
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(RandomTestUtil.randomString());
+					setUrl(
+						() ->
+							"http://localhost:8080/" +
+								RandomTestUtil.randomString());
 				}
 			};
-
-		utilityPageError.setThumbnail(thumbnailURLReference);
-
-		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			utilityPageResource.putSiteUtilityPage(
-				testGroup.getExternalReferenceCode(),
-				putUtilityPage.getExternalReferenceCode(), utilityPageError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
-
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://localhost:8080/" +
-							RandomTestUtil.randomString());
-			}
-		};
 
 		utilityPageError.setThumbnail(thumbnailURLReference);
 

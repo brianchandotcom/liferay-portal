@@ -52,6 +52,7 @@ import com.liferay.calendar.web.internal.util.CalendarResourceUtil;
 import com.liferay.calendar.web.internal.util.CalendarUtil;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -832,20 +833,13 @@ public class CalendarPortlet extends MVCPortlet {
 	}
 
 	private List<Integer> _getDaysOfWeek(Recurrence recurrenceObj) {
-		List<Integer> daysOfWeek = new ArrayList<>();
-
-		List<PositionalWeekday> positionalWeekdays =
-			recurrenceObj.getPositionalWeekdays();
-
-		if (positionalWeekdays != null) {
-			for (PositionalWeekday positionalWeekday : positionalWeekdays) {
+		return TransformUtil.transform(
+			recurrenceObj.getPositionalWeekdays(),
+			positionalWeekday -> {
 				Weekday weekday = positionalWeekday.getWeekday();
 
-				daysOfWeek.add(weekday.getCalendarWeekday());
-			}
-		}
-
-		return daysOfWeek;
+				return weekday.getCalendarWeekday();
+			});
 	}
 
 	private String _getEditCalendarURL(

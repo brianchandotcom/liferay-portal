@@ -113,7 +113,27 @@
 		<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() ? false : null %>
 	);
 
+	window.onload = function () {
+		var toggleSwitch = Liferay.Util.SessionStorage.getItem(
+			'com.liferay.change.tracking.web.toggleSwitch',
+			Liferay.Util.SessionStorage.TYPES.NECESSARY
+		);
+
+		if (toggleSwitch) {
+			document.getElementById(toggleSwitch).focus();
+			Liferay.Util.SessionStorage.removeItem(
+				'com.liferay.change.tracking.web.toggleSwitch'
+			);
+		}
+	};
+
 	function <portlet:namespace />autoSave() {
+		Liferay.Util.SessionStorage.setItem(
+			'com.liferay.change.tracking.web.toggleSwitch',
+			document.activeElement.id,
+			Liferay.Util.SessionStorage.TYPES.NECESSARY
+		);
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

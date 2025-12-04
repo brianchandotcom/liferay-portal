@@ -40,9 +40,15 @@ export default function DefaultPermissionFormContainer({
 	onChange,
 	roles,
 	section,
+	selectedRole,
+	singleRoleMode,
 	types,
 	values,
-}: DefaultPermissionFormContainerProps & {section?: string}) {
+}: DefaultPermissionFormContainerProps & {
+	section?: string;
+	selectedRole?: string;
+	singleRoleMode?: boolean;
+}) {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [activeActions, setActiveActions] = useState<Action[]>([]);
 	const [activeValues, setActiveValues] = useState({});
@@ -115,46 +121,52 @@ export default function DefaultPermissionFormContainer({
 
 	return (
 		<>
-			<ClayNavigationBar
-				className="toolbar-tabs"
-				triggerLabel={String(activeIndex)}
-			>
-				{tabs.map((tab, index) => {
-					return (
-						<ClayNavigationBar.Item
-							active={index === activeIndex}
-							key={`tab-${tab.key}`}
-						>
-							<ClayLink
-								data-testid={`tab-${tab.key}`}
-								onClick={(event) => {
-									event.preventDefault();
+			{(!singleRoleMode || selectedRole) && (
+				<>
+					<ClayNavigationBar
+						className="toolbar-tabs"
+						triggerLabel={String(activeIndex)}
+					>
+						{tabs.map((tab, index) => {
+							return (
+								<ClayNavigationBar.Item
+									active={index === activeIndex}
+									key={`tab-${tab.key}`}
+								>
+									<ClayLink
+										data-testid={`tab-${tab.key}`}
+										onClick={(event) => {
+											event.preventDefault();
 
-									if (disabled) {
-										return;
-									}
+											if (disabled) {
+												return;
+											}
 
-									setActiveIndex(index);
-								}}
-								role="tab"
-							>
-								{tab.label}
-							</ClayLink>
-						</ClayNavigationBar.Item>
-					);
-				})}
-			</ClayNavigationBar>
+											setActiveIndex(index);
+										}}
+										role="tab"
+									>
+										{tab.label}
+									</ClayLink>
+								</ClayNavigationBar.Item>
+							);
+						})}
+					</ClayNavigationBar>
 
-			<div className="border-bottom">
-				<DefaultPermissionForm
-					actions={activeActions}
-					disabled={disabled}
-					infoBoxMessage={infoBoxMessage}
-					onChange={handlePermissionsChange}
-					roles={roles}
-					values={activeValues}
-				/>
-			</div>
+					<div className="border-bottom">
+						<DefaultPermissionForm
+							actions={activeActions}
+							disabled={disabled}
+							infoBoxMessage={infoBoxMessage}
+							onChange={handlePermissionsChange}
+							roles={roles}
+							selectedRole={selectedRole}
+							singleRoleMode={singleRoleMode}
+							values={activeValues}
+						/>
+					</div>
+				</>
+			)}
 		</>
 	);
 }

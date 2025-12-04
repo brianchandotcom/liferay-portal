@@ -443,6 +443,19 @@ export default function AssetsFDSPropsTransformer({
 					type: 'DownloadBulkAction',
 				});
 			}
+			else if (action?.data?.id === 'edit-permissions-by-role') {
+				permissionsBulkAction({
+					apiURL: otherProps.apiURL,
+					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
+					defaultPermissionAdditionalProps:
+						additionalProps.defaultPermissionAdditionalProps || {},
+					section:
+						additionalProps.rootObjectEntryFolderExternalReferenceCode ||
+						additionalProps.parentObjectEntryFolderExternalReferenceCode,
+					selectedData,
+					singleRoleMode: true,
+				});
+			}
 			else if (action?.data?.id === 'permissions') {
 				permissionsBulkAction({
 					apiURL: otherProps.apiURL,

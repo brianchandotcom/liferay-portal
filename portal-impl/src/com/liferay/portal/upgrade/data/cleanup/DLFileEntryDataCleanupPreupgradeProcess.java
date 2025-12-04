@@ -60,6 +60,9 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 					).put(
 						_getDLFileShortcutDataCleanupPreupgradeProcess(),
 						dependsOn(dlFileEntryDataCleanupPreupgradeProcess)
+					).put(
+						_getDLFileVersionDataCleanupPreupgradeProcess(),
+						dependsOn(dlFileEntryDataCleanupPreupgradeProcess)
 					).build();
 
 		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
@@ -77,14 +80,6 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 		_getDLFileEntryDataCleanupPreupgradeProcess() {
 
 		return new DataCleanupPreupgradeProcess(
-			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
-				StringBundler.concat(
-					"[$SOURCE_TABLE_ALIAS$].classNameId in (select ",
-					"classNameId from ClassName_ where value in ('",
-					FileEntry.class.getName(), "', '",
-					DLFileEntry.class.getName(), "'))"),
-				new String[] {"classNameId"}, "classPK",
-				new String[] {"fileEntryId"}, "DLFileEntry"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null, "fileEntryId", "DLFileEntryMetadata", "fileEntryId",
 				"DLFileEntry"),
@@ -198,6 +193,21 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 					DLFileShortcut.class.getName(), "'"),
 				"primKeyId", "ResourcePermission", "fileShortcutId",
 				"DLFileShortcut"));
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getDLFileVersionDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
+			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
+				StringBundler.concat(
+					"[$SOURCE_TABLE_ALIAS$].classNameId in (select ",
+					"classNameId from ClassName_ where value in ('",
+					FileEntry.class.getName(), "', '",
+					DLFileEntry.class.getName(), "'))"),
+				new String[] {"classNameId"}, "classPK",
+				new String[] {"fileEntryId", "fileVersionId"},
+				"DLFileVersion"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

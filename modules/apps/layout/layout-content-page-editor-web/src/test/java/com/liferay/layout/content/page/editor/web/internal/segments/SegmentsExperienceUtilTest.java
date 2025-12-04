@@ -101,9 +101,6 @@ public class SegmentsExperienceUtilTest {
 
 		String targetPortletId = PortletIdCodec.encode(portletId, newNamespace);
 
-		CommentManager commentManager = Mockito.mock(CommentManager.class);
-		PortletRegistry portletRegistry = Mockito.mock(PortletRegistry.class);
-
 		Layout layout = _getLayout();
 		SegmentsExperience sourceSegmentsExperience = _getSegmentsExperience();
 		SegmentsExperience targetSegmentsExperience = _getSegmentsExperience();
@@ -119,12 +116,6 @@ public class SegmentsExperienceUtilTest {
 			newFragmentEntryLink
 		);
 
-		Mockito.when(
-			portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink)
-		).thenReturn(
-			List.of(sourcePortletId)
-		);
-
 		_setUpFragmentEntryLinkLocalServiceUtil(
 			fragmentEntryLink, groupId, layout.getPlid(),
 			sourceSegmentsExperience.getSegmentsExperienceId());
@@ -138,12 +129,14 @@ public class SegmentsExperienceUtilTest {
 			groupId, layoutStructure, layout.getPlid(),
 			sourceSegmentsExperience.getSegmentsExperienceId());
 
+		_setUpPortletRegistry(fragmentEntryLink, sourcePortletId);
+
 		_setUpResourcePermissionLocalServiceUtil(
 			companyId, layout.getPlid(), portletId, sourcePortletId,
 			Collections.emptyList(), null);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
-			commentManager, groupId, layout, portletRegistry,
+			_commentManager, groupId, layout, _portletRegistry,
 			sourceSegmentsExperience, targetSegmentsExperience,
 			key -> Mockito.mock(ServiceContext.class), userId);
 
@@ -185,7 +178,7 @@ public class SegmentsExperienceUtilTest {
 			targetResourcePermission);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
-			commentManager, groupId, layout, portletRegistry,
+			_commentManager, groupId, layout, _portletRegistry,
 			sourceSegmentsExperience, targetSegmentsExperience,
 			key -> Mockito.mock(ServiceContext.class), userId);
 
@@ -439,6 +432,16 @@ public class SegmentsExperienceUtilTest {
 		);
 	}
 
+	private void _setUpPortletRegistry(
+		FragmentEntryLink fragmentEntryLink, String portletId) {
+
+		Mockito.when(
+			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink)
+		).thenReturn(
+			List.of(portletId)
+		);
+	}
+
 	private void _setUpResourcePermissionLocalServiceUtil(
 		long companyId, long plid, String portletId, String sourcePortletId,
 		List<ResourcePermission> sourceResourcePermissions,
@@ -489,5 +492,10 @@ public class SegmentsExperienceUtilTest {
 	private static final MockedStatic<SegmentsExperimentLocalServiceUtil>
 		_segmentsExperimentLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			SegmentsExperimentLocalServiceUtil.class);
+
+	private final CommentManager _commentManager = Mockito.mock(
+		CommentManager.class);
+	private final PortletRegistry _portletRegistry = Mockito.mock(
+		PortletRegistry.class);
 
 }

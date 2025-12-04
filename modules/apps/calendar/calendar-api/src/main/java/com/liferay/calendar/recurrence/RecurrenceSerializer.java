@@ -142,29 +142,27 @@ public class RecurrenceSerializer {
 			rRule.setUntil(dateValue);
 		}
 
-		String data = rRule.toIcal();
-
 		List<Calendar> exceptionJCalendars =
 			recurrence.getExceptionJCalendars();
 
-		if (!exceptionJCalendars.isEmpty()) {
-			DateValue[] dateValues = new DateValue[exceptionJCalendars.size()];
-
-			for (int i = 0; i < exceptionJCalendars.size(); i++) {
-				dateValues[i] = _toDateValue(exceptionJCalendars.get(i));
-			}
-
-			RDateList rDateList = new RDateList(
-				TimeZone.getTimeZone(StringPool.UTC));
-
-			rDateList.setDatesUtc(dateValues);
-			rDateList.setName(_EXDATE);
-
-			data = StringBundler.concat(
-				data, StringPool.NEW_LINE, rDateList.toIcal());
+		if (exceptionJCalendars.isEmpty()) {
+			return rRule.toIcal();
 		}
 
-		return data;
+		DateValue[] dateValues = new DateValue[exceptionJCalendars.size()];
+
+		for (int i = 0; i < exceptionJCalendars.size(); i++) {
+			dateValues[i] = _toDateValue(exceptionJCalendars.get(i));
+		}
+
+		RDateList rDateList = new RDateList(
+			TimeZone.getTimeZone(StringPool.UTC));
+
+		rDateList.setDatesUtc(dateValues);
+		rDateList.setName(_EXDATE);
+
+		return StringBundler.concat(
+			rRule.toIcal(), StringPool.NEW_LINE, rDateList.toIcal());
 	}
 
 	private static DateValue _toDateValue(Calendar jCalendar) {

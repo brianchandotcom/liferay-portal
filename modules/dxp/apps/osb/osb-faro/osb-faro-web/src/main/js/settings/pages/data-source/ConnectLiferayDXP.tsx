@@ -1,9 +1,8 @@
 import React from 'react';
 import WizardPage, {Step} from 'settings/components/base-page/WizardPage';
-import {AssignIndividualsDatatoPropertiesStep} from 'settings/components/salesforce/steps/AssignIndividualsDataToChannelsStep';
+import {AssignLiferayIndividualsDataToChannelsStep} from 'settings/components/liferay/steps/AssignLiferayIndividualsDataToChannelsStep';
 import {ConnectLiferayDXPStep} from 'settings/components/liferay/steps/ConnectLiferayDXPStep';
 import {ReviewSyncedDataStep} from 'settings/components/liferay/steps/ReviewSyncedDataStep';
-import {updateLiferay} from 'shared/api/data-source';
 
 const steps: Step[] = [
 	{
@@ -22,10 +21,7 @@ const steps: Step[] = [
 	},
 	{
 		content: props => (
-			<AssignIndividualsDatatoPropertiesStep
-				{...props}
-				updateDataSourceFn={updateLiferay}
-			/>
+			<AssignLiferayIndividualsDataToChannelsStep {...props} />
 		),
 		description: Liferay.Language.get(
 			'properties-allow-you-to-aggregate-data-on-your-users,-sites-and-dxp-commerce-channels.-individuals-data-will-be-available-in-any-property-they-are-assigned-to'

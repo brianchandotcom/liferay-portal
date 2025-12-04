@@ -1,6 +1,7 @@
 import React from 'react';
 import WizardPage, {Step} from 'settings/components/base-page/WizardPage';
-import {AssignIndividualsDatatoPropertiesStep} from 'settings/components/salesforce/steps/AssignIndividualsDataToChannelsStep';
+import {Alert} from 'shared/types';
+import {AssignIndividualsDataToPropertiesStep} from 'settings/components/salesforce/steps/AssignIndividualsDataToChannelsStep';
 import {ConnectSalesforceStep} from 'settings/components/salesforce/steps/ConnectSalesforceStep';
 import {SyncSalesforceDataStep} from 'settings/components/salesforce/steps/SyncSalesforceDataStep';
 import {updateSalesforce} from 'shared/api/data-source';
@@ -22,8 +23,38 @@ const steps: Step[] = [
 	},
 	{
 		content: props => (
-			<AssignIndividualsDatatoPropertiesStep
+			<AssignIndividualsDataToPropertiesStep
 				{...props}
+				onSubmit={dataSource => {
+					const accountsEnabled = dataSource.provider.getIn([
+						'accountsConfiguration',
+						'enableAllAccounts'
+					]);
+
+					const contactsConfiguration = dataSource.provider.get(
+						'contactsConfiguration'
+					);
+
+					const individualsEnabled =
+						contactsConfiguration.get('enableAllContacts') &&
+						contactsConfiguration.get('enableAllLeads');
+
+					if (accountsEnabled || individualsEnabled) {
+						props.addAlert({
+							alertType: Alert.Types.Success,
+							message: Liferay.Language.get(
+								'the-data-source-setup-is-now-complete,-and-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
+							)
+						});
+					} else {
+						props.addAlert({
+							alertType: Alert.Types.Success,
+							message: Liferay.Language.get(
+								'the-data-source-setup-has-finished'
+							)
+						});
+					}
+				}}
 				updateDataSourceFn={updateSalesforce}
 			/>
 		),

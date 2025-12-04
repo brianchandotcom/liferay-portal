@@ -15,10 +15,11 @@ import {useHistory, useParams} from 'react-router-dom';
 import {useWizardPage} from 'settings/components/base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
-const AssignIndividualsDatatoPropertiesStep = ({
+const AssignIndividualsDataToPropertiesStep = ({
 	addAlert,
 	close,
 	onPrev,
+	onSubmit,
 	open,
 	updateDataSourceFn
 }) => {
@@ -52,51 +53,24 @@ const AssignIndividualsDatatoPropertiesStep = ({
 			onSubmit={async event => {
 				event.preventDefault();
 
-				const updatedDataSource = {
-					channelsConfiguration: {
-						channels: selectedItems.map(channelId => ({
-							channelId,
-							enabled: true
-						})),
-						enableAllChannels: allChannelsSelected
-					},
-					groupId,
-					id: dataSource.id
-				} as any;
-
 				try {
 					setLoading(true);
 
+					const updatedDataSource = {
+						channelsConfiguration: {
+							channels: selectedItems.map(channelId => ({
+								channelId,
+								enabled: true
+							})),
+							enableAllChannels: allChannelsSelected
+						},
+						groupId,
+						id: dataSource.id
+					} as any;
+
 					await updateDataSourceFn(updatedDataSource);
 
-					const accountsEnabled = dataSource.provider.getIn([
-						'accountsConfiguration',
-						'enableAllAccounts'
-					]);
-
-					const contactsConfiguration = dataSource.provider.get(
-						'contactsConfiguration'
-					);
-
-					const individualsEnabled =
-						contactsConfiguration.get('enableAllContacts') &&
-						contactsConfiguration.get('enableAllLeads');
-
-					if (accountsEnabled || individualsEnabled) {
-						addAlert({
-							alertType: Alert.Types.Success,
-							message: Liferay.Language.get(
-								'the-data-source-setup-is-now-complete,-and-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
-							)
-						});
-					} else {
-						addAlert({
-							alertType: Alert.Types.Success,
-							message: Liferay.Language.get(
-								'the-data-source-setup-has-finished'
-							)
-						});
-					}
+					onSubmit(dataSource);
 
 					history.push(
 						toRoute(Routes.SETTINGS_DATA_SOURCE, {
@@ -205,4 +179,4 @@ const AssignIndividualsDatatoPropertiesStep = ({
 	);
 };
 
-export {AssignIndividualsDatatoPropertiesStep};
+export {AssignIndividualsDataToPropertiesStep};

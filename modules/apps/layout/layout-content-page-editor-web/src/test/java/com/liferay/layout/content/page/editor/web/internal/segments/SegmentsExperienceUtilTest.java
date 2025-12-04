@@ -147,6 +147,19 @@ public class SegmentsExperienceUtilTest {
 			sourceSegmentsExperience, targetSegmentsExperience,
 			key -> Mockito.mock(ServiceContext.class), userId);
 
+		_layoutStructureUtilMockedStatic.verify(
+			() -> LayoutStructureUtil.getLayoutStructure(
+				groupId, layout.getPlid(),
+				sourceSegmentsExperience.getSegmentsExperienceId()));
+
+		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.verify(
+			() ->
+				LayoutPageTemplateStructureLocalServiceUtil.
+					updateLayoutPageTemplateStructureData(
+						userId, groupId, layout.getPlid(),
+						targetSegmentsExperience.getSegmentsExperienceId(),
+						layoutStructure.toString()));
+
 		_resourcePermissionLocalServiceUtilMockedStatic.verify(
 			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
 				companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
@@ -158,6 +171,9 @@ public class SegmentsExperienceUtilTest {
 				Mockito.anyLong()),
 			Mockito.never());
 
+		_layoutStructureUtilMockedStatic.clearInvocations();
+		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.
+			clearInvocations();
 		_resourcePermissionLocalServiceUtilMockedStatic.clearInvocations();
 
 		ResourcePermission sourceResourcePermission = _getResourcePermission();
@@ -172,6 +188,19 @@ public class SegmentsExperienceUtilTest {
 			commentManager, groupId, layout, portletRegistry,
 			sourceSegmentsExperience, targetSegmentsExperience,
 			key -> Mockito.mock(ServiceContext.class), userId);
+
+		_layoutStructureUtilMockedStatic.verify(
+			() -> LayoutStructureUtil.getLayoutStructure(
+				groupId, layout.getPlid(),
+				sourceSegmentsExperience.getSegmentsExperienceId()));
+
+		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.verify(
+			() ->
+				LayoutPageTemplateStructureLocalServiceUtil.
+					updateLayoutPageTemplateStructureData(
+						userId, groupId, layout.getPlid(),
+						targetSegmentsExperience.getSegmentsExperienceId(),
+						layoutStructure.toString()));
 
 		_resourcePermissionLocalServiceUtilMockedStatic.verify(
 			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(

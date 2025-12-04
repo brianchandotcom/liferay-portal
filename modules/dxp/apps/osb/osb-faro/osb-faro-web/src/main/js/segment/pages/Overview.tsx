@@ -8,6 +8,7 @@ import SegmentProfileCard from 'segment/components/ProfileCard';
 import {debounce} from 'lodash';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {Segment} from 'shared/util/records';
+import {SegmentTypes} from 'shared/util/constants';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 interface IOverviewProps {
@@ -83,6 +84,7 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 					<CriteriaCard
 						criteriaString={criteriaString}
 						includeAnonymousUsers={includeAnonymousUsers}
+						segmentType={SegmentTypes.Batch}
 						timeZoneId={timeZoneId}
 					/>
 				</ReferencedObjectsProvider>

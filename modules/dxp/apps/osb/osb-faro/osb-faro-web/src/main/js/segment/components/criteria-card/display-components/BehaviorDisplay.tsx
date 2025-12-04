@@ -1,6 +1,7 @@
 import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
 import OccurenceConjunctionDisplay from './OccurenceConjunctionDisplay';
 import React from 'react';
+import RealTimePeriodDisplay from './RealTimePeriodDisplay';
 import ReferencedEntityDisplay from './ReferencedEntityDisplay';
 import {ASSET_TYPE_LANG_MAP} from 'shared/util/lang';
 import {CustomValue} from 'shared/util/records';
@@ -13,10 +14,12 @@ import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
 import {IDisplayComponentProps} from '../types';
 import {Map} from 'immutable';
 import {parseActivityKey} from 'segment/segment-editor/dynamic/utils/utils';
+import {SegmentTypes} from 'shared/util/constants';
 
 const BehaviorDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
-	property
+	property,
+	segmentType
 }) => {
 	const {operatorName, value} = criterion;
 
@@ -60,9 +63,15 @@ const BehaviorDisplay: React.FC<IDisplayComponentProps> = ({
 				value={occurenceCount}
 			/>
 
-			<DateFilterConjunctionDisplay
-				conjunctionCriterion={conjunctionCriterion}
-			/>
+			{segmentType === SegmentTypes.RealTime ? (
+				<RealTimePeriodDisplay
+					conjunctionCriterion={conjunctionCriterion}
+				/>
+			) : (
+				<DateFilterConjunctionDisplay
+					conjunctionCriterion={conjunctionCriterion}
+				/>
+			)}
 		</>
 	);
 };

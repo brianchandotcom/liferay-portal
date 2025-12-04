@@ -10,7 +10,8 @@ import {IDisplayComponentProps} from '../types';
 
 const DisplayComponent: React.FC<IDisplayComponentProps> = ({
 	criterion,
-	property
+	property,
+	segmentType
 }) => {
 	const getDisplayComponent = propertyKey => {
 		switch (propertyKey) {
@@ -36,7 +37,13 @@ const DisplayComponent: React.FC<IDisplayComponentProps> = ({
 		property.propertyKey
 	);
 
-	return <Display criterion={criterion} property={property} />;
+	return (
+		<Display
+			criterion={criterion}
+			property={property}
+			segmentType={segmentType}
+		/>
+	);
 };
 
 export default DisplayComponent;

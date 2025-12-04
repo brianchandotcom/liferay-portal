@@ -2,17 +2,20 @@ import CriteriaView from './CriteriaView';
 import Label from 'shared/components/Label';
 import Panel from '@clayui/panel';
 import React from 'react';
+import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from 'segment/segment-editor/dynamic/utils/odata';
 
 interface ICriteriaCardProps {
 	criteriaString: string;
 	includeAnonymousUsers: boolean;
+	segmentType: SegmentTypes;
 	timeZoneId: string;
 }
 
 const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 	criteriaString,
 	includeAnonymousUsers,
+	segmentType,
 	timeZoneId
 }) => {
 	const _criteriaViewRef = React.createRef<HTMLDivElement>();
@@ -37,6 +40,7 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 				<CriteriaView
 					criteria={translateQueryToCriteria(criteriaString)}
 					ref={_criteriaViewRef}
+					segmentType={segmentType}
 					timeZoneId={timeZoneId}
 				/>
 			</Panel.Body>

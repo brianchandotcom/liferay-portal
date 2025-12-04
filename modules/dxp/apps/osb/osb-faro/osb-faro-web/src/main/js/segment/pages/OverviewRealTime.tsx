@@ -4,6 +4,7 @@ import SegmentProfileCard from 'segment/components/ProfileCard';
 
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {Segment} from 'shared/util/records';
+import {SegmentTypes} from 'shared/util/constants';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 interface IOverviewProps {
@@ -26,6 +27,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 				<CriteriaCard
 					criteriaString={criteriaString}
 					includeAnonymousUsers={includeAnonymousUsers}
+					segmentType={SegmentTypes.RealTime}
 					timeZoneId={timeZoneId}
 				/>
 			</ReferencedObjectsProvider>

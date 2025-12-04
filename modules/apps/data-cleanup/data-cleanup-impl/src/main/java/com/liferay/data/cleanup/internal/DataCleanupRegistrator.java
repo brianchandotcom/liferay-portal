@@ -150,163 +150,139 @@ public class DataCleanupRegistrator {
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new AmazonRankingsUpgradeProcess()),
 			"com.liferay.amazon.rankings.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-chat-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new ChatUpgradeProcess()),
 			"com.liferay.chat.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-document-library-file-rank-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new DocumentLibraryFileRankServiceUpgradeProcess()),
 			"com.liferay.document.library.file.rank.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-dictionary-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new DictionaryUpgradeProcess()),
 			"com.liferay.dictionary.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-currency-converter-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new CurrencyConverterUpgradeProcess()),
 			"com.liferay.currency.converter.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-directory-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP, new DirectoryUpgradeProcess()),
 			"com.liferay.directory.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-frontend-image-editor-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new FrontendImageEditorUpgradeProcess()),
 			"com.liferay.frontend.image.editor.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-google-maps-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new GoogleMapsUpgradeProcess()),
 			"com.liferay.google.maps.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-hello-velocity-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new HelloVelocityUpgradeProcess()),
 			"com.liferay.hello.velocity.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-hello-world-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP, new UpgradeHelloWorld()),
 			"com.liferay.hello.world.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-html-preview-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new HTMLPreviewUpgradeProcess()),
 			"com.liferay.html.preview.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-invitation-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new InvitationUpgradeProcess()),
 			"com.liferay.invitation.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-loan-calculator-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new LoanCalculatorUpgradeProcess()),
 			"com.liferay.loan.calculator.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-mail-reader-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new MailReaderUpgradeProcess()),
 			"com.liferay.mail.reader.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-network-utilities-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new NetworkUtilitiesUpgradeProcess()),
 			"com.liferay.network.utilities.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-oauth-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new OAuthUpgradeProcess()),
 			"com.liferay.oauth.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-open-social-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new OpenSocialUpgradeProcess(_expandoTableLocalService)),
 			"opensocial-portlet");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-password-generator-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new PasswordGeneratorUpgradeProcess()),
 			"com.liferay.password.generator.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-portal-security-wedeploy-auth-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new PortalSecurityWedeployAuthUpgradeProcess()),
 			"com.liferay.portal.security.wedeploy.auth.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-quick-note-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP, new QuickNoteUpgradeProcess()),
 			"com.liferay.quick.note.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-recent-documents-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new RecentDocumentsUpgradeProcess()),
 			"com.liferay.recent.documents.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-shopping-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new ShoppingUpgradeProcess(_imageLocalService)),
 			"com.liferay.shopping.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-social-activity-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new SocialActivityUpgradeProcess()),
 			"com.liferay.social.activity.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-social-group-statistics-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new SocialGroupStatisticsUpgradeProcess()),
 			"com.liferay.social.group.statistics.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-social-private-messaging-module-data",
@@ -314,21 +290,18 @@ public class DataCleanupRegistrator {
 				new SocialPrivateMessagingUpgradeProcess(
 					_mbThreadLocalService)),
 			"com.liferay.social.privatemessaging.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-social-requests-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new SocialRequestsUpgradeProcess()),
 			"com.liferay.social.requests.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-social-user-statistics-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new SocialUserStatisticsUpgradeProcess()),
 			"com.liferay.social.user.statistics.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-software-catalog-module-data",
@@ -337,64 +310,54 @@ public class DataCleanupRegistrator {
 					_imageLocalService, _mbMessageLocalService,
 					_ratingsStatsLocalService, _subscriptionLocalService)),
 			"com.liferay.softwarecatalog.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-sync-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new SyncUpgradeProcess()),
 			"com.liferay.sync.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-translator-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new TranslatorUpgradeProcess()),
 			"com.liferay.translator.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-twitter-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new TwitterUpgradeProcess()),
 			"com.liferay.twitter.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-unit-converter-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new UnitConverterUpgradeProcess()),
 			"com.liferay.unit.converter.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-weather-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new WeatherUpgradeProcess()),
 			"com.liferay.weather.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-web-form-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP, new WebFormUpgradeProcess()),
 			"com.liferay.web.form.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-web-proxy-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP, new WebProxyUpgradeProcess()),
 			"com.liferay.web.proxy.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-wysiwyg-module-data", DataCleanup.MODULE_DATA_CLEANUP,
 				new WysiwygUpgradeProcess()),
 			"com.liferay.wysiwyg.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-xsl-content-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
 				new XSLContentUpgradeProcess()),
 			"com.liferay.xsl.content.web");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-youtube-module-data", DataCleanup.MODULE_DATA_CLEANUP,
@@ -420,7 +383,6 @@ public class DataCleanupRegistrator {
 					}
 
 				}));
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"remove-dl-preview-cts-content-data",
@@ -428,7 +390,6 @@ public class DataCleanupRegistrator {
 				new DLPreviewCTSContentDataUpgradeProcess(
 					_ctCollectionLocalService, _ctEntryLocalService, _portal)),
 			"com.liferay.change.tracking.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"remove-expired-journal-articles",
@@ -436,7 +397,6 @@ public class DataCleanupRegistrator {
 				new ExpiredJournalArticleUpgradeProcess(
 					_journalArticleLocalService)),
 			"com.liferay.journal.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"remove-layout-classed-model-usage-orphan-data",
@@ -448,7 +408,6 @@ public class DataCleanupRegistrator {
 					_layoutPageTemplateStructureLocalService,
 					_layoutPageTemplateStructureRelLocalService)),
 			"com.liferay.layout.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"remove-publications-older-than-6-months",
@@ -456,7 +415,6 @@ public class DataCleanupRegistrator {
 				new OutdatedPublishedCTCollectionUpgradeProcess(
 					_ctCollectionLocalService)),
 			"com.liferay.change.tracking.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"remove-published-cts-content-data",
@@ -464,7 +422,6 @@ public class DataCleanupRegistrator {
 				new PublishedCTSContentDataUpgradeProcess(
 					_ctsContentLocalService, _portal)),
 			"com.liferay.change.tracking.store.service");
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"remove-service-component-orphan-data",
@@ -482,7 +439,6 @@ public class DataCleanupRegistrator {
 					}
 
 				}));
-
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"remove-widget-layout-type-settings",

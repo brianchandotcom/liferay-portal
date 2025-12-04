@@ -56,14 +56,6 @@ public class TranslationManagerTest {
 	}
 
 	@Test
-	public void testExportXLIFFZipFile() throws Exception {
-		_validateZipContent(
-			"test-journal-article-v12.xlf", _MIMETYPE_XLIFF_1_2);
-
-		_validateZipContent("test-journal-article.xlf", _MIMETYPE_XLIFF_2_0);
-	}
-
-	@Test
 	public void testGetXLIFFFileName() {
 		String fileName = _translationManager.getXLIFFFileName(
 			JournalArticle.class.getName(),
@@ -76,10 +68,18 @@ public class TranslationManagerTest {
 		Assert.assertTrue(fileName.contains(".xlf"));
 	}
 
+	@Test
+	public void testGetXLIFFZipFile() throws Exception {
+		_validateZipContent(
+			"test-journal-article-v12.xlf", _MIMETYPE_XLIFF_1_2);
+
+		_validateZipContent("test-journal-article.xlf", _MIMETYPE_XLIFF_2_0);
+	}
+
 	private void _validateZipContent(String fileName, String mimetype)
 		throws Exception {
 
-		File file = _translationManager.exportXLIFFZipFile(
+		File file = _translationManager.getXLIFFZipFile(
 			JournalArticle.class.getName(),
 			_journalArticle.getResourcePrimKey(), mimetype, LocaleUtil.US,
 			LocaleUtil.toLanguageId(LocaleUtil.US), _TARGET_LANGUAGE_IDS,

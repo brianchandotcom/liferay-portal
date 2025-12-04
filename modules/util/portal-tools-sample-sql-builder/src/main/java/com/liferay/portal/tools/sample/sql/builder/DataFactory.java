@@ -8274,7 +8274,6 @@ public class DataFactory {
 		objectDefinitionModel.setEnableCategorization(true);
 		objectDefinitionModel.setEnableComments(enableComments);
 		objectDefinitionModel.setEnableIndexSearch(enableIndexSearch);
-		objectDefinitionModel.setEnableLocalization(false);
 		objectDefinitionModel.setEnableObjectEntryDraft(false);
 		objectDefinitionModel.setEnableObjectEntryHistory(
 			enableObjectEntryHistory);

@@ -297,12 +297,12 @@ function ItemSelector<T extends Record<string, any>>({
 	const selectedKeys = useMemo(() => {
 		return (
 			items?.map((item) =>
-			String(
-				getObjectValueFromPath({
-					object: item,
-					path: locator.value,
-				})
-			)
+				String(
+					getObjectValueFromPath({
+						object: item,
+						path: locator.value,
+					})
+				)
 			) ?? []
 		);
 	}, [items, locator.value]);
@@ -351,6 +351,7 @@ function ItemSelector<T extends Record<string, any>>({
 		itemSelectorComponent = (
 			<ClayMultiSelect
 				{...(otherProps as any)}
+				allowsCustomLabel={false}
 				items={items}
 				locator={{
 					id: (item: T) => {

@@ -27,9 +27,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
@@ -37,38 +39,24 @@ import java.net.HttpURLConnection;
 
 import java.nio.channels.Channels;
 
+import java.util.Map;
+
 /**
  * @author Zsolt Balogh
  */
 public class HelpCenterUtil {
 
-	public static String addAttachmentComment(
+	public static void addAttachmentComment(
 			String fileName, PatcherBuild patcherBuild)
 		throws Exception {
-
-		StorageOptions storageOptions = StorageOptions.getDefaultInstance();
-
-		Storage storage = storageOptions.getService();
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				PatcherConfiguration.class, patcherBuild.getCompanyId());
 
-		BlobId blobId = BlobId.of(
-			patcherConfiguration.googleCloudHotfixBucket(),
-			patcherBuild.getFileName());
-
-		Blob blob = storage.get(blobId);
-
-		if (blob == null) {
-			throw new PortalException(
-				LanguageUtil.format(
-					LocaleUtil.getMostRelevantLocale(),
-					"file-x-was-not-found-in-the-x-gcs-bucket",
-					new Object[] {
-						fileName, patcherConfiguration.googleCloudHotfixBucket()
-					}));
-		}
+		Blob blob = _getGoogleCloudFileObject(
+			patcherConfiguration.googleCloudHotfixBucket(), fileName,
+			patcherBuild);
 
 		String fileSize = String.valueOf(blob.getSize());
 
@@ -84,28 +72,28 @@ public class HelpCenterUtil {
 				"Unable to calculate MD5 checksum for GCS file", exception);
 		}
 
-		String body = JSONUtil.put(
-			"fileName", fileName
-		).put(
-			"fileSize", fileSize
-		).put(
-			"md5Checksum", md5Checksum
-		).put(
-			"ticketId", patcherBuild.getSupportTicket()
-		).put(
-			"type", "hotfix"
-		).toString();
+		Http.Options options = _initOptions(
+			true,
+			HashMapBuilder.put(
+				"Content-Type", ContentTypes.APPLICATION_JSON
+			).put(
+				"Origin", patcherConfiguration.supportLiferayLfuURL()
+			).build(),
+			patcherConfiguration);
 
-		Http.Options options = new Http.Options();
-
-		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-		options.addHeader(
-			"Authorization",
-			"Bearer " + getAuthenticationToken(patcherBuild.getCompanyId()));
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Origin", patcherConfiguration.supportLiferayLfuURL());
-		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			JSONUtil.put(
+				"fileName", fileName
+			).put(
+				"fileSize", fileSize
+			).put(
+				"md5Checksum", md5Checksum
+			).put(
+				"ticketId", patcherBuild.getSupportTicket()
+			).put(
+				"type", "hotfix"
+			).toString(),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(
 			StringBundler.concat(
 				patcherConfiguration.supportLiferayLfuURL(),
@@ -114,17 +102,9 @@ public class HelpCenterUtil {
 					supportLiferayTicketAttachmentApiEndpoint()));
 		options.setPost(true);
 
-		String responseString = HttpUtil.URLtoString(options);
+		String responseString = _sendRequest(options);
 
-		Http.Response response = options.getResponse();
-
-		int responseCode = response.getResponseCode();
-
-		if (responseCode != HttpURLConnection.HTTP_OK) {
-			_log.error(
-				StringBundler.concat(
-					"Response code ", responseCode, ": ", responseString));
-
+		if (Validator.isNull(responseString)) {
 			throw new PortalException(
 				"failed-to-connect-to-the-large-file-uploader");
 		}
@@ -148,25 +128,23 @@ public class HelpCenterUtil {
 		long ticketAttachmentId = responseJSONObject.getLong(
 			"ticketAttachmentId", 0);
 
-		completeUpload(ticketAttachmentId, patcherBuild.getCompanyId());
-
-		return responseString;
+		completeUpload(ticketAttachmentId, patcherConfiguration);
 	}
 
 	public static long fetchAccountEntryId(
 			String accountEntryCode, long companyId)
 		throws Exception {
 
-		Http.Options options = new Http.Options();
-
-		options.addHeader(HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
-		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-		options.addHeader(
-			"Authorization", "Bearer " + getAuthenticationToken(companyId));
-
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				PatcherConfiguration.class, companyId);
+
+		Http.Options options = _initOptions(
+			true,
+			HashMapBuilder.put(
+				HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
+			).build(),
+			patcherConfiguration);
 
 		options.setLocation(
 			StringBundler.concat(
@@ -174,18 +152,12 @@ public class HelpCenterUtil {
 				StringPool.FORWARD_SLASH,
 				patcherConfiguration.supportLiferayAccountSearchApiEndpoint(),
 				accountEntryCode));
-
 		options.setPost(false);
 
-		String responseString = HttpUtil.URLtoString(options);
+		String responseString = _sendRequest(options);
 
-		Http.Response response = options.getResponse();
-
-		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new Exception(
-				StringBundler.concat(
-					"Response code ", response.getResponseCode(), ": ",
-					responseString));
+		if (Validator.isNull(responseString)) {
+			return 0;
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -213,87 +185,63 @@ public class HelpCenterUtil {
 	}
 
 	protected static void completeUpload(
-			long ticketAttachmentId, long companyId)
+			long ticketAttachmentId, PatcherConfiguration patcherConfiguration)
 		throws Exception {
 
-		String body = JSONUtil.put(
-			"commentBody", HelpCenterConstants.HELP_CENTER_UPLOAD_COMMENT
-		).toString();
+		Http.Options options = _initOptions(
+			true,
+			HashMapBuilder.put(
+				"Content-Type", ContentTypes.APPLICATION_JSON
+			).build(),
+			patcherConfiguration);
 
-		Http.Options options = new Http.Options();
-
-		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-		options.addHeader(
-			"Authorization", "Bearer " + getAuthenticationToken(companyId));
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, companyId);
-
+		options.setBody(
+			JSONUtil.put(
+				"commentBody", HelpCenterConstants.HELP_CENTER_UPLOAD_COMMENT
+			).toString(),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(
 			String.format(
 				"%s/ticket-attachments/%d/complete-upload",
 				patcherConfiguration.supportLiferayLfuURL(),
 				ticketAttachmentId));
-
 		options.setPost(true);
 
-		String responseString = HttpUtil.URLtoString(options);
+		String responseString = _sendRequest(options);
 
-		Http.Response response = options.getResponse();
-
-		int responseCode = response.getResponseCode();
-
-		if (responseCode != HttpURLConnection.HTTP_OK) {
-			_log.error(
-				StringBundler.concat(
-					"Response code ", responseCode, ": ", responseString));
-
+		if (Validator.isNull(responseString)) {
 			throw new PortalException("failed-to-upload-file");
 		}
 	}
 
-	protected static String getAuthenticationToken(long companyId)
+	protected static String getAuthenticationToken(
+			PatcherConfiguration patcherConfiguration)
 		throws Exception {
 
 		if (System.currentTimeMillis() < _tokenExpirationTime) {
 			return _accessToken;
 		}
 
-		Http.Options options = new Http.Options();
-
-		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-		options.addHeader(
-			"Content-Type", ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
-
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, companyId);
+		Http.Options options = _initOptions(
+			false,
+			HashMapBuilder.put(
+				"Content-Type", ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED
+			).build(),
+			patcherConfiguration);
 
 		options.addPart(
 			"client_id", patcherConfiguration.supportLiferayApiClientId());
 		options.addPart(
 			"client_secret",
 			patcherConfiguration.supportLiferayApiClientSecret());
-
 		options.addPart("grant_type", "client_credentials");
 		options.setLocation(
 			patcherConfiguration.supportLiferayURL() + "/o/oauth2/token");
 		options.setPost(true);
 
-		String responseString = HttpUtil.URLtoString(options);
+		String responseString = _sendRequest(options);
 
-		Http.Response response = options.getResponse();
-
-		int responseCode = response.getResponseCode();
-
-		if (responseCode != HttpURLConnection.HTTP_OK) {
-			_log.error(
-				StringBundler.concat(
-					"Response code ", responseCode, ": ", responseString));
-
+		if (Validator.isNull(responseString)) {
 			throw new PortalException(
 				"failed-to-connect-to-the-authentication-service");
 		}
@@ -322,18 +270,74 @@ public class HelpCenterUtil {
 			String gcsSessionURL)
 		throws Exception {
 
-		Http.Options options = new Http.Options();
+		Http.Options options = _initOptions(
+			false,
+			HashMapBuilder.put(
+				"Content-Length", fileSize
+			).put(
+				"Content-Type", ContentTypes.APPLICATION_OCTET_STREAM
+			).build(),
+			null);
 
-		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
-		options.addHeader("Content-Length", fileSize);
-		options.addHeader(
-			"Content-Type", ContentTypes.APPLICATION_OCTET_STREAM);
 		options.addInputStreamPart(
 			"file", fileName, fileInputStream,
 			ContentTypes.APPLICATION_OCTET_STREAM);
 		options.setLocation(gcsSessionURL);
 		options.setPut(true);
 
+		String responseString = _sendRequest(options);
+
+		if (Validator.isNull(responseString)) {
+			throw new PortalException("failed-to-upload-file");
+		}
+	}
+
+	private static Blob _getGoogleCloudFileObject(
+			String bucketName, String fileName, PatcherBuild patcherBuild)
+		throws Exception {
+
+		StorageOptions storageOptions = StorageOptions.getDefaultInstance();
+
+		Storage storage = storageOptions.getService();
+
+		BlobId blobId = BlobId.of(bucketName, patcherBuild.getFileName());
+
+		Blob blob = storage.get(blobId);
+
+		if (blob == null) {
+			throw new PortalException(
+				LanguageUtil.format(
+					LocaleUtil.getMostRelevantLocale(),
+					"file-x-was-not-found-in-the-x-gcs-bucket",
+					new Object[] {fileName, bucketName}));
+		}
+
+		return blob;
+	}
+
+	private static Http.Options _initOptions(
+			boolean authenticate, Map<String, String> headers,
+			PatcherConfiguration patcherConfiguration)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
+
+		if (authenticate) {
+			options.addHeader(
+				"Authorization",
+				"Bearer " + getAuthenticationToken(patcherConfiguration));
+		}
+
+		for (Map.Entry<String, String> header : headers.entrySet()) {
+			options.addHeader(header.getKey(), header.getValue());
+		}
+
+		return options;
+	}
+
+	private static String _sendRequest(Http.Options options) throws Exception {
 		String responseString = HttpUtil.URLtoString(options);
 
 		Http.Response response = options.getResponse();
@@ -341,12 +345,16 @@ public class HelpCenterUtil {
 		int responseCode = response.getResponseCode();
 
 		if (responseCode != HttpURLConnection.HTTP_OK) {
-			_log.error(
-				StringBundler.concat(
-					"Response code ", responseCode, ": ", responseString));
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Response code ", responseCode, ": ", responseString));
+			}
 
-			throw new PortalException("failed-to-upload-file");
+			return null;
 		}
+
+		return responseString;
 	}
 
 	private static final String _PATCHER_USER_AGENT = "OSB Patcher Portal/7.4";

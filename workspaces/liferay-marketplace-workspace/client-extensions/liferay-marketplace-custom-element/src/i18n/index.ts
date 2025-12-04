@@ -10,7 +10,7 @@ export const languages = {
 	en_US,
 };
 
-type Word = keyof typeof en_US;
+export type Word = keyof typeof en_US;
 
 export function translate(
 	word: Word,

@@ -23,6 +23,7 @@ import {permissionsBulkAction} from '../default_permission/BulkPermissionModalCo
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import openResetAssetPermissionModal from '../default_permission/ResetPermissionModalContent';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
+import ExportTranslationModalContent from '../modal/ExportTranslationModalContent';
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
 import ACTIONS from './actions/creationMenuActions';
 import deleteAssetEntriesBulkAction, {
@@ -44,6 +45,8 @@ import GalleryView from './views/GalleryView';
 export type AdditionalProps = {
 	assetLibraries: AssetLibrary[];
 	autocompleteURL: string;
+	availableExportFileFormats: any[];
+	availableTargetLocales: any[];
 	baseFolderViewURL: string;
 	brokenLinksCheckerEnabled: boolean;
 	cmsGroupId?: number;
@@ -296,10 +299,35 @@ export default function AssetsFDSPropsTransformer({
 					await deleteItemAction(itemData, loadData);
 				}
 			}
-			else if (
-				action?.data?.id === 'export-for-translation' ||
-				action?.data?.id === 'import-translation'
-			) {
+			else if (action?.data?.id === 'export-for-translation') {
+				event?.preventDefault();
+
+				openModal({
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						ExportTranslationModalContent({
+							availableExportFileFormats:
+								additionalProps.availableExportFileFormats,
+							availableSourceLocales: Object.keys(
+								itemData.embedded?.title_i18n
+							).map((languageId) =>
+								additionalProps.availableTargetLocales.find(
+									(locale) => locale.languageId === languageId
+								)
+							),
+							availableTargetLocales:
+								additionalProps.availableTargetLocales,
+							closeModal,
+							defaultSourceLanguageId:
+								itemData.embedded?.defaultLanguageId,
+							exportTranslationURL: '',
+						}),
+				});
+			}
+			else if (action?.data?.id === 'import-translation') {
 				event?.preventDefault();
 
 				openModal({

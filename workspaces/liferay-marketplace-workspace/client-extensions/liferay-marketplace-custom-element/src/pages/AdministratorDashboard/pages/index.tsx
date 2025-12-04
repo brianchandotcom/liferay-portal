@@ -69,7 +69,7 @@ export default function AdministratorSummary() {
 			description={i18n.translate(
 				'a-sleek-and-intuitive-admin-dashboard-for-monitoring-key-metrics'
 			)}
-			title={i18n.translate('admin-dashboard')}
+			title={i18n.translate('administrator-dashboard')}
 		>
 			<div className="d-flex flex-column">
 				<div className="d-flex flex-wrap mb-4" style={{gap: '20px'}}>

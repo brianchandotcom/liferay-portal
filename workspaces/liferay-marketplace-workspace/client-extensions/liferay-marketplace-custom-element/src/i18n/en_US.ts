@@ -10,7 +10,6 @@ export default {
 		'A request will be sent to deactivate the selected activation key. From now on, it will be hidden and no longer visible.',
 	'a-sleek-and-intuitive-admin-dashboard-for-monitoring-key-metrics':
 		'A sleek and intuitive admin dashboard for monitoring key metrics.',
-	'access-console': 'Access Console',
 	'access-required': 'Access required.',
 	'account': 'Account',
 	'account-details': 'Account Details',
@@ -31,7 +30,7 @@ export default {
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
 	'address-name': 'Address Name',
-	'admin-dashboard': 'Admin Dashboard',
+	'administrator-dashboard': 'Administrator Dashboard',
 	'agreements': 'Agreements',
 	'all-orders': 'All Orders',
 	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit':
@@ -97,8 +96,6 @@ export default {
 	'backend-client-extensions-delivered-as-deployed-services-only-available-to-saas-and-paas-clients':
 		'Backend client extensions delivered as deployed services (only available to SaaS and PaaS clients).',
 	'batch': 'Batch',
-	'becoming-a-liferay-marketplace-customer':
-		'Becoming a Liferay Marketplace Customer',
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
 	'billing-address': 'Billing Address',
@@ -288,6 +285,7 @@ export default {
 	'failure': 'Failure',
 	'file-not-available-for-download': 'File not available for download.',
 	'filter': 'Filter',
+	'finance-dashboard': 'Finance Dashboard',
 	'first-name': 'First Name',
 	'for-businesses-with-a-vat-tax-number-this-account-type-support-multiple-users':
 		'For businesses with a VAT/Tax number; this account type support multiple users.',
@@ -575,6 +573,7 @@ export default {
 		'Review the new publisher info and the Liferay Marketplace terms before proceeding.',
 	'roles': 'Roles',
 	'saas-environments': 'SaaS Environments',
+	'saas-trials': 'SaaS Trials',
 	'save': 'Save',
 	'save-as-a-draft-exit': 'Save as a Draft & Exit',
 	'save-as-draft': 'Save as Draft',
@@ -618,6 +617,7 @@ export default {
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found.',
 	'specify-your-apps-version-this-will-help-the-user-understand-the-latest-version-of-your-app-offered-on-the-marketplace':
 		'Specify your app’s version. This will help the user understand the latest version of your app offered on the Marketplace.',
+	'ssa-dashboard': 'SSA Dashboard',
 	'ssa-trial-installation-in-progress': 'SSA Trial Installation in Progress',
 	'ssa-trial-summary': 'SSA Trial Summary',
 	'ssa-trials': 'SSA Trials',

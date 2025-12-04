@@ -66,6 +66,28 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class AccountsRestController extends BaseRestController {
 
+	@GetMapping("/{externalReferenceCode}/object-key")
+	public ResponseEntity<String> getObjectKey(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			return new ResponseEntity<>(
+				_jiraService.getAccountObjectKey(externalReferenceCode),
+				HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error("Error checking objectKey", exception);
+
+			return new ResponseEntity<>(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@GetMapping("/{externalReferenceCode}/tickets")
 	public ResponseEntity<String> getTickets(
 			@AuthenticationPrincipal Jwt jwt,

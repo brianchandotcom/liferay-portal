@@ -207,18 +207,15 @@ public class SegmentsExperienceUtil {
 	}
 
 	private static void _copyPortletPermissions(
-		long companyId, String newNamespace, String portletId, long plid) {
+		long companyId, String newPortletId, String portletId, long plid) {
 
-		String targetPortletId = _getNewPortletId(newNamespace, portletId);
-
-		String rootPortletId = PortletIdCodec.decodePortletName(
-			portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		String sourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			plid, portletId);
 
 		String targetPrimKey = PortletPermissionUtil.getPrimaryKey(
-			plid, targetPortletId);
+			plid, newPortletId);
 
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.getResourcePermissions(
@@ -255,12 +252,14 @@ public class SegmentsExperienceUtil {
 				portletRegistry.getFragmentEntryLinkPortletIds(
 					fragmentEntryLink)) {
 
-			_getNewPortletPreferences(
-				newFragmentEntryLink.getNamespace(), plid, portletId);
+			String newPortletId = _getNewPortletId(
+				newFragmentEntryLink.getNamespace(), portletId);
+
+			_getNewPortletPreferences(newPortletId, plid, portletId);
 
 			_copyPortletPermissions(
-				fragmentEntryLink.getCompanyId(),
-				newFragmentEntryLink.getNamespace(), portletId, plid);
+				fragmentEntryLink.getCompanyId(), newPortletId, portletId,
+				plid);
 		}
 	}
 
@@ -275,7 +274,8 @@ public class SegmentsExperienceUtil {
 		}
 
 		PortletPreferences portletPreferences = _getNewPortletPreferences(
-			namespace, plid, PortletIdCodec.encode(portletId, instanceId));
+			PortletIdCodec.encode(portletId, namespace), plid,
+			PortletIdCodec.encode(portletId, instanceId));
 
 		if (portletPreferences == null) {
 			return editableValuesJSONObject.toString();
@@ -301,7 +301,7 @@ public class SegmentsExperienceUtil {
 	}
 
 	private static PortletPreferences _getNewPortletPreferences(
-		String namespace, long plid, String portletId) {
+		String newPortletId, long plid, String portletId) {
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
@@ -317,8 +317,6 @@ public class SegmentsExperienceUtil {
 		if ((portlet == null) || portlet.isUndeployedPortlet()) {
 			return null;
 		}
-
-		String newPortletId = _getNewPortletId(namespace, portletId);
 
 		PortletPreferences existingPortletPreferences =
 			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(

@@ -323,7 +323,7 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 			).setType(
 				"group"
 			).build(
-				"groupItems"
+				"groupContextualItems"
 			));
 	}
 

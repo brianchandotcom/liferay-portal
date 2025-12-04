@@ -6,6 +6,7 @@
 package com.liferay.exportimport.report.service.impl;
 
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
+import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.base.ExportImportReportEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -33,7 +34,7 @@ public class ExportImportReportEntryLocalServiceImpl
 	public ExportImportReportEntry addEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId,
-		String modelNameLanguageKey, int origin) {
+		String modelNameLanguageKey) {
 
 		ExportImportReportEntry exportImportReportEntry =
 			exportImportReportEntryPersistence.create(
@@ -47,7 +48,8 @@ public class ExportImportReportEntryLocalServiceImpl
 		exportImportReportEntry.setExportImportConfigurationId(
 			exportImportConfigurationId);
 		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
-		exportImportReportEntry.setOrigin(origin);
+		exportImportReportEntry.setOrigin(
+			ExportImportReportEntryUtil.getOrigin());
 		exportImportReportEntry.setType(
 			ExportImportReportEntryConstants.TYPE_EMPTY);
 		exportImportReportEntry.setStatus(
@@ -63,7 +65,7 @@ public class ExportImportReportEntryLocalServiceImpl
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long classPK, long exportImportConfigurationId,
 		String errorMessage, String errorStacktrace,
-		String modelNameLanguageKey, int origin) {
+		String modelNameLanguageKey) {
 
 		ExportImportReportEntry exportImportReportEntry =
 			exportImportReportEntryPersistence.create(
@@ -80,7 +82,8 @@ public class ExportImportReportEntryLocalServiceImpl
 		exportImportReportEntry.setErrorMessage(errorMessage);
 		exportImportReportEntry.setErrorStacktrace(errorStacktrace);
 		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
-		exportImportReportEntry.setOrigin(origin);
+		exportImportReportEntry.setOrigin(
+			ExportImportReportEntryUtil.getOrigin());
 		exportImportReportEntry.setType(
 			ExportImportReportEntryConstants.TYPE_ERROR);
 		exportImportReportEntry.setStatus(

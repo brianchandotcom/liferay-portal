@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.model.SegmentsExperience;
@@ -131,122 +132,20 @@ public class SegmentsExperienceUtilTest {
 
 		_setUpPortletRegistry(fragmentEntryLink, sourcePortletId);
 
-		_setUpResourcePermissionLocalServiceUtil(
-			companyId, layout.getPlid(), portletId, sourcePortletId,
-			Collections.emptyList(), null);
-
-		SegmentsExperienceUtil.copySegmentsExperienceData(
-			_commentManager, groupId, layout, _portletRegistry,
-			sourceSegmentsExperience, targetSegmentsExperience,
-			key -> Mockito.mock(ServiceContext.class), userId);
-
-		_layoutStructureUtilMockedStatic.verify(
-			() -> LayoutStructureUtil.getLayoutStructure(
-				groupId, layout.getPlid(),
-				sourceSegmentsExperience.getSegmentsExperienceId()));
-
-		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.verify(
-			() ->
-				LayoutPageTemplateStructureLocalServiceUtil.
-					updateLayoutPageTemplateStructureData(
-						userId, groupId, layout.getPlid(),
-						targetSegmentsExperience.getSegmentsExperienceId(),
-						layoutStructure.toString()));
-
-		_resourcePermissionLocalServiceUtilMockedStatic.verify(
-			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
-				companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
-				PortletPermissionUtil.getPrimaryKey(
-					layout.getPlid(), sourcePortletId)));
-
-		_resourcePermissionLocalServiceUtilMockedStatic.verify(
-			() -> ResourcePermissionLocalServiceUtil.createResourcePermission(
-				Mockito.anyLong()),
-			Mockito.never());
-
-		_layoutStructureUtilMockedStatic.clearInvocations();
-		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.
-			clearInvocations();
-		_resourcePermissionLocalServiceUtilMockedStatic.clearInvocations();
+		_testCopySegmentsExperienceData(
+			companyId, groupId, layout, layoutStructure, portletId,
+			sourcePortletId, sourceSegmentsExperience, Collections.emptyList(),
+			targetPortletId, null, targetSegmentsExperience, userId);
 
 		ResourcePermission sourceResourcePermission = _getResourcePermission();
 		ResourcePermission targetResourcePermission = _getResourcePermission();
 
-		_setUpResourcePermissionLocalServiceUtil(
-			companyId, layout.getPlid(), portletId, sourcePortletId,
+		_testCopySegmentsExperienceData(
+			companyId, groupId, layout, layoutStructure, portletId,
+			sourcePortletId, sourceSegmentsExperience,
 			Collections.singletonList(sourceResourcePermission),
-			targetResourcePermission);
-
-		SegmentsExperienceUtil.copySegmentsExperienceData(
-			_commentManager, groupId, layout, _portletRegistry,
-			sourceSegmentsExperience, targetSegmentsExperience,
-			key -> Mockito.mock(ServiceContext.class), userId);
-
-		_layoutStructureUtilMockedStatic.verify(
-			() -> LayoutStructureUtil.getLayoutStructure(
-				groupId, layout.getPlid(),
-				sourceSegmentsExperience.getSegmentsExperienceId()));
-
-		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.verify(
-			() ->
-				LayoutPageTemplateStructureLocalServiceUtil.
-					updateLayoutPageTemplateStructureData(
-						userId, groupId, layout.getPlid(),
-						targetSegmentsExperience.getSegmentsExperienceId(),
-						layoutStructure.toString()));
-
-		_resourcePermissionLocalServiceUtilMockedStatic.verify(
-			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
-				companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
-				PortletPermissionUtil.getPrimaryKey(
-					layout.getPlid(), sourcePortletId)));
-
-		_resourcePermissionLocalServiceUtilMockedStatic.verify(
-			() -> ResourcePermissionLocalServiceUtil.createResourcePermission(
-				Mockito.anyLong()));
-
-		Mockito.verify(
-			targetResourcePermission
-		).setCompanyId(
-			companyId
-		);
-
-		Mockito.verify(
-			targetResourcePermission
-		).setName(
-			portletId
-		);
-
-		Mockito.verify(
-			targetResourcePermission
-		).setScope(
-			ResourceConstants.SCOPE_INDIVIDUAL
-		);
-
-		Mockito.verify(
-			targetResourcePermission
-		).setPrimKey(
-			PortletPermissionUtil.getPrimaryKey(
-				layout.getPlid(), targetPortletId)
-		);
-
-		Mockito.verify(
-			targetResourcePermission
-		).setRoleId(
-			sourceResourcePermission.getRoleId()
-		);
-
-		Mockito.verify(
-			targetResourcePermission
-		).setActionIds(
-			sourceResourcePermission.getActionIds()
-		);
-
-		Mockito.verify(
-			targetResourcePermission
-		).setViewActionId(
-			sourceResourcePermission.isViewActionId()
-		);
+			targetPortletId, targetResourcePermission, targetSegmentsExperience,
+			userId);
 	}
 
 	@Test
@@ -460,6 +359,109 @@ public class SegmentsExperienceUtilTest {
 				Mockito.anyLong())
 		).thenReturn(
 			targetResourcePermission
+		);
+	}
+
+	private void _testCopySegmentsExperienceData(
+			long companyId, long groupId, Layout layout,
+			LayoutStructure layoutStructure, String portletId,
+			String sourcePortletId, SegmentsExperience sourceSegmentsExperience,
+			List<ResourcePermission> sourceResourcePermissions,
+			String targetPortletId, ResourcePermission targetResourcePermission,
+			SegmentsExperience targetSegmentsExperience, long userId)
+		throws Exception {
+
+		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.
+			clearInvocations();
+		_layoutStructureUtilMockedStatic.clearInvocations();
+		_resourcePermissionLocalServiceUtilMockedStatic.reset();
+
+		_setUpResourcePermissionLocalServiceUtil(
+			companyId, layout.getPlid(), portletId, sourcePortletId,
+			sourceResourcePermissions, targetResourcePermission);
+
+		SegmentsExperienceUtil.copySegmentsExperienceData(
+			_commentManager, groupId, layout, _portletRegistry,
+			sourceSegmentsExperience, targetSegmentsExperience,
+			key -> Mockito.mock(ServiceContext.class), userId);
+
+		_layoutStructureUtilMockedStatic.verify(
+			() -> LayoutStructureUtil.getLayoutStructure(
+				groupId, layout.getPlid(),
+				sourceSegmentsExperience.getSegmentsExperienceId()));
+
+		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.verify(
+			() ->
+				LayoutPageTemplateStructureLocalServiceUtil.
+					updateLayoutPageTemplateStructureData(
+						userId, groupId, layout.getPlid(),
+						targetSegmentsExperience.getSegmentsExperienceId(),
+						layoutStructure.toString()));
+
+		_resourcePermissionLocalServiceUtilMockedStatic.verify(
+			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
+				PortletPermissionUtil.getPrimaryKey(
+					layout.getPlid(), sourcePortletId)));
+
+		if (ListUtil.isEmpty(sourceResourcePermissions)) {
+			_resourcePermissionLocalServiceUtilMockedStatic.verify(
+				() ->
+					ResourcePermissionLocalServiceUtil.createResourcePermission(
+						Mockito.anyLong()),
+				Mockito.never());
+
+			return;
+		}
+
+		_resourcePermissionLocalServiceUtilMockedStatic.verify(
+			() -> ResourcePermissionLocalServiceUtil.createResourcePermission(
+				Mockito.anyLong()));
+
+		Mockito.verify(
+			targetResourcePermission
+		).setCompanyId(
+			companyId
+		);
+
+		Mockito.verify(
+			targetResourcePermission
+		).setName(
+			portletId
+		);
+
+		Mockito.verify(
+			targetResourcePermission
+		).setScope(
+			ResourceConstants.SCOPE_INDIVIDUAL
+		);
+
+		Mockito.verify(
+			targetResourcePermission
+		).setPrimKey(
+			PortletPermissionUtil.getPrimaryKey(
+				layout.getPlid(), targetPortletId)
+		);
+
+		ResourcePermission sourceResourcePermission =
+			sourceResourcePermissions.get(0);
+
+		Mockito.verify(
+			targetResourcePermission
+		).setRoleId(
+			sourceResourcePermission.getRoleId()
+		);
+
+		Mockito.verify(
+			targetResourcePermission
+		).setActionIds(
+			sourceResourcePermission.getActionIds()
+		);
+
+		Mockito.verify(
+			targetResourcePermission
+		).setViewActionId(
+			sourceResourcePermission.isViewActionId()
 		);
 	}
 

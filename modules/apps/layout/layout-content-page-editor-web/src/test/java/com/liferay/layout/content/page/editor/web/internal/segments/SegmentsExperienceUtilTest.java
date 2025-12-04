@@ -89,27 +89,14 @@ public class SegmentsExperienceUtilTest {
 
 	@Test
 	public void testCopySegmentsExperienceData() throws Exception {
-		long companyId = RandomTestUtil.randomLong();
-		long groupId = RandomTestUtil.randomLong();
-		long userId = RandomTestUtil.randomLong();
-
-		String newNamespace = RandomTestUtil.randomString();
-		String oldNamespace = RandomTestUtil.randomString();
-
-		String portletId = RandomTestUtil.randomString();
-
-		String sourcePortletId = PortletIdCodec.encode(portletId, oldNamespace);
-
-		String targetPortletId = PortletIdCodec.encode(portletId, newNamespace);
-
 		Layout layout = _getLayout();
 		SegmentsExperience sourceSegmentsExperience = _getSegmentsExperience();
 		SegmentsExperience targetSegmentsExperience = _getSegmentsExperience();
 
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
-			companyId, oldNamespace, portletId);
+			_OLD_NAMESPACE);
 		FragmentEntryLink newFragmentEntryLink = _getFragmentEntryLink(
-			companyId, newNamespace, portletId);
+			_NEW_NAMESPACE);
 
 		Mockito.when(
 			fragmentEntryLink.clone()
@@ -118,7 +105,7 @@ public class SegmentsExperienceUtilTest {
 		);
 
 		_setUpFragmentEntryLinkLocalServiceUtil(
-			fragmentEntryLink, groupId, layout.getPlid(),
+			fragmentEntryLink, layout.getPlid(),
 			sourceSegmentsExperience.getSegmentsExperienceId());
 
 		LayoutStructure layoutStructure = new LayoutStructure();
@@ -127,25 +114,30 @@ public class SegmentsExperienceUtilTest {
 			fragmentEntryLink.getFragmentEntryLinkId(), null, 0);
 
 		_setUpLayoutPageTemplateStructureLocalServiceUtil(
-			groupId, layoutStructure, layout.getPlid(),
+			layoutStructure, layout.getPlid(),
 			sourceSegmentsExperience.getSegmentsExperienceId());
+
+		String sourcePortletId = PortletIdCodec.encode(
+			_PORTLET_ID, _OLD_NAMESPACE);
 
 		_setUpPortletRegistry(fragmentEntryLink, sourcePortletId);
 
+		String targetPortletId = PortletIdCodec.encode(
+			_PORTLET_ID, _NEW_NAMESPACE);
+
 		_testCopySegmentsExperienceData(
-			companyId, groupId, layout, layoutStructure, portletId,
-			sourcePortletId, sourceSegmentsExperience, Collections.emptyList(),
-			targetPortletId, null, targetSegmentsExperience, userId);
+			layout, layoutStructure, sourcePortletId, sourceSegmentsExperience,
+			Collections.emptyList(), targetPortletId, null,
+			targetSegmentsExperience);
 
 		ResourcePermission sourceResourcePermission = _getResourcePermission();
 		ResourcePermission targetResourcePermission = _getResourcePermission();
 
 		_testCopySegmentsExperienceData(
-			companyId, groupId, layout, layoutStructure, portletId,
-			sourcePortletId, sourceSegmentsExperience,
+			layout, layoutStructure, sourcePortletId, sourceSegmentsExperience,
 			Collections.singletonList(sourceResourcePermission),
-			targetPortletId, targetResourcePermission, targetSegmentsExperience,
-			userId);
+			targetPortletId, targetResourcePermission,
+			targetSegmentsExperience);
 	}
 
 	@Test
@@ -170,16 +162,14 @@ public class SegmentsExperienceUtilTest {
 					segmentsExperience)));
 	}
 
-	private FragmentEntryLink _getFragmentEntryLink(
-		long companyId, String namespace, String portletId) {
-
+	private FragmentEntryLink _getFragmentEntryLink(String namespace) {
 		FragmentEntryLink fragmentEntryLink = Mockito.mock(
 			FragmentEntryLink.class);
 
 		Mockito.when(
 			fragmentEntryLink.getCompanyId()
 		).thenReturn(
-			companyId
+			_COMPANY_ID
 		);
 
 		Mockito.when(
@@ -200,7 +190,7 @@ public class SegmentsExperienceUtilTest {
 			JSONUtil.put(
 				"instanceId", namespace
 			).put(
-				"portletId", portletId
+				"portletId", _PORTLET_ID
 			)
 		);
 
@@ -282,14 +272,14 @@ public class SegmentsExperienceUtilTest {
 	}
 
 	private void _setUpFragmentEntryLinkLocalServiceUtil(
-		FragmentEntryLink fragmentEntryLink, long groupId, long plid,
+		FragmentEntryLink fragmentEntryLink, long plid,
 		long segmentsExperienceId) {
 
 		_fragmentEntryLinkLocalServiceUtilMockedStatic.when(
 			() ->
 				FragmentEntryLinkLocalServiceUtil.
 					getFragmentEntryLinksBySegmentsExperienceId(
-						groupId, segmentsExperienceId, plid)
+						_GROUP_ID, segmentsExperienceId, plid)
 		).thenReturn(
 			Collections.singletonList(fragmentEntryLink)
 		);
@@ -303,12 +293,11 @@ public class SegmentsExperienceUtilTest {
 	}
 
 	private void _setUpLayoutPageTemplateStructureLocalServiceUtil(
-		long groupId, LayoutStructure layoutStructure, long plid,
-		long segmentsExperienceId) {
+		LayoutStructure layoutStructure, long plid, long segmentsExperienceId) {
 
 		_layoutStructureUtilMockedStatic.when(
 			() -> LayoutStructureUtil.getLayoutStructure(
-				groupId, plid, segmentsExperienceId)
+				_GROUP_ID, plid, segmentsExperienceId)
 		).thenReturn(
 			layoutStructure
 		);
@@ -325,7 +314,7 @@ public class SegmentsExperienceUtilTest {
 		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.when(
 			() ->
 				LayoutPageTemplateStructureLocalServiceUtil.
-					fetchLayoutPageTemplateStructure(groupId, plid)
+					fetchLayoutPageTemplateStructure(_GROUP_ID, plid)
 		).thenReturn(
 			layoutPageTemplateStructure
 		);
@@ -363,12 +352,11 @@ public class SegmentsExperienceUtilTest {
 	}
 
 	private void _testCopySegmentsExperienceData(
-			long companyId, long groupId, Layout layout,
-			LayoutStructure layoutStructure, String portletId,
+			Layout layout, LayoutStructure layoutStructure,
 			String sourcePortletId, SegmentsExperience sourceSegmentsExperience,
 			List<ResourcePermission> sourceResourcePermissions,
 			String targetPortletId, ResourcePermission targetResourcePermission,
-			SegmentsExperience targetSegmentsExperience, long userId)
+			SegmentsExperience targetSegmentsExperience)
 		throws Exception {
 
 		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.
@@ -377,30 +365,30 @@ public class SegmentsExperienceUtilTest {
 		_resourcePermissionLocalServiceUtilMockedStatic.reset();
 
 		_setUpResourcePermissionLocalServiceUtil(
-			companyId, layout.getPlid(), portletId, sourcePortletId,
+			_COMPANY_ID, layout.getPlid(), _PORTLET_ID, sourcePortletId,
 			sourceResourcePermissions, targetResourcePermission);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
-			_commentManager, groupId, layout, _portletRegistry,
+			_commentManager, _GROUP_ID, layout, _portletRegistry,
 			sourceSegmentsExperience, targetSegmentsExperience,
-			key -> Mockito.mock(ServiceContext.class), userId);
+			key -> Mockito.mock(ServiceContext.class), _USER_ID);
 
 		_layoutStructureUtilMockedStatic.verify(
 			() -> LayoutStructureUtil.getLayoutStructure(
-				groupId, layout.getPlid(),
+				_GROUP_ID, layout.getPlid(),
 				sourceSegmentsExperience.getSegmentsExperienceId()));
 
 		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.verify(
 			() ->
 				LayoutPageTemplateStructureLocalServiceUtil.
 					updateLayoutPageTemplateStructureData(
-						userId, groupId, layout.getPlid(),
+						_USER_ID, _GROUP_ID, layout.getPlid(),
 						targetSegmentsExperience.getSegmentsExperienceId(),
 						layoutStructure.toString()));
 
 		_resourcePermissionLocalServiceUtilMockedStatic.verify(
 			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
-				companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
+				_COMPANY_ID, _PORTLET_ID, ResourceConstants.SCOPE_INDIVIDUAL,
 				PortletPermissionUtil.getPrimaryKey(
 					layout.getPlid(), sourcePortletId)));
 
@@ -421,13 +409,13 @@ public class SegmentsExperienceUtilTest {
 		Mockito.verify(
 			targetResourcePermission
 		).setCompanyId(
-			companyId
+			_COMPANY_ID
 		);
 
 		Mockito.verify(
 			targetResourcePermission
 		).setName(
-			portletId
+			_PORTLET_ID
 		);
 
 		Mockito.verify(
@@ -464,6 +452,18 @@ public class SegmentsExperienceUtilTest {
 			sourceResourcePermission.isViewActionId()
 		);
 	}
+
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
+
+	private static final String _NEW_NAMESPACE = RandomTestUtil.randomString();
+
+	private static final String _OLD_NAMESPACE = RandomTestUtil.randomString();
+
+	private static final String _PORTLET_ID = RandomTestUtil.randomString();
+
+	private static final long _USER_ID = RandomTestUtil.randomLong();
 
 	private static final MockedStatic<CounterLocalServiceUtil>
 		_counterLocalServiceUtilMockedStatic = Mockito.mockStatic(

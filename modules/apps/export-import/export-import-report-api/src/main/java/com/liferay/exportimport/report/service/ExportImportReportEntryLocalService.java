@@ -56,7 +56,7 @@ public interface ExportImportReportEntryLocalService
 	public ExportImportReportEntry addEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId,
-		String modelNameLanguageKey, int origin);
+		String modelNameLanguageKey);
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -64,7 +64,7 @@ public interface ExportImportReportEntryLocalService
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long classPK, long exportImportConfigurationId,
 		String errorMessage, String errorStacktrace,
-		String modelNameLanguageKey, int origin);
+		String modelNameLanguageKey);
 
 	/**
 	 * Adds the export import report entry to the database. Also notifies the appropriate model listeners.

@@ -10,12 +10,10 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.GetObjectMetadataRequest;
-import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.StorageClass;
 import com.amazonaws.services.s3.transfer.TransferManager;
@@ -66,15 +64,19 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
+import software.amazon.awssdk.awscore.exception.AwsServiceException;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.core.async.AsyncResponseTransformer;
 import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient;
 import software.amazon.awssdk.http.nio.netty.ProxyConfiguration;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
 import software.amazon.awssdk.services.s3.model.DeleteObjectResponse;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
-import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
-import software.amazon.awssdk.awscore.exception.AwsServiceException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -219,50 +221,34 @@ public class S3Store implements Store {
 			String versionLabel)
 		throws PortalException {
 
+		if (Validator.isNull(versionLabel)) {
+			versionLabel = _getHeadVersionLabel(
+				companyId, repositoryId, fileName);
+		}
+
+		String key = S3KeyTransformerUtil.getFileVersionKey(
+			companyId, repositoryId, fileName, versionLabel);
+
+		CompletableFuture<ResponseInputStream<GetObjectResponse>>
+			completableFuture = _s3AsyncClient.getObject(
+				builder -> {
+					builder.bucket(_s3StoreConfiguration.bucketName());
+					builder.key(key);
+				},
+				AsyncResponseTransformer.toBlockingInputStream());
+
 		try {
-			if (Validator.isNull(versionLabel)) {
-				versionLabel = _getHeadVersionLabel(
-					companyId, repositoryId, fileName);
-			}
+			return new UnsyncFilterInputStream(completableFuture.join());
+		}
+		catch (CompletionException completionException) {
+			Throwable throwable = completionException.getCause();
 
-			S3Object s3Object = _amazonS3.getObject(
-				new GetObjectRequest(
-					_s3StoreConfiguration.bucketName(),
-					S3KeyTransformerUtil.getFileVersionKey(
-						companyId, repositoryId, fileName, versionLabel)));
-
-			if (s3Object == null) {
+			if (throwable instanceof NoSuchKeyException) {
 				throw new NoSuchFileException(
 					companyId, repositoryId, fileName, versionLabel);
 			}
 
-			InputStream s3InputStream = s3Object.getObjectContent();
-
-			if (s3InputStream == null) {
-				throw new IOException("S3 object input stream is null");
-			}
-
-			return new UnsyncFilterInputStream(s3InputStream) {
-
-				@Override
-				public void close() throws IOException {
-					super.close();
-
-					s3Object.close();
-				}
-
-			};
-		}
-		catch (AmazonClientException amazonClientException) {
-			if (_isFileNotFound(amazonClientException)) {
-				throw new NoSuchFileException(
-					companyId, repositoryId, fileName, versionLabel);
-			}
-
-			throw _transform(amazonClientException);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
+			throw _transform(throwable);
 		}
 	}
 

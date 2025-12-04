@@ -2,7 +2,7 @@ resource "helm_release" "external_secrets" {
 	chart="external-secrets"
 	create_namespace=true
 	name="external-secrets"
-	namespace="external-secrets"
+	namespace=var.external_secrets_namespace
 	repository="https://charts.external-secrets.io"
 	values=[
 		yamlencode(

@@ -15,7 +15,10 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import createTempFile from '../../../utils/createTempFile';
-import {normalizeCSV, readCSVFile} from '../../../utils/fileReader';
+import {
+	readCSVFile,
+	sortCSVHeaderAndSingleRow,
+} from '../../../utils/fileReader';
 import getRandomString from '../../../utils/getRandomString';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 import {
@@ -546,10 +549,10 @@ test('can download object definition sample file', async ({
 		)
 	);
 
-	const normalizedFile = normalizeCSV(file);
-	const normalizedExpectedFile = normalizeCSV(expectedFile);
+	const sortedFile = sortCSVHeaderAndSingleRow(file);
+	const sortedExpectedFile = sortCSVHeaderAndSingleRow(expectedFile);
 
-	expect(normalizedFile).toEqual(normalizedExpectedFile);
+	expect(sortedFile).toEqual(sortedExpectedFile);
 });
 
 test('can handle OnlyAddNewRecords and UpdateChangedRecordFields import strategies with duplicate ERCs', async ({

@@ -61,8 +61,7 @@ public class ImportStagedModelExceptionHandlerImpl
 			ExportImportClassedModelUtil.getClassPK(stagedModel),
 			GetterUtil.getLong(portletDataContext.getExportImportProcessId()),
 			portletDataException.getMessage(),
-			_getErrorStackTrace(portletDataException), modelClass.getName(),
-			ExportImportReportEntryUtil.getOrigin());
+			_getErrorStackTrace(portletDataException), modelClass.getName());
 	}
 
 	private String _getErrorStackTrace(Throwable throwable) {

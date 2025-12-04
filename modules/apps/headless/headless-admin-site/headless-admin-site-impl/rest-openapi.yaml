@@ -3719,8 +3719,8 @@ components:
                 The value of a fragment text element.
             discriminator:
                 mapping:
-                    Inline: "#/components/schemas/TextInlineFragmentValue"
-                    Mapped: "#/components/schemas/TextMappedFragmentValue"
+                    Inline: "#/components/schemas/TextFragmentInlineValue"
+                    Mapped: "#/components/schemas/TextFragmentMappedValue"
                 propertyName: type
             properties:
                 type:
@@ -3730,7 +3730,7 @@ components:
                     enum: [Inline, Mapped]
                     type: string
             type: object
-        TextInlineFragmentValue:
+        TextFragmentInlineValue:
             # @review
             allOf:
                 -   properties:
@@ -3744,7 +3744,7 @@ components:
             description:
                 An inline value of a fragment text element.
             type: object
-        TextMappedFragmentValue:
+        TextFragmentMappedValue:
             # @review
             allOf:
                 -   properties:

@@ -1542,41 +1542,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate pageTemplateError = randomPageTemplate();
 
+		String expectedProblemTitle = "Unable to download file from ";
+
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(RandomTestUtil.randomString());
+					setUrl(
+						() ->
+							"http://localhost:8080/" +
+								RandomTestUtil.randomString());
 				}
 			};
-
-		pageTemplateError.setThumbnail(thumbnailURLReference);
-
-		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			pageTemplateResource.patchSitePageTemplate(
-				testGroup.getExternalReferenceCode(),
-				pageTemplate.getExternalReferenceCode(), pageTemplateError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
-
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://localhost:8080/" +
-							RandomTestUtil.randomString());
-			}
-		};
 
 		pageTemplateError.setThumbnail(thumbnailURLReference);
 
@@ -1804,40 +1781,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate pageTemplateError = randomPageTemplate();
 
+		String expectedProblemTitle = "Unable to download file from ";
+
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(RandomTestUtil.randomString());
+					setUrl(
+						() ->
+							"http://localhost:8080/" +
+								RandomTestUtil.randomString());
 				}
 			};
-
-		pageTemplateError.setThumbnail(thumbnailURLReference);
-
-		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			testPostSitePageTemplateSetPageTemplate_addPageTemplate(
-				pageTemplateError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
-
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://localhost:8080/" +
-							RandomTestUtil.randomString());
-			}
-		};
 
 		pageTemplateError.setThumbnail(thumbnailURLReference);
 
@@ -2106,41 +2061,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate pageTemplateError = randomPageTemplate();
 
+		String expectedProblemTitle = "Unable to download file from ";
+
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(RandomTestUtil.randomString());
+					setUrl(
+						() ->
+							"http://localhost:8080/" +
+								RandomTestUtil.randomString());
 				}
 			};
-
-		pageTemplateError.setThumbnail(thumbnailURLReference);
-
-		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			pageTemplateResource.putSitePageTemplate(
-				testGroup.getExternalReferenceCode(),
-				putPageTemplate.getExternalReferenceCode(), pageTemplateError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
-
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://localhost:8080/" +
-							RandomTestUtil.randomString());
-			}
-		};
 
 		pageTemplateError.setThumbnail(thumbnailURLReference);
 

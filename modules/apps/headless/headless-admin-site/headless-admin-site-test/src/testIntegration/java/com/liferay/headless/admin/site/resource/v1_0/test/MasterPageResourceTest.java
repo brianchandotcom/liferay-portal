@@ -899,41 +899,18 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage masterPageError = randomMasterPage();
 
+		String expectedProblemTitle = "Unable to download file from ";
+
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(RandomTestUtil.randomString());
+					setUrl(
+						() ->
+							"http://localhost:8080/" +
+								RandomTestUtil.randomString());
 				}
 			};
-
-		masterPageError.setThumbnail(thumbnailURLReference);
-
-		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			masterPageResource.patchSiteMasterPage(
-				testGroup.getExternalReferenceCode(),
-				masterPage.getExternalReferenceCode(), masterPageError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
-
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://localhost:8080/" +
-							RandomTestUtil.randomString());
-			}
-		};
 
 		masterPageError.setThumbnail(thumbnailURLReference);
 
@@ -1123,39 +1100,18 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage masterPageError = randomMasterPage();
 
+		String expectedProblemTitle = "Unable to download file from ";
+
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(RandomTestUtil.randomString());
+					setUrl(
+						() ->
+							"http://localhost:8080/" +
+								RandomTestUtil.randomString());
 				}
 			};
-
-		masterPageError.setThumbnail(thumbnailURLReference);
-
-		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			testPostSiteMasterPage_addMasterPage(masterPageError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
-
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://localhost:8080/" +
-							RandomTestUtil.randomString());
-			}
-		};
 
 		masterPageError.setThumbnail(thumbnailURLReference);
 
@@ -1379,41 +1335,18 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage masterPageError = randomMasterPage();
 
+		String expectedProblemTitle = "Unable to download file from ";
+
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(RandomTestUtil.randomString());
+					setUrl(
+						() ->
+							"http://localhost:8080/" +
+								RandomTestUtil.randomString());
 				}
 			};
-
-		masterPageError.setThumbnail(thumbnailURLReference);
-
-		String expectedProblemTitle = "Unable to download file from ";
-
-		try {
-			masterPageResource.putSiteMasterPage(
-				testGroup.getExternalReferenceCode(),
-				putMasterPage.getExternalReferenceCode(), masterPageError);
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
-				problem.getTitle());
-		}
-
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://localhost:8080/" +
-							RandomTestUtil.randomString());
-			}
-		};
 
 		masterPageError.setThumbnail(thumbnailURLReference);
 

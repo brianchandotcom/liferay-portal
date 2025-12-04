@@ -194,7 +194,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 					: valueIMap.mergeIn(
 							['criterionGroup', 'items', 2],
 							fromJS(criterion)
-					  )
+						)
 			});
 		},
 		[onChange, valueIMap, touched, valid]
@@ -402,9 +402,9 @@ const EventInput: React.FC<IEventInputProps> = ({
 								<div className='text-info'>
 									<ClayIcon symbol='info-circle' />
 									<span className='ml-1'>
-										{
-											'Info: Event date attributes may create time conflicts and reduce matching users. Review your criteria to ensure the segment behaves as expected.'
-										}
+										{Liferay.Language.get(
+											'info-event-date-attributes-may-create-time-conflicts'
+										)}
 									</span>
 								</div>
 							)}

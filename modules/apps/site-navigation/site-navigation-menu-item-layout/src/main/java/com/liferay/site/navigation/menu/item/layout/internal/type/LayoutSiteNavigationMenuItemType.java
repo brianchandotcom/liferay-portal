@@ -332,6 +332,22 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean hasModel(
+		long companyId, long groupId,
+		UnicodeProperties typeSettingsUnicodeProperties) {
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			typeSettingsUnicodeProperties.get("externalReferenceCode"),
+			groupId);
+
+		if (layout == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker,
 			SiteNavigationMenuItem siteNavigationMenuItem)

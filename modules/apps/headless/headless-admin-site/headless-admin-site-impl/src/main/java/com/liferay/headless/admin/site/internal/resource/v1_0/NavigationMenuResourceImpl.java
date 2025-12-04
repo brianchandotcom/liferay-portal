@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenu;
@@ -51,11 +52,14 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
+import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemModelException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderComparator;
 
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -304,6 +308,13 @@ public class NavigationMenuResourceImpl
 			navigationMenuItem.getTypeSettings()
 		).build();
 
+		if (!_hasModel(navigationMenuItem, groupId, unicodeProperties)) {
+			throw new InvalidSiteNavigationMenuItemModelException(
+				"Unable to find model for navigation menu item with external " +
+					"reference code " +
+						navigationMenuItem.getExternalReferenceCode());
+		}
+
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
 				navigationMenuItem.getExternalReferenceCode(), groupId,
@@ -507,6 +518,25 @@ public class NavigationMenuResourceImpl
 		return UnicodePropertiesBuilder.fastLoad(
 			siteNavigationMenuItem.getTypeSettings()
 		).build();
+	}
+
+	private boolean _hasModel(
+			NavigationMenuItem navigationMenuItem, long groupId,
+			UnicodeProperties unicodeProperties)
+		throws Exception {
+
+		if (BatchEngineThreadLocal.isBatchImportInProcess()) {
+			return true;
+		}
+
+		String navigationMenuItemType = navigationMenuItem.getType();
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				navigationMenuItemType);
+
+		return siteNavigationMenuItemType.hasModel(
+			contextCompany.getCompanyId(), groupId, unicodeProperties);
 	}
 
 	private boolean _isAuto(Boolean auto) {
@@ -797,10 +827,24 @@ public class NavigationMenuResourceImpl
 			}
 
 			if (siteNavigationMenuItem != null) {
+				UnicodeProperties unicodeProperties =
+					UnicodePropertiesBuilder.putAll(
+						navigationMenuItem.getTypeSettings()
+					).build();
+
+				if (!_hasModel(
+						navigationMenuItem, groupId, unicodeProperties)) {
+
+					throw new InvalidSiteNavigationMenuItemModelException(
+						"Unable to find model for navigation menu item with " +
+							"external reference code " +
+								navigationMenuItemExternalReferenceCode);
+				}
+
 				SiteNavigationMenuItem updatedSiteNavigationMenuItem =
 					_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
 						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-						String.valueOf(navigationMenuItem.getTypeSettings()),
+						unicodeProperties.toString(),
 						ServiceContextBuilder.create(
 							groupId, contextHttpServletRequest, null
 						).expandoBridgeAttributes(
@@ -848,6 +892,10 @@ public class NavigationMenuResourceImpl
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

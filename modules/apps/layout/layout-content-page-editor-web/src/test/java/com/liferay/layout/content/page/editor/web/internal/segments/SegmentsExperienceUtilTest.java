@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 
 import java.util.Collections;
@@ -88,22 +87,6 @@ public class SegmentsExperienceUtilTest {
 				Mockito.anyString())
 		).thenReturn(
 			mockPortletPreferences
-		);
-
-		SegmentsExperimentLocalService segmentsExperimentLocalService =
-			Mockito.mock(SegmentsExperimentLocalService.class);
-
-		_segmentsExperimentLocalServiceUtilMockedStatic.when(
-			SegmentsExperimentLocalServiceUtil::getService
-		).thenReturn(
-			segmentsExperimentLocalService
-		);
-
-		Mockito.when(
-			segmentsExperimentLocalService.fetchSegmentsExperiment(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong())
-		).thenReturn(
-			null
 		);
 	}
 

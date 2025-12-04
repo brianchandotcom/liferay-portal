@@ -5,7 +5,11 @@
 
 package com.liferay.osb.faro.web.internal.model.display.contacts;
 
+import com.liferay.osb.faro.engine.client.model.Channel;
 import com.liferay.osb.faro.engine.client.model.ChannelDataSource;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Marcos Martins
@@ -16,6 +20,26 @@ public class ChannelDataSourceDisplay {
 	public ChannelDataSourceDisplay() {
 	}
 
+	public ChannelDataSourceDisplay(
+		Channel channel, ChannelDataSource channelDataSource) {
+
+		this(channelDataSource);
+
+		_commerceChannelsCount = 0;
+		_groupsCount = 0;
+
+		for (Map<String, Object> dataSource : channel.getDataSources()) {
+			List<String> commerceChannelIds = (List<String>)dataSource.get(
+				"commerceChannelIds");
+
+			_commerceChannelsCount += commerceChannelIds.size();
+
+			List<String> groupIds = (List<String>)dataSource.get("groupIds");
+
+			_groupsCount += groupIds.size();
+		}
+	}
+
 	public ChannelDataSourceDisplay(ChannelDataSource channelDataSource) {
 		_channelId = channelDataSource.getChannelId();
 		_enabled = channelDataSource.isEnabled();
@@ -23,7 +47,9 @@ public class ChannelDataSourceDisplay {
 	}
 
 	private String _channelId;
+	private int _commerceChannelsCount;
 	private boolean _enabled;
+	private int _groupsCount;
 	private String _name;
 
 }

@@ -631,18 +631,20 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						getFragmentInstanceExternalReferenceCode(),
 					testGroup.getGroupId());
 
-		JSONObject defaultJSONObject =
+		JSONObject defaultEditableValuesJSONObject =
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
 				fragmentEntryLink.getHtml(),
 				fragmentEntryLink.getConfigurationJSONObject());
 
-		JSONObject defaultEditableJSONObject = defaultJSONObject.getJSONObject(
-			FragmentEntryProcessorConstants.
-				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+		JSONObject defaultEditableJSONObject =
+			defaultEditableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
-		JSONObject editableJSONObject = jsonObject.getJSONObject(
+		JSONObject editableJSONObject = editableValuesJSONObject.getJSONObject(
 			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 

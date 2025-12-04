@@ -76,6 +76,13 @@ public abstract class BaseFilesSectionDisplayContext
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "password-policies",
+				"edit-permissions-by-role",
+				LanguageUtil.get(
+					httpServletRequest, "edit-permissions-by-role"),
+				null, null, null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies",
 				"reset-to-default-permissions",
 				LanguageUtil.get(
 					httpServletRequest, "reset-to-default-permissions"),

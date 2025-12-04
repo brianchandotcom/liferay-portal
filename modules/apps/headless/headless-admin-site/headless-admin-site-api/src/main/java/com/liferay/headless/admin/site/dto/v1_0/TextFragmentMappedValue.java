@@ -37,20 +37,20 @@ import java.util.function.Supplier;
 @Generated("")
 @GraphQLName(
 	description = "A mapped value of a fragment text element.",
-	value = "TextMappedFragmentValue"
+	value = "TextFragmentMappedValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "TextMappedFragmentValue")
-public class TextMappedFragmentValue
+@XmlRootElement(name = "TextFragmentMappedValue")
+public class TextFragmentMappedValue
 	extends TextFragmentValue implements Serializable {
 
-	public static TextMappedFragmentValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(TextMappedFragmentValue.class, json);
+	public static TextFragmentMappedValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(TextFragmentMappedValue.class, json);
 	}
 
-	public static TextMappedFragmentValue unsafeToDTO(String json) {
+	public static TextFragmentMappedValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			TextMappedFragmentValue.class, json);
+			TextFragmentMappedValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
@@ -106,14 +106,14 @@ public class TextMappedFragmentValue
 			return true;
 		}
 
-		if (!(object instanceof TextMappedFragmentValue)) {
+		if (!(object instanceof TextFragmentMappedValue)) {
 			return false;
 		}
 
-		TextMappedFragmentValue textMappedFragmentValue =
-			(TextMappedFragmentValue)object;
+		TextFragmentMappedValue textFragmentMappedValue =
+			(TextFragmentMappedValue)object;
 
-		return Objects.equals(toString(), textMappedFragmentValue.toString());
+		return Objects.equals(toString(), textFragmentMappedValue.toString());
 	}
 
 	@Override
@@ -161,7 +161,7 @@ public class TextMappedFragmentValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.TextMappedFragmentValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.TextFragmentMappedValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -36,53 +36,53 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A mapped value of a fragment HTML element.",
-	value = "HTMLMappedFragmentValue"
+	description = "An inline value of a fragment HTML element.",
+	value = "HTMLFragmentInlineValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "HTMLMappedFragmentValue")
-public class HTMLMappedFragmentValue
+@XmlRootElement(name = "HTMLFragmentInlineValue")
+public class HTMLFragmentInlineValue
 	extends HTMLFragmentValue implements Serializable {
 
-	public static HTMLMappedFragmentValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(HTMLMappedFragmentValue.class, json);
+	public static HTMLFragmentInlineValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(HTMLFragmentInlineValue.class, json);
 	}
 
-	public static HTMLMappedFragmentValue unsafeToDTO(String json) {
+	public static HTMLFragmentInlineValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			HTMLMappedFragmentValue.class, json);
+			HTMLFragmentInlineValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment mapped value."
+		description = "The fragment inline value."
 	)
 	@Valid
-	public FragmentMappedValue getFragmentMappedValue() {
-		if (_fragmentMappedValueSupplier != null) {
-			fragmentMappedValue = _fragmentMappedValueSupplier.get();
+	public FragmentInlineValue getFragmentInlineValue() {
+		if (_fragmentInlineValueSupplier != null) {
+			fragmentInlineValue = _fragmentInlineValueSupplier.get();
 
-			_fragmentMappedValueSupplier = null;
+			_fragmentInlineValueSupplier = null;
 		}
 
-		return fragmentMappedValue;
+		return fragmentInlineValue;
 	}
 
-	public void setFragmentMappedValue(
-		FragmentMappedValue fragmentMappedValue) {
+	public void setFragmentInlineValue(
+		FragmentInlineValue fragmentInlineValue) {
 
-		this.fragmentMappedValue = fragmentMappedValue;
+		this.fragmentInlineValue = fragmentInlineValue;
 
-		_fragmentMappedValueSupplier = null;
+		_fragmentInlineValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFragmentMappedValue(
-		UnsafeSupplier<FragmentMappedValue, Exception>
-			fragmentMappedValueUnsafeSupplier) {
+	public void setFragmentInlineValue(
+		UnsafeSupplier<FragmentInlineValue, Exception>
+			fragmentInlineValueUnsafeSupplier) {
 
-		_fragmentMappedValueSupplier = () -> {
+		_fragmentInlineValueSupplier = () -> {
 			try {
-				return fragmentMappedValueUnsafeSupplier.get();
+				return fragmentInlineValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -93,12 +93,12 @@ public class HTMLMappedFragmentValue
 		};
 	}
 
-	@GraphQLField(description = "The fragment mapped value.")
+	@GraphQLField(description = "The fragment inline value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentMappedValue fragmentMappedValue;
+	protected FragmentInlineValue fragmentInlineValue;
 
 	@JsonIgnore
-	private Supplier<FragmentMappedValue> _fragmentMappedValueSupplier;
+	private Supplier<FragmentInlineValue> _fragmentInlineValueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -106,14 +106,14 @@ public class HTMLMappedFragmentValue
 			return true;
 		}
 
-		if (!(object instanceof HTMLMappedFragmentValue)) {
+		if (!(object instanceof HTMLFragmentInlineValue)) {
 			return false;
 		}
 
-		HTMLMappedFragmentValue htmlMappedFragmentValue =
-			(HTMLMappedFragmentValue)object;
+		HTMLFragmentInlineValue htmlFragmentInlineValue =
+			(HTMLFragmentInlineValue)object;
 
-		return Objects.equals(toString(), htmlMappedFragmentValue.toString());
+		return Objects.equals(toString(), htmlFragmentInlineValue.toString());
 	}
 
 	@Override
@@ -128,16 +128,16 @@ public class HTMLMappedFragmentValue
 
 		sb.append("{");
 
-		FragmentMappedValue fragmentMappedValue = getFragmentMappedValue();
+		FragmentInlineValue fragmentInlineValue = getFragmentInlineValue();
 
-		if (fragmentMappedValue != null) {
+		if (fragmentInlineValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentMappedValue\": ");
+			sb.append("\"fragmentInlineValue\": ");
 
-			sb.append(String.valueOf(fragmentMappedValue));
+			sb.append(String.valueOf(fragmentInlineValue));
 		}
 
 		Type type = getType();
@@ -161,7 +161,7 @@ public class HTMLMappedFragmentValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLMappedFragmentValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentInlineValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.HTMLMappedFragmentValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentMappedValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,26 +21,26 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class HTMLMappedFragmentValueSerDes {
+public class HTMLFragmentMappedValueSerDes {
 
-	public static HTMLMappedFragmentValue toDTO(String json) {
-		HTMLMappedFragmentValueJSONParser htmlMappedFragmentValueJSONParser =
-			new HTMLMappedFragmentValueJSONParser();
+	public static HTMLFragmentMappedValue toDTO(String json) {
+		HTMLFragmentMappedValueJSONParser htmlFragmentMappedValueJSONParser =
+			new HTMLFragmentMappedValueJSONParser();
 
-		return htmlMappedFragmentValueJSONParser.parseToDTO(json);
+		return htmlFragmentMappedValueJSONParser.parseToDTO(json);
 	}
 
-	public static HTMLMappedFragmentValue[] toDTOs(String json) {
-		HTMLMappedFragmentValueJSONParser htmlMappedFragmentValueJSONParser =
-			new HTMLMappedFragmentValueJSONParser();
+	public static HTMLFragmentMappedValue[] toDTOs(String json) {
+		HTMLFragmentMappedValueJSONParser htmlFragmentMappedValueJSONParser =
+			new HTMLFragmentMappedValueJSONParser();
 
-		return htmlMappedFragmentValueJSONParser.parseToDTOs(json);
+		return htmlFragmentMappedValueJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		HTMLMappedFragmentValue htmlMappedFragmentValue) {
+		HTMLFragmentMappedValue htmlFragmentMappedValue) {
 
-		if (htmlMappedFragmentValue == null) {
+		if (htmlFragmentMappedValue == null) {
 			return "null";
 		}
 
@@ -48,7 +48,7 @@ public class HTMLMappedFragmentValueSerDes {
 
 		sb.append("{");
 
-		if (htmlMappedFragmentValue.getFragmentMappedValue() != null) {
+		if (htmlFragmentMappedValue.getFragmentMappedValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -57,10 +57,10 @@ public class HTMLMappedFragmentValueSerDes {
 
 			sb.append(
 				String.valueOf(
-					htmlMappedFragmentValue.getFragmentMappedValue()));
+					htmlFragmentMappedValue.getFragmentMappedValue()));
 		}
 
-		if (htmlMappedFragmentValue.getType() != null) {
+		if (htmlFragmentMappedValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -68,7 +68,7 @@ public class HTMLMappedFragmentValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-			sb.append(htmlMappedFragmentValue.getType());
+			sb.append(htmlFragmentMappedValue.getType());
 			sb.append("\"");
 		}
 
@@ -78,52 +78,52 @@ public class HTMLMappedFragmentValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		HTMLMappedFragmentValueJSONParser htmlMappedFragmentValueJSONParser =
-			new HTMLMappedFragmentValueJSONParser();
+		HTMLFragmentMappedValueJSONParser htmlFragmentMappedValueJSONParser =
+			new HTMLFragmentMappedValueJSONParser();
 
-		return htmlMappedFragmentValueJSONParser.parseToMap(json);
+		return htmlFragmentMappedValueJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		HTMLMappedFragmentValue htmlMappedFragmentValue) {
+		HTMLFragmentMappedValue htmlFragmentMappedValue) {
 
-		if (htmlMappedFragmentValue == null) {
+		if (htmlFragmentMappedValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (htmlMappedFragmentValue.getFragmentMappedValue() == null) {
+		if (htmlFragmentMappedValue.getFragmentMappedValue() == null) {
 			map.put("fragmentMappedValue", null);
 		}
 		else {
 			map.put(
 				"fragmentMappedValue",
 				String.valueOf(
-					htmlMappedFragmentValue.getFragmentMappedValue()));
+					htmlFragmentMappedValue.getFragmentMappedValue()));
 		}
 
-		if (htmlMappedFragmentValue.getType() == null) {
+		if (htmlFragmentMappedValue.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(htmlMappedFragmentValue.getType()));
+			map.put("type", String.valueOf(htmlFragmentMappedValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class HTMLMappedFragmentValueJSONParser
-		extends BaseJSONParser<HTMLMappedFragmentValue> {
+	public static class HTMLFragmentMappedValueJSONParser
+		extends BaseJSONParser<HTMLFragmentMappedValue> {
 
 		@Override
-		protected HTMLMappedFragmentValue createDTO() {
-			return new HTMLMappedFragmentValue();
+		protected HTMLFragmentMappedValue createDTO() {
+			return new HTMLFragmentMappedValue();
 		}
 
 		@Override
-		protected HTMLMappedFragmentValue[] createDTOArray(int size) {
-			return new HTMLMappedFragmentValue[size];
+		protected HTMLFragmentMappedValue[] createDTOArray(int size) {
+			return new HTMLFragmentMappedValue[size];
 		}
 
 		@Override
@@ -140,20 +140,20 @@ public class HTMLMappedFragmentValueSerDes {
 
 		@Override
 		protected void setField(
-			HTMLMappedFragmentValue htmlMappedFragmentValue,
+			HTMLFragmentMappedValue htmlFragmentMappedValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "fragmentMappedValue")) {
 				if (jsonParserFieldValue != null) {
-					htmlMappedFragmentValue.setFragmentMappedValue(
+					htmlFragmentMappedValue.setFragmentMappedValue(
 						FragmentMappedValueSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					htmlMappedFragmentValue.setType(
-						HTMLMappedFragmentValue.Type.create(
+					htmlFragmentMappedValue.setType(
+						HTMLFragmentMappedValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

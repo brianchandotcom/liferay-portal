@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.HTMLMappedFragmentValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.HTMLFragmentMappedValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class HTMLMappedFragmentValue
+public class HTMLFragmentMappedValue
 	extends HTMLFragmentValue implements Cloneable, Serializable {
 
-	public static HTMLMappedFragmentValue toDTO(String json) {
-		return HTMLMappedFragmentValueSerDes.toDTO(json);
+	public static HTMLFragmentMappedValue toDTO(String json) {
+		return HTMLFragmentMappedValueSerDes.toDTO(json);
 	}
 
 	public FragmentMappedValue getFragmentMappedValue() {
@@ -51,8 +51,8 @@ public class HTMLMappedFragmentValue
 	protected FragmentMappedValue fragmentMappedValue;
 
 	@Override
-	public HTMLMappedFragmentValue clone() throws CloneNotSupportedException {
-		return (HTMLMappedFragmentValue)super.clone();
+	public HTMLFragmentMappedValue clone() throws CloneNotSupportedException {
+		return (HTMLFragmentMappedValue)super.clone();
 	}
 
 	@Override
@@ -61,14 +61,14 @@ public class HTMLMappedFragmentValue
 			return true;
 		}
 
-		if (!(object instanceof HTMLMappedFragmentValue)) {
+		if (!(object instanceof HTMLFragmentMappedValue)) {
 			return false;
 		}
 
-		HTMLMappedFragmentValue htmlMappedFragmentValue =
-			(HTMLMappedFragmentValue)object;
+		HTMLFragmentMappedValue htmlFragmentMappedValue =
+			(HTMLFragmentMappedValue)object;
 
-		return Objects.equals(toString(), htmlMappedFragmentValue.toString());
+		return Objects.equals(toString(), htmlFragmentMappedValue.toString());
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class HTMLMappedFragmentValue
 	}
 
 	public String toString() {
-		return HTMLMappedFragmentValueSerDes.toJSON(this);
+		return HTMLFragmentMappedValueSerDes.toJSON(this);
 	}
 
 }

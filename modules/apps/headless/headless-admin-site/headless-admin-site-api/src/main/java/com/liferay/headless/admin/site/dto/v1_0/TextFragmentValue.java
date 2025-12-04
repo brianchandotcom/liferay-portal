@@ -48,10 +48,10 @@ import java.util.function.Supplier;
 @JsonSubTypes(
 	{
 		@JsonSubTypes.Type(
-			name = "Inline", value = TextInlineFragmentValue.class
+			name = "Inline", value = TextFragmentInlineValue.class
 		),
 		@JsonSubTypes.Type(
-			name = "Mapped", value = TextMappedFragmentValue.class
+			name = "Mapped", value = TextFragmentMappedValue.class
 		)
 	}
 )

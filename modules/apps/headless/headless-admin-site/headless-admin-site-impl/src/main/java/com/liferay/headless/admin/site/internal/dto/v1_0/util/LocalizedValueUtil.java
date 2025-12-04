@@ -10,6 +10,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ public class LocalizedValueUtil {
 
 	public static List<String> getAvailableLanguageIds() {
 		return TransformUtil.transform(
-			LanguageUtil.getAvailableLocales(), LanguageUtil::getLanguageId);
+			LanguageUtil.getAvailableLocales(), LocaleUtil::toBCP47LanguageId);
 	}
 
 	public static JSONObject toJSONObject(Map<String, String> localizedValues) {

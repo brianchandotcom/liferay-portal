@@ -80,7 +80,7 @@ public class MasterPageDTOConverter
 						Layout.class.getName(),
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));
-				setThumbnail(
+				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->

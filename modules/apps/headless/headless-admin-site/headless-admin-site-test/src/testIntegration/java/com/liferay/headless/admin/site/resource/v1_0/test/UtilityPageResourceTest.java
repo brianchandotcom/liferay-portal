@@ -321,9 +321,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		assertEquals(utilityPage, postUtilityPage);
 		assertValid(postUtilityPage);
 
-		_assertThumbnailURLReference(
-			false, postUtilityPage.getExternalReferenceCode(),
-			fileEntry.getExternalReferenceCode());
+		_assertThumbnailFileEntryId(
+			false, fileEntry.getExternalReferenceCode(),
+			postUtilityPage.getExternalReferenceCode());
 
 		UtilityPage utilityPageError = randomUtilityPage();
 
@@ -603,15 +603,15 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		}
 	}
 
-	private void _assertThumbnailURLReference(
-			Boolean defaultValue, String expectedExternalReferenceCode,
-			String thumbnailExternalReferenceCode)
+	private void _assertThumbnailFileEntryId(
+			Boolean defaultValue, String thumbnailExternalReferenceCode,
+			String utilityPageExternalReferenceCode)
 		throws Exception {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
 				getLayoutUtilityPageEntryByExternalReferenceCode(
-					expectedExternalReferenceCode, testGroup.getGroupId());
+					utilityPageExternalReferenceCode, testGroup.getGroupId());
 
 		long fileEntryId = 0;
 
@@ -771,9 +771,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 				ThumbnailURLReference thumbnail = utilityPage.getThumbnail();
 
-				_assertThumbnailURLReference(
-					false, postUtilityPage.getExternalReferenceCode(),
-					thumbnail.getExternalReferenceCode());
+				_assertThumbnailFileEntryId(
+					false, thumbnail.getExternalReferenceCode(),
+					postUtilityPage.getExternalReferenceCode());
 
 				URL url = new URL(thumbnail.getUrl());
 
@@ -943,9 +943,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			utilityPage.getExternalReferenceCode(),
 			postUtilityPage.getExternalReferenceCode());
 
-		_assertThumbnailURLReference(
-			false, utilityPage.getExternalReferenceCode(),
-			fileEntry.getExternalReferenceCode());
+		_assertThumbnailFileEntryId(
+			false, fileEntry.getExternalReferenceCode(),
+			utilityPage.getExternalReferenceCode());
 
 		FileEntry newFileEntry = _addPortletFileEntry(
 			repository.getDlFolderId());
@@ -963,9 +963,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			utilityPage.getExternalReferenceCode(), utilityPage);
 
-		_assertThumbnailURLReference(
-			false, utilityPage.getExternalReferenceCode(),
-			newFileEntry.getExternalReferenceCode());
+		_assertThumbnailFileEntryId(
+			false, newFileEntry.getExternalReferenceCode(),
+			utilityPage.getExternalReferenceCode());
 
 		UtilityPage utilityPageError = randomUtilityPage();
 
@@ -1193,9 +1193,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			utilityPage.getExternalReferenceCode(), utilityPage);
 
-		_assertThumbnailURLReference(
-			false, putUtilityPage.getExternalReferenceCode(),
-			fileEntry1.getExternalReferenceCode());
+		_assertThumbnailFileEntryId(
+			false, fileEntry1.getExternalReferenceCode(),
+			putUtilityPage.getExternalReferenceCode());
 
 		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
 
@@ -1212,9 +1212,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			putUtilityPage.getExternalReferenceCode(), putUtilityPage);
 
-		_assertThumbnailURLReference(
-			false, putUtilityPage.getExternalReferenceCode(),
-			fileEntry2.getExternalReferenceCode());
+		_assertThumbnailFileEntryId(
+			false, fileEntry2.getExternalReferenceCode(),
+			putUtilityPage.getExternalReferenceCode());
 
 		putUtilityPage.setThumbnail(() -> null);
 
@@ -1222,8 +1222,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			putUtilityPage.getExternalReferenceCode(), putUtilityPage);
 
-		_assertThumbnailURLReference(
-			true, putUtilityPage.getExternalReferenceCode(), null);
+		_assertThumbnailFileEntryId(
+			true, null, putUtilityPage.getExternalReferenceCode());
 
 		UtilityPage utilityPageError = randomUtilityPage();
 

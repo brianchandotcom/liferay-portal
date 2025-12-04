@@ -32,6 +32,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -57,8 +58,20 @@ public class ContextDataInjectorBuilderFactoryImpl
 
 			@Override
 			public ContextDataInjector build() {
-				return instance -> _setInstanceFields(
-					instance.getClass(), instance);
+				return new ContextDataInjector() {
+
+					@Override
+					public Object getValue(Class<?> contextClass) {
+						return _getValue(contextClass);
+					}
+
+					@Override
+					public Object inject(Object instance) throws Exception {
+						return _setInstanceFields(
+							instance.getClass(), instance);
+					}
+
+				};
 			}
 
 			@Override
@@ -73,6 +86,15 @@ public class ContextDataInjectorBuilderFactoryImpl
 				ExpressionConvert<?> expressionConvert) {
 
 				_expressionConvert = expressionConvert;
+
+				return this;
+			}
+
+			@Override
+			public ContextDataInjectorBuilder fallbackContextValueFunction(
+				Function<Class<?>, Object> fallabackContextValueFunction) {
+
+				_fallbackContextValueFunction = fallabackContextValueFunction;
 
 				return this;
 			}
@@ -197,6 +219,75 @@ public class ContextDataInjectorBuilderFactoryImpl
 				return this;
 			}
 
+			private Object _getValue(Class<?> fieldClass) {
+				if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
+					return _acceptLanguage;
+				}
+				else if (fieldClass.isAssignableFrom(Company.class)) {
+					return _company;
+				}
+				else if (fieldClass.isAssignableFrom(ExpressionConvert.class)) {
+					return _expressionConvert;
+				}
+				else if (fieldClass.isAssignableFrom(
+							FilterParserProvider.class)) {
+
+					return _filterParserProvider;
+				}
+				else if (fieldClass.isAssignableFrom(GroupLocalService.class)) {
+					return _groupLocalService;
+				}
+				else if (fieldClass.isAssignableFrom(
+							HttpServletRequest.class)) {
+
+					return _httpServletRequest;
+				}
+				else if (fieldClass.isAssignableFrom(
+							HttpServletResponse.class)) {
+
+					return _httpServletResponse;
+				}
+				else if (fieldClass.isAssignableFrom(
+							ResourceActionLocalService.class)) {
+
+					return _resourceActionLocalService;
+				}
+				else if (fieldClass.isAssignableFrom(
+							ResourcePermissionLocalService.class)) {
+
+					return _resourcePermissionLocalService;
+				}
+				else if (fieldClass.isAssignableFrom(RoleLocalService.class)) {
+					return _roleLocalService;
+				}
+				else if (fieldClass.isAssignableFrom(
+							SortParserProvider.class)) {
+
+					return _sortParserProvider;
+				}
+				else if (fieldClass.isAssignableFrom(UriInfo.class)) {
+					return _uriInfo;
+				}
+				else if (fieldClass.isAssignableFrom(User.class)) {
+					return _user;
+				}
+				else if (fieldClass.isAssignableFrom(
+							VulcanBatchEngineExportTaskResource.class)) {
+
+					return _vulcanBatchEngineExportTaskResource;
+				}
+				else if (fieldClass.isAssignableFrom(
+							VulcanBatchEngineImportTaskResource.class)) {
+
+					return _vulcanBatchEngineImportTaskResource;
+				}
+				else if (_fallbackContextValueFunction != null) {
+					return _fallbackContextValueFunction.apply(fieldClass);
+				}
+
+				return null;
+			}
+
 			private Object _setInstanceFields(Class<?> clazz, Object instance)
 				throws Exception {
 
@@ -221,86 +312,9 @@ public class ContextDataInjectorBuilderFactoryImpl
 
 						_setValue(instance, field, methods, _scopeChecker);
 					}
-					else if (fieldClass.isAssignableFrom(
-								AcceptLanguage.class)) {
-
-						_setValue(instance, field, methods, _acceptLanguage);
-					}
-					else if (fieldClass.isAssignableFrom(Company.class)) {
-						_setValue(instance, field, methods, _company);
-					}
-					else if (fieldClass.isAssignableFrom(
-								ExpressionConvert.class)) {
-
-						_setValue(instance, field, methods, _expressionConvert);
-					}
-					else if (fieldClass.isAssignableFrom(
-								FilterParserProvider.class)) {
-
+					else {
 						_setValue(
-							instance, field, methods, _filterParserProvider);
-					}
-					else if (fieldClass.isAssignableFrom(
-								GroupLocalService.class)) {
-
-						_setValue(instance, field, methods, _groupLocalService);
-					}
-					else if (fieldClass.isAssignableFrom(
-								HttpServletRequest.class)) {
-
-						_setValue(
-							instance, field, methods, _httpServletRequest);
-					}
-					else if (fieldClass.isAssignableFrom(
-								HttpServletResponse.class)) {
-
-						_setValue(
-							instance, field, methods, _httpServletResponse);
-					}
-					else if (fieldClass.isAssignableFrom(
-								ResourceActionLocalService.class)) {
-
-						_setValue(
-							instance, field, methods,
-							_resourceActionLocalService);
-					}
-					else if (fieldClass.isAssignableFrom(
-								ResourcePermissionLocalService.class)) {
-
-						_setValue(
-							instance, field, methods,
-							_resourcePermissionLocalService);
-					}
-					else if (fieldClass.isAssignableFrom(
-								RoleLocalService.class)) {
-
-						_setValue(instance, field, methods, _roleLocalService);
-					}
-					else if (fieldClass.isAssignableFrom(
-								SortParserProvider.class)) {
-
-						_setValue(
-							instance, field, methods, _sortParserProvider);
-					}
-					else if (fieldClass.isAssignableFrom(UriInfo.class)) {
-						_setValue(instance, field, methods, _uriInfo);
-					}
-					else if (fieldClass.isAssignableFrom(User.class)) {
-						_setValue(instance, field, methods, _user);
-					}
-					else if (fieldClass.isAssignableFrom(
-								VulcanBatchEngineExportTaskResource.class)) {
-
-						_setValue(
-							instance, field, methods,
-							_vulcanBatchEngineExportTaskResource);
-					}
-					else if (fieldClass.isAssignableFrom(
-								VulcanBatchEngineImportTaskResource.class)) {
-
-						_setValue(
-							instance, field, methods,
-							_vulcanBatchEngineImportTaskResource);
+							instance, field, methods, _getValue(fieldClass));
 					}
 				}
 
@@ -340,6 +354,7 @@ public class ContextDataInjectorBuilderFactoryImpl
 			private AcceptLanguage _acceptLanguage;
 			private Company _company;
 			private ExpressionConvert<?> _expressionConvert;
+			private Function<Class<?>, Object> _fallbackContextValueFunction;
 			private FilterParserProvider _filterParserProvider;
 			private GroupLocalService _groupLocalService;
 			private HttpServletRequest _httpServletRequest;

@@ -34,11 +34,7 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.PathSegment;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriBuilder;
-import jakarta.ws.rs.core.UriInfo;
 import jakarta.ws.rs.ext.Provider;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseBroadcaster;
@@ -48,9 +44,6 @@ import java.io.IOException;
 
 import java.lang.reflect.Method;
 
-import java.net.URI;
-
-import java.util.List;
 import java.util.Set;
 
 import org.apache.cxf.interceptor.Fault;
@@ -176,116 +169,6 @@ public class ContextContainerRequestFilter
 		}
 	}
 
-	private UriInfo _getVulcanUriInfo(
-		HttpServletRequest httpServletRequest, Message message) {
-
-		UriInfo uriInfo = new UriInfoImpl(message);
-
-		return new UriInfo() {
-
-			@Override
-			public URI getAbsolutePath() {
-				return uriInfo.getAbsolutePath();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return uriInfo.getAbsolutePathBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return uriInfo.getBaseUri();
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriInfoUtil.getBaseUriBuilder(
-					httpServletRequest, uriInfo);
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return uriInfo.getMatchedResources();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return uriInfo.getMatchedURIs();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return uriInfo.getMatchedURIs(decode);
-			}
-
-			@Override
-			public String getPath() {
-				return uriInfo.getPath();
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return uriInfo.getPath(decode);
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return uriInfo.getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return uriInfo.getPathParameters(decode);
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return uriInfo.getPathSegments();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return uriInfo.getPathSegments(decode);
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return uriInfo.getQueryParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return uriInfo.getQueryParameters(decode);
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return uriInfo.getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return uriInfo.getRequestUriBuilder();
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return uriInfo.relativize(uri);
-			}
-
-			@Override
-			public URI resolve(URI uri) {
-				return uriInfo.resolve(uri);
-			}
-
-		};
-	}
-
 	private void _handleMessage(
 			ContainerRequestContext containerRequestContext, Message message)
 		throws Exception {
@@ -330,7 +213,8 @@ public class ContextContainerRequestFilter
 			).sortParserProvider(
 				_sortParserProvider
 			).uriInfo(
-				_getVulcanUriInfo(httpServletRequest, message)
+				UriInfoUtil.getVulcanUriInfo(
+					httpServletRequest, new UriInfoImpl(message))
 			).user(
 				_portal.getUser(httpServletRequest)
 			).vulcanBatchEngineExportTaskResource(

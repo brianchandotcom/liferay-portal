@@ -23,6 +23,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import jakarta.ws.rs.core.UriInfo;
 
+import java.util.function.Function;
+
 /**
  * @author Carlos Correa
  */
@@ -37,6 +39,9 @@ public interface ContextDataInjectorBuilder {
 
 	public ContextDataInjectorBuilder expressionConvert(
 		ExpressionConvert<?> expressionConvert);
+
+	public ContextDataInjectorBuilder fallbackContextValueFunction(
+		Function<Class<?>, Object> contextResolver);
 
 	public ContextDataInjectorBuilder filterParserProvider(
 		FilterParserProvider filterParserProvider);

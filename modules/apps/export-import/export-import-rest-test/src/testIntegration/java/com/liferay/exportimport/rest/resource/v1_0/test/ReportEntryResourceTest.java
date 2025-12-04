@@ -122,8 +122,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 						reportEntry.getClassNameId(),
 						_exportImportConfiguration.
 							getExportImportConfigurationId(),
-						reportEntry.getModelName(),
-						ExportImportReportEntryConstants.ORIGIN_BATCH);
+						reportEntry.getModelName());
 		}
 		else {
 			exportImportReportEntry =
@@ -136,8 +135,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 							getExportImportConfigurationId(),
 						reportEntry.getErrorMessage(),
 						reportEntry.getErrorStacktrace(),
-						reportEntry.getModelName(),
-						ExportImportReportEntryConstants.ORIGIN_BATCH);
+						reportEntry.getModelName());
 		}
 
 		_exportImportReportEntries.add(exportImportReportEntry);
@@ -211,7 +209,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 			reportEntry.getClassNameId(), reportEntry.getClassPK(),
 			_exportImportConfiguration.getExportImportConfigurationId(),
 			reportEntry.getErrorMessage(), reportEntry.getErrorStacktrace(),
-			"example-text", ExportImportReportEntryConstants.ORIGIN_BATCH);
+			"example-text");
 
 		Page<ReportEntry> page =
 			reportEntryResource.getImportProcessReportEntriesPage(

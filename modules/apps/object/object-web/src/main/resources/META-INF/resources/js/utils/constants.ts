@@ -7,6 +7,8 @@ export const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export const DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES = [
 	'Boolean',
+	'Date',
+	'DateTime',
 	'Decimal',
 	'Integer',
 	'LongInteger',

@@ -1485,8 +1485,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getModulePageElement(
-			String externalReferenceCode, int numberOfModules,
-			String parentExternalReferenceCode, int position)
+			String externalReferenceCode, String parentExternalReferenceCode,
+			int position)
 		throws Exception {
 
 		return _getPageElement(
@@ -1507,8 +1507,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		for (int i = 0; i < numberOfModules; i++) {
 			pageElements[i] = _getModulePageElement(
-				externalReferenceCode + i, numberOfModules,
-				externalReferenceCode, i);
+				externalReferenceCode + i, externalReferenceCode, i);
 		}
 
 		return pageElements;

@@ -14,7 +14,7 @@ export class StagingPage {
 		this.page = page;
 	}
 
-	async enableLocalStaging() {
+	async enableLocalStaging(stagedPortlets?: string[]) {
 		await this.page.getByTestId('stagingType_local').check();
 
 		this.page.once('dialog', async (dialog) => {
@@ -23,6 +23,28 @@ export class StagingPage {
 			);
 			await dialog.accept().catch();
 		});
+
+		if (stagedPortlets.length) {
+			await this.page
+				.locator('.custom-checkbox')
+				.filter({hasText: 'Select All'})
+				.locator('input')
+				.check();
+
+			await this.page
+				.locator('.custom-checkbox')
+				.filter({hasText: 'Select All'})
+				.locator('input')
+				.uncheck();
+
+			for (const stagedPortlet of stagedPortlets) {
+				await this.page
+					.locator('.custom-checkbox')
+					.filter({hasText: stagedPortlet})
+					.locator('input')
+					.check();
+			}
+		}
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
@@ -67,7 +89,17 @@ export class StagingPage {
 		});
 	}
 
-	async publish(includeIfModified?: string[], title?: string) {
+	async publish({
+		includeIfModified,
+		rangeAll,
+		selectedEntities,
+		title,
+	}: {
+		includeIfModified?: string[];
+		rangeAll?: boolean;
+		selectedEntities?: string[];
+		title?: string;
+	} = {}) {
 		if (!title) {
 			title = getRandomString();
 		}
@@ -79,6 +111,17 @@ export class StagingPage {
 		await this.page
 			.getByPlaceholder('Enter the name of the process')
 			.fill(title);
+
+		if (rangeAll) {
+			await this.page.locator('[data-qa-id="range_rangeAll"]').check();
+			await this.page.getByRole('link', {name: 'Refresh Counts'}).click();
+		}
+
+		for (const i in selectedEntities) {
+			await this.page
+				.getByRole('checkbox', {name: selectedEntities[i]})
+				.check();
+		}
 
 		for (const i in includeIfModified) {
 			await this.page

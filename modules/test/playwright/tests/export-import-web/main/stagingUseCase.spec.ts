@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 import {createReadStream, readdirSync} from 'fs';
 import path from 'path';
@@ -29,7 +30,19 @@ import {exportImportConfig} from './export_import.config';
 import {exportPageTest} from './fixtures/exportPageTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
+import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {unzipAndCheckFolder} from './utils/stagingUtil';
+
+export const testWithBatchStagingFF = mergeTests(
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-35914': {enabled: true},
+		'LPD-41367': {enabled: true},
+	}),
+	loginTest(),
+	stagingConfigurationPageTest,
+	stagingPageTest
+);
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -51,6 +64,115 @@ export const test = mergeTests(
 	webContentDisplayPageTest,
 	workflowPagesTest,
 	uiElementsPageTest
+);
+
+testWithBatchStagingFF(
+	'Object entries can be staged through batch',
+	{tag: ['@LPD-72343']},
+	async ({apiHelpers, stagingPage}) => {
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectActionAPIClient.postObjectDefinition(
+				objectDefitionRequestData({scope: 'site'})
+			);
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const siteName: string = getRandomString();
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: siteName,
+		});
+
+		apiHelpers.data.push({
+			id: site.id,
+			type: 'site',
+		});
+
+		const initialObjectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: 'object1', name: 'test1'},
+			`c/tests/scopes/${siteName}`
+		);
+
+		await stagingPage.goto(site.name);
+		await stagingPage.enableLocalStaging([
+			objectDefinition.pluralLabel.en_US,
+		]);
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: `c/tests/scopes/${siteName}`,
+				externalReferenceCode: initialObjectEntry.externalReferenceCode,
+			})
+		).toMatchObject({
+			externalReferenceCode: initialObjectEntry.externalReferenceCode,
+			name: initialObjectEntry.name,
+			scopeKey: siteName,
+		});
+
+		const stagingSite =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				`${site.friendlyUrlPath}-staging`
+			);
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: `c/tests/scopes/${stagingSite.key}`,
+				externalReferenceCode: initialObjectEntry.externalReferenceCode,
+			})
+		).toMatchObject({
+			externalReferenceCode: initialObjectEntry.externalReferenceCode,
+			name: initialObjectEntry.name,
+			scopeKey: stagingSite.key,
+		});
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: 'object2', name: 'test2'},
+			`c/tests/scopes/${stagingSite.key}`
+		);
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: `c/tests/scopes/${stagingSite.key}`,
+				externalReferenceCode: objectEntry.externalReferenceCode,
+			})
+		).toMatchObject({
+			externalReferenceCode: objectEntry.externalReferenceCode,
+			name: objectEntry.name,
+			scopeKey: stagingSite.key,
+		});
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: `c/tests/scopes/${siteName}`,
+				externalReferenceCode: objectEntry.externalReferenceCode,
+			})
+		).toEqual({
+			status: 'NOT_FOUND',
+		});
+
+		await stagingPage.goto(stagingSite.key);
+		await stagingPage.publish({
+			rangeAll: true,
+			selectedEntities: [objectDefinition.pluralLabel.en_US],
+		});
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: `c/tests/scopes/${siteName}`,
+				externalReferenceCode: objectEntry.externalReferenceCode,
+			})
+		).toMatchObject({
+			externalReferenceCode: objectEntry.externalReferenceCode,
+			name: objectEntry.name,
+			scopeKey: siteName,
+		});
+	}
 );
 
 test('Staging only approved content goes to live', async ({
@@ -389,7 +511,9 @@ test(
 		);
 
 		await stagingPage.goto(site.name + '-staging');
-		await stagingPage.publish(['Web Content 1 Items Web']);
+		await stagingPage.publish({
+			includeIfModified: ['Web Content 1 Items Web'],
+		});
 
 		const tomcatDir = exportImportConfig.environment.tomcatDir;
 

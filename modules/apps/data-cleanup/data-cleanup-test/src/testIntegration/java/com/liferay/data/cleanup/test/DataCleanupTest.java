@@ -131,6 +131,16 @@ public class DataCleanupTest {
 	}
 
 	@Test
+	public void testDeprecatedModulesUpgradeFrontendImageEditor()
+		throws Exception {
+
+		_testDeprecatedModulesUpgrade(
+			"cleanUpFrontendImageEditorModuleData",
+			"com.liferay.frontend.image.editor.web", null,
+			"com_liferay_image_editor_web_portlet_ImageEditorPortlet", null);
+	}
+
+	@Test
 	public void testDeprecatedModulesUpgradeGoogleMaps() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpGoogleMapsModuleData", "com.liferay.google.maps.web", null,
@@ -157,14 +167,6 @@ public class DataCleanupTest {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpHTMLPreviewModuleData", "com.liferay.html.preview.service",
 			"dependencies/html-preview-tables.sql", null, null);
-	}
-
-	@Test
-	public void testDeprecatedModulesUpgradeImageEditor() throws Exception {
-		_testDeprecatedModulesUpgrade(
-			"cleanUpFrontendImageEditorModuleData",
-			"com.liferay.frontend.image.editor.web", null,
-			"com_liferay_image_editor_web_portlet_ImageEditorPortlet", null);
 	}
 
 	@Test
@@ -243,19 +245,6 @@ public class DataCleanupTest {
 	}
 
 	@Test
-	public void testDeprecatedModulesUpgradePrivateMessaging()
-		throws Exception {
-
-		_testDeprecatedModulesUpgrade(
-			"cleanUpSocialPrivateMessagingModuleData",
-			"com.liferay.social.privatemessaging.service",
-			"dependencies/private-messaging-tables.sql",
-			"com_liferay_social_privatemessaging_web_portlet_" +
-				"PrivateMessagingPortlet",
-			null);
-	}
-
-	@Test
 	public void testDeprecatedModulesUpgradeQuickNote() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpQuickNoteModuleData", "com.liferay.quick.note.web", null,
@@ -301,7 +290,20 @@ public class DataCleanupTest {
 	}
 
 	@Test
-	public void testDeprecatedModulesUpgradeSocialRequest() throws Exception {
+	public void testDeprecatedModulesUpgradeSocialPrivateMessaging()
+		throws Exception {
+
+		_testDeprecatedModulesUpgrade(
+			"cleanUpSocialPrivateMessagingModuleData",
+			"com.liferay.social.privatemessaging.service",
+			"dependencies/private-messaging-tables.sql",
+			"com_liferay_social_privatemessaging_web_portlet_" +
+				"PrivateMessagingPortlet",
+			null);
+	}
+
+	@Test
+	public void testDeprecatedModulesUpgradeSocialRequests() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpSocialRequestsModuleData",
 			"com.liferay.social.requests.web", null,

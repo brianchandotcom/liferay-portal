@@ -119,6 +119,13 @@ public class DataCleanupRegistratorTest {
 	}
 
 	@Test
+	public void testDataCleanupUpgradeFrontendImageEditor() throws Exception {
+		_testModuleDataCleanup(
+			"com.liferay.frontend.image.editor.web", null,
+			"com_liferay_image_editor_web_portlet_ImageEditorPortlet", null);
+	}
+
+	@Test
 	public void testDataCleanupUpgradeGoogleMaps() throws Exception {
 		_testModuleDataCleanup(
 			"com.liferay.google.maps.web", null,
@@ -145,13 +152,6 @@ public class DataCleanupRegistratorTest {
 		_testModuleDataCleanup(
 			"com.liferay.html.preview.service",
 			"dependencies/html-preview-tables.sql", null, null);
-	}
-
-	@Test
-	public void testDataCleanupUpgradeImageEditor() throws Exception {
-		_testModuleDataCleanup(
-			"com.liferay.frontend.image.editor.web", null,
-			"com_liferay_image_editor_web_portlet_ImageEditorPortlet", null);
 	}
 
 	@Test
@@ -220,16 +220,6 @@ public class DataCleanupRegistratorTest {
 	}
 
 	@Test
-	public void testDataCleanupUpgradePrivateMessaging() throws Exception {
-		_testModuleDataCleanup(
-			"com.liferay.social.privatemessaging.service",
-			"dependencies/private-messaging-tables.sql",
-			"com_liferay_social_privatemessaging_web_portlet_" +
-				"PrivateMessagingPortlet",
-			null);
-	}
-
-	@Test
 	public void testDataCleanupUpgradeQuickNote() throws Exception {
 		_testModuleDataCleanup(
 			"com.liferay.quick.note.web", null,
@@ -269,7 +259,19 @@ public class DataCleanupRegistratorTest {
 	}
 
 	@Test
-	public void testDataCleanupUpgradeSocialRequest() throws Exception {
+	public void testDataCleanupUpgradeSocialPrivateMessaging()
+		throws Exception {
+
+		_testModuleDataCleanup(
+			"com.liferay.social.privatemessaging.service",
+			"dependencies/private-messaging-tables.sql",
+			"com_liferay_social_privatemessaging_web_portlet_" +
+				"PrivateMessagingPortlet",
+			null);
+	}
+
+	@Test
+	public void testDataCleanupUpgradeSocialRequests() throws Exception {
 		_testModuleDataCleanup(
 			"com.liferay.social.requests.web", null,
 			"com_liferay_social_requests_web_portlet_SocialRequestsPortlet",

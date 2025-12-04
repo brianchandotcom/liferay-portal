@@ -20,7 +20,7 @@ import type {
 	IView,
 } from '@liferay/frontend-data-set-web';
 
-function applyStyles(itemsActions: any) {
+function applyStyles(itemsActions: Array<IItemsActions>): Array<IItemsActions> {
 	return itemsActions.map((action: IItemsActions) => {
 		const newItems = action.items ? applyStyles(action.items) : undefined;
 		const itemsChanged = newItems !== action.items;

@@ -208,22 +208,6 @@ public class FDSActionDropdownItemBuilder {
 		return fdsActionDropdownItemStep.setIcon(iconUnsafeSupplier);
 	}
 
-	public static AfterIdStep setId(String id) {
-		FDSActionDropdownItemStep fdsActionDropdownItemStep =
-			new FDSActionDropdownItemStep();
-
-		return fdsActionDropdownItemStep.setId(id);
-	}
-
-	public static AfterIdStep setId(
-		UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-
-		FDSActionDropdownItemStep fdsActionDropdownItemStep =
-			new FDSActionDropdownItemStep();
-
-		return fdsActionDropdownItemStep.setId(idUnsafeSupplier);
-	}
-
 	public static AfterLabelStep setLabel(String label) {
 		FDSActionDropdownItemStep fdsActionDropdownItemStep =
 			new FDSActionDropdownItemStep();
@@ -427,23 +411,24 @@ public class FDSActionDropdownItemBuilder {
 				   AfterConfirmationMessageTypeStep, AfterDisabledStep,
 				   AfterDropdownItemsStep, AfterErrorMessageStep,
 				   AfterFDSActionDropdownItemsStep, AfterHighlightedStep,
-				   AfterHrefStep, AfterIconStep, AfterIdStep, AfterKeyStep,
-				   AfterLabelStep, AfterMethodStep, AfterModalSizeStep,
-				   AfterPermissionKeyStep, AfterPutDataStep,
-				   AfterQuickActionStep, AfterRequestBodyStep,
+				   AfterHrefStep, AfterIconStep, AfterKeyStep, AfterLabelStep,
+				   AfterMethodStep, AfterModalSizeStep, AfterPermissionKeyStep,
+				   AfterPutDataStep, AfterQuickActionStep, AfterRequestBodyStep,
 				   AfterSeparatorStep, AfterSetDataStep,
 				   AfterSuccessMessageStep, AfterTargetStep, AfterTitleStep,
 				   AfterTypeStep, AfterVisibilityFiltersStep, BuildStep,
 				   ConfirmationMessageStep, ConfirmationMessageTypeStep,
 				   DisabledStep, DropdownItemsStep, ErrorMessageStep,
-				   HighlightedStep, HrefStep, IconStep, IdStep, LabelStep,
-				   MethodStep, ModalSizeStep, PermissionKeyStep, PutDataStep,
+				   HighlightedStep, HrefStep, IconStep, LabelStep, MethodStep,
+				   ModalSizeStep, PermissionKeyStep, PutDataStep,
 				   QuickActionStep, RequestBodyStep, SeparatorStep, SetDataStep,
 				   SuccessMessageStep, TargetStep, TitleStep, TypeStep,
 				   VisibilityFiltersStep {
 
 		@Override
-		public FDSActionDropdownItem build() {
+		public FDSActionDropdownItem build(String id) {
+			_fdsActionDropdownItem.setId(id);
+
 			return _fdsActionDropdownItem;
 		}
 
@@ -710,31 +695,6 @@ public class FDSActionDropdownItemBuilder {
 
 				if (icon != null) {
 					_fdsActionDropdownItem.setIcon(icon);
-				}
-
-				return this;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		}
-
-		@Override
-		public AfterIdStep setId(String id) {
-			_fdsActionDropdownItem.setId(id);
-
-			return this;
-		}
-
-		@Override
-		public AfterIdStep setId(
-			UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-
-			try {
-				String id = idUnsafeSupplier.get();
-
-				if (id != null) {
-					_fdsActionDropdownItem.setId(id);
 				}
 
 				return this;
@@ -1099,7 +1059,7 @@ public class FDSActionDropdownItemBuilder {
 		extends BuildStep, ConfirmationMessageStep, ConfirmationMessageTypeStep,
 				DisabledStep, DropdownItemsStep, ErrorMessageStep,
 				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
-				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
 				QuickActionStep, RequestBodyStep, SeparatorStep, SetDataStep,
 				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
 				VisibilityFiltersStep {
@@ -1108,8 +1068,8 @@ public class FDSActionDropdownItemBuilder {
 	public interface AfterConfirmationMessageStep
 		extends BuildStep, ConfirmationMessageTypeStep, DisabledStep,
 				DropdownItemsStep, ErrorMessageStep, FDSActionDropdownItemsStep,
-				HighlightedStep, HrefStep, IconStep, IdStep, LabelStep,
-				MethodStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				HighlightedStep, HrefStep, IconStep, LabelStep, MethodStep,
+				ModalSizeStep, PermissionKeyStep, QuickActionStep,
 				RequestBodyStep, SeparatorStep, SetDataStep, SuccessMessageStep,
 				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
@@ -1117,7 +1077,7 @@ public class FDSActionDropdownItemBuilder {
 	public interface AfterConfirmationMessageTypeStep
 		extends BuildStep, DisabledStep, DropdownItemsStep, ErrorMessageStep,
 				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
-				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
 				QuickActionStep, RequestBodyStep, SeparatorStep, SetDataStep,
 				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
 				VisibilityFiltersStep {
@@ -1126,7 +1086,7 @@ public class FDSActionDropdownItemBuilder {
 	public interface AfterDisabledStep
 		extends BuildStep, DropdownItemsStep, ErrorMessageStep,
 				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
-				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
 				QuickActionStep, RequestBodyStep, SeparatorStep,
 				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
 				VisibilityFiltersStep {
@@ -1134,37 +1094,36 @@ public class FDSActionDropdownItemBuilder {
 
 	public interface AfterDropdownItemsStep
 		extends BuildStep, ErrorMessageStep, FDSActionDropdownItemsStep,
-				HighlightedStep, IconStep, IdStep, KeyStep, LabelStep,
-				MethodStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				HighlightedStep, IconStep, KeyStep, LabelStep, MethodStep,
+				ModalSizeStep, PermissionKeyStep, QuickActionStep,
 				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
 				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterErrorMessageStep
 		extends BuildStep, FDSActionDropdownItemsStep, HighlightedStep,
-				HrefStep, IconStep, IdStep, LabelStep, MethodStep,
-				ModalSizeStep, PermissionKeyStep, QuickActionStep,
-				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
-				TitleStep, TypeStep, VisibilityFiltersStep {
+				HrefStep, IconStep, LabelStep, MethodStep, ModalSizeStep,
+				PermissionKeyStep, QuickActionStep, RequestBodyStep,
+				SeparatorStep, SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterFDSActionDropdownItemsStep
-		extends BuildStep, HighlightedStep, HrefStep, IconStep, IdStep,
-				LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
-				QuickActionStep, RequestBodyStep, SeparatorStep,
-				SuccessMessageStep, TargetStep, TitleStep, TypeStep,
-				VisibilityFiltersStep {
-	}
-
-	public interface AfterHighlightedStep
-		extends BuildStep, IconStep, IdStep, LabelStep, MethodStep,
-				ModalSizeStep, PermissionKeyStep, QuickActionStep,
+		extends BuildStep, HighlightedStep, HrefStep, IconStep, LabelStep,
+				MethodStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
 				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
 				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
+	public interface AfterHighlightedStep
+		extends BuildStep, IconStep, LabelStep, MethodStep, ModalSizeStep,
+				PermissionKeyStep, QuickActionStep, RequestBodyStep,
+				SeparatorStep, SuccessMessageStep, TargetStep, TitleStep,
+				TypeStep, VisibilityFiltersStep {
+	}
+
 	public interface AfterHrefStep
-		extends BuildStep, DropdownItemsStep, HighlightedStep, IconStep, IdStep,
+		extends BuildStep, DropdownItemsStep, HighlightedStep, IconStep,
 				KeyStep, LabelStep, MethodStep, ModalSizeStep,
 				PermissionKeyStep, QuickActionStep, RequestBodyStep,
 				SeparatorStep, SuccessMessageStep, TargetStep, TitleStep,
@@ -1172,13 +1131,6 @@ public class FDSActionDropdownItemBuilder {
 	}
 
 	public interface AfterIconStep
-		extends BuildStep, DropdownItemsStep, IdStep, KeyStep, LabelStep,
-				MethodStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
-				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
-				TitleStep, TypeStep, VisibilityFiltersStep {
-	}
-
-	public interface AfterIdStep
 		extends BuildStep, DropdownItemsStep, KeyStep, LabelStep, MethodStep,
 				ModalSizeStep, PermissionKeyStep, QuickActionStep,
 				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
@@ -1221,8 +1173,8 @@ public class FDSActionDropdownItemBuilder {
 		extends ActiveStep, BuildStep, ConfirmationMessageStep,
 				ConfirmationMessageTypeStep, DisabledStep, DropdownItemsStep,
 				ErrorMessageStep, FDSActionDropdownItemsStep, HighlightedStep,
-				HrefStep, IconStep, IdStep, LabelStep, MethodStep,
-				ModalSizeStep, PermissionKeyStep, PutDataStep, QuickActionStep,
+				HrefStep, IconStep, LabelStep, MethodStep, ModalSizeStep,
+				PermissionKeyStep, PutDataStep, QuickActionStep,
 				RequestBodyStep, SeparatorStep, SetDataStep, SuccessMessageStep,
 				TargetStep, TitleStep, TypeStep, VisibilityFiltersStep {
 	}
@@ -1245,7 +1197,7 @@ public class FDSActionDropdownItemBuilder {
 	public interface AfterSetDataStep
 		extends BuildStep, DisabledStep, DropdownItemsStep, ErrorMessageStep,
 				FDSActionDropdownItemsStep, HighlightedStep, HrefStep, IconStep,
-				IdStep, LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
+				LabelStep, MethodStep, ModalSizeStep, PermissionKeyStep,
 				PutDataStep, QuickActionStep, RequestBodyStep, SeparatorStep,
 				SetDataStep, SuccessMessageStep, TargetStep, TitleStep,
 				TypeStep, VisibilityFiltersStep {
@@ -1272,7 +1224,7 @@ public class FDSActionDropdownItemBuilder {
 
 	public interface BuildStep {
 
-		public FDSActionDropdownItem build();
+		public FDSActionDropdownItem build(String id);
 
 	}
 
@@ -1357,15 +1309,6 @@ public class FDSActionDropdownItemBuilder {
 
 		public AfterIconStep setIcon(
 			UnsafeSupplier<String, Exception> iconUnsafeSupplier);
-
-	}
-
-	public interface IdStep {
-
-		public AfterIdStep setId(String id);
-
-		public AfterIdStep setId(
-			UnsafeSupplier<String, Exception> idUnsafeSupplier);
 
 	}
 

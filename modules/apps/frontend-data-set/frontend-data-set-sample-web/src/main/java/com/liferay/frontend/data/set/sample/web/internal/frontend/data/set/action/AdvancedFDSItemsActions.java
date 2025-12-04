@@ -57,8 +57,6 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 						"#test-visibility-filter"
 					).setIcon(
 						"sun"
-					).setId(
-						"sampleVisibilityFilterMessage"
 					).setLabel(
 						"Sample Visibility Filter"
 					).setTarget(
@@ -67,84 +65,86 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 						HashMapBuilder.<String, Object>put(
 							"color", "Yellow"
 						).build()
-					).build(),
+					).build(
+						"sampleVisibilityFilterMessage"
+					),
 					FDSActionDropdownItemBuilder.setIcon(
 						"view"
-					).setId(
-						"infoPanel"
 					).setLabel(
 						"View Details"
 					).setTarget(
 						"infoPanel"
-					).build(),
+					).build(
+						"infoPanel"
+					),
 					FDSActionDropdownItemBuilder.setIcon(
 						"view"
-					).setId(
-						"sampleMessage"
 					).setLabel(
 						"Sample View"
 					).setTarget(
 						"link"
-					).build(),
+					).build(
+						"sampleMessage"
+					),
 					FDSActionDropdownItemBuilder.setHref(
 						"#test-pencil"
 					).setIcon(
 						"pencil"
-					).setId(
-						"sampleEditMessage"
 					).setLabel(
 						"Sample Edit"
 					).setTarget(
 						"link"
-					).build(),
+					).build(
+						"sampleEditMessage"
+					),
 					FDSActionDropdownItemBuilder.setHref(
 						"#test-delete"
 					).setIcon(
 						"times-circle"
-					).setId(
-						"sampleDeleteMessage"
 					).setLabel(
 						"Sample Delete"
 					).setTarget(
 						"link"
-					).build(),
+					).build(
+						"sampleDeleteMessage"
+					),
 					FDSActionDropdownItemBuilder.setHref(
 						"#test-copy"
 					).setIcon(
 						"copy"
-					).setId(
-						"sampleMoveFolderMessage"
 					).setLabel(
 						"Sample Copy"
 					).setTarget(
 						"link"
-					).build(),
+					).build(
+						"sampleMoveFolderMessage"
+					),
 					FDSActionDropdownItemBuilder.setHref(
 						href
 					).setIcon(
 						"truck"
-					).setId(
-						"asyncSuccess"
 					).setLabel(
 						"Async Success"
 					).setMethod(
 						"get"
 					).setTarget(
 						"async"
-					).build(),
+					).build(
+						"asyncSuccess"
+					),
 					FDSActionDropdownItemBuilder.setHref(
 						"http://localhost"
 					).setIcon(
 						"times-circle"
-					).setId(
-						"asyncErrorConnectionRefused"
 					).setLabel(
 						"Async Connection Refused"
 					).setMethod(
 						"get"
 					).setTarget(
 						"async"
-					).build(),
+					).build(
+						"asyncErrorConnectionRefused"
+					),
 					FDSActionDropdownItemBuilder.setData(
 						HashMapBuilder.<String, Object>put(
 							"disableHeader", false
@@ -161,13 +161,13 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 						).buildString()
 					).setIcon(
 						"rectangle-split"
-					).setId(
-						"open-side-panel-no-title"
 					).setLabel(
 						"Side Panel With Action Title"
 					).setTarget(
 						"sidePanel"
-					).build(),
+					).build(
+						"open-side-panel-no-title"
+					),
 					FDSActionDropdownItemBuilder.setData(
 						HashMapBuilder.<String, Object>put(
 							"disableHeader", false
@@ -184,13 +184,13 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 						).buildString()
 					).setIcon(
 						"rectangle-split"
-					).setId(
-						"open-side-panel-no-title"
 					).setLabel(
 						"Side Panel With Action and Content Title"
 					).setTarget(
 						"sidePanel"
-					).build(),
+					).build(
+						"open-side-panel-no-title"
+					),
 					FDSActionDropdownItemBuilder.putData(
 						"disableHeader", "true"
 					).setHref(
@@ -203,13 +203,13 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 						).buildString()
 					).setIcon(
 						"rectangle-split"
-					).setId(
-						"open-side-panel-no-title"
 					).setLabel(
 						"Side Panel With Content Title"
 					).setTarget(
 						"sidePanel"
-					).build(),
+					).build(
+						"open-side-panel-no-title"
+					),
 					FDSActionDropdownItemBuilder.setHref(
 						PortletURLBuilder.createRenderURL(
 							liferayPortletResponse
@@ -220,109 +220,109 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 						).buildString()
 					).setIcon(
 						"rectangle-split"
-					).setId(
-						"open-side-panel-without-title"
 					).setLabel(
 						"Side Panel With No Title"
 					).setTarget(
 						"sidePanel"
-					).build(),
+					).build(
+						"open-side-panel-without-title"
+					),
 					FDSActionDropdownItemBuilder.setHref(
 						href + "/abc"
 					).setIcon(
 						"staging"
-					).setId(
-						"asyncErrorResourceNotFound"
 					).setLabel(
 						"Async Resource Not Found"
 					).setMethod(
 						"get"
 					).setTarget(
 						"async"
-					).build(),
+					).build(
+						"asyncErrorResourceNotFound"
+					),
 					FDSActionDropdownItemBuilder.setIcon(
-						"reload"
-					).setId(
 						"reload"
 					).setLabel(
 						"Reload Data"
 					).setTarget(
 						"link"
-					).build(),
+					).build(
+						"reload"
+					),
 					FDSActionDropdownItemBuilder.setIcon(
 						"rectangle-split"
-					).setId(
-						"openSidePanel"
 					).setLabel(
 						"Open Side Panel"
 					).setTarget(
 						"link"
-					).build())
-			).setId(
-				"groupItems"
+					).build(
+						"openSidePanel"
+					))
 			).setSeparator(
 				true
 			).setType(
 				"group"
-			).build(),
+			).build(
+				"groupItems"
+			),
 			FDSActionDropdownItemBuilder.setIcon(
 				"hidden"
-			).setId(
-				"groupPermissionTest"
 			).setSeparator(
 				false
 			).setType(
 				"group"
-			).build(),
+			).build(
+				"groupPermissionTest"
+			),
 			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
 				FDSActionDropdownItemList.of(
 					FDSActionDropdownItemBuilder.setIcon(
 						"separator"
-					).setId(
-						"sampleMessage"
 					).setLabel(
 						"Group Item"
 					).setTarget(
 						"link"
-					).build(),
+					).build(
+						"sampleMessage"
+					),
 					FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
 						FDSActionDropdownItemList.of(
 							FDSActionDropdownItemBuilder.setIcon(
 								"exclamation-circle"
-							).setId(
-								"sampleMessage"
 							).setLabel(
 								"Contextual Sub Item 1"
 							).setTarget(
 								"link"
-							).build(),
+							).build(
+								"sampleMessage"
+							),
 							FDSActionDropdownItemBuilder.setIcon(
 								"exclamation-circle"
-							).setId(
-								"sampleMessage"
 							).setLabel(
 								"Contextual Sub Item 2"
 							).setTarget(
 								"link"
-							).build())
+							).build(
+								"sampleMessage"
+							))
 					).setIcon(
 						"nodes"
-					).setId(
-						"contextualItem"
 					).setLabel(
 						"Contextual Item"
 					).setSeparator(
 						false
 					).setType(
 						"contextual"
-					).build())
-			).setId(
-				"groupItems"
+					).build(
+						"contextualItem"
+					))
 			).setSeparator(
 				true
 			).setType(
 				"group"
-			).build());
+			).build(
+				"groupItems"
+			));
 	}
 
 	@Override

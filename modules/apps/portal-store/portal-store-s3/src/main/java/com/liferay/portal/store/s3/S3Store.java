@@ -34,7 +34,6 @@ import java.time.Instant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +93,7 @@ import software.amazon.awssdk.transfer.s3.model.FileUpload;
 )
 public class S3Store implements Store {
 
-	public void abortMultipartUploads(Date date) {
+	public void abortMultipartUploads(Instant startInstant) {
 		ListMultipartUploadsPublisher listMultipartUploadsPublisher =
 			_s3AsyncClient.listMultipartUploadsPaginator(
 				builder -> builder.bucket(_s3StoreConfiguration.bucketName()));
@@ -108,9 +107,10 @@ public class S3Store implements Store {
 						for (MultipartUpload multipartUpload :
 								response.uploads()) {
 
-							Instant initiated = multipartUpload.initiated();
+							Instant initiatedInstant =
+								multipartUpload.initiated();
 
-							if (initiated.isBefore(date.toInstant())) {
+							if (initiatedInstant.isBefore(startInstant)) {
 								multipartUploads.add(multipartUpload);
 							}
 						}

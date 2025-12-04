@@ -38,19 +38,21 @@ export interface FileData {
 export default function MultipleFileUploader({
 	assetLibraries,
 	filesToUpload: initialFilesToUpload,
+	groupId: initialGroupId,
 	onModalClose,
 	onUploadComplete,
 	uploadRequest,
 }: {
-	assetLibraries: AssetLibrary[];
+	assetLibraries?: AssetLibrary[];
 	filesToUpload?: FileData[];
+	groupId?: number;
 	onModalClose: () => void;
 	onUploadComplete: ({
 		assetLibrary,
 		failedFiles,
 		successFiles,
 	}: {
-		assetLibrary: AssetLibrary;
+		assetLibrary: AssetLibrary | null;
 		failedFiles: string[];
 		successFiles: string[];
 	}) => void;
@@ -97,7 +99,7 @@ export default function MultipleFileUploader({
 	});
 
 	const findAssetLibrary = (groupId: string) =>
-		assetLibraries.find(
+		assetLibraries?.find(
 			(assetLibrary) => assetLibrary.groupId.toString() === groupId
 		);
 
@@ -110,7 +112,10 @@ export default function MultipleFileUploader({
 	const {errors, handleSubmit, setFieldValue, touched} = useFormik({
 		initialValues: {
 			groupId:
-				assetLibraries.length === 1 ? assetLibraries[0].groupId : 0,
+				initialGroupId ||
+				(assetLibraries?.length === 1
+					? assetLibraries?.[0].groupId
+					: 0),
 		},
 		onSubmit: async (values) => {
 			setIsLoading(true);
@@ -146,9 +151,10 @@ export default function MultipleFileUploader({
 
 				if (onUploadComplete) {
 					onUploadComplete({
-						assetLibrary:
-							findAssetLibrary(String(values.groupId)) ||
-							assetLibraries[0],
+						assetLibrary: assetLibraries
+							? findAssetLibrary(String(values.groupId)) ||
+								assetLibraries?.[0]
+							: null,
 						failedFiles: failedFiles.map((file) => file.name),
 						successFiles: uploadedFiles,
 					});
@@ -185,7 +191,7 @@ export default function MultipleFileUploader({
 							<DragZoneBackground />
 						</div>
 
-						{assetLibraries.length > 1 && (
+						{assetLibraries && assetLibraries.length > 1 && (
 							<div className="mt-4">
 								<FieldBase
 									errorMessage={

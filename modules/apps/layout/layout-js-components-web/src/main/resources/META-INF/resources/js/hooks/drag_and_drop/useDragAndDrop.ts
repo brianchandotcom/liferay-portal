@@ -5,6 +5,8 @@
 
 import usePointerDragAndDrop from './usePointerDragAndDrop';
 
+import './useDragAndDrop.scss';
+
 export type DropPosition = 'bottom' | 'top' | null;
 
 interface Props<T> {

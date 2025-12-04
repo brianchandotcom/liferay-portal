@@ -162,12 +162,13 @@ function RuleItem({
 
 	const dispatch = useDispatch();
 
-	useDragAndDrop({
-		dragItemRef,
-		dropItemRef,
-		item: rule,
-		items: rules,
-	});
+	const {isDragging, isDropBottomPosition, isDropTopPosition} =
+		useDragAndDrop({
+			dragItemRef,
+			dropItemRef,
+			item: rule,
+			items: rules,
+		});
 
 	useEffect(() => {
 		if (editing && inputRef.current) {
@@ -263,7 +264,11 @@ function RuleItem({
 				actions,
 				isRuleDisabled
 			)}
-			className="p-2 page-editor__rule"
+			className={classNames('drag-and-drop p-2 page-editor__rule', {
+				'dragging': isDragging,
+				'drop-bottom': isDropBottomPosition,
+				'drop-top': isDropTopPosition,
+			})}
 			key={rule.id}
 			onClick={async () => {
 				await onHighlightItems();

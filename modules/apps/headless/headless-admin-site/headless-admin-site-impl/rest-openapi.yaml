@@ -743,7 +743,7 @@ components:
                     items:
                         type: permission
                     type: array
-                thumbnail:
+                thumbnailURLReference:
                     $ref: "#/components/schemas/ThumbnailURLReference"
                     # @review
                     description:
@@ -2262,7 +2262,7 @@ components:
                     items:
                         $ref: "#/components/schemas/ItemExternalReference"
                     type: array
-                thumbnail:
+                thumbnailURLReference:
                     $ref: "#/components/schemas/ThumbnailURLReference"
                     # @review
                     description:
@@ -3039,7 +3039,7 @@ components:
                     items:
                         $ref: "#/components/schemas/ItemExternalReference"
                     type: array
-                thumbnail:
+                thumbnailURLReference:
                     $ref: "#/components/schemas/ThumbnailURLReference"
                     # @review
                     description:
@@ -4047,7 +4047,7 @@ components:
                     items:
                         type: permission
                     type: array
-                thumbnail:
+                thumbnailURLReference:
                     $ref: "#/components/schemas/ThumbnailURLReference"
                     # @review
                     description:

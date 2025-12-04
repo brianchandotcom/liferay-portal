@@ -560,27 +560,22 @@ public class S3Store implements Store {
 		List<S3Object> s3Objects = _getS3Objects(
 			S3KeyTransformerUtil.getFileKey(companyId, repositoryId, fileName));
 
-		Iterator<S3Object> iterator = s3Objects.iterator();
-
-		String[] keys = new String[s3Objects.size()];
-
-		for (int i = 0; i < keys.length; i++) {
-			S3Object s3Object = iterator.next();
-
-			keys[i] = s3Object.key();
+		if (s3Objects.isEmpty()) {
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 
-		if (keys.length > 0) {
-			Arrays.sort(keys);
+		String headVersionKey = null;
 
-			String headVersionKey = keys[keys.length - 1];
+		for (S3Object s3Object : s3Objects) {
+			if ((headVersionKey == null) ||
+				(headVersionKey.compareTo(s3Object.key()) < 0)) {
 
-			int x = headVersionKey.lastIndexOf(CharPool.SLASH);
-
-			return headVersionKey.substring(x + 1);
+				headVersionKey = s3Object.key();
+			}
 		}
 
-		throw new NoSuchFileException(companyId, repositoryId, fileName);
+		return headVersionKey.substring(
+			headVersionKey.lastIndexOf(CharPool.SLASH) + 1);
 	}
 
 	private List<S3Object> _getS3Objects(String prefix) {

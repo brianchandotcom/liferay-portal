@@ -862,12 +862,12 @@ public class OIDCUserInfoProcessor {
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		if (!company.isStrangers()) {
+		if (!company.isStrangers() && (user == null)) {
 			throw new StrangersNotAllowedException(companyId);
 		}
 
 		if (!company.isStrangersWithMx() &&
-			company.hasCompanyMx(emailAddress)) {
+			company.hasCompanyMx(emailAddress) && (user == null)) {
 
 			throw new UserEmailAddressException.MustNotUseCompanyMx(
 				emailAddress);

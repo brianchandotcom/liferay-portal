@@ -354,13 +354,17 @@ public class DataSourceController extends BaseFaroController {
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
+		FaroProject faroProject =
+			faroProjectLocalService.getFaroProjectByGroupId(groupId);
+
 		Results<ChannelDataSource> results =
 			contactsEngineClient.getChannelDataSources(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				Long.valueOf(id), enabled, name, cur, delta,
+				faroProject, Long.valueOf(id), enabled, name, cur, delta,
 				orderByFieldsFaroParam.getValue());
 		Function<ChannelDataSource, ChannelDataSourceDisplay> function =
 			channelDataSource -> new ChannelDataSourceDisplay(
+				contactsEngineClient.getChannel(
+					faroProject, channelDataSource.getChannelId()),
 				channelDataSource);
 
 		return new FaroResultsDisplay(results, function);

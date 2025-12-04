@@ -197,6 +197,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		Site site = randomSite();
 
+		site.setDefaultLanguageId(regex);
 		site.setDescription(regex);
 		site.setDescriptiveName(regex);
 		site.setExternalReferenceCode(regex);
@@ -212,6 +213,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		site = SiteSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, site.getDefaultLanguageId());
 		Assert.assertEquals(regex, site.getDescription());
 		Assert.assertEquals(regex, site.getDescriptiveName());
 		Assert.assertEquals(regex, site.getExternalReferenceCode());
@@ -741,6 +743,57 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"analyticsConfiguration", additionalAssertFieldName)) {
+
+				if (site.getAnalyticsConfiguration() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"assetAutoTaggingEnabled", additionalAssertFieldName)) {
+
+				if (site.getAssetAutoTaggingEnabled() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"availableLanguages", additionalAssertFieldName)) {
+
+				if (site.getAvailableLanguages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"contentSharingWithChildrenEnabled",
+					additionalAssertFieldName)) {
+
+				if (site.getContentSharingWithChildrenEnabled() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				if (site.getDefaultLanguageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (site.getDescription() == null) {
 					valid = false;
@@ -769,6 +822,16 @@ public abstract class BaseSiteResourceTestCase {
 					"descriptiveName_i18n", additionalAssertFieldName)) {
 
 				if (site.getDescriptiveName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"directoryIndexingEnabled", additionalAssertFieldName)) {
+
+				if (site.getDirectoryIndexingEnabled() == null) {
 					valid = false;
 				}
 
@@ -809,6 +872,14 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("mapProviderKey", additionalAssertFieldName)) {
+				if (site.getMapProviderKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"membershipRestriction", additionalAssertFieldName)) {
 
@@ -821,6 +892,14 @@ public abstract class BaseSiteResourceTestCase {
 
 			if (Objects.equals("membershipType", additionalAssertFieldName)) {
 				if (site.getMembershipType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("mentionsEnabled", additionalAssertFieldName)) {
+				if (site.getMentionsEnabled() == null) {
 					valid = false;
 				}
 
@@ -862,6 +941,22 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("ratingsTypes", additionalAssertFieldName)) {
+				if (site.getRatingsTypes() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sharingEnabled", additionalAssertFieldName)) {
+				if (site.getSharingEnabled() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("templateKey", additionalAssertFieldName)) {
 				if (site.getTemplateKey() == null) {
 					valid = false;
@@ -878,8 +973,28 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("typeSettings", additionalAssertFieldName)) {
-				if (site.getTypeSettings() == null) {
+			if (Objects.equals("trashEnabled", additionalAssertFieldName)) {
+				if (site.getTrashEnabled() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"trashEntriesMaxAge", additionalAssertFieldName)) {
+
+				if (site.getTrashEntriesMaxAge() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"useDefaultLanguages", additionalAssertFieldName)) {
+
+				if (site.getUseDefaultLanguages() == null) {
 					valid = false;
 				}
 
@@ -1020,6 +1135,72 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"analyticsConfiguration", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getAnalyticsConfiguration(),
+						site2.getAnalyticsConfiguration())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"assetAutoTaggingEnabled", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getAssetAutoTaggingEnabled(),
+						site2.getAssetAutoTaggingEnabled())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"availableLanguages", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getAvailableLanguages(),
+						site2.getAvailableLanguages())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"contentSharingWithChildrenEnabled",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getContentSharingWithChildrenEnabled(),
+						site2.getContentSharingWithChildrenEnabled())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getDefaultLanguageId(),
+						site2.getDefaultLanguageId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						site1.getDescription(), site2.getDescription())) {
@@ -1058,6 +1239,19 @@ public abstract class BaseSiteResourceTestCase {
 				if (!equals(
 						(Map)site1.getDescriptiveName_i18n(),
 						(Map)site2.getDescriptiveName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"directoryIndexingEnabled", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getDirectoryIndexingEnabled(),
+						site2.getDirectoryIndexingEnabled())) {
 
 					return false;
 				}
@@ -1116,6 +1310,16 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("mapProviderKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getMapProviderKey(), site2.getMapProviderKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"membershipRestriction", additionalAssertFieldName)) {
 
@@ -1132,6 +1336,17 @@ public abstract class BaseSiteResourceTestCase {
 			if (Objects.equals("membershipType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						site1.getMembershipType(), site2.getMembershipType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("mentionsEnabled", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getMentionsEnabled(),
+						site2.getMentionsEnabled())) {
 
 					return false;
 				}
@@ -1181,6 +1396,26 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("ratingsTypes", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getRatingsTypes(), site2.getRatingsTypes())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sharingEnabled", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getSharingEnabled(), site2.getSharingEnabled())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("templateKey", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						site1.getTemplateKey(), site2.getTemplateKey())) {
@@ -1201,10 +1436,35 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("typeSettings", additionalAssertFieldName)) {
-				if (!equals(
-						(Map)site1.getTypeSettings(),
-						(Map)site2.getTypeSettings())) {
+			if (Objects.equals("trashEnabled", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getTrashEnabled(), site2.getTrashEnabled())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"trashEntriesMaxAge", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getTrashEntriesMaxAge(),
+						site2.getTrashEntriesMaxAge())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"useDefaultLanguages", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getUseDefaultLanguages(),
+						site2.getUseDefaultLanguages())) {
 
 					return false;
 				}
@@ -1324,6 +1584,72 @@ public abstract class BaseSiteResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("analyticsConfiguration")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("assetAutoTaggingEnabled")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("availableLanguages")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("contentSharingWithChildrenEnabled")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("defaultLanguageId")) {
+			Object object = site.getDefaultLanguageId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("description")) {
 			Object object = site.getDescription();
 
@@ -1422,6 +1748,11 @@ public abstract class BaseSiteResourceTestCase {
 		}
 
 		if (entityFieldName.equals("descriptiveName_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("directoryIndexingEnabled")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1574,6 +1905,11 @@ public abstract class BaseSiteResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("mapProviderKey")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("membershipRestriction")) {
 			sb.append(String.valueOf(site.getMembershipRestriction()));
 
@@ -1581,6 +1917,11 @@ public abstract class BaseSiteResourceTestCase {
 		}
 
 		if (entityFieldName.equals("membershipType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("mentionsEnabled")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1687,6 +2028,16 @@ public abstract class BaseSiteResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("ratingsTypes")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("sharingEnabled")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("templateKey")) {
 			Object object = site.getTemplateKey();
 
@@ -1738,7 +2089,18 @@ public abstract class BaseSiteResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("typeSettings")) {
+		if (entityFieldName.equals("trashEnabled")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("trashEntriesMaxAge")) {
+			sb.append(String.valueOf(site.getTrashEntriesMaxAge()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("useDefaultLanguages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1794,10 +2156,16 @@ public abstract class BaseSiteResourceTestCase {
 		return new Site() {
 			{
 				active = RandomTestUtil.randomBoolean();
+				assetAutoTaggingEnabled = RandomTestUtil.randomBoolean();
+				contentSharingWithChildrenEnabled =
+					RandomTestUtil.randomBoolean();
+				defaultLanguageId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				descriptiveName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				directoryIndexingEnabled = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(
@@ -1806,11 +2174,16 @@ public abstract class BaseSiteResourceTestCase {
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				manualMembership = RandomTestUtil.randomBoolean();
 				membershipRestriction = RandomTestUtil.randomInt();
+				mentionsEnabled = RandomTestUtil.randomBoolean();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				parentSiteExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				sharingEnabled = RandomTestUtil.randomBoolean();
 				templateKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				trashEnabled = RandomTestUtil.randomBoolean();
+				trashEntriesMaxAge = RandomTestUtil.randomInt();
+				useDefaultLanguages = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

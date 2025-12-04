@@ -10,6 +10,7 @@ import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
@@ -74,7 +75,8 @@ public class PrimaryKeyUpdaterUtil {
 					catch (Exception exception) {
 						_log.error(exception);
 					}
-				});
+				},
+				PortalInstancePool.getCompanyIds());
 
 			_awaitFuturesTermination();
 

@@ -149,7 +149,7 @@ public class CXConfigOSGiCommandsTest {
 	@Test
 	public void testGetConfigurationDataValidPid() {
 		String pid =
-			"com.liferay.client.extension.type.configuration.CETConfiguration" +
+			CETConfiguration.class.getName() +
 				"~liferay-sample-cx-1/liferay.com";
 
 		Configuration configuration = _getConfiguration(pid);
@@ -320,8 +320,8 @@ public class CXConfigOSGiCommandsTest {
 
 		_testShow(
 			List.of(
-				"com.liferay.client.extension.type.configuration." +
-					"CETConfiguration~liferay-sample-cx-1/liferay.com"),
+				CETConfiguration.class.getName() +
+					"~liferay-sample-cx-1/liferay.com"),
 			"projectName: liferay-sample-cx-1", failures);
 		_testShow(
 			List.of("non-existing-pid"), "No configuration found.", failures);

@@ -1,0 +1,77 @@
+import Form from 'shared/components/form';
+import React, {useMemo, useState} from 'react';
+import {
+	DAYS,
+	HOURS,
+	HOURS_IN_A_DAY,
+	MAX_DAYS,
+	TIME_WINDOW_OPTIONS
+} from '../../utils/constants';
+import {Option, Picker} from '@clayui/core';
+
+interface IRealTimePeriodInputProps {
+	onChange: (interval: number, timeWindow: string) => void;
+}
+
+const DEFAULT_OPTIONS = {
+	interval: 1,
+	timeWindow: DAYS
+};
+
+const RealTimePeriodInput: React.FC<IRealTimePeriodInputProps> = ({
+	onChange
+}) => {
+	const [interval, setInterval] = useState<number>(1);
+	const [timeWindow, setTimeWindow] = useState(DEFAULT_OPTIONS.timeWindow);
+
+	const INTERVAL_OPTIONS = useMemo(() => {
+		const max = timeWindow === HOURS ? HOURS_IN_A_DAY : MAX_DAYS;
+		return Array.from({length: max}, (_, i) => i + 1);
+	}, [timeWindow]);
+
+	const handleIntervalChange = (value: number) => {
+		setInterval(value);
+		onChange(value, timeWindow);
+	};
+
+	const handleTimePeriodChange = (newKey: string) => {
+		let newInterval = interval;
+		if (interval > HOURS_IN_A_DAY && newKey === HOURS) {
+			newInterval = HOURS_IN_A_DAY;
+			setInterval(newInterval);
+		}
+
+		setTimeWindow(newKey);
+		onChange(newInterval, newKey);
+	};
+
+	return (
+		<Form.Group autoFit>
+			<Form.GroupItem className='unit' label shrink>
+				{Liferay.Language.get('in-the-last').toLowerCase()}
+			</Form.GroupItem>
+			<Picker
+				className='operator-input'
+				items={INTERVAL_OPTIONS}
+				onSelectionChange={handleIntervalChange}
+				selectedKey={interval.toString()}
+				shrink
+			>
+				{number => <Option key={number}>{number.toString()}</Option>}
+			</Picker>
+			<Picker
+				className='operator-input ml-2'
+				items={TIME_WINDOW_OPTIONS}
+				onSelectionChange={handleTimePeriodChange}
+				selectedKey={timeWindow}
+				shrink
+			>
+				{TIME_WINDOW_OPTIONS.map(({label, value}) => (
+					<Option key={value}>{label.toLowerCase()}</Option>
+				))}
+			</Picker>
+		</Form.Group>
+	);
+};
+
+export default RealTimePeriodInput;

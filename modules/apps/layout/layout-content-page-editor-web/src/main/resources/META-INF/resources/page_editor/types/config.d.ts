@@ -231,6 +231,7 @@ export interface Config {
 	updatePortletsHighlightedConfigurationURL: string;
 	updateRowColumnsURL: string;
 	updateRuleURL: string;
+	updateRulesURL: string;
 	updateSegmentsExperiencePriorityURL: string;
 	updateSegmentsExperienceURL: string;
 	videoItemSelectorURL: string;

@@ -126,6 +126,9 @@ public class OIDCUserInfoProcessorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_emailAddress = StringUtil.toLowerCase(
+			RandomTestUtil.randomString() + "@liferay.com");
+
 		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
 			TestPropsValues.getCompanyId(),
 			_classNameLocalService.getClassNameId(User.class.getName()),
@@ -164,6 +167,7 @@ public class OIDCUserInfoProcessorTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+		_screenName = RandomTestUtil.randomString();
 		_uuid = PortalUUIDUtil.generate();
 	}
 
@@ -464,12 +468,11 @@ public class OIDCUserInfoProcessorTest {
 	private static final String _ISSUER = RandomTestUtil.randomString();
 
 	private static String _customOIDCUserInfoMapperJSON;
-	private static String _emailAddress = StringUtil.toLowerCase(
-		RandomTestUtil.randomString() + "@liferay.com");
-	private static String _screenName = RandomTestUtil.randomString();
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private String _emailAddress;
 
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;
@@ -496,6 +499,7 @@ public class OIDCUserInfoProcessorTest {
 	private OpenIdConnectUserLocalService _openIdConnectUserLocalService;
 
 	private String _pid;
+	private String _screenName;
 	private ServiceContext _serviceContext;
 
 	@Inject

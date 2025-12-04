@@ -395,6 +395,28 @@ public class AssetVocabularySiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean hasModel(
+			long companyId, long groupId,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.
+				fetchAssetVocabularyByExternalReferenceCode(
+					typeSettingsUnicodeProperties.get("externalReferenceCode"),
+					_getGroupId(
+						companyId, groupId,
+						typeSettingsUnicodeProperties.get(
+							"scopeExternalReferenceCode")));
+
+		if (assetVocabulary == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker,
 			SiteNavigationMenuItem siteNavigationMenuItem)

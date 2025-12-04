@@ -68,8 +68,8 @@ public class BuildRESTTask extends JavaExec {
 
 	@Input
 	@Optional
-	public String getJakartaEnabled() {
-		return GradleUtil.toString(_jakartaEnabled);
+	public boolean getJakartaEnabled() {
+		return _jakartaEnabled;
 	}
 
 	@InputDirectory

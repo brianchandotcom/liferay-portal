@@ -1116,18 +1116,17 @@ public class FDSActionDropdownItemBuilder {
 	}
 
 	public interface AfterHighlightedStep
-		extends BuildStep, IconStep, LabelStep, MethodStep, ModalSizeStep,
-				PermissionKeyStep, QuickActionStep, RequestBodyStep,
-				SeparatorStep, SuccessMessageStep, TargetStep, TitleStep,
-				TypeStep, VisibilityFiltersStep {
+		extends BuildStep, HrefStep, IconStep, LabelStep, MethodStep,
+				ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterHrefStep
-		extends BuildStep, DropdownItemsStep, HighlightedStep, IconStep,
-				KeyStep, LabelStep, MethodStep, ModalSizeStep,
-				PermissionKeyStep, QuickActionStep, RequestBodyStep,
-				SeparatorStep, SuccessMessageStep, TargetStep, TitleStep,
-				TypeStep, VisibilityFiltersStep {
+		extends BuildStep, DropdownItemsStep, IconStep, KeyStep, LabelStep,
+				MethodStep, ModalSizeStep, PermissionKeyStep, QuickActionStep,
+				RequestBodyStep, SeparatorStep, SuccessMessageStep, TargetStep,
+				TitleStep, TypeStep, VisibilityFiltersStep {
 	}
 
 	public interface AfterIconStep

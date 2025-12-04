@@ -264,7 +264,7 @@ public class DataCleanupRegistratorTest {
 
 		_testModuleDataCleanup(
 			"com.liferay.social.privatemessaging.service",
-			"dependencies/private-messaging-tables.sql",
+			"dependencies/social-private-messaging-tables.sql",
 			"com_liferay_social_privatemessaging_web_portlet_" +
 				"PrivateMessagingPortlet",
 			null);

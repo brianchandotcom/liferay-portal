@@ -425,7 +425,7 @@ public class CXConfigOSGiCommandsTest {
 				StringBundler.concat(
 					"FAILURE: ", Arrays.toString(filtersArray),
 					"\nexpected output: ", expectedConfigurationNames,
-					"\nactual output: ", namesFound, "\n"));
+					"\nactual output: ", namesFound, StringPool.NEW_LINE));
 		}
 	}
 

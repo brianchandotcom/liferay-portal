@@ -908,3 +908,129 @@ test(
 		}
 	}
 );
+
+test(
+	'Edit permissions in bulk by role',
+	{tag: '@LPD-67434'},
+	async ({
+		contentsPage,
+		defaultPermissionsPage,
+		folderPage,
+		page,
+		spaceSummaryPage,
+	}) => {
+		await goToAllSpaces(page);
+
+		const spaceName = 'Space' + getRandomInt();
+
+		await createSpace(page, spaceName);
+
+		try {
+			await goToAllSpaces(page);
+
+			await clickMenuItem('Default Permissions', page, spaceName);
+
+			const parentPermissions = [
+				{action: 'DELETE', checked: true, role: 'Power User'},
+				{action: 'PERMISSIONS', checked: true, role: 'User'},
+			];
+
+			await defaultPermissionsPage.checkPermissionsAndSave(
+				parentPermissions
+			);
+
+			await clickMenuItem('Default Permissions', page, spaceName);
+
+			await page.getByTestId('tab-L_CONTENTS').click();
+
+			await defaultPermissionsPage.checkPermissionsAndSave(
+				parentPermissions
+			);
+
+			await spaceSummaryPage.goto(spaceName);
+
+			await spaceSummaryPage.viewAllContentLink.click();
+
+			const folderName = 'Folder' + getRandomInt();
+
+			await folderPage.createFolder(folderName);
+
+			await verifyPermissions({
+				menuitem: 'Permissions',
+				objectName: folderName,
+				page,
+				permissions: parentPermissions,
+			});
+
+			await contentsPage.createContent('Basic Web Content');
+
+			const contentName = 'Content' + getRandomInt();
+
+			await contentsPage.fillData([{label: 'Title', value: contentName}]);
+
+			await contentsPage.saveContent();
+
+			await spaceSummaryPage.goto(spaceName);
+
+			await spaceSummaryPage.viewAllContentLink.click();
+
+			await tickCheckBoxes(page, [folderName, contentName]);
+
+			await clickMenuItem('Edit Permissions by Role', page);
+
+			await defaultPermissionsPage.permissionsModalSelectRole.selectOption(
+				'Power User'
+			);
+
+			await expect(defaultPermissionsPage.permissionsModal).toBeVisible();
+
+			await defaultPermissionsPage.permissionsModal
+				.getByTestId(`row-checkbox-Power User_VIEW`)
+				.check();
+
+			await page.getByTestId('tab-L_CONTENTS').click();
+
+			await defaultPermissionsPage.permissionsModal
+				.getByTestId(`row-checkbox-Power User_UPDATE`)
+				.check();
+
+			await defaultPermissionsPage.permissionsModalSaveButton.click();
+
+			await page
+				.locator('.alert-info')
+				.getByRole('button', {name: 'Close'})
+				.click();
+
+			await defaultPermissionsPage.permissionsModalCancelButton.click();
+
+			const permissionsByRole1 = [
+				{action: 'VIEW', checked: true, role: 'Power User'},
+				{action: 'PERMISSIONS', checked: true, role: 'User'},
+			];
+
+			await verifyPermissions({
+				menuitem: 'Permissions',
+				objectName: folderName,
+				page,
+				permissions: permissionsByRole1,
+			});
+
+			const permissionsByRole2 = [
+				{action: 'UPDATE', checked: true, role: 'Power User'},
+				{action: 'PERMISSIONS', checked: true, role: 'User'},
+			];
+
+			await verifyPermissions({
+				menuitem: 'Permissions',
+				objectName: contentName,
+				page,
+				permissions: permissionsByRole2,
+			});
+		}
+		finally {
+			await goToAllSpaces(page);
+
+			await deleteSpace(page, spaceName);
+		}
+	}
+);

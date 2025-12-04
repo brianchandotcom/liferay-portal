@@ -12,6 +12,7 @@ export class DefaultPermissionsPage {
 	readonly permissionsModal: Locator;
 	readonly permissionsModalCancelButton: Locator;
 	readonly permissionsModalSaveButton: Locator;
+	readonly permissionsModalSelectRole: Locator;
 	readonly propagateCheckbox: Locator;
 
 	constructor(page: Page) {
@@ -21,6 +22,8 @@ export class DefaultPermissionsPage {
 			this.permissionsModal.getByTestId('button-cancel');
 		this.permissionsModalSaveButton =
 			this.permissionsModal.getByTestId('button-save');
+		this.permissionsModalSelectRole =
+			this.permissionsModal.getByLabel('Select Role');
 		this.propagateCheckbox = this.permissionsModal.getByLabel(
 			'I understand that these changes will also affect existing entities.'
 		);

@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.TextMappedFragmentValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.TextFragmentMappedValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class TextMappedFragmentValue
+public class TextFragmentMappedValue
 	extends TextFragmentValue implements Cloneable, Serializable {
 
-	public static TextMappedFragmentValue toDTO(String json) {
-		return TextMappedFragmentValueSerDes.toDTO(json);
+	public static TextFragmentMappedValue toDTO(String json) {
+		return TextFragmentMappedValueSerDes.toDTO(json);
 	}
 
 	public FragmentMappedValue getFragmentMappedValue() {
@@ -51,8 +51,8 @@ public class TextMappedFragmentValue
 	protected FragmentMappedValue fragmentMappedValue;
 
 	@Override
-	public TextMappedFragmentValue clone() throws CloneNotSupportedException {
-		return (TextMappedFragmentValue)super.clone();
+	public TextFragmentMappedValue clone() throws CloneNotSupportedException {
+		return (TextFragmentMappedValue)super.clone();
 	}
 
 	@Override
@@ -61,14 +61,14 @@ public class TextMappedFragmentValue
 			return true;
 		}
 
-		if (!(object instanceof TextMappedFragmentValue)) {
+		if (!(object instanceof TextFragmentMappedValue)) {
 			return false;
 		}
 
-		TextMappedFragmentValue textMappedFragmentValue =
-			(TextMappedFragmentValue)object;
+		TextFragmentMappedValue textFragmentMappedValue =
+			(TextFragmentMappedValue)object;
 
-		return Objects.equals(toString(), textMappedFragmentValue.toString());
+		return Objects.equals(toString(), textFragmentMappedValue.toString());
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class TextMappedFragmentValue
 	}
 
 	public String toString() {
-		return TextMappedFragmentValueSerDes.toJSON(this);
+		return TextFragmentMappedValueSerDes.toJSON(this);
 	}
 
 }

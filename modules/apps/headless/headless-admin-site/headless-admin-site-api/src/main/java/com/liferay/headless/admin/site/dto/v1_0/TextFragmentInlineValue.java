@@ -36,21 +36,21 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "An inline value of a fragment HTML element.",
-	value = "HTMLInlineFragmentValue"
+	description = "An inline value of a fragment text element.",
+	value = "TextFragmentInlineValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "HTMLInlineFragmentValue")
-public class HTMLInlineFragmentValue
-	extends HTMLFragmentValue implements Serializable {
+@XmlRootElement(name = "TextFragmentInlineValue")
+public class TextFragmentInlineValue
+	extends TextFragmentValue implements Serializable {
 
-	public static HTMLInlineFragmentValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(HTMLInlineFragmentValue.class, json);
+	public static TextFragmentInlineValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(TextFragmentInlineValue.class, json);
 	}
 
-	public static HTMLInlineFragmentValue unsafeToDTO(String json) {
+	public static TextFragmentInlineValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			HTMLInlineFragmentValue.class, json);
+			TextFragmentInlineValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
@@ -106,14 +106,14 @@ public class HTMLInlineFragmentValue
 			return true;
 		}
 
-		if (!(object instanceof HTMLInlineFragmentValue)) {
+		if (!(object instanceof TextFragmentInlineValue)) {
 			return false;
 		}
 
-		HTMLInlineFragmentValue htmlInlineFragmentValue =
-			(HTMLInlineFragmentValue)object;
+		TextFragmentInlineValue textFragmentInlineValue =
+			(TextFragmentInlineValue)object;
 
-		return Objects.equals(toString(), htmlInlineFragmentValue.toString());
+		return Objects.equals(toString(), textFragmentInlineValue.toString());
 	}
 
 	@Override
@@ -161,7 +161,7 @@ public class HTMLInlineFragmentValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.HTMLInlineFragmentValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.TextFragmentInlineValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

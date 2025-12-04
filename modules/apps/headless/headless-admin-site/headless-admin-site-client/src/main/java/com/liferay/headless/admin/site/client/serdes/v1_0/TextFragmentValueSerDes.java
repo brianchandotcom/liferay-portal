@@ -5,9 +5,9 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentInlineValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.TextInlineFragmentValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.TextMappedFragmentValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -50,13 +50,13 @@ public class TextFragmentValueSerDes {
 			String typeString = type.toString();
 
 			if (typeString.equals("Inline")) {
-				return TextInlineFragmentValueSerDes.toJSON(
-					(TextInlineFragmentValue)textFragmentValue);
+				return TextFragmentInlineValueSerDes.toJSON(
+					(TextFragmentInlineValue)textFragmentValue);
 			}
 
 			if (typeString.equals("Mapped")) {
-				return TextMappedFragmentValueSerDes.toJSON(
-					(TextMappedFragmentValue)textFragmentValue);
+				return TextFragmentMappedValueSerDes.toJSON(
+					(TextFragmentMappedValue)textFragmentValue);
 			}
 
 			throw new IllegalArgumentException("Unknown type " + typeString);
@@ -124,11 +124,11 @@ public class TextFragmentValueSerDes {
 				String typeString = type.toString();
 
 				if (typeString.equals("Inline")) {
-					return TextInlineFragmentValue.toDTO(json);
+					return TextFragmentInlineValue.toDTO(json);
 				}
 
 				if (typeString.equals("Mapped")) {
-					return TextMappedFragmentValue.toDTO(json);
+					return TextFragmentMappedValue.toDTO(json);
 				}
 
 				throw new IllegalArgumentException(

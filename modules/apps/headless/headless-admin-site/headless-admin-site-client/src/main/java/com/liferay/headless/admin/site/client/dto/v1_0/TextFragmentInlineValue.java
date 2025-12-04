@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.HTMLInlineFragmentValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.TextFragmentInlineValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class HTMLInlineFragmentValue
-	extends HTMLFragmentValue implements Cloneable, Serializable {
+public class TextFragmentInlineValue
+	extends TextFragmentValue implements Cloneable, Serializable {
 
-	public static HTMLInlineFragmentValue toDTO(String json) {
-		return HTMLInlineFragmentValueSerDes.toDTO(json);
+	public static TextFragmentInlineValue toDTO(String json) {
+		return TextFragmentInlineValueSerDes.toDTO(json);
 	}
 
 	public FragmentInlineValue getFragmentInlineValue() {
@@ -51,8 +51,8 @@ public class HTMLInlineFragmentValue
 	protected FragmentInlineValue fragmentInlineValue;
 
 	@Override
-	public HTMLInlineFragmentValue clone() throws CloneNotSupportedException {
-		return (HTMLInlineFragmentValue)super.clone();
+	public TextFragmentInlineValue clone() throws CloneNotSupportedException {
+		return (TextFragmentInlineValue)super.clone();
 	}
 
 	@Override
@@ -61,14 +61,14 @@ public class HTMLInlineFragmentValue
 			return true;
 		}
 
-		if (!(object instanceof HTMLInlineFragmentValue)) {
+		if (!(object instanceof TextFragmentInlineValue)) {
 			return false;
 		}
 
-		HTMLInlineFragmentValue htmlInlineFragmentValue =
-			(HTMLInlineFragmentValue)object;
+		TextFragmentInlineValue textFragmentInlineValue =
+			(TextFragmentInlineValue)object;
 
-		return Objects.equals(toString(), htmlInlineFragmentValue.toString());
+		return Objects.equals(toString(), textFragmentInlineValue.toString());
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class HTMLInlineFragmentValue
 	}
 
 	public String toString() {
-		return HTMLInlineFragmentValueSerDes.toJSON(this);
+		return TextFragmentInlineValueSerDes.toJSON(this);
 	}
 
 }

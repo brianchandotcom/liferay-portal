@@ -28,6 +28,7 @@ import {
 	replaceWithMultipleAtIndex
 } from 'shared/util/array';
 import {isArray} from 'lodash';
+import {SegmentTypes} from 'shared/util/constants';
 
 /**
  * Passes the required values to the drop target.
@@ -84,6 +85,7 @@ interface ICriteriaGroupProps {
 	onMove: OnMove;
 	parentGroupId?: string;
 	root?: boolean;
+	segmentType: SegmentTypes;
 }
 
 class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
@@ -237,7 +239,14 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 	}
 
 	renderCriterion(criterion, index) {
-		const {channelId, criteriaGroupId, groupId, id, onMove} = this.props;
+		const {
+			channelId,
+			criteriaGroupId,
+			groupId,
+			id,
+			onMove,
+			segmentType
+		} = this.props;
 
 		const criterionGroup = isCriterionGroup(criterion);
 
@@ -273,6 +282,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 						onChange={this.handleCriterionChange(index)}
 						onDelete={this.handleCriterionDelete}
 						onMove={onMove}
+						segmentType={segmentType}
 					/>
 				)}
 

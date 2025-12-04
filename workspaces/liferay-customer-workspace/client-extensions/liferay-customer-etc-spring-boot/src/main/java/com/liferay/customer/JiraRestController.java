@@ -28,6 +28,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,8 +44,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class JiraRestController extends BaseRestController {
 
-	@RequestMapping(method = RequestMethod.DELETE, path = "/cache")
-	public ResponseEntity<String> delete(@AuthenticationPrincipal Jwt jwt) {
+	@DeleteMapping("/cache")
+	public ResponseEntity<String> deleteCache(
+		@AuthenticationPrincipal Jwt jwt) {
+
 		try {
 			if (!_hasAdministrator(jwt)) {
 				throw new PrincipalException();
@@ -62,11 +66,10 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@RequestMapping(
-		method = RequestMethod.GET,
-		path = "/security-vulnerabilities/affected-versions"
-	)
-	public ResponseEntity<String> get() throws Exception {
+	@GetMapping("/security-vulnerabilities/affected-versions")
+	public ResponseEntity<String> getSecurityVulnerabilitiesAffectedVersions()
+		throws Exception {
+
 		try {
 			JSONArray affectedVersionsJSONArray =
 				_jiraService.getAffectedVersionsJSONArray();
@@ -82,8 +85,8 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/issue/{issueKey}")
-	public ResponseEntity<String> get(
+	@GetMapping("/issue/{issueKey}")
+	public ResponseEntity<String> getIssue(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("issueKey") String issueKey)
 		throws Exception {
@@ -111,10 +114,8 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@RequestMapping(
-		method = RequestMethod.GET, path = "/security-vulnerabilities/search"
-	)
-	public ResponseEntity<String> search(
+	@GetMapping("/security-vulnerabilities/search")
+	public ResponseEntity<String> getSecurityVulnerabilitiesSearch(
 			@AuthenticationPrincipal Jwt jwt,
 			@RequestParam(defaultValue = "", required = false) String[]
 				filterAffectedVersions,

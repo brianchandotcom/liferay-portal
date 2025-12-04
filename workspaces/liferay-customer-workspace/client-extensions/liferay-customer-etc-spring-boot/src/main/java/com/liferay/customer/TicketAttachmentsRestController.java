@@ -136,7 +136,7 @@ public class TicketAttachmentsRestController extends BaseRestController {
 	}
 
 	@PostMapping("/{ticketAttachmentId}/complete-upload")
-	public ResponseEntity<String> post(
+	public ResponseEntity<String> postCompleteUpload(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json,
 		@PathVariable("ticketAttachmentId") long ticketAttachmentId) {
 
@@ -194,7 +194,7 @@ public class TicketAttachmentsRestController extends BaseRestController {
 	}
 
 	@PostMapping("/initiate-upload")
-	public ResponseEntity<String> post(
+	public ResponseEntity<String> postInitiateUpload(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json,
 		@RequestHeader(name = HttpHeaders.ORIGIN) String origin) {
 

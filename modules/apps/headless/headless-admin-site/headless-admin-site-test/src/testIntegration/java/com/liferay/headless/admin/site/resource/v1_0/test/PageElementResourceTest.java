@@ -1504,10 +1504,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			{
 				setValue_i18n(
 					HashMapBuilder.put(
-						LocaleUtil.SPAIN.toString(),
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
 						RandomTestUtil.randomString()
 					).put(
-						LocaleUtil.US.toString(), RandomTestUtil.randomString()
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+						RandomTestUtil.randomString()
 					).build());
 			}
 		};
@@ -1864,9 +1865,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					null),
 				true, true,
 				HashMapBuilder.put(
-					LocaleUtil.SPAIN.toString(), RandomTestUtil.randomString()
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+					RandomTestUtil.randomString()
 				).put(
-					LocaleUtil.US.toString(), RandomTestUtil.randomString()
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+					RandomTestUtil.randomString()
 				).build(),
 				true, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
@@ -1955,9 +1958,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				RandomTestUtil.randomString(), null, null, null,
 				HashMapBuilder.put(
-					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+					"https://www.liferay.es"
 				).put(
-					LocaleUtil.US.toString(), "https://www.liferay.com"
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+					"https://www.liferay.com"
 				).build(),
 				false, RandomTestUtil.randomString()));
 	}
@@ -2106,9 +2111,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					null),
 				true, true,
 				HashMapBuilder.put(
-					LocaleUtil.SPAIN.toString(), RandomTestUtil.randomString()
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+					RandomTestUtil.randomString()
 				).put(
-					LocaleUtil.US.toString(), RandomTestUtil.randomString()
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+					RandomTestUtil.randomString()
 				).build(),
 				true, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
@@ -2201,9 +2208,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				RandomTestUtil.randomString(), null, null, null,
 				HashMapBuilder.put(
-					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+					"https://www.liferay.es"
 				).put(
-					LocaleUtil.US.toString(), "https://www.liferay.com"
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+					"https://www.liferay.com"
 				).build(),
 				false, externalReferenceCode));
 		_testPutSitePageSpecificationPageExperiencePageElement(
@@ -2989,9 +2998,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getFragmentLink(
 					null, null, null,
 					HashMapBuilder.put(
-						LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+						"https://www.liferay.es"
 					).put(
-						LocaleUtil.US.toString(), "https://www.liferay.com"
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+						"https://www.liferay.com"
 					).build()),
 				null,
 				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE,

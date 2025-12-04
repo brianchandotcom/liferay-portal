@@ -93,7 +93,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			categoryFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					ReferencesTestUtil.getItemExternalReference(
 						object, scopeGroupId)
 				).build());
@@ -122,7 +122,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			checkboxFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					GetterUtil.getBoolean(object)
 				).build());
 		}
@@ -149,7 +149,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			collectionFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					ReferencesTestUtil.getCollectionReference(
 						object, scopeGroupId)
 				).build());
@@ -178,7 +178,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			colorPaletteFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					_getColorPaletteValue((Map<String, String>)object)
 				).build());
 		}
@@ -217,7 +217,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			colorPickerFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					GetterUtil.getString(object)
 				).build());
 		}
@@ -319,7 +319,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			itemFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					_getItemValue((Map<String, Object>)object, scopeGroupId)
 				).build());
 		}
@@ -375,7 +375,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			lengthFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					GetterUtil.getString(object)
 				).build());
 		}
@@ -402,7 +402,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			navigationMenuFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					_getNavigationMenuValue(
 						(Map<String, Object>)object, scopeGroupId)
 				).build());
@@ -501,7 +501,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			selectFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					GetterUtil.getString(object)
 				).build());
 		}
@@ -528,7 +528,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			textFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					GetterUtil.getString(object)
 				).build());
 		}
@@ -554,7 +554,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			urlFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					_getURLValue((Map<String, Object>)object, scopeGroupId)
 				).build());
 		}
@@ -609,7 +609,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 		if (localizable) {
 			videoFragmentConfigurationFieldValue.setValue_i18n(
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					_getVideoValue((Map<String, String>)object)
 				).build());
 		}

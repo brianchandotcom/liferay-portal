@@ -35,6 +35,7 @@ import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -138,6 +139,19 @@ public class SegmentsExperienceUtilTest {
 			Collections.singletonList(sourceResourcePermission),
 			targetPortletId, targetResourcePermission,
 			targetSegmentsExperience);
+
+		Mockito.when(
+			fragmentEntryLink.getEditableValuesJSONObject()
+		).thenReturn(
+			JSONUtil.put("portletId", _PORTLET_ID)
+		);
+
+		_setUpPortletRegistry(fragmentEntryLink, _PORTLET_ID);
+
+		_testCopySegmentsExperienceData(
+			layout, layoutStructure, _PORTLET_ID, sourceSegmentsExperience,
+			Collections.singletonList(sourceResourcePermission), _PORTLET_ID,
+			null, targetSegmentsExperience);
 	}
 
 	@Test
@@ -385,6 +399,13 @@ public class SegmentsExperienceUtilTest {
 						_USER_ID, _GROUP_ID, layout.getPlid(),
 						targetSegmentsExperience.getSegmentsExperienceId(),
 						layoutStructure.toString()));
+
+		if (Objects.equals(sourcePortletId, targetPortletId)) {
+			_resourcePermissionLocalServiceUtilMockedStatic.
+				verifyNoInteractions();
+
+			return;
+		}
 
 		_resourcePermissionLocalServiceUtilMockedStatic.verify(
 			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(

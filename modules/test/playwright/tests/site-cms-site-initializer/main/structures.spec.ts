@@ -3,21 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ObjectDefinition,
-	ObjectRelationshipAPI,
-} from '@liferay/object-admin-rest-client-js';
+import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
 	cmsPagesTest,
+	structureBuilderPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
@@ -84,74 +85,53 @@ test(
 test(
 	'Structures cannot be deleted if they have a relation',
 	{tag: '@LPD-51516'},
-	async ({apiHelpers, page, structuresPage}) => {
-		const objectDefinition1 =
-			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
-				status: {code: 0},
-			})) as ObjectDefinition;
-		apiHelpers.data.push({
-			id: objectDefinition1.id,
-			type: 'objectDefinition',
+	async ({page, structureBuilderPage, structuresPage}) => {
+
+		// Create structures and relate them
+
+		const structureLabel = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			name: `StructureName${getRandomInt()}`,
+			page: structureBuilderPage,
 		});
 
-		const objectDefinition2 =
-			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
-				status: {code: 0},
-			})) as ObjectDefinition;
-		apiHelpers.data.push({
-			id: objectDefinition2.id,
-			type: 'objectDefinition',
+		const structure2Label = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			label: structure2Label,
+			name: `StructureName2${getRandomInt()}`,
+			page: structureBuilderPage,
 		});
 
-		const objectRelationshipLabel =
-			'objectRelationshipLabel' + getRandomInt();
-		const objectRelationshipName =
-			'objectRelationshipName' + Math.floor(Math.random() * 99);
+		await structureBuilderPage.addReferencedStructures([structureLabel]);
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipAPI
-		);
+		await structureBuilderPage.publishStructure();
 
-		const {body: objectRelationship} =
-			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				objectDefinition1.externalReferenceCode,
-				{
-					label: {
-						en_US: objectRelationshipLabel,
-					},
-					name: objectRelationshipName,
-					objectDefinitionExternalReferenceCode1:
-						objectDefinition1.externalReferenceCode,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition2.externalReferenceCode,
-					objectDefinitionId1: objectDefinition1.id,
-					objectDefinitionId2: objectDefinition2.id,
-					objectDefinitionName2: objectDefinition2.name,
-					type: 'oneToMany',
-				}
-			);
-		apiHelpers.data.push({
-			id: objectRelationship.id,
-			type: 'objectRelationship',
-		});
+		// Try to delete them
 
 		await structuresPage.goto();
 
 		await structuresPage.execItemAction({
 			action: 'Delete',
-			filter: objectDefinition1.name,
+			filter: structureLabel,
 		});
+
 		await expect(
 			page.getByRole('heading', {name: 'Deletion Not Allowed'})
 		).toBeVisible();
-		await page.getByRole('button', {name: 'OK'}).click();
+
+		await clickAndExpectToBeHidden({
+			target: page.getByRole('button', {name: 'OK'}),
+			trigger: page.getByRole('button', {name: 'OK'}),
+		});
 
 		await structuresPage.execItemAction({
 			action: 'Delete',
-			filter: objectDefinition2.name,
+			filter: structure2Label,
 		});
+
 		await expect(
 			page.getByRole('heading', {name: 'Deletion Not Allowed'})
 		).toBeVisible();

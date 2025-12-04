@@ -10,21 +10,21 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.HttpURLConnection;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -65,32 +65,15 @@ public class FileEntryUtil {
 			ThumbnailURLReference thumbnailURLReference, User user)
 		throws Exception {
 
-		InputStream inputStream = null;
+		Http.Options options = new Http.Options();
 
-		try {
-			inputStream = HttpUtil.URLtoInputStream(
-				thumbnailURLReference.getUrl());
-		}
-		catch (IOException ioException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to download file from " +
-						thumbnailURLReference.getUrl());
-				_log.warn(ioException);
-			}
+		options.setLocation(thumbnailURLReference.getUrl());
 
-			throw new IllegalArgumentException(
-				"Unable to download file from " +
-					thumbnailURLReference.getUrl());
-		}
+		InputStream inputStream = HttpUtil.URLtoInputStream(options);
 
-		if (inputStream.available() == 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to download file from " +
-						thumbnailURLReference.getUrl());
-			}
+		Http.Response response = options.getResponse();
 
+		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
 			throw new IllegalArgumentException(
 				"Unable to download file from " +
 					thumbnailURLReference.getUrl());
@@ -128,7 +111,5 @@ public class FileEntryUtil {
 			resourceName + "_" + fileName, mimeType, fileName, null, null, null,
 			file, null, null, null, serviceContext);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(FileEntryUtil.class);
 
 }

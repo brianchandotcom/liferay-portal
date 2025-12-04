@@ -340,6 +340,8 @@ public class CXConfigOSGiCommandsTest {
 	private String _captureStout(UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
+		PrintStream originalPrintStream = System.out;
+
 		try {
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
@@ -351,7 +353,7 @@ public class CXConfigOSGiCommandsTest {
 			return byteArrayOutputStream.toString();
 		}
 		finally {
-			System.setOut(System.out);
+			System.setOut(originalPrintStream);
 		}
 	}
 

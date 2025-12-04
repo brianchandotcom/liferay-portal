@@ -9,10 +9,7 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
-import com.amazonaws.services.s3.model.ListObjectsRequest;
-import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.StorageClass;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
@@ -75,6 +72,8 @@ import software.amazon.awssdk.services.s3.model.DeleteObjectResponse;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
+import software.amazon.awssdk.services.s3.model.S3Object;
+import software.amazon.awssdk.services.s3.paginators.ListObjectsV2Publisher;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 
 /**
@@ -158,11 +157,11 @@ public class S3Store implements Store {
 		try {
 			String[] keys = new String[_DELETE_MAX];
 
-			List<S3ObjectSummary> s3ObjectSummaries = _getS3ObjectSummaries(
+			List<S3Object> s3Objects = _getS3Objects(
 				S3KeyTransformerUtil.getDirectoryKey(
 					companyId, repositoryId, dirName));
 
-			Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
+			Iterator<S3Object> iterator = s3Objects.iterator();
 
 			while (iterator.hasNext()) {
 				DeleteObjectsRequest deleteObjectsRequest =
@@ -171,9 +170,9 @@ public class S3Store implements Store {
 
 				for (int i = 0; i < keys.length; i++) {
 					if (iterator.hasNext()) {
-						S3ObjectSummary s3ObjectSummary = iterator.next();
+						S3Object s3Object = iterator.next();
 
-						keys[i] = s3ObjectSummary.getKey();
+						keys[i] = s3Object.key();
 					}
 					else {
 						keys = Arrays.copyOfRange(keys, 0, i);
@@ -266,17 +265,16 @@ public class S3Store implements Store {
 				companyId, repositoryId, dirName);
 		}
 
-		List<S3ObjectSummary> s3ObjectSummaries = _getS3ObjectSummaries(key);
+		List<S3Object> s3Objects = _getS3Objects(key);
 
-		Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
+		Iterator<S3Object> iterator = s3Objects.iterator();
 
-		String[] fileNames = new String[s3ObjectSummaries.size()];
+		String[] fileNames = new String[s3Objects.size()];
 
 		for (int i = 0; i < fileNames.length; i++) {
-			S3ObjectSummary s3ObjectSummary = iterator.next();
+			S3Object s3Object = iterator.next();
 
-			fileNames[i] = S3KeyTransformerUtil.getFileName(
-				s3ObjectSummary.getKey());
+			fileNames[i] = S3KeyTransformerUtil.getFileName(s3Object.key());
 		}
 
 		return fileNames;
@@ -324,19 +322,19 @@ public class S3Store implements Store {
 	public String[] getFileVersions(
 		long companyId, long repositoryId, String fileName) {
 
-		List<S3ObjectSummary> s3ObjectSummaries = _getS3ObjectSummaries(
+		List<S3Object> s3Objects = _getS3Objects(
 			S3KeyTransformerUtil.getFileKey(companyId, repositoryId, fileName));
 
-		if (s3ObjectSummaries.isEmpty()) {
+		if (s3Objects.isEmpty()) {
 			return StringPool.EMPTY_ARRAY;
 		}
 
-		String[] versions = new String[s3ObjectSummaries.size()];
+		String[] versions = new String[s3Objects.size()];
 
-		for (int i = 0; i < s3ObjectSummaries.size(); i++) {
-			S3ObjectSummary s3ObjectSummary = s3ObjectSummaries.get(i);
+		for (int i = 0; i < s3Objects.size(); i++) {
+			S3Object s3Object = s3Objects.get(i);
 
-			String versionKey = s3ObjectSummary.getKey();
+			String versionKey = s3Object.key();
 
 			versions[i] = versionKey.substring(
 				versionKey.lastIndexOf(CharPool.SLASH) + 1);
@@ -515,17 +513,17 @@ public class S3Store implements Store {
 			long companyId, long repositoryId, String fileName)
 		throws NoSuchFileException {
 
-		List<S3ObjectSummary> s3ObjectSummaries = _getS3ObjectSummaries(
+		List<S3Object> s3Objects = _getS3Objects(
 			S3KeyTransformerUtil.getFileKey(companyId, repositoryId, fileName));
 
-		Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
+		Iterator<S3Object> iterator = s3Objects.iterator();
 
-		String[] keys = new String[s3ObjectSummaries.size()];
+		String[] keys = new String[s3Objects.size()];
 
 		for (int i = 0; i < keys.length; i++) {
-			S3ObjectSummary s3ObjectSummary = iterator.next();
+			S3Object s3Object = iterator.next();
 
-			keys[i] = s3ObjectSummary.getKey();
+			keys[i] = s3Object.key();
 		}
 
 		if (keys.length > 0) {
@@ -541,37 +539,28 @@ public class S3Store implements Store {
 		throw new NoSuchFileException(companyId, repositoryId, fileName);
 	}
 
-	private List<S3ObjectSummary> _getS3ObjectSummaries(String prefix) {
+	private List<S3Object> _getS3Objects(String prefix) {
+		ListObjectsV2Publisher listObjectsV2Publisher =
+			_s3AsyncClient.listObjectsV2Paginator(
+				builder -> {
+					builder.bucket(_s3StoreConfiguration.bucketName());
+					builder.prefix(prefix);
+				});
+
+		List<S3Object> s3Objects = new ArrayList<>();
+
+		CompletableFuture<Void> completableFuture =
+			listObjectsV2Publisher.subscribe(
+				response -> s3Objects.addAll(response.contents()));
+
 		try {
-			ListObjectsRequest listObjectsRequest = new ListObjectsRequest();
-
-			listObjectsRequest.withBucketName(
-				_s3StoreConfiguration.bucketName());
-			listObjectsRequest.withPrefix(prefix);
-
-			ObjectListing objectListing = _amazonS3.listObjects(
-				listObjectsRequest);
-
-			List<S3ObjectSummary> s3ObjectSummaries = new ArrayList<>(
-				objectListing.getMaxKeys());
-
-			while (true) {
-				s3ObjectSummaries.addAll(objectListing.getObjectSummaries());
-
-				if (objectListing.isTruncated()) {
-					objectListing = _amazonS3.listNextBatchOfObjects(
-						objectListing);
-				}
-				else {
-					break;
-				}
-			}
-
-			return s3ObjectSummaries;
+			completableFuture.join();
 		}
-		catch (AmazonClientException amazonClientException) {
-			throw _transform(amazonClientException);
+		catch (CompletionException completionException) {
+			throw _transform(completionException.getCause());
 		}
+
+		return s3Objects;
 	}
 
 	private boolean _isFileNotFound(

@@ -4,7 +4,9 @@ import DateFilterConjunctionInput from './components/DateFilterConjunctionInput'
 import Form from 'shared/components/form';
 import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
 import React from 'react';
-import RealTimePeriodInput from './components/RealTimePeriodInput';
+import RealTimePeriodInput, {
+	DEFAULT_OPTIONS
+} from './components/RealTimePeriodInput';
 import SelectEntityFromModal from './components/SelectEntityFromModal';
 import {
 	ACTIVITY_KEY,
@@ -100,6 +102,10 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 	_completedAnalytics = false;
 
+	componentDidMount() {
+		this.initializeRealTimeDefaults();
+	}
+
 	componentDidUpdate() {
 		const {
 			id,
@@ -112,6 +118,21 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 		if (!id && valid && !this._completedAnalytics) {
 			this._completedAnalytics = true;
+		}
+	}
+
+	initializeRealTimeDefaults() {
+		const isRealTime = this.props.segmentType === SegmentTypes.RealTime;
+
+		if (isRealTime) {
+			const currentPeriod = this.getRealTimePeriodFromCriterion();
+
+			if (!currentPeriod) {
+				this.handleRealTimePeriodChange(
+					DEFAULT_OPTIONS.interval,
+					DEFAULT_OPTIONS.timeWindow
+				);
+			}
 		}
 	}
 

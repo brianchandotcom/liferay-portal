@@ -12,14 +12,14 @@ ViewHomeRecentAssetsSectionDisplayContext viewHomeRecentAssetsSectionDisplayCont
 %>
 
 <div class="cms-section">
-	<div class="container-fluid">
+	<div class="container-fluid-max">
 		<div class="align-items-center d-flex justify-content-between">
 			<span class="font-weight-semi-bold text-4">Recent Assets</span>
 
 			<a class="btn btn-link btn-sm font-weight-semi-bold" href="<%= viewHomeRecentAssetsSectionDisplayContext.getAssetsAllURL() %>">View All</a>
 		</div>
 
-		<div class="cms-fds-fluid cms-section custom-empty-state">
+		<div class="cms-fds-fluid cms-section custom-empty-state recent-assets-fds">
 			<frontend-data-set:headless-display
 				additionalProps="<%= viewHomeRecentAssetsSectionDisplayContext.getAdditionalProps() %>"
 				apiURL="<%= viewHomeRecentAssetsSectionDisplayContext.getAPIURL() %>"

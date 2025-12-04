@@ -91,6 +91,15 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public void addOrUpdateObjectDefinitionPLOEntries(
+			com.liferay.object.model.ObjectDefinition objectDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectDefinitionLocalService.addOrUpdateObjectDefinitionPLOEntries(
+			objectDefinition);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition
 			addOrUpdateSystemObjectDefinition(
 				long companyId, long objectFolderId,
@@ -685,6 +694,15 @@ public class ObjectDefinitionLocalServiceWrapper
 
 		_objectDefinitionLocalService.undeployObjectDefinition(
 			objectDefinition);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition updateClassName(
+			long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.updateClassName(
+			objectDefinitionId);
 	}
 
 	@Override

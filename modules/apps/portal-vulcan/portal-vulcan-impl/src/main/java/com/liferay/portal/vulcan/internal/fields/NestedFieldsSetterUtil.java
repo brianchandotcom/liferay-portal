@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.internal.fields;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
@@ -20,7 +21,9 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.internal.fields.servlet.NestedFieldsHttpServletRequestWrapper;
 import com.liferay.portal.vulcan.internal.jaxrs.message.exchange.ExchangeWrapper;
 import com.liferay.portal.vulcan.pagination.Page;
+
 import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
@@ -28,28 +31,16 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
-import jakarta.ws.rs.ext.Provider;
-import jakarta.ws.rs.ext.WriterInterceptor;
 import jakarta.ws.rs.ext.WriterInterceptorContext;
-import org.apache.cxf.jaxrs.ext.ContextProvider;
-import org.apache.cxf.jaxrs.impl.UriInfoImpl;
-import org.apache.cxf.jaxrs.provider.ProviderFactory;
-import org.apache.cxf.message.Exchange;
-import org.apache.cxf.message.Message;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceObjects;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 import java.io.IOException;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,18 +50,30 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.cxf.jaxrs.ext.ContextProvider;
+import org.apache.cxf.jaxrs.impl.UriInfoImpl;
+import org.apache.cxf.jaxrs.provider.ProviderFactory;
+import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.Message;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceObjects;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
+ * @author Alejandro Tardín
  * @author Ivica Cardic
  */
-@Provider
-public class NestedFieldsSetterUtil implements WriterInterceptor {
+public class NestedFieldsSetterUtil {
 
-	public NestedFieldsSetterUtil(BundleContext bundleContext) {
-		this(bundleContext, null);
-	}
-
-	@Override
-	public void aroundWriteTo(WriterInterceptorContext writerInterceptorContext)
+	public static void aroundWriteTo(
+			WriterInterceptorContext writerInterceptorContext)
 		throws IOException, WebApplicationException {
 
 		NestedFieldsContext nestedFieldsContext =
@@ -98,22 +101,13 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 		writerInterceptorContext.proceed();
 	}
 
-	public void destroy() {
-		_serviceTracker.close();
-	}
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(NestedFieldsSetterUtil.class);
 
-	protected NestedFieldsSetterUtil(
-		BundleContext bundleContext,
-		NestedFieldServiceTrackerCustomizer
-			nestedFieldServiceTrackerCustomizer) {
-
-		if (nestedFieldServiceTrackerCustomizer == null) {
-			nestedFieldServiceTrackerCustomizer =
-				new NestedFieldServiceTrackerCustomizer(bundleContext);
-		}
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		_nestedFieldServiceTrackerCustomizer =
-			nestedFieldServiceTrackerCustomizer;
+			new NestedFieldServiceTrackerCustomizer(bundleContext);
 
 		Filter filter = null;
 
@@ -130,7 +124,7 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 		_serviceTracker.open();
 	}
 
-	protected static class NestedFieldServiceTrackerCustomizer
+	private static class NestedFieldServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, List<FactoryKey>> {
 
 		@Override
@@ -196,18 +190,18 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 			_bundleContext.ungetService(serviceReference);
 		}
 
-		protected NestedFieldServiceTrackerCustomizer(
+		private NestedFieldServiceTrackerCustomizer(
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;
 		}
 
-		protected HttpServletRequest getHttpServletRequest(Message message) {
+		private HttpServletRequest _getHttpServletRequest(Message message) {
 			return (HttpServletRequest)message.getContextualProperty(
 				"HTTP.REQUEST");
 		}
 
-		protected ProviderFactory getProviderFactory(Message message) {
+		private ProviderFactory _getProviderFactory(Message message) {
 			return ProviderFactory.getInstance(message);
 		}
 
@@ -253,7 +247,7 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 		private <T> ContextProvider<T> _getContextProvider(
 			Class<T> contextClass, Message message) {
 
-			ProviderFactory providerFactory = getProviderFactory(message);
+			ProviderFactory providerFactory = _getProviderFactory(message);
 
 			return providerFactory.createContextProvider(contextClass, message);
 		}
@@ -465,7 +459,7 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 			message.put(
 				"HTTP.REQUEST",
 				new NestedFieldsHttpServletRequestWrapper(
-					fieldName, getHttpServletRequest(message)));
+					fieldName, _getHttpServletRequest(message)));
 			message.setExchange(
 				new ExchangeWrapper(message.getExchange(), resource));
 
@@ -533,7 +527,7 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 	}
 
 	@FunctionalInterface
-	protected interface UnsafeTriFunction<A, B, C, R> {
+	private interface UnsafeTriFunction<A, B, C, R> {
 
 		public R apply(A a, B b, C c) throws Exception;
 
@@ -552,7 +546,7 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 		return annotation;
 	}
 
-	private Object _adaptToFieldType(Class<?> fieldType, Object value) {
+	private static Object _adaptToFieldType(Class<?> fieldType, Object value) {
 		if (value instanceof Page) {
 			Page<?> page = (Page)value;
 
@@ -575,7 +569,7 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 		return value;
 	}
 
-	private Field _getField(Class<?> entityClass, String fieldName) {
+	private static Field _getField(Class<?> entityClass, String fieldName) {
 		Class<?> clazz = entityClass;
 
 		while ((clazz != null) && (clazz != Object.class)) {
@@ -593,7 +587,7 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 		return null;
 	}
 
-	private List<Object> _getItems(Object entity) {
+	private static List<Object> _getItems(Object entity) {
 		List<Object> items = new ArrayList<>();
 
 		if (entity instanceof Collection) {
@@ -614,8 +608,8 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 		return items;
 	}
 
-	private UnsafeTriFunction<String, Object, NestedFieldsContext, Object>
-		_getUnsafeTriFunction(
+	private static UnsafeTriFunction
+		<String, Object, NestedFieldsContext, Object> _getUnsafeTriFunction(
 			String fieldName, Class<?> itemClass,
 			NestedFieldsContext nestedFieldsContext) {
 
@@ -647,13 +641,13 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 		return null;
 	}
 
-	private boolean _isArray(Object object) {
+	private static boolean _isArray(Object object) {
 		Class<?> objectClass = object.getClass();
 
 		return objectClass.isArray();
 	}
 
-	private void _setFieldValues(
+	private static void _setFieldValues(
 			Object entity, List<String> nestedFields,
 			NestedFieldsContext nestedFieldsContext)
 		throws Exception {
@@ -709,9 +703,10 @@ public class NestedFieldsSetterUtil implements WriterInterceptor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		NestedFieldsSetterUtil.class);
 
-	private final NestedFieldServiceTrackerCustomizer
+	private static final NestedFieldServiceTrackerCustomizer
 		_nestedFieldServiceTrackerCustomizer;
-	private final ServiceTracker<Object, List<FactoryKey>> _serviceTracker;
+	private static final ServiceTracker<Object, List<FactoryKey>>
+		_serviceTracker;
 
 	private static class FactoryKey {
 

@@ -248,6 +248,13 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		return liferayGlobalObjectConfiguration;
 	}
 
+	private void _renderDisabledMethod(String methodName, StringBundler sb) {
+		sb.append(methodName);
+		sb.append(": () => {throw new Error('Method ");
+		sb.append(methodName);
+		sb.append(" has been disabled in Instance Settings');},\n");
+	}
+
 	private void _renderLiferayAUI(
 		HttpServletRequest httpServletRequest, StringBundler sb) {
 
@@ -622,7 +629,11 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		_renderMethod("getPortalURL", sb, themeDisplay.getPortalURL());
 		_renderMethod("getRealUserId", sb, themeDisplay.getRealUserId());
 
-		if (!liferayGlobalObjectConfiguration.disableGetRemoteMethods()) {
+		if (liferayGlobalObjectConfiguration.disableGetRemoteMethods()) {
+			_renderDisabledMethod("getRemoteAddr", sb);
+			_renderDisabledMethod("getRemoteHost", sb);
+		}
+		else {
 			_renderMethod("getRemoteAddr", sb, themeDisplay.getRemoteAddr());
 			_renderMethod("getRemoteHost", sb, themeDisplay.getRemoteHost());
 		}

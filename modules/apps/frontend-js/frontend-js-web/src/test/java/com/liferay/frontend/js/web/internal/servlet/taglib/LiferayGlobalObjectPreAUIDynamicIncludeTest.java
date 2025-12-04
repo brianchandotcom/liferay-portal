@@ -129,10 +129,14 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 
 		String contentAsString = mockHttpServletResponse.getContentAsString();
 
-		Assert.assertFalse(
-			contentAsString.contains("getRemoteAddr: () => '127.0.0.1',"));
-		Assert.assertFalse(
-			contentAsString.contains("getRemoteHost: () => '127.0.0.1',"));
+		Assert.assertTrue(
+			contentAsString.contains(
+				"getRemoteAddr: () => {throw new Error('Method getRemoteAddr " +
+					"has been disabled in Instance Settings');},\n"));
+		Assert.assertTrue(
+			contentAsString.contains(
+				"getRemoteHost: () => {throw new Error('Method getRemoteHost " +
+					"has been disabled in Instance Settings');},\n"));
 	}
 
 	private AuthToken _mockAuthToken() {

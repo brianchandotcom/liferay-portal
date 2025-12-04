@@ -940,6 +940,9 @@ public class DataSourceController extends BaseFaroController {
 			@DefaultValue(StringPool.BLANK) @FormParam("analyticsConfiguration")
 				FaroParam<LiferayProvider.AnalyticsConfiguration>
 					analyticsConfigurationFaroParam,
+			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
+				FaroParam<LiferayProvider.ChannelsConfiguration>
+					channelsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("contactsConfiguration")
 				FaroParam<LiferayProvider.ContactsConfiguration>
 					contactsConfigurationFaroParam,
@@ -952,18 +955,23 @@ public class DataSourceController extends BaseFaroController {
 
 		LiferayProvider.AnalyticsConfiguration analyticsConfiguration =
 			analyticsConfigurationFaroParam.getValue();
+		LiferayProvider.ChannelsConfiguration channelsConfiguration =
+			channelsConfigurationFaroParam.getValue();
 		LiferayProvider.ContactsConfiguration contactsConfiguration =
 			contactsConfigurationFaroParam.getValue();
 
 		if ((analyticsConfiguration != null) &&
+			(channelsConfiguration != null) &&
 			(contactsConfiguration != null)) {
 
 			liferayProvider = new LiferayProvider();
 
 			liferayProvider.setAnalyticsConfiguration(analyticsConfiguration);
+			liferayProvider.setChannelsConfiguration(channelsConfiguration);
 			liferayProvider.setContactsConfiguration(contactsConfiguration);
 		}
 		else if ((analyticsConfiguration != null) ||
+				 (channelsConfiguration != null) ||
 				 (contactsConfiguration != null)) {
 
 			DataSource dataSource = contactsEngineClient.getDataSource(
@@ -974,6 +982,10 @@ public class DataSourceController extends BaseFaroController {
 			if (analyticsConfiguration != null) {
 				liferayProvider.setAnalyticsConfiguration(
 					analyticsConfiguration);
+			}
+
+			if (channelsConfiguration != null) {
+				liferayProvider.setChannelsConfiguration(channelsConfiguration);
 			}
 
 			if (contactsConfiguration != null) {

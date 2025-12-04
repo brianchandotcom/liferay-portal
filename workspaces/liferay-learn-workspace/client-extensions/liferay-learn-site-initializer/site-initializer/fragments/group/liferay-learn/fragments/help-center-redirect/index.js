@@ -46,7 +46,7 @@ async function redirectToArticle() {
 			urlParams.get('lang')?.toLowerCase()
 		);
 
-		window.location.href = `${Liferay.ThemeDisplay.getCDNBaseURL()}/${language}/l/${knowledgeArticleId}`;
+		window.location.href = `${Liferay.ThemeDisplay.getCDNBaseURL()}/${language}/kb-article/${knowledgeArticleId}`;
 	}
 	catch (error) {
 		handleError(`An error occurred during redirect: ${error}`);

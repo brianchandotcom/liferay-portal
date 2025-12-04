@@ -34,7 +34,7 @@ const LearningPathsList = () => {
                                     expertise={learningPath.level.name}
                                     index={index}
                                     key={learningPath.id}
-                                    link={`/l/${learningPath.id}`}
+                                    link={`/learning-path/${learningPath.id}`}
                                     personas={learningPath.persona}
                                     title={!learningPath.title ? '' : learningPath.title}
                                 />

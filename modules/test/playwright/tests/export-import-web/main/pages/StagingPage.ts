@@ -117,9 +117,9 @@ export class StagingPage {
 			await this.page.getByRole('link', {name: 'Refresh Counts'}).click();
 		}
 
-		for (const i in selectedEntities) {
+		for (const selectedEntity of selectedEntities) {
 			await this.page
-				.getByRole('checkbox', {name: selectedEntities[i]})
+				.getByRole('checkbox', {name: selectedEntity})
 				.check();
 		}
 

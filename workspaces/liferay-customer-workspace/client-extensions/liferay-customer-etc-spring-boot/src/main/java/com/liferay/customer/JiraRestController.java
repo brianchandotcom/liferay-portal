@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -66,25 +65,6 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@GetMapping("/security-vulnerabilities/affected-versions")
-	public ResponseEntity<String> getSecurityVulnerabilitiesAffectedVersions()
-		throws Exception {
-
-		try {
-			JSONArray affectedVersionsJSONArray =
-				_jiraService.getAffectedVersionsJSONArray();
-
-			return new ResponseEntity<>(
-				affectedVersionsJSONArray.toString(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
 	@GetMapping("/issue/{issueKey}")
 	public ResponseEntity<String> getIssue(
 			@AuthenticationPrincipal Jwt jwt,
@@ -105,6 +85,25 @@ public class JiraRestController extends BaseRestController {
 
 			return new ResponseEntity<>(
 				"No issue found with key " + issueKey, HttpStatus.NOT_FOUND);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity<>(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/security-vulnerabilities/affected-versions")
+	public ResponseEntity<String> getSecurityVulnerabilitiesAffectedVersions()
+		throws Exception {
+
+		try {
+			JSONArray affectedVersionsJSONArray =
+				_jiraService.getAffectedVersionsJSONArray();
+
+			return new ResponseEntity<>(
+				affectedVersionsJSONArray.toString(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

@@ -85,6 +85,114 @@ public class UriInfoUtil {
 	}
 
 	public static UriInfo getVulcanUriInfo(
+		HttpServletRequest httpServletRequest, UriInfo uriInfo) {
+
+		return new UriInfo() {
+
+			@Override
+			public URI getAbsolutePath() {
+				return uriInfo.getAbsolutePath();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return uriInfo.getAbsolutePathBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return uriInfo.getBaseUri();
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriInfoUtil.getBaseUriBuilder(
+					httpServletRequest, uriInfo);
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return uriInfo.getMatchedResources();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return uriInfo.getMatchedURIs();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return uriInfo.getMatchedURIs(decode);
+			}
+
+			@Override
+			public String getPath() {
+				return uriInfo.getPath();
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return uriInfo.getPath(decode);
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return uriInfo.getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return uriInfo.getPathParameters(decode);
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return uriInfo.getPathSegments();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return uriInfo.getPathSegments(decode);
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return uriInfo.getQueryParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return uriInfo.getQueryParameters(decode);
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return uriInfo.getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return uriInfo.getRequestUriBuilder();
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return uriInfo.relativize(uri);
+			}
+
+			@Override
+			public URI resolve(URI uri) {
+				return uriInfo.resolve(uri);
+			}
+
+		};
+	}
+
+	public static UriInfo getVulcanUriInfo(
 		String applicationPath, UriInfo uriInfo) {
 
 		if ((applicationPath == null) || (uriInfo == null)) {

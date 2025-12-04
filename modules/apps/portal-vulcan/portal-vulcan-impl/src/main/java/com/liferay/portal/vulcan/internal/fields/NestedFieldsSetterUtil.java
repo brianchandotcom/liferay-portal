@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,6 +8,7 @@ package com.liferay.portal.vulcan.internal.fields;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -18,22 +19,14 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
-import com.liferay.portal.vulcan.internal.fields.servlet.NestedFieldsHttpServletRequestWrapper;
-import com.liferay.portal.vulcan.internal.jaxrs.message.exchange.ExchangeWrapper;
+import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjector;
 import com.liferay.portal.vulcan.pagination.Page;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.UriInfo;
-import jakarta.ws.rs.ext.WriterInterceptorContext;
-
-import java.io.IOException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
@@ -49,12 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.cxf.jaxrs.ext.ContextProvider;
-import org.apache.cxf.jaxrs.impl.UriInfoImpl;
-import org.apache.cxf.jaxrs.provider.ProviderFactory;
-import org.apache.cxf.message.Exchange;
-import org.apache.cxf.message.Message;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -72,9 +59,20 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class NestedFieldsSetterUtil {
 
-	public static void aroundWriteTo(
-			WriterInterceptorContext writerInterceptorContext)
-		throws IOException, WebApplicationException {
+	public static void setNestedFields(
+			Object item, ContextDataInjector contextDataInjector)
+		throws Exception {
+
+		setNestedFields(
+			item,
+			(fieldName, nestedFieldsContext, resource) ->
+				() -> contextDataInjector);
+	}
+
+	public static void setNestedFields(
+			Object item,
+			NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer)
+		throws Exception {
 
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
@@ -82,23 +80,32 @@ public class NestedFieldsSetterUtil {
 		if ((nestedFieldsContext == null) ||
 			ListUtil.isEmpty(nestedFieldsContext.getNestedFields())) {
 
-			writerInterceptorContext.proceed();
-
 			return;
 		}
 
-		try {
-			_setFieldValues(
-				writerInterceptorContext.getEntity(),
-				nestedFieldsContext.getNestedFields(), nestedFieldsContext);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
+		_setFieldValues(
+			item, nestedFieldsContext.getNestedFields(), nestedFieldsContext,
+			nestedFieldsSetterCustomizer);
+	}
 
-			throw new WebApplicationException(exception);
+	public interface NestedFieldsSetterCustomizer {
+
+		public NestedFieldsSetterSafeCloseable
+				getNestedFieldsSetterSafeCloseable(
+					String fieldName, NestedFieldsContext nestedFieldsContext,
+					Object resource)
+			throws Exception;
+
+	}
+
+	public interface NestedFieldsSetterSafeCloseable extends SafeCloseable {
+
+		@Override
+		public default void close() {
 		}
 
-		writerInterceptorContext.proceed();
+		public ContextDataInjector getContextDataInjector() throws Exception;
+
 	}
 
 	private static Object _adaptToFieldType(Class<?> fieldType, Object value) {
@@ -176,10 +183,9 @@ public class NestedFieldsSetterUtil {
 		return items;
 	}
 
-	private static UnsafeTriFunction
-		<String, Object, NestedFieldsContext, Object> _getUnsafeTriFunction(
-			String fieldName, Class<?> itemClass,
-			NestedFieldsContext nestedFieldsContext) {
+	private static NestedFieldGetter _getNestedFieldGetter(
+		String fieldName, Class<?> itemClass,
+		NestedFieldsContext nestedFieldsContext) {
 
 		List<Class<?>> parentClasses = ListUtil.fromArray(Void.class);
 
@@ -196,13 +202,12 @@ public class NestedFieldsSetterUtil {
 				fieldName, parentClass,
 				nestedFieldsContext.getResourceVersion());
 
-			UnsafeTriFunction<String, Object, NestedFieldsContext, Object>
-				unsafeTriFunction =
-					_nestedFieldServiceTrackerCustomizer._unsafeTriFunctions.
-						get(factoryKey);
+			NestedFieldGetter nestedFieldGetter =
+				_nestedFieldServiceTrackerCustomizer._nestedFieldGetters.get(
+					factoryKey);
 
-			if (unsafeTriFunction != null) {
-				return unsafeTriFunction;
+			if (nestedFieldGetter != null) {
+				return nestedFieldGetter;
 			}
 		}
 
@@ -217,7 +222,8 @@ public class NestedFieldsSetterUtil {
 
 	private static void _setFieldValues(
 			Object entity, List<String> nestedFields,
-			NestedFieldsContext nestedFieldsContext)
+			NestedFieldsContext nestedFieldsContext,
+			NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer)
 		throws Exception {
 
 		List<Object> items = _getItems(entity);
@@ -244,25 +250,25 @@ public class NestedFieldsSetterUtil {
 
 				field.setAccessible(true);
 
-				UnsafeTriFunction<String, Object, NestedFieldsContext, Object>
-					unsafeTriFunction = _getUnsafeTriFunction(
-						nestedField, itemClass, nestedFieldsContext);
+				NestedFieldGetter nestedFieldGetter = _getNestedFieldGetter(
+					nestedField, itemClass, nestedFieldsContext);
 
-				if (unsafeTriFunction == null) {
+				if (nestedFieldGetter == null) {
 					continue;
 				}
 
 				Object value = _adaptToFieldType(
 					field.getType(),
-					unsafeTriFunction.apply(
-						nestedField, item, nestedFieldsContext));
+					nestedFieldGetter.getValue(
+						nestedField, item, nestedFieldsContext,
+						nestedFieldsSetterCustomizer));
 
 				field.set(item, value);
 
 				if (childNestedField != null) {
 					_setFieldValues(
 						value, Collections.singletonList(childNestedField),
-						nestedFieldsContext);
+						nestedFieldsContext, nestedFieldsSetterCustomizer);
 				}
 			}
 		}
@@ -347,15 +353,15 @@ public class NestedFieldsSetterUtil {
 				ServiceObjects<Object> serviceObjects =
 					_bundleContext.getServiceObjects(serviceReference);
 
-				_unsafeTriFunctions.put(
+				_nestedFieldGetters.put(
 					factoryKey,
-					(fieldName, item, nestedFieldsContext) ->
-						_getNestedFieldValue(
-							fieldName, item, nestedFieldsContext,
-							resourceMethod,
-							_getResourceMethodArgNameTypeEntries(
-								resourceClass, resourceMethod),
-							serviceObjects));
+					(fieldName, item, nestedFieldsContext,
+					 nestedFieldsSetterCustomizer) -> _getNestedFieldValue(
+						fieldName, item, nestedFieldsContext,
+						nestedFieldsSetterCustomizer, resourceMethod,
+						_getResourceMethodArgNameTypeEntries(
+							resourceClass, resourceMethod),
+						serviceObjects));
 
 				if (factoryKeys == null) {
 					factoryKeys = new ArrayList<>();
@@ -378,7 +384,7 @@ public class NestedFieldsSetterUtil {
 			ServiceReference<Object> serviceReference,
 			List<FactoryKey> factoryKeys) {
 
-			factoryKeys.forEach(_unsafeTriFunctions::remove);
+			factoryKeys.forEach(_nestedFieldGetters::remove);
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -413,49 +419,14 @@ public class NestedFieldsSetterUtil {
 			return null;
 		}
 
-		private <T> Object _getContext(Class<T> contextClass, Message message) {
-			if (contextClass.equals(UriInfo.class)) {
-				return new UriInfoImpl(message);
-			}
-
-			ContextProvider<?> contextProvider = _getContextProvider(
-				contextClass, message);
-
-			if (contextProvider != null) {
-				return contextProvider.createContext(message);
-			}
-
-			return null;
-		}
-
-		private <T> ContextProvider<T> _getContextProvider(
-			Class<T> contextClass, Message message) {
-
-			ProviderFactory providerFactory = _getProviderFactory(message);
-
-			return providerFactory.createContextProvider(contextClass, message);
-		}
-
-		private HttpServletRequest _getHttpServletRequest(Message message) {
-			return (HttpServletRequest)message.getContextualProperty(
-				"HTTP.REQUEST");
-		}
-
 		private Object[] _getMethodArgs(
-				String fieldName, Object item,
-				NestedFieldsContext nestedFieldsContext, Object resource,
+				ContextDataInjector contextDataInjector, String fieldName,
+				Object item, NestedFieldsContext nestedFieldsContext,
 				Method resourceMethod,
 				Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries)
 			throws Exception {
 
 			Object[] args = new Object[resourceMethod.getParameterCount()];
-
-			Message message = _handleNestedFieldMessage(
-				fieldName, nestedFieldsContext.getMessage(), resource);
-			MultivaluedMap<String, String> pathParameters =
-				nestedFieldsContext.getPathParameters();
-			MultivaluedMap<String, String> queryParameters =
-				nestedFieldsContext.getQueryParameters();
 
 			for (int i = 0; i < resourceMethod.getParameterCount(); i++) {
 				if (resourceMethodArgNameTypeEntries[i] == null) {
@@ -467,12 +438,11 @@ public class NestedFieldsSetterUtil {
 
 				if (args[i] == null) {
 					args[i] = _getMethodArgValueFromRequest(
-						fieldName, message, pathParameters, queryParameters,
-						resourceMethodArgNameTypeEntries[i]);
+						contextDataInjector, fieldName,
+						resourceMethodArgNameTypeEntries[i],
+						nestedFieldsContext);
 				}
 			}
-
-			_resetNestedFieldMessage(message);
 
 			return args;
 		}
@@ -512,28 +482,34 @@ public class NestedFieldsSetterUtil {
 		}
 
 		private Object _getMethodArgValueFromRequest(
-			String fieldName, Message message,
-			MultivaluedMap<String, String> pathParameters,
-			MultivaluedMap<String, String> queryParameters,
-			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry) {
+			ContextDataInjector contextDataInjector, String fieldName,
+			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry,
+			NestedFieldsContext nestedFieldsContext) {
 
 			Object argValue = null;
 
 			Class<?> resourceMethodArgType =
 				resourceMethodArgNameTypeEntry.getValue();
 
-			Object context = _getContext(resourceMethodArgType, message);
+			Object context = contextDataInjector.getValue(
+				resourceMethodArgType);
 
 			if (context != null) {
 				argValue = context;
 			}
 			else {
+				MultivaluedMap<String, String> pathParameters =
+					nestedFieldsContext.getPathParameters();
+
 				argValue = _convert(
 					pathParameters.getFirst(
 						resourceMethodArgNameTypeEntry.getKey()),
 					resourceMethodArgType);
 
 				if (argValue == null) {
+					MultivaluedMap<String, String> queryParameters =
+						nestedFieldsContext.getQueryParameters();
+
 					argValue = _convert(
 						queryParameters.getFirst(
 							fieldName + StringPool.PERIOD +
@@ -547,19 +523,28 @@ public class NestedFieldsSetterUtil {
 
 		private Object _getNestedFieldValue(
 				String fieldName, Object item,
-				NestedFieldsContext nestedFieldsContext, Method resourceMethod,
+				NestedFieldsContext nestedFieldsContext,
+				NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer,
+				Method resourceMethod,
 				Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries,
 				ServiceObjects<Object> serviceObjects)
 			throws Exception {
 
 			Object resource = serviceObjects.getService();
 
-			try {
-				_setResourceContexts(
-					nestedFieldsContext.getMessage(), resource);
+			try (NestedFieldsSetterSafeCloseable
+					nestedFieldsSetterSafeCloseable =
+						nestedFieldsSetterCustomizer.
+							getNestedFieldsSetterSafeCloseable(
+								fieldName, nestedFieldsContext, resource)) {
+
+				ContextDataInjector contextDataInjector =
+					nestedFieldsSetterSafeCloseable.getContextDataInjector();
+
+				contextDataInjector.inject(resource);
 
 				Object[] args = _getMethodArgs(
-					fieldName, item, nestedFieldsContext, resource,
+					contextDataInjector, fieldName, item, nestedFieldsContext,
 					resourceMethod, resourceMethodArgNameTypeEntries);
 
 				return resourceMethod.invoke(resource, args);
@@ -567,10 +552,6 @@ public class NestedFieldsSetterUtil {
 			finally {
 				serviceObjects.ungetService(resource);
 			}
-		}
-
-		private ProviderFactory _getProviderFactory(Message message) {
-			return ProviderFactory.getInstance(message);
 		}
 
 		private Map.Entry<String, Class<?>>[]
@@ -646,76 +627,11 @@ public class NestedFieldsSetterUtil {
 			return resourceMethodArgNameTypeEntries;
 		}
 
-		private Message _handleNestedFieldMessage(
-			String fieldName, Message message, Object resource) {
-
-			message.put(
-				"HTTP.REQUEST",
-				new NestedFieldsHttpServletRequestWrapper(
-					fieldName, _getHttpServletRequest(message)));
-			message.setExchange(
-				new ExchangeWrapper(message.getExchange(), resource));
-
-			return message;
-		}
-
-		private void _resetNestedFieldMessage(Message message) {
-			NestedFieldsHttpServletRequestWrapper
-				nestedFieldsHttpServletRequestWrapper =
-					(NestedFieldsHttpServletRequestWrapper)
-						message.getContextualProperty("HTTP.REQUEST");
-
-			message.put(
-				"HTTP.REQUEST",
-				nestedFieldsHttpServletRequestWrapper.getRequest());
-
-			Exchange exchange = message.getExchange();
-
-			if (exchange instanceof ExchangeWrapper) {
-				ExchangeWrapper exchangeWrapper = (ExchangeWrapper)exchange;
-
-				message.setExchange(exchangeWrapper.getExchange());
-			}
-		}
-
-		private void _setContextFields(
-				Field[] fields, Message message, Object resource)
-			throws Exception {
-
-			for (Field field : fields) {
-				String name = field.getName();
-
-				if (name.startsWith("context") ||
-					(field.getAnnotation(Context.class) != null)) {
-
-					field.setAccessible(true);
-
-					field.set(resource, _getContext(field.getType(), message));
-				}
-			}
-		}
-
-		private void _setResourceContexts(Message message, Object resource)
-			throws Exception {
-
-			Class<?> resourceClass = resource.getClass();
-
-			_setContextFields(
-				resourceClass.getDeclaredFields(), message, resource);
-
-			Class<?> superClass = resourceClass.getSuperclass();
-
-			_setContextFields(
-				superClass.getDeclaredFields(), message, resource);
-		}
-
 		private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 		private final BundleContext _bundleContext;
-		private final Map
-			<FactoryKey,
-			 UnsafeTriFunction<String, Object, NestedFieldsContext, Object>>
-				_unsafeTriFunctions = new ConcurrentHashMap<>();
+		private final Map<FactoryKey, NestedFieldGetter> _nestedFieldGetters =
+			new ConcurrentHashMap<>();
 
 	}
 
@@ -742,10 +658,13 @@ public class NestedFieldsSetterUtil {
 		_serviceTracker.open();
 	}
 
-	@FunctionalInterface
-	private interface UnsafeTriFunction<A, B, C, R> {
+	private interface NestedFieldGetter {
 
-		public R apply(A a, B b, C c) throws Exception;
+		public Object getValue(
+				String fieldName, Object item,
+				NestedFieldsContext nestedFieldsContext,
+				NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer)
+			throws Exception;
 
 	}
 

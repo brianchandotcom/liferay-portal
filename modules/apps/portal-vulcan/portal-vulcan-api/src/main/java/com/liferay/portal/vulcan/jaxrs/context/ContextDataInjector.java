@@ -10,6 +10,8 @@ package com.liferay.portal.vulcan.jaxrs.context;
  */
 public interface ContextDataInjector {
 
+	public Object getValue(Class<?> contextClass);
+
 	public Object inject(Object instance) throws Exception;
 
 }

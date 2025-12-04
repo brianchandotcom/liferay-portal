@@ -130,8 +130,25 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return LayoutTestUtil.addTypeContentLayout(
-			_groupLocalService.fetchGroup(TestPropsValues.getGroupId()));
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				TestPropsValues.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Group group = _groupLocalService.fetchGroup(
+			TestPropsValues.getGroupId());
+
+		Layout masterLayout = LayoutTestUtil.addTypeContentLayout(group);
+
+		masterLayout.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntry.getExternalReferenceCode());
+
+		_updateLayout(
+			masterLayout.getCtCollectionId(),
+			masterLayoutPageTemplateEntry.getPlid(), masterLayout.getPlid());
+
+		return masterLayout;
 	}
 
 	@Override

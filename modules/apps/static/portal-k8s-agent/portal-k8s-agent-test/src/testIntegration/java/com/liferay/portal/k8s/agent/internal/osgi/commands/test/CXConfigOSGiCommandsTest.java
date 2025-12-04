@@ -11,6 +11,8 @@ import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -214,8 +216,7 @@ public class CXConfigOSGiCommandsTest {
 		_testGetConfigurations(List.of("foo"), List.of(), failures);
 		_testGetConfigurations(List.of("foo", "bar"), List.of(), failures);
 
-		Assert.assertTrue(
-			"Failures: " + String.join("", failures), failures.isEmpty());
+		_assertNoFailures(failures);
 	}
 
 	@Test
@@ -273,8 +274,7 @@ public class CXConfigOSGiCommandsTest {
 		_testReload(List.of("pid-1", "pid-2"), "Too many arguments.", failures);
 		_testReload(List.of(), "No PID provided.", failures);
 
-		Assert.assertTrue(
-			"Failures: " + String.join("", failures), failures.isEmpty());
+		_assertNoFailures(failures);
 	}
 
 	@Test
@@ -328,8 +328,13 @@ public class CXConfigOSGiCommandsTest {
 		_testShow(List.of("pid-1", "pid-2"), "Too many arguments.", failures);
 		_testShow(List.of(), "No PID provided.", failures);
 
+		_assertNoFailures(failures);
+	}
+
+	private void _assertNoFailures(List<String> failures) {
 		Assert.assertTrue(
-			"Failures: " + String.join("", failures), failures.isEmpty());
+			"Failures:\n" + StringUtil.merge(failures, StringPool.NEW_LINE),
+			failures.isEmpty());
 	}
 
 	private String _captureStout(UnsafeRunnable<Exception> unsafeRunnable)
@@ -434,8 +439,7 @@ public class CXConfigOSGiCommandsTest {
 		String output = _captureStout(() -> _reload(inputParamsArray));
 
 		if (!output.contains(expectedOutput)) {
-			failures.add(
-				"FAILURE: " + Arrays.toString(inputParamsArray) + "\n");
+			failures.add("FAILURE: " + Arrays.toString(inputParamsArray));
 		}
 	}
 
@@ -449,8 +453,7 @@ public class CXConfigOSGiCommandsTest {
 		String output = _captureStout(() -> _show(inputParamsArray));
 
 		if (!output.contains(expectedOutput)) {
-			failures.add(
-				"FAILURE: " + Arrays.toString(inputParamsArray) + "\n");
+			failures.add("FAILURE: " + Arrays.toString(inputParamsArray));
 		}
 	}
 

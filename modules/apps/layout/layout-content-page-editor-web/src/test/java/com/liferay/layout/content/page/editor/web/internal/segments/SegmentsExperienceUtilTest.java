@@ -101,14 +101,14 @@ public class SegmentsExperienceUtilTest {
 		String newNamespace = RandomTestUtil.randomString();
 		String oldNamespace = RandomTestUtil.randomString();
 
-		String portletId = RandomTestUtil.randomString() + "_INSTANCE_";
+		String portletId = RandomTestUtil.randomString();
 
-		String sourcePortletId = portletId + oldNamespace;
+		String sourcePortletId = PortletIdCodec.encode(portletId, oldNamespace);
 
 		String sourcePrimaryKey = RandomTestUtil.randomString();
 		String sourceSegmentsExperienceKey = RandomTestUtil.randomString();
 
-		String targetPortletId = portletId + newNamespace;
+		String targetPortletId = PortletIdCodec.encode(portletId, newNamespace);
 
 		String targetPrimaryKey = RandomTestUtil.randomString();
 
@@ -209,7 +209,6 @@ public class SegmentsExperienceUtilTest {
 			List.of(sourcePortletId)
 		);
 
-		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		LayoutStructure layoutStructure = Mockito.mock(LayoutStructure.class);
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
@@ -307,8 +306,8 @@ public class SegmentsExperienceUtilTest {
 
 			resourcePermissionLocalServiceUtilMockedStatic.when(
 				() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
-					companyId, rootPortletId,
-					ResourceConstants.SCOPE_INDIVIDUAL, sourcePrimaryKey)
+					companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
+					sourcePrimaryKey)
 			).thenReturn(
 				Collections.singletonList(resourcePermission)
 			);
@@ -378,7 +377,7 @@ public class SegmentsExperienceUtilTest {
 			Mockito.verify(
 				copiedResourcePermission
 			).setName(
-				rootPortletId
+				portletId
 			);
 
 			Mockito.verify(

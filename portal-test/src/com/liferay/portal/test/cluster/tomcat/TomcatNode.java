@@ -126,7 +126,8 @@ public class TomcatNode {
 		}
 
 		return processChannel.write(
-			new ClusterExecutableProcessCallable<>(clusterExecutable));
+			new BridgeProcessCallable<>(
+				new ClusterExecutableProcessCallable<>(clusterExecutable)));
 	}
 
 	public ProcessChannel<String> start(boolean loadHomePage) throws Exception {
@@ -185,28 +186,11 @@ public class TomcatNode {
 
 		ProcessExecutor processExecutor = new LocalProcessExecutor();
 
-		ProcessChannel<String> processChannel = processExecutor.execute(
+		_processChannel = processExecutor.execute(
 			processConfig, new BootstrapStartProcessCallable(_nodeId));
 
 		NoticeableFuture<String> noticeableFuture =
-			processChannel.getProcessNoticeableFuture();
-
-		_processChannel = new ProcessChannel<String>() {
-
-			@Override
-			public NoticeableFuture<String> getProcessNoticeableFuture() {
-				return noticeableFuture;
-			}
-
-			@Override
-			public <V extends Serializable> NoticeableFuture<V> write(
-				ProcessCallable<V> processCallable) {
-
-				return processChannel.write(
-					new BridgeProcessCallable<>(processCallable));
-			}
-
-		};
+			_processChannel.getProcessNoticeableFuture();
 
 		noticeableFuture.addFutureListener(future -> _processChannel = null);
 

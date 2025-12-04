@@ -117,7 +117,7 @@ public class PageTemplateDTOConverter
 						Layout.class.getName(),
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));
-				setThumbnail(
+				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
@@ -213,7 +213,7 @@ public class PageTemplateDTOConverter
 						Layout.class.getName(),
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));
-				setThumbnail(
+				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->

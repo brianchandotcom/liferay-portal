@@ -43,13 +43,11 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.rest.dto.v1_0.SearchRequestBody;
 import com.liferay.portal.search.rest.util.FilterUtil;
@@ -376,22 +374,14 @@ public class BulkActionBulkSelectionFactory {
 			Predicate predicate = _filterFactory.create(
 				filterString, objectDefinition);
 
-			List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
-				new Long[0], _company.getCompanyId(), _user.getUserId(),
-				objectDefinition.getObjectDefinitionId(), predicate, false,
-				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			if (ListUtil.isEmpty(primaryKeys)) {
-				return new String[0];
-			}
-
-			List<String> rowIds = new ArrayList<>(primaryKeys.size());
-
-			for (long primaryKey : primaryKeys) {
-				rowIds.add(
+			List<String> rowIds = TransformUtil.transform(
+				_objectEntryLocalService.getPrimaryKeys(
+					new Long[0], _company.getCompanyId(), _user.getUserId(),
+					objectDefinition.getObjectDefinitionId(), predicate, false,
+					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				primaryKey ->
 					objectDefinition.getClassName() + StringPool.SPACE +
 						primaryKey);
-			}
 
 			return rowIds.toArray(new String[0]);
 		}
@@ -454,17 +444,14 @@ public class BulkActionBulkSelectionFactory {
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
-		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+		List<String> searchResults = TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> {
+				Document document = searchHit.getDocument();
 
-		List<String> searchResults = new ArrayList<>(searchHitsList.size());
-
-		for (SearchHit searchHit : searchHitsList) {
-			Document document = searchHit.getDocument();
-
-			searchResults.add(
-				_getEntryClassName(document) + StringPool.SPACE +
-					_getEntryClassPK(document));
-		}
+				return _getEntryClassName(document) + StringPool.SPACE +
+					_getEntryClassPK(document);
+			});
 
 		return searchResults.toArray(new String[0]);
 	}
@@ -503,24 +490,21 @@ public class BulkActionBulkSelectionFactory {
 			Predicate predicate = _filterFactory.create(
 				filterString, objectDefinition);
 
-			List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
-				new Long[0], _company.getCompanyId(), _user.getUserId(),
-				objectDefinition.getObjectDefinitionId(), predicate, false,
-				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			for (long primaryKey : primaryKeys) {
-				rowIds.add(
+			rowIds = TransformUtil.transform(
+				_objectEntryLocalService.getPrimaryKeys(
+					new Long[0], _company.getCompanyId(), _user.getUserId(),
+					objectDefinition.getObjectDefinitionId(), predicate, false,
+					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				primaryKey ->
 					objectDefinition.getClassName() + StringPool.SPACE +
 						primaryKey);
-			}
 		}
 		else {
-			for (BulkActionItem bulkActionItem : bulkActionItems) {
-				rowIds.add(
-					StringBundler.concat(
-						bulkActionItem.getClassName(), StringPool.SPACE,
-						bulkActionItem.getClassPK()));
-			}
+			rowIds = TransformUtil.transformToList(
+				bulkActionItems,
+				bulkActionItem -> StringBundler.concat(
+					bulkActionItem.getClassName(), StringPool.SPACE,
+					bulkActionItem.getClassPK()));
 		}
 
 		return rowIds.toArray(new String[0]);
@@ -593,29 +577,26 @@ public class BulkActionBulkSelectionFactory {
 	}
 
 	private long[] _toGroupIds(long companyId, String scope) {
-		List<Long> groupIds = new ArrayList<>();
+		List<Long> groupIds = TransformUtil.transformToList(
+			_toArray(scope),
+			part -> {
+				Group group =
+					_groupLocalService.fetchGroupByExternalReferenceCode(
+						part, companyId);
 
-		String[] parts = _toArray(scope);
+				if (group != null) {
+					return group.getGroupId();
+				}
 
-		for (String part : parts) {
-			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-				part, companyId);
-
-			if (group != null) {
-				groupIds.add(group.getGroupId());
-
-				continue;
-			}
-
-			try {
-				groupIds.add(Long.parseLong(part));
-			}
-			catch (NumberFormatException numberFormatException) {
-				throw new SystemException(
-					"Invalid external reference code or group ID: " + part,
-					numberFormatException);
-			}
-		}
+				try {
+					return Long.parseLong(part);
+				}
+				catch (NumberFormatException numberFormatException) {
+					throw new SystemException(
+						"Invalid external reference code or group ID: " + part,
+						numberFormatException);
+				}
+			});
 
 		return ArrayUtil.toLongArray(groupIds);
 	}

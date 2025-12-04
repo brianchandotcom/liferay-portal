@@ -195,7 +195,7 @@ test(
 				permissions,
 			});
 
-			await contentsPage.createContent('Basic Content');
+			await contentsPage.createContent('Basic Web Content');
 
 			await contentsPage.fillData([{label: 'Title', value: '1234'}]);
 
@@ -685,7 +685,7 @@ test(
 				permissions: childFolderPermissions,
 			});
 
-			await contentsPage.createContent('Basic Content');
+			await contentsPage.createContent('Basic Web Content');
 
 			const contentName = 'Content' + getRandomInt();
 

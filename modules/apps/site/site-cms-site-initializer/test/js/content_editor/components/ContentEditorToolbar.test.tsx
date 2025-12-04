@@ -17,7 +17,7 @@ const renderComponent = () => {
 				displayDate="2025-10-31T13:00"
 				hasWorkflow={false}
 				headerTitle="New Content"
-				type="Basic Content"
+				type="Basic Web Content"
 			/>
 
 			<form

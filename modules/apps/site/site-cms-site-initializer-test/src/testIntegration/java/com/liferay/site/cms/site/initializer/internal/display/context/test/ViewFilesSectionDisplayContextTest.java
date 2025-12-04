@@ -148,7 +148,7 @@ public class ViewFilesSectionDisplayContextTest
 		).put(
 			"folder", StringPool.BLANK
 		).put(
-			"external-video-shortcut", getRedirect("L_CMS_EXTERNAL_VIDEO")
+			"external-video", getRedirect("L_CMS_EXTERNAL_VIDEO")
 		).build();
 	}
 

@@ -244,8 +244,7 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 		ObjectDefinition companyScopedObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, false, true, false,
-				true, false, false, false, false, false,
-				RandomTestUtil.randomString(),
+				true, false, false, false, false, RandomTestUtil.randomString(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"TestObject", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -557,8 +556,7 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 		ObjectDefinition siteScopedObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, false, true, false,
-				true, false, false, false, false, false,
-				RandomTestUtil.randomString(),
+				true, false, false, false, false, RandomTestUtil.randomString(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

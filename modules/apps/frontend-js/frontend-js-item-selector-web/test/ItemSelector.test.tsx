@@ -155,4 +155,53 @@ describe('ItemSelector component', () => {
 			name: mockSecondItemName,
 		});
 	});
+
+	it('renders a controlled item selector with selected state', async () => {
+		const {findByRole} = render(
+			<ItemSelector<TestItem>
+				apiURL={`${location.origin}/o/headless-delivery/v1.0/test-api-url`}
+				items={[
+					{
+						id: 2,
+						name: mockSecondItemName,
+					},
+				]}
+			>
+				{(item) => (
+					<ItemSelector.Item key={item.id} textValue={item.name}>
+						{item.name}
+					</ItemSelector.Item>
+				)}
+			</ItemSelector>
+		);
+
+		const input = await findByRole('combobox');
+
+		await userEvent.click(input);
+
+		const menu = await findByRole('listbox');
+
+		expect(menu).toBeVisible();
+
+		const listItem = await findByRole('option', {
+			name: mockFirstItemName,
+		});
+
+		const listItemSelected = await findByRole('option', {
+			name: mockSecondItemName,
+		});
+
+		expect(listItemSelected).toBeTruthy();
+		expect(listItemSelected).toBeTruthy();
+
+		expect(listItemSelected.getAttribute('aria-selected')).toBe('true');
+		expect(listItemSelected.classList.contains('active')).toBe(true);
+		expect(
+			listItemSelected.querySelector('.lexicon-icon-check-small')
+		).toBeDefined();
+
+		expect(listItem.getAttribute('aria-selected')).toBeNull();
+		expect(listItem.classList.contains('active')).toBe(false);
+		expect(listItem.querySelector('.lexicon-icon-check-small')).toBeNull();
+	});
 });

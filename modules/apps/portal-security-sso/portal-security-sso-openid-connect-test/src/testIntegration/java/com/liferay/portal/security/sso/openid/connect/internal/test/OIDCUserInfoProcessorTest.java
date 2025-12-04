@@ -21,13 +21,16 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -179,83 +182,134 @@ public class OIDCUserInfoProcessorTest {
 	@FeatureFlag("LPD-20879")
 	@Test
 	public void testProcessUserInfo() throws Exception {
-		_testProcessUserInfo(
-			new String[0], "email", new String[0],
-			_customOIDCUserInfoMapperJSON);
-		_testProcessUserInfo(
-			new String[0], "email", new String[0],
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
-		_testProcessUserInfo(
-			new String[] {"group1"}, "email", new String[] {"group1"},
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
-
-		UserGroup userGroup = _userGroupLocalService.addUserGroup(
-			StringPool.BLANK, TestPropsValues.getUserId(),
-			TestPropsValues.getCompanyId(), "group2", StringPool.BLANK,
-			_serviceContext);
-
-		User user = _userLocalService.fetchUserByEmailAddress(
-			TestPropsValues.getCompanyId(), _emailAddress);
-
-		_userGroupLocalService.addUserUserGroups(
-			user.getUserId(), new long[] {userGroup.getUserGroupId()});
-
-		_testProcessUserInfo(
-			new String[] {"group1", "group2", "group3"}, "email",
-			new String[] {"group1", "group3"},
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
-		_testProcessUserInfo(
-			new String[] {"group1", "group2"}, "email", new String[] {"group1"},
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
-		_testProcessUserInfo(
-			new String[] {"group2"}, "email", new String[0],
-			_customOIDCUserInfoMapperJSON);
-
-		_userGroupLocalService.deleteUserUserGroup(
-			user.getUserId(), userGroup.getUserGroupId());
-
-		_testProcessUserInfo(
-			new String[0], "email", new String[0],
-			_customOIDCUserInfoMapperJSON);
-		_testProcessUserInfo(
-			new String[0], "email", new String[0],
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
-		_testProcessUserInfo(
-			new String[] {"group1"}, "email", new String[] {"group1"},
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
-
-		_emailAddress = null;
-
-		user = UserTestUtil.addUser();
-
-		_screenName = user.getScreenName();
-
-		_uuid = PortalUUIDUtil.generate();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_pid,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"companyId", TestPropsValues.getCompanyId()
-					).put(
-						"discoveryEndpoint", _DISCOVERY_ENDPOINT
-					).put(
-						"matcherField", "screenName"
-					).put(
-						"openIdConnectClientId", _CLIENT_ID
-					).build());
-			SafeCloseable safeCloseable =
-				PrefsPropsTestUtil.swapWithSafeCloseable(
-					TestPropsValues.getCompanyId(),
-					PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED,
-					Boolean.FALSE.toString())) {
+		try (SafeCloseable safeCloseable1 = _updateSecurityWithSafeCloseable(
+				true)) {
 
 			_testProcessUserInfo(
-				new String[0], "screenName", new String[0],
+				new String[0], "email", new String[0],
 				_customOIDCUserInfoMapperJSON);
 			_testProcessUserInfo(
-				new String[] {"group1"}, "screenName", new String[] {"group1"},
+				new String[0], "email", new String[0],
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			_testProcessUserInfo(
+				new String[] {"group1"}, "email", new String[] {"group1"},
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+
+			UserGroup userGroup = _userGroupLocalService.addUserGroup(
+				StringPool.BLANK, TestPropsValues.getUserId(),
+				TestPropsValues.getCompanyId(), "group2", StringPool.BLANK,
+				_serviceContext);
+
+			User user = _userLocalService.fetchUserByEmailAddress(
+				TestPropsValues.getCompanyId(), _emailAddress);
+
+			_userGroupLocalService.addUserUserGroups(
+				user.getUserId(), new long[] {userGroup.getUserGroupId()});
+
+			_testProcessUserInfo(
+				new String[] {"group1", "group2", "group3"}, "email",
+				new String[] {"group1", "group3"},
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			_testProcessUserInfo(
+				new String[] {"group1", "group2"}, "email",
+				new String[] {"group1"},
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			_testProcessUserInfo(
+				new String[] {"group2"}, "email", new String[0],
+				_customOIDCUserInfoMapperJSON);
+
+			_userGroupLocalService.deleteUserUserGroup(
+				user.getUserId(), userGroup.getUserGroupId());
+
+			_testProcessUserInfo(
+				new String[0], "email", new String[0],
+				_customOIDCUserInfoMapperJSON);
+			_testProcessUserInfo(
+				new String[0], "email", new String[0],
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			_testProcessUserInfo(
+				new String[] {"group1"}, "email", new String[] {"group1"},
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+
+			_emailAddress = null;
+
+			user = UserTestUtil.addUser();
+
+			_screenName = user.getScreenName();
+
+			_uuid = PortalUUIDUtil.generate();
+
+			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+					new ConfigurationTemporarySwapper(
+						_pid,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"companyId", TestPropsValues.getCompanyId()
+						).put(
+							"discoveryEndpoint", _DISCOVERY_ENDPOINT
+						).put(
+							"matcherField", "screenName"
+						).put(
+							"openIdConnectClientId", _CLIENT_ID
+						).build());
+				SafeCloseable safeCloseable2 =
+					PrefsPropsTestUtil.swapWithSafeCloseable(
+						TestPropsValues.getCompanyId(),
+						PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED,
+						Boolean.FALSE.toString())) {
+
+				_testProcessUserInfo(
+					new String[0], "screenName", new String[0],
+					_customOIDCUserInfoMapperJSON);
+				_testProcessUserInfo(
+					new String[] {"group1"}, "screenName",
+					new String[] {"group1"},
+					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			}
+		}
+	}
+
+	@FeatureFlag("LPD-20879")
+	@Test
+	public void testProcessUserInfoExistingUserWithoutAllowingStrangers()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable = _updateSecurityWithSafeCloseable(
+				true)) {
+
+			_testProcessUserInfo(
+				new String[0], "email", new String[0],
+				_customOIDCUserInfoMapperJSON);
+		}
+
+		try (SafeCloseable safeCloseable = _updateSecurityWithSafeCloseable(
+				false)) {
+
+			_testProcessUserInfo(
+				new String[0], "email", new String[0],
+				_customOIDCUserInfoMapperJSON);
+		}
+	}
+
+	@FeatureFlag("LPD-20879")
+	@Test
+	public void testProcessUserInfoNewUserWithoutAllowingStrangers()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable = _updateSecurityWithSafeCloseable(
+				false)) {
+
+			_testProcessUserInfo(
+				new String[0], "email", new String[0],
+				_customOIDCUserInfoMapperJSON);
+
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Class<?> portalExceptionClass = portalException.getClass();
+
+			Assert.assertEquals(
+				"StrangersNotAllowedException",
+				portalExceptionClass.getSimpleName());
 		}
 	}
 
@@ -460,6 +514,27 @@ public class OIDCUserInfoProcessorTest {
 		};
 	}
 
+	private SafeCloseable _updateSecurityWithSafeCloseable(boolean strangers)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		boolean originalStrangers = company.isStrangers();
+
+		_companyLocalService.updateSecurity(
+			company.getCompanyId(), company.getAuthType(),
+			company.isAutoLogin(), company.isSendPasswordResetLink(), strangers,
+			company.isStrangersWithMx(), company.isStrangersVerify(),
+			company.isSiteLogo());
+
+		return () -> _companyLocalService.updateSecurity(
+			company.getCompanyId(), company.getAuthType(),
+			company.isAutoLogin(), company.isSendPasswordResetLink(),
+			originalStrangers, company.isStrangersWithMx(),
+			company.isStrangersVerify(), company.isSiteLogo());
+	}
+
 	private static final String _CLIENT_ID = RandomTestUtil.randomString();
 
 	private static final String _DISCOVERY_ENDPOINT =
@@ -471,6 +546,9 @@ public class OIDCUserInfoProcessorTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private String _emailAddress;
 

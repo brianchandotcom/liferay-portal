@@ -899,8 +899,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage masterPageError = randomMasterPage();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
@@ -924,7 +922,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -1100,8 +1099,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage masterPageError = randomMasterPage();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
@@ -1123,7 +1120,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}
@@ -1335,8 +1333,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage masterPageError = randomMasterPage();
 
-		String expectedProblemTitle = "Unable to download file from ";
-
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
 				{
@@ -1360,7 +1356,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				expectedProblemTitle + thumbnailURLReference.getUrl(),
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
 	}

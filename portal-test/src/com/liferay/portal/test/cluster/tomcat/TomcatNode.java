@@ -126,8 +126,7 @@ public class TomcatNode {
 		}
 
 		return processChannel.write(
-			new BridgeProcessCallable<>(
-				new ClusterExecutableProcessCallable<>(clusterExecutable)));
+			new BridgeProcessCallable<>(clusterExecutable));
 	}
 
 	public ProcessChannel<String> start(boolean loadHomePage) throws Exception {
@@ -525,11 +524,12 @@ public class TomcatNode {
 						inputStream,
 						BridgeClassLoaderHolder._bridgeClassLoader)) {
 
-				Object payloadProcessCallable = objectInputStream.readObject();
+				Object payloadClusterExecutable =
+					objectInputStream.readObject();
 
-				Class<?> clazz = payloadProcessCallable.getClass();
+				Class<?> clazz = payloadClusterExecutable.getClass();
 
-				Method method = clazz.getMethod("call");
+				Method method = clazz.getMethod("execute");
 
 				method.setAccessible(true);
 
@@ -537,7 +537,7 @@ public class TomcatNode {
 						ThreadContextClassLoaderUtil.swap(
 							BridgeClassLoaderHolder._bridgeClassLoader)) {
 
-					return (T)method.invoke(payloadProcessCallable);
+					return (T)method.invoke(payloadClusterExecutable);
 				}
 			}
 			catch (Exception exception) {
@@ -545,14 +545,14 @@ public class TomcatNode {
 			}
 		}
 
-		private BridgeProcessCallable(ProcessCallable<T> processCallable) {
+		private BridgeProcessCallable(ClusterExecutable<T> clusterExecutable) {
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 
 			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 					unsyncByteArrayOutputStream)) {
 
-				objectOutputStream.writeObject(processCallable);
+				objectOutputStream.writeObject(clusterExecutable);
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
@@ -610,30 +610,6 @@ public class TomcatNode {
 			}
 
 		}
-
-	}
-
-	private static class ClusterExecutableProcessCallable
-		<V extends Serializable>
-			implements ProcessCallable<V> {
-
-		@Override
-		public V call() throws ProcessException {
-			try {
-				return _clusterExecutable.execute();
-			}
-			catch (Throwable throwable) {
-				throw new ProcessException(throwable);
-			}
-		}
-
-		private ClusterExecutableProcessCallable(
-			ClusterExecutable<V> clusterExecutable) {
-
-			_clusterExecutable = clusterExecutable;
-		}
-
-		private final ClusterExecutable<V> _clusterExecutable;
 
 	}
 

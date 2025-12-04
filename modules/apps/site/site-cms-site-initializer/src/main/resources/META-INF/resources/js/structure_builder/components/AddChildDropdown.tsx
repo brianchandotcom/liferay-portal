@@ -26,7 +26,13 @@ type Item = {
 	symbolLeft: string;
 };
 
-export default function AddChildDropdown() {
+export default function AddChildDropdown({
+	className,
+	displayType = 'secondary',
+}: {
+	className?: string;
+	displayType?: 'secondary' | 'unstyled';
+}) {
 	const dispatch = useStateDispatch();
 	const structureUuid = useSelector(selectStructureUuid);
 
@@ -79,7 +85,8 @@ export default function AddChildDropdown() {
 				trigger={
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('add-field')}
-						displayType="secondary"
+						className={className}
+						displayType={displayType}
 						size="sm"
 						symbol="plus"
 						title={Liferay.Language.get('add-field')}

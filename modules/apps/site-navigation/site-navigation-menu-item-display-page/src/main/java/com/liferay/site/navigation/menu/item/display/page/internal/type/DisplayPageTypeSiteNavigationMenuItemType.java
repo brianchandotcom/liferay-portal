@@ -352,6 +352,28 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean hasModel(
+			long companyId, long groupId,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException {
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
+				typeSettingsUnicodeProperties.get("externalReferenceCode"),
+				groupId,
+				typeSettingsUnicodeProperties.get(
+					"scopeExternalReferenceCode"));
+
+		if ((layoutDisplayPageObjectProvider == null) ||
+			(layoutDisplayPageObjectProvider.getDisplayObject() == null)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker,
 			SiteNavigationMenuItem siteNavigationMenuItem)

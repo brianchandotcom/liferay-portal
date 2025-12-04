@@ -17,6 +17,7 @@ import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.Weekday;
 import com.liferay.calendar.util.comparator.CalendarBookingStartTimeComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -281,14 +282,12 @@ public class RecurrenceUtil {
 		else if ((frequency == Frequency.WEEKLY) && !weekdays.isEmpty()) {
 			sb.append("-on-x");
 
-			List<String> formattedWeekdays = new ArrayList<>();
-
-			for (Weekday weekday : weekdays) {
-				formattedWeekdays.add(_weekdayLabels.get(weekday.toString()));
-			}
-
 			arguments.add(
-				ListUtil.toString(formattedWeekdays, StringPool.BLANK));
+				ListUtil.toString(
+					TransformUtil.transform(
+						weekdays,
+						weekday -> _weekdayLabels.get(weekday.toString())),
+					StringPool.BLANK));
 		}
 
 		Calendar untilJCalendar = recurrence.getUntilJCalendar();
@@ -322,50 +321,41 @@ public class RecurrenceUtil {
 
 		TimeZone originalTimeZone = recurrence.getTimeZone();
 
-		List<Calendar> newExceptionJCalendars = new ArrayList<>();
-
 		List<Calendar> exceptionJCalendars =
 			recurrence.getExceptionJCalendars();
 
 		Calendar recurrenceStartTimeJCalendar = JCalendarUtil.getJCalendar(
 			startTimeJCalendar, originalTimeZone);
 
-		for (Calendar exceptionJCalendar : exceptionJCalendars) {
-			exceptionJCalendar = JCalendarUtil.mergeJCalendar(
-				exceptionJCalendar, recurrenceStartTimeJCalendar,
-				originalTimeZone);
+		recurrence.setExceptionJCalendars(
+			TransformUtil.transform(
+				exceptionJCalendars,
+				exceptionJCalendar -> {
+					exceptionJCalendar = JCalendarUtil.mergeJCalendar(
+						exceptionJCalendar, recurrenceStartTimeJCalendar,
+						originalTimeZone);
 
-			exceptionJCalendar = JCalendarUtil.getJCalendar(
-				exceptionJCalendar, timeZone);
+					return JCalendarUtil.getJCalendar(
+						exceptionJCalendar, timeZone);
+				}));
 
-			newExceptionJCalendars.add(exceptionJCalendar);
-		}
+		recurrence.setPositionalWeekdays(
+			TransformUtil.transform(
+				recurrence.getPositionalWeekdays(),
+				positionalWeekday -> {
+					Calendar jCalendar = JCalendarUtil.getJCalendar(
+						startTimeJCalendar, originalTimeZone);
 
-		recurrence.setExceptionJCalendars(newExceptionJCalendars);
+					Weekday weekday = positionalWeekday.getWeekday();
 
-		List<PositionalWeekday> newPositionalWeekdays = new ArrayList<>();
+					jCalendar.set(
+						Calendar.DAY_OF_WEEK, weekday.getCalendarWeekday());
 
-		List<PositionalWeekday> positionalWeekdays =
-			recurrence.getPositionalWeekdays();
-
-		for (PositionalWeekday positionalWeekday : positionalWeekdays) {
-			Calendar jCalendar = JCalendarUtil.getJCalendar(
-				startTimeJCalendar, originalTimeZone);
-
-			Weekday weekday = positionalWeekday.getWeekday();
-
-			jCalendar.set(Calendar.DAY_OF_WEEK, weekday.getCalendarWeekday());
-
-			weekday = Weekday.getWeekday(
-				JCalendarUtil.getJCalendar(jCalendar, timeZone));
-
-			positionalWeekday = new PositionalWeekday(
-				weekday, positionalWeekday.getPosition());
-
-			newPositionalWeekdays.add(positionalWeekday);
-		}
-
-		recurrence.setPositionalWeekdays(newPositionalWeekdays);
+					return new PositionalWeekday(
+						Weekday.getWeekday(
+							JCalendarUtil.getJCalendar(jCalendar, timeZone)),
+						positionalWeekday.getPosition());
+				}));
 		recurrence.setTimeZone(timeZone);
 
 		Calendar untilJCalendar = recurrence.getUntilJCalendar();

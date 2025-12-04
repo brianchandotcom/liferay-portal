@@ -39,9 +39,8 @@ import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -67,15 +66,9 @@ public class SegmentsExperienceUtilTest {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(new LanguageImpl());
-	}
 
-	@Before
-	public void setUp() {
 		SegmentsExperimentLocalService segmentsExperimentLocalService =
 			Mockito.mock(SegmentsExperimentLocalService.class);
-
-		_segmentsExperimentLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			SegmentsExperimentLocalServiceUtil.class);
 
 		_segmentsExperimentLocalServiceUtilMockedStatic.when(
 			SegmentsExperimentLocalServiceUtil::getService
@@ -114,8 +107,8 @@ public class SegmentsExperienceUtilTest {
 		);
 	}
 
-	@After
-	public void tearDown() {
+	@AfterClass
+	public static void tearDownClass() {
 		_segmentsExperimentLocalServiceUtilMockedStatic.close();
 		_portletPreferencesLocalServiceUtilMockedStatic.close();
 	}
@@ -501,9 +494,11 @@ public class SegmentsExperienceUtilTest {
 					segmentsExperience)));
 	}
 
-	private MockedStatic<PortletPreferencesLocalServiceUtil>
-		_portletPreferencesLocalServiceUtilMockedStatic;
-	private MockedStatic<SegmentsExperimentLocalServiceUtil>
-		_segmentsExperimentLocalServiceUtilMockedStatic;
+	private static MockedStatic<PortletPreferencesLocalServiceUtil>
+		_portletPreferencesLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			PortletPreferencesLocalServiceUtil.class);
+	private static final MockedStatic<SegmentsExperimentLocalServiceUtil>
+		_segmentsExperimentLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			SegmentsExperimentLocalServiceUtil.class);
 
 }

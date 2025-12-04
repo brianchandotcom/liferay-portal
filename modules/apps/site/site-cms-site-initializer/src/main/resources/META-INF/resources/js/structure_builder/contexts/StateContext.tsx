@@ -91,7 +91,7 @@ const INITIAL_STATE: State = {
 	unsavedChanges: false,
 };
 
-type AddFieldAction = {field: Field; type: 'add-field'};
+type AddFieldAction = {field: Field; parentUuid?: Uuid; type: 'add-field'};
 
 type AddReferencedStructuresAction = {
 	referencedStructures: ReferencedStructure[];
@@ -206,24 +206,44 @@ function reducer(state: State, action: Action): State {
 
 	switch (action.type) {
 		case 'add-field': {
-			const {field} = action;
+			const {field, parentUuid} = action;
 
 			const {structure} = state;
 
-			const name = findAvailableFieldName(structure.children, field.name);
+			let parent: Structure | RepeatableGroup = structure;
 
-			const children = new Map(structure.children);
+			if (parentUuid) {
+				const item = findChild({root: structure, uuid: parentUuid});
+
+				if (item?.type === 'repeatable-group') {
+					parent = item;
+				}
+			}
+
+			const name = findAvailableFieldName(parent.children, field.name);
+
+			const children = new Map(parent.children);
 
 			children.set(field.uuid, {...field, name});
 
-			const sortedChildren = sortChildren(children);
+			let nextChildren;
+
+			if (parent.type === 'repeatable-group') {
+				nextChildren = updateChild({
+					child: {...parent, children: sortChildren(children)},
+					root: structure,
+				});
+			}
+			else {
+				nextChildren = sortChildren(children);
+			}
 
 			return {
 				...state,
 				selection: [field.uuid],
 				structure: {
 					...structure,
-					children: sortedChildren,
+					children: nextChildren,
 				},
 			};
 		}

@@ -104,13 +104,12 @@ public class RecurrenceSerializer {
 
 		RRule rRule = new RRule();
 
-		List<WeekdayNum> weekdayNums = TransformUtil.transform(
-			recurrence.getPositionalWeekdays(),
-			positionalWeekday -> new WeekdayNum(
-				positionalWeekday.getPosition(),
-				_weekdaysMap.get(positionalWeekday.getWeekday())));
-
-		rRule.setByDay(weekdayNums);
+		rRule.setByDay(
+			TransformUtil.transform(
+				recurrence.getPositionalWeekdays(),
+				positionalWeekday -> new WeekdayNum(
+					positionalWeekday.getPosition(),
+					_weekdaysMap.get(positionalWeekday.getWeekday()))));
 
 		List<Integer> months = recurrence.getMonths();
 

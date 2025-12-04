@@ -800,14 +800,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Comment"
+                                    $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Comment
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Comment"
+                                    $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Comment
                                 type: array
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
         post:
             operationId: postByExternalReferenceCodeComment
             parameters:
@@ -833,7 +833,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
     "/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}":
         delete:
             operationId: deleteByExternalReferenceCodeComment
@@ -853,7 +853,7 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
         get:
             operationId: getByExternalReferenceCodeComment
             parameters:
@@ -876,7 +876,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
         put:
             operationId: putByExternalReferenceCodeComment
             parameters:
@@ -907,7 +907,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
     "/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}/child-comments":
         get:
             operationId: getByExternalReferenceCodeCommentChildCommentsPage
@@ -973,7 +973,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Comment"
                                 type: array
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
         post:
             operationId: postByExternalReferenceCodeCommentChildComment
             parameters:
@@ -1004,7 +1004,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
     "/by-external-reference-code/{externalReferenceCode}/object-actions/{objectActionName}":
         put:
             operationId: putByExternalReferenceCodeObjectActionObjectActionName
@@ -1687,14 +1687,14 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Comment"
+                                    $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Comment
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Comment"
+                                    $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Comment
                                 type: array
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
         post:
             operationId: postScopeScopeKeyByExternalReferenceCodeComment
             parameters:
@@ -1725,7 +1725,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}":
         delete:
             operationId: deleteScopeScopeKeyByExternalReferenceCodeComment
@@ -1750,7 +1750,7 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
         get:
             operationId: getScopeScopeKeyByExternalReferenceCodeComment
             parameters:
@@ -1778,7 +1778,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
         put:
             operationId: putScopeScopeKeyByExternalReferenceCodeComment
             parameters:
@@ -1814,7 +1814,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}/child-comments":
         get:
             operationId: getScopeScopeKeyByExternalReferenceCodeCommentChildCommentsPage
@@ -1885,7 +1885,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Comment"
                                 type: array
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
         post:
             operationId: postScopeScopeKeyByExternalReferenceCodeCommentChildComment
             parameters:
@@ -1921,7 +1921,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
-            tags: ["ObjectEntry"]
+            tags: ["Comment"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/expire":
         post:
             operationId: postScopeScopeKeyByExternalReferenceCodeExpire
@@ -2584,12 +2584,10 @@ paths:
                             schema:
                                 items:
                                     $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
-                                type: array
                         application/xml:
                             schema:
                                 items:
                                     $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
-                                type: array
             tags: ["Collaborator"]
         post:
             description:

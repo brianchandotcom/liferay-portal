@@ -307,8 +307,6 @@ public class LayoutSiteNavigationMenuItemType
 		return UnicodePropertiesBuilder.put(
 			"externalReferenceCode", layout.getExternalReferenceCode()
 		).put(
-			"layoutUuid", layout.getUuid()
-		).put(
 			"privateLayout", String.valueOf(layout.isPrivateLayout())
 		).buildString();
 	}
@@ -397,8 +395,6 @@ public class LayoutSiteNavigationMenuItemType
 			).put(
 				"externalReferenceCode", layout.getExternalReferenceCode()
 			).put(
-				"layoutUuid", layout.getUuid()
-			).put(
 				"privateLayout", String.valueOf(layout.isPrivateLayout())
 			).buildString());
 
@@ -446,7 +442,8 @@ public class LayoutSiteNavigationMenuItemType
 				getParentSiteNavigationMenuItemIds(
 					siteNavigationMenuItem.getSiteNavigationMenuId(),
 					StringBundler.concat(
-						"%layoutUuid=", curLayout.getUuid(),
+						"%externalReferenceCode=",
+						curLayout.getExternalReferenceCode(),
 						StringPool.PERCENT));
 
 		for (Long parentSiteNavigationMenuItemId :

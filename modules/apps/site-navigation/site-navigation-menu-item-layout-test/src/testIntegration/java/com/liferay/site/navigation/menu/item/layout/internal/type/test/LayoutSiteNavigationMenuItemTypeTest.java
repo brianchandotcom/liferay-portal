@@ -191,11 +191,9 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				SiteNavigationMenuItemTypeConstants.LAYOUT);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
-		String layoutUuid = RandomTestUtil.randomString();
 
 		if (layout != null) {
 			externalReferenceCode = layout.getExternalReferenceCode();
-			layoutUuid = layout.getUuid();
 		}
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
@@ -207,8 +205,6 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 					true
 				).put(
 					"externalReferenceCode", externalReferenceCode
-				).put(
-					"layoutUuid", layoutUuid
 				).put(
 					"privateLayout", false
 				).put(

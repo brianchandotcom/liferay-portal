@@ -432,9 +432,12 @@ public class NavItemUtil {
 					siteNavigationMenuItem.getTypeSettings()
 				).build();
 
-			String itemLayoutUuid = unicodeProperties.getProperty("layoutUuid");
+			String externalReferenceCode = unicodeProperties.getProperty(
+				"externalReferenceCode");
 
-			if (Objects.equals(layout.getUuid(), itemLayoutUuid)) {
+			if (Objects.equals(
+					layout.getExternalReferenceCode(), externalReferenceCode)) {
+
 				return siteNavigationMenuItem.getSiteNavigationMenuItemId();
 			}
 		}

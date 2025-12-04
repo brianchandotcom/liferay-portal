@@ -18,22 +18,34 @@ resource "kubernetes_manifest" "external_secret" {
 			namespace=var.argocd_namespace
 		}
 		spec={
-			data=[
-				{
-					remoteRef={
-						key=var.remote_secret_key
-						property=var.git_username_property
-					}
-					secretKey="username"
-				},
-				{
-					remoteRef={
-						key=var.remote_secret_key
-						property=var.git_token_property
-					}
-					secretKey="password"
-				},
-			]
+			data=flatten(
+				[
+					var.git_repo_auth_method == "https" ? [
+						{
+							remoteRef={
+								key=var.remote_secret_key
+								property=var.git_username_property
+							}
+							secretKey="username"
+						},
+						{
+							remoteRef={
+								key=var.remote_secret_key
+								property=var.git_token_property
+							}
+							secretKey="password"
+						},
+					] : [],
+					var.git_repo_auth_method == "ssh" ? [
+						{
+							remoteRef={
+								key=var.remote_secret_key
+								property=var.git_ssh_private_key_property
+							}
+							secretKey="ssh_private_key"
+						},
+					] : [],
+				])
 			refreshInterval="1h"
 			secretStoreRef={
 				kind="SecretStore"
@@ -44,11 +56,11 @@ resource "kubernetes_manifest" "external_secret" {
 				name=local.argocd_repo_credentials_secret_name
 				template={
 					data={
-						"insecure"="true"
-						"password"="{{ .password }}"
+						"password"=var.git_repo_auth_method == "https" ? "{{ .password }}" : null
+						"sshPrivateKey"=var.git_repo_auth_method == "ssh" ? "{{ .ssh_private_key }}" : null
 						"type"="git"
 						"url"=var.git_repo_url
-						"username"="{{ .username }}"
+						"username"=var.git_repo_auth_method == "https" ? "{{ .username }}" : null
 					}
 					metadata = {
 						labels = {

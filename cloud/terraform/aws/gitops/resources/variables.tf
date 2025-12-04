@@ -2,6 +2,14 @@ variable "argocd_namespace" {
 	default="argocd"
 	type=string
 }
+variable "git_repo_auth_method" {
+	default="https"
+	type=string
+	validation {
+		condition=contains(["https", "ssh"], var.git_repo_auth_method)
+		error_message="git_repo_auth_method must be 'https' or 'ssh'."
+	}
+}
 variable "git_repo_liferay_application_base_path" {
 	default="applications/liferay/base"
 	type=string
@@ -13,11 +21,17 @@ variable "git_repo_liferay_application_environments_pattern" {
 variable "git_repo_url" {
 	type=string
 }
+variable "git_ssh_private_key_property" {
+	type=string
+	default=null
+}
 variable "git_token_property" {
 	type=string
+	default=null
 }
 variable "git_username_property" {
 	type=string
+	default=null
 }
 variable "liferay_helm_chart_name" {
 	default="liferay-aws"

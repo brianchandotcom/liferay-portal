@@ -7,6 +7,7 @@ package com.liferay.petra.reflect;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,9 +37,11 @@ public class AnnotationLocator {
 		Class<?> clazz = null;
 
 		while ((clazz = queue.poll()) != null) {
-			_mergeAnnotations(
-				Collections.emptySet(), indexAnnotations, false,
-				clazz.getAnnotations());
+			if (!Proxy.isProxyClass(clazz)) {
+				_mergeAnnotations(
+					Collections.emptySet(), indexAnnotations, false,
+					clazz.getAnnotations());
+			}
 
 			_queueSuperTypes(clazz, queue);
 		}
@@ -66,25 +69,27 @@ public class AnnotationLocator {
 		}
 
 		while ((clazz = queue.poll()) != null) {
-			Method specificMethod = ReflectionUtil.fetchDeclaredMethod(
-				clazz, method.getName(), method.getParameterTypes());
+			if (!Proxy.isProxyClass(clazz)) {
+				Method specificMethod = ReflectionUtil.fetchDeclaredMethod(
+					clazz, method.getName(), method.getParameterTypes());
 
-			if (specificMethod != null) {
-				_mergeAnnotations(
-					concludedAnnotationClasses, indexAnnotations, true,
-					specificMethod.getAnnotations());
-			}
+				if (specificMethod != null) {
+					_mergeAnnotations(
+						concludedAnnotationClasses, indexAnnotations, true,
+						specificMethod.getAnnotations());
+				}
 
-			Method publicMethod = ReflectionUtil.fetchMethod(
-				clazz, method.getName(), method.getParameterTypes());
+				Method publicMethod = ReflectionUtil.fetchMethod(
+					clazz, method.getName(), method.getParameterTypes());
 
-			if (publicMethod != null) {
+				if (publicMethod != null) {
 
-				// Ensure the class has a publicly inherited method
+					// Ensure the class has a publicly inherited method
 
-				_mergeAnnotations(
-					concludedAnnotationClasses, indexAnnotations, false,
-					clazz.getAnnotations());
+					_mergeAnnotations(
+						concludedAnnotationClasses, indexAnnotations, false,
+						clazz.getAnnotations());
+				}
 			}
 
 			_queueSuperTypes(clazz, queue);
@@ -110,6 +115,12 @@ public class AnnotationLocator {
 		Class<?> clazz = null;
 
 		while ((clazz = queue.poll()) != null) {
+			if (Proxy.isProxyClass(clazz)) {
+				_queueSuperTypes(clazz, queue);
+
+				continue;
+			}
+
 			T annotation = clazz.getAnnotation(annotationClass);
 
 			if (annotation == null) {
@@ -145,6 +156,12 @@ public class AnnotationLocator {
 		Class<?> clazz = null;
 
 		while ((clazz = queue.poll()) != null) {
+			if (Proxy.isProxyClass(clazz)) {
+				_queueSuperTypes(clazz, queue);
+
+				continue;
+			}
+
 			T annotation = null;
 
 			try {
@@ -211,8 +228,12 @@ public class AnnotationLocator {
 
 		Class<?> superClass = clazz.getSuperclass();
 
-		if ((superClass != null) && (superClass != Object.class)) {
-			queue.offer(superClass);
+		if (superClass != null) {
+			String name = superClass.getName();
+
+			if (!name.startsWith("java")) {
+				queue.offer(superClass);
+			}
 		}
 
 		Class<?>[] interfaceClasses = clazz.getInterfaces();

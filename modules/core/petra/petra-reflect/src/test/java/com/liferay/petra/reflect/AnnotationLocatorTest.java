@@ -10,11 +10,14 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.Serializable;
+
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -187,6 +190,10 @@ public class AnnotationLocatorTest {
 		_classListLocate(
 			TestInterface2.class, Arrays.asList(_mix(3), _type(4)));
 
+		_classListLocate(
+			_proxyInterface(TestInterface2.class),
+			Arrays.asList(_mix(3), _type(4)));
+
 		_classListLocate(TestInterface1.class, Arrays.asList(_type(4)));
 
 		_classListLocate(OriginClass.class, Arrays.asList(_type(5), _mix(8)));
@@ -210,6 +217,8 @@ public class AnnotationLocatorTest {
 		_classSingleLocate(SuperClass.class, 2, 5);
 
 		_classSingleLocate(TestInterface2.class, 3, 4);
+
+		_classSingleLocate(_proxyInterface(TestInterface2.class), 3, 4);
 
 		_classSingleLocate(TestInterface1.class, -1, 4);
 
@@ -235,7 +244,7 @@ public class AnnotationLocatorTest {
 			TestClass.class, SuperClass.class, TestInterface2.class,
 			TestInterface1.class, OriginClass.class, SuperInterface2.class,
 			SuperInterface1.class, OriginInterface2.class,
-			OriginInterface1.class);
+			OriginInterface1.class, Serializable.class);
 
 		List<Class<?>> actualClassHierarchy = new ArrayList<>();
 
@@ -277,6 +286,16 @@ public class AnnotationLocatorTest {
 
 		_methodListLocate(
 			TestInterface2.class,
+			Arrays.asList(
+				new Annotation[] {_mix(6), _method(6), _type(6)},
+				new Annotation[0],
+				new Annotation[] {_method(3), _mix(3), _type(6)},
+				new Annotation[] {_mix(6), _method(6), _type(6)},
+				new Annotation[] {_mix(4), _method(4), _type(4)},
+				new Annotation[] {_method(3), _mix(3)}));
+
+		_methodListLocate(
+			_proxyInterface(TestInterface2.class),
 			Arrays.asList(
 				new Annotation[] {_mix(6), _method(6), _type(6)},
 				new Annotation[0],
@@ -345,6 +364,11 @@ public class AnnotationLocatorTest {
 		_methodSingleLocate(
 			TestInterface2.class, new int[] {6, -1, 3, 6, 4, 3},
 			new int[] {3, -1, 3, 3, 3, 3}, new int[] {6, -1, 6, 6, 4, -1});
+
+		_methodSingleLocate(
+			_proxyInterface(TestInterface2.class),
+			new int[] {6, -1, 3, 6, 4, 3}, new int[] {3, -1, 3, 3, 3, 3},
+			new int[] {6, -1, 6, 6, 4, -1});
 
 		_methodSingleLocate(
 			TestInterface1.class, new int[] {-1, -1, -1, -1, 4, -1},
@@ -689,6 +713,14 @@ public class AnnotationLocatorTest {
 		};
 	}
 
+	private Class<?> _proxyInterface(Class<?> interfaceClass) {
+		Object proxy = Proxy.newProxyInstance(
+			interfaceClass.getClassLoader(), new Class<?>[] {interfaceClass},
+			(proxy1, method, args) -> null);
+
+		return proxy.getClass();
+	}
+
 	private Type _type(final int value) {
 		return new Type() {
 
@@ -741,7 +773,7 @@ public class AnnotationLocatorTest {
 
 	@Type(value = 5)
 	private static class OriginClass
-		implements OriginInterface2, OriginInterface1 {
+		implements OriginInterface2, OriginInterface1, Serializable {
 
 		@Method(value = 5)
 		@Mix(value = 5)

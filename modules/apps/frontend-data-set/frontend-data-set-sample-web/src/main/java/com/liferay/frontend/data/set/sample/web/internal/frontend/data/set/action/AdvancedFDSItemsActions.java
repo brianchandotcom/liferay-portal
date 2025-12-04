@@ -191,8 +191,10 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 					).build(
 						"open-side-panel-no-title"
 					),
-					FDSActionDropdownItemBuilder.putData(
-						"disableHeader", "true"
+					FDSActionDropdownItemBuilder.setData(
+						HashMapBuilder.<String, Object>put(
+							"disableHeader", true
+						).build()
 					).setHref(
 						PortletURLBuilder.createRenderURL(
 							liferayPortletResponse

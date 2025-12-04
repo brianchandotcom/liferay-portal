@@ -100,6 +100,10 @@ public interface ObjectDefinitionLocalService
 			boolean modifiable, String scope, boolean system)
 		throws PortalException;
 
+	public void addOrUpdateObjectDefinitionPLOEntries(
+			ObjectDefinition objectDefinition)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition addOrUpdateSystemObjectDefinition(
 			long companyId, long objectFolderId,
@@ -443,6 +447,10 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectDefinition updateClassName(long objectDefinitionId)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition updateCustomObjectDefinition(

@@ -93,6 +93,13 @@ public class ObjectDefinitionLocalServiceUtil {
 			system);
 	}
 
+	public static void addOrUpdateObjectDefinitionPLOEntries(
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		getService().addOrUpdateObjectDefinitionPLOEntries(objectDefinition);
+	}
+
 	public static ObjectDefinition addOrUpdateSystemObjectDefinition(
 			long companyId, long objectFolderId,
 			com.liferay.object.system.SystemObjectDefinitionManager
@@ -586,6 +593,12 @@ public class ObjectDefinitionLocalServiceUtil {
 		ObjectDefinition objectDefinition) {
 
 		getService().undeployObjectDefinition(objectDefinition);
+	}
+
+	public static ObjectDefinition updateClassName(long objectDefinitionId)
+		throws PortalException {
+
+		return getService().updateClassName(objectDefinitionId);
 	}
 
 	public static ObjectDefinition updateCustomObjectDefinition(

@@ -503,8 +503,8 @@ public class BulkActionBulkSelectionFactory {
 	}
 
 	private boolean _isAllowedSearchContextAttribute(String key) {
-		if (key.startsWith("search.experiences.") ||
-			key.equals("search.empty.search") || key.equals("status")) {
+		if (key.equals("search.empty.search") || key.equals("status") ||
+			key.startsWith("search.experiences.")) {
 
 			return true;
 		}

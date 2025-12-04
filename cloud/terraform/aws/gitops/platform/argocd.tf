@@ -1,10 +1,7 @@
-locals {
-	argocd_release_name="argocd"
-}
 resource "helm_release" "argocd" {
 	chart="argo-cd"
 	create_namespace=true
-	name=local.argocd_release_name
+	name="argocd"
 	namespace=var.argocd_namespace
 	repository="https://argoproj.github.io/argo-helm"
 	values=[

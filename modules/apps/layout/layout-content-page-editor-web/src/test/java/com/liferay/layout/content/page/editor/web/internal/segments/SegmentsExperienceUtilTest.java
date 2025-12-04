@@ -79,8 +79,14 @@ public class SegmentsExperienceUtilTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		_counterLocalServiceUtilMockedStatic.close();
+		_fragmentEntryLinkLocalServiceUtilMockedStatic.close();
+		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.close();
+		_layoutStructureUtilMockedStatic.close();
 		_portletLocalServiceUtilMockedStatic.close();
+		_portletPermissionUtilMockedStatic.close();
 		_portletPreferencesLocalServiceUtilMockedStatic.close();
+		_resourcePermissionLocalServiceUtilMockedStatic.close();
 		_segmentsExperimentLocalServiceUtilMockedStatic.close();
 	}
 
@@ -128,172 +134,152 @@ public class SegmentsExperienceUtilTest {
 		LayoutStructure layoutStructure = _getLayoutStructure(
 			fragmentEntryLink.getFragmentEntryLinkId());
 
-		try (MockedStatic<FragmentEntryLinkLocalServiceUtil>
-				fragmentEntryLinkMockedStatic = Mockito.mockStatic(
-					FragmentEntryLinkLocalServiceUtil.class);
-			MockedStatic<LayoutStructureUtil> layoutStructureUtilMockedStatic =
-				Mockito.mockStatic(LayoutStructureUtil.class);
-			MockedStatic<LayoutPageTemplateStructureLocalServiceUtil>
-				layoutPageTemplateStructureLocalServiceUtilMockedStatic =
-					Mockito.mockStatic(
-						LayoutPageTemplateStructureLocalServiceUtil.class);
-			MockedStatic<ResourcePermissionLocalServiceUtil>
-				resourcePermissionLocalServiceUtilMockedStatic =
-					Mockito.mockStatic(
-						ResourcePermissionLocalServiceUtil.class);
-			MockedStatic<CounterLocalServiceUtil>
-				counterLocalServiceUtilMockedStatic = Mockito.mockStatic(
-					CounterLocalServiceUtil.class)) {
+		_fragmentEntryLinkLocalServiceUtilMockedStatic.when(
+			() ->
+				FragmentEntryLinkLocalServiceUtil.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						groupId,
+						sourceSegmentsExperience.getSegmentsExperienceId(),
+						layout.getPlid())
+		).thenReturn(
+			Collections.singletonList(fragmentEntryLink)
+		);
 
-			fragmentEntryLinkMockedStatic.when(
-				() ->
-					FragmentEntryLinkLocalServiceUtil.
-						getFragmentEntryLinksBySegmentsExperienceId(
-							groupId,
-							sourceSegmentsExperience.getSegmentsExperienceId(),
-							layout.getPlid())
-			).thenReturn(
-				Collections.singletonList(fragmentEntryLink)
-			);
+		_fragmentEntryLinkLocalServiceUtilMockedStatic.when(
+			() -> FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+				Mockito.any())
+		).thenAnswer(
+			(Answer<FragmentEntryLink>)inv -> inv.getArgument(0)
+		);
 
-			fragmentEntryLinkMockedStatic.when(
-				() -> FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
-					Mockito.any())
-			).thenAnswer(
-				(Answer<FragmentEntryLink>)inv -> inv.getArgument(0)
-			);
+		_layoutStructureUtilMockedStatic.when(
+			() -> LayoutStructureUtil.getLayoutStructure(
+				groupId, layout.getPlid(),
+				sourceSegmentsExperience.getSegmentsExperienceId())
+		).thenReturn(
+			layoutStructure
+		);
 
-			layoutStructureUtilMockedStatic.when(
-				() -> LayoutStructureUtil.getLayoutStructure(
-					groupId, layout.getPlid(),
-					sourceSegmentsExperience.getSegmentsExperienceId())
-			).thenReturn(
-				layoutStructure
-			);
+		ResourcePermission resourcePermission = Mockito.mock(
+			ResourcePermission.class);
 
-			ResourcePermission resourcePermission = Mockito.mock(
-				ResourcePermission.class);
+		Mockito.when(
+			resourcePermission.getRoleId()
+		).thenReturn(
+			roleId
+		);
 
-			Mockito.when(
-				resourcePermission.getRoleId()
-			).thenReturn(
-				roleId
-			);
+		Mockito.when(
+			resourcePermission.getActionIds()
+		).thenReturn(
+			resourceActionIds
+		);
 
-			Mockito.when(
-				resourcePermission.getActionIds()
-			).thenReturn(
-				resourceActionIds
-			);
+		LayoutPageTemplateStructure layoutPageTemplateStructure = Mockito.mock(
+			LayoutPageTemplateStructure.class);
 
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				Mockito.mock(LayoutPageTemplateStructure.class);
+		JSONObject structureDataJSONObject = JSONUtil.put("items", "");
 
-			JSONObject structureDataJSONObject = JSONUtil.put("items", "");
+		Mockito.when(
+			layoutStructure.toJSONObject()
+		).thenReturn(
+			structureDataJSONObject
+		);
 
-			Mockito.when(
-				layoutStructure.toJSONObject()
-			).thenReturn(
-				structureDataJSONObject
-			);
+		Mockito.when(
+			layoutPageTemplateStructure.getData(Mockito.anyLong())
+		).thenReturn(
+			structureDataJSONObject.toString()
+		);
 
-			Mockito.when(
-				layoutPageTemplateStructure.getData(Mockito.anyLong())
-			).thenReturn(
-				structureDataJSONObject.toString()
-			);
+		_layoutPageTemplateStructureLocalServiceUtilMockedStatic.when(
+			() ->
+				LayoutPageTemplateStructureLocalServiceUtil.
+					fetchLayoutPageTemplateStructure(groupId, layout.getPlid())
+		).thenReturn(
+			layoutPageTemplateStructure
+		);
 
-			layoutPageTemplateStructureLocalServiceUtilMockedStatic.when(
-				() ->
-					LayoutPageTemplateStructureLocalServiceUtil.
-						fetchLayoutPageTemplateStructure(
-							groupId, layout.getPlid())
-			).thenReturn(
-				layoutPageTemplateStructure
-			);
-
-			resourcePermissionLocalServiceUtilMockedStatic.when(
-				() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
-					companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
-					PortletPermissionUtil.getPrimaryKey(
-						layout.getPlid(), sourcePortletId))
-			).thenReturn(
-				Collections.singletonList(resourcePermission)
-			);
-
-			resourcePermissionLocalServiceUtilMockedStatic.when(
-				() ->
-					ResourcePermissionLocalServiceUtil.createResourcePermission(
-						Mockito.anyLong())
-			).thenReturn(
-				Mockito.mock(ResourcePermission.class)
-			);
-
-			ArgumentCaptor<ResourcePermission> addedPermission =
-				ArgumentCaptor.forClass(ResourcePermission.class);
-
-			resourcePermissionLocalServiceUtilMockedStatic.when(
-				() -> ResourcePermissionLocalServiceUtil.addResourcePermission(
-					addedPermission.capture())
-			).thenReturn(
-				null
-			);
-
-			SegmentsExperienceUtil.copySegmentsExperienceData(
-				commentManager, groupId, layout, portletRegistry,
-				sourceSegmentsExperience, targetSegmentsExperience,
-				key -> Mockito.mock(ServiceContext.class), userId);
-
-			Assert.assertFalse(
-				addedPermission.getAllValues(
-				).isEmpty());
-
-			ResourcePermission copiedResourcePermission =
-				addedPermission.getValue();
-
-			Mockito.verify(
-				copiedResourcePermission
-			).setCompanyId(
-				companyId
-			);
-
-			Mockito.verify(
-				copiedResourcePermission
-			).setName(
-				portletId
-			);
-
-			Mockito.verify(
-				copiedResourcePermission
-			).setScope(
-				ResourceConstants.SCOPE_INDIVIDUAL
-			);
-
-			Mockito.verify(
-				copiedResourcePermission
-			).setPrimKey(
+		_resourcePermissionLocalServiceUtilMockedStatic.when(
+			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
 				PortletPermissionUtil.getPrimaryKey(
-					layout.getPlid(), targetPortletId)
-			);
+					layout.getPlid(), sourcePortletId))
+		).thenReturn(
+			Collections.singletonList(resourcePermission)
+		);
 
-			Mockito.verify(
-				copiedResourcePermission
-			).setRoleId(
-				roleId
-			);
+		_resourcePermissionLocalServiceUtilMockedStatic.when(
+			() -> ResourcePermissionLocalServiceUtil.createResourcePermission(
+				Mockito.anyLong())
+		).thenReturn(
+			Mockito.mock(ResourcePermission.class)
+		);
 
-			Mockito.verify(
-				copiedResourcePermission
-			).setActionIds(
-				resourceActionIds
-			);
+		ArgumentCaptor<ResourcePermission> addedPermission =
+			ArgumentCaptor.forClass(ResourcePermission.class);
 
-			Mockito.verify(
-				copiedResourcePermission
-			).setViewActionId(
-				resourcePermission.isViewActionId()
-			);
-		}
+		_resourcePermissionLocalServiceUtilMockedStatic.when(
+			() -> ResourcePermissionLocalServiceUtil.addResourcePermission(
+				addedPermission.capture())
+		).thenReturn(
+			null
+		);
+
+		SegmentsExperienceUtil.copySegmentsExperienceData(
+			commentManager, groupId, layout, portletRegistry,
+			sourceSegmentsExperience, targetSegmentsExperience,
+			key -> Mockito.mock(ServiceContext.class), userId);
+
+		Assert.assertFalse(
+			addedPermission.getAllValues(
+			).isEmpty());
+
+		ResourcePermission copiedResourcePermission =
+			addedPermission.getValue();
+
+		Mockito.verify(
+			copiedResourcePermission
+		).setCompanyId(
+			companyId
+		);
+
+		Mockito.verify(
+			copiedResourcePermission
+		).setName(
+			portletId
+		);
+
+		Mockito.verify(
+			copiedResourcePermission
+		).setScope(
+			ResourceConstants.SCOPE_INDIVIDUAL
+		);
+
+		Mockito.verify(
+			copiedResourcePermission
+		).setPrimKey(
+			PortletPermissionUtil.getPrimaryKey(
+				layout.getPlid(), targetPortletId)
+		);
+
+		Mockito.verify(
+			copiedResourcePermission
+		).setRoleId(
+			roleId
+		);
+
+		Mockito.verify(
+			copiedResourcePermission
+		).setActionIds(
+			resourceActionIds
+		);
+
+		Mockito.verify(
+			copiedResourcePermission
+		).setViewActionId(
+			resourcePermission.isViewActionId()
+		);
 	}
 
 	@Test
@@ -425,12 +411,32 @@ public class SegmentsExperienceUtilTest {
 		return segmentsExperience;
 	}
 
+	private static final MockedStatic<CounterLocalServiceUtil>
+		_counterLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			CounterLocalServiceUtil.class);
+	private static final MockedStatic<FragmentEntryLinkLocalServiceUtil>
+		_fragmentEntryLinkLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			FragmentEntryLinkLocalServiceUtil.class);
+	private static final MockedStatic
+		<LayoutPageTemplateStructureLocalServiceUtil>
+			_layoutPageTemplateStructureLocalServiceUtilMockedStatic =
+				Mockito.mockStatic(
+					LayoutPageTemplateStructureLocalServiceUtil.class);
+	private static final MockedStatic<LayoutStructureUtil>
+		_layoutStructureUtilMockedStatic = Mockito.mockStatic(
+			LayoutStructureUtil.class);
 	private static final MockedStatic<PortletLocalServiceUtil>
 		_portletLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			PortletLocalServiceUtil.class);
+	private static final MockedStatic<PortletPermissionUtil>
+		_portletPermissionUtilMockedStatic = Mockito.mockStatic(
+			PortletPermissionUtil.class);
 	private static final MockedStatic<PortletPreferencesLocalServiceUtil>
 		_portletPreferencesLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			PortletPreferencesLocalServiceUtil.class);
+	private static final MockedStatic<ResourcePermissionLocalServiceUtil>
+		_resourcePermissionLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			ResourcePermissionLocalServiceUtil.class);
 	private static final MockedStatic<SegmentsExperimentLocalServiceUtil>
 		_segmentsExperimentLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			SegmentsExperimentLocalServiceUtil.class);

@@ -99,7 +99,7 @@ public class TranslationEntryAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		String infoItemTitle = _translationManager.getInfoItemTitle(
+		String infoItemTitle = _translationManager.getEntryTitle(
 			_translationEntry.getClassName(), _translationEntry.getClassPK(),
 			locale);
 

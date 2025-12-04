@@ -718,7 +718,7 @@ public class ObjectEntryResourceImpl
 				version, _DEFAULT_XLIFF_MIMETYPE_VERSION);
 		}
 
-		File zipFile = _translationManager.exportXLIFFZipFile(
+		File zipFile = _translationManager.getXLIFFZipFile(
 			className, objectEntryId, exportMimeType,
 			contextAcceptLanguage.getPreferredLocale(), sourceLanguageId,
 			StringUtil.split(targetLanguageIds, CharPool.COMMA), contextUser);
@@ -746,22 +746,8 @@ public class ObjectEntryResourceImpl
 
 		_checkFeatureFlag();
 
-		String exportMimeType = null;
-
-		String acceptHeader = contextHttpServletRequest.getHeader(
-			HttpHeaders.ACCEPT);
-
-		if (!Validator.isBlank(acceptHeader)) {
-			for (Map.Entry<String, String> entry :
-					_versionXLIFFMimeType.entrySet()) {
-
-				if (acceptHeader.contains(entry.getValue())) {
-					exportMimeType = entry.getValue();
-
-					break;
-				}
-			}
-		}
+		String exportMimeType = _getExportMimeType(
+			contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT));
 
 		String className = _objectDefinition.getClassName();
 
@@ -1831,6 +1817,22 @@ public class ObjectEntryResourceImpl
 			_dtoConverterRegistry, contextHttpServletRequest, objectEntryId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
+	}
+
+	private String _getExportMimeType(String acceptHeader) {
+		if (Validator.isBlank(acceptHeader)) {
+			return null;
+		}
+
+		for (Map.Entry<String, String> entry :
+				_versionXLIFFMimeType.entrySet()) {
+
+			if (acceptHeader.contains(entry.getValue())) {
+				return entry.getValue();
+			}
+		}
+
+		return null;
 	}
 
 	private String _getFilterString() {

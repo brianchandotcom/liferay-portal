@@ -15,14 +15,14 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemCo
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentInlineValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.HTMLInlineFragmentValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.HTMLMappedFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentInlineValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.TextInlineFragmentValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.TextMappedFragmentValue;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -190,26 +190,8 @@ public class FragmentEditableElementTestUtil {
 		return null;
 	}
 
-	private static HTMLFragmentValue _getHTMLFragmentValue(
-		FragmentMappedValueItemContextReference.ContextSource contextSource,
-		FragmentMappedValueItemReference.Type
-			fragmentMappedValueItemReferenceType,
-		HTMLFragmentValue.Type htmlFragmentValueType) {
-
-		if (htmlFragmentValueType == HTMLFragmentValue.Type.INLINE) {
-			return _getHTMLInlineFragmentValue();
-		}
-
-		if (htmlFragmentValueType == HTMLFragmentValue.Type.MAPPED) {
-			return _getHTMLMappedFragmentValue(
-				contextSource, fragmentMappedValueItemReferenceType);
-		}
-
-		return null;
-	}
-
-	private static HTMLInlineFragmentValue _getHTMLInlineFragmentValue() {
-		return new HTMLInlineFragmentValue() {
+	private static HTMLFragmentInlineValue _getHTMLFragmentInlineValue() {
+		return new HTMLFragmentInlineValue() {
 			{
 				setFragmentInlineValue(() -> _getFragmentInlineValue());
 				setType(Type.INLINE);
@@ -217,12 +199,54 @@ public class FragmentEditableElementTestUtil {
 		};
 	}
 
-	private static HTMLMappedFragmentValue _getHTMLMappedFragmentValue(
+	private static HTMLFragmentMappedValue _getHTMLFragmentMappedValue(
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
 		FragmentMappedValueItemReference.Type
 			fragmentMappedValueItemReferenceType) {
 
-		return new HTMLMappedFragmentValue() {
+		return new HTMLFragmentMappedValue() {
+			{
+				setFragmentMappedValue(
+					() -> _getFragmentMappedValue(
+						contextSource, fragmentMappedValueItemReferenceType));
+				setType(Type.MAPPED);
+			}
+		};
+	}
+
+	private static HTMLFragmentValue _getHTMLFragmentValue(
+		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		FragmentMappedValueItemReference.Type
+			fragmentMappedValueItemReferenceType,
+		HTMLFragmentValue.Type htmlFragmentValueType) {
+
+		if (htmlFragmentValueType == HTMLFragmentValue.Type.INLINE) {
+			return _getHTMLFragmentInlineValue();
+		}
+
+		if (htmlFragmentValueType == HTMLFragmentValue.Type.MAPPED) {
+			return _getHTMLFragmentMappedValue(
+				contextSource, fragmentMappedValueItemReferenceType);
+		}
+
+		return null;
+	}
+
+	private static TextFragmentInlineValue _getTextFragmentInlineValue() {
+		return new TextFragmentInlineValue() {
+			{
+				setFragmentInlineValue(() -> _getFragmentInlineValue());
+				setType(Type.INLINE);
+			}
+		};
+	}
+
+	private static TextFragmentMappedValue _getTextFragmentMappedValue(
+		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		FragmentMappedValueItemReference.Type
+			fragmentMappedValueItemReferenceType) {
+
+		return new TextFragmentMappedValue() {
 			{
 				setFragmentMappedValue(
 					() -> _getFragmentMappedValue(
@@ -239,39 +263,15 @@ public class FragmentEditableElementTestUtil {
 		TextFragmentValue.Type textFragmentValueType) {
 
 		if (textFragmentValueType == TextFragmentValue.Type.INLINE) {
-			return _getTextInlineFragmentValue();
+			return _getTextFragmentInlineValue();
 		}
 
 		if (textFragmentValueType == TextFragmentValue.Type.MAPPED) {
-			return _getTextMappedFragmentValue(
+			return _getTextFragmentMappedValue(
 				contextSource, fragmentMappedValueItemReferenceType);
 		}
 
 		return null;
-	}
-
-	private static TextInlineFragmentValue _getTextInlineFragmentValue() {
-		return new TextInlineFragmentValue() {
-			{
-				setFragmentInlineValue(() -> _getFragmentInlineValue());
-				setType(Type.INLINE);
-			}
-		};
-	}
-
-	private static TextMappedFragmentValue _getTextMappedFragmentValue(
-		FragmentMappedValueItemContextReference.ContextSource contextSource,
-		FragmentMappedValueItemReference.Type
-			fragmentMappedValueItemReferenceType) {
-
-		return new TextMappedFragmentValue() {
-			{
-				setFragmentMappedValue(
-					() -> _getFragmentMappedValue(
-						contextSource, fragmentMappedValueItemReferenceType));
-				setType(Type.MAPPED);
-			}
-		};
 	}
 
 }

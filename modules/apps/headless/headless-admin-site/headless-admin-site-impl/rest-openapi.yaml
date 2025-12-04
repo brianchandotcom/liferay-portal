@@ -2048,8 +2048,8 @@ components:
                 The value of a fragment HTML element.
             discriminator:
                 mapping:
-                    Inline: "#/components/schemas/HTMLInlineFragmentValue"
-                    Mapped: "#/components/schemas/HTMLMappedFragmentValue"
+                    Inline: "#/components/schemas/HTMLFragmentInlineValue"
+                    Mapped: "#/components/schemas/HTMLFragmentMappedValue"
                 propertyName: type
             properties:
                 type:
@@ -2059,7 +2059,7 @@ components:
                     enum: [Inline, Mapped]
                     type: string
             type: object
-        HTMLInlineFragmentValue:
+        HTMLFragmentInlineValue:
             # @review
             allOf:
                 -   properties:
@@ -2073,7 +2073,7 @@ components:
             description:
                 An inline value of a fragment HTML element.
             type: object
-        HTMLMappedFragmentValue:
+        HTMLFragmentMappedValue:
             # @review
             allOf:
                 -   properties:

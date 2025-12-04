@@ -88,6 +88,7 @@ import com.liferay.portal.upgrade.data.cleanup.DataCleanupPreupgradeProcessSuite
 import com.liferay.portal.upgrade.data.cleanup.GroupDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.JournalDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.NullUnicodeContentDataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.data.cleanup.PortletPreferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.UserDataCleanupPreupgradeProcess;
 import com.liferay.portal.verify.VerifyProcess;
@@ -505,6 +506,9 @@ public class DataCleanupRegistrator {
 		).put(
 			NullUnicodeContentDataCleanupPreupgradeProcess.class,
 			"remove-null-unicode-content-data"
+		).put(
+			PortletPreferencesDataCleanupPreupgradeProcess.class,
+			"remove-portlet-preferences-orphan-data"
 		).put(
 			QuartzJobDetailsDataCleanupPreupgradeProcess.class,
 			"remove-quartz-job-details-data"

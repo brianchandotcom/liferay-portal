@@ -76,9 +76,9 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 		_dbInspector = new DBInspector(_connection);
 
-		_db = DBManagerUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
-		_db.alterTableAddColumn(
+		db.alterTableAddColumn(
 			_connection, "Layout", "faviconFileEntryId", "LONG");
 	}
 
@@ -222,7 +222,6 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private Connection _connection;
-	private DB _db;
 	private DBInspector _dbInspector;
 
 	@Inject

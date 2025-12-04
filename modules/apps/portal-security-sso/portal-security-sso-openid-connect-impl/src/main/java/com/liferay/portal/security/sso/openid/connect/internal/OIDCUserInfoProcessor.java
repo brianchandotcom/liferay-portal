@@ -850,24 +850,28 @@ public class OIDCUserInfoProcessor {
 				"Email address is null");
 		}
 
-		if (Validator.isNull(firstName) && (user == null)) {
+		if (user != null) {
+			return;
+		}
+
+		if (Validator.isNull(firstName)) {
 			throw new OpenIdConnectServiceException.UserMappingException(
 				"First name is null");
 		}
 
-		if (Validator.isNull(lastName) && (user == null)) {
+		if (Validator.isNull(lastName)) {
 			throw new OpenIdConnectServiceException.UserMappingException(
 				"Last name is null");
 		}
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		if (!company.isStrangers() && (user == null)) {
+		if (!company.isStrangers()) {
 			throw new StrangersNotAllowedException(companyId);
 		}
 
 		if (!company.isStrangersWithMx() &&
-			company.hasCompanyMx(emailAddress) && (user == null)) {
+			company.hasCompanyMx(emailAddress)) {
 
 			throw new UserEmailAddressException.MustNotUseCompanyMx(
 				emailAddress);

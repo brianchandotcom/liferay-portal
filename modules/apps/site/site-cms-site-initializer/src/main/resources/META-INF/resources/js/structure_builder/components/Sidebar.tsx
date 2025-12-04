@@ -58,7 +58,7 @@ function Toolbar({
 					variant="white"
 				/>
 
-				<AddChildDropdown triggerType="icon" />
+				<AddChildDropdown />
 			</div>
 		);
 	}

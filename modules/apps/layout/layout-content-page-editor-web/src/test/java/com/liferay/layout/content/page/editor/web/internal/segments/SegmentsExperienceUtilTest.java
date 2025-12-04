@@ -67,22 +67,6 @@ public class SegmentsExperienceUtilTest {
 
 		languageUtil.setLanguage(new LanguageImpl());
 
-		SegmentsExperimentLocalService segmentsExperimentLocalService =
-			Mockito.mock(SegmentsExperimentLocalService.class);
-
-		_segmentsExperimentLocalServiceUtilMockedStatic.when(
-			SegmentsExperimentLocalServiceUtil::getService
-		).thenReturn(
-			segmentsExperimentLocalService
-		);
-
-		Mockito.when(
-			segmentsExperimentLocalService.fetchSegmentsExperiment(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong())
-		).thenReturn(
-			null
-		);
-
 		PortletPreferencesLocalService portletPreferencesLocalService =
 			Mockito.mock(PortletPreferencesLocalService.class);
 
@@ -105,12 +89,28 @@ public class SegmentsExperienceUtilTest {
 		).thenReturn(
 			mockPortletPreferences
 		);
+
+		SegmentsExperimentLocalService segmentsExperimentLocalService =
+			Mockito.mock(SegmentsExperimentLocalService.class);
+
+		_segmentsExperimentLocalServiceUtilMockedStatic.when(
+			SegmentsExperimentLocalServiceUtil::getService
+		).thenReturn(
+			segmentsExperimentLocalService
+		);
+
+		Mockito.when(
+			segmentsExperimentLocalService.fetchSegmentsExperiment(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong())
+		).thenReturn(
+			null
+		);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		_segmentsExperimentLocalServiceUtilMockedStatic.close();
 		_portletPreferencesLocalServiceUtilMockedStatic.close();
+		_segmentsExperimentLocalServiceUtilMockedStatic.close();
 	}
 
 	@Test

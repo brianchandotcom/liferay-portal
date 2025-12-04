@@ -53,6 +53,13 @@ public class BatchEnginePortletDataHandlerUtil {
 				() -> {
 					List<String> batchNestedFields = new ArrayList<>();
 
+					if (MapUtil.getBoolean(
+							portletDataContext.getParameterMap(),
+							PortletDataHandlerKeys.COMMENTS)) {
+
+						batchNestedFields.add("comments");
+					}
+
 					batchNestedFields.add("customFields.attributeType");
 
 					if (MapUtil.getBoolean(

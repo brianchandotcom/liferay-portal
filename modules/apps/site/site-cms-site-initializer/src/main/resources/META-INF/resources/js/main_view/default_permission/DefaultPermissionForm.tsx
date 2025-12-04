@@ -24,8 +24,13 @@ export default function DefaultPermissionForm({
 	infoBoxMessage,
 	onChange,
 	roles,
+	selectedRole,
+	singleRoleMode,
 	values,
-}: DefaultPermissionFormProps) {
+}: DefaultPermissionFormProps & {
+	selectedRole?: string;
+	singleRoleMode?: boolean;
+}) {
 	const [data, setData] = useState<CheckedRoleActions>({});
 	const [filteredRoles, setFilteredRoles] = useState(roles);
 	const [pagination, setPagination] = useState({
@@ -48,11 +53,19 @@ export default function DefaultPermissionForm({
 
 	useEffect(() => {
 		setFilteredRoles(
-			roles.filter((role) =>
-				role.name.toLowerCase().includes(search.toLowerCase())
-			)
+			roles.filter((role) => {
+				if (singleRoleMode) {
+					if (!selectedRole) {
+						return false;
+					}
+
+					return role.key === selectedRole;
+				}
+
+				return role.name.toLowerCase().includes(search.toLowerCase());
+			})
 		);
-	}, [roles, search]);
+	}, [roles, search, selectedRole, singleRoleMode]);
 
 	const handleChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
@@ -85,36 +98,40 @@ export default function DefaultPermissionForm({
 
 	return (
 		<>
-			<ClayManagementToolbar className="toolbar-search">
-				<ClayManagementToolbar.Search>
-					<ClayInput.Group>
-						<ClayInput.GroupItem>
-							<ClayInput
-								aria-label="search"
-								className="form-control input-group-inset input-group-inset-after"
-								data-testid="input-search"
-								disabled={disabled}
-								onChange={({target: {value}}) => {
-									setSearch(value);
-								}}
-								placeholder={Liferay.Language.get('search-for')}
-								type="text"
-								value={search}
-							/>
-
-							<ClayInput.GroupInsetItem after tag="span">
-								<ClayButtonWithIcon
-									aria-label="Search"
+			{!singleRoleMode && (
+				<ClayManagementToolbar className="toolbar-search">
+					<ClayManagementToolbar.Search>
+						<ClayInput.Group>
+							<ClayInput.GroupItem>
+								<ClayInput
+									aria-label="search"
+									className="form-control input-group-inset input-group-inset-after"
+									data-testid="input-search"
 									disabled={disabled}
-									displayType="unstyled"
-									symbol="search"
-									type="button"
+									onChange={({target: {value}}) => {
+										setSearch(value);
+									}}
+									placeholder={Liferay.Language.get(
+										'search-for'
+									)}
+									type="text"
+									value={search}
 								/>
-							</ClayInput.GroupInsetItem>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-				</ClayManagementToolbar.Search>
-			</ClayManagementToolbar>
+
+								<ClayInput.GroupInsetItem after tag="span">
+									<ClayButtonWithIcon
+										aria-label="Search"
+										disabled={disabled}
+										displayType="unstyled"
+										symbol="search"
+										type="button"
+									/>
+								</ClayInput.GroupInsetItem>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</ClayManagementToolbar.Search>
+				</ClayManagementToolbar>
+			)}
 
 			{infoBoxMessage ? (
 				<ClayAlert
@@ -131,132 +148,139 @@ export default function DefaultPermissionForm({
 				<></>
 			)}
 
-			<div className="border-top pb-3 pl-4 pr-4 pt-4">
-				<ClayTable responsive={true}>
-					<ClayTable.Head>
-						<>
-							<ClayTable.Cell
-								className="role-name-column"
-								id="0_0"
-							>
-								<></>
-							</ClayTable.Cell>
+			{!!filteredRoles.length && (
+				<div className="border-top pb-3 pl-4 pr-4 pt-4">
+					<ClayTable responsive={true}>
+						<ClayTable.Head>
+							<>
+								<ClayTable.Cell
+									className="role-name-column"
+									id="0_0"
+								>
+									<></>
+								</ClayTable.Cell>
 
-							{actions.map((action) => {
-								return (
-									<ClayTable.Cell
-										align="center"
-										className="text-nowrap"
-										data-testid={`head-cell-${action.key}`}
-										key={`0_${action.key}`}
-									>
-										{action.label}
-									</ClayTable.Cell>
-								);
-							})}
-						</>
-					</ClayTable.Head>
+								{actions.map((action) => {
+									return (
+										<ClayTable.Cell
+											align="center"
+											className="text-nowrap"
+											data-testid={`head-cell-${action.key}`}
+											key={`0_${action.key}`}
+										>
+											{action.label}
+										</ClayTable.Cell>
+									);
+								})}
+							</>
+						</ClayTable.Head>
 
-					<ClayTable.Body>
-						{filteredRoles
-							.slice(
-								(pagination.currentPage - 1) *
-									pagination.pageSize,
-								pagination.currentPage * pagination.pageSize
-							)
-							.map((role) => {
-								return (
-									<ClayTable.Row key={role.key}>
-										<>
-											<ClayTable.Cell
-												className="role-name-column text-nowrap"
-												data-testid={`row-cell-${role.key}`}
-												key={`${role.key}_0`}
-											>
-												<ClayTooltipProvider>
-													<span
-														className="mr-2"
-														title={
-															role.type === '1'
-																? Liferay.Language.get(
-																		'regular-role'
-																	)
-																: Liferay.Language.get(
-																		'site-role'
-																	)
-														}
-													>
-														<ClayIcon
-															data-testid={`row-cell-icon-${role.key}`}
-															symbol={
-																role.type ===
-																'1'
-																	? 'user'
-																	: 'globe'
-															}
-														/>
-													</span>
-												</ClayTooltipProvider>
+						<ClayTable.Body>
+							{filteredRoles
+								.slice(
+									(pagination.currentPage - 1) *
+										pagination.pageSize,
+									pagination.currentPage * pagination.pageSize
+								)
+								.map((role) => {
+									return (
+										<ClayTable.Row key={role.key}>
+											<>
+												<ClayTable.Cell
+													className="role-name-column text-nowrap"
+													data-testid={`row-cell-${role.key}`}
+													key={`${role.key}_0`}
+												>
+													<>
+														<ClayTooltipProvider>
+															<span
+																className="mr-2"
+																title={
+																	role.type ===
+																	'1'
+																		? Liferay.Language.get(
+																				'regular-role'
+																			)
+																		: Liferay.Language.get(
+																				'site-role'
+																			)
+																}
+															>
+																<ClayIcon
+																	data-testid={`row-cell-icon-${role.key}`}
+																	symbol={
+																		role.type ===
+																		'1'
+																			? 'user'
+																			: 'globe'
+																	}
+																/>
+															</span>
+														</ClayTooltipProvider>
 
-												{role.name}
-											</ClayTable.Cell>
+														{role.name}
+													</>
+												</ClayTable.Cell>
 
-											{actions.map((action) => {
-												return (
-													<ClayTable.Cell
-														align="center"
-														data-testid={`row-cell-${role.key}_${action.key}`}
-														key={`${role.key}_${action.key}`}
-													>
-														<ClayCheckbox
-															checked={
-																data[
-																	`${role.key}#${action.key}`
-																]
-															}
-															data-testid={`row-checkbox-${role.key}_${action.key}`}
-															disabled={
-																disabled ||
-																(action.guestUnsupported &&
-																	role.key ===
-																		'Guest') ||
-																(
-																	role.actions ||
-																	[]
-																).includes(
-																	action.key
-																)
-															}
-															inline
+												{actions.map((action) => {
+													return (
+														<ClayTable.Cell
+															align="center"
+															data-testid={`row-cell-${role.key}_${action.key}`}
 															key={`${role.key}_${action.key}`}
-															onChange={
-																handleChange
-															}
-															value={`${role.key}#${action.key}`}
-														/>
-													</ClayTable.Cell>
-												);
-											})}
-										</>
-									</ClayTable.Row>
-								);
-							})}
-					</ClayTable.Body>
-				</ClayTable>
+														>
+															<ClayCheckbox
+																checked={
+																	data[
+																		`${role.key}#${action.key}`
+																	]
+																}
+																data-testid={`row-checkbox-${role.key}_${action.key}`}
+																disabled={
+																	disabled ||
+																	(action.guestUnsupported &&
+																		role.key ===
+																			'Guest') ||
+																	(
+																		role.actions ||
+																		[]
+																	).includes(
+																		action.key
+																	)
+																}
+																inline
+																key={`${role.key}_${action.key}`}
+																onChange={
+																	handleChange
+																}
+																value={`${role.key}#${action.key}`}
+															/>
+														</ClayTable.Cell>
+													);
+												})}
+											</>
+										</ClayTable.Row>
+									);
+								})}
+						</ClayTable.Body>
+					</ClayTable>
 
-				<div className="data-set-pagination-wrapper">
-					<ClayPaginationBarWithBasicItems
-						activeDelta={pagination.pageSize}
-						deltas={[20, 40, 60].map((size) => ({
-							label: size,
-						}))}
-						ellipsisBuffer={3}
-						onActiveChange={handlePaginationPageChange}
-						onDeltaChange={handlePaginationDeltaChange}
-						totalItems={filteredRoles.length}
-					/>
+					{!singleRoleMode && (
+						<div className="data-set-pagination-wrapper">
+							<ClayPaginationBarWithBasicItems
+								activeDelta={pagination.pageSize}
+								deltas={[20, 40, 60].map((size) => ({
+									label: size,
+								}))}
+								ellipsisBuffer={3}
+								onActiveChange={handlePaginationPageChange}
+								onDeltaChange={handlePaginationDeltaChange}
+								totalItems={filteredRoles.length}
+							/>
+						</div>
+					)}
 				</div>
-			</div>
+			)}
 		</>
 	);
 }

@@ -5,11 +5,6 @@
 
 package com.liferay.portal.store.s3;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.transfer.TransferManager;
-
 import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
@@ -612,26 +607,6 @@ public class S3Store implements Store {
 		return s3Objects;
 	}
 
-	private boolean _isFileNotFound(
-		AmazonClientException amazonClientException) {
-
-		if (amazonClientException instanceof AmazonServiceException) {
-			AmazonServiceException amazonServiceException =
-				(AmazonServiceException)amazonClientException;
-
-			String errorCode = amazonServiceException.getErrorCode();
-
-			if (errorCode.equals(_ERROR_CODE_FILE_NOT_FOUND) &&
-				(amazonServiceException.getStatusCode() ==
-					_STATUS_CODE_FILE_NOT_FOUND)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private SystemException _transform(Throwable throwable) {
 		if (throwable instanceof AwsServiceException) {
 			AwsServiceException awsServiceException =
@@ -673,18 +648,12 @@ public class S3Store implements Store {
 
 	private static final int _DELETE_MAX = 1000;
 
-	private static final String _ERROR_CODE_FILE_NOT_FOUND = "NoSuchKey";
-
-	private static final int _STATUS_CODE_FILE_NOT_FOUND = 404;
-
 	private static final Log _log = LogFactoryUtil.getLog(S3Store.class);
 
-	private AmazonS3 _amazonS3;
 	private S3AsyncClient _s3AsyncClient;
 	private S3StoreConfiguration _s3StoreConfiguration;
 	private S3TransferManager _s3TransferManager;
 	private StorageClass _storageClass;
 	private ThreadPoolExecutor _threadPoolExecutor;
-	private TransferManager _transferManager;
 
 }

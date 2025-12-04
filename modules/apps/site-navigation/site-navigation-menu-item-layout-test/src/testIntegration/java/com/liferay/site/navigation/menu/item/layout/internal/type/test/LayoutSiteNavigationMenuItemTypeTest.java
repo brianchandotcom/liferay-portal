@@ -242,7 +242,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				StringBundler.concat(
 					"No layout found for site navigation menu item ID ",
 					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-					" with  external reference code ", externalReferenceCode,
+					" with external reference code ", externalReferenceCode,
 					" and group ID ", _group.getGroupId()),
 				logEntry.getMessage());
 		}

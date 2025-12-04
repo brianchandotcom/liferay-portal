@@ -38,10 +38,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 /**
  * @author Jenny Chen
  */
+@RequestMapping("/jira")
 @RestController
 public class JiraRestController extends BaseRestController {
 
-	@RequestMapping(method = RequestMethod.DELETE, path = "/jira/cache")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/cache")
 	public ResponseEntity<String> delete(@AuthenticationPrincipal Jwt jwt) {
 		try {
 			if (!_hasAdministrator(jwt)) {
@@ -63,7 +64,7 @@ public class JiraRestController extends BaseRestController {
 
 	@RequestMapping(
 		method = RequestMethod.GET,
-		path = "/jira/security-vulnerabilities/affected-versions"
+		path = "/security-vulnerabilities/affected-versions"
 	)
 	public ResponseEntity<String> get() throws Exception {
 		try {
@@ -81,7 +82,7 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/jira/issue/{issueKey}")
+	@RequestMapping(method = RequestMethod.GET, path = "/issue/{issueKey}")
 	public ResponseEntity<String> get(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("issueKey") String issueKey)
@@ -111,8 +112,7 @@ public class JiraRestController extends BaseRestController {
 	}
 
 	@RequestMapping(
-		method = RequestMethod.GET,
-		path = "/jira/security-vulnerabilities/search"
+		method = RequestMethod.GET, path = "/security-vulnerabilities/search"
 	)
 	public ResponseEntity<String> search(
 			@AuthenticationPrincipal Jwt jwt,

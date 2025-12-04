@@ -317,8 +317,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			throw new ValidationException("Filter is null");
 		}
 
-		List<BulkActionItem> bulkActionItems = new ArrayList<>();
-
 		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
 			contextHttpServletRequest);
 
@@ -348,12 +346,14 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			null, true, null, null, search, filter, pagination,
 			new Sort[] {sort});
 
-		for (SearchResult searchResult : searchPage.getItems()) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				String.valueOf(searchResult.getEmbedded()));
+		List<BulkActionItem> bulkActionItems = transform(
+			searchPage.getItems(),
+			searchResult -> {
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					String.valueOf(searchResult.getEmbedded()));
 
-			bulkActionItems.add(_toBulkActionItem(jsonObject.getLong("id")));
-		}
+				return _toBulkActionItem(jsonObject.getLong("id"));
+			});
 
 		if (StringUtil.equalsIgnoreCase(sort.getFieldName(), "usages")) {
 			bulkActionItems = _sortBulkActionItems(bulkActionItems, sort);
@@ -366,15 +366,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		List<BulkActionItem> bulkActionItems1, Pagination pagination,
 		String search, Sort sort) {
 
-		List<BulkActionItem> bulkActionItems2 = new ArrayList<>();
+		List<BulkActionItem> bulkActionItems2 = transform(
+			bulkActionItems1,
+			bulkActionItem -> _toBulkActionItem(
+				GetterUtil.getLong(bulkActionItem.getClassPK())));
 
 		long totalCount = bulkActionItems1.size();
-
-		for (BulkActionItem bulkActionItem : bulkActionItems1) {
-			bulkActionItems2.add(
-				_toBulkActionItem(
-					GetterUtil.getLong(bulkActionItem.getClassPK())));
-		}
 
 		if (Validator.isNotNull(search)) {
 			bulkActionItems2 = ListUtil.filter(

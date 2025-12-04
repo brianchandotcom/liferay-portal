@@ -141,26 +141,27 @@ public class TaxonomyVocabularyResourceImpl
 	private List<AssetVocabulary> _getAssetVocabularies(Long siteId)
 		throws Exception {
 
-		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
+		return transform(
+			_assetVocabularyLocalService.getGroupVocabularies(
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(siteId)),
+			assetVocabulary -> {
+				if (!assetVocabulary.isAssociatedToClassNameId(
+						_getClassNameId())) {
 
-		for (AssetVocabulary assetVocabulary :
-				_assetVocabularyLocalService.getGroupVocabularies(
-					_siteConnectedGroupGroupProvider.
-						getCurrentAndAncestorSiteAndDepotGroupIds(siteId))) {
+					return null;
+				}
 
-			if (!assetVocabulary.isAssociatedToClassNameId(_getClassNameId())) {
-				continue;
-			}
+				int count =
+					_assetCategoryLocalService.getVocabularyCategoriesCount(
+						assetVocabulary.getVocabularyId());
 
-			int count = _assetCategoryLocalService.getVocabularyCategoriesCount(
-				assetVocabulary.getVocabularyId());
+				if (count > 0) {
+					return assetVocabulary;
+				}
 
-			if (count > 0) {
-				assetVocabularies.add(assetVocabulary);
-			}
-		}
-
-		return assetVocabularies;
+				return null;
+			});
 	}
 
 	private long _getClassNameId() {

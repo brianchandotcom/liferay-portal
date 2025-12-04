@@ -149,7 +149,7 @@ public class CXConfigOSGiCommandsTest {
 	}
 
 	@Test
-	public void testGetConfigurationDataValidPid() {
+	public void testGetConfiguration() {
 		String pid =
 			CETConfiguration.class.getName() +
 				"~liferay-sample-cx-1/liferay.com";

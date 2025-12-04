@@ -192,7 +192,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 				ThumbnailURLReference thumbnail = masterPage.getThumbnail();
 
-				_assertThumbnailURLReference(
+				_assertThumbnailFileEntryId(
 					false, postMasterPage.getExternalReferenceCode(),
 					thumbnail.getExternalReferenceCode());
 
@@ -556,15 +556,15 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		}
 	}
 
-	private void _assertThumbnailURLReference(
-			Boolean defaultValue, String expectedExternalReferenceCode,
+	private void _assertThumbnailFileEntryId(
+			Boolean defaultValue, String masterPageExternalReferenceCode,
 			String thumbnailExternalReferenceCode)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplate =
 			_layoutPageTemplateEntryLocalService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
-					expectedExternalReferenceCode, testGroup.getGroupId());
+					masterPageExternalReferenceCode, testGroup.getGroupId());
 
 		long fileEntryId = 0;
 
@@ -873,7 +873,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		Assert.assertEquals(masterPage.getKey(), postMasterPage.getKey());
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, masterPage.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
@@ -893,7 +893,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			masterPage.getExternalReferenceCode(), masterPage);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, masterPage.getExternalReferenceCode(),
 			newFileEntry.getExternalReferenceCode());
 
@@ -1094,7 +1094,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		Assert.assertEquals(masterPage.getKey(), postMasterPage.getKey());
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, postMasterPage.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
@@ -1301,7 +1301,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			masterPage.getExternalReferenceCode(), masterPage);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, putMasterPage.getExternalReferenceCode(),
 			fileEntry1.getExternalReferenceCode());
 
@@ -1320,7 +1320,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			putMasterPage.getExternalReferenceCode(), putMasterPage);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			false, putMasterPage.getExternalReferenceCode(),
 			fileEntry2.getExternalReferenceCode());
 
@@ -1330,7 +1330,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			putMasterPage.getExternalReferenceCode(), putMasterPage);
 
-		_assertThumbnailURLReference(
+		_assertThumbnailFileEntryId(
 			true, putMasterPage.getExternalReferenceCode(), null);
 
 		MasterPage masterPageError = randomMasterPage();

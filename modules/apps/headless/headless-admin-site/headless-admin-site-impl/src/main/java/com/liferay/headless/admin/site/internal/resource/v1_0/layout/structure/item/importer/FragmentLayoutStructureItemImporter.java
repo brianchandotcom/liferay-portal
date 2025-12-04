@@ -20,6 +20,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReference;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReferenceUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.util.FragmentConfigurationFieldValuesUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -29,6 +30,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -178,6 +180,15 @@ public class FragmentLayoutStructureItemImporter
 				fragmentInstancePageElementDefinition.getIndexed(), true));
 		fragmentStyledLayoutStructureItem.setName(
 			fragmentInstancePageElementDefinition.getName());
+
+		JSONObject fragmentViewportsJSONObject =
+			FragmentViewportUtil.toFragmentViewportsJSONObject(
+				fragmentInstancePageElementDefinition.getFragmentViewports());
+
+		if (fragmentViewportsJSONObject != null) {
+			fragmentStyledLayoutStructureItem.updateItemConfig(
+				fragmentViewportsJSONObject);
+		}
 
 		return fragmentStyledLayoutStructureItem;
 	}

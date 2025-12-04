@@ -13,7 +13,7 @@ import {
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import './useDragAndDrop.scss';
-import {DROP_POSITIONS, DropPosition} from './useDragAndDrop';
+import {DropPosition} from './useDragAndDrop';
 
 const HOVER_BORDER_LIMIT = 60;
 
@@ -37,7 +37,7 @@ export default function usePointerDragAndDrop<
 	targetItem: T;
 }) {
 	const dropIndexRef = useRef<number>(0);
-	const [dropPosition, setDropPosition] = useState<DropPosition>('');
+	const [dropPosition, setDropPosition] = useState<DropPosition>(null);
 
 	const [{isOver}, drop] = useDrop<
 		T & DragObjectWithType,
@@ -70,7 +70,7 @@ export default function usePointerDragAndDrop<
 				return;
 			}
 
-			let dropPosition: DropPosition = '';
+			let dropPosition: DropPosition = null;
 
 			if (targetItem.id !== draggedItem.id) {
 				dropPosition = getDropPosition(
@@ -88,7 +88,7 @@ export default function usePointerDragAndDrop<
 
 			dropIndexRef.current = Math.max(
 				0,
-				targetIndex + (dropPosition === DROP_POSITIONS.bottom ? 1 : 0)
+				targetIndex + (dropPosition === 'bottom' ? 1 : 0)
 			);
 		},
 	});
@@ -118,9 +118,8 @@ export default function usePointerDragAndDrop<
 
 	return {
 		isPointerDragging: isDragging,
-		isPointerDropBottomPosition:
-			isOver && dropPosition === DROP_POSITIONS.bottom,
-		isPointerDropTopPosition: isOver && dropPosition === DROP_POSITIONS.top,
+		isPointerDropBottomPosition: isOver && dropPosition === 'bottom',
+		isPointerDropTopPosition: isOver && dropPosition === 'top',
 	};
 }
 
@@ -130,7 +129,7 @@ function getDropPosition(
 	hoverLimit: number
 ) {
 	if (!ref.current) {
-		return '';
+		return null;
 	}
 
 	const clientOffset = monitor.getClientOffset()!;
@@ -138,7 +137,5 @@ function getDropPosition(
 	const hoverBottomLimit = dropItemBoundingRect.height - hoverLimit;
 	const hoverClientY = clientOffset.y - dropItemBoundingRect.top;
 
-	return hoverClientY > hoverBottomLimit
-		? DROP_POSITIONS.bottom
-		: DROP_POSITIONS.top;
+	return hoverClientY > hoverBottomLimit ? 'bottom' : 'top';
 }

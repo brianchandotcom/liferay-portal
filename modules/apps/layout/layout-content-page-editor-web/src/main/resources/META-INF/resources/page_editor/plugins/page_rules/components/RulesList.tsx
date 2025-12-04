@@ -10,6 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import {useDragAndDrop} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -124,6 +125,7 @@ export default function RulesList({
 							onDelete={onDeleteRule}
 							onEdit={onEditRule}
 							rule={rule}
+							rules={rules}
 						/>
 					))}
 				</ClayList>
@@ -136,10 +138,12 @@ function RuleItem({
 	onDelete,
 	onEdit,
 	rule,
+	rules,
 }: {
 	onDelete: (rule: Rule) => void;
 	onEdit: (rule: Rule, trigger: HTMLButtonElement | null) => void;
 	rule: Rule;
+	rules: Rule[];
 }) {
 	const highlightItems = useHighlightItems();
 	const {isTarget: isNavigationTarget, setElement} = useKeyboardNavigation({
@@ -152,9 +156,18 @@ function RuleItem({
 	const [editing, setEditing] = useState(false);
 	const [name, setName] = useState(rule.name);
 
+	const dragItemRef = useRef<HTMLButtonElement | null>(null);
+	const dropItemRef = useRef<HTMLLIElement | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const dispatch = useDispatch();
+
+	useDragAndDrop({
+		dragItemRef,
+		dropItemRef,
+		item: rule,
+		items: rules,
+	});
 
 	useEffect(() => {
 		if (editing && inputRef.current) {
@@ -225,6 +238,15 @@ function RuleItem({
 		isLayoutDataItemDeleted(layoutData, id)
 	);
 
+	const setListItemRef = useCallback(
+		(node: HTMLLIElement) => {
+			dropItemRef.current = node;
+
+			setElement(node);
+		},
+		[setElement]
+	);
+
 	const tabIndex = useMemo(
 		() => (isNavigationTarget ? 0 : -1),
 		[isNavigationTarget]
@@ -255,7 +277,7 @@ function RuleItem({
 					onScroll();
 				}
 			}}
-			ref={setElement}
+			ref={setListItemRef}
 			role="menuitem"
 			tabIndex={tabIndex}
 		>
@@ -319,6 +341,7 @@ function RuleItem({
 								onClick={(event) => {
 									event.stopPropagation();
 								}}
+								ref={dragItemRef}
 								symbol="drag"
 								tabIndex={tabIndex}
 								title={sub(

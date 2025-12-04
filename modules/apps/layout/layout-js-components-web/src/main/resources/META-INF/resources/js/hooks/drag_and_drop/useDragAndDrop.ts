@@ -5,14 +5,7 @@
 
 import usePointerDragAndDrop from './usePointerDragAndDrop';
 
-export const DROP_POSITIONS = {
-	bottom: 'bottom',
-	top: 'top',
-} as const;
-
-export type DropPosition =
-	| (typeof DROP_POSITIONS)[keyof typeof DROP_POSITIONS]
-	| '';
+export type DropPosition = 'bottom' | 'top' | null;
 
 interface Props<T> {
 	dragHandlerRef: React.RefObject<HTMLElement>;

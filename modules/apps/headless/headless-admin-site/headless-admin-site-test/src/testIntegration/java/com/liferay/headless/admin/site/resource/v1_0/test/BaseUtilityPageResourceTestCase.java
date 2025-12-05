@@ -1158,8 +1158,10 @@ public abstract class BaseUtilityPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("thumbnail", additionalAssertFieldName)) {
-				if (utilityPage.getThumbnail() == null) {
+			if (Objects.equals(
+					"thumbnailURLReference", additionalAssertFieldName)) {
+
+				if (utilityPage.getThumbnailURLReference() == null) {
 					valid = false;
 				}
 
@@ -1482,10 +1484,12 @@ public abstract class BaseUtilityPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("thumbnail", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"thumbnailURLReference", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						utilityPage1.getThumbnail(),
-						utilityPage2.getThumbnail())) {
+						utilityPage1.getThumbnailURLReference(),
+						utilityPage2.getThumbnailURLReference())) {
 
 					return false;
 				}
@@ -1888,7 +1892,7 @@ public abstract class BaseUtilityPageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("thumbnail")) {
+		if (entityFieldName.equals("thumbnailURLReference")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

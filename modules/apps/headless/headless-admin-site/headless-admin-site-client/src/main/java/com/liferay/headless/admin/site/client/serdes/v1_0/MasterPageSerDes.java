@@ -252,14 +252,14 @@ public class MasterPageSerDes {
 			sb.append("]");
 		}
 
-		if (masterPage.getThumbnail() != null) {
+		if (masterPage.getThumbnailURLReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"thumbnail\": ");
+			sb.append("\"thumbnailURLReference\": ");
 
-			sb.append(String.valueOf(masterPage.getThumbnail()));
+			sb.append(String.valueOf(masterPage.getThumbnailURLReference()));
 		}
 
 		if (masterPage.getUuid() != null) {
@@ -396,11 +396,13 @@ public class MasterPageSerDes {
 					masterPage.getTaxonomyCategoryItemExternalReferences()));
 		}
 
-		if (masterPage.getThumbnail() == null) {
-			map.put("thumbnail", null);
+		if (masterPage.getThumbnailURLReference() == null) {
+			map.put("thumbnailURLReference", null);
 		}
 		else {
-			map.put("thumbnail", String.valueOf(masterPage.getThumbnail()));
+			map.put(
+				"thumbnailURLReference",
+				String.valueOf(masterPage.getThumbnailURLReference()));
 		}
 
 		if (masterPage.getUuid() == null) {
@@ -471,7 +473,9 @@ public class MasterPageSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "thumbnailURLReference")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {
@@ -605,9 +609,11 @@ public class MasterPageSerDes {
 						taxonomyCategoryItemExternalReferencesArray);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "thumbnailURLReference")) {
+
 				if (jsonParserFieldValue != null) {
-					masterPage.setThumbnail(
+					masterPage.setThumbnailURLReference(
 						ThumbnailURLReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}

@@ -676,7 +676,7 @@
 		<finder name="LayoutSetPrototypeLayoutERC" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="layoutSetPrototypeLayoutERC" />
 		</finder>
-		<finder name="G_P" return-type="Collection" where="system = [$FALSE$]">
+		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 		</finder>
@@ -714,6 +714,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column arrayable-operator="OR" name="type" />
+		</finder>
+		<finder name="G_P_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="system" />
 		</finder>
 		<finder name="G_P_F" return-type="Layout" unique="true">
 			<finder-column name="groupId" />

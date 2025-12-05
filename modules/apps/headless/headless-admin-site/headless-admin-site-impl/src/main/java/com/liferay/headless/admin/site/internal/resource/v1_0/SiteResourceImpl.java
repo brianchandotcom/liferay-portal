@@ -110,20 +110,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	@Override
-	public Site getSite(String externalReferenceCode) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-41306")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
-
-		return _toSite(group);
-	}
-
-	@Override
 	public Response getSiteSiteInitializer(String externalReferenceCode)
 		throws Exception {
 
@@ -157,75 +143,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	@Override
-	public Page<Site> getSitesPage(
-			Boolean active, String search, Pagination pagination)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-41306")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		long[] classNameIds = {
-			_portal.getClassNameId(Company.class.getName()),
-			_portal.getClassNameId(Group.class.getName())
-		};
-		LinkedHashMap<String, Object> params =
-			LinkedHashMapBuilder.<String, Object>put(
-				"active",
-				() -> {
-					if (active != null) {
-						return GetterUtil.getBoolean(active);
-					}
-
-					return null;
-				}
-			).put(
-				"site", true
-			).build();
-
-		return Page.of(
-			HashMapBuilder.put(
-				"create",
-				addAction(
-					ActionKeys.UPDATE, "postSite", Group.class.getName(), null)
-			).put(
-				"createBatch",
-				addAction(
-					ActionKeys.UPDATE, "postSiteBatch", Group.class.getName(),
-					null)
-			).put(
-				"deleteBatch",
-				addAction(
-					ActionKeys.DELETE, "deleteSiteBatch", Group.class.getName(),
-					null)
-			).build(),
-			transform(
-				_groupService.search(
-					contextCompany.getCompanyId(), classNameIds, search, null,
-					params, true, pagination.getStartPosition(),
-					pagination.getEndPosition(), new GroupNameComparator()),
-				this::_toSite),
-			pagination,
-			_groupService.searchCount(
-				contextCompany.getCompanyId(), classNameIds, search, params));
-	}
-
-	@Override
-	public Site postSite(Site site) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-41306")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		Group group = _addGroup(site.getExternalReferenceCode(), site);
-
-		return _toSite(group);
-	}
-
-	@Override
 	public Site postSiteSiteInitializer(MultipartBody multipartBody)
 		throws Exception {
 
@@ -239,39 +156,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		return putSiteSiteInitializer(
 			site.getExternalReferenceCode(), multipartBody);
-	}
-
-	@Override
-	public Site putSite(String siteExternalReferenceCode, Site site)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-41306")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		if (site.getExternalReferenceCode() == null) {
-			site.setExternalReferenceCode(() -> siteExternalReferenceCode);
-		}
-
-		if (!Objects.equals(
-				siteExternalReferenceCode, site.getExternalReferenceCode())) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
-		if (group == null) {
-			group = _addGroup(siteExternalReferenceCode, site);
-		}
-		else {
-			group = _updateGroup(group, site);
-		}
-
-		return _toSite(group);
 	}
 
 	@Override
@@ -393,6 +277,122 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				unsafeFunction.apply(site);
 			}
 		}
+	}
+
+	@Override
+	protected Site doGetSite(String externalReferenceCode) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		return _toSite(group);
+	}
+
+	@Override
+	protected Page<Site> doGetSitesPage(
+			Boolean active, String search, Pagination pagination)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		long[] classNameIds = {
+			_portal.getClassNameId(Company.class.getName()),
+			_portal.getClassNameId(Group.class.getName())
+		};
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"active",
+				() -> {
+					if (active != null) {
+						return GetterUtil.getBoolean(active);
+					}
+
+					return null;
+				}
+			).put(
+				"site", true
+			).build();
+
+		return Page.of(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.UPDATE, "postSite", Group.class.getName(), null)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postSiteBatch", Group.class.getName(),
+					null)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteSiteBatch", Group.class.getName(),
+					null)
+			).build(),
+			transform(
+				_groupService.search(
+					contextCompany.getCompanyId(), classNameIds, search, null,
+					params, true, pagination.getStartPosition(),
+					pagination.getEndPosition(), new GroupNameComparator()),
+				this::_toSite),
+			pagination,
+			_groupService.searchCount(
+				contextCompany.getCompanyId(), classNameIds, search, params));
+	}
+
+	@Override
+	protected Site doPostSite(Site site) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _addGroup(site.getExternalReferenceCode(), site);
+
+		return _toSite(group);
+	}
+
+	@Override
+	protected Site doPutSite(String siteExternalReferenceCode, Site site)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if (site.getExternalReferenceCode() == null) {
+			site.setExternalReferenceCode(() -> siteExternalReferenceCode);
+		}
+
+		if (!Objects.equals(
+				siteExternalReferenceCode, site.getExternalReferenceCode())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		if (group == null) {
+			group = _addGroup(siteExternalReferenceCode, site);
+		}
+		else {
+			group = _updateGroup(group, site);
+		}
+
+		return _toSite(group);
 	}
 
 	private Group _addGroup(String externalReferenceCode, Site site)

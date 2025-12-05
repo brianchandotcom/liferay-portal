@@ -9,6 +9,7 @@ import com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration;
 import com.liferay.data.cleanup.internal.upgrade.AmazonRankingsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.ChatUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.CurrencyConverterUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.DictionaryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DirectoryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DocumentLibraryFileRankServiceUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.FrontendImageEditorUpgradeProcess;
@@ -97,6 +98,9 @@ public class DataCleanupExecutor {
 			dataCleanupConfiguration::cleanUpCurrencyConverterModuleData,
 			"com.liferay.currency.converter.web",
 			CurrencyConverterUpgradeProcess::new);
+		_cleanUpModuleData(
+			dataCleanupConfiguration::cleanUpDictionaryModuleData,
+			"com.liferay.dictionary.web", DictionaryUpgradeProcess::new);
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpDirectoryModuleData,
 			"com.liferay.directory.web", DirectoryUpgradeProcess::new);

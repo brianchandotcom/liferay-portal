@@ -60,8 +60,8 @@ const viewsActions: TViewsActions = {
 		return {
 			...state,
 			activeSnapshotERC: erc,
+			snapshotUpdated: false,
 			snapshots: updatedSnapshots,
-			viewUpdated: false,
 		};
 	},
 	[EViewsActionTypes.BATCH_UPDATE]: (state, stateUpdates) => {
@@ -90,8 +90,8 @@ const viewsActions: TViewsActions = {
 			...state,
 			...defaultSnapshot,
 			activeSnapshotERC: null,
+			snapshotUpdated: false,
 			snapshots: remainingSnapshots,
-			viewUpdated: false,
 		};
 	},
 	[EViewsActionTypes.RENAME_ACTIVE_SNAPSHOT]: (state, value) => {
@@ -107,8 +107,8 @@ const viewsActions: TViewsActions = {
 
 		return {
 			...state,
+			snapshotUpdated: false,
 			snapshots: [...updatedSnapshots],
-			viewUpdated: false,
 		};
 	},
 	[EViewsActionTypes.RESET_TO_DEFAULT_SNAPSHOT]: (state) => {
@@ -118,7 +118,7 @@ const viewsActions: TViewsActions = {
 			...state,
 			...defaultSnapshot,
 			activeSnapshotERC: null,
-			viewUpdated: false,
+			snapshotUpdated: false,
 		};
 	},
 	[EViewsActionTypes.UPDATE_ACTIVE_SNAPSHOT]: (state, value) => {
@@ -136,7 +136,7 @@ const viewsActions: TViewsActions = {
 			...state,
 			...value.configuration,
 			activeSnapshotERC: value.erc,
-			viewUpdated: false,
+			snapshotUpdated: false,
 		};
 	},
 	[EViewsActionTypes.UPDATE_ACTIVE_VIEW]: (state, value) => {
@@ -153,14 +153,14 @@ const viewsActions: TViewsActions = {
 		return {
 			...state,
 			activeView,
-			viewUpdated: true,
+			snapshotUpdated: true,
 		};
 	},
 	[EViewsActionTypes.UPDATE_FILTERS]: (state, value) => {
 		return {
 			...state,
 			filters: value,
-			viewUpdated: true,
+			snapshotUpdated: true,
 		};
 	},
 	[EViewsActionTypes.UPDATE_FILTERS_CX]: (state, value) => {
@@ -204,7 +204,7 @@ const viewsActions: TViewsActions = {
 		return {
 			...state,
 			paginationDelta: value,
-			viewUpdated: true,
+			snapshotUpdated: true,
 		};
 	},
 	[EViewsActionTypes.UPDATE_SEARCH_PARAM]: (state, value) => {
@@ -216,8 +216,8 @@ const viewsActions: TViewsActions = {
 	[EViewsActionTypes.UPDATE_SORTING]: (state, value) => {
 		return {
 			...state,
+			snapshotUpdated: true,
 			sorts: value,
-			viewUpdated: true,
 		};
 	},
 
@@ -264,7 +264,7 @@ const viewsActions: TViewsActions = {
 		return {
 			...state,
 			modifiedFields: fields,
-			viewUpdated: true,
+			snapshotUpdated: true,
 			visibleFieldNames: value,
 		};
 	},

@@ -71,7 +71,7 @@ public class AnnotationLocator {
 		while ((clazz = queue.poll()) != null) {
 			if (!Proxy.isProxyClass(clazz)) {
 				Method specificMethod = ReflectionUtil.fetchDeclaredMethod(
-					clazz, method.getName(), method.getParameterTypes());
+					false, clazz, method.getName(), method.getParameterTypes());
 
 				if (specificMethod != null) {
 					_mergeAnnotations(
@@ -80,7 +80,7 @@ public class AnnotationLocator {
 				}
 
 				Method publicMethod = ReflectionUtil.fetchMethod(
-					clazz, method.getName(), method.getParameterTypes());
+					false, clazz, method.getName(), method.getParameterTypes());
 
 				if (publicMethod != null) {
 

@@ -418,8 +418,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", companyIds
 			).put(
-				"liferay.filter.disabled", true
-			).put(
 				"liferay.jackson", false
 			).put(
 				"liferay.objects", true

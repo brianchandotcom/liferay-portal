@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,12 +60,15 @@ import jakarta.ws.rs.ServerErrorException;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
 
 import java.io.IOException;
 
 import java.net.HttpURLConnection;
 
 import java.nio.charset.StandardCharsets;
+
+import java.security.Principal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -709,8 +713,10 @@ public class LiferayOAuthDataProvider
 
 	@Override
 	public void setClient(Client client) {
+		MessageContext messageContext = getMessageContext();
+
 		long companyId = _portal.getCompanyId(
-			getMessageContext().getHttpServletRequest());
+			messageContext.getHttpServletRequest());
 
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
@@ -718,13 +724,13 @@ public class LiferayOAuthDataProvider
 
 		if (oAuth2Application == null) {
 			try {
-				String principalName = getMessageContext(
-				).getSecurityContext(
-				).getUserPrincipal(
-				).getName();
+				SecurityContext securityContext =
+					messageContext.getSecurityContext();
+
+				Principal userPrincipal = securityContext.getUserPrincipal();
 
 				User user = _userLocalService.fetchUser(
-					GetterUtil.getLong(principalName));
+					GetterUtil.getLong(userPrincipal.getName()));
 
 				Map<String, String> properties = client.getProperties();
 
@@ -1142,12 +1148,8 @@ public class LiferayOAuthDataProvider
 			return null;
 		}
 
-		if (!jwksUri.toLowerCase(
-			).startsWith(
-				"https://"
-			)) {
-
-			OAuthError error = new OAuthError(
+		if (!StringUtil.startsWith(jwksUri, "https://")) {
+			OAuthError oAuthError = new OAuthError(
 				"invalid_request", "jwks_uri must use the https scheme");
 
 			Response.ResponseBuilder responseBuilder =
@@ -1158,7 +1160,7 @@ public class LiferayOAuthDataProvider
 			throw ExceptionUtils.toBadRequestException(
 				(Throwable)null,
 				responseBuilder.entity(
-					error
+					oAuthError
 				).build());
 		}
 
@@ -1166,17 +1168,30 @@ public class LiferayOAuthDataProvider
 
 		options.setLocation(jwksUri);
 
-		String responseJSON = null;
-
 		try {
-			responseJSON = _http.URLtoString(options);
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
+			String responseJSON = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Response code " + response.getResponseCode());
+				}
+
+				throw new SystemException(
+					"Unable to retrieve JWKS from " + jwksUri);
 			}
 
-			OAuthError error = new OAuthError(
+			return _jsonFactory.createJSONObject(
+				responseJSON
+			).toString();
+		}
+		catch (IOException | SystemException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			OAuthError oAuthError = new OAuthError(
 				"invalid_request", "Jwks uri is unreachable");
 
 			Response.ResponseBuilder responseBuilder =
@@ -1187,31 +1202,9 @@ public class LiferayOAuthDataProvider
 			throw ExceptionUtils.toBadRequestException(
 				(Throwable)null,
 				responseBuilder.entity(
-					error
+					oAuthError
 				).build());
 		}
-
-		Http.Response response = options.getResponse();
-
-		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			OAuthError error = new OAuthError(
-				"invalid_request", "Jwks uri is unreachable");
-
-			Response.ResponseBuilder responseBuilder =
-				JAXRSUtils.toResponseBuilder(400);
-
-			responseBuilder.type(MediaType.APPLICATION_JSON);
-
-			throw ExceptionUtils.toBadRequestException(
-				(Throwable)null,
-				responseBuilder.entity(
-					error
-				).build());
-		}
-
-		return _jsonFactory.createJSONObject(
-			responseJSON
-		).toString();
 	}
 
 	private List<GrantType> _getAllowedGrantTypes(List<String> grantTypes) {

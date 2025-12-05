@@ -180,6 +180,17 @@ const EventInput: React.FC<IEventInputProps> = ({
 
 	const handleDateFilterConjunctionChange = useCallback(
 		criterion => {
+			let value: Map<string, any>;
+
+			if (isNil(criterion)) {
+				value = valueIMap.deleteIn(['criterionGroup', 'items', 2]);
+			} else {
+				value = valueIMap.mergeIn(
+					['criterionGroup', 'items', 2],
+					fromJS(criterion)
+				);
+			}
+
 			onChange({
 				touched: {
 					...touched,
@@ -189,12 +200,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 					...valid,
 					dateFilter: isNil(criterion) || criterion.valid
 				},
-				value: isNil(criterion)
-					? valueIMap.deleteIn(['criterionGroup', 'items', 2])
-					: valueIMap.mergeIn(
-							['criterionGroup', 'items', 2],
-							fromJS(criterion)
-						)
+				value
 			});
 		},
 		[onChange, valueIMap, touched, valid]

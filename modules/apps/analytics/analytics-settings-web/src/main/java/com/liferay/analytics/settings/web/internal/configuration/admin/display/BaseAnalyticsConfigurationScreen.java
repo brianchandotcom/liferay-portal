@@ -9,6 +9,7 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys;
 import com.liferay.analytics.settings.web.internal.user.AnalyticsUsersManager;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -45,7 +46,7 @@ public abstract class BaseAnalyticsConfigurationScreen
 
 	@Override
 	public String getScope() {
-		return "company";
+		return ExtendedObjectClassDefinition.Scope.COMPANY.getValue();
 	}
 
 	@Override

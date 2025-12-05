@@ -6,6 +6,7 @@
 package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -56,7 +57,7 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getScope() {
-		return "company";
+		return ExtendedObjectClassDefinition.Scope.COMPANY.getValue();
 	}
 
 	@Override

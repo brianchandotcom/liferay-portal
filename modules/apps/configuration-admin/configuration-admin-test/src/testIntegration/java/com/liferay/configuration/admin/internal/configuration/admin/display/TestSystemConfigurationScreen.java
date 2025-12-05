@@ -6,6 +6,7 @@
 package com.liferay.configuration.admin.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -17,7 +18,7 @@ public class TestSystemConfigurationScreen extends BaseConfigurationScreen {
 
 	@Override
 	public String getScope() {
-		return "system";
+		return ExtendedObjectClassDefinition.Scope.SYSTEM.getValue();
 	}
 
 }

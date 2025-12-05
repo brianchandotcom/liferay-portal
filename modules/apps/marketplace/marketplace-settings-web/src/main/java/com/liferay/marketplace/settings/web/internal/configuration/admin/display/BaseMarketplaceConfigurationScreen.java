@@ -6,6 +6,7 @@
 package com.liferay.marketplace.settings.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import jakarta.servlet.RequestDispatcher;
@@ -36,7 +37,7 @@ public abstract class BaseMarketplaceConfigurationScreen
 
 	@Override
 	public String getScope() {
-		return "company";
+		return ExtendedObjectClassDefinition.Scope.COMPANY.getValue();
 	}
 
 	@Override

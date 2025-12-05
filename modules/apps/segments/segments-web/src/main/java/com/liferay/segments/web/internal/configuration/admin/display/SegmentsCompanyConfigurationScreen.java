@@ -6,6 +6,7 @@
 package com.liferay.segments.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
@@ -47,7 +48,7 @@ public class SegmentsCompanyConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getScope() {
-		return "company";
+		return ExtendedObjectClassDefinition.Scope.COMPANY.getValue();
 	}
 
 	@Override

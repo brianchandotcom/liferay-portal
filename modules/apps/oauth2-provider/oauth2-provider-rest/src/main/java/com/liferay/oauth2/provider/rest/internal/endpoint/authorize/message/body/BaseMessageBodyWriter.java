@@ -42,7 +42,7 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 
 	@Override
 	public long getSize(
-		T t, Class<?> aClass, Type type, Annotation[] annotations,
+		T t, Class<?> clazz, Type type, Annotation[] annotations,
 		MediaType mediaType) {
 
 		return -1L;
@@ -50,7 +50,7 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 
 	@Override
 	public void writeTo(
-			T t, Class<?> aClass, Type type, Annotation[] annotations,
+			T t, Class<?> clazz, Type type, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap<String, Object> multivaluedMap,
 			OutputStream outputStream)
 		throws WebApplicationException {

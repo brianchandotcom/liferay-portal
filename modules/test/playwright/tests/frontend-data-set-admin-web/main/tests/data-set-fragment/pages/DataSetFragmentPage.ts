@@ -41,8 +41,14 @@ export class DataSetFragmentPage {
 		bodyRows: Locator;
 		container: Locator;
 		headRow: Locator;
+		headerCells: Locator;
 		itemActionsCells: Locator;
+		manageColumnsVisibilityButton: Locator;
 	};
+	readonly userViewsActionsButton: Locator;
+	readonly userViewsDeleteAlert: Locator;
+	readonly userViewsSelectorButton: Locator;
+	readonly userViewsSaveModal: Locator;
 
 	constructor(page: Page) {
 		this.activeViewSelector = page.getByLabel(/View Selected/);
@@ -108,8 +114,21 @@ export class DataSetFragmentPage {
 			bodyRows: tableContainer.locator('tbody tr'),
 			container: tableContainer,
 			headRow: tableContainer.locator('thead tr'),
+			headerCells: tableContainer.locator('thead th'),
 			itemActionsCells: tableContainer.locator('td.cell-item-actions'),
+			manageColumnsVisibilityButton: tableContainer.getByTitle(
+				'Manage Columns Visibility'
+			),
 		};
+
+		this.userViewsActionsButton = page.getByLabel('Show View Actions');
+		this.userViewsDeleteAlert = page.getByRole('dialog', {
+			name: 'Delete View',
+		});
+		this.userViewsSelectorButton = page.getByLabel('Views');
+		this.userViewsSaveModal = page.getByRole('dialog', {
+			name: 'Save New View As',
+		});
 	}
 
 	async goto() {

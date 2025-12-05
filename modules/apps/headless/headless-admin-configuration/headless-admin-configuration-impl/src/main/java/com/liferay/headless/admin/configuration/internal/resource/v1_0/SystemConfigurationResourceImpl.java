@@ -287,7 +287,7 @@ public class SystemConfigurationResourceImpl
 			_configurationExportImportProcessor, configurationScreen,
 			ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
-		if ((properties == null) || properties.isEmpty()) {
+		if (properties == null) {
 			return null;
 		}
 

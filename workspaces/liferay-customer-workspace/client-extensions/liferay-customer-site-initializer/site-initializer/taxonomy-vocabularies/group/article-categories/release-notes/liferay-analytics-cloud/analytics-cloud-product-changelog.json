@@ -1,0 +1,17 @@
+{
+	"externalReferenceCode": "T_AC_ANALYTICS_CLOUD_PRODUCT_CHANGELOG",
+	"name": "Analytics Cloud - Product Changelog",
+	"name_i18n": {
+		"en_US": "Analytics Cloud - Product Changelog",
+		"es-ES": "Analytics Cloud - Histórico de Actualizaciones",
+		"ja-JP": "Analytics Cloud - 製品チェンジログ",
+		"pt-BR": "Analytics Cloud - Histórico de Atualizações"
+	},
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "reference-the-latest-changes-for-liferay-analytics-cloud"
+		}
+	],
+	"viewableBy": "Anyone"
+}

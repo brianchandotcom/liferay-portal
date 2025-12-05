@@ -44,20 +44,21 @@ export function getEditingValue({
 }) {
 	const valueJSON = convertValueToJSON(value);
 
-	if (valueJSON) {
-		if (fieldName === 'submitLabel') {
-			return valueJSON[editingLocale.localeId] || '';
-		}
-		else {
-			return (
-				valueJSON[editingLocale.localeId] ||
-				valueJSON[defaultLocale.localeId] ||
-				''
-			);
-		}
+	if (!valueJSON) {
+		return editingLocale;
 	}
 
-	return editingLocale;
+	const editingValue = valueJSON[editingLocale.localeId];
+
+	if (fieldName === 'submitLabel') {
+		return editingValue ?? '';
+	}
+
+	if (editingValue !== undefined) {
+		return editingValue;
+	}
+
+	return valueJSON[defaultLocale.localeId] || '';
 }
 
 export function getISO639LanguageCode(localeId) {

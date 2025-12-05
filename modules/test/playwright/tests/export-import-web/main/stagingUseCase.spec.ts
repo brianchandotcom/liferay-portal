@@ -93,7 +93,7 @@ testWithBatchStagingFF(
 		});
 
 		const initialObjectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			{externalReferenceCode: 'object1', name: 'test1'},
+			{externalReferenceCode: getRandomString(), name: getRandomString()},
 			`c/tests/scopes/${site.name}`
 		);
 
@@ -130,7 +130,7 @@ testWithBatchStagingFF(
 		});
 
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			{externalReferenceCode: 'object2', name: 'test2'},
+			{externalReferenceCode: getRandomString(), name: getRandomString()},
 			`c/tests/scopes/${stagingSite.key}`
 		);
 

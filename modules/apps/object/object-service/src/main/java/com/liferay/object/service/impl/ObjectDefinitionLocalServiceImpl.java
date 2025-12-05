@@ -715,6 +715,10 @@ public class ObjectDefinitionLocalServiceImpl
 			_dropTable(objectDefinition.getExtensionDBTableName());
 		}
 		else if (objectDefinition.isApproved()) {
+			_portletLocalService.removePortletModelResources(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getPortletId());
+
 			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 					objectDefinition.getCompanyId())) {
 

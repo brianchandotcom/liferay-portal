@@ -1197,6 +1197,24 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void removePortletModelResources(long companyId, String portletId) {
+		List<String> modelResources =
+			ResourceActionsUtil.getPortletModelResources(portletId);
+
+		_companyDefaultModelResources.compute(
+			companyId,
+			(key, value) -> {
+				if (value == null) {
+					return null;
+				}
+
+				modelResources.forEach(value::remove);
+
+				return value;
+			});
+	}
+
+	@Override
 	public Portlet updatePortlet(
 		long companyId, String portletId, String roles, boolean active) {
 

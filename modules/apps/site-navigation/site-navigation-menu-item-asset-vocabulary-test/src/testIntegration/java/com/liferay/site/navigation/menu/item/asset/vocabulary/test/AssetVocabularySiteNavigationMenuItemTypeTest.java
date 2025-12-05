@@ -137,8 +137,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 					"title", assetVocabulary1.getTitle()
 				).put(
 					"type", "asset-vocabulary"
-				).put(
-					"uuid", assetVocabulary1.getUuid()
 				).buildString(),
 				_serviceContext);
 
@@ -797,8 +795,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			).put(
 				"useCustomName",
 				String.valueOf(!Objects.equals(localizedNames, "{}"))
-			).put(
-				"uuid", assetVocabulary.getUuid()
 			).buildString(),
 			_serviceContext);
 	}

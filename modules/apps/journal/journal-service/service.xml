@@ -120,10 +120,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="layoutUuid" />
 		</finder>
-		<finder name="G_NotL" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column arrayable-operator="AND" comparator="!=" name="layoutUuid" />
-		</finder>
 		<finder name="G_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="status" />
@@ -188,6 +184,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="layoutUuid" />
+		</finder>
+		<finder name="G_C_NotL" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column arrayable-operator="AND" comparator="!=" name="layoutUuid" />
 		</finder>
 		<finder name="G_A_V" return-type="JournalArticle" unique="true">
 			<finder-column name="groupId" />

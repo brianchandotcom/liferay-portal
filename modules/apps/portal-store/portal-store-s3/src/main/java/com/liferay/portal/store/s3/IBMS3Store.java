@@ -375,7 +375,7 @@ public class IBMS3Store implements Store {
 		_s3StoreConfiguration = ConfigurableUtil.createConfigurable(
 			S3StoreConfiguration.class, properties);
 
-		AWSCredentialsProvider awsCredentialsProvider;
+		AWSCredentialsProvider awsCredentialsProvider = null;
 
 		if (Validator.isNotNull(_s3StoreConfiguration.accessKey()) &&
 			Validator.isNotNull(_s3StoreConfiguration.secretKey())) {

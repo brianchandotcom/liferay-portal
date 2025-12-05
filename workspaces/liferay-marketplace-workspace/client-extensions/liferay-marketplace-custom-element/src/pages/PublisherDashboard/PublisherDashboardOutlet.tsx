@@ -7,17 +7,14 @@ import {Outlet, useOutletContext} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
-import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
+import {useAccount} from '../../hooks/data/useAccounts';
 import i18n from '../../i18n';
-import {getAccountImage} from '../../utils/util';
 
 type PublisherDashboardOutletProps = {
-	accountsSearch: ReturnType<typeof useAccounts>;
 	catalogId?: number;
 };
 
 const PublisherDashboardOutlet: React.FC<PublisherDashboardOutletProps> = ({
-	accountsSearch,
 	catalogId,
 }) => {
 	const {data: selectedAccount, error, isLoading} = useAccount();
@@ -26,9 +23,6 @@ const PublisherDashboardOutlet: React.FC<PublisherDashboardOutletProps> = ({
 		<PageRenderer error={error} isLoading={isLoading}>
 			<div className="published-apps-dashboard-page-container">
 				<DashboardNavigation
-					accountIcon={getAccountImage(selectedAccount?.logoURL)}
-					accountsSearch={accountsSearch}
-					currentAccount={selectedAccount as unknown as Account}
 					dashboardNavigationItems={[
 						{
 							itemTitle: i18n.translate('apps'),

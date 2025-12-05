@@ -23,6 +23,19 @@ import org.json.JSONObject;
  */
 public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 
+	@Override
+	public String getBaseSlaveLabel() {
+		Properties poshiProperties = getPoshiProperties();
+
+		String slaveLabel = poshiProperties.getProperty("slave.label");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
+		}
+
+		return super.getBaseSlaveLabel();
+	}
+
 	public FunctionalAxisTestClassGroup getFunctionalAxisTestClassGroup(
 		int segmentIndex) {
 
@@ -74,19 +87,6 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 			functionalAxisTestClassGroups.get(0);
 
 		return functionalAxisTestClassGroup.getPoshiProperties();
-	}
-
-	@Override
-	public String getSlaveLabel() {
-		Properties poshiProperties = getPoshiProperties();
-
-		String slaveLabel = poshiProperties.getProperty("slave.label");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-			return slaveLabel;
-		}
-
-		return super.getSlaveLabel();
 	}
 
 	@Override

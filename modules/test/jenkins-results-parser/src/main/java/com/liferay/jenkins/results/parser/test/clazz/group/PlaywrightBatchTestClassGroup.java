@@ -425,8 +425,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 						addAxisTestClassGroup(axisTestClassGroup);
 
-						playwrightSegmentTestClassGroup.setSlaveLabel(
-							axisTestClassGroup.getSlaveLabel());
+						playwrightSegmentTestClassGroup.setBaseSlaveLabel(
+							axisTestClassGroup.getBaseSlaveLabel());
 					}
 				}
 

@@ -96,18 +96,6 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 	}
 
 	@Override
-	public String getSlaveLabel() {
-		String slaveLabel = JenkinsResultsParserUtil.getProperty(
-			getPoshiProperties(), "slave.label");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-			return slaveLabel;
-		}
-
-		return super.getSlaveLabel();
-	}
-
-	@Override
 	public File getTestBaseDir() {
 		return _testBaseDir;
 	}
@@ -160,6 +148,18 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		super(jsonObject, segmentTestClassGroup);
 
 		_testBaseDir = new File(jsonObject.getString("test_base_dir"));
+	}
+
+	@Override
+	protected String getBaseSlaveLabel() {
+		String slaveLabel = JenkinsResultsParserUtil.getProperty(
+			getPoshiProperties(), "slave.label");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
+		}
+
+		return super.getBaseSlaveLabel();
 	}
 
 	private final File _testBaseDir;

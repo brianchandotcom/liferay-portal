@@ -697,8 +697,7 @@ public abstract class BaseJob implements Job {
 				"test.batch.os.architecture",
 				batchTestClassGroup.getOSArchitecture());
 			batchProperties.setProperty(
-				"test.batch.slave.label",
-				batchTestClassGroup.getOSSlaveLabel());
+				"test.batch.slave.label", batchTestClassGroup.getSlaveLabel());
 
 			if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
 				FunctionalBatchTestClassGroup functionalBatchTestClassGroup =
@@ -758,7 +757,7 @@ public abstract class BaseJob implements Job {
 					String.valueOf(segmentTestClassGroup.getAxisCount()));
 				segmentProperties.setProperty(
 					"test.batch.slave.label",
-					segmentTestClassGroup.getOSSlaveLabel());
+					segmentTestClassGroup.getSlaveLabel());
 
 				String testCasePropertiesContent =
 					segmentTestClassGroup.getTestCasePropertiesContent();

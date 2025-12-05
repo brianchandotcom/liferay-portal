@@ -5,17 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {searchExperiencesPagesTest} from '../../../fixtures/searchExperiencesPageTest';
-import {searchPageTest} from '../../../fixtures/searchPageTest';
-import {DEFAULT_SXP_BLUEPRINT_CONFIGURATION} from '../../../helpers/SearchExperiencesApiHelper';
-import {getRandomInt} from '../../../utils/getRandomInt';
-import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
+import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
+import {searchExperiencesPagesTest} from '../../../../fixtures/searchExperiencesPageTest';
+import {searchPageTest} from '../../../../fixtures/searchPageTest';
+import {DEFAULT_SXP_BLUEPRINT_CONFIGURATION} from '../../../../helpers/SearchExperiencesApiHelper';
+import {getRandomInt} from '../../../../utils/getRandomInt';
+import getBasicWebContentStructureId from '../../../../utils/structured-content/getBasicWebContentStructureId';
 
 export const test = mergeTests(
 	isolatedLayoutTest({type: 'portlet'}),
@@ -33,84 +33,7 @@ export const test = mergeTests(
 	searchExperiencesPagesTest
 );
 
-test.describe('Data Persists', () => {
-	let site1: any;
-	let sxpBlueprintId: string;
-	const sxpBlueprintTitle = `Blueprint${getRandomInt()}`;
-
-	test.beforeEach(
-		async ({
-			apiHelpers,
-			editSXPBlueprintPage,
-			sxpBlueprintsAndElementsViewPage,
-		}) => {
-			await test.step('Create site via API', async () => {
-				site1 = await apiHelpers.headlessSite.createSite({
-					name: `Site1 ${getRandomInt()}`,
-				});
-			});
-
-			await test.step('Create blueprint manually', async () => {
-				await sxpBlueprintsAndElementsViewPage.goto();
-
-				await sxpBlueprintsAndElementsViewPage.createBlueprint(
-					sxpBlueprintTitle
-				);
-			});
-
-			await test.step('Save ID for created blueprint', async () => {
-				await expect(editSXPBlueprintPage.editTitleButton).toHaveText(
-					sxpBlueprintTitle
-				);
-
-				sxpBlueprintId = await editSXPBlueprintPage.getSXPBlueprintId();
-			});
-		}
-	);
-
-	test.afterEach(async ({apiHelpers}) => {
-		await test.step('Delete created site and blueprint', async () => {
-			if (site1.id) {
-				await apiHelpers.headlessSite.deleteSite(site1.id);
-			}
-
-			await apiHelpers.searchExperiences.deleteSXPBlueprint(
-				sxpBlueprintId
-			);
-		});
-	});
-
-	test('Scope selection persists after saving blueprint', async ({
-		editSXPBlueprintPage,
-		page,
-		sxpBlueprintsAndElementsViewPage,
-	}) => {
-		await test.step('Select site1 for the scope', async () => {
-			await editSXPBlueprintPage.selectScope({
-				label: site1.name,
-				tab: 'My Sites',
-			});
-		});
-
-		await test.step('Save blueprint and redirect back to it', async () => {
-			await editSXPBlueprintPage.saveBlueprint();
-
-			await sxpBlueprintsAndElementsViewPage.selectTableLink(
-				sxpBlueprintTitle
-			);
-		});
-
-		await test.step('Assert the scope selections saved', async () => {
-			await expect(
-				page
-					.locator('.scope-selector tr')
-					.filter({has: page.getByRole('cell', {name: site1.name})})
-			).toBeVisible();
-		});
-	});
-});
-
-test.describe('Scope Selection', () => {
+test.describe('Site Scope', () => {
 	let site1: any;
 	let site2: any;
 
@@ -132,6 +55,51 @@ test.describe('Scope Selection', () => {
 		if (site2.id) {
 			await apiHelpers.headlessSite.deleteSite(site2.id);
 		}
+	});
+
+	test('Scope selection persists after saving blueprint', async ({
+		apiHelpers,
+		editSXPBlueprintPage,
+		page,
+		sxpBlueprintsAndElementsViewPage,
+	}) => {
+		let sxpBlueprint: SXPBlueprint;
+
+		await test.step('Create blueprint with API scoped to the first site', async () => {
+			sxpBlueprint =
+				await apiHelpers.searchExperiences.createSXPBlueprint();
+		});
+
+		await test.step('Navigate to created blueprint', async () => {
+			await sxpBlueprintsAndElementsViewPage.goto();
+
+			await sxpBlueprintsAndElementsViewPage.selectTableLink(
+				sxpBlueprint.title
+			);
+		});
+
+		await test.step('Select site1 for the scope', async () => {
+			await editSXPBlueprintPage.selectScope({
+				label: site1.name,
+				tab: 'My Sites',
+			});
+		});
+
+		await test.step('Save blueprint and redirect back to it', async () => {
+			await editSXPBlueprintPage.saveBlueprint();
+
+			await sxpBlueprintsAndElementsViewPage.selectTableLink(
+				sxpBlueprint.title
+			);
+		});
+
+		await test.step('Assert the scope selections saved', async () => {
+			await expect(
+				page
+					.locator('.scope-selector tr')
+					.filter({has: page.getByRole('cell', {name: site1.name})})
+			).toBeVisible();
+		});
 	});
 
 	test('Sites with content are shown in blueprint preview', async ({

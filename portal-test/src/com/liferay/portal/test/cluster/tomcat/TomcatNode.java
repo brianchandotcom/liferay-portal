@@ -130,7 +130,7 @@ public class TomcatNode {
 	public <V extends Serializable> NoticeableFuture<V> execute(
 		ClusterExecutable<V> clusterExecutable) {
 
-		return _execute(clusterExecutable, _osgiAware);
+		return _execute(clusterExecutable, _testBundleInstalled);
 	}
 
 	public ProcessChannel<String> start(boolean loadHomePage) throws Exception {
@@ -197,7 +197,7 @@ public class TomcatNode {
 
 		processNoticeableFuture.addFutureListener(
 			future -> {
-				_osgiAware = false;
+				_testBundleInstalled = false;
 
 				_processChannel = null;
 			});
@@ -238,7 +238,7 @@ public class TomcatNode {
 				public void completeWithResult(
 					Future<String> future, String result) {
 
-					_osgiAware = true;
+					_testBundleInstalled = true;
 				}
 
 			});
@@ -298,7 +298,7 @@ public class TomcatNode {
 			ClusterExecutable<V> clusterExecutable)
 		throws Exception {
 
-		return _syncExecute(clusterExecutable, _osgiAware);
+		return _syncExecute(clusterExecutable, _testBundleInstalled);
 	}
 
 	@Override
@@ -465,7 +465,7 @@ public class TomcatNode {
 	}
 
 	private <V extends Serializable> NoticeableFuture<V> _execute(
-		ClusterExecutable<V> clusterExecutable, boolean osgiAware) {
+		ClusterExecutable<V> clusterExecutable, boolean osgiify) {
 
 		ProcessChannel<String> processChannel = _processChannel;
 
@@ -473,15 +473,15 @@ public class TomcatNode {
 			throw new IllegalStateException("Tomcat node is not running");
 		}
 
-		if (osgiAware) {
-			clusterExecutable = _osgiAware(clusterExecutable);
+		if (osgiify) {
+			clusterExecutable = _osgiify(clusterExecutable);
 		}
 
 		return processChannel.write(
 			new BridgeProcessCallable<>(clusterExecutable));
 	}
 
-	private <V extends Serializable> ClusterExecutable<V> _osgiAware(
+	private <V extends Serializable> ClusterExecutable<V> _osgiify(
 		ClusterExecutable<V> clusterExecutable) {
 
 		Serializer serializer = new Serializer();
@@ -500,11 +500,11 @@ public class TomcatNode {
 	}
 
 	private <V extends Serializable> V _syncExecute(
-			ClusterExecutable<V> clusterExecutable, boolean osgiAware)
+			ClusterExecutable<V> clusterExecutable, boolean osgiify)
 		throws Exception {
 
 		NoticeableFuture<V> noticeableFuture = _execute(
-			clusterExecutable, osgiAware);
+			clusterExecutable, osgiify);
 
 		return noticeableFuture.get();
 	}
@@ -560,9 +560,9 @@ public class TomcatNode {
 	private final String _jvmArgs;
 	private final String _liferayHome;
 	private final int _nodeId;
-	private volatile boolean _osgiAware;
 	private volatile ProcessChannel<String> _processChannel;
 	private final int _shutdownPort;
+	private volatile boolean _testBundleInstalled;
 
 	private static class BootstrapStartProcessCallable
 		implements Externalizable, ProcessCallable<String> {

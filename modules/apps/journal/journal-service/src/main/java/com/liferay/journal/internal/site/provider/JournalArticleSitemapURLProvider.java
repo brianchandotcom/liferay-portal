@@ -114,7 +114,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		int end = QueryUtil.ALL_POS;
 
 		int count = _journalArticleService.getLayoutArticlesCount(
-			layoutSet.getGroupId());
+			layoutSet.getGroupId(), 0);
 
 		if (count > SitemapManager.MAXIMUM_ENTRIES) {
 			start = count - SitemapManager.MAXIMUM_ENTRIES;
@@ -123,7 +123,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 		List<JournalArticle> journalArticles =
 			_journalArticleService.getLayoutArticles(
-				layoutSet.getGroupId(), start, end);
+				layoutSet.getGroupId(), 0, start, end);
 
 		visitArticles(
 			element, null, layoutSet, themeDisplay, journalArticles, true);

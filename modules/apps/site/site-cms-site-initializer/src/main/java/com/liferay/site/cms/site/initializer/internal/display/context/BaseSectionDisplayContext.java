@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -57,9 +58,11 @@ import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRe
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -131,6 +134,11 @@ public abstract class BaseSectionDisplayContext {
 				_translationInfoItemFieldValuesExporterRegistry.
 					getTranslationInfoItemFieldValuesExporters(),
 				this::_getExportFileFormatJSONObject)
+		).put(
+			"availableTargetLocales",
+			_getLocalesJSONArray(
+				themeDisplay.getLocale(),
+				LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
 		).put(
 			"baseAssetLibraryViewURL", ActionUtil.getBaseSpaceURL(themeDisplay)
 		).put(
@@ -493,6 +501,23 @@ public abstract class BaseSectionDisplayContext {
 		}
 
 		return layout.getName(themeDisplay.getLocale(), true);
+	}
+
+	private JSONArray _getLocalesJSONArray(
+		Locale locale, Collection<Locale> locales) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		locales.forEach(
+			currentLocale -> jsonArray.put(
+				JSONUtil.put(
+					"displayName",
+					LocaleUtil.getLocaleDisplayName(currentLocale, locale)
+				).put(
+					"languageId", LocaleUtil.toLanguageId(currentLocale)
+				)));
+
+		return jsonArray;
 	}
 
 	private ObjectEntryFolder _getObjectEntryFolder(

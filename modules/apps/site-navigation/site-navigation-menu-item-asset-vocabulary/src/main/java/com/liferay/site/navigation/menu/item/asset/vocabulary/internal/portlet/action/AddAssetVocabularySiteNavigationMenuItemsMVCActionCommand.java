@@ -122,8 +122,6 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 							assetVocabularyJSONObject.getString("title")
 						).put(
 							"type", "asset-vocabulary"
-						).put(
-							"uuid", assetVocabularyJSONObject.getString("uuid")
 						).buildString(),
 						serviceContext);
 

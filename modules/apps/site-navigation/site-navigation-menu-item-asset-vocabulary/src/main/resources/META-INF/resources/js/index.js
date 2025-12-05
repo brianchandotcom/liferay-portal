@@ -319,7 +319,6 @@ AssetVocabularyContextualSidebar.propTypes = {
 		groupId: PropTypes.string,
 		title: PropTypes.string,
 		type: PropTypes.string,
-		uuid: PropTypes.string,
 	}).isRequired,
 	chooseAssetVocabularyProps: PropTypes.shape({
 		assetVocabularySelectorURL: PropTypes.string,
@@ -393,12 +392,6 @@ function FormValues({
 				type="hidden"
 				value={useCustomName}
 			/>
-			<input
-				name={getFieldName(namespace, 'uuid')}
-				readOnly
-				type="hidden"
-				value={selectedVocabulary.uuid || ''}
-			/>
 		</>
 	);
 }
@@ -411,7 +404,6 @@ FormValues.propTypes = {
 		groupId: PropTypes.string,
 		title: PropTypes.string,
 		type: PropTypes.string,
-		uuid: PropTypes.string,
 	}).isRequired,
 	showAssetVocabularyLevel: PropTypes.bool,
 	useCustomName: PropTypes.bool,

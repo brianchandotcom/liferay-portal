@@ -95,8 +95,6 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 				}
 			).put(
 				"type", "asset-vocabulary"
-			).put(
-				"uuid", _typeSettingsUnicodeProperties.get("uuid")
 			).build()
 		).put(
 			"chooseAssetVocabularyProps",

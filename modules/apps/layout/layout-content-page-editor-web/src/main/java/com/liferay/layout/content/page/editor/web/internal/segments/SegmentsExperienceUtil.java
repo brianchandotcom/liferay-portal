@@ -208,7 +208,7 @@ public class SegmentsExperienceUtil {
 	}
 
 	private static void _copyPortletPermissions(
-		long companyId, String newPortletId, String portletId, long plid) {
+		long companyId, String newPortletId, long plid, String portletId) {
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
@@ -263,8 +263,8 @@ public class SegmentsExperienceUtil {
 			_getNewPortletPreferences(newPortletId, plid, portletId);
 
 			_copyPortletPermissions(
-				fragmentEntryLink.getCompanyId(), newPortletId, portletId,
-				plid);
+				fragmentEntryLink.getCompanyId(), newPortletId, plid,
+				portletId);
 		}
 	}
 

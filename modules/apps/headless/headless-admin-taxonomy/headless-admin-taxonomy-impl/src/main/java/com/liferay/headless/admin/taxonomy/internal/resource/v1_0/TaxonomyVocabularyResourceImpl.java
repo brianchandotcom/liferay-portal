@@ -161,7 +161,7 @@ public class TaxonomyVocabularyResourceImpl
 
 			@Override
 			public String getResourceClassName() {
-				return TaxonomyCategoryResourceImpl.class.getName();
+				return TaxonomyVocabularyResourceImpl.class.getName();
 			}
 
 			@Override

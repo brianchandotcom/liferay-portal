@@ -6,8 +6,12 @@
 package com.liferay.portal.upgrade.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -39,6 +43,7 @@ import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -251,8 +256,59 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 		}
 	}
 
+	@Test
+	public void testUpgradeWithPWCFileVersion() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, null, 0, null, null, null, serviceContext);
+
+		_dlAppService.checkOutFileEntry(
+			fileEntry.getFileEntryId(), serviceContext);
+
+		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+
+		AssetEntry latestFileVersionAssetEntry =
+			_assetEntryLocalService.fetchEntry(
+				DLFileEntry.class.getName(),
+				latestFileVersion.getFileVersionId());
+
+		Assert.assertNotNull(latestFileVersionAssetEntry);
+
+		try {
+			upgrade();
+
+			_assetEntryPersistence.clearCache(latestFileVersionAssetEntry);
+
+			latestFileVersionAssetEntry = _assetEntryLocalService.fetchEntry(
+				DLFileEntry.class.getName(),
+				latestFileVersion.getFileVersionId());
+
+			Assert.assertNotNull(latestFileVersionAssetEntry);
+		}
+		finally {
+			_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+
+			if (latestFileVersionAssetEntry != null) {
+				_assetEntryLocalService.deleteAssetEntry(
+					latestFileVersionAssetEntry);
+			}
+		}
+	}
+
 	private static List<ClassName> _classNames;
 	private static List<SystemEvent> _systemEvents;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetEntryPersistence _assetEntryPersistence;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

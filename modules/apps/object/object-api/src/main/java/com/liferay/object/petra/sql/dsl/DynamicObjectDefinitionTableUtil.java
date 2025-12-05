@@ -7,6 +7,7 @@ package com.liferay.object.petra.sql.dsl;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -25,7 +27,9 @@ import java.sql.Timestamp;
 import java.sql.Types;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Feliphe Marinho
@@ -60,6 +64,28 @@ public class DynamicObjectDefinitionTableUtil {
 
 		return StringBundler.concat(
 			dataType, "(", getMaxLength(businessType), ")");
+	}
+
+	public static DynamicObjectDefinitionTable getDynamicObjectDefinitionTable(
+			boolean extension, ObjectDefinition objectDefinition,
+			List<ObjectField> objectFields)
+		throws PortalException {
+
+		String dbTableName = objectDefinition.getDBTableName();
+
+		if (extension) {
+			dbTableName = objectDefinition.getExtensionDBTableName();
+		}
+
+		String finalDBTableName = dbTableName;
+
+		return new DynamicObjectDefinitionTable(
+			objectDefinition,
+			ListUtil.filter(
+				objectFields,
+				objectField -> Objects.equals(
+					finalDBTableName, objectField.getDBTableName())),
+			dbTableName);
 	}
 
 	public static DynamicObjectDefinitionTable getDynamicObjectDefinitionTable(

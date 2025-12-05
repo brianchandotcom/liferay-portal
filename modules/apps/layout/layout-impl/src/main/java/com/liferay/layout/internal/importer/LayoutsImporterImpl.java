@@ -97,6 +97,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -2267,17 +2268,22 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					String faviconFileEntryScopeERC = null;
 
 					if (layout.getGroupId() != fileEntry.getGroupId()) {
-						Group fileEntryGroup;
+						Group fileEntryGroup = _groupLocalService.fetchGroup(
+							fileEntry.getGroupId());
 
-						try {
-							fileEntryGroup = _groupLocalService.getGroup(
-								fileEntry.getGroupId());
-
+						if (fileEntryGroup != null) {
 							faviconFileEntryScopeERC =
 								fileEntryGroup.getExternalReferenceCode();
 						}
-						catch (PortalException portalException) {
-							throw new RuntimeException(portalException);
+						else {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"Unable to find group for file entry ",
+										fileEntry.getFileEntryId(),
+										" with groupId ",
+										fileEntry.getGroupId()));
+							}
 						}
 					}
 

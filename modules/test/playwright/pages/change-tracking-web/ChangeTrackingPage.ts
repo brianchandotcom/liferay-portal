@@ -207,10 +207,9 @@ export class ChangeTrackingPage {
 		await this.goToPublicationsViaApplicationMenu();
 
 		if (
-			await this.page
-				.getByTestId('headerTitle')
-				.filter({hasText: 'Publications'})
-				.isVisible()
+			!(await this.page
+				.getByRole('heading', {name: 'Settings'})
+				.isVisible())
 		) {
 			await this.page.getByLabel('Options').click();
 
@@ -295,11 +294,16 @@ export class ChangeTrackingPage {
 
 		const enablePublications = this.page.getByText('Enable Publications');
 
-		const publicationsHeader = this.page
-			.getByTestId('headerTitle')
-			.filter({hasText: 'Publications'});
+		if (await enablePublications.isHidden()) {
+			const publicationsHeader = this.page
+				.getByTestId('headerTitle')
+				.filter({hasText: 'Publications'});
 
-		await expect(enablePublications.or(publicationsHeader)).toBeVisible();
+			await expect(publicationsHeader).toBeVisible();
+		}
+		else {
+			await expect(enablePublications).toBeVisible();
+		}
 	}
 
 	async goToPublicationHistory() {
@@ -321,9 +325,15 @@ export class ChangeTrackingPage {
 	async gotoPublicationsSettings() {
 		await this.goto();
 
-		await this.page.getByLabel('Options').click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Settings'}),
+			trigger: this.page.getByLabel('Options'),
+		});
 
-		await this.page.getByRole('menuitem', {name: 'Settings'}).click();
+		await expect(
+			this.page.getByRole('heading', {name: 'Settings'})
+		).toBeVisible();
 	}
 
 	async goToReviewChanges(title: string, languageCode?: string) {

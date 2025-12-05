@@ -27,9 +27,9 @@ Runtime runtime = Runtime.getRuntime();
 
 long totalMemory = runtime.totalMemory();
 
-request.setAttribute("systemDataCleanups", DataCleanupUtil.getSystemDataCleanups());
+request.setAttribute(DataCleanupWebKeys.SYSTEM_DATA_CLEANUPS, DataCleanupUtil.getSystemDataCleanups());
 
-request.setAttribute("moduleDataCleanups", DataCleanupUtil.getModuleDataCleanups());
+request.setAttribute(DataCleanupWebKeys.MODULES_DATA_CLEANUPS, DataCleanupUtil.getModuleDataCleanups());
 
 long usedMemory = totalMemory - runtime.freeMemory();
 %>

@@ -311,6 +311,11 @@ public class ObjectEntryWrapper
 		return model.getHeadObjectEntryId();
 	}
 
+	@Override
+	public Map<String, Serializable> getIndexedValues() {
+		return model.getIndexedValues();
+	}
+
 	/**
 	 * Returns the last publish date of this object entry.
 	 *

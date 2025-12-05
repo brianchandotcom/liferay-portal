@@ -392,6 +392,13 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static Map<String, Serializable> getIndexedValues(
+			ObjectEntry objectEntry)
+		throws PortalException {
+
+		return getService().getIndexedValues(objectEntry);
+	}
+
 	public static List<ObjectEntry> getManyToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, boolean reverse, String search, int start, int end)

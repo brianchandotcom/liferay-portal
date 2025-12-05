@@ -441,6 +441,14 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<String, java.io.Serializable> getIndexedValues(
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getIndexedValues(objectEntry);
+	}
+
+	@Override
 	public java.util.List<com.liferay.object.model.ObjectEntry>
 			getManyToManyObjectEntries(
 				long groupId, long objectRelationshipId, long primaryKey,

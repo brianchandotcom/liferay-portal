@@ -1,7 +1,7 @@
 import CriteriaCard from 'segment/components/criteria-card';
-import React from 'react';
-import SegmentProfileCard from 'segment/components/ProfileCard';
+import Membership from './Membership';
 
+import React from 'react';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {Segment} from 'shared/util/records';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
@@ -17,7 +17,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	groupId,
 	segment
 }) => {
-	const {criteriaString, id, includeAnonymousUsers} = segment;
+	const {criteriaString, includeAnonymousUsers} = segment;
 	const {timeZoneId} = useTimeZone();
 
 	return (
@@ -29,11 +29,11 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 					timeZoneId={timeZoneId}
 				/>
 			</ReferencedObjectsProvider>
-			<SegmentProfileCard
+			<Membership
 				channelId={channelId}
 				groupId={groupId}
-				id={id}
 				segment={segment}
+				timeZoneId={timeZoneId}
 			/>
 		</div>
 	);

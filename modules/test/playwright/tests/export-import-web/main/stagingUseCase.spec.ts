@@ -33,18 +33,7 @@ import {stagingPageTest} from './fixtures/stagingPageTest';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {unzipAndCheckFolder} from './utils/stagingUtil';
 
-export const testWithBatchStagingFF = mergeTests(
-	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-35914': {enabled: true},
-		'LPD-41367': {enabled: true},
-	}),
-	loginTest(),
-	stagingConfigurationPageTest,
-	stagingPageTest
-);
-
-export const test = mergeTests(
+const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true},
@@ -64,6 +53,17 @@ export const test = mergeTests(
 	webContentDisplayPageTest,
 	workflowPagesTest,
 	uiElementsPageTest
+);
+
+const testWithBatchStagingFF = mergeTests(
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-35914': {enabled: true},
+		'LPD-41367': {enabled: true},
+	}),
+	loginTest(),
+	stagingConfigurationPageTest,
+	stagingPageTest
 );
 
 testWithBatchStagingFF(

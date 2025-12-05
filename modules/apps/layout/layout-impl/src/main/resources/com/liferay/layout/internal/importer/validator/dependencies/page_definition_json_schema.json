@@ -310,6 +310,10 @@
 					"title": "The encodingFormat Schema",
 					"type": "string"
 				},
+				"externalReferenceCode": {
+					"title": "The externalReferenceCode Schema",
+					"type": "string"
+				},
 				"fileExtension": {
 					"title": "The fileExtension Schema",
 					"type": "string"
@@ -317,6 +321,10 @@
 				"id": {
 					"title": "The id Schema",
 					"type": "integer"
+				},
+				"scopeExternalReferenceCode": {
+					"title": "The scopeExternalReferenceCode Schema",
+					"type": "string"
 				},
 				"sizeInBytes": {
 					"title": "The sizeInBytes Schema",

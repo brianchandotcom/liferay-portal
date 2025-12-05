@@ -6,6 +6,7 @@
 package com.liferay.object.rest.internal.dto.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.object.rest.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -35,6 +36,20 @@ public class TaxonomyCategoryBriefUtil {
 				setEmbeddedTaxonomyCategory(
 					() -> _toTaxonomyCategory(
 						assetCategory.getCategoryId(), dtoConverterContext));
+				setParentTaxonomyCategory(
+					() -> {
+						AssetCategory parentAssetCategory =
+							assetCategory.getParentCategory();
+
+						return new ParentTaxonomyCategory() {
+							{
+								setExternalReferenceCode(
+									() ->
+										parentAssetCategory.
+											getExternalReferenceCode());
+							}
+						};
+					});
 				setScope(
 					() -> Scope.of(
 						assetCategory.getGroupId(),

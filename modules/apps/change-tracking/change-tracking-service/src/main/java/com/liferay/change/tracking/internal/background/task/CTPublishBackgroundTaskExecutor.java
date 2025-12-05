@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
@@ -124,11 +125,16 @@ public class CTPublishBackgroundTaskExecutor
 			for (Map.Entry<Long, List<ConflictInfo>> entry :
 					conflictInfosMap.entrySet()) {
 
-				for (ConflictInfo conflictInfo : entry.getValue()) {
-					if (!conflictInfo.isResolved()) {
-						unresolvedConflictInfos.add(conflictInfo);
-					}
-				}
+				unresolvedConflictInfos.addAll(
+					TransformUtil.transform(
+						entry.getValue(),
+						conflictInfo -> {
+							if (!conflictInfo.isResolved()) {
+								return conflictInfo;
+							}
+
+							return null;
+						}));
 			}
 
 			if (!unresolvedConflictInfos.isEmpty()) {

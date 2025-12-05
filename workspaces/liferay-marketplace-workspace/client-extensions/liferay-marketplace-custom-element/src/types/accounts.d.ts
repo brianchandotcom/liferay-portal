@@ -65,7 +65,8 @@ type RoleBrief = {
 type UserAccount = {
 	accountBriefs: AccountBrief[];
 	alternateName: string;
-	currentPassword: string;
+	customFields: CustomField[];
+	description: string;
 	emailAddress: string;
 	externalReferenceCode: string;
 	familyName: string;

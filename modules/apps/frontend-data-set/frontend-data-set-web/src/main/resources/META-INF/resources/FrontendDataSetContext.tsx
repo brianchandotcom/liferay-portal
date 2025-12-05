@@ -43,6 +43,7 @@ export interface IFrontendDataSetContext {
 	}) => Promise<void>;
 	formId?: string;
 	formName?: string;
+	handleSnapshotChange: Function;
 	hideManagementBarInEmptyState?: boolean;
 	highlightItems: Function;
 	highlightedItemsValue?: Array<string>;
@@ -104,6 +105,7 @@ const FrontendDataSetContext = React.createContext({
 	applyItemInlineUpdates: () => {},
 	createInlineItem: () => {},
 	executeAsyncItemAction: () => {},
+	handleSnapshotChange: () => {},
 	hideManagementBarInEmptyState: false,
 	highlightItems: () => {},
 	id: '',

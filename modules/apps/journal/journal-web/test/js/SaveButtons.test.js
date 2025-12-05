@@ -228,6 +228,21 @@ describe('SaveButtons', () => {
 		).not.toBeInTheDocument();
 	});
 
+	it('select past years from date picker when scheduling', async () => {
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: null,
+		});
+
+		userEvent.click(screen.getByText('schedule-publication'));
+		userEvent.click(await screen.findByLabelText('select-date'));
+		userEvent.click(await screen.findByLabelText('select-a-year'));
+
+		const currentYearMinus5 = new Date().getFullYear() - 5;
+
+		expect(screen.getByText(currentYearMinus5)).toBeInTheDocument();
+	});
+
 	it('does not proceed if required fields validation fails', async () => {
 		global.Liferay.Form = {
 			get: () => ({

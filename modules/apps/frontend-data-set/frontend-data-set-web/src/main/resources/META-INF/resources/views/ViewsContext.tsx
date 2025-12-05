@@ -17,6 +17,7 @@ export interface IViewsContext {
 	modifiedFields: any;
 	paginationDelta: any;
 	sorts: Array<any>;
+	viewUpdated: boolean;
 	views: Array<any>;
 	visibleFieldNames: any;
 }
@@ -37,6 +38,7 @@ const initialState: IViewsContext = {
 	modifiedFields: {},
 	paginationDelta: null,
 	sorts: [],
+	viewUpdated: false,
 	views: [],
 	visibleFieldNames: {},
 };

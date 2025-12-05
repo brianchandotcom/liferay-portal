@@ -58,6 +58,7 @@ import Cookie, {
 	removeCookie,
 	setCookie,
 } from './util/cookie/cookie';
+import deepClone from './util/deepClone';
 import fetch from './util/fetch.es';
 import focusFormField from './util/focus_form_field';
 import getFormElement from './util/form/get_form_element.es';
@@ -413,6 +414,7 @@ Liferay.__INTERNALS = {
 	createRenderURL,
 	createResourceURL,
 	debounce,
+	deepClone,
 	delegate,
 	escapeHTML,
 	fetch,

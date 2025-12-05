@@ -7,7 +7,9 @@ package com.liferay.headless.delivery.dto.v1_0.util;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 import jakarta.ws.rs.core.UriInfo;
 
@@ -34,8 +36,16 @@ public class ContentDocumentUtil {
 						fileEntry::getContentStream, uriInfo));
 				setDescription(fileEntry::getDescription);
 				setEncodingFormat(fileEntry::getMimeType);
+				setExternalReferenceCode(fileEntry::getExternalReferenceCode);
 				setFileExtension(fileEntry::getExtension);
 				setId(fileEntry::getFileEntryId);
+				setScopeExternalReferenceCode(
+					() -> {
+						Group group = GroupLocalServiceUtil.getGroup(
+							fileEntry.getGroupId());
+
+						return group.getExternalReferenceCode();
+					});
 				setSizeInBytes(fileEntry::getSize);
 				setTitle(fileEntry::getTitle);
 			}

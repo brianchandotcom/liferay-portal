@@ -27,41 +27,39 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 
 	public abstract String getOSArchitecture();
 
-	public String getOSSlaveLabel() {
-		String slaveLabel = getSlaveLabel();
+	public String getSlaveLabel() {
+		String baseSlaveLabel = getBaseSlaveLabel();
 
 		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return slaveLabel;
+			return baseSlaveLabel;
 		}
 
 		try {
 			String osArchitecture = getOSArchitecture();
 
 			if (Objects.equals(osArchitecture, "arm")) {
-				String osSlaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-					"slave.label.arm[" + slaveLabel + "]");
+				String slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"slave.label.arm[" + baseSlaveLabel + "]");
 
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(osSlaveLabel)) {
-					return osSlaveLabel;
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+					return slaveLabel;
 				}
 			}
 			else if (Objects.equals(osArchitecture, "x86")) {
 				String osSlaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-					"slave.label.x86[" + slaveLabel + "]");
+					"slave.label.x86[" + baseSlaveLabel + "]");
 
 				if (!JenkinsResultsParserUtil.isNullOrEmpty(osSlaveLabel)) {
 					return osSlaveLabel;
 				}
 			}
 
-			return slaveLabel;
+			return baseSlaveLabel;
 		}
 		catch (IOException ioException) {
-			return slaveLabel;
+			return baseSlaveLabel;
 		}
 	}
-
-	public abstract String getSlaveLabel();
 
 	@Override
 	public List<TestClass> getTestClasses() {
@@ -103,6 +101,8 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	protected boolean containsTestClasses() {
 		return !_testClasses.isEmpty();
 	}
+
+	protected abstract String getBaseSlaveLabel();
 
 	protected String getBuildStartProperty(String propertyName) {
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();

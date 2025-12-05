@@ -91,32 +91,6 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 		return playwrightTestClassMethods;
 	}
 
-	@Override
-	public String getSlaveLabel() {
-		List<TestClass> testClasses = getTestClasses();
-
-		if (testClasses.isEmpty()) {
-			return super.getSlaveLabel();
-		}
-
-		TestClass testClass = testClasses.get(0);
-
-		if (!(testClass instanceof PlaywrightJUnitTestClass)) {
-			return super.getSlaveLabel();
-		}
-
-		PlaywrightJUnitTestClass playwrightJUnitTestClass =
-			(PlaywrightJUnitTestClass)testClass;
-
-		String slaveLabel = playwrightJUnitTestClass.getSlaveLabel();
-
-		if (slaveLabel == null) {
-			return super.getSlaveLabel();
-		}
-
-		return slaveLabel;
-	}
-
 	public Boolean isAnalyticsCloudEnabled() {
 		List<TestClass> testClasses = getTestClasses();
 
@@ -166,6 +140,32 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
 
 		super(jsonObject, segmentTestClassGroup);
+	}
+
+	@Override
+	protected String getBaseSlaveLabel() {
+		List<TestClass> testClasses = getTestClasses();
+
+		if (testClasses.isEmpty()) {
+			return super.getBaseSlaveLabel();
+		}
+
+		TestClass testClass = testClasses.get(0);
+
+		if (!(testClass instanceof PlaywrightJUnitTestClass)) {
+			return super.getBaseSlaveLabel();
+		}
+
+		PlaywrightJUnitTestClass playwrightJUnitTestClass =
+			(PlaywrightJUnitTestClass)testClass;
+
+		String slaveLabel = playwrightJUnitTestClass.getSlaveLabel();
+
+		if (slaveLabel == null) {
+			return super.getBaseSlaveLabel();
+		}
+
+		return slaveLabel;
 	}
 
 }

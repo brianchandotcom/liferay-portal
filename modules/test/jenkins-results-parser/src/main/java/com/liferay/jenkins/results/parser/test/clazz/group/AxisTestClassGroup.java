@@ -214,30 +214,6 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return _segmentTestClassGroup;
 	}
 
-	@Override
-	public String getSlaveLabel() {
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return _getSlaveLabel();
-		}
-
-		String slaveLabel = null;
-
-		try {
-			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.osb.jenkins.web.slave.label.minimum.ram",
-				String.valueOf(getMinimumSlaveRAM()));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-			return slaveLabel;
-		}
-
-		return _getSlaveLabel();
-	}
-
 	public File getTestBaseDir() {
 		return null;
 	}
@@ -307,6 +283,30 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		testClass.setAxisTestClassGroup(this);
 	}
 
+	@Override
+	protected String getBaseSlaveLabel() {
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return _getBaseSlaveLabel();
+		}
+
+		String slaveLabel = null;
+
+		try {
+			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.osb.jenkins.web.slave.label.minimum.ram",
+				String.valueOf(getMinimumSlaveRAM()));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
+		}
+
+		return _getBaseSlaveLabel();
+	}
+
 	protected void setBatchTestClassGroup(
 		BatchTestClassGroup batchTestClassGroup) {
 
@@ -319,12 +319,12 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		_segmentTestClassGroup = segmentTestClassGroup;
 	}
 
-	private String _getSlaveLabel() {
+	private String _getBaseSlaveLabel() {
 		if (_segmentTestClassGroup != null) {
-			return _segmentTestClassGroup.getSlaveLabel();
+			return _segmentTestClassGroup.getBaseSlaveLabel();
 		}
 
-		return _batchTestClassGroup.getSlaveLabel();
+		return _batchTestClassGroup.getBaseSlaveLabel();
 	}
 
 	private Long _averageDuration;

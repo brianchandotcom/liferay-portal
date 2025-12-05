@@ -309,7 +309,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		String batchJobSuffix = "-downstream";
 
-		String slaveLabel = getSlaveLabel();
+		String slaveLabel = getBaseSlaveLabel();
 
 		if (slaveLabel.contains("win")) {
 			batchJobSuffix = "-windows-downstream";
@@ -441,56 +441,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public List<SegmentTestClassGroup> getSegmentTestClassGroups() {
 		return _segmentTestClassGroups;
-	}
-
-	@Override
-	public String getSlaveLabel() {
-		JobProperty jobProperty = getJobProperty("test.batch.slave.label");
-
-		String jobPropertyValue = jobProperty.getValue();
-
-		if (jobPropertyValue != null) {
-			recordJobProperty(jobProperty);
-
-			return jobPropertyValue;
-		}
-
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
-			return SLAVE_LABEL_DEFAULT;
-		}
-
-		String slaveLabel = null;
-
-		try {
-			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.osb.jenkins.web.slave.label", getBatchJobName(),
-				getTestSuiteName());
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-					"jenkins.osb.jenkins.web.slave.label.minimum.ram",
-					String.valueOf(getMinimumSlaveRAM()));
-			}
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-					"cloud.fleet.primary.label");
-			}
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-					"master.auto.scaling.group.name");
-			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-			return slaveLabel;
-		}
-
-		return SLAVE_LABEL_DEFAULT;
 	}
 
 	public String getTestCasePropertiesContent() {
@@ -635,6 +585,56 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return AXES_SIZE_MAX_DEFAULT;
+	}
+
+	@Override
+	protected String getBaseSlaveLabel() {
+		JobProperty jobProperty = getJobProperty("test.batch.slave.label");
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (jobPropertyValue != null) {
+			recordJobProperty(jobProperty);
+
+			return jobPropertyValue;
+		}
+
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return SLAVE_LABEL_DEFAULT;
+		}
+
+		String slaveLabel = null;
+
+		try {
+			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.osb.jenkins.web.slave.label", getBatchJobName(),
+				getTestSuiteName());
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.osb.jenkins.web.slave.label.minimum.ram",
+					String.valueOf(getMinimumSlaveRAM()));
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"cloud.fleet.primary.label");
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"master.auto.scaling.group.name");
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
+		}
+
+		return SLAVE_LABEL_DEFAULT;
 	}
 
 	protected List<String> getGlobs(List<JobProperty> jobProperties) {
@@ -1651,7 +1651,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				new HashMap<>();
 
 			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
-				String slaveLabel = axisTestClassGroup.getSlaveLabel();
+				String slaveLabel = axisTestClassGroup.getBaseSlaveLabel();
 
 				List<AxisTestClassGroup> slaveLabelAxisTestClassGroups =
 					axisTestClassGroupsMap.get(slaveLabel);

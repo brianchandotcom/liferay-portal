@@ -505,7 +505,7 @@ for (const tab of TABS) {
 					await page.keyboard.press('Escape');
 				});
 
-				await test.step('Assert that "Group Item" is visible and clicking on it shows an alert "You clicked on an item in a group"', async () => {
+				await test.step('Assert that "Group Item" is visible and clicking on it shows an alert "Hello Sample1!"', async () => {
 					await fdsSamplePage.clickItemAction('Group Item');
 
 					expect(dialogMessage).toContain('Hello Sample1!');

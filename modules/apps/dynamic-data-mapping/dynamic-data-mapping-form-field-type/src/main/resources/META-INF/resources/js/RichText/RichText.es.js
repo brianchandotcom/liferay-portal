@@ -93,7 +93,6 @@ const RichText = ({
 	);
 	const [ckEditor5Config, setCKEditor5Config] = useState({
 		...editorConfig,
-		initialData: contents,
 		language: {
 			content: getISO639LanguageCode(editingLocale?.localeId),
 		},
@@ -105,7 +104,6 @@ const RichText = ({
 		if (Liferay.FeatureFlags['LPD-11235']) {
 			setCKEditor5Config({
 				...ckEditor5Config,
-				initialData: currentInternalValue,
 				language: {
 					content: getISO639LanguageCode(
 						currentEditingLocale.localeId
@@ -152,16 +150,33 @@ const RichText = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditingLocale]);
 
+	useEffect(() => {
+		if (Liferay.FeatureFlags['LPD-11235']) {
+			setCurrentInternalValue(
+				getEditingValue({
+					defaultLocale,
+					editingLocale: currentEditingLocale,
+					fieldName,
+					value: currentValue,
+				})
+			);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentEditingLocale, currentValue]);
+
 	const changeLanguage = (localeId) => {
 		if (!localeId) {
 			return;
 		}
+
 		let newEditingLocale = {};
 
 		if (currentAvailableLocales) {
 			const index = currentAvailableLocales?.findIndex(
 				(availableLocale) => availableLocale.localeId === localeId
 			);
+
 			newEditingLocale = currentAvailableLocales[index];
 		}
 		else {
@@ -181,14 +196,17 @@ const RichText = ({
 			...newEditingLocale,
 			icon: normalizeLocaleId(newEditingLocale.localeId),
 		});
-		setCurrentInternalValue(
-			getEditingValue({
-				defaultLocale,
-				editingLocale: newEditingLocale,
-				fieldName,
-				value: newCurrentValue,
-			})
-		);
+
+		if (!Liferay.FeatureFlags['LPD-11235']) {
+			setCurrentInternalValue(
+				getEditingValue({
+					defaultLocale,
+					editingLocale: newEditingLocale,
+					fieldName,
+					value: newCurrentValue,
+				})
+			);
+		}
 	};
 
 	useEffect(() => {
@@ -203,6 +221,7 @@ const RichText = ({
 				...currentValue,
 				[currentEditingLocale.localeId]: content,
 			};
+
 			setCurrentInternalValue(content);
 
 			const {availableLocales} = {
@@ -353,9 +372,7 @@ const RichText = ({
 						<CKEditor5ClassicEditor
 							className="w-100"
 							config={ckEditor5Config}
-							{...(!localizedObjectField && {
-								data: currentInternalValue,
-							})}
+							data={currentInternalValue}
 							disabled={readOnly}
 							key={JSON.stringify(ckEditor5Config)}
 							onBlur={onBlur}

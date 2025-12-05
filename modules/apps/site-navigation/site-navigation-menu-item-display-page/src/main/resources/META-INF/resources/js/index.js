@@ -291,7 +291,6 @@ DisplayPageItemContextualSidebar.propTypes = {
 	item: PropTypes.shape({
 		className: PropTypes.string,
 		classPK: PropTypes.string,
-		classTypeId: PropTypes.string,
 		data: PropTypes.array,
 		title: PropTypes.string,
 		type: PropTypes.string,
@@ -318,12 +317,6 @@ function FormValues({localizedNames, namespace, selectedItem, useCustomName}) {
 				readOnly
 				type="hidden"
 				value={selectedItem.classPK || ''}
-			/>
-			<input
-				name={getFieldName(namespace, 'classTypeId')}
-				readOnly
-				type="hidden"
-				value={selectedItem.classTypeId || ''}
 			/>
 			<input
 				name={getFieldName(namespace, 'externalReferenceCode')}
@@ -371,7 +364,6 @@ FormValues.propTypes = {
 	selectedItem: PropTypes.shape({
 		className: PropTypes.string,
 		classPK: PropTypes.string,
-		classTypeId: PropTypes.string,
 		data: PropTypes.array,
 		title: PropTypes.string,
 		type: PropTypes.string,

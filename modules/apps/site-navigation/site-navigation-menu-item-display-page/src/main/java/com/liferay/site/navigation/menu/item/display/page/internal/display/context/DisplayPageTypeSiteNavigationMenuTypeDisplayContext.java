@@ -152,30 +152,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return _classPK;
 	}
 
-	public long getClassTypeId() {
-		if (_classTypeId != null) {
-			return _classTypeId;
-		}
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider();
-
-		if (layoutDisplayPageObjectProvider != null) {
-			_classTypeId = layoutDisplayPageObjectProvider.getClassTypeId();
-		}
-		else {
-			UnicodeProperties typeSettingsUnicodeProperties =
-				UnicodePropertiesBuilder.fastLoad(
-					_siteNavigationMenuItem.getTypeSettings()
-				).build();
-
-			_classTypeId = GetterUtil.getLong(
-				typeSettingsUnicodeProperties.get("classTypeId"));
-		}
-
-		return _classTypeId;
-	}
-
 	public Map<String, Object> getDisplayPageItemContextualSidebarContext()
 		throws Exception {
 
@@ -204,8 +180,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 				"className", getClassName()
 			).put(
 				"classPK", getClassPK()
-			).put(
-				"classTypeId", getClassTypeId()
 			).put(
 				"data", _getDataJSONArray()
 			).put(
@@ -312,7 +286,8 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				layoutDisplayPageObjectProvider.getGroupId(),
-				String.valueOf(getClassTypeId()));
+				String.valueOf(
+					layoutDisplayPageObjectProvider.getClassTypeId()));
 
 		if (infoItemFormVariation != null) {
 			return infoItemFormVariation.getLabel(_themeDisplay.getLocale());
@@ -449,7 +424,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 	private String _className;
 	private Long _classPK;
-	private Long _classTypeId;
 	private final DisplayPageTypeContext _displayPageTypeContext;
 	private String _externalReferenceCode;
 	private final HttpServletRequest _httpServletRequest;

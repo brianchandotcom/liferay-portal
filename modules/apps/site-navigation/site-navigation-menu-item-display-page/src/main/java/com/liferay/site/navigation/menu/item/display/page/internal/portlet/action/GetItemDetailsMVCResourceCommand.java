@@ -88,12 +88,8 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"itemSubtype",
 					() -> {
-						long classTypeId = ParamUtil.getLong(
-							resourceRequest, "classTypeId");
-
 						String itemSubtype = _getItemSubtype(
-							className, infoItemIdentifier, classTypeId,
-							themeDisplay);
+							className, infoItemIdentifier, themeDisplay);
 
 						if (Validator.isNull(itemSubtype)) {
 							return null;
@@ -170,7 +166,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private String _getItemSubtype(
 			String className, InfoItemIdentifier infoItemIdentifier,
-			long classTypeId, ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
@@ -191,7 +187,8 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				layoutDisplayPageObjectProvider.getGroupId(),
-				String.valueOf(classTypeId));
+				String.valueOf(
+					layoutDisplayPageObjectProvider.getClassTypeId()));
 
 		if (infoItemFormVariation != null) {
 			return infoItemFormVariation.getLabel(themeDisplay.getLocale());

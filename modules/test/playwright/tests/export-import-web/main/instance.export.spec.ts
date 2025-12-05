@@ -3,13 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
+import {
+	ObjectDefinitionAPI,
+	ObjectRelationship,
+	ObjectRelationshipAPI,
+} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -33,8 +38,226 @@ export const test = mergeTests(
 		'LPD-35914': {enabled: true},
 	}),
 	loginTest(),
+	objectPagesTest,
 	productMenuPageTest,
 	uiElementsPageTest
+);
+
+const rootModelTest = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-34594': {enabled: true},
+		'LPD-35914': {enabled: true},
+	})
+);
+
+rootModelTest.describe(
+	'Manage export and import of root model object definitions',
+	() => {
+		rootModelTest(
+			'can distinguish root model object definitions in export/import',
+			async ({
+				apiHelpers,
+				applicationsMenuPage,
+				companyExportImportPage,
+				exportImportPage,
+				page,
+			}) => {
+				const objectRelationships: ObjectRelationship[] = [];
+
+				try {
+					const objectDefinitionA =
+						await apiHelpers.objectAdmin.postRandomObjectDefinition(
+							{
+								status: {code: 0},
+							}
+						);
+
+					const objectDefinitionB =
+						await apiHelpers.objectAdmin.postRandomObjectDefinition(
+							{
+								status: {code: 0},
+							}
+						);
+
+					const objectDefinitionC =
+						await apiHelpers.objectAdmin.postRandomObjectDefinition(
+							{
+								status: {code: 0},
+							}
+						);
+
+					apiHelpers.data.push({
+						id: objectDefinitionA.id,
+						type: 'objectDefinition',
+					});
+					apiHelpers.data.push({
+						id: objectDefinitionB.id,
+						type: 'objectDefinition',
+					});
+					apiHelpers.data.push({
+						id: objectDefinitionC.id,
+						type: 'objectDefinition',
+					});
+
+					const objectRelationshipAPIClient =
+						await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+					const {body: objectRelationshipAB} =
+						await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+							objectDefinitionA.externalReferenceCode,
+							{
+								edge: true,
+								label: {
+									en_US:
+										'objectRelationshipABLabel' +
+										getRandomInt(),
+								},
+								name:
+									'objectRelationshipABName' +
+									Math.floor(Math.random() * 99),
+								objectDefinitionExternalReferenceCode1:
+									objectDefinitionA.externalReferenceCode,
+								objectDefinitionExternalReferenceCode2:
+									objectDefinitionB.externalReferenceCode,
+								objectDefinitionId1: objectDefinitionA.id,
+								objectDefinitionId2: objectDefinitionB.id,
+								objectDefinitionName2: objectDefinitionB.name,
+								type: 'oneToMany',
+							}
+						);
+
+					const {body: objectRelationshipAC} =
+						await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+							objectDefinitionA.externalReferenceCode,
+							{
+								edge: true,
+								label: {
+									en_US:
+										'objectRelationshipBCLabel' +
+										getRandomInt(),
+								},
+								name:
+									'objectRelationshipBCName' +
+									Math.floor(Math.random() * 99),
+								objectDefinitionExternalReferenceCode1:
+									objectDefinitionA.externalReferenceCode,
+								objectDefinitionExternalReferenceCode2:
+									objectDefinitionC.externalReferenceCode,
+								objectDefinitionId1: objectDefinitionA.id,
+								objectDefinitionId2: objectDefinitionC.id,
+								objectDefinitionName2: objectDefinitionC.name,
+								type: 'oneToMany',
+							}
+						);
+
+					objectRelationships.push(
+						objectRelationshipAB,
+						objectRelationshipAC
+					);
+
+					apiHelpers.data.push({
+						id: objectRelationshipAB.id,
+						type: 'objectRelationship',
+					});
+					apiHelpers.data.push({
+						id: objectRelationshipAC.id,
+						type: 'objectRelationship',
+					});
+
+					const objectEntryA =
+						await apiHelpers.objectEntry.postObjectEntry(
+							{textField: 'entryA'},
+							'c/' + objectDefinitionA.name.toLowerCase() + 's'
+						);
+
+					const objectEntryB =
+						await apiHelpers.objectEntry.postObjectEntry(
+							{textField: 'entryB'},
+							'c/' + objectDefinitionB.name.toLowerCase() + 's'
+						);
+
+					await apiHelpers.objectEntry.postObjectEntry(
+						{
+							[`r_${objectRelationshipAB.name}_c_${objectDefinitionA.name[0].toLowerCase() + objectDefinitionA.name.substring(1)}Id`]:
+								objectEntryA.id.toString(),
+							[`r_${objectRelationshipAC.name}_c_${objectDefinitionB.name[0].toLowerCase() + objectDefinitionB.name.substring(1)}Id`]:
+								objectEntryB.id.toString(),
+							textField: 'entryC',
+						},
+						'c/' + objectDefinitionC.name.toLowerCase() + 's'
+					);
+
+					await applicationsMenuPage.goToExport();
+
+					await page
+						.getByTestId('creationMenuNewButton')
+						.nth(1)
+						.click();
+
+					await expect(
+						page
+							.locator('strong')
+							.filter({hasText: objectDefinitionA.label.en_US})
+					).toBeVisible();
+
+					await expect(
+						page.getByText('Root Object').first()
+					).toBeVisible();
+
+					await expect(
+						page.getByText(
+							`${objectDefinitionB.label.en_US}, ${objectDefinitionC.label.en_US}`
+						)
+					).toBeVisible();
+
+					const filePath = await companyExportImportPage.export([
+						`${objectDefinitionA.name} Root Object 1 Items`,
+					]);
+
+					await applicationsMenuPage.goToImport();
+
+					await exportImportPage.newImportButton.click();
+
+					await page
+						.locator('input[type="file"]')
+						.setInputFiles(filePath);
+
+					await exportImportPage.continueButton.click();
+
+					await expect(
+						page.getByText(objectDefinitionA.label.en_US)
+					).toBeVisible();
+
+					await expect(page.getByText('Root Object')).toBeVisible();
+
+					await expect(
+						page.getByText(
+							`${objectDefinitionB.label.en_US}, ${objectDefinitionC.label.en_US}`
+						)
+					).toBeVisible();
+
+					await exportImportPage.importButton.click();
+
+					await expect(page.getByText('Successful')).toBeVisible();
+				}
+				finally {
+					const objectRelationshipAPIClient =
+						await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+					for (const objectRelationship of objectRelationships) {
+						await objectRelationshipAPIClient.putObjectRelationship(
+							objectRelationship.id,
+							{
+								...objectRelationship,
+								edge: false,
+							}
+						);
+					}
+				}
+			}
+		);
+	}
 );
 
 test('cannot export site scoped custom object entries at instance level', async ({

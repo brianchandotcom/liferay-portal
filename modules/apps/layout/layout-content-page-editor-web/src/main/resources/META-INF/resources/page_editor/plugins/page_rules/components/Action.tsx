@@ -10,23 +10,15 @@ import React, {ComponentProps, useContext, useRef} from 'react';
 import {useSelectorCallback} from '../../../app/contexts/StoreContext';
 import isInputFragment from '../../../app/utils/isInputFragment';
 import useActionValues from '../../../app/utils/useActionValues';
+import {Action as ActionType, RuleError} from '../../../types/Rule';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
-import {RuleError} from './RulesModal';
-
-export interface Action {
-	error?: RuleError | null;
-	id: string;
-	itemId?: string;
-	readOnly?: boolean;
-	type: 'show' | 'hide' | 'enable' | 'disable' | undefined;
-}
 
 interface ActionProps {
-	action: Action;
+	action: ActionType;
 	inputFragmentItems: {label: string; value: string}[];
 	layoutDataItems: {label: string; value: string}[];
-	onActionChange: (action: Action) => void;
+	onActionChange: (action: ActionType) => void;
 	onDeleteAction: () => void;
 	showDeleteButton: boolean;
 	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];

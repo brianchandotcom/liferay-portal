@@ -29,9 +29,11 @@ import useActionValues, {
 import useConditionValues, {
 	ConditionValues,
 } from '../../../app/utils/useConditionValues';
-import {Rule} from '../../../types/Rule';
-import {Action as ActionType} from './Action';
-import {Condition as ConditionType} from './Condition';
+import {
+	Action as ActionType,
+	Condition as ConditionType,
+	Rule,
+} from '../../../types/Rule';
 
 const MAX_RULES = 20;
 

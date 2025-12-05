@@ -21,16 +21,12 @@ import {
 import {useDispatch} from '../../../app/contexts/StoreContext';
 import addRule from '../../../app/thunks/addRule';
 import updateRule from '../../../app/thunks/updateRule';
+import {RuleError} from '../../../types/Rule';
 import {
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
 } from './RuleBuilderSection';
 import RuleField from './RuleField';
-
-export type RuleError = {
-	field: HTMLButtonElement | HTMLInputElement;
-	label: string;
-};
 
 export default function RulesModal() {
 	const {editingRule, visible} = useRulesModalState();

@@ -5,13 +5,13 @@
 
 import {
 	CONDITION_TYPE_ITEMS,
-	Condition,
 	FORM_FRAGMENT_CONDITION_ITEMS,
 	TYPE_VALUES,
 	USER_CONDITION_ITEMS,
 	convertOptionsToConditionValue,
 } from '../../plugins/page_rules/components/Condition';
 import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
+import {Condition} from '../../types/Rule';
 import {config} from '../config/index';
 import RulesService from '../services/RulesService';
 import {CACHE_KEYS} from './cache';

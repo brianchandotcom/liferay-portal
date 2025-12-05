@@ -13,8 +13,8 @@ import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
 
 import {useRuleValidation} from '../../../app/contexts/RulesModalContext';
 import {getSelectOptions} from '../../../common/getSelectOptions';
+import {RuleError} from '../../../types/Rule';
 import RuleField from './RuleField';
-import {RuleError} from './RulesModal';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	(

@@ -6,6 +6,7 @@
 package com.liferay.info.type;
 
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -88,6 +89,18 @@ public class WebImage {
 
 				jsonObject.put(
 					"classPK", classPKInfoItemIdentifier.getClassPK());
+			}
+			else if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
+				ERCInfoItemIdentifier ercInfoItemIdentifier =
+					(ERCInfoItemIdentifier)infoItemIdentifier;
+
+				jsonObject.put(
+					"externalReferenceCode",
+					ercInfoItemIdentifier.getExternalReferenceCode()
+				).put(
+					"scopeExternalReferenceCode",
+					ercInfoItemIdentifier.getScopeExternalReferenceCode()
+				);
 			}
 		}
 

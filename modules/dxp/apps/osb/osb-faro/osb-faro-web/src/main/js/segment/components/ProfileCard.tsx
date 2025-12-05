@@ -35,10 +35,13 @@ const SegmentProfileCard: React.FC<ISegmentProfileCardProps> = ({
 		className='segment-profile-card-root'
 		reportContainer={ReportContainer.SegmentMembershipCard}
 	>
-		<Card.Header>
+		<Card.Header className='align-items-center d-flex justify-content-between'>
 			<Card.Title>
-				{Liferay.Language.get('segment-membership')}
+				{Liferay.Language.get('segment-membership-trend')}
 			</Card.Title>
+			<span className='text-secondary text-uppercase'>
+				<strong>{Liferay.Language.get('last-30-days')}</strong>
+			</span>
 		</Card.Header>
 
 		<Card.Body>

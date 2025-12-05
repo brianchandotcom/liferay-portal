@@ -189,6 +189,7 @@ function SelectionFilter({
 	const loaderVisible = !localItems.length && items?.length < total;
 
 	useEffect(() => {
+		setExclude(!!selectedData?.exclude);
 		setSelectedItems(selectedData?.selectedItems || []);
 	}, [selectedData]);
 

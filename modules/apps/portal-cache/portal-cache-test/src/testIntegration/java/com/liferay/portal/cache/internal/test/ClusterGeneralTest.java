@@ -439,14 +439,14 @@ public class ClusterGeneralTest implements Serializable {
 			boolean keepStarted, String... portalExtLines)
 		throws Exception {
 
-		// Apply properties to nodes
+		// Apply portal-ext lines to nodes
 
 		try (Closeable closeable1 = _applyPortalExtLines(
 				keepStarted, _tomcatNode1, portalExtLines);
 			Closeable closeable2 = _applyPortalExtLines(
 				keepStarted, _tomcatNode2, portalExtLines)) {
 
-			// Assert properties are set correctly on both nodes
+			// Assert portal-ext lines are set correctly on both nodes
 
 			for (String portalExtLine : portalExtLines) {
 				List<String> parts = StringUtil.split(

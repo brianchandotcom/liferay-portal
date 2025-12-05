@@ -94,16 +94,11 @@ public class SegmentsExperienceUtilTest {
 		SegmentsExperience sourceSegmentsExperience = _getSegmentsExperience();
 		SegmentsExperience targetSegmentsExperience = _getSegmentsExperience();
 
-		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
-			_OLD_NAMESPACE);
 		FragmentEntryLink newFragmentEntryLink = _getFragmentEntryLink(
-			_NEW_NAMESPACE);
+			null, _NEW_NAMESPACE);
 
-		Mockito.when(
-			fragmentEntryLink.clone()
-		).thenReturn(
-			newFragmentEntryLink
-		);
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+			newFragmentEntryLink, _OLD_NAMESPACE);
 
 		_setUpFragmentEntryLinkLocalServiceUtil(
 			fragmentEntryLink, layout.getPlid(),
@@ -176,9 +171,17 @@ public class SegmentsExperienceUtilTest {
 					segmentsExperience)));
 	}
 
-	private FragmentEntryLink _getFragmentEntryLink(String namespace) {
+	private FragmentEntryLink _getFragmentEntryLink(
+		FragmentEntryLink clonedFragmentEntryLink, String namespace) {
+
 		FragmentEntryLink fragmentEntryLink = Mockito.mock(
 			FragmentEntryLink.class);
+
+		Mockito.when(
+			fragmentEntryLink.clone()
+		).thenReturn(
+			clonedFragmentEntryLink
+		);
 
 		Mockito.when(
 			fragmentEntryLink.getCompanyId()

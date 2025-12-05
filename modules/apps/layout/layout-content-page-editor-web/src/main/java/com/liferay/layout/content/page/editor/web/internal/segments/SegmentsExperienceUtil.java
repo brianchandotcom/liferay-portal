@@ -212,29 +212,22 @@ public class SegmentsExperienceUtil {
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
-		String sourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-			plid, portletId);
-
-		String targetPrimKey = PortletPermissionUtil.getPrimaryKey(
-			plid, newPortletId);
-
-		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getResourcePermissions(
-				companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
-				sourcePrimKey);
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			long resourcePermissionId = CounterLocalServiceUtil.increment(
-				ResourcePermission.class.getName());
+		for (ResourcePermission resourcePermission :
+				ResourcePermissionLocalServiceUtil.getResourcePermissions(
+					companyId, rootPortletId,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					PortletPermissionUtil.getPrimaryKey(plid, portletId))) {
 
 			ResourcePermission newPermission =
 				ResourcePermissionLocalServiceUtil.createResourcePermission(
-					resourcePermissionId);
+					CounterLocalServiceUtil.increment(
+						ResourcePermission.class.getName()));
 
 			newPermission.setCompanyId(companyId);
 			newPermission.setName(rootPortletId);
 			newPermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-			newPermission.setPrimKey(targetPrimKey);
+			newPermission.setPrimKey(
+				PortletPermissionUtil.getPrimaryKey(plid, newPortletId));
 			newPermission.setRoleId(resourcePermission.getRoleId());
 			newPermission.setActionIds(resourcePermission.getActionIds());
 			newPermission.setViewActionId(resourcePermission.isViewActionId());

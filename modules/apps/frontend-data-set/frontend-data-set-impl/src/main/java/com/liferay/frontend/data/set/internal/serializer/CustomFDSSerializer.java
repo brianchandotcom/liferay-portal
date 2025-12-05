@@ -895,23 +895,6 @@ public class CustomFDSSerializer
 		);
 	}
 
-	private Object _getIntegerKey(
-		String entityFieldType, ListTypeEntry listTypeEntry) {
-
-		if (Objects.equals(entityFieldType, FDSEntityFieldTypes.INTEGER)) {
-			try {
-				return Integer.valueOf(listTypeEntry.getKey());
-			}
-			catch (NumberFormatException numberFormatException) {
-				throw new IllegalArgumentException(
-					"Invalid integer key: " + listTypeEntry.getKey(),
-					numberFormatException);
-			}
-		}
-
-		return listTypeEntry.getKey();
-	}
-
 	private ObjectDefinition _getObjectDefinition(
 		HttpServletRequest httpServletRequest) {
 
@@ -1012,7 +995,24 @@ public class CustomFDSSerializer
 		return GetterUtil.getString(properties.get("type"));
 	}
 
-	private boolean _isActive(ObjectEntry objectEntry) {
+	private Object _getTypedKey(
+		String entityFieldType, ListTypeEntry listTypeEntry) {
+
+		if (Objects.equals(entityFieldType, FDSEntityFieldTypes.INTEGER)) {
+			try {
+				return Integer.valueOf(listTypeEntry.getKey());
+			}
+			catch (NumberFormatException numberFormatException) {
+				throw new IllegalArgumentException(
+					"Invalid integer key: " + listTypeEntry.getKey(),
+					numberFormatException);
+			}
+		}
+
+		return listTypeEntry.getKey();
+	}
+
+	private Boolean _isActive(ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		return (boolean)properties.get("active");
@@ -1096,9 +1096,6 @@ public class CustomFDSSerializer
 
 				return FDSEntityFieldTypes.STRING;
 			}
-		).put(
-			"entityFieldTypeCollection",
-			GetterUtil.getBoolean(properties.get("entityFieldTypeCollection"))
 		).put(
 			"id", fieldName
 		).put(
@@ -1193,26 +1190,29 @@ public class CustomFDSSerializer
 		).put(
 			"entityFieldType",
 			() -> {
+				boolean collection =
+					_isCollection(
+						String.valueOf(properties.get("fieldName")),
+						sourceType) ||
+					Objects.equals(
+						entityFieldType,
+						FDSEntityFieldTypes.COLLECTION_INTEGER) ||
+					Objects.equals(
+						entityFieldType, FDSEntityFieldTypes.COLLECTION_STRING);
+
+				if (collection) {
+					if (Validator.isNotNull(entityFieldType)) {
+						return entityFieldType;
+					}
+
+					return FDSEntityFieldTypes.COLLECTION;
+				}
+
 				if (Validator.isNotNull(entityFieldType)) {
 					return entityFieldType;
 				}
 
 				return FDSEntityFieldTypes.STRING;
-			}
-		).put(
-			"entityFieldTypeCollection",
-			() -> {
-				if (_isCollection(
-						String.valueOf(properties.get("fieldName")),
-						sourceType) ||
-					(!(boolean)properties.get("entityFieldTypeCollection") &&
-					 !Objects.equals(
-						 entityFieldType, FDSEntityFieldTypes.BOOLEAN))) {
-
-					return FDSEntityFieldTypes.COLLECTION;
-				}
-
-				return (boolean)properties.get("entityFieldTypeCollection");
 			}
 		).put(
 			"id",
@@ -1295,8 +1295,7 @@ public class CustomFDSSerializer
 					listTypeEntry.getName(
 						PortalUtil.getLocale(httpServletRequest))
 				).put(
-					"value",
-					() -> _getIntegerKey(entityFieldType, listTypeEntry)
+					"value", () -> _getTypedKey(entityFieldType, listTypeEntry)
 				))
 		).put(
 			"preloadedData",
@@ -1328,7 +1327,7 @@ public class CustomFDSSerializer
 									PortalUtil.getLocale(httpServletRequest))
 							).put(
 								"value",
-								() -> _getIntegerKey(
+								() -> _getTypedKey(
 									entityFieldType, listTypeEntry)
 							));
 					}

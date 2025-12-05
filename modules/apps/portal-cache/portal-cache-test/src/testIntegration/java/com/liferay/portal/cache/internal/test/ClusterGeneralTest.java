@@ -184,9 +184,9 @@ public class ClusterGeneralTest implements Serializable {
 		return localClusterNode.getClusterNodeId();
 	}
 
-	private Closeable _applyPortalExtLines(
+	private Closeable _applyPortalExtPropertiesLines(
 			boolean keepStarted, TomcatNode tomcatNode,
-			String... portalExtLines)
+			String... portalExtPropertiesLines)
 		throws Exception {
 
 		tomcatNode.stop();
@@ -196,7 +196,7 @@ public class ClusterGeneralTest implements Serializable {
 		byte[] bytes = Files.readAllBytes(path);
 
 		Files.write(
-			path, Arrays.asList(portalExtLines), StandardOpenOption.APPEND);
+			path, Arrays.asList(portalExtPropertiesLines), StandardOpenOption.APPEND);
 
 		tomcatNode.start(true);
 
@@ -436,19 +436,20 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	private void _testControlChannelProperties(
-			boolean keepStarted, String... portalExtLines)
+			boolean keepStarted, String... portalExtPropertiesLines)
 		throws Exception {
 
-		// Apply portal-ext lines to nodes
+		// Apply portal-ext.properties lines to nodes
 
-		try (Closeable closeable1 = _applyPortalExtLines(
-				keepStarted, _tomcatNode1, portalExtLines);
-			Closeable closeable2 = _applyPortalExtLines(
-				keepStarted, _tomcatNode2, portalExtLines)) {
+		try (Closeable closeable1 = _applyPortalExtPropertiesLines(
+				keepStarted, _tomcatNode1, portalExtPropertiesLines);
+			Closeable closeable2 = _applyPortalExtPropertiesLines(
+				keepStarted, _tomcatNode2, portalExtPropertiesLines)) {
 
-			// Assert portal-ext lines are set correctly on both nodes
+			// Assert portal-ext.properties lines are set correctly on both
+			// nodes
 
-			for (String portalExtLine : portalExtLines) {
+			for (String portalExtLine : portalExtPropertiesLines) {
 				List<String> parts = StringUtil.split(
 					portalExtLine, CharPool.EQUAL);
 
@@ -469,7 +470,6 @@ public class ClusterGeneralTest implements Serializable {
 			Assert.assertNotNull(
 				_tomcatNode1.syncExecute(
 					ClusterGeneralTest::_getLocalClusterNodeId));
-
 			Assert.assertNotNull(
 				_tomcatNode2.syncExecute(
 					ClusterGeneralTest::_getLocalClusterNodeId));

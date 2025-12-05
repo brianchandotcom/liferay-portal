@@ -67,7 +67,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AccountsRestController extends BaseRestController {
 
 	@GetMapping("/{externalReferenceCode}/jira/object-key")
-	public ResponseEntity<String> getObjectKey(
+	public ResponseEntity<String> getJiraObjectKey(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode)
 		throws Exception {

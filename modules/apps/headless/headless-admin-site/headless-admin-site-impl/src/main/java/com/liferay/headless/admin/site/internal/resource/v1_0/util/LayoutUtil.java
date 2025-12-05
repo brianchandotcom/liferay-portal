@@ -1144,8 +1144,10 @@ public class LayoutUtil {
 				SegmentsExperienceServiceUtil.getSegmentsExperiences(
 					layout.getGroupId(), layout.getPlid(), true);
 
-			if ((pageExperiences == null) ||
-				(pageExperiences.length != segmentsExperiences.size())) {
+			if (Validator.isNull(
+					SegmentsExperienceUtil.
+						getDefaultSegmentsExperienceExternalReferenceCode(
+							pageExperiences))) {
 
 				throw new UnsupportedOperationException();
 			}

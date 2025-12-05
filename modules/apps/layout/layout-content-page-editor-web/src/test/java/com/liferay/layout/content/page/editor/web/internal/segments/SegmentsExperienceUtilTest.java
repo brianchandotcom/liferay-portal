@@ -90,15 +90,14 @@ public class SegmentsExperienceUtilTest {
 
 	@Test
 	public void testCopySegmentsExperienceData() throws Exception {
-		Layout layout = _getLayout();
-		SegmentsExperience sourceSegmentsExperience = _getSegmentsExperience();
-		SegmentsExperience targetSegmentsExperience = _getSegmentsExperience();
-
 		FragmentEntryLink newFragmentEntryLink = _getFragmentEntryLink(
 			null, _NEW_NAMESPACE);
 
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			newFragmentEntryLink, _OLD_NAMESPACE);
+
+		Layout layout = _getLayout();
+		SegmentsExperience sourceSegmentsExperience = _getSegmentsExperience();
 
 		_setUpFragmentEntryLinkLocalServiceUtil(
 			fragmentEntryLink, layout.getPlid(),
@@ -120,6 +119,7 @@ public class SegmentsExperienceUtilTest {
 
 		String targetPortletId = PortletIdCodec.encode(
 			_PORTLET_ID, _NEW_NAMESPACE);
+		SegmentsExperience targetSegmentsExperience = _getSegmentsExperience();
 
 		_testCopySegmentsExperienceData(
 			layout, layoutStructure, sourcePortletId, sourceSegmentsExperience,
@@ -190,6 +190,16 @@ public class SegmentsExperienceUtilTest {
 		);
 
 		Mockito.when(
+			fragmentEntryLink.getEditableValuesJSONObject()
+		).thenReturn(
+			JSONUtil.put(
+				"instanceId", namespace
+			).put(
+				"portletId", _PORTLET_ID
+			)
+		);
+
+		Mockito.when(
 			fragmentEntryLink.getFragmentEntryLinkId()
 		).thenReturn(
 			RandomTestUtil.randomLong()
@@ -199,16 +209,6 @@ public class SegmentsExperienceUtilTest {
 			fragmentEntryLink.getNamespace()
 		).thenReturn(
 			namespace
-		);
-
-		Mockito.when(
-			fragmentEntryLink.getEditableValuesJSONObject()
-		).thenReturn(
-			JSONUtil.put(
-				"instanceId", namespace
-			).put(
-				"portletId", _PORTLET_ID
-			)
 		);
 
 		return fragmentEntryLink;
@@ -231,13 +231,13 @@ public class SegmentsExperienceUtilTest {
 			ResourcePermission.class);
 
 		Mockito.when(
-			resourcePermission.getRoleId()
+			resourcePermission.getActionIds()
 		).thenReturn(
 			RandomTestUtil.randomLong()
 		);
 
 		Mockito.when(
-			resourcePermission.getActionIds()
+			resourcePermission.getRoleId()
 		).thenReturn(
 			RandomTestUtil.randomLong()
 		);
@@ -248,12 +248,6 @@ public class SegmentsExperienceUtilTest {
 	private SegmentsExperience _getSegmentsExperience() {
 		SegmentsExperience segmentsExperience = Mockito.mock(
 			SegmentsExperience.class);
-
-		Mockito.when(
-			segmentsExperience.isActive()
-		).thenReturn(
-			RandomTestUtil.randomBoolean()
-		);
 
 		Mockito.when(
 			segmentsExperience.getNameCurrentValue()
@@ -285,12 +279,25 @@ public class SegmentsExperienceUtilTest {
 			RandomTestUtil.randomString()
 		);
 
+		Mockito.when(
+			segmentsExperience.isActive()
+		).thenReturn(
+			RandomTestUtil.randomBoolean()
+		);
+
 		return segmentsExperience;
 	}
 
 	private void _setUpFragmentEntryLinkLocalServiceUtil(
 		FragmentEntryLink fragmentEntryLink, long plid,
 		long segmentsExperienceId) {
+
+		_fragmentEntryLinkLocalServiceUtilMockedStatic.when(
+			() -> FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+				Mockito.any())
+		).thenAnswer(
+			invocation -> invocation.getArgument(0, FragmentEntryLink.class)
+		);
 
 		_fragmentEntryLinkLocalServiceUtilMockedStatic.when(
 			() ->
@@ -300,24 +307,10 @@ public class SegmentsExperienceUtilTest {
 		).thenReturn(
 			Collections.singletonList(fragmentEntryLink)
 		);
-
-		_fragmentEntryLinkLocalServiceUtilMockedStatic.when(
-			() -> FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
-				Mockito.any())
-		).thenAnswer(
-			invocation -> invocation.getArgument(0, FragmentEntryLink.class)
-		);
 	}
 
 	private void _setUpLayoutPageTemplateStructureLocalServiceUtil(
 		LayoutStructure layoutStructure, long plid, long segmentsExperienceId) {
-
-		_layoutStructureUtilMockedStatic.when(
-			() -> LayoutStructureUtil.getLayoutStructure(
-				_GROUP_ID, plid, segmentsExperienceId)
-		).thenReturn(
-			layoutStructure
-		);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure = Mockito.mock(
 			LayoutPageTemplateStructure.class);
@@ -334,6 +327,13 @@ public class SegmentsExperienceUtilTest {
 					fetchLayoutPageTemplateStructure(_GROUP_ID, plid)
 		).thenReturn(
 			layoutPageTemplateStructure
+		);
+
+		_layoutStructureUtilMockedStatic.when(
+			() -> LayoutStructureUtil.getLayoutStructure(
+				_GROUP_ID, plid, segmentsExperienceId)
+		).thenReturn(
+			layoutStructure
 		);
 	}
 
@@ -353,18 +353,18 @@ public class SegmentsExperienceUtilTest {
 		ResourcePermission targetResourcePermission) {
 
 		_resourcePermissionLocalServiceUtilMockedStatic.when(
+			() -> ResourcePermissionLocalServiceUtil.createResourcePermission(
+				Mockito.anyLong())
+		).thenReturn(
+			targetResourcePermission
+		);
+
+		_resourcePermissionLocalServiceUtilMockedStatic.when(
 			() -> ResourcePermissionLocalServiceUtil.getResourcePermissions(
 				companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
 				PortletPermissionUtil.getPrimaryKey(plid, sourcePortletId))
 		).thenReturn(
 			sourceResourcePermissions
-		);
-
-		_resourcePermissionLocalServiceUtilMockedStatic.when(
-			() -> ResourcePermissionLocalServiceUtil.createResourcePermission(
-				Mockito.anyLong())
-		).thenReturn(
-			targetResourcePermission
 		);
 	}
 
@@ -430,6 +430,15 @@ public class SegmentsExperienceUtilTest {
 			() -> ResourcePermissionLocalServiceUtil.createResourcePermission(
 				Mockito.anyLong()));
 
+		ResourcePermission sourceResourcePermission =
+			sourceResourcePermissions.get(0);
+
+		Mockito.verify(
+			targetResourcePermission
+		).setActionIds(
+			sourceResourcePermission.getActionIds()
+		);
+
 		Mockito.verify(
 			targetResourcePermission
 		).setCompanyId(
@@ -444,19 +453,10 @@ public class SegmentsExperienceUtilTest {
 
 		Mockito.verify(
 			targetResourcePermission
-		).setScope(
-			ResourceConstants.SCOPE_INDIVIDUAL
-		);
-
-		Mockito.verify(
-			targetResourcePermission
 		).setPrimKey(
 			PortletPermissionUtil.getPrimaryKey(
 				layout.getPlid(), targetPortletId)
 		);
-
-		ResourcePermission sourceResourcePermission =
-			sourceResourcePermissions.get(0);
 
 		Mockito.verify(
 			targetResourcePermission
@@ -466,8 +466,8 @@ public class SegmentsExperienceUtilTest {
 
 		Mockito.verify(
 			targetResourcePermission
-		).setActionIds(
-			sourceResourcePermission.getActionIds()
+		).setScope(
+			ResourceConstants.SCOPE_INDIVIDUAL
 		);
 
 		Mockito.verify(

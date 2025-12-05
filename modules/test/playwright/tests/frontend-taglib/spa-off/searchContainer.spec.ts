@@ -61,9 +61,15 @@ test(
 			await journalPage.setFilterBy(FilterBy.RECENT);
 		});
 
-		await test.step('Select one article per page', async () => {
+		await test.step('Select one article in page 1', async () => {
 			await journalPage.selectItem(0);
+		});
+
+		await test.step('Select another article in page 2', async () => {
 			await journalPage.selectPage(1);
+
+			await page.getByText('Showing 5 to 6 of 6 entries.').waitFor();
+
 			await journalPage.selectItem(0);
 		});
 

@@ -1114,7 +1114,8 @@ public interface JournalArticleService extends BaseService {
 	 * @return The matching web content articles
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getLayoutArticles(long groupId);
+	public List<JournalArticle> getLayoutArticles(
+		long groupId, long classNameId);
 
 	/**
 	 * Returns all the web content articles that the user has permission to view
@@ -1139,7 +1140,7 @@ public interface JournalArticleService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getLayoutArticles(
-		long groupId, int start, int end);
+		long groupId, long classNameId, int start, int end);
 
 	/**
 	 * Returns the number of web content articles that the user has permission
@@ -1149,7 +1150,7 @@ public interface JournalArticleService extends BaseService {
 	 * @return the number of matching web content articles
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutArticlesCount(long groupId);
+	public int getLayoutArticlesCount(long groupId, long classNameId);
 
 	/**
 	 * Returns the OSGi service identifier.

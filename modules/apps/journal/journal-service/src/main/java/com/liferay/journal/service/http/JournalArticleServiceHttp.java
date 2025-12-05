@@ -2196,14 +2196,16 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalArticle>
-		getLayoutArticles(HttpPrincipal httpPrincipal, long groupId) {
+		getLayoutArticles(
+			HttpPrincipal httpPrincipal, long groupId, long classNameId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				JournalArticleServiceUtil.class, "getLayoutArticles",
 				_getLayoutArticlesParameterTypes54);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, classNameId);
 
 			Object returnObj = null;
 
@@ -2229,7 +2231,8 @@ public class JournalArticleServiceHttp {
 
 	public static java.util.List<com.liferay.journal.model.JournalArticle>
 		getLayoutArticles(
-			HttpPrincipal httpPrincipal, long groupId, int start, int end) {
+			HttpPrincipal httpPrincipal, long groupId, long classNameId,
+			int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -2237,7 +2240,7 @@ public class JournalArticleServiceHttp {
 				_getLayoutArticlesParameterTypes55);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end);
+				methodKey, groupId, classNameId, start, end);
 
 			Object returnObj = null;
 
@@ -2262,14 +2265,15 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int getLayoutArticlesCount(
-		HttpPrincipal httpPrincipal, long groupId) {
+		HttpPrincipal httpPrincipal, long groupId, long classNameId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				JournalArticleServiceUtil.class, "getLayoutArticlesCount",
 				_getLayoutArticlesCountParameterTypes56);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, classNameId);
 
 			Object returnObj = null;
 
@@ -3326,11 +3330,11 @@ public class JournalArticleServiceHttp {
 	private static final Class<?>[] _getLatestArticlesCountParameterTypes53 =
 		new Class[] {long.class, int.class};
 	private static final Class<?>[] _getLayoutArticlesParameterTypes54 =
-		new Class[] {long.class};
+		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getLayoutArticlesParameterTypes55 =
-		new Class[] {long.class, int.class, int.class};
+		new Class[] {long.class, long.class, int.class, int.class};
 	private static final Class<?>[] _getLayoutArticlesCountParameterTypes56 =
-		new Class[] {long.class};
+		new Class[] {long.class, long.class};
 	private static final Class<?>[] _moveArticleParameterTypes57 = new Class[] {
 		long.class, String.class, long.class,
 		com.liferay.portal.kernel.service.ServiceContext.class

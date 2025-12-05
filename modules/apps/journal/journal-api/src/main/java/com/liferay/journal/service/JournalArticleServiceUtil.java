@@ -1282,8 +1282,10 @@ public class JournalArticleServiceUtil {
 	 * @param groupId the primary key of the web content article's group
 	 * @return The matching web content articles
 	 */
-	public static List<JournalArticle> getLayoutArticles(long groupId) {
-		return getService().getLayoutArticles(groupId);
+	public static List<JournalArticle> getLayoutArticles(
+		long groupId, long classNameId) {
+
+		return getService().getLayoutArticles(groupId, classNameId);
 	}
 
 	/**
@@ -1308,9 +1310,9 @@ public class JournalArticleServiceUtil {
 	 * @return the range of matching web content articles
 	 */
 	public static List<JournalArticle> getLayoutArticles(
-		long groupId, int start, int end) {
+		long groupId, long classNameId, int start, int end) {
 
-		return getService().getLayoutArticles(groupId, start, end);
+		return getService().getLayoutArticles(groupId, classNameId, start, end);
 	}
 
 	/**
@@ -1320,8 +1322,8 @@ public class JournalArticleServiceUtil {
 	 * @param groupId the primary key of the web content article's group
 	 * @return the number of matching web content articles
 	 */
-	public static int getLayoutArticlesCount(long groupId) {
-		return getService().getLayoutArticlesCount(groupId);
+	public static int getLayoutArticlesCount(long groupId, long classNameId) {
+		return getService().getLayoutArticlesCount(groupId, classNameId);
 	}
 
 	/**

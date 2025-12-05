@@ -186,7 +186,7 @@ describe('ItemSelector component', () => {
 
 		expect(listItem).toBeTruthy();
 
-		expect(mockedFetch).toHaveBeenCalledTimes(2);
+		expect(mockedFetch).toHaveBeenCalledTimes(3);
 
 		await userEvent.click(listItem);
 

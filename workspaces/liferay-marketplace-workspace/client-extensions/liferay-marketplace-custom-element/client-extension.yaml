@@ -17,7 +17,6 @@ liferay-marketplace-custom-element:
         eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
         marketoFormId: 3738
         useSiteTaxonomyVocabularyQuery: false
-
     type: customElement
     urls:
         -   "main.js"

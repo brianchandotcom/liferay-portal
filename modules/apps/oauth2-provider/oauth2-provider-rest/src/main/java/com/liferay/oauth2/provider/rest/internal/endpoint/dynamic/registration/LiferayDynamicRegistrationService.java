@@ -44,6 +44,7 @@ public class LiferayDynamicRegistrationService
 	extends DynamicRegistrationService {
 
 	@GET
+	@Override
 	@Path("{clientId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ClientRegistration readClientRegistrationWithPath(
@@ -53,6 +54,7 @@ public class LiferayDynamicRegistrationService
 	}
 
 	@GET
+	@Override
 	@Produces(MediaType.APPLICATION_JSON)
 	public ClientRegistration readClientRegistrationWithQuery(
 		@QueryParam("client_id") String clientId) {

@@ -477,7 +477,7 @@ function UQBEditSXPBlueprintForm({
 					// Enable Feature Flag LPD-41306 to use the new Headless API
 
 					const response = await fetch(
-						`/o/headless-admin-site/v1.0/sites/by-external-reference-code/${externalReferenceCode}`,
+						`/o/headless-admin-site/v1.0/sites/${externalReferenceCode}`,
 						{
 							headers: new Headers({
 								'Accept-Language':

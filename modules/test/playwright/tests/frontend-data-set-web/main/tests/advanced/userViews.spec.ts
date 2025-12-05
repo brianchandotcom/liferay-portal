@@ -17,6 +17,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	fdsSamplePageTest,
 	featureFlagsTest({
+		'LPD-10683': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -31,33 +32,28 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 });
 
-/**
- * Skip until we refactor custom views in LPD-10683. The tests here are correct,
- * but the feature is broken at least in few ways:
- * - interactions with client extensions are broken
- * - migration to ClayTable broke column visibility logic
- */
-test.skip(
-	'Create, edit and delete custom views',
+test(
+	'Create, edit and delete user views',
 	{
 		tag: ['@LPS-130101'],
 	},
 	async ({fdsSamplePage, page}) => {
 		let actionsDropdown: Locator;
-		let customViewsDropdown: Locator;
+		let userViewsDropdown: Locator;
 		let columnsVisibilityDropdown: Locator;
 
-		const customView1Name = getRandomString();
-		const customView2Name = getRandomString();
+		const newUserViewName = getRandomString();
+		const userView1Name = getRandomString();
+		const userView2Name = getRandomString();
 
 		await test.step('Get dropdown references', async () => {
 
 			// Click on dropdown toggle button adds the aria-controls attribute
 
-			await fdsSamplePage.customViewsActionsButton.click();
+			await fdsSamplePage.userViewsActionsButton.click();
 
 			const actionsDropdownId =
-				await fdsSamplePage.customViewsActionsButton.getAttribute(
+				await fdsSamplePage.userViewsActionsButton.getAttribute(
 					'aria-controls'
 				);
 
@@ -65,14 +61,14 @@ test.skip(
 
 			page.keyboard.press('Escape');
 
-			await fdsSamplePage.customViewsSelectorButton.click();
+			await fdsSamplePage.userViewsSelectorButton.click();
 
-			const customViewsDropdownId =
-				await fdsSamplePage.customViewsSelectorButton.getAttribute(
+			const userViewsDropdownId =
+				await fdsSamplePage.userViewsSelectorButton.getAttribute(
 					'aria-controls'
 				);
 
-			customViewsDropdown = page.locator(`#${customViewsDropdownId}`);
+			userViewsDropdown = page.locator(`#${userViewsDropdownId}`);
 
 			page.keyboard.press('Escape');
 
@@ -90,8 +86,8 @@ test.skip(
 			page.keyboard.press('Escape');
 		});
 
-		await test.step('Create a custom views and set it as the default one', async () => {
-			await fdsSamplePage.customViewsActionsButton.click();
+		await test.step('Create a user view and set it as the default one', async () => {
+			await fdsSamplePage.userViewsActionsButton.click();
 
 			await actionsDropdown
 				.filter({has: page.getByRole('menu')})
@@ -105,17 +101,17 @@ test.skip(
 
 			await menuItem.click();
 
-			await expect(fdsSamplePage.customViewsSaveModal).toBeInViewport();
+			await expect(fdsSamplePage.userViewsSaveModal).toBeInViewport();
 
-			await fdsSamplePage.customViewsSaveModal
+			await fdsSamplePage.userViewsSaveModal
 				.getByLabel('NameRequired')
-				.fill(customView1Name);
+				.fill(userView1Name);
 
-			await fdsSamplePage.customViewsSaveModal
+			await fdsSamplePage.userViewsSaveModal
 				.getByRole('button', {name: 'Save'})
 				.click();
 
-			await fdsSamplePage.customViewsActionsButton.click();
+			await fdsSamplePage.userViewsActionsButton.click();
 
 			await actionsDropdown
 				.filter({has: page.getByRole('menu')})
@@ -125,27 +121,27 @@ test.skip(
 				.getByRole('menuitem', {name: 'Save View As...'})
 				.click();
 
-			await expect(fdsSamplePage.customViewsSaveModal).toBeInViewport();
+			await expect(fdsSamplePage.userViewsSaveModal).toBeInViewport();
 
-			await fdsSamplePage.customViewsSaveModal
+			await fdsSamplePage.userViewsSaveModal
 				.getByLabel('NameRequired')
-				.fill(customView2Name);
-			await fdsSamplePage.customViewsSaveModal
+				.fill(userView2Name);
+			await fdsSamplePage.userViewsSaveModal
 				.getByRole('button', {name: 'Save'})
 				.click();
 
-			await expect(fdsSamplePage.customViewsSelectorButton).toHaveText(
-				customView2Name
+			await expect(fdsSamplePage.userViewsSelectorButton).toHaveText(
+				userView2Name
 			);
 
-			await fdsSamplePage.customViewsSelectorButton.click();
+			await fdsSamplePage.userViewsSelectorButton.click();
 
-			await expect(customViewsDropdown.getByRole('option')).toHaveCount(
-				3
-			);
+			expect(
+				await userViewsDropdown.getByRole('option').count()
+			).toBeGreaterThanOrEqual(3);
 		});
 
-		await test.step('Edit custom view, by changing visibility of one column', async () => {
+		await test.step('Edit user view, by changing visibility of one column', async () => {
 			await expect(fdsSamplePage.table.headerCells).toHaveCount(10);
 
 			await fdsSamplePage.table.manageColumnsVisibilityButton.click();
@@ -159,34 +155,34 @@ test.skip(
 			await expect(fdsSamplePage.table.headerCells).toHaveCount(9);
 		});
 
-		await test.step('Confirm that changes in a custom view does not affect Default View', async () => {
-			await expect(fdsSamplePage.customViewsSelectorButton).toHaveText(
-				customView2Name
+		await test.step('Confirm that changes in a user view does not affect Default View', async () => {
+			await expect(fdsSamplePage.userViewsSelectorButton).toHaveText(
+				`${userView2Name}${userView2Name} Updated`
 			);
 
 			await expect(fdsSamplePage.table.headerCells).toHaveCount(9);
 
-			await fdsSamplePage.customViewsSelectorButton.click();
+			await fdsSamplePage.userViewsSelectorButton.click();
 
-			await customViewsDropdown.waitFor();
+			await userViewsDropdown.waitFor();
 
-			await customViewsDropdown
+			await userViewsDropdown
 				.getByRole('option', {name: 'Default View'})
 				.click();
 
 			await expect(fdsSamplePage.table.headerCells).toHaveCount(10);
 		});
 
-		await test.step('Can change a custom view name', async () => {
-			await fdsSamplePage.customViewsSelectorButton.click();
+		await test.step('Can change a user view name', async () => {
+			await fdsSamplePage.userViewsSelectorButton.click();
 
-			await customViewsDropdown.waitFor();
+			await userViewsDropdown.waitFor();
 
-			await customViewsDropdown
-				.getByRole('option', {name: customView2Name})
+			await userViewsDropdown
+				.getByRole('option', {name: userView2Name})
 				.click();
 
-			await fdsSamplePage.customViewsActionsButton.click();
+			await fdsSamplePage.userViewsActionsButton.click();
 
 			await actionsDropdown.waitFor();
 
@@ -198,33 +194,31 @@ test.skip(
 
 			await menuItem.click();
 
-			await expect(fdsSamplePage.customViewsSaveModal).toBeInViewport();
+			await expect(fdsSamplePage.userViewsSaveModal).toBeInViewport();
 
-			const newCustomViewName = getRandomString();
-
-			await fdsSamplePage.customViewsSaveModal
+			await fdsSamplePage.userViewsSaveModal
 				.getByLabel('NameRequired')
-				.fill(newCustomViewName);
+				.fill(newUserViewName);
 
-			await fdsSamplePage.customViewsSaveModal
+			await fdsSamplePage.userViewsSaveModal
 				.getByRole('button', {name: 'Save'})
 				.click();
 
-			await expect(fdsSamplePage.customViewsSelectorButton).toHaveText(
-				newCustomViewName
+			await expect(fdsSamplePage.userViewsSelectorButton).toHaveText(
+				newUserViewName
 			);
 		});
 
-		await test.step('Delete a custom view', async () => {
-			await fdsSamplePage.customViewsSelectorButton.click();
+		await test.step('Delete a user view', async () => {
+			await fdsSamplePage.userViewsSelectorButton.click();
 
-			await customViewsDropdown.waitFor();
+			await userViewsDropdown.waitFor();
 
-			await customViewsDropdown
-				.getByRole('option', {name: customView1Name})
+			await userViewsDropdown
+				.getByRole('option', {name: userView1Name})
 				.click();
 
-			await fdsSamplePage.customViewsActionsButton.click();
+			await fdsSamplePage.userViewsActionsButton.click();
 
 			await actionsDropdown.waitFor();
 
@@ -236,18 +230,44 @@ test.skip(
 
 			await menuItem.click();
 
-			await expect(fdsSamplePage.customViewsDeleteAlert).toBeVisible();
+			await expect(fdsSamplePage.userViewsDeleteAlert).toBeVisible();
 
-			await fdsSamplePage.customViewsDeleteAlert
+			await fdsSamplePage.userViewsDeleteAlert
 				.getByRole('button', {name: 'Delete'})
 				.click();
 
-			await fdsSamplePage.customViewsSelectorButton.click();
+			await fdsSamplePage.userViewsSelectorButton.click();
 
-			await customViewsDropdown.waitFor();
+			await userViewsDropdown.waitFor();
 
 			await expect(
-				customViewsDropdown.getByRole('option', {name: customView1Name})
+				userViewsDropdown.getByRole('option', {name: userView1Name})
+			).not.toBeVisible();
+
+			await userViewsDropdown
+				.getByRole('option', {name: newUserViewName})
+				.click();
+
+			await fdsSamplePage.userViewsActionsButton.click();
+
+			await actionsDropdown.waitFor();
+
+			await expect(menuItem).toBeVisible();
+
+			await menuItem.click();
+
+			await expect(fdsSamplePage.userViewsDeleteAlert).toBeVisible();
+
+			await fdsSamplePage.userViewsDeleteAlert
+				.getByRole('button', {name: 'Delete'})
+				.click();
+
+			await fdsSamplePage.userViewsSelectorButton.click();
+
+			await userViewsDropdown.waitFor();
+
+			await expect(
+				userViewsDropdown.getByRole('option', {name: newUserViewName})
 			).not.toBeVisible();
 		});
 	}

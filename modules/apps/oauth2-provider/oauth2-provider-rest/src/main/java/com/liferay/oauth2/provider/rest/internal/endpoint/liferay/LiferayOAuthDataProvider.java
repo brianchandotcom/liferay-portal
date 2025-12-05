@@ -1214,46 +1214,42 @@ public class LiferayOAuthDataProvider
 		).toString();
 	}
 
-	private List<GrantType> _getAllowedGrantTypes(
-		List<String> givenGrantTypes) {
+	private List<GrantType> _getAllowedGrantTypes(List<String> grantTypes) {
+		Set<GrantType> allowedGrantTypes = new HashSet<>();
 
-		Set<GrantType> grantTypes = new HashSet<>();
-
-		for (String givenGrantType : givenGrantTypes) {
+		for (String grantType : grantTypes) {
 			if (OAuthConstants.AUTHORIZATION_CODE_GRANT.equalsIgnoreCase(
-					givenGrantType)) {
+					grantType)) {
 
-				grantTypes.add(GrantType.AUTHORIZATION_CODE);
+				allowedGrantTypes.add(GrantType.AUTHORIZATION_CODE);
 			}
 			else if (OAuthConstants.CLIENT_CREDENTIALS_GRANT.equalsIgnoreCase(
-						givenGrantType)) {
+						grantType)) {
 
-				grantTypes.add(GrantType.CLIENT_CREDENTIALS);
+				allowedGrantTypes.add(GrantType.CLIENT_CREDENTIALS);
 			}
-			else if (Constants.JWT_BEARER_GRANT.equalsIgnoreCase(
-						givenGrantType)) {
-
-				grantTypes.add(GrantType.JWT_BEARER);
+			else if (Constants.JWT_BEARER_GRANT.equalsIgnoreCase(grantType)) {
+				allowedGrantTypes.add(GrantType.JWT_BEARER);
 			}
 			else if (OAuth2ProviderRESTEndpointConstants.
 						AUTHORIZATION_CODE_PKCE_GRANT.equalsIgnoreCase(
-							givenGrantType)) {
+							grantType)) {
 
-				grantTypes.add(GrantType.AUTHORIZATION_CODE_PKCE);
+				allowedGrantTypes.add(GrantType.AUTHORIZATION_CODE_PKCE);
 			}
 			else if (OAuthConstants.RESOURCE_OWNER_GRANT.equalsIgnoreCase(
-						givenGrantType)) {
+						grantType)) {
 
-				grantTypes.add(GrantType.RESOURCE_OWNER_PASSWORD);
+				allowedGrantTypes.add(GrantType.RESOURCE_OWNER_PASSWORD);
 			}
 			else if (OAuthConstants.REFRESH_TOKEN_GRANT.equalsIgnoreCase(
-						givenGrantType)) {
+						grantType)) {
 
-				grantTypes.add(GrantType.REFRESH_TOKEN);
+				allowedGrantTypes.add(GrantType.REFRESH_TOKEN);
 			}
 		}
 
-		return ListUtil.fromCollection(grantTypes);
+		return ListUtil.fromCollection(allowedGrantTypes);
 	}
 
 	private Collection<LiferayOAuth2Scope> _getLiferayOAuth2Scopes(

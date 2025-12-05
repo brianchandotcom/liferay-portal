@@ -58,8 +58,8 @@ const PaymentMethods = {
 				symbol="document-text"
 			/>
 		),
-		subtitle: 'Online payments with PayPal',
-		title: i18n.translate('pay-with-invoice'),
+		subtitle: 'Online payments with Bank Transfer',
+		title: i18n.translate('pay-with-bank-transfer'),
 	},
 };
 

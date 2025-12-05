@@ -188,7 +188,7 @@ export const BUILD_UPLOAD_OPTIONS = {
 			tooltip: ReactDOMServer.renderToString(
 				<span>
 					{i18n.translate(
-						'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
+						'zip-files-must-be-in-universal-file-format-archive-luffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
 					)}
 					<a href={LearnLinks.WORKING_WITH_CLIENT_EXTENSIONS}>
 						{i18n.translate('liferay-learn')}
@@ -231,7 +231,7 @@ export const BUILD_UPLOAD_OPTIONS = {
 			tooltip: ReactDOMServer.renderToString(
 				<span>
 					{i18n.translate(
-						'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
+						'zip-files-must-be-in-universal-file-format-archive-luffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
 					)}
 					<a href={LearnLinks.WORKING_WITH_CLIENT_EXTENSIONS}>
 						{i18n.translate('liferay-learn')}

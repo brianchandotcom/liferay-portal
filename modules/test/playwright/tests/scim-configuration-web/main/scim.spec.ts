@@ -141,7 +141,7 @@ featureFlagDisabledtest(
 
 		for (const customFieldAttribute of customFieldAttributes) {
 			await expect(
-				await editUserPage.customField(customFieldAttribute)
+				await page.getByLabel(customFieldAttribute)
 			).not.toBeVisible();
 		}
 
@@ -549,7 +549,6 @@ test('LPD-34644: Check if the token expiration warning message appears in the SC
 });
 
 test('LPD-37452 verify expando field is not visible for user added to SCIM', async ({
-	editUserPage,
 	page,
 	usersAndOrganizationsPage,
 }) => {
@@ -571,9 +570,7 @@ test('LPD-37452 verify expando field is not visible for user added to SCIM', asy
 		await usersAndOrganizationsPage.usersTableRowLink(newUser.userName)
 	).click();
 
-	await expect(
-		await editUserPage.customField('scimClientId')
-	).not.toBeVisible();
+	await expect(await page.getByLabel('Scimclientid')).not.toBeVisible();
 
 	await scimConfigurationPage.goTo();
 	await scimConfigurationPage.resetClientData();

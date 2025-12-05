@@ -51,7 +51,6 @@ public class DLFileEntryRelatedEntryModelDocumentContributor
 
 		if (mbMessageValues != null) {
 			document.addKeyword(Field.CATEGORY_ID, mbMessageValues[0]);
-
 			document.addKeyword("discussion", false);
 			document.addKeyword("threadId", mbMessageValues[1]);
 		}

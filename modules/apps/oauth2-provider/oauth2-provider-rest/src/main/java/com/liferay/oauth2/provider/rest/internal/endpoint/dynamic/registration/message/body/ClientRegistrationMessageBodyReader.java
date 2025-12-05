@@ -6,7 +6,6 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.message.body;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -63,9 +62,7 @@ public class ClientRegistrationMessageBodyReader
 
 		ObjectReader objectReader = objectMapper.readerFor(clazz);
 
-		JsonNode jsonNode = objectReader.readTree(inputStream);
-
-		return objectReader.readValue(jsonNode);
+		return objectReader.readValue(objectReader.readTree(inputStream));
 	}
 
 	private static class ObjectMapperHolder {

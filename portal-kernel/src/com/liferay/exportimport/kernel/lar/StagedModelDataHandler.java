@@ -74,6 +74,19 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	public T fetchMissingReference(String uuid, long groupId);
 
 	/**
+	 * Returns the staged model by external reference code and group.
+	 *
+	 * @param  externalReferenceCode the model's external reference code
+	 * @param  groupId the primary key of the group
+	 * @return the staged model
+	 */
+	public default T fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return null;
+	}
+
+	/**
 	 * Returns the staged model with the UUID and group. This method is used in
 	 * cases with grouped models.
 	 *

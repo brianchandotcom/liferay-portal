@@ -10,6 +10,8 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.data.cleanup.DataCleanup;
+import com.liferay.data.cleanup.util.DataCleanupUtil;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.processor.AudioProcessor;
@@ -120,6 +122,7 @@ import jakarta.portlet.WindowState;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -282,6 +285,18 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("verifyMembershipPolicies")) {
 			_verifyMembershipPolicies();
+		}
+		else {
+			List<DataCleanup> dataCleanups = new ArrayList<>();
+
+			dataCleanups.addAll(DataCleanupUtil.getSystemDataCleanups());
+			dataCleanups.addAll(DataCleanupUtil.getModuleDataCleanups());
+
+			for (DataCleanup dataCleanup : dataCleanups) {
+				if (cmd.equals(dataCleanup.getLabel())) {
+					dataCleanup.cleanup();
+				}
+			}
 		}
 
 		sendRedirect(actionRequest, actionResponse, redirect);

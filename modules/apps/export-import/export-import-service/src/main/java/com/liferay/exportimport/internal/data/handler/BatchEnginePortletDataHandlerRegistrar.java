@@ -122,7 +122,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 					"(export.import.vulcan.batch.engine.task.item." +
 						"delegate=true)",
 					new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-						bundleContext));
+						bundleContext, companyId));
 			});
 
 		if (newOpen.get()) {
@@ -201,9 +201,10 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			 ServiceRegistration<PortletDataHandler>> {
 
 		public VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-			BundleContext bundleContext) {
+			BundleContext bundleContext, long companyId) {
 
 			_bundleContext = bundleContext;
+			_companyId = companyId;
 		}
 
 		@Override
@@ -226,7 +227,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			BatchEnginePortletDataHandler
 				previousBatchEnginePortletDataHandler =
 					BatchEnginePortletDataHandlerRegistryUtil.getByPortletId(
-						portletId);
+						_companyId, portletId);
 
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
 				previousBatchEnginePortletDataHandler;
@@ -242,9 +243,6 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 				batchEnginePortletDataHandler.setPortletId(
 					exportImportDescriptor.getPortletId());
-
-				BatchEnginePortletDataHandlerRegistryUtil.put(
-					portletId, batchEnginePortletDataHandler);
 			}
 
 			batchEnginePortletDataHandler.
@@ -257,6 +255,9 @@ public class BatchEnginePortletDataHandlerRegistrar {
 					exportImportDescriptor,
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"));
+
+			BatchEnginePortletDataHandlerRegistryUtil.put(
+				batchEnginePortletDataHandler, _companyId, portletId);
 
 			if (previousBatchEnginePortletDataHandler != null) {
 				return _serviceRegistrations.get(portletId);
@@ -304,7 +305,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
 				BatchEnginePortletDataHandlerRegistryUtil.getByPortletId(
-					portletId);
+					_companyId, portletId);
 
 			if (batchEnginePortletDataHandler == null) {
 				return;
@@ -325,13 +326,15 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			if (classNames.length == 0) {
 				serviceRegistration.unregister();
 
-				BatchEnginePortletDataHandlerRegistryUtil.remove(portletId);
+				BatchEnginePortletDataHandlerRegistryUtil.remove(
+					_companyId, portletId);
 
 				_serviceRegistrations.remove(portletId);
 			}
 		}
 
 		private final BundleContext _bundleContext;
+		private final long _companyId;
 
 	}
 

@@ -1926,7 +1926,8 @@ public class GitWorkingDirectory {
 						JenkinsResultsParserUtil.getBuildProperty(
 							"mirrors.hostname"),
 						"/github.com/liferay/sha/", getGitRepositoryName(), "(",
-						remoteGitBranchName, ").txt"), false);
+						remoteGitBranchName, ").txt"),
+					false);
 
 				sha = sha.trim();
 
@@ -1936,9 +1937,8 @@ public class GitWorkingDirectory {
 			}
 			catch (Exception exception) {
 				System.out.println(
-					"Unable to retrieve cached SHA information.");
-
-				exception.printStackTrace();
+					"Unable to retrieve cached SHA information. " +
+						exception.getMessage());
 			}
 		}
 

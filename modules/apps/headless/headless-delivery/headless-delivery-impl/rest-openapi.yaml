@@ -499,6 +499,10 @@ components:
                         The document's content type (e.g., `application/pdf`, etc.).
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The document's externalReferenceCode.
+                    type: string
                 fileExtension:
                     description:
                         The document's file extension.
@@ -509,6 +513,10 @@ components:
                         The document's ID.
                     format: int64
                     type: integer
+                scopeExternalReferenceCode:
+                    description:
+                        The document's scopeExternalReferenceCode.
+                    type: string
                 sizeInBytes:
                     description:
                         The document's file size in bytes.

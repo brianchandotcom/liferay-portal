@@ -282,7 +282,6 @@ components:
                                 The parent taxonomy category's external reference code.
                             type: string
                     type: object
-                    writeOnly: true
                 parentTaxonomyVocabulary:
                     description:
                         The parent category's `TaxonomyVocabulary`.
@@ -293,7 +292,6 @@ components:
                                 The parent category's `TaxonomyVocabulary` external reference code.
                             type: string
                     type: object
-                    writeOnly: true
                 scope:
                     type: scope
                 taxonomyCategoryExternalReferenceCode:

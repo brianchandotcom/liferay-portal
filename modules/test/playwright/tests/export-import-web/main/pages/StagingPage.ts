@@ -3,15 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import getRandomString from '../../../../utils/getRandomString';
 
 export class StagingPage {
 	readonly page: Page;
+	readonly stagedPortletCheckbox: (stagedPortletName: string) => Locator;
 
 	constructor(page: Page) {
 		this.page = page;
+		this.stagedPortletCheckbox = (stagedPortletName: string) =>
+			this.page
+				.locator('.custom-checkbox')
+				.filter({hasText: stagedPortletName})
+				.locator('input');
 	}
 
 	async enableLocalStaging(stagedPortlets?: string[]) {
@@ -24,25 +30,12 @@ export class StagingPage {
 			await dialog.accept().catch();
 		});
 
-		if (stagedPortlets?.length > 0) {
-			await this.page
-				.locator('.custom-checkbox')
-				.filter({hasText: 'Select All'})
-				.locator('input')
-				.check();
-
-			await this.page
-				.locator('.custom-checkbox')
-				.filter({hasText: 'Select All'})
-				.locator('input')
-				.uncheck();
+		if (stagedPortlets) {
+			await this.stagedPortletCheckbox('Select All').check();
+			await this.stagedPortletCheckbox('Select All').uncheck();
 
 			for (const stagedPortlet of stagedPortlets) {
-				await this.page
-					.locator('.custom-checkbox')
-					.filter({hasText: stagedPortlet})
-					.locator('input')
-					.check();
+				await this.stagedPortletCheckbox(stagedPortlet).check();
 			}
 		}
 

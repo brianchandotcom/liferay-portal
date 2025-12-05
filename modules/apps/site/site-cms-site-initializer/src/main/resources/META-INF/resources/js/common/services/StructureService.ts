@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ApiHelper from '../../common/services/ApiHelper';
-import {ObjectDefinitions} from '../../common/types/ObjectDefinition';
-import {State} from '../contexts/StateContext';
-import {Structure} from '../types/Structure';
-import buildGroupObjectDefinitions from '../utils/buildGroupObjectDefinitions';
-import buildObjectDefinition from '../utils/buildObjectDefinition';
-import getRandomId from '../utils/getRandomId';
+import {State} from '../../structure_builder/contexts/StateContext';
+import {Structure} from '../../structure_builder/types/Structure';
+import buildGroupObjectDefinitions from '../../structure_builder/utils/buildGroupObjectDefinitions';
+import buildObjectDefinition from '../../structure_builder/utils/buildObjectDefinition';
+import getRandomId from '../../structure_builder/utils/getRandomId';
+import {ObjectDefinitions} from '../types/ObjectDefinition';
+import ApiHelper from './ApiHelper';
 
 async function createStructure({
 	children,

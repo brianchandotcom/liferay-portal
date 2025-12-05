@@ -12,6 +12,7 @@ import {addParams, navigate} from 'frontend-js-web';
 import React, {Dispatch, useEffect} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
+import StructureService from '../../common/services/StructureService';
 import {ObjectDefinitions} from '../../common/types/ObjectDefinition';
 import {config} from '../config';
 import {CacheKey, useCache, useStaleCache} from '../contexts/CacheContext';
@@ -35,7 +36,6 @@ import selectStructureUuid from '../selectors/selectStructureUuid';
 import selectStructureWorkflows from '../selectors/selectStructureWorkflows';
 import selectUnsavedChanges from '../selectors/selectUnsavedChanges';
 import DisplayPageService from '../services/DisplayPageService';
-import StructureService from '../services/StructureService';
 import {useValidate} from '../utils/validation';
 import AsyncButton from './AsyncButton';
 

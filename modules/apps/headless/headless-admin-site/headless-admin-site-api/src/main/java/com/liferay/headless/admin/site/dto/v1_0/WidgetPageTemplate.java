@@ -607,16 +607,17 @@ public class WidgetPageTemplate extends PageTemplate implements Serializable {
 			sb.append("]");
 		}
 
-		ThumbnailURLReference thumbnail = getThumbnail();
+		ThumbnailURLReference thumbnailURLReference =
+			getThumbnailURLReference();
 
-		if (thumbnail != null) {
+		if (thumbnailURLReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"thumbnail\": ");
+			sb.append("\"thumbnailURLReference\": ");
 
-			sb.append(String.valueOf(thumbnail));
+			sb.append(String.valueOf(thumbnailURLReference));
 		}
 
 		Type type = getType();

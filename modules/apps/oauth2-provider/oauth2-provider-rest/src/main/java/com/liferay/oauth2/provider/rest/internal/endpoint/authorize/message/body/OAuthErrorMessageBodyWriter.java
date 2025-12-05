@@ -38,10 +38,10 @@ public class OAuthErrorMessageBodyWriter
 
 	@Override
 	public boolean isWriteable(
-		Class<?> aClass, Type type, Annotation[] annotations,
+		Class<?> clazz, Type type, Annotation[] annotations,
 		MediaType mediaType) {
 
-		if (aClass.isAssignableFrom(OAuthError.class) &&
+		if (clazz.isAssignableFrom(OAuthError.class) &&
 			StringUtil.equalsIgnoreCase(mediaType.getType(), "text") &&
 			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "html")) {
 

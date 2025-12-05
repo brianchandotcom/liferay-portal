@@ -5,12 +5,15 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
+import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectUser;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
+import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectUserLocalService;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.jose.JWSAlgorithm;
@@ -73,6 +76,10 @@ public class OpenIdConnectBackchannelLogoutServletTest {
 			"_openIdConnectSessionLocalService",
 			_openIdConnectSessionLocalService);
 
+		ReflectionTestUtils.setField(
+			_openIdConnectBackchannelLogoutServlet,
+			"_openIdConnectUserLocalService", _openIdConnectUserLocalService);
+
 		Mockito.doReturn(
 			new URL("http://mocked.jwks.uri/key-set.json")
 		).when(
@@ -84,8 +91,114 @@ public class OpenIdConnectBackchannelLogoutServletTest {
 
 	@Test
 	public void testDoPost() throws Exception {
-		OpenIdConnectSession openIdConnectSession = _mockOpenIdConnectSession(
-			_createSignedJWT(false));
+		_testDoPost(_SESSION_ID);
+
+		_testDoPost(StringPool.BLANK);
+	}
+
+	@Test
+	public void testDoPostWithInvalidToken() throws Exception {
+		_testDoPostWithInvalidToken(RandomTestUtil.randomString());
+
+		SignedJWT signedJWT = _createSignedJWT(true, _SESSION_ID);
+
+		_testDoPostWithInvalidToken(signedJWT.serialize());
+	}
+
+	private SignedJWT _createSignedJWT(boolean logoutToken, String sessionId)
+		throws Exception {
+
+		Date now = new Date();
+
+		JWTClaimsSet.Builder jwtClaimsSetBuilder = new JWTClaimsSet.Builder(
+		).audience(
+			_CLIENT_ID
+		).claim(
+			"sid", sessionId
+		).expirationTime(
+			new Date(now.getTime() + 60_000)
+		).issuer(
+			_ISSUER_URL
+		).issueTime(
+			now
+		).subject(
+			_SUBJECT
+		);
+
+		if (logoutToken) {
+			jwtClaimsSetBuilder.claim(
+				"events",
+				JSONUtil.put(
+					"http://schemas.openid.net/event/backchannel-logout", "{}")
+			).claim(
+				"typ", "Logout"
+			).jwtID(
+				String.valueOf(UUID.randomUUID())
+			);
+		}
+		else {
+			jwtClaimsSetBuilder.claim("typ", "ID");
+		}
+
+		JWSHeader jwsHeader = new JWSHeader.Builder(
+			JWSAlgorithm.RS256
+		).keyID(
+			_KEY_ID
+		).build();
+
+		SignedJWT signedJWT = new SignedJWT(
+			jwsHeader, jwtClaimsSetBuilder.build());
+
+		RSAKey rsaKey = new RSAKeyGenerator(
+			2048
+		).keyID(
+			_KEY_ID
+		).generate();
+
+		signedJWT.sign(new RSASSASigner(rsaKey.toPrivateKey()));
+
+		return signedJWT;
+	}
+
+	private void _testDoPost(String sessionId) throws Exception {
+		OpenIdConnectSession openIdConnectSession = Mockito.mock(
+			OpenIdConnectSession.class);
+
+		Mockito.when(
+			_openIdConnectSessionLocalService.getOpenIdConnectSession(
+				Mockito.anyLong(), Mockito.any())
+		).thenReturn(
+			openIdConnectSession
+		);
+
+		Mockito.when(
+			openIdConnectSession.getClientId()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_openIdConnectSessionLocalService.getOpenIdConnectSession(
+				Mockito.any(), Mockito.eq(_SESSION_ID))
+		).thenReturn(
+			openIdConnectSession
+		);
+
+		OpenIdConnectUser openIdConnectUser = Mockito.mock(
+			OpenIdConnectUser.class);
+
+		Mockito.when(
+			_openIdConnectUserLocalService.getOpenIdConnectUser(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString())
+		).thenReturn(
+			openIdConnectUser
+		);
+
+		Mockito.when(
+			openIdConnectUser.getUserId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
 
 		LogoutTokenClaimsSet logoutTokenClaimsSet = new LogoutTokenClaimsSet(
 			new JWTClaimsSet.Builder(
@@ -112,7 +225,7 @@ public class OpenIdConnectBackchannelLogoutServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		SignedJWT signedJWT = _createSignedJWT(true);
+		SignedJWT signedJWT = _createSignedJWT(true, sessionId);
 
 		mockHttpServletRequest.setParameter(
 			"logout_token", signedJWT.serialize());
@@ -155,98 +268,6 @@ public class OpenIdConnectBackchannelLogoutServletTest {
 		);
 	}
 
-	@Test
-	public void testDoPostWithInvalidToken() throws Exception {
-		_testDoPostWithInvalidToken(RandomTestUtil.randomString());
-
-		_mockOpenIdConnectSession(_createSignedJWT(false));
-
-		SignedJWT signedJWT = _createSignedJWT(true);
-
-		_testDoPostWithInvalidToken(signedJWT.serialize());
-	}
-
-	private SignedJWT _createSignedJWT(boolean logoutToken) throws Exception {
-		Date now = new Date();
-
-		JWTClaimsSet.Builder jwtClaimsSetBuilder = new JWTClaimsSet.Builder(
-		).audience(
-			_CLIENT_ID
-		).claim(
-			"sid", _SESSION_ID
-		).expirationTime(
-			new Date(now.getTime() + 60_000)
-		).issuer(
-			_ISSUER_URL
-		).issueTime(
-			now
-		).subject(
-			RandomTestUtil.randomString()
-		);
-
-		if (logoutToken) {
-			jwtClaimsSetBuilder.claim(
-				"events",
-				JSONUtil.put(
-					"http://schemas.openid.net/event/backchannel-logout", "{}")
-			).claim(
-				"typ", "Logout"
-			).jwtID(
-				String.valueOf(UUID.randomUUID())
-			);
-		}
-		else {
-			jwtClaimsSetBuilder.claim("typ", "ID");
-		}
-
-		JWSHeader jwsHeader = new JWSHeader.Builder(
-			JWSAlgorithm.RS256
-		).keyID(
-			_KEY_ID
-		).build();
-
-		SignedJWT signedJWT = new SignedJWT(
-			jwsHeader, jwtClaimsSetBuilder.build());
-
-		RSAKey rsaKey = new RSAKeyGenerator(
-			2048
-		).keyID(
-			_KEY_ID
-		).generate();
-
-		signedJWT.sign(new RSASSASigner(rsaKey.toPrivateKey()));
-
-		return signedJWT;
-	}
-
-	private OpenIdConnectSession _mockOpenIdConnectSession(SignedJWT signedJWT)
-		throws Exception {
-
-		OpenIdConnectSession openIdConnectSession = Mockito.mock(
-			OpenIdConnectSession.class);
-
-		Mockito.when(
-			openIdConnectSession.getIdToken()
-		).thenReturn(
-			signedJWT.serialize()
-		);
-
-		Mockito.when(
-			openIdConnectSession.getClientId()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			_openIdConnectSessionLocalService.getOpenIdConnectSession(
-				Mockito.any(), Mockito.eq(_SESSION_ID))
-		).thenReturn(
-			openIdConnectSession
-		);
-
-		return openIdConnectSession;
-	}
-
 	private void _testDoPostWithInvalidToken(String logoutToken) {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -272,11 +293,15 @@ public class OpenIdConnectBackchannelLogoutServletTest {
 
 	private static final String _SESSION_ID = RandomTestUtil.randomString();
 
+	private static final String _SUBJECT = RandomTestUtil.randomString();
+
 	private final OpenIdConnectBackchannelLogoutServlet
 		_openIdConnectBackchannelLogoutServlet = Mockito.spy(
 			new OpenIdConnectBackchannelLogoutServlet());
 	private final OpenIdConnectSessionLocalService
 		_openIdConnectSessionLocalService = Mockito.mock(
 			OpenIdConnectSessionLocalService.class);
+	private final OpenIdConnectUserLocalService _openIdConnectUserLocalService =
+		Mockito.mock(OpenIdConnectUserLocalService.class);
 
 }

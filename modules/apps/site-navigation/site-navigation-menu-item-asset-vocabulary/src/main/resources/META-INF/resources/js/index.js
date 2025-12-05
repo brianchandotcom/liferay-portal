@@ -316,7 +316,7 @@ function AssetVocabularyContextualSidebar({
 AssetVocabularyContextualSidebar.propTypes = {
 	assetVocabulary: PropTypes.shape({
 		classPK: PropTypes.string,
-		groupId: PropTypes.string,
+		scopeExternalReferenceCode: PropTypes.string,
 		title: PropTypes.string,
 		type: PropTypes.string,
 	}).isRequired,
@@ -401,7 +401,7 @@ FormValues.propTypes = {
 	namespace: PropTypes.string.isRequired,
 	selectedVocabulary: PropTypes.shape({
 		classPK: PropTypes.string,
-		groupId: PropTypes.string,
+		scopeExternalReferenceCode: PropTypes.string,
 		title: PropTypes.string,
 		type: PropTypes.string,
 	}).isRequired,

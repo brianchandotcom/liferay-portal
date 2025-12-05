@@ -1385,7 +1385,9 @@ const FrontendDataSetContent = ({
 	}, [configInURLBehavior, handlePopState, id, refreshData]);
 
 	const hasSearch = !!searchParam;
-	const hasActiveFilters = filters.some((filter: any) => filter.active);
+	const hasActiveFilters = filters
+		? filters.some((filter: any) => filter.active)
+		: false;
 
 	const showManagementToolbar =
 		showManagementBar &&

@@ -455,6 +455,12 @@ public class PortletLocalServiceUtil {
 		getService().removeCompanyPortletsPool(companyId);
 	}
 
+	public static void removePortletModelResources(
+		long companyId, String portletId) {
+
+		getService().removePortletModelResources(companyId, portletId);
+	}
+
 	public static Portlet updatePortlet(
 		long companyId, String portletId, String roles, boolean active) {
 

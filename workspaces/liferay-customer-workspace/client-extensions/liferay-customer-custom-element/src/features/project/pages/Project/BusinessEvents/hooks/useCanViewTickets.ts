@@ -23,7 +23,7 @@ const useCanViewTickets = (externalReferenceCode?: string, skip?: boolean) => {
 			const data = await Liferay.OAuth2Client.FromUserAgentApplication(
 				'liferay-customer-etc-spring-boot-oaua'
 			)
-				.fetch(`/accounts/${externalReferenceCode}/object-key`)
+				.fetch(`/accounts/${externalReferenceCode}/jira/object-key`)
 				.then((response: Response) => response.text());
 
 			setCanViewTickets(Boolean(data));

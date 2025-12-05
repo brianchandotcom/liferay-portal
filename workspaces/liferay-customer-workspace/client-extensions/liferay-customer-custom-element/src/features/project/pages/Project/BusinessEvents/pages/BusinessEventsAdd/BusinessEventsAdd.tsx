@@ -24,7 +24,7 @@ import Layout from '../../../../../../../components/FormLayout';
 import AssociatedTicketsContainer from '../../components/AssociatedTicketsContainer';
 import useAccountsSyncBusinessEvents from '../../hooks/useAccountsSyncBusinessEvents';
 import useAccountsTickets from '../../hooks/useAccountsTickets';
-import usecanViewTickets from '../../hooks/useCanViewTickets';
+import useCanViewTickets from '../../hooks/useCanViewTickets';
 import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesList';
 import useGetLiferayVersions from '../../hooks/useGetLiferayVersions';
 import useGetUTCTimeZonesList from '../../hooks/useGetUTCTimeZonesList';
@@ -100,7 +100,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const {
 		canViewTickets: canViewTickets,
 		loading: loadingJiraAccountChecking,
-	} = usecanViewTickets(project?.accountKey || '');
+	} = useCanViewTickets(project?.accountKey || '');
 
 	const {loading: loadingUTCTimeZonesList, utcTimeZonesList} =
 		useGetUTCTimeZonesList();

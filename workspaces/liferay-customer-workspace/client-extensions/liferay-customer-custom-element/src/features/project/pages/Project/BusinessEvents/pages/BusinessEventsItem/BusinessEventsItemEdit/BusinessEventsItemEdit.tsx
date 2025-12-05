@@ -30,7 +30,7 @@ import {isValidDate} from '~/utils/validations.form';
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
 import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useAccountsTickets from '../../../hooks/useAccountsTickets';
-import usecanViewTickets from '../../../hooks/useCanViewTickets';
+import useCanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 import {containsOption} from '../../../utils/containsOption';
@@ -136,7 +136,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	const {
 		canViewTickets: canViewTickets,
 		loading: loadingJiraAccountChecking,
-	} = usecanViewTickets(project?.accountKey || '');
+	} = useCanViewTickets(project?.accountKey || '');
 
 	const {
 		dxpMinorVersionsAndPortalMajorVersions,

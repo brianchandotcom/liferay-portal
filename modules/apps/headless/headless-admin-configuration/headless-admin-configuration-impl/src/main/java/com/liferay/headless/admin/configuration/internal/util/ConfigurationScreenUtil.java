@@ -60,7 +60,7 @@ public class ConfigurationScreenUtil {
 				configurationScreen.exportProperties(scopePK)
 			).build();
 
-		if ((properties == null) || properties.isEmpty()) {
+		if (properties.isEmpty()) {
 			return null;
 		}
 

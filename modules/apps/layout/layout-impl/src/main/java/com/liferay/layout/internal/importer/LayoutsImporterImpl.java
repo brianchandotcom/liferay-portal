@@ -2258,37 +2258,59 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		if (MapUtil.isNotEmpty(favIconMap)) {
 			if (Objects.equals(favIconMap.get("contentType"), "Document")) {
-				FileEntry fileEntry = _getFileEntry(
-					GetterUtil.getLong(favIconMap.get("id")));
+				String faviconFileEntryERC = (String)favIconMap.get(
+					"externalReferenceCode");
+				String faviconFileEntryScopeERC = (String)favIconMap.get(
+					"scopeExternalReferenceCode");
 
-				if (fileEntry != null) {
-					layout.setFaviconFileEntryERC(
-						fileEntry.getExternalReferenceCode());
+				if (Validator.isNotNull(faviconFileEntryERC)) {
+					layout.setFaviconFileEntryERC(faviconFileEntryERC);
 
-					String faviconFileEntryScopeERC = null;
+					Group layoutGroup = layout.getGroup();
 
-					if (layout.getGroupId() != fileEntry.getGroupId()) {
-						Group fileEntryGroup = _groupLocalService.fetchGroup(
-							fileEntry.getGroupId());
+					if (Validator.isNotNull(faviconFileEntryScopeERC) &&
+						!faviconFileEntryScopeERC.equals(
+							layoutGroup.getExternalReferenceCode())) {
 
-						if (fileEntryGroup != null) {
-							faviconFileEntryScopeERC =
-								fileEntryGroup.getExternalReferenceCode();
-						}
-						else {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									StringBundler.concat(
-										"Unable to find group for file entry ",
-										fileEntry.getFileEntryId(),
-										" with groupId ",
-										fileEntry.getGroupId()));
+						layout.setFaviconFileEntryScopeERC(
+							faviconFileEntryScopeERC);
+					}
+					else {
+						layout.setFaviconFileEntryScopeERC(null);
+					}
+				}
+				else {
+					long fileEntryId = GetterUtil.getLong(favIconMap.get("id"));
+
+					if (fileEntryId > 0) {
+						FileEntry fileEntry = _getFileEntry(fileEntryId);
+
+						if (fileEntry != null) {
+							layout.setFaviconFileEntryERC(
+								fileEntry.getExternalReferenceCode());
+
+							if (layout.getGroupId() != fileEntry.getGroupId()) {
+								Group fileEntryGroup =
+									_groupLocalService.fetchGroup(
+										fileEntry.getGroupId());
+
+								if (fileEntryGroup != null) {
+									layout.setFaviconFileEntryScopeERC(
+										fileEntryGroup.
+											getExternalReferenceCode());
+								}
+								else if (_log.isWarnEnabled()) {
+									_log.warn(
+										StringBundler.concat(
+											"Unable to find group for file ",
+											"entry ",
+											fileEntry.getFileEntryId(),
+											" with groupId ",
+											fileEntry.getGroupId()));
+								}
 							}
 						}
 					}
-
-					layout.setFaviconFileEntryScopeERC(
-						faviconFileEntryScopeERC);
 				}
 			}
 			else if (favIconMap.containsKey("externalReferenceCode")) {

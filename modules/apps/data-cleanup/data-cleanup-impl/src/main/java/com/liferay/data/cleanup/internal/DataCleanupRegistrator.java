@@ -56,6 +56,7 @@ import com.liferay.data.cleanup.internal.upgrade.XSLContentUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.YoutubeUpgradeProcess;
 import com.liferay.data.cleanup.internal.verify.ClassNamePostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.PostUpgradeDataCleanupProcess;
+import com.liferay.data.cleanup.internal.verify.ResourceActionPostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.ServiceComponentPostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.util.DataCleanupUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -72,6 +73,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -424,6 +426,23 @@ public class DataCleanupRegistrator {
 			"com.liferay.change.tracking.store.service");
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
+				"remove-resource-action-orphan-data",
+				DataCleanup.SYSTEM_DATA_CLEANUP,
+				new VerifyProcess() {
+
+					@Override
+					protected void doVerify() throws Exception {
+						PostUpgradeDataCleanupProcess
+							postUpgradeDataCleanupProcess =
+								new ResourceActionPostUpgradeDataCleanupProcess(
+									connection, _resourceActionLocalService);
+
+						postUpgradeDataCleanupProcess.cleanUp();
+					}
+
+				}));
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
 				"remove-service-component-orphan-data",
 				DataCleanup.SYSTEM_DATA_CLEANUP,
 				new VerifyProcess() {
@@ -561,6 +580,9 @@ public class DataCleanupRegistrator {
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ServiceComponentLocalService _serviceComponentLocalService;

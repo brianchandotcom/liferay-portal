@@ -369,7 +369,7 @@ public class ClusterGeneralTest implements Serializable {
 				return null;
 			});
 
-		// Update properties in sender node and assert change
+		// Update log levels in sender node and assert change
 
 		Assert.assertEquals(
 			"DEBUG",
@@ -406,7 +406,7 @@ public class ClusterGeneralTest implements Serializable {
 				return null;
 			});
 
-		// Update properties in sender node and assert change
+		// Update log levels in sender node and assert change
 
 		Assert.assertEquals(
 			"ERROR",

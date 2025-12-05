@@ -388,6 +388,8 @@ public class LayoutLocalServiceTest {
 				Layout.class.getName(), StringPool.POUND, _group.getGroupId(),
 				StringPool.POUND, true));
 
+		// A content layout consists of 2 layout entries
+
 		Assert.assertEquals(
 			layout.getLayoutId() + 2,
 			_layoutLocalService.getNextLayoutId(_group.getGroupId(), true));

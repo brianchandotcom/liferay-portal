@@ -22,10 +22,12 @@ import java.util.function.Consumer;
  */
 public class ReflectionUtil {
 
-	public static Field fetchDeclaredField(Class<?> clazz, String name) {
+	public static Field fetchDeclaredField(
+		boolean accessible, Class<?> clazz, String name) {
+
 		if (_fetchDeclaredFieldMethodHandle == null) {
 			try {
-				return getDeclaredField(clazz, name);
+				return getDeclaredField(accessible, clazz, name);
 			}
 			catch (Exception exception) {
 				return null;
@@ -34,7 +36,34 @@ public class ReflectionUtil {
 
 		try {
 			return (Field)_fetchDeclaredFieldMethodHandle.invokeExact(
-				clazz, name);
+				accessible, clazz, name);
+		}
+		catch (Throwable throwable) {
+			return throwException(throwable);
+		}
+	}
+
+	public static Field fetchDeclaredField(Class<?> clazz, String name) {
+		return fetchDeclaredField(true, clazz, name);
+	}
+
+	public static Method fetchDeclaredMethod(
+		boolean accessible, Class<?> clazz, String name,
+		Class<?>... parameterTypes) {
+
+		if (_fetchDeclaredMethodMethodHandle == null) {
+			try {
+				return getDeclaredMethod(
+					accessible, clazz, name, parameterTypes);
+			}
+			catch (Exception exception) {
+				return null;
+			}
+		}
+
+		try {
+			return (Method)_fetchDeclaredMethodMethodHandle.invokeExact(
+				accessible, clazz, name, parameterTypes);
 		}
 		catch (Throwable throwable) {
 			return throwException(throwable);
@@ -44,30 +73,19 @@ public class ReflectionUtil {
 	public static Method fetchDeclaredMethod(
 		Class<?> clazz, String name, Class<?>... parameterTypes) {
 
-		if (_fetchDeclaredMethodMethodHandle == null) {
-			try {
-				return getDeclaredMethod(clazz, name, parameterTypes);
-			}
-			catch (Exception exception) {
-				return null;
-			}
-		}
-
-		try {
-			return (Method)_fetchDeclaredMethodMethodHandle.invokeExact(
-				clazz, name, parameterTypes);
-		}
-		catch (Throwable throwable) {
-			return throwException(throwable);
-		}
+		return fetchDeclaredMethod(true, clazz, name, parameterTypes);
 	}
 
-	public static Field fetchField(Class<?> clazz, String name) {
+	public static Field fetchField(
+		boolean accessible, Class<?> clazz, String name) {
+
 		if (_fetchFieldMethodHandle == null) {
 			try {
 				Field field = clazz.getField(name);
 
-				field.setAccessible(true);
+				if (accessible) {
+					field.setAccessible(true);
+				}
 
 				return field;
 			}
@@ -77,21 +95,29 @@ public class ReflectionUtil {
 		}
 
 		try {
-			return (Field)_fetchFieldMethodHandle.invokeExact(clazz, name);
+			return (Field)_fetchFieldMethodHandle.invokeExact(
+				accessible, clazz, name);
 		}
 		catch (Throwable throwable) {
 			return throwException(throwable);
 		}
 	}
 
+	public static Field fetchField(Class<?> clazz, String name) {
+		return fetchField(true, clazz, name);
+	}
+
 	public static Method fetchMethod(
-		Class<?> clazz, String name, Class<?>... parameterTypes) {
+		boolean accessible, Class<?> clazz, String name,
+		Class<?>... parameterTypes) {
 
 		if (_fetchMethodMethodHandle == null) {
 			try {
 				Method method = clazz.getMethod(name, parameterTypes);
 
-				method.setAccessible(true);
+				if (accessible) {
+					method.setAccessible(true);
+				}
 
 				return method;
 			}
@@ -102,42 +128,75 @@ public class ReflectionUtil {
 
 		try {
 			return (Method)_fetchMethodMethodHandle.invokeExact(
-				clazz, name, parameterTypes);
+				accessible, clazz, name, parameterTypes);
 		}
 		catch (Throwable throwable) {
 			return throwException(throwable);
 		}
 	}
 
-	public static Field getDeclaredField(Class<?> clazz, String name)
+	public static Method fetchMethod(
+		Class<?> clazz, String name, Class<?>... parameterTypes) {
+
+		return fetchMethod(true, clazz, name, parameterTypes);
+	}
+
+	public static Field getDeclaredField(
+			boolean accessible, Class<?> clazz, String name)
 		throws Exception {
 
 		Field field = clazz.getDeclaredField(name);
 
-		field.setAccessible(true);
+		if (accessible) {
+			field.setAccessible(true);
+		}
 
 		return field;
 	}
 
-	public static Field[] getDeclaredFields(Class<?> clazz) throws Exception {
+	public static Field getDeclaredField(Class<?> clazz, String name)
+		throws Exception {
+
+		return getDeclaredField(true, clazz, name);
+	}
+
+	public static Field[] getDeclaredFields(boolean accessible, Class<?> clazz)
+		throws Exception {
+
 		Field[] fields = clazz.getDeclaredFields();
 
-		for (Field field : fields) {
-			field.setAccessible(true);
+		if (accessible) {
+			for (Field field : fields) {
+				field.setAccessible(true);
+			}
 		}
 
 		return fields;
+	}
+
+	public static Field[] getDeclaredFields(Class<?> clazz) throws Exception {
+		return getDeclaredFields(true, clazz);
+	}
+
+	public static Method getDeclaredMethod(
+			boolean accessible, Class<?> clazz, String name,
+			Class<?>... parameterTypes)
+		throws Exception {
+
+		Method method = clazz.getDeclaredMethod(name, parameterTypes);
+
+		if (accessible) {
+			method.setAccessible(true);
+		}
+
+		return method;
 	}
 
 	public static Method getDeclaredMethod(
 			Class<?> clazz, String name, Class<?>... parameterTypes)
 		throws Exception {
 
-		Method method = clazz.getDeclaredMethod(name, parameterTypes);
-
-		method.setAccessible(true);
-
-		return method;
+		return getDeclaredMethod(true, clazz, name, parameterTypes);
 	}
 
 	public static MethodHandles.Lookup getImplLookup() {
@@ -194,7 +253,8 @@ public class ReflectionUtil {
 	private static Field _fetchDeclaredField(
 			MethodHandle privateGetDeclaredFieldsMethodHandle,
 			MethodHandle searchFieldsMethodHandle,
-			MethodHandle copyFieldMethodHandle, Class<?> clazz, String name)
+			MethodHandle copyFieldMethodHandle, boolean accessible,
+			Class<?> clazz, String name)
 		throws Throwable {
 
 		Field field = (Field)searchFieldsMethodHandle.invokeExact(
@@ -208,7 +268,9 @@ public class ReflectionUtil {
 
 		field = (Field)copyFieldMethodHandle.invokeExact(field);
 
-		field.setAccessible(true);
+		if (accessible) {
+			field.setAccessible(true);
+		}
 
 		return field;
 	}
@@ -216,8 +278,8 @@ public class ReflectionUtil {
 	private static Method _fetchDeclaredMethod(
 			MethodHandle privateGetDeclaredMethodsMethodHandle,
 			MethodHandle searchMethodsMethodHandle,
-			MethodHandle copyMethodMethodHandle, Class<?> clazz, String name,
-			Class<?>... parameterTypes)
+			MethodHandle copyMethodMethodHandle, boolean accessible,
+			Class<?> clazz, String name, Class<?>... parameterTypes)
 		throws Throwable {
 
 		Method method = (Method)searchMethodsMethodHandle.invokeExact(
@@ -231,14 +293,17 @@ public class ReflectionUtil {
 
 		method = (Method)copyMethodMethodHandle.invokeExact(method);
 
-		method.setAccessible(true);
+		if (accessible) {
+			method.setAccessible(true);
+		}
 
 		return method;
 	}
 
 	private static Field _fetchField(
 			MethodHandle getField0MethodHandle,
-			MethodHandle copyFieldMethodHandle, Class<?> clazz, String name)
+			MethodHandle copyFieldMethodHandle, boolean accessible,
+			Class<?> clazz, String name)
 		throws Throwable {
 
 		Field field = (Field)getField0MethodHandle.invokeExact(clazz, name);
@@ -249,15 +314,17 @@ public class ReflectionUtil {
 
 		field = (Field)copyFieldMethodHandle.invokeExact(field);
 
-		field.setAccessible(true);
+		if (accessible) {
+			field.setAccessible(true);
+		}
 
 		return field;
 	}
 
 	private static Method _fetchMethod(
 			MethodHandle getMethod0MethodHandle,
-			MethodHandle copyMethodMethodHandle, Class<?> clazz, String name,
-			Class<?>... parameterTypes)
+			MethodHandle copyMethodMethodHandle, boolean accessible,
+			Class<?> clazz, String name, Class<?>... parameterTypes)
 		throws Throwable {
 
 		Method method = (Method)getMethod0MethodHandle.invokeExact(
@@ -269,7 +336,9 @@ public class ReflectionUtil {
 
 		method = (Method)copyMethodMethodHandle.invokeExact(method);
 
-		method.setAccessible(true);
+		if (accessible) {
+			method.setAccessible(true);
+		}
 
 		return method;
 	}
@@ -332,7 +401,8 @@ public class ReflectionUtil {
 				ReflectionUtil.class, "_fetchDeclaredField",
 				MethodType.methodType(
 					Field.class, MethodHandle.class, MethodHandle.class,
-					MethodHandle.class, Class.class, String.class));
+					MethodHandle.class, boolean.class, Class.class,
+					String.class));
 
 			fetchDeclaredFieldMethodHandle = MethodHandles.insertArguments(
 				fetchDeclaredFieldMethodHandle, 0,
@@ -350,8 +420,8 @@ public class ReflectionUtil {
 				ReflectionUtil.class, "_fetchDeclaredMethod",
 				MethodType.methodType(
 					Method.class, MethodHandle.class, MethodHandle.class,
-					MethodHandle.class, Class.class, String.class,
-					Class[].class));
+					MethodHandle.class, boolean.class, Class.class,
+					String.class, Class[].class));
 
 			fetchDeclaredMethodMethodHandle = MethodHandles.insertArguments(
 				fetchDeclaredMethodMethodHandle, 0,
@@ -370,7 +440,7 @@ public class ReflectionUtil {
 				ReflectionUtil.class, "_fetchField",
 				MethodType.methodType(
 					Field.class, MethodHandle.class, MethodHandle.class,
-					Class.class, String.class));
+					boolean.class, Class.class, String.class));
 
 			fetchFieldMethodHandle = MethodHandles.insertArguments(
 				fetchFieldMethodHandle, 0,
@@ -384,7 +454,7 @@ public class ReflectionUtil {
 				ReflectionUtil.class, "_fetchMethod",
 				MethodType.methodType(
 					Method.class, MethodHandle.class, MethodHandle.class,
-					Class.class, String.class, Class[].class));
+					boolean.class, Class.class, String.class, Class[].class));
 
 			fetchMethodMethodHandle = MethodHandles.insertArguments(
 				fetchMethodMethodHandle, 0,

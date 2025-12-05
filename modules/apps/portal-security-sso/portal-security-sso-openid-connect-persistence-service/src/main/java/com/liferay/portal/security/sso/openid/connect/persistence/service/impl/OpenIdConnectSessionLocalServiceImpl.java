@@ -6,11 +6,11 @@
 package com.liferay.portal.security.sso.openid.connect.persistence.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
-import com.liferay.portal.security.sso.openid.connect.persistence.exception.NoSuchSessionException;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.base.OpenIdConnectSessionLocalServiceBaseImpl;
 
@@ -93,7 +93,7 @@ public class OpenIdConnectSessionLocalServiceImpl
 	@Override
 	public OpenIdConnectSession getOpenIdConnectSession(
 			long userId, String issuer)
-		throws NoSuchSessionException {
+		throws PortalException {
 
 		return openIdConnectSessionPersistence.findByU_I(userId, issuer);
 	}
@@ -101,7 +101,7 @@ public class OpenIdConnectSessionLocalServiceImpl
 	@Override
 	public OpenIdConnectSession getOpenIdConnectSession(
 			String issuer, String sessionId)
-		throws NoSuchSessionException {
+		throws PortalException {
 
 		return openIdConnectSessionPersistence.findByI_S(issuer, sessionId);
 	}

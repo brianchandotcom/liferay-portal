@@ -18,8 +18,8 @@ const baseAttributes = [
 	'publisherLicenseAgreement',
 	'ssaProjectPrefix',
 	'trialAccountCheck',
-	'trialEulaURL',
 	'trialSSAHostPrefix',
+	'useSiteTaxonomyVocabularyQuery',
 ] as const;
 
 const baseKPIAttributes = [
@@ -52,6 +52,8 @@ export function getAttributes(element: HTMLElement) {
 		featureFlags: parseArray(element.getAttribute('featureFlags')),
 		featurePreview: parseArray(element.getAttribute('featurePreview')),
 		kpi: getAttribute(element, baseKPIAttributes),
+		useSiteTaxonomyVocabularyQuery:
+			element.getAttribute('useSiteTaxonomyVocabularyQuery') === 'true',
 	};
 }
 

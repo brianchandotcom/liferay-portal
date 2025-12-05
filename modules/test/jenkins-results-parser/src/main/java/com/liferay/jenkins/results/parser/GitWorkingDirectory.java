@@ -1916,6 +1916,32 @@ public class GitWorkingDirectory {
 				this, "Invalid remote url " + remoteURL);
 		}
 
+		if (!JenkinsResultsParserUtil.isCloudCINode() &&
+			remoteURL.startsWith("git@github.com:liferay/")) {
+
+			try {
+				String sha = JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.combine(
+						"http://",
+						JenkinsResultsParserUtil.getBuildProperty(
+							"mirrors.hostname"),
+						"/github.com/liferay/sha/", getGitRepositoryName(), "(",
+						remoteGitBranchName, ").txt"), false);
+
+				sha = sha.trim();
+
+				if (JenkinsResultsParserUtil.isValidGitSHA(sha)) {
+					return sha;
+				}
+			}
+			catch (Exception exception) {
+				System.out.println(
+					"Unable to retrieve cached SHA information.");
+
+				exception.printStackTrace();
+			}
+		}
+
 		String command = JenkinsResultsParserUtil.combine(
 			"git ls-remote -h ", remoteURL, " ", remoteGitBranchName);
 

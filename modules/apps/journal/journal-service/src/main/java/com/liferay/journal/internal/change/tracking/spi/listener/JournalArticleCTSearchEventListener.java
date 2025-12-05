@@ -5,16 +5,19 @@
 
 package com.liferay.journal.internal.change.tracking.spi.listener;
 
-import com.liferay.change.tracking.model.CTEntryTable;
+import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
@@ -31,6 +34,13 @@ public class JournalArticleCTSearchEventListener implements CTEventListener {
 
 	@Override
 	public void onAfterPublish(long ctCollectionId) {
+		List<CTEntry> ctEntries = _ctEntryLocalService.getCTEntries(
+			ctCollectionId, _portal.getClassNameId(JournalArticle.class));
+
+		if (ctEntries.isEmpty()) {
+			return;
+		}
+
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				List<JournalArticle> journalArticles = null;
@@ -45,13 +55,16 @@ public class JournalArticleCTSearchEventListener implements CTEventListener {
 							JournalArticleTable.INSTANCE
 						).from(
 							JournalArticleTable.INSTANCE
-						).innerJoinON(
-							CTEntryTable.INSTANCE,
-							CTEntryTable.INSTANCE.modelClassPK.eq(
-								JournalArticleTable.INSTANCE.id)
 						).where(
 							JournalArticleTable.INSTANCE.ctCollectionId.eq(
-								ctCollectionId)
+								ctCollectionId
+							).and(
+								JournalArticleTable.INSTANCE.id.in(
+									TransformUtil.transformToArray(
+										ctEntries,
+										ctEntry -> ctEntry.getModelClassPK(),
+										Long.class))
+							)
 						));
 				}
 
@@ -61,6 +74,9 @@ public class JournalArticleCTSearchEventListener implements CTEventListener {
 			});
 	}
 
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
+
 	@Reference(
 		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
 	)
@@ -68,5 +84,8 @@ public class JournalArticleCTSearchEventListener implements CTEventListener {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

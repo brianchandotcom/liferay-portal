@@ -111,13 +111,11 @@ const RichText = ({
 				},
 			});
 
-			const {availableLocales} = {
-				...transformAvailableLocalesAndValue({
-					availableLocales: currentAvailableLocales,
-					defaultLocale,
-					value: currentValue,
-				}),
-			};
+			const {availableLocales} = transformAvailableLocalesAndValue({
+				availableLocales: currentAvailableLocales,
+				defaultLocale,
+				value: currentValue,
+			});
 
 			setCurrentAvailableLocales(availableLocales);
 		}
@@ -136,13 +134,11 @@ const RichText = ({
 				editor.setData(currentInternalValue);
 			}
 
-			const {availableLocales} = {
-				...transformAvailableLocalesAndValue({
-					availableLocales: currentAvailableLocales,
-					defaultLocale,
-					value: currentValue,
-				}),
-			};
+			const {availableLocales} = transformAvailableLocalesAndValue({
+				availableLocales: currentAvailableLocales,
+				defaultLocale,
+				value: currentValue,
+			});
 
 			setCurrentAvailableLocales(availableLocales);
 		}
@@ -224,13 +220,11 @@ const RichText = ({
 
 			setCurrentInternalValue(content);
 
-			const {availableLocales} = {
-				...transformAvailableLocalesAndValue({
-					availableLocales: currentAvailableLocales,
-					defaultLocale,
-					value: newValue,
-				}),
-			};
+			const {availableLocales} = transformAvailableLocalesAndValue({
+				availableLocales: currentAvailableLocales,
+				defaultLocale,
+				value: newValue,
+			});
 
 			setCurrentAvailableLocales(availableLocales);
 

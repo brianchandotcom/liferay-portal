@@ -481,24 +481,6 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_NotL() throws Exception {
-		_persistence.countByG_NotL(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByG_NotL(0L, "null");
-
-		_persistence.countByG_NotL(0L, (String)null);
-	}
-
-	@Test
-	public void testCountByG_NotLArrayable() throws Exception {
-		_persistence.countByG_NotL(
-			RandomTestUtil.nextLong(),
-			new String[] {
-				RandomTestUtil.randomString(), "", "null", null, null
-			});
-	}
-
-	@Test
 	public void testCountByG_ST() throws Exception {
 		_persistence.countByG_ST(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
@@ -642,6 +624,25 @@ public class JournalArticlePersistenceTest {
 		_persistence.countByG_C_L(0L, 0L, "null");
 
 		_persistence.countByG_C_L(0L, 0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_C_NotL() throws Exception {
+		_persistence.countByG_C_NotL(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_C_NotL(0L, 0L, "null");
+
+		_persistence.countByG_C_NotL(0L, 0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_C_NotLArrayable() throws Exception {
+		_persistence.countByG_C_NotL(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			});
 	}
 
 	@Test

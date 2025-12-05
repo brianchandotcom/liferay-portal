@@ -68,7 +68,7 @@ export default function RuleSelect<T extends string>({
 	triggerRef,
 	...otherProps
 }: RuleSelectProps<T>) {
-	const [error, setError] = useState<boolean>(false);
+	const [hasError, setHasError] = useState<boolean>(false);
 	const id = useId();
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const previousSelectedKey = usePrevious(selectedKey);
@@ -78,12 +78,12 @@ export default function RuleSelect<T extends string>({
 	useEffect(() => {
 		if (!previousSelectedKey && fieldRef?.current) {
 			onErrorChange(
-				selectedKey ? null : {field: fieldRef.current, label}
+				selectedKey ? null : {element: fieldRef.current, message: label}
 			);
 		}
 	}, [label, id, fieldRef, onErrorChange, previousSelectedKey, selectedKey]);
 
-	useRuleValidation(() => setError(!selectedKey && !previousSelectedKey));
+	useRuleValidation(() => setHasError(!selectedKey && !previousSelectedKey));
 
 	if (readOnly) {
 		const item = items.find(({value}) => value === selectedKey);
@@ -102,9 +102,9 @@ export default function RuleSelect<T extends string>({
 	return (
 		<RuleField
 			className="mb-0 page-editor__rule-builder-select w-100"
-			error={error}
-			errorLabel={label}
+			errorMessage={label}
 			fieldId={id}
+			hasError={hasError}
 		>
 			{items.length ? (
 				<Picker
@@ -128,12 +128,12 @@ export default function RuleSelect<T extends string>({
 					onSelectionChange={(selection: React.Key) => {
 						onSelectionChange(selection as T);
 
-						setError(false);
+						setHasError(false);
 					}}
 					placeholder={Liferay.Language.get('select')}
 					selectedKey={selectedKey}
 					triggerRef={fieldRef}
-					{...(error && {'aria-describedby': `${id}-error`})}
+					{...(hasError && {'aria-describedby': `${id}-error`})}
 					{...otherProps}
 				>
 					{(item) => <Option key={item.value}>{item.label}</Option>}
@@ -147,7 +147,7 @@ export default function RuleSelect<T extends string>({
 					ref={inputRef}
 					sizing="sm"
 					value={Liferay.Language.get('no-options-available')}
-					{...(error && {'aria-describedby': `${id}-error`})}
+					{...(hasError && {'aria-describedby': `${id}-error`})}
 				/>
 			)}
 		</RuleField>

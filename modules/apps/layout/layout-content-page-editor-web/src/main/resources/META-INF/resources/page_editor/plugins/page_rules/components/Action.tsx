@@ -89,7 +89,7 @@ export default function Action({
 	const completeAction = !!action.itemId;
 
 	const onErrorChange = (error: RuleError | null) => {
-		if (action.error?.field.id !== error?.field.id) {
+		if (action.error?.element.id !== error?.element.id) {
 			onActionChange({...action, error});
 		}
 	};

@@ -35,6 +35,6 @@ export type Rule = {
 };
 
 export type RuleError = {
-	field: HTMLButtonElement | HTMLInputElement;
-	label: string;
+	element: HTMLButtonElement | HTMLInputElement;
+	message: string;
 };

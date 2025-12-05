@@ -10,26 +10,28 @@ import React from 'react';
 export default function RuleField({
 	children,
 	className,
-	error,
-	errorLabel,
+	errorMessage,
 	fieldId,
+	hasError,
 }: {
 	children: React.ReactNode;
 	className?: string;
-	error: boolean;
-	errorLabel: string;
+	errorMessage: string;
 	fieldId: string;
+	hasError: boolean;
 }) {
 	return (
-		<ClayForm.Group className={classNames(className, {'has-error': error})}>
+		<ClayForm.Group
+			className={classNames(className, {'has-error': hasError})}
+		>
 			{children}
 
-			{error ? (
+			{hasError ? (
 				<ClayForm.FeedbackGroup>
 					<ClayForm.FeedbackItem>
 						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-						{errorLabel}
+						{errorMessage}
 
 						<span className="sr-only" id={`${fieldId}-error`}>
 							{Liferay.Language.get('this-field-is-required')}

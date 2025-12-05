@@ -107,16 +107,19 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -125,6 +128,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -2814,50 +2818,32 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testPublishCustomObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"textObjectField"
-					).localized(
-						true
-					).build()));
+		ObjectDefinition objectDefinition1 = _publishCustomObjectDefinition();
 
-		objectDefinition1.setName(ObjectDefinitionTestUtil.getRandomName());
+		_assertPublishedObjectDefinition(objectDefinition1);
 
-		objectDefinition1 = _updateCustomObjectDefinition(
-			null, objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 
-		objectDefinition1 =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				objectDefinition1.getObjectDefinitionId());
+		ObjectDefinition objectDefinition2 = _publishCustomObjectDefinition();
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition1.getObjectDefinitionId(), "textObjectField");
+		_assertPublishedObjectDefinition(objectDefinition2);
 
-		Assert.assertEquals(
-			objectDefinition1.getDBTableName(), objectField.getDBTableName());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 
-		ObjectDefinition objectDefinition2 = _publishCustomObjectDefinition(
+		ObjectDefinition objectDefinition3 = _publishCustomObjectDefinition(
 			false);
 
 		Assert.assertNull(
-			IndexerRegistryUtil.getIndexer(objectDefinition2.getClassName()));
+			IndexerRegistryUtil.getIndexer(objectDefinition3.getClassName()));
 
-		ObjectDefinition objectDefinition3 = _publishCustomObjectDefinition(
+		ObjectDefinition objectDefinition4 = _publishCustomObjectDefinition(
 			true);
 
 		Assert.assertNotNull(
-			IndexerRegistryUtil.getIndexer(objectDefinition3.getClassName()));
+			IndexerRegistryUtil.getIndexer(objectDefinition4.getClassName()));
 
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition4);
 	}
 
 	@Test
@@ -3717,6 +3703,27 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(required, objectField.isRequired());
 	}
 
+	private void _assertPublishedObjectDefinition(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Assert.assertTrue(
+			_hasOwnerResourcePermission(ActionKeys.DELETE, objectDefinition));
+		Assert.assertTrue(
+			_hasOwnerResourcePermission(
+				ActionKeys.PERMISSIONS, objectDefinition));
+		Assert.assertTrue(
+			_hasOwnerResourcePermission(ActionKeys.UPDATE, objectDefinition));
+		Assert.assertTrue(
+			_hasOwnerResourcePermission(ActionKeys.VIEW, objectDefinition));
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getObjectDefinitionId(), "textObjectField");
+
+		Assert.assertEquals(
+			objectDefinition.getDBTableName(), objectField.getDBTableName());
+	}
+
 	private void _assertSystemObjectFields(
 		ObjectField expectedObjectField, ObjectField objectField) {
 
@@ -3843,12 +3850,55 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
+	private boolean _hasOwnerResourcePermission(
+			String actionId, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(
+			objectDefinition.getCompanyId(), RoleConstants.OWNER);
+
+		return _resourcePermissionLocalService.hasResourcePermission(
+			objectDefinition.getCompanyId(), objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, objectDefinition.getClassName(),
+			role.getRoleId(), actionId);
+	}
+
 	private boolean _hasTable(String tableName) throws Exception {
 		try (Connection connection = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			return dbInspector.hasTable(tableName);
 		}
+	}
+
+	private ObjectDefinition _publishCustomObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition = _addCustomObjectDefinition(
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION + "test",
+			ObjectDefinitionTestUtil.getRandomName());
+
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
+			).name(
+				"textObjectField"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		objectDefinition.setName(ObjectDefinitionTestUtil.getRandomName());
+
+		objectDefinition = _updateCustomObjectDefinition(
+			null, objectDefinition);
+
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	private ObjectDefinition _publishCustomObjectDefinition(
@@ -4346,6 +4396,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;

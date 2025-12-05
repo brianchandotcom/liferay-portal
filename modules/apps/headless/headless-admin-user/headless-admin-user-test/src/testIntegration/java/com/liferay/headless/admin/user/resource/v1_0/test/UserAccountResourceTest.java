@@ -574,6 +574,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 
 		_testGetUserAccountWithGender();
+		_testGetUserAccountWithLoginDate();
 		_testGetUserAccountWithMoreExternalReferenceCodes();
 		_testGetUserAccountWithNestedFields();
 	}
@@ -2292,6 +2293,17 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 			portletPreferences.store();
 		}
+	}
+
+	private void _testGetUserAccountWithLoginDate() throws Exception {
+		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
+
+		_userLocalService.updateLastLogin(postUserAccount.getId(), null);
+
+		UserAccount getUserAccount = userAccountResource.getUserAccount(
+			postUserAccount.getId());
+
+		Assert.assertNotNull(getUserAccount.getLoginDate());
 	}
 
 	private void _testGetUserAccountWithMoreExternalReferenceCodes()

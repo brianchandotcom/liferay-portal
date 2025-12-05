@@ -17,8 +17,9 @@ import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import {isAllowedInRules} from '../../../app/utils/isAllowedInRules';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
-import ActionComponent, {Action} from './Action';
-import ConditionComponent, {Condition} from './Condition';
+import {Action, Condition} from '../../../types/Rule';
+import ActionComponent from './Action';
+import ConditionComponent from './Condition';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className: _className, onClick, ...otherProps}, ref) => (

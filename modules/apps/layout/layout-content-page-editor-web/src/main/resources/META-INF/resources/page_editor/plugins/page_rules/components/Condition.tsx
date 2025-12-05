@@ -12,25 +12,14 @@ import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
 import useConditionValues from '../../../app/utils/useConditionValues';
+import {Condition as ConditionType, RuleError} from '../../../types/Rule';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
-import {RuleError} from './RulesModal';
-
-export interface Condition {
-	error?: RuleError | null;
-	field?: 'user' | 'role' | 'segment' | string;
-	id: string;
-	options?: {
-		type: 'equal' | 'not-equal';
-		value?: string;
-	};
-	type: 'user' | 'form' | undefined;
-}
 
 interface ConditionProps {
-	condition: Condition;
+	condition: ConditionType;
 	inputFragmentItems: {label: string; value: string}[];
-	onConditionChange: (condition: Condition) => void;
+	onConditionChange: (condition: ConditionType) => void;
 	onDeleteCondition: () => void;
 	showDeleteButton: boolean;
 	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
@@ -194,9 +183,9 @@ function FormFragmentTypeSelectors({
 	onErrorChange,
 	sendMessage,
 }: {
-	condition: Condition;
+	condition: ConditionType;
 	inputFragmentItems: {label: string; value: string}[];
-	onConditionChange: (condition: Condition) => void;
+	onConditionChange: (condition: ConditionType) => void;
 	onErrorChange: (error: RuleError | null) => void;
 	sendMessage: (message: string) => void;
 }) {
@@ -303,8 +292,8 @@ function UserTypeSelectors({
 	onErrorChange,
 	sendMessage,
 }: {
-	condition: Condition;
-	onConditionChange: (condition: Condition) => void;
+	condition: ConditionType;
+	onConditionChange: (condition: ConditionType) => void;
 	onErrorChange: (error: RuleError | null) => void;
 	sendMessage: (message: string) => void;
 }) {
@@ -446,7 +435,7 @@ function SegmentsSelector({
 
 function convertConditionValueToOptions(
 	field: keyof typeof CONDITION_VALUES
-): Partial<Condition> {
+): Partial<ConditionType> {
 	if (field === CONDITION_VALUES.not_user) {
 		return {
 			field: CONDITION_VALUES.user,
@@ -483,7 +472,7 @@ function convertConditionValueToOptions(
 }
 
 export function convertOptionsToConditionValue(
-	condition: Condition
+	condition: ConditionType
 ): keyof typeof CONDITION_VALUES | undefined {
 	if (condition.field === CONDITION_VALUES.user) {
 		if (condition.options?.type === 'equal') {

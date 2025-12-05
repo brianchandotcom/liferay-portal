@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export function deactivateFilter(filter: any) {
-	filter.active = false;
-	filter.odataFilterString = undefined;
-	filter.selectedData = undefined;
+import {deepClone} from 'frontend-js-web';
 
-	return {
-		...filter,
-	};
+export function deactivateFilter(filter: any) {
+	const updatedFilter = deepClone(filter);
+
+	updatedFilter.active = false;
+	updatedFilter.odataFilterString = undefined;
+	updatedFilter.selectedData = undefined;
+
+	return updatedFilter;
 }

@@ -376,6 +376,8 @@ public interface PortletLocalService
 	@Transactional(enabled = false)
 	public void removeCompanyPortletsPool(long companyId);
 
+	public void removePortletModelResources(long companyId, String portletId);
+
 	public Portlet updatePortlet(
 		long companyId, String portletId, String roles, boolean active);
 

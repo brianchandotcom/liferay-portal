@@ -12,12 +12,14 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -49,6 +52,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.site.cms.site.initializer.internal.util.PermissionUtil;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -70,7 +75,9 @@ public abstract class BaseSectionDisplayContext {
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		ModelResourcePermission<ObjectEntryFolder>
 			objectEntryFolderModelResourcePermission,
-		Portal portal) {
+		Portal portal,
+		TranslationInfoItemFieldValuesExporterRegistry
+			translationInfoItemFieldValuesExporterRegistry) {
 
 		this.depotEntryLocalService = depotEntryLocalService;
 
@@ -83,6 +90,8 @@ public abstract class BaseSectionDisplayContext {
 		_objectDefinitionService = objectDefinitionService;
 
 		this.portal = portal;
+		_translationInfoItemFieldValuesExporterRegistry =
+			translationInfoItemFieldValuesExporterRegistry;
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -116,6 +125,12 @@ public abstract class BaseSectionDisplayContext {
 				"true&entryClassNames=com.liferay.portal.kernel.model.User,",
 				"com.liferay.portal.kernel.model.UserGroup&nestedFields=",
 				"embedded")
+		).put(
+			"availableExportFileFormats",
+			() -> TransformUtil.transform(
+				_translationInfoItemFieldValuesExporterRegistry.
+					getTranslationInfoItemFieldValuesExporters(),
+				this::_getExportFileFormatJSONObject)
 		).put(
 			"baseAssetLibraryViewURL", ActionUtil.getBaseSpaceURL(themeDisplay)
 		).put(
@@ -355,6 +370,25 @@ public abstract class BaseSectionDisplayContext {
 	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
+	private JSONObject _getExportFileFormatJSONObject(
+		TranslationInfoItemFieldValuesExporter
+			translationInfoItemFieldValuesExporter) {
+
+		return JSONUtil.put(
+			"displayName",
+			() -> {
+				InfoLocalizedValue<String> labelInfoLocalizedValue =
+					translationInfoItemFieldValuesExporter.
+						getLabelInfoLocalizedValue();
+
+				return labelInfoLocalizedValue.getValue(
+					themeDisplay.getLocale());
+			}
+		).put(
+			"mimeType", translationInfoItemFieldValuesExporter.getMimeType()
+		);
+	}
+
 	private Map<String, String> _getFileMimeTypeCssClasses() {
 		return HashMapBuilder.put(
 			"default", "file-icon-color-0"
@@ -493,5 +527,7 @@ public abstract class BaseSectionDisplayContext {
 	private final DLConfiguration _dlConfiguration;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final SectionDisplayContextHelper _sectionDisplayContextHelper;
+	private final TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 }

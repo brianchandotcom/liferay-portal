@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -41,13 +42,16 @@ public abstract class BaseContentsSectionDisplayContext
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		ModelResourcePermission<ObjectEntryFolder>
 			objectEntryFolderModelResourcePermission,
-		Portal portal) {
+		Portal portal,
+		TranslationInfoItemFieldValuesExporterRegistry
+			translationInfoItemFieldValuesExporterRegistry) {
 
 		super(
 			depotEntryLocalService, null, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
-			objectEntryFolderModelResourcePermission, portal);
+			objectEntryFolderModelResourcePermission, portal,
+			translationInfoItemFieldValuesExporterRegistry);
 	}
 
 	@Override

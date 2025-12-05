@@ -677,7 +677,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"10.25.0", "10.25.1",
 			UpgradeProcessFactory.alterColumnType(
-				"ObjectDefinitionSetting", "value", "TEXT"));
+				"ObjectFieldSetting", "value", "TEXT"));
 
 		registry.register(
 			"10.25.1", "10.26.0",

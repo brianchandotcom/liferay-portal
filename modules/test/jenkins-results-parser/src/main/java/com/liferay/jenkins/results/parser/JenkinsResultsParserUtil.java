@@ -4130,6 +4130,16 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
+	public static boolean isValidGitSHA(String sha) {
+		if (sha == null) {
+			return false;
+		}
+
+		Matcher matcher = _gitSHAPattern.matcher(sha);
+
+		return matcher.matches();
+	}
+
 	public static boolean isValidTarFile(File file) {
 		if (!file.exists()) {
 			return false;
@@ -7278,6 +7288,8 @@ public class JenkinsResultsParserUtil {
 		"https\\:\\/\\/api\\.github\\.com(.*)");
 	private static final DateFormat _gitHubDateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss");
+	private static final Pattern _gitSHAPattern = Pattern.compile(
+		"^([0-9a-fA-F]{6}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64})$");
 	private static JSONArray _gitWorkingDirectoriesJSONArray;
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");

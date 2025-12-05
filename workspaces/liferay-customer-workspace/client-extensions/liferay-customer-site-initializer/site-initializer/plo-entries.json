@@ -294,6 +294,15 @@
 		}
 	},
 	{
+		"key": "reference-the-latest-changes-for-liferay-analytics-cloud",
+		"value": {
+			"en-US": "Reference the latest changes for Liferay Analytics Cloud platform and services",
+			"es-ES": "Revisa los últimos cambios de la plataforma y los servicios de Liferay Analytics Cloud",
+			"ja-JP": "Liferay Analytics Cloudプラットフォームおよびサービスの最新の変更点の確認はこちら",
+			"pt-BR": "Revise as últimas alterações da plataforma e dos serviços do Liferay Analytics Cloud"
+		}
+	},
+	{
 		"key": "search-engine-compatibility-by-product-and-version",
 		"value": {
 			"en-US": "Search engine compatibility by product and version",

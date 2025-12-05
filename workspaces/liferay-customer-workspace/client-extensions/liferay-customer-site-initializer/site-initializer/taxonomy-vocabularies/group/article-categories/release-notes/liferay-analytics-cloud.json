@@ -1,0 +1,11 @@
+{
+	"externalReferenceCode": "T_AC_LIFERAY_ANALYTICS_CLOUD",
+	"name": "Liferay Analytics Cloud",
+	"name_i18n": {
+		"en_US": "Liferay Analytics Cloud",
+		"es-ES": "Liferay Analytics Cloud",
+		"ja-JP": "Liferay Analytics Cloud",
+		"pt-BR": "Liferay Analytics Cloud"
+	},
+	"viewableBy": "Anyone"
+}

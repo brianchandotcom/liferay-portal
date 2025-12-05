@@ -7,46 +7,61 @@ import {Liferay} from '../../liferay/liferay';
 import fetcher from '../fetcher';
 
 export default class HeadlessAdminTaxonomy {
-	static async getTaxonomyVocabularies() {
-		return fetcher(
-			`/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies`
-		);
-	}
-
-	static async getSiteTaxonomyVocabulariesWithCategories() {
+	static async getSiteTaxonomyVocabulariesGraphQL() {
 		const response = await fetcher.post<{
-			data: {taxonomyVocabularies: APIResponse<TaxonomyVocabulary>};
+			data: {
+				headlessAdminTaxonomy_v1_0: {
+					taxonomyVocabularies: APIResponse<TaxonomyVocabulary>;
+				};
+			};
 		}>('/o/graphql', {
 			query: `{
-				taxonomyVocabularies: siteTaxonomyVocabularies(siteKey: "${Liferay.ThemeDisplay.getScopeGroupId()}") {
-					items {
-						id
-						name
-						taxonomyCategories {
-							items {
-								externalReferenceCode
-								id
-								name
+				headlessAdminTaxonomy_v1_0 {
+					taxonomyVocabularies: siteTaxonomyVocabularies(siteKey: "${Liferay.ThemeDisplay.getScopeGroupId()}") {
+						items {
+							id
+							name
+							taxonomyCategories {
+								items {
+									id
+									name
+								}
 							}
 						}
 					}
-					lastPage
-					page
-					pageSize
-					totalCount
 				}
 			}`,
 		});
 
-		return response.data.taxonomyVocabularies;
+		return response.data?.headlessAdminTaxonomy_v1_0?.taxonomyVocabularies;
 	}
 
-	static async getTaxonomyCategories(
-		vocabularyId: number,
-		searchParams = new URLSearchParams()
-	) {
-		return fetcher(
-			`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories?${searchParams.toString()}`
-		);
+	static async getTaxonomyVocabulariesGraphQL() {
+		const response = await fetcher.post<{
+			data: {
+				headlessAdminTaxonomy_v1_0: {
+					taxonomyVocabularies: APIResponse<TaxonomyVocabulary>;
+				};
+			};
+		}>('/o/graphql', {
+			query: `{
+				headlessAdminTaxonomy_v1_0 {
+					taxonomyVocabularies(siteKey: "${Liferay.ThemeDisplay.getScopeGroupId()}") {
+						items {
+							id
+							name
+							taxonomyCategories {
+								items {
+									id
+									name
+								}
+							}
+						}
+					}
+				}
+			}`,
+		});
+
+		return response.data?.headlessAdminTaxonomy_v1_0?.taxonomyVocabularies;
 	}
 }

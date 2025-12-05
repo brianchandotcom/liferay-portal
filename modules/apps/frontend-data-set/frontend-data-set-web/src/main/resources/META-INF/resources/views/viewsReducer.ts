@@ -3,16 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {deepClone} from 'frontend-js-web';
+
 import {IView} from '../utils/types';
+import {ISnapshot} from './ViewsContext';
 import getViewComponent from './getViewComponent';
 
 export enum EViewsActionTypes {
-	ADD_OR_UPDATE_CUSTOM_VIEW = 'ADD_OR_UPDATE_CUSTOM_VIEW',
+	ADD_OR_UPDATE_SNAPSHOT = 'ADD_OR_UPDATE_SNAPSHOT',
 	BATCH_UPDATE = 'BATCH_UPDATE',
-	DELETE_CUSTOM_VIEW = 'DELETE_CUSTOM_VIEW',
-	RENAME_ACTIVE_CUSTOM_VIEW = 'RENAME_ACTIVE_CUSTOM_VIEW',
-	RESET_TO_DEFAULT_VIEW = 'RESET_TO_DEFAULT_VIEW',
-	UPDATE_ACTIVE_CUSTOM_VIEW = 'UPDATE_ACTIVE_CUSTOM_VIEW',
+	DELETE_SNAPSHOT = 'DELETE_SNAPSHOT',
+	RENAME_ACTIVE_SNAPSHOT = 'RENAME_ACTIVE_SNAPSHOT',
+	RESET_TO_DEFAULT_SNAPSHOT = 'RESET_TO_DEFAULT_SNAPSHOT',
+	UPDATE_ACTIVE_SNAPSHOT = 'UPDATE_ACTIVE_SNAPSHOT',
 	UPDATE_ACTIVE_VIEW = 'UPDATE_ACTIVE_VIEW',
 	UPDATE_FIELD = 'UPDATE_FIELD',
 	UPDATE_FILTERS = 'UPDATE_FILTERS',
@@ -29,18 +32,34 @@ type TViewsActions = {
 };
 
 const viewsActions: TViewsActions = {
-	[EViewsActionTypes.ADD_OR_UPDATE_CUSTOM_VIEW]: (state, value) => {
-		const {customViews} = state;
+	[EViewsActionTypes.ADD_OR_UPDATE_SNAPSHOT]: (state, value) => {
+		const {snapshots} = state;
 
-		const {id, viewState} = value;
+		const {configuration, erc} = value;
+
+		const existentSnapshot = snapshots.find(
+			(snapshot: ISnapshot) => snapshot.erc === erc
+		);
+
+		let updatedSnapshots;
+
+		if (!existentSnapshot) {
+			updatedSnapshots = snapshots.concat([value]);
+		}
+		else {
+			updatedSnapshots = snapshots.map((snapshot: ISnapshot) => {
+				if (snapshot.erc === erc) {
+					snapshot.configuration = configuration;
+				}
+
+				return snapshot;
+			});
+		}
 
 		return {
 			...state,
-			activeCustomViewId: id,
-			customViews: {
-				...customViews,
-				[id]: viewState,
-			},
+			activeSnapshotERC: erc,
+			snapshots: updatedSnapshots,
 			viewUpdated: false,
 		};
 	},
@@ -59,67 +78,63 @@ const viewsActions: TViewsActions = {
 			return viewsActions[type](acc, value);
 		}, state);
 	},
-	[EViewsActionTypes.DELETE_CUSTOM_VIEW]: (state, value) => {
-		const {customViews, defaultView} = state;
+	[EViewsActionTypes.DELETE_SNAPSHOT]: (state, value) => {
+		const {defaultSnapshot, snapshots} = state;
 
-		const {[value.id]: _unusedVar, ...remainingCustomViews} = customViews;
+		const remainingSnapshots = snapshots.filter(
+			(snapshot: ISnapshot) => snapshot.erc !== value.snapshotERC
+		);
 
 		return {
 			...state,
-			...defaultView,
-			activeCustomViewId: null,
-			customViews: remainingCustomViews,
+			...defaultSnapshot,
+			activeSnapshotERC: null,
+			snapshots: remainingSnapshots,
 			viewUpdated: false,
 		};
 	},
-	[EViewsActionTypes.RENAME_ACTIVE_CUSTOM_VIEW]: (state, value) => {
-		const {activeCustomViewId, customViews} = state;
+	[EViewsActionTypes.RENAME_ACTIVE_SNAPSHOT]: (state, value) => {
+		const {activeSnapshotERC, snapshots} = state;
 
-		const customView = customViews[activeCustomViewId];
+		const updatedSnapshots = snapshots.map((snapshot: ISnapshot) => {
+			if (snapshot.erc === activeSnapshotERC) {
+				snapshot.label = value.label;
+			}
 
-		customView.customViewLabel = value.label;
-
-		return {
-			...state,
-			customViews: {
-				...customViews,
-				[activeCustomViewId]: customView,
-			},
-		};
-	},
-	[EViewsActionTypes.RESET_TO_DEFAULT_VIEW]: (state) => {
-		const {defaultView} = state;
+			return snapshot;
+		});
 
 		return {
 			...state,
-			...defaultView,
-			activeCustomViewId: null,
-			modifiedFields: {},
+			snapshots: [...updatedSnapshots],
 			viewUpdated: false,
 		};
 	},
-	[EViewsActionTypes.UPDATE_ACTIVE_CUSTOM_VIEW]: (state, value) => {
-		const {customViews, defaultView} = state;
-
-		const activeCustomView = customViews[value];
-
-		if (!activeCustomView) {
-			return state;
-		}
-
-		if (!activeCustomView.activeView) {
-			activeCustomView.activeView = defaultView.activeView;
-		}
-
-		activeCustomView.activeView.component =
-			getViewComponent(activeCustomView.activeView) ??
-			getViewComponent(defaultView.activeView);
+	[EViewsActionTypes.RESET_TO_DEFAULT_SNAPSHOT]: (state) => {
+		const {defaultSnapshot} = state;
 
 		return {
 			...state,
-			...activeCustomView,
-			activeCustomViewId: value,
-			modifiedFields: {},
+			...defaultSnapshot,
+			activeSnapshotERC: null,
+			viewUpdated: false,
+		};
+	},
+	[EViewsActionTypes.UPDATE_ACTIVE_SNAPSHOT]: (state, value) => {
+		const {defaultSnapshot} = state;
+
+		if (!value.configuration.activeView) {
+			value.configuration.activeView = defaultSnapshot.activeView;
+		}
+
+		value.configuration.activeView.component =
+			getViewComponent(value.configuration.activeView) ??
+			getViewComponent(defaultSnapshot.activeView);
+
+		return {
+			...state,
+			...value.configuration,
+			activeSnapshotERC: value.erc,
 			viewUpdated: false,
 		};
 	},
@@ -148,11 +163,18 @@ const viewsActions: TViewsActions = {
 		};
 	},
 	[EViewsActionTypes.UPDATE_FIELD]: (state, value) => {
-		const {modifiedFields} = state;
+		const {defaultSnapshot, modifiedFields} = state;
 
 		const {name} = value;
 
 		const fieldAttributes = modifiedFields[name] ?? {};
+
+		if (!defaultSnapshot.modifiedFields[name]) {
+			defaultSnapshot.modifiedFields[name] = {
+				...fieldAttributes,
+				...value,
+			};
+		}
 
 		return {
 			...state,
@@ -166,7 +188,6 @@ const viewsActions: TViewsActions = {
 		return {
 			...state,
 			pageNumber: value,
-			viewUpdated: false,
 		};
 	},
 	[EViewsActionTypes.UPDATE_PAGINATION_DELTA]: (state, value) => {
@@ -180,7 +201,6 @@ const viewsActions: TViewsActions = {
 		return {
 			...state,
 			searchParam: value,
-			viewUpdated: false,
 		};
 	},
 	[EViewsActionTypes.UPDATE_SORTING]: (state, value) => {
@@ -248,7 +268,7 @@ const viewsReducer = (
 		return viewsActions[type](state, value);
 	}
 
-	return state;
+	return deepClone(state);
 };
 
 export default viewsReducer;

@@ -99,7 +99,7 @@ function AssetVocabularyContextualSidebar({
 
 					setSelectedVocabulary({
 						...item,
-						classPK: item.assetVocabularyId,
+						externalReferenceCode: item.externalReferenceCode,
 					});
 
 					const namespacedItem = Liferay.Util.ns(namespace, item);
@@ -315,7 +315,7 @@ function AssetVocabularyContextualSidebar({
 
 AssetVocabularyContextualSidebar.propTypes = {
 	assetVocabulary: PropTypes.shape({
-		classPK: PropTypes.string,
+		externalReferenceCode: PropTypes.string,
 		scopeExternalReferenceCode: PropTypes.string,
 		title: PropTypes.string,
 		type: PropTypes.string,
@@ -344,12 +344,6 @@ function FormValues({
 }) {
 	return (
 		<>
-			<input
-				name={getFieldName(namespace, 'classPK')}
-				readOnly
-				type="hidden"
-				value={selectedVocabulary.classPK || ''}
-			/>
 			<input
 				name={getFieldName(namespace, 'externalReferenceCode')}
 				readOnly
@@ -400,7 +394,7 @@ FormValues.propTypes = {
 	localizedNames: PropTypes.object.isRequired,
 	namespace: PropTypes.string.isRequired,
 	selectedVocabulary: PropTypes.shape({
-		classPK: PropTypes.string,
+		externalReferenceCode: PropTypes.string,
 		scopeExternalReferenceCode: PropTypes.string,
 		title: PropTypes.string,
 		type: PropTypes.string,

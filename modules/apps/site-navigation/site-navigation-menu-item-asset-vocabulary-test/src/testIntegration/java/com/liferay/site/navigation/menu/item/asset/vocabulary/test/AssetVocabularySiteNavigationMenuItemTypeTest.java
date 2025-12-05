@@ -125,9 +125,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
-					"classPK",
-					String.valueOf(assetVocabulary1.getVocabularyId())
-				).put(
 					"externalReferenceCode",
 					assetVocabulary1.getExternalReferenceCode()
 				).put(
@@ -779,8 +776,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 				Field.DEFAULT_LANGUAGE_ID,
 				LocaleUtil.toLanguageId(defaultLocale)
 			).put(
-				"classPK", String.valueOf(assetVocabulary.getVocabularyId())
-			).put(
 				"externalReferenceCode",
 				assetVocabulary.getExternalReferenceCode()
 			).put(
@@ -885,8 +880,9 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		Assert.assertEquals(
 			"asset-category", typeSettingsUnicodeProperties.get("type"));
 		Assert.assertEquals(
-			assetCategory.getCategoryId(),
-			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")));
+			assetCategory.getExternalReferenceCode(),
+			GetterUtil.getString(
+				typeSettingsUnicodeProperties.get("externalReferenceCode")));
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.getAssetVocabulary(
@@ -936,9 +932,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 					typeSettingsUnicodeProperties.get("type"),
 					"asset-category") ||
 				!Objects.equals(
-					assetCategory.getCategoryId(),
-					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("classPK")))) {
+					assetCategory.getExternalReferenceCode(),
+					GetterUtil.getString(
+						typeSettingsUnicodeProperties.get(
+							"externalReferenceCode")))) {
 
 				continue;
 			}

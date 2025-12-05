@@ -207,8 +207,6 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				UnicodePropertiesBuilder.put(
 					"className", JournalArticle.class.getName()
 				).put(
-					"classPK", journalArticle1.getResourcePrimKey()
-				).put(
 					"externalReferenceCode",
 					journalArticle1.getExternalReferenceCode()
 				).put(
@@ -319,8 +317,6 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				AssetCategory.class.getName(),
 				UnicodePropertiesBuilder.put(
 					"className", JournalArticle.class.getName()
-				).put(
-					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"externalReferenceCode",
 					journalArticle.getExternalReferenceCode()

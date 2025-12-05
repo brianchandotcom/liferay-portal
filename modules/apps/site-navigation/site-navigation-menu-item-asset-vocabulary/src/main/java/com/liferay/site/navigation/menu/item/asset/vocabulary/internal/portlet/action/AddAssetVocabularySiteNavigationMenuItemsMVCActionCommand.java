@@ -90,10 +90,6 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 						UnicodePropertiesBuilder.create(
 							true
 						).put(
-							"classPK",
-							assetVocabularyJSONObject.getString(
-								"assetVocabularyId")
-						).put(
 							"externalReferenceCode",
 							assetVocabularyJSONObject.getString(
 								"externalReferenceCode")

@@ -59,7 +59,6 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String externalReferenceCode = ParamUtil.getString(
 			actionRequest, "externalReferenceCode");
 		long siteNavigationMenuId = ParamUtil.getLong(
@@ -67,7 +66,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 		String siteNavigationMenuItemType = ParamUtil.getString(
 			actionRequest, "siteNavigationMenuItemType");
 
-		if ((classPK > 0) && Validator.isNotNull(externalReferenceCode) &&
+		if (Validator.isNotNull(externalReferenceCode) &&
 			(siteNavigationMenuId > 0) &&
 			Validator.isNotNull(siteNavigationMenuItemType)) {
 
@@ -90,8 +89,6 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 							true
 						).put(
 							"className", siteNavigationMenuItemType
-						).put(
-							"classPK", String.valueOf(classPK)
 						).put(
 							"externalReferenceCode", externalReferenceCode
 						).put(
@@ -148,11 +145,10 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to add site navigation menu item for class PK ",
-						classPK, ", external reference code ",
-						externalReferenceCode, " site navigation menu ID ",
-						siteNavigationMenuId, " and type ",
-						siteNavigationMenuItemType));
+						"Unable to add site navigation menu item for external ",
+						"reference code ", externalReferenceCode,
+						" site navigation menu ID ", siteNavigationMenuId,
+						" and type ", siteNavigationMenuItemType));
 			}
 
 			jsonObject.put(

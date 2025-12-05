@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -69,7 +68,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Lourdes Fernández Besada
@@ -125,10 +123,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			siteNavigationMenuItemElement.addAttribute(
 				"display-page-class-name",
 				_displayPageTypeContext.getClassName());
-			siteNavigationMenuItemElement.addAttribute(
-				"display-page-class-pk",
-				GetterUtil.getString(
-					typeSettingsUnicodeProperties.get("classPK")));
 			siteNavigationMenuItemElement.addAttribute(
 				"display-page-external-reference-code",
 				GetterUtil.getString(
@@ -462,17 +456,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		importedSiteNavigationMenuItem.setTypeSettings(
 			UnicodePropertiesBuilder.fastLoad(
 				siteNavigationMenuItem.getTypeSettings()
-			).put(
-				"classPK",
-				String.valueOf(
-					MapUtil.getLong(
-						(Map<Long, Long>)
-							portletDataContext.getNewPrimaryKeysMap(
-								_displayPageTypeContext.getClassName()),
-						GetterUtil.getLong(
-							element.attributeValue("display-page-class-pk")),
-						GetterUtil.getLong(
-							element.attributeValue("display-page-class-pk"))))
 			).put(
 				"externalReferenceCode", externalReferenceCode
 			).put(

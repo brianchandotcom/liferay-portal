@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
@@ -56,14 +57,29 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 			siteNavigationMenuItem.getTypeSettings()
 		).build();
 
-		_assetVocabulary = AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-			GetterUtil.getLong(_typeSettingsUnicodeProperties.get("classPK")));
+		Group group;
+		String scopeExternalReferenceCode = _typeSettingsUnicodeProperties.get(
+			"scopeExternalReferenceCode");
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNull(scopeExternalReferenceCode)) {
+			group = _themeDisplay.getScopeGroup();
+		}
+		else {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				scopeExternalReferenceCode, _themeDisplay.getCompanyId());
+		}
+
+		_assetVocabulary =
+			AssetVocabularyLocalServiceUtil.
+				fetchAssetVocabularyByExternalReferenceCode(
+					_typeSettingsUnicodeProperties.get("externalReferenceCode"),
+					group.getGroupId());
 
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
 			(PortletResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAKARTA_PORTLET_RESPONSE));
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public Map<String, Object> getAssetVocabularyContextualSidebarContext()
@@ -72,10 +88,6 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"assetVocabulary",
 			() -> HashMapBuilder.<String, Object>put(
-				"classPK",
-				GetterUtil.getLong(
-					_typeSettingsUnicodeProperties.get("classPK"))
-			).put(
 				"externalReferenceCode",
 				_typeSettingsUnicodeProperties.get("externalReferenceCode")
 			).put(

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,7 +65,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -472,15 +470,6 @@ public class AssetVocabularySiteNavigationMenuItemType
 			UnicodePropertiesBuilder.fastLoad(
 				siteNavigationMenuItem.getTypeSettings()
 			).put(
-				"classPK",
-				String.valueOf(
-					MapUtil.getLong(
-						(Map<Long, Long>)
-							portletDataContext.getNewPrimaryKeysMap(
-								AssetVocabulary.class.getName()),
-						assetVocabulary.getVocabularyId(),
-						assetVocabulary.getVocabularyId()))
-			).put(
 				"externalReferenceCode", externalReferenceCode
 			).put(
 				"scopeExternalReferenceCode", scopeExternalReferenceCode
@@ -603,8 +592,6 @@ public class AssetVocabularySiteNavigationMenuItemType
 				).put(
 					"assetVocabularyExternalReferenceCode",
 					String.valueOf(assetVocabulary.getExternalReferenceCode())
-				).put(
-					"classPK", String.valueOf(assetCategory.getCategoryId())
 				).put(
 					"externalReferenceCode",
 					assetCategory.getExternalReferenceCode()

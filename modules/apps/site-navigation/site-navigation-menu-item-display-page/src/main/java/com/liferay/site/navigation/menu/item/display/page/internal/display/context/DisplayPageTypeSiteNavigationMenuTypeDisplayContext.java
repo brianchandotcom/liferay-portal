@@ -136,22 +136,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return _className;
 	}
 
-	public long getClassPK() {
-		if (_classPK != null) {
-			return _classPK;
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				_siteNavigationMenuItem.getTypeSettings()
-			).build();
-
-		_classPK = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.get("classPK"));
-
-		return _classPK;
-	}
-
 	public Map<String, Object> getDisplayPageItemContextualSidebarContext()
 		throws Exception {
 
@@ -178,8 +162,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			"item",
 			HashMapBuilder.<String, Object>put(
 				"className", getClassName()
-			).put(
-				"classPK", getClassPK()
 			).put(
 				"data", _getDataJSONArray()
 			).put(
@@ -423,7 +405,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	}
 
 	private String _className;
-	private Long _classPK;
 	private final DisplayPageTypeContext _displayPageTypeContext;
 	private String _externalReferenceCode;
 	private final HttpServletRequest _httpServletRequest;

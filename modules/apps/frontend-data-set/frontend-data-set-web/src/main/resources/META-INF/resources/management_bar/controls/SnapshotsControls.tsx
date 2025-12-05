@@ -39,10 +39,10 @@ const RequiredMark = () => (
 const SnapshotsControlsTrigger = React.forwardRef(
 	(
 		{
+			snapshotUpdated,
 			triggerLabel,
-			viewUpdated,
 			...otherProps
-		}: {triggerLabel: string; viewUpdated: boolean},
+		}: {snapshotUpdated: boolean; triggerLabel: string},
 		ref: Ref<HTMLButtonElement>
 	) => (
 		<ClayButton
@@ -54,7 +54,7 @@ const SnapshotsControlsTrigger = React.forwardRef(
 		>
 			<span className="navbar-text-truncate">{triggerLabel}</span>
 
-			{viewUpdated && (
+			{snapshotUpdated && (
 				<span className="inline-item-after reference-mark view-updated-mark">
 					<span className="hide-accessible sr-only">
 						{sub(
@@ -86,9 +86,9 @@ const SnapshotsControls = () => {
 			defaultSnapshot,
 			filters,
 			paginationDelta,
+			snapshotUpdated,
 			snapshots,
 			sorts,
-			viewUpdated,
 			visibleFieldNames,
 		},
 		viewsDispatch,
@@ -414,12 +414,12 @@ const SnapshotsControls = () => {
 					}}
 					onSelectionChange={handleSelectionChange}
 					selectedKey={activeSnapshot.erc}
+					snapshotUpdated={snapshotUpdated}
 					triggerLabel={
 						activeSnapshotERC
 							? activeSnapshot.label
 							: Liferay.Language.get('default-view')
 					}
-					viewUpdated={viewUpdated}
 				>
 					{(view) => <Option key={view.erc}>{view.label}</Option>}
 				</Picker>

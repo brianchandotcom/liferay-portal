@@ -15,10 +15,10 @@ export interface IViewsContext {
 	filtersGroups: Array<any>;
 	modifiedFields: any;
 	paginationDelta: any;
+	snapshotUpdated: boolean;
 	snapshots: Array<ISnapshot>;
 	snapshotsEnabled: boolean;
 	sorts: Array<any>;
-	viewUpdated: boolean;
 	views: Array<any>;
 	visibleFieldNames: any;
 }
@@ -45,10 +45,10 @@ const ViewsContext = createContext<[IViewsContext, any]>([
 		filtersGroups: [],
 		modifiedFields: {},
 		paginationDelta: null,
+		snapshotUpdated: false,
 		snapshots: [],
 		snapshotsEnabled: false,
 		sorts: [],
-		viewUpdated: false,
 		views: [],
 		visibleFieldNames: {},
 	},

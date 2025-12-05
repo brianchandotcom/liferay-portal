@@ -318,6 +318,49 @@ public class ContentDocument implements Serializable {
 	private Supplier<String> _encodingFormatSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The document's externalReferenceCode."
+	)
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The document's externalReferenceCode.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The document's file extension."
 	)
 	public String getFileExtension() {
@@ -400,6 +443,53 @@ public class ContentDocument implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The document's scopeExternalReferenceCode."
+	)
+	public String getScopeExternalReferenceCode() {
+		if (_scopeExternalReferenceCodeSupplier != null) {
+			scopeExternalReferenceCode =
+				_scopeExternalReferenceCodeSupplier.get();
+
+			_scopeExternalReferenceCodeSupplier = null;
+		}
+
+		return scopeExternalReferenceCode;
+	}
+
+	public void setScopeExternalReferenceCode(
+		String scopeExternalReferenceCode) {
+
+		this.scopeExternalReferenceCode = scopeExternalReferenceCode;
+
+		_scopeExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setScopeExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			scopeExternalReferenceCodeUnsafeSupplier) {
+
+		_scopeExternalReferenceCodeSupplier = () -> {
+			try {
+				return scopeExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The document's scopeExternalReferenceCode.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String scopeExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _scopeExternalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The document's file size in bytes."
@@ -606,6 +696,22 @@ public class ContentDocument implements Serializable {
 			sb.append("\"");
 		}
 
+		String externalReferenceCode = getExternalReferenceCode();
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		String fileExtension = getFileExtension();
 
 		if (fileExtension != null) {
@@ -632,6 +738,22 @@ public class ContentDocument implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		String scopeExternalReferenceCode = getScopeExternalReferenceCode();
+
+		if (scopeExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scopeExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(scopeExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long sizeInBytes = getSizeInBytes();

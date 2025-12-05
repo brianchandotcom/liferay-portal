@@ -352,8 +352,8 @@ public class ObjectEntryLocalServiceImpl
 			new HashMap<>(), objectDefinition, objectEntry.getObjectEntryId(),
 			null, false, values);
 		_insertIntoTable(
-			_getDynamicObjectDefinitionTable(
-				objectDefinition.getObjectDefinitionId()),
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService),
 			new HashMap<>(), objectEntry.getObjectEntryId(), false, values);
 		_insertIntoTable(
 			_getExtensionDynamicObjectDefinitionTable(
@@ -435,7 +435,8 @@ public class ObjectEntryLocalServiceImpl
 			values);
 
 		boolean dynamicObjectDefinitionStaticValues = _insertIntoTable(
-			_getDynamicObjectDefinitionTable(objectDefinitionId),
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService),
 			insertedValues, objectEntryId, false, values);
 		boolean extensionDynamicObjectDefinitionStaticValues = _insertIntoTable(
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId),
@@ -939,8 +940,11 @@ public class ObjectEntryLocalServiceImpl
 					objectRelationship.getObjectDefinitionId2());
 		}
 		else {
-			dynamicObjectDefinitionTable = _getDynamicObjectDefinitionTable(
-				relatedObjectDefinition.getObjectDefinitionId());
+			dynamicObjectDefinitionTable =
+				DynamicObjectDefinitionTableUtil.
+					getDynamicObjectDefinitionTable(
+						false, relatedObjectDefinition,
+						_objectFieldLocalService);
 
 			Column<DynamicObjectDefinitionTable, Long> column =
 				(Column<DynamicObjectDefinitionTable, Long>)
@@ -1040,8 +1044,13 @@ public class ObjectEntryLocalServiceImpl
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinitionId, aggregationTerm);
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(objectDefinitionId);
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
+
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
 
@@ -1235,8 +1244,8 @@ public class ObjectEntryLocalServiceImpl
 				DynamicObjectDefinitionLocalizationTableFactory.create(
 					objectDefinition, _objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(
-				objectDefinition.getObjectDefinitionId());
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(
 				objectDefinition.getObjectDefinitionId());
@@ -1315,8 +1324,13 @@ public class ObjectEntryLocalServiceImpl
 			int end)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(objectDefinitionId);
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
+
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinitionId, aggregationTerm);
 		Table table = _objectFieldLocalService.getTable(
@@ -1426,7 +1440,8 @@ public class ObjectEntryLocalServiceImpl
 		_addResourcePermissions(objectDefinition, objectEntry);
 
 		_insertIntoTable(
-			_getDynamicObjectDefinitionTable(objectDefinitionId),
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService),
 			new HashMap<>(), objectEntry.getObjectEntryId(), false,
 			new HashMap<>());
 		_insertIntoTable(
@@ -1451,8 +1466,13 @@ public class ObjectEntryLocalServiceImpl
 		).limit(
 			start, end
 		);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(objectDefinitionId);
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
 
 		return TransformUtil.transform(
 			objectEntryPersistence.dslQuery(
@@ -1478,8 +1498,8 @@ public class ObjectEntryLocalServiceImpl
 				getPersistedModelLocalService(objectDefinition.getClassName());
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(
-				objectDefinition.getObjectDefinitionId());
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
 
 		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
@@ -1620,15 +1640,17 @@ public class ObjectEntryLocalServiceImpl
 	public Map<String, Serializable> getValues(ObjectEntry objectEntry)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
 				DynamicObjectDefinitionLocalizationTableFactory.create(
-					_objectDefinitionPersistence.findByPrimaryKey(
-						objectEntry.getObjectDefinitionId()),
-					_objectFieldLocalService);
+					objectDefinition, _objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(
-				objectEntry.getObjectDefinitionId());
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
 
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(
@@ -3843,16 +3865,6 @@ public class ObjectEntryLocalServiceImpl
 			"Language ID " + defaultLanguageId + " is not available");
 	}
 
-	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(
-			long objectDefinitionId)
-		throws PortalException {
-
-		return DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
-			false,
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId),
-			_objectFieldLocalService);
-	}
-
 	private DynamicObjectDefinitionTable
 			_getExtensionDynamicObjectDefinitionTable(long objectDefinitionId)
 		throws PortalException {
@@ -4053,14 +4065,17 @@ public class ObjectEntryLocalServiceImpl
 
 		long objectDefinitionId2 = objectRelationship.getObjectDefinitionId2();
 
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId2);
+
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
 				DynamicObjectDefinitionLocalizationTableFactory.create(
-					_objectDefinitionPersistence.findByPrimaryKey(
-						objectDefinitionId2),
-					_objectFieldLocalService);
+					objectDefinition2, _objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(objectDefinitionId2);
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition2, _objectFieldLocalService);
+
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId2);
 
@@ -4070,8 +4085,6 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId2);
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =
@@ -4176,14 +4189,17 @@ public class ObjectEntryLocalServiceImpl
 			Predicate predicate, boolean preferApproved, String search)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
 				DynamicObjectDefinitionLocalizationTableFactory.create(
-					_objectDefinitionPersistence.findByPrimaryKey(
-						objectDefinitionId),
-					_objectFieldLocalService);
+					objectDefinition, _objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(objectDefinitionId);
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
+
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
 
@@ -4260,15 +4276,18 @@ public class ObjectEntryLocalServiceImpl
 			_objectRelationshipPersistence.findByPrimaryKey(
 				objectRelationshipId);
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
 				DynamicObjectDefinitionLocalizationTableFactory.create(
-					_objectDefinitionPersistence.findByPrimaryKey(
-						objectRelationship.getObjectDefinitionId2()),
-					_objectFieldLocalService);
+					objectDefinition, _objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(
-				objectRelationship.getObjectDefinitionId2());
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
+
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(
 				objectRelationship.getObjectDefinitionId2());
@@ -4688,8 +4707,9 @@ public class ObjectEntryLocalServiceImpl
 				objectField.getDBTableName(),
 				rootObjectDefinition.getDBTableName())) {
 
-			return _getDynamicObjectDefinitionTable(
-				rootObjectDefinition.getObjectDefinitionId());
+			return DynamicObjectDefinitionTableUtil.
+				getDynamicObjectDefinitionTable(
+					false, rootObjectDefinition, _objectFieldLocalService);
 		}
 
 		return _getExtensionDynamicObjectDefinitionTable(
@@ -6468,8 +6488,8 @@ public class ObjectEntryLocalServiceImpl
 			partialUpdate, values);
 
 		_updateTable(
-			_getDynamicObjectDefinitionTable(
-				objectEntry.getObjectDefinitionId()),
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService),
 			objectEntryId, partialUpdate, values);
 		_updateTable(
 			_getExtensionDynamicObjectDefinitionTable(

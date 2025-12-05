@@ -44,6 +44,10 @@ public class TaxonomyCategoryBriefUtil {
 						AssetCategory parentAssetCategory =
 							assetCategory.getParentCategory();
 
+						if (parentAssetCategory == null) {
+							return null;
+						}
+
 						return new ParentTaxonomyCategory() {
 							{
 								setExternalReferenceCode(

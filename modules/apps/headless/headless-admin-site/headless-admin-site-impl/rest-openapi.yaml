@@ -3132,6 +3132,10 @@ components:
                     type: object
                 parentSiteExternalReferenceCode:
                     type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 templateKey:
                     type: string
                     writeOnly: true
@@ -8556,6 +8560,51 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["PageTemplate"]
+    "/sites/{siteExternalReferenceCode}/permissions":
+        get:
+            operationId: getSitePermissionsPage
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: roleNames
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Site"]
+        put:
+            operationId: putSitePermissionsPage
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Site"]
     "/sites/{siteExternalReferenceCode}/site-pages":
         get:
             # @review

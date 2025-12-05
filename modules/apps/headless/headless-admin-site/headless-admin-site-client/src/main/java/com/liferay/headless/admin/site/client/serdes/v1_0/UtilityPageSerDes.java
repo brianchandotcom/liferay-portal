@@ -209,14 +209,14 @@ public class UtilityPageSerDes {
 			sb.append("]");
 		}
 
-		if (utilityPage.getThumbnail() != null) {
+		if (utilityPage.getThumbnailURLReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"thumbnail\": ");
+			sb.append("\"thumbnailURLReference\": ");
 
-			sb.append(String.valueOf(utilityPage.getThumbnail()));
+			sb.append(String.valueOf(utilityPage.getThumbnailURLReference()));
 		}
 
 		if (utilityPage.getType() != null) {
@@ -371,11 +371,13 @@ public class UtilityPageSerDes {
 				"permissions", String.valueOf(utilityPage.getPermissions()));
 		}
 
-		if (utilityPage.getThumbnail() == null) {
-			map.put("thumbnail", null);
+		if (utilityPage.getThumbnailURLReference() == null) {
+			map.put("thumbnailURLReference", null);
 		}
 		else {
-			map.put("thumbnail", String.valueOf(utilityPage.getThumbnail()));
+			map.put(
+				"thumbnailURLReference",
+				String.valueOf(utilityPage.getThumbnailURLReference()));
 		}
 
 		if (utilityPage.getType() == null) {
@@ -460,7 +462,9 @@ public class UtilityPageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "thumbnailURLReference")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -582,9 +586,11 @@ public class UtilityPageSerDes {
 					utilityPage.setPermissions(permissionsArray);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "thumbnailURLReference")) {
+
 				if (jsonParserFieldValue != null) {
-					utilityPage.setThumbnail(
+					utilityPage.setThumbnailURLReference(
 						ThumbnailURLReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}

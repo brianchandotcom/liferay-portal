@@ -279,11 +279,11 @@ public class SegmentsExperienceUtil {
 			return editableValuesJSONObject.toString();
 		}
 
-		JSONObject newEditableValuesJSONObject = editableValuesJSONObject.put(
-			"instanceId",
-			PortletIdCodec.decodeInstanceId(portletPreferences.getPortletId()));
-
-		return newEditableValuesJSONObject.toString();
+		return JSONUtil.put(
+			"instanceId", namespace
+		).put(
+			"portletId", portletId
+		).toString();
 	}
 
 	private static String _getNewPortletId(

@@ -236,9 +236,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public boolean isHidden(long repositoryId)
-		throws PortalException {
-
+	public boolean isHidden(long repositoryId) throws PortalException {
 		Set<Long> hiddenRepositoryIds =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
 

@@ -27,9 +27,9 @@ Runtime runtime = Runtime.getRuntime();
 
 long totalMemory = runtime.totalMemory();
 
-request.setAttribute("systemDataCleanups", DataCleanupUtil.getSystemDataCleanups());
+List<DataCleanup> systemDataCleanups = DataCleanupUtil.getSystemDataCleanups();
 
-request.setAttribute("moduleDataCleanups", DataCleanupUtil.getModuleDataCleanups());
+List<DataCleanup> moduleDataCleanups = DataCleanupUtil.getModuleDataCleanups();
 
 long usedMemory = totalMemory - runtime.freeMemory();
 %>
@@ -207,7 +207,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="system-cleanup-actions">
 			<ul class="list-group system-action-group">
-				<c:forEach items="${systemDataCleanups}" var="systemDataCleanup">
+				<c:forEach items="<%= systemDataCleanups %>" var="systemDataCleanup">
 					<li class="list-group-item list-group-item-flex">
 						<div class="autofit-col autofit-col-expand">
 							<p class="list-group-title text-truncate">
@@ -292,10 +292,10 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			</ul>
 		</aui:fieldset>
 
-		<c:if test="${!empty moduleDataCleanups}">
+		<c:if test="<%= ListUtil.isNotEmpty(moduleDataCleanups) %>">
 			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="module-cleanup-actions">
 				<ul class="list-group system-action-group">
-					<c:forEach items="${moduleDataCleanups}" var="moduleDataCleanup">
+					<c:forEach items="<%= moduleDataCleanups %>" var="moduleDataCleanup">
 						<li class="list-group-item list-group-item-flex">
 							<div class="autofit-col autofit-col-expand">
 								<p class="list-group-title text-truncate">

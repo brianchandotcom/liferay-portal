@@ -202,8 +202,8 @@ public class TomcatNode {
 				_processChannel = null;
 			});
 
-		// Make sure the follow lambda is capturing the local variable rather
-		// than the instance field to ensure serializability
+		// Make sure the lambda is capturing the local variable rather than the
+		// instance field to ensure serializability
 
 		String clusterOwnerJarPath = _clusterOwnerJarPath;
 
@@ -245,8 +245,8 @@ public class TomcatNode {
 
 		if (loadHomePage) {
 
-			// Make sure the follow lambda is capturing the local variable
-			// rather than the instance field to ensure serializability
+			// Make sure the lambda is capturing the local variable rather than
+			// the instance field to ensure serializability
 
 			int connectorPort = _connectorPort;
 
@@ -346,9 +346,6 @@ public class TomcatNode {
 		throws IOException {
 
 		_clusterOwnerClass = clusterOwnerClass;
-
-		_clusterOwnerJarPath = _toJarFilePath(clusterOwnerClass);
-
 		_connectorPort = connectorPort;
 		_copyPropertyKeys = copyPropertyKeys;
 		_elasticSearchNetworkHostAddresses = elasticSearchNetworkHostAddresses;
@@ -363,6 +360,7 @@ public class TomcatNode {
 		_catalinaHome = catalineHome;
 
 		_catalinaBase = _liferayHome + "/tomcat";
+		_clusterOwnerJarPath = _toJarFilePath(clusterOwnerClass);
 
 		StringBundler sb = StringUtil.replaceToStringBundler(
 			_TPL_PORTAL_EXT_PROPERTIES, "${", "}",

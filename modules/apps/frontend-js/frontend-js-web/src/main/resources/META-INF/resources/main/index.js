@@ -23,6 +23,7 @@ export const {
 	createRenderURL,
 	createResourceURL,
 	debounce,
+	deepClone,
 	delegate,
 	escapeHTML,
 	fetch,

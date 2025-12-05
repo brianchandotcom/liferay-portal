@@ -72,61 +72,63 @@ public class LiferayDynamicRegistrationService
 	protected void checkRegistrationAccessToken(Client c, String accessToken) {
 	}
 
+	@Override
 	protected void fromClientRegistrationToClient(
-		ClientRegistration request, Client client) {
+		ClientRegistration clientRegistration, Client client) {
 
-		client.setApplicationName(request.getClientName());
+		client.setApplicationName(clientRegistration.getClientName());
 
-		List<String> grantTypes = client.getAllowedGrantTypes();
+		List<String> allowedGrantTypes = client.getAllowedGrantTypes();
 
-		_checkValidGrantResponseTypes(grantTypes, request.getResponseTypes());
+		_checkValidGrantResponseTypes(
+			allowedGrantTypes, clientRegistration.getResponseTypes());
 
-		List<String> redirectUris = request.getRedirectUris();
+		List<String> redirectUris = clientRegistration.getRedirectUris();
 
 		if (redirectUris != null) {
-			String appType = request.getApplicationType();
+			String applicationType = clientRegistration.getApplicationType();
 
-			if (appType == null) {
-				appType = "web";
+			if (applicationType == null) {
+				applicationType = "web";
 			}
 
 			for (String redirectUri : redirectUris) {
-				validateRequestUri(redirectUri, appType, grantTypes);
+				validateRequestUri(
+					redirectUri, applicationType, allowedGrantTypes);
 			}
 
 			client.setRedirectUris(redirectUris);
 		}
 
-		if (client.getRedirectUris(
-			).isEmpty() &&
-			(grantTypes.contains("authorization_code") ||
-			 grantTypes.contains("implicit"))) {
+		if (ListUtil.isEmpty(client.getRedirectUris()) &&
+			(allowedGrantTypes.contains("authorization_code") ||
+			 allowedGrantTypes.contains("implicit"))) {
 
-			OAuthError error = new OAuthError(
+			OAuthError oAuthError = new OAuthError(
 				"invalid_request", "A Redirection URI is required");
 
-			_reportInvalidRequestError(error);
+			_reportInvalidRequestError(oAuthError);
 		}
 
-		List<String> resourceUris = request.getResourceUris();
+		List<String> resourceUris = clientRegistration.getResourceUris();
 
 		if (resourceUris != null) {
 			client.setRegisteredAudiences(resourceUris);
 		}
 
-		String scope = request.getScope();
+		String scope = clientRegistration.getScope();
 
 		if (!Validator.isBlank(scope)) {
 			client.setRegisteredScopes(OAuthUtils.parseScope(scope));
 		}
 
-		String clientUri = request.getClientUri();
+		String clientUri = clientRegistration.getClientUri();
 
 		if (clientUri != null) {
 			client.setApplicationWebUri(clientUri);
 		}
 
-		String clientLogoUri = request.getLogoUri();
+		String clientLogoUri = clientRegistration.getLogoUri();
 
 		if (Validator.isNotNull(clientLogoUri)) {
 			client.setApplicationLogoUri(clientLogoUri);
@@ -134,96 +136,103 @@ public class LiferayDynamicRegistrationService
 
 		Map<String, String> properties = client.getProperties();
 
-		String jwks = request.getStringProperty("jwks");
+		String jwks = clientRegistration.getStringProperty("jwks");
 
 		if (Validator.isNotNull(jwks)) {
 			properties.put("jwks", jwks);
 		}
 
-		String jwksUri = request.getStringProperty("jwks_uri");
+		String jwksUri = clientRegistration.getStringProperty("jwks_uri");
 
 		if (Validator.isNotNull(jwksUri)) {
 			properties.put("jwks_uri", jwksUri);
 		}
 
-		String softwareId = request.getStringProperty("software_id");
+		String softwareId = clientRegistration.getStringProperty("software_id");
 
 		if (Validator.isNotNull(softwareId)) {
 			properties.put("software_id", softwareId);
 		}
 
-		String tosUri = request.getTosUri();
+		String tosUri = clientRegistration.getTosUri();
 
 		if (Validator.isNotNull(tosUri)) {
 			properties.put("tos_uri", tosUri);
 		}
 	}
 
+	@Override
 	protected LiferayClientRegistrationResponse
 		fromClientToRegistrationResponse(Client client) {
 
-		LiferayClientRegistrationResponse response =
+		LiferayClientRegistrationResponse liferayClientRegistrationResponse =
 			new LiferayClientRegistrationResponse();
 
-		response.setClientId(client.getClientId());
+		liferayClientRegistrationResponse.setClientId(client.getClientId());
 
 		if (Validator.isNotNull(client.getApplicationName())) {
-			response.setClientName(client.getApplicationName());
+			liferayClientRegistrationResponse.setClientName(
+				client.getApplicationName());
 		}
 
 		if (client.getClientSecret() != null) {
-			response.setClientSecret(client.getClientSecret());
-			response.setClientSecretExpiresAt(0L);
+			liferayClientRegistrationResponse.setClientSecret(
+				client.getClientSecret());
+			liferayClientRegistrationResponse.setClientSecretExpiresAt(0L);
 		}
 
-		response.setClientIdIssuedAt(client.getRegisteredAt());
-		response.setGrantTypes(client.getAllowedGrantTypes());
-
-		response.setLogoUri(client.getApplicationLogoUri());
-		response.setRedirectUris(client.getRedirectUris());
+		liferayClientRegistrationResponse.setClientIdIssuedAt(
+			client.getRegisteredAt());
+		liferayClientRegistrationResponse.setGrantTypes(
+			client.getAllowedGrantTypes());
+		liferayClientRegistrationResponse.setLogoUri(
+			client.getApplicationLogoUri());
+		liferayClientRegistrationResponse.setRedirectUris(
+			client.getRedirectUris());
+		liferayClientRegistrationResponse.setRegistrationAccessToken(
+			client.getProperties(
+			).get(
+				"registration_access_token"
+			));
 
 		UriBuilder uriBuilder = getMessageContext(
 		).getUriInfo(
 		).getAbsolutePathBuilder();
 
-		response.setRegistrationClientUri(
+		liferayClientRegistrationResponse.setRegistrationClientUri(
 			uriBuilder.path(
 				client.getClientId()
 			).build(
 				new Object[0]
 			).toString());
 
-		response.setRegistrationAccessToken(
-			(String)client.getProperties(
-			).get(
-				"registration_access_token"
-			));
-
-		if (!client.getRegisteredScopes(
-			).isEmpty()) {
-
-			response.setScope(client.getRegisteredScopes());
+		if (ListUtil.isNotEmpty(client.getRegisteredScopes())) {
+			liferayClientRegistrationResponse.setScope(
+				client.getRegisteredScopes());
 		}
 
 		Map<String, String> properties = client.getProperties();
 
 		if (properties.get("jwks") != null) {
-			response.setJwks(properties.get("jwks"));
+			liferayClientRegistrationResponse.setJwks(properties.get("jwks"));
 		}
 
 		if (properties.get("jwks_uri") != null) {
-			response.setJwksUri(properties.get("jwks_uri"));
+			liferayClientRegistrationResponse.setJwksUri(
+				properties.get("jwks_uri"));
 		}
 
 		if (properties.get("software_id") != null) {
-			response.setSoftwareId(properties.get("software_id"));
+			liferayClientRegistrationResponse.setSoftwareId(
+				properties.get("software_id"));
 		}
 
 		if (properties.get("tos_uri") != null) {
-			response.setTosUri(properties.get("tos_uri"));
+			liferayClientRegistrationResponse.setTosUri(
+				properties.get("tos_uri"));
 		}
 
-		return response;
+		return liferayClientRegistrationResponse;
 	}
 
 	@Override
@@ -257,29 +266,29 @@ public class LiferayDynamicRegistrationService
 		if (ListUtil.isEmpty(responseTypes) &&
 			!allowedResponseTypeList.isEmpty()) {
 
-			OAuthError error = new OAuthError(
+			OAuthError oAuthError = new OAuthError(
 				"invalid_client_metadata",
 				"A response type '" + allowedResponseTypeList.get(0) +
 					"' is needed to match provided grant types");
 
-			_reportInvalidRequestError(error);
+			_reportInvalidRequestError(oAuthError);
 		}
 
-		if (responseTypes != null) {
+		if (ListUtil.isNotEmpty(responseTypes)) {
 			for (String responseType : responseTypes) {
 				if (!allowedResponseTypeList.contains(responseType)) {
-					OAuthError error = new OAuthError(
+					OAuthError oAuthError = new OAuthError(
 						"invalid_client_metadata",
 						"Invalid response type '" + responseType +
 							"' by provided grant types");
 
-					_reportInvalidRequestError(error);
+					_reportInvalidRequestError(oAuthError);
 				}
 			}
 		}
 	}
 
-	private void _reportInvalidRequestError(OAuthError error) {
+	private void _reportInvalidRequestError(OAuthError oAuthError) {
 		Response.ResponseBuilder responseBuilder = JAXRSUtils.toResponseBuilder(
 			400);
 
@@ -288,7 +297,7 @@ public class LiferayDynamicRegistrationService
 		throw ExceptionUtils.toBadRequestException(
 			(Throwable)null,
 			responseBuilder.entity(
-				error
+				oAuthError
 			).build());
 	}
 

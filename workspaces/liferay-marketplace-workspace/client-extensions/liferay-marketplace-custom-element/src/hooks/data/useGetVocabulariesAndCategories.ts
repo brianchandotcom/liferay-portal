@@ -5,8 +5,8 @@
 
 import useSWR from 'swr';
 
-import HeadlessAdminTaxonomy from '../../services/rest/HeadlessAdminTaxonomy';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import HeadlessAdminTaxonomy from '../../services/rest/HeadlessAdminTaxonomy';
 
 const useGetVocabulariesAndCategories = (vocabulariesName: string[]) => {
 	const {properties} = useMarketplaceContext();
@@ -18,7 +18,14 @@ const useGetVocabulariesAndCategories = (vocabulariesName: string[]) => {
 
 		const response = await fn();
 
-		const vocabularies: any = {};
+		const vocabularies: Record<
+			string,
+			{
+				categories: {label: string; value: unknown}[];
+				id: unknown;
+				name: string;
+			}
+		> = {};
 
 		for (const vocabularyName of vocabulariesName) {
 			const vocabulary = response.items.find(

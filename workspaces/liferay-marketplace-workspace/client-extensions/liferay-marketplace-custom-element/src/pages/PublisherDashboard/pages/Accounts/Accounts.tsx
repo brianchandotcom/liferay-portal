@@ -29,7 +29,7 @@ function AccountDetailsPage({selectedAccount}: AccountDetailsPageProps) {
 	const [selectedAccountAddress, setSelectedAccountAddress] =
 		useState<AccountPostalAddresses[]>();
 
-	let accountType = selectedAccount
+	const accountType = selectedAccount
 		? selectedAccount.type === 'person'
 			? 'Personal'
 			: selectedAccount.type
@@ -60,9 +60,9 @@ function AccountDetailsPage({selectedAccount}: AccountDetailsPageProps) {
 			<div className="account-details-header-container">
 				<div className="account-details-header-left-content-container">
 					<img
-						draggable={false}
 						alt="Account Image"
 						className="account-details-header-left-content-image rounded"
+						draggable={false}
 						src={getAccountImage(selectedAccount?.logoURL)}
 					/>
 

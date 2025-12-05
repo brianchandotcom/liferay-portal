@@ -83,10 +83,8 @@ testWithBatchStagingFF(
 			type: 'objectDefinition',
 		});
 
-		const siteName: string = getRandomString();
-
 		const site = await apiHelpers.headlessSite.createSite({
-			name: siteName,
+			name: getRandomString(),
 		});
 
 		apiHelpers.data.push({
@@ -96,7 +94,7 @@ testWithBatchStagingFF(
 
 		const initialObjectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{externalReferenceCode: 'object1', name: 'test1'},
-			`c/tests/scopes/${siteName}`
+			`c/tests/scopes/${site.name}`
 		);
 
 		await stagingPage.goto(site.name);
@@ -106,13 +104,13 @@ testWithBatchStagingFF(
 
 		expect(
 			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
-				applicationName: `c/tests/scopes/${siteName}`,
+				applicationName: `c/tests/scopes/${site.name}`,
 				externalReferenceCode: initialObjectEntry.externalReferenceCode,
 			})
 		).toMatchObject({
 			externalReferenceCode: initialObjectEntry.externalReferenceCode,
 			name: initialObjectEntry.name,
-			scopeKey: siteName,
+			scopeKey: site.name,
 		});
 
 		const stagingSite =
@@ -149,7 +147,7 @@ testWithBatchStagingFF(
 
 		expect(
 			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
-				applicationName: `c/tests/scopes/${siteName}`,
+				applicationName: `c/tests/scopes/${site.name}`,
 				externalReferenceCode: objectEntry.externalReferenceCode,
 			})
 		).toEqual({
@@ -164,13 +162,13 @@ testWithBatchStagingFF(
 
 		expect(
 			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
-				applicationName: `c/tests/scopes/${siteName}`,
+				applicationName: `c/tests/scopes/${site.name}`,
 				externalReferenceCode: objectEntry.externalReferenceCode,
 			})
 		).toMatchObject({
 			externalReferenceCode: objectEntry.externalReferenceCode,
 			name: objectEntry.name,
-			scopeKey: siteName,
+			scopeKey: site.name,
 		});
 	}
 );

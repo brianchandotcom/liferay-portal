@@ -416,7 +416,8 @@ public class DBUpgraderTest {
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			if (Objects.equals(
-					bundle.getSymbolicName(), "com.liferay.data.cleanup")) {
+					bundle.getSymbolicName(),
+					"com.liferay.data.cleanup.impl")) {
 
 				return bundle;
 			}

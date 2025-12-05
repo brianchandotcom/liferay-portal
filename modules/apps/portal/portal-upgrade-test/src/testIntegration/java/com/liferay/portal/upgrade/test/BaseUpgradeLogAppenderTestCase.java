@@ -1336,7 +1336,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		throws Exception {
 
 		Bundle bundle = BundleUtil.getBundle(
-			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
+			SystemBundleUtil.getBundleContext(),
+			"com.liferay.data.cleanup.impl");
 
 		Class<?> clazz = bundle.loadClass(
 			"com.liferay.data.cleanup.internal.verify." +

@@ -415,8 +415,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"entityFieldType", FDSEntityFieldTypes.STRING
 				).put(
-					"entityFieldTypeCollection", false
-				).put(
 					"id", FIELD_NAMES[0]
 				).put(
 					"label", LABELS[0]
@@ -576,8 +574,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			).put(
 				"entityFieldType", FDSEntityFieldTypes.STRING
 			).put(
-				"entityFieldTypeCollection", false
-			).put(
 				"fieldName", FIELD_NAMES[0]
 			).put(
 				"include", true
@@ -618,8 +614,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 					"autocompleteEnabled", true
 				).put(
 					"entityFieldType", FDSEntityFieldTypes.STRING
-				).put(
-					"entityFieldTypeCollection", FDSEntityFieldTypes.COLLECTION
 				).put(
 					"id", FIELD_NAMES[0]
 				).put(

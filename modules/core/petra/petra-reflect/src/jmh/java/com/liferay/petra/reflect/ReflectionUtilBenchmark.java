@@ -43,12 +43,22 @@ public class ReflectionUtilBenchmark {
 	}
 
 	@Benchmark
+	public Field declaredFieldExistFetchAccessibleFalse() throws Exception {
+		return ReflectionUtil.fetchDeclaredField(false, TestClass.class, "_s");
+	}
+
+	@Benchmark
 	public Field declaredFieldExistGet() throws Exception {
 		Field field = TestClass.class.getDeclaredField("_s");
 
 		field.setAccessible(true);
 
 		return field;
+	}
+
+	@Benchmark
+	public Field declaredFieldExistGetAccessibleFalse() throws Exception {
+		return TestClass.class.getDeclaredField("_s");
 	}
 
 	@Benchmark
@@ -77,9 +87,21 @@ public class ReflectionUtilBenchmark {
 	}
 
 	@Benchmark
+	public Method declaredMethodExistFetchAccessibleFalse() throws Exception {
+		return ReflectionUtil.fetchDeclaredMethod(
+			false, TestClass.class, "_method", String.class);
+	}
+
+	@Benchmark
 	public Method declaredMethodExistGet() throws Exception {
 		return ReflectionUtil.getDeclaredMethod(
 			TestClass.class, "_method", String.class);
+	}
+
+	@Benchmark
+	public Method declaredMethodExistGetAccessibleFalse() throws Exception {
+		return ReflectionUtil.getDeclaredMethod(
+			false, TestClass.class, "_method", String.class);
 	}
 
 	@Benchmark
@@ -105,12 +127,22 @@ public class ReflectionUtilBenchmark {
 	}
 
 	@Benchmark
+	public Field publicFieldExistFetchAccessibleFalse() throws Exception {
+		return ReflectionUtil.fetchField(false, TestClass.class, "i");
+	}
+
+	@Benchmark
 	public Field publicFieldExistGet() throws Exception {
 		Field field = TestClass.class.getField("i");
 
 		field.setAccessible(true);
 
 		return field;
+	}
+
+	@Benchmark
+	public Field publicFieldExistGetAccessibleFalse() throws Exception {
+		return TestClass.class.getField("i");
 	}
 
 	@Benchmark
@@ -138,12 +170,23 @@ public class ReflectionUtilBenchmark {
 	}
 
 	@Benchmark
+	public Method publicMethodExistFetchAccessibleFalse() throws Exception {
+		return ReflectionUtil.fetchMethod(
+			false, TestClass.class, "method", int.class);
+	}
+
+	@Benchmark
 	public Method publicMethodExistGet() throws Exception {
 		Method method = TestClass.class.getMethod("method", int.class);
 
 		method.setAccessible(true);
 
 		return method;
+	}
+
+	@Benchmark
+	public Method publicMethodExistGetAccessibleFalse() throws Exception {
+		return TestClass.class.getMethod("method", int.class);
 	}
 
 	@Benchmark

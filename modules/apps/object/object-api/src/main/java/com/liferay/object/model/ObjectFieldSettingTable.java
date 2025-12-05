@@ -8,6 +8,7 @@ package com.liferay.object.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -52,8 +53,8 @@ public class ObjectFieldSettingTable
 			"objectFieldId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldSettingTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ObjectFieldSettingTable, String> value = createColumn(
-		"value", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectFieldSettingTable, Clob> value = createColumn(
+		"value", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private ObjectFieldSettingTable() {
 		super("ObjectFieldSetting", ObjectFieldSettingTable::new);

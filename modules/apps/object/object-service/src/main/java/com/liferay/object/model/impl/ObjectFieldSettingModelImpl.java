@@ -68,7 +68,7 @@ public class ObjectFieldSettingModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectFieldId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"value", Types.VARCHAR}
+		{"value", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,11 +85,11 @@ public class ObjectFieldSettingModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("value", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectFieldSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldSettingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectFieldId LONG,name VARCHAR(75) null,value VARCHAR(255) null)";
+		"create table ObjectFieldSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldSettingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectFieldId LONG,name VARCHAR(75) null,value TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectFieldSetting";
 

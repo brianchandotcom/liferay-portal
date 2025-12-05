@@ -191,17 +191,17 @@ describe('ItemSelector component', () => {
 			name: mockSecondItemName,
 		});
 
-		expect(listItemSelected).toBeTruthy();
+		expect(listItem).toBeTruthy();
 		expect(listItemSelected).toBeTruthy();
 
-		expect(listItemSelected.getAttribute('aria-selected')).toBe('true');
+		expect(listItem.classList.contains('active')).toBe(false);
+		expect(listItem.getAttribute('aria-selected')).toBeNull();
+		expect(listItem.querySelector('.lexicon-icon-check-small')).toBeNull();
+
 		expect(listItemSelected.classList.contains('active')).toBe(true);
+		expect(listItemSelected.getAttribute('aria-selected')).toBe('true');
 		expect(
 			listItemSelected.querySelector('.lexicon-icon-check-small')
 		).toBeDefined();
-
-		expect(listItem.getAttribute('aria-selected')).toBeNull();
-		expect(listItem.classList.contains('active')).toBe(false);
-		expect(listItem.querySelector('.lexicon-icon-check-small')).toBeNull();
 	});
 });

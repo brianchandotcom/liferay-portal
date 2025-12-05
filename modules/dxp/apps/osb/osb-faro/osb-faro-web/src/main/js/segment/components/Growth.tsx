@@ -399,7 +399,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 					/>
 
 					<Legend
-						align='left'
+						align='right'
 						formatter={(value, {count}) => (
 							<span className='legend-text-color'>
 								{`${value}:`}
@@ -435,7 +435,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 								value: Liferay.Language.get('total-members')
 							}
 						]}
-						verticalAlign='top'
+						verticalAlign='bottom'
 						wrapperStyle={{
 							color: AXIS.textColor,
 							fontSize: '14px',
@@ -557,6 +557,7 @@ interface ISegmentGrowthWithList {
 	id: string;
 	individualCounts?: {anonymousCount: number; knownCount: number};
 	selectedPoint: number;
+	shouldShowMembershipList?: boolean;
 	timeZoneId: string;
 }
 
@@ -569,6 +570,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 	id,
 	individualCounts,
 	selectedPoint,
+	shouldShowMembershipList = true,
 	timeZoneId
 }) => {
 	const [showMembershipList, setShowMembershipList] = useState(true);
@@ -643,7 +645,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 				/>
 			</div>
 
-			{showMembershipList && (
+			{shouldShowMembershipList && showMembershipList && (
 				<>
 					<SelectedPointInfo />
 

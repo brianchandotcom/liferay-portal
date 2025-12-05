@@ -52,6 +52,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -183,6 +184,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
+			Map<String, Object> properties = dataSetObjectEntry.getProperties();
+
 			if (!FeatureFlagManagerUtil.isEnabled(
 					_portal.getCompanyId(httpServletRequest), "LPD-38564")) {
 
@@ -190,6 +193,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					HashMapBuilder.<String, Object>put(
 						"namespace",
 						fragmentRendererContext.getFragmentElementId()
+					).put(
+						"snapshotsEnabled", properties.get("snapshotsEnabled")
 					).put(
 						"style", "fluid"
 					).build(),
@@ -230,6 +235,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					HashMapBuilder.<String, Object>put(
 						"namespace",
 						fragmentRendererContext.getFragmentElementId()
+					).put(
+						"snapshotsEnabled", properties.get("snapshotsEnabled")
 					).put(
 						"style", "fluid"
 					).put(

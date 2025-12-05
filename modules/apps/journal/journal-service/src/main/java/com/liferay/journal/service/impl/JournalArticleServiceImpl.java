@@ -1585,9 +1585,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @return The matching web content articles
 	 */
 	@Override
-	public List<JournalArticle> getLayoutArticles(long groupId) {
-		return journalArticlePersistence.filterFindByG_NotL(
-			groupId, new String[] {null, StringPool.BLANK});
+	public List<JournalArticle> getLayoutArticles(
+		long groupId, long classNameId) {
+
+		return journalArticlePersistence.filterFindByG_C_NotL(
+			groupId, classNameId, new String[] {null, StringPool.BLANK});
 	}
 
 	/**
@@ -1613,10 +1615,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public List<JournalArticle> getLayoutArticles(
-		long groupId, int start, int end) {
+		long groupId, long classNameId, int start, int end) {
 
-		return journalArticlePersistence.filterFindByG_NotL(
-			groupId, new String[] {null, StringPool.BLANK}, start, end);
+		return journalArticlePersistence.filterFindByG_C_NotL(
+			groupId, classNameId, new String[] {null, StringPool.BLANK}, start,
+			end);
 	}
 
 	/**
@@ -1627,9 +1630,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @return the number of matching web content articles
 	 */
 	@Override
-	public int getLayoutArticlesCount(long groupId) {
-		return journalArticlePersistence.filterCountByG_NotL(
-			groupId, new String[] {null, StringPool.BLANK});
+	public int getLayoutArticlesCount(long groupId, long classNameId) {
+		return journalArticlePersistence.filterCountByG_C_NotL(
+			groupId, classNameId, new String[] {null, StringPool.BLANK});
 	}
 
 	/**

@@ -17,21 +17,21 @@ apply plugin: "com.liferay.settings.plugin"
 apply from: "build-develocity.gradle"
 
 if (Boolean.getBoolean("gradle.s3.build.cache.enabled")) {
-    apply plugin: "com.github.burrunan.s3-build-cache"
+	apply plugin: "com.github.burrunan.s3-build-cache"
 
-    buildCache {
-        remote(com.github.burrunan.s3cache.AwsS3BuildCache) {
-            bucket = System.getProperty("gradle.s3.build.cache.bucket")
-            lookupDefaultAwsCredentials = true
-            prefix = System.getProperty("gradle.s3.build.cache.prefix")
+	buildCache {
+		remote(com.github.burrunan.s3cache.AwsS3BuildCache) {
+			bucket = System.getProperty("gradle.s3.build.cache.bucket")
+			lookupDefaultAwsCredentials = true
+			prefix = System.getProperty("gradle.s3.build.cache.prefix")
 
-            if (Boolean.getBoolean("gradle.s3.build.cache.push.enabled")) {
-                push = true
-            }
+			if (Boolean.getBoolean("gradle.s3.build.cache.push.enabled")) {
+				push = true
+			}
 
-            region = System.getProperty("gradle.s3.build.cache.region")
-        }
-    }
+			region = System.getProperty("gradle.s3.build.cache.region")
+		}
+	}
 }
 
 File privateYarnLockFile = new File(rootDir, "private/yarn.lock")

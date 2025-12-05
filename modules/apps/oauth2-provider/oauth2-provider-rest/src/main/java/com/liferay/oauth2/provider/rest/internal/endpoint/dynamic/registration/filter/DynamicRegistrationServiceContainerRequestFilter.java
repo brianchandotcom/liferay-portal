@@ -95,25 +95,22 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		User user;
 
 		try {
-			JwtToken token = _getToken(httpServletRequest);
+			JwtToken jwtToken = _getJwtToken(httpServletRequest);
 
 			long currentTime = System.currentTimeMillis() / Time.SECOND;
-			long expirationTime = GetterUtil.getLong(token.getClaim("exp"));
+			long expirationTime = GetterUtil.getLong(jwtToken.getClaim("exp"));
 
 			if (currentTime > expirationTime) {
 				throw ExceptionUtils.toNotAuthorizedException(
 					(Throwable)null, (Response)null);
 			}
 
-			String clientId = GetterUtil.getString(token.getClaim("client_id"));
-
-			long userId = GetterUtil.getLong(token.getClaim("sub"));
-
-			user = _getUser(userId);
+			user = _getUser(GetterUtil.getLong(jwtToken.getClaim("sub")));
 
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.fetchOAuth2Application(
-					user.getCompanyId(), clientId);
+					user.getCompanyId(),
+					GetterUtil.getString(jwtToken.getClaim("client_id")));
 
 			if ((oAuth2Application == null) ||
 				!StringUtil.equals(
@@ -193,7 +190,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			OAuth2ProviderActionKeys.ACTION_REGISTER_APPLICATION);
 	}
 
-	private JwtToken _getToken(HttpServletRequest httpServletRequest)
+	private JwtToken _getJwtToken(HttpServletRequest httpServletRequest)
 		throws JSONException, WebApplicationException {
 
 		String authorizationHeader = httpServletRequest.getHeader(

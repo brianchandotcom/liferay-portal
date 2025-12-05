@@ -70,6 +70,31 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
+	public Map<String, Serializable> getIndexedValues() {
+		if (_indexedValues == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Get values for object entry " + getObjectEntryId());
+			}
+
+			try {
+				_indexedValues = ObjectEntryLocalServiceUtil.getIndexedValues(
+					this);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				return new HashMap<>();
+			}
+		}
+		else if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Use cached values for object entry " + getObjectEntryId());
+		}
+
+		return _indexedValues;
+	}
+
+	@Override
 	public String getModelClassName() {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
@@ -188,21 +213,16 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 				String title = String.valueOf(
 					ObjectEntryValuesUtil.getValue(
-						languageId, objectField, getValues()));
+						languageId, objectField, getIndexedValues()));
 
 				if (Validator.isNull(title) && useDefault) {
 					title = String.valueOf(
 						ObjectEntryValuesUtil.getValue(
-							getDefaultLanguageId(), objectField, getValues()));
+							getDefaultLanguageId(), objectField,
+							getIndexedValues()));
 				}
 
-				if (Validator.isNotNull(title)) {
-					return title;
-				}
-
-				return ObjectEntryValuesUtil.getValueString(
-					objectField,
-					ObjectEntryLocalServiceUtil.getSystemValues(this));
+				return title;
 			}
 		}
 
@@ -294,6 +314,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryImpl.class);
 
+	private Map<String, Serializable> _indexedValues;
 	private Map<String, Serializable> _transientValues;
 	private Map<String, Serializable> _values;
 

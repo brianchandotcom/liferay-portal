@@ -481,7 +481,9 @@ public class ObjectEntryLocalServiceImpl
 			extensionDynamicObjectDefinitionStaticValues) {
 
 			_addObjectRelationshipERCFieldValue(
-				objectEntry.getObjectDefinitionId(), insertedValues);
+				_objectFieldLocalService.getObjectFields(
+					objectEntry.getObjectDefinitionId()),
+				insertedValues);
 
 			objectEntry.setValues(insertedValues);
 		}
@@ -1153,8 +1155,132 @@ public class ObjectEntryLocalServiceImpl
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 			dynamicObjectDefinitionLocalizationTable,
 			objectDefinition.getObjectDefinitionId(), primaryKey, values);
+
 		_addObjectRelationshipERCFieldValue(
-			objectDefinition.getObjectDefinitionId(), values);
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			values);
+
+		return values;
+	}
+
+	@Override
+	public Map<String, Serializable> getIndexedValues(ObjectEntry objectEntry)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		List<ObjectField> indexedObjectFields =
+			_objectFieldPersistence.findByODI_I(
+				objectEntry.getObjectDefinitionId(), true);
+
+		// Title ObjectField is always needed during reindexing regardless it is
+		// indexed or not.
+
+		long titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
+
+		boolean found = false;
+
+		for (ObjectField indexedObjectField : indexedObjectFields) {
+			if (indexedObjectField.getObjectFieldId() == titleObjectFieldId) {
+				found = true;
+
+				break;
+			}
+		}
+
+		if (!found) {
+			ObjectField titleObjectField =
+				_objectFieldPersistence.findByPrimaryKey(titleObjectFieldId);
+
+			if (!Objects.equals(
+					titleObjectField.getName(), "externalReferenceCode") &&
+				!Objects.equals(titleObjectField.getName(), "id")) {
+
+				indexedObjectFields = new ArrayList<>(indexedObjectFields);
+
+				indexedObjectFields.add(titleObjectField);
+			}
+		}
+
+		DynamicObjectDefinitionLocalizationTable
+			dynamicObjectDefinitionLocalizationTable =
+				DynamicObjectDefinitionLocalizationTableFactory.create(
+					objectDefinition, indexedObjectFields);
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, indexedObjectFields);
+
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				true, objectDefinition, indexedObjectFields);
+
+		List<Expression<?>> selectExpressionList = new ArrayList<>();
+
+		if (dynamicObjectDefinitionLocalizationTable != null) {
+			selectExpressionList.addAll(
+				dynamicObjectDefinitionLocalizationTable.
+					getObjectFieldColumns());
+		}
+
+		selectExpressionList.addAll(dynamicObjectDefinitionTable.getColumns());
+
+		List<Expression<?>> extensionExpressions = new ArrayList<>(
+			extensionDynamicObjectDefinitionTable.getColumns());
+
+		extensionExpressions.remove(
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn());
+
+		Predicate innerJoinPredicate = null;
+
+		if (!extensionExpressions.isEmpty()) {
+			innerJoinPredicate =
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
+				);
+
+			selectExpressionList.addAll(extensionExpressions);
+		}
+
+		Expression<?>[] selectExpressions = selectExpressionList.toArray(
+			new Expression<?>[0]);
+
+		List<Object[]> rows = _list(
+			DSLQueryFactoryUtil.select(
+				selectExpressions
+			).from(
+				dynamicObjectDefinitionTable
+			).innerJoinON(
+				extensionDynamicObjectDefinitionTable, innerJoinPredicate
+			).leftJoinOn(
+				dynamicObjectDefinitionLocalizationTable,
+				ObjectEntrySearchUtil.getLeftJoinLocalizationTablePredicate(
+					dynamicObjectDefinitionLocalizationTable,
+					dynamicObjectDefinitionTable, null)
+			).where(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					objectEntry.getObjectEntryId()
+				)
+			),
+			objectEntry.getObjectDefinitionId(), selectExpressions);
+
+		if (ListUtil.isEmpty(rows)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Serializable> values = _getValues(
+			objectEntry.getObjectDefinitionId(), rows.get(0),
+			selectExpressions);
+
+		_addLocalizedObjectFieldValues(
+			objectEntry.getDefaultLanguageId(),
+			dynamicObjectDefinitionLocalizationTable,
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			values);
 
 		return values;
 	}
@@ -1720,8 +1846,11 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionLocalizationTable,
 			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
 			values);
+
 		_addObjectRelationshipERCFieldValue(
-			objectEntry.getObjectDefinitionId(), values);
+			_objectFieldLocalService.getObjectFields(
+				objectEntry.getObjectDefinitionId()),
+			values);
 
 		return values;
 	}
@@ -2729,11 +2858,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _addObjectRelationshipERCFieldValue(
-		long objectDefinitionId, Map<String, Serializable> values) {
+		List<ObjectField> objectFields, Map<String, Serializable> values) {
 
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(objectDefinitionId)) {
-
+		for (ObjectField objectField : objectFields) {
 			if (!Objects.equals(
 					objectField.getRelationshipType(),
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {

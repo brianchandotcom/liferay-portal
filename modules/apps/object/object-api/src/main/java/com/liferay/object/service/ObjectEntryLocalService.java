@@ -305,6 +305,10 @@ public interface ObjectEntryLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<String, Serializable> getIndexedValues(ObjectEntry objectEntry)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectEntry> getManyToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, boolean reverse, String search, int start, int end)

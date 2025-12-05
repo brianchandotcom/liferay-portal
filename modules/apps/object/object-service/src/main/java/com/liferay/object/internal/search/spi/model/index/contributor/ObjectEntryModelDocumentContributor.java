@@ -329,7 +329,7 @@ public class ObjectEntryModelDocumentContributor
 		document.addKeyword(
 			"objectDefinitionName", objectDefinition.getShortName());
 
-		Map<String, Serializable> values = objectEntry.getValues();
+		Map<String, Serializable> values = objectEntry.getIndexedValues();
 
 		List<ObjectField> objectFields = null;
 
@@ -337,48 +337,58 @@ public class ObjectEntryModelDocumentContributor
 			objectFields = ListUtil.filter(
 				_objectFieldLocalService.getObjectFields(
 					objectEntry.getObjectDefinitionId()),
-				objectField -> !objectField.isMetadata());
+				objectField ->
+					!objectField.isMetadata() && objectField.isIndexed());
 		}
 		else {
-			objectFields = _objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId(), false);
+			objectFields =
+				objectFields = ListUtil.filter(
+					_objectFieldLocalService.getObjectFields(
+						objectEntry.getObjectDefinitionId(), false),
+					ObjectField::isIndexed);
 		}
 
-		ObjectContentHelper objectContentHelper = new ObjectContentHelper(
-			objectEntry, objectFields, _textEmbeddingDocumentContributor);
+		ObjectContentHelper objectContentHelper = null;
 
-		for (ObjectField objectField : objectFields) {
-			if (objectField.isLocalized()) {
-				Map<String, Object> localizedValues =
-					(Map<String, Object>)values.get(
-						objectField.getI18nObjectFieldName());
+		if (!objectFields.isEmpty()) {
+			objectContentHelper = new ObjectContentHelper(
+				objectEntry, objectFields, _textEmbeddingDocumentContributor);
 
-				if (MapUtil.isEmpty(localizedValues)) {
-					continue;
+			for (ObjectField objectField : objectFields) {
+				if (objectField.isLocalized()) {
+					Map<String, Object> localizedValues =
+						(Map<String, Object>)values.get(
+							objectField.getI18nObjectFieldName());
+
+					if (MapUtil.isEmpty(localizedValues)) {
+						continue;
+					}
+
+					for (Map.Entry<String, Object> entry :
+							localizedValues.entrySet()) {
+
+						_contribute(
+							document, fieldArray, objectField.getName(),
+							entry.getValue(), entry.getKey(),
+							objectContentHelper, objectDefinition, objectEntry,
+							objectField, values);
+					}
 				}
-
-				for (Map.Entry<String, Object> entry :
-						localizedValues.entrySet()) {
-
+				else {
 					_contribute(
 						document, fieldArray, objectField.getName(),
-						entry.getValue(), entry.getKey(), objectContentHelper,
-						objectDefinition, objectEntry, objectField, values);
+						values.get(objectField.getName()), null,
+						objectContentHelper, objectDefinition, objectEntry,
+						objectField, values);
 				}
 			}
-			else {
-				_contribute(
-					document, fieldArray, objectField.getName(),
-					values.get(objectField.getName()), null,
-					objectContentHelper, objectDefinition, objectEntry,
-					objectField, values);
-			}
+
+			objectContentHelper.trim();
+
+			document.add(
+				new Field(
+					"objectEntryContent", objectContentHelper.getContent()));
 		}
-
-		objectContentHelper.trim();
-
-		document.add(
-			new Field("objectEntryContent", objectContentHelper.getContent()));
 
 		document.addKeyword("objectEntryId", objectEntry.getObjectEntryId());
 		document.add(
@@ -459,6 +469,10 @@ public class ObjectEntryModelDocumentContributor
 	private void _contributeTextEmbeddings(
 		Document document, ObjectContentHelper objectContentHelper,
 		ObjectEntry objectEntry) {
+
+		if (objectContentHelper == null) {
+			return;
+		}
 
 		Map<String, String> localizedContentMap =
 			objectContentHelper.getLocalizedContentMap();

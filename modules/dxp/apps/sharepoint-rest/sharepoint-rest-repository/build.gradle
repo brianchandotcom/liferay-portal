@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "com.mashape.unirest", name: "unirest-java", version: "1.4.9"
-	compileInclude group: "com.microsoft.azure", name: "msal4j", version: "1.23.1"
+	compileInclude group: "com.microsoft.azure", name: "msal4j", version: "1.16.2"
 	compileInclude group: "org.apache.httpcomponents", name: "httpasyncclient", version: "4.1.4"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.nimbusds", name: "nimbus-jose-jwt", version: "10.4"
 	compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
 	compileOnly group: "org.json", name: "json", version: "20231013"
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"

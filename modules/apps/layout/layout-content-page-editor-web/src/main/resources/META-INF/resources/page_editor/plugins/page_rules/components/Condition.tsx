@@ -120,7 +120,7 @@ export default function Condition({
 	const completeCondition = !!condition.options?.value;
 
 	const onErrorChange = (error: RuleError | null) => {
-		if (condition.error?.field.id !== error?.field.id) {
+		if (condition.error?.element.id !== error?.element.id) {
 			onConditionChange({...condition, error});
 		}
 	};

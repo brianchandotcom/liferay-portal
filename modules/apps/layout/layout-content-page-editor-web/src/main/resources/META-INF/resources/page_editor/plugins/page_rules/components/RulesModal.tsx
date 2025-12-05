@@ -55,8 +55,8 @@ export default function RulesModal() {
 			setNameError(true);
 
 			errors.push({
-				field: nameInputRef.current!,
-				label: sub(
+				element: nameInputRef.current!,
+				message: sub(
 					Liferay.Language.get('the-x-field-is-required'),
 					Liferay.Language.get('rule-name')
 				),
@@ -144,9 +144,11 @@ export default function RulesModal() {
 				/>
 
 				<RuleField
-					error={nameError}
-					errorLabel={Liferay.Language.get('this-field-is-required')}
+					errorMessage={Liferay.Language.get(
+						'this-field-is-required'
+					)}
 					fieldId={nameId}
+					hasError={nameError}
 				>
 					<label htmlFor={nameId}>
 						{Liferay.Language.get('rule-name')}
@@ -265,17 +267,17 @@ function ErrorAlert({
 				{errors.length ? (
 					<ul className="mb-0">
 						{errors.map((error) => (
-							<li key={error.field.id}>
+							<li key={error.element.id}>
 								<a
 									className="text-danger text-underline"
-									href={`#${error.field.id}`}
+									href={`#${error.element.id}`}
 									onClick={(event) => {
 										event.preventDefault();
 
-										error.field?.focus();
+										error.element?.focus();
 									}}
 								>
-									{error.label}
+									{error.message}
 								</a>
 							</li>
 						))}

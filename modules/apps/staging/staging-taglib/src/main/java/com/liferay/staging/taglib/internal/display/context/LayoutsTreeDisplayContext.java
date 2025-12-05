@@ -16,6 +16,7 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -108,6 +109,14 @@ public class LayoutsTreeDisplayContext {
 			if (!stagingConfiguration.publishParentLayoutsByDefault()) {
 				childPageHelpMessage = null;
 			}
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-35443") &&
+			FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-35914")) {
+
+			childPageHelpMessage = "child-page-process-warning-new-procedure";
 		}
 
 		return childPageHelpMessage;

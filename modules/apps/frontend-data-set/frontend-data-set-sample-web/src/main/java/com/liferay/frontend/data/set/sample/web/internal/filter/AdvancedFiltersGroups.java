@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.filter;
 
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -52,6 +54,24 @@ public class AdvancedFiltersGroups implements FDSFiltersGroups {
 		).put(
 			"Group 3",
 			Arrays.asList(filtersMap.get("status"), filtersMap.get("title"))
+		).put(
+			"Empty Group", new ArrayList<FDSFilter>()
+		).put(
+			"Group with not registered filter",
+			List.of(
+				new BaseSelectionFDSFilter() {
+
+					@Override
+					public String getId() {
+						return "notRegistered";
+					}
+
+					@Override
+					public String getLabel() {
+						return "This filter is not registered";
+					}
+
+				})
 		).build();
 	}
 

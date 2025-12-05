@@ -28,14 +28,22 @@ const FiltersDropdown = () => {
 	);
 
 	const groupedFilters = useMemo(() => {
-		return filtersGroups?.map((group) => ({
-			children: group.filters
-				.map((filterId: string) =>
-					validFilters.find((f) => f.id === filterId)
-				)
-				.filter(Boolean),
-			label: group.label,
-		}));
+		return filtersGroups
+			?.map((group) => {
+				const children = group.filters
+					.map((filterId: string) =>
+						validFilters.find((f) => f.id === filterId)
+					)
+					.filter(Boolean);
+
+				if (children.length) {
+					return {
+						children,
+						label: group.label,
+					};
+				}
+			})
+			.filter(Boolean);
 	}, [filtersGroups, validFilters]);
 
 	const filtersList =

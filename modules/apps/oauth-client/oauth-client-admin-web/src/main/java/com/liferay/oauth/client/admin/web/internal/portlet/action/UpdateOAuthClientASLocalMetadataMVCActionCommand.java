@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -42,9 +42,6 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			String localWellKnownURIOIC = ParamUtil.getString(
-				actionRequest, "localWellKnownURIOIC");
-
 			Boolean enabledLocalWellKnownURIOAS = ParamUtil.getBoolean(
 				actionRequest, "enabled");
 
@@ -66,11 +63,15 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 			String userInfoEndpoint = ParamUtil.getString(
 				actionRequest, "userinfo_endpoint");
 
-			if (Validator.isNull(localWellKnownURIOIC)) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+				_oAuthClientASLocalMetadataService.
+					getIssuerAuthClientASLocalMetadata(
+						themeDisplay.getCompanyId(), issuer);
+
+			if (oAuthClientASLocalMetadata == null) {
 				_oAuthClientASLocalMetadataService.
 					addOAuthClientASLocalMetadata(
 						themeDisplay.getUserId(), authorizationEndpoint,
@@ -82,10 +83,6 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 						tokenEndpoint, userInfoEndpoint);
 			}
 			else {
-				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-					_oAuthClientASLocalMetadataService.
-						getOAuthClientASLocalMetadata(localWellKnownURIOIC);
-
 				_oAuthClientASLocalMetadataService.
 					updateOAuthClientASLocalMetadata(
 						oAuthClientASLocalMetadata.

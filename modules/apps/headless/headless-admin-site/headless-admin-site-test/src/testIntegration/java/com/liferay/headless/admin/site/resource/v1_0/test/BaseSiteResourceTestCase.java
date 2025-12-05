@@ -17,6 +17,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.Site;
 import com.liferay.headless.admin.site.client.http.HttpInvoker;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
+import com.liferay.headless.admin.site.client.permission.Permission;
 import com.liferay.headless.admin.site.client.resource.v1_0.SiteResource;
 import com.liferay.headless.admin.site.client.serdes.v1_0.SiteSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
@@ -29,9 +30,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -123,6 +126,18 @@ public abstract class BaseSiteResourceTestCase {
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
+		).build();
+
+		permissionsSiteResource = SiteResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
 		).build();
 	}
 
@@ -275,9 +290,32 @@ public abstract class BaseSiteResourceTestCase {
 
 		assertEquals(postSite, getSite);
 		assertValid(getSite);
+
+		Assert.assertNull(getSite.getPermissions());
+
+		getSite = permissionsSiteResource.getSite(
+			postSite.getExternalReferenceCode());
+
+		Assert.assertNotNull(getSite.getPermissions());
 	}
 
 	protected Site testGetSite_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSitePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Site postSite = testGetSitePermissionsPage_addSite();
+
+		Page<Permission> page = siteResource.getSitePermissionsPage(
+			postSite.getExternalReferenceCode(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected Site testGetSitePermissionsPage_addSite() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -305,6 +343,17 @@ public abstract class BaseSiteResourceTestCase {
 		assertContains(site1, (List<Site>)page.getItems());
 		assertContains(site2, (List<Site>)page.getItems());
 		assertValid(page, testGetSitesPage_getExpectedActions());
+
+		for (Site site : page.getItems()) {
+			Assert.assertNull(site.getPermissions());
+		}
+
+		page = permissionsSiteResource.getSitesPage(
+			null, null, Pagination.of(1, 10));
+
+		for (Site site : page.getItems()) {
+			Assert.assertNotNull(site.getPermissions());
+		}
 
 		siteResource.deleteSite(site1.getExternalReferenceCode());
 
@@ -403,9 +452,28 @@ public abstract class BaseSiteResourceTestCase {
 
 		assertEquals(randomSite, postSite);
 		assertValid(postSite);
+
+		Site randomPermissionsSite1 = randomPermissionsSite();
+
+		Site postPermissionsSite1 = testPostSite_addSite(
+			randomPermissionsSite1);
+
+		Assert.assertNull(postPermissionsSite1.getPermissions());
+
+		Site randomPermissionsSite2 = randomPermissionsSite();
+
+		Site postPermissionsSite2 = testPostSite_addPermissionsSite(
+			randomPermissionsSite2);
+
+		Assert.assertNotNull(postPermissionsSite2.getPermissions());
 	}
 
 	protected Site testPostSite_addSite(Site site) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Site testPostSite_addPermissionsSite(Site site) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -445,13 +513,71 @@ public abstract class BaseSiteResourceTestCase {
 		assertEquals(randomSite, putSite);
 		assertValid(putSite);
 
+		Assert.assertNull(putSite.getPermissions());
+
 		Site getSite = siteResource.getSite(putSite.getExternalReferenceCode());
 
 		assertEquals(randomSite, getSite);
 		assertValid(getSite);
+
+		Site randomPermissionsSite = randomPermissionsSite();
+
+		putSite = siteResource.putSite(
+			postSite.getExternalReferenceCode(), randomPermissionsSite);
+
+		assertEquals(randomPermissionsSite, putSite);
+		assertValid(putSite);
+
+		Assert.assertNull(putSite.getPermissions());
+
+		putSite = permissionsSiteResource.putSite(
+			postSite.getExternalReferenceCode(), randomPermissionsSite);
+
+		Assert.assertNotNull(putSite.getPermissions());
 	}
 
 	protected Site testPutSite_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSitePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Site site = testPutSitePermissionsPage_addSite();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			siteResource.putSitePermissionsPageHttpResponse(
+				site.getExternalReferenceCode(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			siteResource.putSitePermissionsPageHttpResponse(
+				site.getExternalReferenceCode(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected Site testPutSitePermissionsPage_addSite() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -722,6 +848,14 @@ public abstract class BaseSiteResourceTestCase {
 					additionalAssertFieldName)) {
 
 				if (site.getParentSiteExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (site.getPermissions() == null) {
 					valid = false;
 				}
 
@@ -1030,6 +1164,16 @@ public abstract class BaseSiteResourceTestCase {
 				if (!Objects.deepEquals(
 						site1.getParentSiteExternalReferenceCode(),
 						site2.getParentSiteExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getPermissions(), site2.getPermissions())) {
 
 					return false;
 				}
@@ -1538,6 +1682,11 @@ public abstract class BaseSiteResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("templateKey")) {
 			Object object = site.getTemplateKey();
 
@@ -1676,6 +1825,25 @@ public abstract class BaseSiteResourceTestCase {
 		return randomSite();
 	}
 
+	protected Site randomPermissionsSite() throws Exception {
+		Site site = randomSite();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		site.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return site;
+	}
+
 	protected final JSONObject waitForFinish(
 			String expectedExecuteStatus, JSONObject jsonObject)
 		throws Exception {
@@ -1701,6 +1869,7 @@ public abstract class BaseSiteResourceTestCase {
 	protected SiteResource siteResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected SiteResource permissionsSiteResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

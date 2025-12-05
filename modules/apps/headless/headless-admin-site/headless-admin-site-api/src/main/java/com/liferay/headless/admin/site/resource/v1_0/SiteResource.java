@@ -54,6 +54,11 @@ public interface SiteResource {
 
 	public Site getSite(String siteExternalReferenceCode) throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSitePermissionsPage(
+				String siteExternalReferenceCode, String roleNames)
+		throws Exception;
+
 	public Response getSiteSiteInitializer(String siteExternalReferenceCode)
 		throws Exception;
 
@@ -78,6 +83,12 @@ public interface SiteResource {
 		throws Exception;
 
 	public Response putSiteBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSitePermissionsPage(
+				String siteExternalReferenceCode,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Site putSiteSiteInitializer(

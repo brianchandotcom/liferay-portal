@@ -224,6 +224,26 @@ public class SiteSerDes {
 			sb.append("\"");
 		}
 
+		if (site.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < site.getPermissions().length; i++) {
+				sb.append(site.getPermissions()[i]);
+
+				if ((i + 1) < site.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (site.getTemplateKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -395,6 +415,13 @@ public class SiteSerDes {
 				String.valueOf(site.getParentSiteExternalReferenceCode()));
 		}
 
+		if (site.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put("permissions", String.valueOf(site.getPermissions()));
+		}
+
 		if (site.getTemplateKey() == null) {
 			map.put("templateKey", null);
 		}
@@ -485,6 +512,9 @@ public class SiteSerDes {
 						jsonParserFieldName,
 						"parentSiteExternalReferenceCode")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "templateKey")) {
@@ -594,6 +624,26 @@ public class SiteSerDes {
 				if (jsonParserFieldValue != null) {
 					site.setParentSiteExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.site.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.site.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.site.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					site.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "templateKey")) {

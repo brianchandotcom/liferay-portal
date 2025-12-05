@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.cors.annotation.CORS;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -42,6 +43,21 @@ import org.apache.cxf.rs.security.oauth2.utils.OAuthUtils;
 @Path("/register")
 public class LiferayDynamicRegistrationService
 	extends DynamicRegistrationService {
+
+	@DELETE
+	@Path("{clientId}")
+	public Response deleteClientRegistration(
+		@PathParam("clientId") String clientId) {
+
+		super.deleteClientRegistration(clientId);
+
+		Response.ResponseBuilder responseBuilder = JAXRSUtils.toResponseBuilder(
+			204);
+
+		responseBuilder.type(MediaType.APPLICATION_JSON);
+
+		return responseBuilder.build();
+	}
 
 	@GET
 	@Path("{clientId}")
@@ -286,7 +302,7 @@ public class LiferayDynamicRegistrationService
 		responseBuilder.type(MediaType.APPLICATION_JSON);
 
 		throw ExceptionUtils.toBadRequestException(
-			(Throwable)null,
+			null,
 			responseBuilder.entity(
 				error
 			).build());

@@ -51,6 +51,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -100,6 +102,7 @@ import org.apache.cxf.rs.security.oauth2.provider.OAuthJoseJwtProducer;
 import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
 import org.apache.cxf.rs.security.oauth2.tokens.bearer.BearerAccessToken;
 import org.apache.cxf.rs.security.oauth2.tokens.refresh.RefreshToken;
+import org.apache.cxf.rs.security.oauth2.utils.AuthorizationUtils;
 import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 import org.apache.cxf.rs.security.oauth2.utils.OAuthUtils;
 
@@ -339,7 +342,36 @@ public class LiferayOAuthDataProvider
 			Client client, UserSubject subject)
 		throws OAuthServiceException {
 
-		throw new UnsupportedOperationException();
+		OAuth2Application oAuth2Application = resolveOAuth2Application(client);
+
+		List<OAuth2Authorization> oAuth2Authorizations =
+			_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
+				oAuth2Application.getOAuth2ApplicationId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		List<ServerAccessToken> serverAccessTokens = new ArrayList<>();
+
+		if (ListUtil.isNotEmpty(oAuth2Authorizations)) {
+			for (OAuth2Authorization oAuth2Authorization :
+					oAuth2Authorizations) {
+
+				try {
+					serverAccessTokens.add(
+						_populateAccessToken(oAuth2Authorization));
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Error when retrieving accessToken",
+							portalException);
+					}
+
+					throw new OAuthServiceException(portalException);
+				}
+			}
+		}
+
+		return serverAccessTokens;
 	}
 
 	public BearerTokenProvider getBearerTokenProvider(
@@ -670,6 +702,28 @@ public class LiferayOAuthDataProvider
 	}
 
 	@Override
+	public Client removeClient(String clientId) {
+		Client client = doGetClient(clientId);
+
+		OAuth2Application oAuth2Application = resolveOAuth2Application(client);
+
+		if (!_isAllowedToDelete(oAuth2Application)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Operation not allowed for client: " +
+						client.getClientId());
+			}
+
+			throw ExceptionUtils.toForbiddenException(null, (Response)null);
+		}
+
+		removeClientTokens(client);
+		doRemoveClient(client);
+
+		return client;
+	}
+
+	@Override
 	public ServerAuthorizationCodeGrant removeCodeGrant(String code)
 		throws OAuthServiceException {
 
@@ -979,8 +1033,22 @@ public class LiferayOAuthDataProvider
 	}
 
 	@Override
-	protected void doRemoveClient(Client c) {
-		throw new UnsupportedOperationException();
+	protected void doRemoveClient(Client client) {
+		OAuth2Application oAuth2Application = resolveOAuth2Application(client);
+
+		try {
+			_oAuth2ApplicationLocalService.deleteOAuth2Application(
+				oAuth2Application);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error deleting oauth2 application", portalException);
+			}
+
+			throw ExceptionUtils.toInternalServerErrorException(
+				portalException, (Response)null);
+		}
 	}
 
 	@Override
@@ -1147,19 +1215,7 @@ public class LiferayOAuthDataProvider
 				"https://"
 			)) {
 
-			OAuthError error = new OAuthError(
-				"invalid_request", "jwks_uri must use the https scheme");
-
-			Response.ResponseBuilder responseBuilder =
-				JAXRSUtils.toResponseBuilder(400);
-
-			responseBuilder.type(MediaType.APPLICATION_JSON);
-
-			throw ExceptionUtils.toBadRequestException(
-				(Throwable)null,
-				responseBuilder.entity(
-					error
-				).build());
+			_throwBadRequest("jwks_uri must use the https scheme");
 		}
 
 		Http.Options options = new Http.Options();
@@ -1176,37 +1232,13 @@ public class LiferayOAuthDataProvider
 				_log.debug(ioException);
 			}
 
-			OAuthError error = new OAuthError(
-				"invalid_request", "Jwks uri is unreachable");
-
-			Response.ResponseBuilder responseBuilder =
-				JAXRSUtils.toResponseBuilder(400);
-
-			responseBuilder.type(MediaType.APPLICATION_JSON);
-
-			throw ExceptionUtils.toBadRequestException(
-				(Throwable)null,
-				responseBuilder.entity(
-					error
-				).build());
+			_throwBadRequest("Jwks uri is unreachable");
 		}
 
 		Http.Response response = options.getResponse();
 
 		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			OAuthError error = new OAuthError(
-				"invalid_request", "Jwks uri is unreachable");
-
-			Response.ResponseBuilder responseBuilder =
-				JAXRSUtils.toResponseBuilder(400);
-
-			responseBuilder.type(MediaType.APPLICATION_JSON);
-
-			throw ExceptionUtils.toBadRequestException(
-				(Throwable)null,
-				responseBuilder.entity(
-					error
-				).build());
+			_throwBadRequest("Jwks uri is unreachable");
 		}
 
 		return _jsonFactory.createJSONObject(
@@ -1353,6 +1385,35 @@ public class LiferayOAuthDataProvider
 
 				return null;
 			});
+	}
+
+	private boolean _isAllowedToDelete(OAuth2Application oAuth2Application) {
+		OAuth2Authorization oAuth2Authorization =
+			_oAuth2AuthorizationLocalService.
+				fetchOAuth2AuthorizationByAccessTokenContent(
+					AuthorizationUtils.getAuthorizationParts(
+						getMessageContext(), Collections.singleton("Bearer"))
+						[1]);
+
+		if (oAuth2Authorization != null) {
+			OAuth2Application accessTokenOAuth2Application =
+				_oAuth2ApplicationLocalService.fetchOAuth2Application(
+					oAuth2Authorization.getOAuth2ApplicationId());
+
+			if (!_nondeletableOAuth2ApplicationNames.contains(
+					oAuth2Application.getName()) &&
+				(StringUtil.equals(
+					accessTokenOAuth2Application.getClientId(),
+					oAuth2Application.getClientId()) ||
+				 StringUtil.equals(
+					 accessTokenOAuth2Application.getName(),
+					 OAuth2ProviderConstants.DYNAMIC_REGISTRATOR))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private ServerAccessToken _populateAccessToken(
@@ -1575,6 +1636,21 @@ public class LiferayOAuthDataProvider
 		return userSubject;
 	}
 
+	private void _throwBadRequest(String message) {
+		OAuthError error = new OAuthError("invalid_request", message);
+
+		Response.ResponseBuilder responseBuilder = JAXRSUtils.toResponseBuilder(
+			400);
+
+		responseBuilder.type(MediaType.APPLICATION_JSON);
+
+		throw ExceptionUtils.toBadRequestException(
+			null,
+			responseBuilder.entity(
+				error
+			).build());
+	}
+
 	private long _toCXFTime(Date dateCreated) {
 		return dateCreated.getTime() / 1000;
 	}
@@ -1666,6 +1742,11 @@ public class LiferayOAuthDataProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayOAuthDataProvider.class);
 
+	private static final Set<String> _nondeletableOAuth2ApplicationNames =
+		SetUtil.fromArray(
+			new String[] {
+				"Dynamic Registrator", "Fragment Renderer", "Analytics Cloud"
+			});
 	private static final Set<String> _refreshTokenIncompatibleGrants =
 		new HashSet<>();
 

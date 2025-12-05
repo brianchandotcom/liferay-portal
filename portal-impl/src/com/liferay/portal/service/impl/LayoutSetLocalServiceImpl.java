@@ -246,7 +246,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	@Override
 	public int getPageCount(long groupId, boolean privateLayout) {
-		return _layoutPersistence.countByG_P(groupId, privateLayout);
+		return _layoutPersistence.countByG_P_S(groupId, privateLayout, false);
 	}
 
 	@Override

@@ -156,9 +156,9 @@ public class LayoutSetBranchLocalServiceImpl
 		if (layoutSetBranch.isMaster() ||
 			(copyLayoutSetBranchId == LayoutSetBranchConstants.ALL_BRANCHES)) {
 
-			List<Layout> layouts = _layoutPersistence.findByG_P(
-				layoutSetBranch.getGroupId(),
-				layoutSetBranch.isPrivateLayout());
+			List<Layout> layouts = _layoutPersistence.findByG_P_S(
+				layoutSetBranch.getGroupId(), layoutSetBranch.isPrivateLayout(),
+				false);
 
 			for (Layout layout : layouts) {
 				LayoutBranch layoutBranch =

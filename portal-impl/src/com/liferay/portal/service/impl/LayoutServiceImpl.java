@@ -864,7 +864,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public List<Layout> getLayouts(long groupId, boolean privateLayout) {
-		return layoutPersistence.filterFindByG_P(groupId, privateLayout);
+		return layoutPersistence.filterFindByG_P_S(
+			groupId, privateLayout, false);
 	}
 
 	@Override
@@ -949,8 +950,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
-			return layoutPersistence.filterFindByG_P(
-				groupId, privateLayout, start, end, orderByComparator);
+			return layoutPersistence.filterFindByG_P_S(
+				groupId, privateLayout, false, start, end, orderByComparator);
 		}
 
 		return layoutLocalService.getLayouts(
@@ -990,7 +991,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout) {
-		return layoutPersistence.filterCountByG_P(groupId, privateLayout);
+		return layoutPersistence.filterCountByG_P_S(
+			groupId, privateLayout, false);
 	}
 
 	@Override
@@ -1036,7 +1038,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
-			return layoutPersistence.filterCountByG_P(groupId, privateLayout);
+			return layoutPersistence.filterCountByG_P_S(
+				groupId, privateLayout, false);
 		}
 
 		return layoutLocalService.getLayoutsCount(

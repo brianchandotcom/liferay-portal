@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.net.URLEncoder;
+
 import java.nio.file.PathMatcher;
 
 import java.util.ArrayList;
@@ -1926,7 +1928,8 @@ public class GitWorkingDirectory {
 						JenkinsResultsParserUtil.getBuildProperty(
 							"mirrors.hostname"),
 						"/github.com/liferay/sha/", getGitRepositoryName(), "(",
-						remoteGitBranchName, ").txt"),
+						URLEncoder.encode(remoteGitBranchName, "UTF-8"),
+						").txt"),
 					false);
 
 				sha = sha.trim();

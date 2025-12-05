@@ -27,6 +27,10 @@ Runtime runtime = Runtime.getRuntime();
 
 long totalMemory = runtime.totalMemory();
 
+request.setAttribute("systemDataCleanups", DataCleanupUtil.getSystemDataCleanups());
+
+request.setAttribute("moduleDataCleanups", DataCleanupUtil.getModuleDataCleanups());
+
 long usedMemory = totalMemory - runtime.freeMemory();
 %>
 
@@ -201,8 +205,22 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			</ul>
 		</aui:fieldset>
 
-		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="clean-up-actions">
+		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="system-cleanup-actions">
 			<ul class="list-group system-action-group">
+				<c:forEach items="${systemDataCleanups}" var="systemDataCleanup">
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col autofit-col-expand">
+							<p class="list-group-title text-truncate">
+								<liferay-ui:message key="${systemDataCleanup.label}" />
+							</p>
+						</div>
+
+						<div class="autofit-col">
+							<aui:button cssClass="save-server-button" data-cmd="${systemDataCleanup.label}" value="execute" />
+						</div>
+					</li>
+				</c:forEach>
+
 				<li class="list-group-item list-group-item-flex">
 					<div class="autofit-col autofit-col-expand">
 						<p class="list-group-title text-truncate">
@@ -273,6 +291,26 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</li>
 			</ul>
 		</aui:fieldset>
+
+		<c:if test="${!empty moduleDataCleanups}">
+			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="module-cleanup-actions">
+				<ul class="list-group system-action-group">
+					<c:forEach items="${moduleDataCleanups}" var="moduleDataCleanup">
+						<li class="list-group-item list-group-item-flex">
+							<div class="autofit-col autofit-col-expand">
+								<p class="list-group-title text-truncate">
+									<liferay-ui:message key="${moduleDataCleanup.label}" />
+								</p>
+							</div>
+
+							<div class="autofit-col">
+								<aui:button cssClass="save-server-button" data-cmd="${moduleDataCleanup.label}" value="execute" />
+							</div>
+						</li>
+					</c:forEach>
+				</ul>
+			</aui:fieldset>
+		</c:if>
 
 		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="regeneration-actions">
 			<ul class="list-group system-action-group">

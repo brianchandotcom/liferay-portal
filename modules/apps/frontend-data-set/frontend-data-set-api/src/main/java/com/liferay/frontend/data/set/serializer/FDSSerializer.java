@@ -78,6 +78,9 @@ public interface FDSSerializer {
 	public String serializePropsTransformer(
 		String fdsName, HttpServletRequest httpServletRequest);
 
+	public JSONArray serializeSnapshots(
+		String fdsName, HttpServletRequest httpServletRequest);
+
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest);
 

@@ -27,10 +27,14 @@ import com.liferay.frontend.data.set.view.FDSViewContextContributor;
 import com.liferay.frontend.data.set.view.FDSViewContextContributorRegistry;
 import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -255,6 +259,22 @@ public class SystemFDSSerializer
 	}
 
 	@Override
+	public JSONArray serializeSnapshots(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		try {
+			return serializeSnapshots(
+				fdsName, httpServletRequest, _objectDefinitionLocalService,
+				_objectEntryManagerRegistry);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to serialize snapshots", exception);
+
+			return JSONUtil.putAll();
+		}
+	}
+
+	@Override
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
@@ -400,6 +420,9 @@ public class SystemFDSSerializer
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SystemFDSSerializer.class);
+
 	private static final SystemFDSEntry _systemFDSEntry = new SystemFDSEntry() {
 
 		public int getDefaultItemsPerPage() {
@@ -441,5 +464,11 @@ public class SystemFDSSerializer
 		}
 
 	};
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 }

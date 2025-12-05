@@ -155,7 +155,46 @@ async function updateStructure({
 	);
 }
 
+async function deleteStructure({
+	id,
+	repeatableGroupIds,
+}: {
+	id: Structure['id'];
+	repeatableGroupIds?: number[];
+}) {
+	let promise;
+
+	// If the structure does not have repeatable groups, just delete it
+
+	if (!repeatableGroupIds?.length) {
+		promise = ApiHelper.delete(
+			`/o/object-admin/v1.0/object-definitions/${id}`
+		);
+	}
+
+	// Otherwise perform a batch request to remove also the groups
+
+	else {
+		const data = [...repeatableGroupIds, id].map((id) => ({
+			id,
+		}));
+
+		promise = ApiHelper.batch({
+			data,
+			method: 'DELETE',
+			url: '/o/object-admin/v1.0/object-definitions/batch',
+		});
+	}
+
+	const response = await promise;
+
+	if (response?.error) {
+		return {error: response.error};
+	}
+}
+
 export default {
 	createStructure,
+	deleteStructure,
 	updateStructure,
 };

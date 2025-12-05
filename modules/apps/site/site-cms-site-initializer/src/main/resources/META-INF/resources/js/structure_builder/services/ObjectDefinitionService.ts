@@ -7,6 +7,7 @@ import ApiHelper from '../../common/services/ApiHelper';
 import {
 	ObjectDefinition,
 	ObjectDefinitions,
+	ObjectRelationship,
 } from '../../common/types/ObjectDefinition';
 
 async function getObjectDefinitions(): Promise<ObjectDefinitions> {
@@ -31,6 +32,22 @@ async function getObjectDefinitions(): Promise<ObjectDefinitions> {
 	return objectDefinitions;
 }
 
+async function getRelatedObjectDefinitions({
+	objectRelationships,
+}: {
+	objectRelationships: ObjectRelationship[];
+}) {
+	const names = objectRelationships.map((rel) => rel.objectDefinitionName2!);
+
+	return await ApiHelper.getAll<ObjectDefinition>({
+		filter: names
+			.map((n) => `name eq '${n.replace(/'/g, "''")}'`)
+			.join(' or '),
+		url: '/o/object-admin/v1.0/object-definitions',
+	});
+}
+
 export default {
 	getObjectDefinitions,
+	getRelatedObjectDefinitions,
 };

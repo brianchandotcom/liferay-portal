@@ -7,7 +7,9 @@ import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import ApiHelper from '../../../common/services/ApiHelper';
+import StructureService from '../../../common/services/StructureService';
 import {ObjectDefinition} from '../../../common/types/ObjectDefinition';
+import ObjectDefinitionService from '../../../structure_builder/services/ObjectDefinitionService';
 import DeleteStructureModalContent from '../../modal/DeleteStructureModalContent';
 
 const REPEATABLE_GROUPS_FOLDER_ERC = 'L_CMS_STRUCTURE_REPEATABLE_GROUPS';
@@ -32,31 +34,10 @@ export default async function deleteStructureAction({
 	}: {
 		repeatableGroupIds?: number[];
 	} = {}) => {
-		let promise;
-
-		// If the structure does not have repeatable groups, just delete it
-
-		if (!repeatableGroupIds?.length) {
-			promise = ApiHelper.delete(
-				`/o/object-admin/v1.0/object-definitions/${structureId}`
-			);
-		}
-
-		// Otherwise perform a batch request to remove also the groups
-
-		else {
-			const data = [...repeatableGroupIds, structureId].map((id) => ({
-				id,
-			}));
-
-			promise = ApiHelper.batch({
-				data,
-				method: 'DELETE',
-				url: '/o/object-admin/v1.0/object-definitions/batch',
-			});
-		}
-
-		const response = await promise;
+		const response = await StructureService.deleteStructure({
+			id: structureId,
+			repeatableGroupIds,
+		});
 
 		if (response?.error) {
 			openToast({
@@ -142,7 +123,7 @@ export default async function deleteStructureAction({
 }
 
 async function classifyRelationships(
-	relationships: ObjectDefinition['objectRelationships']
+	objectRelationships: ObjectDefinition['objectRelationships']
 ): Promise<{
 	referencedStructureIds: number[];
 	repeatableGroupIds: number[];
@@ -150,20 +131,16 @@ async function classifyRelationships(
 	const referencedStructureIds: number[] = [];
 	const repeatableGroupIds: number[] = [];
 
-	if (!relationships?.length) {
+	if (!objectRelationships?.length) {
 		return {referencedStructureIds, repeatableGroupIds};
 	}
 
 	// Get all related object definitions
 
-	const names = relationships.map((rel) => rel.objectDefinitionName2!);
-
-	const objectDefinitions = await ApiHelper.getAll<ObjectDefinition>({
-		filter: names
-			.map((n) => `name eq '${n.replace(/'/g, "''")}'`)
-			.join(' or '),
-		url: '/o/object-admin/v1.0/object-definitions',
-	});
+	const objectDefinitions =
+		await ObjectDefinitionService.getRelatedObjectDefinitions({
+			objectRelationships,
+		});
 
 	for (const objectDefinition of objectDefinitions) {
 

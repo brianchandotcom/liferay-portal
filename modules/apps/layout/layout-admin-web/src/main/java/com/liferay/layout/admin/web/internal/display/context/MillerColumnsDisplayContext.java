@@ -247,7 +247,9 @@ public class MillerColumnsDisplayContext {
 				).put(
 					"hasDuplicatedFriendlyURL",
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								layout.getCompanyId(), "LPS-174417")) {
+
 							return false;
 						}
 

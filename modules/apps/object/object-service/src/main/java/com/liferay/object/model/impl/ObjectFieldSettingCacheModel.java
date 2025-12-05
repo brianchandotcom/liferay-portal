@@ -159,7 +159,9 @@ public class ObjectFieldSettingCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -174,7 +176,7 @@ public class ObjectFieldSettingCacheModel
 
 		objectFieldId = objectInput.readLong();
 		name = objectInput.readUTF();
-		value = objectInput.readUTF();
+		value = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -214,10 +216,10 @@ public class ObjectFieldSettingCacheModel
 		}
 
 		if (value == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(value);
+			objectOutput.writeObject(value);
 		}
 	}
 

@@ -126,7 +126,11 @@ export default function SpacesSelector({
 								key={item.externalReferenceCode}
 								textValue={item.name}
 							>
-								<SpaceSticker name={item.name} size="sm" />
+								<SpaceSticker
+									displayType={item.settings?.logoColor}
+									name={item.name}
+									size="sm"
+								/>
 							</ItemSelector.Item>
 						)}
 					</ItemSelector>

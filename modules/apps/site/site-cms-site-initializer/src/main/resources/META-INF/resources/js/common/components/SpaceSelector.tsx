@@ -10,16 +10,17 @@ import {
 } from '@liferay/frontend-js-item-selector-web';
 import React from 'react';
 
-import {Space} from '../types/Space';
+import {LogoColor, Space} from '../types/Space';
 import SpaceSticker from './SpaceSticker';
 
 interface ISpaceInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+	spaceLogoColor?: LogoColor;
 	spaceName?: string;
 	value?: string;
 }
 
 export const SpaceInput = React.forwardRef<HTMLInputElement, ISpaceInputProps>(
-	({spaceName, value, ...otherProps}, ref) => {
+	({spaceLogoColor, spaceName, value, ...otherProps}, ref) => {
 		const showSticker = !!spaceName && !!value && !!value.length;
 
 		return (
@@ -36,7 +37,12 @@ export const SpaceInput = React.forwardRef<HTMLInputElement, ISpaceInputProps>(
 
 					{showSticker && (
 						<ClayInput.GroupInsetItem before>
-							<SpaceSticker hideName name={spaceName} size="sm" />
+							<SpaceSticker
+								displayType={spaceLogoColor}
+								hideName
+								name={spaceName}
+								size="sm"
+							/>
 						</ClayInput.GroupInsetItem>
 					)}
 				</ClayInput.GroupItem>
@@ -85,7 +91,11 @@ export default function SpaceSelector({
 					key={space.externalReferenceCode}
 					textValue={space.name}
 				>
-					<SpaceSticker name={space.name} size="sm" />
+					<SpaceSticker
+						displayType={space.settings?.logoColor}
+						name={space.name}
+						size="sm"
+					/>
 				</ItemSelector.Item>
 			)}
 		</ItemSelector>

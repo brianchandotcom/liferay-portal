@@ -12,9 +12,10 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
 import SpaceService from '../../../common/services/SpaceService';
+import {LogoColor} from '../../../common/types/Space';
 
 type Space = {
-	displayType?: string;
+	displayType?: LogoColor;
 	label: string;
 	value: any;
 };
@@ -163,11 +164,11 @@ export default function CategorizationSpaces({
 							key={item.value}
 							textValue={item.label}
 						>
-							<div className="autofit-row autofit-row-center">
-								<span className="align-items-center d-flex space-renderer-sticker">
-									<SpaceSticker name={item.label} />
-								</span>
-							</div>
+							<SpaceSticker
+								displayType={item.displayType}
+								name={item.label}
+								size="sm"
+							/>
 						</ClayMultiSelect.Item>
 					)}
 				</ClayMultiSelect>

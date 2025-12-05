@@ -10,67 +10,111 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Vendel Toreki
+ * @author Petteri Karttunen
  */
 public class BatchEnginePortletDataHandlerRegistryUtil {
 
 	public static BatchEnginePortletDataHandler getByClassName(
-		String className) {
+		long companyId, String className) {
 
-		String portletId = _getPortletId(className);
-
-		if (portletId == null) {
-			return null;
-		}
-
-		return _batchEnginePortletDataHandlers.get(portletId);
+		return getByPortletId(companyId, _getPortletId(companyId, className));
 	}
 
 	public static BatchEnginePortletDataHandler getByPortletId(
-		String portletId) {
+		long companyId, String portletId) {
 
-		return _batchEnginePortletDataHandlers.get(portletId);
-	}
+		Map<String, BatchEnginePortletDataHandler>
+			batchEnginePortletDataHandlerMap =
+				_batchEnginePortletDataHandlersMaps.get(companyId);
 
-	public static boolean hasByClassName(String className) {
-		if (_getPortletId(className) != null) {
-			return true;
+		if (batchEnginePortletDataHandlerMap == null) {
+			return null;
 		}
 
-		return false;
+		return batchEnginePortletDataHandlerMap.get(portletId);
+	}
+
+	public static boolean hasByClassName(String className, long companyId) {
+		Map<String, String> classNamesToPortletIdsMap =
+			_classNamesToPortletIdsMaps.get(companyId);
+
+		if (classNamesToPortletIdsMap == null) {
+			return false;
+		}
+
+		return classNamesToPortletIdsMap.containsKey(className);
 	}
 
 	protected static void put(
-		String portletId,
-		BatchEnginePortletDataHandler batchEnginePortletDataHandler) {
+		BatchEnginePortletDataHandler batchEnginePortletDataHandler,
+		long companyId, String portletId) {
 
-		_batchEnginePortletDataHandlers.put(
+		Map<String, BatchEnginePortletDataHandler>
+			batchEnginePortletDataHandlersMap =
+				_batchEnginePortletDataHandlersMaps.computeIfAbsent(
+					companyId, key -> new ConcurrentHashMap<>());
+
+		batchEnginePortletDataHandlersMap.put(
 			portletId, batchEnginePortletDataHandler);
+
+		Map<String, String> classNamesToPortletIdsMap =
+			_classNamesToPortletIdsMaps.computeIfAbsent(
+				companyId, key -> new ConcurrentHashMap<>());
+
+		for (String className : batchEnginePortletDataHandler.getClassNames()) {
+			classNamesToPortletIdsMap.put(className, portletId);
+		}
 	}
 
-	protected static void remove(String portletId) {
-		_batchEnginePortletDataHandlers.remove(portletId);
-	}
+	protected static void remove(long companyId, String portletId) {
+		_batchEnginePortletDataHandlersMaps.computeIfPresent(
+			companyId,
+			(key, batchEnginePortletDataHandlersMap) -> {
+				BatchEnginePortletDataHandler batchEnginePortletDataHandler =
+					batchEnginePortletDataHandlersMap.remove(portletId);
 
-	private static String _getPortletId(String className) {
-		for (Map.Entry<String, BatchEnginePortletDataHandler> entry :
-				_batchEnginePortletDataHandlers.entrySet()) {
-
-			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
-				entry.getValue();
-
-			String[] classNames = batchEnginePortletDataHandler.getClassNames();
-
-			for (String currentClassName : classNames) {
-				if (currentClassName.equals(className)) {
-					return entry.getKey();
+				if (batchEnginePortletDataHandler != null) {
+					_removeClassNameMappings(
+						batchEnginePortletDataHandler, companyId, portletId);
 				}
-			}
+
+				return batchEnginePortletDataHandlersMap.isEmpty() ? null :
+					batchEnginePortletDataHandlersMap;
+			});
+	}
+
+	private static String _getPortletId(long companyId, String className) {
+		Map<String, String> classNamestoPortletIdsMap =
+			_classNamesToPortletIdsMaps.get(companyId);
+
+		if (classNamestoPortletIdsMap == null) {
+			return null;
 		}
 
-		return null;
+		return classNamestoPortletIdsMap.get(className);
 	}
 
-	private static final Map<String, BatchEnginePortletDataHandler>
-		_batchEnginePortletDataHandlers = new ConcurrentHashMap<>();
+	private static void _removeClassNameMappings(
+		BatchEnginePortletDataHandler batchEnginePortletDataHandler,
+		long companyId, String portletId) {
+
+		_classNamesToPortletIdsMaps.computeIfPresent(
+			companyId,
+			(key, classNamesToPortletIdsMap) -> {
+				for (String className :
+						batchEnginePortletDataHandler.getClassNames()) {
+
+					classNamesToPortletIdsMap.remove(className, portletId);
+				}
+
+				return classNamesToPortletIdsMap.isEmpty() ? null :
+					classNamesToPortletIdsMap;
+			});
+	}
+
+	private static final Map<Long, Map<String, BatchEnginePortletDataHandler>>
+		_batchEnginePortletDataHandlersMaps = new ConcurrentHashMap<>();
+	private static final Map<Long, Map<String, String>>
+		_classNamesToPortletIdsMaps = new ConcurrentHashMap<>();
 
 }

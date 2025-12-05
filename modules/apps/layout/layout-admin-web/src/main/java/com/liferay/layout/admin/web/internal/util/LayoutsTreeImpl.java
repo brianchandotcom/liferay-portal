@@ -179,12 +179,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			long groupId, boolean privateLayout)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-			return Collections.emptyList();
-		}
-
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			groupId, privateLayout);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				layoutSet.getCompanyId(), "LPS-174417")) {
+
+			return Collections.emptyList();
+		}
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
 			return _layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(

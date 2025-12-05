@@ -656,7 +656,8 @@ public class LayoutsAdminDisplayContext {
 		Group group = layout.getGroup();
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417") ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPS-174417") ||
 			(!group.isLayoutSetPrototype() &&
 			 !layoutSet.isLayoutSetPrototypeLinkActive())) {
 
@@ -2472,11 +2473,13 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private boolean _isShouldCheckFriendlyURL() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+		Group group = getGroup();
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPS-174417")) {
+
 			return false;
 		}
-
-		Group group = getGroup();
 
 		if (group.isLayoutSetPrototype()) {
 			return true;

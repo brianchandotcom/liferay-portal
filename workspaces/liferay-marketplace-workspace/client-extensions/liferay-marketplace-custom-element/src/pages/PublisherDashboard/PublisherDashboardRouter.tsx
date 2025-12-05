@@ -112,14 +112,7 @@ const PublisherDashboardRouter = () => {
 				</Route>
 			</Route>
 
-			<Route
-				element={
-					<PublishedDashboardOutlet
-						accountsSearch={accountsSearch}
-						catalogId={catalogId}
-					/>
-				}
-			>
+			<Route element={<PublishedDashboardOutlet catalogId={catalogId} />}>
 				<Route path="/">
 					<Route element={<Apps />} index />
 
@@ -153,10 +146,7 @@ const PublisherDashboardRouter = () => {
 				>
 					<Route
 						element={
-							<PublishedDashboardOutlet
-								accountsSearch={accountsSearch}
-								catalogId={catalogId}
-							/>
+							<PublishedDashboardOutlet catalogId={catalogId} />
 						}
 					>
 						<Route element={<SolutionsDetails />} index />

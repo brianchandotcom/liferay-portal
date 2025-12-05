@@ -68,7 +68,6 @@ const SSADashboardOutlet = () => {
 		<PageRenderer error={error} isLoading={fetching}>
 			<div className="published-apps-dashboard-page-container">
 				<DashboardNavigation
-					currentAccount={ssaAccount}
 					dashboardNavigationItems={[
 						{
 							itemTitle: i18n.translate('my-saas-demos'),

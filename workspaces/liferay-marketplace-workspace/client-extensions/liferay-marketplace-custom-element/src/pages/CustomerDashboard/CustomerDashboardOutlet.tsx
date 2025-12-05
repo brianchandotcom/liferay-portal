@@ -7,9 +7,8 @@ import {Outlet, useOutletContext} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
-import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
+import {useAccount} from '../../hooks/data/useAccounts';
 import i18n from '../../i18n';
-import {getAccountImage} from '../../utils/util';
 
 import './CustomerDashboard.scss';
 
@@ -33,15 +32,11 @@ export const dashboardNavigationItems = [
 
 const CustomerDashboardOutlet = () => {
 	const {data: selectedAccount, error, isLoading} = useAccount();
-	const accountsSearch = useAccounts();
 
 	return (
 		<PageRenderer error={error} isLoading={isLoading}>
 			<div className="purchased-apps-dashboard-page-container">
 				<DashboardNavigation
-					accountIcon={getAccountImage(selectedAccount?.logoURL)}
-					accountsSearch={accountsSearch}
-					currentAccount={selectedAccount as any}
 					dashboardNavigationItems={dashboardNavigationItems}
 				/>
 

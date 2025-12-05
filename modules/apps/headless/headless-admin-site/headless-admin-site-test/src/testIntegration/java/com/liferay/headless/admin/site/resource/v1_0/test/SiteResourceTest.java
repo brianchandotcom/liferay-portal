@@ -275,8 +275,22 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
+	protected Site testGetSitePermissionsPage_addSite() throws Exception {
+		return testPostSite_addSite(randomSite());
+	}
+
+	@Override
 	protected Site testGetSitesPage_addSite(Site site) throws Exception {
 		Site postSite = siteResource.postSite(site);
+
+		_sites.add(postSite);
+
+		return postSite;
+	}
+
+	@Override
+	protected Site testPostSite_addPermissionsSite(Site site) throws Exception {
+		Site postSite = permissionsSiteResource.postSite(site);
 
 		_sites.add(postSite);
 
@@ -307,6 +321,11 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 	@Override
 	protected Site testPutSite_addSite() throws Exception {
+		return testPostSite_addSite(randomSite());
+	}
+
+	@Override
+	protected Site testPutSitePermissionsPage_addSite() throws Exception {
 		return testPostSite_addSite(randomSite());
 	}
 

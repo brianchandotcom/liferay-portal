@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 import com.liferay.trash.TrashHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,13 +60,17 @@ public class ViewRecycleBinSectionDisplayContext
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		ModelResourcePermission<ObjectEntryFolder>
 			objectEntryFolderModelResourcePermission,
-		Portal portal, TrashHelper trashHelper) {
+		Portal portal,
+		TranslationInfoItemFieldValuesExporterRegistry
+			translationInfoItemFieldValuesExporterRegistry,
+		TrashHelper trashHelper) {
 
 		super(
 			depotEntryLocalService, null, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
-			objectEntryFolderModelResourcePermission, portal);
+			objectEntryFolderModelResourcePermission, portal,
+			translationInfoItemFieldValuesExporterRegistry);
 
 		_assetLibraryResourceFactory = assetLibraryResourceFactory;
 		_groupId = groupId;

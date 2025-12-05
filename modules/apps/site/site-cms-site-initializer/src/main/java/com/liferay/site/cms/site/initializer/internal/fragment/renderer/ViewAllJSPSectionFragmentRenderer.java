@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewAllSectionDisplayContext;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -66,7 +67,8 @@ public class ViewAllJSPSectionFragmentRenderer
 			_objectDefinitionSettingLocalService,
 			_objectEntryFolderModelResourcePermission, _portal,
 			_viewAllSectionFDSCreationMenu, _viewAllSectionFDSItemsActions,
-			_viewAllSectionSystemFDSEntry);
+			_viewAllSectionSystemFDSEntry,
+			_translationInfoItemFieldValuesExporterRegistry);
 	}
 
 	@Override
@@ -94,6 +96,10 @@ public class ViewAllJSPSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 	@Reference(
 		target = "(frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION + ")"

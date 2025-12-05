@@ -360,7 +360,7 @@ public class TomcatNode {
 		_catalinaHome = catalineHome;
 
 		_catalinaBase = _liferayHome + "/tomcat";
-		_clusterOwnerJarPath = _toJarFilePath(clusterOwnerClass);
+		_clusterOwnerJarPath = _toJarPath(clusterOwnerClass);
 
 		StringBundler sb = StringUtil.replaceToStringBundler(
 			_TPL_PORTAL_EXT_PROPERTIES, "${", "}",
@@ -460,7 +460,7 @@ public class TomcatNode {
 
 	private String _buildRuntimeClassPath() {
 		return StringBundler.concat(
-			_toJarFilePath(TomcatNode.class), File.pathSeparator,
+			_toJarPath(TomcatNode.class), File.pathSeparator,
 			_clusterOwnerJarPath);
 	}
 
@@ -509,7 +509,7 @@ public class TomcatNode {
 		return noticeableFuture.get();
 	}
 
-	private String _toJarFilePath(Class<?> clazz) {
+	private String _toJarPath(Class<?> clazz) {
 		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
 
 		CodeSource codeSource = protectionDomain.getCodeSource();

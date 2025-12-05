@@ -5,6 +5,8 @@
 
 import {useLayoutEffect} from 'react';
 
+import {breadcrumbStore} from '../../../components/Breadcrumb/BreadcrumbStore';
+
 const usePublishHeader = () => {
 	useLayoutEffect(() => {
 		const marketplaceHeader = document.querySelector('.marketplace-header');
@@ -22,7 +24,11 @@ const usePublishHeader = () => {
 			);
 		}
 
+		breadcrumbStore.send({type: 'setVisibility', visible: false});
+
 		return () => {
+			breadcrumbStore.send({type: 'setVisibility', visible: true});
+
 			marketplaceHeader?.classList?.remove('d-none');
 			marketplacePublisherContainer?.classList?.remove(
 				'marketplace-publisher-header'

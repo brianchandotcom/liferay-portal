@@ -157,10 +157,10 @@ public class DataCleanupRegistrator {
 			"com.liferay.chat.service");
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
-				"clean-up-document-library-file-rank-module-data",
+				"clean-up-currency-converter-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP,
-				new DocumentLibraryFileRankServiceUpgradeProcess()),
-			"com.liferay.document.library.file.rank.service");
+				new CurrencyConverterUpgradeProcess()),
+			"com.liferay.currency.converter.web");
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-dictionary-module-data",
@@ -169,15 +169,15 @@ public class DataCleanupRegistrator {
 			"com.liferay.dictionary.web");
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
-				"clean-up-currency-converter-module-data",
-				DataCleanup.MODULE_DATA_CLEANUP,
-				new CurrencyConverterUpgradeProcess()),
-			"com.liferay.currency.converter.web");
-		_registerDataCleanup(
-			DataCleanupAdapter.create(
 				"clean-up-directory-module-data",
 				DataCleanup.MODULE_DATA_CLEANUP, new DirectoryUpgradeProcess()),
 			"com.liferay.directory.web");
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
+				"clean-up-document-library-file-rank-module-data",
+				DataCleanup.MODULE_DATA_CLEANUP,
+				new DocumentLibraryFileRankServiceUpgradeProcess()),
+			"com.liferay.document.library.file.rank.service");
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
 				"clean-up-frontend-image-editor-module-data",

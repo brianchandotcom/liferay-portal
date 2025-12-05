@@ -156,6 +156,13 @@ public class ReflectionUtilTest {
 		Assert.assertSame(
 			TestClass._privateStaticFinalObject, staticField.get(null));
 
+		staticField = ReflectionUtil.fetchDeclaredField(
+			false, TestClass.class, "_privateStaticFinalObject");
+
+		Assert.assertFalse(staticField.isAccessible());
+		Assert.assertSame(
+			TestClass._privateStaticFinalObject, staticField.get(null));
+
 		TestClass testClass = new TestClass();
 
 		Field field = ReflectionUtil.fetchDeclaredField(
@@ -217,6 +224,12 @@ public class ReflectionUtilTest {
 		Assert.assertTrue(method.isAccessible());
 		Assert.assertSame(TestClass._privateStaticObject, method.invoke(null));
 
+		method = ReflectionUtil.fetchDeclaredMethod(
+			false, TestClass.class, "_getPrivateStaticObject");
+
+		Assert.assertFalse(method.isAccessible());
+		Assert.assertSame(TestClass._privateStaticObject, method.invoke(null));
+
 		Assert.assertNull(
 			ReflectionUtil.fetchDeclaredMethod(
 				TestClass.class, "_notExistMethod"));
@@ -259,6 +272,12 @@ public class ReflectionUtilTest {
 		Assert.assertTrue(staticField.isAccessible());
 		Assert.assertSame(TestClass.publicStaticObject, staticField.get(null));
 
+		staticField = ReflectionUtil.fetchField(
+			false, TestClass.class, "publicStaticObject");
+
+		Assert.assertFalse(staticField.isAccessible());
+		Assert.assertSame(TestClass.publicStaticObject, staticField.get(null));
+
 		TestClass testClass = new TestClass();
 
 		Field field = ReflectionUtil.fetchField(
@@ -293,6 +312,13 @@ public class ReflectionUtilTest {
 				Assert.assertSame(
 					TestClass.publicStaticObject, staticField.get(null));
 
+				staticField = ReflectionUtil.fetchField(
+					false, TestClass.class, "publicStaticObject");
+
+				Assert.assertFalse(staticField.isAccessible());
+				Assert.assertSame(
+					TestClass.publicStaticObject, staticField.get(null));
+
 				TestClass testClass = new TestClass();
 
 				Field field = ReflectionUtil.fetchField(
@@ -316,6 +342,12 @@ public class ReflectionUtilTest {
 			TestClass.class, "getPrivateStaticObject");
 
 		Assert.assertTrue(method.isAccessible());
+		Assert.assertSame(TestClass._privateStaticObject, method.invoke(null));
+
+		method = ReflectionUtil.fetchMethod(
+			false, TestClass.class, "getPrivateStaticObject");
+
+		Assert.assertFalse(method.isAccessible());
 		Assert.assertSame(TestClass._privateStaticObject, method.invoke(null));
 
 		Assert.assertNull(
@@ -343,6 +375,13 @@ public class ReflectionUtilTest {
 				Assert.assertSame(
 					TestClass._privateStaticObject, method.invoke(null));
 
+				method = ReflectionUtil.fetchMethod(
+					false, TestClass.class, "getPrivateStaticObject");
+
+				Assert.assertFalse(method.isAccessible());
+				Assert.assertSame(
+					TestClass._privateStaticObject, method.invoke(null));
+
 				Assert.assertNull(
 					ReflectionUtil.fetchMethod(
 						TestClass.class, "_notExistMethod"));
@@ -357,6 +396,13 @@ public class ReflectionUtilTest {
 			TestClass.class, "_privateStaticFinalObject");
 
 		Assert.assertTrue(staticField.isAccessible());
+		Assert.assertSame(
+			TestClass._privateStaticFinalObject, staticField.get(null));
+
+		staticField = ReflectionUtil.getDeclaredField(
+			false, TestClass.class, "_privateStaticFinalObject");
+
+		Assert.assertFalse(staticField.isAccessible());
 		Assert.assertSame(
 			TestClass._privateStaticFinalObject, staticField.get(null));
 
@@ -388,6 +434,23 @@ public class ReflectionUtilTest {
 					TestClass._privateStaticObject, field.get(null));
 			}
 		}
+
+		fields = ReflectionUtil.getDeclaredFields(false, TestClass.class);
+
+		for (Field field : fields) {
+			Assert.assertFalse(field.isAccessible());
+
+			String name = field.getName();
+
+			if (name.equals("_privateStaticFinalObject")) {
+				Assert.assertSame(
+					TestClass._privateStaticFinalObject, field.get(null));
+			}
+			else if (name.equals("_privateStaticObject")) {
+				Assert.assertSame(
+					TestClass._privateStaticObject, field.get(null));
+			}
+		}
 	}
 
 	@Test
@@ -396,6 +459,12 @@ public class ReflectionUtilTest {
 			TestClass.class, "_getPrivateStaticObject");
 
 		Assert.assertTrue(method.isAccessible());
+		Assert.assertSame(TestClass._privateStaticObject, method.invoke(null));
+
+		method = ReflectionUtil.getDeclaredMethod(
+			false, TestClass.class, "_getPrivateStaticObject");
+
+		Assert.assertFalse(method.isAccessible());
 		Assert.assertSame(TestClass._privateStaticObject, method.invoke(null));
 	}
 

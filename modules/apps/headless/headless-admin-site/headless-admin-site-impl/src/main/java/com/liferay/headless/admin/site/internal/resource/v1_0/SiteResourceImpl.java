@@ -395,6 +395,23 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		return _toSite(group);
 	}
 
+	@Override
+	protected Long getPermissionCheckerResourceId(String externalReferenceCode)
+		throws Exception {
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		return group.getPrimaryKey();
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(
+		String externalReferenceCode) {
+
+		return Group.class.getName();
+	}
+
 	private Group _addGroup(String externalReferenceCode, Site site)
 		throws Exception {
 

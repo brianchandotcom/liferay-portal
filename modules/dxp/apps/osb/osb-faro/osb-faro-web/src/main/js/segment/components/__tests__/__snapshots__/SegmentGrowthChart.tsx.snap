@@ -485,11 +485,11 @@ exports[`SegmentGrowthChart should render chart and display the tooltip on mouse
         </svg>
         <div
           class="recharts-legend-wrapper"
-          style="position: absolute; width: 790px; height: auto; left: 5px; top: 5px; color: rgb(107, 108, 126); font-size: 14px; line-height: 21px; padding-bottom: 22px;"
+          style="position: absolute; width: 790px; height: auto; right: 5px; bottom: 5px; color: rgb(107, 108, 126); font-size: 14px; line-height: 21px; padding-bottom: 22px;"
         >
           <ul
             class="recharts-default-legend"
-            style="padding: 0px; margin: 0px; text-align: left;"
+            style="padding: 0px; margin: 0px; text-align: right;"
           >
             <li
               class="recharts-legend-item legend-item-0"

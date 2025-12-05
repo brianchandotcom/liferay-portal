@@ -6,13 +6,20 @@ exports[`Membership should render 1`] = `
     class="card card-root segment-membership-root"
   >
     <div
-      class="card-header"
+      class="card-header d-flex justify-content-between align-items-center"
     >
       <div
         class="card-title"
       >
-        Segment Membership
+        Segment Membership Trend
       </div>
+      <span
+        class="text-secondary text-uppercase"
+      >
+        <strong>
+          Last 30 days
+        </strong>
+      </span>
     </div>
     <div
       class="card-body segment-growth-root no-padding"

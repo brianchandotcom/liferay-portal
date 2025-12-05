@@ -1,3 +1,4 @@
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -13,16 +14,16 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 import ViewsContext from '../../views/ViewsContext';
 import ActiveViewSelector from './ActiveViewSelector';
 import CreationMenu from './CreationMenu';
-import CustomViewsControls from './CustomViewsControls';
 import InfoPanelToggleButton from './InfoPanelToggleButton';
 import MainSearch from './MainSearch';
+import SnapshotsControls from './SnapshotsControls';
 import SortDropdown from './SortDropdown';
 import FiltersDropdown from './filters/FiltersDropdown';
 
 function NavBar({creationMenu, showSearch}) {
 	const {showInfoPanel} = useContext(FrontendDataSetContext);
 
-	const [{customViewsEnabled, filters, sorts, views}] =
+	const [{filters, snapshotsEnabled, sorts, views}] =
 		useContext(ViewsContext);
 
 	const [showMobile, setShowMobile] = useState(false);
@@ -77,7 +78,7 @@ function NavBar({creationMenu, showSearch}) {
 					</ManagementToolbar.Item>
 				)}
 
-				{customViewsEnabled && <CustomViewsControls />}
+				{snapshotsEnabled && <SnapshotsControls />}
 
 				{views?.length > 1 && (
 					<ManagementToolbar.Item>

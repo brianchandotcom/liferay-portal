@@ -12,6 +12,7 @@ import {openToast} from 'frontend-js-components-web';
 import {
 	ClientExtensionDefinition,
 	ClientExtensionResolution,
+	deepClone,
 	fetch,
 	getObjectValueFromPath,
 	loadClientExtensions,
@@ -83,7 +84,7 @@ import {
 	VisibleFieldNames,
 } from './utils/types';
 import useConfigInURL, {useUpdateConfig} from './utils/useConfigInURL';
-import ViewsContext from './views/ViewsContext';
+import ViewsContext, {ISnapshot} from './views/ViewsContext';
 
 // @ts-ignore
 
@@ -108,8 +109,6 @@ const FrontendDataSetContent = ({
 	currentURL,
 	customDataRenderers,
 	customRenderers,
-	customViews = '{}',
-	customViewsEnabled,
 	defaultSelectedItems,
 	emptyState,
 	filters: initialFilters,
@@ -144,6 +143,8 @@ const FrontendDataSetContent = ({
 	showSearch = true,
 	showSelectAll = false,
 	sidePanelId,
+	snapshots = [],
+	snapshotsEnabled,
 	sorts: sortsProp = [],
 	style = 'default',
 	uniformActionsDisplay,
@@ -498,6 +499,13 @@ const FrontendDataSetContent = ({
 	};
 
 	const getInitialViewsState = () => {
+		const defaultSnapshot: any = {
+			modifiedFields: {},
+			paginationDelta:
+				showPagination &&
+				(pagination?.initialDelta || DEFAULT_PAGINATION_DELTA),
+		};
+
 		const customInternalViews =
 			customRenderers?.views?.map((customRenderer: TRenderer) => ({
 
@@ -520,9 +528,14 @@ const FrontendDataSetContent = ({
 			views[0] ||
 			(customInternalViews?.length && customInternalViews[0]);
 
+		defaultSnapshot.activeView = {
+			component: getViewComponent(initialActiveView as IView),
+			...initialActiveView,
+		};
+
 		let initialVisibleFieldNames = {};
 
-		if (activeViewSettings) {
+		if (!Liferay.FeatureFlags['LPD-10683'] && activeViewSettings) {
 			const {name: activeViewName, visibleFieldNames} =
 				JSON.parse(activeViewSettings);
 
@@ -542,6 +555,8 @@ const FrontendDataSetContent = ({
 		}
 
 		const visibleFieldNames = getVisibleFields();
+
+		defaultSnapshot.visibleFieldNames = initialVisibleFieldNames;
 
 		let saveVisibleFieldNames = false;
 
@@ -574,29 +589,29 @@ const FrontendDataSetContent = ({
 			...initialActiveView,
 		};
 
+		defaultSnapshot.filters =
+			initialFilters &&
+			initialFilters.map((filter) => {
+				const preloadedData = deepClone(filter.preloadedData);
+				if (preloadedData) {
+					filter = activateFilter({
+						filter,
+						selectedData: preloadedData,
+					});
+				}
+
+				return filter;
+			});
+
 		const filters = initialFilters
 			? updateFilterActivation({
 					newFilters: getFilters(),
-					oldFilters: initialFilters.map((filter) => {
-						const preloadedData = filter.preloadedData;
-
-						if (preloadedData) {
-							filter = activateFilter({
-								filter,
-								selectedData: preloadedData,
-							});
-						}
-
-						return filter;
-					}),
+					oldFilters: deepClone(defaultSnapshot.filters),
 				})
 			: [];
 
 		const paginationDelta =
-			showPagination &&
-			(getDelta() ||
-				pagination?.initialDelta ||
-				DEFAULT_PAGINATION_DELTA);
+			showPagination && (getDelta() || defaultSnapshot.paginationDelta);
 
 		const pageNumber =
 			getPageNumber() ||
@@ -604,6 +619,8 @@ const FrontendDataSetContent = ({
 			DEFAULT_PAGINATION_PAGE_NUMBER;
 
 		const searchParam = getSearchParam();
+
+		defaultSnapshot.sorts = sortsProp;
 
 		const sorts = updateSortsActivation({
 			newSorts: getActiveSorts(),
@@ -637,23 +654,22 @@ const FrontendDataSetContent = ({
 			});
 		}
 
+		const parsedSnapshots = snapshots?.map((snapshot: ISnapshot) => ({
+			...snapshot,
+			configuration: JSON.parse(snapshot.configuration),
+		}));
+
 		return {
 			activeView,
-			customViews: customViews && JSON.parse(customViews),
-			customViewsEnabled,
-			defaultView: {
-				activeView,
-				filters,
-				paginationDelta,
-				sorts,
-				visibleFieldNames: initialVisibleFieldNames,
-			},
+			defaultSnapshot,
 			filters,
 			filtersGroups,
 			modifiedFields: {},
 			pageNumber,
 			paginationDelta,
 			searchParam,
+			snapshots: parsedSnapshots,
+			snapshotsEnabled,
 			sorts,
 			views: [...views, ...customInternalViews],
 			visibleFieldNames: initialVisibleFieldNames,
@@ -1577,6 +1593,55 @@ const FrontendDataSetContent = ({
 		});
 	}
 
+	const handleSnapshotChange = ({defaultSnapshot, snapshots, value}: any) => {
+		if (value === 'DEFAULT_VIEW') {
+			updateConfig({
+				[EConfigInURLKeys.ACTIVE_FILTERS]: defaultSnapshot.filters,
+				[EConfigInURLKeys.ACTIVE_SORTS]: defaultSnapshot.sorts,
+				[EConfigInURLKeys.DELTA]: {...defaultSnapshot.paginationDelta},
+				[EConfigInURLKeys.VIEW_NAME]: {
+					...defaultSnapshot.activeView.name,
+				},
+				[EConfigInURLKeys.VISIBLE_FIELDS]: {
+					...defaultSnapshot.visibleFieldNames,
+				},
+			});
+
+			viewsDispatch({
+				type: EViewsActionTypes.RESET_TO_DEFAULT_SNAPSHOT,
+			});
+		}
+		else {
+			const snapshot = deepClone(
+				snapshots.find((view: ISnapshot) => view.erc === value)
+			);
+
+			updateConfig({
+				[EConfigInURLKeys.ACTIVE_FILTERS]: updateFilterActivation({
+					newFilters: snapshot.configuration.filters.filter(
+						(filter: any) => filter.active
+					),
+					oldFilters: deepClone(filters),
+				}),
+				[EConfigInURLKeys.ACTIVE_SORTS]: updateSortsActivation({
+					newSorts: snapshot.configuration.sorts,
+					oldSorts: sorts,
+				}),
+				[EConfigInURLKeys.DELTA]:
+					snapshot.configuration.paginationDelta,
+				[EConfigInURLKeys.VIEW_NAME]:
+					snapshot.configuration.activeView.name,
+				[EConfigInURLKeys.VISIBLE_FIELDS]:
+					snapshot.configuration.visibleFieldNames,
+			});
+
+			viewsDispatch({
+				type: EViewsActionTypes.UPDATE_ACTIVE_SNAPSHOT,
+				value: snapshot,
+			});
+		}
+	};
+
 	function toggleItemInlineEdit(itemKey: any) {
 		setItemsChanges(({[itemKey]: foundItem, ...itemsChanges}) => {
 			return foundItem
@@ -1719,6 +1784,7 @@ const FrontendDataSetContent = ({
 				executeAsyncItemAction,
 				formId,
 				formName,
+				handleSnapshotChange,
 				hideManagementBarInEmptyState,
 				highlightItems,
 				highlightedItemsValue,

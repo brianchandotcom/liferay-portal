@@ -1275,7 +1275,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Site randomSite = randomSite();
 
 		randomSite.setExternalReferenceCode(RandomTestUtil.randomString());
-
 		randomSite.setParentSiteExternalReferenceCode(
 			postParentSite.getExternalReferenceCode());
 

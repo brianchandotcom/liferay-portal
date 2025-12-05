@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useSelector} from '@xstate/store/react';
-import React, {useMemo} from 'react';
 import {useLocation} from 'react-router-dom';
+import {useSelector} from '@xstate/store/react';
+import classNames from 'classnames';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import i18n, {Word} from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
@@ -23,11 +24,16 @@ export function Breadcrumbs({
 	basePath = Liferay.ThemeDisplay.getLayoutRelativeURL(),
 	hiddenPaths = [],
 }: BreadcrumbsProps) {
+	const [loaded, setLoaded] = useState(false);
 	const {pathname} = useLocation();
 
-	const replacements = useSelector(
+	useEffect(() => {
+		setTimeout(() => setLoaded(true), 25);
+	}, []);
+
+	const {replacements, visible} = useSelector(
 		breadcrumbStore,
-		({context: {replacements}}) => replacements
+		({context}) => context
 	);
 
 	const items = useMemo(() => {
@@ -36,16 +42,20 @@ export function Breadcrumbs({
 			...pathname.split('/'),
 		].filter(Boolean);
 
-		return [
-			{
-				active: false,
+		const items = [];
+
+		if (!basePath.startsWith('/web/marketplace')) {
+			items.push({
 				href: '/web/marketplace',
 				label: 'Marketplace',
-			},
+			});
+		}
+
+		return [
+			...items,
 			...rawPaths
-				.slice(2)
-				.map((path, index, array) => ({
-					active: index === array.length - 1,
+				.map((path, index) => ({
+					active: index === rawPaths.length - 1,
 					href:
 						'/' +
 						rawPaths
@@ -54,21 +64,30 @@ export function Breadcrumbs({
 									? segment + '#'
 									: segment
 							)
-							.slice(0, index + 3)
+							.slice(0, index + 1)
 							.join('/'),
 					label: replacements[path] || i18n.translate(path as Word),
 				}))
 				.filter(
 					(item) =>
-						!hiddenPaths.some((hiddenPath) =>
+						!['web', ...hiddenPaths].some((hiddenPath) =>
 							item.href.endsWith(hiddenPath)
 						)
 				),
 		];
-	}, [basePath, hiddenPaths, pathname, replacements]);
+	}, [basePath, hiddenPaths, loaded, pathname, replacements]);
+
+	if (!visible) {
+		return null;
+	}
 
 	return (
-		<nav aria-label="Breadcrumb" className="breadcrumb-bar">
+		<nav
+			aria-label="Breadcrumb"
+			className={classNames('breadcrumb-bar', {
+				invisible: !loaded,
+			})}
+		>
 			<ol className="breadcrumb">
 				{items.map((item: React.ComponentProps<typeof Item>, index) => (
 					<Item

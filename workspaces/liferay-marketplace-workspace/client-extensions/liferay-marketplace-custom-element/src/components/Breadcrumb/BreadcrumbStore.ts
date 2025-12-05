@@ -7,6 +7,7 @@ import {createStore} from '@xstate/store';
 
 const context = {
 	replacements: {} as Record<string, string>,
+	visible: true,
 };
 
 export const breadcrumbStore = createStore({
@@ -15,14 +16,16 @@ export const breadcrumbStore = createStore({
 		setReplacements: (
 			context,
 			event: {replacements: Record<number | string, string>}
-		) => {
-			return {
-				...context,
-				replacements: {
-					...context.replacements,
-					...event.replacements,
-				},
-			};
-		},
+		) => ({
+			...context,
+			replacements: {
+				...context.replacements,
+				...event.replacements,
+			},
+		}),
+		setVisibility: (context, event: {visible: boolean}) => ({
+			...context,
+			visible: event.visible,
+		}),
 	},
 });

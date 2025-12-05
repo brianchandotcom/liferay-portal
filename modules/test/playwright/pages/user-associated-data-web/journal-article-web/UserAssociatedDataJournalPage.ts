@@ -19,7 +19,10 @@ export class UserAssociatedDataJournalPage {
 		this.articleTitleInput = page.locator(
 			'.article-content-title .input-group-item input'
 		);
-		this.optionsButton = page.getByRole('button', {name: 'Options'});
+		this.optionsButton = page.getByRole('button', {
+			exact: true,
+			name: 'Options',
+		});
 		this.page = page;
 	}
 }

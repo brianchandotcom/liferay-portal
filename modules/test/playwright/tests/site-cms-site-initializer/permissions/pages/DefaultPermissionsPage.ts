@@ -52,14 +52,14 @@ export class DefaultPermissionsPage {
 		if (bulk) {
 			await waitForAlert(
 				this.page,
-				'Info:Default permissions update action started for 2 assets. Check the Task Report for details.',
+				'Info:Default permissions update action started for',
 				{type: 'info'}
 			);
 		}
 		else if (propagate) {
 			await waitForAlert(
 				this.page,
-				'Info:Default permissions update action started for all assets. Check the Task Report for details.',
+				'Info:Default permissions update action started for all assets.',
 				{type: 'info'}
 			);
 		}

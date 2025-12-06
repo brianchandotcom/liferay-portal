@@ -6,6 +6,7 @@
 package com.liferay.user.service.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -14,15 +15,25 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -39,7 +50,9 @@ public class UserPermissionTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
 	public void testContainsPermissionsActionId() throws Exception {
@@ -117,6 +130,58 @@ public class UserPermissionTest {
 				permissionChecker, _user2.getUserId(), ActionKeys.UPDATE));
 	}
 
+	@Test
+	public void testUpdateFieldPermissionWithInheritedRole() throws Exception {
+		String[] fieldEditableUserTypes = PropsValues.FIELD_EDITABLE_USER_TYPES;
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PropsUtil.set(
+				PropsKeys.FIELD_EDITABLE_USER_TYPES, StringPool.BLANK);
+
+			_user1 = UserTestUtil.addUser();
+			_organization = OrganizationTestUtil.addOrganization();
+
+			_userLocalService.addOrganizationUser(
+				_organization.getOrganizationId(), _user1);
+
+			Role adminRole = _roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), "administrator");
+
+			_roleLocalService.addGroupRole(
+				_organization.getGroupId(), adminRole);
+
+			PermissionChecker userPermissionChecker =
+				PermissionCheckerFactoryUtil.create(_user1);
+
+			PermissionThreadLocal.setPermissionChecker(userPermissionChecker);
+
+			Assert.assertTrue(
+				UsersAdminUtil.hasUpdateFieldPermission(
+					userPermissionChecker, _user1, _user1, "suffix"));
+
+			_user2 = UserTestUtil.addUser();
+
+			PermissionChecker user2PermissionChecker =
+				PermissionCheckerFactoryUtil.create(_user2);
+
+			PermissionThreadLocal.setPermissionChecker(user2PermissionChecker);
+
+			Assert.assertFalse(
+				UsersAdminUtil.hasUpdateFieldPermission(
+					user2PermissionChecker, _user2, _user2, "suffix"));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PropsUtil.set(
+				PropsKeys.FIELD_EDITABLE_USER_TYPES,
+				StringUtil.merge(fieldEditableUserTypes, StringPool.COMMA));
+		}
+	}
+
 	@DeleteAfterTestRun
 	private Organization _organization;
 
@@ -125,6 +190,9 @@ public class UserPermissionTest {
 
 	@DeleteAfterTestRun
 	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private User _user1;

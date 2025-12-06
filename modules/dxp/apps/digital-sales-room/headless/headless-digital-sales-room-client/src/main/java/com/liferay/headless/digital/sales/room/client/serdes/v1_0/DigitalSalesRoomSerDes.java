@@ -96,6 +96,20 @@ public class DigitalSalesRoomSerDes {
 			sb.append(digitalSalesRoom.getChannelId());
 		}
 
+		if (digitalSalesRoom.getChannelName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"channelName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoom.getChannelName()));
+
+			sb.append("\"");
+		}
+
 		if (digitalSalesRoom.getClientLogo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -324,6 +338,15 @@ public class DigitalSalesRoomSerDes {
 				"channelId", String.valueOf(digitalSalesRoom.getChannelId()));
 		}
 
+		if (digitalSalesRoom.getChannelName() == null) {
+			map.put("channelName", null);
+		}
+		else {
+			map.put(
+				"channelName",
+				String.valueOf(digitalSalesRoom.getChannelName()));
+		}
+
 		if (digitalSalesRoom.getClientLogo() == null) {
 			map.put("clientLogo", null);
 		}
@@ -464,6 +487,9 @@ public class DigitalSalesRoomSerDes {
 			else if (Objects.equals(jsonParserFieldName, "channelId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "channelName")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "clientLogo")) {
 				return false;
 			}
@@ -536,6 +562,12 @@ public class DigitalSalesRoomSerDes {
 				if (jsonParserFieldValue != null) {
 					digitalSalesRoom.setChannelId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "channelName")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setChannelName(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "clientLogo")) {

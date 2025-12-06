@@ -5,7 +5,8 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DirectFragmentImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.ImageValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,26 +22,26 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class FragmentMappedImageValueSerDes {
+public class DirectFragmentImageValueSerDes {
 
-	public static FragmentMappedImageValue toDTO(String json) {
-		FragmentMappedImageValueJSONParser fragmentMappedImageValueJSONParser =
-			new FragmentMappedImageValueJSONParser();
+	public static DirectFragmentImageValue toDTO(String json) {
+		DirectFragmentImageValueJSONParser directFragmentImageValueJSONParser =
+			new DirectFragmentImageValueJSONParser();
 
-		return fragmentMappedImageValueJSONParser.parseToDTO(json);
+		return directFragmentImageValueJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentMappedImageValue[] toDTOs(String json) {
-		FragmentMappedImageValueJSONParser fragmentMappedImageValueJSONParser =
-			new FragmentMappedImageValueJSONParser();
+	public static DirectFragmentImageValue[] toDTOs(String json) {
+		DirectFragmentImageValueJSONParser directFragmentImageValueJSONParser =
+			new DirectFragmentImageValueJSONParser();
 
-		return fragmentMappedImageValueJSONParser.parseToDTOs(json);
+		return directFragmentImageValueJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		FragmentMappedImageValue fragmentMappedImageValue) {
+		DirectFragmentImageValue directFragmentImageValue) {
 
-		if (fragmentMappedImageValue == null) {
+		if (directFragmentImageValue == null) {
 			return "null";
 		}
 
@@ -48,19 +49,17 @@ public class FragmentMappedImageValueSerDes {
 
 		sb.append("{");
 
-		if (fragmentMappedImageValue.getFragmentMappedValue() != null) {
+		if (directFragmentImageValue.getValue_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentMappedValue\": ");
+			sb.append("\"value_i18n\": ");
 
-			sb.append(
-				String.valueOf(
-					fragmentMappedImageValue.getFragmentMappedValue()));
+			sb.append(_toJSON(directFragmentImageValue.getValue_i18n()));
 		}
 
-		if (fragmentMappedImageValue.getType() != null) {
+		if (directFragmentImageValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -68,7 +67,7 @@ public class FragmentMappedImageValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-			sb.append(fragmentMappedImageValue.getType());
+			sb.append(directFragmentImageValue.getType());
 			sb.append("\"");
 		}
 
@@ -78,58 +77,57 @@ public class FragmentMappedImageValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentMappedImageValueJSONParser fragmentMappedImageValueJSONParser =
-			new FragmentMappedImageValueJSONParser();
+		DirectFragmentImageValueJSONParser directFragmentImageValueJSONParser =
+			new DirectFragmentImageValueJSONParser();
 
-		return fragmentMappedImageValueJSONParser.parseToMap(json);
+		return directFragmentImageValueJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		FragmentMappedImageValue fragmentMappedImageValue) {
+		DirectFragmentImageValue directFragmentImageValue) {
 
-		if (fragmentMappedImageValue == null) {
+		if (directFragmentImageValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentMappedImageValue.getFragmentMappedValue() == null) {
-			map.put("fragmentMappedValue", null);
+		if (directFragmentImageValue.getValue_i18n() == null) {
+			map.put("value_i18n", null);
 		}
 		else {
 			map.put(
-				"fragmentMappedValue",
-				String.valueOf(
-					fragmentMappedImageValue.getFragmentMappedValue()));
+				"value_i18n",
+				String.valueOf(directFragmentImageValue.getValue_i18n()));
 		}
 
-		if (fragmentMappedImageValue.getType() == null) {
+		if (directFragmentImageValue.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(fragmentMappedImageValue.getType()));
+			map.put("type", String.valueOf(directFragmentImageValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentMappedImageValueJSONParser
-		extends BaseJSONParser<FragmentMappedImageValue> {
+	public static class DirectFragmentImageValueJSONParser
+		extends BaseJSONParser<DirectFragmentImageValue> {
 
 		@Override
-		protected FragmentMappedImageValue createDTO() {
-			return new FragmentMappedImageValue();
+		protected DirectFragmentImageValue createDTO() {
+			return new DirectFragmentImageValue();
 		}
 
 		@Override
-		protected FragmentMappedImageValue[] createDTOArray(int size) {
-			return new FragmentMappedImageValue[size];
+		protected DirectFragmentImageValue[] createDTOArray(int size) {
+			return new DirectFragmentImageValue[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "fragmentMappedValue")) {
-				return false;
+			if (Objects.equals(jsonParserFieldName, "value_i18n")) {
+				return true;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
@@ -140,20 +138,19 @@ public class FragmentMappedImageValueSerDes {
 
 		@Override
 		protected void setField(
-			FragmentMappedImageValue fragmentMappedImageValue,
+			DirectFragmentImageValue directFragmentImageValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentMappedValue")) {
+			if (Objects.equals(jsonParserFieldName, "value_i18n")) {
 				if (jsonParserFieldValue != null) {
-					fragmentMappedImageValue.setFragmentMappedValue(
-						FragmentMappedValueSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					directFragmentImageValue.setValue_i18n(
+						(Map<String, ImageValue>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					fragmentMappedImageValue.setType(
-						FragmentMappedImageValue.Type.create(
+					directFragmentImageValue.setType(
+						DirectFragmentImageValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

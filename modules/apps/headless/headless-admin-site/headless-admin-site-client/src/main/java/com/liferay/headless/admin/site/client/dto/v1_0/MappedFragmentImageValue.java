@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentMappedImageValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.MappedFragmentImageValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class FragmentMappedImageValue
+public class MappedFragmentImageValue
 	extends FragmentImageValue implements Cloneable, Serializable {
 
-	public static FragmentMappedImageValue toDTO(String json) {
-		return FragmentMappedImageValueSerDes.toDTO(json);
+	public static MappedFragmentImageValue toDTO(String json) {
+		return MappedFragmentImageValueSerDes.toDTO(json);
 	}
 
 	public FragmentMappedValue getFragmentMappedValue() {
@@ -51,8 +51,8 @@ public class FragmentMappedImageValue
 	protected FragmentMappedValue fragmentMappedValue;
 
 	@Override
-	public FragmentMappedImageValue clone() throws CloneNotSupportedException {
-		return (FragmentMappedImageValue)super.clone();
+	public MappedFragmentImageValue clone() throws CloneNotSupportedException {
+		return (MappedFragmentImageValue)super.clone();
 	}
 
 	@Override
@@ -61,14 +61,14 @@ public class FragmentMappedImageValue
 			return true;
 		}
 
-		if (!(object instanceof FragmentMappedImageValue)) {
+		if (!(object instanceof MappedFragmentImageValue)) {
 			return false;
 		}
 
-		FragmentMappedImageValue fragmentMappedImageValue =
-			(FragmentMappedImageValue)object;
+		MappedFragmentImageValue mappedFragmentImageValue =
+			(MappedFragmentImageValue)object;
 
-		return Objects.equals(toString(), fragmentMappedImageValue.toString());
+		return Objects.equals(toString(), mappedFragmentImageValue.toString());
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class FragmentMappedImageValue
 	}
 
 	public String toString() {
-		return FragmentMappedImageValueSerDes.toJSON(this);
+		return MappedFragmentImageValueSerDes.toJSON(this);
 	}
 
 }

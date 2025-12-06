@@ -47,10 +47,10 @@ import java.util.function.Supplier;
 @JsonSubTypes(
 	{
 		@JsonSubTypes.Type(
-			name = "Direct", value = FragmentDirectImageValue.class
+			name = "Direct", value = DirectFragmentImageValue.class
 		),
 		@JsonSubTypes.Type(
-			name = "Mapped", value = FragmentMappedImageValue.class
+			name = "Mapped", value = MappedFragmentImageValue.class
 		)
 	}
 )

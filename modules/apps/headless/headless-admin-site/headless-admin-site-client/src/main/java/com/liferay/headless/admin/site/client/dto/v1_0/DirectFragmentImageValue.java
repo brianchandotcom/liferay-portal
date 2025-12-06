@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentDirectImageValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.DirectFragmentImageValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -20,11 +20,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class FragmentDirectImageValue
+public class DirectFragmentImageValue
 	extends FragmentImageValue implements Cloneable, Serializable {
 
-	public static FragmentDirectImageValue toDTO(String json) {
-		return FragmentDirectImageValueSerDes.toDTO(json);
+	public static DirectFragmentImageValue toDTO(String json) {
+		return DirectFragmentImageValueSerDes.toDTO(json);
 	}
 
 	public Map<String, ImageValue> getValue_i18n() {
@@ -50,8 +50,8 @@ public class FragmentDirectImageValue
 	protected Map<String, ImageValue> value_i18n;
 
 	@Override
-	public FragmentDirectImageValue clone() throws CloneNotSupportedException {
-		return (FragmentDirectImageValue)super.clone();
+	public DirectFragmentImageValue clone() throws CloneNotSupportedException {
+		return (DirectFragmentImageValue)super.clone();
 	}
 
 	@Override
@@ -60,14 +60,14 @@ public class FragmentDirectImageValue
 			return true;
 		}
 
-		if (!(object instanceof FragmentDirectImageValue)) {
+		if (!(object instanceof DirectFragmentImageValue)) {
 			return false;
 		}
 
-		FragmentDirectImageValue fragmentDirectImageValue =
-			(FragmentDirectImageValue)object;
+		DirectFragmentImageValue directFragmentImageValue =
+			(DirectFragmentImageValue)object;
 
-		return Objects.equals(toString(), fragmentDirectImageValue.toString());
+		return Objects.equals(toString(), directFragmentImageValue.toString());
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class FragmentDirectImageValue
 	}
 
 	public String toString() {
-		return FragmentDirectImageValueSerDes.toJSON(this);
+		return DirectFragmentImageValueSerDes.toJSON(this);
 	}
 
 }

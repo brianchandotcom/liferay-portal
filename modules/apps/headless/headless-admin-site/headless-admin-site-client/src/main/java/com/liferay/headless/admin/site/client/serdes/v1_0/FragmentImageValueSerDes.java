@@ -5,9 +5,9 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDirectImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DirectFragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImageValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -50,13 +50,13 @@ public class FragmentImageValueSerDes {
 			String typeString = type.toString();
 
 			if (typeString.equals("Direct")) {
-				return FragmentDirectImageValueSerDes.toJSON(
-					(FragmentDirectImageValue)fragmentImageValue);
+				return DirectFragmentImageValueSerDes.toJSON(
+					(DirectFragmentImageValue)fragmentImageValue);
 			}
 
 			if (typeString.equals("Mapped")) {
-				return FragmentMappedImageValueSerDes.toJSON(
-					(FragmentMappedImageValue)fragmentImageValue);
+				return MappedFragmentImageValueSerDes.toJSON(
+					(MappedFragmentImageValue)fragmentImageValue);
 			}
 
 			throw new IllegalArgumentException("Unknown type " + typeString);
@@ -124,11 +124,11 @@ public class FragmentImageValueSerDes {
 				String typeString = type.toString();
 
 				if (typeString.equals("Direct")) {
-					return FragmentDirectImageValue.toDTO(json);
+					return DirectFragmentImageValue.toDTO(json);
 				}
 
 				if (typeString.equals("Mapped")) {
-					return FragmentMappedImageValue.toDTO(json);
+					return MappedFragmentImageValue.toDTO(json);
 				}
 
 				throw new IllegalArgumentException(

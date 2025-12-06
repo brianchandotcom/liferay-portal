@@ -37,20 +37,20 @@ import java.util.function.Supplier;
 @Generated("")
 @GraphQLName(
 	description = "A mapped fragment image value.",
-	value = "FragmentMappedImageValue"
+	value = "MappedFragmentImageValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentMappedImageValue")
-public class FragmentMappedImageValue
+@XmlRootElement(name = "MappedFragmentImageValue")
+public class MappedFragmentImageValue
 	extends FragmentImageValue implements Serializable {
 
-	public static FragmentMappedImageValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentMappedImageValue.class, json);
+	public static MappedFragmentImageValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(MappedFragmentImageValue.class, json);
 	}
 
-	public static FragmentMappedImageValue unsafeToDTO(String json) {
+	public static MappedFragmentImageValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			FragmentMappedImageValue.class, json);
+			MappedFragmentImageValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -104,14 +104,14 @@ public class FragmentMappedImageValue
 			return true;
 		}
 
-		if (!(object instanceof FragmentMappedImageValue)) {
+		if (!(object instanceof MappedFragmentImageValue)) {
 			return false;
 		}
 
-		FragmentMappedImageValue fragmentMappedImageValue =
-			(FragmentMappedImageValue)object;
+		MappedFragmentImageValue mappedFragmentImageValue =
+			(MappedFragmentImageValue)object;
 
-		return Objects.equals(toString(), fragmentMappedImageValue.toString());
+		return Objects.equals(toString(), mappedFragmentImageValue.toString());
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class FragmentMappedImageValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentMappedImageValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.MappedFragmentImageValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

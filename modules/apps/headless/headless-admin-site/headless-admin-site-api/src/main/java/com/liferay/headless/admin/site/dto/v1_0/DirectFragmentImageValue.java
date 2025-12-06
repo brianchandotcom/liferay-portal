@@ -37,20 +37,20 @@ import java.util.function.Supplier;
 @Generated("")
 @GraphQLName(
 	description = "A fragment image value of type direct.",
-	value = "FragmentDirectImageValue"
+	value = "DirectFragmentImageValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentDirectImageValue")
-public class FragmentDirectImageValue
+@XmlRootElement(name = "DirectFragmentImageValue")
+public class DirectFragmentImageValue
 	extends FragmentImageValue implements Serializable {
 
-	public static FragmentDirectImageValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentDirectImageValue.class, json);
+	public static DirectFragmentImageValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(DirectFragmentImageValue.class, json);
 	}
 
-	public static FragmentDirectImageValue unsafeToDTO(String json) {
+	public static DirectFragmentImageValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			FragmentDirectImageValue.class, json);
+			DirectFragmentImageValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
@@ -106,14 +106,14 @@ public class FragmentDirectImageValue
 			return true;
 		}
 
-		if (!(object instanceof FragmentDirectImageValue)) {
+		if (!(object instanceof DirectFragmentImageValue)) {
 			return false;
 		}
 
-		FragmentDirectImageValue fragmentDirectImageValue =
-			(FragmentDirectImageValue)object;
+		DirectFragmentImageValue directFragmentImageValue =
+			(DirectFragmentImageValue)object;
 
-		return Objects.equals(toString(), fragmentDirectImageValue.toString());
+		return Objects.equals(toString(), directFragmentImageValue.toString());
 	}
 
 	@Override
@@ -161,7 +161,7 @@ public class FragmentDirectImageValue
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentDirectImageValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.DirectFragmentImageValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

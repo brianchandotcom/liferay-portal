@@ -112,8 +112,7 @@ public class CTSearchEventListener implements CTEventListener {
 							ctCollection.getCompanyId(), uids,
 							indexer.isCommitImmediately());
 
-						_reindex(
-							ctEntryEntry.getKey(), ctEntryEntry.getValue());
+						_reindex(ctEntryEntry.getKey(), ctEntries);
 
 						_ctEntryIndexer.reindex(ctEntries);
 					}

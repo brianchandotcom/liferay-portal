@@ -221,7 +221,7 @@ public class FragmentEntryProcessorHelperImpl
 			long classNameId, long classPK, String fieldName, Locale locale)
 		throws PortalException {
 
-		if (classNameId == 0) {
+		if ((classNameId == 0) || Validator.isNull(fieldName)) {
 			return 0;
 		}
 
@@ -881,7 +881,7 @@ public class FragmentEntryProcessorHelperImpl
 		String className, Object displayObject, String fieldName,
 		Locale locale) {
 
-		if (displayObject == null) {
+		if ((displayObject == null) || Validator.isNull(fieldName)) {
 			return 0;
 		}
 

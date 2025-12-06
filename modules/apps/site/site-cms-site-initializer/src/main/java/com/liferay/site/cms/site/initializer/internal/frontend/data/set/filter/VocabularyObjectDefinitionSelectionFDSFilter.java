@@ -10,7 +10,7 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.service.ObjectDefinitionServiceUtil;
+import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noor Najjar
@@ -55,7 +56,7 @@ public class VocabularyObjectDefinitionSelectionFDSFilter
 		Locale locale) {
 
 		return TransformUtil.transform(
-			ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
+			_objectDefinitionService.getCMSObjectDefinitions(
 				CompanyThreadLocal.getCompanyId(),
 				new String[] {
 					ObjectFolderConstants.
@@ -66,5 +67,8 @@ public class VocabularyObjectDefinitionSelectionFDSFilter
 				objectDefinition.getLabel(locale),
 				objectDefinition.getObjectDefinitionId()));
 	}
+
+	@Reference
+	private ObjectDefinitionService _objectDefinitionService;
 
 }

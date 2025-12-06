@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.internal.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
@@ -273,12 +274,11 @@ public class TableReferenceDefinitionManager {
 						currentTableReferenceDefinition.getTable(),
 						key -> new ArrayList<>());
 
-				for (TableJoinHolder currentParentTableJoinHolder :
-						currentParentTableJoinHolders) {
-
-					combinedChildTableJoinHolders.add(
-						TableJoinHolder.reverse(currentParentTableJoinHolder));
-				}
+				combinedChildTableJoinHolders.addAll(
+					TransformUtil.transform(
+						currentParentTableJoinHolders,
+						currentParentTableJoinHolder -> TableJoinHolder.reverse(
+							currentParentTableJoinHolder)));
 			}
 
 			Map<Table<?>, List<TableJoinHolder>>
@@ -294,12 +294,11 @@ public class TableReferenceDefinitionManager {
 						currentTableReferenceDefinition.getTable(),
 						key -> new ArrayList<>());
 
-				for (TableJoinHolder currentChildTableJoinHolder :
-						currentChildTableJoinHolders) {
-
-					combinedParentTableJoinHolders.add(
-						TableJoinHolder.reverse(currentChildTableJoinHolder));
-				}
+				combinedParentTableJoinHolders.addAll(
+					TransformUtil.transform(
+						currentChildTableJoinHolders,
+						currentChildTableJoinHolder -> TableJoinHolder.reverse(
+							currentChildTableJoinHolder)));
 			}
 		}
 

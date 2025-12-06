@@ -1352,19 +1352,12 @@ public class CTCollectionLocalServiceImpl
 				enclosureMap.entrySet()) {
 
 			long classNameId = enclosureEntry.getKey();
-
 			Set<Long> classPKs = enclosureEntry.getValue();
 
-			List<CTEntry> ctEntries = new ArrayList<>(classPKs.size());
-
-			for (long classPK : classPKs) {
-				CTEntry ctEntry = _ctEntryPersistence.fetchByC_MCNI_MCPK(
-					ctCollection.getCtCollectionId(), classNameId, classPK);
-
-				if (ctEntry != null) {
-					ctEntries.add(ctEntry);
-				}
-			}
+			List<CTEntry> ctEntries = TransformUtil.transform(
+				classPKs,
+				classPK -> _ctEntryPersistence.fetchByC_MCNI_MCPK(
+					ctCollection.getCtCollectionId(), classNameId, classPK));
 
 			if (ctEntries.isEmpty()) {
 				continue;

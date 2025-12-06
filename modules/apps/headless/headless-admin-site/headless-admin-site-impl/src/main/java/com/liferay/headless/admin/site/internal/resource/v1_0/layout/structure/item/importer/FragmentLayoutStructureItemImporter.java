@@ -270,6 +270,14 @@ public class FragmentLayoutStructureItemImporter
 
 		return JSONUtil.put(
 			FragmentEntryProcessorConstants.
+				KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+			FragmentEditableElementUtil.
+				getBackgroundImageFragmentEntryProcessorJSONObject(
+					fragmentInstancePageElementDefinition.
+						getFragmentEditableElements(),
+					layoutStructureItemImporterContext)
+		).put(
+			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			FragmentEditableElementUtil.
 				getEditableFragmentEntryProcessorJSONObject(

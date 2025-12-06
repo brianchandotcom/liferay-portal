@@ -34,6 +34,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.i
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,6 +51,21 @@ import java.util.TreeSet;
  * @author Rubén Pulido
  */
 public class FragmentEditableElementUtil {
+
+	public static JSONObject getBackgroundImageFragmentEntryProcessorJSONObject(
+		FragmentEditableElement[] fragmentEditableElements,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
+
+		JSONObject backgroundImageFragmentEntryProcessorJSONObject =
+			_getBackgroundImageFragmentEntryProcessorJSONObject(
+				fragmentEditableElements, layoutStructureItemImporterContext);
+
+		if (backgroundImageFragmentEntryProcessorJSONObject.length() > 0) {
+			return backgroundImageFragmentEntryProcessorJSONObject;
+		}
+
+		return null;
+	}
 
 	public static JSONObject getEditableFragmentEntryProcessorJSONObject(
 		long companyId, FragmentEditableElement[] fragmentEditableElements,
@@ -103,6 +119,92 @@ public class FragmentEditableElementUtil {
 				backgroundImageFragmentEntryProcessorJSONObject,
 				editableFragmentEntryProcessorJSONObject),
 			scopeGroupId);
+	}
+
+	private static JSONObject
+			_getBackgroundImageFragmentEditableElementJSONObject(
+				BackgroundImageFragmentEditableElementValue
+					backgroundImageFragmentEditableElementValue,
+				LayoutStructureItemImporterContext
+					layoutStructureItemImporterContext)
+		throws Exception {
+
+		FragmentImageValue backgroundFragmentImageValue =
+			backgroundImageFragmentEditableElementValue.
+				getBackgroundFragmentImageValue();
+
+		if (backgroundFragmentImageValue == null) {
+			return null;
+		}
+
+		if (backgroundFragmentImageValue instanceof DirectFragmentImageValue) {
+			DirectFragmentImageValue directFragmentImageValue =
+				(DirectFragmentImageValue)backgroundFragmentImageValue;
+
+			return LocalizedValueUtil.toJSONObject(
+				directFragmentImageValue.getValue_i18n(),
+				imageValue -> _getImageValueJSONObject(
+					imageValue, layoutStructureItemImporterContext));
+		}
+
+		if (!(backgroundFragmentImageValue instanceof
+				MappedFragmentImageValue)) {
+
+			return null;
+		}
+
+		MappedFragmentImageValue mappedFragmentImageValue =
+			(MappedFragmentImageValue)backgroundFragmentImageValue;
+
+		return _getFragmentMappedValueJSONObject(
+			layoutStructureItemImporterContext.getCompanyId(),
+			mappedFragmentImageValue.getFragmentMappedValue(),
+			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
+			layoutStructureItemImporterContext.getGroupId());
+	}
+
+	private static JSONObject
+		_getBackgroundImageFragmentEntryProcessorJSONObject(
+			FragmentEditableElement[] fragmentEditableElements,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentEditableElements == null) {
+			return jsonObject;
+		}
+
+		for (FragmentEditableElement fragmentEditableElement :
+				fragmentEditableElements) {
+
+			if ((fragmentEditableElement == null) ||
+				(fragmentEditableElement.getId() == null)) {
+
+				continue;
+			}
+
+			FragmentEditableElementValue fragmentEditableElementValue =
+				fragmentEditableElement.getFragmentEditableElementValue();
+
+			if ((fragmentEditableElementValue == null) ||
+				!Objects.equals(
+					fragmentEditableElementValue.getType(),
+					FragmentEditableElementValue.Type.BACKGROUND_IMAGE)) {
+
+				continue;
+			}
+
+			jsonObject.put(
+				fragmentEditableElement.getId(),
+				() -> _getJSONObject(
+					() -> _getBackgroundImageFragmentEditableElementJSONObject(
+						(BackgroundImageFragmentEditableElementValue)
+							fragmentEditableElementValue,
+						layoutStructureItemImporterContext)));
+		}
+
+		return jsonObject;
 	}
 
 	private static JSONObject _getEditableFragmentEntryProcessorJSONObject(
@@ -341,6 +443,45 @@ public class FragmentEditableElementUtil {
 		urlImageValue.setUrl(() -> url);
 
 		return urlImageValue;
+	}
+
+	private static JSONObject _getImageValueJSONObject(
+			ImageValue imageValue,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
+		throws PortalException {
+
+		if (imageValue == null) {
+			return null;
+		}
+
+		if (Objects.equals(imageValue.getType(), ImageValue.Type.ITEM)) {
+			ItemImageValue itemImageValue = (ItemImageValue)imageValue;
+
+			ItemExternalReference itemExternalReference =
+				itemImageValue.getItemExternalReference();
+
+			if ((itemExternalReference == null) ||
+				Validator.isNull(
+					itemExternalReference.getExternalReferenceCode())) {
+
+				return null;
+			}
+
+			return FileEntryUtil.getFileEntryJSONObject(
+				layoutStructureItemImporterContext.getCompanyId(),
+				itemExternalReference.getExternalReferenceCode(),
+				itemExternalReference.getScope(),
+				layoutStructureItemImporterContext.getGroupId());
+		}
+
+		URLImageValue urlImageValue = (URLImageValue)imageValue;
+
+		if (Validator.isNull(urlImageValue.getUrl())) {
+			return null;
+		}
+
+		return JSONUtil.put("url", urlImageValue.getUrl());
 	}
 
 	private static JSONObject _getJSONObject(

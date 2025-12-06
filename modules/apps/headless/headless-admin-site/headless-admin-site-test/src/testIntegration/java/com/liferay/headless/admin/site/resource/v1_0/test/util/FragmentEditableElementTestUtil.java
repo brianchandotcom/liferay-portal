@@ -5,9 +5,12 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DirectFragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValueFragmentLink;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValue;
@@ -18,19 +21,82 @@ import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentEditableEleme
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.ImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.URLImageValue;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 /**
  * @author Rubén Pulido
  */
 public class FragmentEditableElementTestUtil {
+
+	public static FragmentEditableElement
+		getBackgroundImageFragmentEditableElement(
+			FragmentImageValue fragmentImageValue, String id) {
+
+		FragmentEditableElement fragmentEditableElement =
+			new FragmentEditableElement();
+
+		BackgroundImageFragmentEditableElementValue
+			backgroundImageFragmentEditableElementValue =
+				new BackgroundImageFragmentEditableElementValue();
+
+		backgroundImageFragmentEditableElementValue.
+			setBackgroundFragmentImageValue(() -> fragmentImageValue);
+		backgroundImageFragmentEditableElementValue.setType(
+			() -> FragmentEditableElementValue.Type.BACKGROUND_IMAGE);
+
+		fragmentEditableElement.setFragmentEditableElementValue(
+			() -> backgroundImageFragmentEditableElementValue);
+
+		fragmentEditableElement.setId(() -> id);
+
+		return fragmentEditableElement;
+	}
+
+	public static FragmentImageValue getDirectFragmentImageValue(
+		ItemExternalReference itemExternalReference, String url) {
+
+		DirectFragmentImageValue directFragmentImageValue =
+			new DirectFragmentImageValue();
+
+		directFragmentImageValue.setType(() -> FragmentImageValue.Type.DIRECT);
+		directFragmentImageValue.setValue_i18n(
+			HashMapBuilder.put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
+				() -> {
+					if (itemExternalReference == null) {
+						URLImageValue urlImageValue = new URLImageValue();
+
+						urlImageValue.setType(() -> ImageValue.Type.URL);
+						urlImageValue.setUrl(() -> url);
+
+						return urlImageValue;
+					}
+
+					ItemImageValue itemImageValue = new ItemImageValue();
+
+					itemImageValue.setItemExternalReference(
+						() -> itemExternalReference);
+					itemImageValue.setType(() -> ImageValue.Type.ITEM);
+
+					return itemImageValue;
+				}
+			).build());
+
+		return directFragmentImageValue;
+	}
 
 	public static FragmentEditableElement getHTMLFragmentEditableElement(
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
@@ -57,6 +123,23 @@ public class FragmentEditableElementTestUtil {
 		fragmentEditableElement.setId(() -> "element-html");
 
 		return fragmentEditableElement;
+	}
+
+	public static FragmentImageValue getMappedFragmentImageValue(
+		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		String fieldKey,
+		FragmentMappedValueItemReference.Type
+			fragmentMappedValueItemReferenceType) {
+
+		MappedFragmentImageValue mappedFragmentImageValue =
+			new MappedFragmentImageValue();
+
+		mappedFragmentImageValue.setFragmentMappedValue(
+			() -> _getFragmentMappedValue(
+				contextSource, fieldKey, fragmentMappedValueItemReferenceType));
+		mappedFragmentImageValue.setType(() -> FragmentImageValue.Type.MAPPED);
+
+		return mappedFragmentImageValue;
 	}
 
 	public static FragmentEditableElement getTextFragmentEditableElement(

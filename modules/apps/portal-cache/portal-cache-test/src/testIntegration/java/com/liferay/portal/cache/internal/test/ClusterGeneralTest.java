@@ -196,7 +196,8 @@ public class ClusterGeneralTest implements Serializable {
 		byte[] bytes = Files.readAllBytes(path);
 
 		Files.write(
-			path, Arrays.asList(portalExtPropertiesLines), StandardOpenOption.APPEND);
+			path, Arrays.asList(portalExtPropertiesLines),
+			StandardOpenOption.APPEND);
 
 		tomcatNode.start(true);
 

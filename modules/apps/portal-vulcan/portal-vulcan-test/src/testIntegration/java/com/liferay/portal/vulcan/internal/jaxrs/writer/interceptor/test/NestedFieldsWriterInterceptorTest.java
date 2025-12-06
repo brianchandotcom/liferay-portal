@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONSerializable;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -125,7 +125,7 @@ public class NestedFieldsWriterInterceptorTest {
 	}
 
 	@Test
-	public void testGetNestedFieldsForMultipleItems() throws Exception {
+	public void testGetNestedFields() throws Exception {
 		_test(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -161,87 +161,60 @@ public class NestedFieldsWriterInterceptorTest {
 				).put(
 					"skus", JSONUtil.putAll()
 				)),
-			"v1.0/products",
 			HashMapBuilder.put(
 				"nestedFields", "productOptions,skus"
-			).build());
-	}
-
-	@Test
-	public void testGetNestedFieldsForSingleItem() throws Exception {
-		_test(
-			JSONUtil.put(
-				"id", 1
-			).put(
-				"productOptions",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"id", 10
-					).put(
-						"name", "test1"
-					),
-					JSONUtil.put(
-						"id", 20
-					).put(
-						"name", "test2"
-					),
-					JSONUtil.put(
-						"id", 30
-					).put(
-						"name", "test3"
-					))
-			).put(
-				"skus",
-				JSONUtil.putAll(
-					JSONUtil.put("id", 1), JSONUtil.put("id", 2),
-					JSONUtil.put("id", 3), JSONUtil.put("id", 4))
-			),
-			"v1.0/products/1",
-			HashMapBuilder.put(
-				"nestedFields", "productOptions,skus"
-			).build());
+			).build(),
+			"v1.0");
 	}
 
 	@Test
 	public void testGetNestedFieldsWithDeeplyNestedFields() throws Exception {
 		_test(
-			JSONUtil.put(
-				"id", 1
-			).put(
-				"productOptions",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"id", 10
-					).put(
-						"name", "test1"
-					).put(
-						"productOptionValues",
-						JSONUtil.putAll(
-							JSONUtil.put("id", 100), JSONUtil.put("id", 200),
-							JSONUtil.put("id", 300))
-					),
-					JSONUtil.put(
-						"id", 20
-					).put(
-						"name", "test2"
-					).put(
-						"productOptionValues",
-						JSONUtil.putAll(
-							JSONUtil.put("id", 400), JSONUtil.put("id", 500))
-					),
-					JSONUtil.put(
-						"id", 30
-					).put(
-						"name", "test3"
-					).put(
-						"productOptionValues", JSONUtil.putAll()
-					))
-			),
-			"v1.0/products/1",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"id", 1
+				).put(
+					"productOptions",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"id", 10
+						).put(
+							"name", "test1"
+						).put(
+							"productOptionValues",
+							JSONUtil.putAll(
+								JSONUtil.put("id", 100),
+								JSONUtil.put("id", 200),
+								JSONUtil.put("id", 300))
+						),
+						JSONUtil.put(
+							"id", 20
+						).put(
+							"name", "test2"
+						).put(
+							"productOptionValues",
+							JSONUtil.putAll(
+								JSONUtil.put("id", 400),
+								JSONUtil.put("id", 500))
+						),
+						JSONUtil.put(
+							"id", 30
+						).put(
+							"name", "test3"
+						).put(
+							"productOptionValues", JSONUtil.putAll()
+						))
+				),
+				JSONUtil.put(
+					"id", 2
+				).put(
+					"productOptions", JSONUtil.putAll()
+				)),
 			HashMapBuilder.put(
 				"nestedFields",
 				"productOptions,productOptions.productOptionValues"
-			).build());
+			).build(),
+			"v1.0");
 	}
 
 	@Test
@@ -261,10 +234,10 @@ public class NestedFieldsWriterInterceptorTest {
 				).put(
 					"id", 2
 				)),
-			"v1.0/products",
 			HashMapBuilder.put(
 				"nestedFields", "categories"
-			).build());
+			).build(),
+			"v1.0");
 		_test(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -279,128 +252,120 @@ public class NestedFieldsWriterInterceptorTest {
 				).put(
 					"id", 2
 				)),
-			"v2.0/products",
 			HashMapBuilder.put(
 				"nestedFields", "categories"
-			).build());
+			).build(),
+			"v2.0");
 	}
 
 	@Test
 	public void testGetNestedFieldsWithNonexistentFieldName() throws Exception {
-		_test(JSONUtil.put("id", 1), "v1.0/products/1", Collections.emptyMap());
 		_test(
-			JSONUtil.put("id", 1), "v1.0/products/1",
+			JSONUtil.putAll(JSONUtil.put("id", 1), JSONUtil.put("id", 2)),
+			Collections.emptyMap(), "v1.0");
+		_test(
+			JSONUtil.putAll(JSONUtil.put("id", 1), JSONUtil.put("id", 2)),
 			HashMapBuilder.put(
 				"nestedFields", "nonexistentField"
-			).build());
+			).build(),
+			"v1.0");
 	}
 
 	@Test
 	public void testGetNestedFieldsWithoutOverridingMethod() throws Exception {
 		_test(
-			JSONUtil.put(
-				"externalCode", "codigoExterno"
-			).put(
-				"id", 1
-			),
-			"v1.0/products/1",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"externalCode", "codigoExterno"
+				).put(
+					"id", 1
+				),
+				JSONUtil.put("id", 2)),
 			HashMapBuilder.put(
 				"externalCode.AcceptLanguage", "es_ES"
 			).put(
 				"nestedFields", "externalCode"
-			).build());
+			).build(),
+			"v1.0");
 	}
 
 	@Test
 	public void testGetNestedFieldsWithPagination() throws Exception {
 		_test(
-			JSONUtil.put(
-				"id", 1
-			).put(
-				"skus",
-				JSONUtil.putAll(JSONUtil.put("id", 1), JSONUtil.put("id", 2))
-			),
-			"v1.0/products/1",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"id", 1
+				).put(
+					"skus",
+					JSONUtil.putAll(
+						JSONUtil.put("id", 1), JSONUtil.put("id", 2))
+				),
+				JSONUtil.put(
+					"id", 2
+				).put(
+					"skus", JSONUtil.putAll()
+				)),
 			HashMapBuilder.put(
 				"nestedFields", "skus"
 			).put(
 				"skus.page", "1"
 			).put(
 				"skus.pageSize", "2"
-			).build());
+			).build(),
+			"v1.0");
 	}
 
 	@Test
 	public void testGetNestedFieldsWithQueryParameter() throws Exception {
 		_test(
-			JSONUtil.put(
-				"id", 1
-			).put(
-				"productOptions",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"id", 20
-					).put(
-						"name", "test2"
-					))
-			),
-			"v1.0/products/1",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"id", 1
+				).put(
+					"productOptions",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"id", 20
+						).put(
+							"name", "test2"
+						))
+				),
+				JSONUtil.put(
+					"id", 2
+				).put(
+					"productOptions", JSONUtil.putAll()
+				)),
 			HashMapBuilder.put(
 				"nestedFields", "productOptions"
 			).put(
 				"productOptions.name", "test2"
-			).build());
+			).build(),
+			"v1.0");
 	}
 
 	@Test
 	public void testGetNestedFieldsWithResourceVersioning() throws Exception {
 		_test(
-			JSONUtil.put(
-				"id", 1
-			).put(
-				"skus",
-				JSONUtil.putAll(
-					JSONUtil.put("id", 1), JSONUtil.put("id", 2),
-					JSONUtil.put("id", 3), JSONUtil.put("id", 4),
-					JSONUtil.put("id", 5), JSONUtil.put("id", 6))
-			),
-			"v2.0/products/1",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"id", 1
+				).put(
+					"skus",
+					JSONUtil.putAll(
+						JSONUtil.put("id", 1), JSONUtil.put("id", 2),
+						JSONUtil.put("id", 3), JSONUtil.put("id", 4),
+						JSONUtil.put("id", 5), JSONUtil.put("id", 6))
+				),
+				JSONUtil.put("id", 2)),
 			HashMapBuilder.put(
 				"nestedFields", "skus"
-			).build());
-	}
-
-	@Test
-	public void testGetNestedFieldsWithSubitem() throws Exception {
-		_test(
-			JSONUtil.put(
-				"id", 1
-			).put(
-				"skus",
-				JSONUtil.putAll(
-					JSONUtil.put("id", 1), JSONUtil.put("id", 2),
-					JSONUtil.put("id", 3), JSONUtil.put("id", 4),
-					JSONUtil.put("id", 5), JSONUtil.put("id", 6))
-			),
-			"v2.0/subproduct",
-			HashMapBuilder.put(
-				"nestedFields", "skus"
-			).build());
+			).build(),
+			"v2.0");
 	}
 
 	@Path("/v1.0")
 	public static class BaseProductResource_v1_0_Impl
 		implements ProductResource_v1_0 {
-
-		@GET
-		@Path("/products/{id}")
-		@Produces("application/json")
-		public Product getProduct(
-			@QueryParam("inlineInitialization") boolean inlineInitialization,
-			@PathParam("id") long id) {
-
-			return null;
-		}
 
 		@GET
 		@Path("/products/{id}/productOptions")
@@ -454,16 +419,6 @@ public class NestedFieldsWriterInterceptorTest {
 		}
 
 		@GET
-		@Path("/products/{id}")
-		@Produces("application/json")
-		public Product getProduct(
-			@QueryParam("inlineInitialization") boolean inlineInitialization,
-			@PathParam("id") long id) {
-
-			return null;
-		}
-
-		@GET
 		@Path("/products/{id}/productOptions")
 		@Produces("application/*")
 		public List<ProductOption> getProductOptions(
@@ -488,15 +443,6 @@ public class NestedFieldsWriterInterceptorTest {
 			@PathParam("id") Long id, @Context Pagination pagination) {
 
 			return Page.of(Collections.emptyList());
-		}
-
-		@GET
-		@Path("/subproduct")
-		@Produces("application/json")
-		public Subproduct getSubproduct(
-			@QueryParam("inlineInitialization") boolean inlineInitialization) {
-
-			return null;
 		}
 
 	}
@@ -636,11 +582,6 @@ public class NestedFieldsWriterInterceptorTest {
 			return "codigoExterno";
 		}
 
-		@Override
-		public Product getProduct(boolean inlineInitialization, long id) {
-			return _toProduct(null, id, inlineInitialization);
-		}
-
 		@NestedField("productOptions")
 		@Override
 		public List<ProductOption> getProductOptions(Long id, String name) {
@@ -735,11 +676,6 @@ public class NestedFieldsWriterInterceptorTest {
 			return Arrays.asList(_toCategory(1L), _toCategory(2L));
 		}
 
-		@Override
-		public Product getProduct(boolean inlineInitialization, long id) {
-			return _toProduct(null, 1L, inlineInitialization);
-		}
-
 		@NestedField("productOptions")
 		@Override
 		public List<ProductOption> getProductOptions(Long id, String name) {
@@ -767,7 +703,7 @@ public class NestedFieldsWriterInterceptorTest {
 		@Override
 		public List<Product> getProducts(boolean inlineInitialization) {
 			return Arrays.asList(
-				_toProduct("externalCode", 1L, inlineInitialization),
+				_toSubproduct("externalCode", 1L, inlineInitialization),
 				_toProduct(null, 2L, inlineInitialization));
 		}
 
@@ -790,25 +726,6 @@ public class NestedFieldsWriterInterceptorTest {
 				Math.min(pagination.getEndPosition(), skus.size()));
 
 			return Page.of(skus);
-		}
-
-		@Override
-		public Subproduct getSubproduct(boolean inlineInitialization) {
-			if (inlineInitialization) {
-				return new Subproduct() {
-					{
-						setExternalCode(null);
-						setId(1L);
-					}
-				};
-			}
-
-			Subproduct subproduct = new Subproduct();
-
-			subproduct.setExternalCode(null);
-			subproduct.setId(1L);
-
-			return subproduct;
 		}
 
 		protected Company contextCompany;
@@ -851,15 +768,11 @@ public class NestedFieldsWriterInterceptorTest {
 
 		public List<Category> getCategories(String externalCode);
 
-		public Product getProduct(boolean inlineInitialization, long id);
-
 		public List<ProductOption> getProductOptions(Long id, String name);
 
 		public List<Product> getProducts(boolean inlineInitialization);
 
 		public Page<Sku> getSkus(Long id, Pagination pagination);
-
-		public Subproduct getSubproduct(boolean inlineInitialization);
 
 	}
 
@@ -916,6 +829,26 @@ public class NestedFieldsWriterInterceptorTest {
 		return sku;
 	}
 
+	private static Subproduct _toSubproduct(
+		String externalCode, long id, boolean inlineInitialization) {
+
+		if (inlineInitialization) {
+			return new Subproduct() {
+				{
+					setExternalCode(externalCode);
+					setId(id);
+				}
+			};
+		}
+
+		Subproduct subproduct = new Subproduct();
+
+		subproduct.setExternalCode(externalCode);
+		subproduct.setId(id);
+
+		return subproduct;
+	}
+
 	private String _getQueryString(Map<String, String> parameters) {
 		String queryString = StringUtil.merge(
 			TransformUtil.transform(
@@ -938,17 +871,17 @@ public class NestedFieldsWriterInterceptorTest {
 	}
 
 	private void _test(
-			JSONSerializable expectedJSONSerializable, String path,
-			Map<String, String> queryParameters)
+			JSONArray expectedJSONArray, Map<String, String> queryParameters,
+			String version)
 		throws Exception {
 
 		for (boolean inlineInitialization : new boolean[] {false, true}) {
 			JSONAssert.assertEquals(
-				expectedJSONSerializable.toJSONString(),
+				expectedJSONArray.toString(),
 				HTTPTestUtil.invokeToString(
 					null,
 					StringBundler.concat(
-						"test-vulcan/", path,
+						"test-vulcan/", version, "/products",
 						_getQueryString(
 							HashMapBuilder.putAll(
 								queryParameters

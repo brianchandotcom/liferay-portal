@@ -17,7 +17,9 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -25,15 +27,20 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,6 +51,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -72,6 +80,16 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -84,9 +102,7 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
-			null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			null, _serviceContext);
 
 		fragmentEntryLink.setEditableValues(
 			JSONUtil.put(
@@ -125,6 +141,137 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 
 		Assert.assertFalse(
 			processFragmentEntryLinkHTML.contains("imagePreview=1"));
+	}
+
+	@Test
+	@TestInfo("LPD-73556")
+	public void testProcessFragmentEntryLinkHTMLWithMissingReference()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		JSONObject jsonObject = JSONUtil.put(
+			"className", FileEntry.class.getName()
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		);
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"bannerSimpleImage",
+					JSONUtil.put(
+						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+						jsonObject))
+			).toString());
+
+		fragmentEntryLink.setHtml(_readFileToString("fragment_entry.html"));
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, LocaleUtil.getDefault());
+
+		String processFragmentEntryLinkHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext);
+
+		Assert.assertTrue(
+			processFragmentEntryLinkHTML,
+			processFragmentEntryLinkHTML.contains(
+				StringBundler.concat(
+					"background-image: url(",
+					HtmlUtil.toInputSafe(jsonObject.toString()),
+					"); background-size: cover;")));
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null, _serviceContext);
+
+		processFragmentEntryLinkHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext);
+
+		Assert.assertFalse(
+			processFragmentEntryLinkHTML,
+			processFragmentEntryLinkHTML.contains(
+				HtmlUtil.toInputSafe(jsonObject.toString())));
+
+		String previewURL = _dlURLHelper.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+
+		Assert.assertTrue(
+			processFragmentEntryLinkHTML,
+			processFragmentEntryLinkHTML.contains(
+				"background-image: url(" + HtmlUtil.toInputSafe(previewURL)));
+
+		Group group = GroupTestUtil.addGroup();
+
+		jsonObject = JSONUtil.put(
+			"className", FileEntry.class.getName()
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		).put(
+			"scopeExternalReferenceCode", group.getExternalReferenceCode()
+		);
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"bannerSimpleImage",
+					JSONUtil.put(
+						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+						jsonObject))
+			).toString());
+
+		processFragmentEntryLinkHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext);
+
+		Assert.assertTrue(
+			processFragmentEntryLinkHTML,
+			processFragmentEntryLinkHTML.contains(
+				StringBundler.concat(
+					"background-image: url(",
+					HtmlUtil.toInputSafe(jsonObject.toString()),
+					"); background-size: cover;")));
+
+		fileEntry = _dlAppLocalService.addFileEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null,
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId()));
+
+		processFragmentEntryLinkHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext);
+
+		Assert.assertFalse(
+			processFragmentEntryLinkHTML,
+			processFragmentEntryLinkHTML.contains(
+				HtmlUtil.toInputSafe(jsonObject.toString())));
+
+		previewURL = _dlURLHelper.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+
+		Assert.assertTrue(
+			processFragmentEntryLinkHTML,
+			processFragmentEntryLinkHTML.contains(
+				"background-image: url(" + HtmlUtil.toInputSafe(previewURL)));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()
@@ -203,6 +350,8 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 
 	@Inject
 	private Portal _portal;
+
+	private ServiceContext _serviceContext;
 
 	@Inject
 	private ThemeLocalService _themeLocalService;

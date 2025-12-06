@@ -93,6 +93,7 @@ import com.liferay.headless.admin.site.client.serdes.v1_0.PageElementSerDes;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentConfigurationTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEditableElementTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ReferencesTestUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -3099,6 +3100,22 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
+			FragmentEditableElementTestUtil.
+				getBackgroundImageFragmentEditableElement(
+					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+						ReferencesTestUtil.getItemExternalReference(
+							_getFileEntry(testGroup.getGroupId()),
+							testGroup.getGroupId()),
+						RandomTestUtil.randomString()),
+					"element-background-image1"),
+			FragmentEditableElementTestUtil.
+				getBackgroundImageFragmentEditableElement(
+					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+						ReferencesTestUtil.getItemExternalReference(
+							_getFileEntry(irrelevantGroup.getGroupId()),
+							testGroup.getGroupId()),
+						null),
+					"element-background-image2"),
 			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
 				null, null, HTMLFragmentValue.Type.INLINE),
 			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
@@ -3110,6 +3127,20 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				null, null, TextFragmentValue.Type.INLINE));
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
+			FragmentEditableElementTestUtil.
+				getBackgroundImageFragmentEditableElement(
+					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+						null, RandomTestUtil.randomString()),
+					"element-background-image1"),
+			FragmentEditableElementTestUtil.
+				getBackgroundImageFragmentEditableElement(
+					FragmentEditableElementTestUtil.getMappedFragmentImageValue(
+						FragmentMappedValueItemContextReference.ContextSource.
+							COLLECTION_ITEM,
+						"JournalArticle_authorProfileImage",
+						FragmentMappedValueItemReference.Type.
+							CONTEXT_REFERENCE),
+					"element-background-image2"),
 			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
 				FragmentMappedValueItemContextReference.ContextSource.
 					COLLECTION_ITEM,
@@ -3125,6 +3156,15 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
+			FragmentEditableElementTestUtil.
+				getBackgroundImageFragmentEditableElement(
+					FragmentEditableElementTestUtil.getMappedFragmentImageValue(
+						FragmentMappedValueItemContextReference.ContextSource.
+							DISPLAY_PAGE_ITEM,
+						"JournalArticle_authorProfileImage",
+						FragmentMappedValueItemReference.Type.
+							CONTEXT_REFERENCE),
+					"element-background-image1"),
 			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
 				FragmentMappedValueItemContextReference.ContextSource.
 					DISPLAY_PAGE_ITEM,
@@ -3141,6 +3181,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				TextFragmentValue.Type.MAPPED));
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
+			FragmentEditableElementTestUtil.
+				getBackgroundImageFragmentEditableElement(
+					FragmentEditableElementTestUtil.getMappedFragmentImageValue(
+						null, "FileEntry_authorProfileImage",
+						FragmentMappedValueItemReference.Type.
+							ITEM_EXTERNAL_REFERENCE),
+					"element-background-image1"),
 			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
 				null,
 				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE,

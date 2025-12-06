@@ -27,6 +27,15 @@ export type RequestResult<T> =
 			status?: number;
 	  };
 
+async function get<T>(url: string) {
+	return handleRequest<T>(() =>
+		fetch(url, {
+			headers: HEADERS,
+			method: 'GET',
+		})
+	);
+}
+
 async function handleRequest<T>(
 	fetcher: () => Promise<Response>
 ): Promise<RequestResult<T>> {
@@ -71,5 +80,6 @@ async function post<T>(url: string, data?: Record<string, any>) {
 }
 
 export default {
+	get,
 	post,
 };

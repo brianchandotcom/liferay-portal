@@ -6,17 +6,24 @@
 import React, {SetStateAction} from 'react';
 
 export type TDSRDataContext = {
+	accountId?: number;
+	accountName?: string;
 	banner: {
 		base64?: string;
 		name?: string;
 		size?: number;
 	};
+	channelId?: number;
+	channelName?: string;
 	clientLogo: {
 		base64?: string;
 	};
 	clientName: string;
 	errors: {
+		accountId?: null | string;
 		banner?: null | string;
+		channelId?: null | string;
+		channelName?: null | string;
 		clientLogo?: null | string;
 		clientName?: null | string;
 		friendlyURL?: null | string;

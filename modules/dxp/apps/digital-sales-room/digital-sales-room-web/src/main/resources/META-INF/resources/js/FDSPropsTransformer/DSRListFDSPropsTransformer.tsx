@@ -36,7 +36,7 @@ export default function propsTransformer({
 									}) =>
 										DSRInitializer({
 											closeModal,
-											numberOfSteps: 1,
+											numberOfSteps: 2,
 										}),
 									size: 'md',
 								});

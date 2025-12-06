@@ -10,6 +10,7 @@ import React, {SetStateAction, useCallback, useState} from 'react';
 
 import DigitalSalesRoomService from '../commons/DigitalSalesRoomService';
 import DSRRoomDetailsStep from './DSRRoomDetailsStep';
+import DSRRoomSettingsStep from './DSRRoomSettingsStep';
 import {TDSRContext, TDSRDataContext, TDSRInitializerProps} from './DSRTypes';
 
 const DEFAULT_DATA_CONTEXT: TDSRDataContext = {
@@ -75,6 +76,14 @@ function StepLoader({
 			></DSRRoomDetailsStep>
 		);
 	}
+	else if (step === 2) {
+		return (
+			<DSRRoomSettingsStep
+				numberOfSteps={numberOfSteps}
+				setHandleStepSubmit={setHandleStepSubmit}
+			></DSRRoomSettingsStep>
+		);
+	}
 
 	return <div></div>;
 }
@@ -132,14 +141,15 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
 				if (stepValid) {
 					const digitalSalesRoom =
 						await DigitalSalesRoomService.postDigitalSalesRoom({
-							accountId: 0,
+							accountId: dataContext.accountId || 0,
 							banner: {
 								fileBase64:
 									(dataContext.banner.base64 || '')
 										.split(',')
 										.pop() || '',
 							},
-							channelId: 0,
+							channelId: dataContext.channelId || 0,
+							channelName: dataContext.channelName || '',
 							clientLogo: {
 								fileBase64:
 									(dataContext.clientLogo.base64 || '')

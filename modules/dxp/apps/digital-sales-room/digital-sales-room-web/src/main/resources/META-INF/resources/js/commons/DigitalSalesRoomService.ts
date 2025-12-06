@@ -5,6 +5,36 @@
 
 import ApiHelper from './ApiHelper';
 
+export type TAccountDTO = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	status: number;
+	type: string;
+};
+
+export type TAccountsDTO = {
+	items: Array<TAccountDTO>;
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+
+export type TChannelDTO = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
+export type TChannelsDTO = {
+	items: Array<TChannelDTO>;
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+
 export type TDSRDTO = {
 	accountId: number;
 	accountName?: string;
@@ -37,6 +67,7 @@ export type TDSRPayload = {
 		fileBase64: string;
 	};
 	channelId: number;
+	channelName?: string;
 	clientLogo?: {
 		fileBase64: string;
 	};
@@ -48,10 +79,35 @@ export type TDSRPayload = {
 	secondaryColor?: string;
 };
 
+async function getAccounts(accountName = ''): Promise<TAccountsDTO> {
+	const {data, error} = await ApiHelper.get(
+		`/o/headless-admin-user/v1.0/accounts?filter=contains(name, '${accountName}')`
+	);
+
+	if (data) {
+		return data as TAccountsDTO;
+	}
+
+	throw new Error(error);
+}
+
+async function getChannels(channelName = ''): Promise<TChannelsDTO> {
+	const {data, error} = await ApiHelper.get(
+		`/o/headless-commerce-delivery-catalog/v1.0/channels?filter=contains(name,'${channelName}')`
+	);
+
+	if (data) {
+		return data as TChannelsDTO;
+	}
+
+	throw new Error(error);
+}
+
 async function postDigitalSalesRoom({
 	accountId,
 	banner,
 	channelId,
+	channelName,
 	clientLogo,
 	clientName,
 	description,
@@ -66,6 +122,7 @@ async function postDigitalSalesRoom({
 			accountId,
 			banner,
 			channelId,
+			channelName,
 			clientLogo,
 			clientName,
 			description,
@@ -84,5 +141,7 @@ async function postDigitalSalesRoom({
 }
 
 export default {
+	getAccounts,
+	getChannels,
 	postDigitalSalesRoom,
 };

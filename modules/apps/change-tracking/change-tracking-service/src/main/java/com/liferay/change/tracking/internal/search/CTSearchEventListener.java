@@ -13,6 +13,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.exception.CTEventException;
 import com.liferay.change.tracking.spi.listener.CTEventListener;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -100,15 +101,12 @@ public class CTSearchEventListener implements CTEventListener {
 
 						List<CTEntry> ctEntries = ctEntryEntry.getValue();
 
-						List<String> uids = new ArrayList<>(ctEntries.size());
-
-						for (CTEntry ctEntry : ctEntries) {
-							uids.add(
-								_uidFactory.getUID(
-									indexer.getClassName(),
-									ctEntry.getModelClassPK(),
-									CTConstants.CT_COLLECTION_ID_PRODUCTION));
-						}
+						List<String> uids = TransformUtil.transform(
+							ctEntries,
+							ctEntry -> _uidFactory.getUID(
+								indexer.getClassName(),
+								ctEntry.getModelClassPK(),
+								CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
 						_indexWriterHelper.deleteDocuments(
 							ctCollection.getCompanyId(), uids,
@@ -148,20 +146,19 @@ public class CTSearchEventListener implements CTEventListener {
 				continue;
 			}
 
-			List<CTEntry> ctEntries = ctEntryEntry.getValue();
+			List<String> uids = TransformUtil.transform(
+				ctEntryEntry.getValue(),
+				ctEntry -> {
+					if (ctEntry.getChangeType() ==
+							CTConstants.CT_CHANGE_TYPE_DELETION) {
 
-			List<String> uids = new ArrayList<>(ctEntries.size());
+						return null;
+					}
 
-			for (CTEntry ctEntry : ctEntries) {
-				if (ctEntry.getChangeType() !=
-						CTConstants.CT_CHANGE_TYPE_DELETION) {
-
-					uids.add(
-						_uidFactory.getUID(
-							indexer.getClassName(), ctEntry.getModelClassPK(),
-							ctEntry.getCtCollectionId()));
-				}
-			}
+					return _uidFactory.getUID(
+						indexer.getClassName(), ctEntry.getModelClassPK(),
+						ctEntry.getCtCollectionId());
+				});
 
 			try {
 				_indexWriterHelper.deleteDocuments(

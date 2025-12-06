@@ -96,6 +96,28 @@ public class JournalArticleSitemapURLProviderTest {
 	}
 
 	@Test
+	public void testJournalArticleSitemapURLProviderArticleDefaultValues()
+		throws Exception {
+
+		JournalArticle article = JournalTestUtil.addArticleDefaultValues(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString());
+
+		Element rootElement = _getRootElement();
+
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			article.getDDMStructureId(), true,
+			WorkflowConstants.STATUS_APPROVED);
+
+		_journalArticleSitemapURLProvider.visitLayoutSet(
+			rootElement, _layoutSet, _themeDisplay);
+
+		Assert.assertFalse(rootElement.hasContent());
+	}
+
+	@Test
 	public void testJournalArticleSitemapURLProviderDefaultDisplayPage()
 		throws Exception {
 

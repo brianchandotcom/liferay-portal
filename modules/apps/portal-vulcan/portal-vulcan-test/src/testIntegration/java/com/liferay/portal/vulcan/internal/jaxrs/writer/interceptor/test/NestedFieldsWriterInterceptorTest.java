@@ -6,20 +6,38 @@
 package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskContentType;
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.test.TransactionContainerRequestFilterTest;
@@ -33,13 +51,18 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.UriInfo;
+
+import java.io.Serializable;
 
 import java.net.URLEncoder;
 
 import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -48,6 +71,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -67,6 +91,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 public class NestedFieldsWriterInterceptorTest {
 
 	@ClassRule
+	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
@@ -98,6 +123,14 @@ public class NestedFieldsWriterInterceptorTest {
 				HashMapDictionaryBuilder.<String, Object>put(
 					"api.version", "v1.0"
 				).put(
+					"batch.engine.entity.class.name", Product.class.getName()
+				).put(
+					"batch.engine.task.item.delegate", "true"
+				).put(
+					"batch.engine.task.item.delegate.name", "Test.Vulcan.v1.0"
+				).put(
+					"entity.class.name", Product.class.getName()
+				).put(
 					"nested.field.support", "true"
 				).put(
 					"osgi.jaxrs.application.select",
@@ -109,6 +142,14 @@ public class NestedFieldsWriterInterceptorTest {
 				ProductResource_v2_0.class, new ProductResource_v2_0_Impl(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"api.version", "v2.0"
+				).put(
+					"batch.engine.entity.class.name", Product.class.getName()
+				).put(
+					"batch.engine.task.item.delegate", "true"
+				).put(
+					"batch.engine.task.item.delegate.name", "Test.Vulcan.v2.0"
+				).put(
+					"entity.class.name", Product.class.getName()
 				).put(
 					"nested.field.support", "true"
 				).put(
@@ -286,7 +327,7 @@ public class NestedFieldsWriterInterceptorTest {
 			).put(
 				"nestedFields", "externalCode"
 			).build(),
-			"v1.0");
+			false, "v1.0");
 	}
 
 	@Test
@@ -312,7 +353,7 @@ public class NestedFieldsWriterInterceptorTest {
 			).put(
 				"skus.pageSize", "2"
 			).build(),
-			"v1.0");
+			false, "v1.0");
 	}
 
 	@Test
@@ -340,7 +381,7 @@ public class NestedFieldsWriterInterceptorTest {
 			).put(
 				"productOptions.name", "test2"
 			).build(),
-			"v1.0");
+			false, "v1.0");
 	}
 
 	@Test
@@ -365,7 +406,25 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Path("/v1.0")
 	public static class BaseProductResource_v1_0_Impl
-		implements ProductResource_v1_0 {
+		implements ProductResource_v1_0,
+				   VulcanBatchEngineTaskItemDelegate<Product> {
+
+		@Override
+		public void create(
+			Collection<Product> items, Map<String, Serializable> parameters) {
+		}
+
+		@Override
+		public void delete(
+			Collection<Product> items, Map<String, Serializable> parameters) {
+		}
+
+		@Override
+		public EntityModel getEntityModel(
+			Map<String, List<String>> multivaluedMap) {
+
+			return null;
+		}
 
 		@GET
 		@Path("/products/{id}/productOptions")
@@ -394,6 +453,16 @@ public class NestedFieldsWriterInterceptorTest {
 			return Collections.emptyList();
 		}
 
+		@Override
+		public Class<?> getResourceClass() {
+			return getClass();
+		}
+
+		@Override
+		public String getResourceName() {
+			return Product.class.getName();
+		}
+
 		@GET
 		@Path("/products/{id}/skus")
 		@Produces("application/*")
@@ -403,11 +472,85 @@ public class NestedFieldsWriterInterceptorTest {
 			return Page.of(Collections.emptyList());
 		}
 
+		@Override
+		public String getVersion() {
+			return "v1.0";
+		}
+
+		@Override
+		public Page<Product> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search) {
+
+			return Page.of(
+				getProducts(
+					GetterUtil.getBoolean(
+						parameters.get("inlineInitialization"))));
+		}
+
+		@Override
+		public void setContextBatchUnsafeBiConsumer(
+			UnsafeBiConsumer
+				<Collection<Product>,
+				 UnsafeFunction<Product, Product, Exception>, Exception>
+					contextBatchUnsafeBiConsumer) {
+		}
+
+		@Override
+		public void setContextCompany(Company contextCompany) {
+		}
+
+		@Override
+		public void setContextUriInfo(UriInfo uriInfo) {
+		}
+
+		@Override
+		public void setContextUser(User contextUser) {
+		}
+
+		@Override
+		public void setGroupLocalService(GroupLocalService groupLocalService) {
+		}
+
+		@Override
+		public void setLanguageId(String languageId) {
+		}
+
+		@Override
+		public void setResourceActionLocalService(
+			ResourceActionLocalService resourceActionLocalService) {
+		}
+
+		@Override
+		public void setResourcePermissionLocalService(
+			ResourcePermissionLocalService resourcePermissionLocalService) {
+		}
+
+		@Override
+		public void setRoleLocalService(RoleLocalService roleLocalService) {
+		}
+
+		@Override
+		public void update(
+			Collection<Product> items, Map<String, Serializable> parameters) {
+		}
+
 	}
 
 	@Path("/v2.0")
 	public static class BaseProductResource_v2_0_Impl
-		implements ProductResource_v2_0 {
+		implements ProductResource_v2_0,
+				   VulcanBatchEngineTaskItemDelegate<Product> {
+
+		@Override
+		public void create(
+			Collection<Product> items, Map<String, Serializable> parameters) {
+		}
+
+		@Override
+		public void delete(
+			Collection<Product> items, Map<String, Serializable> parameters) {
+		}
 
 		@GET
 		@Path("/products/{productExternalCode}/categories")
@@ -416,6 +559,14 @@ public class NestedFieldsWriterInterceptorTest {
 			@PathParam("productExternalCode") String productExternalCode) {
 
 			return Collections.emptyList();
+		}
+
+		@Override
+		public EntityModel getEntityModel(
+				Map<String, List<String>> multivaluedMap)
+			throws Exception {
+
+			return null;
 		}
 
 		@GET
@@ -443,6 +594,69 @@ public class NestedFieldsWriterInterceptorTest {
 			@PathParam("id") Long id, @Context Pagination pagination) {
 
 			return Page.of(Collections.emptyList());
+		}
+
+		@Override
+		public String getVersion() {
+			return "v2.0";
+		}
+
+		@Override
+		public Page<Product> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search) {
+
+			return Page.of(
+				getProducts(
+					GetterUtil.getBoolean(
+						parameters.get("inlineInitialization"))));
+		}
+
+		@Override
+		public void setContextBatchUnsafeBiConsumer(
+			UnsafeBiConsumer
+				<Collection<Product>,
+				 UnsafeFunction<Product, Product, Exception>, Exception>
+					contextBatchUnsafeBiConsumer) {
+		}
+
+		@Override
+		public void setContextCompany(Company contextCompany) {
+		}
+
+		@Override
+		public void setContextUriInfo(UriInfo uriInfo) {
+		}
+
+		@Override
+		public void setContextUser(User contextUser) {
+		}
+
+		@Override
+		public void setGroupLocalService(GroupLocalService groupLocalService) {
+		}
+
+		@Override
+		public void setLanguageId(String languageId) {
+		}
+
+		@Override
+		public void setResourceActionLocalService(
+			ResourceActionLocalService resourceActionLocalService) {
+		}
+
+		@Override
+		public void setResourcePermissionLocalService(
+			ResourcePermissionLocalService resourcePermissionLocalService) {
+		}
+
+		@Override
+		public void setRoleLocalService(RoleLocalService roleLocalService) {
+		}
+
+		@Override
+		public void update(
+			Collection<Product> items, Map<String, Serializable> parameters) {
 		}
 
 	}
@@ -645,6 +859,12 @@ public class NestedFieldsWriterInterceptorTest {
 			List<Sku> skus = Arrays.asList(
 				_toSku(1L), _toSku(2L), _toSku(3L), _toSku(4L));
 
+			if ((pagination.getStartPosition() == -1) &&
+				(pagination.getEndPosition() == -1)) {
+
+				return Page.of(skus);
+			}
+
 			skus = skus.subList(
 				pagination.getStartPosition(),
 				Math.min(pagination.getEndPosition(), skus.size()));
@@ -720,6 +940,12 @@ public class NestedFieldsWriterInterceptorTest {
 			List<Sku> skus = Arrays.asList(
 				_toSku(1L), _toSku(2L), _toSku(3L), _toSku(4L), _toSku(5L),
 				_toSku(6L));
+
+			if ((pagination.getStartPosition() == -1) &&
+				(pagination.getEndPosition() == -1)) {
+
+				return Page.of(skus);
+			}
 
 			skus = skus.subList(
 				pagination.getStartPosition(),
@@ -872,27 +1098,79 @@ public class NestedFieldsWriterInterceptorTest {
 
 	private void _test(
 			JSONArray expectedJSONArray, Map<String, String> queryParameters,
-			String version)
+			boolean testBatch, String version)
 		throws Exception {
 
 		for (boolean inlineInitialization : new boolean[] {false, true}) {
+			HashMap<String, String> parameters = HashMapBuilder.putAll(
+				queryParameters
+			).put(
+				"inlineInitialization", String.valueOf(inlineInitialization)
+			).build();
+
 			JSONAssert.assertEquals(
 				expectedJSONArray.toString(),
 				HTTPTestUtil.invokeToString(
 					null,
 					StringBundler.concat(
 						"test-vulcan/", version, "/products",
-						_getQueryString(
-							HashMapBuilder.putAll(
-								queryParameters
-							).put(
-								"inlineInitialization",
-								String.valueOf(inlineInitialization)
-							).build())),
+						_getQueryString(parameters)),
 					Http.Method.GET),
+				JSONCompareMode.STRICT_ORDER);
+
+			if (!testBatch) {
+				continue;
+			}
+
+			BatchEngineExportTaskExecutor.Result result =
+				_batchEngineExportTaskExecutor.execute(
+					_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+						null, TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), null,
+						Product.class.getName(),
+						BatchEngineTaskContentType.JSON.toString(),
+						BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+						HashMapBuilder.<String, Serializable>putAll(
+							parameters
+						).put(
+							"batchNestedFields", parameters.get("nestedFields")
+						).build(),
+						"Test.Vulcan." + version),
+					new BatchEngineExportTaskExecutor.Settings() {
+
+						@Override
+						public boolean isCompressContent() {
+							return false;
+						}
+
+						@Override
+						public boolean isPersist() {
+							return false;
+						}
+
+					});
+
+			JSONAssert.assertEquals(
+				expectedJSONArray.toString(),
+				StringUtil.read(result.getInputStream()),
 				JSONCompareMode.STRICT_ORDER);
 		}
 	}
+
+	private void _test(
+			JSONArray expectedJSONArray, Map<String, String> queryParameters,
+			String version)
+		throws Exception {
+
+		_test(expectedJSONArray, queryParameters, true, version);
+	}
+
+	@Inject
+	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;
+
+	@Inject
+	private BatchEngineExportTaskLocalService
+		_batchEngineExportTaskLocalService;
 
 	private List<ServiceRegistration<?>> _serviceRegistrations;
 

@@ -56,3 +56,40 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Create a digital sales room with account and channel',
+	{tag: '@LPD-73190'},
+	async ({apiHelpers, digitalSalesRoomsPage, editDigitalSalesRoomPage}) => {
+		const roomName = `A${getRandomInt()}`;
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			channelName: channel.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(channel.name)
+		).toBeVisible();
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName)
+		).toBeVisible();
+	}
+);

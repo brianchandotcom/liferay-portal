@@ -12,32 +12,49 @@ export class EditDigitalSalesRoomPage {
 	readonly bannerImage: Locator;
 	readonly clientLogoButton: Locator;
 	readonly clientNameInput: Locator;
+	readonly nextButton: Locator;
 	readonly page: Page;
 	readonly primaryColorInput: Locator;
 	readonly roomNameInput: Locator;
 	readonly saveButton: Locator;
 	readonly secondaryColorInput: Locator;
+	readonly selectAccountInput: Locator;
+	readonly selectChannelInput: Locator;
+	readonly selectOption: (value: string) => Locator;
 
 	constructor(page: Page) {
 		this.bannerImage = page.getByTestId('bannerImage');
 		this.clientLogoButton = page.getByTestId('clientLogoButton');
 		this.clientNameInput = page.getByLabel('Client Name');
+		this.nextButton = page.getByRole('button', {name: 'Next'});
 		this.page = page;
 		this.primaryColorInput = page.getByTestId('primaryColorInput');
 		this.roomNameInput = page.getByLabel('Room Name');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.secondaryColorInput = page.getByTestId('secondaryColorInput');
+		this.selectAccountInput = page.getByRole('combobox', {
+			name: 'Select Account',
+		});
+		this.selectChannelInput = page.getByRole('combobox', {
+			name: 'Select Channel',
+		});
+		this.selectOption = (value: string) =>
+			page.getByRole('option', {name: value});
 	}
 
 	async addDigitalSalesRoom({
+		accountName,
 		banner,
+		channelName,
 		clientLogo,
 		clientName = getRandomString(),
 		primaryColor = '#FF0000',
 		roomName = `A${getRandomInt()}`,
 		secondaryColor = '#00FF00',
 	}: {
+		accountName?: string;
 		banner?: string;
+		channelName?: string;
 		clientLogo?: string;
 		clientName?: string;
 		primaryColor?: string;
@@ -69,6 +86,22 @@ export class EditDigitalSalesRoomPage {
 
 				await fileChooser.setFiles(clientLogo);
 			}
+		}
+
+		await this.nextButton.click();
+
+		if (accountName) {
+			await this.selectAccountInput.click();
+			await this.selectOption(accountName).click();
+
+			await expect(this.selectAccountInput).toHaveValue(accountName);
+		}
+
+		if (channelName) {
+			await this.selectChannelInput.click();
+			await this.selectOption(channelName).click();
+
+			await expect(this.selectChannelInput).toHaveValue(channelName);
 		}
 
 		await this.saveButton.click();

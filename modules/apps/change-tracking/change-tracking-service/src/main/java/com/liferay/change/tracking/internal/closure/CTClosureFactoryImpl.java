@@ -16,6 +16,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -121,7 +122,6 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		CTCollection ctCollection = _ctCollectionPersistence.fetchByPrimaryKey(
 			ctCollectionId);
 		Map<Long, List<Long>> map = new LinkedHashMap<>();
-		List<Node> nodes = new ArrayList<>();
 
 		List<CTEntry> ctEntries = new ArrayList<>(
 			_ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId));
@@ -130,23 +130,24 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			(ctEntry1, ctEntry2) ->
 				(int)(ctEntry1.getCtEntryId() - ctEntry2.getCtEntryId()));
 
-		for (CTEntry ctEntry : ctEntries) {
-			if (!classNameIds.isEmpty() &&
-				!combinedTableReferenceInfos.containsKey(
-					ctEntry.getModelClassNameId())) {
+		List<Node> nodes = TransformUtil.transform(
+			ctEntries,
+			ctEntry -> {
+				if (!classNameIds.isEmpty() &&
+					!combinedTableReferenceInfos.containsKey(
+						ctEntry.getModelClassNameId())) {
 
-				continue;
-			}
+					return null;
+				}
 
-			List<Long> primaryKeys = map.computeIfAbsent(
-				ctEntry.getModelClassNameId(), key -> new ArrayList<>());
+				List<Long> primaryKeys = map.computeIfAbsent(
+					ctEntry.getModelClassNameId(), key -> new ArrayList<>());
 
-			primaryKeys.add(ctEntry.getModelClassPK());
+				primaryKeys.add(ctEntry.getModelClassPK());
 
-			nodes.add(
-				new Node(
-					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK()));
-		}
+				return new Node(
+					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+			});
 
 		Map<Node, Collection<Edge>> edgeMap = new LinkedHashMap<>();
 

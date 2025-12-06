@@ -8,9 +8,12 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue;
+import com.liferay.headless.admin.site.dto.v1_0.DirectFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValueFragmentLink;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
@@ -18,13 +21,20 @@ import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentEditableElementValue
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentValue;
+import com.liferay.headless.admin.site.dto.v1_0.ImageValue;
+import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.ItemImageValue;
+import com.liferay.headless.admin.site.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentValue;
+import com.liferay.headless.admin.site.dto.v1_0.URLImageValue;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -58,8 +68,9 @@ public class FragmentEditableElementUtil {
 	}
 
 	public static FragmentEditableElement[] getFragmentEditableElements(
-		long companyId, FragmentEntryLink fragmentEntryLink,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+			long companyId, FragmentEntryLink fragmentEntryLink,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws JSONException {
 
 		JSONObject editableValuesJSONObject =
 			fragmentEntryLink.getEditableValuesJSONObject();
@@ -68,12 +79,18 @@ public class FragmentEditableElementUtil {
 			return null;
 		}
 
+		JSONObject backgroundImageFragmentEntryProcessorJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR);
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		if (editableFragmentEntryProcessorJSONObject == null) {
+		if ((backgroundImageFragmentEntryProcessorJSONObject == null) &&
+			(editableFragmentEntryProcessorJSONObject == null)) {
+
 			return new FragmentEditableElement[0];
 		}
 
@@ -81,7 +98,10 @@ public class FragmentEditableElementUtil {
 			companyId,
 			EditableFragmentEntryProcessorUtil.getEditableTypes(
 				fragmentEntryLink.getHtml()),
-			infoItemServiceRegistry, editableFragmentEntryProcessorJSONObject,
+			infoItemServiceRegistry,
+			JSONUtil.merge(
+				backgroundImageFragmentEntryProcessorJSONObject,
+				editableFragmentEntryProcessorJSONObject),
 			scopeGroupId);
 	}
 
@@ -178,6 +198,11 @@ public class FragmentEditableElementUtil {
 		_getFragmentEditableElementValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 			JSONObject jsonObject, long scopeGroupId, String type) {
+
+		if (Objects.equals(type, "background-image")) {
+			return _toBackgroundImageFragmentEditableElementValue(
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+		}
 
 		if (Objects.equals(type, "html")) {
 			return _toHTMLFragmentEditableElementValue(
@@ -278,6 +303,46 @@ public class FragmentEditableElementUtil {
 			infoItemServiceRegistry, scopeGroupId);
 	}
 
+	private static ImageValue _getImageValue(
+			long companyId, JSONObject jsonObject, long scopeGroupId)
+		throws Exception {
+
+		if (JSONUtil.isEmpty(jsonObject)) {
+			return null;
+		}
+
+		if (FileEntryUtil.isItemImageValue(jsonObject)) {
+			ItemExternalReference itemExternalReference =
+				FileEntryUtil.getFileEntryItemExternalReference(
+					companyId, jsonObject, scopeGroupId);
+
+			if (itemExternalReference == null) {
+				return null;
+			}
+
+			ItemImageValue itemImageValue = new ItemImageValue();
+
+			itemImageValue.setItemExternalReference(
+				() -> itemExternalReference);
+			itemImageValue.setType(ImageValue.Type.ITEM);
+
+			return itemImageValue;
+		}
+
+		String url = jsonObject.getString("url");
+
+		if (url == null) {
+			return null;
+		}
+
+		URLImageValue urlImageValue = new URLImageValue();
+
+		urlImageValue.setType(URLImageValue.Type.URL);
+		urlImageValue.setUrl(() -> url);
+
+		return urlImageValue;
+	}
+
 	private static JSONObject _getJSONObject(
 			UnsafeSupplier<JSONObject, Exception> unsafeSupplier)
 		throws Exception {
@@ -373,6 +438,30 @@ public class FragmentEditableElementUtil {
 			jsonObject);
 	}
 
+	private static FragmentEditableElementValue
+		_toBackgroundImageFragmentEditableElementValue(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId) {
+
+		FragmentImageValue backgroundFragmentImageValue = _toFragmentImageValue(
+			companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+
+		if (backgroundFragmentImageValue == null) {
+			return null;
+		}
+
+		BackgroundImageFragmentEditableElementValue
+			backgroundImageFragmentEditableElementValue =
+				new BackgroundImageFragmentEditableElementValue();
+
+		backgroundImageFragmentEditableElementValue.
+			setBackgroundFragmentImageValue(() -> backgroundFragmentImageValue);
+		backgroundImageFragmentEditableElementValue.setType(
+			FragmentEditableElementValue.Type.BACKGROUND_IMAGE);
+
+		return backgroundImageFragmentEditableElementValue;
+	}
+
 	private static FragmentEditableElementValueFragmentLink
 		_toFragmentEditableElementValueFragmentLink(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
@@ -417,6 +506,40 @@ public class FragmentEditableElementUtil {
 			});
 
 		return fragmentEditableElementValueFragmentLink;
+	}
+
+	private static FragmentImageValue _toFragmentImageValue(
+		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+		JSONObject jsonObject, long scopeGroupId) {
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
+			MappedFragmentImageValue mappedFragmentImageValue =
+				new MappedFragmentImageValue();
+
+			mappedFragmentImageValue.setFragmentMappedValue(
+				() -> FragmentMappingUtil.toFragmentMappedValue(
+					companyId, infoItemServiceRegistry, jsonObject,
+					scopeGroupId));
+			mappedFragmentImageValue.setType(FragmentImageValue.Type.MAPPED);
+
+			return mappedFragmentImageValue;
+		}
+
+		DirectFragmentImageValue directFragmentImageValue =
+			new DirectFragmentImageValue();
+
+		directFragmentImageValue.setValue_i18n(
+			() -> LocalizedValueUtil.toLocalizedValues(
+				jsonObject,
+				key -> _getImageValue(
+					companyId, jsonObject.getJSONObject(key), scopeGroupId)));
+		directFragmentImageValue.setType(FragmentImageValue.Type.DIRECT);
+
+		return directFragmentImageValue;
 	}
 
 	private static HTMLFragmentEditableElementValue

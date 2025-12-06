@@ -173,6 +173,7 @@ describe('DSRInitializer', () => {
 				fileBase64: '',
 			},
 			channelId: 0,
+			channelName: '',
 			clientLogo: {
 				fileBase64: '',
 			},
@@ -203,6 +204,7 @@ describe('DSRInitializer', () => {
 				fileBase64: '',
 			},
 			channelId: 0,
+			channelName: '',
 			clientLogo: {
 				fileBase64: '',
 			},

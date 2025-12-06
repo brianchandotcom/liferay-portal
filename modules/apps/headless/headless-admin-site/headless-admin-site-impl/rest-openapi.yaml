@@ -1211,7 +1211,7 @@ components:
             required:
                 -   type
             type: object
-        FragmentDirectImageValue:
+        DirectFragmentImageValue:
             allOf:
                 -   $ref: "#/components/schemas/FragmentImageValue"
                 -   properties:
@@ -1332,8 +1332,8 @@ components:
                 The fragment image value.
             discriminator:
                 mapping:
-                    Direct: "#/components/schemas/FragmentDirectImageValue"
-                    Mapped: "#/components/schemas/FragmentMappedImageValue"
+                    Direct: "#/components/schemas/DirectFragmentImageValue"
+                    Mapped: "#/components/schemas/MappedFragmentImageValue"
                 propertyName: type
             properties:
                 type:
@@ -1564,7 +1564,7 @@ components:
                     enum: [FragmentInlineValue, FragmentMappedValue]
                     type: string
             type: object
-        FragmentMappedImageValue:
+        MappedFragmentImageValue:
             allOf:
                 -   $ref: "#/components/schemas/FragmentImageValue"
                 -   properties:

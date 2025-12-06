@@ -122,7 +122,6 @@ import jakarta.portlet.WindowState;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -287,14 +286,19 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			_verifyMembershipPolicies();
 		}
 		else {
-			List<DataCleanup> dataCleanups = new ArrayList<>();
+			for (DataCleanup moduleDataCleanups :
+					DataCleanupUtil.getModuleDataCleanups()) {
 
-			dataCleanups.addAll(DataCleanupUtil.getSystemDataCleanups());
-			dataCleanups.addAll(DataCleanupUtil.getModuleDataCleanups());
+				if (cmd.equals(moduleDataCleanups.getLabel())) {
+					moduleDataCleanups.cleanup();
+				}
+			}
 
-			for (DataCleanup dataCleanup : dataCleanups) {
-				if (cmd.equals(dataCleanup.getLabel())) {
-					dataCleanup.cleanup();
+			for (DataCleanup systemDataCleanup :
+					DataCleanupUtil.getSystemDataCleanups()) {
+
+				if (cmd.equals(systemDataCleanup.getLabel())) {
+					systemDataCleanup.cleanup();
 				}
 			}
 		}

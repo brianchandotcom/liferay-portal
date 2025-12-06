@@ -869,16 +869,20 @@ public class FragmentEntryProcessorHelperImpl
 		InfoItemIdentifier fileEntryInfoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
 
-		if (!(fileEntryInfoItemIdentifier instanceof
-			ClassPKInfoItemIdentifier)) {
+		if (fileEntryInfoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
 
+			return classPKInfoItemIdentifier.getClassPK();
+		}
+
+		if (!(fileEntryInfoItemIdentifier instanceof ERCInfoItemIdentifier)) {
 			return 0;
 		}
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
-
-		return classPKInfoItemIdentifier.getClassPK();
+		return _getClassPK(
+			FileEntry.class.getName(),
+			(ERCInfoItemIdentifier)fileEntryInfoItemIdentifier, groupId);
 	}
 
 	private long _getFileEntryId(

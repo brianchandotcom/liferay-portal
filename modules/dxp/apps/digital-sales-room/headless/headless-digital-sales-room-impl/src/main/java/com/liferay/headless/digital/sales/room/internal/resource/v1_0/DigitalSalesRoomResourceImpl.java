@@ -5,6 +5,8 @@
 
 package com.liferay.headless.digital.sales.room.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.headless.digital.sales.room.dto.v1_0.DigitalSalesRoom;
 import com.liferay.headless.digital.sales.room.dto.v1_0.FileEntry;
 import com.liferay.headless.digital.sales.room.resource.v1_0.DigitalSalesRoomResource;
@@ -394,7 +396,18 @@ public class DigitalSalesRoomResourceImpl
 			{
 				setProperties(
 					() -> HashMapBuilder.<String, Object>put(
-						"accountId", digitalSalesRoom.getAccountId()
+						"accountId",
+						() -> {
+							if (digitalSalesRoom.getAccountId() == 0) {
+								return null;
+							}
+
+							AccountEntry accountEntry =
+								_accountEntryService.getAccountEntry(
+									digitalSalesRoom.getAccountId());
+
+							return accountEntry.getAccountEntryId();
+						}
 					).put(
 						"banner",
 						() -> {
@@ -417,6 +430,8 @@ public class DigitalSalesRoomResourceImpl
 						}
 					).put(
 						"channelId", digitalSalesRoom.getChannelId()
+					).put(
+						"channelName", digitalSalesRoom.getChannelName()
 					).put(
 						"clientLogo",
 						() -> {
@@ -451,6 +466,9 @@ public class DigitalSalesRoomResourceImpl
 			}
 		};
 	}
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.digital.sales.room.internal.dto.v1_0.converter.DigitalSalesRoomDTOConverter)"

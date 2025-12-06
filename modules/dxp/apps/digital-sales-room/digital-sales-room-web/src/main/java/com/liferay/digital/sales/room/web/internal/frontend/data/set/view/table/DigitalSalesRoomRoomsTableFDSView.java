@@ -38,7 +38,7 @@ public class DigitalSalesRoomRoomsTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
-			"channel", "channel"
+			"channelName", "channel"
 		).add(
 			"ownerName", "owner"
 		).add(

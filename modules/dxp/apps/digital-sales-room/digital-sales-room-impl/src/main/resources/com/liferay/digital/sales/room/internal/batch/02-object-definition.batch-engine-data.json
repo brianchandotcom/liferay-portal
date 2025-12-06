@@ -116,6 +116,24 @@
 					"unique": false
 				},
 				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CHANNEL_NAME",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Channel Name"
+					},
+					"name": "channelName",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
 					"DBType": "Long",
 					"businessType": "Attachment",
 					"defaultValue": "null",

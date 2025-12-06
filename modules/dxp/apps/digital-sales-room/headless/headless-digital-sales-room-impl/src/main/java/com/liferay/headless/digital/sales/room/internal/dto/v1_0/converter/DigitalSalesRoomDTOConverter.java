@@ -97,6 +97,8 @@ public class DigitalSalesRoomDTOConverter
 					});
 				setBanner(() -> _getFileEntry("banner", values));
 				setChannelId(() -> GetterUtil.getLong(values.get("channelId")));
+				setChannelName(
+					() -> GetterUtil.getString(values.get("channelName")));
 				setClientLogo(() -> _getFileEntry("clientLogo", values));
 				setClientName(
 					() -> GetterUtil.getString(values.get("clientName")));

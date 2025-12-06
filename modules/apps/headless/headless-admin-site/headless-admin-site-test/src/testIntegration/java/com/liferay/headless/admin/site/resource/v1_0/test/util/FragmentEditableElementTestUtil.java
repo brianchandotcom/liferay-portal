@@ -127,21 +127,19 @@ public class FragmentEditableElementTestUtil {
 
 	private static FragmentMappedValue _getFragmentMappedValue(
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
-		FragmentMappedValueItemReference.Type type) {
+		String fieldKey, FragmentMappedValueItemReference.Type type) {
 
-		return new FragmentMappedValue() {
-			{
-				setMapping(
-					new Mapping() {
-						{
-							setFieldKey("field-key");
-							setItemReference(
-								_getFragmentMappedValueItemReference(
-									contextSource, type));
-						}
-					});
-			}
-		};
+		FragmentMappedValue fragmentMappedValue = new FragmentMappedValue();
+
+		Mapping mapping = new Mapping();
+
+		mapping.setFieldKey(() -> fieldKey);
+		mapping.setItemReference(
+			() -> _getFragmentMappedValueItemReference(contextSource, type));
+
+		fragmentMappedValue.setMapping(() -> mapping);
+
+		return fragmentMappedValue;
 	}
 
 	private static FragmentMappedValueItemContextReference
@@ -208,7 +206,8 @@ public class FragmentEditableElementTestUtil {
 			{
 				setFragmentMappedValue(
 					() -> _getFragmentMappedValue(
-						contextSource, fragmentMappedValueItemReferenceType));
+						contextSource, "field-key",
+						fragmentMappedValueItemReferenceType));
 				setType(Type.MAPPED);
 			}
 		};
@@ -250,7 +249,8 @@ public class FragmentEditableElementTestUtil {
 			{
 				setFragmentMappedValue(
 					() -> _getFragmentMappedValue(
-						contextSource, fragmentMappedValueItemReferenceType));
+						contextSource, "field-key",
+						fragmentMappedValueItemReferenceType));
 				setType(Type.MAPPED);
 			}
 		};

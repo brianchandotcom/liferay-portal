@@ -254,28 +254,7 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public long getFileEntryId(WebImage webImage) {
-		InfoItemReference infoItemReference = webImage.getInfoItemReference();
-
-		if ((infoItemReference == null) ||
-			!Objects.equals(
-				infoItemReference.getClassName(), FileEntry.class.getName())) {
-
-			return 0;
-		}
-
-		InfoItemIdentifier fileEntryInfoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (!(fileEntryInfoItemIdentifier instanceof
-				ClassPKInfoItemIdentifier)) {
-
-			return 0;
-		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
-
-		return classPKInfoItemIdentifier.getClassPK();
+		return _getFileEntryId(0, webImage.getInfoItemReference());
 	}
 
 	@Override
@@ -875,6 +854,31 @@ public class FragmentEntryProcessorHelperImpl
 		_defaultPatterns.put(locale, defaultPattern);
 
 		return defaultPattern;
+	}
+
+	private long _getFileEntryId(
+		long groupId, InfoItemReference infoItemReference) {
+
+		if ((infoItemReference == null) ||
+			!Objects.equals(
+				infoItemReference.getClassName(), FileEntry.class.getName())) {
+
+			return 0;
+		}
+
+		InfoItemIdentifier fileEntryInfoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(fileEntryInfoItemIdentifier instanceof
+			ClassPKInfoItemIdentifier)) {
+
+			return 0;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
+
+		return classPKInfoItemIdentifier.getClassPK();
 	}
 
 	private long _getFileEntryId(

@@ -15,7 +15,7 @@
 	}
 
 	&__form-view-field-repeatable-dnd {
-		padding: 4px;
+		padding: 4px 4px 0;
 		position: relative;
 
 		&:focus,
@@ -33,10 +33,6 @@
 
 		.ddm-field-types-fieldset__nested {
 			margin: 0;
-		}
-
-		.form-group {
-			margin-bottom: 0;
 		}
 	}
 

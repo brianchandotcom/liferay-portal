@@ -13,6 +13,8 @@ components:
                 channelId:
                     format: int64
                     type: integer
+                channelName:
+                    type: string
                 clientLogo:
                     $ref: "#/components/schemas/FileEntry"
                 clientName:

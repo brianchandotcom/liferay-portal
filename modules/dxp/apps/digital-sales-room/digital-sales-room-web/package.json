@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@clayui/autocomplete": "3.155.0",
 		"@clayui/button": "3.144.1",
 		"@clayui/color-picker": "3.155.0",
 		"@clayui/form": "3.151.0",
@@ -17,7 +18,8 @@
 		"frontend-js-web": "*",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"react-dropzone": "11.4.2"
+		"react-dropzone": "11.4.2",
+		"resize-observer-polyfill": "^1.5.1"
 	},
 	"jest": {
 		"setupFiles": [

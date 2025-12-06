@@ -218,6 +218,47 @@ public class DigitalSalesRoom implements Serializable {
 	private Supplier<Long> _channelIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getChannelName() {
+		if (_channelNameSupplier != null) {
+			channelName = _channelNameSupplier.get();
+
+			_channelNameSupplier = null;
+		}
+
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+
+		_channelNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setChannelName(
+		UnsafeSupplier<String, Exception> channelNameUnsafeSupplier) {
+
+		_channelNameSupplier = () -> {
+			try {
+				return channelNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String channelName;
+
+	@JsonIgnore
+	private Supplier<String> _channelNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FileEntry getClientLogo() {
 		if (_clientLogoSupplier != null) {
@@ -827,6 +868,22 @@ public class DigitalSalesRoom implements Serializable {
 			sb.append("\"channelId\": ");
 
 			sb.append(channelId);
+		}
+
+		String channelName = getChannelName();
+
+		if (channelName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"channelName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(channelName));
+
+			sb.append("\"");
 		}
 
 		FileEntry clientLogo = getClientLogo();

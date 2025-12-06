@@ -110,6 +110,27 @@ public class DigitalSalesRoom implements Cloneable, Serializable {
 
 	protected Long channelId;
 
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public void setChannelName(
+		UnsafeSupplier<String, Exception> channelNameUnsafeSupplier) {
+
+		try {
+			channelName = channelNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String channelName;
+
 	public FileEntry getClientLogo() {
 		return clientLogo;
 	}

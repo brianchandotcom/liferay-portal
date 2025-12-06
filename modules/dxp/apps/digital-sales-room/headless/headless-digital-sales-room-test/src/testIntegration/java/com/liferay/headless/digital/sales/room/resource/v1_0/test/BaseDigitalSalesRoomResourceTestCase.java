@@ -197,6 +197,7 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 		DigitalSalesRoom digitalSalesRoom = randomDigitalSalesRoom();
 
 		digitalSalesRoom.setAccountName(regex);
+		digitalSalesRoom.setChannelName(regex);
 		digitalSalesRoom.setClientName(regex);
 		digitalSalesRoom.setDescription(regex);
 		digitalSalesRoom.setExternalReferenceCode(regex);
@@ -213,6 +214,7 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 		digitalSalesRoom = DigitalSalesRoomSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, digitalSalesRoom.getAccountName());
+		Assert.assertEquals(regex, digitalSalesRoom.getChannelName());
 		Assert.assertEquals(regex, digitalSalesRoom.getClientName());
 		Assert.assertEquals(regex, digitalSalesRoom.getDescription());
 		Assert.assertEquals(regex, digitalSalesRoom.getExternalReferenceCode());
@@ -1014,6 +1016,14 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("channelName", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getChannelName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("clientLogo", additionalAssertFieldName)) {
 				if (digitalSalesRoom.getClientLogo() == null) {
 					valid = false;
@@ -1274,6 +1284,17 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				if (!Objects.deepEquals(
 						digitalSalesRoom1.getChannelId(),
 						digitalSalesRoom2.getChannelId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channelName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getChannelName(),
+						digitalSalesRoom2.getChannelName())) {
 
 					return false;
 				}
@@ -1592,6 +1613,52 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 		if (entityFieldName.equals("channelId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("channelName")) {
+			Object object = digitalSalesRoom.getChannelName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("clientLogo")) {
@@ -2084,6 +2151,8 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				accountName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				channelId = RandomTestUtil.randomLong();
+				channelName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				clientName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();

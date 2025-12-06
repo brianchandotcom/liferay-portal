@@ -238,12 +238,6 @@ public class FragmentEntryProcessorHelperImpl
 			return 0;
 		}
 
-		Object object = infoItemObjectProvider.getInfoItem(infoItemIdentifier);
-
-		if (object == null) {
-			return 0;
-		}
-
 		return _getFileEntryId(
 			className, infoItemObjectProvider.getInfoItem(infoItemIdentifier),
 			fieldName, locale);

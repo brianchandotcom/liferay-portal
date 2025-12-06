@@ -8,8 +8,8 @@ package com.liferay.change.tracking.web.internal.frontend.data.set.filter;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+import com.liferay.petra.function.transform.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,18 +40,15 @@ public class UserSelectionFDSFilter extends BaseSelectionFDSFilter {
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			_usersMap.entrySet(),
+			entry -> {
+				Map<String, String> user =
+					(Map<String, String>)entry.getValue();
 
-		for (Map.Entry<String, Object> entry : _usersMap.entrySet()) {
-			Map<String, String> user = (Map<String, String>)entry.getValue();
-
-			selectionFDSFilterItems.add(
-				new SelectionFDSFilterItem(
-					user.get("userName"), String.valueOf(entry.getKey())));
-		}
-
-		return selectionFDSFilterItems;
+				return new SelectionFDSFilterItem(
+					user.get("userName"), String.valueOf(entry.getKey()));
+			});
 	}
 
 	private final Map<String, Object> _usersMap;

@@ -565,6 +565,21 @@ components:
             required:
                 -   defaultFragmentKey
             type: object
+        DirectFragmentImageValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentImageValue"
+                -   properties:
+                        value_i18n:
+                            additionalProperties:
+                                $ref: "#/components/schemas/ImageValue"
+                            # @review
+                            description:
+                                The localized value of the direct fragment image.
+                            type: object
+            # @review
+            description:
+                A fragment image value of type direct.
+            type: object
         DisplayPageActionExecutionResult:
             # @review
             description:
@@ -1211,21 +1226,6 @@ components:
             required:
                 -   type
             type: object
-        DirectFragmentImageValue:
-            allOf:
-                -   $ref: "#/components/schemas/FragmentImageValue"
-                -   properties:
-                        value_i18n:
-                            additionalProperties:
-                                $ref: "#/components/schemas/ImageValue"
-                            # @review
-                            description:
-                                The localized value of the direct fragment image.
-                            type: object
-            # @review
-            description:
-                A fragment image value of type direct.
-            type: object
         FragmentDropZonePageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
@@ -1563,16 +1563,6 @@ components:
                         value.
                     enum: [FragmentInlineValue, FragmentMappedValue]
                     type: string
-            type: object
-        MappedFragmentImageValue:
-            allOf:
-                -   $ref: "#/components/schemas/FragmentImageValue"
-                -   properties:
-                        fragmentMappedValue:
-                            $ref: "#/components/schemas/FragmentMappedValue"
-            # @review
-            description:
-                A mapped fragment image value.
             type: object
         FragmentMappedValue:
             description:
@@ -2301,6 +2291,16 @@ components:
             # @review
             description:
                 The collection display's list style.
+            type: object
+        MappedFragmentImageValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentImageValue"
+                -   properties:
+                        fragmentMappedValue:
+                            $ref: "#/components/schemas/FragmentMappedValue"
+            # @review
+            description:
+                A mapped fragment image value.
             type: object
         MasterPage:
             # @review

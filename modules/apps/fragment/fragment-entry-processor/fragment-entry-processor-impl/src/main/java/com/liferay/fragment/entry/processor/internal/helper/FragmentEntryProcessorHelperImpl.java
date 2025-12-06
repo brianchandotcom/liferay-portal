@@ -180,7 +180,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		return _getFileEntryId(
 			infoItemReference.getClassName(), _getInfoItem(infoItemReference),
-			fieldName, locale);
+			fieldName, 0, locale);
 	}
 
 	@Override
@@ -241,7 +241,7 @@ public class FragmentEntryProcessorHelperImpl
 			return _getFileEntryId(
 				className,
 				infoItemObjectProvider.getInfoItem(infoItemIdentifier),
-				fieldName, locale);
+				fieldName, 0, locale);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {
@@ -313,7 +313,7 @@ public class FragmentEntryProcessorHelperImpl
 				className,
 				infoItemObjectProvider.getInfoItem(
 					_getGroupId(groupId), infoItemIdentifier),
-				fieldName, locale);
+				fieldName, groupId, locale);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {
@@ -958,7 +958,7 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	private long _getFileEntryId(
-		String className, Object displayObject, String fieldName,
+		String className, Object displayObject, String fieldName, long groupId,
 		Locale locale) {
 
 		if ((displayObject == null) || Validator.isNull(fieldName)) {
@@ -989,7 +989,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		WebImage webImage = (WebImage)value;
 
-		return getFileEntryId(webImage);
+		return _getFileEntryId(groupId, webImage.getInfoItemReference());
 	}
 
 	private long _getGroupId(long scopeGroupId) {

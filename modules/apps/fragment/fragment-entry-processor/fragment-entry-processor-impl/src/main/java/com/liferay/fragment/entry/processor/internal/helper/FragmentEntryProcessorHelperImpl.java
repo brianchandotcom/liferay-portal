@@ -25,10 +25,12 @@ import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
@@ -50,10 +52,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -176,6 +181,39 @@ public class FragmentEntryProcessorHelperImpl
 		return _getFileEntryId(
 			infoItemReference.getClassName(), _getInfoItem(infoItemReference),
 			fieldName, locale);
+	}
+
+	@Override
+	public long getFileEntryId(long groupId, JSONObject jsonObject) {
+		String className = jsonObject.getString("className", null);
+
+		if (Validator.isNull(className) && jsonObject.has("classNameId")) {
+			className = _portal.fetchClassName(
+				jsonObject.getLong("classNameId"));
+		}
+
+		if (Validator.isNotNull(className) &&
+			!Objects.equals(className, FileEntry.class.getName())) {
+
+			return 0;
+		}
+
+		long fileEntryId = jsonObject.getLong("classPK");
+
+		if (fileEntryId == 0) {
+			fileEntryId = jsonObject.getLong("fileEntryId");
+		}
+
+		if ((fileEntryId > 0) || !jsonObject.has("externalReferenceCode")) {
+			return fileEntryId;
+		}
+
+		return _getClassPK(
+			FileEntry.class.getName(),
+			new ERCInfoItemIdentifier(
+				jsonObject.getString("externalReferenceCode"),
+				jsonObject.getString("scopeExternalReferenceCode")),
+			groupId);
 	}
 
 	@Override
@@ -718,6 +756,55 @@ public class FragmentEntryProcessorHelperImpl
 		return infoCollectionTextFormatter.format(list, locale);
 	}
 
+	private long _getClassPK(
+		String className, ERCInfoItemIdentifier ercInfoItemIdentifier,
+		long groupId) {
+
+		InfoItemObjectProvider<?> infoItemObjectProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		if (infoItemObjectProvider == null) {
+			return 0;
+		}
+
+		long scopeGroupId = _getGroupId(groupId);
+
+		try {
+			Object infoItem = infoItemObjectProvider.getInfoItem(
+				scopeGroupId, ercInfoItemIdentifier);
+
+			if (infoItem == null) {
+				return 0;
+			}
+
+			InfoItemDetailsProvider infoItemDetailsProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemDetailsProvider.class, className);
+
+			InfoItemDetails infoItemDetails =
+				infoItemDetailsProvider.getInfoItemDetails(
+					scopeGroupId, ClassPKInfoItemIdentifier.class, infoItem);
+
+			InfoItemReference infoItemReference =
+				infoItemDetails.getInfoItemReference();
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
+			return classPKInfoItemIdentifier.getClassPK();
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return 0;
+	}
+
 	private String _getDateValue(
 		JSONObject editableValueJSONObject, Date date, String defaultPattern,
 		Locale locale) {
@@ -829,6 +916,31 @@ public class FragmentEntryProcessorHelperImpl
 		WebImage webImage = (WebImage)value;
 
 		return getFileEntryId(webImage);
+	}
+
+	private long _getGroupId(long scopeGroupId) {
+		if (scopeGroupId > 0) {
+			return scopeGroupId;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) &&
+			(serviceContext.getScopeGroupId() > 0)) {
+
+			return serviceContext.getScopeGroupId();
+		}
+
+		Long groupId = GroupThreadLocal.getGroupId();
+
+		if (groupId != null) {
+			return groupId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor group thread local are " +
+				"initialized");
 	}
 
 	private InfoCollectionTextFormatter<Object> _getInfoCollectionTextFormatter(

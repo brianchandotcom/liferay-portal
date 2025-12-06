@@ -1369,12 +1369,9 @@ public class UsersAdminUtil {
 		for (String roleName :
 				PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_ROLES)) {
 
-			Role role = RoleLocalServiceUtil.fetchRole(
-				updatedUser.getCompanyId(), roleName);
-
-			if ((role != null) &&
-				RoleLocalServiceUtil.hasUserRole(
-					updatedUser.getUserId(), role.getRoleId())) {
+			if (RoleLocalServiceUtil.hasUserRole(
+					updatedUser.getUserId(), updatedUser.getCompanyId(),
+					roleName, true)) {
 
 				return true;
 			}

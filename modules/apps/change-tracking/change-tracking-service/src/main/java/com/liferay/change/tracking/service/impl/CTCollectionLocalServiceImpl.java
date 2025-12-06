@@ -1352,10 +1352,9 @@ public class CTCollectionLocalServiceImpl
 				enclosureMap.entrySet()) {
 
 			long classNameId = enclosureEntry.getKey();
-			Set<Long> classPKs = enclosureEntry.getValue();
 
 			List<CTEntry> ctEntries = TransformUtil.transform(
-				classPKs,
+				enclosureEntry.getValue(),
 				classPK -> _ctEntryPersistence.fetchByC_MCNI_MCPK(
 					ctCollection.getCtCollectionId(), classNameId, classPK));
 

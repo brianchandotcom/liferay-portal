@@ -281,10 +281,8 @@ public class ListTypeDefinitionResourceImpl
 		}
 
 		Locale locale = _getLocale();
-
-		String resourceName =
+		String permissionName =
 			com.liferay.list.type.model.ListTypeDefinition.class.getName();
-
 		User user = _userLocalService.fetchUser(
 			serviceBuilderListTypeDefinition.getUserId());
 
@@ -308,7 +306,7 @@ public class ListTypeDefinitionResourceImpl
 
 							return addAction(
 								ActionKeys.DELETE, "deleteListTypeDefinition",
-								resourceName,
+								permissionName,
 								serviceBuilderListTypeDefinition.
 									getListTypeDefinitionId());
 						}
@@ -316,21 +314,21 @@ public class ListTypeDefinitionResourceImpl
 						"get",
 						addAction(
 							ActionKeys.VIEW, "getListTypeDefinition",
-							resourceName,
+							permissionName,
 							serviceBuilderListTypeDefinition.
 								getListTypeDefinitionId())
 					).put(
 						"permissions",
 						addAction(
 							ActionKeys.PERMISSIONS, "patchListTypeDefinition",
-							resourceName,
+							permissionName,
 							serviceBuilderListTypeDefinition.
 								getListTypeDefinitionId())
 					).put(
 						"update",
 						addAction(
 							ActionKeys.UPDATE, "putListTypeDefinition",
-							resourceName,
+							permissionName,
 							serviceBuilderListTypeDefinition.
 								getListTypeDefinitionId())
 					).build());
@@ -364,7 +362,7 @@ public class ListTypeDefinitionResourceImpl
 						"permissions",
 						nestedFieldNames -> {
 							_permissionService.checkPermission(
-								user.getGroupId(), resourceName,
+								user.getGroupId(), permissionName,
 								serviceBuilderListTypeDefinition.
 									getListTypeDefinitionId());
 
@@ -372,10 +370,10 @@ public class ListTypeDefinitionResourceImpl
 								PermissionUtil.getPermissions(
 									user.getCompanyId(),
 									resourceActionLocalService.
-										getResourceActions(resourceName),
+										getResourceActions(permissionName),
 									serviceBuilderListTypeDefinition.
 										getListTypeDefinitionId(),
-									resourceName, null);
+									permissionName, null);
 
 							return permissions.toArray(new Permission[0]);
 						}));

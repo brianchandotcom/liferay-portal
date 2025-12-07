@@ -436,49 +436,49 @@ public class CommerceCartResource {
 			Locale locale)
 		throws Exception {
 
-		List<Product> products = TransformUtil.transform(
-			commerceOrder.getCommerceOrderItems(),
-			commerceOrderItem -> {
-				PriceModel priceModel = _getCommerceOrderItemPriceModel(
-					commerceOrderItem, commerceContext, locale);
+		return _groupProductByOrderItemId(
+			TransformUtil.transform(
+				commerceOrder.getCommerceOrderItems(),
+				commerceOrderItem -> {
+					PriceModel priceModel = _getCommerceOrderItemPriceModel(
+						commerceOrderItem, commerceContext, locale);
 
-				ProductSettingsModel productSettingsModel =
-					_productHelper.getProductSettingsModel(
-						commerceOrderItem.getCPDefinitionId(), commerceContext);
+					ProductSettingsModel productSettingsModel =
+						_productHelper.getProductSettingsModel(
+							commerceOrderItem.getCPDefinitionId(),
+							commerceContext);
 
-				BigDecimal quantity = commerceOrderItem.getQuantity();
+					BigDecimal quantity = commerceOrderItem.getQuantity();
 
-				Product product = new Product(
-					commerceOrderItem.getCommerceOrderItemId(),
-					commerceOrderItem.getParentCommerceOrderItemId(),
-					commerceOrderItem.getCPInstanceId(),
-					commerceOrderItem.getName(locale), priceModel,
-					productSettingsModel, quantity.intValue(),
-					commerceOrderItem.getSku(),
-					_cpInstanceHelper.getCPInstanceThumbnailSrc(
-						CommerceUtil.getCommerceAccountId(commerceContext),
-						commerceOrderItem.getCPInstanceId()),
-					commerceOrderItem.getUnitOfMeasureKey(),
-					_getErrorMessages(locale, commerceOrderItem));
+					Product product = new Product(
+						commerceOrderItem.getCommerceOrderItemId(),
+						commerceOrderItem.getParentCommerceOrderItemId(),
+						commerceOrderItem.getCPInstanceId(),
+						commerceOrderItem.getName(locale), priceModel,
+						productSettingsModel, quantity.intValue(),
+						commerceOrderItem.getSku(),
+						_cpInstanceHelper.getCPInstanceThumbnailSrc(
+							CommerceUtil.getCommerceAccountId(commerceContext),
+							commerceOrderItem.getCPInstanceId()),
+						commerceOrderItem.getUnitOfMeasureKey(),
+						_getErrorMessages(locale, commerceOrderItem));
 
-				long commerceOptionValueCPDefinitionId =
-					commerceOrderItem.getCPDefinitionId();
+					long commerceOptionValueCPDefinitionId =
+						commerceOrderItem.getCPDefinitionId();
 
-				if (commerceOrderItem.hasParentCommerceOrderItem()) {
-					commerceOptionValueCPDefinitionId =
-						commerceOrderItem.
-							getParentCommerceOrderItemCPDefinitionId();
-				}
+					if (commerceOrderItem.hasParentCommerceOrderItem()) {
+						commerceOptionValueCPDefinitionId =
+							commerceOrderItem.
+								getParentCommerceOrderItemCPDefinitionId();
+					}
 
-				product.setOptions(
-					_cpInstanceHelper.getKeyValuePairs(
-						commerceOptionValueCPDefinitionId,
-						commerceOrderItem.getJson(), locale));
+					product.setOptions(
+						_cpInstanceHelper.getKeyValuePairs(
+							commerceOptionValueCPDefinitionId,
+							commerceOrderItem.getJson(), locale));
 
-				return product;
-			});
-
-		return _groupProductByOrderItemId(products);
+					return product;
+				}));
 	}
 
 	private Response _getResponse(Object object) {

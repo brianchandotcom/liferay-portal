@@ -362,13 +362,14 @@ public class ListTypeDefinitionResourceImpl
 						"permissions",
 						nestedFieldNames -> {
 							_permissionService.checkPermission(
-								user.getGroupId(), permissionName,
+								contextCompany.getGroupId(), permissionName,
 								serviceBuilderListTypeDefinition.
 									getListTypeDefinitionId());
 
 							Collection<Permission> permissions =
 								PermissionUtil.getPermissions(
-									user.getCompanyId(),
+									serviceBuilderListTypeDefinition.
+										getCompanyId(),
 									resourceActionLocalService.
 										getResourceActions(permissionName),
 									serviceBuilderListTypeDefinition.

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay AI Hub Site Initializer API
 Bundle-SymbolicName: com.liferay.ai.hub.site.initializer.api
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1
 Export-Package: com.liferay.ai.hub.site.initializer.mcp.tool.provider
 Import-Package:\
 	!org.bouncycastle.jsse.*,\

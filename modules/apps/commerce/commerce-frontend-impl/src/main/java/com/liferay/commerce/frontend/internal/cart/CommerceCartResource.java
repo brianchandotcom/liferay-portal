@@ -42,6 +42,7 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -435,50 +436,47 @@ public class CommerceCartResource {
 			Locale locale)
 		throws Exception {
 
-		List<Product> products = new ArrayList<>();
+		List<Product> products = TransformUtil.transform(
+			commerceOrder.getCommerceOrderItems(),
+			commerceOrderItem -> {
+				PriceModel priceModel = _getCommerceOrderItemPriceModel(
+					commerceOrderItem, commerceContext, locale);
 
-		List<CommerceOrderItem> commerceOrderItems =
-			commerceOrder.getCommerceOrderItems();
+				ProductSettingsModel productSettingsModel =
+					_productHelper.getProductSettingsModel(
+						commerceOrderItem.getCPDefinitionId(), commerceContext);
 
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			PriceModel priceModel = _getCommerceOrderItemPriceModel(
-				commerceOrderItem, commerceContext, locale);
+				BigDecimal quantity = commerceOrderItem.getQuantity();
 
-			ProductSettingsModel productSettingsModel =
-				_productHelper.getProductSettingsModel(
-					commerceOrderItem.getCPDefinitionId(), commerceContext);
+				Product product = new Product(
+					commerceOrderItem.getCommerceOrderItemId(),
+					commerceOrderItem.getParentCommerceOrderItemId(),
+					commerceOrderItem.getCPInstanceId(),
+					commerceOrderItem.getName(locale), priceModel,
+					productSettingsModel, quantity.intValue(),
+					commerceOrderItem.getSku(),
+					_cpInstanceHelper.getCPInstanceThumbnailSrc(
+						CommerceUtil.getCommerceAccountId(commerceContext),
+						commerceOrderItem.getCPInstanceId()),
+					commerceOrderItem.getUnitOfMeasureKey(),
+					_getErrorMessages(locale, commerceOrderItem));
 
-			BigDecimal quantity = commerceOrderItem.getQuantity();
+				long commerceOptionValueCPDefinitionId =
+					commerceOrderItem.getCPDefinitionId();
 
-			Product product = new Product(
-				commerceOrderItem.getCommerceOrderItemId(),
-				commerceOrderItem.getParentCommerceOrderItemId(),
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getName(locale), priceModel,
-				productSettingsModel, quantity.intValue(),
-				commerceOrderItem.getSku(),
-				_cpInstanceHelper.getCPInstanceThumbnailSrc(
-					CommerceUtil.getCommerceAccountId(commerceContext),
-					commerceOrderItem.getCPInstanceId()),
-				commerceOrderItem.getUnitOfMeasureKey(),
-				_getErrorMessages(locale, commerceOrderItem));
+				if (commerceOrderItem.hasParentCommerceOrderItem()) {
+					commerceOptionValueCPDefinitionId =
+						commerceOrderItem.
+							getParentCommerceOrderItemCPDefinitionId();
+				}
 
-			long commerceOptionValueCPDefinitionId =
-				commerceOrderItem.getCPDefinitionId();
+				product.setOptions(
+					_cpInstanceHelper.getKeyValuePairs(
+						commerceOptionValueCPDefinitionId,
+						commerceOrderItem.getJson(), locale));
 
-			if (commerceOrderItem.hasParentCommerceOrderItem()) {
-				commerceOptionValueCPDefinitionId =
-					commerceOrderItem.
-						getParentCommerceOrderItemCPDefinitionId();
-			}
-
-			product.setOptions(
-				_cpInstanceHelper.getKeyValuePairs(
-					commerceOptionValueCPDefinitionId,
-					commerceOrderItem.getJson(), locale));
-
-			products.add(product);
-		}
+				return product;
+			});
 
 		return _groupProductByOrderItemId(products);
 	}

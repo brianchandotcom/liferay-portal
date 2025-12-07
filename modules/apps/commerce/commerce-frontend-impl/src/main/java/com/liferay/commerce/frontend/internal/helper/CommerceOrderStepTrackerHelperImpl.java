@@ -12,6 +12,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -121,36 +122,34 @@ public class CommerceOrderStepTrackerHelperImpl
 	private List<StepModel> _getWorkflowSteps(
 		CommerceOrder commerceOrder, Locale locale) {
 
-		List<StepModel> stepModels = new ArrayList<>();
-
 		int[] workflowStatuses = {
 			WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_PENDING,
 			WorkflowConstants.STATUS_APPROVED
 		};
 
-		for (int workflowStatus : workflowStatuses) {
-			StepModel stepModel = new StepModel();
+		return TransformUtil.transformToList(
+			workflowStatuses,
+			workflowStatus -> {
+				StepModel stepModel = new StepModel();
 
-			String workflowStatusLabel = WorkflowConstants.getStatusLabel(
-				workflowStatus);
+				String workflowStatusLabel = WorkflowConstants.getStatusLabel(
+					workflowStatus);
 
-			stepModel.setId(workflowStatusLabel);
-			stepModel.setLabel(_language.get(locale, workflowStatusLabel));
+				stepModel.setId(workflowStatusLabel);
+				stepModel.setLabel(_language.get(locale, workflowStatusLabel));
 
-			if (commerceOrder.getStatus() == workflowStatus) {
-				stepModel.setState("active");
-			}
-			else if (commerceOrder.getStatus() < workflowStatus) {
-				stepModel.setState("completed");
-			}
-			else {
-				stepModel.setState("inactive");
-			}
+				if (commerceOrder.getStatus() == workflowStatus) {
+					stepModel.setState("active");
+				}
+				else if (commerceOrder.getStatus() < workflowStatus) {
+					stepModel.setState("completed");
+				}
+				else {
+					stepModel.setState("inactive");
+				}
 
-			stepModels.add(stepModel);
-		}
-
-		return stepModels;
+				return stepModel;
+			});
 	}
 
 	@Reference

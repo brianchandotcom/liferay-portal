@@ -29,6 +29,7 @@ import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -203,18 +203,16 @@ public class ProductHelperImpl implements ProductHelper {
 			BigDecimal[] discountPercentages, Locale locale)
 		throws PortalException {
 
-		List<String> formattedDiscountPercentages = new ArrayList<>();
+		return TransformUtil.transform(
+			discountPercentages,
+			percentage -> {
+				if (percentage == null) {
+					percentage = BigDecimal.ZERO;
+				}
 
-		for (BigDecimal percentage : discountPercentages) {
-			if (percentage == null) {
-				percentage = BigDecimal.ZERO;
-			}
-
-			formattedDiscountPercentages.add(
-				_commercePriceFormatter.format(percentage, locale));
-		}
-
-		return formattedDiscountPercentages.toArray(new String[0]);
+				return _commercePriceFormatter.format(percentage, locale);
+			},
+			String.class);
 	}
 
 	private PriceModel _getPriceModel(

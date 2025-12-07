@@ -72,7 +72,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -442,24 +441,17 @@ public class CommerceAccountResource {
 			long companyId, String keywords, String imagePath)
 		throws PortalException {
 
-		List<AccountOrganization> accountOrganizations = new ArrayList<>();
-
 		BaseModelSearchResult<Organization> baseModelSearchResult =
 			_organizationLocalService.searchOrganizations(
 				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 				keywords, null, 0, 10, SortFactoryUtil.create("name", false));
 
-		for (Organization organization :
-				baseModelSearchResult.getBaseModels()) {
-
-			accountOrganizations.add(
-				new AccountOrganization(
-					organization.getOrganizationId(), organization.getName(),
-					StringPool.BLANK,
-					_getLogoThumbnailSrc(organization.getLogoId(), imagePath)));
-		}
-
-		return accountOrganizations;
+		return TransformUtil.transform(
+			baseModelSearchResult.getBaseModels(),
+			organization -> new AccountOrganization(
+				organization.getOrganizationId(), organization.getName(),
+				StringPool.BLANK,
+				_getLogoThumbnailSrc(organization.getLogoId(), imagePath)));
 	}
 
 	private List<AccountUser> _searchUsers(

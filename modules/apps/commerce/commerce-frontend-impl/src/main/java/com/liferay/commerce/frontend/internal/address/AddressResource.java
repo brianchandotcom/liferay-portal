@@ -15,12 +15,12 @@ import com.liferay.commerce.frontend.internal.address.model.CountryModel;
 import com.liferay.commerce.frontend.internal.address.model.RegionModel;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,7 +34,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -81,14 +80,9 @@ public class AddressResource {
 		@PathParam("countryId") long countryId,
 		@Context ThemeDisplay themeDisplay) {
 
-		List<RegionModel> regionModels = new ArrayList<>();
-
-		List<Region> regions = _regionService.getRegions(countryId, true);
-
-		for (Region region : regions) {
-			regionModels.add(
-				new RegionModel(region.getRegionId(), region.getName()));
-		}
+		List<RegionModel> regionModels = TransformUtil.transform(
+			_regionService.getRegions(countryId, true),
+			region -> new RegionModel(region.getRegionId(), region.getName()));
 
 		try {
 			String json = _OBJECT_MAPPER.writeValueAsString(regionModels);
@@ -147,14 +141,11 @@ public class AddressResource {
 	}
 
 	private Response _getCountries(List<Country> countries, String languageId) {
-		List<CountryModel> countryModels = new ArrayList<>();
-
-		for (Country country : countries) {
-			countryModels.add(
-				new CountryModel(
-					country.getCountryId(), country.getTitle(languageId),
-					country.isBillingAllowed(), country.isShippingAllowed()));
-		}
+		List<CountryModel> countryModels = TransformUtil.transform(
+			countries,
+			country -> new CountryModel(
+				country.getCountryId(), country.getTitle(languageId),
+				country.isBillingAllowed(), country.isShippingAllowed()));
 
 		try {
 			String json = _OBJECT_MAPPER.writeValueAsString(countryModels);

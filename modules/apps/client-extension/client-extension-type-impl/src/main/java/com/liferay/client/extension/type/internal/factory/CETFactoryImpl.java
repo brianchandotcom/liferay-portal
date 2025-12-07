@@ -12,6 +12,7 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.type.factory.CETImplFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -33,11 +34,9 @@ import jakarta.portlet.PortletRequest;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -378,13 +377,11 @@ public class CETFactoryImpl implements CETFactory {
 
 	private String _transformURL(String baseURL, String value) {
 		if (value.contains(StringPool.NEW_LINE)) {
-			List<String> values = new ArrayList<>();
-
-			for (String line : StringUtil.split(value, CharPool.NEW_LINE)) {
-				values.add(_transformURL(baseURL, line));
-			}
-
-			return StringUtil.merge(values, StringPool.NEW_LINE);
+			return StringUtil.merge(
+				TransformUtil.transform(
+					StringUtil.split(value, CharPool.NEW_LINE),
+					line -> _transformURL(baseURL, line)),
+				StringPool.NEW_LINE);
 		}
 
 		if (value.contains(StringPool.COLON)) {

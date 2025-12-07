@@ -97,12 +97,11 @@ public class CommerceDiscountValidatorRegistryImpl
 
 					String value = GetterUtil.getString(valueObject);
 
-					if (ArrayUtil.contains(types, value)) {
-						return commerceDiscountValidatorServiceWrapper.
-							getService();
+					if (!ArrayUtil.contains(types, value)) {
+						return null;
 					}
 
-					return null;
+					return commerceDiscountValidatorServiceWrapper.getService();
 				}));
 	}
 

@@ -146,7 +146,6 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			termsSetFilterBuilder.setFieldName("commerceAccountGroupIds");
 			termsSetFilterBuilder.setMinimumShouldMatchField(
 				"commerceAccountGroupIds_required_matches");
-
 			termsSetFilterBuilder.setValues(
 				TransformUtil.transformToList(
 					commerceAccountGroupIds,

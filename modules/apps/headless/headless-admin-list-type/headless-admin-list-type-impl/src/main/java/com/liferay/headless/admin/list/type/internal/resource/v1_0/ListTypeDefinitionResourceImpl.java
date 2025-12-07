@@ -246,9 +246,6 @@ public class ListTypeDefinitionResourceImpl
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
 		if (listTypeDefinition.getPermissions() == null) {
 			serviceContext.setModelPermissions(null);
 

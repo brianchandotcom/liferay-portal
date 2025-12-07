@@ -182,9 +182,6 @@ public class ListTypeDefinitionResourceImpl
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
-		ServiceContext serviceContext = _createServiceContext(
-			listTypeDefinition);
-
 		return _toListTypeDefinition(
 			_listTypeDefinitionService.addListTypeDefinition(
 				listTypeDefinition.getExternalReferenceCode(),
@@ -197,16 +194,13 @@ public class ListTypeDefinitionResourceImpl
 					listTypeDefinition.getListTypeEntries(),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
 						listTypeEntry, _listTypeEntryLocalService)),
-				serviceContext));
+				_createServiceContext(listTypeDefinition)));
 	}
 
 	@Override
 	public ListTypeDefinition putListTypeDefinition(
 			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
 		throws Exception {
-
-		ServiceContext serviceContext = _createServiceContext(
-			listTypeDefinition);
 
 		return _toListTypeDefinition(
 			_listTypeDefinitionService.updateListTypeDefinition(
@@ -220,7 +214,7 @@ public class ListTypeDefinitionResourceImpl
 					listTypeDefinition.getListTypeEntries(),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
 						listTypeEntry, _listTypeEntryLocalService)),
-				serviceContext));
+				_createServiceContext(listTypeDefinition)));
 	}
 
 	@Override

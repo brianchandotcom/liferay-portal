@@ -6,7 +6,7 @@ exports[`Membership should render 1`] = `
     class="card card-root segment-membership-root"
   >
     <div
-      class="card-header d-flex justify-content-between align-items-center"
+      class="card-header align-items-center d-flex justify-content-between"
     >
       <div
         class="card-title"

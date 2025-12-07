@@ -8,6 +8,7 @@ package com.liferay.client.extension.web.internal.display.context;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.annotation.CETProperty;
 import com.liferay.client.extension.web.internal.display.context.util.CETLabelUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
@@ -77,11 +78,16 @@ public class ViewClientExtensionEntryDisplayContext<T extends CET> {
 				continue;
 			}
 
-			for (Method method : interfaceClass.getDeclaredMethods()) {
-				if (method.getAnnotation(CETProperty.class) != null) {
-					methods.add(method);
-				}
-			}
+			methods.addAll(
+				TransformUtil.transformToList(
+					interfaceClass.getDeclaredMethods(),
+					method -> {
+						if (method.getAnnotation(CETProperty.class) != null) {
+							return method;
+						}
+
+						return null;
+					}));
 		}
 
 		Collections.sort(

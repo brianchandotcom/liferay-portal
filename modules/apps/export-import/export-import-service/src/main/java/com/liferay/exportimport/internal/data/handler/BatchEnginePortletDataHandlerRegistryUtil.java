@@ -84,14 +84,14 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 	}
 
 	private static String _getPortletId(long companyId, String className) {
-		Map<String, String> classNamestoPortletIdsMap =
+		Map<String, String> classNamesToPortletIdsMap =
 			_classNamesToPortletIdsMaps.get(companyId);
 
-		if (classNamestoPortletIdsMap == null) {
+		if (classNamesToPortletIdsMap == null) {
 			return null;
 		}
 
-		return classNamestoPortletIdsMap.get(className);
+		return classNamesToPortletIdsMap.get(className);
 	}
 
 	private static void _removeClassNameMappings(

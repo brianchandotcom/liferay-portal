@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -363,12 +362,8 @@ public class ObjectEntryModelDocumentContributor
 
 					_contribute(
 						document, fieldArray, objectField.getName(),
-						entry.getValue(),
-						LocaleUtil.fromLanguageId(
-							entry.getKey(), true, false
-						).toString(),
-						objectContentHelper, objectDefinition, objectEntry,
-						objectField, values);
+						entry.getValue(), entry.getKey(), objectContentHelper,
+						objectDefinition, objectEntry, objectField, values);
 				}
 			}
 			else {

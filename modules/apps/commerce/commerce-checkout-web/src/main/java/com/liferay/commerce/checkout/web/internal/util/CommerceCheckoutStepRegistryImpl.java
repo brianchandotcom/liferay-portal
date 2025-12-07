@@ -12,6 +12,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -20,7 +21,6 @@ import com.liferay.portal.kernel.util.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -73,8 +73,6 @@ public class CommerceCheckoutStepRegistryImpl
 			HttpServletResponse httpServletResponse, boolean onlyActive)
 		throws Exception {
 
-		List<CommerceCheckoutStep> commerceCheckoutSteps = new ArrayList<>();
-
 		ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
 			commerceCheckoutStepServiceTrackerMap =
 				_getCommerceCheckoutStepServiceTrackerMap();
@@ -87,22 +85,22 @@ public class CommerceCheckoutStepRegistryImpl
 			commerceCheckoutStepServiceWrappers,
 			_commerceCheckoutStepServiceWrapperDisplayOrderComparator);
 
-		for (ServiceWrapper<CommerceCheckoutStep>
-				commerceCheckoutStepServiceWrapper :
-					commerceCheckoutStepServiceWrappers) {
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				commerceCheckoutStepServiceWrappers,
+				commerceCheckoutStepServiceWrapper -> {
+					CommerceCheckoutStep commerceCheckoutStep =
+						commerceCheckoutStepServiceWrapper.getService();
 
-			CommerceCheckoutStep commerceCheckoutStep =
-				commerceCheckoutStepServiceWrapper.getService();
+					if (!onlyActive ||
+						commerceCheckoutStep.isActive(
+							httpServletRequest, httpServletResponse)) {
 
-			if (!onlyActive ||
-				commerceCheckoutStep.isActive(
-					httpServletRequest, httpServletResponse)) {
+						return commerceCheckoutStep;
+					}
 
-				commerceCheckoutSteps.add(commerceCheckoutStep);
-			}
-		}
-
-		return Collections.unmodifiableList(commerceCheckoutSteps);
+					return null;
+				}));
 	}
 
 	@Override

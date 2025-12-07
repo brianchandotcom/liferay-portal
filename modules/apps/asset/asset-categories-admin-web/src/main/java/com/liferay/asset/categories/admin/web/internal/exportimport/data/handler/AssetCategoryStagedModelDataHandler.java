@@ -71,6 +71,15 @@ public class AssetCategoryStagedModelDataHandler
 	}
 
 	@Override
+	public AssetCategory fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return _assetCategoryLocalService.
+			fetchAssetCategoryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public AssetCategory fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -243,8 +252,8 @@ public class AssetCategoryStagedModelDataHandler
 
 		AssetCategory importedCategory = null;
 
-		AssetCategory existingCategory = fetchStagedModelByUuidAndGroupId(
-			category.getUuid(), portletDataContext.getScopeGroupId());
+		AssetCategory existingCategory = fetchExistingStagedModel(
+			category, portletDataContext.getScopeGroupId());
 
 		if (existingCategory == null) {
 			String name = _getCategoryName(

@@ -56,6 +56,14 @@ public class AssetTagStagedModelDataHandler
 	}
 
 	@Override
+	public AssetTag fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return _assetTagLocalService.fetchAssetTagByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public AssetTag fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -129,15 +137,8 @@ public class AssetTagStagedModelDataHandler
 		ServiceContext serviceContext = _createServiceContext(
 			portletDataContext, assetTag);
 
-		AssetTag existingAssetTag =
-			_assetTagLocalService.fetchAssetTagByExternalReferenceCode(
-				assetTag.getExternalReferenceCode(),
-				portletDataContext.getScopeGroupId());
-
-		if (existingAssetTag == null) {
-			existingAssetTag = fetchStagedModelByUuidAndGroupId(
-				assetTag.getUuid(), portletDataContext.getScopeGroupId());
-		}
+		AssetTag existingAssetTag = fetchExistingStagedModel(
+			assetTag, portletDataContext.getScopeGroupId());
 
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();

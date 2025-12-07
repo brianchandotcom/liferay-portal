@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -68,6 +67,15 @@ public class AssetVocabularyStagedModelDataHandler
 		if (vocabulary != null) {
 			deleteStagedModel(vocabulary);
 		}
+	}
+
+	@Override
+	public AssetVocabulary fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return _assetVocabularyLocalService.
+			fetchAssetVocabularyByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	@Override
@@ -199,8 +207,8 @@ public class AssetVocabularyStagedModelDataHandler
 
 		AssetVocabulary importedVocabulary = null;
 
-		AssetVocabulary existingVocabulary = fetchStagedModelByUuidAndGroupId(
-			vocabulary.getUuid(), portletDataContext.getScopeGroupId());
+		AssetVocabulary existingVocabulary = fetchExistingStagedModel(
+			vocabulary, portletDataContext.getScopeGroupId());
 
 		if (existingVocabulary == null) {
 			String name = _getVocabularyName(
@@ -220,8 +228,8 @@ public class AssetVocabularyStagedModelDataHandler
 		}
 		else {
 			String name = _getVocabularyName(
-				vocabulary.getUuid(), portletDataContext.getScopeGroupId(),
-				vocabulary.getName(), 2);
+				vocabulary.getExternalReferenceCode(),
+				portletDataContext.getScopeGroupId(), vocabulary.getName(), 2);
 
 			importedVocabulary = _assetVocabularyLocalService.updateVocabulary(
 				existingVocabulary.getExternalReferenceCode(),
@@ -309,21 +317,23 @@ public class AssetVocabularyStagedModelDataHandler
 	}
 
 	private String _getVocabularyName(
-			String uuid, long groupId, String name, int count)
+			String externalReferenceCode, long groupId, String name, int count)
 		throws Exception {
 
 		AssetVocabulary vocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(groupId, name);
 
 		if ((vocabulary == null) ||
-			(Validator.isNotNull(uuid) && uuid.equals(vocabulary.getUuid()))) {
+			Objects.equals(
+				externalReferenceCode, vocabulary.getExternalReferenceCode())) {
 
 			return name;
 		}
 
 		name = StringUtil.appendParentheticalSuffix(name, count);
 
-		return _getVocabularyName(uuid, groupId, name, ++count);
+		return _getVocabularyName(
+			externalReferenceCode, groupId, name, ++count);
 	}
 
 	private Map<Locale, String> _getVocabularyTitleMap(

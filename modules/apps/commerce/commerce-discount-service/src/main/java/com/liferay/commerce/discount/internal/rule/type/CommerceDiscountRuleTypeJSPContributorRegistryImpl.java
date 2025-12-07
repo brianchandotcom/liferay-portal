@@ -9,8 +9,8 @@ import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContri
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContributorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,16 +37,10 @@ public class CommerceDiscountRuleTypeJSPContributorRegistryImpl
 	public List<CommerceDiscountRuleTypeJSPContributor>
 		getCommerceDiscountRuleTypeJSPContributors() {
 
-		List<CommerceDiscountRuleTypeJSPContributor>
-			commerceDiscountRuleTypeJSPContributors = new ArrayList<>();
-
-		for (String key : _serviceTrackerMap.keySet()) {
-			commerceDiscountRuleTypeJSPContributors.add(
-				_serviceTrackerMap.getService(key));
-		}
-
 		return Collections.unmodifiableList(
-			commerceDiscountRuleTypeJSPContributors);
+			TransformUtil.transform(
+				_serviceTrackerMap.keySet(),
+				key -> _serviceTrackerMap.getService(key)));
 	}
 
 	@Activate

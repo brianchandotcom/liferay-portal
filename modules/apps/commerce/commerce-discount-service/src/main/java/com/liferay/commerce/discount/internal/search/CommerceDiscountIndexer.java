@@ -147,14 +147,11 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			termsSetFilterBuilder.setMinimumShouldMatchField(
 				"commerceAccountGroupIds_required_matches");
 
-			List<String> values = new ArrayList<>(
-				commerceAccountGroupIds.length);
-
-			for (long commerceAccountGroupId : commerceAccountGroupIds) {
-				values.add(String.valueOf(commerceAccountGroupId));
-			}
-
-			termsSetFilterBuilder.setValues(values);
+			termsSetFilterBuilder.setValues(
+				TransformUtil.transformToList(
+					commerceAccountGroupIds,
+					commerceAccountGroupId -> String.valueOf(
+						commerceAccountGroupId)));
 
 			BooleanFilter fieldBooleanFilter = new BooleanFilter();
 

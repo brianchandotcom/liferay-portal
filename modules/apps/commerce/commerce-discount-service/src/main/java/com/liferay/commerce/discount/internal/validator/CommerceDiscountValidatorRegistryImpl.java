@@ -12,6 +12,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -69,9 +69,6 @@ public class CommerceDiscountValidatorRegistryImpl
 	public List<CommerceDiscountValidator> getCommerceDiscountValidators(
 		String... types) {
 
-		List<CommerceDiscountValidator> commerceDiscountValidators =
-			new ArrayList<>();
-
 		List<ServiceWrapper<CommerceDiscountValidator>>
 			commerceDiscountValidatorServiceWrappers = ListUtil.fromCollection(
 				_serviceTrackerMap.values());
@@ -80,34 +77,33 @@ public class CommerceDiscountValidatorRegistryImpl
 			commerceDiscountValidatorServiceWrappers,
 			_commerceDiscountValidatorServiceWrapperPriorityComparator);
 
-		for (ServiceWrapper<CommerceDiscountValidator>
-				commerceDiscountValidatorServiceWrapper :
-					commerceDiscountValidatorServiceWrappers) {
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				commerceDiscountValidatorServiceWrappers,
+				commerceDiscountValidatorServiceWrapper -> {
+					if (ArrayUtil.isEmpty(types)) {
+						return commerceDiscountValidatorServiceWrapper.
+							getService();
+					}
 
-			if (ArrayUtil.isEmpty(types)) {
-				commerceDiscountValidators.add(
-					commerceDiscountValidatorServiceWrapper.getService());
+					Map<String, Object>
+						commerceDiscountValidatorServiceWrapperProperties =
+							commerceDiscountValidatorServiceWrapper.
+								getProperties();
 
-				continue;
-			}
+					Object valueObject =
+						commerceDiscountValidatorServiceWrapperProperties.get(
+							"commerce.discount.validator.type");
 
-			Map<String, Object>
-				commerceDiscountValidatorServiceWrapperProperties =
-					commerceDiscountValidatorServiceWrapper.getProperties();
+					String value = GetterUtil.getString(valueObject);
 
-			Object valueObject =
-				commerceDiscountValidatorServiceWrapperProperties.get(
-					"commerce.discount.validator.type");
+					if (ArrayUtil.contains(types, value)) {
+						return commerceDiscountValidatorServiceWrapper.
+							getService();
+					}
 
-			String value = GetterUtil.getString(valueObject);
-
-			if (ArrayUtil.contains(types, value)) {
-				commerceDiscountValidators.add(
-					commerceDiscountValidatorServiceWrapper.getService());
-			}
-		}
-
-		return Collections.unmodifiableList(commerceDiscountValidators);
+					return null;
+				}));
 	}
 
 	@Activate

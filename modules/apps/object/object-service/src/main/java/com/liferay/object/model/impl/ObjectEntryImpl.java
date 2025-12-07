@@ -176,6 +176,16 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 					objectDefinition.getTitleObjectFieldId());
 
 			if (objectField != null) {
+				if (Objects.equals(
+						objectField.getName(), "externalReferenceCode")) {
+
+					return getExternalReferenceCode();
+				}
+
+				if (Objects.equals(objectField.getName(), "id")) {
+					return String.valueOf(getObjectEntryId());
+				}
+
 				String title = String.valueOf(
 					ObjectEntryValuesUtil.getValue(
 						languageId, objectField, getValues()));
@@ -188,16 +198,6 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 				if (Validator.isNotNull(title)) {
 					return title;
-				}
-
-				if (Objects.equals(
-						objectField.getName(), "externalReferenceCode")) {
-
-					return getExternalReferenceCode();
-				}
-
-				if (Objects.equals(objectField.getName(), "id")) {
-					return String.valueOf(getObjectEntryId());
 				}
 
 				return ObjectEntryValuesUtil.getValueString(

@@ -358,14 +358,14 @@ public class ObjectEntryModelDocumentContributor
 					continue;
 				}
 
-				for (Map.Entry<String, Object> localeMap :
+				for (Map.Entry<String, Object> entry :
 						localizedValues.entrySet()) {
 
 					_contribute(
 						document, fieldArray, objectField.getName(),
-						localizedValues.get(localeMap.getKey()),
+						entry.getValue(),
 						LocaleUtil.fromLanguageId(
-							localeMap.getKey(), true, false
+							entry.getKey(), true, false
 						).toString(),
 						objectContentHelper, objectDefinition, objectEntry,
 						objectField, values);

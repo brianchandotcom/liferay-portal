@@ -7,13 +7,20 @@ exports[`SegmentProfileCard should render 1`] = `
     id="container.report.segmentMembershipCard"
   >
     <div
-      class="card-header"
+      class="card-header align-items-center d-flex justify-content-between"
     >
       <div
         class="card-title"
       >
-        Segment Membership
+        Segment Membership Trend
       </div>
+      <span
+        class="text-secondary text-uppercase"
+      >
+        <strong>
+          Last 30 days
+        </strong>
+      </span>
     </div>
     <div
       class="card-body"

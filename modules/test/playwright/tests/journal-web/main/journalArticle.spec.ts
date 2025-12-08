@@ -509,6 +509,79 @@ baseTest(
 );
 
 baseTest(
+	'Check multi select and single select Category selector',
+	{
+		tag: '@LPD-72738',
+	},
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const category1 = getRandomString();
+		const category2 = getRandomString();
+		const vocabularyName1 = getRandomString();
+		const vocabularyName2 = getRandomString();
+
+		await baseTest.step('create vocabulary and category', async () => {
+			await createCategories({
+				apiHelpers,
+				assetTypes: [{required: false, type: 'AllAssetTypes'}],
+				categoryNames: [{name: category1}, {name: category2}],
+				siteId: site.id,
+				vocabularyName: vocabularyName1,
+			});
+		});
+
+		await baseTest.step('create vocabulary and category', async () => {
+			await createCategories({
+				apiHelpers,
+				assetTypes: [{required: false, type: 'AllAssetTypes'}],
+				categoryNames: [{name: category1}, {name: category2}],
+				multiValued: false,
+				siteId: site.id,
+				vocabularyName: vocabularyName2,
+			});
+		});
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const CategorizationButton = await page.getByRole('button', {
+			name: 'Categorization',
+		});
+
+		const expandedAttribute =
+			await CategorizationButton.getAttribute('aria-expanded');
+
+		if (expandedAttribute === 'false') {
+			await CategorizationButton.click();
+		}
+
+		await page
+			.getByRole('button', {name: `Select ${vocabularyName1}`})
+			.click();
+
+		let categoryCheckbox = page
+			.frameLocator(`iframe[title="Select ${vocabularyName1}"]`)
+			.locator('li')
+			.filter({hasText: `${category1}`})
+			.getByRole('checkbox');
+
+		await expect(categoryCheckbox).toBeVisible();
+
+		await page.getByRole('button', {name: 'Cancel'}).click();
+
+		await page
+			.getByRole('button', {name: `Select ${vocabularyName2}`})
+			.click();
+
+		categoryCheckbox = page
+			.frameLocator(`iframe[title="Select ${vocabularyName2}"]`)
+			.locator('li')
+			.filter({hasText: `${category1}`})
+			.getByRole('checkbox');
+
+		await expect(categoryCheckbox).toHaveCount(0);
+	}
+);
+
+baseTest(
 	'LPD-32979: Ensure the presence of the Description column when needed',
 	async ({journalEditArticlePage, journalPage, page, site}) => {
 		page.on('dialog', (dialog) => dialog.accept());

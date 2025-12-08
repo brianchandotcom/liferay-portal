@@ -253,6 +253,70 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	@Override
+	public long getFileEntryId(
+			String fieldName, long groupId, JSONObject jsonObject,
+			Locale locale) {
+
+		if (Validator.isNull(fieldName)) {
+			return 0;
+		}
+
+		String className = jsonObject.getString("className", null);
+
+		if (Validator.isNull(className) && jsonObject.has("classNameId")) {
+			className = _portal.fetchClassName(
+				jsonObject.getLong("classNameId"));
+		}
+
+		if (Validator.isNull(className)) {
+			return 0;
+		}
+
+		long classPK = jsonObject.getLong("classPK");
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
+
+		InfoItemIdentifier infoItemIdentifier = null;
+
+		if (classPK > 0) {
+			infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
+		}
+		else if (Validator.isNotNull(externalReferenceCode)) {
+			infoItemIdentifier = new ERCInfoItemIdentifier(
+				externalReferenceCode,
+				jsonObject.getString("scopeExternalReferenceCode"));
+		}
+
+		if (infoItemIdentifier == null) {
+			return 0;
+		}
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		if (infoItemObjectProvider == null) {
+			return 0;
+		}
+
+		try {
+			return _getFileEntryId(
+				className,
+				infoItemObjectProvider.getInfoItem(
+					_getGroupId(groupId), infoItemIdentifier),
+				fieldName, locale);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return 0;
+	}
+
+	@Override
 	public long getFileEntryId(WebImage webImage) {
 		return _getFileEntryId(0, webImage.getInfoItemReference());
 	}

@@ -80,6 +80,9 @@ public class GetConflictInfoMVCResourceCommandTest {
 
 	@After
 	public void tearDown() throws Exception {
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection2);
+
 		GroupTestUtil.deleteGroup(_group);
 	}
 

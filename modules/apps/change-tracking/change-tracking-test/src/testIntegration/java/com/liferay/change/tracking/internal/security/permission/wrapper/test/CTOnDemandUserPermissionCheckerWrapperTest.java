@@ -95,6 +95,7 @@ public class CTOnDemandUserPermissionCheckerWrapperTest {
 			_layoutPermission.contains(
 				permissionChecker, layout, ActionKeys.VIEW));
 
+		_ctCollectionLocalService.deleteCTCollection(ctCollection);
 		_layoutLocalService.deleteLayout(layout);
 	}
 

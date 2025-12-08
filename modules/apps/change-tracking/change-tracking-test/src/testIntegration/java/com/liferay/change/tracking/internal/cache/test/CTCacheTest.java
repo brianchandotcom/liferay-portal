@@ -241,6 +241,9 @@ public class CTCacheTest {
 				ctCollection2Layout.getCtCollectionId(),
 				cachedLayout.getCtCollectionId());
 		}
+
+		_ctCollectionLocalService.deleteCTCollection(ctCollection1);
+		_ctCollectionLocalService.deleteCTCollection(ctCollection2);
 	}
 
 	@Test

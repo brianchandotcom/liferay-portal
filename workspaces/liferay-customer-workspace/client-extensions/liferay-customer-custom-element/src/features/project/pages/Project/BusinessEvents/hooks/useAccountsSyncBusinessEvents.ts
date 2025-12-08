@@ -15,7 +15,7 @@ export default function useAccountsSyncBusinessEvents(
 	isRemoval: boolean
 ): any {
 	const filterQuery = useMemo<string>(() => {
-		let filterQuery = `filter=eventStatus ne 'canceled' and eventStatus ne 'completed' and r_accountEntryToBusinessEvent_accountEntryId eq '${businessEvent.r_accountEntryToBusinessEvent_accountEntryId || ''}'`;
+		let filterQuery = `filter=eventStatus ne 'canceled' and eventStatus ne 'completed' and r_accountEntryToBusinessEvents_accountEntryId eq '${businessEvent.r_accountEntryToBusinessEvents_accountEntryId || ''}'`;
 
 		if (isEdition || isRemoval) {
 			filterQuery += ` and id ne '${businessEvent.id || ''}'`;
@@ -26,7 +26,7 @@ export default function useAccountsSyncBusinessEvents(
 		return filterQuery;
 	}, [
 		businessEvent.id,
-		businessEvent.r_accountEntryToBusinessEvent_accountEntryId,
+		businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
 		isEdition,
 		isRemoval,
 	]);

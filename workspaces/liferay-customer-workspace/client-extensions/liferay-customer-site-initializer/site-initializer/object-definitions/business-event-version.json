@@ -1,6 +1,6 @@
 {
 	"accountEntryRestricted": true,
-	"accountEntryRestrictedObjectFieldName": "r_accountEntryToBusinessEventVersion_accountEntryId",
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToBusinessEventVersions_accountEntryId",
 	"externalReferenceCode": "C_BUSINESS_EVENT_VERSION",
 	"label": {
 		"en_US": "Business Event Version"

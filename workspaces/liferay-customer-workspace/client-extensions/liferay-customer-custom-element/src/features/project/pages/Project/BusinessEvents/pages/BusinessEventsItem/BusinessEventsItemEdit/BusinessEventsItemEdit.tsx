@@ -207,8 +207,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			lastComment: reason,
 			name: businessEvent?.name,
 			newLiferayVersion: businessEvent.newLiferayVersion?.key,
-			r_accountEntryToBusinessEvent_accountEntryId:
-				businessEvent.r_accountEntryToBusinessEvent_accountEntryId,
+			r_accountEntryToBusinessEvents_accountEntryId:
+				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
 			targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
 			timeZone: businessEvent.timeZone?.key,
 		};

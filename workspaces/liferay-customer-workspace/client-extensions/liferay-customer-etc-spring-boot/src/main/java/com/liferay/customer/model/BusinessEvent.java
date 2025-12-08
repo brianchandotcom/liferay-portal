@@ -22,7 +22,7 @@ public class BusinessEvent {
 		_accountExternalReferenceCode = propertiesJSONObject.getString(
 			"accountEntryToBusinessEventERC");
 		_accountId = propertiesJSONObject.getLong(
-			"r_accountEntryToBusinessEvent_accountEntryId");
+			"r_accountEntryToBusinessEvents_accountEntryId");
 
 		_businessEventId = jsonObject.getLong("id");
 

@@ -128,11 +128,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				if (ddmFormField.isLocalizable()) {
 					for (Locale locale : locales) {
-						name = encodeName(
-							ddmStructure.getStructureId(),
-							ddmFormField.getFieldReference(), locale,
-							indexType);
 						value = _getValue(field, ddmFormField, locale);
+
+						if ((value != null) || legacyDDMIndexFieldsEnabled) {
+							name = encodeName(
+								ddmStructure.getStructureId(),
+								ddmFormField.getFieldReference(), locale,
+								indexType);
+						}
 
 						if (legacyDDMIndexFieldsEnabled) {
 							_addToDocument(
@@ -148,11 +151,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 					}
 				}
 				else {
-					name = encodeName(
-						ddmStructure.getStructureId(),
-						ddmFormField.getFieldReference(), null, indexType);
 					value = _getValue(
 						field, ddmFormField, ddmFormValues.getDefaultLocale());
+
+					if ((value != null) || legacyDDMIndexFieldsEnabled) {
+						name = encodeName(
+							ddmStructure.getStructureId(),
+							ddmFormField.getFieldReference(), null, indexType);
+					}
 
 					if (legacyDDMIndexFieldsEnabled) {
 						_addToDocument(

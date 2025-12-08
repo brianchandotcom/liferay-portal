@@ -253,8 +253,7 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public long getFileEntryId(
-			String fieldName, long groupId, JSONObject jsonObject,
-			Locale locale) {
+		String fieldName, long groupId, JSONObject jsonObject, Locale locale) {
 
 		if (Validator.isNull(fieldName)) {
 			return 0;

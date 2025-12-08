@@ -109,13 +109,20 @@ public class AddRepositoryIdInitialRequestPortalInstanceLifecycleListener
 
 				serviceContext.setUserId(user.getCompanyId());
 
-				Repository repository = _repositoryLocalService.addRepository(
-					null, user.getUserId(), company.getGroupId(),
-					_portal.getClassNameId(PortletRepository.class.getName()),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, null,
-					CPConstants.SERVICE_NAME_PRODUCT, new UnicodeProperties(),
-					true, serviceContext);
+				Repository repository = _repositoryLocalService.fetchRepository(
+					company.getGroupId(), PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO,
+					CPConstants.SERVICE_NAME_PRODUCT);
+
+				if (repository == null) {
+					repository = _repositoryLocalService.addRepository(
+						null, user.getUserId(), company.getGroupId(),
+						_portal.getClassNameId(
+							PortletRepository.class.getName()),
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, null,
+						CPConstants.SERVICE_NAME_PRODUCT,
+						new UnicodeProperties(), true, serviceContext);
+				}
 
 				Image image = ImageToolUtil.getDefaultCompanyLogo();
 

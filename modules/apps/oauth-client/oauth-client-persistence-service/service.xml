@@ -28,6 +28,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="OAuthClientASLocalMetadataId" return-type="OAuthClientASLocalMetadata">
+			<finder-column name="oAuthClientASLocalMetadataId" />
+		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>

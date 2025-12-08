@@ -5,12 +5,11 @@
 
 package com.liferay.asset.info.internal.item.provider;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.info.internal.item.AssetEntryInfoItemFields;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -121,15 +120,19 @@ public class AssetEntryInfoItemFieldValuesProvider
 		}
 
 		try {
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					assetEntry.getClassName(),
-					new ClassPKInfoItemIdentifier(assetEntry.getClassPK())),
-				themeDisplay);
+			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
+			return assetRenderer.getURLViewInContext(
+				themeDisplay, StringPool.BLANK);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
 			}
 		}
 
@@ -178,10 +181,6 @@ public class AssetEntryInfoItemFieldValuesProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntryInfoItemFieldValuesProvider.class);
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider

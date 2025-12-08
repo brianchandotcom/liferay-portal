@@ -56,6 +56,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -157,6 +158,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Test
 	public void testPostBulkAction() throws Exception {
 		_testPostBulkActionWithTypeDefaultPermission();
+		_testPostBulkActionWithTypeDefaultPermissionSingleRole();
 		_testPostBulkActionWithTypeDelete();
 		_testPostBulkActionWithTypeKeyword();
 		_testPostBulkActionWithTypePermission();
@@ -716,6 +718,140 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		Assert.assertFalse(jsonObject.has("test2"));
 		Assert.assertTrue(jsonObject.has("test3"));
+	}
+
+	private void _testPostBulkActionWithTypeDefaultPermissionSingleRole()
+		throws Exception {
+
+		DefaultPermissionBulkAction defaultPermissionBulkAction =
+			new DefaultPermissionBulkAction();
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addGroupRole(
+			testGroup.getGroupId(), role1.getRoleId());
+
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addGroupRole(
+			testGroup.getGroupId(), role2.getRoleId());
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION", _depotEntry2.getCompanyId());
+
+		ObjectEntryFolder objectEntryFolder1 =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					_depotEntry2.getGroupId(), _depotEntry2.getCompanyId());
+
+		ObjectEntryFolder objectEntryFolder2 =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), _depotEntry2.getGroupId(),
+				TestPropsValues.getUserId(),
+				objectEntryFolder1.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntryFolder objectEntryFolder3 =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), _depotEntry2.getGroupId(),
+				TestPropsValues.getUserId(),
+				objectEntryFolder1.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		JSONObject defaultPermissionsJSONObject = JSONUtil.put(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+			JSONUtil.put(
+				role1.getName(), JSONUtil.putAll(ActionKeys.VIEW)
+			).put(
+				role2.getName(), JSONUtil.putAll(ActionKeys.VIEW)
+			));
+
+		defaultPermissionBulkAction.setDefaultPermissions(
+			defaultPermissionsJSONObject.toString());
+
+		defaultPermissionBulkAction.setDepotGroupId(_depotEntry2.getGroupId());
+		defaultPermissionBulkAction.setBulkActionItems(
+			new BulkActionItem[] {
+				_toBulkActionItem(objectEntryFolder2),
+				_toBulkActionItem(objectEntryFolder3)
+			});
+
+		defaultPermissionBulkAction.setType(
+			BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION);
+
+		_postBulkAction(defaultPermissionBulkAction);
+
+		JSONObject singleRoleDefaultPermissionsJSONObject = JSONUtil.put(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+			JSONUtil.put(
+				role1.getName(),
+				JSONUtil.putAll(ActionKeys.DELETE, ActionKeys.UPDATE)
+			).put(
+				role2.getName(), JSONUtil.putAll(ActionKeys.ADD_ENTRY)
+			));
+
+		defaultPermissionBulkAction.setDefaultPermissions(
+			singleRoleDefaultPermissionsJSONObject.toString());
+
+		defaultPermissionBulkAction.setRoleKey(role1.getName());
+
+		_postBulkAction(defaultPermissionBulkAction);
+
+		JSONObject jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder2);
+
+		defaultPermissionsJSONObject = jsonObject.getJSONObject(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
+
+		JSONArray jsonArray = defaultPermissionsJSONObject.getJSONArray(
+			role1.getName());
+
+		String role1Permissions = jsonArray.toString();
+
+		Assert.assertTrue(role1Permissions.contains(ActionKeys.DELETE));
+		Assert.assertTrue(role1Permissions.contains(ActionKeys.UPDATE));
+		Assert.assertFalse(role1Permissions.contains(ActionKeys.VIEW));
+
+		jsonArray = defaultPermissionsJSONObject.getJSONArray(role2.getName());
+
+		String role2Permissions = jsonArray.toString();
+
+		Assert.assertFalse(role2Permissions.contains(ActionKeys.DELETE));
+		Assert.assertFalse(role2Permissions.contains(ActionKeys.UPDATE));
+		Assert.assertTrue(role2Permissions.contains(ActionKeys.VIEW));
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder3);
+
+		defaultPermissionsJSONObject = jsonObject.getJSONObject(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
+
+		jsonArray = defaultPermissionsJSONObject.getJSONArray(role1.getName());
+
+		role1Permissions = jsonArray.toString();
+
+		Assert.assertTrue(role1Permissions.contains(ActionKeys.DELETE));
+		Assert.assertTrue(role1Permissions.contains(ActionKeys.UPDATE));
+		Assert.assertFalse(role1Permissions.contains(ActionKeys.VIEW));
+
+		jsonArray = defaultPermissionsJSONObject.getJSONArray(role2.getName());
+
+		role2Permissions = jsonArray.toString();
+
+		Assert.assertFalse(role2Permissions.contains(ActionKeys.DELETE));
+		Assert.assertFalse(role2Permissions.contains(ActionKeys.UPDATE));
+		Assert.assertTrue(role2Permissions.contains(ActionKeys.VIEW));
 	}
 
 	private void _testPostBulkActionWithTypeDelete() throws Exception {

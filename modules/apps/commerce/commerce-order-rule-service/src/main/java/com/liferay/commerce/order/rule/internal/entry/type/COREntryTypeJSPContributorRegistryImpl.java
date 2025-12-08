@@ -9,8 +9,8 @@ import com.liferay.commerce.order.rule.entry.type.COREntryTypeJSPContributor;
 import com.liferay.commerce.order.rule.entry.type.COREntryTypeJSPContributorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,14 +35,10 @@ public class COREntryTypeJSPContributorRegistryImpl
 
 	@Override
 	public List<COREntryTypeJSPContributor> getCOREntryTypeJSPContributors() {
-		List<COREntryTypeJSPContributor> corEntryTypeJSPContributors =
-			new ArrayList<>();
-
-		for (String key : _serviceTrackerMap.keySet()) {
-			corEntryTypeJSPContributors.add(_serviceTrackerMap.getService(key));
-		}
-
-		return Collections.unmodifiableList(corEntryTypeJSPContributors);
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				_serviceTrackerMap.keySet(),
+				key -> _serviceTrackerMap.getService(key)));
 	}
 
 	@Activate

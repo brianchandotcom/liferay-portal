@@ -11,6 +11,7 @@ import com.liferay.petra.lang.HashUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -57,6 +58,9 @@ public class DDMFormValues implements Serializable {
 		ddmFormFieldValue.setDDMFormValues(this);
 
 		_ddmFormFieldValues.add(ddmFormFieldValue);
+
+		_ddmFormFieldValueMap.putIfAbsent(
+			ddmFormFieldValue.getName(), ddmFormFieldValue);
 	}
 
 	@Override
@@ -94,18 +98,18 @@ public class DDMFormValues implements Serializable {
 	public DDMFormFieldValue getDDMFormFieldValue(
 		String name, boolean includeNestedDDMFormFieldValues) {
 
-		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
-			if (Objects.equals(name, ddmFormFieldValue.getName())) {
-				return ddmFormFieldValue;
-			}
+		DDMFormFieldValue ddmFormFieldValue = _ddmFormFieldValueMap.get(name);
 
-			if (includeNestedDDMFormFieldValues) {
-				DDMFormFieldValue matchedDDMFormFieldValue =
-					ddmFormFieldValue.getNestedDDMFormFieldValue(name);
+		if (!includeNestedDDMFormFieldValues || (ddmFormFieldValue != null)) {
+			return ddmFormFieldValue;
+		}
 
-				if (matchedDDMFormFieldValue != null) {
-					return matchedDDMFormFieldValue;
-				}
+		for (DDMFormFieldValue curDDMFormFieldValue : _ddmFormFieldValues) {
+			DDMFormFieldValue matchedDDMFormFieldValue =
+				curDDMFormFieldValue.getNestedDDMFormFieldValue(name);
+
+			if (matchedDDMFormFieldValue != null) {
+				return matchedDDMFormFieldValue;
 			}
 		}
 
@@ -215,6 +219,11 @@ public class DDMFormValues implements Serializable {
 		}
 
 		_ddmFormFieldValues = ddmFormFieldValues;
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			_ddmFormFieldValueMap.putIfAbsent(
+				ddmFormFieldValue.getName(), ddmFormFieldValue);
+		}
 	}
 
 	public void setDefaultLocale(Locale defaultLocale) {
@@ -223,6 +232,8 @@ public class DDMFormValues implements Serializable {
 
 	private Set<Locale> _availableLocales = new LinkedHashSet<>();
 	private final DDMForm _ddmForm;
+	private final Map<String, DDMFormFieldValue> _ddmFormFieldValueMap =
+		new HashMap<>();
 	private List<DDMFormFieldValue> _ddmFormFieldValues = new ArrayList<>();
 	private Locale _defaultLocale;
 

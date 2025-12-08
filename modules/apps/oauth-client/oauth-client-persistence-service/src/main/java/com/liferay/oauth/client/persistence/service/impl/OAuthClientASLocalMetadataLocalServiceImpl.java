@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.nimbusds.oauth2.sdk.GrantType;
 import com.nimbusds.oauth2.sdk.Scope;
@@ -200,11 +201,40 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	@Override
+	public OAuthClientASLocalMetadata fetchByOAuthClientASLocalMetadataId(
+			long oAuthClientASLocalMetadataId)
+		throws PortalException {
+
+		return oAuthClientASLocalMetadataPersistence.
+			fetchByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata
+			fetchIssuerByCompanyAuthClientASLocalMetadata(
+				long companyId, String issuer)
+		throws PortalException {
+
+		return oAuthClientASLocalMetadataPersistence.fetchByC_I(
+			companyId, issuer);
+	}
+
+	@Override
 	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 		String localWellKnownURI) {
 
 		return oAuthClientASLocalMetadataPersistence.fetchByLocalWellKnownURI(
 			localWellKnownURI);
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata
+		fetchOAuthClientASLocalMetadataByCompanyEnabled(
+			long companyId, boolean enabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		return oAuthClientASLocalMetadataPersistence.fetchByC_L_First(
+			companyId, enabled, orderByComparator);
 	}
 
 	@Override

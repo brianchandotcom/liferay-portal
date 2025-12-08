@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -50,6 +52,20 @@ public class DDMFormValuesToFieldsConverterImpl
 				ddmForm.getDDMFormFields(),
 				ddmFormValues.getDDMFormFieldValuesMap(true));
 
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueListMap =
+			new HashMap<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			List<DDMFormFieldValue> ddmFormFieldValueList =
+				ddmFormFieldValueListMap.computeIfAbsent(
+					ddmFormFieldValue.getName(), key -> new ArrayList<>());
+
+			ddmFormFieldValueList.add(ddmFormFieldValue);
+
+			ddmFormFieldValue.populateNestedDDMFormFieldValuesMap(
+				ddmFormFieldValueListMap);
+		}
+
 		Fields fields = new Fields();
 
 		StringBundler fieldDisplayNamesSB = new StringBundler(
@@ -57,7 +73,7 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			_addFields(
-				ddmForm, ddmFormFieldValue, ddmFormFieldValues,
+				ddmForm, ddmFormFieldValue, ddmFormFieldValueListMap,
 				ddmStructure.getStructureId(), ddmFormValues.getDefaultLocale(),
 				fieldDisplayNamesSB, fields);
 		}
@@ -76,8 +92,8 @@ public class DDMFormValuesToFieldsConverterImpl
 
 	private void _addField(
 			DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue,
-			List<DDMFormFieldValue> ddmFormFieldValues, long ddmStructureId,
-			Locale defaultLocale, Fields fields)
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValueListMap,
+			long ddmStructureId, Locale defaultLocale, Fields fields)
 		throws PortalException {
 
 		if ((ddmFormField == null) || ddmFormField.isTransient() ||
@@ -87,8 +103,8 @@ public class DDMFormValuesToFieldsConverterImpl
 		}
 
 		Field field = _createField(
-			ddmFormField, ddmFormFieldValues, ddmFormFieldValue, ddmStructureId,
-			defaultLocale);
+			ddmFormField, ddmFormFieldValueListMap, ddmFormFieldValue,
+			ddmStructureId, defaultLocale);
 
 		Field existingField = fields.get(field.getName());
 
@@ -106,14 +122,14 @@ public class DDMFormValuesToFieldsConverterImpl
 
 	private void _addFields(
 			DDMForm ddmForm, DDMFormFieldValue ddmFormFieldValue,
-			List<DDMFormFieldValue> ddmFormFieldValues, long ddmStructureId,
-			Locale defaultLocale, StringBundler fieldDisplayNamesSB,
-			Fields fields)
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValueListMap,
+			long ddmStructureId, Locale defaultLocale,
+			StringBundler fieldDisplayNamesSB, Fields fields)
 		throws PortalException {
 
 		_addField(
 			ddmForm.getDDMFormField(ddmFormFieldValue.getName(), true),
-			ddmFormFieldValue, ddmFormFieldValues, ddmStructureId,
+			ddmFormFieldValue, ddmFormFieldValueListMap, ddmStructureId,
 			defaultLocale, fields);
 
 		fieldDisplayNamesSB.append(ddmFormFieldValue.getName());
@@ -125,14 +141,14 @@ public class DDMFormValuesToFieldsConverterImpl
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 			_addFields(
-				ddmForm, nestedDDMFormFieldValue, ddmFormFieldValues,
+				ddmForm, nestedDDMFormFieldValue, ddmFormFieldValueListMap,
 				ddmStructureId, defaultLocale, fieldDisplayNamesSB, fields);
 		}
 	}
 
 	private Field _createField(
 			DDMFormField ddmFormField,
-			List<DDMFormFieldValue> ddmFormFieldValues,
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValueListMap,
 			DDMFormFieldValue ddmFormFieldValue, long ddmStructureId,
 			Locale defaultLocale)
 		throws PortalException {
@@ -144,7 +160,7 @@ public class DDMFormValuesToFieldsConverterImpl
 		field.setName(ddmFormFieldValue.getName());
 
 		Set<Locale> availableLocales = _getAvailableLocales(
-			ddmFormFieldValues, ddmFormField.getName());
+			ddmFormFieldValueListMap, ddmFormField.getName());
 
 		Value value = ddmFormFieldValue.getValue();
 
@@ -191,14 +207,34 @@ public class DDMFormValuesToFieldsConverterImpl
 	}
 
 	private Set<Locale> _getAvailableLocales(
-		List<DDMFormFieldValue> ddmFormFieldValues, String name) {
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueListMap,
+		String name) {
 
 		Set<Locale> availableLocales = new HashSet<>();
 
-		for (DDMFormFieldValue ddmFormFieldValue :
-				DDMFormValues.getDDMFormFieldValues(
-					ddmFormFieldValues, name, true)) {
+		List<DDMFormFieldValue> ddmFormFieldValueList =
+			ddmFormFieldValueListMap.get(name);
 
+		if (ddmFormFieldValueList == null) {
+			return availableLocales;
+		}
+
+		List<DDMFormFieldValue> matchedDDMFormFieldValues = new ArrayList<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValueList) {
+			Value value = ddmFormFieldValue.getValue();
+
+			if (value == null) {
+				continue;
+			}
+
+			availableLocales.addAll(value.getAvailableLocales());
+
+			ddmFormFieldValue.populateNestedDDMFormFieldValues(
+				name, matchedDDMFormFieldValues);
+		}
+
+		for (DDMFormFieldValue ddmFormFieldValue : matchedDDMFormFieldValues) {
 			Value value = ddmFormFieldValue.getValue();
 
 			if (value == null) {

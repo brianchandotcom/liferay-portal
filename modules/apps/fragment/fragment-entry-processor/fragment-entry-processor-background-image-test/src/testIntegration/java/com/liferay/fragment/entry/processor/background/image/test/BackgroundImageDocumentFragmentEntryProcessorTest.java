@@ -188,6 +188,41 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 			Arrays.asList("background-image: url(" + previewURL),
 			fragmentEntryLink, Arrays.asList(jsonObject.toString()));
 
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		jsonObject = JSONUtil.put(
+			"classNameId", _portal.getClassNameId(FileEntry.class.getName())
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		).put(
+			"fieldId", "FileEntry_fileURL"
+		);
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("bannerSimpleImage", jsonObject)
+			).toString());
+
+		_testProcessFragmentEntryLinkHTML(
+			Collections.emptyList(), fragmentEntryLink,
+			Arrays.asList(jsonObject.toString()));
+
+		fileEntry = _dlAppLocalService.addFileEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null, _serviceContext);
+
+		previewURL = _dlURLHelper.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+
+		_testProcessFragmentEntryLinkHTML(
+			Arrays.asList("background-image: url(" + previewURL),
+			fragmentEntryLink, Arrays.asList(jsonObject.toString()));
+
 		Group group = GroupTestUtil.addGroup();
 
 		jsonObject = JSONUtil.put(

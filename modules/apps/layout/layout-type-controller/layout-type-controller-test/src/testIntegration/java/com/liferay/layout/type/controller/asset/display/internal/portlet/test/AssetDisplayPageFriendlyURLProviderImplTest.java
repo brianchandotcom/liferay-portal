@@ -145,17 +145,22 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 
 		_setUpThemeDisplay(layout);
 
-		_assertGetFriendlyURL(
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR,
-			JournalTestUtil.addArticle(
-				_group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
-				true, RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(), layout.getUuid(),
-				LocaleUtil.getSiteDefault(), null, false, false,
-				ServiceContextThreadLocal.getServiceContext()));
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+			true, RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), layout.getUuid(),
+			LocaleUtil.getSiteDefault(), null, false, false,
+			ServiceContextThreadLocal.getServiceContext());
+
+		Assert.assertNull(
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()),
+				LocaleUtil.getSiteDefault(), _themeDisplay));
 	}
 
 	private void _assertGetFriendlyURL(String urlSeparator) throws Exception {
@@ -169,23 +174,6 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 				new InfoItemReference(
 					JournalArticle.class.getName(),
 					_journalArticle.getResourcePrimKey()),
-				LocaleUtil.getSiteDefault(), _themeDisplay));
-	}
-
-	private void _assertGetFriendlyURL(
-			String urlSeparator, JournalArticle journalArticle)
-		throws Exception {
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				_portal.getGroupFriendlyURL(
-					_group.getPublicLayoutSet(), _themeDisplay, false, false),
-				urlSeparator,
-				journalArticle.getUrlTitle(LocaleUtil.getSiteDefault())),
-			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey()),
 				LocaleUtil.getSiteDefault(), _themeDisplay));
 	}
 

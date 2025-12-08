@@ -10,13 +10,13 @@ import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry
 import com.liferay.commerce.payment.internal.entry.comparator.CommercePaymentEntryRefundTypeOrderComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -62,14 +62,15 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 		getCommercePaymentEntryRefundTypes(long companyId) {
 
 		List<CommercePaymentEntryRefundType> commercePaymentEntryRefundTypes =
-			new ArrayList<>();
+			TransformUtil.transform(
+				_serviceTrackerMap.keySet(),
+				scopedKey -> {
+					if (companyId == scopedKey._companyId) {
+						return _serviceTrackerMap.getService(scopedKey);
+					}
 
-		for (ScopedKey scopedKey : _serviceTrackerMap.keySet()) {
-			if (companyId == scopedKey._companyId) {
-				commercePaymentEntryRefundTypes.add(
-					_serviceTrackerMap.getService(scopedKey));
-			}
-		}
+					return null;
+				});
 
 		commercePaymentEntryRefundTypes.sort(
 			_commercePaymentEntryRefundTypeOrderComparator);

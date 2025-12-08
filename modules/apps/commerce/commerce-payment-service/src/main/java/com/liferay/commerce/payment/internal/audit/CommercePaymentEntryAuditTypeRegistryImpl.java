@@ -10,11 +10,11 @@ import com.liferay.commerce.payment.audit.CommercePaymentEntryAuditTypeRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,25 +56,17 @@ public class CommercePaymentEntryAuditTypeRegistryImpl
 	public List<CommercePaymentEntryAuditType>
 		getCommercePaymentEntryAuditTypes() {
 
-		List<CommercePaymentEntryAuditType> commercePaymentEntryAuditTypes =
-			new ArrayList<>();
-
 		List
 			<ServiceTrackerCustomizerFactory.ServiceWrapper
 				<CommercePaymentEntryAuditType>>
 					commercePaymentEntryAuditTypeServiceWrappers =
 						ListUtil.fromCollection(_serviceTrackerMap.values());
 
-		for (ServiceTrackerCustomizerFactory.ServiceWrapper
-				<CommercePaymentEntryAuditType>
-					commerceDiscountRuleTypeServiceWrapper :
-						commercePaymentEntryAuditTypeServiceWrappers) {
-
-			commercePaymentEntryAuditTypes.add(
-				commerceDiscountRuleTypeServiceWrapper.getService());
-		}
-
-		return Collections.unmodifiableList(commercePaymentEntryAuditTypes);
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				commercePaymentEntryAuditTypeServiceWrappers,
+				commerceDiscountRuleTypeServiceWrapper ->
+					commerceDiscountRuleTypeServiceWrapper.getService()));
 	}
 
 	@Activate

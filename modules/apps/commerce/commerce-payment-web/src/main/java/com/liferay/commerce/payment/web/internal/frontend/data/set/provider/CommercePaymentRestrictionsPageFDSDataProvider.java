@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -57,8 +56,6 @@ public class CommercePaymentRestrictionsPageFDSDataProvider
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		List<PaymentRestriction> paymentRestrictions = new ArrayList<>();
 
 		long commerceChannelId = ParamUtil.getLong(
 			httpServletRequest, "commerceChannelId");
@@ -91,17 +88,14 @@ public class CommercePaymentRestrictionsPageFDSDataProvider
 				CommerceUtil.getCountryOrderByComparator(
 					orderByFieldName, orderByType));
 
-		for (Country country : baseModelSearchResult.getBaseModels()) {
-			paymentRestrictions.add(
-				new PaymentRestriction(
-					country.getCountryId(),
-					country.getTitle(themeDisplay.getLocale()),
-					_getFields(
-						commercePaymentMethodGroupRels, country.getCountryId(),
-						themeDisplay.getLanguageId())));
-		}
-
-		return paymentRestrictions;
+		return TransformUtil.transform(
+			baseModelSearchResult.getBaseModels(),
+			country -> new PaymentRestriction(
+				country.getCountryId(),
+				country.getTitle(themeDisplay.getLocale()),
+				_getFields(
+					commercePaymentMethodGroupRels, country.getCountryId(),
+					themeDisplay.getLanguageId())));
 	}
 
 	@Override

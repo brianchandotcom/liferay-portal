@@ -5,16 +5,15 @@
 
 package com.liferay.commerce.payment.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
 import com.liferay.commerce.payment.web.internal.constants.CommercePaymentsFDSNames;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,21 +49,13 @@ public class CommerceRefundReasonSelectionFDSFilter
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
-
-		for (CommercePaymentEntryRefundType commercePaymentEntryRefundType :
-				_commercePaymentEntryRefundTypeRegistry.
-					getCommercePaymentEntryRefundTypes(
-						CompanyThreadLocal.getCompanyId())) {
-
-			selectionFDSFilterItems.add(
-				new SelectionFDSFilterItem(
-					commercePaymentEntryRefundType.getName(locale),
-					commercePaymentEntryRefundType.getKey()));
-		}
-
-		return selectionFDSFilterItems;
+		return TransformUtil.transform(
+			_commercePaymentEntryRefundTypeRegistry.
+				getCommercePaymentEntryRefundTypes(
+					CompanyThreadLocal.getCompanyId()),
+			commercePaymentEntryRefundType -> new SelectionFDSFilterItem(
+				commercePaymentEntryRefundType.getName(locale),
+				commercePaymentEntryRefundType.getKey()));
 	}
 
 	@Reference

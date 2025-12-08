@@ -6,7 +6,7 @@
 package com.liferay.change.tracking.web.internal.portlet.configuration.icon;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletRequest;
@@ -44,21 +45,14 @@ public class DataCleanUpPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				portletRequest, ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/configuration_admin/edit_configuration"
-		).setParameter(
-			"factoryPid",
-			"com.liferay.data.cleanup.internal.configuration." +
-				"DataRemovalConfiguration"
-		).setParameter(
-			"pid",
-			"com.liferay.data.cleanup.internal.configuration." +
-				"DataRemovalConfiguration"
-		).buildString();
+		return StringBundler.concat(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					portletRequest, PortletKeys.SERVER_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).buildString(),
+			"#_com_liferay_server_admin_web_portlet_ServerAdminPortlet_",
+			"system-cleanup-actionsContent");
 	}
 
 	@Override

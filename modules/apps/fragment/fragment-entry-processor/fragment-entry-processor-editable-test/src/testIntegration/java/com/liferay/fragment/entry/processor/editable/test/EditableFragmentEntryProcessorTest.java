@@ -1273,22 +1273,6 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(),
 			GetterUtil.getLong(element.attr("data-fileentryid")));
-	}
-
-	@Test
-	public void testFragmentEntryProcessorEditableMappedDLPreview()
-		throws Exception {
-
-		FileEntry fileEntry = _addImageFileEntry();
-
-		String editableValues = _getEditableFieldValues(
-			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
-			"fileURL", "fragment_entry_link_mapped_asset_field_image.json");
-
-		Element element = _getElement(
-			"data-lfr-editable-id", "image-square", editableValues,
-			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
-			FragmentEntryLinkConstants.EDIT);
 
 		String src = element.attr("src");
 

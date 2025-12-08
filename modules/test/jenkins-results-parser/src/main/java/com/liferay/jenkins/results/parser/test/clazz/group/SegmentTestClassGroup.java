@@ -122,12 +122,12 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(osArchitecture)) {
 				return osArchitecture;
 			}
-
-			return _batchTestClassGroup.getOSArchitecture();
 		}
 		catch (IOException ioException) {
-			return _batchTestClassGroup.getOSArchitecture();
+			ioException.printStackTrace();
 		}
+
+		return _batchTestClassGroup.getOSArchitecture();
 	}
 
 	public String getSegmentName() {

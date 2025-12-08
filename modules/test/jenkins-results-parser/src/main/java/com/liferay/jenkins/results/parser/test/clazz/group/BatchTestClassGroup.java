@@ -415,12 +415,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(osArchitecture)) {
 				return osArchitecture;
 			}
-
-			return _OS_ARCHITECTURE_DEFAULT;
 		}
 		catch (IOException ioException) {
-			return _OS_ARCHITECTURE_DEFAULT;
+			ioException.printStackTrace();
 		}
+
+		return _OS_ARCHITECTURE_DEFAULT;
 	}
 
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {

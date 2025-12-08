@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -223,9 +222,6 @@ public class GetConflictInfoMVCResourceCommandTest {
 
 	@DeleteAfterTestRun
 	private static JournalArticle _journalArticle;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private static Portal _portal;

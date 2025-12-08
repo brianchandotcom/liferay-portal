@@ -1286,7 +1286,8 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testFragmentEntryProcessorEditableMappedDLImageFileEntryId()
+	@TestInfo("LPD-73556")
+	public void testFragmentEntryProcessorEditableMappedDLImage()
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(FileEntry.class);

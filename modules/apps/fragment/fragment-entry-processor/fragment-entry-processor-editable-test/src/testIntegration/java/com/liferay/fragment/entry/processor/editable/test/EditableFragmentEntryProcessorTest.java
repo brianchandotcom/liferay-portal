@@ -63,6 +63,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1235,7 +1236,7 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableMappedDLImageBackgroundImageFileEntryId()
 		throws Exception {
 
-		FileEntry fileEntry = _addImageFileEntry();
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
 
 		String editableValues = _getEditableFieldValues(
 			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
@@ -1259,13 +1260,47 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableMappedDLImageFileEntryId()
 		throws Exception {
 
-		FileEntry fileEntry = _addImageFileEntry();
+		long classNameId = _portal.getClassNameId(FileEntry.class);
+		String externalReferenceCode = RandomTestUtil.randomString();
 
-		String editableValues = _getEditableFieldValues(
-			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
-			"fileURL", "fragment_entry_link_mapped_asset_field_image.json");
+		String editableValues = JSONUtil.put(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			JSONUtil.put(
+				"image-square",
+				JSONUtil.put(
+					"classNameId", classNameId
+				).put(
+					"externalReferenceCode", externalReferenceCode
+				).put(
+					"fieldId", "fileURL"
+				))
+		).toString();
 
 		Element element = _getElement(
+			"data-lfr-editable-id", "image-square", editableValues,
+			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
+
+		Assert.assertEquals(
+			_DEFAULT_SRC, GetterUtil.getString(element.attr("src")));
+
+		FileEntry fileEntry = _addImageFileEntry(externalReferenceCode);
+
+		element = _getElement(
+			"data-lfr-editable-id", "image-square", editableValues,
+			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			GetterUtil.getLong(element.attr("data-fileentryid")));
+
+		editableValues = _getEditableFieldValues(
+			classNameId, fileEntry.getFileEntryId(), "fileURL",
+			"fragment_entry_link_mapped_asset_field_image.json");
+
+		element = _getElement(
 			"data-lfr-editable-id", "image-square", editableValues,
 			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
 			FragmentEntryLinkConstants.EDIT);
@@ -1287,7 +1322,7 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableMappedJournalArticleBackgroundImageFileEntryId()
 		throws Exception {
 
-		FileEntry fileEntry = _addImageFileEntry();
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
 
 		String editableValues = _getJournalArticleEditableFieldValues(
 			"fragment_entry_link_mapped_asset_field_background_image.json",
@@ -1310,7 +1345,7 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableMappedJournalArticleImageFileEntryId()
 		throws Exception {
 
-		FileEntry fileEntry = _addImageFileEntry();
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
 
 		String editableValues = _getJournalArticleEditableFieldValues(
 			"fragment_entry_link_mapped_asset_field_image.json",
@@ -1743,7 +1778,9 @@ public class EditableFragmentEntryProcessorTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	private FileEntry _addImageFileEntry() throws Exception {
+	private FileEntry _addImageFileEntry(String externalReferenceCode)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -1758,7 +1795,7 @@ public class EditableFragmentEntryProcessorTest {
 			RepositoryProviderUtil.getLocalRepository(_group.getGroupId());
 
 		return localRepository.addFileEntry(
-			null, TestPropsValues.getUserId(),
+			externalReferenceCode, TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -2124,6 +2161,12 @@ public class EditableFragmentEntryProcessorTest {
 			"uuid", fileEntry.getUuid()
 		).toString();
 	}
+
+	private static final String _DEFAULT_SRC = StringBundler.concat(
+		"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJ",
+		"CAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs",
+		"4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8P",
+		"zw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=");
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;

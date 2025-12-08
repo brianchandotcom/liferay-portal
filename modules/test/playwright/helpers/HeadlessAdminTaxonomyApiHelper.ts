@@ -8,6 +8,7 @@ import {ApiHelpers} from './ApiHelpers';
 interface postSiteTaxonomyVocabularyProps {
 	assetLibraries?: AssetLibrary[];
 	assetTypes?: AssetType[];
+	multiValued?: boolean;
 	name: string;
 	siteId: string;
 	visibilityType?: string;
@@ -115,13 +116,22 @@ export class HeadlessAdminTaxonomyApiHelper {
 	async postSiteTaxonomyVocabulary({
 		assetLibraries,
 		assetTypes,
+		multiValued = true,
 		name,
 		siteId,
 		visibilityType,
 	}: postSiteTaxonomyVocabularyProps): Promise<{id: number}> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/taxonomy-vocabularies`,
-			{data: {assetLibraries, assetTypes, name, visibilityType}}
+			{
+				data: {
+					assetLibraries,
+					assetTypes,
+					multiValued,
+					name,
+					visibilityType,
+				},
+			}
 		);
 	}
 

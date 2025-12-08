@@ -16,6 +16,7 @@ export async function createCategories({
 	assetLibraries,
 	assetTypes,
 	categoryNames,
+	multiValued,
 	siteId,
 	vocabularyName,
 	vocabularyVisibility,
@@ -24,6 +25,7 @@ export async function createCategories({
 	assetLibraries?: AssetLibrary[];
 	assetTypes?: AssetType[];
 	categoryNames: TCategory[];
+	multiValued?: boolean;
 	siteId?: string;
 	vocabularyName: string;
 	vocabularyVisibility?: boolean;
@@ -32,6 +34,7 @@ export async function createCategories({
 		await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
 			assetLibraries,
 			assetTypes,
+			multiValued,
 			name: vocabularyName,
 			siteId,
 			visibilityType:

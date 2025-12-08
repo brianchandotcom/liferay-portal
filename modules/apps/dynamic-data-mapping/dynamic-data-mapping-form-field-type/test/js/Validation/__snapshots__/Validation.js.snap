@@ -6,7 +6,7 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
     class="form-group lfr-ddm-form-field-validation"
   >
     <div
-      class="form-group hide"
+      class="hide"
       data-field-name="enableValidation"
     >
       <div

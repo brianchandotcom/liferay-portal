@@ -3,7 +3,7 @@
 exports[`Smoke test field Checkbox Multiple renders the expected structure with default props 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="namePropertyValue"
   >
     <div

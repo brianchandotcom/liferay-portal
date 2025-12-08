@@ -194,7 +194,7 @@ exports[`Field Radio has a label 1`] = `
 exports[`Field Radio has a placeholder 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="radioField"
   >
     <div
@@ -277,7 +277,7 @@ exports[`Field Radio has a placeholder 1`] = `
 exports[`Field Radio has a value 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="radioField"
   >
     <div
@@ -360,7 +360,7 @@ exports[`Field Radio has a value 1`] = `
 exports[`Field Radio has an id 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="radioField"
   >
     <div
@@ -443,7 +443,7 @@ exports[`Field Radio has an id 1`] = `
 exports[`Field Radio is not editable 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="radioField"
   >
     <div
@@ -528,7 +528,7 @@ exports[`Field Radio is not editable 1`] = `
 exports[`Field Radio is not required 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="radioField"
   >
     <div
@@ -708,7 +708,7 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
 exports[`Field Radio renders no options when options is empty 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="radioField"
   >
     <div
@@ -744,7 +744,7 @@ exports[`Field Radio renders no options when options is empty 1`] = `
 exports[`Field Radio renders options 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="radioField"
   >
     <div

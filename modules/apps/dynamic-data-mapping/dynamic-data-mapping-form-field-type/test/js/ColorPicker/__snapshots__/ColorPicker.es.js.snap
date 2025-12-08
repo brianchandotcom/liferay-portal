@@ -3,7 +3,7 @@
 exports[`Field Color Picker renders field disabled 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
     data-field-name="colorPicker"
   >
     <input

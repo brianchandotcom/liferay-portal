@@ -78,7 +78,7 @@ exports[`Field Checkbox has a helptext 1`] = `
 exports[`Field Checkbox has a key 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -142,7 +142,7 @@ exports[`Field Checkbox has a key 1`] = `
 exports[`Field Checkbox has a label 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -206,7 +206,7 @@ exports[`Field Checkbox has a label 1`] = `
 exports[`Field Checkbox has a predefined Value 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -269,7 +269,7 @@ exports[`Field Checkbox has a predefined Value 1`] = `
 exports[`Field Checkbox has a value 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -333,7 +333,7 @@ exports[`Field Checkbox has a value 1`] = `
 exports[`Field Checkbox has an id 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -396,7 +396,7 @@ exports[`Field Checkbox has an id 1`] = `
 exports[`Field Checkbox is not editable 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -460,7 +460,7 @@ exports[`Field Checkbox is not editable 1`] = `
 exports[`Field Checkbox is not required 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -523,7 +523,7 @@ exports[`Field Checkbox is not required 1`] = `
 exports[`Field Checkbox is shown as a switcher 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -586,7 +586,7 @@ exports[`Field Checkbox is shown as a switcher 1`] = `
 exports[`Field Checkbox is shown as checkbox 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"
@@ -636,7 +636,7 @@ exports[`Field Checkbox is shown as checkbox 1`] = `
 exports[`Field Checkbox renders Label if showLabel is true 1`] = `
 <div>
   <div
-    class="form-group hide"
+    class="hide"
   >
     <div
       class="input-group"

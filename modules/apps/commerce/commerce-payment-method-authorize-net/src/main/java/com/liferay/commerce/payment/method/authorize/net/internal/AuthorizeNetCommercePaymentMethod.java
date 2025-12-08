@@ -17,6 +17,7 @@ import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -34,7 +35,6 @@ import java.math.RoundingMode;
 
 import java.net.URLEncoder;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -208,16 +208,11 @@ public class AuthorizeNetCommercePaymentMethod
 				"?redirectURL=", URLCodec.encodeURL(redirectURL), "&token=",
 				URLEncoder.encode(token, StringPool.UTF8));
 
-			List<String> resultMessages = new ArrayList<>();
-
 			MessagesType messagesType =
 				getHostedPaymentPageResponse.getMessages();
 
-			List<MessagesType.Message> messages = messagesType.getMessage();
-
-			for (MessagesType.Message message : messages) {
-				resultMessages.add(message.getText());
-			}
+			List<String> resultMessages = TransformUtil.transform(
+				messagesType.getMessage(), message -> message.getText());
 
 			return new CommercePaymentResult(
 				token, authorizeNetCommercePaymentRequest.getCommerceOrderId(),

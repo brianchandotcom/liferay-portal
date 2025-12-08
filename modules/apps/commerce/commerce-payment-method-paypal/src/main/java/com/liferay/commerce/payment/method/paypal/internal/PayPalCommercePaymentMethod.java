@@ -21,6 +21,7 @@ import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -913,36 +914,34 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			purchaseUnitRequest.shippingDetail(shippingDetail);
 		}
 
-		List<Item> items = new ArrayList<>();
+		purchaseUnitRequest.items(
+			TransformUtil.transform(
+				commerceOrder.getCommerceOrderItems(),
+				commerceOrderItem -> {
+					Item item = new Item();
 
-		for (CommerceOrderItem commerceOrderItem :
-				commerceOrder.getCommerceOrderItems()) {
+					item.name(commerceOrderItem.getName(locale));
+					item.quantity(
+						String.valueOf(commerceOrderItem.getQuantity()));
+					item.sku(commerceOrderItem.getSku());
 
-			Item item = new Item();
+					com.paypal.orders.Money unitAmountMoney =
+						new com.paypal.orders.Money();
 
-			item.name(commerceOrderItem.getName(locale));
-			item.quantity(String.valueOf(commerceOrderItem.getQuantity()));
-			item.sku(commerceOrderItem.getSku());
+					unitAmountMoney.currencyCode(commerceCurrency.getCode());
 
-			com.paypal.orders.Money unitAmountMoney =
-				new com.paypal.orders.Money();
+					BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
 
-			unitAmountMoney.currencyCode(commerceCurrency.getCode());
+					BigDecimal unitAmount = finalPrice.divide(
+						commerceOrderItem.getQuantity());
 
-			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
+					unitAmountMoney.value(
+						_getAmountValue(unitAmount, commerceCurrency));
 
-			BigDecimal unitAmount = finalPrice.divide(
-				commerceOrderItem.getQuantity());
+					item.unitAmount(unitAmountMoney);
 
-			unitAmountMoney.value(
-				_getAmountValue(unitAmount, commerceCurrency));
-
-			item.unitAmount(unitAmountMoney);
-
-			items.add(item);
-		}
-
-		purchaseUnitRequest.items(items);
+					return item;
+				}));
 
 		purchaseUnitRequests.add(purchaseUnitRequest);
 
@@ -953,31 +952,29 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			CommerceOrder commerceOrder)
 		throws PortalException {
 
-		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
-
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		for (CommerceOrderItem commerceOrderItem :
-				commerceOrder.getCommerceOrderItems()) {
+		return TransformUtil.transform(
+			commerceOrder.getCommerceOrderItems(),
+			commerceOrderItem -> {
+				AmountWithBreakdown amountWithBreakdown =
+					new AmountWithBreakdown();
 
-			AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
+				amountWithBreakdown.currencyCode(commerceCurrency.getCode());
 
-			amountWithBreakdown.currencyCode(commerceCurrency.getCode());
+				amountWithBreakdown.value(
+					_getAmountValue(
+						commerceOrderItem.getFinalPrice(), commerceCurrency));
 
-			amountWithBreakdown.value(
-				_getAmountValue(
-					commerceOrderItem.getFinalPrice(), commerceCurrency));
+				PurchaseUnitRequest purchaseUnitRequest =
+					new PurchaseUnitRequest();
 
-			PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+				purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
+				purchaseUnitRequest.referenceId(
+					String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
 
-			purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
-			purchaseUnitRequest.referenceId(
-				String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
-
-			purchaseUnitRequests.add(purchaseUnitRequest);
-		}
-
-		return purchaseUnitRequests;
+				return purchaseUnitRequest;
+			});
 	}
 
 	private RefundRequest _buildRefundRequestBody(

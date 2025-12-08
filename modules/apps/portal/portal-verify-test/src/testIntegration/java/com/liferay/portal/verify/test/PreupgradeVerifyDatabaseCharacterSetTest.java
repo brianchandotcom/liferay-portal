@@ -6,6 +6,13 @@
 package com.liferay.portal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,9 +40,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.PreupgradeVerifyDatabaseCharacterSet;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.sql.Connection;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -160,6 +170,91 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 	}
 
 	@Test
+	public void testVerifyMixedCharacterSetObjectTables() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL));
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).userId(
+						TestPropsValues.getUserId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).localized(
+						true
+					).name(
+						"localizedField"
+					).build()));
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				objectDefinition2,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_db.runSQL("drop table " + objectDefinition1.getDBTableName());
+		_db.runSQL("drop table " + objectDefinition1.getExtensionDBTableName());
+		_db.runSQL(
+			"drop table " + objectDefinition1.getLocalizationDBTableName());
+		_db.runSQL("drop table " + objectRelationship.getDBTableName());
+
+		String createTableSQL =
+			" (testColumn VARCHAR(75) primary key) collate utf8_bin";
+
+		_db.runSQL(
+			"create table " + objectDefinition1.getDBTableName() +
+				createTableSQL);
+		_db.runSQL(
+			"create table " + objectDefinition1.getExtensionDBTableName() +
+				createTableSQL);
+		_db.runSQL(
+			"create table " + objectDefinition1.getLocalizationDBTableName() +
+				createTableSQL);
+		_db.runSQL(
+			"create table " + objectRelationship.getDBTableName() +
+				createTableSQL);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				PreupgradeVerifyDatabaseCharacterSet.class.getName(),
+				LoggerTestUtil.WARN)) {
+
+			testVerify();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
+
+			String messages = logEntries.toString();
+
+			List<String> objectDBTableNames = Arrays.asList(
+				objectDefinition1.getDBTableName(),
+				objectDefinition1.getExtensionDBTableName(),
+				objectDefinition1.getLocalizationDBTableName(),
+				objectRelationship.getDBTableName());
+
+			DBInspector dbInspector = new DBInspector(_connection);
+
+			for (String objectDBTableName : objectDBTableNames) {
+				Assert.assertTrue(
+					"Expected warning for table " +
+						dbInspector.normalizeName(objectDBTableName),
+					messages.contains(
+						"Mixed character set and collation: " +
+							dbInspector.normalizeName(objectDBTableName)));
+			}
+		}
+	}
+
+	@Test
 	public void testVerifyUnsupportedCharacterSet() {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
@@ -208,5 +303,8 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 	private static ServiceComponentLocalService _serviceComponentLocalService;
 
 	private static DataSource _unsupportedCharacterSetDataSource;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

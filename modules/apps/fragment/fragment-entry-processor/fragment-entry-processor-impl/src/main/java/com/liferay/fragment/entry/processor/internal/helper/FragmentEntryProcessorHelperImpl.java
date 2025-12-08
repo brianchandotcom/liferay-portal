@@ -237,9 +237,19 @@ public class FragmentEntryProcessorHelperImpl
 			return 0;
 		}
 
-		return _getFileEntryId(
-			className, infoItemObjectProvider.getInfoItem(infoItemIdentifier),
-			fieldName, locale);
+		try {
+			return _getFileEntryId(
+				className,
+				infoItemObjectProvider.getInfoItem(infoItemIdentifier),
+				fieldName, locale);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return 0;
 	}
 
 	@Override

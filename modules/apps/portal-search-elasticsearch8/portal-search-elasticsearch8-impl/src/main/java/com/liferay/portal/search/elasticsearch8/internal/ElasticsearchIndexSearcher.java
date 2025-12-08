@@ -131,7 +131,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			Hits hits = null;
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-172416") &&
+			if (FeatureFlagManagerUtil.isEnabled(
+					searchContext.getCompanyId(), "LPS-172416") &&
 				_isEnableDeepPagination(searchContext.getCompanyId())) {
 
 				hits = _searchWithDeepPagination(

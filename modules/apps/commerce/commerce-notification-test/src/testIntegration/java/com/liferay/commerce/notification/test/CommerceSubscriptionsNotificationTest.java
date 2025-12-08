@@ -15,7 +15,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
-import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
@@ -29,6 +28,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelper;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -205,26 +205,21 @@ public class CommerceSubscriptionsNotificationTest {
 			String commerceNotificationTemplateType)
 		throws Exception {
 
-		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries =
-			_commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntries(
-					_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null);
+		List<String> commerceNotificationTemplateTypes =
+			TransformUtil.transform(
+				_commerceNotificationQueueEntryLocalService.
+					getCommerceNotificationQueueEntries(
+						_group.getGroupId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null),
+				commerceNotificationQueueEntry -> {
+					CommerceNotificationTemplate commerceNotificationTemplate =
+						CommerceNotificationTemplateLocalServiceUtil.
+							getCommerceNotificationTemplate(
+								commerceNotificationQueueEntry.
+									getCommerceNotificationTemplateId());
 
-		List<String> commerceNotificationTemplateTypes = new ArrayList<>();
-
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				commerceNotificationQueueEntries) {
-
-			CommerceNotificationTemplate commerceNotificationTemplate =
-				CommerceNotificationTemplateLocalServiceUtil.
-					getCommerceNotificationTemplate(
-						commerceNotificationQueueEntry.
-							getCommerceNotificationTemplateId());
-
-			commerceNotificationTemplateTypes.add(
-				commerceNotificationTemplate.getType());
-		}
+					return commerceNotificationTemplate.getType();
+				});
 
 		Assert.assertTrue(
 			commerceNotificationTemplateTypes.contains(

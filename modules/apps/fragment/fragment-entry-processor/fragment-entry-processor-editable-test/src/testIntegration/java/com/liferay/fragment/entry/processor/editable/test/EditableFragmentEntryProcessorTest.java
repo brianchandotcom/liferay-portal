@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -112,7 +111,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -173,8 +171,14 @@ public class EditableFragmentEntryProcessorTest {
 
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 
-		ServiceContextThreadLocal.pushServiceContext(
-			new MockServiceContext(_layout, _getThemeDisplay(LocaleUtil.US)));
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group, TestPropsValues.getUserId());
+
+		_serviceContext.setRequest(
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				_company, _group, _layout));
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -383,9 +387,12 @@ public class EditableFragmentEntryProcessorTest {
 
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.SPAIN);
 
-		ServiceContextThreadLocal.pushServiceContext(
-			new MockServiceContext(
-				_layout, _getThemeDisplay(LocaleUtil.SPAIN)));
+		ThemeDisplay themeDisplay = _serviceContext.getThemeDisplay();
+
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+		themeDisplay.setLocale(LocaleUtil.SPAIN);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		try {
 			element = _getElement(
@@ -395,6 +402,10 @@ public class EditableFragmentEntryProcessorTest {
 		finally {
 			LocaleThreadLocal.setThemeDisplayLocale(
 				_originalThemeDisplayDefaultLocale);
+
+			themeDisplay.setLanguageId(
+				LocaleUtil.toLanguageId(_originalThemeDisplayDefaultLocale));
+			themeDisplay.setLocale(_originalThemeDisplayDefaultLocale);
 
 			ServiceContextThreadLocal.popServiceContext();
 		}
@@ -435,8 +446,7 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			"page", element.attr("data-lfr-on-error-interaction"));
 		Assert.assertEquals(
-			_portal.getLayoutURL(
-				_layout, _getThemeDisplay(LocaleUtil.getSiteDefault())),
+			_portal.getLayoutURL(_layout, _serviceContext.getThemeDisplay()),
 			element.attr("data-lfr-on-error-page-url"));
 	}
 
@@ -481,9 +491,12 @@ public class EditableFragmentEntryProcessorTest {
 
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.SPAIN);
 
-		ServiceContextThreadLocal.pushServiceContext(
-			new MockServiceContext(
-				_layout, _getThemeDisplay(LocaleUtil.SPAIN)));
+		ThemeDisplay themeDisplay = _serviceContext.getThemeDisplay();
+
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+		themeDisplay.setLocale(LocaleUtil.SPAIN);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		try {
 			element = _getElement(
@@ -493,6 +506,10 @@ public class EditableFragmentEntryProcessorTest {
 		finally {
 			LocaleThreadLocal.setThemeDisplayLocale(
 				_originalThemeDisplayDefaultLocale);
+
+			themeDisplay.setLanguageId(
+				LocaleUtil.toLanguageId(_originalThemeDisplayDefaultLocale));
+			themeDisplay.setLocale(_originalThemeDisplayDefaultLocale);
 
 			ServiceContextThreadLocal.popServiceContext();
 		}
@@ -577,9 +594,12 @@ public class EditableFragmentEntryProcessorTest {
 
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.SPAIN);
 
-		ServiceContextThreadLocal.pushServiceContext(
-			new MockServiceContext(
-				_layout, _getThemeDisplay(LocaleUtil.SPAIN)));
+		ThemeDisplay themeDisplay = _serviceContext.getThemeDisplay();
+
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+		themeDisplay.setLocale(LocaleUtil.SPAIN);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		try {
 			element = _getElement(
@@ -589,6 +609,10 @@ public class EditableFragmentEntryProcessorTest {
 		finally {
 			LocaleThreadLocal.setThemeDisplayLocale(
 				_originalThemeDisplayDefaultLocale);
+
+			themeDisplay.setLanguageId(
+				LocaleUtil.toLanguageId(_originalThemeDisplayDefaultLocale));
+			themeDisplay.setLocale(_originalThemeDisplayDefaultLocale);
 
 			ServiceContextThreadLocal.popServiceContext();
 		}
@@ -630,8 +654,7 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			"page", element.attr("data-lfr-on-success-interaction"));
 		Assert.assertEquals(
-			_portal.getLayoutURL(
-				_layout, _getThemeDisplay(LocaleUtil.getSiteDefault())),
+			_portal.getLayoutURL(_layout, _serviceContext.getThemeDisplay()),
 			element.attr("data-lfr-on-success-page-url"));
 
 		Group group = GroupTestUtil.addGroup();
@@ -666,8 +689,7 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			"page", element.attr("data-lfr-on-success-interaction"));
 		Assert.assertEquals(
-			_portal.getLayoutURL(
-				layout, _getThemeDisplay(LocaleUtil.getSiteDefault())),
+			_portal.getLayoutURL(layout, _serviceContext.getThemeDisplay()),
 			element.attr("data-lfr-on-success-page-url"));
 	}
 
@@ -712,9 +734,12 @@ public class EditableFragmentEntryProcessorTest {
 
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.SPAIN);
 
-		ServiceContextThreadLocal.pushServiceContext(
-			new MockServiceContext(
-				_layout, _getThemeDisplay(LocaleUtil.SPAIN)));
+		ThemeDisplay themeDisplay = _serviceContext.getThemeDisplay();
+
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+		themeDisplay.setLocale(LocaleUtil.SPAIN);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		try {
 			element = _getElement(
@@ -724,6 +749,10 @@ public class EditableFragmentEntryProcessorTest {
 		finally {
 			LocaleThreadLocal.setThemeDisplayLocale(
 				_originalThemeDisplayDefaultLocale);
+
+			themeDisplay.setLanguageId(
+				LocaleUtil.toLanguageId(_originalThemeDisplayDefaultLocale));
+			themeDisplay.setLocale(_originalThemeDisplayDefaultLocale);
 
 			ServiceContextThreadLocal.popServiceContext();
 		}
@@ -2050,36 +2079,6 @@ public class EditableFragmentEntryProcessorTest {
 		return bodyElement.html();
 	}
 
-	private ThemeDisplay _getThemeDisplay(Locale locale) throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setLocale(locale);
-
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			_group.getGroupId(), false);
-
-		themeDisplay.setLayoutSet(layoutSet);
-
-		themeDisplay.setLayoutTypePortlet(
-			(LayoutTypePortlet)_layout.getLayoutType());
-		themeDisplay.setLookAndFeel(
-			_themeLocalService.getTheme(
-				_company.getCompanyId(), layoutSet.getThemeId()),
-			null);
-		themeDisplay.setPortalURL(_company.getPortalURL(_group.getGroupId()));
-		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(_getHttpServletRequest(locale));
-		themeDisplay.setResponse(new MockHttpServletResponse());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
-	}
-
 	private String _readFileToString(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -2110,7 +2109,7 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertTrue(
 			content.contains(
 				_portal.getLayoutRelativeURL(
-					layout, _getThemeDisplay(LocaleUtil.US))));
+					layout, _serviceContext.getThemeDisplay())));
 	}
 
 	private void _testFragmentEntryProcessorEditableLinkInlineValue(
@@ -2245,41 +2244,9 @@ public class EditableFragmentEntryProcessorTest {
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
+	private ServiceContext _serviceContext;
+
 	@Inject
 	private ThemeLocalService _themeLocalService;
-
-	private static class MockServiceContext extends ServiceContext {
-
-		public MockServiceContext(Layout layout, ThemeDisplay themeDisplay) {
-			_layout = layout;
-			_themeDisplay = themeDisplay;
-		}
-
-		@Override
-		public HttpServletRequest getRequest() {
-			HttpServletRequest httpServletRequest =
-				new MockHttpServletRequest();
-
-			httpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
-			httpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, _themeDisplay);
-
-			return httpServletRequest;
-		}
-
-		@Override
-		public HttpServletResponse getResponse() {
-			return new MockHttpServletResponse();
-		}
-
-		@Override
-		public ThemeDisplay getThemeDisplay() {
-			return _themeDisplay;
-		}
-
-		private final Layout _layout;
-		private final ThemeDisplay _themeDisplay;
-
-	}
 
 }

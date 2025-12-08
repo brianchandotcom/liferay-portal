@@ -29,6 +29,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -312,18 +313,9 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 			_getCommerceInventoryBookedQuantities(Hits hits)
 		throws Exception {
 
-		Document[] documents = hits.getDocs();
-
-		List<CommerceInventoryBookedQuantity>
-			commerceInventoryBookedQuantities = new ArrayList<>(
-				documents.length);
-
-		for (Document document : documents) {
-			commerceInventoryBookedQuantities.add(
-				_getCommerceInventoryBookedQuantity(document));
-		}
-
-		return commerceInventoryBookedQuantities;
+		return TransformUtil.transformToList(
+			hits.getDocs(),
+			document -> _getCommerceInventoryBookedQuantity(document));
 	}
 
 	private CommerceInventoryBookedQuantity _getCommerceInventoryBookedQuantity(

@@ -11,7 +11,9 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.test.rule.LazyReferencing;
 import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
-import com.liferay.google.places.constants.GooglePlacesWebKeys;
+import com.liferay.headless.admin.site.client.dto.v1_0.AnalyticsConfiguration;
+import com.liferay.headless.admin.site.client.dto.v1_0.GoogleAnalyticsConfiguration;
+import com.liferay.headless.admin.site.client.dto.v1_0.RatingsTypes;
 import com.liferay.headless.admin.site.client.dto.v1_0.Site;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
@@ -42,7 +44,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -206,7 +207,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteWithLocalizedName();
 		_testPostSiteWithNondefaultLocales();
 		_testPostSiteWithParentSiteExternalReferenceCode();
-		_testPostSiteWithTypeSettings();
+		_testPostSiteWithTypeSettingsFields();
 		_testPostSiteWithoutAuthentication();
 	}
 
@@ -253,13 +254,11 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 					CharPool.FORWARD_SLASH +
 						StringUtil.toLowerCase(RandomTestUtil.randomString());
 				manualMembership = RandomTestUtil.randomBoolean();
+				mapProviderKey = MapProviderKey.GOOGLE_MAPS;
 				membershipRestriction =
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 				name = RandomTestUtil.randomString();
 				parentSiteExternalReferenceCode = StringPool.BLANK;
-				typeSettings = LinkedHashMapBuilder.put(
-					RandomTestUtil.randomString(), RandomTestUtil.randomString()
-				).build();
 			}
 		};
 	}
@@ -966,24 +965,19 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private void _testPostSiteWithNondefaultLocales() throws Exception {
 		Site site = randomSite();
 
-		String locales = StringBundler.concat(
-			LocaleUtil.BRAZIL, StringPool.COMMA, LocaleUtil.SPAIN);
+		String[] locales = {
+			String.valueOf(LocaleUtil.BRAZIL), String.valueOf(LocaleUtil.SPAIN)
+		};
 
-		site.setTypeSettings(
-			LinkedHashMapBuilder.put(
-				PropsKeys.LOCALES, locales
-			).put(
-				"languageId", String.valueOf(LocaleUtil.BRAZIL)
-			).build());
+		site.setAvailableLanguages(locales);
+
+		site.setDefaultLanguageId(String.valueOf(LocaleUtil.SPAIN));
 
 		Site postSite = _testPostSite_addSite(site);
 
+		Assert.assertArrayEquals(postSite.getAvailableLanguages(), locales);
 		Assert.assertEquals(
-			postSite.getTypeSettings(
-			).get(
-				PropsKeys.LOCALES
-			),
-			locales);
+			postSite.getDefaultLanguageId(), String.valueOf(LocaleUtil.SPAIN));
 	}
 
 	private void _testPostSiteWithoutAuthentication() throws Exception {
@@ -1055,37 +1049,46 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		assertValid(postSite);
 	}
 
-	private void _testPostSiteWithTypeSettings() throws Exception {
+	private void _testPostSiteWithTypeSettingsFields() throws Exception {
 		Site randomSite = randomSite();
 
-		randomSite.setTypeSettings(
-			LinkedHashMapBuilder.put(
-				GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES, "true"
-			).put(
-				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
-				RandomTestUtil.randomString()
-			).put(
-				"defaultSiteRoleIds", RandomTestUtil.randomString()
-			).put(
-				"defaultTeamIds", RandomTestUtil.randomString()
-			).put(
-				"googleMapsAPIKey", RandomTestUtil.randomString()
-			).build());
+		GoogleAnalyticsConfiguration googleAnalyticsConfiguration1 =
+			new GoogleAnalyticsConfiguration() {
+				{
+					setGoogleAnalytics4CustomConfig(
+						RandomTestUtil::randomString);
+					setGoogleAnalytics4Id(RandomTestUtil::randomString);
+				}
+			};
+
+		AnalyticsConfiguration analyticsConfiguration =
+			new AnalyticsConfiguration() {
+				{
+					setGoogleAnalyticsConfiguration(
+						googleAnalyticsConfiguration1);
+					setMatomoAnalyticsScript(RandomTestUtil::randomString);
+				}
+			};
+
+		randomSite.setAnalyticsConfiguration(analyticsConfiguration);
+
+		RatingsTypes ratingsTypes = new RatingsTypes() {
+			{
+				setComments(Comments.STARS);
+				setWiki(Wiki.LIKE);
+			}
+		};
+
+		randomSite.setRatingsTypes(ratingsTypes);
+
+		randomSite.setUseDefaultLanguages(true);
 
 		Site postSite = _testPostSite_addSite(randomSite);
 
-		Map<String, String> typeSettingsMap = postSite.getTypeSettings();
+		Assert.assertNotNull(postSite.getAvailableLanguages());
+		Assert.assertTrue(postSite.getUseDefaultLanguages());
 
-		Assert.assertEquals(
-			"true",
-			typeSettingsMap.get(
-				GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES));
-		Assert.assertNotNull(typeSettingsMap.get(PropsKeys.LOCALES));
-		Assert.assertNull(
-			typeSettingsMap.get(GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY));
-		Assert.assertNull(typeSettingsMap.get("defaultSiteRoleIds"));
-		Assert.assertNull(typeSettingsMap.get("defaultTeamIds"));
-		Assert.assertNull(typeSettingsMap.get("googleMapsAPIKey"));
+		assertEquals(randomSite, postSite);
 	}
 
 	private void _testPutSiteBatch() throws Exception {
@@ -1228,17 +1231,14 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			postSite.getExternalReferenceCode(),
 			TestPropsValues.getCompanyId());
 
-		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.putAll(
-			postSite.getTypeSettings()
-		).put(
-			GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
-			RandomTestUtil.randomString()
-		).put(
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
 			"defaultSiteRoleIds", RandomTestUtil.randomString()
 		).put(
 			"defaultTeamIds", RandomTestUtil.randomString()
 		).put(
 			"googleMapsAPIKey", RandomTestUtil.randomString()
+		).put(
+			"MAP_PROVIDER_KEY", postSite.getMapProviderKeyAsString()
 		).build();
 
 		_groupLocalService.updateGroup(
@@ -1261,10 +1261,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			).build();
 
 		Assert.assertEquals(
-			unicodeProperties.get(GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY),
-			putSiteUnicodeProperties.get(
-				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY));
-		Assert.assertEquals(
 			unicodeProperties.get("defaultSiteRoleIds"),
 			putSiteUnicodeProperties.get("defaultSiteRoleIds"));
 		Assert.assertEquals(
@@ -1273,17 +1269,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Assert.assertEquals(
 			unicodeProperties.get("googleMapsAPIKey"),
 			putSiteUnicodeProperties.get("googleMapsAPIKey"));
-
-		Map<String, String> randomSiteTypeSettings =
-			randomSite.getTypeSettings();
-
-		for (Map.Entry<String, String> randomSiteTypeSetting :
-				randomSiteTypeSettings.entrySet()) {
-
-			Assert.assertEquals(
-				putSiteUnicodeProperties.get(randomSiteTypeSetting.getKey()),
-				randomSiteTypeSetting.getValue());
-		}
+		Assert.assertEquals(
+			unicodeProperties.get("MAP_PROVIDER_KEY"),
+			putSiteUnicodeProperties.get("MAP_PROVIDER_KEY"));
 	}
 
 	private void _testPutSiteWithParentSiteExternalReferenceCode()

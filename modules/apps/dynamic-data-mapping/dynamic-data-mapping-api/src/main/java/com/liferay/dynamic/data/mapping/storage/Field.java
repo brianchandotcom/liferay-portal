@@ -212,16 +212,7 @@ public class Field implements Serializable {
 	}
 
 	public boolean isPrivate() {
-		try {
-			return _name.startsWith(StringPool.UNDERLINE);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return false;
-		}
+		return _name.startsWith(StringPool.UNDERLINE);
 	}
 
 	public boolean isRepeatable() throws PortalException {

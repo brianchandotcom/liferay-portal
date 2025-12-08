@@ -487,7 +487,7 @@ export default function ChangeTrackingIndicator({
 		return (
 			<ClayPopover
 				alignPosition="bottom"
-				closeOnClickOutside={!cms}
+				closeOnClickOutside={true}
 				disableScroll={true}
 				header={
 					<ClayLayout.ContentRow verticalAlign="center">
@@ -495,35 +495,29 @@ export default function ChangeTrackingIndicator({
 							{warningHeader}
 						</ClayLayout.ContentCol>
 
-						{!cms && (
-							<ClayLayout.ContentCol>
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('close')}
-									displayType="unstyled"
-									onClick={() => {
-										setShowWarning(false);
+						<ClayLayout.ContentCol>
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('close')}
+								displayType="unstyled"
+								onClick={() => {
+									setShowWarning(false);
 
-										if (popoverCheckbox) {
-											savePortalPreferences(
-												'hideContextChangeWarningDuration',
-												saveDisplayPreferenceURL,
-												hideContextChangeWarningDuration
-											);
-										}
-									}}
-									size="xs"
-									symbol="times"
-									title={Liferay.Language.get('close')}
-								/>
-							</ClayLayout.ContentCol>
-						)}
+									if (popoverCheckbox) {
+										savePortalPreferences(
+											'hideContextChangeWarningDuration',
+											saveDisplayPreferenceURL,
+											hideContextChangeWarningDuration
+										);
+									}
+								}}
+								size="xs"
+								symbol="times"
+								title={Liferay.Language.get('close')}
+							/>
+						</ClayLayout.ContentCol>
 					</ClayLayout.ContentRow>
 				}
 				onShowChange={(value) => {
-					if (cms) {
-						return;
-					}
-
 					setShowWarning(value);
 
 					if (popoverCheckbox) {

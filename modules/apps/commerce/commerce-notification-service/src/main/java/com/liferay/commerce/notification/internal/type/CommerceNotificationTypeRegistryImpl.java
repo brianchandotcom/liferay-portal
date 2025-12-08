@@ -12,11 +12,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -53,9 +53,6 @@ public class CommerceNotificationTypeRegistryImpl
 
 	@Override
 	public List<CommerceNotificationType> getCommerceNotificationTypes() {
-		List<CommerceNotificationType> commerceNotificationTypes =
-			new ArrayList<>();
-
 		List<ServiceWrapper<CommerceNotificationType>>
 			commerceNotificationTypeServiceWrappers = ListUtil.fromCollection(
 				_serviceTrackerMap.values());
@@ -64,15 +61,11 @@ public class CommerceNotificationTypeRegistryImpl
 			commerceNotificationTypeServiceWrappers,
 			_commerceNotificationTypeServiceWrapperOrderComparator);
 
-		for (ServiceWrapper<CommerceNotificationType>
-				commerceNotificationTypeServiceWrapper :
-					commerceNotificationTypeServiceWrappers) {
-
-			commerceNotificationTypes.add(
-				commerceNotificationTypeServiceWrapper.getService());
-		}
-
-		return Collections.unmodifiableList(commerceNotificationTypes);
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				commerceNotificationTypeServiceWrappers,
+				commerceNotificationTypeServiceWrapper ->
+					commerceNotificationTypeServiceWrapper.getService()));
 	}
 
 	@Activate

@@ -13,12 +13,12 @@ import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.web.internal.model.Refund;
-import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -36,7 +36,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -57,8 +56,6 @@ public class CommerceRefundFDSDataProvider implements FDSDataProvider<Refund> {
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Refund> refunds = new ArrayList<>();
-
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
 
@@ -73,37 +70,29 @@ public class CommerceRefundFDSDataProvider implements FDSDataProvider<Refund> {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		for (CommercePaymentEntry commercePaymentEntry :
-				_commercePaymentEntryLocalService.
-					getRefundCommercePaymentEntries(
-						commerceOrder.getCompanyId(),
-						_classNameLocalService.getClassNameId(
-							CommerceOrder.class),
-						commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS)) {
-
-			refunds.add(
-				new Refund(
-					_formatCommercePaymentEntryAmount(
-						commerceOrder.getCommerceCurrency(),
-						commercePaymentEntry.getAmount(), themeDisplay),
-					dateTimeFormat.format(commercePaymentEntry.getCreateDate()),
-					commercePaymentEntry.getExternalReferenceCode(),
-					commercePaymentEntry.getCommercePaymentEntryId(),
-					commercePaymentEntry.getClassNameId(),
-					commercePaymentEntry.getClassName(),
-					new LabelField(
-						CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(
-							commercePaymentEntry.getPaymentStatus()),
-						_language.get(
-							httpServletRequest,
-							CommerceOrderPaymentConstants.
-								getOrderPaymentStatusLabel(
-									commercePaymentEntry.
-										getPaymentStatus())))));
-		}
-
-		return refunds;
+		return TransformUtil.transform(
+			_commercePaymentEntryLocalService.getRefundCommercePaymentEntries(
+				commerceOrder.getCompanyId(),
+				_classNameLocalService.getClassNameId(CommerceOrder.class),
+				commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			commercePaymentEntry -> new Refund(
+				_formatCommercePaymentEntryAmount(
+					commerceOrder.getCommerceCurrency(),
+					commercePaymentEntry.getAmount(), themeDisplay),
+				dateTimeFormat.format(commercePaymentEntry.getCreateDate()),
+				commercePaymentEntry.getExternalReferenceCode(),
+				commercePaymentEntry.getCommercePaymentEntryId(),
+				commercePaymentEntry.getClassNameId(),
+				commercePaymentEntry.getClassName(),
+				new LabelField(
+					CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(
+						commercePaymentEntry.getPaymentStatus()),
+					_language.get(
+						httpServletRequest,
+						CommerceOrderPaymentConstants.
+							getOrderPaymentStatusLabel(
+								commercePaymentEntry.getPaymentStatus())))));
 	}
 
 	@Override

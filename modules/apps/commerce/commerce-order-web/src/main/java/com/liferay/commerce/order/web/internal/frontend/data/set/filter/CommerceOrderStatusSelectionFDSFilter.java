@@ -5,15 +5,14 @@
 
 package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+import com.liferay.petra.function.transform.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,19 +48,11 @@ public class CommerceOrderStatusSelectionFDSFilter
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
-
-		for (CommerceOrderStatus commerceOrderStatus :
-				_commerceOrderStatusRegistry.getCommerceOrderStatuses()) {
-
-			selectionFDSFilterItems.add(
-				new SelectionFDSFilterItem(
-					commerceOrderStatus.getLabel(locale),
-					commerceOrderStatus.getKey()));
-		}
-
-		return selectionFDSFilterItems;
+		return TransformUtil.transform(
+			_commerceOrderStatusRegistry.getCommerceOrderStatuses(),
+			commerceOrderStatus -> new SelectionFDSFilterItem(
+				commerceOrderStatus.getLabel(locale),
+				commerceOrderStatus.getKey()));
 	}
 
 	@Reference

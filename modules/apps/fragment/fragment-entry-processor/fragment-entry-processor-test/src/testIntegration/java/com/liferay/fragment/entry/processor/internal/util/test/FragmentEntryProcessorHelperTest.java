@@ -123,6 +123,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -152,15 +153,29 @@ public class FragmentEntryProcessorHelperTest {
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
 
-		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
-			_companyLocalService.getCompany(_group.getCompanyId()), _group,
-			_layout);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setRequest(
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				_companyLocalService.getCompany(_group.getCompanyId()), _group,
+				_layout));
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		_themeDisplay = serviceContext.getThemeDisplay();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
 	public void testGetFieldValueFromCollectionValue() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), "ImageFieldName",
+			_addImageFileEntry(RandomTestUtil.randomString()), "ImageFieldName",
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -182,7 +197,8 @@ public class FragmentEntryProcessorHelperTest {
 	@Test
 	public void testGetFieldValueFromLabeledValue() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), "ImageFieldName", "Custom Title");
+			_addImageFileEntry(RandomTestUtil.randomString()), "ImageFieldName",
+			"Custom Title");
 
 		Assert.assertEquals(
 			"Custom Title",
@@ -254,7 +270,7 @@ public class FragmentEntryProcessorHelperTest {
 	@Test
 	public void testGetFieldValueFromNullValue() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), "ImageFieldName",
+			_addImageFileEntry(RandomTestUtil.randomString()), "ImageFieldName",
 			RandomTestUtil.randomString());
 
 		Assert.assertNull(
@@ -476,7 +492,8 @@ public class FragmentEntryProcessorHelperTest {
 		String fieldId = "ImageFieldName";
 
 		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), fieldId, RandomTestUtil.randomString());
+			_addImageFileEntry(RandomTestUtil.randomString()), fieldId,
+			RandomTestUtil.randomString());
 
 		Object actual = _getFieldValue(
 			JSONUtil.put(
@@ -512,8 +529,56 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	@TestInfo("LPD-73556")
+	public void testGetFileEntryId() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		JSONObject jsonObject = JSONUtil.put(
+			"className", FileEntry.class.getName()
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		);
+
+		Assert.assertEquals(
+			0,
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				_group.getGroupId(), jsonObject));
+
+		FileEntry fileEntry = _addImageFileEntry(externalReferenceCode);
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				_group.getGroupId(), jsonObject));
+
+		jsonObject.put(
+			"scopeExternalReferenceCode", RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			0,
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				_group.getGroupId(), jsonObject));
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				_group.getGroupId(),
+				JSONUtil.put(
+					"className", FileEntry.class.getName()
+				).put(
+					"classPK", fileEntry.getFileEntryId()
+				)));
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				_group.getGroupId(),
+				JSONUtil.put("fileEntryId", fileEntry.getFileEntryId())));
+	}
+
+	@Test
 	public void testGetFileEntryIdClassNameClassPKDLImage() throws Exception {
-		FileEntry fileEntry = _addImageFileEntry();
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(),
@@ -526,7 +591,7 @@ public class FragmentEntryProcessorHelperTest {
 		throws Exception {
 
 		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), "ImageFieldName",
+			_addImageFileEntry(RandomTestUtil.randomString()), "ImageFieldName",
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -538,7 +603,7 @@ public class FragmentEntryProcessorHelperTest {
 
 	@Test
 	public void testGetFileEntryIdClassPKDLImage() throws Exception {
-		FileEntry fileEntry = _addImageFileEntry();
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(),
@@ -550,7 +615,7 @@ public class FragmentEntryProcessorHelperTest {
 
 	@Test
 	public void testGetFileEntryIdClassPKJournalArticle() throws Exception {
-		FileEntry fileEntry = _addImageFileEntry();
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
 
 		String fieldId = "ImageFieldName";
 
@@ -569,7 +634,7 @@ public class FragmentEntryProcessorHelperTest {
 	public void testGetFileEntryIdDisplayObjectJournalArticle()
 		throws Exception {
 
-		FileEntry fileEntry = _addImageFileEntry();
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
 
 		String fieldId = "ImageFieldName";
 
@@ -584,6 +649,54 @@ public class FragmentEntryProcessorHelperTest {
 					new ClassPKInfoItemIdentifier(
 						journalArticle.getResourcePrimKey())),
 				fieldId, LocaleUtil.getSiteDefault()));
+	}
+
+	@Test
+	@TestInfo("LPD-73556")
+	public void testGetFileEntryIdWithMappedField() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		long classNameId = _portal.getClassNameId(FileEntry.class.getName());
+
+		JSONObject jsonObject = JSONUtil.put(
+			"classNameId", classNameId
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		);
+
+		Assert.assertEquals(
+			0,
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				"FileEntry_fileURL", _group.getGroupId(), jsonObject,
+				LocaleUtil.getMostRelevantLocale()));
+
+		FileEntry fileEntry = _addImageFileEntry(externalReferenceCode);
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				"FileEntry_fileURL", _group.getGroupId(), jsonObject,
+				LocaleUtil.getMostRelevantLocale()));
+
+		jsonObject.put(
+			"scopeExternalReferenceCode", RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			0,
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				"FileEntry_fileURL", _group.getGroupId(), jsonObject,
+				LocaleUtil.getMostRelevantLocale()));
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				"FileEntry_fileURL", _group.getGroupId(),
+				JSONUtil.put(
+					"classNameId", classNameId
+				).put(
+					"classPK", fileEntry.getFileEntryId()
+				),
+				LocaleUtil.getMostRelevantLocale()));
 	}
 
 	@Test
@@ -803,8 +916,8 @@ public class FragmentEntryProcessorHelperTest {
 			"classPK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
-					_addImageFileEntry(), "ImageFieldName",
-					RandomTestUtil.randomString());
+					_addImageFileEntry(RandomTestUtil.randomString()),
+					"ImageFieldName", RandomTestUtil.randomString());
 
 				return journalArticle.getResourcePrimKey();
 			}
@@ -853,8 +966,8 @@ public class FragmentEntryProcessorHelperTest {
 			"classPK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
-					_addImageFileEntry(), "ImageFieldName",
-					RandomTestUtil.randomString());
+					_addImageFileEntry(RandomTestUtil.randomString()),
+					"ImageFieldName", RandomTestUtil.randomString());
 
 				return journalArticle.getResourcePrimKey();
 			}
@@ -980,7 +1093,9 @@ public class FragmentEntryProcessorHelperTest {
 			DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	private FileEntry _addImageFileEntry() throws Exception {
+	private FileEntry _addImageFileEntry(String externalReferenceCode)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -995,7 +1110,7 @@ public class FragmentEntryProcessorHelperTest {
 			RepositoryProviderUtil.getLocalRepository(_group.getGroupId());
 
 		return localRepository.addFileEntry(
-			null, TestPropsValues.getUserId(),
+			externalReferenceCode, TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),

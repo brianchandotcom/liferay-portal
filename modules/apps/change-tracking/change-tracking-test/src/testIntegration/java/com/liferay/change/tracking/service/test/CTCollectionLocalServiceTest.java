@@ -48,10 +48,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -77,6 +79,9 @@ public class CTCollectionLocalServiceTest {
 		_ctCollection1 = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, CTCollectionLocalServiceTest.class.getSimpleName(), null);
+
+		_ctCollections.add(_ctCollection1);
+
 		_group = GroupTestUtil.addGroup();
 		_journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class);
@@ -84,6 +89,13 @@ public class CTCollectionLocalServiceTest {
 			JournalFolder.class);
 		_layoutClassNameId = _classNameLocalService.getClassNameId(
 			Layout.class);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (CTCollection ctCollection : _ctCollections) {
+			_ctCollectionLocalService.deleteCTCollection(ctCollection);
+		}
 	}
 
 	@Test
@@ -332,6 +344,8 @@ public class CTCollectionLocalServiceTest {
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, CTCollectionLocalServiceTest.class.getSimpleName(), null);
 
+		_ctCollections.add(_ctCollection2);
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection2.getCtCollectionId())) {
@@ -377,6 +391,8 @@ public class CTCollectionLocalServiceTest {
 			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
 			_ctCollection1.getName() + " (undo)", StringPool.BLANK);
 
+		_ctCollections.add(_ctCollection2);
+
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection2.getUserId(), _ctCollection2.getCtCollectionId());
 
@@ -418,6 +434,8 @@ public class CTCollectionLocalServiceTest {
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, StringUtil.randomString(), StringUtil.randomString());
 
+		_ctCollections.add(_ctCollection2);
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection2.getCtCollectionId())) {
@@ -444,6 +462,8 @@ public class CTCollectionLocalServiceTest {
 			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
 			_ctCollection1.getName() + " (undo)", StringPool.BLANK);
 
+		_ctCollections.add(_ctCollection3);
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection3.getCtCollectionId())) {
@@ -457,6 +477,8 @@ public class CTCollectionLocalServiceTest {
 		_ctCollection4 = _ctCollectionLocalService.undoCTCollection(
 			_ctCollection2.getCtCollectionId(), _ctCollection2.getUserId(),
 			_ctCollection2.getName() + " (undo)", StringPool.BLANK);
+
+		_ctCollections.add(_ctCollection4);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -491,13 +513,9 @@ public class CTCollectionLocalServiceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		CTCollection ctCollection1 = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, CTCollectionLocalServiceTest.class.getSimpleName(), null);
-
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection1.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			journalArticle = _journalArticleLocalService.updateArticle(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -506,31 +524,33 @@ public class CTCollectionLocalServiceTest {
 				serviceContext);
 		}
 
-		ctCollection1.setStatus(WorkflowConstants.STATUS_EXPIRED);
+		_ctCollection1.setStatus(WorkflowConstants.STATUS_EXPIRED);
 
-		ctCollection1 = _ctCollectionLocalService.updateCTCollection(
-			ctCollection1);
+		_ctCollection1 = _ctCollectionLocalService.updateCTCollection(
+			_ctCollection1);
 
-		CTCollection ctCollection2 = _ctCollectionLocalService.addCTCollection(
+		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, RandomTestUtil.randomString(), null);
 
+		_ctCollections.add(_ctCollection2);
+
 		_ctCollectionService.moveCTEntry(
-			ctCollection1.getCtCollectionId(),
-			ctCollection2.getCtCollectionId(),
+			_ctCollection1.getCtCollectionId(),
+			_ctCollection2.getCtCollectionId(),
 			_classNameLocalService.getClassNameId(JournalArticle.class),
 			journalArticle.getId());
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection2.getCtCollectionId())) {
+					_ctCollection2.getCtCollectionId())) {
 
 			journalArticle = _journalArticleLocalService.getArticle(
 				journalArticle.getId());
 		}
 
 		Assert.assertEquals(
-			ctCollection2.getCtCollectionId(),
+			_ctCollection2.getCtCollectionId(),
 			journalArticle.getCtCollectionId());
 	}
 
@@ -650,6 +670,8 @@ public class CTCollectionLocalServiceTest {
 			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
 			_ctCollection1.getName() + " (undo)", StringPool.BLANK);
 
+		_ctCollections.add(_ctCollection2);
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection2.getCtCollectionId())) {
@@ -735,6 +757,8 @@ public class CTCollectionLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection4;
+
+	private final List<CTCollection> _ctCollections = new ArrayList<>();
 
 	@Inject
 	private CTCollectionService _ctCollectionService;

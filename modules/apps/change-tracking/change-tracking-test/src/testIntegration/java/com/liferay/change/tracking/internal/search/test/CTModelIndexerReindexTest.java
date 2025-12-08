@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -52,6 +53,15 @@ public class CTModelIndexerReindexTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, _group.getCompanyId(), TestPropsValues.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 	}
 
 	@Test
@@ -69,13 +79,9 @@ public class CTModelIndexerReindexTest {
 
 		BlogsEntry ctCollectionBlogsEntry;
 
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			null, _group.getCompanyId(), TestPropsValues.getUserId(), 0,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
+					_ctCollection.getCtCollectionId())) {
 
 			ctCollectionBlogsEntry = _blogsEntryLocalService.updateEntry(
 				TestPropsValues.getUserId(), productionBlogsEntry.getEntryId(),
@@ -98,7 +104,7 @@ public class CTModelIndexerReindexTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
+					_ctCollection.getCtCollectionId())) {
 
 			FieldValuesAssert.assertFieldValue(
 				Field.TITLE, ctCollectionBlogsEntry.getTitle(),
@@ -124,6 +130,8 @@ public class CTModelIndexerReindexTest {
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	private CTCollection _ctCollection;
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;

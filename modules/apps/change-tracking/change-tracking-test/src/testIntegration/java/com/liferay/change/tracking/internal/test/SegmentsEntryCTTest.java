@@ -35,6 +35,7 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -62,6 +63,11 @@ public class SegmentsEntryCTTest {
 			0, JournalArticleCTTest.class.getName(), null);
 
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 	}
 
 	@Test

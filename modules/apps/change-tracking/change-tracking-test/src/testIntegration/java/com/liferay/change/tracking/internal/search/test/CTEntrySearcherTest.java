@@ -61,6 +61,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -88,6 +89,11 @@ public class CTEntrySearcherTest {
 			JournalFolder.class);
 		_journalFolderFixture = new JournalFolderFixture(
 			_journalFolderLocalService);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 	}
 
 	@Test

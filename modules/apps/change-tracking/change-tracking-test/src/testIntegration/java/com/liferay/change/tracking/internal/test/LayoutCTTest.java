@@ -77,6 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -105,6 +106,13 @@ public class LayoutCTTest {
 		_group = GroupTestUtil.addGroup();
 		_layoutClassNameId = _classNameLocalService.getClassNameId(
 			Layout.class);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		if (_ctCollection != null) {
+			_ctCollectionLocalService.deleteCTCollection(_ctCollection);
+		}
 	}
 
 	@Test
@@ -1180,6 +1188,8 @@ public class LayoutCTTest {
 		}
 
 		Assert.assertTrue(hasConflict);
+
+		_ctCollectionLocalService.deleteCTCollection(otherCTCollection);
 	}
 
 	@Test

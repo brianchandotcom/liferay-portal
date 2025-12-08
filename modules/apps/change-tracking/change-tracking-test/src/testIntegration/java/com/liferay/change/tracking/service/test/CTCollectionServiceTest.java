@@ -75,8 +75,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -115,6 +117,13 @@ public class CTCollectionServiceTest {
 			_roleLocalService.getDefaultGroupRole(_group.getGroupId()));
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		for (CTCollection ctCollection : _ctCollections) {
+			_ctCollectionLocalService.deleteCTCollection(ctCollection);
+		}
+	}
+
 	@Test
 	public void testAddCTCollectionWithCustomOwnerPermissions()
 		throws Exception {
@@ -127,6 +136,8 @@ public class CTCollectionServiceTest {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), null);
+
+		_ctCollections.add(_ctCollection);
 
 		Assert.assertTrue(
 			_ctCollectionModelResourcePermission.contains(
@@ -168,6 +179,8 @@ public class CTCollectionServiceTest {
 		_ctCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(_ctCollection);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -278,6 +291,8 @@ public class CTCollectionServiceTest {
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_ctCollections.add(fromCollection);
+
 		JournalFolder journalFolder = null;
 		String folderName = RandomTestUtil.randomString();
 
@@ -292,6 +307,8 @@ public class CTCollectionServiceTest {
 		CTCollection toCTCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(toCTCollection);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -333,6 +350,8 @@ public class CTCollectionServiceTest {
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_ctCollections.add(fromCollection);
+
 		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -349,6 +368,8 @@ public class CTCollectionServiceTest {
 		CTCollection toCTCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(toCTCollection);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -390,6 +411,8 @@ public class CTCollectionServiceTest {
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_ctCollections.add(fromCollection);
+
 		JournalArticle journalArticle = null;
 
 		try (SafeCloseable safeCloseable =
@@ -404,6 +427,8 @@ public class CTCollectionServiceTest {
 		CTCollection toCTCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(toCTCollection);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.change.tracking.service.impl." +
@@ -442,6 +467,8 @@ public class CTCollectionServiceTest {
 		_ctCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(_ctCollection);
 
 		Assert.assertEquals(
 			1,
@@ -531,6 +558,8 @@ public class CTCollectionServiceTest {
 	)
 	private volatile ModelResourcePermission<CTCollection>
 		_ctCollectionModelResourcePermission;
+
+	private final List<CTCollection> _ctCollections = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Group _group;

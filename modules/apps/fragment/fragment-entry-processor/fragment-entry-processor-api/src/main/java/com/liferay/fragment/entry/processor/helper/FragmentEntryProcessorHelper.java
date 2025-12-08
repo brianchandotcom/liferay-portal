@@ -45,6 +45,16 @@ public interface FragmentEntryProcessorHelper {
 
 	public long getFileEntryId(String className, long classPK);
 
+	public default long getFileEntryId(
+			String fieldName, long groupId, JSONObject jsonObject,
+			Locale locale)
+		throws PortalException {
+
+		return getFileEntryId(
+			jsonObject.getLong("classNameId"), jsonObject.getLong("classPK"),
+			fieldName, locale);
+	}
+
 	public long getFileEntryId(WebImage webImage);
 
 	public InfoItemFieldMapped getInfoItemFieldMapped(

@@ -24,7 +24,7 @@
 		<liferay-ui:search-container-row
 			className="com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata"
 			escapedModel="<%= true %>"
-			keyProperty="localWellKnownURIOIC"
+			keyProperty="localWellKnownURI"
 			modelVar="oAuthClientASLocalMetadata"
 		>
 			<portlet:renderURL var="editURL">
@@ -36,7 +36,7 @@
 			<liferay-ui:search-container-column-text
 				href="<%= editURL %>"
 				name="oauth-client-as-local-well-known-uri"
-				property="localWellKnownURIOIC"
+				property="localWellKnownURI"
 			/>
 
 			<liferay-ui:search-container-column-jsp

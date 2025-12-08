@@ -11,11 +11,11 @@ import com.liferay.commerce.inventory.method.CommerceInventoryMethodRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -52,9 +52,6 @@ public class CommerceInventoryMethodRegistryImpl
 
 	@Override
 	public List<CommerceInventoryMethod> getCommerceInventoryMethods() {
-		List<CommerceInventoryMethod> commerceInventoryMethods =
-			new ArrayList<>();
-
 		List
 			<ServiceTrackerCustomizerFactory.ServiceWrapper
 				<CommerceInventoryMethod>>
@@ -65,16 +62,11 @@ public class CommerceInventoryMethodRegistryImpl
 			commerceInventoryMethodServiceWrappers,
 			_commerceInventoryMethodServiceWrapperOrderComparator);
 
-		for (ServiceTrackerCustomizerFactory.ServiceWrapper
-				<CommerceInventoryMethod>
-					commerceInventoryMethodServiceWrapper :
-						commerceInventoryMethodServiceWrappers) {
-
-			commerceInventoryMethods.add(
-				commerceInventoryMethodServiceWrapper.getService());
-		}
-
-		return Collections.unmodifiableList(commerceInventoryMethods);
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				commerceInventoryMethodServiceWrappers,
+				commerceInventoryMethodServiceWrapper ->
+					commerceInventoryMethodServiceWrapper.getService()));
 	}
 
 	@Activate

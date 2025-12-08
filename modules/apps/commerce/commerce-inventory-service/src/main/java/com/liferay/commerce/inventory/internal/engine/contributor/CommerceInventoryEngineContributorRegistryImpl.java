@@ -11,11 +11,11 @@ import com.liferay.commerce.inventory.internal.engine.contributor.comparator.Com
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -58,9 +58,6 @@ public class CommerceInventoryEngineContributorRegistryImpl
 	public List<CommerceInventoryEngineContributor>
 		getCommerceInventoryEngineContributors() {
 
-		List<CommerceInventoryEngineContributor>
-			commerceInventoryEngineContributors = new ArrayList<>();
-
 		List
 			<ServiceTrackerCustomizerFactory.ServiceWrapper
 				<CommerceInventoryEngineContributor>>
@@ -71,17 +68,12 @@ public class CommerceInventoryEngineContributorRegistryImpl
 			commerceInventoryEngineContributorServiceWrappers,
 			_commerceInventoryEngineContributorServiceWrapperOrderComparator);
 
-		for (ServiceTrackerCustomizerFactory.ServiceWrapper
-				<CommerceInventoryEngineContributor>
-					commerceInventoryEngineContributorServiceWrapper :
-						commerceInventoryEngineContributorServiceWrappers) {
-
-			commerceInventoryEngineContributors.add(
-				commerceInventoryEngineContributorServiceWrapper.getService());
-		}
-
 		return Collections.unmodifiableList(
-			commerceInventoryEngineContributors);
+			TransformUtil.transform(
+				commerceInventoryEngineContributorServiceWrappers,
+				commerceInventoryEngineContributorServiceWrapper ->
+					commerceInventoryEngineContributorServiceWrapper.
+						getService()));
 	}
 
 	@Activate

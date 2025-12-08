@@ -58,7 +58,7 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 							themeDisplay.getCompanyId(), issuer);
 
 				String metadataJSON =
-					oAuthClientASLocalMetadata.getMetadataJSONOIC();
+					oAuthClientASLocalMetadata.getMetadataJSON();
 
 				OIDCProviderMetadata authorizationServerMetadata =
 					OIDCProviderMetadata.parse(metadataJSON);

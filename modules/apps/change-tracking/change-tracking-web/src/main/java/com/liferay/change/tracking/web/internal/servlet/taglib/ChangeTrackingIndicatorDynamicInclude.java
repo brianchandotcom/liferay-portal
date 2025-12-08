@@ -338,9 +338,13 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			"spritemap", themeDisplay.getPathThemeSpritemap()
 		).build();
 
-		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-
 		boolean cms = _isCMSContextChange(httpServletRequest);
+
+		if (cms) {
+			data.put("cms", true);
+		}
+
+		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 
 		if (ctCollection != null) {
 			ctCollectionId = ctCollection.getCtCollectionId();
@@ -349,7 +353,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			data.put("iconName", "radio-button");
 
 			if (cms) {
-				data.put("cms", true);
 				data.put(
 					"title",
 					StringBundler.concat(
@@ -670,7 +673,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				));
 		}
 
-		_getTimelineData(ctCollection, data, httpServletRequest, themeDisplay);
+		if (!cms) {
+			_getTimelineData(
+				ctCollection, data, httpServletRequest, themeDisplay);
+		}
 
 		return data;
 	}

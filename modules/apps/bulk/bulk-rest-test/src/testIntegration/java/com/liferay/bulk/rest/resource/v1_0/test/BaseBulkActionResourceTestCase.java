@@ -327,6 +327,20 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("roleKey", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof DefaultPermissionBulkAction)) {
+					continue;
+				}
+
+				if (((DefaultPermissionBulkAction)bulkAction).getRoleKey() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("treePath", additionalAssertFieldName)) {
 				if (!(bulkAction instanceof DefaultPermissionBulkAction)) {
 					continue;
@@ -768,6 +782,24 @@ public abstract class BaseBulkActionResourceTestCase {
 							getDepotGroupId(),
 						((DefaultPermissionBulkAction)bulkAction2).
 							getDepotGroupId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("roleKey", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof DefaultPermissionBulkAction) ||
+					!(bulkAction2 instanceof DefaultPermissionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DefaultPermissionBulkAction)bulkAction1).getRoleKey(),
+						((DefaultPermissionBulkAction)bulkAction2).
+							getRoleKey())) {
 
 					return false;
 				}
@@ -1285,6 +1317,8 @@ public abstract class BaseBulkActionResourceTestCase {
 				bulkAction.setDefaultPermissions(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				bulkAction.setDepotGroupId(RandomTestUtil.randomLong());
+				bulkAction.setRoleKey(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				bulkAction.setTreePath(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 

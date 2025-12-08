@@ -76,6 +76,20 @@ public class DefaultPermissionBulkActionSerDes {
 			sb.append(defaultPermissionBulkAction.getDepotGroupId());
 		}
 
+		if (defaultPermissionBulkAction.getRoleKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(defaultPermissionBulkAction.getRoleKey()));
+
+			sb.append("\"");
+		}
+
 		if (defaultPermissionBulkAction.getTreePath() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -183,6 +197,15 @@ public class DefaultPermissionBulkActionSerDes {
 				String.valueOf(defaultPermissionBulkAction.getDepotGroupId()));
 		}
 
+		if (defaultPermissionBulkAction.getRoleKey() == null) {
+			map.put("roleKey", null);
+		}
+		else {
+			map.put(
+				"roleKey",
+				String.valueOf(defaultPermissionBulkAction.getRoleKey()));
+		}
+
 		if (defaultPermissionBulkAction.getTreePath() == null) {
 			map.put("treePath", null);
 		}
@@ -244,6 +267,9 @@ public class DefaultPermissionBulkActionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "depotGroupId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "roleKey")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "treePath")) {
 				return false;
 			}
@@ -275,6 +301,12 @@ public class DefaultPermissionBulkActionSerDes {
 				if (jsonParserFieldValue != null) {
 					defaultPermissionBulkAction.setDepotGroupId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleKey")) {
+				if (jsonParserFieldValue != null) {
+					defaultPermissionBulkAction.setRoleKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "treePath")) {

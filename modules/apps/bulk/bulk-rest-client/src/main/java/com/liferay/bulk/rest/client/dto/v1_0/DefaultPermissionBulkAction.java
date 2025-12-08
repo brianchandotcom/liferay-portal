@@ -68,6 +68,27 @@ public class DefaultPermissionBulkAction
 
 	protected Long depotGroupId;
 
+	public String getRoleKey() {
+		return roleKey;
+	}
+
+	public void setRoleKey(String roleKey) {
+		this.roleKey = roleKey;
+	}
+
+	public void setRoleKey(
+		UnsafeSupplier<String, Exception> roleKeyUnsafeSupplier) {
+
+		try {
+			roleKey = roleKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String roleKey;
+
 	public String getTreePath() {
 		return treePath;
 	}

@@ -132,6 +132,47 @@ public class DefaultPermissionBulkAction
 	private Supplier<Long> _depotGroupIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getRoleKey() {
+		if (_roleKeySupplier != null) {
+			roleKey = _roleKeySupplier.get();
+
+			_roleKeySupplier = null;
+		}
+
+		return roleKey;
+	}
+
+	public void setRoleKey(String roleKey) {
+		this.roleKey = roleKey;
+
+		_roleKeySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRoleKey(
+		UnsafeSupplier<String, Exception> roleKeyUnsafeSupplier) {
+
+		_roleKeySupplier = () -> {
+			try {
+				return roleKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String roleKey;
+
+	@JsonIgnore
+	private Supplier<String> _roleKeySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTreePath() {
 		if (_treePathSupplier != null) {
 			treePath = _treePathSupplier.get();
@@ -227,6 +268,22 @@ public class DefaultPermissionBulkAction
 			sb.append("\"depotGroupId\": ");
 
 			sb.append(depotGroupId);
+		}
+
+		String roleKey = getRoleKey();
+
+		if (roleKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(roleKey));
+
+			sb.append("\"");
 		}
 
 		String treePath = getTreePath();

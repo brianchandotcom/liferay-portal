@@ -68,6 +68,10 @@ public class Field implements Serializable {
 	}
 
 	public void addValue(Locale locale, Serializable value) {
+		if (value == null) {
+			return;
+		}
+
 		List<Serializable> values = _valuesMap.get(locale);
 
 		if (values == null) {

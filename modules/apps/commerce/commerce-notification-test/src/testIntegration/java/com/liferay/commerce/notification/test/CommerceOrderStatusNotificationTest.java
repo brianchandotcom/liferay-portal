@@ -19,7 +19,6 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalSer
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
-import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
@@ -32,6 +31,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -263,26 +263,21 @@ public class CommerceOrderStatusNotificationTest {
 			String commerceNotificationTemplateType)
 		throws Exception {
 
-		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries =
-			_commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntries(
-					_commerceChannel.getGroupId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+		List<String> commerceNotificationTemplateTypes =
+			TransformUtil.transform(
+				_commerceNotificationQueueEntryLocalService.
+					getCommerceNotificationQueueEntries(
+						_commerceChannel.getGroupId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null),
+				commerceNotificationQueueEntry -> {
+					CommerceNotificationTemplate commerceNotificationTemplate =
+						CommerceNotificationTemplateLocalServiceUtil.
+							getCommerceNotificationTemplate(
+								commerceNotificationQueueEntry.
+									getCommerceNotificationTemplateId());
 
-		List<String> commerceNotificationTemplateTypes = new ArrayList<>();
-
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				commerceNotificationQueueEntries) {
-
-			CommerceNotificationTemplate commerceNotificationTemplate =
-				CommerceNotificationTemplateLocalServiceUtil.
-					getCommerceNotificationTemplate(
-						commerceNotificationQueueEntry.
-							getCommerceNotificationTemplateId());
-
-			commerceNotificationTemplateTypes.add(
-				commerceNotificationTemplate.getType());
-		}
+					return commerceNotificationTemplate.getType();
+				});
 
 		Assert.assertTrue(
 			commerceNotificationTemplateTypes.contains(

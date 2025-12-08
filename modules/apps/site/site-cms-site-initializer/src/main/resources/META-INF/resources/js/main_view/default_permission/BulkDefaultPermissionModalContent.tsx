@@ -6,6 +6,7 @@
 import '../../../css/components/DefaultPermission.scss';
 
 import ClayButton from '@clayui/button';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -49,12 +50,14 @@ export function defaultPermissionsBulkAction({
 	defaultPermissionAdditionalProps,
 	section,
 	selectedData,
+	singleRoleMode,
 }: {
 	apiURL?: string;
 	className: string;
 	defaultPermissionAdditionalProps: any;
 	section?: string;
 	selectedData: any;
+	singleRoleMode?: boolean;
 }) {
 	if (
 		selectedData?.selectAll ||
@@ -84,7 +87,7 @@ export function defaultPermissionsBulkAction({
 
 	return openModal({
 		containerProps: {
-			className: '',
+			className: singleRoleMode ? 'modal-height-lg' : '',
 		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			BulkDefaultPermissionModalContent({
@@ -94,6 +97,7 @@ export function defaultPermissionsBulkAction({
 				closeModal,
 				section,
 				selectedData,
+				singleRoleMode,
 			}),
 		size: 'full-screen',
 	});
@@ -107,13 +111,23 @@ export default function BulkDefaultPermissionModalContent({
 	roles,
 	section,
 	selectedData,
+	singleRoleMode,
 }: BulkDefaultPermissionModalContentProps & {
 	apiURL?: string;
 	section?: string;
+	singleRoleMode?: boolean;
 }) {
 	const [currentValues, setCurrentValues] =
 		useState<AssetRoleSelectedActions>({});
 	const [loading, setLoading] = useState(false);
+	const [selectedRole, setSelectedRole] = useState<string>('');
+
+	const handleRoleChange = useCallback(
+		(event: React.ChangeEvent<HTMLSelectElement>) => {
+			setSelectedRole(event.target.value);
+		},
+		[]
+	);
 
 	const saveHandler = useCallback(() => {
 		setLoading(true);
@@ -122,12 +136,17 @@ export default function BulkDefaultPermissionModalContent({
 			apiURL,
 			keyValues: {
 				defaultPermissions: JSON.stringify(currentValues),
+				...(singleRoleMode && selectedRole
+					? {roleKey: selectedRole}
+					: {}),
 			},
 			onCreateError: () => {
 				setLoading(false);
 			},
 			onCreateSuccess: (_response) => {
-				closeModal();
+				if (!singleRoleMode) {
+					closeModal();
+				}
 
 				setLoading(false);
 			},
@@ -150,7 +169,15 @@ export default function BulkDefaultPermissionModalContent({
 						},
 			type: 'DefaultPermissionBulkAction',
 		});
-	}, [apiURL, className, closeModal, currentValues, selectedData]);
+	}, [
+		apiURL,
+		className,
+		closeModal,
+		currentValues,
+		selectedData,
+		selectedRole,
+		singleRoleMode,
+	]);
 
 	const onChangeHandler = useCallback((data: any) => {
 		setCurrentValues(data);
@@ -254,9 +281,27 @@ export default function BulkDefaultPermissionModalContent({
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
-				{sub(
-					Liferay.Language.get('edit-x'),
-					Liferay.Language.get('default-permissions')
+				{singleRoleMode ? (
+					<>
+						{Liferay.Language.get(
+							'edit-default-permissions-by-role'
+						)}
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								title={Liferay.Language.get(
+									'these-default-permissions-will-apply-to-all-newly-created-items-within-the-selected-folders-or-spaces'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
+					</>
+				) : (
+					sub(
+						Liferay.Language.get('edit-x'),
+						Liferay.Language.get('default-permissions')
+					)
 				)}
 
 				<span className="pl-2 text-4 text-secondary text-weight-normal">
@@ -268,29 +313,85 @@ export default function BulkDefaultPermissionModalContent({
 					])})`}
 				</span>
 
-				<ClayTooltipProvider>
-					<span
-						className="pl-2 text-3"
-						data-tooltip-align="bottom"
-						title={Liferay.Language.get(
-							'setting-default-permissions-for-this-folder-will-automatically-apply-them-to-all-newly-created-items'
-						)}
-					>
-						<ClayIcon aria-label="Info" symbol="info-circle" />
-					</span>
-				</ClayTooltipProvider>
+				{!singleRoleMode && (
+					<ClayTooltipProvider>
+						<span
+							className="pl-2 text-3"
+							data-tooltip-align="bottom"
+							title={Liferay.Language.get(
+								'setting-default-permissions-for-this-folder-will-automatically-apply-them-to-all-newly-created-items'
+							)}
+						>
+							<ClayIcon aria-label="Info" symbol="info-circle" />
+						</span>
+					</ClayTooltipProvider>
+				)}
 			</ClayModal.Header>
 
 			<ClayModal.Body className="p-0">
+				{singleRoleMode && (
+					<div className="border-bottom p-4">
+						<div className="alert alert-info mb-3" role="alert">
+							<span className="alert-indicator">
+								<ClayIcon symbol="info-circle" />
+							</span>
+
+							<strong className="lead">
+								{Liferay.Language.get('info')}:
+							</strong>{' '}
+
+							{Liferay.Language.get(
+								'please-note-that-the-configuration-shown-at-the-top-corresponds-to-the-default-settings-of-the-parent-level'
+							)}
+						</div>
+
+						<ClayForm.Group>
+							<label htmlFor="roleSelect">
+								{Liferay.Language.get('select-role')}{' '}
+
+								<span className="text-danger">*</span>
+							</label>
+
+							<ClaySelectWithOption
+								aria-label="Select Role"
+								disabled={loading}
+								id="roleSelect"
+								onChange={handleRoleChange}
+								options={[
+									{
+										disabled: true,
+										label: Liferay.Language.get(
+											'choose-an-option'
+										),
+										value: '',
+									},
+									...roles.map((role) => ({
+										label: role.name,
+										value: role.key,
+									})),
+								]}
+								required={true}
+								value={selectedRole}
+							/>
+						</ClayForm.Group>
+					</div>
+				)}
+
 				<DefaultPermissionFormContainer
 					actions={actions}
 					disabled={loading}
-					infoBoxMessage={Liferay.Language.get(
-						'please-be-aware-that-the-configuration-shown-at-the-beginning-is-the-default-of-the-parent-level'
-					)}
+					infoBoxMessage={
+						singleRoleMode
+							? undefined
+							: Liferay.Language.get(
+									'please-be-aware-that-the-configuration-shown-at-the-beginning-is-the-default-of-the-parent-level'
+								)
+					}
 					onChange={onChangeHandler}
 					roles={roles}
 					section={section}
+					selectedRole={singleRoleMode ? selectedRole : undefined}
+					singleRoleMode={singleRoleMode}
 					values={currentValues}
 				/>
 			</ClayModal.Body>

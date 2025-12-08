@@ -93,6 +93,7 @@ export interface IBulkActionTaskType {
 	DefaultPermissionBulkAction: {
 		defaultPermissions: string;
 		depotGroupId?: number;
+		roleKey?: string;
 		treePath?: string;
 	};
 	DeleteBulkAction: {};

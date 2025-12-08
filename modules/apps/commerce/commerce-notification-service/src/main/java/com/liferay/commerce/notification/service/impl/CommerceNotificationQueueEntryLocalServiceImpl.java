@@ -256,21 +256,16 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 					fileEntry.getFileName(), fileEntry.getContentStream());
 			}
 
-			List<InternetAddress> bccInternetAddresses =
-				TransformUtil.transformToList(
-					StringUtil.split(commerceNotificationQueueEntry.getBcc()),
-					bccAddress -> new InternetAddress(bccAddress));
-
 			mailMessage.setBCC(
-				bccInternetAddresses.toArray(new InternetAddress[0]));
-
-			List<InternetAddress> ccInternetAddresses =
-				TransformUtil.transformToList(
-					StringUtil.split(commerceNotificationQueueEntry.getCc()),
-					ccAddress -> new InternetAddress(ccAddress));
-
+				TransformUtil.transform(
+					StringUtil.split(commerceNotificationQueueEntry.getBcc()),
+					bccAddress -> new InternetAddress(bccAddress),
+					InternetAddress.class));
 			mailMessage.setCC(
-				ccInternetAddresses.toArray(new InternetAddress[0]));
+				TransformUtil.transform(
+					StringUtil.split(commerceNotificationQueueEntry.getCc()),
+					ccAddress -> new InternetAddress(ccAddress),
+					InternetAddress.class));
 
 			try {
 				_mailService.sendEmail(mailMessage);

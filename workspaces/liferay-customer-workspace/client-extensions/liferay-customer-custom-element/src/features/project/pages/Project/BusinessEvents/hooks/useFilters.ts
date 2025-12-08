@@ -32,7 +32,7 @@ export default function useFilters(project?: IProject): {
 			const queryParams: string[] = [];
 
 			queryParams.push(
-				`r_accountEntryToBusinessEvent_accountEntryId eq '${project?.id || ''}'`
+				`r_accountEntryToBusinessEvents_accountEntryId eq '${project?.id || ''}'`
 			);
 
 			if (

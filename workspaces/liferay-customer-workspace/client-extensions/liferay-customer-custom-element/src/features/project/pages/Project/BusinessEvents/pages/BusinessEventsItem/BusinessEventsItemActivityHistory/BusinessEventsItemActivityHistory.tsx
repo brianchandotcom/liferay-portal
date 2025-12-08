@@ -39,7 +39,7 @@ const BusinessEventsItemActivityHistory = () => {
 
 		if (id) {
 			queryParams.push(
-				`r_businessEventToBusinessEventVersion_c_businessEventId eq '${id}'`
+				`r_businessEventToBusinessEventVersions_c_businessEventId eq '${id}'`
 			);
 		}
 

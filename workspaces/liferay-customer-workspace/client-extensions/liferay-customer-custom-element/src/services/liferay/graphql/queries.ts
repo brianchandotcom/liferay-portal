@@ -475,7 +475,7 @@ export const getBusinessEvent = gql`
 				path: "/c/businessevents/{args.businessEventId}"
 			) {
 			id
-			r_accountEntryToBusinessEvent_accountEntryId
+			r_accountEntryToBusinessEvents_accountEntryId
 		}
 	}
 `;

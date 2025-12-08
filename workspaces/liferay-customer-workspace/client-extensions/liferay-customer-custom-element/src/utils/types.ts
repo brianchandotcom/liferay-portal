@@ -54,7 +54,7 @@ export interface IBusinessEvent {
 		key: string;
 		name: string;
 	};
-	r_accountEntryToBusinessEvent_accountEntryId?: number;
+	r_accountEntryToBusinessEvents_accountEntryId?: number;
 	targetGoLiveDate?: string;
 	targetGoLiveDateTime?: string;
 	targetGoLiveTime?: string;
@@ -74,8 +74,8 @@ export interface IBusinessEventVersion {
 		name: string;
 	};
 	dateModified?: string;
-	r_accountEntryToBusinessEventVersion_accountEntryId?: number;
-	r_businessEventToBusinessEventVersion_c_businessEventId?: number;
+	r_accountEntryToBusinessEventVersions_accountEntryId?: number;
+	r_businessEventToBusinessEventVersions_c_businessEventId?: number;
 }
 
 export interface IKoroneikiAccount {

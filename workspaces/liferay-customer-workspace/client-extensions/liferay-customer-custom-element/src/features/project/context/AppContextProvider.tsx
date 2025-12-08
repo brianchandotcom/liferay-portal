@@ -359,7 +359,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 						getStructuredContents();
 
 						const businessEventsFilterQuery = accountBrief?.id
-							? `filter=r_accountEntryToBusinessEvent_accountEntryId eq '${accountBrief.id}'`
+							? `filter=r_accountEntryToBusinessEvents_accountEntryId eq '${accountBrief.id}'`
 							: '';
 						getBusinessEvents(businessEventsFilterQuery);
 					}

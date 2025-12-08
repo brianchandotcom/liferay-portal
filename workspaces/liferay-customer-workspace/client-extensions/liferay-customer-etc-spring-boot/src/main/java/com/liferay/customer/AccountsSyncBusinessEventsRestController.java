@@ -119,7 +119,7 @@ public class AccountsSyncBusinessEventsRestController
 
 					_updateAccountHeatTags(
 						businessEventJSONObject.getLong(
-							"r_accountEntryToBusinessEvent_accountEntryId"),
+							"r_accountEntryToBusinessEvents_accountEntryId"),
 						externalReferenceCode);
 
 					syncedAccountExternalReferenceCodes.add(
@@ -281,7 +281,7 @@ public class AccountsSyncBusinessEventsRestController
 			JSONObject jsonObject = _getBusinessEventsJSONObject(
 				StringBundler.concat(
 					"eventStatus ne 'canceled' and eventStatus ne 'completed' ",
-					"and r_accountEntryToBusinessEvent_accountEntryId eq '",
+					"and r_accountEntryToBusinessEvents_accountEntryId eq '",
 					accountId, "'"),
 				page, 500, "targetGoLiveDateTime:asc");
 

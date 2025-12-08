@@ -429,14 +429,14 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"bulkActionTaskId", bulkActionTask.getId());
 
 		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
+			DefaultPermissionBulkAction defaultPermissionBulkAction =
+				(DefaultPermissionBulkAction)bulkAction;
+
 			return hashMapWrapper.put(
 				"defaultPermissions",
-				() -> {
-					DefaultPermissionBulkAction defaultPermissionBulkAction =
-						(DefaultPermissionBulkAction)bulkAction;
-
-					return defaultPermissionBulkAction.getDefaultPermissions();
-				}
+				defaultPermissionBulkAction::getDefaultPermissions
+			).put(
+				"roleKey", defaultPermissionBulkAction.getRoleKey()
 			).build();
 		}
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {

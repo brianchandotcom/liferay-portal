@@ -42,7 +42,9 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			Boolean enabledLocalWellKnownURIOAS = ParamUtil.getBoolean(
+			Long oAuthClientASLocalMetadataId = ParamUtil.getLong(actionRequest, "oAuthClientASLocalMetadataId");
+
+			Boolean enabledLocalWellKnown = ParamUtil.getBoolean(
 				actionRequest, "enabled");
 
 			String authorizationEndpoint = ParamUtil.getString(
@@ -68,14 +70,17 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 				_oAuthClientASLocalMetadataService.
-					getIssuerAuthClientASLocalMetadata(
+					fetchIssuerOAuthClientASLocalMetadata(
 						themeDisplay.getCompanyId(), issuer);
+
+
+
 
 			if (oAuthClientASLocalMetadata == null) {
 				_oAuthClientASLocalMetadataService.
 					addOAuthClientASLocalMetadata(
 						themeDisplay.getUserId(), authorizationEndpoint,
-						enabledLocalWellKnownURIOAS, issuer, jwksUri,
+						enabledLocalWellKnown, issuer, jwksUri,
 						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
 						StringUtil.split(supportedScopes, StringPool.COMMA),
 						StringUtil.split(
@@ -87,7 +92,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 					updateOAuthClientASLocalMetadata(
 						oAuthClientASLocalMetadata.
 							getOAuthClientASLocalMetadataId(),
-						authorizationEndpoint, enabledLocalWellKnownURIOAS,
+						authorizationEndpoint, enabledLocalWellKnown,
 						issuer, jwksUri,
 						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
 						StringUtil.split(supportedScopes, StringPool.COMMA),

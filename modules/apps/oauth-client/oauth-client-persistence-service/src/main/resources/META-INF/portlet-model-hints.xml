@@ -15,6 +15,12 @@
 		<field name="metadataJSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="oAuthASLocalWellKnownURI" type="String" >
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="oAuthASMetadataJSON" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.oauth.client.persistence.model.OAuthClientEntry">
 		<field name="mvccVersion" type="long" />

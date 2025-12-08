@@ -51,6 +51,10 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -129,18 +133,9 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 
 		fragmentEntryLink.setHtml(_readFileToString("fragment_entry.html"));
 
-		DefaultFragmentEntryProcessorContext
-			defaultFragmentEntryProcessorContext =
-				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					null, LocaleUtil.getDefault());
-
-		String processFragmentEntryLinkHTML =
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext);
-
-		Assert.assertFalse(
-			processFragmentEntryLinkHTML.contains("imagePreview=1"));
+		_testProcessFragmentEntryLinkHTML(
+			Collections.emptyList(), fragmentEntryLink,
+			Arrays.asList("imagePreview=1"));
 	}
 
 	@Test
@@ -172,23 +167,12 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 
 		fragmentEntryLink.setHtml(_readFileToString("fragment_entry.html"));
 
-		DefaultFragmentEntryProcessorContext
-			defaultFragmentEntryProcessorContext =
-				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					null, LocaleUtil.getDefault());
-
-		String processFragmentEntryLinkHTML =
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext);
-
-		Assert.assertTrue(
-			processFragmentEntryLinkHTML,
-			processFragmentEntryLinkHTML.contains(
+		_testProcessFragmentEntryLinkHTML(
+			Arrays.asList(
 				StringBundler.concat(
-					"background-image: url(",
-					HtmlUtil.toInputSafe(jsonObject.toString()),
-					"); background-size: cover;")));
+					"background-image: url(", jsonObject,
+					"); background-size: cover;")),
+			fragmentEntryLink, Collections.emptyList());
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			externalReferenceCode, TestPropsValues.getUserId(),
@@ -197,22 +181,12 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			null, _serviceContext);
 
-		processFragmentEntryLinkHTML =
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext);
-
-		Assert.assertFalse(
-			processFragmentEntryLinkHTML,
-			processFragmentEntryLinkHTML.contains(
-				HtmlUtil.toInputSafe(jsonObject.toString())));
-
 		String previewURL = _dlURLHelper.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
 
-		Assert.assertTrue(
-			processFragmentEntryLinkHTML,
-			processFragmentEntryLinkHTML.contains(
-				"background-image: url(" + HtmlUtil.toInputSafe(previewURL)));
+		_testProcessFragmentEntryLinkHTML(
+			Arrays.asList("background-image: url(" + previewURL),
+			fragmentEntryLink, Arrays.asList(jsonObject.toString()));
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -235,17 +209,9 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 						jsonObject))
 			).toString());
 
-		processFragmentEntryLinkHTML =
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext);
-
-		Assert.assertTrue(
-			processFragmentEntryLinkHTML,
-			processFragmentEntryLinkHTML.contains(
-				StringBundler.concat(
-					"background-image: url(",
-					HtmlUtil.toInputSafe(jsonObject.toString()),
-					"); background-size: cover;")));
+		_testProcessFragmentEntryLinkHTML(
+			Arrays.asList(jsonObject.toString()), fragmentEntryLink,
+			Collections.emptyList());
 
 		fileEntry = _dlAppLocalService.addFileEntry(
 			externalReferenceCode, TestPropsValues.getUserId(),
@@ -256,22 +222,12 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId()));
 
-		processFragmentEntryLinkHTML =
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext);
-
-		Assert.assertFalse(
-			processFragmentEntryLinkHTML,
-			processFragmentEntryLinkHTML.contains(
-				HtmlUtil.toInputSafe(jsonObject.toString())));
-
 		previewURL = _dlURLHelper.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
 
-		Assert.assertTrue(
-			processFragmentEntryLinkHTML,
-			processFragmentEntryLinkHTML.contains(
-				"background-image: url(" + HtmlUtil.toInputSafe(previewURL)));
+		_testProcessFragmentEntryLinkHTML(
+			Arrays.asList("background-image: url(" + previewURL),
+			fragmentEntryLink, Arrays.asList(jsonObject.toString()));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()
@@ -317,6 +273,36 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 			clazz.getClassLoader(),
 			"com/liferay/fragment/entry/processor/background/image/test" +
 				"/dependencies/" + fileName);
+	}
+
+	private void _testProcessFragmentEntryLinkHTML(
+			List<String> expected, FragmentEntryLink fragmentEntryLink,
+			List<String> notExpected)
+		throws Exception {
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, LocaleUtil.getDefault());
+
+		String processFragmentEntryLinkHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext);
+
+		for (String string : expected) {
+			Assert.assertTrue(
+				processFragmentEntryLinkHTML,
+				processFragmentEntryLinkHTML.contains(
+					HtmlUtil.toInputSafe(string)));
+		}
+
+		for (String string : notExpected) {
+			Assert.assertFalse(
+				processFragmentEntryLinkHTML,
+				processFragmentEntryLinkHTML.contains(
+					HtmlUtil.toInputSafe(string)));
+		}
 	}
 
 	@Inject

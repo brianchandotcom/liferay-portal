@@ -72,6 +72,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +103,9 @@ public class LayoutCTTest {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, LayoutCTTest.class.getName(), null);
+
+		_ctCollections.add(_ctCollection);
+
 		_group = GroupTestUtil.addGroup();
 		_layoutClassNameId = _classNameLocalService.getClassNameId(
 			Layout.class);
@@ -1138,6 +1142,8 @@ public class LayoutCTTest {
 				TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
 				null);
 
+		_ctCollections.add(otherCTCollection);
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					otherCTCollection.getCtCollectionId())) {
@@ -1436,10 +1442,11 @@ public class LayoutCTTest {
 	@Inject
 	private BulkLayoutConverter _bulkLayoutConverter;
 
-	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
 	@DeleteAfterTestRun
+	private final List<CTCollection> _ctCollections = new ArrayList<>();
+
 	private Group _group;
 
 	@Inject

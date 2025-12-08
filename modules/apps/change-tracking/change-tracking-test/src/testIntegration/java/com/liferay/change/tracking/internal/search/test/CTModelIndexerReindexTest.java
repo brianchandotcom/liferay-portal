@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -52,6 +53,10 @@ public class CTModelIndexerReindexTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, _group.getCompanyId(), TestPropsValues.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -69,13 +74,9 @@ public class CTModelIndexerReindexTest {
 
 		BlogsEntry ctCollectionBlogsEntry;
 
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			null, _group.getCompanyId(), TestPropsValues.getUserId(), 0,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
+					_ctCollection.getCtCollectionId())) {
 
 			ctCollectionBlogsEntry = _blogsEntryLocalService.updateEntry(
 				TestPropsValues.getUserId(), productionBlogsEntry.getEntryId(),
@@ -98,7 +99,7 @@ public class CTModelIndexerReindexTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
+					_ctCollection.getCtCollectionId())) {
 
 			FieldValuesAssert.assertFieldValue(
 				Field.TITLE, ctCollectionBlogsEntry.getTitle(),
@@ -124,6 +125,9 @@ public class CTModelIndexerReindexTest {
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection;
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;

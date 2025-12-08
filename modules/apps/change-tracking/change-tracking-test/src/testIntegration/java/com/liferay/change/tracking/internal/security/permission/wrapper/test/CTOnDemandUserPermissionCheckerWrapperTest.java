@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -29,6 +30,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,19 +49,22 @@ public class CTOnDemandUserPermissionCheckerWrapperTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test
-	public void testHasPermission() throws Exception {
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+	@Before
+	public void setUp() throws Exception {
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, RandomTestUtil.randomString(), null);
+	}
 
-		ctCollection.setShareable(true);
+	@Test
+	public void testHasPermission() throws Exception {
+		_ctCollection.setShareable(true);
 
-		ctCollection = _ctCollectionLocalService.updateCTCollection(
-			ctCollection);
+		_ctCollection = _ctCollectionLocalService.updateCTCollection(
+			_ctCollection);
 
 		Ticket ticket = _ctOnDemandUserTicketGenerator.generate(
-			ctCollection.getCtCollectionId());
+			_ctCollection.getCtCollectionId());
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			_userLocalService.getUser(Long.valueOf(ticket.getExtraInfo())));
@@ -79,7 +84,7 @@ public class CTOnDemandUserPermissionCheckerWrapperTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
+					_ctCollection.getCtCollectionId())) {
 
 			layout = _layoutLocalService.updatePriority(
 				layout, RandomTestUtil.randomInt());
@@ -94,9 +99,10 @@ public class CTOnDemandUserPermissionCheckerWrapperTest {
 		Assert.assertTrue(
 			_layoutPermission.contains(
 				permissionChecker, layout, ActionKeys.VIEW));
-
-		_layoutLocalService.deleteLayout(layout);
 	}
+
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection;
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;

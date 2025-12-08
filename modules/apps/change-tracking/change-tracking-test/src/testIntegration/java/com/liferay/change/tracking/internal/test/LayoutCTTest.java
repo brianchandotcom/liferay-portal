@@ -1180,6 +1180,8 @@ public class LayoutCTTest {
 		}
 
 		Assert.assertTrue(hasConflict);
+
+		_ctCollectionLocalService.deleteCTCollection(otherCTCollection);
 	}
 
 	@Test
@@ -1431,7 +1433,6 @@ public class LayoutCTTest {
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject

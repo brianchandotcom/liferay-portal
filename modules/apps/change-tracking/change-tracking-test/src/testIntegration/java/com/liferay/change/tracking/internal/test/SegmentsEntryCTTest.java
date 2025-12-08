@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -143,7 +144,9 @@ public class SegmentsEntryCTTest {
 	@Inject
 	private static CTEntryLocalService _ctEntryLocalService;
 
+	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
+
 	private Group _group;
 
 	@Inject

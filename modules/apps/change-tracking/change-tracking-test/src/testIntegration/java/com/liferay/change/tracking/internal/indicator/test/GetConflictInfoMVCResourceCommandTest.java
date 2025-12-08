@@ -35,7 +35,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.ByteArrayOutputStream;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -75,11 +74,6 @@ public class GetConflictInfoMVCResourceCommandTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString());
 		}
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupTestUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -208,26 +202,23 @@ public class GetConflictInfoMVCResourceCommandTest {
 		return mockLiferayResourceRequest;
 	}
 
-	@DeleteAfterTestRun
-	private static CTCollection _ctCollection1;
-
-	@DeleteAfterTestRun
-	private static CTCollection _ctCollection2;
-
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@DeleteAfterTestRun
-	private static Group _group;
-
-	@DeleteAfterTestRun
-	private static JournalArticle _journalArticle;
 
 	@Inject
 	private static Portal _portal;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection1;
+
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection2;
+
+	private Group _group;
+	private JournalArticle _journalArticle;
 
 	@Inject(filter = "mvc.command.name=/change_tracking/get_conflict_info")
 	private MVCResourceCommand _mvcResourceCommand;

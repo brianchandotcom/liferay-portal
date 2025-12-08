@@ -137,6 +137,8 @@ public class LayoutImportBackgroundTaskExecutorTest {
 					BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
 					backgroundTask.getStatus());
 			});
+
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	private DLFileEntry _addDLFileEntry(String content, long groupId)

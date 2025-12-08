@@ -218,8 +218,7 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public long getFileEntryId(
-			long classNameId, long classPK, String fieldName, Locale locale)
-		throws PortalException {
+		long classNameId, long classPK, String fieldName, Locale locale) {
 
 		if ((classNameId == 0) || Validator.isNull(fieldName)) {
 			return 0;

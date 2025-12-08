@@ -76,6 +76,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -129,6 +130,8 @@ public class CTCollectionServiceTest {
 			null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), null);
 
+		_ctCollections.add(_ctCollection);
+
 		Assert.assertTrue(
 			_ctCollectionModelResourcePermission.contains(
 				permissionChecker, _ctCollection, CTActionKeys.PUBLISH));
@@ -169,6 +172,8 @@ public class CTCollectionServiceTest {
 		_ctCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(_ctCollection);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -279,6 +284,8 @@ public class CTCollectionServiceTest {
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_ctCollections.add(fromCollection);
+
 		JournalFolder journalFolder = null;
 		String folderName = RandomTestUtil.randomString();
 
@@ -293,6 +300,8 @@ public class CTCollectionServiceTest {
 		CTCollection toCTCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(toCTCollection);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -334,6 +343,8 @@ public class CTCollectionServiceTest {
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_ctCollections.add(fromCollection);
+
 		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -350,6 +361,8 @@ public class CTCollectionServiceTest {
 		CTCollection toCTCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(toCTCollection);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -391,6 +404,8 @@ public class CTCollectionServiceTest {
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_ctCollections.add(fromCollection);
+
 		JournalArticle journalArticle = null;
 
 		try (SafeCloseable safeCloseable =
@@ -405,6 +420,8 @@ public class CTCollectionServiceTest {
 		CTCollection toCTCollection = _ctCollectionService.addCTCollection(
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(toCTCollection);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.change.tracking.service.impl." +
@@ -444,10 +461,14 @@ public class CTCollectionServiceTest {
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_ctCollections.add(_ctCollection);
+
 		_assertPublishCTCollection(1);
 
 		_ctCollection =
 			CTCollectionTestUtil.createCTCollectionWithIncompleteStatus(_user);
+
+		_ctCollections.add(_ctCollection);
 
 		_assertPublishCTCollection(2);
 	}
@@ -535,7 +556,6 @@ public class CTCollectionServiceTest {
 	@Inject
 	private static RoleLocalService _roleLocalService;
 
-	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
 	@Inject(
@@ -545,12 +565,11 @@ public class CTCollectionServiceTest {
 		_ctCollectionModelResourcePermission;
 
 	@DeleteAfterTestRun
-	private Group _group;
+	private final List<CTCollection> _ctCollections = new ArrayList<>();
 
+	private Group _group;
 	private final JournalFolderFixture _journalFolderFixture =
 		new JournalFolderFixture(_journalFolderLocalService);
-
-	@DeleteAfterTestRun
 	private Role _role;
 
 	@Inject
@@ -559,7 +578,6 @@ public class CTCollectionServiceTest {
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
-	@DeleteAfterTestRun
 	private User _user;
 
 }

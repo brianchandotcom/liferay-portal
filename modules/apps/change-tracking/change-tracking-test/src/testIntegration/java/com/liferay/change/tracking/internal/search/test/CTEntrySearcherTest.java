@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -589,6 +590,7 @@ public class CTEntrySearcherTest {
 	@Inject
 	private CounterLocalService _counterLocalService;
 
+	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
 	@Inject

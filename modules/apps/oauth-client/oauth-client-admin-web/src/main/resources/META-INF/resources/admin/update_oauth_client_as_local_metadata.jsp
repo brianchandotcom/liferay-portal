@@ -32,6 +32,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 
 <aui:form action="<%= updateOAuthClientASLocalMetadataURL %>" id="oauth-client-as-fm" method="post" name="oauth-client-as-fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="oAuthClientASLocalMetadataId" type="hidden" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId() : \"\"  %>" />
 
 	<aui:model-context bean="<%= oAuthClientASLocalMetadata %>" model="<%= OAuthClientASLocalMetadata.class %>" />
 
@@ -66,16 +67,16 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 				<aui:fieldset label="oauth-client-as-local-oauth-authorization-server">
 					<aui:input checked="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getLocalWellKnownEnabled() : false %>" label="enable" name="enabled" type="checkbox" />
 
-					<aui:input helpMessage="oauth-client-as-local-well-known-uri-oauth-authorization-server-help" label="oauth-client-as-local-well-known-uri-oauth-authorization-server" name="localWellKnownURIOAS" readonly="true" type="text" />
+					<aui:input helpMessage="oauth-client-as-local-well-known-uri-oauth-authorization-server-help" label="oauth-client-as-local-well-known-uri-oauth-authorization-server" name="oAuthASLocalWellKnownURI" readonly="true" type="text"  value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI() : \"\"  %>"/>
 
 					<aui:input
 						helpMessage="oauth-client-as-local-metadata-json-oauth-authorization-server-help"
 						label="oauth-client-as-local-metadata-json-oauth-authorization-server"
-						name="metadataJSONOAS"
+						name="oAuthASMetadataJSON"
 						readonly="true"
 						style="min-height: 600px;"
 						type="textarea"
-						value='<%=
+						value='<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASMetadataJSON() :
 							JSONUtil.put(
 								"authorization_endpoint", ""
 							).put(
@@ -90,16 +91,16 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 				</aui:fieldset>
 
 				<aui:fieldset label="oauth-client-as-local--openid-configuration">
-					<aui:input label="oauth-client-as-local-metadata-subject_types_supported" name="supported_subject_types" type="text" value="<%= supportedSubjectTypes %>" />
+					<aui:input label="oauth-client-as-local-metadata-subject_types_supported" name="supported_subject_types" type="text" value="<%= (oAuthClientASLocalMetadata != null) ? supportedSubjectTypes : \"public\" %>" />
 
 					<aui:input label="oauth-client-as-local-metadata-userinfo_endpoint" name="userinfo_endpoint" type="text" value="<%= userinfoEndpoint %>" />
 
-					<aui:input helpMessage="oauth-client-as-local-well-known-uri-openid-configuration-help" label="oauth-client-as-local-well-known-uri-openid-configuration" name="localWellKnownURIOIC" readonly="true" type="text" />
+					<aui:input helpMessage="oauth-client-as-local-well-known-uri-openid-configuration-help" label="oauth-client-as-local-well-known-uri-openid-configuration" name="localWellKnownURI" readonly="true" type="text" />
 
 					<aui:input
 						helpMessage="oauth-client-as-local-metadata-json-openid-configuration-help"
 						label="oauth-client-as-local-metadata-json-openid-configuration"
-						name="metadataJSONOIC"
+						name="metadataJSON"
 						readonly="true"
 						style="min-height: 600px;"
 						type="textarea"
@@ -138,56 +139,56 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 			'<portlet:namespace />oauth-client-as-fm'
 		);
 
-		var metadataJSONOAS = document.getElementById(
-			'<portlet:namespace />metadataJSONOAS'
+		var oAuthASMetadataJSON = document.getElementById(
+			'<portlet:namespace />oAuthASMetadataJSON'
 		).value;
 
 		try {
-			metadataJSONOAS = JSON.stringify(JSON.parse(metadataJSONOAS), null, 0);
+			oAuthASMetadataJSON = JSON.stringify(JSON.parse(oAuthASMetadataJSON), null, 0);
 		}
 		catch (e) {
 			alert('Ill-formatted Metadata JSON');
 			return;
 		}
 
-		document.getElementById('<portlet:namespace />metadataJSONOAS').value =
-			metadataJSONOAS;
+		document.getElementById('<portlet:namespace />oAuthASMetadataJSON').value =
+			oAuthASMetadataJSON;
 
-		var metadataJSONOIC = document.getElementById(
-			'<portlet:namespace />metadataJSONOIC'
+		var metadataJSON = document.getElementById(
+			'<portlet:namespace />metadataJSON'
 		).value;
 
 		try {
-			metadataJSONOIC = JSON.stringify(JSON.parse(metadataJSONOIC), null, 0);
+			metadataJSON = JSON.stringify(JSON.parse(metadataJSON), null, 0);
 		}
 		catch (e) {
 			alert('Ill-formatted Metadata JSON');
 			return;
 		}
 
-		document.getElementById('<portlet:namespace />metadataJSONOIC').value =
-			metadataJSONOIC;
+		document.getElementById('<portlet:namespace />metadataJSON').value =
+			metadataJSON;
 
 		submitForm(form);
 	}
 
 	function <portlet:namespace />init() {
-		var metadataJSONOAS = document.getElementById(
-			'<portlet:namespace />metadataJSONOAS'
+		var oAuthASMetadataJSON = document.getElementById(
+			'<portlet:namespace />oAuthASMetadataJSON'
 		);
 
-		metadataJSONOAS.value = JSON.stringify(
-			JSON.parse(metadataJSONOAS.value),
+		oAuthASMetadataJSON.value = JSON.stringify(
+			JSON.parse(oAuthASMetadataJSON.value),
 			null,
 			4
 		);
 
-		var metadataJSONOIC = document.getElementById(
-			'<portlet:namespace />metadataJSONOIC'
+		var metadataJSON = document.getElementById(
+			'<portlet:namespace />metadataJSON'
 		);
 
-		metadataJSONOIC.value = JSON.stringify(
-			JSON.parse(metadataJSONOIC.value),
+		metadataJSON.value = JSON.stringify(
+			JSON.parse(metadataJSON.value),
 			null,
 			4
 		);

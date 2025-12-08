@@ -22,89 +22,41 @@ const test = mergeTests(
 );
 
 test(
-	'Publications bar is not visible in CMS site in Production',
-	{tag: '@LPD-64066'},
-	async ({homePage, page}) => {
-		const changeTrackingIndicator = page.locator(
-			'.change-tracking-indicator'
-		);
-
-		await expect(changeTrackingIndicator).toBeVisible();
-
-		await homePage.goto();
-
-		await expect(changeTrackingIndicator).not.toBeVisible();
-
-		await page.goto('/');
-
-		await expect(changeTrackingIndicator).toBeVisible();
-	}
-);
-
-test(
 	'Warning popover is displayed in CMS site in a Publication',
 	{tag: '@LPD-64066'},
-	async ({changeTrackingPage, ctCollection, homePage, page}) => {
+	async ({assetsPage, changeTrackingPage, ctCollection, homePage, page}) => {
 		await changeTrackingPage.workOnPublication(ctCollection);
 
 		await homePage.goto();
 
 		await expect(page.getByLabel('CMS Control Menu')).toBeVisible();
 
-		await expect(
-			page.locator('.change-tracking-indicator-title').filter({
-				hasText:
-					ctCollection.body.name +
-					' (Do Not Make CMS Changes Inside a Publication)',
-			})
-		).toBeVisible();
+		const changeTrackingIndicator = page
+			.locator('.change-tracking-indicator-title')
+			.filter({
+				hasText: ctCollection.body.name + ' (Editing in Production)',
+			});
 
-		await expect(
-			page.getByText('Do Not Make CMS Changes Inside a Publication', {
-				exact: true,
-			})
-		).toBeVisible();
+		await expect(changeTrackingIndicator).toBeVisible();
+
+		const popoverTitle = page.locator('.popover-header').filter({
+			hasText: 'Editing in Production',
+		});
+
+		await expect(popoverTitle).toBeVisible();
 
 		await expect(
 			page.getByText(
-				'The CMS application is not fully supported by Publications yet. Click the button below to ensure all your changes are made in production.',
+				'The CMS application is not fully supported by Publications yet. Changes are saved directly to production.',
 				{exact: true}
 			)
 		).toBeVisible();
 
-		await expect(
-			await page.getByRole('button', {name: 'Work on Production'})
-		).toBeVisible();
+		await assetsPage.gotoAll();
 
-		await expect(
-			page.getByRole('button', {exact: true, name: 'close'})
-		).not.toBeVisible();
-	}
-);
+		await expect(changeTrackingIndicator).toBeVisible();
 
-test(
-	'Warning popover will not close without switching to Production',
-	{tag: '@LPD-64066'},
-	async ({changeTrackingPage, ctCollection, homePage, page}) => {
-		await changeTrackingPage.workOnPublication(ctCollection);
-
-		await homePage.goto();
-
-		await page.locator('.change-tracking-indicator').click();
-
-		await page.locator('.popover-header').click();
-
-		await expect(
-			page.getByText('Do Not Make CMS Changes Inside a Publication', {
-				exact: true,
-			})
-		).toBeVisible();
-
-		await page.getByRole('button', {name: 'Work on Production'}).click();
-
-		await expect(
-			page.locator('.change-tracking-indicator')
-		).not.toBeVisible();
+		await expect(popoverTitle).not.toBeVisible();
 	}
 );
 

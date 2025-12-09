@@ -17,6 +17,7 @@ import {
 	PANELS,
 	selectPanels,
 } from '../../plugins/browser/components/page_structure/selectors/selectPanels';
+import {FragmentSidebarHeader} from '../components/FragmentSidebarHeader';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {useCollectionActiveItemContext} from '../contexts/CollectionActiveItemContext';
 import {CollectionItemContext} from '../contexts/CollectionItemContext';
@@ -118,9 +119,12 @@ function ItemConfigurationContent({
 
 	return (
 		<div className="page-editor__page-structure__item-configuration">
-			{activeItemType === ITEM_TYPES.editable && !!activeItem && (
-				<EditableSidebarHeader editable={activeItem} />
-			)}
+			{!!activeItem &&
+				(activeItemType === ITEM_TYPES.editable ? (
+					<EditableSidebarHeader editable={activeItem} />
+				) : (
+					<FragmentSidebarHeader item={activeItem} />
+				))}
 
 			{!panels.length ? (
 				<ClayAlert

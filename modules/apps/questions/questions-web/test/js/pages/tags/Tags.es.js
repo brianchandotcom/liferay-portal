@@ -5,7 +5,7 @@
 
 import {cleanup} from '@testing-library/react';
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Routes} from 'react-router';
 
 import Tags from '../../../../src/main/resources/META-INF/resources/js/pages/tags/Tags.es';
 import {renderComponent} from '../../../helpers.es';
@@ -79,7 +79,11 @@ describe('Tags', () => {
 			contextValue: {siteKey: '20020'},
 			fetch,
 			route,
-			ui: <Route component={Tags} />,
+			ui: (
+				<Routes>
+					<Route element={<Tags />} path="/tags" />
+				</Routes>
+			),
 		});
 
 		const firstTag = await findByText('new');

@@ -9,9 +9,9 @@ import ClayLabel from '@clayui/label';
 import classnames from 'classnames';
 import {useMutation} from 'graphql-hooks';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
+import {withRouter} from '../hooks/withRouter.es';
 import FlagsContainer from '../pages/questions/components/FlagsContainer';
 import {
 	deleteMessageQuery,
@@ -34,7 +34,7 @@ export default withRouter(
 		deleteAnswer,
 		display,
 		editable = true,
-		match: {url},
+		location,
 		onSubscription,
 		question,
 		showItems = true,
@@ -367,7 +367,7 @@ export default withRouter(
 													>
 														<Link
 															className="text-reset"
-															to={`${url}/answers/${answer.friendlyUrlPath}/edit`}
+															to={`${location.pathname}/answers/${answer.friendlyUrlPath}/edit`}
 														>
 															{Liferay.Language.get(
 																'edit'

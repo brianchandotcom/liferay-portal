@@ -4,9 +4,9 @@
  */
 
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 import Link from '../components/Link.es';
+import {withRouter} from '../hooks/withRouter.es';
 import UserIcon from './UserIcon.es';
 import UserPopover from './UserPopover.es';
 

@@ -22,7 +22,6 @@ import React, {
 	useState,
 } from 'react';
 import {Helmet} from 'react-helmet';
-import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Alert from '../../components/Alert.es';
@@ -39,6 +38,7 @@ import Rating from '../../components/Rating.es';
 import SectionLabel from '../../components/SectionLabel.es';
 import SubscritionCheckbox from '../../components/SubscribeCheckbox.es';
 import TagList from '../../components/TagList.es';
+import {withRouter} from '../../hooks/withRouter.es';
 import {
 	createAnswerQuery,
 	getMessages,
@@ -81,6 +81,7 @@ const Question = ({
 	history,
 	questionId,
 	sectionTitle,
+	url,
 }) => {
 	const sectionRef = useRef(null);
 
@@ -255,7 +256,7 @@ const Question = ({
 		try {
 			const {error} = await createAnswer({
 				fetchOptionsOverrides: getContextLink(
-					`${sectionTitle}/${questionId}`
+					url || `${sectionTitle}/${questionId}`
 				),
 				variables: {
 					articleBody: editorRef.current.getContent(),
@@ -743,13 +744,16 @@ const Question = ({
 					<title>{question.headline}</title>
 
 					<link
-						href={`${getFullPath(
-							context.historyRouterBasePath || 'questions'
-						)}${
-							context.historyRouterBasePath
-								? context.historyRouterBasePath
-								: '#'
-						}/questions/${sectionTitle}/${questionId}`}
+						href={
+							url ||
+							`${getFullPath(
+								context.historyRouterBasePath || 'questions'
+							)}${
+								context.historyRouterBasePath
+									? context.historyRouterBasePath
+									: '#'
+							}/questions/${sectionTitle}/${questionId}`
+						}
 						rel="canonical"
 					/>
 				</Helmet>
@@ -765,13 +769,7 @@ const Question = ({
 };
 
 export default withRouter(
-	({
-		history,
-		match: {
-			params: {questionId, sectionTitle},
-			url,
-		},
-	}) => (
+	({history, params: {questionId, sectionTitle, url}}) => (
 		<Question
 			history={history}
 			questionId={questionId}

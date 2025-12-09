@@ -3,7 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-// @ts-nocheck
+/* eslint-env jest */
+
+/* global global */
+
+// eslint-disable-next-line @liferay/no-extraneous-dependencies
+const {TextDecoder, TextEncoder} = require('node:util');
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
 
 jest.mock('@ckeditor/ckeditor5-bookmark/dist/index', () => ({}));
 jest.mock('@ckeditor/ckeditor5-clipboard/dist/index', () => ({}));

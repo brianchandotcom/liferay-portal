@@ -11,10 +11,10 @@ import React, {
 	useMemo,
 	useState,
 } from 'react';
-import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Breadcrumb from '../../components/Breadcrumb.es';
+import {withRouter} from '../../hooks/withRouter.es';
 import {
 	getSectionThreadsQuery,
 	getTagsOrderByDateCreatedQuery,
@@ -29,7 +29,7 @@ import useQuestionsURLUtil from './hooks/useQuestionsURLUtil.es';
 
 const MAX_NUMBER_OF_QUESTIONS = 500;
 
-export default withRouter(({history, location, match: {params}}) => {
+export default withRouter(({history, location, params}) => {
 	const {creatorId, sectionTitle} = params;
 
 	const urlParams = useQuestionsURLParameters(location);

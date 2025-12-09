@@ -9,9 +9,10 @@ import ClayLabel from '@clayui/label';
 import classnames from 'classnames';
 import {useMutation} from 'graphql-hooks';
 import React, {useContext, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link} from 'react-router';
 
 import {AppContext} from '../AppContext.es';
+import {withRouter} from '../hooks/withRouter.es';
 import FlagsContainer from '../pages/questions/components/FlagsContainer';
 import {deleteMessageQuery} from '../utils/client.es';
 import {fromNow} from '../utils/time.es';
@@ -25,7 +26,7 @@ export default withRouter(
 		commentChange,
 		display,
 		editable = true,
-		match: {url},
+		location,
 		showSignature,
 		styledItems = false,
 	}) => {
@@ -128,7 +129,7 @@ export default withRouter(
 								>
 									<Link
 										className="text-reset"
-										to={`${url}/answers/${comment.friendlyUrlPath}/edit`}
+										to={`${location.pathname}/answers/${comment.friendlyUrlPath}/edit`}
 									>
 										{Liferay.Language.get('edit')}
 									</Link>

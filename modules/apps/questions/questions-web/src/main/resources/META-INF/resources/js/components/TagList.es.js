@@ -5,9 +5,9 @@
 
 import ClayLabel from '@clayui/label';
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 import Link from '../components/Link.es';
+import {withRouter} from '../hooks/withRouter.es';
 
 export default withRouter(({tags = [], sectionTitle = ''}) => {
 	if (tags.length) {

@@ -9,7 +9,7 @@ import Questions from '../../../../src/main/resources/META-INF/resources/js/page
 
 import '@testing-library/jest-dom';
 import {act, cleanup} from '@testing-library/react';
-import {Route} from 'react-router-dom';
+import {MemoryRouter, Route, Routes} from 'react-router';
 
 import {renderComponent} from '../../../helpers.es';
 
@@ -198,7 +198,13 @@ describe.skip('Questions', () => {
 			},
 			fetch,
 			route,
-			ui: <Route component={Questions} path={path} />,
+			ui: (
+				<MemoryRouter>
+					<Routes>
+						<Route element={Questions} path={path} />
+					</Routes>
+				</MemoryRouter>
+			),
 		});
 
 		const loading = container.querySelectorAll('.loading-animation');

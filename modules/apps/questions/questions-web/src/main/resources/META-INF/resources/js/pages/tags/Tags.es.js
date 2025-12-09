@@ -8,12 +8,12 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 import Alert from '../../components/Alert.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import TagsLayout from '../../components/TagsLayout.es';
 import useTags from '../../hooks/useTags.es';
+import {withRouter} from '../../hooks/withRouter.es';
 
 export default withRouter(({history, location}) => {
 	const {

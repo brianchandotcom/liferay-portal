@@ -4,8 +4,8 @@
  */
 
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
+import {withRouter} from '../hooks/withRouter.es';
 import {timeDifference} from '../utils/utils.es';
 import Link from './Link.es';
 import UserIcon from './UserIcon.es';
@@ -14,9 +14,7 @@ import UserPopover from './UserPopover.es';
 export default withRouter(
 	({
 		isContentReviewer,
-		match: {
-			params: {sectionTitle},
-		},
+		params: {sectionTitle},
 		question: {creator = {}, creatorStatistics, dateCreated},
 	}) => (
 		<Link

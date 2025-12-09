@@ -4,21 +4,16 @@
  */
 
 import React from 'react';
-import {Redirect, Route} from 'react-router-dom';
+import {Navigate, Outlet} from 'react-router';
 
-export default function ProtectedRoute({component: Component, ...rest}) {
-	return (
-		<Route
-			{...rest}
-			render={(props) =>
-				themeDisplay.isSignedIn() &&
-				(!Liferay.Session ||
-					Liferay.Session.sessionState === 'active') ? (
-					<Component {...props} />
-				) : (
-					<Redirect to={{pathname: '/'}} />
-				)
-			}
-		/>
-	);
+export default function ProtectedRoute({children}) {
+	const isAllowed =
+		themeDisplay.isSignedIn() &&
+		(!Liferay.Session || Liferay.Session.sessionState === 'active');
+
+	if (!isAllowed) {
+		return <Navigate replace to="/login" />;
+	}
+
+	return children ? children : <Outlet />;
 }

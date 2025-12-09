@@ -6,10 +6,10 @@
 import ClayButton from '@clayui/button';
 import {useMutation} from 'graphql-hooks';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import DefaultQuestionsEditor from '../../components/DefaultQuestionsEditor.es';
+import {withRouter} from '../../hooks/withRouter.es';
 import {
 	client,
 	getMessageQuery,
@@ -18,12 +18,7 @@ import {
 import {getContextLink} from '../../utils/utils.es';
 
 export default withRouter(
-	({
-		history,
-		match: {
-			params: {answerId, questionId, sectionTitle},
-		},
-	}) => {
+	({history, params: {answerId, questionId, sectionTitle}}) => {
 		const context = useContext(AppContext);
 
 		const [addUpdateMessage] = useMutation(updateMessageQuery);

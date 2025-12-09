@@ -5,9 +5,9 @@
 
 import {useMutation} from 'graphql-hooks';
 import React, {useContext} from 'react';
-import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
+import {withRouter} from '../hooks/withRouter.es';
 import {deleteMessageBoardThreadQuery} from '../utils/client.es';
 import {deleteCache, historyPushWithSlug} from '../utils/utils.es';
 import Modal from './Modal.es';

@@ -13,9 +13,9 @@ import React, {
 	useMemo,
 	useState,
 } from 'react';
-import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
+import {withRouter} from '../hooks/withRouter.es';
 import {getSectionQuery, getSectionsQuery} from '../utils/client.es';
 import {ALL_SECTIONS_ID} from '../utils/contants.es';
 import {historyPushWithSlug, slugToText, stringToSlug} from '../utils/utils.es';
@@ -27,7 +27,7 @@ import {getSectionTitle} from './SectionLabel.es';
 const MAX_SECTIONS_IN_BREADCRUMB = 3;
 
 export default withRouter(
-	({allowCreateTopicInRootTopic, history, match, section}) => {
+	({allowCreateTopicInRootTopic, history, params, section}) => {
 		const context = useContext(AppContext);
 
 		const rootTopicId = context.rootTopicId;
@@ -40,7 +40,7 @@ export default withRouter(
 			[context.sections]
 		);
 
-		const sectionTitle = slugToText(match.params.sectionTitle);
+		const sectionTitle = slugToText(params.sectionTitle);
 
 		const historyPushParser = historyPushWithSlug(history.push);
 		const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);

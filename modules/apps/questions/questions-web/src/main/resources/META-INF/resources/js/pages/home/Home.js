@@ -12,12 +12,13 @@ import classNames from 'classnames';
 import {useManualQuery} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet';
-import {Redirect, withRouter} from 'react-router-dom';
+import {Navigate} from 'react-router';
 
 import {AppContext} from '../../AppContext.es';
 import Alert from '../../components/Alert.es';
 import Link from '../../components/Link.es';
 import NewTopicModal from '../../components/NewTopicModal.es';
+import {withRouter} from '../../hooks/withRouter.es';
 import {
 	getSectionBySectionTitleQuery,
 	getSectionsQuery,
@@ -25,12 +26,12 @@ import {
 import lang from '../../utils/lang.es';
 import {
 	getBasePathWithHistoryRouter,
-	historyPushWithSlug,
+	navigateWithSlug,
 } from '../../utils/utils.es';
 
-export default withRouter(({history, isHomePath}) => {
+export default withRouter(({isHomePath, navigate}) => {
 	const context = useContext(AppContext);
-	const historyPushParser = historyPushWithSlug(history.push);
+	const navigateSlug = navigateWithSlug(navigate);
 	const [topicModalVisibility, setTopicModalVisibility] = useState(false);
 
 	const [error, setError] = useState({});
@@ -94,7 +95,7 @@ export default withRouter(({history, isHomePath}) => {
 	return (
 		<section className="c-mt-3 questions-section">
 			{!context.showCardsForTopicNavigation && (
-				<Redirect to={'/questions/' + context.rootTopicId} />
+				<Navigate replace to={`/questions/${context.rootTopicId}`} />
 			)}
 
 			<div className="d-flex justify-content-end pb-3">
@@ -104,7 +105,7 @@ export default withRouter(({history, isHomePath}) => {
 						'text-white': isHomePath,
 					})}
 					displayType="unstyled"
-					onClick={() => history.push('/questions/all')}
+					onClick={() => navigateSlug('/questions/all')}
 				>
 					{Liferay.Language.get('all-questions')}
 
@@ -246,8 +247,8 @@ export default withRouter(({history, isHomePath}) => {
 					currentSectionId={+context.rootTopicId}
 					onClose={() => setTopicModalVisibility(false)}
 					onCreateNavigateTo={() => {
-						historyPushParser(`/tmp`);
-						history.goBack();
+						navigateSlug(`/tmp`);
+						navigate(-1);
 					}}
 					setError={setError}
 					visible={topicModalVisibility}

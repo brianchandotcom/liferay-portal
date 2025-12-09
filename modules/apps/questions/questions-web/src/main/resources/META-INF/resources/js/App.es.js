@@ -5,7 +5,7 @@
 
 import {ClientContext} from 'graphql-hooks';
 import React from 'react';
-import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, HashRouter, Route, Routes} from 'react-router';
 
 import {AppContextProvider} from './AppContext.es';
 import {ErrorBoundary} from './components/ErrorBoundary.es';
@@ -28,7 +28,6 @@ export default function App(props) {
 	redirectForNotifications(props);
 
 	const Router = props.historyRouterBasePath ? BrowserRouter : HashRouter;
-
 	let path = props.historyRouterBasePath;
 
 	if (path && props.i18nPath) {
@@ -42,6 +41,50 @@ export default function App(props) {
 		);
 	}
 
+	function SectionRoutes(props) {
+		return (
+			<Routes>
+				<Route
+					element={
+						<ProtectedRoute>
+							<EditAnswer {...props} />
+						</ProtectedRoute>
+					}
+					path=":questionId/answers/:answerId/edit"
+				/>
+
+				<Route
+					element={<Questions {...props} />}
+					path="creator/:creatorId"
+				/>
+
+				<Route element={<Questions {...props} />} path="tag/:tag" />
+
+				<Route
+					element={
+						<ProtectedRoute>
+							<NewQuestion {...props} />
+						</ProtectedRoute>
+					}
+					path="new"
+				/>
+
+				<Route element={<Question {...props} />} path=":questionId" />
+
+				<Route
+					element={
+						<ProtectedRoute>
+							<EditQuestion {...props} />
+						</ProtectedRoute>
+					}
+					path=":questionId/edit"
+				/>
+
+				<Route element={<Questions {...props} />} path="" />
+			</Routes>
+		);
+	}
+
 	return (
 		<ClientContext.Provider value={client}>
 			<AppContextProvider {...props}>
@@ -50,130 +93,49 @@ export default function App(props) {
 						<div>
 							<NavigationBar />
 
-							<Switch>
+							<Routes>
 								<Route
-									component={(props) => (
+									element={
 										<Home {...props} isHomePath={true} />
-									)}
-									exact
+									}
 									path="/"
 								/>
 
 								<Route
-									component={(props) => <Home {...props} />}
-									exact
+									element={<Home {...props} />}
 									path="/questions"
 								/>
 
 								<Route
-									component={(props) => (
-										<ForumsToQuestion {...props} />
-									)}
-									exact
+									element={<ForumsToQuestion {...props} />}
 									path="/questions/question/:questionId"
 								/>
 
 								<Route
-									component={(props) => (
-										<UserActivity {...props} />
-									)}
-									exact
+									element={<UserActivity {...props} />}
 									path="/questions/activity/:creatorId"
 								/>
 
 								<Route
-									component={(props) => (
-										<UserSubscriptions {...props} />
-									)}
-									exact
+									element={<UserSubscriptions {...props} />}
 									path="/questions/subscriptions/:creatorId"
 								/>
 
 								<Route
-									component={(props) => (
-										<Questions {...props} />
-									)}
-									exact
+									element={<Questions {...props} />}
 									path="/questions/tag/:tag"
 								/>
 
 								<Route
-									component={(props) => <Tags {...props} />}
-									exact
+									element={<Tags {...props} />}
 									path="/tags"
 								/>
 
 								<Route
-									path="/questions/:sectionTitle"
-									render={({match: {path}}) => (
-										<>
-											<Switch>
-												<ProtectedRoute
-													component={(props) => (
-														<EditAnswer
-															{...props}
-														/>
-													)}
-													exact
-													path={`${path}/:questionId/answers/:answerId/edit`}
-												/>
-
-												<Route
-													component={(props) => (
-														<Questions {...props} />
-													)}
-													exact
-													path={`${path}/creator/:creatorId`}
-												/>
-
-												<Route
-													component={(props) => (
-														<Questions {...props} />
-													)}
-													exact
-													path={`${path}/tag/:tag`}
-												/>
-
-												<ProtectedRoute
-													component={(props) => (
-														<NewQuestion
-															{...props}
-														/>
-													)}
-													exact
-													path={`${path}/new`}
-												/>
-
-												<Route
-													component={(props) => (
-														<Question {...props} />
-													)}
-													exact
-													path={`${path}/:questionId`}
-												/>
-
-												<ProtectedRoute
-													component={(props) => (
-														<EditQuestion
-															{...props}
-														/>
-													)}
-													exact
-													path={`${path}/:questionId/edit`}
-												/>
-
-												<Route
-													component={(props) => (
-														<Questions {...props} />
-													)}
-													exact
-													path={`${path}/`}
-												/>
-											</Switch>
-										</>
-									)}
+									element={<SectionRoutes {...props} />}
+									path="/questions/:sectionTitle/*"
 								/>
-							</Switch>
+							</Routes>
 						</div>
 					</ErrorBoundary>
 				</Router>

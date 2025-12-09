@@ -6,21 +6,26 @@
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React, {useContext} from 'react';
-import {matchPath, withRouter} from 'react-router-dom';
+import {matchPath} from 'react-router';
 
 import {AppContext} from '../AppContext.es';
 import useQueryParams from '../hooks/useQueryParams.es';
-import {historyPushWithSlug} from '../utils/utils.es';
+import {withRouter} from '../hooks/withRouter.es';
+import {navigateWithSlug} from '../utils/utils.es';
 
-export default withRouter(({history, location}) => {
+export default withRouter(({location, navigate}) => {
 	const context = useContext(AppContext);
 
 	const queryParams = useQueryParams(location);
 
-	const match = matchPath(location.pathname, {
-		path: '/questions/:sectionTitle/',
-		strict: false,
-	});
+	const match = matchPath(
+		{
+			caseSensitive: false,
+			end: false,
+			path: '/questions/:sectionTitle/',
+		},
+		location.pathname
+	);
 
 	const sectionTitle =
 		(match &&
@@ -47,7 +52,7 @@ export default withRouter(({history, location}) => {
 		return Liferay.Language.get('questions');
 	};
 
-	const historyPushParser = historyPushWithSlug(history.push);
+	const navigateSlug = navigateWithSlug(navigate);
 
 	return (
 		<section className="border-bottom pb-0 questions-section questions-section-nav">
@@ -64,7 +69,7 @@ export default withRouter(({history, location}) => {
 								isActive('/')
 							}
 							onClick={() =>
-								historyPushParser(
+								navigateSlug(
 									sectionTitle
 										? `/questions/${sectionTitle}`
 										: '/'
@@ -78,7 +83,7 @@ export default withRouter(({history, location}) => {
 
 						<ClayNavigationBar.Item
 							active={isActive(`/tags`)}
-							onClick={() => historyPushParser('/tags')}
+							onClick={() => navigateSlug('/tags')}
 						>
 							<ClayLink>{Liferay.Language.get('tags')}</ClayLink>
 						</ClayNavigationBar.Item>
@@ -93,7 +98,7 @@ export default withRouter(({history, location}) => {
 									: 'd-none'
 							}
 							onClick={() =>
-								historyPushParser(
+								navigateSlug(
 									`/questions/subscriptions/${
 										context.userId
 									}${
@@ -119,7 +124,7 @@ export default withRouter(({history, location}) => {
 									: 'd-none'
 							}
 							onClick={() =>
-								historyPushParser(
+								navigateSlug(
 									`/questions/activity/${context.userId}${
 										sectionTitle
 											? '?sectionTitle=' + sectionTitle

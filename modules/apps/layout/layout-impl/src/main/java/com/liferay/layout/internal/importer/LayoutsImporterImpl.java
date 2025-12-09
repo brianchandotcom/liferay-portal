@@ -650,6 +650,22 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return null;
 	}
 
+	private FileEntry _getFileEntry(
+		String externalReferenceCode, long groupId) {
+
+		try {
+			return _dlAppService.getFileEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		return null;
+	}
+
 	private String _getKey(String defaultKey, String fileName, String name) {
 		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
 
@@ -2268,15 +2284,45 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 					Group layoutGroup = layout.getGroup();
 
+					long targetGroupId = layoutGroup.getGroupId();
+
 					if (Validator.isNotNull(faviconFileEntryScopeERC) &&
 						!faviconFileEntryScopeERC.equals(
 							layoutGroup.getExternalReferenceCode())) {
 
 						layout.setFaviconFileEntryScopeERC(
 							faviconFileEntryScopeERC);
+
+						Group scopeGroup = _groupLocalService.fetchGroup(
+							layout.getCompanyId(), faviconFileEntryScopeERC);
+
+						if (scopeGroup != null) {
+							targetGroupId = scopeGroup.getGroupId();
+						}
+						else {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"Favicon group with external ",
+										"reference code ",
+										faviconFileEntryScopeERC,
+										" could not be found."));
+							}
+						}
 					}
 					else {
 						layout.setFaviconFileEntryScopeERC(null);
+					}
+
+					FileEntry fileEntry = _getFileEntry(
+						faviconFileEntryERC, targetGroupId);
+
+					if ((fileEntry == null) && _log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Unable to find favicon file entry with ",
+								"external reference code ", faviconFileEntryERC,
+								" in group ", targetGroupId));
 					}
 				}
 				else {
@@ -2309,6 +2355,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 											fileEntry.getGroupId()));
 								}
 							}
+						}
+						else if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to find file entry " +
+									favIconMap.get("id"));
 						}
 					}
 				}

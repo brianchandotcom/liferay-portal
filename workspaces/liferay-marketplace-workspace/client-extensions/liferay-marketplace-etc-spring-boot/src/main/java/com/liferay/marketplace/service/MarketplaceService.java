@@ -430,15 +430,14 @@ public class MarketplaceService extends BaseService {
 	public void patchPublisherAssetAttachment(String body, long id)
 		throws Exception {
 
-		new JSONObject(
-			patch(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-marketplace-etc-spring-boot-oahs"),
-				body,
-				UriComponentsBuilder.fromPath(
-					"/o/c/publisherassetattachments/" + id
-				).build(
-				).toUri()));
+		patch(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs"),
+			body,
+			UriComponentsBuilder.fromPath(
+				"/o/c/publisherassetattachments/" + id
+			).build(
+			).toUri());
 	}
 
 	public void postNotificationQueueEntry(

@@ -71,13 +71,12 @@ public class FragmentEditableElementUtil {
 	}
 
 	public static JSONObject getEditableFragmentEntryProcessorJSONObject(
-		long companyId, FragmentEditableElement[] fragmentEditableElements,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+		FragmentEditableElement[] fragmentEditableElements,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			_getEditableFragmentEntryProcessorJSONObject(
-				companyId, fragmentEditableElements, infoItemServiceRegistry,
-				scopeGroupId);
+				fragmentEditableElements, layoutStructureItemImporterContext);
 
 		if (editableFragmentEntryProcessorJSONObject.length() > 0) {
 			return editableFragmentEntryProcessorJSONObject;
@@ -177,8 +176,8 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static JSONObject _getEditableFragmentEntryProcessorJSONObject(
-		long companyId, FragmentEditableElement[] fragmentEditableElements,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+		FragmentEditableElement[] fragmentEditableElements,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -210,10 +209,12 @@ public class FragmentEditableElementUtil {
 					fragmentEditableElement.getId(),
 					() -> _getJSONObject(
 						() -> _getHTMLFragmentEditableElementJSONObject(
-							companyId,
+							layoutStructureItemImporterContext.getCompanyId(),
 							(HTMLFragmentEditableElementValue)
 								fragmentEditableElementValue,
-							infoItemServiceRegistry, scopeGroupId)));
+							layoutStructureItemImporterContext.
+								getInfoItemServiceRegistry(),
+							layoutStructureItemImporterContext.getGroupId())));
 
 				continue;
 			}
@@ -226,7 +227,10 @@ public class FragmentEditableElementUtil {
 					fragmentEditableElement.getId(),
 					() -> _getJSONObject(
 						() -> _getTextFragmentEditableElementJSONObject(
-							companyId, infoItemServiceRegistry, scopeGroupId,
+							layoutStructureItemImporterContext.getCompanyId(),
+							layoutStructureItemImporterContext.
+								getInfoItemServiceRegistry(),
+							layoutStructureItemImporterContext.getGroupId(),
 							(TextFragmentEditableElementValue)
 								fragmentEditableElementValue)));
 			}

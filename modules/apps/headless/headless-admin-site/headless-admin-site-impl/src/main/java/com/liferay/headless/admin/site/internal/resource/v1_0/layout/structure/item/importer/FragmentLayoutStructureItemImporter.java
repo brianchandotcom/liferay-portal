@@ -290,12 +290,9 @@ public class FragmentLayoutStructureItemImporter
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			FragmentEditableElementUtil.
 				getEditableFragmentEntryProcessorJSONObject(
-					layoutStructureItemImporterContext.getCompanyId(),
 					fragmentInstancePageElementDefinition.
 						getFragmentEditableElements(),
-					layoutStructureItemImporterContext.
-						getInfoItemServiceRegistry(),
-					layoutStructureItemImporterContext.getGroupId())
+					layoutStructureItemImporterContext)
 		).put(
 			FragmentEntryProcessorConstants.
 				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,

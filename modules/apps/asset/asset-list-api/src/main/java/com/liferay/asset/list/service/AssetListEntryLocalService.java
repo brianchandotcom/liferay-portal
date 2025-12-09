@@ -377,6 +377,10 @@ public interface AssetListEntryLocalService
 			int newPosition)
 		throws PortalException;
 
+	public void removeClassNameIdFromAssetListEntryTypeSettings(
+			long companyId, long classNameId)
+		throws PortalException;
+
 	/**
 	 * Updates the asset list entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

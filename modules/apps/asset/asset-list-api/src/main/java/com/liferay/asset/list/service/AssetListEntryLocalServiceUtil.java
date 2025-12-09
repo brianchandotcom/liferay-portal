@@ -463,6 +463,14 @@ public class AssetListEntryLocalServiceUtil {
 			assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
+	public static void removeClassNameIdFromAssetListEntryTypeSettings(
+			long companyId, long classNameId)
+		throws PortalException {
+
+		getService().removeClassNameIdFromAssetListEntryTypeSettings(
+			companyId, classNameId);
+	}
+
 	/**
 	 * Updates the asset list entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

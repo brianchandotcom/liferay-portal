@@ -520,6 +520,16 @@ public class AssetListEntryLocalServiceWrapper
 			assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
+	@Override
+	public void removeClassNameIdFromAssetListEntryTypeSettings(
+			long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetListEntryLocalService.
+			removeClassNameIdFromAssetListEntryTypeSettings(
+				companyId, classNameId);
+	}
+
 	/**
 	 * Updates the asset list entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

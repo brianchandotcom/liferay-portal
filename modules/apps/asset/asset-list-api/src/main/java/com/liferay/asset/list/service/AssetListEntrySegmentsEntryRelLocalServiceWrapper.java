@@ -436,6 +436,16 @@ public class AssetListEntrySegmentsEntryRelLocalServiceWrapper
 				orderByComparator);
 	}
 
+	@Override
+	public java.util.List<AssetListEntrySegmentsEntryRel>
+		getAssetListEntrySegmentsEntryRelsByClassNameId(
+			long companyId, long classNameId) {
+
+		return _assetListEntrySegmentsEntryRelLocalService.
+			getAssetListEntrySegmentsEntryRelsByClassNameId(
+				companyId, classNameId);
+	}
+
 	/**
 	 * Returns all the asset list entry segments entry rels matching the UUID and company.
 	 *

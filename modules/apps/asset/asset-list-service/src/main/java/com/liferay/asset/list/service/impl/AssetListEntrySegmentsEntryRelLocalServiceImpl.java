@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -216,6 +217,30 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 
 		return assetListEntrySegmentsEntryRelPersistence.findByA_S_C(
 			assetListEntryId, segmentsEntryIds, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<AssetListEntrySegmentsEntryRel>
+		getAssetListEntrySegmentsEntryRelsByClassNameId(
+			long companyId, long classNameId) {
+
+		if (classNameId <= 0) {
+			return Collections.emptyList();
+		}
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				AssetListEntrySegmentsEntryRelTable.INSTANCE
+			).from(
+				AssetListEntrySegmentsEntryRelTable.INSTANCE
+			).where(
+				AssetListEntrySegmentsEntryRelTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					AssetListEntrySegmentsEntryRelTable.INSTANCE.typeSettings.
+						like("%" + classNameId + "%")
+				)
+			));
 	}
 
 	@Override

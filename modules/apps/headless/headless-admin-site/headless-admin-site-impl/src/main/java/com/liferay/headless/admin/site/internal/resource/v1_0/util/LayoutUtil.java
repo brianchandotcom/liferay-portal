@@ -1167,12 +1167,15 @@ public class LayoutUtil {
 						pageExperience.getExternalReferenceCode());
 
 				if (segmentsExperience == null) {
-					throw new UnsupportedOperationException();
+					SegmentsExperienceUtil.addSegmentsExperience(
+						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
+						layout, pageExperience, serviceContext);
+				}else {
+					SegmentsExperienceUtil.updateSegmentsExperience(
+						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
+						layout, pageExperience, segmentsExperience,
+						serviceContext);
 				}
-
-				SegmentsExperienceUtil.updateSegmentsExperience(
-					fragmentEntryProcessorRegistry, infoItemServiceRegistry,
-					layout, pageExperience, segmentsExperience, serviceContext);
 			}
 		}
 	}

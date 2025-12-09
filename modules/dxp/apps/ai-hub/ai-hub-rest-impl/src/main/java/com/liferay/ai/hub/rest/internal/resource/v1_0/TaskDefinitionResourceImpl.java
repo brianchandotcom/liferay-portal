@@ -5,9 +5,28 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
+import com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition;
 import com.liferay.ai.hub.rest.resource.v1_0.TaskDefinitionResource;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -18,4 +37,61 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = TaskDefinitionResource.class
 )
 public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
+
+	@Override
+	public Page<TaskDefinition> getTaskDefinitionsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-62272")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return SearchUtil.search(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getTaskDefinitionsPage",
+					WorkflowConstants.RESOURCE_NAME, null)
+			).build(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter("scope", "ai"), BooleanClauseOccur.MUST);
+			},
+			filter, KaleoDefinitionVersion.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(Field.NAME),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			sorts,
+			document -> _toTaskDefinition(
+				_kaleoDefinitionVersionLocalService.
+					getLatestKaleoDefinitionVersion(
+						contextCompany.getCompanyId(),
+						document.get(Field.NAME))));
+	}
+
+	private TaskDefinition _toTaskDefinition(
+			KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws PortalException {
+
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionVersion.getKaleoDefinition();
+
+		return new TaskDefinition() {
+			{
+				setName(kaleoDefinition::getName);
+				setVersion(kaleoDefinition::getVersion);
+			}
+		};
+	}
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
+
 }

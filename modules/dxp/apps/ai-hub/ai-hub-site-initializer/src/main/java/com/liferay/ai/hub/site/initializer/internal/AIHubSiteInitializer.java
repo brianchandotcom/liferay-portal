@@ -153,7 +153,7 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			_localization.getXml(
 				titleMap, _language.getLanguageId(company.getLocale()),
 				"title"),
-			workflowDefinitionName, json.getBytes());
+			workflowDefinitionName, "ai", json.getBytes());
 	}
 
 	private void _deployWorkflowDefinitions(long groupId) throws Exception {

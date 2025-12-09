@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")
+	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:ai-hub:ai-hub-rest-api")

@@ -11,6 +11,7 @@ import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTDestinationNames;
 import com.liferay.change.tracking.exception.CTPublishConflictException;
+import com.liferay.change.tracking.internal.test.util.CTCollectionTestUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTProcess;
@@ -443,8 +444,19 @@ public class CTCollectionServiceTest {
 			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_assertPublishCTCollection(1);
+
+		_ctCollection =
+			CTCollectionTestUtil.createCTCollectionWithIncompleteStatus(_user);
+
+		_assertPublishCTCollection(2);
+	}
+
+	private void _assertPublishCTCollection(long expectedCTCollectionsCount)
+		throws Exception {
+
 		Assert.assertEquals(
-			1,
+			expectedCTCollectionsCount,
 			_ctCollectionService.getCTCollectionsCount(
 				_user.getCompanyId(), null, ""));
 

@@ -13,7 +13,9 @@ import com.liferay.headless.admin.site.dto.v1_0.DirectFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValueFragmentLink;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentImage;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentImageValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentImageViewport;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
@@ -21,6 +23,7 @@ import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentEditableElementValue
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentValue;
+import com.liferay.headless.admin.site.dto.v1_0.ImageFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.ImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemImageValue;
@@ -311,6 +314,11 @@ public class FragmentEditableElementUtil {
 				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}
 
+		if (Objects.equals(type, "image")) {
+			return _toImageFragmentEditableElementValue(
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+		}
+
 		if (Objects.equals(type, "text")) {
 			return _toTextFragmentEditableElementValue(
 				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
@@ -545,6 +553,10 @@ public class FragmentEditableElementUtil {
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 			JSONObject jsonObject, long scopeGroupId) {
 
+		if (jsonObject == null) {
+			return null;
+		}
+
 		FragmentImageValue backgroundFragmentImageValue = _toFragmentImageValue(
 			companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 
@@ -657,13 +669,89 @@ public class FragmentEditableElementUtil {
 		return fragmentEditableElementValueFragmentLink;
 	}
 
-	private static FragmentImageValue _toFragmentImageValue(
+	private static FragmentImage _toFragmentImage(
 		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 		JSONObject jsonObject, long scopeGroupId) {
 
 		if (jsonObject == null) {
 			return null;
 		}
+
+		FragmentImageValue fragmentImageValue = _toFragmentImageValue(
+			companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+
+		JSONObject configJSONObject = jsonObject.getJSONObject("config");
+
+		if ((fragmentImageValue == null) &&
+			((configJSONObject == null) ||
+			 (!configJSONObject.has("alt") &&
+			  !configJSONObject.has("imageConfiguration") &&
+			  !configJSONObject.has("lazyLoading")))) {
+
+			return null;
+		}
+
+		FragmentImage fragmentImage = new FragmentImage();
+
+		fragmentImage.setFragmentImageValue(() -> fragmentImageValue);
+
+		if (configJSONObject == null) {
+			return fragmentImage;
+		}
+
+		fragmentImage.setDescription_i18n(
+			() -> {
+				JSONObject altJSONObject = configJSONObject.getJSONObject(
+					"alt");
+
+				return LocalizedValueUtil.toLocalizedValues(
+					altJSONObject, key -> altJSONObject.getString(key));
+			});
+
+		JSONObject imageConfigurationJSONObject =
+			configJSONObject.getJSONObject("imageConfiguration");
+
+		if (!JSONUtil.isEmpty(imageConfigurationJSONObject)) {
+			fragmentImage.setFragmentImageViewports(
+				() -> TransformUtil.transformToArray(
+					new TreeSet<>(imageConfigurationJSONObject.keySet()),
+					key -> {
+						FragmentImageViewport.Id id =
+							FragmentImageViewport.Id.create(
+								ViewportIdUtil.toExternalType(key));
+						String resolution =
+							imageConfigurationJSONObject.getString(key);
+
+						if ((id == null) || Validator.isNull(resolution)) {
+							return null;
+						}
+
+						FragmentImageViewport fragmentImageViewport =
+							new FragmentImageViewport();
+
+						fragmentImageViewport.setId(() -> id);
+						fragmentImageViewport.setResolution(() -> resolution);
+
+						return fragmentImageViewport;
+					},
+					FragmentImageViewport.class));
+		}
+
+		fragmentImage.setLazyLoading(
+			() -> {
+				if (!configJSONObject.has("lazyLoading")) {
+					return null;
+				}
+
+				return configJSONObject.getBoolean("lazyLoading");
+			});
+
+		return fragmentImage;
+	}
+
+	private static FragmentImageValue _toFragmentImageValue(
+		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+		JSONObject jsonObject, long scopeGroupId) {
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
 			MappedFragmentImageValue mappedFragmentImageValue =
@@ -754,6 +842,39 @@ public class FragmentEditableElementUtil {
 		htmlFragmentInlineValue.setType(HTMLFragmentValue.Type.INLINE);
 
 		return htmlFragmentInlineValue;
+	}
+
+	private static FragmentEditableElementValue
+		_toImageFragmentEditableElementValue(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId) {
+
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink =
+				_toFragmentEditableElementValueFragmentLink(
+					companyId, infoItemServiceRegistry,
+					jsonObject.getJSONObject("config"), scopeGroupId);
+
+		FragmentImage fragmentImage = _toFragmentImage(
+			companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+
+		if ((fragmentEditableElementValueFragmentLink == null) &&
+			(fragmentImage == null)) {
+
+			return null;
+		}
+
+		ImageFragmentEditableElementValue imageFragmentEditableElementValue =
+			new ImageFragmentEditableElementValue();
+
+		imageFragmentEditableElementValue.
+			setFragmentEditableElementValueFragmentLink(
+				() -> fragmentEditableElementValueFragmentLink);
+		imageFragmentEditableElementValue.setFragmentImage(() -> fragmentImage);
+		imageFragmentEditableElementValue.setType(
+			FragmentEditableElementValue.Type.IMAGE);
+
+		return imageFragmentEditableElementValue;
 	}
 
 	private static TextFragmentEditableElementValue

@@ -1140,10 +1140,6 @@ public class LayoutUtil {
 					layout,
 					UserLocalServiceUtil.getUser(serviceContext.getUserId()))) {
 
-			List<SegmentsExperience> segmentsExperiences =
-				SegmentsExperienceServiceUtil.getSegmentsExperiences(
-					layout.getGroupId(), layout.getPlid(), true);
-
 			if (Validator.isNull(
 					SegmentsExperienceUtil.
 						getDefaultSegmentsExperienceExternalReferenceCode(
@@ -1151,6 +1147,10 @@ public class LayoutUtil {
 
 				throw new UnsupportedOperationException();
 			}
+
+			List<SegmentsExperience> segmentsExperiences =
+				SegmentsExperienceServiceUtil.getSegmentsExperiences(
+					layout.getGroupId(), layout.getPlid(), true);
 
 			Map<String, SegmentsExperience> segmentsExperiencesMap =
 				new HashMap<>();
@@ -1170,7 +1170,8 @@ public class LayoutUtil {
 					SegmentsExperienceUtil.addSegmentsExperience(
 						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
 						layout, pageExperience, serviceContext);
-				}else {
+				}
+				else {
 					SegmentsExperienceUtil.updateSegmentsExperience(
 						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
 						layout, pageExperience, segmentsExperience,

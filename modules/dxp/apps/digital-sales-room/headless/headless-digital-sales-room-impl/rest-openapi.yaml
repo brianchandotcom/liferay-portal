@@ -50,6 +50,10 @@ components:
                     type: string
                 secondaryColor:
                     type: string
+                userAccountBriefs:
+                    items:
+                        $ref: "#/components/schemas/UserAccountBrief"
+                    type: array
         FileEntry:
             properties:
                 fileBase64:
@@ -63,6 +67,25 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+        UserAccountBrief:
+            properties:
+                alternateName:
+                    readOnly: true
+                    type: string
+                emailAddress:
+                    type: string
+                externalReferenceCode:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    readOnly: true
+                    type: string
+                roleKey:
+                    type: string
 info:
     license:
         name: Apache 2.0
@@ -131,6 +154,33 @@ paths:
                     schema:
                         format: int64
                         type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoom"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoom"
+            tags: ["DigitalSalesRoom"]
+        patch:
+            operationId: patchDigitalSalesRoom
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoom"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoom"
             responses:
                 200:
                     content:

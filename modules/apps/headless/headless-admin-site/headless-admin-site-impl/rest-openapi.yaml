@@ -1900,16 +1900,16 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
                 -   properties:
+                        fragmentEditableElementValueFragmentLink:
+                            $ref: "#/components/schemas/FragmentEditableElementValueFragmentLink"
+                            # @review
+                            description:
+                                The fragment link of an image fragment editable element value.
                         fragmentImage:
                             $ref: "#/components/schemas/FragmentImage"
                             # @review
                             description:
                                 The fragment editable element's image.
-                        fragmentLink:
-                            $ref: "#/components/schemas/FragmentLink"
-                            # @review
-                            description:
-                                A link to a fragment.
             # @review
             description:
                 A fragment editable element value of type image.

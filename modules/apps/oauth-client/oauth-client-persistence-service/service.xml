@@ -40,9 +40,6 @@
 		<finder name="LocalWellKnownURI" return-type="OAuthClientASLocalMetadata" unique="true">
 			<finder-column name="localWellKnownURI" />
 		</finder>
-		<finder name="OAuthASLocalWellKnownURI" return-type="OAuthClientASLocalMetadata" unique="true">
-			<finder-column name="oAuthASLocalWellKnownURI" />
-		</finder>
 		<finder name="C_I" return-type="OAuthClientASLocalMetadata" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="issuer" />
@@ -50,6 +47,10 @@
 		<finder name="C_L" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="localWellKnownEnabled" />
+		</finder>
+		<finder name="C_O" return-type="OAuthClientASLocalMetadata" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="oAuthASLocalWellKnownURI" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="OAuthClientEntry" remote-service="true">

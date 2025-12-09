@@ -45,7 +45,7 @@ export function getEditingValue({
 	const valueJSON = convertValueToJSON(value);
 
 	if (!valueJSON) {
-		return editingLocale;
+		return '';
 	}
 
 	const editingValue = valueJSON[editingLocale.localeId];

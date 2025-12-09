@@ -51,7 +51,7 @@ export default function TranslationManager({
 			);
 
 			if (descriptionMessage && friendlyURLMessage) {
-				if (selectedLanguageId !== defaultLanguageId) {
+				if (lastSelectedLanguageIdRef.current !== defaultLanguageId) {
 					descriptionMessage.hidden = false;
 					friendlyURLMessage.hidden = false;
 				}

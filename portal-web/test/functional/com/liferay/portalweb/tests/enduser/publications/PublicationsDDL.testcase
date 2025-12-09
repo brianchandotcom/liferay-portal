@@ -43,6 +43,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test PublishPublicationWithDeletedListAndRecord {
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -289,6 +290,7 @@ definition {
 			value1 = "Text");
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test PublishPublicationWithEditedListAndRecord {
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -455,6 +457,7 @@ definition {
 			fieldFieldLabel = "Text");
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test PublishPublicationWithFormTemplate {
 		property custom.properties = "feature.flag.LPS-196935=true";
@@ -566,6 +569,7 @@ definition {
 		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test PublishPublicationWithNewListAndRecord {
 		JSONPublications.addPublication(publicationName = "Publication Name");

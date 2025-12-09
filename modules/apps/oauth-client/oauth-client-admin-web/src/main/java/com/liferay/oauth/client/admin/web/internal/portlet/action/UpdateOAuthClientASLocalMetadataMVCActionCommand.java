@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -68,18 +67,14 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 				_oAuthClientASLocalMetadataService.
-					fetchByOAuthClientASLocalMetadataId(
+					fetchOAuthClientASLocalMetadata(
 						oAuthClientASLocalMetadataId);
 
 			if (oAuthClientASLocalMetadata == null) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				_oAuthClientASLocalMetadataService.
 					addOAuthClientASLocalMetadata(
-						themeDisplay.getUserId(), authorizationEndpoint,
-						enabledLocalWellKnown, issuer, jwksUri,
+						authorizationEndpoint, issuer, jwksUri,
+						enabledLocalWellKnown,
 						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
 						StringUtil.split(supportedScopes, StringPool.COMMA),
 						StringUtil.split(
@@ -91,8 +86,8 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 					updateOAuthClientASLocalMetadata(
 						oAuthClientASLocalMetadata.
 							getOAuthClientASLocalMetadataId(),
-						authorizationEndpoint, enabledLocalWellKnown, issuer,
-						jwksUri,
+						authorizationEndpoint, issuer, jwksUri,
+						enabledLocalWellKnown,
 						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
 						StringUtil.split(supportedScopes, StringPool.COMMA),
 						StringUtil.split(

@@ -1,6 +1,6 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
@@ -29,7 +29,7 @@
 		>
 			<portlet:renderURL var="editURL">
 				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_as_local_metadata" />
-				<portlet:param name="issuer" value="<%= oAuthClientASLocalMetadata.getIssuer() %>" />
+				<portlet:param name="oAuthClientASLocalMetadataId" value="<%= String.valueOf(oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId()) %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 

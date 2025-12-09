@@ -1080,7 +1080,7 @@ public class LayoutStructure {
 
 	public LayoutStructureRule updateLayoutStructureRule(
 		JSONArray actionsJSONArray, JSONArray conditionsJSONArray,
-		String conditionType, String name, String script, String ruleId) {
+		String conditionType, String name, String ruleId, String script) {
 
 		LayoutStructureRule layoutStructureRule = _layoutStructureRulesMap.get(
 			ruleId);

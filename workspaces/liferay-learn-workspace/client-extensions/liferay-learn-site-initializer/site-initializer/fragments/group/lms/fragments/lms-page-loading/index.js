@@ -4,7 +4,7 @@
  */
 
 Liferay.on('allPortletsReady', () => {
-	const loadingIndicator = document.querySelector('#loadingIndicator');
+	const loadingIndicator = fragmentElement.querySelector('#loadingIndicator');
 
 	if (loadingIndicator) {
 		loadingIndicator.classList.add('hide');

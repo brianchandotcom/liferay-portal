@@ -4,9 +4,13 @@
  */
 
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {Toggle} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
+
+import './ConfigurationContainer.scss';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -80,12 +84,14 @@ export function ConfigurationContainer({
 				/>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
+			<ClayForm.Group className="lfr-objects__comments-enable-comments">
 				<Toggle
 					disabled={disabled}
 					label={sub(
 						Liferay.Language.get('enable-x'),
-						Liferay.Language.get('comments-in-page-builder')
+						Liferay.FeatureFlags['LPD-69419']
+							? Liferay.Language.get('comments')
+							: Liferay.Language.get('comments-in-page-builder')
 					)}
 					name="enableComments"
 					onBlur={(event) => {
@@ -102,6 +108,24 @@ export function ConfigurationContainer({
 					}
 					toggled={values.enableComments}
 				/>
+
+				{Liferay.FeatureFlags['LPD-69419'] && (
+					<>
+						&nbsp;
+						<ClayTooltipProvider>
+							<span
+								title={Liferay.Language.get(
+									'comments-are-supported-in-page-builder-and-api'
+								)}
+							>
+								<ClayIcon
+									className="lfr-objects__comments-tooltip-icon"
+									symbol="question-circle-full"
+								/>
+							</span>
+						</ClayTooltipProvider>
+					</>
+				)}
 			</ClayForm.Group>
 
 			<ClayForm.Group>

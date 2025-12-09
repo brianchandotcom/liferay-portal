@@ -2658,11 +2658,11 @@ components:
                         experience will always be assigned priority 0. A priority higher than 0 will result in an
                         experience being active and a priority lower than 0 will result in an experience being inactive.
                     type: integer
-                segmentExternalReferenceCode:
+                segmentItemExternalReference:
+                    $ref: "#/components/schemas/ItemExternalReference"
                     # @review
                     description:
-                        The segment's external reference code.
-                    type: string
+                        The segment's item external reference.
             type: object
         PageRule:
             # @review

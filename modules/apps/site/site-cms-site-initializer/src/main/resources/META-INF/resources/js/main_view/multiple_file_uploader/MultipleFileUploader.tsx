@@ -37,6 +37,8 @@ export interface FileData {
 
 export default function MultipleFileUploader({
 	assetLibraries,
+	buttonLabel,
+	description,
 	filesToUpload: initialFilesToUpload,
 	groupId: initialGroupId,
 	onModalClose,
@@ -44,6 +46,8 @@ export default function MultipleFileUploader({
 	uploadRequest,
 }: {
 	assetLibraries?: AssetLibrary[];
+	buttonLabel?: string;
+	description?: string;
 	filesToUpload?: FileData[];
 	groupId?: number;
 	onModalClose: () => void;
@@ -178,6 +182,16 @@ export default function MultipleFileUploader({
 				) : (
 					<>
 						{isLoading && <LoadingMessage />}
+
+						{description && (
+							<div className="mb-1">
+								<p className="text-secondary">{description}</p>
+
+								<span className="font-weight-semi-bold text-3">
+									{Liferay.Language.get('file')}
+								</span>
+							</div>
+						)}
 
 						<div
 							{...getRootProps({
@@ -317,10 +331,11 @@ export default function MultipleFileUploader({
 							</ClayButton>
 
 							<ClayButton disabled={isLoading} type="submit">
-								{sub(
-									Liferay.Language.get('upload-x'),
-									`(${filesToUpload.length})`
-								)}
+								{buttonLabel ||
+									sub(
+										Liferay.Language.get('upload-x'),
+										`(${filesToUpload.length})`
+									)}
 							</ClayButton>
 						</ClayButton.Group>
 					}

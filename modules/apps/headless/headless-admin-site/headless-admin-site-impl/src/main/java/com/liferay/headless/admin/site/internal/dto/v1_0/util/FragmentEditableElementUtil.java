@@ -300,9 +300,10 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static FragmentEditableElementValue
-		_getFragmentEditableElementValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId, String type) {
+			_getFragmentEditableElementValue(
+				long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+				JSONObject jsonObject, long scopeGroupId, String type)
+		throws Exception {
 
 		if (Objects.equals(type, "background-image")) {
 			return _toBackgroundImageFragmentEditableElementValue(
@@ -549,9 +550,10 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static FragmentEditableElementValue
-		_toBackgroundImageFragmentEditableElementValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId) {
+			_toBackgroundImageFragmentEditableElementValue(
+				long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+				JSONObject jsonObject, long scopeGroupId)
+		throws Exception {
 
 		if (jsonObject == null) {
 			return null;
@@ -670,8 +672,9 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static FragmentImage _toFragmentImage(
-		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-		JSONObject jsonObject, long scopeGroupId) {
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId)
+		throws Exception {
 
 		if (jsonObject == null) {
 			return null;
@@ -750,30 +753,44 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static FragmentImageValue _toFragmentImageValue(
-		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-		JSONObject jsonObject, long scopeGroupId) {
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId)
+		throws Exception {
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
+			FragmentMappedValue fragmentMappedValue =
+				FragmentMappingUtil.toFragmentMappedValue(
+					companyId, infoItemServiceRegistry, jsonObject,
+					scopeGroupId);
+
+			if (fragmentMappedValue == null) {
+				return null;
+			}
+
 			MappedFragmentImageValue mappedFragmentImageValue =
 				new MappedFragmentImageValue();
 
 			mappedFragmentImageValue.setFragmentMappedValue(
-				() -> FragmentMappingUtil.toFragmentMappedValue(
-					companyId, infoItemServiceRegistry, jsonObject,
-					scopeGroupId));
+				() -> fragmentMappedValue);
 			mappedFragmentImageValue.setType(FragmentImageValue.Type.MAPPED);
 
 			return mappedFragmentImageValue;
 		}
 
+		Map<String, ImageValue> imageValueMap =
+			LocalizedValueUtil.toLocalizedValues(
+				jsonObject,
+				key -> _getImageValue(
+					companyId, jsonObject.getJSONObject(key), scopeGroupId));
+
+		if (MapUtil.isEmpty(imageValueMap)) {
+			return null;
+		}
+
 		DirectFragmentImageValue directFragmentImageValue =
 			new DirectFragmentImageValue();
 
-		directFragmentImageValue.setValue_i18n(
-			() -> LocalizedValueUtil.toLocalizedValues(
-				jsonObject,
-				key -> _getImageValue(
-					companyId, jsonObject.getJSONObject(key), scopeGroupId)));
+		directFragmentImageValue.setValue_i18n(() -> imageValueMap);
 		directFragmentImageValue.setType(FragmentImageValue.Type.DIRECT);
 
 		return directFragmentImageValue;
@@ -845,9 +862,10 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static FragmentEditableElementValue
-		_toImageFragmentEditableElementValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId) {
+			_toImageFragmentEditableElementValue(
+				long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+				JSONObject jsonObject, long scopeGroupId)
+		throws Exception {
 
 		FragmentEditableElementValueFragmentLink
 			fragmentEditableElementValueFragmentLink =

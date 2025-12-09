@@ -17,6 +17,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 
 import java.util.Map;
@@ -136,6 +137,15 @@ public class ReferencesTestUtil {
 			return _getItemExternalReference(
 				map.get("className"), map.get("externalReferenceCode"),
 				map.get("scopeExternalReferenceCode"));
+		}
+
+		if (object instanceof SegmentsEntry) {
+			SegmentsEntry segmentsEntry = (SegmentsEntry)object;
+
+			return _getItemExternalReference(
+				SegmentsEntry.class.getName(),
+				segmentsEntry.getExternalReferenceCode(),
+				segmentsEntry.getGroupId(), scopeGroupId);
 		}
 
 		if (object instanceof SiteNavigationMenu) {

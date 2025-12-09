@@ -1156,7 +1156,8 @@ public class PageSpecificationResourceTest
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, _getStyleBookEntryERC(serviceContext),
-			0, layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
+			null, null, layout.getMasterLayoutPageTemplateEntryERC(),
+			serviceContext);
 	}
 
 	@Inject

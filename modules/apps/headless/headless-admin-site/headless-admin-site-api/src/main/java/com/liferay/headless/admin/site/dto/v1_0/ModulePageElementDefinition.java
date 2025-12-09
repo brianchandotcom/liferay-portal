@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -103,49 +101,6 @@ public class ModulePageElementDefinition
 	@JsonIgnore
 	private Supplier<ModuleViewport[]> _moduleViewportsSupplier;
 
-	@DecimalMax("12")
-	@DecimalMin("1")
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The module's size."
-	)
-	public Integer getSize() {
-		if (_sizeSupplier != null) {
-			size = _sizeSupplier.get();
-
-			_sizeSupplier = null;
-		}
-
-		return size;
-	}
-
-	public void setSize(Integer size) {
-		this.size = size;
-
-		_sizeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
-		_sizeSupplier = () -> {
-			try {
-				return sizeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The module's size.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer size;
-
-	@JsonIgnore
-	private Supplier<Integer> _sizeSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -195,18 +150,6 @@ public class ModulePageElementDefinition
 			}
 
 			sb.append("]");
-		}
-
-		Integer size = getSize();
-
-		if (size != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"size\": ");
-
-			sb.append(size);
 		}
 
 		Type type = getType();

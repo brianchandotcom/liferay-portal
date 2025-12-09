@@ -26,6 +26,31 @@ public class GridPageElementDefinition
 		return GridPageElementDefinitionSerDes.toDTO(json);
 	}
 
+	public FragmentImage getBackgroundFragmentImage() {
+		return backgroundFragmentImage;
+	}
+
+	public void setBackgroundFragmentImage(
+		FragmentImage backgroundFragmentImage) {
+
+		this.backgroundFragmentImage = backgroundFragmentImage;
+	}
+
+	public void setBackgroundFragmentImage(
+		UnsafeSupplier<FragmentImage, Exception>
+			backgroundFragmentImageUnsafeSupplier) {
+
+		try {
+			backgroundFragmentImage =
+				backgroundFragmentImageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentImage backgroundFragmentImage;
+
 	public String[] getCssClasses() {
 		return cssClasses;
 	}
@@ -46,48 +71,6 @@ public class GridPageElementDefinition
 	}
 
 	protected String[] cssClasses;
-
-	public String getCustomCSS() {
-		return customCSS;
-	}
-
-	public void setCustomCSS(String customCSS) {
-		this.customCSS = customCSS;
-	}
-
-	public void setCustomCSS(
-		UnsafeSupplier<String, Exception> customCSSUnsafeSupplier) {
-
-		try {
-			customCSS = customCSSUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String customCSS;
-
-	public FragmentStyle getFragmentStyle() {
-		return fragmentStyle;
-	}
-
-	public void setFragmentStyle(FragmentStyle fragmentStyle) {
-		this.fragmentStyle = fragmentStyle;
-	}
-
-	public void setFragmentStyle(
-		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
-
-		try {
-			fragmentStyle = fragmentStyleUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected FragmentStyle fragmentStyle;
 
 	public GridViewport[] getGridViewports() {
 		return gridViewports;
@@ -152,27 +135,6 @@ public class GridPageElementDefinition
 
 	protected Boolean indexed;
 
-	public Integer getModulesPerRow() {
-		return modulesPerRow;
-	}
-
-	public void setModulesPerRow(Integer modulesPerRow) {
-		this.modulesPerRow = modulesPerRow;
-	}
-
-	public void setModulesPerRow(
-		UnsafeSupplier<Integer, Exception> modulesPerRowUnsafeSupplier) {
-
-		try {
-			modulesPerRow = modulesPerRowUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer modulesPerRow;
-
 	public String getName() {
 		return name;
 	}
@@ -234,36 +196,6 @@ public class GridPageElementDefinition
 
 	protected Boolean reverseOrder;
 
-	public VerticalAlignment getVerticalAlignment() {
-		return verticalAlignment;
-	}
-
-	public String getVerticalAlignmentAsString() {
-		if (verticalAlignment == null) {
-			return null;
-		}
-
-		return verticalAlignment.toString();
-	}
-
-	public void setVerticalAlignment(VerticalAlignment verticalAlignment) {
-		this.verticalAlignment = verticalAlignment;
-	}
-
-	public void setVerticalAlignment(
-		UnsafeSupplier<VerticalAlignment, Exception>
-			verticalAlignmentUnsafeSupplier) {
-
-		try {
-			verticalAlignment = verticalAlignmentUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected VerticalAlignment verticalAlignment;
-
 	@Override
 	public GridPageElementDefinition clone() throws CloneNotSupportedException {
 		return (GridPageElementDefinition)super.clone();
@@ -294,39 +226,6 @@ public class GridPageElementDefinition
 
 	public String toString() {
 		return GridPageElementDefinitionSerDes.toJSON(this);
-	}
-
-	public static enum VerticalAlignment {
-
-		BOTTOM("Bottom"), MIDDLE("Middle"), TOP("Top");
-
-		public static VerticalAlignment create(String value) {
-			for (VerticalAlignment verticalAlignment : values()) {
-				if (Objects.equals(verticalAlignment.getValue(), value) ||
-					Objects.equals(verticalAlignment.name(), value)) {
-
-					return verticalAlignment;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private VerticalAlignment(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
 	}
 
 }

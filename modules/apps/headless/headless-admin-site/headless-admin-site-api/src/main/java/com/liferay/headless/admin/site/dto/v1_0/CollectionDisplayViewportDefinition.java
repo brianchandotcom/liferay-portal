@@ -262,7 +262,7 @@ public class CollectionDisplayViewportDefinition implements Serializable {
 	private Supplier<Justify> _justifySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The number of columns of the collection viewport."
+		description = "The number of columns of the collection viewport if a grid list style is selected."
 	)
 	public Integer getNumberOfColumns() {
 		if (_numberOfColumnsSupplier != null) {
@@ -298,7 +298,7 @@ public class CollectionDisplayViewportDefinition implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The number of columns of the collection viewport."
+		description = "The number of columns of the collection viewport if a grid list style is selected."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;

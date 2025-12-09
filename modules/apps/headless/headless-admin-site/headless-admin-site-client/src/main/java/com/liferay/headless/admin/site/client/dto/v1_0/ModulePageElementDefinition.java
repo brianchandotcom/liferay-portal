@@ -48,25 +48,6 @@ public class ModulePageElementDefinition
 
 	protected ModuleViewport[] moduleViewports;
 
-	public Integer getSize() {
-		return size;
-	}
-
-	public void setSize(Integer size) {
-		this.size = size;
-	}
-
-	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
-		try {
-			size = sizeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer size;
-
 	@Override
 	public ModulePageElementDefinition clone()
 		throws CloneNotSupportedException {

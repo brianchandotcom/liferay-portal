@@ -70,15 +70,23 @@ public class FragmentViewport implements Cloneable, Serializable {
 
 	protected FragmentViewportStyle fragmentViewportStyle;
 
-	public String getId() {
+	public Id getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public String getIdAsString() {
+		if (id == null) {
+			return null;
+		}
+
+		return id.toString();
+	}
+
+	public void setId(Id id) {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<Id, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -87,7 +95,7 @@ public class FragmentViewport implements Cloneable, Serializable {
 		}
 	}
 
-	protected String id;
+	protected Id id;
 
 	@Override
 	public FragmentViewport clone() throws CloneNotSupportedException {
@@ -118,6 +126,40 @@ public class FragmentViewport implements Cloneable, Serializable {
 
 	public String toString() {
 		return FragmentViewportSerDes.toJSON(this);
+	}
+
+	public static enum Id {
+
+		DESKTOP("Desktop"), LANDSCAPE_MOBILE("LandscapeMobile"),
+		PORTRAIT_MOBILE("PortraitMobile"), TABLET("Tablet");
+
+		public static Id create(String value) {
+			for (Id id : values()) {
+				if (Objects.equals(id.getValue(), value) ||
+					Objects.equals(id.name(), value)) {
+
+					return id;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Id(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

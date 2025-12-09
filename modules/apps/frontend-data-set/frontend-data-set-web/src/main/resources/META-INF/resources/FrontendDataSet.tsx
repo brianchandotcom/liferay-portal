@@ -598,19 +598,19 @@ const FrontendDataSetContent = ({
 			...initialActiveView,
 		};
 
-		defaultSnapshot.filters =
-			initialFilters ?
-			initialFilters.map((filter) => {
-				const preloadedData = deepClone(filter.preloadedData);
-				if (preloadedData) {
-					filter = activateFilter({
-						filter,
-						selectedData: preloadedData,
-					});
-				}
+		defaultSnapshot.filters = initialFilters
+			? initialFilters.map((filter) => {
+					const preloadedData = deepClone(filter.preloadedData);
+					if (preloadedData) {
+						filter = activateFilter({
+							filter,
+							selectedData: preloadedData,
+						});
+					}
 
-				return filter;
-			}) : [];
+					return filter;
+				})
+			: [];
 
 		const filters = initialFilters
 			? updateFilterActivation({

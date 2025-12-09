@@ -400,6 +400,10 @@ public interface AssetListEntryLocalService
 		throws PortalException;
 
 	public void updateAssetListEntryTypeSettings(
+			long companyId, long classNameId)
+		throws PortalException;
+
+	public void updateAssetListEntryTypeSettings(
 			long assetListEntryId, long segmentsEntryId, String typeSettings)
 		throws PortalException;
 

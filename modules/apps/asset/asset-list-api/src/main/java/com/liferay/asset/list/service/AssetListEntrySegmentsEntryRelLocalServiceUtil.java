@@ -387,6 +387,14 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			assetListEntryId, segmentsEntryIds, start, end, orderByComparator);
 	}
 
+	public static List<AssetListEntrySegmentsEntryRel>
+		getAssetListEntrySegmentsEntryRelsByClassNameId(
+			long companyId, long classNameId) {
+
+		return getService().getAssetListEntrySegmentsEntryRelsByClassNameId(
+			companyId, classNameId);
+	}
+
 	/**
 	 * Returns all the asset list entry segments entry rels matching the UUID and company.
 	 *

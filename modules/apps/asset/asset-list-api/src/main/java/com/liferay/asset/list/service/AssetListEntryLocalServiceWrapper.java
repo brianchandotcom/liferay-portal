@@ -556,6 +556,15 @@ public class AssetListEntryLocalServiceWrapper
 
 	@Override
 	public void updateAssetListEntryTypeSettings(
+			long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetListEntryLocalService.updateAssetListEntryTypeSettings(
+			companyId, classNameId);
+	}
+
+	@Override
+	public void updateAssetListEntryTypeSettings(
 			long assetListEntryId, long segmentsEntryId, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

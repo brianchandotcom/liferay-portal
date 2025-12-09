@@ -14,6 +14,7 @@ import React, {ComponentProps} from 'react';
 import DefaultPermissionModalContent from '../../main_view/default_permission/DefaultPermissionModalContent';
 import {DefaultPermissionModalContentProps} from '../../main_view/default_permission/DefaultPermissionTypes';
 import ApiHelper from '../services/ApiHelper';
+import {LogoColor} from '../types/Space';
 import {displayErrorToast} from '../utils/toastUtil';
 import SpaceSticker from './SpaceSticker';
 
@@ -28,14 +29,11 @@ export interface ActionDropdownItemProps {
 	target?: 'asyncDelete' | 'defaultPermissionsModal' | 'link' | 'modal';
 }
 
-interface Props
-	extends Pick<
-		React.ComponentProps<typeof ClaySticker>,
-		'displayType' | 'size'
-	> {
+interface Props extends Pick<React.ComponentProps<typeof ClaySticker>, 'size'> {
 	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'] &
 		ActionDropdownItemProps;
 	breadcrumbItems: BreadcrumbItem[];
+	displayType?: LogoColor;
 	hideSpace?: boolean;
 }
 

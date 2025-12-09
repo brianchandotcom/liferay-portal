@@ -208,7 +208,7 @@ export default function MergeTagsModalContent({
 						(
 							assetLibrary: {
 								name: string;
-								settings?: {logoColor: string};
+								settings?: {logoColor: LogoColor};
 							},
 							index: number
 						) => (
@@ -218,8 +218,7 @@ export default function MergeTagsModalContent({
 							>
 								<SpaceSticker
 									displayType={
-										assetLibrary.settings
-											?.logoColor as LogoColor
+										assetLibrary.settings?.logoColor
 									}
 									name={assetLibrary.name}
 									size="sm"

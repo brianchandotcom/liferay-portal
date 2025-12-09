@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
+import {LogoColor} from '../../../common/types/Space';
 
 const SpaceRenderer = ({
 	href,
@@ -16,7 +17,7 @@ const SpaceRenderer = ({
 	value,
 }: {
 	href?: string;
-	logoColor: IClayStickerProps['displayType'];
+	logoColor?: LogoColor;
 	size?: IClayStickerProps['size'];
 	value: string;
 }) => {

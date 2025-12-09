@@ -367,35 +367,36 @@ public class PageExperience implements Serializable {
 	private Supplier<Integer> _prioritySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The segment's external reference code."
+		description = "The segment's item external reference."
 	)
-	public String getSegmentExternalReferenceCode() {
-		if (_segmentExternalReferenceCodeSupplier != null) {
-			segmentExternalReferenceCode =
-				_segmentExternalReferenceCodeSupplier.get();
+	@Valid
+	public ItemExternalReference getSegmentItemExternalReference() {
+		if (_segmentItemExternalReferenceSupplier != null) {
+			segmentItemExternalReference =
+				_segmentItemExternalReferenceSupplier.get();
 
-			_segmentExternalReferenceCodeSupplier = null;
+			_segmentItemExternalReferenceSupplier = null;
 		}
 
-		return segmentExternalReferenceCode;
+		return segmentItemExternalReference;
 	}
 
-	public void setSegmentExternalReferenceCode(
-		String segmentExternalReferenceCode) {
+	public void setSegmentItemExternalReference(
+		ItemExternalReference segmentItemExternalReference) {
 
-		this.segmentExternalReferenceCode = segmentExternalReferenceCode;
+		this.segmentItemExternalReference = segmentItemExternalReference;
 
-		_segmentExternalReferenceCodeSupplier = null;
+		_segmentItemExternalReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSegmentExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			segmentExternalReferenceCodeUnsafeSupplier) {
+	public void setSegmentItemExternalReference(
+		UnsafeSupplier<ItemExternalReference, Exception>
+			segmentItemExternalReferenceUnsafeSupplier) {
 
-		_segmentExternalReferenceCodeSupplier = () -> {
+		_segmentItemExternalReferenceSupplier = () -> {
 			try {
-				return segmentExternalReferenceCodeUnsafeSupplier.get();
+				return segmentItemExternalReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -406,12 +407,13 @@ public class PageExperience implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The segment's external reference code.")
+	@GraphQLField(description = "The segment's item external reference.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String segmentExternalReferenceCode;
+	protected ItemExternalReference segmentItemExternalReference;
 
 	@JsonIgnore
-	private Supplier<String> _segmentExternalReferenceCodeSupplier;
+	private Supplier<ItemExternalReference>
+		_segmentItemExternalReferenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -557,20 +559,17 @@ public class PageExperience implements Serializable {
 			sb.append(priority);
 		}
 
-		String segmentExternalReferenceCode = getSegmentExternalReferenceCode();
+		ItemExternalReference segmentItemExternalReference =
+			getSegmentItemExternalReference();
 
-		if (segmentExternalReferenceCode != null) {
+		if (segmentItemExternalReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"segmentExternalReferenceCode\": ");
+			sb.append("\"segmentItemExternalReference\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(segmentExternalReferenceCode));
-
-			sb.append("\"");
+			sb.append(String.valueOf(segmentItemExternalReference));
 		}
 
 		sb.append("}");

@@ -177,30 +177,30 @@ public class PageExperience implements Cloneable, Serializable {
 
 	protected Integer priority;
 
-	public String getSegmentExternalReferenceCode() {
-		return segmentExternalReferenceCode;
+	public ItemExternalReference getSegmentItemExternalReference() {
+		return segmentItemExternalReference;
 	}
 
-	public void setSegmentExternalReferenceCode(
-		String segmentExternalReferenceCode) {
+	public void setSegmentItemExternalReference(
+		ItemExternalReference segmentItemExternalReference) {
 
-		this.segmentExternalReferenceCode = segmentExternalReferenceCode;
+		this.segmentItemExternalReference = segmentItemExternalReference;
 	}
 
-	public void setSegmentExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			segmentExternalReferenceCodeUnsafeSupplier) {
+	public void setSegmentItemExternalReference(
+		UnsafeSupplier<ItemExternalReference, Exception>
+			segmentItemExternalReferenceUnsafeSupplier) {
 
 		try {
-			segmentExternalReferenceCode =
-				segmentExternalReferenceCodeUnsafeSupplier.get();
+			segmentItemExternalReference =
+				segmentItemExternalReferenceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String segmentExternalReferenceCode;
+	protected ItemExternalReference segmentItemExternalReference;
 
 	@Override
 	public PageExperience clone() throws CloneNotSupportedException {

@@ -155,19 +155,16 @@ public class PageExperienceSerDes {
 			sb.append(pageExperience.getPriority());
 		}
 
-		if (pageExperience.getSegmentExternalReferenceCode() != null) {
+		if (pageExperience.getSegmentItemExternalReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"segmentExternalReferenceCode\": ");
-
-			sb.append("\"");
+			sb.append("\"segmentItemExternalReference\": ");
 
 			sb.append(
-				_escape(pageExperience.getSegmentExternalReferenceCode()));
-
-			sb.append("\"");
+				String.valueOf(
+					pageExperience.getSegmentItemExternalReference()));
 		}
 
 		sb.append("}");
@@ -248,14 +245,14 @@ public class PageExperienceSerDes {
 			map.put("priority", String.valueOf(pageExperience.getPriority()));
 		}
 
-		if (pageExperience.getSegmentExternalReferenceCode() == null) {
-			map.put("segmentExternalReferenceCode", null);
+		if (pageExperience.getSegmentItemExternalReference() == null) {
+			map.put("segmentItemExternalReference", null);
 		}
 		else {
 			map.put(
-				"segmentExternalReferenceCode",
+				"segmentItemExternalReference",
 				String.valueOf(
-					pageExperience.getSegmentExternalReferenceCode()));
+					pageExperience.getSegmentItemExternalReference()));
 		}
 
 		return map;
@@ -301,7 +298,7 @@ public class PageExperienceSerDes {
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "segmentExternalReferenceCode")) {
+						jsonParserFieldName, "segmentItemExternalReference")) {
 
 				return false;
 			}
@@ -379,11 +376,12 @@ public class PageExperienceSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "segmentExternalReferenceCode")) {
+						jsonParserFieldName, "segmentItemExternalReference")) {
 
 				if (jsonParserFieldValue != null) {
-					pageExperience.setSegmentExternalReferenceCode(
-						(String)jsonParserFieldValue);
+					pageExperience.setSegmentItemExternalReference(
+						ItemExternalReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

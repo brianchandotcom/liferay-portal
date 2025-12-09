@@ -1142,10 +1142,12 @@ public class LayoutUtil {
 					layout,
 					UserLocalServiceUtil.getUser(serviceContext.getUserId()))) {
 
-			if (Validator.isNull(
-					SegmentsExperienceUtil.
-						getDefaultSegmentsExperienceExternalReferenceCode(
-							pageExperiences))) {
+			PageExperience defaultPageExperience =
+				PageExperienceUtil.getDefaultPageExperience(pageExperiences);
+
+			if ((defaultPageExperience == null) ||
+				(defaultPageExperience.getSegmentItemExternalReference() !=
+					null)) {
 
 				throw new UnsupportedOperationException();
 			}

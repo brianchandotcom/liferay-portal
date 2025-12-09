@@ -30,6 +30,18 @@ export enum TabName {
 }
 
 export class ClaySamplePage extends POM {
+	readonly alert: (
+		alertMessage: string,
+		triggerText?: string
+	) => {
+		close?: Locator;
+		icon: Locator;
+		lead: Locator;
+		locator: Locator;
+		tooltip?: Locator;
+		trigger?: Locator;
+	};
+
 	readonly managementToolbarActiveState: Locator;
 	readonly managementToolbarDefaultState: Locator;
 	readonly managementToolbarUsingDisplayContext: Locator;
@@ -39,6 +51,32 @@ export class ClaySamplePage extends POM {
 
 	constructor(page: Page, url: string) {
 		super(page, url);
+
+		this.alert = (alertMessage: string, triggerText?: string) => ({
+			close: this.page
+				.getByRole('alert')
+				.filter({hasText: alertMessage})
+				.locator(
+					triggerText
+						? '+ [aria-label="Close"]'
+						: '[aria-label="Close"]'
+				),
+			icon: this.page
+				.getByRole('alert')
+				.filter({hasText: alertMessage})
+				.locator('.alert-indicator .lexicon-icon'),
+			lead: this.page
+				.getByRole('alert')
+				.filter({hasText: alertMessage})
+				.locator('.lead'),
+			locator: this.page
+				.getByRole('alert')
+				.filter({hasText: alertMessage}),
+			tooltip: this.page
+				.getByRole('tooltip')
+				.filter({hasText: alertMessage}),
+			trigger: this.page.getByRole('button', {name: triggerText}),
+		});
 
 		this.managementToolbarActiveState = page.locator(
 			'#managementToolbarActiveState'

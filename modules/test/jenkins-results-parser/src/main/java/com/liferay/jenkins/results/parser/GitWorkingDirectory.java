@@ -1919,7 +1919,8 @@ public class GitWorkingDirectory {
 				this, "Invalid remote url " + remoteURL);
 		}
 
-		if (!JenkinsResultsParserUtil.isCloudCINode() &&
+		if (JenkinsResultsParserUtil.isCINode() &&
+			!JenkinsResultsParserUtil.isCloudCINode() &&
 			remoteURL.startsWith("git@github.com:liferay/")) {
 
 			try {

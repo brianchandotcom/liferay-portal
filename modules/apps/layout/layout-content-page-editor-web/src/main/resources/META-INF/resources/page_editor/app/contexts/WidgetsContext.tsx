@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 
 import {FragmentEntryLink} from '../actions/addFragmentEntryLinks';
-import updateWidgets from '../actions/updateWidgets';
+import updateWidgets, {WidgetSet} from '../actions/updateWidgets';
 import {
 	Thunk,
 	useDispatch,
@@ -27,8 +27,11 @@ import loadWidgetsThunk from '../thunks/loadWidgets';
 
 type Status = 'not-loaded' | 'loading' | 'loaded';
 
-const WidgetsContext = createContext({
-	getWidgets: () => {},
+const WidgetsContext = createContext<{
+	getWidgets: () => WidgetSet[];
+	loadWidgets: () => void;
+}>({
+	getWidgets: () => [],
 	loadWidgets: () => {},
 });
 

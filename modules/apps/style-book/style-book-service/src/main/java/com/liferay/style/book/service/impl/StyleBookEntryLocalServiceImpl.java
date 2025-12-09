@@ -452,6 +452,11 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
+		if (previewFileEntryId == 0) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				styleBookEntry.getPreviewFileEntryId());
+		}
+
 		styleBookEntry.setModifiedDate(new Date());
 		styleBookEntry.setPreviewFileEntryId(previewFileEntryId);
 

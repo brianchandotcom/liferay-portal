@@ -116,13 +116,34 @@ DeserializeUtil.prototype = {
 
 				if (type === 'llm' || type === 'ai-decision') {
 					data.prompt = node.prompt || '';
-					data.inputVariables = node['input-variables']
-						? JSON.parse(node['input-variables'])
-						: {};
-					data.outputVariables = node['output-variables']
-						? JSON.parse(node['output-variables'])
-						: {};
-					data.tools = node.tools ? JSON.parse(node.tools) : {};
+
+					data.inputVariables = (() => {
+						try {
+							return JSON.parse(node['input-variables']);
+						}
+						catch (error) {
+							return [];
+						}
+					})();
+
+					data.outputVariables = (() => {
+						try {
+							return JSON.parse(node['output-variables']);
+						}
+						catch (error) {
+							return [];
+						}
+					})();
+
+					data.tools = (() => {
+						try {
+							return JSON.parse(node.tools);
+						}
+						catch (error) {
+							return [];
+						}
+					})();
+
 					data.userMessage = node['user-message'] || '';
 				}
 

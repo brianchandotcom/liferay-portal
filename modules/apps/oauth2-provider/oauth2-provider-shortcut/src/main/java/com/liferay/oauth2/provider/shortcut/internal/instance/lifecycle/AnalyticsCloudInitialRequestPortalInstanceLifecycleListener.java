@@ -212,7 +212,7 @@ public class AnalyticsCloudInitialRequestPortalInstanceLifecycleListener
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(oAuth2Application.getPrimaryKey()), role.getRoleId(),
 			new String[] {
-				ActionKeys.VIEW, OAuth2ProviderActionKeys.ACTION_CREATE_TOKEN
+				ActionKeys.VIEW, OAuth2ProviderActionKeys.CREATE_TOKEN
 			});
 	}
 

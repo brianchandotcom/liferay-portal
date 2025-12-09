@@ -73,7 +73,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		return permissionChecker.hasPermission(
 			0, OAuth2ProviderConstants.RESOURCE_NAME,
 			OAuth2ProviderConstants.RESOURCE_NAME,
-			OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
+			OAuth2ProviderActionKeys.ADD_APPLICATION);
 	}
 
 	public boolean hasAddTrustedApplicationPermission() {
@@ -83,7 +83,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		return permissionChecker.hasPermission(
 			0, OAuth2ProviderConstants.RESOURCE_NAME,
 			OAuth2ProviderConstants.RESOURCE_NAME,
-			OAuth2ProviderActionKeys.ACTION_ADD_TRUSTED_APPLICATION);
+			OAuth2ProviderActionKeys.ADD_TRUSTED_APPLICATION);
 	}
 
 	public boolean hasDeletePermission(OAuth2Application oAuth2Application) {
@@ -123,14 +123,14 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		return permissionChecker.hasPermission(
 			0, OAuth2ProviderConstants.RESOURCE_NAME,
 			OAuth2ProviderConstants.RESOURCE_NAME,
-			OAuth2ProviderActionKeys.ACTION_ADD_REMEMBER_DEVICE);
+			OAuth2ProviderActionKeys.ADD_REMEMBER_DEVICE);
 	}
 
 	public boolean hasRevokeTokenPermission(
 		OAuth2Application oAuth2Application) {
 
 		return hasPermission(
-			oAuth2Application, OAuth2ProviderActionKeys.ACTION_REVOKE_TOKEN);
+			oAuth2Application, OAuth2ProviderActionKeys.REVOKE_TOKEN);
 	}
 
 	public boolean hasUpdatePermission(OAuth2Application oAuth2Application) {
@@ -144,7 +144,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		try {
 			return PortletPermissionUtil.contains(
 				permissionChecker, OAuth2ProviderPortletKeys.OAUTH2_ADMIN,
-				OAuth2ProviderActionKeys.ACTION_VIEW_GRANTED_AUTHORIZATIONS);
+				OAuth2ProviderActionKeys.VIEW_GRANTED_AUTHORIZATIONS);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

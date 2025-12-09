@@ -34,6 +34,7 @@
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
 				href="<%= editURL %>"
 				name="oauth-client-as-local-well-known-uri"
 				property="localWellKnownURI"

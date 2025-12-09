@@ -12,11 +12,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
@@ -45,23 +43,18 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		try {
-			String issuer = ParamUtil.getString(renderRequest, "issuer");
+			Long oAuthClientASLocalMetadataId = ParamUtil.getLong(
+				renderRequest, "oAuthClientASLocalMetadataId");
 
-			if (Validator.isNotNull(issuer)) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
+			if (Validator.isNotNull(oAuthClientASLocalMetadataId)) {
 				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 					_oAuthClientASLocalMetadataService.
-						getIssuerAuthClientASLocalMetadata(
-							themeDisplay.getCompanyId(), issuer);
-
-				String metadataJSON =
-					oAuthClientASLocalMetadata.getMetadataJSON();
+						fetchOAuthClientASLocalMetadata(
+							oAuthClientASLocalMetadataId);
 
 				OIDCProviderMetadata authorizationServerMetadata =
-					OIDCProviderMetadata.parse(metadataJSON);
+					OIDCProviderMetadata.parse(
+						oAuthClientASLocalMetadata.getMetadataJSON());
 
 				renderRequest.setAttribute(
 					OAuthClientASLocalMetadata.class.getName(),

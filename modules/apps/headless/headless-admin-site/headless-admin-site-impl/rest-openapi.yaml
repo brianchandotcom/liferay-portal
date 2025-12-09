@@ -396,6 +396,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        backgroundFragmentImage:
+                            $ref: "#/components/schemas/FragmentImage"
+                            # @review
+                            description:
+                                The fragment's background image.
                         contentVisibility:
                             # @review
                             description:
@@ -409,21 +414,11 @@ components:
                             items:
                                 type: string
                             type: array
-                        customCSS:
-                            # @review
-                            description:
-                                Custom CSS that is applied on the container page element.
-                            type: string
                         fragmentLink:
                             $ref: "#/components/schemas/FragmentLink"
                             # @review
                             description:
                                 The fragment link of the container page element.
-                        fragmentStyle:
-                            $ref: "#/components/schemas/FragmentStyle"
-                            # @review
-                            description:
-                                The fragment style of the container page element.
                         fragmentViewports:
                             # @review
                             description:
@@ -994,6 +989,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        backgroundFragmentImage:
+                            $ref: "#/components/schemas/FragmentImage"
+                            # @review
+                            description:
+                                The fragment's background image.
                         cssClasses:
                             # @review
                             description:
@@ -1001,18 +1001,8 @@ components:
                             items:
                                 type: string
                             type: array
-                        customCSS:
-                            # @review
-                            description:
-                                Custom CSS that is applied on the form container page element.
-                            type: string
                         formContainerConfig:
                             $ref: "#/components/schemas/FormContainerConfig"
-                        fragmentStyle:
-                            $ref: "#/components/schemas/FragmentStyle"
-                            # @review
-                            description:
-                                The fragment style of a form container page element.
                         fragmentViewports:
                             # @review
                             description:
@@ -1060,6 +1050,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        backgroundFragmentImage:
+                            $ref: "#/components/schemas/FragmentImage"
+                            # @review
+                            description:
+                                The fragment's background image.
                         cssClasses:
                             # @review
                             description:
@@ -1067,16 +1062,6 @@ components:
                             items:
                                 type: string
                             type: array
-                        customCSS:
-                            # @review
-                            description:
-                                Custom CSS that is applied on the form step container page element.
-                            type: string
-                        fragmentStyle:
-                            $ref: "#/components/schemas/FragmentStyle"
-                            # @review
-                            description:
-                                The fragment style of a form step container page element.
                         fragmentViewports:
                             # @review
                             description:
@@ -1357,6 +1342,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        backgroundFragmentImage:
+                            $ref: "#/components/schemas/FragmentImage"
+                            # @review
+                            description:
+                                The fragment's background image.
                         configuration:
                             # @review
                             description:
@@ -1374,11 +1364,6 @@ components:
                             items:
                                 type: string
                             type: array
-                        customCSS:
-                            # @review
-                            description:
-                                Custom CSS that is applied on the fragment instance.
-                            type: string
                         customCSSViewports:
                             # @review
                             description:
@@ -1422,12 +1407,6 @@ components:
                             description:
                                 The fragment reference of the fragment instance.
                             type: object
-                        fragmentStyle:
-                            $ref: "#/components/schemas/FragmentStyle"
-                            # @review
-                            description:
-                                The fragment style of the fragment instance page element.
-                            type: string
                         fragmentType:
                             # @review
                             description:
@@ -1608,152 +1587,6 @@ components:
                     description:
                         The fragment reference's type (DefaultFragmentReference, FragmentItemExternalReference).
                     enum: [DefaultFragmentReference, FragmentItemExternalReference]
-                    type: string
-            type: object
-        FragmentStyle:
-            # @review
-            description:
-                A fragment style.
-            properties:
-                backgroundColor:
-                    # @review
-                    description:
-                        The fragment's background color.
-                    type: string
-                backgroundFragmentImage:
-                    $ref: "#/components/schemas/FragmentImage"
-                    # @review
-                    description:
-                        The fragment's background image.
-                borderColor:
-                    # @review
-                    description:
-                        The fragment's border color.
-                    type: string
-                borderRadius:
-                    # @review
-                    description:
-                        The fragment's background radius.
-                    type: string
-                borderWidth:
-                    # @review
-                    description:
-                        The fragment's border width.
-                    type: string
-                fontFamily:
-                    # @review
-                    description:
-                        The fragment's font family.
-                    type: string
-                fontSize:
-                    # @review
-                    description:
-                        The fragment's font size.
-                    type: string
-                fontWeight:
-                    # @review
-                    description:
-                        The fragment's font weight.
-                    type: string
-                height:
-                    # @review
-                    description:
-                        The fragment's height.
-                    type: string
-                hidden:
-                    # @review
-                    description:
-                        Specifies if the fragment is hidden to the user.
-                    type: boolean
-                marginBottom:
-                    # @review
-                    description:
-                        The fragment's margin bottom.
-                    type: string
-                marginLeft:
-                    # @review
-                    description:
-                        The fragment's margin left.
-                    type: string
-                marginRight:
-                    # @review
-                    description:
-                        The fragment's margin right.
-                    type: string
-                marginTop:
-                    # @review
-                    description:
-                        The fragment's margin top.
-                    type: string
-                maxHeight:
-                    # @review
-                    description:
-                        The fragment's max height.
-                    type: string
-                maxWidth:
-                    # @review
-                    description:
-                        The fragment's max width.
-                    type: string
-                minHeight:
-                    # @review
-                    description:
-                        The fragment's min height.
-                    type: string
-                minWidth:
-                    # @review
-                    description:
-                        The fragment's min width.
-                    type: string
-                opacity:
-                    # @review
-                    description:
-                        The fragment's opacity.
-                    type: string
-                overflow:
-                    # @review
-                    description:
-                        The fragment's overflow behavior.
-                    type: string
-                paddingBottom:
-                    # @review
-                    description:
-                        The fragment's padding bottom.
-                    type: string
-                paddingLeft:
-                    # @review
-                    description:
-                        The fragment's padding left.
-                    type: string
-                paddingRight:
-                    # @review
-                    description:
-                        The fragment's padding right.
-                    type: string
-                paddingTop:
-                    # @review
-                    description:
-                        The fragment's padding top.
-                    type: string
-                shadow:
-                    # @review
-                    description:
-                        The fragment's shadow effect.
-                    type: string
-                textAlign:
-                    # @review
-                    description:
-                        The fragment's text align.
-                    type: string
-                textColor:
-                    # @review
-                    description:
-                        The fragment's text color.
-                    type: string
-                width:
-                    # @review
-                    description:
-                        The fragment's width.
                     type: string
             type: object
         FragmentViewport:
@@ -1939,6 +1772,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        backgroundFragmentImage:
+                            $ref: "#/components/schemas/FragmentImage"
+                            # @review
+                            description:
+                                The fragment's background image.
                         cssClasses:
                             # @review
                             description:
@@ -1946,16 +1784,6 @@ components:
                             items:
                                 type: string
                             type: array
-                        customCSS:
-                            # @review
-                            description:
-                                Custom CSS that is applied on the row page element.
-                            type: string
-                        fragmentStyle:
-                            $ref: "#/components/schemas/FragmentStyle"
-                            # @review
-                            description:
-                                The fragment style of the row page element.
                         gridViewports:
                             # @review
                             description:
@@ -4076,6 +3904,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        backgroundFragmentImage:
+                            $ref: "#/components/schemas/FragmentImage"
+                            # @review
+                            description:
+                                The fragment's background image.
                         cssClasses:
                             # @review
                             description:
@@ -4083,21 +3916,11 @@ components:
                             items:
                                 type: string
                             type: array
-                        customCSS:
-                            # @review
-                            description:
-                                Custom CSS that is applied on the widget instance page element.
-                            type: string
                         draftWidgetInstanceExternalReferenceCode:
                             # @review
                             description:
                                 The draft widget instance external reference code.
                             type: string
-                        fragmentStyle:
-                            $ref: "#/components/schemas/FragmentStyle"
-                            # @review
-                            description:
-                                The fragment style of the widget instance page element.
                         fragmentViewports:
                             # @review
                             description:

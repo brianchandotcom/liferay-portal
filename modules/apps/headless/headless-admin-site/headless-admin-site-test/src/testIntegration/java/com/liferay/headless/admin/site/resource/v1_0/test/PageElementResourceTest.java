@@ -3181,7 +3181,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				TextFragmentValue.Type.MAPPED));
 
 		_testMissingOptionalReference(
-			3,
+			4,
 			() ->
 				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 					FragmentEditableElementTestUtil.
@@ -3192,6 +3192,24 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 									FragmentMappedValueItemReference.Type.
 										ITEM_EXTERNAL_REFERENCE),
 							"element-background-image1"),
+					FragmentEditableElementTestUtil.
+						getBackgroundImageFragmentEditableElement(
+							FragmentEditableElementTestUtil.
+								getDirectFragmentImageValue(
+									ReferencesTestUtil.getItemExternalReference(
+										HashMapBuilder.put(
+											"className",
+											FileEntry.class.getName()
+										).put(
+											"externalReferenceCode",
+											RandomTestUtil.randomString()
+										).put(
+											"scopeExternalReferenceCode",
+											RandomTestUtil.randomString()
+										).build(),
+										testGroup.getGroupId()),
+									null),
+							"element-background-image2"),
 					FragmentEditableElementTestUtil.
 						getHTMLFragmentEditableElement(
 							null,

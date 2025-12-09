@@ -13,15 +13,31 @@ public class PublisherAssetLink {
 	public PublisherAssetLink(
 		long attachmentId, String fileName, String href, String version) {
 
-		this.attachmentId = attachmentId;
-		this.fileName = fileName;
-		this.href = href;
-		this.version = version;
+		_attachmentId = attachmentId;
+		_fileName = fileName;
+		_href = href;
+		_version = version;
 	}
 
-	public long attachmentId;
-	public String fileName;
-	public String href;
-	public String version;
+	public long getAttachmentId() {
+		return _attachmentId;
+	}
+
+	public String getFileName() {
+		return _fileName;
+	}
+
+	public String getHref() {
+		return _href;
+	}
+
+	public String getVersion() {
+		return _version;
+	}
+
+	private final long _attachmentId;
+	private final String _fileName;
+	private final String _href;
+	private final String _version;
 
 }

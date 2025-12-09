@@ -32,6 +32,8 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.test.util.ExpandoTestUtil;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
@@ -20242,10 +20244,18 @@ public class ObjectEntryResourceTest {
 			boolean withEmbeddedTaxonomyCategory)
 		throws Exception {
 
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			taxonomyCategory.getParentTaxonomyVocabulary();
+
 		Scope scope = Scope.of(
 			taxonomyCategory.getSiteId(), LocaleUtil.getDefault());
 
 		JSONObject jsonObject = JSONUtil.put(
+			"parentTaxonomyVocabulary",
+			JSONUtil.put(
+				"externalReferenceCode",
+				parentTaxonomyVocabulary.getExternalReferenceCode())
+		).put(
 			"scope",
 			JSONUtil.put(
 				"externalReferenceCode", scope.getExternalReferenceCode()
@@ -20260,6 +20270,17 @@ public class ObjectEntryResourceTest {
 		).put(
 			"taxonomyCategoryName", taxonomyCategory.getName()
 		);
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			taxonomyCategory.getParentTaxonomyCategory();
+
+		if (parentTaxonomyCategory != null) {
+			jsonObject.put(
+				"parentTaxonomyCategory",
+				JSONUtil.put(
+					"externalReferenceCode",
+					parentTaxonomyCategory.getExternalReferenceCode()));
+		}
 
 		if (!withEmbeddedTaxonomyCategory) {
 			return jsonObject;

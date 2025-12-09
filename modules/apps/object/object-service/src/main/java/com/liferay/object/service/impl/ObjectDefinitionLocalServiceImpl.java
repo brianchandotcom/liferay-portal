@@ -8,6 +8,7 @@ package com.liferay.object.service.impl;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.friendly.url.separator.util.FriendlyURLSeparatorUtil;
@@ -715,6 +716,12 @@ public class ObjectDefinitionLocalServiceImpl
 			_dropTable(objectDefinition.getExtensionDBTableName());
 		}
 		else if (objectDefinition.isApproved()) {
+			_assetListEntryLocalService.
+				removeClassNameIdFromAssetListEntryTypeSettings(
+					objectDefinition.getCompanyId(),
+					_classNameLocalService.getClassNameId(
+						objectDefinition.getClassName()));
+
 			_portletLocalService.removePortletModelResources(
 				objectDefinition.getCompanyId(),
 				objectDefinition.getPortletId());
@@ -3697,6 +3704,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	private BundleContext _bundleContext;
 

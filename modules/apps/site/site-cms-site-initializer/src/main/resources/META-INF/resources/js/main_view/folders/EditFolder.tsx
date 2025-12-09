@@ -26,12 +26,11 @@ interface EditFolderProps {
 
 const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 	const [folderData, setFolderData] = useState<
-		Pick<TFolder, 'description' | 'scopeKey' | 'title'> & {
+		Pick<TFolder, 'description' | 'title'> & {
 			space: Pick<Space, 'name' | 'settings'>;
 		}
 	>({
 		description: '',
-		scopeKey: '',
 		space: {
 			name: '',
 			settings: {

@@ -221,7 +221,7 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 								? isCloudApp
 									? `${getSiteURL()}/customer-dashboard#/order/${orderId}/cloud-provisioning`
 									: `${getSiteURL()}/customer-dashboard#/order/${orderId}/download`
-								: getSiteURL();
+								: `${getSiteURL()}/applications`;
 						Liferay.Util.navigate(url);
 					}}
 				>

@@ -1,11 +1,8 @@
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import Clipboard from 'clipboard';
-import getCN from 'classnames';
+import ClayForm from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'shared/types';
+import {ConnectLiferayDXPTokenFragment} from '../ConnectLiferayDXPTokenFragment';
 import {DataSourceStatuses} from 'shared/util/constants';
 import {disconnect, fetchToken} from 'shared/api/data-source';
 import {modalTypes} from 'shared/actions/modals';
@@ -81,7 +78,15 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 					}
 				}}
 			>
-				<ConnectLiferayDXPFragment
+				<label htmlFor='token'>
+					<Text weight='semi-bold'>
+						{Liferay.Language.get(
+							'copy-this-token-to-your-dxp-instance'
+						)}
+					</Text>
+				</label>
+
+				<ConnectLiferayDXPTokenFragment
 					addAlert={addAlert}
 					disabled={false}
 					token={token}
@@ -117,7 +122,15 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 				{Liferay.Language.get('token-authenticated-successfully')}
 			</ClayAlert>
 
-			<ConnectLiferayDXPFragment
+			<label htmlFor='token'>
+				<Text weight='semi-bold'>
+					{Liferay.Language.get(
+						'copy-this-token-to-your-dxp-instance'
+					)}
+				</Text>
+			</label>
+
+			<ConnectLiferayDXPTokenFragment
 				addAlert={addAlert}
 				disabled
 				token={token}
@@ -173,81 +186,6 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 				prevButtonLabel={Liferay.Language.get('disconnect-data-source')}
 			/>
 		</ClayForm>
-	);
-};
-
-const ConnectLiferayDXPFragment = ({addAlert, disabled, token}) => {
-	const [isUrlCopied, setIsUrlCopied] = useState(false);
-	const [copyTitle, setCopyTitle] = useState(
-		Liferay.Language.get('click-to-copy')
-	);
-
-	useEffect(() => {
-		const _clipboard = new Clipboard('[data-clipboard-text]');
-
-		_clipboard.on('success', event => {
-			setCopyTitle(Liferay.Language.get('copied'));
-
-			addAlert({
-				alertType: Alert.Types.Success,
-				message: Liferay.Language.get(
-					'copied-successfully-to-the-clipboard'
-				)
-			});
-
-			setTimeout(() => {
-				setCopyTitle(Liferay.Language.get('click-to-copy'));
-				setIsUrlCopied(false);
-			}, 3000);
-
-			event.clearSelection();
-		});
-
-		return () => _clipboard.destroy();
-	}, []);
-
-	return (
-		<ClayForm.Group
-			className={getCN({
-				'has-success': isUrlCopied
-			})}
-		>
-			<label htmlFor='token'>
-				<Text weight='semi-bold'>
-					{Liferay.Language.get(
-						'copy-this-token-to-your-dxp-instance'
-					)}
-				</Text>
-			</label>
-
-			<ClayInput.Group>
-				<ClayInput.GroupItem prepend>
-					<ClayInput
-						disabled={disabled}
-						id='token'
-						insetAfter
-						name='token'
-						readOnly={!isUrlCopied}
-						type='text'
-						value={token}
-					/>
-				</ClayInput.GroupItem>
-
-				<ClayInput.GroupItem append shrink>
-					<ClayButton
-						aria-label={copyTitle}
-						data-clipboard-text={token}
-						disabled={disabled}
-						displayType={isUrlCopied ? 'success' : 'secondary'}
-						onClick={() => setIsUrlCopied(true)}
-						outline
-						title={copyTitle}
-					>
-						<ClayIcon symbol={isUrlCopied ? 'check' : 'copy'} />
-					</ClayButton>
-				</ClayInput.GroupItem>
-			</ClayInput.Group>
-		</ClayForm.Group>
 	);
 };
 

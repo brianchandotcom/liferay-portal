@@ -257,8 +257,9 @@ function EditableSidebarHeader({editable}) {
 							'back-to-parent-configuration'
 						)}
 						borderless
-						className="mb-0 mr-3 p-0"
+						className="mb-0 mr-3"
 						displayType="secondary"
+						monospaced
 						onClick={() => selectItem(editable.parentId)}
 						size="sm"
 						title={Liferay.Language.get(

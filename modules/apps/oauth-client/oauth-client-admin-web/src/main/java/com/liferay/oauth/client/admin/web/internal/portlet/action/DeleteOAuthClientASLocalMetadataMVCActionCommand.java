@@ -38,7 +38,6 @@ public class DeleteOAuthClientASLocalMetadataMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-
 			Long oAuthClientASLocalMetadataId = ParamUtil.getLong(
 				actionRequest, "oAuthClientASLocalMetadataId");
 

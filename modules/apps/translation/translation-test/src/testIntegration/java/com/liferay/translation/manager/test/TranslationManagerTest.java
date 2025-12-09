@@ -21,8 +21,9 @@ import com.liferay.translation.manager.TranslationManager;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
-import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -55,6 +56,31 @@ public class TranslationManagerTest {
 	}
 
 	@Test
+	public void testGetXLIFFFile() throws Exception {
+		File xliff12File = _translationManager.getXLIFFFile(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(), _MIMETYPE_XLIFF_1_2,
+			LocaleUtil.US, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_TARGET_LANGUAGE_IDS[0]);
+
+		Assert.assertEquals(_getXLIFFFileName(), xliff12File.getName());
+
+		_assertXLIFFEquals(
+			"test-journal-article-v12.xlf", new FileInputStream(xliff12File));
+
+		File xliff20File = _translationManager.getXLIFFFile(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(), _MIMETYPE_XLIFF_2_0,
+			LocaleUtil.US, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_TARGET_LANGUAGE_IDS[0]);
+
+		Assert.assertEquals(_getXLIFFFileName(), xliff20File.getName());
+
+		_assertXLIFFEquals(
+			"test-journal-article.xlf", new FileInputStream(xliff20File));
+	}
+
+	@Test
 	public void testGetXLIFFZipFile() throws Exception {
 		_validateZipContent(
 			"test-journal-article-v12.xlf", _MIMETYPE_XLIFF_1_2);
@@ -62,46 +88,45 @@ public class TranslationManagerTest {
 		_validateZipContent("test-journal-article.xlf", _MIMETYPE_XLIFF_2_0);
 	}
 
-	private void _validateZipContent(String fileName, String mimetype)
+	private void _assertXLIFFEquals(String expected, InputStream inputStream)
+		throws Exception {
+
+		Assert.assertEquals(
+			StringUtil.replace(
+				TranslationTestUtil.readFileToString(expected),
+				"[$JOURNAL_ARTICLE_ID$]",
+				String.valueOf(_journalArticle.getResourcePrimKey())),
+			StringUtil.read(inputStream));
+	}
+
+	private String _getXLIFFFileName() {
+		return String.format(
+			"%s-%s-%s.xlf", _journalArticle.getTitle(),
+			LocaleUtil.toLanguageId(LocaleUtil.US), _TARGET_LANGUAGE_IDS[0]);
+	}
+
+	private void _validateZipContent(String fileName, String xliffMimeType)
 		throws Exception {
 
 		File xliffZipFile = _translationManager.getXLIFFZipFile(
 			JournalArticle.class.getName(),
-			new long[] {_journalArticle.getResourcePrimKey()}, mimetype,
+			new long[] {_journalArticle.getResourcePrimKey()}, xliffMimeType,
 			LocaleUtil.US, LocaleUtil.toLanguageId(LocaleUtil.US),
 			_TARGET_LANGUAGE_IDS);
 
 		try (ZipFile zipFile = new ZipFile(xliffZipFile)) {
-			int count = 0;
+			ZipEntry zipEntry = zipFile.getEntry(_getXLIFFFileName());
 
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+			Assert.assertNotNull(zipEntry);
+			Assert.assertFalse(zipEntry.isDirectory());
 
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
+			_assertXLIFFEquals(fileName, zipFile.getInputStream(zipEntry));
 
-				if (!zipEntry.isDirectory()) {
-					Assert.assertEquals(
-						StringUtil.replace(
-							TranslationTestUtil.readFileToString(fileName),
-							"[$JOURNAL_ARTICLE_ID$]",
-							String.valueOf(
-								_journalArticle.getResourcePrimKey())),
-						StringUtil.read(zipFile.getInputStream(zipEntry)));
-
-					count++;
-				}
-			}
-
-			Assert.assertEquals(1, count);
-
-			String xliffZipFileName = xliffZipFile.getName();
-
-			Assert.assertTrue(
-				xliffZipFileName.contains(_journalArticle.getTitle()));
-			Assert.assertTrue(
-				xliffZipFileName.contains(
-					LocaleUtil.toLanguageId(LocaleUtil.US)));
-			Assert.assertTrue(xliffZipFileName.contains(".xlf"));
+			Assert.assertEquals(
+				String.format(
+					"%s-%s.zip", _journalArticle.getTitle(),
+					LocaleUtil.toLanguageId(LocaleUtil.US)),
+				xliffZipFile.getName());
 		}
 		finally {
 			if ((xliffZipFile != null) && xliffZipFile.exists()) {

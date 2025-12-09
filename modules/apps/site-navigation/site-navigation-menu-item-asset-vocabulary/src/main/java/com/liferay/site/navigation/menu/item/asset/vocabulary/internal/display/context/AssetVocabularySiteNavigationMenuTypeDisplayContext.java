@@ -53,15 +53,19 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		_itemSelector = itemSelector;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAKARTA_PORTLET_RESPONSE));
 		_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.fastLoad(
 			siteNavigationMenuItem.getTypeSettings()
 		).build();
-
-		Group group;
-		String scopeExternalReferenceCode = _typeSettingsUnicodeProperties.get(
-			"scopeExternalReferenceCode");
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Group group = null;
+
+		String scopeExternalReferenceCode = _typeSettingsUnicodeProperties.get(
+			"scopeExternalReferenceCode");
 
 		if (Validator.isNull(scopeExternalReferenceCode)) {
 			group = _themeDisplay.getScopeGroup();
@@ -76,10 +80,6 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 				fetchAssetVocabularyByExternalReferenceCode(
 					_typeSettingsUnicodeProperties.get("externalReferenceCode"),
 					group.getGroupId());
-
-		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
-			(PortletResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAKARTA_PORTLET_RESPONSE));
 	}
 
 	public Map<String, Object> getAssetVocabularyContextualSidebarContext()

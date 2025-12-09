@@ -55,16 +55,11 @@ function ItemConfigurationContent({
 }) {
 	const tabIdPrefix = useId();
 	const panelIdPrefix = useId();
-	const selectItem = useSelectItem();
 
 	const {activeItem, panelsIds} = useSelectorCallback(
 		(state) => selectPanels(activeItemId, activeItemType, state),
 		[activeItemId, activeItemType],
 		deepEqual
-	);
-
-	const canUpdateItemConfiguration = useSelector(
-		selectCanUpdateItemConfiguration
 	);
 
 	const [previousPanel, setPreviousPanel] = useState({});
@@ -124,30 +119,7 @@ function ItemConfigurationContent({
 	return (
 		<div className="page-editor__page-structure__item-configuration">
 			{activeItemType === ITEM_TYPES.editable && !!activeItem && (
-				<SidebarPanelHeader
-					iconLeft={
-						canUpdateItemConfiguration && (
-							<ClayButton
-								aria-label={Liferay.Language.get(
-									'back-to-parent-configuration'
-								)}
-								borderless
-								className="mb-0 mr-3 p-0"
-								displayType="secondary"
-								onClick={() => selectItem(activeItem.parentId)}
-								size="sm"
-								title={Liferay.Language.get(
-									'back-to-parent-configuration'
-								)}
-							>
-								<ClayIcon symbol="angle-left" />
-							</ClayButton>
-						)
-					}
-					showCloseButton={false}
-				>
-					{activeItem.editableId}
-				</SidebarPanelHeader>
+				<EditableSidebarHeader editable={activeItem} />
 			)}
 
 			{!panels.length ? (
@@ -264,3 +236,38 @@ ItemConfigurationComponent.propTypes = {
 	Component: PropTypes.func.isRequired,
 	item: PropTypes.object.isRequired,
 };
+
+function EditableSidebarHeader({editable}) {
+	const selectItem = useSelectItem();
+
+	const canUpdateItemConfiguration = useSelector(
+		selectCanUpdateItemConfiguration
+	);
+
+	return (
+		<SidebarPanelHeader
+			iconLeft={
+				canUpdateItemConfiguration && (
+					<ClayButton
+						aria-label={Liferay.Language.get(
+							'back-to-parent-configuration'
+						)}
+						borderless
+						className="mb-0 mr-3 p-0"
+						displayType="secondary"
+						onClick={() => selectItem(editable.parentId)}
+						size="sm"
+						title={Liferay.Language.get(
+							'back-to-parent-configuration'
+						)}
+					>
+						<ClayIcon symbol="angle-left" />
+					</ClayButton>
+				)
+			}
+			showCloseButton={false}
+		>
+			{editable.editableId}
+		</SidebarPanelHeader>
+	);
+}

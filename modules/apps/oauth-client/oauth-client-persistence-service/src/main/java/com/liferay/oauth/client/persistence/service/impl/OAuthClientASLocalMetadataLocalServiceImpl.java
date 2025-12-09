@@ -5,6 +5,7 @@
 
 package com.liferay.oauth.client.persistence.service.impl;
 
+import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASIssuerException;
 import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASLocalMetadataException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataJSONException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException;
@@ -57,10 +58,20 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String tokenEndpointString, String userinfoEndpoint)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			oAuthClientASLocalMetadataPersistence.fetchByC_I(
+				user.getCompanyId(), issuerString);
+
+		if (oAuthClientASLocalMetadata != null) {
+			throw new DuplicateOAuthClientASIssuerException();
+		}
+
 		String localWellKnownURIOIC = _generateLocalWellKnownURI(
 			issuerString, tokenEndpointString, "openid-configuration");
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+		oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataPersistence.fetchByLocalWellKnownURI(
 				localWellKnownURIOIC);
 
@@ -76,8 +87,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		String metadataJSONOAS = _buildAuthorizationServerJSON(
 			authorizationEndpoint, issuerString, jwksUri, supportedScopes,
 			supportedGrantTypes, tokenEndpointString);
-
-		User user = _userLocalService.getUser(userId);
 
 		oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataPersistence.create(

@@ -10,11 +10,11 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -28,8 +28,10 @@ import com.liferay.translation.internal.helper.InfoItemHelper;
 import com.liferay.translation.manager.TranslationManager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.util.Locale;
 
@@ -51,35 +53,38 @@ public class TranslationManagerImpl implements TranslationManager {
 	}
 
 	@Override
+	public File getXLIFFFile(
+			String className, long classPK, String exportMimeType,
+			Locale locale, String sourceLanguageId, String targetLanguageId)
+		throws IOException, PortalException {
+
+		String fileName = _getXLIFFFileName(
+			className, classPK, sourceLanguageId, targetLanguageId, locale);
+
+		File file = new File(_createTempDirectory(), fileName);
+
+		try (OutputStream outputStream = new FileOutputStream(file)) {
+			StreamUtil.transfer(
+				_getXLIFFInputStream(
+					className, classPK, exportMimeType, sourceLanguageId,
+					targetLanguageId),
+				outputStream);
+		}
+
+		return file;
+	}
+
+	@Override
 	public File getXLIFFZipFile(
 			String className, long[] classPKs, String exportMimeType,
 			Locale locale, String sourceLanguageId, String[] targetLanguageIds)
 		throws IOException, PortalException {
 
-		String fileName;
+		String fileName = _getZipFileName(
+			className, classPKs, sourceLanguageId, locale);
 
-		if (ArrayUtil.isNotEmpty(targetLanguageIds) &&
-			(targetLanguageIds.length == 1) && (classPKs.length == 1)) {
-
-			fileName = _getXLIFFFileName(
-				className, classPKs[0], sourceLanguageId, targetLanguageIds[0],
-				locale);
-		}
-		else {
-			fileName = _getZipFileName(
-				className, classPKs, sourceLanguageId, locale);
-		}
-
-		File dir = FileUtil.createTempFile();
-
-		if (!dir.mkdir()) {
-			throw new IOException(
-				"Unable to create directory " + dir.getPath());
-		}
-
-		File file = new File(dir, fileName);
-
-		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(file);
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(
+			new File(_createTempDirectory(), fileName));
 
 		for (long classPK : classPKs) {
 			_addZipEntry(
@@ -105,6 +110,17 @@ public class TranslationManagerImpl implements TranslationManager {
 					className, classPK, exportMimeType, sourceLanguageId,
 					targetLanguageId));
 		}
+	}
+
+	private File _createTempDirectory() throws IOException {
+		File directory = FileUtil.createTempFile();
+
+		if (!directory.mkdir()) {
+			throw new IOException(
+				"Unable to create directory " + directory.getPath());
+		}
+
+		return directory;
 	}
 
 	private String _getPrefixName(

@@ -66,7 +66,9 @@ public class FragmentImageViewportSerDes {
 			sb.append("\"resolution\": ");
 
 			sb.append("\"");
-			sb.append(fragmentImageViewport.getResolution());
+
+			sb.append(_escape(fragmentImageViewport.getResolution()));
+
 			sb.append("\"");
 		}
 
@@ -150,8 +152,7 @@ public class FragmentImageViewportSerDes {
 			else if (Objects.equals(jsonParserFieldName, "resolution")) {
 				if (jsonParserFieldValue != null) {
 					fragmentImageViewport.setResolution(
-						FragmentImageViewport.Resolution.create(
-							(String)jsonParserFieldValue));
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

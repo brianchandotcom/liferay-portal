@@ -50,6 +50,21 @@ public class ImageFragmentEditableElementValueSerDes {
 
 		sb.append("{");
 
+		if (imageFragmentEditableElementValue.
+				getFragmentEditableElementValueFragmentLink() != null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentEditableElementValueFragmentLink\": ");
+
+			sb.append(
+				String.valueOf(
+					imageFragmentEditableElementValue.
+						getFragmentEditableElementValueFragmentLink()));
+		}
+
 		if (imageFragmentEditableElementValue.getFragmentImage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -60,18 +75,6 @@ public class ImageFragmentEditableElementValueSerDes {
 			sb.append(
 				String.valueOf(
 					imageFragmentEditableElementValue.getFragmentImage()));
-		}
-
-		if (imageFragmentEditableElementValue.getFragmentLink() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fragmentLink\": ");
-
-			sb.append(
-				String.valueOf(
-					imageFragmentEditableElementValue.getFragmentLink()));
 		}
 
 		if (imageFragmentEditableElementValue.getType() != null) {
@@ -108,6 +111,19 @@ public class ImageFragmentEditableElementValueSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (imageFragmentEditableElementValue.
+				getFragmentEditableElementValueFragmentLink() == null) {
+
+			map.put("fragmentEditableElementValueFragmentLink", null);
+		}
+		else {
+			map.put(
+				"fragmentEditableElementValueFragmentLink",
+				String.valueOf(
+					imageFragmentEditableElementValue.
+						getFragmentEditableElementValueFragmentLink()));
+		}
+
 		if (imageFragmentEditableElementValue.getFragmentImage() == null) {
 			map.put("fragmentImage", null);
 		}
@@ -116,16 +132,6 @@ public class ImageFragmentEditableElementValueSerDes {
 				"fragmentImage",
 				String.valueOf(
 					imageFragmentEditableElementValue.getFragmentImage()));
-		}
-
-		if (imageFragmentEditableElementValue.getFragmentLink() == null) {
-			map.put("fragmentLink", null);
-		}
-		else {
-			map.put(
-				"fragmentLink",
-				String.valueOf(
-					imageFragmentEditableElementValue.getFragmentLink()));
 		}
 
 		if (imageFragmentEditableElementValue.getType() == null) {
@@ -155,10 +161,13 @@ public class ImageFragmentEditableElementValueSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "fragmentImage")) {
+			if (Objects.equals(
+					jsonParserFieldName,
+					"fragmentEditableElementValueFragmentLink")) {
+
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentLink")) {
+			else if (Objects.equals(jsonParserFieldName, "fragmentImage")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -173,17 +182,22 @@ public class ImageFragmentEditableElementValueSerDes {
 			ImageFragmentEditableElementValue imageFragmentEditableElementValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentImage")) {
+			if (Objects.equals(
+					jsonParserFieldName,
+					"fragmentEditableElementValueFragmentLink")) {
+
+				if (jsonParserFieldValue != null) {
+					imageFragmentEditableElementValue.
+						setFragmentEditableElementValueFragmentLink(
+							FragmentEditableElementValueFragmentLinkSerDes.
+								toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentImage")) {
 				if (jsonParserFieldValue != null) {
 					imageFragmentEditableElementValue.setFragmentImage(
 						FragmentImageSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentLink")) {
-				if (jsonParserFieldValue != null) {
-					imageFragmentEditableElementValue.setFragmentLink(
-						FragmentLinkSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

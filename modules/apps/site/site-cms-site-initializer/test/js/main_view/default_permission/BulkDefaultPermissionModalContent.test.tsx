@@ -83,6 +83,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 			externalReferenceCode: 'ERC2',
 			id: 1,
 			name: 'Test Space',
+			settings: {logoColor: 'outline-0'},
 			siteId: 20203,
 		});
 

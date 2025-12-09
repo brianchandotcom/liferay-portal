@@ -16,6 +16,8 @@ import {SpaceInput} from '../../common/components/SpaceSelector';
 import {FieldText} from '../../common/components/forms';
 import {required, validate} from '../../common/components/forms/validations';
 import FolderService, {TFolder} from '../../common/services/FolderService';
+import SpaceService from '../../common/services/SpaceService';
+import {Space} from '../../common/types/Space';
 
 interface EditFolderProps {
 	backURL: string;
@@ -24,8 +26,20 @@ interface EditFolderProps {
 
 const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 	const [folderData, setFolderData] = useState<
-		Pick<TFolder, 'description' | 'scopeKey' | 'title'>
-	>({description: '', scopeKey: '', title: ''});
+		Pick<TFolder, 'description' | 'scopeKey' | 'title'> & {
+			space: Pick<Space, 'name' | 'settings'>;
+		}
+	>({
+		description: '',
+		scopeKey: '',
+		space: {
+			name: '',
+			settings: {
+				logoColor: 'outline-0',
+			},
+		},
+		title: '',
+	});
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const folderSpaceInputId = `${uuidv4()}folderSpace`;
@@ -35,8 +49,11 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 			setIsLoading(true);
 			try {
 				const response = await FolderService.getFolder(folderId);
+				const space = await SpaceService.getSpace(
+					response.scope?.externalReferenceCode!
+				);
 
-				setFolderData(response);
+				setFolderData({...response, space});
 			}
 			catch (error: any) {
 				throw new Error(
@@ -62,7 +79,7 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 		initialValues: {
 			folderDescription: folderData.description,
 			folderName: folderData.title,
-			folderSpace: folderData.scopeKey,
+			folderSpace: folderData.space,
 		},
 		onSubmit: async (formValues) => {
 			const newFolderValues: TFolder = {
@@ -105,7 +122,7 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 			setValues({
 				folderDescription: folderData.description,
 				folderName: folderData.title,
-				folderSpace: folderData.scopeKey,
+				folderSpace: folderData.space,
 			});
 		}
 	}, [folderData, setValues]);
@@ -195,8 +212,11 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 							aria-readonly
 							id={folderSpaceInputId}
 							readOnly
-							spaceName={values.folderSpace}
-							value={values.folderSpace}
+							spaceLogoColor={
+								values.folderSpace.settings?.logoColor
+							}
+							spaceName={values.folderSpace.name}
+							value={values.folderSpace.name}
 						/>
 					</FieldBase>
 

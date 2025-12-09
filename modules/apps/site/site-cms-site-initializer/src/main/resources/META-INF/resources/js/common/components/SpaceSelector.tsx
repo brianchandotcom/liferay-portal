@@ -83,6 +83,7 @@ export default function SpaceSelector({
 					event.preventDefault();
 				}
 			}}
+			spaceLogoColor={space?.settings?.logoColor}
 			spaceName={space?.name}
 			{...otherProps}
 		>

@@ -9,6 +9,9 @@ export type TFolder = {
 	description: string;
 	externalReferenceCode?: string;
 	id: number;
+	scope?: {
+		externalReferenceCode: string;
+	};
 	scopeKey?: string;
 	title: string;
 };

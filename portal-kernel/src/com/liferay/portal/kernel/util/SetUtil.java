@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.ToLongFunction;
 
 /**
  * @author Brian Wing Shun Chan
@@ -320,6 +321,20 @@ public class SetUtil {
 
 	public static Set<Long> symmetricDifference(long[] array1, long[] array2) {
 		return symmetricDifference(fromArray(array1), fromArray(array2));
+	}
+
+	public static <T> long[] toLongArray(
+		Set<? extends T> set, ToLongFunction<T> toLongFunction) {
+
+		long[] array = new long[set.size()];
+
+		int i = 0;
+
+		for (T t : set) {
+			array[i++] = toLongFunction.applyAsLong(t);
+		}
+
+		return array;
 	}
 
 }

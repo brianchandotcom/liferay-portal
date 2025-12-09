@@ -8,12 +8,10 @@ package com.liferay.translation.manager.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -69,9 +67,9 @@ public class TranslationManagerTest {
 
 		File xliffZipFile = _translationManager.getXLIFFZipFile(
 			JournalArticle.class.getName(),
-			_journalArticle.getResourcePrimKey(), StringPool.BLANK, mimetype,
-			LocaleUtil.US, false, LocaleUtil.toLanguageId(LocaleUtil.US),
-			_TARGET_LANGUAGE_IDS, TestPropsValues.getUser());
+			new long[] {_journalArticle.getResourcePrimKey()}, mimetype,
+			LocaleUtil.US, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_TARGET_LANGUAGE_IDS);
 
 		try (ZipFile zipFile = new ZipFile(xliffZipFile)) {
 			int count = 0;

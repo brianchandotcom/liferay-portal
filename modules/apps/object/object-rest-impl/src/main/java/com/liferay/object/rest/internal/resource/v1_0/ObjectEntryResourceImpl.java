@@ -43,7 +43,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -722,13 +721,9 @@ public class ObjectEntryResourceImpl
 		}
 
 		File xliffZipFile = _translationManager.getXLIFFZipFile(
-			className, objectEntryId,
-			LanguageUtil.get(
-				contextAcceptLanguage.getPreferredLocale(),
-				"model.resource." + className),
-			exportMimeType, contextAcceptLanguage.getPreferredLocale(), false,
-			sourceLanguageId,
-			StringUtil.split(targetLanguageIds, CharPool.COMMA), contextUser);
+			className, new long[] {objectEntryId}, exportMimeType,
+			contextAcceptLanguage.getPreferredLocale(), sourceLanguageId,
+			StringUtil.split(targetLanguageIds, CharPool.COMMA));
 
 		return Response.ok(
 			xliffZipFile
@@ -746,11 +741,11 @@ public class ObjectEntryResourceImpl
 		_checkFeatureFlag();
 
 		File xliffZipFile = _translationManager.getXLIFFZipFile(
-			_objectDefinition.getClassName(), objectEntryId, StringPool.BLANK,
+			_objectDefinition.getClassName(), new long[] {objectEntryId},
 			_getExportMimeType(
 				contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT)),
-			contextAcceptLanguage.getPreferredLocale(), false, languageId,
-			StringUtil.split(targetLanguageId, CharPool.COMMA), contextUser);
+			contextAcceptLanguage.getPreferredLocale(), languageId,
+			StringUtil.split(targetLanguageId, CharPool.COMMA));
 
 		StreamingOutput streamingOutput = outputStream -> {
 			try (ZipFile zipFile = new ZipFile(xliffZipFile)) {

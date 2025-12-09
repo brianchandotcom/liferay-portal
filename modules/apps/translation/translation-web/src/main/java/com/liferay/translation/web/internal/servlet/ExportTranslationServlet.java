@@ -10,7 +10,6 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.manager.TranslationManager;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
@@ -35,6 +32,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -82,15 +80,6 @@ public class ExportTranslationServlet extends HttpServlet {
 			String className = translationRequestHelper.getClassName(
 				segmentsExperienceIds);
 
-			String exportMimeType = ParamUtil.getString(
-				httpServletRequest, "exportMimeType");
-			String sourceLanguageId = ParamUtil.getString(
-				httpServletRequest, "sourceLanguageId");
-			String[] targetLanguageIds = ParamUtil.getStringValues(
-				httpServletRequest, "targetLanguageIds");
-
-			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
-
 			Set<Long> classPKs = SetUtil.fromArray(
 				_getClassPKs(
 					className, segmentsExperienceIds,
@@ -105,37 +94,35 @@ public class ExportTranslationServlet extends HttpServlet {
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-			for (long classPK : classPKs) {
-				if ((infoItemPermissionProvider != null) &&
-					!infoItemPermissionProvider.hasPermission(
-						permissionChecker,
-						new InfoItemReference(className, classPK),
-						ActionKeys.VIEW)) {
+			if (infoItemPermissionProvider != null) {
+				for (long classPK : classPKs) {
+					if (!infoItemPermissionProvider.hasPermission(
+							permissionChecker,
+							new InfoItemReference(className, classPK),
+							ActionKeys.VIEW)) {
 
-					throw new PrincipalException();
+						throw new PrincipalException.MustHavePermission(
+							permissionChecker, className, classPK,
+							ActionKeys.VIEW);
+					}
 				}
-
-				_translationManager.addZipEntry(
-					zipWriter, className, classPK, exportMimeType,
-					sourceLanguageId, targetLanguageIds,
-					_portal.getLocale(httpServletRequest));
 			}
 
-			try (InputStream inputStream = new FileInputStream(
-					zipWriter.getFile())) {
+			String sourceLanguageId = ParamUtil.getString(
+				httpServletRequest, "sourceLanguageId");
+			String[] targetLanguageIds = ParamUtil.getStringValues(
+				httpServletRequest, "targetLanguageIds");
+			String exportMimeType = ParamUtil.getString(
+				httpServletRequest, "exportMimeType");
 
+			File file = _translationManager.getXLIFFZipFile(
+				className, SetUtil.toLongArray(classPKs, classPK -> classPK),
+				exportMimeType, _portal.getLocale(httpServletRequest),
+				sourceLanguageId, targetLanguageIds);
+
+			try (InputStream inputStream = new FileInputStream(file)) {
 				ServletResponseUtil.sendFile(
-					httpServletRequest, httpServletResponse,
-					_translationManager.getZipFileName(
-						translationRequestHelper.getModelClassName(),
-						translationRequestHelper.getModelClassPK(),
-						_language.get(
-							_portal.getLocale(httpServletRequest),
-							"model.resource." + className),
-						_isMultipleModels(
-							translationRequestHelper.getModelClassPKs()),
-						sourceLanguageId,
-						_portal.getLocale(httpServletRequest)),
+					httpServletRequest, httpServletResponse, file.getName(),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}
 		}
@@ -181,19 +168,8 @@ public class ExportTranslationServlet extends HttpServlet {
 		return draftLayout.getPlid();
 	}
 
-	private boolean _isMultipleModels(long[] classPKs) {
-		if (classPKs.length > 1) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -209,8 +185,5 @@ public class ExportTranslationServlet extends HttpServlet {
 
 	@Reference
 	private TranslationManager _translationManager;
-
-	@Reference
-	private ZipWriterFactory _zipWriterFactory;
 
 }

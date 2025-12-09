@@ -14,7 +14,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -44,7 +43,54 @@ import org.osgi.service.component.annotations.Reference;
 public class TranslationManagerImpl implements TranslationManager {
 
 	@Override
-	public void addZipEntry(
+	public String getEntryTitle(String className, long classPK, Locale locale) {
+		InfoItemHelper infoItemHelper = new InfoItemHelper(
+			className, _infoItemServiceRegistry);
+
+		return infoItemHelper.getInfoItemTitle(classPK, locale);
+	}
+
+	@Override
+	public File getXLIFFZipFile(
+			String className, long[] classPKs, String exportMimeType,
+			Locale locale, String sourceLanguageId, String[] targetLanguageIds)
+		throws IOException, PortalException {
+
+		String fileName;
+
+		if (ArrayUtil.isNotEmpty(targetLanguageIds) &&
+			(targetLanguageIds.length == 1) && (classPKs.length == 1)) {
+
+			fileName = _getXLIFFFileName(
+				className, classPKs[0], sourceLanguageId, targetLanguageIds[0],
+				locale);
+		}
+		else {
+			fileName = _getZipFileName(
+				className, classPKs, sourceLanguageId, locale);
+		}
+
+		File dir = FileUtil.createTempFile();
+
+		if (!dir.mkdir()) {
+			throw new IOException(
+				"Unable to create directory " + dir.getPath());
+		}
+
+		File file = new File(dir, fileName);
+
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(file);
+
+		for (long classPK : classPKs) {
+			_addZipEntry(
+				zipWriter, className, classPK, exportMimeType, sourceLanguageId,
+				targetLanguageIds, locale);
+		}
+
+		return zipWriter.getFile();
+	}
+
+	private void _addZipEntry(
 			ZipWriter zipWriter, String className, long classPK,
 			String exportMimeType, String sourceLanguageId,
 			String[] targetLanguageIds, Locale locale)
@@ -61,83 +107,25 @@ public class TranslationManagerImpl implements TranslationManager {
 		}
 	}
 
-	@Override
-	public String getEntryTitle(String className, long classPK, Locale locale) {
-		InfoItemHelper infoItemHelper = new InfoItemHelper(
-			className, _infoItemServiceRegistry);
-
-		return infoItemHelper.getInfoItemTitle(classPK, locale);
-	}
-
-	@Override
-	public File getXLIFFZipFile(
-			String className, long classPK, String classNameTitle,
-			String exportMimeType, Locale locale, boolean multipleModels,
-			String sourceLanguageId, String[] targetLanguageIds, User user)
-		throws IOException, PortalException {
-
-		String fileName;
-
-		if (ArrayUtil.isNotEmpty(targetLanguageIds) &&
-			(targetLanguageIds.length == 1)) {
-
-			fileName = _getXLIFFFileName(
-				className, classPK, sourceLanguageId, targetLanguageIds[0],
-				locale);
-		}
-		else {
-			fileName = getZipFileName(
-				className, classPK, classNameTitle, multipleModels,
-				sourceLanguageId, locale);
-		}
-
-		File dir = FileUtil.createTempFile();
-
-		if (!dir.mkdir()) {
-			throw new IOException(
-				"Unable to create directory " + dir.getPath());
-		}
-
-		File file = new File(dir, fileName);
-
-		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(file);
-
-		addZipEntry(
-			zipWriter, className, classPK, exportMimeType, sourceLanguageId,
-			targetLanguageIds, locale);
-
-		return zipWriter.getFile();
-	}
-
-	@Override
-	public String getZipFileName(
-		String className, long classPK, String classNameTitle,
-		boolean multipleModels, String sourceLanguageId, Locale locale) {
-
-		return StringBundler.concat(
-			StringUtil.removeSubstrings(
-				_getPrefixName(
-					classPK, classNameTitle,
-					getEntryTitle(className, classPK, locale), multipleModels,
-					locale),
-				PropsValues.DL_CHAR_BLACKLIST),
-			StringPool.DASH, sourceLanguageId, ".zip");
-	}
-
 	private String _getPrefixName(
-		long classPK, String classNameTitle, String entryTitle,
-		boolean multipleModels, Locale locale) {
+		String className, long[] classPKs, Locale locale) {
 
-		if (multipleModels) {
-			return classNameTitle + StringPool.SPACE +
+		if (classPKs.length > 1) {
+			String title = _language.get(locale, "model.resource." + className);
+
+			return title + StringPool.SPACE +
 				_language.get(locale, "translations");
 		}
+
+		String entryTitle = getEntryTitle(className, classPKs[0], locale);
 
 		if (entryTitle != null) {
 			return entryTitle;
 		}
 
-		return classNameTitle + StringPool.SPACE + classPK;
+		String title = _language.get(locale, "model.resource." + className);
+
+		return title + StringPool.SPACE + classPKs[0];
 	}
 
 	private String _getXLIFFFileName(
@@ -194,6 +182,17 @@ public class TranslationManagerImpl implements TranslationManager {
 			infoItemFieldValuesProvider.getInfoItemFieldValues(object),
 			LocaleUtil.fromLanguageId(sourceLanguageId),
 			LocaleUtil.fromLanguageId(targetLanguageId));
+	}
+
+	private String _getZipFileName(
+		String className, long[] classPKs, String sourceLanguageId,
+		Locale locale) {
+
+		return StringBundler.concat(
+			StringUtil.removeSubstrings(
+				_getPrefixName(className, classPKs, locale),
+				PropsValues.DL_CHAR_BLACKLIST),
+			StringPool.DASH, sourceLanguageId, ".zip");
 	}
 
 	@Reference

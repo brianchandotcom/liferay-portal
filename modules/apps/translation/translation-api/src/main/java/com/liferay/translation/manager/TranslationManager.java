@@ -6,8 +6,6 @@
 package com.liferay.translation.manager;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,22 +17,11 @@ import java.util.Locale;
  */
 public interface TranslationManager {
 
-	public void addZipEntry(
-			ZipWriter zipWriter, String className, long classPK,
-			String exportMimeType, String sourceLanguageId,
-			String[] targetLanguageIds, Locale locale)
-		throws IOException, PortalException;
-
 	public String getEntryTitle(String className, long classPK, Locale locale);
 
 	public File getXLIFFZipFile(
-			String className, long classPK, String classNameTitle,
-			String exportMimeType, Locale locale, boolean multipleModels,
-			String sourceLanguageId, String[] targetLanguageIds, User user)
+			String className, long[] classPKs, String exportMimeType,
+			Locale locale, String sourceLanguageId, String[] targetLanguageIds)
 		throws IOException, PortalException;
-
-	public String getZipFileName(
-		String className, long classPK, String classNameTitle,
-		boolean multipleModels, String sourceLanguageId, Locale locale);
 
 }

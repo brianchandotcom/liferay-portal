@@ -99,6 +99,7 @@
 		<exception>DuplicateOAuthClientASIssuer</exception>
 		<exception>DuplicateOAuthClientASLocalMetadata</exception>
 		<exception>DuplicateOAuthClientEntry</exception>
+		<exception>OAuthClientASLocalMetadataIssuerURI</exception>
 		<exception>OAuthClientASLocalMetadataJSON</exception>
 		<exception>OAuthClientASLocalMetadataLocalWellKnownURI</exception>
 		<exception>OAuthClientEntryAuthRequestParametersJSON</exception>

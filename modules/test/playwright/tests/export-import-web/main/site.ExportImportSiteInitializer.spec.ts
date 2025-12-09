@@ -57,7 +57,7 @@ async function getSiteHomePageScreenshot(
 
 	const screenshot = await page.screenshot({
 		fullPage: true,
-		mask: [mask, page.getByTestId('notificationsCount')],
+		mask: [mask],
 		path: path.join(
 			getTempDir(),
 			`${siteKey}-${staging ? 'staging' : 'live'}.png`
@@ -97,8 +97,18 @@ async function getSiteHomePageScreenshot(
 		const comparator = getComparator('image/png');
 
 		const buffer = comparator(
-			await getSiteHomePageScreenshot(page, site.name, {staging: false}),
-			await getSiteHomePageScreenshot(page, site.name, {staging: true})
+			await getSiteHomePageScreenshot(
+				page,
+				site.name,
+				{staging: false},
+				page.getByTestId('notificationsCount')
+			),
+			await getSiteHomePageScreenshot(
+				page,
+				site.name,
+				{staging: true},
+				page.getByTestId('notificationsCount')
+			)
 		);
 
 		if (buffer !== null && buffer.diff !== undefined) {

@@ -503,50 +503,11 @@ public class FragmentEditableElementUtil {
 			TextFragmentEditableElementValue textFragmentEditableElementValue)
 		throws Exception {
 
-		JSONObject jsonObject = JSONUtil.put(
-			"config",
-			() -> {
-				FragmentEditableElementValueFragmentLink
-					fragmentEditableElementValueFragmentLink =
-						textFragmentEditableElementValue.
-							getFragmentEditableElementValueFragmentLink();
-
-				if (fragmentEditableElementValueFragmentLink == null) {
-					return null;
-				}
-
-				JSONObject configJSONObject = FragmentLinkUtil.toJSONObject(
-					companyId,
-					fragmentEditableElementValueFragmentLink.getFragmentLink(),
-					infoItemServiceRegistry, scopeGroupId);
-
-				if (JSONUtil.isEmpty(configJSONObject)) {
-					return null;
-				}
-
-				configJSONObject.put("mapperType", "link");
-
-				FragmentEditableElementValueFragmentLink.Prefix prefix =
-					fragmentEditableElementValueFragmentLink.getPrefix();
-
-				if ((prefix == null) ||
-					Objects.equals(
-						prefix,
-						FragmentEditableElementValueFragmentLink.Prefix.NONE)) {
-
-					return configJSONObject;
-				}
-
-				if (Objects.equals(
-						prefix,
-						FragmentEditableElementValueFragmentLink.Prefix.
-							EMAIL)) {
-
-					return configJSONObject.put("prefix", "mailto:");
-				}
-
-				return configJSONObject.put("prefix", "tel:");
-			});
+		JSONObject jsonObject = _toConfigJSONObject(
+			companyId,
+			textFragmentEditableElementValue.
+				getFragmentEditableElementValueFragmentLink(),
+			infoItemServiceRegistry, scopeGroupId);
 
 		TextFragmentValue textFragmentValue =
 			textFragmentEditableElementValue.getTextFragmentValue();
@@ -601,6 +562,53 @@ public class FragmentEditableElementUtil {
 			FragmentEditableElementValue.Type.BACKGROUND_IMAGE);
 
 		return backgroundImageFragmentEditableElementValue;
+	}
+
+	private static JSONObject _toConfigJSONObject(
+		long companyId,
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink,
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+
+		return JSONUtil.put(
+			"config",
+			() -> {
+				if (fragmentEditableElementValueFragmentLink == null) {
+					return null;
+				}
+
+				JSONObject configJSONObject = FragmentLinkUtil.toJSONObject(
+					companyId,
+					fragmentEditableElementValueFragmentLink.getFragmentLink(),
+					infoItemServiceRegistry, scopeGroupId);
+
+				if (JSONUtil.isEmpty(configJSONObject)) {
+					return null;
+				}
+
+				configJSONObject.put("mapperType", "link");
+
+				FragmentEditableElementValueFragmentLink.Prefix prefix =
+					fragmentEditableElementValueFragmentLink.getPrefix();
+
+				if ((prefix == null) ||
+					Objects.equals(
+						prefix,
+						FragmentEditableElementValueFragmentLink.Prefix.NONE)) {
+
+					return configJSONObject;
+				}
+
+				if (Objects.equals(
+						prefix,
+						FragmentEditableElementValueFragmentLink.Prefix.
+							EMAIL)) {
+
+					return configJSONObject.put("prefix", "mailto:");
+				}
+
+				return configJSONObject.put("prefix", "tel:");
+			});
 	}
 
 	private static FragmentEditableElementValueFragmentLink

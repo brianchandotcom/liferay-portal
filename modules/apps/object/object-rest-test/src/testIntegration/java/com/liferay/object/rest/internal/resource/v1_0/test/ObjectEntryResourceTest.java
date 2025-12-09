@@ -8264,8 +8264,9 @@ public class ObjectEntryResourceTest {
 				new ServiceContext());
 
 		TaxonomyCategory taxonomyCategory1 =
-			_addTaxonomyVocabularyTaxonomyCategory(
-				group1.getGroupId(), assetVocabulary1.getVocabularyId());
+			_taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+				assetVocabulary1.getVocabularyId(),
+				_randomTaxonomyCategory(group1.getGroupId()));
 
 		Group group2 = _groupLocalService.getGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.CMS);
@@ -8278,18 +8279,21 @@ public class ObjectEntryResourceTest {
 				new ServiceContext());
 
 		TaxonomyCategory taxonomyCategory2 =
-			_addTaxonomyVocabularyTaxonomyCategory(
-				group2.getGroupId(), assetVocabulary2.getVocabularyId());
+			_taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+				assetVocabulary2.getVocabularyId(),
+				_randomTaxonomyCategory(group2.getGroupId()));
 
 		Group group3 = _groupLocalService.fetchGroup(_testGroupId);
 
 		TaxonomyCategory taxonomyCategory3 =
-			_addTaxonomyVocabularyTaxonomyCategory(
-				group3.getGroupId(), _assetVocabulary.getVocabularyId());
+			_taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+				_assetVocabulary.getVocabularyId(),
+				_randomTaxonomyCategory(group3.getGroupId()));
 
 		TaxonomyCategory taxonomyCategory4 =
-			_addTaxonomyCategoryTaxonomyCategory(
-				group3.getGroupId(), taxonomyCategory3.getId());
+			_taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+				taxonomyCategory3.getId(),
+				_randomTaxonomyCategory(group3.getGroupId()));
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -10792,13 +10796,14 @@ public class ObjectEntryResourceTest {
 			JSONCompareMode.STRICT);
 
 		TaxonomyCategory taxonomyCategory1 =
-			_addTaxonomyVocabularyTaxonomyCategory(
-				assetVocabulary.getGroupId(),
-				assetVocabulary.getVocabularyId());
+			_taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+				assetVocabulary.getVocabularyId(),
+				_randomTaxonomyCategory(assetVocabulary.getGroupId()));
+
 		TaxonomyCategory taxonomyCategory2 =
-			_addTaxonomyVocabularyTaxonomyCategory(
-				assetVocabulary.getGroupId(),
-				assetVocabulary.getVocabularyId());
+			_taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+				assetVocabulary.getVocabularyId(),
+				_randomTaxonomyCategory(assetVocabulary.getGroupId()));
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -15339,27 +15344,13 @@ public class ObjectEntryResourceTest {
 			actionId);
 	}
 
-	private TaxonomyCategory _addTaxonomyCategoryTaxonomyCategory(
-			long groupId, String taxonomyCategoryId)
-		throws Exception {
-
-		return _taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-			taxonomyCategoryId, _randomTaxonomyCategory(groupId));
-	}
-
 	private TaxonomyCategory _addTaxonomyVocabularyTaxonomyCategory()
 		throws Exception {
 
-		return _addTaxonomyVocabularyTaxonomyCategory(
-			_testGroupId, _assetVocabulary.getVocabularyId());
-	}
-
-	private TaxonomyCategory _addTaxonomyVocabularyTaxonomyCategory(
-			long groupId, long taxonomyVocabularyId)
-		throws Exception {
+		long taxonomyVocabularyId = _assetVocabulary.getVocabularyId();
 
 		return _taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-			taxonomyVocabularyId, _randomTaxonomyCategory(groupId));
+			taxonomyVocabularyId, _randomTaxonomyCategory(_testGroupId));
 	}
 
 	private FileEntry _addTempFileEntry(

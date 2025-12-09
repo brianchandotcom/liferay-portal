@@ -22,6 +22,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -117,9 +118,7 @@ public class FragmentImageViewport implements Serializable {
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The resolution of the fragment image viewport."
 	)
-	@JsonGetter("resolution")
-	@Valid
-	public Resolution getResolution() {
+	public String getResolution() {
 		if (_resolutionSupplier != null) {
 			resolution = _resolutionSupplier.get();
 
@@ -129,18 +128,7 @@ public class FragmentImageViewport implements Serializable {
 		return resolution;
 	}
 
-	@JsonIgnore
-	public String getResolutionAsString() {
-		Resolution resolution = getResolution();
-
-		if (resolution == null) {
-			return null;
-		}
-
-		return resolution.toString();
-	}
-
-	public void setResolution(Resolution resolution) {
+	public void setResolution(String resolution) {
 		this.resolution = resolution;
 
 		_resolutionSupplier = null;
@@ -148,7 +136,7 @@ public class FragmentImageViewport implements Serializable {
 
 	@JsonIgnore
 	public void setResolution(
-		UnsafeSupplier<Resolution, Exception> resolutionUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> resolutionUnsafeSupplier) {
 
 		_resolutionSupplier = () -> {
 			try {
@@ -167,11 +155,11 @@ public class FragmentImageViewport implements Serializable {
 		description = "The resolution of the fragment image viewport."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Resolution resolution;
+	@NotEmpty
+	protected String resolution;
 
 	@JsonIgnore
-	private Supplier<Resolution> _resolutionSupplier;
+	private Supplier<String> _resolutionSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -215,7 +203,7 @@ public class FragmentImageViewport implements Serializable {
 			sb.append("\"");
 		}
 
-		Resolution resolution = getResolution();
+		String resolution = getResolution();
 
 		if (resolution != null) {
 			if (sb.length() > 1) {
@@ -225,7 +213,9 @@ public class FragmentImageViewport implements Serializable {
 			sb.append("\"resolution\": ");
 
 			sb.append("\"");
-			sb.append(resolution);
+
+			sb.append(_escape(resolution));
+
 			sb.append("\"");
 		}
 
@@ -244,8 +234,8 @@ public class FragmentImageViewport implements Serializable {
 	@GraphQLName("Id")
 	public static enum Id {
 
-		LANDSCAPE_MOBILE("LandscapeMobile"), PORTRAIT_MOBILE("PortraitMobile"),
-		TABLET("Tablet");
+		DESKTOP("Desktop"), LANDSCAPE_MOBILE("LandscapeMobile"),
+		PORTRAIT_MOBILE("PortraitMobile"), TABLET("Tablet");
 
 		@JsonCreator
 		public static Id create(String value) {
@@ -273,44 +263,6 @@ public class FragmentImageViewport implements Serializable {
 		}
 
 		private Id(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("Resolution")
-	public static enum Resolution {
-
-		AUTO("Auto"), PREVIEW("Preview"), THUMBNAIL("Thumbnail");
-
-		@JsonCreator
-		public static Resolution create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Resolution resolution : values()) {
-				if (Objects.equals(resolution.getValue(), value)) {
-					return resolution;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Resolution(String value) {
 			_value = value;
 		}
 

@@ -103,18 +103,6 @@ public class FragmentImageSerDes {
 			sb.append(fragmentImage.getLazyLoading());
 		}
 
-		if (fragmentImage.getResolution() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"resolution\": ");
-
-			sb.append("\"");
-			sb.append(fragmentImage.getResolution());
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -169,14 +157,6 @@ public class FragmentImageSerDes {
 				"lazyLoading", String.valueOf(fragmentImage.getLazyLoading()));
 		}
 
-		if (fragmentImage.getResolution() == null) {
-			map.put("resolution", null);
-		}
-		else {
-			map.put(
-				"resolution", String.valueOf(fragmentImage.getResolution()));
-		}
-
 		return map;
 	}
 
@@ -209,9 +189,6 @@ public class FragmentImageSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "lazyLoading")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "resolution")) {
 				return false;
 			}
 
@@ -263,13 +240,6 @@ public class FragmentImageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "lazyLoading")) {
 				if (jsonParserFieldValue != null) {
 					fragmentImage.setLazyLoading((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "resolution")) {
-				if (jsonParserFieldValue != null) {
-					fragmentImage.setResolution(
-						FragmentImage.Resolution.create(
-							(String)jsonParserFieldValue));
 				}
 			}
 		}

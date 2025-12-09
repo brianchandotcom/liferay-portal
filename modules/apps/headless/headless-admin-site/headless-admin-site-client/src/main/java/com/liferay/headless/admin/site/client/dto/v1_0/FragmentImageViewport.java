@@ -52,24 +52,16 @@ public class FragmentImageViewport implements Cloneable, Serializable {
 
 	protected Id id;
 
-	public Resolution getResolution() {
+	public String getResolution() {
 		return resolution;
 	}
 
-	public String getResolutionAsString() {
-		if (resolution == null) {
-			return null;
-		}
-
-		return resolution.toString();
-	}
-
-	public void setResolution(Resolution resolution) {
+	public void setResolution(String resolution) {
 		this.resolution = resolution;
 	}
 
 	public void setResolution(
-		UnsafeSupplier<Resolution, Exception> resolutionUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> resolutionUnsafeSupplier) {
 
 		try {
 			resolution = resolutionUnsafeSupplier.get();
@@ -79,7 +71,7 @@ public class FragmentImageViewport implements Cloneable, Serializable {
 		}
 	}
 
-	protected Resolution resolution;
+	protected String resolution;
 
 	@Override
 	public FragmentImageViewport clone() throws CloneNotSupportedException {
@@ -115,8 +107,8 @@ public class FragmentImageViewport implements Cloneable, Serializable {
 
 	public static enum Id {
 
-		LANDSCAPE_MOBILE("LandscapeMobile"), PORTRAIT_MOBILE("PortraitMobile"),
-		TABLET("Tablet");
+		DESKTOP("Desktop"), LANDSCAPE_MOBILE("LandscapeMobile"),
+		PORTRAIT_MOBILE("PortraitMobile"), TABLET("Tablet");
 
 		public static Id create(String value) {
 			for (Id id : values()) {
@@ -140,39 +132,6 @@ public class FragmentImageViewport implements Cloneable, Serializable {
 		}
 
 		private Id(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	public static enum Resolution {
-
-		AUTO("Auto"), PREVIEW("Preview"), THUMBNAIL("Thumbnail");
-
-		public static Resolution create(String value) {
-			for (Resolution resolution : values()) {
-				if (Objects.equals(resolution.getValue(), value) ||
-					Objects.equals(resolution.name(), value)) {
-
-					return resolution;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Resolution(String value) {
 			_value = value;
 		}
 

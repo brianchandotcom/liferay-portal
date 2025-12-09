@@ -115,35 +115,6 @@ public class FragmentImage implements Cloneable, Serializable {
 
 	protected Boolean lazyLoading;
 
-	public Resolution getResolution() {
-		return resolution;
-	}
-
-	public String getResolutionAsString() {
-		if (resolution == null) {
-			return null;
-		}
-
-		return resolution.toString();
-	}
-
-	public void setResolution(Resolution resolution) {
-		this.resolution = resolution;
-	}
-
-	public void setResolution(
-		UnsafeSupplier<Resolution, Exception> resolutionUnsafeSupplier) {
-
-		try {
-			resolution = resolutionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Resolution resolution;
-
 	@Override
 	public FragmentImage clone() throws CloneNotSupportedException {
 		return (FragmentImage)super.clone();
@@ -173,39 +144,6 @@ public class FragmentImage implements Cloneable, Serializable {
 
 	public String toString() {
 		return FragmentImageSerDes.toJSON(this);
-	}
-
-	public static enum Resolution {
-
-		AUTO("Auto"), PREVIEW("Preview"), THUMBNAIL("Thumbnail");
-
-		public static Resolution create(String value) {
-			for (Resolution resolution : values()) {
-				if (Objects.equals(resolution.getValue(), value) ||
-					Objects.equals(resolution.name(), value)) {
-
-					return resolution;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Resolution(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
 	}
 
 }

@@ -26,6 +26,36 @@ public class ImageFragmentEditableElementValue
 		return ImageFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
+	public FragmentEditableElementValueFragmentLink
+		getFragmentEditableElementValueFragmentLink() {
+
+		return fragmentEditableElementValueFragmentLink;
+	}
+
+	public void setFragmentEditableElementValueFragmentLink(
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink) {
+
+		this.fragmentEditableElementValueFragmentLink =
+			fragmentEditableElementValueFragmentLink;
+	}
+
+	public void setFragmentEditableElementValueFragmentLink(
+		UnsafeSupplier<FragmentEditableElementValueFragmentLink, Exception>
+			fragmentEditableElementValueFragmentLinkUnsafeSupplier) {
+
+		try {
+			fragmentEditableElementValueFragmentLink =
+				fragmentEditableElementValueFragmentLinkUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentEditableElementValueFragmentLink
+		fragmentEditableElementValueFragmentLink;
+
 	public FragmentImage getFragmentImage() {
 		return fragmentImage;
 	}
@@ -46,27 +76,6 @@ public class ImageFragmentEditableElementValue
 	}
 
 	protected FragmentImage fragmentImage;
-
-	public FragmentLink getFragmentLink() {
-		return fragmentLink;
-	}
-
-	public void setFragmentLink(FragmentLink fragmentLink) {
-		this.fragmentLink = fragmentLink;
-	}
-
-	public void setFragmentLink(
-		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
-
-		try {
-			fragmentLink = fragmentLinkUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected FragmentLink fragmentLink;
 
 	@Override
 	public ImageFragmentEditableElementValue clone()

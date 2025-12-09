@@ -55,6 +55,63 @@ public class ImageFragmentEditableElementValue
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment link of an image fragment editable element value."
+	)
+	@Valid
+	public FragmentEditableElementValueFragmentLink
+		getFragmentEditableElementValueFragmentLink() {
+
+		if (_fragmentEditableElementValueFragmentLinkSupplier != null) {
+			fragmentEditableElementValueFragmentLink =
+				_fragmentEditableElementValueFragmentLinkSupplier.get();
+
+			_fragmentEditableElementValueFragmentLinkSupplier = null;
+		}
+
+		return fragmentEditableElementValueFragmentLink;
+	}
+
+	public void setFragmentEditableElementValueFragmentLink(
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink) {
+
+		this.fragmentEditableElementValueFragmentLink =
+			fragmentEditableElementValueFragmentLink;
+
+		_fragmentEditableElementValueFragmentLinkSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFragmentEditableElementValueFragmentLink(
+		UnsafeSupplier<FragmentEditableElementValueFragmentLink, Exception>
+			fragmentEditableElementValueFragmentLinkUnsafeSupplier) {
+
+		_fragmentEditableElementValueFragmentLinkSupplier = () -> {
+			try {
+				return fragmentEditableElementValueFragmentLinkUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The fragment link of an image fragment editable element value."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentEditableElementValueFragmentLink
+		fragmentEditableElementValueFragmentLink;
+
+	@JsonIgnore
+	private Supplier<FragmentEditableElementValueFragmentLink>
+		_fragmentEditableElementValueFragmentLinkSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment editable element's image."
 	)
 	@Valid
@@ -98,50 +155,6 @@ public class ImageFragmentEditableElementValue
 	@JsonIgnore
 	private Supplier<FragmentImage> _fragmentImageSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A link to a fragment."
-	)
-	@Valid
-	public FragmentLink getFragmentLink() {
-		if (_fragmentLinkSupplier != null) {
-			fragmentLink = _fragmentLinkSupplier.get();
-
-			_fragmentLinkSupplier = null;
-		}
-
-		return fragmentLink;
-	}
-
-	public void setFragmentLink(FragmentLink fragmentLink) {
-		this.fragmentLink = fragmentLink;
-
-		_fragmentLinkSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFragmentLink(
-		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
-
-		_fragmentLinkSupplier = () -> {
-			try {
-				return fragmentLinkUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "A link to a fragment.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentLink fragmentLink;
-
-	@JsonIgnore
-	private Supplier<FragmentLink> _fragmentLinkSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -171,6 +184,20 @@ public class ImageFragmentEditableElementValue
 
 		sb.append("{");
 
+		FragmentEditableElementValueFragmentLink
+			fragmentEditableElementValueFragmentLink =
+				getFragmentEditableElementValueFragmentLink();
+
+		if (fragmentEditableElementValueFragmentLink != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentEditableElementValueFragmentLink\": ");
+
+			sb.append(String.valueOf(fragmentEditableElementValueFragmentLink));
+		}
+
 		FragmentImage fragmentImage = getFragmentImage();
 
 		if (fragmentImage != null) {
@@ -181,18 +208,6 @@ public class ImageFragmentEditableElementValue
 			sb.append("\"fragmentImage\": ");
 
 			sb.append(String.valueOf(fragmentImage));
-		}
-
-		FragmentLink fragmentLink = getFragmentLink();
-
-		if (fragmentLink != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fragmentLink\": ");
-
-			sb.append(String.valueOf(fragmentLink));
 		}
 
 		Type type = getType();

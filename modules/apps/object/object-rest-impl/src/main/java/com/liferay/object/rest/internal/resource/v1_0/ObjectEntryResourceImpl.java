@@ -77,22 +77,16 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.StreamingOutput;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  * @author Javier Gamarra
@@ -740,37 +734,18 @@ public class ObjectEntryResourceImpl
 
 		_checkFeatureFlag();
 
-		File xliffZipFile = _translationManager.getXLIFFZipFile(
-			_objectDefinition.getClassName(), new long[] {objectEntryId},
+		File xliffFile = _translationManager.getXLIFFFile(
+			_objectDefinition.getClassName(), objectEntryId,
 			_getExportMimeType(
 				contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT)),
 			contextAcceptLanguage.getPreferredLocale(), languageId,
-			StringUtil.split(targetLanguageId, CharPool.COMMA));
-
-		StreamingOutput streamingOutput = outputStream -> {
-			try (ZipFile zipFile = new ZipFile(xliffZipFile)) {
-				Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-				if (!enumeration.hasMoreElements()) {
-					throw new IOException(
-						"Zip file is empty: " + xliffZipFile.getName());
-				}
-
-				ZipEntry zipEntry = enumeration.nextElement();
-
-				try (InputStream inputStream = zipFile.getInputStream(
-						zipEntry)) {
-
-					inputStream.transferTo(outputStream);
-				}
-			}
-		};
+			targetLanguageId);
 
 		return Response.ok(
-			streamingOutput
+			xliffFile
 		).header(
 			"content-disposition",
-			"attachment; filename=\"" + xliffZipFile.getName() + "\""
+			"attachment; filename=\"" + xliffFile.getName() + "\""
 		).build();
 	}
 

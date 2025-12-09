@@ -1,279 +1,292 @@
-import * as API from 'shared/api';
+import * as breadcrumbs from 'shared/util/breadcrumbs';
+import BasePage from 'settings/components/base-page/BasePage';
+import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import Form, {
-	toPromise,
-	validateMaxLength,
-	validateRequired
-} from 'shared/components/form';
-import InputWithEditToggle from 'shared/components/InputWithEditToggle';
-import Label from 'shared/components/Label';
-import React, {useCallback, useRef} from 'react';
-import Sheet from 'shared/components/Sheet';
-import {addAlert} from '../../../shared/actions/alerts';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
+import React, {useEffect, useState} from 'react';
+import URLConstants from 'shared/util/url-constants';
+import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
+import {Card} from 'shared/components/revamping/Card';
+import {ClayInput} from '@clayui/form';
+import {close, open} from 'shared/actions/modals';
+import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {DataSource, User} from 'shared/util/records';
-import {DataSourceStates} from 'shared/util/constants';
-import {
-	fetchDataSource,
-	updateLiferayDataSource
-} from 'shared/actions/data-sources';
-import {noop} from 'lodash';
-import {sequence} from 'shared/util/promise';
-import {validateUniqueName} from 'shared/util/data-sources';
+import {ConnectLiferayDXPTokenFragment} from './ConnectLiferayDXPTokenFragment';
+import {DataSource} from 'shared/util/records';
+import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
+import {DataSourceStatuses} from 'shared/util/constants';
+import {fetch, fetchToken, updateLiferay} from 'shared/api/data-source';
+import {getDataSourceDisplayObject} from 'shared/util/data-sources';
+import {ReviewSyncedDataFragment} from './ReviewSyncedDataFragment';
+import {Text} from '@clayui/core';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {useDisconnectDataSource} from '../data-source/utils';
+import {useParams} from 'react-router-dom';
 
-const getStatusLabel = (configured: boolean): React.ReactNode => (
-	<Label display={configured ? 'success' : 'secondary'} size='lg' uppercase>
-		{configured
-			? Liferay.Language.get('configured')
-			: Liferay.Language.get('unconfigured')}
-	</Label>
-);
-
-type ConfigurationItem = {
-	description: string;
-	getConfigurationStatus: (dataSource: DataSource) => boolean;
-	title: string;
-};
-
-const configurationItems: ConfigurationItem[] = [
-	{
-		description: Liferay.Language.get(
-			'to-configure-sites,-go-to-the-analytics-cloud-configuration-in-your-dxp-instance-settings,-then-select-the-sites-you-would-like-to-start-tracking'
-		),
-		getConfigurationStatus: dataSource => dataSource.sitesSelected,
-		title: Liferay.Language.get('synced-sites')
-	},
-	{
-		description: Liferay.Language.get(
-			'to-configure-contacts,-go-to-the-analytics-cloud-configuration-in-your-dxp-instance-settings,-then-select-which-contacts-you-would-like-to-sync'
-		),
-		getConfigurationStatus: dataSource => dataSource.contactsSelected,
-		title: Liferay.Language.get('synced-contacts')
-	}
-];
+const TIMEOUT_INTERVAL = 5000;
 
 const connector = connect(null, {
 	addAlert,
 	close,
-	fetchDataSource,
-	open,
-	updateLiferayDataSource
+	open
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-interface ILiferayOverviewProps extends PropsFromRedux {
-	currentUser: User;
+interface ILiferayeOverviewProps extends PropsFromRedux {
 	dataSource: DataSource;
-	groupId: string;
-	id: string;
 }
 
-const LiferayOverview: React.FC<ILiferayOverviewProps> = ({
+const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 	addAlert,
 	close,
-	currentUser,
-	dataSource,
-	fetchDataSource,
-	groupId,
-	id,
-	open,
-	updateLiferayDataSource
+	dataSource: initialDataSource,
+	open
 }) => {
-	const cachedNameValues = useRef(new Map());
+	const [dataSource, setDataSource] = useState(initialDataSource);
+	const [, setLoading] = useState(false);
+	const {groupId, id} = useParams();
+	const currentUser = useCurrentUser();
+	const [token, setToken] = useState('');
 
-	const handleDisconnectClick = useCallback(() => {
-		open(modalTypes.CONFIRMATION_MODAL, {
-			message: (
-				<>
-					<p className='text-secondary'>
-						{Liferay.Language.get(
-							'are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-the-dxp-instance'
-						)}
-					</p>
+	const {display, label} = getDataSourceDisplayObject(dataSource);
 
-					<b>
-						{Liferay.Language.get(
-							'this-will-stop-any-syncing-of-analytics-or-contact-data-to-your-analytics-cloud-workspace'
-						)}
-					</b>
-				</>
-			),
-			modalVariant: 'modal-warning',
-			onClose: close,
-			onSubmit: () =>
-				API.dataSource
-					.disconnect({
-						groupId,
-						id
-					})
-					.then(() => {
-						fetchDataSource({
-							groupId,
-							id
-						});
+	type Alert = {
+		displayType: DisplayType;
+		message: string;
+	};
 
-						close();
-					})
-					.catch(error => {
-						addAlert({
-							alertType: Alert.Types.Error,
-							message: error.message,
-							timeout: false
-						});
+	const [alert, setAlert] = useState<Alert>({
+		displayType: 'success',
+		message: ''
+	});
 
-						fetchDataSource({
-							groupId,
-							id
-						});
-					}),
-			submitButtonDisplay: 'warning',
-			submitMessage: Liferay.Language.get('disconnect'),
-			title: Liferay.Language.get('disconnecting-data-source'),
-			titleIcon: 'warning-full'
-		});
-	}, [addAlert, close, fetchDataSource, groupId, id, open]);
+	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
-	const handleReconnectClick = useCallback(() => {
-		open(modalTypes.CONNECT_DXP_MODAL, {
-			groupId,
-			id,
-			onClose: () => {
-				fetchDataSource({groupId, id});
-
-				close();
-			}
-		});
-	}, [close, fetchDataSource, groupId, id, open]);
-
-	const handleUpdateName = useCallback(
-		name => updateLiferayDataSource({groupId, id, name}),
-		[groupId, id, updateLiferayDataSource]
-	);
-
-	const handleValidate = useCallback(
-		value => {
-			let error = null;
-
-			if (value !== dataSource.name) {
-				if (cachedNameValues.current.has(value)) {
-					error = cachedNameValues.current.get(value);
-				} else {
-					error = validateUniqueName({groupId, value});
-
-					cachedNameValues.current.set(value, error);
-				}
-			}
-
-			return toPromise(error);
+	const {handleDisconnect} = useDisconnectDataSource({
+		addAlert,
+		close,
+		groupId,
+		id,
+		onSubmit: async () => {
+			await handleUpdateDataSource();
 		},
-		[dataSource.name, groupId]
-	);
+		open
+	});
 
-	const disconnected = dataSource.state === DataSourceStates.Disconnected;
+	const handleUpdateDataSource = async () => {
+		try {
+			setLoading(true);
+
+			const newDataSource = await fetch({
+				groupId,
+				id
+			});
+
+			setDataSource(new DataSource(newDataSource));
+		} catch (error) {
+			addAlert({
+				alertType: Alert.Types.Error,
+				message: Liferay.Language.get(
+					'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
+				)
+			});
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		const alert: Alert = {
+			displayType: 'success',
+			message: Liferay.Language.get(
+				'you-have-successfully-authenticated-your-token-with-liferay-analytics-cloud.-you-can-now-select-the-data-to-sync'
+			)
+		};
+
+		if (!dataSourceActive) {
+			alert.displayType = 'warning';
+
+			alert.message = Liferay.Language.get(
+				'the-data-source-is-disconnected.-data-is-no-longer-being-synced-from-dxp,-but-you-can-reconnect-to-resume-syncing'
+			);
+		} else if (dataSource?.sitesSelected || dataSource?.contactsSelected) {
+			alert.message = Liferay.Language.get(
+				'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
+			);
+		}
+
+		setAlert(alert);
+	}, [dataSource, dataSourceActive]);
+
+	let _tokenRequest;
+
+	const getNextToken = async (prevToken?: string) => {
+		const nextToken = await fetchToken(groupId, id);
+
+		if (!prevToken || prevToken === nextToken) {
+			_tokenRequest = setTimeout(
+				() => getNextToken(nextToken),
+				TIMEOUT_INTERVAL
+			);
+		} else {
+			handleUpdateDataSource();
+		}
+
+		return nextToken;
+	};
+
+	useEffect(() => {
+		if (!dataSourceActive) {
+			_tokenRequest = getNextToken().then(setToken);
+		}
+
+		return () => {
+			clearTimeout(_tokenRequest);
+		};
+	}, [dataSourceActive]);
 
 	return (
-		<Sheet className='liferay-data-source-root'>
-			<Sheet.Header className='mb-1'>
-				<Sheet.Title>
-					{Liferay.Language.get('data-source-information')}
-				</Sheet.Title>
-			</Sheet.Header>
+		<BasePage
+			breadcrumbItems={[
+				breadcrumbs.getDataSources({groupId}),
+				breadcrumbs.getDataSourceName({
+					active: true,
+					label: dataSource.name
+				})
+			]}
+			documentTitle={Liferay.Language.get('configure-data-source')}
+		>
+			<DataSourceEditableTitle
+				dataSource={dataSource}
+				displayType={display}
+				editable={currentUser?.isAdmin()}
+				groupId={groupId}
+				label={label}
+				onUpdateName={async name => {
+					await updateLiferay({groupId, id, name} as any);
 
-			<Sheet.Body>
-				<Sheet.Section>
-					<InputWithEditToggle
-						editable={currentUser.isAdmin()}
-						inputWidth={100}
-						label={Liferay.Language.get('name')}
-						name='dataSourceName'
-						onSubmit={name => toPromise(handleUpdateName(name))}
-						required
-						validate={sequence([
-							validateRequired,
-							validateMaxLength(255),
-							handleValidate
-						])}
-						value={dataSource.name || ''}
+					await handleUpdateDataSource();
+				}}
+			/>
+
+			<Card title={Liferay.Language.get('authentication')}>
+				<div className='mb-4'>
+					<Card.SubHeader
+						title={Liferay.Language.get('connection-status')}
 					/>
-				</Sheet.Section>
 
-				<Sheet.Section>
-					<Form
-						initialValues={{
-							dataSourceName: dataSource.name,
-							dxpInstanceId: dataSource.id
-						}}
-						onSubmit={noop}
-					>
-						{() => (
-							<Form.Form className='dxp-instance-id-root'>
-								<Form.Group>
-									<Form.GroupItem className='d-flex mb-3'>
-										<Form.Input
-											label={Liferay.Language.get(
-												'dxp-instance-id'
-											)}
-											name='dxpInstanceId'
-											readOnly
-											showSuccess={false}
-											width={100}
-										/>
-									</Form.GroupItem>
+					{alert && (
+						<ClayAlert displayType={alert.displayType as any}>
+							{alert.message}
+						</ClayAlert>
+					)}
 
-									<Form.GroupItem>
-										<ClayButton
-											className='button-root'
-											data-testid='disconnect-button'
-											disabled={!currentUser.isAdmin()}
-											displayType='secondary'
-											onClick={
-												disconnected
-													? handleReconnectClick
-													: handleDisconnectClick
-											}
-										>
-											{disconnected
-												? Liferay.Language.get(
-														'reconnect'
-												  )
-												: Liferay.Language.get(
-														'disconnect'
-												  )}
-										</ClayButton>
-									</Form.GroupItem>
-								</Form.Group>
-							</Form.Form>
-						)}
-					</Form>
-				</Sheet.Section>
+					{!dataSourceActive && (
+						<>
+							<div className='mb-4'>
+								<Text color='secondary' size={4}>
+									{Liferay.Language.get(
+										'to-reestablish-the-connection-between-the-liferay-dxp-instance-and-liferay-analytics-cloud,-copy-the-token-below-and-go-to-dxp-instance-settings-analytics-cloud-to-continue-the-data-source-configuration'
+									)}
+								</Text>
 
-				{configurationItems.map(
-					({
-						description,
-						getConfigurationStatus,
-						title
-					}: ConfigurationItem) => (
-						<Sheet.Section key={title} lastChildMargin>
-							<div className='mb-1 d-flex align-items-center'>
-								<div className='h4 mb-0 mr-2'>{title}</div>
-
-								{getStatusLabel(
-									getConfigurationStatus(dataSource)
-								)}
+								<ClayLink
+									className='ml-1'
+									href={URLConstants.HelpConnectDxp}
+									key='DOCUMENTATION'
+									target='_blank'
+								>
+									{Liferay.Language.get(
+										'learn-more-about-data-sources'
+									)}
+								</ClayLink>
 							</div>
 
-							<p className='description-secondary'>
-								{description}
-							</p>
-						</Sheet.Section>
-					)
+							<label htmlFor='token'>
+								<Text weight='semi-bold'>
+									{Liferay.Language.get(
+										'analytics-cloud-token'
+									)}
+								</Text>
+
+								<div>
+									<Text color='secondary' weight='normal'>
+										{Liferay.Language.get(
+											'copy-this-token-to-the-dxp-instance-you-would-like-to-connect'
+										)}
+									</Text>
+								</div>
+							</label>
+
+							<ConnectLiferayDXPTokenFragment
+								addAlert={addAlert}
+								disabled={false}
+								token={token}
+							/>
+						</>
+					)}
+				</div>
+
+				<div className='mb-4'>
+					<Card.SubHeader
+						title={Liferay.Language.get('data-source-details')}
+					/>
+
+					<ClayInput.Group className='d-flex mt-3'>
+						<ClayInput.GroupItem className='mr-3' shrink>
+							<label htmlFor='dataSourceType'>
+								{Liferay.Language.get('data-source-type')}
+							</label>
+
+							<ClayInput
+								readOnly
+								type='text'
+								value={Liferay.Language.get('liferay-portal')}
+							/>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem className='ml-0' shrink>
+							<label htmlFor='dataSourceId'>
+								{Liferay.Language.get('data-source-id')}
+							</label>
+
+							<ClayInput
+								readOnly
+								type='text'
+								value={dataSource.id}
+							/>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</div>
+
+				{currentUser.isAdmin() && dataSourceActive && (
+					<ClayButton
+						aria-label={Liferay.Language.get(
+							'disconnect-data-source'
+						)}
+						displayType='danger'
+						onClick={handleDisconnect}
+						outline
+						size='sm'
+					>
+						<ClayIcon className='mr-2' symbol='logout' />
+
+						{Liferay.Language.get('disconnect-data-source')}
+					</ClayButton>
 				)}
-			</Sheet.Body>
-		</Sheet>
+			</Card>
+
+			<Card title={Liferay.Language.get('synced-data')}>
+				<ReviewSyncedDataFragment
+					contactsSelected={dataSource.contactsSelected}
+					sitesSelected={dataSource.sitesSelected}
+				/>
+			</Card>
+		</BasePage>
 	);
 };
 
-export default connector(LiferayOverview);
+export default compose(connector)(LiferayOverview);

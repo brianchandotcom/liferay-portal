@@ -3,14 +3,12 @@ import BasePage from 'settings/components/base-page/BasePage';
 import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
-import InputWithEditToggle from 'shared/components/InputWithEditToggle';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import SalesforceAccountsAndIndividuals from './SalesforceAccountsAndIndividuals';
 import TextTruncate from 'shared/components/TextTruncate';
 import URLConstants from 'shared/util/url-constants';
@@ -24,29 +22,21 @@ import {connect, ConnectedProps} from 'react-redux';
 import {ConnectSalesforceAuth} from './ConnectSalesforceAuth';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {DataSource} from 'shared/util/records';
+import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
 import {DataSourceStatuses, Sizes} from 'shared/util/constants';
 import {
-	disconnect,
 	fetch,
 	fetchAccountsCount,
 	fetchChannelDatasources,
 	fetchUserCount,
 	updateSalesforce
 } from 'shared/api/data-source';
-import {
-	getDataSourceDisplayObject,
-	validateUniqueName
-} from 'shared/util/data-sources';
+import {getDataSourceDisplayObject} from 'shared/util/data-sources';
 import {Link, useParams} from 'react-router-dom';
 import {Routes, toRoute} from 'shared/util/router';
-import {sequence} from 'shared/util/promise';
 import {Text} from '@clayui/core';
-import {
-	toPromise,
-	validateMaxLength,
-	validateRequired
-} from 'shared/components/form';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {useDisconnectDataSource} from '../data-source/utils';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
 import {withSelectionProvider} from 'shared/context/selection';
@@ -84,12 +74,10 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 		message: string;
 	};
 
-	const initialAlert: Alert = {
+	const [alert, setAlert] = useState<Alert>({
 		displayType: 'success',
 		message: ''
-	};
-
-	const [alert, setAlert] = useState(initialAlert);
+	});
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
@@ -163,76 +151,16 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 		enabledAllContacts
 	]);
 
-	const cachedNameValues = useRef(new Map());
-
-	const handleDisconnectClick = useCallback(() => {
-		open(modalTypes.CONFIRMATION_MODAL, {
-			message: (
-				<Text as='p' size={4}>
-					{Liferay.Language.get(
-						'this-action-will-stop-syncing-data-from-salesforce-to-this-analytics-cloud-workspace.-the-data-that-was-already-synced-will-remain-available-in-the-properties-the-data-source-was-connected-to.-are-you-sure-you-want-to-continue'
-					)}
-				</Text>
-			),
-			modalVariant: 'modal-warning',
-			onClose: close,
-			onSubmit: async () => {
-				try {
-					await disconnect({groupId, id});
-
-					await handleUpdateDataSource();
-
-					addAlert({
-						alertType: Alert.Types.Success,
-						message: Liferay.Language.get(
-							'data-source-disconnected'
-						)
-					});
-
-					close();
-				} catch (error) {
-					addAlert({
-						alertType: Alert.Types.Error,
-						message: Liferay.Language.get(
-							'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-						)
-					});
-				}
-			},
-			submitButtonDisplay: 'warning',
-			submitMessage: Liferay.Language.get('disconnect'),
-			title: Liferay.Language.get('disconnect-data-source'),
-			titleIcon: 'warning-full'
-		});
-	}, [addAlert, close, groupId, id, open]);
-
-	const handleUpdateName = useCallback(
-		async name => {
-			await updateSalesforce({groupId, id, name} as any);
-
+	const {handleDisconnect} = useDisconnectDataSource({
+		addAlert,
+		close,
+		groupId,
+		id,
+		onSubmit: async () => {
 			await handleUpdateDataSource();
 		},
-		[groupId, id]
-	);
-
-	const handleValidate = useCallback(
-		value => {
-			let error = null;
-
-			if (value !== dataSource.name) {
-				if (cachedNameValues.current.has(value)) {
-					error = cachedNameValues.current.get(value);
-				} else {
-					error = validateUniqueName({groupId, value});
-
-					cachedNameValues.current.set(value, error);
-				}
-			}
-
-			return toPromise(error);
-		},
-		[dataSource.name, groupId]
-	);
+		open
+	});
 
 	const {display, label} = getDataSourceDisplayObject(dataSource);
 
@@ -305,25 +233,18 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 			]}
 			documentTitle={Liferay.Language.get('configure-data-source')}
 		>
-			<div className='mb-5'>
-				<ClayLabel className='mb-2' displayType={display as any}>
-					{label}
-				</ClayLabel>
+			<DataSourceEditableTitle
+				dataSource={dataSource}
+				displayType={display}
+				editable={currentUser.isAdmin()}
+				groupId={groupId}
+				label={label}
+				onUpdateName={async name => {
+					await updateSalesforce({groupId, id, name} as any);
 
-				<InputWithEditToggle
-					editable={currentUser?.isAdmin()}
-					inputWidth={30}
-					name='dataSourceName'
-					onSubmit={name => toPromise(handleUpdateName(name))}
-					required
-					validate={sequence([
-						validateRequired,
-						validateMaxLength(75),
-						handleValidate
-					])}
-					value={dataSource.name || ''}
-				/>
-			</div>
+					await handleUpdateDataSource();
+				}}
+			/>
 
 			<Card title={Liferay.Language.get('authentication')}>
 				<div className='mb-4'>
@@ -408,7 +329,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 							'disconnect-data-source'
 						)}
 						displayType='danger'
-						onClick={handleDisconnectClick}
+						onClick={handleDisconnect}
 						outline
 						size='sm'
 					>

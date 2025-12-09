@@ -36,6 +36,8 @@ import com.liferay.object.rest.internal.manager.v1_0.ObjectEntryMtoMObjectRelati
 import com.liferay.object.rest.internal.manager.v1_0.SystemObjectEntry1toMObjectRelationshipElementsParserImpl;
 import com.liferay.object.rest.internal.manager.v1_0.SystemObjectEntryMtoMObjectRelationshipElementsParserImpl;
 import com.liferay.object.rest.internal.openapi.v1_0.ObjectEntryOpenAPIResourceImpl;
+import com.liferay.object.rest.internal.resource.v1_0.BaseCollaboratorResourceImpl;
+import com.liferay.object.rest.internal.resource.v1_0.BaseCommentResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.CollaboratorResourceFactoryImpl;
 import com.liferay.object.rest.internal.resource.v1_0.CollaboratorResourceImpl;
@@ -312,29 +314,22 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectScopeProvider objectScopeProvider) {
 
 		try {
-			Method[] methods = BaseObjectEntryResourceImpl.class.getMethods();
-
 			List<String> excludedOperationIds = new ArrayList<>();
 
-			for (Method method : methods) {
-				Path path = method.getAnnotation(Path.class);
+			_processMethods(
+				excludedOperationIds,
+				BaseCollaboratorResourceImpl.class.getMethods(),
+				objectScopeProvider);
 
-				if (path == null) {
-					continue;
-				}
+			_processMethods(
+				excludedOperationIds,
+				BaseCommentResourceImpl.class.getMethods(),
+				objectScopeProvider);
 
-				String value = path.value();
-
-				boolean groupAware = objectScopeProvider.isGroupAware();
-				boolean hasScope = value.contains("scopes");
-
-				if ((!groupAware && hasScope) ||
-					(groupAware && !hasScope &&
-					 !value.startsWith("/{objectEntryId}"))) {
-
-					excludedOperationIds.add(method.getName());
-				}
-			}
+			_processMethods(
+				excludedOperationIds,
+				BaseObjectEntryResourceImpl.class.getMethods(),
+				objectScopeProvider);
 
 			Collections.sort(excludedOperationIds);
 
@@ -892,6 +887,31 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			jaxRsApplicationDescriptor.getRESTContextPath(),
 			key -> _registerExceptionMappers(
 				jaxRsApplicationDescriptor.getApplicationName()));
+	}
+
+	private void _processMethods(
+		List<String> excludedOperationIds, Method[] methods,
+		ObjectScopeProvider objectScopeProvider) {
+
+		for (Method method : methods) {
+			Path path = method.getAnnotation(Path.class);
+
+			if (path == null) {
+				continue;
+			}
+
+			String value = path.value();
+
+			boolean groupAware = objectScopeProvider.isGroupAware();
+			boolean hasScope = value.contains("scopes");
+
+			if ((!groupAware && hasScope) ||
+				(groupAware && !hasScope &&
+				 !value.startsWith("/{objectEntryId}"))) {
+
+				excludedOperationIds.add(method.getName());
+			}
+		}
 	}
 
 	private List<ServiceRegistration<?>> _registerExceptionMappers(

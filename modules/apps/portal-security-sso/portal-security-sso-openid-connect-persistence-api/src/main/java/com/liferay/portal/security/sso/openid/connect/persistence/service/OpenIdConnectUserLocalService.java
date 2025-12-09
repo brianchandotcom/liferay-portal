@@ -114,6 +114,8 @@ public interface OpenIdConnectUserLocalService
 	public OpenIdConnectUser deleteOpenIdConnectUser(
 		OpenIdConnectUser openIdConnectUser);
 
+	public void deleteOpenIdConnectUsers(long companyId, long userId);
+
 	/**
 	 * @throws PortalException
 	 */

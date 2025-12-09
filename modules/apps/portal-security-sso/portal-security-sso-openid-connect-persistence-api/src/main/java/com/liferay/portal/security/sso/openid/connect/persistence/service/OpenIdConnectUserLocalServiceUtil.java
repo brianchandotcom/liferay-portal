@@ -115,6 +115,10 @@ public class OpenIdConnectUserLocalServiceUtil {
 		return getService().deleteOpenIdConnectUser(openIdConnectUser);
 	}
 
+	public static void deleteOpenIdConnectUsers(long companyId, long userId) {
+		getService().deleteOpenIdConnectUsers(companyId, userId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

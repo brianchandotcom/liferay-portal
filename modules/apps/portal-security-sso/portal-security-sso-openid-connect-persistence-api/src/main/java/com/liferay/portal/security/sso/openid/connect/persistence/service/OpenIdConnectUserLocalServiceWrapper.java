@@ -125,6 +125,12 @@ public class OpenIdConnectUserLocalServiceWrapper
 			openIdConnectUser);
 	}
 
+	@Override
+	public void deleteOpenIdConnectUsers(long companyId, long userId) {
+		_openIdConnectUserLocalService.deleteOpenIdConnectUsers(
+			companyId, userId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

@@ -11,7 +11,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import jakarta.portlet.ActionRequest;
@@ -46,9 +45,6 @@ public class DeleteLayoutPageTemplateEntryPreviewMVCActionCommand
 				layoutPageTemplateEntryId);
 
 		if (layoutPageTemplateEntry != null) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				layoutPageTemplateEntry.getPreviewFileEntryId());
-
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId, 0);
 		}

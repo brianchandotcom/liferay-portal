@@ -90,4 +90,14 @@ test.describe('Testing Alert Scenarios', () => {
 			await expect(alertDisappearsAfterFiveSeconds.locator).toBeHidden();
 		});
 	});
+
+	test('Testing ClayAlertStripe', async ({claySamplePage}) => {
+		const alertEmbeddedSuccess = claySamplePage.alert(
+			'Success:This is a success message.'
+		);
+
+		await test.step('Check if the stripe alert-success displays close button.', async () => {
+			await expect(alertEmbeddedSuccess.close).toBeVisible();
+		});
+	});
 });

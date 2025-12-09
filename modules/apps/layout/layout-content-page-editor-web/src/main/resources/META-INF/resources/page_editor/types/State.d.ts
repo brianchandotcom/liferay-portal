@@ -4,10 +4,12 @@
  */
 
 import {FragmentEntryLinkMap} from '../app/actions/addFragmentEntryLinks';
+import {FragmentSet} from '../app/actions/updateFragments';
 import layoutDataReducer from '../app/reducers/layoutDataReducer';
 
 export interface State {
 	fragmentEntryLinks: FragmentEntryLinkMap;
+	fragments: FragmentSet[];
 	languageId: Liferay.Language.Locale;
 	layoutData: ReturnType<typeof layoutDataReducer>;
 	segmentsExperienceId: string;

@@ -7,40 +7,10 @@ import {DragPreview} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useActiveItemIds} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import {useGetWidgets} from '../contexts/WidgetsContext';
-import getWidget from '../utils/getWidget';
-
-function getItemIcon(fragmentEntryLinks, fragments, item, getWidgets) {
-	if (!item) {
-		return null;
-	}
-
-	const fragmentEntries = fragments.flatMap(
-		(collection) => collection.fragmentEntries
-	);
-
-	if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-		const fragmentEntryLink =
-			fragmentEntryLinks[item.config.fragmentEntryLinkId];
-
-		if (fragmentEntryLink.portletId) {
-			const widget = getWidget(getWidgets(), fragmentEntryLink.portletId);
-
-			return widget?.instanceable ? 'square-hole-multi' : 'square-hole';
-		}
-
-		return fragmentEntries.find(
-			(fragment) =>
-				fragment.fragmentEntryKey === fragmentEntryLink.fragmentEntryKey
-		)?.icon;
-	}
-
-	return fragmentEntries.find((fragment) => fragment.type === item.type)
-		?.icon;
-}
+import {getItemIcon} from '../utils/getItemIcon';
 
 export function getIcon({
 	activeItemIds,

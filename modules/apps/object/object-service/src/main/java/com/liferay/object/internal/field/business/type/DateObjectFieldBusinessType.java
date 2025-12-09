@@ -7,6 +7,7 @@ package com.liferay.object.internal.field.business.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
@@ -14,11 +15,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,7 +33,14 @@ import org.osgi.service.component.annotations.Reference;
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_DATE,
 	service = ObjectFieldBusinessType.class
 )
-public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
+public class DateObjectFieldBusinessType extends BaseObjectFieldBusinessType {
+
+	@Override
+	public Set<String> getAllowedObjectFieldSettingsNames() {
+		return SetUtil.fromArray(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
+	}
 
 	@Override
 	public String getDBType() {
@@ -53,9 +63,8 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 		throws PortalException {
 
 		if (objectField.isLocalized()) {
-			Map<String, Object> localizedValues =
-				ObjectFieldBusinessType.super.getLocalizedValues(
-					objectField, userId, values);
+			Map<String, Object> localizedValues = super.getLocalizedValues(
+				objectField, userId, values);
 
 			if (localizedValues == null) {
 				return null;

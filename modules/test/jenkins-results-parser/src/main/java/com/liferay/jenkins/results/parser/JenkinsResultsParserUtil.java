@@ -3488,8 +3488,18 @@ public class JenkinsResultsParserUtil {
 			remoteURL);
 		Matcher localURLAuthorityMatcher3 = _localURLAuthorityPattern3.matcher(
 			remoteURL);
+		Matcher localURLAuthroityMatcherAWS = _localURLAuthorityPatternAWS.matcher(
+			remoteURL);
 
-		if (localURLAuthorityMatcher1.find()) {
+		if(isCloudCINode() && localURLAuthroityMatcherAWS.find()) {
+			String localURLAuthority = localURLAuthroityMatcherAWS.group(0);
+			String remoteURLAuthority = combine(
+				"https://", localURLAuthroityMatcherAWS.group(1), "-aws", ".liferay.com/");
+
+			remoteURL = remoteURL.replaceAll(
+				localURLAuthority, remoteURLAuthority);
+		}
+		else if (localURLAuthorityMatcher1.find()) {
 			String localURLAuthority = localURLAuthorityMatcher1.group(0);
 			String remoteURLAuthority = combine(
 				"https://", localURLAuthorityMatcher1.group(2), ".liferay.com/",
@@ -7310,6 +7320,8 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _localURLAuthorityPattern3 = Pattern.compile(
 		"https?://(mirrors/|mirrors.dlc.liferay.com/|mirrors.lax.liferay.com/" +
 			")?((files|releases).liferay.com)");
+	private static final Pattern _localURLAuthorityPatternAWS = Pattern.compile(
+		"http://(test-[0-9]+-[0])/");
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
 	private static final Pattern _poshiFileNamePattern = Pattern.compile(

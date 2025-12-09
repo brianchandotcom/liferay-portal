@@ -11,6 +11,7 @@ import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,12 +41,10 @@ public class UpdateRulesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		jsonObject.put(
+		return JSONUtil.put(
 			"layoutData",
 			LayoutStructureUtil.updateLayoutPageTemplateData(
 				themeDisplay.getScopeGroupId(),
@@ -75,8 +74,6 @@ public class UpdateRulesMVCActionCommand
 							ruleJSONObject.getString("script"));
 					}
 				}));
-
-		return jsonObject;
 	}
 
 	@Reference

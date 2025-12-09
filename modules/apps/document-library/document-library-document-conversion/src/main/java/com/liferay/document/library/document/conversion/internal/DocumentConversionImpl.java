@@ -275,11 +275,21 @@ public class DocumentConversionImpl implements DocumentConversion {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_documentConverter = null;
+
 		_executorService = _portalExecutorManager.getPortalExecutor(
 			DocumentConversionImpl.class.getName());
 
 		_openOfficeConfiguration = ConfigurableUtil.createConfigurable(
 			OpenOfficeConfiguration.class, properties);
+
+		if ((_openOfficeConnection != null) &&
+			_openOfficeConnection.isConnected()) {
+
+			_openOfficeConnection.disconnect();
+		}
+
+		_openOfficeConnection = null;
 	}
 
 	@Deactivate
@@ -432,10 +442,10 @@ public class DocumentConversionImpl implements DocumentConversion {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private DocumentConverter _documentConverter;
+	private volatile DocumentConverter _documentConverter;
 	private volatile ExecutorService _executorService;
 	private volatile OpenOfficeConfiguration _openOfficeConfiguration;
-	private OpenOfficeConnection _openOfficeConnection;
+	private volatile OpenOfficeConnection _openOfficeConnection;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

@@ -83,17 +83,20 @@ ckeditor5Test(
 		const editable = formBuilderSidePanelPage.page.getByRole('textbox', {
 			name: 'Rich Text Editor',
 		});
+
 		await expect(editable).toBeVisible();
 		await expect(editable).toHaveAttribute('contenteditable', 'false');
 
 		const ckEditor5Toolbar = page.getByRole('toolbar', {
 			name: 'Editor toolbar',
 		});
+
 		await expect(ckEditor5Toolbar).toBeVisible();
 
 		const ckEditor5SourceButton = page.getByRole('button', {
 			name: 'Source',
 		});
+
 		await expect(ckEditor5SourceButton).toBeDisabled();
 	}
 );

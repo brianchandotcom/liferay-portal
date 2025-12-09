@@ -257,7 +257,7 @@
 </tr>
 <tr>
 	<td>REVIEW_CHANGES_BUTTON</td>
-	<td>//td[contains(@class,'item-actions')]/a[contains(@title,'Review Changes')]</td>
+	<td>//a[contains(@title,'Review Changes')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -697,10 +697,7 @@ function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 			);
 		}
 
-		if (
-			(item.type === 'llm' && prompt) ||
-			(item.type === 'ai-decision' && prompt)
-		) {
+		if (item.type === 'llm' || item.type === 'ai-decision') {
 			buffer.push(
 				XMLUtil.create(
 					'input-variables',
@@ -713,7 +710,7 @@ function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 					cdata(jsonStringify(item.data.outputVariables))
 				)
 			);
-			buffer.push(XMLUtil.create('prompt', cdata(prompt)));
+			buffer.push(XMLUtil.create('prompt', cdata(prompt ? prompt : '')));
 			buffer.push(
 				XMLUtil.create('tools', cdata(jsonStringify(item.data.tools)))
 			);
@@ -725,12 +722,12 @@ function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 
 		appendXMLTransitions(buffer, nodeTransitions);
 
-		if (
-			(item.type === 'llm' && prompt) ||
-			(item.type === 'ai-decision' && prompt)
-		) {
+		if (item.type === 'llm' || item.type === 'ai-decision') {
 			buffer.push(
-				XMLUtil.create('user-message', cdata(item.data.userMessage))
+				XMLUtil.create(
+					'user-message',
+					cdata(item.data.userMessage ? item.data.userMessage : '')
+				)
 			);
 		}
 

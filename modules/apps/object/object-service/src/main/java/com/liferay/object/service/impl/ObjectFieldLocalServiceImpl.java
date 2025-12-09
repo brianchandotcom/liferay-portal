@@ -262,8 +262,13 @@ public class ObjectFieldLocalServiceImpl
 				objectFieldSettings);
 		}
 
+		validateExternalReferenceCode(
+			externalReferenceCode, existingObjectField.getObjectFieldId(),
+			existingObjectField.getCompanyId(),
+			existingObjectField.getObjectDefinitionId());
 		_validateLabel(labelMap, existingObjectField);
 
+		existingObjectField.setExternalReferenceCode(externalReferenceCode);
 		existingObjectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
 		return objectFieldPersistence.update(existingObjectField);

@@ -12,16 +12,20 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
+import com.liferay.headless.commerce.admin.catalog.client.custom.field.CustomField;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CurrencyResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductVirtualSettingsFileEntryResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
@@ -39,8 +43,20 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.net.URL;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import java.nio.file.Files;
+
+import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +71,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Keven Leone
@@ -138,6 +155,17 @@ public class MarketplaceService extends BaseService {
 
 	public AccountRoleResource getAccountRoleResource() throws Exception {
 		return AccountRoleResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
+	}
+
+	public AttachmentResource getAttachmentResource() throws Exception {
+		return AttachmentResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -297,6 +325,74 @@ public class MarketplaceService extends BaseService {
 		return version;
 	}
 
+	public long getProductVirtualSettingsId(long productId) throws Exception {
+		UriComponentsBuilder uriComponentsBuilder =
+			UriComponentsBuilder.fromPath(
+				"/o/headless-commerce-admin-catalog/v1.0/products/" +
+					productId + "/product-virtual-settings");
+
+		String response = get(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs"),
+			uriComponentsBuilder.build(
+			).toUri());
+
+		JSONObject jsonObject = new JSONObject(response);
+
+		return jsonObject.getLong("id");
+	}
+
+	public InputStream getPublisherAssetInputStream(String publisherAssetURL)
+		throws Exception {
+
+		HttpRequest httpRequest = HttpRequest.newBuilder(
+		).uri(
+			URI.create(
+				StringBundler.concat(
+					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+					publisherAssetURL))
+		).header(
+			"Authorization",
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).GET(
+		).build();
+
+		HttpClient httpClient = HttpClient.newHttpClient();
+
+		HttpResponse<InputStream> httpResponse = httpClient.send(
+			httpRequest, HttpResponse.BodyHandlers.ofInputStream());
+
+		if (httpResponse.statusCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
+			throw new IOException(
+				"Failed to download publisher asset. HTTP Status: " +
+					httpResponse.statusCode());
+		}
+
+		return httpResponse.body();
+	}
+
+	public JSONObject getPublisherAssetsJSONObject(long productId)
+		throws Exception {
+
+		return new JSONObject(
+			get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-marketplace-etc-spring-boot-oahs"),
+				UriComponentsBuilder.fromPath(
+					"/o/c/publisherassetses"
+				).queryParam(
+					"filter",
+					"r_productEntryToPublisherAssets_CProductId eq '" +
+						productId + "'"
+				).queryParam(
+					"pageSize", 20
+				).queryParam(
+					"nestedFields", "publisherAssetsToAttachment"
+				).build(
+				).toUri()));
+	}
+
 	public Sku getSku(Long id) throws Exception {
 		SkuResource skuResource = getSkuResource();
 
@@ -329,6 +425,20 @@ public class MarketplaceService extends BaseService {
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"liferay-marketplace-etc-spring-boot-oahs")
 		).build();
+	}
+
+	public void patchPublisherAssetAttachment(String body, long id)
+		throws Exception {
+
+		new JSONObject(
+			patch(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-marketplace-etc-spring-boot-oahs"),
+				body,
+				UriComponentsBuilder.fromPath(
+					"/o/c/publisherassetattachments/" + id
+				).build(
+				).toUri()));
 	}
 
 	public void postNotificationQueueEntry(
@@ -444,6 +554,50 @@ public class MarketplaceService extends BaseService {
 		}
 	}
 
+	public void postProductAttachment(
+			File file, String fileName, long productId)
+		throws Exception {
+
+		AttachmentResource attachmentResource = getAttachmentResource();
+
+		attachmentResource.postProductIdAttachmentByBase64(
+			productId,
+			new AttachmentBase64() {
+				{
+					setAttachment(
+						() -> Base64.getEncoder(
+						).encodeToString(
+							Files.readAllBytes(file.toPath())
+						));
+					setContentType(() -> "application/zip");
+					setTitle(
+						() -> HashMapBuilder.put(
+							"en_US", fileName
+						).build());
+				}
+			});
+	}
+
+	public void postVirtualFileEntry(File file, long productId, String version)
+		throws Exception {
+
+		ProductVirtualSettingsFileEntryResource
+			productVirtualSettingsFileEntryResource =
+				_getProductVirtualSettingsFileEntryResource();
+
+		productVirtualSettingsFileEntryResource.
+			postProductVirtualSettingIdProductVirtualSettingsFileEntry(
+				getProductVirtualSettingsId(productId),
+				ProductVirtualSettingsFileEntry.toDTO(
+					new JSONObject(
+					).put(
+						"version", version
+					).toString()),
+				HashMapBuilder.put(
+					"file", file
+				).build());
+	}
+
 	public void updateOrder(
 			Map<String, ?> customFields, long orderId, int orderStatus)
 		throws Exception {
@@ -496,6 +650,20 @@ public class MarketplaceService extends BaseService {
 		throws Exception {
 
 		return ProductSpecificationResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
+	}
+
+	private ProductVirtualSettingsFileEntryResource
+			_getProductVirtualSettingsFileEntryResource()
+		throws Exception {
+
+		return ProductVirtualSettingsFileEntryResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(

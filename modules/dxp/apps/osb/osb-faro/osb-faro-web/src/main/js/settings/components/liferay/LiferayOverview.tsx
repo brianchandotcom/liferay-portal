@@ -8,6 +8,7 @@ import React, {useEffect, useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
+import {AssignedPropertiesTable} from '../AssignedPropertiesTable';
 import {Card} from 'shared/components/revamping/Card';
 import {ClayInput} from '@clayui/form';
 import {close, open} from 'shared/actions/modals';
@@ -283,6 +284,42 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 				<ReviewSyncedDataFragment
 					contactsSelected={dataSource.contactsSelected}
 					sitesSelected={dataSource.sitesSelected}
+				/>
+			</Card>
+
+			<Card
+				innerPadding={false}
+				title={Liferay.Language.get('assigned-properties')}
+			>
+				<AssignedPropertiesTable
+					addAlert={addAlert}
+					close={close}
+					customColumns={[
+						{
+							accessor: 'commerceChannelsCount',
+							className: 'text-right',
+							label: Liferay.Language.get(
+								'dxp-commerce-channels'
+							),
+							sortable: false
+						},
+						{
+							accessor: 'groupsCount',
+							className: 'text-right',
+							label: Liferay.Language.get('sites'),
+							sortable: false
+						},
+						{
+							accessor: 'individualDataSourcesCount',
+							className: 'text-right',
+							label: Liferay.Language.get('individuals'),
+							sortable: false
+						}
+					]}
+					dataSource={dataSource}
+					handleUpdateDataSource={handleUpdateDataSource}
+					open={open}
+					updateDataSourceFn={updateLiferay}
 				/>
 			</Card>
 		</BasePage>

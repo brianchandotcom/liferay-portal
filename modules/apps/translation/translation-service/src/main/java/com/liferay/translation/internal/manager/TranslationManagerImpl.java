@@ -59,15 +59,15 @@ public class TranslationManagerImpl implements TranslationManager {
 		throws IOException, PortalException {
 
 		String fileName = _getXLIFFFileName(
-			className, classPK, sourceLanguageId, targetLanguageId, locale);
+			className, classPK, locale, sourceLanguageId, targetLanguageId);
 
 		File file = new File(_createTempDirectory(), fileName);
 
 		try (OutputStream outputStream = new FileOutputStream(file)) {
 			StreamUtil.transfer(
 				_getXLIFFInputStream(
-					className, classPK, xliffMimeType, sourceLanguageId,
-					targetLanguageId),
+					className, classPK, sourceLanguageId, targetLanguageId,
+					xliffMimeType),
 				outputStream);
 		}
 
@@ -81,34 +81,34 @@ public class TranslationManagerImpl implements TranslationManager {
 		throws IOException, PortalException {
 
 		String fileName = _getZipFileName(
-			className, classPKs, sourceLanguageId, locale);
+			className, classPKs, locale, sourceLanguageId);
 
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(
 			new File(_createTempDirectory(), fileName));
 
 		for (long classPK : classPKs) {
 			_addZipEntry(
-				zipWriter, className, classPK, xliffMimeType, sourceLanguageId,
-				targetLanguageIds, locale);
+				className, classPK, locale, sourceLanguageId, targetLanguageIds,
+				xliffMimeType, zipWriter);
 		}
 
 		return zipWriter.getFile();
 	}
 
 	private void _addZipEntry(
-			ZipWriter zipWriter, String className, long classPK,
-			String xliffMimeType, String sourceLanguageId,
-			String[] targetLanguageIds, Locale locale)
+			String className, long classPK, Locale locale,
+			String sourceLanguageId, String[] targetLanguageIds,
+			String xliffMimeType, ZipWriter zipWriter)
 		throws IOException, PortalException {
 
 		for (String targetLanguageId : targetLanguageIds) {
 			zipWriter.addEntry(
 				_getXLIFFFileName(
-					className, classPK, sourceLanguageId, targetLanguageId,
-					locale),
+					className, classPK, locale, sourceLanguageId,
+					targetLanguageId),
 				_getXLIFFInputStream(
-					className, classPK, xliffMimeType, sourceLanguageId,
-					targetLanguageId));
+					className, classPK, sourceLanguageId, targetLanguageId,
+					xliffMimeType));
 		}
 	}
 
@@ -145,8 +145,8 @@ public class TranslationManagerImpl implements TranslationManager {
 	}
 
 	private String _getXLIFFFileName(
-		String className, long classPK, String sourceLanguageId,
-		String targetLanguageId, Locale locale) {
+		String className, long classPK, Locale locale, String sourceLanguageId,
+		String targetLanguageId) {
 
 		String title = getEntryTitle(className, classPK, locale);
 
@@ -164,8 +164,8 @@ public class TranslationManagerImpl implements TranslationManager {
 	}
 
 	private InputStream _getXLIFFInputStream(
-			String className, long classPK, String xliffMimeType,
-			String sourceLanguageId, String targetLanguageId)
+			String className, long classPK, String sourceLanguageId,
+			String targetLanguageId, String xliffMimeType)
 		throws IOException, PortalException {
 
 		if (Validator.isBlank(xliffMimeType)) {
@@ -201,8 +201,8 @@ public class TranslationManagerImpl implements TranslationManager {
 	}
 
 	private String _getZipFileName(
-		String className, long[] classPKs, String sourceLanguageId,
-		Locale locale) {
+		String className, long[] classPKs, Locale locale,
+		String sourceLanguageId) {
 
 		return StringBundler.concat(
 			StringUtil.removeSubstrings(

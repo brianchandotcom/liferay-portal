@@ -198,7 +198,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
 		dynamicQuery.add(
-			nameProperty.eq(OAuth2ProviderConstants.DYNAMIC_REGISTRATOR));
+			nameProperty.eq(
+				OAuth2ProviderConstants.OAUTH2_PROVIDER_DYNAMIC_REGISTRATOR));
 
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);

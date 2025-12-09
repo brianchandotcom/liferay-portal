@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -221,6 +223,21 @@ public class FragmentEditableElementUtil {
 
 			if (Objects.equals(
 					fragmentEditableElementValue.getType(),
+					FragmentEditableElementValue.Type.IMAGE)) {
+
+				jsonObject.put(
+					fragmentEditableElement.getId(),
+					() -> _getJSONObject(
+						() -> _getImageFragmentEditableElementJSONObject(
+							(ImageFragmentEditableElementValue)
+								fragmentEditableElementValue,
+							layoutStructureItemImporterContext)));
+
+				continue;
+			}
+
+			if (Objects.equals(
+					fragmentEditableElementValue.getType(),
 					FragmentEditableElementValue.Type.TEXT)) {
 
 				jsonObject.put(
@@ -382,6 +399,82 @@ public class FragmentEditableElementUtil {
 		return _getFragmentMappedValueJSONObject(
 			companyId, htmlFragmentMappedValue.getFragmentMappedValue(),
 			infoItemServiceRegistry, scopeGroupId);
+	}
+
+	private static JSONObject _getImageConfigurationJSONObject(
+		FragmentImage fragmentImage) {
+
+		if (ArrayUtil.isEmpty(fragmentImage.getFragmentImageViewports())) {
+			return null;
+		}
+
+		JSONObject imageConfigurationJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		for (FragmentImageViewport fragmentImageViewport :
+				fragmentImage.getFragmentImageViewports()) {
+
+			imageConfigurationJSONObject.put(
+				ViewportIdUtil.toInternalValue(
+					fragmentImageViewport.getIdAsString()),
+				fragmentImageViewport.getResolution());
+		}
+
+		if (JSONUtil.isEmpty(imageConfigurationJSONObject)) {
+			return null;
+		}
+
+		return imageConfigurationJSONObject;
+	}
+
+	private static JSONObject _getImageFragmentEditableElementJSONObject(
+			ImageFragmentEditableElementValue imageFragmentEditableElementValue,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
+		throws Exception {
+
+		JSONObject jsonObject = _toConfigJSONObject(
+			layoutStructureItemImporterContext.getCompanyId(),
+			imageFragmentEditableElementValue.
+				getFragmentEditableElementValueFragmentLink(),
+			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
+			layoutStructureItemImporterContext.getGroupId());
+
+		FragmentImage fragmentImage =
+			imageFragmentEditableElementValue.getFragmentImage();
+
+		if (fragmentImage == null) {
+			return jsonObject;
+		}
+
+		return JSONUtil.merge(
+			JSONUtil.put(
+				"config",
+				() -> _getJSONObject(
+					() -> JSONUtil.merge(
+						jsonObject.getJSONObject("config"),
+						JSONUtil.put(
+							"alt",
+							() -> LocalizedValueUtil.toJSONObject(
+								fragmentImage.getDescription_i18n())
+						).put(
+							"imageConfiguration",
+							() -> _getImageConfigurationJSONObject(
+								fragmentImage)
+						).put(
+							"lazyLoading",
+							() -> {
+								if (fragmentImage.getLazyLoading() == null) {
+									return null;
+								}
+
+								return GetterUtil.getBoolean(
+									fragmentImage.getLazyLoading());
+							}
+						)))),
+			_toFragmentImageValueJSONObject(
+				fragmentImage.getFragmentImageValue(),
+				layoutStructureItemImporterContext));
 	}
 
 	private static ImageValue _getImageValue(

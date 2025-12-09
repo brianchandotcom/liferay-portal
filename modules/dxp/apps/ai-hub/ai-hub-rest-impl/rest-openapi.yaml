@@ -37,10 +37,17 @@ components:
                 type:
                     type: string
             type: object
+        TaskDefinition:
+            properties:
+                name:
+                    type: string
+                version:
+                    type: integer
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.ai.hub.rest.client', and version '1.0.3'."
+        'com.liferay.ai.hub.rest.client', and version '1.0.4'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -115,6 +122,44 @@ paths:
                     content:
                         text/event-stream: {}
             tags: ["Chat"]
+    "/task-definitions":
+        get:
+            operationId: getTaskDefinitionsPage
+            parameters:
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaskDefinition"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaskDefinition"
+                                type: array
+            tags: ["TaskDefinition"]
     "/tasks/subscribe":
         get:
             operationId: getTaskSubscribe

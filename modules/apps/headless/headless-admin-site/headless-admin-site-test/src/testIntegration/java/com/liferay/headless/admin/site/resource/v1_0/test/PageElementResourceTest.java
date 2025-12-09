@@ -3180,18 +3180,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
 				TextFragmentValue.Type.MAPPED));
 
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
+			new FragmentEditableElement[0]);
+
 		_testMissingOptionalReference(
 			4,
 			() ->
 				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-					FragmentEditableElementTestUtil.
-						getBackgroundImageFragmentEditableElement(
-							FragmentEditableElementTestUtil.
-								getMappedFragmentImageValue(
-									null, "FileEntry_authorProfileImage",
-									FragmentMappedValueItemReference.Type.
-										ITEM_EXTERNAL_REFERENCE),
-							"element-background-image1"),
 					FragmentEditableElementTestUtil.
 						getBackgroundImageFragmentEditableElement(
 							FragmentEditableElementTestUtil.
@@ -3209,6 +3204,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 										).build(),
 										testGroup.getGroupId()),
 									null),
+							"element-background-image1"),
+					FragmentEditableElementTestUtil.
+						getBackgroundImageFragmentEditableElement(
+							FragmentEditableElementTestUtil.
+								getMappedFragmentImageValue(
+									null, "FileEntry_authorProfileImage",
+									FragmentMappedValueItemReference.Type.
+										ITEM_EXTERNAL_REFERENCE),
 							"element-background-image2"),
 					FragmentEditableElementTestUtil.
 						getHTMLFragmentEditableElement(
@@ -3233,9 +3236,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							FragmentMappedValueItemReference.Type.
 								ITEM_EXTERNAL_REFERENCE,
 							TextFragmentValue.Type.MAPPED)));
-
-		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-			new FragmentEditableElement[0]);
 	}
 
 	private void

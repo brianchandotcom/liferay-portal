@@ -1262,30 +1262,6 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testFragmentEntryProcessorEditableMappedDLImageBackgroundImageFileEntryId()
-		throws Exception {
-
-		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
-
-		String editableValues = _getEditableFieldValues(
-			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
-			"fileURL",
-			"fragment_entry_link_mapped_asset_field_background_image.json");
-
-		Element element = _getElement(
-			"data-lfr-background-image-id", "background-image", editableValues,
-			"fragment_entry_background_image.html", LocaleUtil.getSiteDefault(),
-			FragmentEntryLinkConstants.EDIT);
-
-		String style = element.attr("style");
-
-		Assert.assertTrue(
-			style.contains(
-				"--background-image-file-entry-id: " +
-					fileEntry.getFileEntryId() + ";"));
-	}
-
-	@Test
 	@TestInfo("LPD-73556")
 	public void testFragmentEntryProcessorEditableMappedDLImage()
 		throws Exception {
@@ -1346,6 +1322,30 @@ public class EditableFragmentEntryProcessorTest {
 			_dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK),
 			src);
+	}
+
+	@Test
+	public void testFragmentEntryProcessorEditableMappedDLImageBackgroundImageFileEntryId()
+		throws Exception {
+
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
+
+		String editableValues = _getEditableFieldValues(
+			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
+			"fileURL",
+			"fragment_entry_link_mapped_asset_field_background_image.json");
+
+		Element element = _getElement(
+			"data-lfr-background-image-id", "background-image", editableValues,
+			"fragment_entry_background_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
+
+		String style = element.attr("style");
+
+		Assert.assertTrue(
+			style.contains(
+				"--background-image-file-entry-id: " +
+					fileEntry.getFileEntryId() + ";"));
 	}
 
 	@Test

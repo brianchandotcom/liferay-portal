@@ -56,6 +56,9 @@ public class InfoItemUtil {
 						scope, scopeGroupId)));
 
 			if (infoItem == null) {
+				LogUtil.logOptionalReference(
+					className, externalReferenceCode, scope, scopeGroupId);
+
 				return null;
 			}
 

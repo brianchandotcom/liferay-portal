@@ -66,16 +66,16 @@ public class BuildRESTTask extends JavaExec {
 		return GradleUtil.toString(_forcePredictableOperationId);
 	}
 
-	@Input
-	@Optional
-	public boolean getJakartaEnabled() {
-		return _jakartaEnabled;
-	}
-
 	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getRESTConfigDir() {
 		return GradleUtil.toFile(getProject(), _restConfigDir);
+	}
+
+	@Input
+	@Optional
+	public boolean isJakartaEnabled() {
+		return _jakartaEnabled;
 	}
 
 	public void setCopyrightFile(Object copyrightFile) {

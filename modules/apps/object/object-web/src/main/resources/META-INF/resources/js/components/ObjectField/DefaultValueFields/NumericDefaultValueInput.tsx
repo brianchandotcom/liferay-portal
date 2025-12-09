@@ -32,7 +32,7 @@ const NumericDefaultValueInput: React.FC<
 			allowLeadingZeroes: true,
 			allowNegative: true,
 			decimalLimit: null,
-			decimalSeparator: decimalSeparator ?? '.',
+			decimalSymbol: decimalSeparator ?? '.',
 			includeThousandsSeparator: false,
 			prefix: '',
 		};

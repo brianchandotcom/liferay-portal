@@ -80,36 +80,28 @@ public class TranslationManagerImpl implements TranslationManager {
 			Locale locale, String sourceLanguageId, String[] targetLanguageIds)
 		throws IOException, PortalException {
 
-		String fileName = _getZipFileName(
-			className, classPKs, locale, sourceLanguageId);
+		String fileName = StringBundler.concat(
+			StringUtil.removeSubstrings(
+				_getPrefixName(className, classPKs, locale),
+				PropsValues.DL_CHAR_BLACKLIST),
+			StringPool.DASH, sourceLanguageId, ".zip");
 
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(
 			new File(_createTempDirectory(), fileName));
 
 		for (long classPK : classPKs) {
-			_addZipEntry(
-				className, classPK, locale, sourceLanguageId, targetLanguageIds,
-				xliffMimeType, zipWriter);
+			for (String targetLanguageId : targetLanguageIds) {
+				zipWriter.addEntry(
+					_getXLIFFFileName(
+						className, classPK, locale, sourceLanguageId,
+						targetLanguageId),
+					_getXLIFFInputStream(
+						className, classPK, sourceLanguageId, targetLanguageId,
+						xliffMimeType));
+			}
 		}
 
 		return zipWriter.getFile();
-	}
-
-	private void _addZipEntry(
-			String className, long classPK, Locale locale,
-			String sourceLanguageId, String[] targetLanguageIds,
-			String xliffMimeType, ZipWriter zipWriter)
-		throws IOException, PortalException {
-
-		for (String targetLanguageId : targetLanguageIds) {
-			zipWriter.addEntry(
-				_getXLIFFFileName(
-					className, classPK, locale, sourceLanguageId,
-					targetLanguageId),
-				_getXLIFFInputStream(
-					className, classPK, sourceLanguageId, targetLanguageId,
-					xliffMimeType));
-		}
 	}
 
 	private File _createTempDirectory() throws IOException {
@@ -198,17 +190,6 @@ public class TranslationManagerImpl implements TranslationManager {
 			infoItemFieldValuesProvider.getInfoItemFieldValues(object),
 			LocaleUtil.fromLanguageId(sourceLanguageId),
 			LocaleUtil.fromLanguageId(targetLanguageId));
-	}
-
-	private String _getZipFileName(
-		String className, long[] classPKs, Locale locale,
-		String sourceLanguageId) {
-
-		return StringBundler.concat(
-			StringUtil.removeSubstrings(
-				_getPrefixName(className, classPKs, locale),
-				PropsValues.DL_CHAR_BLACKLIST),
-			StringPool.DASH, sourceLanguageId, ".zip");
 	}
 
 	@Reference

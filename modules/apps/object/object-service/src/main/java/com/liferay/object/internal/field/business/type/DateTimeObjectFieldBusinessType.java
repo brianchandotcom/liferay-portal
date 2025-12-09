@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -49,11 +50,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectFieldBusinessType.class
 )
 public class DateTimeObjectFieldBusinessType
-	implements ObjectFieldBusinessType {
+	extends BaseObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
-		return Collections.singleton(
+		return SetUtil.fromArray(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 			ObjectFieldSettingConstants.NAME_TIME_STORAGE);
 	}
 
@@ -88,9 +91,8 @@ public class DateTimeObjectFieldBusinessType
 		User user = _userLocalService.getUser(userId);
 
 		if (objectField.isLocalized()) {
-			Map<String, Object> localizedValues =
-				ObjectFieldBusinessType.super.getLocalizedValues(
-					objectField, userId, values);
+			Map<String, Object> localizedValues = super.getLocalizedValues(
+				objectField, userId, values);
 
 			if (localizedValues == null) {
 				return null;
@@ -134,9 +136,8 @@ public class DateTimeObjectFieldBusinessType
 			ObjectField objectField, Long userId, Map<String, Object> values)
 		throws PortalException {
 
-		Map<String, Object> localizedValues =
-			ObjectFieldBusinessType.super.getLocalizedValues(
-				objectField, userId, values);
+		Map<String, Object> localizedValues = super.getLocalizedValues(
+			objectField, userId, values);
 
 		if (localizedValues == null) {
 			return null;
@@ -185,8 +186,7 @@ public class DateTimeObjectFieldBusinessType
 			Map<String, Object> values)
 		throws PortalException {
 
-		Object value = ObjectFieldBusinessType.super.getValue(
-			groupId, objectField, userId, values);
+		Object value = super.getValue(groupId, objectField, userId, values);
 
 		if (Validator.isNull(value)) {
 			return null;

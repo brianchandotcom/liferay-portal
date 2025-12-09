@@ -25,7 +25,6 @@ export class FormBuilderPage {
 	readonly publishButton: Locator;
 	readonly requireCaptchaToggle: Locator;
 	readonly saveButton: Locator;
-	readonly settingsAdvancedTab: Locator;
 	readonly shareButton: Locator;
 	readonly translationManagerPlusButton: Locator;
 	readonly unpublishButton: Locator;
@@ -54,7 +53,6 @@ export class FormBuilderPage {
 		});
 		this.requireCaptchaToggle = page.getByLabel('Require CAPTCHA');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.settingsAdvancedTab = page.getByRole('tab', {name: 'Advanced'});
 		this.shareButton = page.getByRole('button', {name: 'Share'});
 		this.translationManagerPlusButton = page
 			.locator('#translationManager')

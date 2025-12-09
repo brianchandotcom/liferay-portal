@@ -27,7 +27,7 @@ export class FormBuilderPage {
 	readonly saveButton: Locator;
 	readonly settingsAdvancedTab: Locator;
 	readonly shareButton: Locator;
-	readonly translationManagerButton: Locator;
+	readonly translationManagerPlusButton: Locator;
 	readonly unpublishButton: Locator;
 
 	constructor(page: Page) {
@@ -56,9 +56,9 @@ export class FormBuilderPage {
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.settingsAdvancedTab = page.getByRole('tab', {name: 'Advanced'});
 		this.shareButton = page.getByRole('button', {name: 'Share'});
-		this.translationManagerButton = page
+		this.translationManagerPlusButton = page
 			.locator('#translationManager')
-			.getByRole('button');
+			.locator('.dropdown-toggle');
 		this.unpublishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Unpublish',
@@ -66,7 +66,8 @@ export class FormBuilderPage {
 	}
 
 	async changeFormBuilderLanguage(language: string) {
-		await this.translationManagerButton.click();
+		await this.translationManagerPlusButton.click();
+
 		await this.page.getByRole('menuitem', {name: language}).click();
 	}
 

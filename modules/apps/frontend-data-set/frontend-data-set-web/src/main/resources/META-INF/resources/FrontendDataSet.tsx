@@ -883,8 +883,7 @@ const FrontendDataSetContent = ({
 		if (
 			(!filterClientExtensionDefinitions.length &&
 				!cellClientExtensionDefinitions.length) ||
-			cellClientExtensionsLoaded ||
-			filterClientExtensionsLoaded
+			(cellClientExtensionsLoaded && filterClientExtensionsLoaded)
 		) {
 			return;
 		}
@@ -957,10 +956,10 @@ const FrontendDataSetContent = ({
 								name: field.fieldName,
 							},
 						});
-
-						setCellClientExtensionsLoading(false);
-						setCellClientExtensionsLoaded(true);
 					});
+
+					setCellClientExtensionsLoading(false);
+					setCellClientExtensionsLoaded(true);
 				},
 			},
 		]);

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
+import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectUserLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -23,9 +24,15 @@ public class UserModelListener extends BaseModelListener<User> {
 	public void onBeforeRemove(User user) throws ModelListenerException {
 		_openIdConnectSessionLocalService.deleteOpenIdConnectSessions(
 			user.getUserId());
+
+		_openIdConnectUserLocalService.deleteOpenIdConnectUsers(
+			user.getCompanyId(), user.getUserId());
 	}
 
 	@Reference
 	private OpenIdConnectSessionLocalService _openIdConnectSessionLocalService;
+
+	@Reference
+	private OpenIdConnectUserLocalService _openIdConnectUserLocalService;
 
 }

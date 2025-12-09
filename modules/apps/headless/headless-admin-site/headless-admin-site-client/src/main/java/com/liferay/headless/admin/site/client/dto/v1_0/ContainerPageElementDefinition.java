@@ -26,6 +26,31 @@ public class ContainerPageElementDefinition
 		return ContainerPageElementDefinitionSerDes.toDTO(json);
 	}
 
+	public FragmentImage getBackgroundFragmentImage() {
+		return backgroundFragmentImage;
+	}
+
+	public void setBackgroundFragmentImage(
+		FragmentImage backgroundFragmentImage) {
+
+		this.backgroundFragmentImage = backgroundFragmentImage;
+	}
+
+	public void setBackgroundFragmentImage(
+		UnsafeSupplier<FragmentImage, Exception>
+			backgroundFragmentImageUnsafeSupplier) {
+
+		try {
+			backgroundFragmentImage =
+				backgroundFragmentImageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentImage backgroundFragmentImage;
+
 	public ContentVisibility getContentVisibility() {
 		return contentVisibility;
 	}
@@ -77,27 +102,6 @@ public class ContainerPageElementDefinition
 
 	protected String[] cssClasses;
 
-	public String getCustomCSS() {
-		return customCSS;
-	}
-
-	public void setCustomCSS(String customCSS) {
-		this.customCSS = customCSS;
-	}
-
-	public void setCustomCSS(
-		UnsafeSupplier<String, Exception> customCSSUnsafeSupplier) {
-
-		try {
-			customCSS = customCSSUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String customCSS;
-
 	public FragmentLink getFragmentLink() {
 		return fragmentLink;
 	}
@@ -118,27 +122,6 @@ public class ContainerPageElementDefinition
 	}
 
 	protected FragmentLink fragmentLink;
-
-	public FragmentStyle getFragmentStyle() {
-		return fragmentStyle;
-	}
-
-	public void setFragmentStyle(FragmentStyle fragmentStyle) {
-		this.fragmentStyle = fragmentStyle;
-	}
-
-	public void setFragmentStyle(
-		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
-
-		try {
-			fragmentStyle = fragmentStyleUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected FragmentStyle fragmentStyle;
 
 	public FragmentViewport[] getFragmentViewports() {
 		return fragmentViewports;

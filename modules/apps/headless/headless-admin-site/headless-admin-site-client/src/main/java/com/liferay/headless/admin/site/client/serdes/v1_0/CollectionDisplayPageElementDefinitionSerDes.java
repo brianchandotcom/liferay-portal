@@ -156,16 +156,6 @@ public class CollectionDisplayPageElementDefinitionSerDes {
 						getEmptyCollectionConfig()));
 		}
 
-		if (collectionDisplayPageElementDefinition.getHidden() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"hidden\": ");
-
-			sb.append(collectionDisplayPageElementDefinition.getHidden());
-		}
-
 		if (collectionDisplayPageElementDefinition.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -346,16 +336,6 @@ public class CollectionDisplayPageElementDefinitionSerDes {
 						getEmptyCollectionConfig()));
 		}
 
-		if (collectionDisplayPageElementDefinition.getHidden() == null) {
-			map.put("hidden", null);
-		}
-		else {
-			map.put(
-				"hidden",
-				String.valueOf(
-					collectionDisplayPageElementDefinition.getHidden()));
-		}
-
 		if (collectionDisplayPageElementDefinition.getName() == null) {
 			map.put("name", null);
 		}
@@ -468,9 +448,6 @@ public class CollectionDisplayPageElementDefinitionSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "hidden")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -566,12 +543,6 @@ public class CollectionDisplayPageElementDefinitionSerDes {
 						setEmptyCollectionConfig(
 							EmptyCollectionConfigSerDes.toDTO(
 								(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "hidden")) {
-				if (jsonParserFieldValue != null) {
-					collectionDisplayPageElementDefinition.setHidden(
-						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

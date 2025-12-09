@@ -5,7 +5,6 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.CustomCSSViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
@@ -63,6 +62,21 @@ public class FragmentInstancePageElementDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (fragmentInstancePageElementDefinition.
+				getBackgroundFragmentImage() != null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"backgroundFragmentImage\": ");
+
+			sb.append(
+				String.valueOf(
+					fragmentInstancePageElementDefinition.
+						getBackgroundFragmentImage()));
+		}
+
 		if (fragmentInstancePageElementDefinition.getConfiguration() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -115,52 +129,6 @@ public class FragmentInstancePageElementDefinitionSerDes {
 
 				if ((i + 1) < fragmentInstancePageElementDefinition.
 						getCssClasses().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (fragmentInstancePageElementDefinition.getCustomCSS() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customCSS\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				_escape(fragmentInstancePageElementDefinition.getCustomCSS()));
-
-			sb.append("\"");
-		}
-
-		if (fragmentInstancePageElementDefinition.getCustomCSSViewports() !=
-				null) {
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customCSSViewports\": ");
-
-			sb.append("[");
-
-			for (int i = 0;
-				 i < fragmentInstancePageElementDefinition.
-					 getCustomCSSViewports().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(
-						fragmentInstancePageElementDefinition.
-							getCustomCSSViewports()[i]));
-
-				if ((i + 1) < fragmentInstancePageElementDefinition.
-						getCustomCSSViewports().length) {
 
 					sb.append(", ");
 				}
@@ -282,18 +250,6 @@ public class FragmentInstancePageElementDefinitionSerDes {
 				String.valueOf(
 					fragmentInstancePageElementDefinition.
 						getFragmentReference()));
-		}
-
-		if (fragmentInstancePageElementDefinition.getFragmentStyle() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fragmentStyle\": ");
-
-			sb.append(
-				String.valueOf(
-					fragmentInstancePageElementDefinition.getFragmentStyle()));
 		}
 
 		if (fragmentInstancePageElementDefinition.getFragmentType() != null) {
@@ -489,6 +445,19 @@ public class FragmentInstancePageElementDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (fragmentInstancePageElementDefinition.
+				getBackgroundFragmentImage() == null) {
+
+			map.put("backgroundFragmentImage", null);
+		}
+		else {
+			map.put(
+				"backgroundFragmentImage",
+				String.valueOf(
+					fragmentInstancePageElementDefinition.
+						getBackgroundFragmentImage()));
+		}
+
 		if (fragmentInstancePageElementDefinition.getConfiguration() == null) {
 			map.put("configuration", null);
 		}
@@ -516,29 +485,6 @@ public class FragmentInstancePageElementDefinitionSerDes {
 				"cssClasses",
 				String.valueOf(
 					fragmentInstancePageElementDefinition.getCssClasses()));
-		}
-
-		if (fragmentInstancePageElementDefinition.getCustomCSS() == null) {
-			map.put("customCSS", null);
-		}
-		else {
-			map.put(
-				"customCSS",
-				String.valueOf(
-					fragmentInstancePageElementDefinition.getCustomCSS()));
-		}
-
-		if (fragmentInstancePageElementDefinition.getCustomCSSViewports() ==
-				null) {
-
-			map.put("customCSSViewports", null);
-		}
-		else {
-			map.put(
-				"customCSSViewports",
-				String.valueOf(
-					fragmentInstancePageElementDefinition.
-						getCustomCSSViewports()));
 		}
 
 		if (fragmentInstancePageElementDefinition.getDatePropagated() == null) {
@@ -614,16 +560,6 @@ public class FragmentInstancePageElementDefinitionSerDes {
 				String.valueOf(
 					fragmentInstancePageElementDefinition.
 						getFragmentReference()));
-		}
-
-		if (fragmentInstancePageElementDefinition.getFragmentStyle() == null) {
-			map.put("fragmentStyle", null);
-		}
-		else {
-			map.put(
-				"fragmentStyle",
-				String.valueOf(
-					fragmentInstancePageElementDefinition.getFragmentStyle()));
 		}
 
 		if (fragmentInstancePageElementDefinition.getFragmentType() == null) {
@@ -751,21 +687,18 @@ public class FragmentInstancePageElementDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "configuration")) {
+			if (Objects.equals(
+					jsonParserFieldName, "backgroundFragmentImage")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "configuration")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "css")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "customCSS")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "customCSSViewports")) {
-
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "datePropagated")) {
@@ -795,9 +728,6 @@ public class FragmentInstancePageElementDefinitionSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentReference")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentType")) {
@@ -840,7 +770,17 @@ public class FragmentInstancePageElementDefinitionSerDes {
 				fragmentInstancePageElementDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "configuration")) {
+			if (Objects.equals(
+					jsonParserFieldName, "backgroundFragmentImage")) {
+
+				if (jsonParserFieldValue != null) {
+					fragmentInstancePageElementDefinition.
+						setBackgroundFragmentImage(
+							FragmentImageSerDes.toDTO(
+								(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "configuration")) {
 				if (jsonParserFieldValue != null) {
 					fragmentInstancePageElementDefinition.setConfiguration(
 						(String)jsonParserFieldValue);
@@ -856,32 +796,6 @@ public class FragmentInstancePageElementDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					fragmentInstancePageElementDefinition.setCssClasses(
 						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "customCSS")) {
-				if (jsonParserFieldValue != null) {
-					fragmentInstancePageElementDefinition.setCustomCSS(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "customCSSViewports")) {
-
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					CustomCSSViewport[] customCSSViewportsArray =
-						new CustomCSSViewport[jsonParserFieldValues.length];
-
-					for (int i = 0; i < customCSSViewportsArray.length; i++) {
-						customCSSViewportsArray[i] =
-							CustomCSSViewportSerDes.toDTO(
-								(String)jsonParserFieldValues[i]);
-					}
-
-					fragmentInstancePageElementDefinition.setCustomCSSViewports(
-						customCSSViewportsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "datePropagated")) {
@@ -949,13 +863,6 @@ public class FragmentInstancePageElementDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					fragmentInstancePageElementDefinition.setFragmentReference(
 						FragmentReferenceSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
-				if (jsonParserFieldValue != null) {
-					fragmentInstancePageElementDefinition.setFragmentStyle(
-						FragmentStyleSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

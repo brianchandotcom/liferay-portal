@@ -52,112 +52,6 @@ public class ListStyleDefinition implements Serializable {
 			ListStyleDefinition.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("align")
-	@Valid
-	public Align getAlign() {
-		if (_alignSupplier != null) {
-			align = _alignSupplier.get();
-
-			_alignSupplier = null;
-		}
-
-		return align;
-	}
-
-	@JsonIgnore
-	public String getAlignAsString() {
-		Align align = getAlign();
-
-		if (align == null) {
-			return null;
-		}
-
-		return align.toString();
-	}
-
-	public void setAlign(Align align) {
-		this.align = align;
-
-		_alignSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setAlign(UnsafeSupplier<Align, Exception> alignUnsafeSupplier) {
-		_alignSupplier = () -> {
-			try {
-				return alignUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Align align;
-
-	@JsonIgnore
-	private Supplier<Align> _alignSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("flexWrap")
-	@Valid
-	public FlexWrap getFlexWrap() {
-		if (_flexWrapSupplier != null) {
-			flexWrap = _flexWrapSupplier.get();
-
-			_flexWrapSupplier = null;
-		}
-
-		return flexWrap;
-	}
-
-	@JsonIgnore
-	public String getFlexWrapAsString() {
-		FlexWrap flexWrap = getFlexWrap();
-
-		if (flexWrap == null) {
-			return null;
-		}
-
-		return flexWrap.toString();
-	}
-
-	public void setFlexWrap(FlexWrap flexWrap) {
-		this.flexWrap = flexWrap;
-
-		_flexWrapSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFlexWrap(
-		UnsafeSupplier<FlexWrap, Exception> flexWrapUnsafeSupplier) {
-
-		_flexWrapSupplier = () -> {
-			try {
-				return flexWrapUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FlexWrap flexWrap;
-
-	@JsonIgnore
-	private Supplier<FlexWrap> _flexWrapSupplier;
-
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the collection display page element has gutters if a grid list style is selected."
 	)
@@ -203,107 +97,8 @@ public class ListStyleDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _guttersSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("justify")
-	@Valid
-	public Justify getJustify() {
-		if (_justifySupplier != null) {
-			justify = _justifySupplier.get();
-
-			_justifySupplier = null;
-		}
-
-		return justify;
-	}
-
-	@JsonIgnore
-	public String getJustifyAsString() {
-		Justify justify = getJustify();
-
-		if (justify == null) {
-			return null;
-		}
-
-		return justify.toString();
-	}
-
-	public void setJustify(Justify justify) {
-		this.justify = justify;
-
-		_justifySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setJustify(
-		UnsafeSupplier<Justify, Exception> justifyUnsafeSupplier) {
-
-		_justifySupplier = () -> {
-			try {
-				return justifyUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Justify justify;
-
-	@JsonIgnore
-	private Supplier<Justify> _justifySupplier;
-
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The number of columns in the collection display page element."
-	)
-	public Integer getNumberOfColumns() {
-		if (_numberOfColumnsSupplier != null) {
-			numberOfColumns = _numberOfColumnsSupplier.get();
-
-			_numberOfColumnsSupplier = null;
-		}
-
-		return numberOfColumns;
-	}
-
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
-
-		_numberOfColumnsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
-
-		_numberOfColumnsSupplier = () -> {
-			try {
-				return numberOfColumnsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The number of columns in the collection display page element."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer numberOfColumns;
-
-	@JsonIgnore
-	private Supplier<Integer> _numberOfColumnsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The vertical alignment property of the collection display page element if a grid list style is selected.."
+		description = "The vertical alignment property of the collection display page element if a grid list style is selected."
 	)
 	@JsonGetter("verticalAlignment")
 	@Valid
@@ -353,7 +148,7 @@ public class ListStyleDefinition implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The vertical alignment property of the collection display page element if a grid list style is selected.."
+		description = "The vertical alignment property of the collection display page element if a grid list style is selected."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected VerticalAlignment verticalAlignment;
@@ -388,34 +183,6 @@ public class ListStyleDefinition implements Serializable {
 
 		sb.append("{");
 
-		Align align = getAlign();
-
-		if (align != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"align\": ");
-
-			sb.append("\"");
-			sb.append(align);
-			sb.append("\"");
-		}
-
-		FlexWrap flexWrap = getFlexWrap();
-
-		if (flexWrap != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"flexWrap\": ");
-
-			sb.append("\"");
-			sb.append(flexWrap);
-			sb.append("\"");
-		}
-
 		Boolean gutters = getGutters();
 
 		if (gutters != null) {
@@ -426,32 +193,6 @@ public class ListStyleDefinition implements Serializable {
 			sb.append("\"gutters\": ");
 
 			sb.append(gutters);
-		}
-
-		Justify justify = getJustify();
-
-		if (justify != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"justify\": ");
-
-			sb.append("\"");
-			sb.append(justify);
-			sb.append("\"");
-		}
-
-		Integer numberOfColumns = getNumberOfColumns();
-
-		if (numberOfColumns != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"numberOfColumns\": ");
-
-			sb.append(numberOfColumns);
 		}
 
 		VerticalAlignment verticalAlignment = getVerticalAlignment();
@@ -479,122 +220,6 @@ public class ListStyleDefinition implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Align")
-	public static enum Align {
-
-		BASELINE("Baseline"), CENTER("Center"), END("End"), NONE("None"),
-		START("Start"), STRETCH("Stretch");
-
-		@JsonCreator
-		public static Align create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Align align : values()) {
-				if (Objects.equals(align.getValue(), value)) {
-					return align;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Align(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("FlexWrap")
-	public static enum FlexWrap {
-
-		NO_WRAP("NoWrap"), WRAP("Wrap"), WRAP_REVERSE("WrapReverse");
-
-		@JsonCreator
-		public static FlexWrap create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (FlexWrap flexWrap : values()) {
-				if (Objects.equals(flexWrap.getValue(), value)) {
-					return flexWrap;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private FlexWrap(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("Justify")
-	public static enum Justify {
-
-		CENTER("Center"), END("End"), NONE("None"), SPACE_AROUND("SpaceAround"),
-		SPACE_BETWEEN("SpaceBetween"), START("Start");
-
-		@JsonCreator
-		public static Justify create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Justify justify : values()) {
-				if (Objects.equals(justify.getValue(), value)) {
-					return justify;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Justify(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	@GraphQLName("VerticalAlignment")
 	public static enum VerticalAlignment {

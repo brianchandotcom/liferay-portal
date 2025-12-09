@@ -349,8 +349,8 @@ public class GridViewport implements Serializable {
 	@GraphQLName("Id")
 	public static enum Id {
 
-		LANDSCAPE_MOBILE("LandscapeMobile"), PORTRAIT_MOBILE("PortraitMobile"),
-		TABLET("Tablet");
+		DESKTOP("Desktop"), LANDSCAPE_MOBILE("LandscapeMobile"),
+		PORTRAIT_MOBILE("PortraitMobile"), TABLET("Tablet");
 
 		@JsonCreator
 		public static Id create(String value) {

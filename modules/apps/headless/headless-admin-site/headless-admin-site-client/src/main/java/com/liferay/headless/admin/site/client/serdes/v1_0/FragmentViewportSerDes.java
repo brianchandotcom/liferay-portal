@@ -79,9 +79,7 @@ public class FragmentViewportSerDes {
 			sb.append("\"id\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(fragmentViewport.getId()));
-
+			sb.append(fragmentViewport.getId());
 			sb.append("\"");
 		}
 
@@ -182,7 +180,9 @@ public class FragmentViewportSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					fragmentViewport.setId((String)jsonParserFieldValue);
+					fragmentViewport.setId(
+						FragmentViewport.Id.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

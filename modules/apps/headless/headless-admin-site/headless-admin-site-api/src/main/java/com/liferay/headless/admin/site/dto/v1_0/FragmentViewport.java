@@ -5,9 +5,12 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -19,7 +22,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -147,7 +150,9 @@ public class FragmentViewport implements Serializable {
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment viewport's ID."
 	)
-	public String getId() {
+	@JsonGetter("id")
+	@Valid
+	public Id getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
 
@@ -157,14 +162,25 @@ public class FragmentViewport implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
+	@JsonIgnore
+	public String getIdAsString() {
+		Id id = getId();
+
+		if (id == null) {
+			return null;
+		}
+
+		return id.toString();
+	}
+
+	public void setId(Id id) {
 		this.id = id;
 
 		_idSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<Id, Exception> idUnsafeSupplier) {
 		_idSupplier = () -> {
 			try {
 				return idUnsafeSupplier.get();
@@ -180,11 +196,11 @@ public class FragmentViewport implements Serializable {
 
 	@GraphQLField(description = "The fragment viewport's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String id;
+	@NotNull
+	protected Id id;
 
 	@JsonIgnore
-	private Supplier<String> _idSupplier;
+	private Supplier<Id> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -242,7 +258,7 @@ public class FragmentViewport implements Serializable {
 			sb.append(String.valueOf(fragmentViewportStyle));
 		}
 
-		String id = getId();
+		Id id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -252,9 +268,7 @@ public class FragmentViewport implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(id));
-
+			sb.append(id);
 			sb.append("\"");
 		}
 
@@ -269,6 +283,45 @@ public class FragmentViewport implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Id")
+	public static enum Id {
+
+		DESKTOP("Desktop"), LANDSCAPE_MOBILE("LandscapeMobile"),
+		PORTRAIT_MOBILE("PortraitMobile"), TABLET("Tablet");
+
+		@JsonCreator
+		public static Id create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Id id : values()) {
+				if (Objects.equals(id.getValue(), value)) {
+					return id;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Id(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

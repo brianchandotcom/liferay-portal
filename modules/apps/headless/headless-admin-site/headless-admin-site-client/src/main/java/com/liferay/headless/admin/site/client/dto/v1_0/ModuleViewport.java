@@ -110,8 +110,8 @@ public class ModuleViewport implements Cloneable, Serializable {
 
 	public static enum Id {
 
-		LANDSCAPE_MOBILE("LandscapeMobile"), PORTRAIT_MOBILE("PortraitMobile"),
-		TABLET("Tablet");
+		DESKTOP("Desktop"), LANDSCAPE_MOBILE("LandscapeMobile"),
+		PORTRAIT_MOBILE("PortraitMobile"), TABLET("Tablet");
 
 		public static Id create(String value) {
 			for (Id id : values()) {

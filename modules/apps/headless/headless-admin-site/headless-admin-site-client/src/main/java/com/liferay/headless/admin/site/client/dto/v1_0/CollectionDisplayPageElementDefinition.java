@@ -164,27 +164,6 @@ public class CollectionDisplayPageElementDefinition
 
 	protected EmptyCollectionConfig emptyCollectionConfig;
 
-	public Boolean getHidden() {
-		return hidden;
-	}
-
-	public void setHidden(Boolean hidden) {
-		this.hidden = hidden;
-	}
-
-	public void setHidden(
-		UnsafeSupplier<Boolean, Exception> hiddenUnsafeSupplier) {
-
-		try {
-			hidden = hiddenUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean hidden;
-
 	public String getName() {
 		return name;
 	}

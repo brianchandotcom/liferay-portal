@@ -51,6 +51,18 @@ public class GridPageElementDefinitionSerDes {
 
 		sb.append("{");
 
+		if (gridPageElementDefinition.getBackgroundFragmentImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"backgroundFragmentImage\": ");
+
+			sb.append(
+				String.valueOf(
+					gridPageElementDefinition.getBackgroundFragmentImage()));
+		}
+
 		if (gridPageElementDefinition.getCssClasses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -74,31 +86,6 @@ public class GridPageElementDefinitionSerDes {
 			}
 
 			sb.append("]");
-		}
-
-		if (gridPageElementDefinition.getCustomCSS() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customCSS\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(gridPageElementDefinition.getCustomCSS()));
-
-			sb.append("\"");
-		}
-
-		if (gridPageElementDefinition.getFragmentStyle() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fragmentStyle\": ");
-
-			sb.append(
-				String.valueOf(gridPageElementDefinition.getFragmentStyle()));
 		}
 
 		if (gridPageElementDefinition.getGridViewports() != null) {
@@ -147,16 +134,6 @@ public class GridPageElementDefinitionSerDes {
 			sb.append(gridPageElementDefinition.getIndexed());
 		}
 
-		if (gridPageElementDefinition.getModulesPerRow() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"modulesPerRow\": ");
-
-			sb.append(gridPageElementDefinition.getModulesPerRow());
-		}
-
 		if (gridPageElementDefinition.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -189,18 +166,6 @@ public class GridPageElementDefinitionSerDes {
 			sb.append("\"reverseOrder\": ");
 
 			sb.append(gridPageElementDefinition.getReverseOrder());
-		}
-
-		if (gridPageElementDefinition.getVerticalAlignment() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"verticalAlignment\": ");
-
-			sb.append("\"");
-			sb.append(gridPageElementDefinition.getVerticalAlignment());
-			sb.append("\"");
 		}
 
 		if (gridPageElementDefinition.getType() != null) {
@@ -237,6 +202,16 @@ public class GridPageElementDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (gridPageElementDefinition.getBackgroundFragmentImage() == null) {
+			map.put("backgroundFragmentImage", null);
+		}
+		else {
+			map.put(
+				"backgroundFragmentImage",
+				String.valueOf(
+					gridPageElementDefinition.getBackgroundFragmentImage()));
+		}
+
 		if (gridPageElementDefinition.getCssClasses() == null) {
 			map.put("cssClasses", null);
 		}
@@ -244,24 +219,6 @@ public class GridPageElementDefinitionSerDes {
 			map.put(
 				"cssClasses",
 				String.valueOf(gridPageElementDefinition.getCssClasses()));
-		}
-
-		if (gridPageElementDefinition.getCustomCSS() == null) {
-			map.put("customCSS", null);
-		}
-		else {
-			map.put(
-				"customCSS",
-				String.valueOf(gridPageElementDefinition.getCustomCSS()));
-		}
-
-		if (gridPageElementDefinition.getFragmentStyle() == null) {
-			map.put("fragmentStyle", null);
-		}
-		else {
-			map.put(
-				"fragmentStyle",
-				String.valueOf(gridPageElementDefinition.getFragmentStyle()));
 		}
 
 		if (gridPageElementDefinition.getGridViewports() == null) {
@@ -291,15 +248,6 @@ public class GridPageElementDefinitionSerDes {
 				String.valueOf(gridPageElementDefinition.getIndexed()));
 		}
 
-		if (gridPageElementDefinition.getModulesPerRow() == null) {
-			map.put("modulesPerRow", null);
-		}
-		else {
-			map.put(
-				"modulesPerRow",
-				String.valueOf(gridPageElementDefinition.getModulesPerRow()));
-		}
-
 		if (gridPageElementDefinition.getName() == null) {
 			map.put("name", null);
 		}
@@ -324,16 +272,6 @@ public class GridPageElementDefinitionSerDes {
 			map.put(
 				"reverseOrder",
 				String.valueOf(gridPageElementDefinition.getReverseOrder()));
-		}
-
-		if (gridPageElementDefinition.getVerticalAlignment() == null) {
-			map.put("verticalAlignment", null);
-		}
-		else {
-			map.put(
-				"verticalAlignment",
-				String.valueOf(
-					gridPageElementDefinition.getVerticalAlignment()));
 		}
 
 		if (gridPageElementDefinition.getType() == null) {
@@ -362,13 +300,12 @@ public class GridPageElementDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "cssClasses")) {
+			if (Objects.equals(
+					jsonParserFieldName, "backgroundFragmentImage")) {
+
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "customCSS")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
+			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "gridViewports")) {
@@ -380,9 +317,6 @@ public class GridPageElementDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "indexed")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "modulesPerRow")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -390,9 +324,6 @@ public class GridPageElementDefinitionSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "reverseOrder")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -407,23 +338,19 @@ public class GridPageElementDefinitionSerDes {
 			GridPageElementDefinition gridPageElementDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "cssClasses")) {
+			if (Objects.equals(
+					jsonParserFieldName, "backgroundFragmentImage")) {
+
+				if (jsonParserFieldValue != null) {
+					gridPageElementDefinition.setBackgroundFragmentImage(
+						FragmentImageSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {
 				if (jsonParserFieldValue != null) {
 					gridPageElementDefinition.setCssClasses(
 						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "customCSS")) {
-				if (jsonParserFieldValue != null) {
-					gridPageElementDefinition.setCustomCSS(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
-				if (jsonParserFieldValue != null) {
-					gridPageElementDefinition.setFragmentStyle(
-						FragmentStyleSerDes.toDTO(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "gridViewports")) {
@@ -455,12 +382,6 @@ public class GridPageElementDefinitionSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "modulesPerRow")) {
-				if (jsonParserFieldValue != null) {
-					gridPageElementDefinition.setModulesPerRow(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					gridPageElementDefinition.setName(
@@ -477,13 +398,6 @@ public class GridPageElementDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					gridPageElementDefinition.setReverseOrder(
 						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
-				if (jsonParserFieldValue != null) {
-					gridPageElementDefinition.setVerticalAlignment(
-						GridPageElementDefinition.VerticalAlignment.create(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

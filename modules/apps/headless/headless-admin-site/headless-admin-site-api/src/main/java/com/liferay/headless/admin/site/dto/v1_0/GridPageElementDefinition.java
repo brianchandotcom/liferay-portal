@@ -5,12 +5,9 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -58,6 +55,53 @@ public class GridPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment's background image."
+	)
+	@Valid
+	public FragmentImage getBackgroundFragmentImage() {
+		if (_backgroundFragmentImageSupplier != null) {
+			backgroundFragmentImage = _backgroundFragmentImageSupplier.get();
+
+			_backgroundFragmentImageSupplier = null;
+		}
+
+		return backgroundFragmentImage;
+	}
+
+	public void setBackgroundFragmentImage(
+		FragmentImage backgroundFragmentImage) {
+
+		this.backgroundFragmentImage = backgroundFragmentImage;
+
+		_backgroundFragmentImageSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setBackgroundFragmentImage(
+		UnsafeSupplier<FragmentImage, Exception>
+			backgroundFragmentImageUnsafeSupplier) {
+
+		_backgroundFragmentImageSupplier = () -> {
+			try {
+				return backgroundFragmentImageUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The fragment's background image.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentImage backgroundFragmentImage;
+
+	@JsonIgnore
+	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of CSS classes that are applied to the row page element."
 	)
 	public String[] getCssClasses() {
@@ -101,95 +145,6 @@ public class GridPageElementDefinition
 
 	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Custom CSS that is applied on the row page element."
-	)
-	public String getCustomCSS() {
-		if (_customCSSSupplier != null) {
-			customCSS = _customCSSSupplier.get();
-
-			_customCSSSupplier = null;
-		}
-
-		return customCSS;
-	}
-
-	public void setCustomCSS(String customCSS) {
-		this.customCSS = customCSS;
-
-		_customCSSSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCustomCSS(
-		UnsafeSupplier<String, Exception> customCSSUnsafeSupplier) {
-
-		_customCSSSupplier = () -> {
-			try {
-				return customCSSUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "Custom CSS that is applied on the row page element."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String customCSS;
-
-	@JsonIgnore
-	private Supplier<String> _customCSSSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of the row page element."
-	)
-	@Valid
-	public FragmentStyle getFragmentStyle() {
-		if (_fragmentStyleSupplier != null) {
-			fragmentStyle = _fragmentStyleSupplier.get();
-
-			_fragmentStyleSupplier = null;
-		}
-
-		return fragmentStyle;
-	}
-
-	public void setFragmentStyle(FragmentStyle fragmentStyle) {
-		this.fragmentStyle = fragmentStyle;
-
-		_fragmentStyleSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFragmentStyle(
-		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
-
-		_fragmentStyleSupplier = () -> {
-			try {
-				return fragmentStyleUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment style of the row page element.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentStyle fragmentStyle;
-
-	@JsonIgnore
-	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of viewports configuration of the grid page element."
@@ -328,49 +283,6 @@ public class GridPageElementDefinition
 	private Supplier<Boolean> _indexedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The row page element's modules per row."
-	)
-	public Integer getModulesPerRow() {
-		if (_modulesPerRowSupplier != null) {
-			modulesPerRow = _modulesPerRowSupplier.get();
-
-			_modulesPerRowSupplier = null;
-		}
-
-		return modulesPerRow;
-	}
-
-	public void setModulesPerRow(Integer modulesPerRow) {
-		this.modulesPerRow = modulesPerRow;
-
-		_modulesPerRowSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setModulesPerRow(
-		UnsafeSupplier<Integer, Exception> modulesPerRowUnsafeSupplier) {
-
-		_modulesPerRowSupplier = () -> {
-			try {
-				return modulesPerRowUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The row page element's modules per row.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer modulesPerRow;
-
-	@JsonIgnore
-	private Supplier<Integer> _modulesPerRowSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The custom name of a row page element."
 	)
 	public String getName() {
@@ -499,65 +411,6 @@ public class GridPageElementDefinition
 	@JsonIgnore
 	private Supplier<Boolean> _reverseOrderSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The vertical alignment property of the row page element."
-	)
-	@JsonGetter("verticalAlignment")
-	@Valid
-	public VerticalAlignment getVerticalAlignment() {
-		if (_verticalAlignmentSupplier != null) {
-			verticalAlignment = _verticalAlignmentSupplier.get();
-
-			_verticalAlignmentSupplier = null;
-		}
-
-		return verticalAlignment;
-	}
-
-	@JsonIgnore
-	public String getVerticalAlignmentAsString() {
-		VerticalAlignment verticalAlignment = getVerticalAlignment();
-
-		if (verticalAlignment == null) {
-			return null;
-		}
-
-		return verticalAlignment.toString();
-	}
-
-	public void setVerticalAlignment(VerticalAlignment verticalAlignment) {
-		this.verticalAlignment = verticalAlignment;
-
-		_verticalAlignmentSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setVerticalAlignment(
-		UnsafeSupplier<VerticalAlignment, Exception>
-			verticalAlignmentUnsafeSupplier) {
-
-		_verticalAlignmentSupplier = () -> {
-			try {
-				return verticalAlignmentUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The vertical alignment property of the row page element."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected VerticalAlignment verticalAlignment;
-
-	@JsonIgnore
-	private Supplier<VerticalAlignment> _verticalAlignmentSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -586,6 +439,18 @@ public class GridPageElementDefinition
 
 		sb.append("{");
 
+		FragmentImage backgroundFragmentImage = getBackgroundFragmentImage();
+
+		if (backgroundFragmentImage != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"backgroundFragmentImage\": ");
+
+			sb.append(String.valueOf(backgroundFragmentImage));
+		}
+
 		String[] cssClasses = getCssClasses();
 
 		if (cssClasses != null) {
@@ -610,34 +475,6 @@ public class GridPageElementDefinition
 			}
 
 			sb.append("]");
-		}
-
-		String customCSS = getCustomCSS();
-
-		if (customCSS != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customCSS\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(customCSS));
-
-			sb.append("\"");
-		}
-
-		FragmentStyle fragmentStyle = getFragmentStyle();
-
-		if (fragmentStyle != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fragmentStyle\": ");
-
-			sb.append(String.valueOf(fragmentStyle));
 		}
 
 		GridViewport[] gridViewports = getGridViewports();
@@ -686,18 +523,6 @@ public class GridPageElementDefinition
 			sb.append(indexed);
 		}
 
-		Integer modulesPerRow = getModulesPerRow();
-
-		if (modulesPerRow != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"modulesPerRow\": ");
-
-			sb.append(modulesPerRow);
-		}
-
 		String name = getName();
 
 		if (name != null) {
@@ -738,20 +563,6 @@ public class GridPageElementDefinition
 			sb.append(reverseOrder);
 		}
 
-		VerticalAlignment verticalAlignment = getVerticalAlignment();
-
-		if (verticalAlignment != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"verticalAlignment\": ");
-
-			sb.append("\"");
-			sb.append(verticalAlignment);
-			sb.append("\"");
-		}
-
 		Type type = getType();
 
 		if (type != null) {
@@ -777,44 +588,6 @@ public class GridPageElementDefinition
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("VerticalAlignment")
-	public static enum VerticalAlignment {
-
-		BOTTOM("Bottom"), MIDDLE("Middle"), TOP("Top");
-
-		@JsonCreator
-		public static VerticalAlignment create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (VerticalAlignment verticalAlignment : values()) {
-				if (Objects.equals(verticalAlignment.getValue(), value)) {
-					return verticalAlignment;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private VerticalAlignment(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

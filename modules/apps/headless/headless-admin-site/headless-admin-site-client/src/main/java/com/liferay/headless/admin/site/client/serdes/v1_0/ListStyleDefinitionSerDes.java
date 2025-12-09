@@ -46,30 +46,6 @@ public class ListStyleDefinitionSerDes {
 
 		sb.append("{");
 
-		if (listStyleDefinition.getAlign() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"align\": ");
-
-			sb.append("\"");
-			sb.append(listStyleDefinition.getAlign());
-			sb.append("\"");
-		}
-
-		if (listStyleDefinition.getFlexWrap() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"flexWrap\": ");
-
-			sb.append("\"");
-			sb.append(listStyleDefinition.getFlexWrap());
-			sb.append("\"");
-		}
-
 		if (listStyleDefinition.getGutters() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -78,28 +54,6 @@ public class ListStyleDefinitionSerDes {
 			sb.append("\"gutters\": ");
 
 			sb.append(listStyleDefinition.getGutters());
-		}
-
-		if (listStyleDefinition.getJustify() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"justify\": ");
-
-			sb.append("\"");
-			sb.append(listStyleDefinition.getJustify());
-			sb.append("\"");
-		}
-
-		if (listStyleDefinition.getNumberOfColumns() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"numberOfColumns\": ");
-
-			sb.append(listStyleDefinition.getNumberOfColumns());
 		}
 
 		if (listStyleDefinition.getVerticalAlignment() != null) {
@@ -135,44 +89,12 @@ public class ListStyleDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (listStyleDefinition.getAlign() == null) {
-			map.put("align", null);
-		}
-		else {
-			map.put("align", String.valueOf(listStyleDefinition.getAlign()));
-		}
-
-		if (listStyleDefinition.getFlexWrap() == null) {
-			map.put("flexWrap", null);
-		}
-		else {
-			map.put(
-				"flexWrap", String.valueOf(listStyleDefinition.getFlexWrap()));
-		}
-
 		if (listStyleDefinition.getGutters() == null) {
 			map.put("gutters", null);
 		}
 		else {
 			map.put(
 				"gutters", String.valueOf(listStyleDefinition.getGutters()));
-		}
-
-		if (listStyleDefinition.getJustify() == null) {
-			map.put("justify", null);
-		}
-		else {
-			map.put(
-				"justify", String.valueOf(listStyleDefinition.getJustify()));
-		}
-
-		if (listStyleDefinition.getNumberOfColumns() == null) {
-			map.put("numberOfColumns", null);
-		}
-		else {
-			map.put(
-				"numberOfColumns",
-				String.valueOf(listStyleDefinition.getNumberOfColumns()));
 		}
 
 		if (listStyleDefinition.getVerticalAlignment() == null) {
@@ -202,19 +124,7 @@ public class ListStyleDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "align")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "flexWrap")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "gutters")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "justify")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {
+			if (Objects.equals(jsonParserFieldName, "gutters")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
@@ -229,37 +139,10 @@ public class ListStyleDefinitionSerDes {
 			ListStyleDefinition listStyleDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "align")) {
-				if (jsonParserFieldValue != null) {
-					listStyleDefinition.setAlign(
-						ListStyleDefinition.Align.create(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "flexWrap")) {
-				if (jsonParserFieldValue != null) {
-					listStyleDefinition.setFlexWrap(
-						ListStyleDefinition.FlexWrap.create(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "gutters")) {
+			if (Objects.equals(jsonParserFieldName, "gutters")) {
 				if (jsonParserFieldValue != null) {
 					listStyleDefinition.setGutters(
 						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "justify")) {
-				if (jsonParserFieldValue != null) {
-					listStyleDefinition.setJustify(
-						ListStyleDefinition.Justify.create(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {
-				if (jsonParserFieldValue != null) {
-					listStyleDefinition.setNumberOfColumns(
-						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {

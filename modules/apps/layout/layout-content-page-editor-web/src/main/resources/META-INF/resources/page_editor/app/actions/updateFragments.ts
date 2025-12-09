@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {LayoutDataItemType} from '../config/constants/layoutDataItemTypes';
 import {FragmentComposition} from './addFragmentComposition';
 import {UPDATE_FRAGMENTS} from './types';
 
@@ -14,6 +15,7 @@ export interface FragmentEntry {
 	highlighted: boolean;
 	icon: string;
 	imagePreviewURL: string;
+	itemType: LayoutDataItemType;
 	name: string;
 	type: FragmentEntryType;
 }

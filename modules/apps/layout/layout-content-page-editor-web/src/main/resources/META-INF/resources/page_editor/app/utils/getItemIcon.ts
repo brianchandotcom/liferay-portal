@@ -40,6 +40,7 @@ export function getItemIcon(
 		)?.icon;
 	}
 
-	return fragmentEntries.find((fragment) => fragment.type === item.type)
-		?.icon;
+	return fragmentEntries.find(
+		(fragment) => 'itemType' in fragment && fragment.itemType === item.type
+	)?.icon;
 }

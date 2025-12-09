@@ -92,7 +92,7 @@ public class OAuth2AuthorizationServiceImpl
 				_oAuth2ApplicationModelResourcePermission.check(
 					getPermissionChecker(),
 					oAuth2Authorization.getOAuth2ApplicationId(),
-					OAuth2ProviderActionKeys.ACTION_REVOKE_TOKEN);
+					OAuth2ProviderActionKeys.REVOKE_TOKEN);
 			}
 
 			oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
@@ -114,7 +114,7 @@ public class OAuth2AuthorizationServiceImpl
 			_oAuth2ApplicationModelResourcePermission.check(
 				getPermissionChecker(),
 				oAuth2Authorization.getOAuth2ApplicationId(),
-				OAuth2ProviderActionKeys.ACTION_REVOKE_TOKEN);
+				OAuth2ProviderActionKeys.REVOKE_TOKEN);
 		}
 
 		oAuth2AuthorizationLocalService.deleteOAuth2Authorization(

@@ -49,7 +49,7 @@ public class OAuth2AuthorizePortletDisplayContext
 		OAuth2Application oAuth2Application) {
 
 		return hasPermission(
-			oAuth2Application, OAuth2ProviderActionKeys.ACTION_CREATE_TOKEN);
+			oAuth2Application, OAuth2ProviderActionKeys.CREATE_TOKEN);
 	}
 
 	public void setAssignableScopes(AssignableScopes assignableScopes) {

@@ -3380,7 +3380,9 @@ cmsTest.describe('Manage attachment ObjectField download permission', () => {
 					'#guest_ACTION_download_' + objectField.name
 				);
 
-				await objectFieldActionCheckbox.click();
+				await page.waitForTimeout(500);
+
+				await objectFieldActionCheckbox.check();
 
 				await expect(objectFieldActionCheckbox).toBeChecked();
 

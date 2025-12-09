@@ -20,6 +20,7 @@ import moveItems from '../actions/moveItems';
 import moveStepper from '../actions/moveStepper';
 import pasteItems from '../actions/pasteItems';
 import removeFormStep from '../actions/removeFormStep';
+import swapFragment from '../actions/swapFragment';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
@@ -34,6 +35,7 @@ import {
 	MOVE_STEPPER,
 	PASTE_ITEM,
 	REMOVE_FORM_STEP,
+	SWAP_FRAGMENT,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FORM_ITEM_CONFIG,
@@ -68,6 +70,7 @@ export default function fragmentEntryLinksReducer(
 		| typeof moveItems
 		| typeof moveStepper
 		| typeof removeFormStep
+		| typeof swapFragment
 		| typeof updateCollectionDisplayCollection
 		| typeof updateEditableValues
 		| typeof updateFormItemConfig
@@ -282,6 +285,14 @@ export default function fragmentEntryLinksReducer(
 					...fragmentEntryLink,
 					comments: nextComments,
 				},
+			};
+		}
+
+		case SWAP_FRAGMENT: {
+			return {
+				...fragmentEntryLinks,
+				[action.fragmentEntryLink.fragmentEntryLinkId]:
+					action.fragmentEntryLink,
 			};
 		}
 

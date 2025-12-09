@@ -52,20 +52,20 @@ public class OAuth2ApplicationServiceImpl
 
 		ModelResourcePermissionUtil.check(
 			_oAuth2ApplicationModelResourcePermission, getPermissionChecker(),
-			0, 0, OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
+			0, 0, OAuth2ProviderActionKeys.ADD_APPLICATION);
 
 		if (rememberDevice) {
 			ModelResourcePermissionUtil.check(
 				_oAuth2ApplicationModelResourcePermission,
 				getPermissionChecker(), 0, 0,
-				OAuth2ProviderActionKeys.ACTION_ADD_REMEMBER_DEVICE);
+				OAuth2ProviderActionKeys.ADD_REMEMBER_DEVICE);
 		}
 
 		if (trustedApplication) {
 			ModelResourcePermissionUtil.check(
 				_oAuth2ApplicationModelResourcePermission,
 				getPermissionChecker(), 0, 0,
-				OAuth2ProviderActionKeys.ACTION_ADD_TRUSTED_APPLICATION);
+				OAuth2ProviderActionKeys.ADD_TRUSTED_APPLICATION);
 		}
 
 		User user = getUser();
@@ -196,14 +196,14 @@ public class OAuth2ApplicationServiceImpl
 			ModelResourcePermissionUtil.check(
 				_oAuth2ApplicationModelResourcePermission,
 				getPermissionChecker(), 0, 0,
-				OAuth2ProviderActionKeys.ACTION_ADD_REMEMBER_DEVICE);
+				OAuth2ProviderActionKeys.ADD_REMEMBER_DEVICE);
 		}
 
 		if (trustedApplication) {
 			ModelResourcePermissionUtil.check(
 				_oAuth2ApplicationModelResourcePermission,
 				getPermissionChecker(), 0, 0,
-				OAuth2ProviderActionKeys.ACTION_ADD_TRUSTED_APPLICATION);
+				OAuth2ProviderActionKeys.ADD_TRUSTED_APPLICATION);
 		}
 
 		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS)) {

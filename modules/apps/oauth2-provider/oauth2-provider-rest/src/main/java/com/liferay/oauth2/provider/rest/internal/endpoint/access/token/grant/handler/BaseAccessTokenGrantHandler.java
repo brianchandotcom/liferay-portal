@@ -94,7 +94,7 @@ public abstract class BaseAccessTokenGrantHandler
 		try {
 			if (modelResourcePermission.contains(
 					permissionChecker, oAuth2Application,
-					OAuth2ProviderActionKeys.ACTION_CREATE_TOKEN)) {
+					OAuth2ProviderActionKeys.CREATE_TOKEN)) {
 
 				return true;
 			}

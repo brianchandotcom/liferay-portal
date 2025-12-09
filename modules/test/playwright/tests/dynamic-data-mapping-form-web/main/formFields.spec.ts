@@ -393,6 +393,7 @@ test.describe('Manage fields through Form Preview page', () => {
 test.describe('Manage fields through Form Builder page', () => {
 	test('Assert edition of a rich text field predefined value that contains a rule', async ({
 		formBuilderPage,
+		formBuilderSidePanelPage,
 		formsPage,
 		page,
 	}) => {
@@ -414,7 +415,7 @@ test.describe('Manage fields through Form Builder page', () => {
 
 		await formBuilderPage.openFieldSettings('Rich Text');
 
-		await formBuilderPage.settingsAdvancedTab.click();
+		await formBuilderSidePanelPage.advancedTab.click();
 
 		const richTextPredefinedValueIframe = page
 			.getByRole('textbox', {name: 'Predefined Value'})

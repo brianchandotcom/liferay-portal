@@ -1943,7 +1943,7 @@ public class GitWorkingDirectory {
 			}
 			catch (Exception exception) {
 				System.out.println(
-					"Unable to retrieve cached SHA information. " +
+					"Unable to retrieve cached SHA information: " +
 						exception.getMessage());
 			}
 		}

@@ -35,6 +35,10 @@ public class LocalizedValueUtil {
 			UnsafeFunction<T, R, E> unsafeFunction)
 		throws E {
 
+		if (localizedValues == null) {
+			return null;
+		}
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		List<String> availableLanguageIds = getAvailableLanguageIds();
@@ -56,6 +60,10 @@ public class LocalizedValueUtil {
 	public static <R, E extends Throwable> Map<String, R> toLocalizedValues(
 			JSONObject jsonObject, UnsafeFunction<String, R, E> unsafeFunction)
 		throws E {
+
+		if (jsonObject == null) {
+			return null;
+		}
 
 		return new HashMap<>() {
 			{

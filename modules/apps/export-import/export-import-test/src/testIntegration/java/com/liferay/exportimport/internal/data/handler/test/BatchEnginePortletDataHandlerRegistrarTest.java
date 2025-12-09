@@ -191,7 +191,11 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 							new String[] {className2},
 							portletDataHandler.getClassNames()) &&
 						_hasPortletDataHandlerControls(
-							new PortletDataHandlerControl[0],
+							new PortletDataHandlerControl[] {
+								new PortletDataHandlerBoolean(
+									portletId, className2, className2, true,
+									false, null, className2, null)
+							},
 							portletDataHandler.getExportControls()));
 
 				safeCloseable3.close();

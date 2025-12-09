@@ -44,5 +44,5 @@ export default function resolveEditableValue(
 	}).then(({fileEntryURL}) => ({
 		...localizedEditableValue,
 		url: fileEntryURL,
-	}));
+	})).catch(() => localizedEditableValue);
 }

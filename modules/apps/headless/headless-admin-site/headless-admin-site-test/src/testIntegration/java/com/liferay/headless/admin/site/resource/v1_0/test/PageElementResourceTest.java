@@ -1932,6 +1932,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		};
 	}
 
+	private ItemExternalReference _randomItemExternalReference() {
+		return ReferencesTestUtil.getItemExternalReference(
+			HashMapBuilder.put(
+				"className", FileEntry.class.getName()
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"scopeExternalReferenceCode", RandomTestUtil.randomString()
+			).build(),
+			testGroup.getGroupId());
+	}
+
 	private PageElement _randomPageElement(
 			PageElementDefinition.Type pageElementDefinitionType,
 			String parentExternalReferenceCode, PageElement... pageElements)
@@ -3129,25 +3141,86 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+		FileEntry fileEntry1 = _getFileEntry(testGroup.getGroupId());
+		FileEntry fileEntry2 = _getFileEntry(irrelevantGroup.getGroupId());
+
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 			FragmentEditableElementTestUtil.
 				getBackgroundImageFragmentEditableElement(
 					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
 						ReferencesTestUtil.getItemExternalReference(
-							_getFileEntry(testGroup.getGroupId()),
-							testGroup.getGroupId()),
+							fileEntry1, testGroup.getGroupId()),
 						RandomTestUtil.randomString()),
 					"element-background-image1"),
 			FragmentEditableElementTestUtil.
 				getBackgroundImageFragmentEditableElement(
 					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
 						ReferencesTestUtil.getItemExternalReference(
-							_getFileEntry(irrelevantGroup.getGroupId()),
-							testGroup.getGroupId()),
+							fileEntry2, testGroup.getGroupId()),
 						null),
 					"element-background-image2"),
 			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
 				null, null, HTMLFragmentValue.Type.INLINE),
+			FragmentEditableElementTestUtil.getImageFragmentEditableElement(
+				FragmentEditableElementTestUtil.getFragmentImage(
+					HashMapBuilder.put(
+						LocaleUtil.toBCP47LanguageId(
+							LocaleUtil.getMostRelevantLocale()),
+						RandomTestUtil.randomString()
+					).build(),
+					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+						ReferencesTestUtil.getItemExternalReference(
+							fileEntry1, testGroup.getGroupId()),
+						RandomTestUtil.randomString()),
+					Boolean.FALSE,
+					HashMapBuilder.put(
+						"desktop", "auto"
+					).build()),
+				"element-image1"),
+			FragmentEditableElementTestUtil.getImageFragmentEditableElement(
+				FragmentEditableElementTestUtil.getFragmentImage(
+					HashMapBuilder.put(
+						LocaleUtil.toBCP47LanguageId(
+							LocaleUtil.getMostRelevantLocale()),
+						RandomTestUtil.randomString()
+					).put(
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+						RandomTestUtil.randomString()
+					).build(),
+					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+						ReferencesTestUtil.getItemExternalReference(
+							fileEntry2, testGroup.getGroupId()),
+						RandomTestUtil.randomString()),
+					Boolean.TRUE,
+					HashMapBuilder.put(
+						"desktop", "auto"
+					).put(
+						"landscapeMobile", "preview-1000x0"
+					).put(
+						"tablet", "auto"
+					).build()),
+				"element-image2"),
+			FragmentEditableElementTestUtil.getImageFragmentEditableElement(
+				FragmentEditableElementTestUtil.getFragmentImage(
+					HashMapBuilder.put(
+						LocaleUtil.toBCP47LanguageId(
+							LocaleUtil.getMostRelevantLocale()),
+						RandomTestUtil.randomString()
+					).put(
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+						RandomTestUtil.randomString()
+					).build(),
+					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+						null, RandomTestUtil.randomString()),
+					null,
+					HashMapBuilder.put(
+						"desktop", "auto"
+					).put(
+						"landscapeMobile", "preview-1000x0"
+					).put(
+						"tablet", "auto"
+					).build()),
+				"element-image3"),
 			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
 				FragmentEditableElementValueFragmentLink.Prefix.EMAIL,
 				_getFragmentLink(
@@ -3176,6 +3249,24 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					COLLECTION_ITEM,
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
 				HTMLFragmentValue.Type.MAPPED),
+			FragmentEditableElementTestUtil.getImageFragmentEditableElement(
+				FragmentEditableElementTestUtil.getFragmentImage(
+					HashMapBuilder.put(
+						LocaleUtil.toBCP47LanguageId(
+							LocaleUtil.getMostRelevantLocale()),
+						RandomTestUtil.randomString()
+					).build(),
+					FragmentEditableElementTestUtil.getMappedFragmentImageValue(
+						FragmentMappedValueItemContextReference.ContextSource.
+							COLLECTION_ITEM,
+						"JournalArticle_authorProfileImage",
+						FragmentMappedValueItemReference.Type.
+							CONTEXT_REFERENCE),
+					Boolean.FALSE,
+					HashMapBuilder.put(
+						"tablet", "auto"
+					).build()),
+				"element-image1"),
 			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
 				null, null,
 				FragmentMappedValueItemContextReference.ContextSource.
@@ -3200,6 +3291,24 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					DISPLAY_PAGE_ITEM,
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
 				HTMLFragmentValue.Type.MAPPED),
+			FragmentEditableElementTestUtil.getImageFragmentEditableElement(
+				FragmentEditableElementTestUtil.getFragmentImage(
+					HashMapBuilder.put(
+						LocaleUtil.toBCP47LanguageId(
+							LocaleUtil.getMostRelevantLocale()),
+						RandomTestUtil.randomString()
+					).build(),
+					FragmentEditableElementTestUtil.getMappedFragmentImageValue(
+						FragmentMappedValueItemContextReference.ContextSource.
+							DISPLAY_PAGE_ITEM,
+						"JournalArticle_authorProfileImage",
+						FragmentMappedValueItemReference.Type.
+							CONTEXT_REFERENCE),
+					Boolean.FALSE,
+					HashMapBuilder.put(
+						"tablet", "auto"
+					).build()),
+				"element-image1"),
 			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
 				FragmentEditableElementValueFragmentLink.Prefix.PHONE,
 				_getFragmentLink(
@@ -3214,26 +3323,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			new FragmentEditableElement[0]);
 
 		_testMissingOptionalReference(
-			4,
+			6,
 			() ->
 				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 					FragmentEditableElementTestUtil.
 						getBackgroundImageFragmentEditableElement(
 							FragmentEditableElementTestUtil.
 								getDirectFragmentImageValue(
-									ReferencesTestUtil.getItemExternalReference(
-										HashMapBuilder.put(
-											"className",
-											FileEntry.class.getName()
-										).put(
-											"externalReferenceCode",
-											RandomTestUtil.randomString()
-										).put(
-											"scopeExternalReferenceCode",
-											RandomTestUtil.randomString()
-										).build(),
-										testGroup.getGroupId()),
-									null),
+									_randomItemExternalReference(), null),
 							"element-background-image1"),
 					FragmentEditableElementTestUtil.
 						getBackgroundImageFragmentEditableElement(
@@ -3249,6 +3346,40 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							FragmentMappedValueItemReference.Type.
 								ITEM_EXTERNAL_REFERENCE,
 							HTMLFragmentValue.Type.MAPPED),
+					FragmentEditableElementTestUtil.
+						getImageFragmentEditableElement(
+							FragmentEditableElementTestUtil.getFragmentImage(
+								HashMapBuilder.put(
+									LocaleUtil.toBCP47LanguageId(
+										LocaleUtil.getMostRelevantLocale()),
+									RandomTestUtil.randomString()
+								).build(),
+								FragmentEditableElementTestUtil.
+									getDirectFragmentImageValue(
+										_randomItemExternalReference(), null),
+								Boolean.FALSE,
+								HashMapBuilder.put(
+									"tablet", "auto"
+								).build()),
+							"element-image1"),
+					FragmentEditableElementTestUtil.
+						getImageFragmentEditableElement(
+							FragmentEditableElementTestUtil.getFragmentImage(
+								HashMapBuilder.put(
+									LocaleUtil.toBCP47LanguageId(
+										LocaleUtil.getMostRelevantLocale()),
+									RandomTestUtil.randomString()
+								).build(),
+								FragmentEditableElementTestUtil.
+									getMappedFragmentImageValue(
+										null, "FileEntry_authorProfileImage",
+										FragmentMappedValueItemReference.Type.
+											ITEM_EXTERNAL_REFERENCE),
+								Boolean.FALSE,
+								HashMapBuilder.put(
+									"desktop", "auto"
+								).build()),
+							"element-image2"),
 					FragmentEditableElementTestUtil.
 						getTextFragmentEditableElement(
 							null,

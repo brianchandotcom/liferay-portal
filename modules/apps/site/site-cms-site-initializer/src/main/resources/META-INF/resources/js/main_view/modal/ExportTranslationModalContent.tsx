@@ -7,7 +7,11 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput, ClaySelect} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
+import {openToast} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
+
+import {displayErrorToast} from '../../common/utils/toastUtil';
 
 type FileFormat = {
 	displayName: string;
@@ -69,7 +73,11 @@ const SourceLocales = ({
 }) => {
 	if (availableSourceLocales.length === 1) {
 		return (
-			<ClayInput readOnly value={availableSourceLocales[0].displayName} />
+			<ClayInput
+				id="sourceLanguageId"
+				readOnly
+				value={availableSourceLocales[0].displayName}
+			/>
 		);
 	}
 	else {
@@ -128,14 +136,14 @@ export default function ExportTranslationModalContent({
 	availableTargetLocales = [],
 	closeModal,
 	defaultSourceLanguageId,
-	exportTranslationURL,
+	itemId,
 }: {
 	availableExportFileFormats: FileFormat[];
 	availableSourceLocales: Locale[];
 	availableTargetLocales: Locale[];
 	closeModal: () => void;
 	defaultSourceLanguageId: string;
-	exportTranslationURL: string;
+	itemId: number;
 }) {
 	const [exportMimeType, setExportMimeType] = useState(
 		availableExportFileFormats[0].mimeType
@@ -150,9 +158,46 @@ export default function ExportTranslationModalContent({
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		// action with exportTranslationURL
+		return fetch(`/o/headless-object/v1.0/${itemId}/translations`, {
+			body: JSON.stringify({
+				sourceLanguageId,
+				targetLanguageIds: selectedTargetLanguageIds.join(','),
+				version: availableExportFileFormats
+					.find((format) => format.mimeType === exportMimeType)
+					?.displayName.split(' ')[1],
+			}),
+			headers: {
+				'Accept': 'application/zip',
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+		}).then(async (response) => {
+			if (!response.ok) {
+				displayErrorToast();
+			}
+			else {
+				openToast({
+					message: Liferay.Language.get(
+						'the-download-will-begin-shortly'
+					),
+					title: Liferay.Language.get('success'),
+					type: 'success',
+				});
 
-		closeModal();
+				const blob = response.blob();
+				const blobURL = URL.createObjectURL(await blob);
+
+				const link = document.createElement('a');
+				link.href = blobURL;
+
+				link.click();
+
+				URL.revokeObjectURL(blobURL);
+
+				closeModal();
+			}
+		});
 	};
 
 	const onChangeTargetLanguage = (
@@ -238,7 +283,11 @@ export default function ExportTranslationModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary" type="submit">
+						<ClayButton
+							disabled={!selectedTargetLanguageIds.length}
+							displayType="primary"
+							type="submit"
+						>
 							{Liferay.Language.get('export')}
 						</ClayButton>
 					</ClayButton.Group>

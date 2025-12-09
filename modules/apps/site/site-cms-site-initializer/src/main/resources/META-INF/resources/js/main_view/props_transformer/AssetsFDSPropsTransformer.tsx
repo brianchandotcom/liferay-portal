@@ -323,7 +323,7 @@ export default function AssetsFDSPropsTransformer({
 							closeModal,
 							defaultSourceLanguageId:
 								itemData.embedded?.defaultLanguageId,
-							exportTranslationURL: '',
+							itemId: itemData.embedded.id,
 						}),
 				});
 			}

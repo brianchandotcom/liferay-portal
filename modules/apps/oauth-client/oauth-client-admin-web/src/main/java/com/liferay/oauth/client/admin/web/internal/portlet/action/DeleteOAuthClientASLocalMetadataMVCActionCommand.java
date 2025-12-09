@@ -38,11 +38,12 @@ public class DeleteOAuthClientASLocalMetadataMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			String localWellKnownURI = ParamUtil.getString(
-				actionRequest, "localWellKnownURI");
+
+			Long oAuthClientASLocalMetadataId = ParamUtil.getLong(
+				actionRequest, "oAuthClientASLocalMetadataId");
 
 			_oAuthClientASLocalMetadataService.deleteOAuthClientASLocalMetadata(
-				localWellKnownURI);
+				oAuthClientASLocalMetadataId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isInfoEnabled()) {

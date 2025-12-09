@@ -702,7 +702,7 @@ public class LayoutStagedModelDataHandlerTest
 							importedFileEntry.getFileVersion(), null,
 							StringPool.BLANK)),
 					"\" data-fileentryid=\"",
-					importedFileEntry.getFileEntryId(), "\"></a>")));
+					importedFileEntry.getFileEntryId(), "\"")));
 
 		_stagingLocalService.disableStaging(liveGroup, serviceContext);
 
@@ -736,7 +736,7 @@ public class LayoutStagedModelDataHandlerTest
 							importedFileEntry.getFileVersion(), null,
 							StringPool.BLANK)),
 					"\" data-fileentryid=\"",
-					importedFileEntry.getFileEntryId(), "\"></a>")));
+					importedFileEntry.getFileEntryId(), "\"")));
 		Assert.assertTrue(
 			html,
 			html.contains(

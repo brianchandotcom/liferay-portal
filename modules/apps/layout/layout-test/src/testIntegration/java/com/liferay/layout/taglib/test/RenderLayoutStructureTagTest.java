@@ -2929,7 +2929,7 @@ public class RenderLayoutStructureTagTest {
 							fileEntry, fileEntry.getFileVersion(), null,
 							StringPool.BLANK)),
 					"\" data-fileentryid=\"", fileEntry.getFileEntryId(),
-					"\"></a>")));
+					"\"")));
 	}
 
 	@Test

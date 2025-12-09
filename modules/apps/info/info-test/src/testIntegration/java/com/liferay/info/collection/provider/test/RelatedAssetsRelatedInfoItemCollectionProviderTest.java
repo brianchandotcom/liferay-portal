@@ -50,6 +50,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -456,16 +457,26 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 			long segmentsExperienceId)
 		throws Exception {
 
-		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
-			attributes, layout, _layoutServiceContextHelper,
-			_layoutStructureProvider, segmentsExperienceId);
+		String html = StringUtil.removeChars(
+			ContentLayoutTestUtil.getRenderLayoutHTML(
+				attributes, layout, _layoutServiceContextHelper,
+				_layoutStructureProvider, segmentsExperienceId),
+			CharPool.NEW_LINE, CharPool.SPACE, CharPool.TAB);
 
 		Assert.assertEquals(
-			html, count, StringUtil.count(html, _blogsEntry.getTitle()));
+			html, count,
+			StringUtil.count(
+				html, StringPool.GREATER_THAN + _blogsEntry.getTitle() + "</"));
 		Assert.assertEquals(
-			html, count, StringUtil.count(html, _dlFileEntry.getTitle()));
+			html, count,
+			StringUtil.count(
+				html,
+				StringPool.GREATER_THAN + _dlFileEntry.getTitle() + "</"));
 		Assert.assertEquals(
-			html, count, StringUtil.count(html, _journalArticle.getTitle()));
+			html, count,
+			StringUtil.count(
+				html,
+				StringPool.GREATER_THAN + _journalArticle.getTitle() + "</"));
 
 		return html;
 	}

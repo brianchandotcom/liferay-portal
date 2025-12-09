@@ -7,6 +7,8 @@ package com.liferay.exportimport.kernel.lar;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,6 +29,22 @@ public class StagedModelTypeTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		_classNameLocalServiceUtilMockedStatic.when(
+			() -> ClassNameLocalServiceUtil.fetchClassName(Mockito.anyLong())
+		).thenAnswer(
+			invocationOnMock -> {
+				ClassName className = Mockito.mock(ClassName.class);
+
+				Mockito.when(
+					className.getClassName()
+				).thenReturn(
+					String.valueOf(invocationOnMock.getArgument(0, Long.class))
+				);
+
+				return className;
+			}
+		);
+
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getClassName(Mockito.anyLong())
 		).thenAnswer(
@@ -44,6 +62,7 @@ public class StagedModelTypeTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		_classNameLocalServiceUtilMockedStatic.close();
 		_portalUtilMockedStatic.close();
 	}
 
@@ -144,6 +163,9 @@ public class StagedModelTypeTest {
 		Assert.assertEquals(expected, stagedModelType.toString());
 	}
 
+	private static final MockedStatic<ClassNameLocalServiceUtil>
+		_classNameLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			ClassNameLocalServiceUtil.class);
 	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
 		Mockito.mockStatic(PortalUtil.class);
 

@@ -112,12 +112,12 @@ public class ExportTranslationServlet extends HttpServlet {
 				httpServletRequest, "sourceLanguageId");
 			String[] targetLanguageIds = ParamUtil.getStringValues(
 				httpServletRequest, "targetLanguageIds");
-			String exportMimeType = ParamUtil.getString(
-				httpServletRequest, "exportMimeType");
+			String xliffMimeType = ParamUtil.getString(
+				httpServletRequest, "xliffMimeType");
 
 			File file = _translationManager.getXLIFFZipFile(
 				className, SetUtil.toLongArray(classPKs, classPK -> classPK),
-				exportMimeType, _portal.getLocale(httpServletRequest),
+				xliffMimeType, _portal.getLocale(httpServletRequest),
 				sourceLanguageId, targetLanguageIds);
 
 			try (InputStream inputStream = new FileInputStream(file)) {

@@ -707,15 +707,15 @@ public class ObjectEntryResourceImpl
 
 		String className = _objectDefinition.getClassName();
 
-		String exportMimeType = _DEFAULT_XLIFF_MIMETYPE_VERSION;
+		String xliffMimeType = _DEFAULT_XLIFF_MIMETYPE_VERSION;
 
 		if (version != null) {
-			exportMimeType = _versionXLIFFMimeType.getOrDefault(
+			xliffMimeType = _versionXLIFFMimeType.getOrDefault(
 				version, _DEFAULT_XLIFF_MIMETYPE_VERSION);
 		}
 
 		File xliffZipFile = _translationManager.getXLIFFZipFile(
-			className, new long[] {objectEntryId}, exportMimeType,
+			className, new long[] {objectEntryId}, xliffMimeType,
 			contextAcceptLanguage.getPreferredLocale(), sourceLanguageId,
 			StringUtil.split(targetLanguageIds, CharPool.COMMA));
 
@@ -736,7 +736,7 @@ public class ObjectEntryResourceImpl
 
 		File xliffFile = _translationManager.getXLIFFFile(
 			_objectDefinition.getClassName(), objectEntryId,
-			_getExportMimeType(
+			_getXLIFFMimeType(
 				contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT)),
 			contextAcceptLanguage.getPreferredLocale(), languageId,
 			targetLanguageId);
@@ -1798,22 +1798,6 @@ public class ObjectEntryResourceImpl
 			contextUser);
 	}
 
-	private String _getExportMimeType(String acceptHeader) {
-		if (Validator.isBlank(acceptHeader)) {
-			return null;
-		}
-
-		for (Map.Entry<String, String> entry :
-				_versionXLIFFMimeType.entrySet()) {
-
-			if (acceptHeader.contains(entry.getValue())) {
-				return entry.getValue();
-			}
-		}
-
-		return null;
-	}
-
 	private String _getFilterString() {
 		if (contextHttpServletRequest != null) {
 			return _getFilterString(
@@ -1904,6 +1888,22 @@ public class ObjectEntryResourceImpl
 
 		if (parameters.containsKey("siteId")) {
 			return String.valueOf(parameters.get("siteId"));
+		}
+
+		return null;
+	}
+
+	private String _getXLIFFMimeType(String acceptHeader) {
+		if (Validator.isBlank(acceptHeader)) {
+			return null;
+		}
+
+		for (Map.Entry<String, String> entry :
+				_versionXLIFFMimeType.entrySet()) {
+
+			if (acceptHeader.contains(entry.getValue())) {
+				return entry.getValue();
+			}
 		}
 
 		return null;

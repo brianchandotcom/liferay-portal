@@ -20,12 +20,12 @@ public interface TranslationManager {
 	public String getEntryTitle(String className, long classPK, Locale locale);
 
 	public File getXLIFFFile(
-			String className, long classPK, String exportMimeType,
-			Locale locale, String sourceLanguageId, String targetLanguageId)
+			String className, long classPK, String xliffMimeType, Locale locale,
+			String sourceLanguageId, String targetLanguageId)
 		throws IOException, PortalException;
 
 	public File getXLIFFZipFile(
-			String className, long[] classPKs, String exportMimeType,
+			String className, long[] classPKs, String xliffMimeType,
 			Locale locale, String sourceLanguageId, String[] targetLanguageIds)
 		throws IOException, PortalException;
 

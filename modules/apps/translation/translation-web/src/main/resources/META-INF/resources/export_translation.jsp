@@ -23,7 +23,7 @@ renderResponse.setTitle(exportTranslationDisplayContext.getTitle());
 	>
 		<clay:sheet>
 			<div>
-				<aui:select label="export-file-format" name="exportMimeType" wrapperCssClass="w-50"></aui:select>
+				<aui:select label="export-file-format" name="xliffMimeType" wrapperCssClass="w-50"></aui:select>
 				<aui:select label="original-language" name="sourceLanguageId"></aui:select>
 
 				<div class="form-group">

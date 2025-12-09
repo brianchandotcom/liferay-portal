@@ -90,9 +90,9 @@ const Experiences = ({
 
 const ExportFileFormats = ({
 	availableExportFileFormats,
-	exportMimeType,
 	portletNamespace,
-	setExportMimeType,
+	setXLIFFMimeType,
+	xliffMimeType,
 }) => {
 	if (availableExportFileFormats.length === 1) {
 		return (
@@ -105,12 +105,12 @@ const ExportFileFormats = ({
 	else {
 		return (
 			<ClaySelect
-				id={`${portletNamespace}exportMimeType`}
-				name={`${portletNamespace}exportMimeType`}
+				id={`${portletNamespace}xliffMimeType`}
+				name={`${portletNamespace}xliffMimeType`}
 				onChange={(event) => {
-					setExportMimeType(event.currentTarget.value);
+					setXLIFFMimeType(event.currentTarget.value);
 				}}
-				value={exportMimeType}
+				value={xliffMimeType}
 			>
 				{availableExportFileFormats.map((exportFileFormat) => (
 					<ClaySelect.Option
@@ -239,7 +239,7 @@ const ExportTranslation = ({
 	portletNamespace,
 	redirectURL,
 }) => {
-	const [exportMimeType, setExportMimeType] = useState(
+	const [xliffMimeType, setXLIFFMimeType] = useState(
 		availableExportFileFormats[0].mimeType
 	);
 
@@ -293,9 +293,9 @@ const ExportTranslation = ({
 				event.preventDefault();
 
 				const params = {
-					exportMimeType,
 					sourceLanguageId,
 					targetLanguageIds: selectedTargetLanguageIds.join(','),
+					xliffMimeType,
 				};
 
 				if (multiplePagesSelected) {
@@ -313,7 +313,7 @@ const ExportTranslation = ({
 				<label
 					htmlFor={
 						availableExportFileFormats.length > 1
-							? `${portletNamespace}exportMimeType`
+							? `${portletNamespace}xliffMimeType`
 							: undefined
 					}
 				>
@@ -322,9 +322,9 @@ const ExportTranslation = ({
 
 				<ExportFileFormats
 					availableExportFileFormats={availableExportFileFormats}
-					exportMimeType={exportMimeType}
 					portletNamespace={portletNamespace}
-					setExportMimeType={setExportMimeType}
+					setXLIFFMimeType={setXLIFFMimeType}
+					xliffMimeType={xliffMimeType}
 				/>
 			</ClayForm.Group>
 

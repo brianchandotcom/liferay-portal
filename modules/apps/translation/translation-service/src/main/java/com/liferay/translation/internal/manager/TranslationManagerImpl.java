@@ -54,8 +54,8 @@ public class TranslationManagerImpl implements TranslationManager {
 
 	@Override
 	public File getXLIFFFile(
-			String className, long classPK, String exportMimeType,
-			Locale locale, String sourceLanguageId, String targetLanguageId)
+			String className, long classPK, String xliffMimeType, Locale locale,
+			String sourceLanguageId, String targetLanguageId)
 		throws IOException, PortalException {
 
 		String fileName = _getXLIFFFileName(
@@ -66,7 +66,7 @@ public class TranslationManagerImpl implements TranslationManager {
 		try (OutputStream outputStream = new FileOutputStream(file)) {
 			StreamUtil.transfer(
 				_getXLIFFInputStream(
-					className, classPK, exportMimeType, sourceLanguageId,
+					className, classPK, xliffMimeType, sourceLanguageId,
 					targetLanguageId),
 				outputStream);
 		}
@@ -76,7 +76,7 @@ public class TranslationManagerImpl implements TranslationManager {
 
 	@Override
 	public File getXLIFFZipFile(
-			String className, long[] classPKs, String exportMimeType,
+			String className, long[] classPKs, String xliffMimeType,
 			Locale locale, String sourceLanguageId, String[] targetLanguageIds)
 		throws IOException, PortalException {
 
@@ -88,7 +88,7 @@ public class TranslationManagerImpl implements TranslationManager {
 
 		for (long classPK : classPKs) {
 			_addZipEntry(
-				zipWriter, className, classPK, exportMimeType, sourceLanguageId,
+				zipWriter, className, classPK, xliffMimeType, sourceLanguageId,
 				targetLanguageIds, locale);
 		}
 
@@ -97,7 +97,7 @@ public class TranslationManagerImpl implements TranslationManager {
 
 	private void _addZipEntry(
 			ZipWriter zipWriter, String className, long classPK,
-			String exportMimeType, String sourceLanguageId,
+			String xliffMimeType, String sourceLanguageId,
 			String[] targetLanguageIds, Locale locale)
 		throws IOException, PortalException {
 
@@ -107,7 +107,7 @@ public class TranslationManagerImpl implements TranslationManager {
 					className, classPK, sourceLanguageId, targetLanguageId,
 					locale),
 				_getXLIFFInputStream(
-					className, classPK, exportMimeType, sourceLanguageId,
+					className, classPK, xliffMimeType, sourceLanguageId,
 					targetLanguageId));
 		}
 	}
@@ -164,22 +164,22 @@ public class TranslationManagerImpl implements TranslationManager {
 	}
 
 	private InputStream _getXLIFFInputStream(
-			String className, long classPK, String exportMimeType,
+			String className, long classPK, String xliffMimeType,
 			String sourceLanguageId, String targetLanguageId)
 		throws IOException, PortalException {
 
-		if (Validator.isBlank(exportMimeType)) {
-			throw new FileMimeTypeException("Unknown export mime type");
+		if (Validator.isBlank(xliffMimeType)) {
+			throw new FileMimeTypeException("Unknown xliff mime type");
 		}
 
 		TranslationInfoItemFieldValuesExporter
 			translationInfoItemFieldValuesExporter =
 				_translationInfoItemFieldValuesExporterRegistry.
-					getTranslationInfoItemFieldValuesExporter(exportMimeType);
+					getTranslationInfoItemFieldValuesExporter(xliffMimeType);
 
 		if (translationInfoItemFieldValuesExporter == null) {
 			throw new FileMimeTypeException(
-				"Unknown export mime type: " + exportMimeType);
+				"Unknown xliff mime type: " + xliffMimeType);
 		}
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =

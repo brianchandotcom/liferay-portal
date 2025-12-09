@@ -531,7 +531,7 @@ public class MarketplaceRestController extends BaseRestController {
 				"Failed to upload publisher asset for product ID %d: %s",
 				productId, exception.getMessage());
 
-			_log.error(errorMessage);
+			_log.error(errorMessage, exception);
 		}
 	}
 
@@ -641,21 +641,21 @@ public class MarketplaceRestController extends BaseRestController {
 
 		try {
 			publisherAssetFile = _getPublisherAssetFile(
-				publisherAssetLink.href);
+				publisherAssetLink.getHref());
 
 			publisherAssetArtifactFile = MarketplaceUtil.addArtifactMetadata(
-				publisherAssetFile, publisherAssetLink.fileName,
+				publisherAssetFile, publisherAssetLink.getFileName(),
 				MarketplaceUtil.getArtifactProperties(
 					product, productSpecificationsMap, publisherAssetLink));
 
 			_marketplaceService.postVirtualFileEntry(
 				publisherAssetArtifactFile, product.getProductId(),
-				publisherAssetLink.version);
+				publisherAssetLink.getVersion());
 
 			if (Objects.equals(productSpecificationsMap.get("type"), "cloud")) {
 				_marketplaceService.postProductAttachment(
-					publisherAssetArtifactFile, publisherAssetLink.fileName,
-					product.getProductId());
+					publisherAssetArtifactFile,
+					publisherAssetLink.getFileName(), product.getProductId());
 			}
 
 			_marketplaceService.patchPublisherAssetAttachment(
@@ -663,7 +663,7 @@ public class MarketplaceRestController extends BaseRestController {
 				).put(
 					"processed", true
 				).toString(),
-				publisherAssetLink.attachmentId);
+				publisherAssetLink.getAttachmentId());
 		}
 		finally {
 			MarketplaceUtil.deleteTempFile(publisherAssetFile, false);

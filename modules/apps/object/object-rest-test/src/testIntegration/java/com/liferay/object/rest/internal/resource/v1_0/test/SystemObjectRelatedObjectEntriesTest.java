@@ -270,10 +270,9 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_objectRelationships.add(objectRelationship);
 
 		_testGetManyToOneSystemObjectRelatedObjectEntries(
-			StringPool.BLANK, 0, objectRelationship, _user.getUserId());
+			null, 0, objectRelationship, _user.getUserId());
 		_testGetManyToOneSystemObjectRelatedObjectEntries(
-			StringPool.BLANK, 0, objectRelationship,
-			_userAccountJSONObject.getLong("id"));
+			null, 0, objectRelationship, _userAccountJSONObject.getLong("id"));
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry.getObjectEntryId(), _user.getUserId(),

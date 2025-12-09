@@ -3180,32 +3180,42 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
 				TextFragmentValue.Type.MAPPED));
 
-		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
-			FragmentEditableElementTestUtil.
-				getBackgroundImageFragmentEditableElement(
-					FragmentEditableElementTestUtil.getMappedFragmentImageValue(
-						null, "FileEntry_authorProfileImage",
-						FragmentMappedValueItemReference.Type.
-							ITEM_EXTERNAL_REFERENCE),
-					"element-background-image1"),
-			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
-				null,
-				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE,
-				HTMLFragmentValue.Type.MAPPED),
-			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
-				null,
-				_getFragmentLink(
-					null, null, null,
-					HashMapBuilder.put(
-						LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
-						"https://www.liferay.es"
-					).put(
-						LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
-						"https://www.liferay.com"
-					).build()),
-				null,
-				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE,
-				TextFragmentValue.Type.MAPPED));
+		_testMissingOptionalReference(
+			3,
+			() ->
+				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
+					FragmentEditableElementTestUtil.
+						getBackgroundImageFragmentEditableElement(
+							FragmentEditableElementTestUtil.
+								getMappedFragmentImageValue(
+									null, "FileEntry_authorProfileImage",
+									FragmentMappedValueItemReference.Type.
+										ITEM_EXTERNAL_REFERENCE),
+							"element-background-image1"),
+					FragmentEditableElementTestUtil.
+						getHTMLFragmentEditableElement(
+							null,
+							FragmentMappedValueItemReference.Type.
+								ITEM_EXTERNAL_REFERENCE,
+							HTMLFragmentValue.Type.MAPPED),
+					FragmentEditableElementTestUtil.
+						getTextFragmentEditableElement(
+							null,
+							_getFragmentLink(
+								null, null, null,
+								HashMapBuilder.put(
+									LocaleUtil.toBCP47LanguageId(
+										LocaleUtil.SPAIN),
+									"https://www.liferay.es"
+								).put(
+									LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+									"https://www.liferay.com"
+								).build()),
+							null,
+							FragmentMappedValueItemReference.Type.
+								ITEM_EXTERNAL_REFERENCE,
+							TextFragmentValue.Type.MAPPED)));
+
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 			new FragmentEditableElement[0]);
 	}

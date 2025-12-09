@@ -132,38 +132,10 @@ public class FragmentEditableElementUtil {
 					layoutStructureItemImporterContext)
 		throws Exception {
 
-		FragmentImageValue backgroundFragmentImageValue =
+		return _toFragmentImageValueJSONObject(
 			backgroundImageFragmentEditableElementValue.
-				getBackgroundFragmentImageValue();
-
-		if (backgroundFragmentImageValue == null) {
-			return null;
-		}
-
-		if (backgroundFragmentImageValue instanceof DirectFragmentImageValue) {
-			DirectFragmentImageValue directFragmentImageValue =
-				(DirectFragmentImageValue)backgroundFragmentImageValue;
-
-			return LocalizedValueUtil.toJSONObject(
-				directFragmentImageValue.getValue_i18n(),
-				imageValue -> _getImageValueJSONObject(
-					imageValue, layoutStructureItemImporterContext));
-		}
-
-		if (!(backgroundFragmentImageValue instanceof
-				MappedFragmentImageValue)) {
-
-			return null;
-		}
-
-		MappedFragmentImageValue mappedFragmentImageValue =
-			(MappedFragmentImageValue)backgroundFragmentImageValue;
-
-		return _getFragmentMappedValueJSONObject(
-			layoutStructureItemImporterContext.getCompanyId(),
-			mappedFragmentImageValue.getFragmentMappedValue(),
-			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
-			layoutStructureItemImporterContext.getGroupId());
+				getBackgroundFragmentImageValue(),
+			layoutStructureItemImporterContext);
 	}
 
 	private static JSONObject
@@ -794,6 +766,40 @@ public class FragmentEditableElementUtil {
 		directFragmentImageValue.setType(FragmentImageValue.Type.DIRECT);
 
 		return directFragmentImageValue;
+	}
+
+	private static JSONObject _toFragmentImageValueJSONObject(
+			FragmentImageValue fragmentImageValue,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
+		throws Exception {
+
+		if (fragmentImageValue == null) {
+			return null;
+		}
+
+		if (fragmentImageValue instanceof DirectFragmentImageValue) {
+			DirectFragmentImageValue directFragmentImageValue =
+				(DirectFragmentImageValue)fragmentImageValue;
+
+			return LocalizedValueUtil.toJSONObject(
+				directFragmentImageValue.getValue_i18n(),
+				imageValue -> _getImageValueJSONObject(
+					imageValue, layoutStructureItemImporterContext));
+		}
+
+		if (!(fragmentImageValue instanceof MappedFragmentImageValue)) {
+			return null;
+		}
+
+		MappedFragmentImageValue mappedFragmentImageValue =
+			(MappedFragmentImageValue)fragmentImageValue;
+
+		return _getFragmentMappedValueJSONObject(
+			layoutStructureItemImporterContext.getCompanyId(),
+			mappedFragmentImageValue.getFragmentMappedValue(),
+			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
+			layoutStructureItemImporterContext.getGroupId());
 	}
 
 	private static HTMLFragmentEditableElementValue

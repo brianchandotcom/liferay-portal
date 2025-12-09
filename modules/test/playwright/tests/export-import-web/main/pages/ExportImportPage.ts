@@ -279,7 +279,7 @@ export class ExportImportPage {
 			'#_com_liferay_exportimport_web_portlet_ExportPortlet_selectContents .portlet-list'
 		);
 
-		await portletListContainer.waitFor();
+		await portletListContainer.waitFor({state: 'attached'});
 
 		const itemsLocator = portletListContainer.locator(
 			'.custom-control-label-text:has(strong)'

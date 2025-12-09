@@ -1,5 +1,5 @@
+import Alert from '@clayui/alert';
 import AttributeConjunctionInput from './components/attribute-conjunction-input';
-import ClayIcon from '@clayui/icon';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 import EventPropertiesQuery, {
 	EventPropertiesData,
@@ -405,14 +405,15 @@ const EventInput: React.FC<IEventInputProps> = ({
 								</Form.Group>
 							)}
 							{isRealTime && (
-								<div className='text-info'>
-									<ClayIcon symbol='info-circle' />
-									<span className='ml-1'>
-										{Liferay.Language.get(
-											'info-event-date-attributes-may-create-time-conflicts'
-										)}
-									</span>
-								</div>
+								<Alert
+									className='mt-2'
+									displayType='info'
+									variant='feedback'
+								>
+									{Liferay.Language.get(
+										'event-date-attributes-may-create-time-conflicts-and-reduce-matching-users.-review-your-criteria-to-ensure-the-segment-behaves-as-expected'
+									)}
+								</Alert>
 							)}
 						</>
 					);

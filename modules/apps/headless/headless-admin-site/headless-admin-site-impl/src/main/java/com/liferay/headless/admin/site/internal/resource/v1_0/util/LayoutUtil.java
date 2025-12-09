@@ -74,10 +74,12 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1161,6 +1163,8 @@ public class LayoutUtil {
 					segmentsExperience);
 			}
 
+			List<String> externalReferenceCodes = new ArrayList<>();
+
 			for (PageExperience pageExperience : pageExperiences) {
 				SegmentsExperience segmentsExperience =
 					segmentsExperiencesMap.get(
@@ -1176,6 +1180,18 @@ public class LayoutUtil {
 						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
 						layout, pageExperience, segmentsExperience,
 						serviceContext);
+				}
+
+				externalReferenceCodes.add(
+					pageExperience.getExternalReferenceCode());
+			}
+
+			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+				if (!externalReferenceCodes.contains(
+						segmentsExperience.getExternalReferenceCode())) {
+
+					SegmentsExperienceLocalServiceUtil.deleteSegmentsExperience(
+						segmentsExperience);
 				}
 			}
 		}

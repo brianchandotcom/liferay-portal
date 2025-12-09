@@ -146,6 +146,14 @@ const RichText = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditingLocale]);
 
+	/**
+	 * This `useEffect` is needed to fix an issue on the Forms edit page causing
+	 * the Rich Text field to replace any focused field when changing languages.
+	 *
+	 * `setCurrentInternalValue` needs to be set after `currentEditingLocale`
+	 * and `currentValue` are updated otherwise `handleContentChange` could be
+	 * called with stale data.
+	 */
 	useEffect(() => {
 		if (Liferay.FeatureFlags['LPD-11235']) {
 			setCurrentInternalValue(

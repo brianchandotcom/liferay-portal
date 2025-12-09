@@ -55,6 +55,7 @@ import com.liferay.data.cleanup.internal.upgrade.WysiwygUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.XSLContentUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.YoutubeUpgradeProcess;
 import com.liferay.data.cleanup.internal.verify.ClassNamePostUpgradeDataCleanupProcess;
+import com.liferay.data.cleanup.internal.verify.PortletPreferencesPostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.PostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.ResourceActionPostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.ServiceComponentPostUpgradeDataCleanupProcess;
@@ -72,6 +73,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
@@ -89,7 +91,6 @@ import com.liferay.portal.upgrade.data.cleanup.GroupDataCleanupPreupgradeProcess
 import com.liferay.portal.upgrade.data.cleanup.JournalDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.NullUnicodeContentDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.PortalPreferencesDataCleanupPreupgradeProcess;
-import com.liferay.portal.upgrade.data.cleanup.PortletPreferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.UserDataCleanupPreupgradeProcess;
 import com.liferay.portal.verify.VerifyProcess;
@@ -399,6 +400,25 @@ public class DataCleanupRegistrator {
 					_layoutPageTemplateStructureRelLocalService)));
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
+				"remove-portlet-preferences-orphan-data",
+				_getBundleSymbolicName(
+					ClassNamePostUpgradeDataCleanupProcess.class),
+				DataCleanup.SYSTEM_DATA_CLEANUP,
+				new VerifyProcess() {
+
+					@Override
+					protected void doVerify() throws Exception {
+						PostUpgradeDataCleanupProcess
+							postUpgradeDataCleanupProcess =
+								new PortletPreferencesPostUpgradeDataCleanupProcess(
+									connection, _portletLocalService);
+
+						postUpgradeDataCleanupProcess.cleanUp();
+					}
+
+				}));
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
 				"remove-publications-older-than-6-months",
 				"com.liferay.change.tracking.service",
 				DataCleanup.SYSTEM_DATA_CLEANUP,
@@ -511,9 +531,6 @@ public class DataCleanupRegistrator {
 			PortalPreferencesDataCleanupPreupgradeProcess.class,
 			"remove-portal-preferences-orphan-data"
 		).put(
-			PortletPreferencesDataCleanupPreupgradeProcess.class,
-			"remove-portlet-preferences-orphan-data"
-		).put(
 			QuartzJobDetailsDataCleanupPreupgradeProcess.class,
 			"remove-quartz-job-details-data"
 		).put(
@@ -572,6 +589,9 @@ public class DataCleanupRegistrator {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

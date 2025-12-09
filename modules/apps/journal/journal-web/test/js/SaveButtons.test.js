@@ -229,18 +229,27 @@ describe('SaveButtons', () => {
 	});
 
 	it('select past years from date picker when scheduling', async () => {
+		jest.useFakeTimers().setSystemTime(new Date('2023-01-01'));
+
 		renderComponent({
 			...DEFAULT_PROPS,
 			articleId: null,
 		});
 
-		userEvent.click(screen.getByText('schedule-publication'));
-		userEvent.click(await screen.findByLabelText('select-date'));
+		userEvent.click(await screen.findByText('schedule-publication'));
+
+		jest.runOnlyPendingTimers();
+
+		userEvent.click(
+			await screen.findByRole('button', {name: 'select-date'})
+		);
+
 		userEvent.click(await screen.findByLabelText('select-a-year'));
 
-		const currentYearMinus5 = new Date().getFullYear() - 5;
+		const yearToCheck = 2023 - 5;
+		expect(screen.getByText(yearToCheck)).toBeInTheDocument();
 
-		expect(screen.getByText(currentYearMinus5)).toBeInTheDocument();
+		jest.useRealTimers();
 	});
 
 	it('does not proceed if required fields validation fails', async () => {

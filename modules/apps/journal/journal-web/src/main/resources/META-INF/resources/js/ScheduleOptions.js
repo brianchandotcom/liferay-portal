@@ -11,6 +11,9 @@ import classNames from 'classnames';
 import {dateUtils, sub} from 'frontend-js-web';
 import React, {useEffect} from 'react';
 
+const FUTURE_YEARS_RANGE = 25;
+const PAST_YEARS_RANGE = 50;
+
 export default function ScheduleOptions({
 	displayDate,
 	error,
@@ -20,6 +23,7 @@ export default function ScheduleOptions({
 	setError,
 	timeZone,
 }) {
+	const currentYear = new Date().getFullYear();
 	const {day, hour, minutes, month, year} = getDate(displayDate);
 
 	useEffect(() => {
@@ -93,8 +97,8 @@ export default function ScheduleOptions({
 					value={displayDate || ''}
 					weekdaysShort={dateUtils.getWeekdaysShort()}
 					years={{
-						end: new Date().getFullYear() + 25,
-						start: new Date().getFullYear() - 50,
+						end: currentYear + FUTURE_YEARS_RANGE,
+						start: currentYear - PAST_YEARS_RANGE,
 					}}
 				/>
 

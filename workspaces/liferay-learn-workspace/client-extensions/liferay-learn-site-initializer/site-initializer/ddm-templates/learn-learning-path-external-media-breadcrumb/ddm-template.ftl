@@ -20,7 +20,10 @@
 		<a href="/education-lms/learning-paths">
 			<@liferay_ui["message"] key="learning-path" />&nbsp/
 		</a>&nbsp
-		<a href="/learning-path/${learningPathId}">${learningPathName}&nbsp/</a>&nbsp
+		<a href="/learning-path/${learningPathId}">
+			${learningPathName}&nbsp/
+		</a>&nbsp
+
 		<span class="breadcrumb-text-truncate title">
 			<#if (ObjectField_name.getData())??>
 				${ObjectField_name.getData()}

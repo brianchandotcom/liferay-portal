@@ -69,6 +69,11 @@ public class OpenIdConnectUserLocalServiceImpl
 	}
 
 	@Override
+	public void deleteOpenIdConnectUsers(long companyId, long userId) {
+		openIdConnectUserPersistence.removeByC_U(companyId, userId);
+	}
+
+	@Override
 	public OpenIdConnectUser fetchOpenIdConnectUser(
 		long companyId, String issuer, String subject) {
 

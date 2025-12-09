@@ -1053,7 +1053,13 @@ public class LayoutCTTest {
 			layout = _layoutLocalService.updateLayout(layout);
 		}
 
-		_layoutLocalService.deleteLayout(layout);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"CHANGE_TRACKING_DELETION_PROTECTION_ENABLED", false,
+					false)) {
+
+			_layoutLocalService.deleteLayout(layout);
+		}
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.background.task.internal.messaging." +

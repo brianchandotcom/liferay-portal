@@ -32,7 +32,7 @@ OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetad
 	/>
 
 	<portlet:actionURL name="/oauth_client_admin/delete_oauth_client_as_local_metadata" var="deleteURL">
-		<portlet:param name="issuer" value="<%= oAuthClientASLocalMetadata.getIssuer() %>" />
+		<portlet:param name="oAuthClientASLocalMetadataId" value="<%= String.valueOf(oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

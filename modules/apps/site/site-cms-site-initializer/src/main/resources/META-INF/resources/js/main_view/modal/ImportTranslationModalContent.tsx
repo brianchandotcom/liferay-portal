@@ -55,6 +55,10 @@ export default function ImportTranslationModalContent({
 
 			<MultipleFileUploader
 				assetLibraries={[]}
+				buttonLabel={Liferay.Language.get('import')}
+				description={Liferay.Language.get(
+					'please-upload-your-translation-files'
+				)}
 				groupId={groupId}
 				onModalClose={onModalClose}
 				onUploadComplete={onUploadComplete}

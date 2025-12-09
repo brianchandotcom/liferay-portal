@@ -6,9 +6,17 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -140,6 +148,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -147,6 +157,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -162,6 +173,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
@@ -2458,6 +2470,10 @@ public class ObjectDefinitionLocalServiceTest {
 					TestPropsValues.getCompanyId(),
 					objectDefinition.getClassName())));
 
+		// Delete custom object definition with asset list entry
+
+		_testDeleteCustomObjectDefinitionWithAssetListEntry();
+
 		// Delete modifiable system object definition
 
 		ObjectDefinition modifiableSystemObjectDefinition =
@@ -3818,6 +3834,10 @@ public class ObjectDefinitionLocalServiceTest {
 		return Collections.singletonList(workflowDefinitionLink);
 	}
 
+	private long _getClassNameId(String className) throws Exception {
+		return _classNameLocalService.getClassNameId(className);
+	}
+
 	private int _getObjectEntryVersionsCount(long objectDefinitionId) {
 		return _objectEntryVersionLocalService.dslQueryCount(
 			DSLQueryFactoryUtil.count(
@@ -3952,6 +3972,19 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 	}
 
+	private ObjectDefinition _publishObjectDefinition() throws Exception {
+		return ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"a" + RandomTestUtil.randomString()
+				).build()),
+			ObjectDefinitionConstants.SCOPE_SITE);
+	}
+
 	private void _testAddObjectDefinition(boolean modifiable, boolean system)
 		throws Exception {
 
@@ -4000,6 +4033,148 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_objectFolderLocalService.deleteObjectFolder(objectFolder);
+	}
+
+	private void _testDeleteCustomObjectDefinitionWithAssetListEntry()
+		throws Exception {
+
+		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
+			TestPropsValues.getCompanyId(), true);
+
+		ObjectDefinition objectDefinition1 = _publishObjectDefinition();
+
+		long objectDefinitionClassNameId = _getClassNameId(
+			objectDefinition1.getClassName());
+
+		_testDeleteCustomObjectDefinitionWithAssetListEntry(
+			Boolean.TRUE.toString(), classNameIds,
+			HashMapBuilder.put(
+				"anyAssetType", String.valueOf(objectDefinitionClassNameId)
+			).put(
+				"classNameIds",
+				() -> StringUtil.merge(
+					ArrayUtil.append(classNameIds, objectDefinitionClassNameId))
+			).build(),
+			objectDefinition1);
+
+		ObjectDefinition objectDefinition2 = _publishObjectDefinition();
+
+		long blogsEntryClassNameId = _getClassNameId(
+			BlogsEntry.class.getName());
+
+		_testDeleteCustomObjectDefinitionWithAssetListEntry(
+			String.valueOf(blogsEntryClassNameId), classNameIds,
+			HashMapBuilder.put(
+				"anyAssetType", Boolean.FALSE.toString()
+			).put(
+				"classNameIds",
+				() -> StringUtil.merge(
+					new long[] {
+						blogsEntryClassNameId,
+						_getClassNameId(objectDefinition2.getClassName())
+					})
+			).build(),
+			objectDefinition2);
+
+		ObjectDefinition objectDefinition3 = _publishObjectDefinition();
+
+		long journalArticleClassNameId = _getClassNameId(
+			JournalArticle.class.getName());
+
+		_testDeleteCustomObjectDefinitionWithAssetListEntry(
+			Boolean.FALSE.toString(),
+			new long[] {blogsEntryClassNameId, journalArticleClassNameId},
+			HashMapBuilder.put(
+				"anyAssetType", Boolean.FALSE.toString()
+			).put(
+				"classNameIds",
+				() -> StringUtil.merge(
+					new long[] {
+						blogsEntryClassNameId, journalArticleClassNameId,
+						_getClassNameId(objectDefinition3.getClassName())
+					})
+			).build(),
+			objectDefinition3);
+
+		ObjectDefinition objectDefinition4 = _publishObjectDefinition();
+
+		_testDeleteCustomObjectDefinitionWithAssetListEntry(
+			Boolean.TRUE.toString(), classNameIds,
+			HashMapBuilder.put(
+				"anyAssetType", Boolean.TRUE.toString()
+			).put(
+				"classNameIds",
+				() -> StringUtil.merge(
+					ArrayUtil.append(
+						classNameIds,
+						_getClassNameId(objectDefinition4.getClassName())))
+			).build(),
+			objectDefinition4);
+
+		ObjectDefinition objectDefinition5 = _publishObjectDefinition();
+		ObjectDefinition objectDefinition6 = _publishObjectDefinition();
+
+		_testDeleteCustomObjectDefinitionWithAssetListEntry(
+			Boolean.TRUE.toString(), classNameIds,
+			HashMapBuilder.put(
+				"anyAssetType", Boolean.FALSE.toString()
+			).put(
+				"classNameIds",
+				() -> StringUtil.merge(
+					new long[] {
+						_getClassNameId(objectDefinition5.getClassName()),
+						_getClassNameId(objectDefinition6.getClassName())
+					})
+			).build(),
+			objectDefinition5, objectDefinition6);
+	}
+
+	private void _testDeleteCustomObjectDefinitionWithAssetListEntry(
+			String expectedAnyAssetType, long[] expectedClassNameIds,
+			Map<String, String> typeSettings,
+			ObjectDefinition... objectDefinitions)
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"groupIds", String.valueOf(group.getGroupId())
+				).putAll(
+					typeSettings
+				).buildString(),
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRel(
+					assetListEntry.getAssetListEntryId(),
+					SegmentsEntryConstants.ID_DEFAULT);
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.load(
+			assetListEntrySegmentsEntryRel.getTypeSettings()
+		).build();
+
+		Assert.assertEquals(
+			expectedAnyAssetType,
+			unicodeProperties.getProperty("anyAssetType"));
+		Assert.assertArrayEquals(
+			expectedClassNameIds,
+			GetterUtil.getLongValues(
+				StringUtil.split(
+					unicodeProperties.getProperty("classNameIds"))));
 	}
 
 	private void _testSystemObjectFields(
@@ -4344,6 +4519,13 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private static ObjectFolderLocalService _objectFolderLocalService;
+
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

@@ -114,7 +114,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 			if ((oAuth2Application == null) ||
 				!StringUtil.equals(
-					OAuth2ProviderConstants.DYNAMIC_REGISTRATOR,
+					OAuth2ProviderConstants.OAUTH2_PROVIDER_DYNAMIC_REGISTRATOR,
 					oAuth2Application.getName()) ||
 				!_containsOAuth2RegisterApplicationPermission(
 					oAuth2Application, user)) {
@@ -187,7 +187,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 		return _oAuth2ApplicationModelResourcePermission.contains(
 			_permissionCheckerFactory.create(user), oAuth2Application,
-			OAuth2ProviderActionKeys.ACTION_REGISTER_APPLICATION);
+			OAuth2ProviderActionKeys.REGISTER_APPLICATION);
 	}
 
 	private JwtToken _getJwtToken(HttpServletRequest httpServletRequest)

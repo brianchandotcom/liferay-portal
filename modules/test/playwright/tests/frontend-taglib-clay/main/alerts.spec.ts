@@ -100,4 +100,16 @@ test.describe('Testing Alert Scenarios', () => {
 			await expect(alertEmbeddedSuccess.close).toBeVisible();
 		});
 	});
+
+	test('Testing ClayAlertFeedback', async ({claySamplePage}) => {
+		await test.step('Check if a tooltip message is displayed when have an alert icon without text and the cursor hovers over it.', async () => {
+			const alertHover = claySamplePage.alert('Tooltip Content', 'Hover');
+
+			await expect(alertHover.trigger).toBeVisible();
+
+			await alertHover.trigger.hover();
+
+			await expect(alertHover.tooltip).toBeVisible();
+		});
+	});
 });

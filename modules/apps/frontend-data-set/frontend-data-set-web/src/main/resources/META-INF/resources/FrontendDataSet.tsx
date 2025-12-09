@@ -599,7 +599,7 @@ const FrontendDataSetContent = ({
 		};
 
 		defaultSnapshot.filters =
-			initialFilters &&
+			initialFilters ?
 			initialFilters.map((filter) => {
 				const preloadedData = deepClone(filter.preloadedData);
 				if (preloadedData) {
@@ -610,7 +610,7 @@ const FrontendDataSetContent = ({
 				}
 
 				return filter;
-			});
+			}) : [];
 
 		const filters = initialFilters
 			? updateFilterActivation({

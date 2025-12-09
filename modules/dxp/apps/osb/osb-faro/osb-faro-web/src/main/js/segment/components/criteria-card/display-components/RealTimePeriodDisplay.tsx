@@ -10,8 +10,8 @@ const RealTimePeriodDisplay: React.FC<{
 
 	return (
 		<span>
-			{Liferay.Language.get('in-the-last')}{' '}
-			<strong>
+			{Liferay.Language.get('in-the-last').toLowerCase()}
+			<strong className='ml-1'>
 				{interval} {timeWindow}
 			</strong>
 		</span>

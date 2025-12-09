@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
 	performLogout,
@@ -137,8 +138,12 @@ test('LPD-55426 Test sign in button is disabled until page is fully loaded', asy
 	await page.goto(liferayConfig.environment.baseUrl, {
 		waitUntil: 'domcontentloaded',
 	});
-	await page.getByRole('button', {name: 'Sign In'}).click();
-	await expect(page.getByText('Forgot Password')).toBeVisible();
+	await clickAndExpectToBeVisible({
+		target: page.getByText('Forgot Password'),
+		trigger: page.getByRole('button', {
+			name: 'Sign In',
+		}),
+	});
 	await expect(
 		page.getByRole('button', {name: 'Sign In'}).last()
 	).toBeEnabled();

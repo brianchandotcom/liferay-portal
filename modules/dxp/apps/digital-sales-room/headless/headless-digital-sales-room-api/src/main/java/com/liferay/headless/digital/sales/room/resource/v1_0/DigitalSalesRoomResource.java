@@ -50,6 +50,10 @@ public interface DigitalSalesRoomResource {
 			String search, Pagination pagination)
 		throws Exception;
 
+	public DigitalSalesRoom patchDigitalSalesRoom(
+			Long digitalSalesRoomId, DigitalSalesRoom digitalSalesRoom)
+		throws Exception;
+
 	public DigitalSalesRoom postDigitalSalesRoom(
 			DigitalSalesRoom digitalSalesRoom)
 		throws Exception;

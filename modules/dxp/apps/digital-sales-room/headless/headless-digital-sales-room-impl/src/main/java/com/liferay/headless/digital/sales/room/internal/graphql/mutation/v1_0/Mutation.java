@@ -42,6 +42,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public DigitalSalesRoom patchDigitalSalesRoom(
+			@GraphQLName("digitalSalesRoomId") Long digitalSalesRoomId,
+			@GraphQLName("digitalSalesRoom") DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_digitalSalesRoomResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			digitalSalesRoomResource ->
+				digitalSalesRoomResource.patchDigitalSalesRoom(
+					digitalSalesRoomId, digitalSalesRoom));
+	}
+
+	@GraphQLField
 	public DigitalSalesRoom createDigitalSalesRoom(
 			@GraphQLName("digitalSalesRoom") DigitalSalesRoom digitalSalesRoom)
 		throws Exception {

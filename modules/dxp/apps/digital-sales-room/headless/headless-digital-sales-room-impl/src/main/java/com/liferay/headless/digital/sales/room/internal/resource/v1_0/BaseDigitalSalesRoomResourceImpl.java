@@ -122,7 +122,41 @@ public abstract class BaseDigitalSalesRoomResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-rooms' -d $'{"accountId": ___, "banner": ___, "channelId": ___, "channelName": ___, "clientLogo": ___, "clientName": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "name": ___, "primaryColor": ___, "secondaryColor": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-rooms/{digitalSalesRoomId}' -d $'{"accountId": ___, "banner": ___, "channelId": ___, "channelName": ___, "clientLogo": ___, "clientName": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "name": ___, "primaryColor": ___, "secondaryColor": ___, "userAccountBriefs": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "digitalSalesRoomId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "DigitalSalesRoom")
+		}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/digital-sales-rooms/{digitalSalesRoomId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public DigitalSalesRoom patchDigitalSalesRoom(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("digitalSalesRoomId")
+			Long digitalSalesRoomId,
+			DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		return new DigitalSalesRoom();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-rooms' -d $'{"accountId": ___, "banner": ___, "channelId": ___, "channelName": ___, "clientLogo": ___, "clientName": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "name": ___, "primaryColor": ___, "secondaryColor": ___, "userAccountBriefs": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {

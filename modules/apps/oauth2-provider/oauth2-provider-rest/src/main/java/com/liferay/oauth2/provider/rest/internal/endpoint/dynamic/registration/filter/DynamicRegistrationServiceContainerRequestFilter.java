@@ -114,7 +114,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 			if ((oAuth2Application == null) ||
 				!StringUtil.equals(
-					OAuth2ProviderConstants.OAUTH2_PROVIDER_DYNAMIC_REGISTRATOR,
+					OAuth2ProviderConstants.OAUTH2_APP_NAME_DYNAMIC_REGISTRATOR,
 					oAuth2Application.getName()) ||
 				!_containsOAuth2RegisterApplicationPermission(
 					oAuth2Application, user)) {

@@ -8,10 +8,11 @@ package com.liferay.exportimport.content.processor.constants;
 /**
  * @author Carlos Correa
  */
-public class ExportImportContentParserConstants {
+public class ExportImportContentProcessorConstants {
 
-	public static final String CONTENT_PARSER_TYPE = "content.parser.type";
+	public static final String CONTENT_PROCESSOR_TYPE =
+		"content.processor.type";
 
-	public static final String DOCUMENT_LIBRARY = "DOCUMENT_LIBRARY";
+	public static final String DOCUMENT_LIBRARY_REFERENCES = "DLReferences";
 
 }

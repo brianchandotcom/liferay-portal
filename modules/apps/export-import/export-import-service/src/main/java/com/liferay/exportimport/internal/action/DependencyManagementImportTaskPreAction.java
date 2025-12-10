@@ -9,7 +9,8 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.exportimport.content.processor.ExportImportContentParser;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.internal.lar.ExportImportDescriptorThreadLocal;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -127,17 +128,19 @@ public class DependencyManagementImportTaskPreAction
 				continue;
 			}
 
-			ExportImportContentParser exportImportContentParser =
+			ExportImportContentProcessor<?> exportImportContentProcessor =
 				_serviceTrackerMap.getService(entry.getValue());
 
-			if (exportImportContentParser == null) {
+			if (exportImportContentProcessor == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
 							"Unable to get the ",
-							ExportImportContentParser.class.getSimpleName(),
-							" for \"", _CONTENT_PARSER_TYPE, "\"=\"",
-							entry.getKey(), "\""));
+							ExportImportContentProcessor.class.getSimpleName(),
+							" for \"",
+							ExportImportContentProcessorConstants.
+								CONTENT_PROCESSOR_TYPE,
+							"\"=\"", entry.getKey(), "\""));
 				}
 
 				continue;
@@ -155,7 +158,7 @@ public class DependencyManagementImportTaskPreAction
 
 			setMethod.invoke(
 				item, fieldName,
-				exportImportContentParser.parseImportContent(
+				exportImportContentProcessor.replaceImportContentReferences(
 					value, portletDataContext));
 		}
 	}
@@ -163,8 +166,10 @@ public class DependencyManagementImportTaskPreAction
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ExportImportContentParser.class,
-			_CONTENT_PARSER_TYPE);
+			bundleContext,
+			(Class<ExportImportContentProcessor<?>>)
+				(Class<?>)ExportImportContentProcessor.class,
+			ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE);
 	}
 
 	@Deactivate
@@ -190,12 +195,10 @@ public class DependencyManagementImportTaskPreAction
 		return method;
 	}
 
-	private static final String _CONTENT_PARSER_TYPE = "content.parser.type";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DependencyManagementImportTaskPreAction.class);
 
-	private ServiceTrackerMap<String, ExportImportContentParser>
+	private ServiceTrackerMap<String, ExportImportContentProcessor<?>>
 		_serviceTrackerMap;
 
 }

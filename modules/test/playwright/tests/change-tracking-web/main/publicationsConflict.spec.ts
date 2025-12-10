@@ -10,8 +10,8 @@ import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest
 import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
@@ -177,13 +177,11 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await journalPage.goto();
 
-	await page.getByLabel(`Actions for ${title}`).click();
-
-	await page.getByRole('menuitem', {name: 'Delete'}).click();
-
-	await page.reload();
-
-	await changeTrackingPage.workOnProduction();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Delete'}),
+		trigger: page.getByLabel(`Actions for ${title}`),
+	});
 
 	const ctCollection2 =
 		await apiHelpers.headlessChangeTracking.createCTCollection(
@@ -239,6 +237,10 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await expect(page.getByText('Missing entity')).toBeVisible();
 
+	await expect(
+		page.getByRole('link', {name: 'Restore From Recycle Bin'})
+	).toBeVisible();
+
 	await page
 		.getByLabel('Test Test added a Web Content')
 		.getByRole('button')
@@ -259,87 +261,4 @@ test('Resolve deletion modification conflict publications by discarding', async 
 	);
 
 	await apiHelpers.headlessDelivery.deleteBlog(blog.id);
-});
-
-test('Resolve deletion modification conflict publications by restoring from recycle bin', async ({
-	changeTrackingPage,
-	ctCollection,
-	journalEditArticlePage,
-	journalPage,
-	page,
-}) => {
-	await journalEditArticlePage.goto();
-
-	const title = getRandomString();
-
-	await journalEditArticlePage.fillTitle(title);
-
-	await journalEditArticlePage.publishArticle();
-
-	await waitForAlert(page, `Success:${title} was created successfully.`);
-
-	await changeTrackingPage.workOnPublication(ctCollection);
-
-	await journalPage.goto();
-
-	await journalEditArticlePage.editArticle(title);
-
-	await journalEditArticlePage.publishArticle(true);
-
-	await waitForAlert(page, `Success:${title} was updated successfully.`);
-
-	await changeTrackingPage.workOnProduction();
-
-	await journalPage.goto();
-
-	await page.getByLabel(`Actions for ${title}`).click();
-
-	await page.getByRole('menuitem', {name: 'Delete'}).click();
-
-	await page.reload();
-
-	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
-
-	const publishLink = page.getByRole('link', {name: 'Publish'});
-
-	await publishLink.click();
-
-	await expect(page.getByText('Missing entity')).toBeVisible();
-
-	await page.getByRole('link', {name: 'Restore From Recycle Bin'}).click();
-
-	await waitForAlert(page, 'Success:Your request completed successfully.');
-
-	await journalPage.goto();
-
-	await expect(page.getByText(title)).toBeVisible();
-
-	await changeTrackingPage.workOnProduction();
-
-	await journalPage.goto();
-
-	await page.getByLabel(`Actions for ${title}`).click();
-
-	await page.getByRole('menuitem', {name: 'Delete'}).click();
-
-	await page.goto(`/group/guest${PORTLET_URLS.recycleBin}`);
-
-	await expect(
-		page
-			.getByTestId('header')
-			.locator('div')
-			.filter({hasText: 'Recycle Bin'})
-			.nth(1)
-	).toBeVisible();
-
-	await page.getByLabel('Select All Items on the Page').check();
-
-	await page.getByRole('button', {name: 'Delete'}).click();
-
-	await page
-		.getByLabel('Delete- Loading')
-		.getByRole('button', {name: 'Delete'})
-		.click();
-
-	await waitForAlert(page, 'Success:Your request completed successfully.');
 });

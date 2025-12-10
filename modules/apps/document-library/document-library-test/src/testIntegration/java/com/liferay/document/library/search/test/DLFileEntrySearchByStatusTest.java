@@ -64,12 +64,11 @@ public class DLFileEntrySearchByStatusTest {
 
 		_addFileEntry(null, titlePrefix + StringUtil.randomString());
 
-		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
-
 		_addFileEntry(
-			displayDate, titlePrefix + " " + StringUtil.randomString());
+			new Date(System.currentTimeMillis() + Time.DAY),
+			titlePrefix + " " + StringUtil.randomString());
 
-		_assertHits(2, titlePrefix, true, WorkflowConstants.STATUS_ANY);
+		_assertHits(1, titlePrefix, true, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Test

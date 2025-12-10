@@ -911,6 +911,8 @@ definition {
 	@description = "LPS-93726: Validate if, on content set personalized variations, the same content can match different content set variations"
 	@priority = 3
 	test SelectAssetToDifferentVariations {
+		property browser.chrome.version = "139.0";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1002,6 +1004,7 @@ definition {
 	@description = "LPS-93726: Validate if, when the user creates one content set personalized, for Manual Content Sets, he can apply in some portlet (assert publisher) to use"
 	@priority = 5
 	test UseManualCollectionAtPortlet {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Create a public page") {
@@ -1517,6 +1520,7 @@ definition {
 	@description = "This is a test for LPS-84331 and LPS-166045. The site designer could see the usages of Collections from site."
 	@priority = 5
 	test ViewUsagesOfCollectionFromSite {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given the site designer has collections") {

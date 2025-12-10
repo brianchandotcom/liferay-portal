@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"jakarta.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/select_default_input_fragment_entry"
+		"mvc.command.name=/fragment/select_input_fragment_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class SelectDefaultInputFragmentEntryMVCRenderCommand
+public class SelectInputFragmentEntryMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -89,7 +89,7 @@ public class SelectDefaultInputFragmentEntryMVCRenderCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SelectDefaultInputFragmentEntryMVCRenderCommand.class);
+		SelectInputFragmentEntryMVCRenderCommand.class);
 
 	@Reference
 	private ItemSelector _itemSelector;

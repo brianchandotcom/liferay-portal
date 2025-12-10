@@ -109,7 +109,7 @@ public class ConfigurationDisplayContext {
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setMVCRenderCommandName(
-				"/fragment/select_default_input_fragment_entry"
+				"/fragment/select_input_fragment_entry"
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()

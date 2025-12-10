@@ -24,7 +24,6 @@ public class UserModelListener extends BaseModelListener<User> {
 	public void onBeforeRemove(User user) throws ModelListenerException {
 		_openIdConnectSessionLocalService.deleteOpenIdConnectSessions(
 			user.getUserId());
-
 		_openIdConnectUserLocalService.deleteOpenIdConnectUsers(
 			user.getCompanyId(), user.getUserId());
 	}

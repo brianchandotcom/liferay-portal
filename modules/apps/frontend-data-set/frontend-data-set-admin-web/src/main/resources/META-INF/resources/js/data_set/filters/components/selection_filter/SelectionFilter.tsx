@@ -90,7 +90,6 @@ function Body({
 		filter
 			? {
 					entityFieldType: filter.entityFieldType,
-					entityFieldTypeCollection: filter.entityFieldTypeCollection,
 					label: filter.fieldName,
 					name: filter.fieldName,
 				}
@@ -223,8 +222,6 @@ function Body({
 		if (success) {
 			let formData: any = {
 				entityFieldType: selectedField?.entityFieldType,
-				entityFieldTypeCollection:
-					selectedField?.entityFieldTypeCollection,
 				fieldName: selectedField?.name,
 				include: includeMode === 'include',
 				label_i18n: i18nFilterLabels,

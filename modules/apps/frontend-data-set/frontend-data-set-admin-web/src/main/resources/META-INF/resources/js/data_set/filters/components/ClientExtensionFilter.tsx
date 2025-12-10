@@ -70,7 +70,6 @@ function Body({
 		filter
 			? {
 					entityFieldType: filter.entityFieldType,
-					entityFieldTypeCollection: filter.entityFieldTypeCollection,
 					label: filter.fieldName,
 					name: filter.fieldName,
 				}
@@ -137,8 +136,6 @@ function Body({
 				clientExtensionEntryERC:
 					selectedClientExtension?.externalReferenceCode,
 				entityFieldType: selectedField?.entityFieldType,
-				entityFieldTypeCollection:
-					selectedField?.entityFieldTypeCollection,
 				fieldName: selectedField?.name,
 				label_i18n: i18nFilterLabels,
 				type: selectedField?.type,

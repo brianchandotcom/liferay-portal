@@ -11,6 +11,7 @@ import com.liferay.cookies.banner.web.internal.display.context.CookiesBannerConf
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
@@ -67,7 +68,11 @@ public class UserCookiesBannerConfigurationScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, User selUser) {
-		if (selUser == null) {
+		if ((selUser == null) ||
+			!_cookiesConfigurationProvider.isCookiesPreferenceHandlingEnabled(
+				ExtendedObjectClassDefinition.Scope.COMPANY,
+				user.getCompanyId())) {
+
 			return false;
 		}
 

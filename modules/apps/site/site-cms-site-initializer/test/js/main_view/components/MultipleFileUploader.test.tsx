@@ -288,4 +288,38 @@ describe('MultipleFileUploader', () => {
 			).toBeInTheDocument();
 		});
 	});
+
+	it('can show custom button label and messages', async () => {
+		const {container, findByText, getByRole, getByText} = render(
+			<MultipleFileUploader
+				{...DEFAULT_PROPS}
+				buttonLabel="Import"
+				description="This is a custom description for import translation"
+				messages={{filesToUpload: 'files-to-import'}}
+			/>
+		);
+
+		expect(
+			getByText('This is a custom description for import translation')
+		).toBeInTheDocument();
+
+		const input =
+			container.querySelector<HTMLInputElement>('input[type="file"]')!;
+
+		const file = createFile('image1.png', 2048);
+
+		fireEvent.change(input, {
+			target: {files: [file]},
+		});
+
+		expect(await findByText('image1.png')).toBeInTheDocument();
+
+		expect(
+			getByRole('button', {
+				name: 'Import',
+			})
+		).toBeInTheDocument();
+
+		expect(getByText('files-to-import')).toBeInTheDocument();
+	});
 });

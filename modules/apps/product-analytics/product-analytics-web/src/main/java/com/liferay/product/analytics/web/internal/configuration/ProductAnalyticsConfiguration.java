@@ -35,7 +35,7 @@ public interface ProductAnalyticsConfiguration {
 	public int consentRenewalPeriod();
 
 	@Meta.AD(
-		deflt = "true",
+		deflt = "false",
 		description = "product-analytics-enable-user-preference-handling-help",
 		name = "enabled", required = false
 	)

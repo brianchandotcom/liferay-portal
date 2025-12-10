@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.group.capability.GroupCapabilityUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -46,7 +47,9 @@ import java.util.function.Supplier;
 public class Scope implements Serializable {
 
 	public static Scope of(Group group, Locale locale) {
-		if ((group == null) || group.isCompany()) {
+		if ((group == null) ||
+			GroupCapabilityUtil.isExportImportCompanyGroup(group)) {
+
 			return null;
 		}
 

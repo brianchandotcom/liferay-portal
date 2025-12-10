@@ -244,58 +244,6 @@ definition {
 		}
 	}
 
-	@priority = 5
-	test CanCreateVirtualInstanceWithClusteringSecondNode {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "sequential";
-
-		Clustering.viewClusterStatusInConsole();
-
-		Page.assertNodePortPG(nodePort = 8080);
-
-		User.logoutPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-
-		User.loginPG(
-			nodePort = 9080,
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = 9080);
-
-		PortalInstances.openVirtualInstancesAdmin(baseURL = "http://localhost:9080");
-
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-		User.firstLoginPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:9080");
-
-		User.firstLoginUI(
-			password = PropsUtil.get("default.admin.password"),
-			specificURL = "http://www.able.com:9080",
-			userEmailAddress = "test@www.able.com");
-
-		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "No default user was found for company",
-			nodePort = 8080);
-
-		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "No default user was found for company",
-			nodePort = 9080);
-	}
-
 	@priority = 4
 	test CanInvokeMethods {
 		property test.liferay.virtual.instance = "false";

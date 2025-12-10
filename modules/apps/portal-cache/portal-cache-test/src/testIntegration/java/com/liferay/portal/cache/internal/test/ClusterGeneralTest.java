@@ -132,6 +132,45 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	@Test
+	public void testCanCreateVirtualInstanceWithClusteringSecondNode()
+		throws Exception {
+
+		long companyId = _tomcatNode2.syncExecute(
+			() -> {
+				Company company = CompanyTestUtil.addCompany();
+
+				return company.getCompanyId();
+			});
+
+		Assert.assertNotNull(
+			_tomcatNode1.syncExecute(
+				() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
+
+		_tomcatNode1.syncExecute(
+			() -> {
+				TestPortalInstanceLifecycleListener.register();
+
+				return null;
+			});
+
+		Assert.assertNull(
+			_tomcatNode2.syncExecute(
+				() -> {
+					CompanyLocalServiceUtil.deleteCompany(companyId);
+
+					return CompanyLocalServiceUtil.fetchCompany(companyId);
+				}));
+
+		Assert.assertNull(
+			_tomcatNode1.syncExecute(
+				() -> {
+					TestPortalInstanceLifecycleListener.await();
+
+					return CompanyLocalServiceUtil.fetchCompany(companyId);
+				}));
+	}
+
+	@Test
 	public void testCanUpdateLogLevelsForAllNodesFromMaster() throws Exception {
 		_testCanUpdateLogLevelsForAllNodes(_tomcatNode2, _tomcatNode1, true);
 	}

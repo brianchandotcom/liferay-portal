@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {
 	CommerceDNDTablePage,
@@ -11,6 +11,7 @@ import {
 } from '../commerceDNDTablePage';
 
 export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
+	readonly addSkuUOMButton: Locator;
 	readonly closeSidePanelFrame: (isNestedFrame: boolean) => Promise<Locator>;
 	readonly incrementalOrderQuantity: Locator;
 	readonly inventoryTableRow: (
@@ -52,7 +53,16 @@ export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly skusTableRowLink: (skuName: string) => Locator;
 	readonly skuUOMFrame: FrameLocator;
+	readonly skuUOMModal: FrameLocator;
 	readonly skuUOMTab: Locator;
+	readonly skuUOMTable: Locator;
+	readonly skuUOMTableRow: (
+		colPosition: number,
+		value: number | string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly skuUOMTableRowAction: (skuUOMName: string) => Promise<Locator>;
+	readonly skuUOMActionMenuItem: (actionName: string) => Locator;
 	readonly skuUOMFrameCancelButton: Locator;
 	readonly uomTableRowLink: (uomName: string) => Locator;
 
@@ -61,6 +71,10 @@ export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 			page,
 			'#_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_fm .fds table'
 		);
+		this.sidePanelFrame = page.frameLocator('.is-visible iframe');
+		this.addSkuUOMButton = this.sidePanelFrame
+			.getByTestId('managementToolbar')
+			.locator('[data-testid="fdsCreationActionButton"]');
 		this.closeSidePanelFrame = async (isNestedFrame: boolean) => {
 			if (isNestedFrame) {
 				return this.sidePanelNestedFrame
@@ -112,7 +126,6 @@ export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 			.first()
 			.frameLocator('iframe')
 			.getByLabel('Pricing Quantity');
-		this.sidePanelFrame = page.frameLocator('.is-visible iframe');
 		this.sidePanelDetailsSkuFieldName =
 			this.sidePanelFrame.getByLabel('SKU Required');
 		this.sidePanelDetailsSkuPublishButton = this.sidePanelFrame.getByRole(
@@ -204,14 +217,86 @@ export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 		this.skusTableRowLink = (sku: string) =>
 			page.getByRole('link', {exact: true, name: sku});
 		this.skuUOMFrame = page.frameLocator('iframe').first();
-		this.skuUOMTab = this.skuUOMFrame.getByRole('link', {
+		this.skuUOMModal = page.frameLocator('iframe >> nth=1');
+		this.skuUOMTab = this.sidePanelFrame.getByRole('link', {
 			name: 'Units of Measure',
 		});
-		this.skuUOMFrameCancelButton = this.skuUOMFrame
+		this.skuUOMTable = this.sidePanelFrame.locator('.fds table');
+		this.skuUOMTableRow = async (
+			colPosition: number,
+			value: number | string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.skuUOMTable,
+				colPosition,
+				String(value),
+				strictEqual
+			);
+		};
+		this.skuUOMTableRowAction = async (skuUOMName: string) => {
+			const skuUOMTableRow = await this.skuUOMTableRow(
+				1,
+				skuUOMName,
+				true
+			);
+
+			if (skuUOMTableRow && skuUOMTableRow.column) {
+				return skuUOMTableRow.row.getByRole('button', {
+					name: 'Actions',
+				});
+			}
+			throw new Error(
+				`Cannot locate sku UOM row with name ${skuUOMName}`
+			);
+		};
+		this.skuUOMActionMenuItem = (actionName: string) =>
+			this.sidePanelFrame.getByRole('menuitem', {
+				exact: true,
+				name: actionName,
+			});
+
+		this.skuUOMFrameCancelButton = this.sidePanelFrame
 			.frameLocator('iframe')
 			.getByRole('button', {name: 'Cancel'});
 		this.uomTableRowLink = (uom: string) =>
-			this.skuUOMFrame.getByRole('link', {exact: true, name: uom});
+			this.sidePanelFrame.getByRole('link', {exact: true, name: uom});
+	}
+
+	async addUOMEntry({
+		baseUnitQuantity = '1',
+		decimalAllowed = '0',
+		skipModalOpening = false,
+		uomKey,
+		uomName,
+	}) {
+		if (!skipModalOpening) {
+			await this.addSkuUOMButton.click();
+		}
+
+		await expect(
+			this.skuUOMModal.getByRole('heading', {name: 'Add Unit of Measure'})
+		).toBeVisible();
+
+		await expect(
+			this.skuUOMModal.getByLabel('Unit of Measure Required')
+		).toBeVisible();
+
+		await this.skuUOMModal
+			.getByLabel('Unit of Measure Required')
+			.fill(uomName);
+
+		await this.skuUOMModal.getByLabel('Key Required').fill(uomKey);
+
+		await this.skuUOMModal
+			.getByLabel('Decimal Allowed (Precision)')
+			.fill(decimalAllowed);
+
+		await this.skuUOMModal
+			.getByLabel('Base Unit Quantity Required')
+			.fill(baseUnitQuantity);
+
+		await this.skuUOMModal.getByRole('button', {name: 'Add'}).click();
 	}
 
 	async addWarehouseQuantity(quantity: string, warehouseName: string) {

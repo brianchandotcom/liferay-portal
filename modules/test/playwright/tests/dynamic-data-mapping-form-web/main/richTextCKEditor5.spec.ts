@@ -20,14 +20,6 @@ const test = mergeTests(
 	loginTest()
 );
 
-const xssBypassTest = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-11235': {enabled: true},
-		'LPD-31212': {enabled: true},
-	})
-);
-
 const xssDisabledTest = mergeTests(
 	test,
 	featureFlagsTest({
@@ -36,7 +28,7 @@ const xssDisabledTest = mergeTests(
 	})
 );
 
-[test, xssBypassTest, xssDisabledTest].forEach((testSuite) => {
+[test, xssDisabledTest].forEach((testSuite) => {
 	testSuite.afterEach(async ({formsPage}) => {
 		await formsPage.goTo();
 
@@ -231,21 +223,6 @@ const createRichText = async (
 
 	return formEntryPage;
 };
-
-/**
- * Skipping until LPD-73757 is fixed.
- */
-xssBypassTest.skip(
-	'Can add scripts to the rich text field @LPD-31212',
-	async ({formBuilderPage, formBuilderSidePanelPage}) => {
-		const formEntryPage = await createRichText(
-			formBuilderPage,
-			formBuilderSidePanelPage
-		);
-
-		await assertRichTextContent(content, content, formEntryPage);
-	}
-);
 
 xssDisabledTest(
 	'Can add help text to the rich text field @LPD-52535',

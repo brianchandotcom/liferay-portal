@@ -516,7 +516,8 @@ public class ObjectEntryResourceImpl
 
 					references.put(
 						objectField.getName(),
-						ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES);
+						ExportImportContentProcessorConstants.
+							DOCUMENT_LIBRARY_REFERENCES);
 				}
 
 				return references;

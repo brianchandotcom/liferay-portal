@@ -714,14 +714,8 @@ public class BatchEnginePortletDataHandlerTest {
 			_portletDataHandlerProvider.provide(
 				TestPropsValues.getCompanyId(), portletId));
 
-		try (SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
-				Portlet.class,
-				new GenericPortlet() {
-				},
-				MapUtil.singletonDictionary("jakarta.portlet.name", portletId));
-			SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
-				VulcanBatchEngineTaskItemDelegate.class,
-				new TestExportImportVulcanBatchEngineTaskItemDelegate(
+		try (SafeCloseable safeCloseable =
+				_registerPortletAndDelegateWithSafeCloseable(
 					filter -> {
 						if (filter != null) {
 							return Page.of(Arrays.asList(new TestItem(1)));
@@ -732,25 +726,7 @@ public class BatchEnginePortletDataHandlerTest {
 								new TestItem(1), new TestItem(2),
 								new TestItem(3)));
 					},
-					portletId),
-				HashMapDictionaryBuilder.put(
-					"batch.engine.task.item.delegate", "true"
-				).put(
-					"batch.engine.task.item.delegate.class.name",
-					TestItem.class.getName()
-				).put(
-					"batch.engine.task.item.delegate.name",
-					RandomTestUtil.randomString()
-				).put(
-					"companyId", String.valueOf(TestPropsValues.getCompanyId())
-				).put(
-					"export.import.vulcan.batch.engine.task.item.delegate",
-					"true"
-				).build())) {
-
-			// Filter is not null
-
-			Thread.sleep(1000);
+					portletId)) {
 
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(
@@ -835,6 +811,28 @@ public class BatchEnginePortletDataHandlerTest {
 		_assertNull(
 			objectDefinition.getObjectDefinitionId(), objectEntries[0],
 			objectEntries[1]);
+	}
+
+	@Test
+	@TestInfo("LPD-73132")
+	public void testIsStagedWithObjectDefinitions() throws Exception {
+		String portletId = StringBundler.concat(
+			ObjectPortletKeys.OBJECT_DEFINITIONS, StringPool.POUND,
+			RandomTestUtil.randomString());
+
+		Assert.assertNull(
+			_portletDataHandlerProvider.provide(
+				TestPropsValues.getCompanyId(), portletId));
+
+		try (SafeCloseable safeCloseable =
+				_registerPortletAndDelegateWithSafeCloseable(null, portletId)) {
+
+			PortletDataHandler portletDataHandler =
+				_portletDataHandlerProvider.provide(
+					TestPropsValues.getCompanyId(), portletId);
+
+			Assert.assertFalse(portletDataHandler.isStaged());
+		}
 	}
 
 	public static class TestItem implements Serializable {
@@ -1443,6 +1441,44 @@ public class BatchEnginePortletDataHandlerTest {
 
 		return _importLayouts(
 			deletions, expectError, file, groupId, false, false, objects);
+	}
+
+	private SafeCloseable _registerPortletAndDelegateWithSafeCloseable(
+			Function<Filter, Page<TestItem>> function, String portletId)
+		throws Exception {
+
+		SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
+			Portlet.class,
+			new GenericPortlet() {
+			},
+			MapUtil.singletonDictionary("jakarta.portlet.name", portletId));
+
+		SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
+			VulcanBatchEngineTaskItemDelegate.class,
+			new TestExportImportVulcanBatchEngineTaskItemDelegate(
+				function, portletId),
+			HashMapDictionaryBuilder.put(
+				"batch.engine.task.item.delegate", "true"
+			).put(
+				"batch.engine.task.item.delegate.class.name",
+				TestItem.class.getName()
+			).put(
+				"batch.engine.task.item.delegate.name",
+				RandomTestUtil.randomString()
+			).put(
+				"companyId", String.valueOf(TestPropsValues.getCompanyId())
+			).put(
+				"export.import.vulcan.batch.engine.task.item.delegate", "true"
+			).build());
+
+		// Wait for registration to complete
+
+		Thread.sleep(1000);
+
+		return () -> {
+			safeCloseable2.close();
+			safeCloseable1.close();
+		};
 	}
 
 	private <S> SafeCloseable _registerServiceWithSafeCloseable(

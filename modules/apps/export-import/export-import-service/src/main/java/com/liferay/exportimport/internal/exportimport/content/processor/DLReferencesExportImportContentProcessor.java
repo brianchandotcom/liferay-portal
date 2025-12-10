@@ -82,7 +82,7 @@ public class DLReferencesExportImportContentProcessor
 		}
 
 		return _replaceExportDLReferences(
-			portletDataContext, stagedModel, content, exportReferencedContent);
+			content, exportReferencedContent, portletDataContext, stagedModel);
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class DLReferencesExportImportContentProcessor
 		throws Exception {
 
 		return _replaceImportDLReferences(
-			portletDataContext, stagedModel, content);
+			content, portletDataContext, stagedModel);
 	}
 
 	@Override
@@ -244,7 +244,7 @@ public class DLReferencesExportImportContentProcessor
 		throws PortalException {
 
 		if (_isValidateDLReferences()) {
-			_validateDLReferences(groupId, content);
+			_validateDLReferences(content, groupId);
 		}
 	}
 
@@ -322,8 +322,8 @@ public class DLReferencesExportImportContentProcessor
 	}
 
 	private String _replaceExportDLReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			String content, boolean exportReferencedContent)
+			String content, boolean exportReferencedContent,
+			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder(content);
@@ -410,8 +410,8 @@ public class DLReferencesExportImportContentProcessor
 	}
 
 	private String _replaceImportDLReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			String content)
+			String content, PortletDataContext portletDataContext,
+			StagedModel stagedModel)
 		throws Exception {
 
 		List<Element> referenceElements =
@@ -583,7 +583,7 @@ public class DLReferencesExportImportContentProcessor
 		return content;
 	}
 
-	private void _validateDLReferences(long groupId, String content)
+	private void _validateDLReferences(String content, long groupId)
 		throws PortalException {
 
 		DLReferencesReverseIterator dlReferencesReverseIterator =

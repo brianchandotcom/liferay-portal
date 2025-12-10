@@ -600,6 +600,10 @@ public class TaxonomyVocabularyResourceImpl
 								getAssetRendererFactoryByClassNameId(
 									classNameId);
 
+						if (assetRendererFactory == null) {
+							return null;
+						}
+
 						ClassTypeReader classTypeReader =
 							assetRendererFactory.getClassTypeReader();
 
@@ -644,10 +648,16 @@ public class TaxonomyVocabularyResourceImpl
 							return assetTypeType;
 						}
 
-						return _getModelResource(
+						AssetRendererFactory<?> assetRendererFactory =
 							AssetRendererFactoryRegistryUtil.
 								getAssetRendererFactoryByClassNameId(
-									classNameId));
+									classNameId);
+
+						if (assetRendererFactory == null) {
+							return null;
+						}
+
+						return _getModelResource(assetRendererFactory);
 					});
 				setTypeId(() -> classNameId);
 			}
@@ -787,6 +797,10 @@ public class TaxonomyVocabularyResourceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				contextCompany.getCompanyId(), className);
+
+		if (objectDefinition == null) {
+			return null;
+		}
 
 		return objectDefinition.getLabelCurrentLanguageId();
 	}

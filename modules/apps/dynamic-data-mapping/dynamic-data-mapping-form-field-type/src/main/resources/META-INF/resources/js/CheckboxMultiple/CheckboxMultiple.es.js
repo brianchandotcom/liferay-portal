@@ -5,6 +5,7 @@
 
 import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import classNames from 'classnames';
+import {useFormState} from 'data-engine-js-components-web';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React, {useEffect, useState} from 'react';
 
@@ -37,12 +38,25 @@ const CheckboxMultiple = ({
 	value: initialValue,
 }) => {
 	const [value, setValue] = useState(initialValue ?? predefinedValue);
+	const {editingLanguageId} = useFormState();
 
 	useEffect(() => {
-		if (initialValue?.length > 0) {
-			setValue(initialValue);
+		if (
+			localizedValueEdited?.[editingLanguageId] &&
+			!initialValue?.length
+		) {
+			setValue([]);
+
+			return;
 		}
-	}, [initialValue]);
+
+		setValue(initialValue?.length ? initialValue : predefinedValue);
+	}, [
+		editingLanguageId,
+		initialValue,
+		localizedValueEdited,
+		predefinedValue,
+	]);
 
 	const displayValues =
 		value?.length || (value?.length === 0 && localizedValueEdited)

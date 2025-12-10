@@ -11,7 +11,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -55,7 +54,7 @@ public class ConfigurationScreenUtil {
 			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
 		throws Exception {
 
-		HashMapDictionary<String, Object> properties =
+		Dictionary<String, Object> properties =
 			HashMapDictionaryBuilder.<String, Object>putAll(
 				configurationScreen.exportProperties(scopePK)
 			).build();

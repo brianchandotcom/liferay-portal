@@ -232,9 +232,9 @@ public class DDMFormValues implements Serializable {
 
 	private Set<Locale> _availableLocales = new LinkedHashSet<>();
 	private final DDMForm _ddmForm;
+	private List<DDMFormFieldValue> _ddmFormFieldValues = new ArrayList<>();
 	private final Map<String, DDMFormFieldValue> _ddmFormFieldValuesMap =
 		new HashMap<>();
-	private List<DDMFormFieldValue> _ddmFormFieldValues = new ArrayList<>();
 	private Locale _defaultLocale;
 
 }

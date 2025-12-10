@@ -239,7 +239,7 @@ public class SalesforceObjectEntryManagerImplTest
 					).name(
 						"customStatus"
 					).build()),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(

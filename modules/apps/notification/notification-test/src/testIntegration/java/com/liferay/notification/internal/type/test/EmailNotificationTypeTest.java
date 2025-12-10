@@ -1129,7 +1129,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					).name(
 						"textObjectField"
 					).build()),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		_addObjectAction(
 			objectDefinition.getObjectDefinitionId(),
@@ -1595,7 +1595,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					).name(
 						"textObjectField"
 					).build()),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		if (accountRestricted) {
 			ObjectDefinition accountEntryObjectDefinition =

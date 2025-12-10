@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -409,7 +410,7 @@ public class ObjectDefinitionServiceTest {
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
 					RandomTestUtil.randomString(), StringUtil.randomId())),
-			Collections.emptyList());
+			Collections.emptyList(), new ServiceContext());
 	}
 
 	private ObjectDefinition _addSystemObjectDefinition(
@@ -467,7 +468,7 @@ public class ObjectDefinitionServiceTest {
 							ObjectFieldConstants.DB_TYPE_STRING,
 							RandomTestUtil.randomString(),
 							StringUtil.randomId())),
-					Collections.emptyList());
+					Collections.emptyList(), new ServiceContext());
 
 			objectDefinition =
 				_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -594,7 +595,7 @@ public class ObjectDefinitionServiceTest {
 					LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition.getScope(), objectDefinition.getStatus(),
 					Collections.emptyList(), Collections.emptyList(),
-					Collections.emptyList());
+					Collections.emptyList(), new ServiceContext());
 		}
 		finally {
 			if (objectDefinition != null) {

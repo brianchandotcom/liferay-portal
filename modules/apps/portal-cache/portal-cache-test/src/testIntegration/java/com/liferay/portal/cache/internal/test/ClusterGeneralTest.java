@@ -9,15 +9,20 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
@@ -87,6 +92,43 @@ public class ClusterGeneralTest implements Serializable {
 		_tomcatNode2 = builder2.build();
 
 		_tomcatNode2.start(true);
+	}
+
+	@Test
+	public void testCanCreateVirtualInstanceWithClustering() throws Exception {
+		long companyId = _tomcatNode1.syncExecute(
+			() -> {
+				Company company = CompanyTestUtil.addCompany();
+
+				return company.getCompanyId();
+			});
+
+		Assert.assertNotNull(
+			_tomcatNode2.syncExecute(
+				() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
+
+		_tomcatNode2.syncExecute(
+			() -> {
+				TestPortalInstanceLifecycleListener.register();
+
+				return null;
+			});
+
+		Assert.assertNull(
+			_tomcatNode1.syncExecute(
+				() -> {
+					CompanyLocalServiceUtil.deleteCompany(companyId);
+
+					return CompanyLocalServiceUtil.fetchCompany(companyId);
+				}));
+
+		Assert.assertNull(
+			_tomcatNode2.syncExecute(
+				() -> {
+					TestPortalInstanceLifecycleListener.await();
+
+					return CompanyLocalServiceUtil.fetchCompany(companyId);
+				}));
 	}
 
 	@Test
@@ -531,6 +573,65 @@ public class ClusterGeneralTest implements Serializable {
 
 		@Override
 		public void masterTokenReleased() {
+		}
+
+		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+		private ServiceRegistration<?> _serviceRegistration;
+
+	}
+
+	private static class TestPortalInstanceLifecycleListener
+		implements EveryNodeEveryStartup, PortalInstanceLifecycleListener {
+
+		public static void await() throws Exception {
+			Map<String, Object> attributes =
+				LocalProcessLauncher.ProcessContext.getAttributes();
+
+			TestPortalInstanceLifecycleListener
+				testPortalInstanceLifecycleListener =
+					(TestPortalInstanceLifecycleListener)attributes.remove(
+						TestPortalInstanceLifecycleListener.class.getName());
+
+			CountDownLatch countDownLatch =
+				testPortalInstanceLifecycleListener._countDownLatch;
+
+			countDownLatch.await();
+
+			ServiceRegistration<?> serviceRegistration =
+				testPortalInstanceLifecycleListener._serviceRegistration;
+
+			serviceRegistration.unregister();
+		}
+
+		public static void register() {
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			TestPortalInstanceLifecycleListener
+				testPortalInstanceLifecycleListener =
+					new TestPortalInstanceLifecycleListener();
+
+			testPortalInstanceLifecycleListener._serviceRegistration =
+				bundleContext.registerService(
+					PortalInstanceLifecycleListener.class,
+					testPortalInstanceLifecycleListener, null);
+
+			Map<String, Object> attributes =
+				LocalProcessLauncher.ProcessContext.getAttributes();
+
+			attributes.put(
+				TestPortalInstanceLifecycleListener.class.getName(),
+				testPortalInstanceLifecycleListener);
+		}
+
+		@Override
+		public void portalInstanceRegistered(Company company) throws Exception {
+		}
+
+		@Override
+		public void portalInstanceUnregistered(Company company)
+			throws Exception {
+
+			_countDownLatch.countDown();
 		}
 
 		private final CountDownLatch _countDownLatch = new CountDownLatch(1);

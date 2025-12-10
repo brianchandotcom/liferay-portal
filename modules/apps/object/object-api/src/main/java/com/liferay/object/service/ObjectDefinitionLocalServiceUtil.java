@@ -53,7 +53,8 @@ public class ObjectDefinitionLocalServiceUtil {
 				objectDefinitionSettings,
 			List<com.liferay.object.model.ObjectField> objectFields,
 			List<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
-				workflowDefinitionLinks)
+				workflowDefinitionLinks,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
@@ -64,7 +65,7 @@ public class ObjectDefinitionLocalServiceUtil {
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
 			storageType, objectDefinitionSettings, objectFields,
-			workflowDefinitionLinks);
+			workflowDefinitionLinks, serviceContext);
 	}
 
 	/**
@@ -541,6 +542,17 @@ public class ObjectDefinitionLocalServiceUtil {
 			objectFolderId);
 	}
 
+	public static ObjectDefinition getOrAddEmptyObjectDefinition(
+			String externalReferenceCode, long companyId, long userId,
+			long objectFolderId, boolean modifiable, String scope,
+			boolean system)
+		throws PortalException {
+
+		return getService().getOrAddEmptyObjectDefinition(
+			externalReferenceCode, companyId, userId, objectFolderId,
+			modifiable, scope, system);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -621,7 +633,8 @@ public class ObjectDefinitionLocalServiceUtil {
 				objectDefinitionSettings,
 			List<com.liferay.object.model.ObjectField> objectFields,
 			List<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
-				workflowDefinitionLinks)
+				workflowDefinitionLinks,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCustomObjectDefinition(
@@ -635,7 +648,7 @@ public class ObjectDefinitionLocalServiceUtil {
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
 			status, objectDefinitionSettings, objectFields,
-			workflowDefinitionLinks);
+			workflowDefinitionLinks, serviceContext);
 	}
 
 	public static ObjectDefinition updateExternalReferenceCode(

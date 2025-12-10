@@ -47,7 +47,8 @@ public class ObjectDefinitionLocalServiceWrapper
 			java.util.List<com.liferay.object.model.ObjectField> objectFields,
 			java.util.List
 				<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
-					workflowDefinitionLinks)
+					workflowDefinitionLinks,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
@@ -58,7 +59,7 @@ public class ObjectDefinitionLocalServiceWrapper
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
 			storageType, objectDefinitionSettings, objectFields,
-			workflowDefinitionLinks);
+			workflowDefinitionLinks, serviceContext);
 	}
 
 	/**
@@ -628,6 +629,19 @@ public class ObjectDefinitionLocalServiceWrapper
 			getObjectFolderObjectDefinitionsCount(objectFolderId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			getOrAddEmptyObjectDefinition(
+				String externalReferenceCode, long companyId, long userId,
+				long objectFolderId, boolean modifiable, String scope,
+				boolean system)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+			externalReferenceCode, companyId, userId, objectFolderId,
+			modifiable, scope, system);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -731,7 +745,8 @@ public class ObjectDefinitionLocalServiceWrapper
 					objectFields,
 				java.util.List
 					<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
-						workflowDefinitionLinks)
+						workflowDefinitionLinks,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
@@ -745,7 +760,7 @@ public class ObjectDefinitionLocalServiceWrapper
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
 			status, objectDefinitionSettings, objectFields,
-			workflowDefinitionLinks);
+			workflowDefinitionLinks, serviceContext);
 	}
 
 	@Override

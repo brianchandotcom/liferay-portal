@@ -63,7 +63,7 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 			<aui:option label="html" selected='<%= output.equals("html") %>' value="html" />
 		</aui:select>
 
-		<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
+		<aui:input cssClass="lfr-textarea-container" name="script" type="textarea" value="<%= script %>" />
 
 		<liferay-captcha:captcha />
 

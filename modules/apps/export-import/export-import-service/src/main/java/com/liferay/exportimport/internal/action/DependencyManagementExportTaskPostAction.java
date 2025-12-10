@@ -9,14 +9,13 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.action.ExportTaskPostAction;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
 import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.internal.lar.ExportImportDescriptorThreadLocal;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -30,10 +29,7 @@ import java.lang.reflect.Method;
 
 import java.util.Map;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Carlos Correa
@@ -136,7 +132,9 @@ public class DependencyManagementExportTaskPostAction
 			}
 
 			ExportImportContentProcessor<?> exportImportContentProcessor =
-				_serviceTrackerMap.getService(entry.getValue());
+				ExportImportContentProcessorRegistryUtil.
+					getExportImportContentProcessorByContentProcessorType(
+						entry.getValue());
 
 			if (exportImportContentProcessor == null) {
 				if (_log.isDebugEnabled()) {
@@ -180,20 +178,6 @@ public class DependencyManagementExportTaskPostAction
 		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<ExportImportContentProcessor<?>>)
-				(Class<?>)ExportImportContentProcessor.class,
-			ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	private Method _fetchDeclaredMethod(
 		Class<?> clazz, String name, Class<?>... parameterTypes) {
 
@@ -214,8 +198,5 @@ public class DependencyManagementExportTaskPostAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DependencyManagementExportTaskPostAction.class);
-
-	private ServiceTrackerMap<String, ExportImportContentProcessor<?>>
-		_serviceTrackerMap;
 
 }

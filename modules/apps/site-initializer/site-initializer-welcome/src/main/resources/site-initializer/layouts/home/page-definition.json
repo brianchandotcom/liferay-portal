@@ -201,8 +201,8 @@
 																	}
 																},
 																"text": {
-																	"value": {
-																		"title": "Enjoy using the best DXP on Earth!"
+																	"value_i18n": {
+																		"en_US": "Enjoy using the best DXP on Earth!"
 																	}
 																}
 															}

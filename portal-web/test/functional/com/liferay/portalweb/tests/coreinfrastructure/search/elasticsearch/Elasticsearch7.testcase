@@ -366,6 +366,7 @@ definition {
 
 	@priority = 5
 	test MultipleConnectionsSmokeTest {
+		property browser.chrome.version = "139.0";
 		property elasticsearch.multiple.connections = "true";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";

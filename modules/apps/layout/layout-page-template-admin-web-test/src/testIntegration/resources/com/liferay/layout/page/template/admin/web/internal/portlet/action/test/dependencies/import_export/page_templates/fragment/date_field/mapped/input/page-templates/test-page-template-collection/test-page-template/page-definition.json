@@ -27,14 +27,13 @@
 									"value_i18n": {
 										"en_US": "MM/dd/yyyy"
 									}
-								},
-								"fragmentLink": {}
+								}
 							}
 						}
 					]
 				},
-				"type": "Fragment",
-				"id": "item2"
+				"id": "item2",
+				"type": "Fragment"
 			}
 		],
 		"type": "Root"

@@ -1397,8 +1397,8 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 	private void _addDateFragmentEntry() throws Exception {
 		String html =
 			"<div data-lfr-editable-id=\"element-date\" " +
-			"data-lfr-editable-type=\"date-time\">" +
-			"01/01/2025 00:00 AM</div>";
+				"data-lfr-editable-type=\"date-time\">" +
+					"01/01/2025 00:00 AM</div>";
 
 		_addFragmentEntry(
 			_group1.getGroupId(), "test-date-fragment", "Test Date Fragment",

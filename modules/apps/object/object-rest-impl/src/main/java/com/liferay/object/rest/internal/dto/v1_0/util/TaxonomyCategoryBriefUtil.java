@@ -51,9 +51,8 @@ public class TaxonomyCategoryBriefUtil {
 						return new ParentTaxonomyCategory() {
 							{
 								setExternalReferenceCode(
-									() ->
-										parentAssetCategory.
-											getExternalReferenceCode());
+									parentAssetCategory::
+										getExternalReferenceCode);
 							}
 						};
 					});
@@ -66,9 +65,8 @@ public class TaxonomyCategoryBriefUtil {
 						return new ParentTaxonomyVocabulary() {
 							{
 								setExternalReferenceCode(
-									() ->
-										parentAssetVocabulary.
-											getExternalReferenceCode());
+									parentAssetVocabulary::
+										getExternalReferenceCode);
 							}
 						};
 					});

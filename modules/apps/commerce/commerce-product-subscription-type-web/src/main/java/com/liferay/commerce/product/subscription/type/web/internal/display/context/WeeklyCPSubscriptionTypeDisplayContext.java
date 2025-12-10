@@ -8,6 +8,7 @@ package com.liferay.commerce.product.subscription.type.web.internal.display.cont
 import com.liferay.commerce.product.subscription.type.web.internal.display.context.helper.CPSubscriptionTypeRequestHelper;
 import com.liferay.commerce.product.subscription.type.web.internal.display.context.util.comparator.WeeklyCPSubscriptionTypeCalendarWeekDaysComparator;
 import com.liferay.commerce.util.CommerceSubscriptionTypeUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -15,7 +16,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -36,16 +36,11 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 	}
 
 	public List<Integer> getCalendarWeekDays() {
-		List<Integer> calendarWeekDays = new ArrayList<>();
-
 		Map<String, Integer> calendarWeekDaysDisplayNames =
 			_getCalendarWeekDaysDisplayNames();
 
-		for (Map.Entry<String, Integer> entry :
-				calendarWeekDaysDisplayNames.entrySet()) {
-
-			calendarWeekDays.add(entry.getValue());
-		}
+		List<Integer> calendarWeekDays = TransformUtil.transform(
+			calendarWeekDaysDisplayNames.entrySet(), entry -> entry.getValue());
 
 		calendarWeekDays.sort(
 			new WeeklyCPSubscriptionTypeCalendarWeekDaysComparator());

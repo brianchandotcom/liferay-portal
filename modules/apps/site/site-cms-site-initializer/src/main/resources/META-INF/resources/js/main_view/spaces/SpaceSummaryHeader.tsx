@@ -37,7 +37,7 @@ type SpaceModalPropsType = {
 };
 
 interface SpaceSummaryHeaderProps {
-	apiUrl: string;
+	apiURL: string;
 	creationMenu?: any;
 	label: string;
 	permissions?: SpaceSummaryHeaderPermissions;
@@ -47,7 +47,7 @@ interface SpaceSummaryHeaderProps {
 }
 
 export default function SpaceSummaryHeader({
-	apiUrl,
+	apiURL,
 	creationMenu,
 	label,
 	permissions,
@@ -61,7 +61,7 @@ export default function SpaceSummaryHeader({
 	const loadData = () => window.location.reload();
 
 	const fetchItems = useCallback(() => {
-		if (!apiUrl) {
+		if (!apiURL) {
 			setShowViewAll(false);
 
 			return;
@@ -72,12 +72,12 @@ export default function SpaceSummaryHeader({
 			lastPage: number;
 			page: number;
 			totalCount: number;
-		}>(apiUrl)
+		}>(apiURL)
 			.then((response) => {
 				setShowViewAll(Boolean(response.data?.totalCount));
 			})
 			.catch(() => setShowViewAll(false));
-	}, [apiUrl]);
+	}, [apiURL]);
 
 	useEffect(() => {
 		Liferay.on(DISPLAY_UPDATED, fetchItems);

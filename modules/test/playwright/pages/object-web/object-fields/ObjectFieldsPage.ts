@@ -231,6 +231,18 @@ export class ObjectFieldsPage {
 			await this.selectDefaultValue(defaultValue);
 		}
 
+		if (objectFieldBusinessType === 'Date') {
+			await this.iframeLocator
+				.getByPlaceholder('__/__/____')
+				.fill(defaultValue);
+		}
+
+		if (objectFieldBusinessType === 'DateTime') {
+			await this.iframeLocator
+				.getByPlaceholder('__/__/____ __:__ _')
+				.fill(defaultValue);
+		}
+
 		if (
 			objectFieldBusinessType === 'Decimal' ||
 			objectFieldBusinessType === 'Integer' ||

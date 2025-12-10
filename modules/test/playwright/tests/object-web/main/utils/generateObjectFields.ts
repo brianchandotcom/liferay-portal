@@ -201,12 +201,18 @@ function generateObjectFieldProperties({
 		listTypeDefinitionExternalReferenceCode
 	);
 
+	const mergedSettings = [
+		...(objectFieldSpecificProperties.objectFieldSettings ?? []),
+		...(additionalSettings.objectFieldSettings ?? []),
+	];
+
 	return {
 		...objectFieldBaseProperties,
 		...objectFieldSpecificProperties,
 		label: {en_US: objectFieldLabel},
 		name: objectFieldLabel.toLocaleLowerCase(),
 		...additionalSettings,
+		objectFieldSettings: mergedSettings,
 	};
 }
 

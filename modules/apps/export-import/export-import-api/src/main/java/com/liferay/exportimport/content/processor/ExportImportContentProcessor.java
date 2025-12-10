@@ -22,10 +22,24 @@ public interface ExportImportContentProcessor<T extends Serializable> {
 			T content, boolean exportReferencedContent, boolean escapeContent)
 		throws Exception;
 
+	public default String replaceExportContentReferences(
+			String content, PortletDataContext portletDataContext)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public T replaceImportContentReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			T content)
 		throws Exception;
+
+	public default String replaceImportContentReferences(
+			String content, PortletDataContext portletDataContext)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public void validateContentReferences(long groupId, T content)
 		throws PortalException;

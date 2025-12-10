@@ -191,6 +191,25 @@ public class MBCommentManagerImpl implements CommentManager {
 			userId, groupId, className, newClassPK, serviceContextFunction);
 	}
 
+	public Comment createComment(
+		long commentId, String externalReferenceCode, long userId, long groupId,
+		String className, long classPK, long parentCommentId, String subject,
+		String body) {
+
+		MBMessage mbMessage = _mbMessageLocalService.createMBMessage(commentId);
+
+		mbMessage.setExternalReferenceCode(externalReferenceCode);
+		mbMessage.setGroupId(groupId);
+		mbMessage.setUserId(userId);
+		mbMessage.setClassName(className);
+		mbMessage.setClassPK(classPK);
+		mbMessage.setParentMessageId(parentCommentId);
+		mbMessage.setSubject(subject);
+		mbMessage.setBody(body);
+
+		return new MBCommentImpl(mbMessage);
+	}
+
 	@Override
 	public void deleteComment(long commentId) throws PortalException {
 		_mbMessageLocalService.deleteDiscussionMessage(commentId);

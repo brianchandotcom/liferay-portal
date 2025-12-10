@@ -223,6 +223,11 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="C_N_V" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+			<finder-column name="value" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectEntry" remote-service="true" trash-enabled="true" uuid="true">
 

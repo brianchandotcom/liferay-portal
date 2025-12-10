@@ -80,7 +80,7 @@ export default function SchedulePublicationModal({
 					{hasWorkflow
 						? sub(
 								Liferay.Language.get(
-									'set-the-date-and-time-for-publishing-the-x-and-submit-it-for-workflow'
+									'set-the-date-and-time-to-publish-the-x-then-submit-it-to-workflow'
 								),
 								type
 							)

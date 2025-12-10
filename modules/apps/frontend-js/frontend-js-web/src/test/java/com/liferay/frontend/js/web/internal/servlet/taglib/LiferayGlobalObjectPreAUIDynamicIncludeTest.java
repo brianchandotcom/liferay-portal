@@ -51,7 +51,6 @@ import java.util.function.Predicate;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.MockedStatic;
@@ -69,22 +68,16 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_browserSnifferUtilMockedStatic = _mockBrowserSnifferUtil();
-		_contentSecurityPolicyNonceProviderUtilMockedStatic =
-			_mockContentSecurityPolicyNonceProviderUtil();
-		_portalWebResourcesUtilMockedStatic = _mockPortalWebResourcesUtil();
-		_shutdownUtilMockedStatic = _mockShutdownUtil();
-		_timeMockedStatic = _mockTime();
-	}
-
 	@After
 	public void tearDown() {
 		_browserSnifferUtilMockedStatic.close();
+
 		_contentSecurityPolicyNonceProviderUtilMockedStatic.close();
+
 		_portalWebResourcesUtilMockedStatic.close();
+
 		_shutdownUtilMockedStatic.close();
+
 		_timeMockedStatic.close();
 	}
 
@@ -94,7 +87,7 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 			liferayGlobalObjectPreAUIDynamicInclude =
 				new LiferayGlobalObjectPreAUIDynamicInclude();
 
-		_setupDefaultMocks(liferayGlobalObjectPreAUIDynamicInclude);
+		_setUpMocks(liferayGlobalObjectPreAUIDynamicInclude);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -114,7 +107,7 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 			liferayGlobalObjectPreAUIDynamicInclude =
 				new LiferayGlobalObjectPreAUIDynamicInclude();
 
-		_setupDefaultMocks(liferayGlobalObjectPreAUIDynamicInclude);
+		_setUpMocks(liferayGlobalObjectPreAUIDynamicInclude);
 
 		ReflectionTestUtil.setFieldValue(
 			liferayGlobalObjectPreAUIDynamicInclude, "_configurationProvider",
@@ -151,36 +144,6 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		return authToken;
 	}
 
-	private MockedStatic<BrowserSnifferUtil> _mockBrowserSnifferUtil() {
-		MockedStatic<BrowserSnifferUtil> browserSnifferUtilMockedStatic =
-			Mockito.mockStatic(BrowserSnifferUtil.class);
-
-		BrowserMetadata browserMetadata = Mockito.mock(BrowserMetadata.class);
-
-		browserSnifferUtilMockedStatic.when(
-			() -> BrowserSnifferUtil.getBrowserMetadata(
-				Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			browserMetadata
-		);
-
-		browserSnifferUtilMockedStatic.when(
-			() -> BrowserSnifferUtil.getRevision(
-				Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			"42.0"
-		);
-
-		browserSnifferUtilMockedStatic.when(
-			() -> BrowserSnifferUtil.getVersion(
-				Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			"42.0"
-		);
-
-		return browserSnifferUtilMockedStatic;
-	}
-
 	private ConfigurationProvider _mockConfigurationProvider(
 			boolean disableGetRemoteMethods)
 		throws Exception {
@@ -205,24 +168,6 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		);
 
 		return configurationProvider;
-	}
-
-	private MockedStatic<ContentSecurityPolicyNonceProviderUtil>
-		_mockContentSecurityPolicyNonceProviderUtil() {
-
-		MockedStatic<ContentSecurityPolicyNonceProviderUtil>
-			contentSecurityPolicyNonceProviderUtilMockedStatic =
-				Mockito.mockStatic(
-					ContentSecurityPolicyNonceProviderUtil.class);
-
-		contentSecurityPolicyNonceProviderUtilMockedStatic.when(
-			() -> ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-				Mockito.any())
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		return contentSecurityPolicyNonceProviderUtilMockedStatic;
 	}
 
 	private FastDateFormatFactory _mockFastDateFormatFactory() {
@@ -390,34 +335,6 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		return portal;
 	}
 
-	private MockedStatic<PortalWebResourcesUtil> _mockPortalWebResourcesUtil() {
-		MockedStatic<PortalWebResourcesUtil>
-			portalWebResourcesUtilMockedStatic = Mockito.mockStatic(
-				PortalWebResourcesUtil.class);
-
-		portalWebResourcesUtilMockedStatic.when(
-			() -> PortalWebResourcesUtil.getContextPath(Mockito.anyString())
-		).thenAnswer(
-			(Answer<String>)
-				invocationOnMock -> "/o/" + invocationOnMock.getArgument(0)
-		);
-
-		return portalWebResourcesUtilMockedStatic;
-	}
-
-	private MockedStatic<ShutdownUtil> _mockShutdownUtil() {
-		MockedStatic<ShutdownUtil> shutdownUtilMockedStatic =
-			Mockito.mockStatic(ShutdownUtil.class);
-
-		shutdownUtilMockedStatic.when(
-			ShutdownUtil::isInProcess
-		).thenReturn(
-			true
-		);
-
-		return shutdownUtilMockedStatic;
-	}
-
 	private Staging _mockStaging() {
 		Staging staging = Mockito.mock(Staging.class);
 
@@ -556,18 +473,6 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		return themeDisplay;
 	}
 
-	private MockedStatic<Time> _mockTime() {
-		MockedStatic<Time> timeMockedStatic = Mockito.mockStatic(Time.class);
-
-		timeMockedStatic.when(
-			() -> Time.getDate(Mockito.any(Calendar.class))
-		).thenReturn(
-			new Date(109, 3, 23)
-		);
-
-		return timeMockedStatic;
-	}
-
 	private String _read(String name) throws Exception {
 		try (InputStream inputStream =
 				LiferayGlobalObjectPreAUIDynamicIncludeTest.class.
@@ -577,10 +482,69 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		}
 	}
 
-	private void _setupDefaultMocks(
+	private void _setUpMocks(
 			LiferayGlobalObjectPreAUIDynamicInclude
 				liferayGlobalObjectPreAUIDynamicInclude)
 		throws Exception {
+
+		// BrowserSnifferUtil
+
+		_browserSnifferUtilMockedStatic.when(
+			() -> BrowserSnifferUtil.getBrowserMetadata(
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			Mockito.mock(BrowserMetadata.class)
+		);
+
+		_browserSnifferUtilMockedStatic.when(
+			() -> BrowserSnifferUtil.getRevision(
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			"42.0"
+		);
+
+		_browserSnifferUtilMockedStatic.when(
+			() -> BrowserSnifferUtil.getVersion(
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			"42.0"
+		);
+
+		// ContentSecurityPolicyNonceProviderUtil
+
+		_contentSecurityPolicyNonceProviderUtilMockedStatic.when(
+			() -> ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				Mockito.any())
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		// PortalWebResourcesUtil
+
+		_portalWebResourcesUtilMockedStatic.when(
+			() -> PortalWebResourcesUtil.getContextPath(Mockito.anyString())
+		).thenAnswer(
+			(Answer<String>)
+				invocationOnMock -> "/o/" + invocationOnMock.getArgument(0)
+		);
+
+		// ShutdownUtil
+
+		_shutdownUtilMockedStatic.when(
+			ShutdownUtil::isInProcess
+		).thenReturn(
+			true
+		);
+
+		// Time
+
+		_timeMockedStatic.when(
+			() -> Time.getDate(Mockito.any(Calendar.class))
+		).thenReturn(
+			new Date(109, 3, 23)
+		);
+
+		//  Populate liferayGlobalObjectPreAUIDynamicInclude
 
 		ReflectionTestUtil.setFieldValue(
 			liferayGlobalObjectPreAUIDynamicInclude, "_authToken",
@@ -614,12 +578,18 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 			Mockito.mock(UploadServletRequestConfigurationProvider.class));
 	}
 
-	private MockedStatic<BrowserSnifferUtil> _browserSnifferUtilMockedStatic;
-	private MockedStatic<ContentSecurityPolicyNonceProviderUtil>
-		_contentSecurityPolicyNonceProviderUtilMockedStatic;
-	private MockedStatic<PortalWebResourcesUtil>
-		_portalWebResourcesUtilMockedStatic;
-	private MockedStatic<ShutdownUtil> _shutdownUtilMockedStatic;
-	private MockedStatic<Time> _timeMockedStatic;
+	private final MockedStatic<BrowserSnifferUtil>
+		_browserSnifferUtilMockedStatic = Mockito.mockStatic(
+			BrowserSnifferUtil.class);
+	private final MockedStatic<ContentSecurityPolicyNonceProviderUtil>
+		_contentSecurityPolicyNonceProviderUtilMockedStatic =
+			Mockito.mockStatic(ContentSecurityPolicyNonceProviderUtil.class);
+	private final MockedStatic<PortalWebResourcesUtil>
+		_portalWebResourcesUtilMockedStatic = Mockito.mockStatic(
+			PortalWebResourcesUtil.class);
+	private final MockedStatic<ShutdownUtil> _shutdownUtilMockedStatic =
+		Mockito.mockStatic(ShutdownUtil.class);
+	private final MockedStatic<Time> _timeMockedStatic = Mockito.mockStatic(
+		Time.class);
 
 }

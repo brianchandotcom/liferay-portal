@@ -3267,6 +3267,45 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						"tablet", "auto"
 					).build()),
 				"element-image1"),
+			FragmentEditableElementTestUtil.getImageFragmentEditableElement(
+				FragmentEditableElementTestUtil.getFragmentImage(
+					HashMapBuilder.put(
+						LocaleUtil.toBCP47LanguageId(
+							LocaleUtil.getMostRelevantLocale()),
+						RandomTestUtil.randomString()
+					).put(
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+						RandomTestUtil.randomString()
+					).build(),
+					FragmentEditableElementTestUtil.getMappedFragmentImageValue(
+						FileEntry.class.getName(),
+						fileEntry1.getExternalReferenceCode(),
+						"FileEntry_fileURL", null),
+					Boolean.TRUE,
+					HashMapBuilder.put(
+						"desktop", "auto"
+					).put(
+						"tablet", "preview-1000x0"
+					).build()),
+				"element-image2"),
+			FragmentEditableElementTestUtil.getImageFragmentEditableElement(
+				FragmentEditableElementTestUtil.getFragmentImage(
+					HashMapBuilder.put(
+						LocaleUtil.toBCP47LanguageId(
+							LocaleUtil.getMostRelevantLocale()),
+						RandomTestUtil.randomString()
+					).build(),
+					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+						ReferencesTestUtil.getItemExternalReference(
+							fileEntry2, testGroup.getGroupId()),
+						RandomTestUtil.randomString()),
+					Boolean.TRUE,
+					HashMapBuilder.put(
+						"landscapeMobile", "preview-1000x0"
+					).put(
+						"tablet", "auto"
+					).build()),
+				"element-image3"),
 			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
 				null, null,
 				FragmentMappedValueItemContextReference.ContextSource.

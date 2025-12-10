@@ -27,7 +27,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,8 +59,8 @@ public class SelectInputFragmentEntryMVCRenderCommand
 
 		fragmentEntryItemSelectorCriterion.setInputTypes(
 			new HashSet<>(
-				Collections.singletonList(
-					ParamUtil.getString(renderRequest, "inputType"))));
+				Arrays.asList(
+					ParamUtil.getStringValues(renderRequest, "inputType"))));
 
 		fragmentEntryItemSelectorCriterion.setType(
 			FragmentConstants.TYPE_INPUT);

@@ -206,11 +206,12 @@ test('LPD-40224: Check if the audit events filtered by date are being exported',
 
 	await page.locator('#endDate').press('Tab');
 
-	await page.locator('.lexicon-icon-search').click();
-
 	await page.waitForTimeout(500);
 
-	await expect(page.getByText('There are no events.')).toBeVisible();
+	await clickAndExpectToBeVisible({
+		target: page.getByText('There are no events.'),
+		trigger: page.locator('.lexicon-icon-search'),
+	});
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,

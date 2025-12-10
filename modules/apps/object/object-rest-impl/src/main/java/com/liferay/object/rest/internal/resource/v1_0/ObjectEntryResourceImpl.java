@@ -5,7 +5,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
-import com.liferay.exportimport.content.processor.constants.ExportImportContentParserConstants;
+import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectEntryValidationException;
@@ -502,7 +502,7 @@ public class ObjectEntryResourceImpl
 
 					references.put(
 						objectField.getName(),
-						ExportImportContentParserConstants.DOCUMENT_LIBRARY);
+						ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES);
 				}
 
 				return references;

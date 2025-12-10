@@ -28,13 +28,14 @@
 										"en_US": "MM/dd/yyyy"
 									}
 								},
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						}
 					]
 				},
-				"type": "Fragment",
-				"id": "item2"
+				"id": "item2",
+				"type": "Fragment"
 			}
 		],
 		"type": "Root"

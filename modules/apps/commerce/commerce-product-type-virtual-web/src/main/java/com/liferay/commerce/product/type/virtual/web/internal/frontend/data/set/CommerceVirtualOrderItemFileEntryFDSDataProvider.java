@@ -16,6 +16,7 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -25,7 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,8 +48,6 @@ public class CommerceVirtualOrderItemFileEntryFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<VirtualFile> virtualFiles = new ArrayList<>();
-
 		long commerceVirtualOrderItemId = ParamUtil.getLong(
 			httpServletRequest, "commerceVirtualOrderItemId");
 
@@ -56,25 +55,21 @@ public class CommerceVirtualOrderItemFileEntryFDSDataProvider
 			_commerceVirtualOrderItemService.fetchCommerceVirtualOrderItem(
 				commerceVirtualOrderItemId);
 
-		if (commerceVirtualOrderItem != null) {
-			for (CommerceVirtualOrderItemFileEntry
-					commerceVirtualOrderItemFileEntry :
-						_commerceVirtualOrderItemFileEntryService.
-							getCommerceVirtualOrderItemFileEntries(
-								commerceVirtualOrderItemId,
-								fdsPagination.getStartPosition(),
-								fdsPagination.getEndPosition())) {
-
-				virtualFiles.add(
-					new VirtualFile(
-						commerceVirtualOrderItemFileEntry.
-							getCommerceVirtualOrderItemFileEntryId(),
-						_getURL(commerceVirtualOrderItemFileEntry),
-						commerceVirtualOrderItemFileEntry.getVersion()));
-			}
+		if (commerceVirtualOrderItem == null) {
+			return Collections.emptyList();
 		}
 
-		return virtualFiles;
+		return TransformUtil.transform(
+			_commerceVirtualOrderItemFileEntryService.
+				getCommerceVirtualOrderItemFileEntries(
+					commerceVirtualOrderItemId,
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition()),
+			commerceVirtualOrderItemFileEntry -> new VirtualFile(
+				commerceVirtualOrderItemFileEntry.
+					getCommerceVirtualOrderItemFileEntryId(),
+				_getURL(commerceVirtualOrderItemFileEntry),
+				commerceVirtualOrderItemFileEntry.getVersion()));
 	}
 
 	@Override

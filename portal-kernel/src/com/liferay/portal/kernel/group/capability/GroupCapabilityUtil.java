@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class GroupCapabilityUtil {
 
-	public static boolean isExportImportCompanyGroup(Group group) {
+	public static boolean isSupportScope(Group group) {
 		for (GroupCapability groupCapability : _getGroupCapabilities(group)) {
-			if (groupCapability.isExportImportCompanyGroup()) {
-				return true;
+			if (!groupCapability.isSupportScope()) {
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	public static boolean isSupportsPages(Group group) {

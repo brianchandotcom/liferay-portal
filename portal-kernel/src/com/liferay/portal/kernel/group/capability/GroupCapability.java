@@ -12,11 +12,11 @@ import com.liferay.portal.kernel.model.Portlet;
  */
 public interface GroupCapability {
 
-	public default boolean isExportImportCompanyGroup() {
-		return false;
-	}
-
 	public boolean isSupportPortlet(Portlet portlet);
+
+	public default boolean isSupportScope() {
+		return true;
+	}
 
 	public boolean isSupportsPages();
 

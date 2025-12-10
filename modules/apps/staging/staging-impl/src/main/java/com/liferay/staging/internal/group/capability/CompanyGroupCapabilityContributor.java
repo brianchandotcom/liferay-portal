@@ -30,13 +30,13 @@ public class CompanyGroupCapabilityContributor
 		return new GroupCapability() {
 
 			@Override
-			public boolean isExportImportCompanyGroup() {
+			public boolean isSupportPortlet(Portlet portlet) {
 				return true;
 			}
 
 			@Override
-			public boolean isSupportPortlet(Portlet portlet) {
-				return true;
+			public boolean isSupportScope() {
+				return false;
 			}
 
 			@Override

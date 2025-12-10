@@ -47,9 +47,7 @@ import java.util.function.Supplier;
 public class Scope implements Serializable {
 
 	public static Scope of(Group group, Locale locale) {
-		if ((group == null) ||
-			GroupCapabilityUtil.isExportImportCompanyGroup(group)) {
-
+		if ((group == null) || GroupCapabilityUtil.isSupportScope(group)) {
 			return null;
 		}
 

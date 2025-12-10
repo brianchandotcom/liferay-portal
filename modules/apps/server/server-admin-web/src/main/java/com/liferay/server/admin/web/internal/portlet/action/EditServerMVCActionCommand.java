@@ -620,6 +620,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		for (DataCleanup dataCleanup : dataCleanups) {
 			if (cmd.equals(dataCleanup.getLabel())) {
 				dataCleanup.cleanup();
+
+				CacheRegistryUtil.clear();
 			}
 		}
 	}

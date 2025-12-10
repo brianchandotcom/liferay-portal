@@ -9,12 +9,17 @@ import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.ws.rs.ClientErrorException;
+
+import java.util.List;
 
 /**
  * @author Javier Gamarra
@@ -53,6 +58,19 @@ public class CommentUtil {
 			throw new ClientErrorException(
 				"Comment text is null", 422, messageSubjectException);
 		}
+	}
+
+	public static List<com.liferay.portal.kernel.comment.Comment> toComments(
+		String className, long classPK, CommentManager commentManager,
+		Comment[] comments, long groupId, long userId) {
+
+		return TransformUtil.transformToList(
+			comments,
+			comment -> commentManager.createComment(
+				0L, comment.getExternalReferenceCode(), userId, groupId,
+				className, classPK,
+				GetterUtil.getLong(comment.getParentCommentId()),
+				StringPool.BLANK, comment.getText()));
 	}
 
 	private static Comment _toComment(

@@ -8,8 +8,8 @@ package com.liferay.exportimport.internal.action;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.action.ExportTaskPostAction;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
-import com.liferay.exportimport.content.processor.ExportImportContentParser;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentParserConstants;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.internal.lar.ExportImportDescriptorThreadLocal;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -135,18 +135,18 @@ public class DependencyManagementExportTaskPostAction
 				continue;
 			}
 
-			ExportImportContentParser exportImportContentParser =
+			ExportImportContentProcessor<?> exportImportContentProcessor =
 				_serviceTrackerMap.getService(entry.getValue());
 
-			if (exportImportContentParser == null) {
+			if (exportImportContentProcessor == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
 							"Unable to get the ",
-							ExportImportContentParser.class.getSimpleName(),
+							ExportImportContentProcessor.class.getSimpleName(),
 							" for \"",
-							ExportImportContentParserConstants.
-								CONTENT_PARSER_TYPE,
+							ExportImportContentProcessorConstants.
+								CONTENT_PROCESSOR_TYPE,
 							"\"=\"", entry.getKey(), "\""));
 				}
 
@@ -166,14 +166,15 @@ public class DependencyManagementExportTaskPostAction
 			if (setMethod != null) {
 				setMethod.invoke(
 					item, fieldName,
-					(UnsafeSupplier)
-						() -> exportImportContentParser.parseExportContent(
-							value, portletDataContext));
+					(UnsafeSupplier)() ->
+						exportImportContentProcessor.
+							replaceExportContentReferences(
+								value, portletDataContext));
 			}
 			else {
 				setPropertyValueMethod.invoke(
 					item, fieldName,
-					exportImportContentParser.parseExportContent(
+					exportImportContentProcessor.replaceExportContentReferences(
 						value, portletDataContext));
 			}
 		}
@@ -182,8 +183,10 @@ public class DependencyManagementExportTaskPostAction
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ExportImportContentParser.class,
-			ExportImportContentParserConstants.CONTENT_PARSER_TYPE);
+			bundleContext,
+			(Class<ExportImportContentProcessor<?>>)
+				(Class<?>)ExportImportContentProcessor.class,
+			ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE);
 	}
 
 	@Deactivate
@@ -212,7 +215,7 @@ public class DependencyManagementExportTaskPostAction
 	private static final Log _log = LogFactoryUtil.getLog(
 		DependencyManagementExportTaskPostAction.class);
 
-	private ServiceTrackerMap<String, ExportImportContentParser>
+	private ServiceTrackerMap<String, ExportImportContentProcessor<?>>
 		_serviceTrackerMap;
 
 }

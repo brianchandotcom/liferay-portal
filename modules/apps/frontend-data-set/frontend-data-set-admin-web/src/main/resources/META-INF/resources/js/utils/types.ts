@@ -19,6 +19,8 @@ export enum EFieldType {
 	OBJECT = 'object',
 	STRING = 'string',
 	BOOLEAN = 'boolean',
+	COLLECTION_STRING = 'collection-string',
+	COLLECTION_INTEGER = 'collection-integer',
 }
 
 export enum EFilterType {
@@ -121,8 +123,7 @@ export interface IDateFilter extends IFilter {
 
 export interface IField {
 	children?: Array<IField>;
-	entityFieldType?: EFieldType;
-	entityFieldTypeCollection?: boolean;
+	entityFieldType?: EFieldType | `collection-${string}`;
 	format?: EFieldFormat | EFieldType;
 	id?: string;
 	label?: string;
@@ -144,7 +145,6 @@ export interface IFieldTreeItem extends IField {
 
 export interface IFilter extends IOrderable {
 	entityFieldType: EFieldType;
-	entityFieldTypeCollection: boolean;
 	fieldName: string;
 	filterType?: EFilterType;
 	include?: boolean;

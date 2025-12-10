@@ -15,10 +15,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import createTempFile from '../../../utils/createTempFile';
-import {
-	readCSVFile,
-	sortCSVHeaderAndSingleRow,
-} from '../../../utils/fileReader';
+import {readCSVFile} from '../../../utils/fileReader';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
@@ -606,21 +603,9 @@ test('can download object definition sample file', async ({
 	await dataMigrationCenterPage.gotoPage();
 	await dataMigrationCenterPage.goToImportFile();
 
-	const file = await dataMigrationCenterPage.downloadSampleFile(
+	await dataMigrationCenterPage.assertSampleFileDownload(
 		OBJECT_DEFINITION_TYPE
 	);
-
-	const expectedFile = await readCSVFile(
-		path.join(
-			__dirname,
-			'/dependencies/object_definition_import_sample.csv'
-		)
-	);
-
-	const sortedFile = sortCSVHeaderAndSingleRow(file);
-	const sortedExpectedFile = sortCSVHeaderAndSingleRow(expectedFile);
-
-	expect(sortedFile).toEqual(sortedExpectedFile);
 });
 
 test('can handle OnlyAddNewRecords and UpdateChangedRecordFields import strategies with duplicate ERCs', async ({

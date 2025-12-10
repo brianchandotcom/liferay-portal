@@ -1076,3 +1076,36 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Select All should not be visible in case of search or filter',
+	{
+		tag: ['@LPD-71053'],
+	},
+
+	async ({
+		documentLibraryEditFilePage,
+		documentLibraryEditFolderPage,
+		documentLibraryPage,
+		page,
+		site,
+	}) => {
+		const folderTitle = 'Folder' + getRandomString();
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+
+		for (let i = 0; i < 21; i++) {
+			await documentLibraryPage.goToCreateNewFolder();
+			await documentLibraryEditFolderPage.fillTitle(folderTitle + i);
+			await documentLibraryEditFilePage.saveButton.click();
+		}
+
+		await documentLibraryPage.searchInDL('Folder');
+
+		await page.getByLabel('Select All Items on the Page').click();
+
+		await expect(
+			page.getByRole('button', {name: 'Select All'})
+		).not.toBeVisible();
+	}
+);

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -54,7 +53,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcessTest {
 
 	@Before
 	public void setUp() throws Exception {
-		HashMapDictionary<String, Object> properties =
+		Dictionary<String, Object> properties =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", TestPropsValues.getCompanyId()
 			).build();

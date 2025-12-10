@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -20,8 +19,10 @@ import com.liferay.portal.spring.aop.AopInvocationHandler;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -138,17 +139,21 @@ public class ApplicationContextServicePublisherUtil {
 
 		String symbolicName = bundle.getSymbolicName();
 
-		HashMapDictionary<String, Object> properties =
+		Map<String, Object> osgiBeanPropertiesMap = null;
+
+		if (osgiBeanProperties != null) {
+			osgiBeanPropertiesMap = OSGiBeanProperties.Convert.toMap(
+				osgiBeanProperties);
+		}
+
+		Dictionary<String, Object> properties =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"bean.id", beanName
 			).put(
 				"origin.bundle.symbolic.name", symbolicName
+			).putAll(
+				osgiBeanPropertiesMap
 			).build();
-
-		if (osgiBeanProperties != null) {
-			properties.putAll(
-				OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
-		}
 
 		if (bean instanceof BaseService) {
 			Class<?> beanClass = bean.getClass();

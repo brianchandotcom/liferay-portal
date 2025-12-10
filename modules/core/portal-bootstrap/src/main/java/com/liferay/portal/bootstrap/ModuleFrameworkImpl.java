@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -799,12 +800,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private Dictionary<String, Object> _getProperties(
 		OSGiBeanProperties osgiBeanProperties, Object bean, String beanName) {
 
-		HashMapDictionary<String, Object> properties =
-			new HashMapDictionary<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		if (osgiBeanProperties != null) {
-			properties.putAll(
-				OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
+			properties = HashMapDictionaryBuilder.<String, Object>putAll(
+				OSGiBeanProperties.Convert.toMap(osgiBeanProperties)
+			).build();
 		}
 
 		properties.put(ServicePropsKeys.BEAN_ID, beanName);

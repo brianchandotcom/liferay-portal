@@ -24,51 +24,61 @@ const NumericDefaultValueInput: React.FC<
 	setValues,
 	values,
 }: InputAsValueFieldComponentProps) => {
+	const config = {
+		allowDecimal: dataType === 'double',
+		allowLeadingZeroes: true,
+		allowNegative: true,
+		decimalLimit: null,
+		decimalSymbol: decimalSeparator ?? '.',
+		includeThousandsSeparator: false,
+		prefix: '',
+	};
+
+	const mask = createNumberMask(config);
+
+	const getConformedValue = (value: string): string => {
+		const {conformedValue} = conformToMask(value, mask, {
+			guide: false,
+			keepCharPositions: false,
+			placeholderChar: '\u2000',
+		});
+
+		return conformedValue;
+	};
+
 	const initialValue = typeof defaultValue === 'string' ? defaultValue : '';
-	const [value, setValue] = useState(initialValue);
-	const handleChangeInput = (event: any) => {
-		const config = {
-			allowDecimal: dataType === 'double',
-			allowLeadingZeroes: true,
-			allowNegative: true,
-			decimalLimit: null,
-			decimalSymbol: decimalSeparator ?? '.',
-			includeThousandsSeparator: false,
-			prefix: '',
-		};
 
-		const mask = createNumberMask(config);
+	const [value, setValue] = useState<{masked: string; raw: string}>({
+		masked: getConformedValue(
+			initialValue.replace('.', decimalSeparator || ',')
+		),
+		raw: initialValue,
+	});
 
-		const {conformedValue: masked} = conformToMask(
-			event.target.value,
-			mask,
-			{
-				guide: false,
-				keepCharPositions: false,
-				placeholderChar: '\u2000',
-			}
+	const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const masked = getConformedValue(event.target.value);
+
+		const newObjectFieldSettings = getUpdatedDefaultValueFieldSettings(
+			values,
+			masked.replace(decimalSeparator || ',', '.'),
+			'inputAsValue'
 		);
 
-		if (masked) {
-			const newObjectFieldSettings = getUpdatedDefaultValueFieldSettings(
-				values,
-				masked,
-				'inputAsValue'
-			);
+		setValues({
+			objectFieldSettings: newObjectFieldSettings,
+		});
 
-			setValues({
+		if (onSubmit) {
+			onSubmit({
+				...values,
 				objectFieldSettings: newObjectFieldSettings,
 			});
-
-			if (onSubmit) {
-				onSubmit({
-					...values,
-					objectFieldSettings: newObjectFieldSettings,
-				});
-			}
 		}
 
-		setValue(masked);
+		setValue({
+			masked,
+			raw: event.target.value,
+		});
 	};
 
 	return (
@@ -78,7 +88,7 @@ const NumericDefaultValueInput: React.FC<
 			onChange={handleChangeInput}
 			placeholder={Liferay.Language.get('enter-a-default-value')}
 			required={required}
-			value={value}
+			value={value.masked}
 		/>
 	);
 };

@@ -8,7 +8,6 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {claySamplePageTest} from './fixtures/claySamplePageTest';
-import {TabName} from './pages/ClaySamplePage';
 
 const test = mergeTests(
 	featureFlagsTest({
@@ -16,6 +15,8 @@ const test = mergeTests(
 	}),
 	claySamplePageTest
 );
+
+const ALERT_CONTAINER_ID = '#ToastAlertContainer';
 
 const FAIL_SUBMIT_MESSAGE = 'Error:An unexpected error occurred.';
 const DISAPPEARS_AFTER_FIVE_SECONDS_MESSAGE =
@@ -39,7 +40,7 @@ const TRIGGERED_ALERTS_CONFIG = [
 
 async function closeAllDefaultAlerts(page: Page) {
 	const closeButtons = page
-		.locator('#ToastAlertContainer')
+		.locator(ALERT_CONTAINER_ID)
 		.locator('[aria-label="Close"]');
 
 	const count = await closeButtons.count();
@@ -53,219 +54,208 @@ async function closeAllDefaultAlerts(page: Page) {
 	}
 }
 
-test.beforeEach('Select Alerts tab', async ({claySamplePage, page}) => {
-	await claySamplePage.selectTab(TabName.ALERTS);
-	await closeAllDefaultAlerts(page);
-});
+test('Testing ClayAlert, Testing ClayAlertStripe,Testing ClayAlertFeedback, Testing ClayAlertToast', async ({
+	claySamplePage,
+	page,
+}) => {
+	test.setTimeout(90000);
 
-test.describe('Testing Alert Scenarios', () => {
-	test('Testing ClayAlert', async ({claySamplePage, page}) => {
-		const alertEmbeddedSuccess = claySamplePage.alert(
-			'Success:This is a success message.'
+	const alertEmbeddedSuccess = claySamplePage.alert(
+		'Success:This is a success message.'
+	);
+
+	const [
+		alertFailSubmit,
+		alertDisappearsAfterFiveSeconds,
+		alertDisappearsAfterTenSeconds,
+		alertSuccessSubmit,
+	] = TRIGGERED_ALERTS_CONFIG.map((config) =>
+		claySamplePage.alert(config.message, config.trigger)
+	);
+
+	const allToastAlertsLocator = page
+		.locator(ALERT_CONTAINER_ID)
+		.getByRole('alert');
+
+	await test.step('ClayAlert: Verify alert contains all required attributes: icon, lead text, and description.', async () => {
+		await expect(alertEmbeddedSuccess.icon.first()).toBeVisible();
+		await expect(alertEmbeddedSuccess.lead.first()).toBeVisible();
+		await expect(alertEmbeddedSuccess.locator.first()).toBeVisible();
+	});
+
+	await test.step('ClayAlert: Verify the keyword is semi-bold when alert contains status icon and keyword.', async () => {
+		const successAlert = alertEmbeddedSuccess.locator.first();
+
+		await expect(successAlert).toHaveCSS('font-weight', '400');
+		await expect(successAlert.locator('.lead')).toHaveCSS(
+			'font-weight',
+			'600'
 		);
+	});
 
-		const [, alertDisappearsAfterFiveSeconds, , alertSuccessSubmit] =
-			TRIGGERED_ALERTS_CONFIG.map((config) =>
-				claySamplePage.alert(config.message, config.trigger)
-			);
+	await test.step('ClayAlert: Verify toast message popup can be closed manually.', async () => {
+		await alertSuccessSubmit.trigger.click();
 
-		await test.step('Verify alert contains all required attributes: icon, lead text, and description.', async () => {
-			await expect(alertEmbeddedSuccess.icon.first()).toBeVisible();
-
-			await expect(alertEmbeddedSuccess.lead.first()).toBeVisible();
-
-			await expect(alertEmbeddedSuccess.locator.first()).toBeVisible();
-		});
-
-		await test.step('Verify the keyword is semi-bold when alert contains status icon and keyword.', async () => {
-			const successAlert = alertEmbeddedSuccess.locator.first();
-
-			await expect(successAlert).toHaveCSS('font-weight', '400');
-
-			await expect(successAlert.locator('.lead')).toHaveCSS(
-				'font-weight',
-				'600'
-			);
-		});
-
-		await test.step('Verify toast message popup can be closed manually.', async () => {
-			await alertSuccessSubmit.trigger.click();
-
-			await clickAndExpectToBeHidden({
-				target: alertSuccessSubmit.locator,
-				trigger: alertSuccessSubmit.close,
-			});
-		});
-
-		await test.step('Verify toast message popup will close automatically.', async () => {
-			await alertDisappearsAfterFiveSeconds.trigger.click();
-
-			await expect(alertDisappearsAfterFiveSeconds.locator).toBeVisible();
-
-			await page.waitForTimeout(5000);
-
-			await expect(alertDisappearsAfterFiveSeconds.locator).toBeHidden();
+		await clickAndExpectToBeHidden({
+			target: alertSuccessSubmit.locator,
+			trigger: alertSuccessSubmit.close,
 		});
 	});
 
-	test('Testing ClayAlertStripe', async ({claySamplePage}) => {
-		const alertEmbeddedSuccess = claySamplePage.alert(
-			'Success:This is a success message.'
-		);
+	await test.step('ClayAlert: Verify toast message popup will close automatically.', async () => {
+		await alertDisappearsAfterFiveSeconds.trigger.click();
 
-		await test.step('Check if the stripe alert-success displays close button.', async () => {
-			await expect(alertEmbeddedSuccess.close).toBeVisible();
-		});
+		await expect(alertDisappearsAfterFiveSeconds.locator).toBeVisible();
+
+		await page.waitForTimeout(5000);
+
+		await expect(alertDisappearsAfterFiveSeconds.locator).toBeHidden();
 	});
 
-	test('Testing ClayAlertFeedback', async ({claySamplePage}) => {
-		await test.step('Check if a tooltip message is displayed when have an alert icon without text and the cursor hovers over it.', async () => {
-			const alertHover = claySamplePage.alert('Tooltip Content', 'Hover');
-
-			await expect(alertHover.trigger).toBeVisible();
-
-			await alertHover.trigger.hover();
-
-			await expect(alertHover.tooltip).toBeVisible();
-		});
+	await test.step('ClayAlertStripe: Check if the stripe alert-success displays close button', async () => {
+		await expect(alertEmbeddedSuccess.close).toBeVisible();
 	});
 
-	test('Testing ClayAlertToast', async ({claySamplePage, page}) => {
-		const [
-			alertFailSubmit,
-			alertDisappearsAfterFiveSeconds,
-			alertDisappearsAfterTenSeconds,
-			alertSuccessSubmit,
-		] = TRIGGERED_ALERTS_CONFIG.map((config) =>
-			claySamplePage.alert(config.message, config.trigger)
+	await test.step('ClayAlertFeedback: Check if a tooltip message is displayed when have an alert icon without text and the cursor hovers over it.', async () => {
+		const alertHover = claySamplePage.alert('Tooltip Content', 'Hover');
+
+		await expect(alertHover.trigger).toBeVisible();
+
+		await alertHover.trigger.hover();
+
+		await expect(alertHover.tooltip).toBeVisible();
+	});
+
+	await test.step('ClayAlertToast: Check if alert toast message does disapear.', async () => {
+		await alertFailSubmit.trigger.click();
+
+		await expect(alertFailSubmit.locator).toBeVisible();
+
+		await page.waitForTimeout(20000);
+
+		await expect(alertFailSubmit.locator).toBeHidden();
+	});
+
+	await test.step('Closing all Alerts', async () => {
+		await closeAllDefaultAlerts(page);
+	});
+
+	await test.step('ClayAlertToast: Check if an alert in the middle of stack is closed, the others fill the stack.', async () => {
+		await alertSuccessSubmit.trigger.click();
+		await alertFailSubmit.trigger.click();
+		await alertSuccessSubmit.trigger.click();
+
+		await expect(allToastAlertsLocator).toHaveCount(3);
+
+		await expect(allToastAlertsLocator.nth(0)).toHaveText(
+			SUCCESS_SUBMIT_MESSAGE
+		);
+		await expect(allToastAlertsLocator.nth(1)).toHaveText(
+			FAIL_SUBMIT_MESSAGE
+		);
+		await expect(allToastAlertsLocator.nth(2)).toHaveText(
+			SUCCESS_SUBMIT_MESSAGE
 		);
 
-		const allToastAlertsLocator = page
-			.locator('#ToastAlertContainer')
-			.getByRole('alert');
+		await alertFailSubmit.close.click();
 
-		await test.step('Check if alert toast message does disapear.', async () => {
-			await alertFailSubmit.trigger.click();
+		await expect(allToastAlertsLocator).toHaveCount(2);
+		await expect(allToastAlertsLocator.nth(0)).toHaveText(
+			SUCCESS_SUBMIT_MESSAGE
+		);
+		await expect(allToastAlertsLocator.nth(1)).toHaveText(
+			SUCCESS_SUBMIT_MESSAGE
+		);
+	});
 
-			await expect(alertFailSubmit.locator).toBeVisible();
+	await test.step('Closing all Alerts', async () => {
+		await closeAllDefaultAlerts(page);
+	});
 
-			await page.waitForTimeout(20000);
+	await test.step('ClayAlertToast: Check if after clicking in a link present on a toast alert, the navigation goes to the link.', async () => {
+		await alertDisappearsAfterTenSeconds.trigger.click();
 
-			await expect(alertFailSubmit.locator).toBeHidden();
-		});
+		await expect(alertDisappearsAfterTenSeconds.locator).toBeVisible();
 
-		await test.step('Check if an alert in the middle of stack is closed, the others fill the stack.', async () => {
-			await alertSuccessSubmit.trigger.click();
-			await alertFailSubmit.trigger.click();
-			await alertSuccessSubmit.trigger.click();
+		const linkTextRegex = new RegExp(
+			DISAPPEARS_AFTER_TEN_SECONDS_MESSAGE.split(':')[1],
 
-			await expect(allToastAlertsLocator).toHaveCount(3);
-			await expect(allToastAlertsLocator.nth(0)).toHaveText(
-				SUCCESS_SUBMIT_MESSAGE
-			);
-			await expect(allToastAlertsLocator.nth(1)).toHaveText(
-				FAIL_SUBMIT_MESSAGE
-			);
-			await expect(allToastAlertsLocator.nth(2)).toHaveText(
-				SUCCESS_SUBMIT_MESSAGE
-			);
+			'i'
+		);
 
-			await alertFailSubmit.close.click();
+		await alertDisappearsAfterTenSeconds.locator
+			.getByRole('link', {
+				name: linkTextRegex,
+			})
+			.click();
 
-			await expect(allToastAlertsLocator).toHaveCount(2);
-			await expect(allToastAlertsLocator.nth(0)).toHaveText(
-				SUCCESS_SUBMIT_MESSAGE
-			);
-			await expect(allToastAlertsLocator.nth(1)).toHaveText(
-				SUCCESS_SUBMIT_MESSAGE
-			);
-		});
+		await expect(page).toHaveURL(/\/web\/guest$/);
+	});
 
-		await test.step('Closing all opened Alerts.', async () => {
-			await closeAllDefaultAlerts(page);
-		});
+	await test.step('Back to claySamplePage.', async () => {
+		await claySamplePage.goto();
+	});
 
-		await test.step('Check if after clicking in a link present on a toast alert, the navigation goes to the link.', async () => {
-			await alertDisappearsAfterTenSeconds.trigger.click();
+	await test.step('ClayAlertToast: Check if toast alert with no actions disappears after 5 seconds.', async () => {
+		await alertDisappearsAfterFiveSeconds.trigger.click();
 
-			await expect(alertDisappearsAfterTenSeconds.locator).toBeVisible();
+		await expect(alertDisappearsAfterFiveSeconds.locator).toBeVisible();
 
-			const linkTextRegex = new RegExp(
-				DISAPPEARS_AFTER_TEN_SECONDS_MESSAGE.split(':')[1],
-				'i'
-			);
+		await page.waitForTimeout(5000);
 
-			await alertDisappearsAfterTenSeconds.locator
-				.getByRole('link', {
-					name: linkTextRegex,
-				})
-				.click();
+		await expect(alertDisappearsAfterFiveSeconds.locator).toBeHidden();
+	});
 
-			await expect(page).toHaveURL(/\/web\/guest$/);
-		});
+	await test.step('ClayAlertToast: Check if toast alert with no actions disappears after 10 seconds.', async () => {
+		await alertDisappearsAfterTenSeconds.trigger.click();
 
-		await test.step('Back to claySamplePage.', async () => {
-			await claySamplePage.goto();
-		});
+		await expect(alertDisappearsAfterTenSeconds.locator).toBeVisible();
 
-		await test.step('Check if toast alert with no actions disappears after 5 seconds.', async () => {
-			await alertDisappearsAfterFiveSeconds.trigger.click();
+		await page.waitForTimeout(10000);
 
-			await expect(alertDisappearsAfterFiveSeconds.locator).toBeVisible();
+		await expect(alertDisappearsAfterTenSeconds.locator).toBeHidden();
+	});
 
-			await page.waitForTimeout(5000);
+	await test.step('ClayAlertToast: Check if alert toast message does not disapear when mouse hovers over it.', async () => {
+		await alertDisappearsAfterFiveSeconds.trigger.click();
 
-			await expect(alertDisappearsAfterFiveSeconds.locator).toBeHidden();
-		});
+		await expect(alertDisappearsAfterFiveSeconds.locator).toBeVisible();
 
-		await test.step('Check if toast alert with no actions disappears after 10 seconds.', async () => {
-			await alertDisappearsAfterTenSeconds.trigger.click();
+		await alertDisappearsAfterFiveSeconds.locator.hover();
 
-			await expect(alertDisappearsAfterTenSeconds.locator).toBeVisible();
+		await page.waitForTimeout(6000);
 
-			await page.waitForTimeout(10000);
+		await expect(alertDisappearsAfterFiveSeconds.locator).toBeVisible();
 
-			await expect(alertDisappearsAfterTenSeconds.locator).toBeHidden();
-		});
+		await page.mouse.move(0, 0);
 
-		await test.step('Check if alert toast message does not disapear when mouse hovers over it.', async () => {
-			await alertDisappearsAfterFiveSeconds.trigger.click();
+		await page.waitForTimeout(5000);
 
-			await expect(alertDisappearsAfterFiveSeconds.locator).toBeVisible();
+		await expect(alertDisappearsAfterFiveSeconds.locator).toBeHidden();
+	});
 
-			await alertDisappearsAfterFiveSeconds.locator.hover();
+	await test.step('Closing all Alerts', async () => {
+		await closeAllDefaultAlerts(page);
+	});
 
-			await page.waitForTimeout(6000);
+	await test.step('ClayAlertToast: Check if multiple alert messages can be displayed.', async () => {
+		await alertDisappearsAfterFiveSeconds.trigger.click();
 
-			await expect(alertDisappearsAfterFiveSeconds.locator).toBeVisible();
+		await alertDisappearsAfterFiveSeconds.locator.hover();
 
-			await page.mouse.move(0, 0);
+		await alertFailSubmit.trigger.click();
+		await alertSuccessSubmit.trigger.click();
 
-			await page.waitForTimeout(5000);
+		await expect(allToastAlertsLocator).toHaveCount(3);
 
-			await expect(alertDisappearsAfterFiveSeconds.locator).toBeHidden();
-		});
-
-		await test.step('Closing all opened Alerts.', async () => {
-			await closeAllDefaultAlerts(page);
-		});
-
-		await test.step('Check if multiple alert messages can be displayed.', async () => {
-			await alertDisappearsAfterFiveSeconds.trigger.click();
-			await alertDisappearsAfterFiveSeconds.locator.hover();
-			await alertFailSubmit.trigger.click();
-			await alertSuccessSubmit.trigger.click();
-
-			await expect(allToastAlertsLocator).toHaveCount(3);
-			await expect(allToastAlertsLocator.nth(0)).toHaveText(
-				DISAPPEARS_AFTER_FIVE_SECONDS_MESSAGE
-			);
-			await expect(allToastAlertsLocator.nth(1)).toHaveText(
-				FAIL_SUBMIT_MESSAGE
-			);
-			await expect(allToastAlertsLocator.nth(2)).toHaveText(
-				SUCCESS_SUBMIT_MESSAGE
-			);
-		});
+		await expect(allToastAlertsLocator.nth(0)).toHaveText(
+			DISAPPEARS_AFTER_FIVE_SECONDS_MESSAGE
+		);
+		await expect(allToastAlertsLocator.nth(1)).toHaveText(
+			FAIL_SUBMIT_MESSAGE
+		);
+		await expect(allToastAlertsLocator.nth(2)).toHaveText(
+			SUCCESS_SUBMIT_MESSAGE
+		);
 	});
 });

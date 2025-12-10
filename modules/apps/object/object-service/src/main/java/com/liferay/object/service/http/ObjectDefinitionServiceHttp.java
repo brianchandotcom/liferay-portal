@@ -62,7 +62,8 @@ public class ObjectDefinitionServiceHttp {
 					objectFields,
 				java.util.List
 					<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
-						workflowDefinitionLinks)
+						workflowDefinitionLinks,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -78,8 +79,8 @@ public class ObjectDefinitionServiceHttp {
 				enableObjectEntrySubscription, enableObjectEntryVersioning,
 				friendlyURLSeparator, labelMap, name, panelAppOrder,
 				panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
-				objectDefinitionSettings, objectFields,
-				workflowDefinitionLinks);
+				objectDefinitionSettings, objectFields, workflowDefinitionLinks,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -677,7 +678,8 @@ public class ObjectDefinitionServiceHttp {
 					objectFields,
 				java.util.List
 					<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
-						workflowDefinitionLinks)
+						workflowDefinitionLinks,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -697,8 +699,8 @@ public class ObjectDefinitionServiceHttp {
 				enableObjectEntrySubscription, enableObjectEntryVersioning,
 				friendlyURLSeparator, labelMap, name, panelAppOrder,
 				panelCategoryKey, portlet, pluralLabelMap, scope, status,
-				objectDefinitionSettings, objectFields,
-				workflowDefinitionLinks);
+				objectDefinitionSettings, objectFields, workflowDefinitionLinks,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -876,7 +878,8 @@ public class ObjectDefinitionServiceHttp {
 			boolean.class, boolean.class, boolean.class, String.class,
 			java.util.Map.class, String.class, String.class, String.class,
 			java.util.Map.class, boolean.class, String.class, String.class,
-			java.util.List.class, java.util.List.class, java.util.List.class
+			java.util.List.class, java.util.List.class, java.util.List.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addObjectDefinitionParameterTypes1 =
 		new Class[] {
@@ -928,7 +931,8 @@ public class ObjectDefinitionServiceHttp {
 			boolean.class, boolean.class, String.class, java.util.Map.class,
 			String.class, String.class, String.class, boolean.class,
 			java.util.Map.class, String.class, int.class, java.util.List.class,
-			java.util.List.class, java.util.List.class
+			java.util.List.class, java.util.List.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes15 = new Class[] {

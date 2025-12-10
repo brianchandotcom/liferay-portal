@@ -96,78 +96,11 @@ public class ClusterGeneralTest implements Serializable {
 
 	@Test
 	public void testCanCreateVirtualInstanceWithClustering() throws Exception {
-		long companyId = _tomcatNode1.syncExecute(
-			() -> {
-				Company company = CompanyTestUtil.addCompany();
+		_assertCanCreateVirtualInstanceWithClustering(
+			_tomcatNode1, _tomcatNode2);
 
-				return company.getCompanyId();
-			});
-
-		Assert.assertNotNull(
-			_tomcatNode2.syncExecute(
-				() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
-
-		_tomcatNode2.syncExecute(
-			() -> {
-				TestPortalInstanceLifecycleListener.register();
-
-				return null;
-			});
-
-		Assert.assertNull(
-			_tomcatNode1.syncExecute(
-				() -> {
-					CompanyLocalServiceUtil.deleteCompany(companyId);
-
-					return CompanyLocalServiceUtil.fetchCompany(companyId);
-				}));
-
-		Assert.assertNull(
-			_tomcatNode2.syncExecute(
-				() -> {
-					TestPortalInstanceLifecycleListener.await();
-
-					return CompanyLocalServiceUtil.fetchCompany(companyId);
-				}));
-	}
-
-	@Test
-	public void testCanCreateVirtualInstanceWithClusteringSecondNode()
-		throws Exception {
-
-		long companyId = _tomcatNode2.syncExecute(
-			() -> {
-				Company company = CompanyTestUtil.addCompany();
-
-				return company.getCompanyId();
-			});
-
-		Assert.assertNotNull(
-			_tomcatNode1.syncExecute(
-				() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
-
-		_tomcatNode1.syncExecute(
-			() -> {
-				TestPortalInstanceLifecycleListener.register();
-
-				return null;
-			});
-
-		Assert.assertNull(
-			_tomcatNode2.syncExecute(
-				() -> {
-					CompanyLocalServiceUtil.deleteCompany(companyId);
-
-					return CompanyLocalServiceUtil.fetchCompany(companyId);
-				}));
-
-		Assert.assertNull(
-			_tomcatNode1.syncExecute(
-				() -> {
-					TestPortalInstanceLifecycleListener.await();
-
-					return CompanyLocalServiceUtil.fetchCompany(companyId);
-				}));
+		_assertCanCreateVirtualInstanceWithClustering(
+			_tomcatNode2, _tomcatNode1);
 	}
 
 	@Test
@@ -298,6 +231,45 @@ public class ClusterGeneralTest implements Serializable {
 				throw new IOException(exception);
 			}
 		};
+	}
+
+	private void _assertCanCreateVirtualInstanceWithClustering(
+			TomcatNode tomcatNode1, TomcatNode tomcatNode2)
+		throws Exception {
+
+		long companyId = tomcatNode1.syncExecute(
+			() -> {
+				Company company = CompanyTestUtil.addCompany();
+
+				return company.getCompanyId();
+			});
+
+		Assert.assertNotNull(
+			tomcatNode2.syncExecute(
+				() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
+
+		tomcatNode2.syncExecute(
+			() -> {
+				TestPortalInstanceLifecycleListener.register();
+
+				return null;
+			});
+
+		Assert.assertNull(
+			tomcatNode1.syncExecute(
+				() -> {
+					CompanyLocalServiceUtil.deleteCompany(companyId);
+
+					return CompanyLocalServiceUtil.fetchCompany(companyId);
+				}));
+
+		Assert.assertNull(
+			tomcatNode2.syncExecute(
+				() -> {
+					TestPortalInstanceLifecycleListener.await();
+
+					return CompanyLocalServiceUtil.fetchCompany(companyId);
+				}));
 	}
 
 	private void _assertNodesVisibleToEachOther(

@@ -62,13 +62,13 @@
 
 			List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
-			String[] hiddenNodes = ArrayUtil.clone(wikiPortletInstanceSettingsHelper.getHiddenNodes());
-
-			Arrays.sort(hiddenNodes);
-
 			String[] visibleNodeNames = ArrayUtil.clone(wikiPortletInstanceSettingsHelper.getVisibleNodeNames());
 
 			Arrays.sort(visibleNodeNames);
+
+			String[] hiddenNodes = ArrayUtil.clone(wikiPortletInstanceSettingsHelper.getHiddenNodes());
+
+			Arrays.sort(hiddenNodes);
 
 			for (String folderColumn : hiddenNodes) {
 				if (currentVisibleNodes.contains(folderColumn) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {

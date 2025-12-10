@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -45,6 +46,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
@@ -1036,10 +1038,27 @@ public class PageSpecificationResourceTest
 				draftLayout.getExternalReferenceCode(),
 				new ContentPageSpecification() {
 					{
+						PageExperience pageExperience =
+							PageExperiencesTestUtil.getPageExperience();
+
+						pageExperience.setSegmentItemExternalReference(
+							() -> {
+								ItemExternalReference itemExternalReference =
+									new ItemExternalReference();
+
+								itemExternalReference.setClassName(
+									SegmentsEntry.class.getName());
+								itemExternalReference.setExternalReferenceCode(
+									RandomTestUtil.randomString());
+
+								return itemExternalReference;
+							});
+
 						setPageExperiences(
 							() -> ArrayUtil.append(
 								contentPageSpecification.getPageExperiences(),
-								new PageExperience()));
+								pageExperience));
+
 						setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
 					}
 				}));

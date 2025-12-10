@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -267,7 +268,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 					).name(
 						"textObjectFieldName"
 					).build()),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

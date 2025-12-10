@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -441,7 +442,7 @@ public class ObjectRelatedModelsProviderTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		scopeSiteObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -596,7 +597,7 @@ public class ObjectRelatedModelsProviderTest {
 				true, ObjectDefinitionConstants.SCOPE_SITE,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,

@@ -18,6 +18,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -73,7 +74,7 @@ public abstract class BaseDisplayContextTestCase {
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
 						RandomTestUtil.randomString(), "text", false)),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		if (status == WorkflowConstants.STATUS_DRAFT) {
 			return objectDefinition;
@@ -110,7 +111,8 @@ public abstract class BaseDisplayContextTestCase {
 			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
 			objectDefinition.getScope(), objectDefinition.getStatus(),
 			objectDefinition.getObjectDefinitionSettings(),
-			Collections.emptyList(), Collections.emptyList());
+			Collections.emptyList(), Collections.emptyList(),
+			new ServiceContext());
 	}
 
 	protected ObjectDefinition addCustomObjectDefinition(

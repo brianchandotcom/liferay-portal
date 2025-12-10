@@ -93,7 +93,7 @@ public class ObjectRelationshipServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		_objectDefinition1 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -114,7 +114,7 @@ public class ObjectRelationshipServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		_objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

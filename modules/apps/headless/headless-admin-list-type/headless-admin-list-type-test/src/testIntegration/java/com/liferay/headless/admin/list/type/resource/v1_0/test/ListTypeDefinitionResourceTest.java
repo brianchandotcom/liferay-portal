@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -280,7 +281,10 @@ public class ListTypeDefinitionResourceTest
 		com.liferay.list.type.model.ListTypeDefinition
 			serviceBuilderListTypeDefinition =
 				_listTypeDefinitionLocalService.addListTypeDefinition(
-					RandomTestUtil.randomString(), user.getUserId(), false);
+					RandomTestUtil.randomString(), user.getUserId(),
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					false, Collections.emptyList(), new ServiceContext());
 
 		listTypeDefinition = listTypeDefinitionResource.getListTypeDefinition(
 			serviceBuilderListTypeDefinition.getListTypeDefinitionId());

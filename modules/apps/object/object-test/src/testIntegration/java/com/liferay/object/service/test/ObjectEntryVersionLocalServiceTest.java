@@ -114,7 +114,7 @@ public class ObjectEntryVersionLocalServiceTest {
 					).name(
 						"textObjectFieldName"
 					).build()),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -86,7 +87,7 @@ public class ObjectEntryRowInfoItemRendererTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), _objectFieldName)),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

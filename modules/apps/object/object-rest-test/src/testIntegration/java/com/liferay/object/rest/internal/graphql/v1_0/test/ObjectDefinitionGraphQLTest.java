@@ -1252,7 +1252,7 @@ public class ObjectDefinitionGraphQLTest {
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(

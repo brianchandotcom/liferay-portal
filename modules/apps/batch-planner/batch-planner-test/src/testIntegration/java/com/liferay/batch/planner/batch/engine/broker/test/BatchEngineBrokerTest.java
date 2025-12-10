@@ -1370,7 +1370,7 @@ public class BatchEngineBrokerTest {
 					).name(
 						"testTextField"
 					).build()),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(

@@ -753,7 +753,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_SITE,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(), objectFields, Collections.emptyList());
+				Collections.emptyList(), objectFields, Collections.emptyList(),
+				new ServiceContext());
 
 		ObjectField myTextObjectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(

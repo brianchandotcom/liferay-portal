@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.math.BigDecimal;
 
@@ -638,7 +639,8 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				false);
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, Collections.emptyList(), new ServiceContext());
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(

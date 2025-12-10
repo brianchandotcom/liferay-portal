@@ -10,6 +10,8 @@ import React from 'react';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
 import MultipleFileUploader from '../multiple_file_uploader/MultipleFileUploader';
 
+const VALID_EXTENSIONS = '.xliff,.xlf,.zip';
+
 export default function ImportTranslationModalContent({
 	groupId,
 	loadData,
@@ -63,6 +65,7 @@ export default function ImportTranslationModalContent({
 				onModalClose={onModalClose}
 				onUploadComplete={onUploadComplete}
 				uploadRequest={uploadRequest}
+				validExtensions={VALID_EXTENSIONS}
 			/>
 		</>
 	);

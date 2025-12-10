@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -140,7 +139,6 @@ public class DDMFieldAttributeUpgradeProcessTest {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setName("field1");
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString(8));
 
 		Value value = new LocalizedValue(LocaleUtil.ENGLISH);
 

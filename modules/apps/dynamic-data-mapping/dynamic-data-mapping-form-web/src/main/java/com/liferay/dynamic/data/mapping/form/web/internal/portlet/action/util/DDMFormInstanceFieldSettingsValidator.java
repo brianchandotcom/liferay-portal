@@ -85,15 +85,13 @@ public class DDMFormInstanceFieldSettingsValidator {
 
 				@Override
 				public void accept(JSONObject jsonObject) {
-					DDMFormFieldValue ddmFormFieldValue =
-						new DDMFormFieldValue();
+					DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+						jsonObject.getString("instanceId"));
 
 					ddmFormFieldValue.setDDMFormValues(
 						fieldSettingsDDMFormValues);
 					ddmFormFieldValue.setFieldReference(
 						jsonObject.getString("fieldReference"));
-					ddmFormFieldValue.setInstanceId(
-						jsonObject.getString("instanceId"));
 					ddmFormFieldValue.setName(
 						jsonObject.getString("fieldName"));
 					ddmFormFieldValue.setValue(getValue(jsonObject));

@@ -67,14 +67,12 @@ public class DDMFormEvaluatorTest {
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"result",
+				"instanceId", "result",
 				new LocalizedValue() {
 					{
 						addString(LocaleUtil.US, null);
 					}
 				});
-
-		ddmFormFieldValue.setInstanceId("instanceId");
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 

@@ -74,7 +74,6 @@ public class DDLRecordDDMFormValuesReaderTest {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setName(name);
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
 		ddmFormFieldValue.setValue(
 			new UnlocalizedValue(StringUtil.randomString()));
 

@@ -2395,9 +2395,8 @@ public class DLFileEntryLocalServiceTest {
 
 		ddmFormValues.addAvailableLocale(LocaleUtil.US);
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue("baga");
 
-		ddmFormFieldValue.setInstanceId("baga");
 		ddmFormFieldValue.setName("Text1");
 		ddmFormFieldValue.setValue(new UnlocalizedValue("Text 1 Value"));
 

@@ -15,6 +15,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -106,10 +107,8 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"Field1", "Value 1");
-
-		ddmFormFieldValue.setInstanceId(instanceId);
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "Field1", new UnlocalizedValue("Value 1"));
 
 		ddmFormFieldValues.add(ddmFormFieldValue);
 
@@ -167,10 +166,8 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"Field1", "Value 1");
-
-		ddmFormFieldValue.setInstanceId(instanceId);
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "Field1", new UnlocalizedValue("Value 1"));
 
 		ddmFormFieldValues.add(ddmFormFieldValue);
 
@@ -239,10 +236,8 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"Field1", "Value 1");
-
-		ddmFormFieldValue.setInstanceId(instanceId);
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "Field1", new UnlocalizedValue("Value 1"));
 
 		ddmFormFieldValues.add(ddmFormFieldValue);
 

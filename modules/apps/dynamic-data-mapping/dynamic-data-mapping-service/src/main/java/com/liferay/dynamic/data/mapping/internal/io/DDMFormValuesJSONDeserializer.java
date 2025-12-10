@@ -187,16 +187,19 @@ public class DDMFormValuesJSONDeserializer
 	private DDMFormFieldValue _getDDMFormFieldValue(
 		JSONObject jsonObject, Map<String, DDMFormField> ddmFormFieldsMap) {
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
-		ddmFormFieldValue.setFieldReference(
-			jsonObject.getString("fieldReference"));
+		DDMFormFieldValue ddmFormFieldValue = null;
 
 		String instanceId = jsonObject.getString("instanceId");
 
 		if (instanceId.matches("[a-zA-Z0-9]*")) {
-			ddmFormFieldValue.setInstanceId(instanceId);
+			ddmFormFieldValue = new DDMFormFieldValue(instanceId);
 		}
+		else {
+			ddmFormFieldValue = new DDMFormFieldValue();
+		}
+
+		ddmFormFieldValue.setFieldReference(
+			jsonObject.getString("fieldReference"));
 
 		ddmFormFieldValue.setName(jsonObject.getString("name"));
 

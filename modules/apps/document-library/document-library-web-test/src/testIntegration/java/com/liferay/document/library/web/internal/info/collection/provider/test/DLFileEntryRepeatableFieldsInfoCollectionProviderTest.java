@@ -244,7 +244,6 @@ public class DLFileEntryRepeatableFieldsInfoCollectionProviderTest {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setName(name);
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
 
 		Value value = new LocalizedValue(locale);
 

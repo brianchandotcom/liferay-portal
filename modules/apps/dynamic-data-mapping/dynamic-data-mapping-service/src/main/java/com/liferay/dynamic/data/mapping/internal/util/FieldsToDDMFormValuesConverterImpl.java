@@ -65,7 +65,7 @@ public class FieldsToDDMFormValuesConverterImpl
 
 			for (int i = 0; i < repetitions; i++) {
 				DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-					fieldName);
+					fieldName, fields, ddmFieldsCounter);
 
 				DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
 
@@ -85,8 +85,12 @@ public class FieldsToDDMFormValuesConverterImpl
 		return ddmFormValues;
 	}
 
-	protected DDMFormFieldValue createDDMFormFieldValue(String name) {
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+	protected DDMFormFieldValue createDDMFormFieldValue(
+		String name, Fields ddmFields, DDMFieldsCounter ddmFieldsCounter) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+			_getDDMFieldInstanceId(
+				ddmFields, name, ddmFieldsCounter.get(name)));
 
 		ddmFormFieldValue.setName(name);
 
@@ -247,17 +251,6 @@ public class FieldsToDDMFormValuesConverterImpl
 			ddmFormFields, ddmFormField -> ddmFormField.getName());
 	}
 
-	private void _setDDMFormFieldValueInstanceId(
-		DDMFormFieldValue ddmFormFieldValue, Fields ddmFields,
-		DDMFieldsCounter ddmFieldsCounter) {
-
-		String name = ddmFormFieldValue.getName();
-
-		ddmFormFieldValue.setInstanceId(
-			_getDDMFieldInstanceId(
-				ddmFields, name, ddmFieldsCounter.get(name)));
-	}
-
 	private void _setDDMFormFieldValueLocalizedValue(
 		DDMFormFieldValue ddmFormFieldValue, Field ddmField, int index) {
 
@@ -278,9 +271,6 @@ public class FieldsToDDMFormValuesConverterImpl
 			Map<String, DDMFormField> ddmFormFieldsMap, Fields ddmFields,
 			DDMFieldsCounter ddmFieldsCounter)
 		throws PortalException {
-
-		_setDDMFormFieldValueInstanceId(
-			ddmFormFieldValue, ddmFields, ddmFieldsCounter);
 
 		_setNestedDDMFormFieldValues(
 			ddmFormFieldValue, ddmFormFieldsMap, ddmFields, ddmFieldsCounter);
@@ -348,7 +338,8 @@ public class FieldsToDDMFormValuesConverterImpl
 
 			for (int i = 0; i < repetitions; i++) {
 				DDMFormFieldValue nestedDDMFormFieldValue =
-					createDDMFormFieldValue(nestedFieldName);
+					createDDMFormFieldValue(
+						nestedFieldName, ddmFields, ddmFieldsCounter);
 
 				DDMFormField nestedDDMFormField = ddmFormFieldsMap.get(
 					nestedFieldName);

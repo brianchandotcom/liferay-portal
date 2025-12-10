@@ -94,12 +94,12 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 				continue;
 			}
 
-			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+				dataRecordValueKeyParts
+					[DDMFormFieldParameterNameUtil.
+						DDM_FORM_FIELD_INSTANCE_ID_INDEX]) {
+
 				{
-					setInstanceId(
-						dataRecordValueKeyParts
-							[DDMFormFieldParameterNameUtil.
-								DDM_FORM_FIELD_INSTANCE_ID_INDEX]);
 					setName(dataRecordValueFieldName);
 				}
 			};

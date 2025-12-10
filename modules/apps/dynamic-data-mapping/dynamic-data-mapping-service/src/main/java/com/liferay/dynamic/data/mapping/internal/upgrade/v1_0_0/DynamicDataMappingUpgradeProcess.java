@@ -1812,15 +1812,15 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				return null;
 			}
 
-			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+				getDDMFieldInstanceId(
+					rootElement, fieldName, ddmFieldsCounter.get(fieldName))) {
+
 				{
 					setName(fieldName);
 					setValue(value);
 				}
 			};
-
-			setDDMFormFieldValueInstanceId(
-				ddmFormFieldValue, rootElement, ddmFieldsCounter);
 
 			setNestedDDMFormFieldValues(
 				ddmFormFieldValue, ddmFormField, rootElement, ddmFieldsCounter);
@@ -2119,17 +2119,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 			}
 
 			return value;
-		}
-
-		protected void setDDMFormFieldValueInstanceId(
-			DDMFormFieldValue ddmFormFieldValue, Element rootElement,
-			DDMFieldsCounter ddmFieldsCounter) {
-
-			String name = ddmFormFieldValue.getName();
-
-			ddmFormFieldValue.setInstanceId(
-				getDDMFieldInstanceId(
-					rootElement, name, ddmFieldsCounter.get(name)));
 		}
 
 		protected void setDDMFormValuesAvailableLocales(

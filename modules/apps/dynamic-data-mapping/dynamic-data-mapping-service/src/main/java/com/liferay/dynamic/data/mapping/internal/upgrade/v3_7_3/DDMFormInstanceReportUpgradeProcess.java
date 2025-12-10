@@ -198,10 +198,10 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 		while (iterator.hasNext()) {
 			JSONObject jsonObject = iterator.next();
 
-			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+				jsonObject.getString("instanceId"));
 
 			ddmFormFieldValue.setDDMFormValues(ddmFormValues);
-			ddmFormFieldValue.setInstanceId(jsonObject.getString("instanceId"));
 			ddmFormFieldValue.setName(jsonObject.getString("name"));
 
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(

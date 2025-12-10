@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.settings.LocationVariableResolver;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -83,7 +82,6 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setFieldReference(name);
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
 		ddmFormFieldValue.setName(
 			DDMFormFieldNameUtil.normalizeFieldName(name));
 

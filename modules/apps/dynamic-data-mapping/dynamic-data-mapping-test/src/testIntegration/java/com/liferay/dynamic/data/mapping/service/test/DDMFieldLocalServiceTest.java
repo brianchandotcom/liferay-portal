@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -172,7 +171,6 @@ public class DDMFieldLocalServiceTest {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setName("field1");
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString(8));
 
 		Value value = new LocalizedValue(LocaleUtil.ENGLISH);
 
@@ -500,7 +498,6 @@ public class DDMFieldLocalServiceTest {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setName(name);
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString(8));
 
 		Value value = new LocalizedValue(locale);
 

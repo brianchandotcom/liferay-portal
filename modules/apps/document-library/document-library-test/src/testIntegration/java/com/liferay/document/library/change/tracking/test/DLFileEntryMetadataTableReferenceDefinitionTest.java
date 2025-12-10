@@ -156,7 +156,6 @@ public class DLFileEntryMetadataTableReferenceDefinitionTest
 		ddmFormFieldValue.setName(
 			DLFileEntryMetadataTableReferenceDefinitionTest.class.
 				getSimpleName());
-		ddmFormFieldValue.setInstanceId(RandomTestUtil.randomString());
 		ddmFormFieldValue.setValue(
 			new UnlocalizedValue(RandomTestUtil.randomString()));
 

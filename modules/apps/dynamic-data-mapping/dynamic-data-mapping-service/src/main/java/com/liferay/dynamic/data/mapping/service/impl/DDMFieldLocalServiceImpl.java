@@ -681,9 +681,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 	private DDMFormFieldValue _getDDMFormFieldValue(
 		DDMFieldInfo ddmFieldInfo, Locale defaultLocale) {
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+			ddmFieldInfo._instanceId);
 
-		ddmFormFieldValue.setInstanceId(ddmFieldInfo._instanceId);
 		ddmFormFieldValue.setName(ddmFieldInfo._fieldName);
 
 		if (ddmFieldInfo._localizable) {

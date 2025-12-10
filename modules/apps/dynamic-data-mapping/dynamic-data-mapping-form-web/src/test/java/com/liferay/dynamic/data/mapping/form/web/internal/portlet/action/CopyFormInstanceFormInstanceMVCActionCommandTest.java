@@ -139,9 +139,8 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest {
 	protected DDMFormFieldValue createDDMFormFieldValue(
 		String instanceId, String name, Value value) {
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(instanceId);
 
-		ddmFormFieldValue.setInstanceId(instanceId);
 		ddmFormFieldValue.setName(name);
 		ddmFormFieldValue.setValue(value);
 

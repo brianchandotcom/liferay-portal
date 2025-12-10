@@ -211,7 +211,6 @@ public class DataStorageUtil {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
 			{
-				setInstanceId(StringUtil.randomString());
 				setName(ddmFormField.getName());
 			}
 		};

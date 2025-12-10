@@ -138,9 +138,8 @@ public class DLFileEntryDDMFormValuesReaderTest {
 	protected DDMFormFieldValue createDDMFormFieldValue(
 		String instanceId, String name, String value) {
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(instanceId);
 
-		ddmFormFieldValue.setInstanceId(instanceId);
 		ddmFormFieldValue.setName(name);
 		ddmFormFieldValue.setValue(new UnlocalizedValue(value));
 

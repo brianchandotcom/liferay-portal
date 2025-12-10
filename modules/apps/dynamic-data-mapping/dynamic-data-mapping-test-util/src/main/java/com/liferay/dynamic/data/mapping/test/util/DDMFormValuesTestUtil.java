@@ -39,10 +39,9 @@ public class DDMFormValuesTestUtil {
 	public static DDMFormFieldValue createDDMFormFieldValue(
 		String instanceId, String name, Value value) {
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(instanceId);
 
 		ddmFormFieldValue.setFieldReference(name);
-		ddmFormFieldValue.setInstanceId(instanceId);
 		ddmFormFieldValue.setName(name);
 		ddmFormFieldValue.setValue(value);
 

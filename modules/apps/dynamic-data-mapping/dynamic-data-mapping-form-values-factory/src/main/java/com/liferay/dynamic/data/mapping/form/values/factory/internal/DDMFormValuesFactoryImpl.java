@@ -176,21 +176,19 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		String ddmFormFieldParameterName,
 		Map<String, DDMFormField> ddmFormFieldsMap) {
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
 		String[] lastDDMFormFieldParameterNameParts =
 			DDMFormFieldParameterNameUtil.getLastDDMFormFieldParameterNameParts(
 				ddmFormFieldParameterName);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+			lastDDMFormFieldParameterNameParts
+				[DDMFormFieldParameterNameUtil.
+					DDM_FORM_FIELD_INSTANCE_ID_INDEX]);
 
 		String fieldName = lastDDMFormFieldParameterNameParts
 			[DDMFormFieldParameterNameUtil.DDM_FORM_FIELD_NAME_INDEX];
 
 		ddmFormFieldValue.setName(fieldName);
-
-		ddmFormFieldValue.setInstanceId(
-			lastDDMFormFieldParameterNameParts
-				[DDMFormFieldParameterNameUtil.
-					DDM_FORM_FIELD_INSTANCE_ID_INDEX]);
 
 		DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
 

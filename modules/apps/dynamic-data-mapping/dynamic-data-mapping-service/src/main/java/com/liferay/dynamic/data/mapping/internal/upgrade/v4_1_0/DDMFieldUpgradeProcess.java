@@ -632,9 +632,6 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					DDMFormFieldValue newDDMFormFieldValue =
 						new DDMFormFieldValue() {
 							{
-								setInstanceId(
-									com.liferay.portal.kernel.util.StringUtil.
-										randomString());
 								setName(
 									ddmFormFieldValue.getName() + "FieldSet");
 							}

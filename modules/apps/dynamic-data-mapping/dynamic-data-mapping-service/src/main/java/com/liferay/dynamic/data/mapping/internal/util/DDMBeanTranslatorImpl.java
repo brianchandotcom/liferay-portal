@@ -303,10 +303,9 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			return null;
 		}
 
-		DDMFormFieldValue translatedDDMFormFieldValue = new DDMFormFieldValue();
-
-		translatedDDMFormFieldValue.setInstanceId(
+		DDMFormFieldValue translatedDDMFormFieldValue = new DDMFormFieldValue(
 			ddmFormFieldValue.getInstanceId());
+
 		translatedDDMFormFieldValue.setName(ddmFormFieldValue.getName());
 		translatedDDMFormFieldValue.setValue(
 			translate(ddmFormFieldValue.getValue()));
@@ -331,10 +330,9 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 		com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
 			translatedDDMFormFieldValue =
-				new com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue();
+				new com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue(
+					ddmFormFieldValue.getInstanceId());
 
-		translatedDDMFormFieldValue.setInstanceId(
-			ddmFormFieldValue.getInstanceId());
 		translatedDDMFormFieldValue.setName(ddmFormFieldValue.getName());
 		translatedDDMFormFieldValue.setValue(
 			translate(ddmFormFieldValue.getValue()));

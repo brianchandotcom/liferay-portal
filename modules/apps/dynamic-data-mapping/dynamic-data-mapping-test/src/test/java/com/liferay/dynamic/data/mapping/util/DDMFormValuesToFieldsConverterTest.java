@@ -609,7 +609,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		DDMFormFieldValue nestedDDMFormFieldValue = new DDMFormFieldValue();
 
 		nestedDDMFormFieldValue.setFieldReference("text");
-		nestedDDMFormFieldValue.setInstanceId(RandomTestUtil.randomString());
 		nestedDDMFormFieldValue.setName("text");
 
 		if (value == null) {

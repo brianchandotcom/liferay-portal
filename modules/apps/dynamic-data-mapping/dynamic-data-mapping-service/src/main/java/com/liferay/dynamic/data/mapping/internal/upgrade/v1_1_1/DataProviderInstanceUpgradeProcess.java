@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -166,7 +165,6 @@ public class DataProviderInstanceUpgradeProcess extends UpgradeProcess {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setDDMFormValues(ddmFormValues);
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
 		ddmFormFieldValue.setName(name);
 
 		if (Validator.isNotNull(value)) {

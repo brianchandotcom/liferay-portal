@@ -59,9 +59,10 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 		Map<String, Object> fieldInstanceValue, String instanceId,
 		Locale locale) {
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+			instanceId) {
+
 			{
-				setInstanceId(instanceId);
 				setName(ddmFormField.getName());
 			}
 		};

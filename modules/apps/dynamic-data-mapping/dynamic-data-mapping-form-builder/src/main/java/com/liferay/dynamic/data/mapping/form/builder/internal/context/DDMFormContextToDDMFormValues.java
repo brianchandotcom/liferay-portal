@@ -150,11 +150,11 @@ public class DDMFormContextToDDMFormValues
 	protected JSONFactory jsonFactory;
 
 	private DDMFormFieldValue _getDDMFormFieldValue(JSONObject jsonObject) {
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue(
+			jsonObject.getString("instanceId"));
 
 		ddmFormFieldValue.setFieldReference(
 			jsonObject.getString("fieldReference"));
-		ddmFormFieldValue.setInstanceId(jsonObject.getString("instanceId"));
 		ddmFormFieldValue.setName(jsonObject.getString("fieldName"));
 
 		return ddmFormFieldValue;

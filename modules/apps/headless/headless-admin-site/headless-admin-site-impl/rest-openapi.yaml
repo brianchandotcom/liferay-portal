@@ -1213,6 +1213,7 @@ components:
                     BackgroundImage: "#/components/schemas/BackgroundImageFragmentEditableElementValue"
                     HTML: "#/components/schemas/HTMLFragmentEditableElementValue"
                     Image: "#/components/schemas/ImageFragmentEditableElementValue"
+                    RichText: "#/components/schemas/HTMLFragmentEditableElementValue"
                     Text: "#/components/schemas/TextFragmentEditableElementValue"
                 propertyName: type
             properties:
@@ -1225,6 +1226,7 @@ components:
                         -   BackgroundImage
                         -   HTML
                         -   Image
+                        -   RichText
                         -   Text
                     type: string
             type: object

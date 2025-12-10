@@ -6,6 +6,7 @@
 package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -237,7 +238,9 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		}
 	}
 
-	@Reference(target = "(content.processor.type=DLReferences)")
+	@Reference(
+		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=" + ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES + ")"
+	)
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 
@@ -249,7 +252,7 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		_layoutPageTemplateStructureLocalService;
 
 	@Reference(
-		target = "(content.processor.type=LayoutPageTemplateStructureRelReferences)"
+		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=LayoutPageTemplateStructureRelReferences)"
 	)
 	private ExportImportContentProcessor<String>
 		_layoutPageTemplateStructureRelReferencesExportImportContentProcessor;

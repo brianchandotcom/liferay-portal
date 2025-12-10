@@ -27,7 +27,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Adolfo Pérez
@@ -162,7 +166,9 @@ public class SharepointRepositoryAuthorizationCapability
 			sharepointRepositoryRequestState.restore(
 				httpServletRequest, httpServletResponse);
 		}
-		catch (Exception exception) {
+		catch (ExecutionException | InterruptedException | IOException |
+			   URISyntaxException exception) {
+
 			throw new PortalException(exception);
 		}
 	}
@@ -182,7 +188,9 @@ public class SharepointRepositoryAuthorizationCapability
 				PortalUtil.getUserId(httpServletRequest),
 				sharepointRepositoryAuthenticationResult.getToken());
 		}
-		catch (Exception exception) {
+		catch (ExecutionException | InterruptedException | MalformedURLException
+					exception) {
+
 			throw new PortalException(exception);
 		}
 	}

@@ -213,7 +213,7 @@ public class LiferayOAuthDataProvider
 		}
 
 		oAuth2Authorization.setAccessTokenContent(
-			OAuth2ProviderConstants.OAUTH2_PROVIDER_EXPIRED_TOKEN);
+			OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN);
 
 		_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
@@ -236,7 +236,7 @@ public class LiferayOAuthDataProvider
 		}
 
 		oAuth2Authorization.setRefreshTokenContent(
-			OAuth2ProviderConstants.OAUTH2_PROVIDER_EXPIRED_TOKEN);
+			OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN);
 
 		_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
@@ -312,7 +312,7 @@ public class LiferayOAuthDataProvider
 			return null;
 		}
 
-		if (OAuth2ProviderConstants.OAUTH2_PROVIDER_EXPIRED_TOKEN.equals(
+		if (OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN.equals(
 				oAuth2Authorization.getAccessTokenContent())) {
 
 			if (_log.isDebugEnabled()) {
@@ -471,7 +471,7 @@ public class LiferayOAuthDataProvider
 				return null;
 			}
 
-			if (OAuth2ProviderConstants.OAUTH2_PROVIDER_EXPIRED_TOKEN.equals(
+			if (OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN.equals(
 					oAuth2Authorization.getRefreshTokenContent())) {
 
 				if (_log.isDebugEnabled()) {

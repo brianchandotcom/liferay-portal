@@ -19,6 +19,12 @@ public class ObjectDefinitionSettingImpl
 	public boolean isReadOnly() {
 		if (Objects.equals(
 				getName(),
+				ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME) ||
+			Objects.equals(
+				getName(),
+				ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME_ID) ||
+			Objects.equals(
+				getName(),
 				ObjectDefinitionSettingConstants.
 					NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES) ||
 			Objects.equals(

@@ -17,6 +17,7 @@ import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -40,7 +41,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.frutilla.FrutillaRule;
@@ -141,11 +141,9 @@ public class SpecificationOptionFacetsTest {
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 
-		List<Long> terms = new ArrayList<>();
-
-		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
-			terms.add(Long.valueOf(termCollector.getTerm()));
-		}
+		List<Long> terms = TransformUtil.transform(
+			facetCollector.getTermCollectors(),
+			termCollector -> Long.valueOf(termCollector.getTerm()));
 
 		long expectedTerm = cpSpecificationOption.getCPSpecificationOptionId();
 

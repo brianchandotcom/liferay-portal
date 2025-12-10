@@ -44,6 +44,10 @@ definition {
 				publicationName = ${publicationName});
 		}
 		else {
+			WaitForPageLoad();
+
+			AssertElementPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+
 			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
 			MenuItem.click(menuItem = "Review Changes");

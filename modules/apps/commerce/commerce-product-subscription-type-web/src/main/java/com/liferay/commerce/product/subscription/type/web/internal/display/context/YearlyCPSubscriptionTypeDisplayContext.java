@@ -9,6 +9,7 @@ import com.liferay.commerce.product.subscription.type.web.internal.constants.CPS
 import com.liferay.commerce.product.subscription.type.web.internal.display.context.helper.CPSubscriptionTypeRequestHelper;
 import com.liferay.commerce.product.subscription.type.web.internal.display.context.util.comparator.YearlyCPSubscriptionTypeCalendarMonthsComparator;
 import com.liferay.commerce.util.CommerceSubscriptionTypeUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -37,16 +37,11 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 	}
 
 	public List<Integer> getCalendarMonths() {
-		List<Integer> calendarMonths = new ArrayList<>();
-
 		Map<String, Integer> calendarMonthsDisplayNames =
 			_getCalendarMonthsDisplayNames();
 
-		for (Map.Entry<String, Integer> entry :
-				calendarMonthsDisplayNames.entrySet()) {
-
-			calendarMonths.add(entry.getValue());
-		}
+		List<Integer> calendarMonths = TransformUtil.transform(
+			calendarMonthsDisplayNames.entrySet(), entry -> entry.getValue());
 
 		calendarMonths.sort(
 			new YearlyCPSubscriptionTypeCalendarMonthsComparator());

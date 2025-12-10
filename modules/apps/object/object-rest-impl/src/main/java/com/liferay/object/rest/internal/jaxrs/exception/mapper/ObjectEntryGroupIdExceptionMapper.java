@@ -35,8 +35,7 @@ public class ObjectEntryGroupIdExceptionMapper
 			Response.Status.BAD_REQUEST,
 			ObjectExceptionMapperUtil.getTitle(
 				_acceptLanguage, null, _language,
-				objectEntryGroupIdException.getMessage(),
-				objectEntryGroupIdException.getMessageKey()));
+				objectEntryGroupIdException.getMessage(), null));
 	}
 
 	@Context

@@ -12,7 +12,7 @@ import classNames from 'classnames';
 import {useFormik} from 'formik';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
-import {useDropzone} from 'react-dropzone';
+import {Accept, useDropzone} from 'react-dropzone';
 import {v4 as uuidv4} from 'uuid';
 
 import DragZoneBackground from './DragZoneBackground';
@@ -44,6 +44,7 @@ export default function MultipleFileUploader({
 	onModalClose,
 	onUploadComplete,
 	uploadRequest,
+	validExtensions = '*',
 }: {
 	assetLibraries?: AssetLibrary[];
 	buttonLabel?: string;
@@ -67,6 +68,7 @@ export default function MultipleFileUploader({
 		fileData: FileData;
 		groupId: string;
 	}) => Promise<any>;
+	validExtensions?: string;
 }) {
 	const [filesToUpload, setFilesToUpload] = useState<FileData[]>(
 		initialFilesToUpload || []
@@ -78,6 +80,10 @@ export default function MultipleFileUploader({
 	const groupIdInputId = `${uuidv4()}groupId`;
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
+		accept:
+			validExtensions === '*'
+				? undefined
+				: (validExtensions as unknown as Accept),
 		multiple: true,
 		noKeyboard: true,
 		onDropAccepted: (acceptedFiles) => {

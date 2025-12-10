@@ -57,6 +57,9 @@ public interface DLURLHelper {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL);
 
+	public String getPreviewURL(
+		String fileEntryFriendlyURL, String groupFriendlyURL);
+
 	public String getThumbnailSrc(
 			FileEntry fileEntry, FileVersion fileVersion,
 			ThemeDisplay themeDisplay)

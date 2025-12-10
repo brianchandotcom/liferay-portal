@@ -38,7 +38,7 @@ public class ValidateExpressionMVCResourceCommandTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testInvalidExpression() throws Exception {
+	public void testServeResourceInvalidExpression() throws Exception {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
@@ -56,7 +56,7 @@ public class ValidateExpressionMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testValidExpression() throws Exception {
+	public void testServeResourceValidExpression() throws Exception {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 

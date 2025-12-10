@@ -25,10 +25,6 @@ public class ChannelDataSourceDisplay {
 
 		this(channelDataSource);
 
-		_commerceChannelsCount = 0;
-		_groupsCount = 0;
-		_individualDataSourcesCount = 0;
-
 		for (Map<String, Object> dataSource : channel.getDataSources()) {
 			List<String> commerceChannelIds = (List<String>)dataSource.get(
 				"commerceChannelIds");

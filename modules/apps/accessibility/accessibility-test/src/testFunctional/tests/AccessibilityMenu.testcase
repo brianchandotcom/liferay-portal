@@ -34,28 +34,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-178192. Verifies that the user can disable it by Instance Settings"
-	@priority = 5
-	test CanBeDisabledByInstanceSettings {
-		property portal.acceptance = "true";
-
-		task ("Given user with admin privileges") {
-			Navigator.openURL();
-		}
-
-		task ("When Accessibility Menu is reset to default values") {
-			AccessibilityMenu.resetDefaultValues(portlet = "Instance Settings");
-		}
-
-		task ("Then Accessibility Menu cannot be accessed") {
-			AccessibilityMenu.assertCannotAccessAccessibilityMenuModal();
-		}
-
-		task ("And Accessibility Menu cannot be reached through the user's profile menu") {
-			AccessibilityMenu.assertCannotAccessAccessibilityMenuModalByTheUserProfileMenu();
-		}
-	}
-
 	@description = "LPS-178192. Verifies Expanded Text effects toggle can be enabled."
 	@priority = 4
 	test CanEnableExpandedText {

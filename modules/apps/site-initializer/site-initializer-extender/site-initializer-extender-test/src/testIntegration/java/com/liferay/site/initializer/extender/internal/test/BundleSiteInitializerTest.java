@@ -3904,17 +3904,29 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			AssetCategory.class.getName(), siteNavigationMenuItem4.getType());
 
+		typeSettings = siteNavigationMenuItem4.getTypeSettings();
+
+		Assert.assertTrue(typeSettings.contains("externalReferenceCode"));
+
 		SiteNavigationMenuItem siteNavigationMenuItem5 =
 			siteNavigationMenuItems.get(4);
 
 		Assert.assertEquals(
 			JournalArticle.class.getName(), siteNavigationMenuItem5.getType());
 
+		typeSettings = siteNavigationMenuItem5.getTypeSettings();
+
+		Assert.assertTrue(typeSettings.contains("externalReferenceCode"));
+
 		SiteNavigationMenuItem siteNavigationMenuItem6 =
 			siteNavigationMenuItems.get(5);
 
 		Assert.assertEquals(
 			FileEntry.class.getName(), siteNavigationMenuItem6.getType());
+
+		typeSettings = siteNavigationMenuItem6.getTypeSettings();
+
+		Assert.assertTrue(typeSettings.contains("externalReferenceCode"));
 
 		SiteNavigationMenuItem siteNavigationMenuItem7 =
 			siteNavigationMenuItems.get(6);
@@ -3925,6 +3937,10 @@ public class BundleSiteInitializerTest {
 			type.startsWith(
 				ObjectDefinitionConstants.
 					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
+
+		typeSettings = siteNavigationMenuItem7.getTypeSettings();
+
+		Assert.assertTrue(typeSettings.contains("externalReferenceCode"));
 	}
 
 	private void _assertSiteNavigationMenu2() {
@@ -3986,17 +4002,29 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			AssetCategory.class.getName(), siteNavigationMenuItem4.getType());
 
+		typeSettings = siteNavigationMenuItem4.getTypeSettings();
+
+		Assert.assertTrue(typeSettings.contains("externalReferenceCode"));
+
 		SiteNavigationMenuItem siteNavigationMenuItem5 =
 			siteNavigationMenuItems.get(4);
 
 		Assert.assertEquals(
 			JournalArticle.class.getName(), siteNavigationMenuItem5.getType());
 
+		typeSettings = siteNavigationMenuItem5.getTypeSettings();
+
+		Assert.assertTrue(typeSettings.contains("externalReferenceCode"));
+
 		SiteNavigationMenuItem siteNavigationMenuItem6 =
 			siteNavigationMenuItems.get(5);
 
 		Assert.assertEquals(
 			FileEntry.class.getName(), siteNavigationMenuItem6.getType());
+
+		typeSettings = siteNavigationMenuItem6.getTypeSettings();
+
+		Assert.assertTrue(typeSettings.contains("externalReferenceCode"));
 
 		SiteNavigationMenuItem siteNavigationMenuItem7 =
 			siteNavigationMenuItems.get(6);
@@ -4007,6 +4035,10 @@ public class BundleSiteInitializerTest {
 			type.startsWith(
 				ObjectDefinitionConstants.
 					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
+
+		typeSettings = siteNavigationMenuItem7.getTypeSettings();
+
+		Assert.assertTrue(typeSettings.contains("externalReferenceCode"));
 
 		SiteNavigationMenuItem siteNavigationMenuItem8 =
 			siteNavigationMenuItems.get(7);

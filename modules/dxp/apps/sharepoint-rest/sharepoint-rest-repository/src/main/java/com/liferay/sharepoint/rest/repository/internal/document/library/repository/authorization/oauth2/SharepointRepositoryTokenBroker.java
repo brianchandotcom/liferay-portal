@@ -6,8 +6,6 @@
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.oauth2.Token;
-import com.liferay.portal.kernel.json.JSONDeserializer;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
 
 import com.microsoft.aad.msal4j.AuthorizationCodeParameters;
@@ -25,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.Collections;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -45,7 +44,7 @@ public class SharepointRepositoryTokenBroker {
 		ConfidentialClientApplication confidentialClientApplication =
 			_getConfidentialClientApplication();
 
-		AuthorizationRequestUrlParameters parameters =
+		return confidentialClientApplication.getAuthorizationRequestUrl(
 			AuthorizationRequestUrlParameters.builder(
 				redirectUri,
 				Collections.singleton(
@@ -58,10 +57,7 @@ public class SharepointRepositoryTokenBroker {
 				state
 			).nonce(
 				nonce
-			).build();
-
-		return confidentialClientApplication.getAuthorizationRequestUrl(
-			parameters
+			).build()
 		).toString();
 	}
 
@@ -70,57 +66,50 @@ public class SharepointRepositoryTokenBroker {
 		throws ExecutionException, InterruptedException, MalformedURLException,
 			   URISyntaxException {
 
-		AuthorizationCodeParameters authorizationCodeParameters =
-			AuthorizationCodeParameters.builder(
-				code, new URI(redirectURL)
-			).scopes(
-				Collections.singleton(
-					_sharepointRepositoryConfiguration.scope())
-			).build();
-
 		ConfidentialClientApplication confidentialClientApplication =
 			_getConfidentialClientApplication();
 
 		IAuthenticationResult iAuthenticationResult =
 			confidentialClientApplication.acquireToken(
-				authorizationCodeParameters
+				AuthorizationCodeParameters.builder(
+					code, new URI(redirectURL)
+				).scopes(
+					Collections.singleton(
+						_sharepointRepositoryConfiguration.scope())
+				).build()
 			).get();
 
 		return new SharepointRepositoryAuthenticationResult(
+			iAuthenticationResult,
 			confidentialClientApplication.tokenCache(
-			).serialize(),
-			iAuthenticationResult);
+			).serialize());
 	}
 
 	public SharepointRepositoryAuthenticationResult requestAccessTokenSilently(
 			Token token)
 		throws ExecutionException, InterruptedException, MalformedURLException {
 
-		JSONDeserializer<IAccount> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		SilentParameters silentParameters = SilentParameters.builder(
-			Collections.singleton(_sharepointRepositoryConfiguration.scope()),
-			jsonDeserializer.deserialize(token.getRefreshToken())
-		).build();
-
 		ConfidentialClientApplication confidentialClientApplication =
 			_getConfidentialClientApplication();
 
 		confidentialClientApplication.tokenCache(
 		).deserialize(
-			token.getAccessToken()
+			token.getRefreshToken()
 		);
 
 		IAuthenticationResult iAuthenticationResult =
 			confidentialClientApplication.acquireTokenSilently(
-				silentParameters
+				SilentParameters.builder(
+					Collections.singleton(
+						_sharepointRepositoryConfiguration.scope()),
+					_getIAccount(confidentialClientApplication)
+				).build()
 			).get();
 
 		return new SharepointRepositoryAuthenticationResult(
+			iAuthenticationResult,
 			confidentialClientApplication.tokenCache(
-			).serialize(),
-			iAuthenticationResult);
+			).serialize());
 	}
 
 	private ConfidentialClientApplication _getConfidentialClientApplication()
@@ -134,6 +123,17 @@ public class SharepointRepositoryTokenBroker {
 			"https://login.microsoftonline.com/" +
 				_sharepointRepositoryConfiguration.tenantId()
 		).build();
+	}
+
+	private IAccount _getIAccount(
+			ConfidentialClientApplication confidentialClientApplication)
+		throws ExecutionException, InterruptedException {
+
+		Set<IAccount> iAccounts = confidentialClientApplication.getAccounts(
+		).get();
+
+		return iAccounts.iterator(
+		).next();
 	}
 
 	private final SharepointRepositoryConfiguration

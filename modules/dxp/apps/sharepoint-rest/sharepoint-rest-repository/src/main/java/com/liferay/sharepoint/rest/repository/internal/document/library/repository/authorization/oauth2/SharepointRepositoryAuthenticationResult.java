@@ -6,8 +6,6 @@
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.oauth2.Token;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -25,10 +23,10 @@ import java.util.Map;
 public class SharepointRepositoryAuthenticationResult {
 
 	public SharepointRepositoryAuthenticationResult(
-		String accessToken, IAuthenticationResult iAuthenticationResult) {
+		IAuthenticationResult iAuthenticationResult, String tokenCache) {
 
-		_accessToken = accessToken;
 		_iAuthenticationResult = iAuthenticationResult;
+		_tokenCache = tokenCache;
 	}
 
 	public String getNonce() {
@@ -50,17 +48,14 @@ public class SharepointRepositoryAuthenticationResult {
 	}
 
 	public Token getToken() {
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
 		return SharepointRepositoryToken.newInstance(
-			_accessToken,
-			jsonSerializer.serialize(_iAuthenticationResult.account()));
+			_iAuthenticationResult.accessToken(), _tokenCache);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharepointRepositoryAuthenticationResult.class);
 
-	private final String _accessToken;
 	private final IAuthenticationResult _iAuthenticationResult;
+	private final String _tokenCache;
 
 }

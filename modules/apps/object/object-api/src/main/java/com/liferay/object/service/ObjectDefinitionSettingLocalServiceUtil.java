@@ -229,6 +229,13 @@ public class ObjectDefinitionSettingLocalServiceUtil {
 			objectDefinitionId, name);
 	}
 
+	public static ObjectDefinitionSetting fetchObjectDefinitionSetting(
+		long companyId, String name, String value) {
+
+		return getService().fetchObjectDefinitionSetting(
+			companyId, name, value);
+	}
+
 	/**
 	 * Returns the object definition setting with the matching UUID and company.
 	 *

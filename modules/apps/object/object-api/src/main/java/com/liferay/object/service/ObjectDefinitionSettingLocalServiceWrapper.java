@@ -259,6 +259,15 @@ public class ObjectDefinitionSettingLocalServiceWrapper
 			fetchObjectDefinitionSetting(objectDefinitionId, name);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectDefinitionSetting
+		fetchObjectDefinitionSetting(
+			long companyId, String name, String value) {
+
+		return _objectDefinitionSettingLocalService.
+			fetchObjectDefinitionSetting(companyId, name, value);
+	}
+
 	/**
 	 * Returns the object definition setting with the matching UUID and company.
 	 *

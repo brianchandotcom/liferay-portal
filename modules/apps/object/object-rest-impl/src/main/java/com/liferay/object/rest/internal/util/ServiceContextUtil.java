@@ -12,6 +12,7 @@ import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -37,6 +39,28 @@ import java.util.Set;
  * @author Sergio Jiménez del Coso
  */
 public class ServiceContextUtil {
+
+	public static ServiceContext createServiceContext(
+		List<Comment> comments, long companyId, long groupId, Locale locale,
+		ModelPermissions modelPermissions, ObjectEntry objectEntry,
+		long userId) {
+
+		ServiceContext serviceContext = createServiceContext(
+			companyId, groupId, objectEntry, userId);
+
+		serviceContext.setAttribute("comments", (Serializable)comments);
+		serviceContext.setAttribute(
+			"friendlyUrlMap",
+			(Serializable)LocalizedMapUtil.populateI18nMap(
+				LocaleUtil.toLanguageId(locale),
+				objectEntry.getFriendlyUrlPath_i18n(),
+				objectEntry.getFriendlyUrlPath()));
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));
+		serviceContext.setModelPermissions(modelPermissions);
+
+		return serviceContext;
+	}
 
 	public static ServiceContext createServiceContext(long objectEntryId) {
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -54,27 +78,6 @@ public class ServiceContextUtil {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
-
-		return serviceContext;
-	}
-
-	public static ServiceContext createServiceContext(
-		long companyId, long groupId, Locale locale,
-		ModelPermissions modelPermissions, ObjectEntry objectEntry,
-		long userId) {
-
-		ServiceContext serviceContext = createServiceContext(
-			companyId, groupId, objectEntry, userId);
-
-		serviceContext.setAttribute(
-			"friendlyUrlMap",
-			(Serializable)LocalizedMapUtil.populateI18nMap(
-				LocaleUtil.toLanguageId(locale),
-				objectEntry.getFriendlyUrlPath_i18n(),
-				objectEntry.getFriendlyUrlPath()));
-		serviceContext.setCompanyId(companyId);
-		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));
-		serviceContext.setModelPermissions(modelPermissions);
 
 		return serviceContext;
 	}

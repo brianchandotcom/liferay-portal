@@ -12,6 +12,7 @@ import com.liferay.depot.model.DepotEntryModel;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
+import com.liferay.headless.delivery.dto.v1_0.util.CommentUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -78,6 +79,8 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -2044,23 +2047,32 @@ public class DefaultObjectEntryManagerImpl
 			String scopeKey)
 		throws Exception {
 
-		if (objectEntry.getPermissions() == null) {
-			return ServiceContextUtil.createServiceContext(
-				objectDefinition.getCompanyId(),
+		List<Comment> comments = null;
+
+		if ((objectEntry.getComments() != null) &&
+			FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			comments = CommentUtil.toComments(
+				objectDefinition.getClassName(),
+				GetterUtil.getLong(objectEntry.getId()), _commentManager,
+				objectEntry.getComments(),
 				getGroupId(objectDefinition, scopeKey),
-				dtoConverterContext.getLocale(), null, objectEntry,
 				dtoConverterContext.getUserId());
 		}
 
-		ModelPermissions modelPermissions =
-			ModelPermissionsUtil.toModelPermissions(
+		ModelPermissions modelPermissions = null;
+
+		if (objectEntry.getPermissions() != null) {
+			modelPermissions = ModelPermissionsUtil.toModelPermissions(
 				objectDefinition.getCompanyId(), objectEntry.getPermissions(),
 				GetterUtil.getLong(objectEntry.getId()),
 				objectDefinition.getClassName(), _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService);
+		}
 
 		return ServiceContextUtil.createServiceContext(
-			objectDefinition.getCompanyId(),
+			comments, objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			dtoConverterContext.getLocale(), modelPermissions, objectEntry,
 			dtoConverterContext.getUserId());
@@ -3883,6 +3895,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private AttachmentManager _attachmentManager;
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

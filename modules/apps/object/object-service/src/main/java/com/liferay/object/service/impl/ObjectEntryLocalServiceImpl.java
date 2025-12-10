@@ -160,6 +160,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -510,6 +511,9 @@ public class ObjectEntryLocalServiceImpl
 				serviceContext.getAssetLinkEntryIds(),
 				serviceContext.getAssetPriority(), serviceContext);
 		}
+
+		_addComments(
+			groupId, userId, objectDefinition, objectEntry, serviceContext);
 
 		_addFriendlyURLEntry(
 			objectDefinition, objectEntry, serviceContext, values);
@@ -2563,6 +2567,39 @@ public class ObjectEntryLocalServiceImpl
 	@Reference
 	protected ConfigurationProvider configurationProvider;
 
+	private void _addComments(
+			long groupId, long userId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		List<Comment> comments = (List<Comment>)serviceContext.getAttribute(
+			"comments");
+
+		if (!objectDefinition.isEnableComments() || (comments == null)) {
+			return;
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		for (Comment comment : comments) {
+			if (comment.getParentCommentId() == 0) {
+				_commentManager.addComment(
+					comment.getExternalReferenceCode(), userId, groupId,
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId(), user.getFullName(), null,
+					comment.getBody(), _createServiceContextFunction());
+			}
+			else {
+				_commentManager.addComment(
+					comment.getExternalReferenceCode(), userId,
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId(), user.getFullName(),
+					comment.getParentCommentId(), null, comment.getBody(),
+					_createServiceContextFunction());
+			}
+		}
+	}
+
 	private void _addDLFileEntries(
 			Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap, long groupId,
 			ObjectDefinition objectDefinition, long objectEntryId,
@@ -3189,6 +3226,16 @@ public class ObjectEntryLocalServiceImpl
 		catch (SQLException sqlException) {
 			throw new SystemException(sqlException);
 		}
+	}
+
+	private Function<String, ServiceContext> _createServiceContextFunction() {
+		return className -> {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			return serviceContext;
+		};
 	}
 
 	private void _deleteFileEntries(

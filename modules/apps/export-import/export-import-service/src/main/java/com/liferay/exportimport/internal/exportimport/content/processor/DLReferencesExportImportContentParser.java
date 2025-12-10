@@ -8,7 +8,11 @@ package com.liferay.exportimport.internal.exportimport.content.processor;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.content.processor.ExportImportContentParser;
 import com.liferay.exportimport.content.processor.constants.ExportImportContentParserConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -16,9 +20,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,16 +113,70 @@ public class DLReferencesExportImportContentParser
 					groupId,
 					documentLibraryReference.getFileEntryFriendlyURL());
 
-			if (!_isSameFileEntry(documentLibraryReference, fileEntry) &&
-				_log.isDebugEnabled() && (fileEntry == null)) {
+			if (!_isSameFileEntry(documentLibraryReference, fileEntry)) {
+				if (_log.isDebugEnabled()) {
+					if (fileEntry == null) {
+						_log.debug(
+							StringBundler.concat(
+								"The file entry with friendly URL ",
+								documentLibraryReference.
+									getFileEntryFriendlyURL(),
+								" and group friendly URL ",
+								documentLibraryReference.getGroupFriendlyURL(),
+								" does not exist"));
+					}
+					else {
+						_log.debug(
+							StringBundler.concat(
+								"The file entry with friendly URL ",
+								documentLibraryReference.
+									getFileEntryFriendlyURL(),
+								" and group with friendly URL ",
+								documentLibraryReference.getGroupFriendlyURL(),
+								" exists but it may contain wrong data"));
+					}
+				}
 
-				_log.debug(
-					StringBundler.concat(
-						"The file entry with friendly URL ",
-						documentLibraryReference.getFileEntryFriendlyURL(),
-						" and group friendly URL ",
-						documentLibraryReference.getGroupFriendlyURL(),
-						" does not exist"));
+				boolean companyGroup = false;
+
+				if (group != null) {
+					companyGroup = _stagingGroupHelper.isCompanyGroup(group);
+				}
+
+				ExportImportReportEntry exportImportReportEntry =
+					_exportImportReportEntryLocalService.
+						addEmptyExportImportReportEntry(
+							companyGroup ? 0L : groupId,
+							portletDataContext.getCompanyId(),
+							documentLibraryReference.getExternalReferenceCode(),
+							_classNameLocalService.getClassNameId(
+								FileEntry.class),
+							GetterUtil.getLong(
+								ExportImportThreadLocal.
+									getExportImportConfigurationId()),
+							FileEntry.class.getName());
+
+				_exportImportProcessCallbackRegistry.registerCallback(
+					portletDataContext.getExportImportProcessId(),
+					() -> {
+						FileEntry afterImportFileEntry =
+							_fileEntryFriendlyURLResolver.resolveFriendlyURL(
+								groupId,
+								documentLibraryReference.
+									getFileEntryFriendlyURL());
+
+						if (_isSameFileEntry(
+								documentLibraryReference,
+								afterImportFileEntry)) {
+
+							_exportImportReportEntryLocalService.
+								deleteExportImportReportEntry(
+									exportImportReportEntry.
+										getExportImportReportEntryId());
+						}
+
+						return null;
+					});
 			}
 
 			content = StringUtil.replaceLast(
@@ -187,13 +247,27 @@ public class DLReferencesExportImportContentParser
 		DLReferencesExportImportContentParser.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private ExportImportProcessCallbackRegistry
+		_exportImportProcessCallbackRegistry;
+
+	@Reference
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	@Reference
 	private FileEntryFriendlyURLResolver _fileEntryFriendlyURLResolver;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 	private static class DocumentLibraryReference {
 

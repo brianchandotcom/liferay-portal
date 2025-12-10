@@ -29,7 +29,19 @@ public class SharepointRepositoryAuthenticationResult {
 		_tokenCache = tokenCache;
 	}
 
+	public String getAccessToken() {
+		if (_iAuthenticationResult == null) {
+			return null;
+		}
+
+		return _iAuthenticationResult.accessToken();
+	}
+
 	public String getNonce() {
+		if (_iAuthenticationResult == null) {
+			return null;
+		}
+
 		try {
 			Map<String, Object> tokenClaims = SignedJWT.parse(
 				_iAuthenticationResult.idToken()
@@ -48,8 +60,7 @@ public class SharepointRepositoryAuthenticationResult {
 	}
 
 	public Token getToken() {
-		return SharepointRepositoryToken.newInstance(
-			_iAuthenticationResult.accessToken(), _tokenCache);
+		return SharepointRepositoryToken.newInstance(_tokenCache);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

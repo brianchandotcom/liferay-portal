@@ -29,12 +29,12 @@ public class SharepointRepositoryToken implements Token {
 			sharepointOAuth2TokenEntry.getExpirationDate());
 	}
 
-	public static Token newInstance(String accessToken, String refreshToken) {
+	public static Token newInstance(String accessToken) {
 		if (Validator.isNull(accessToken)) {
 			return null;
 		}
 
-		return new SharepointRepositoryToken(accessToken, refreshToken, null);
+		return new SharepointRepositoryToken(accessToken, null, null);
 	}
 
 	@Override

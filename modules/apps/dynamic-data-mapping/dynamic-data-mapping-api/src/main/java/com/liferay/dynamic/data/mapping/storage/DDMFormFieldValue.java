@@ -26,6 +26,14 @@ import java.util.Objects;
  */
 public class DDMFormFieldValue implements Serializable {
 
+	public DDMFormFieldValue() {
+		this(StringUtil.randomString());
+	}
+
+	public DDMFormFieldValue(String instanceId) {
+		_instanceId = instanceId;
+	}
+
 	public void addNestedDDMFormFieldValue(
 		DDMFormFieldValue nestedDDMFormFieldValue) {
 
@@ -271,7 +279,7 @@ public class DDMFormFieldValue implements Serializable {
 	private Object _confirmationValue;
 	private DDMFormValues _ddmFormValues;
 	private String _fieldReference;
-	private String _instanceId = StringUtil.randomString();
+	private String _instanceId;
 	private String _name;
 	private List<DDMFormFieldValue> _nestedDDMFormFieldValues =
 		new ArrayList<>();

@@ -199,7 +199,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		dynamicQuery.add(
 			nameProperty.eq(
-				OAuth2ProviderConstants.OAUTH2_PROVIDER_DYNAMIC_REGISTRATOR));
+				OAuth2ProviderConstants.OAUTH2_APP_NAME_DYNAMIC_REGISTRATOR));
 
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);

@@ -2237,26 +2237,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false));
 
-			long fileEntryTypeId = 0;
-
-			if (fileEntry.getModel() instanceof DLFileEntry) {
-				DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-				DLFileEntryType dlFileEntryType =
-					dlFileEntry.getDLFileEntryType();
-
-				fileEntryTypeId = dlFileEntryType.getFileEntryTypeId();
-			}
-
-			String fileEntryTypeIdString = String.valueOf(fileEntryTypeId);
-
 			siteNavigationMenuItemSettingsBuilder.put(
 				key,
 				new SiteNavigationMenuItemSetting() {
 					{
 						className = FileEntry.class.getName();
-						classPK = String.valueOf(fileEntry.getFileEntryId());
-						classTypeId = fileEntryTypeIdString;
+						externalReferenceCode =
+							fileEntry.getExternalReferenceCode();
 						title = fileEntry.getTitle();
 						type = ResourceActionsUtil.getModelResource(
 							serviceContext.getLocale(),
@@ -2479,10 +2466,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				new SiteNavigationMenuItemSetting() {
 					{
 						className = JournalArticle.class.getName();
-						classPK = String.valueOf(
-							finalJournalArticle.getResourcePrimKey());
-						classTypeId = String.valueOf(
-							ddmStructure.getStructureId());
+						externalReferenceCode =
+							finalJournalArticle.getExternalReferenceCode();
 						title = finalJournalArticle.getTitle(
 							serviceContext.getLocale());
 						type = ResourceActionsUtil.getModelResource(
@@ -3324,8 +3309,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 						{
 							className =
 								serviceBuilderObjectEntry.getModelClassName();
-							classPK = String.valueOf(
-								serviceBuilderObjectEntry.getObjectEntryId());
+							externalReferenceCode =
+								serviceBuilderObjectEntry.
+									getExternalReferenceCode();
 							title = StringBundler.concat(
 								objectDefinition.getName(), StringPool.SPACE,
 								serviceBuilderObjectEntry.getObjectEntryId());
@@ -3999,15 +3985,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).put(
 					"className", siteNavigationMenuItemSetting.className
 				).put(
-					"classNameId",
-					String.valueOf(
-						_portal.getClassNameId(
-							siteNavigationMenuItemSetting.className))
-				).put(
-					"classPK",
-					String.valueOf(siteNavigationMenuItemSetting.classPK)
-				).put(
-					"classTypeId", siteNavigationMenuItemSetting.classTypeId
+					"externalReferenceCode",
+					siteNavigationMenuItemSetting.externalReferenceCode
 				).put(
 					"title", siteNavigationMenuItemSetting.title
 				).put(
@@ -4719,7 +4698,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				new SiteNavigationMenuItemSetting() {
 					{
 						className = AssetCategory.class.getName();
-						classPK = finalTaxonomyCategory.getId();
+						externalReferenceCode =
+							finalTaxonomyCategory.getExternalReferenceCode();
 						title = finalTaxonomyCategory.getName();
 					}
 				});
@@ -6175,8 +6155,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private class SiteNavigationMenuItemSetting {
 
 		public String className;
-		public String classPK;
-		public String classTypeId = StringPool.BLANK;
+		public String externalReferenceCode;
 		public String title;
 		public String type = StringPool.BLANK;
 

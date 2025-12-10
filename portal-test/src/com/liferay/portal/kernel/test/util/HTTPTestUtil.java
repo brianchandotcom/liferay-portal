@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -109,6 +110,10 @@ public class HTTPTestUtil {
 
 			_modulePath = _newModulePath;
 
+			int defaultTimeout = _timeout;
+
+			_timeout = _newTimeout;
+
 			try {
 				unsafeRunnable.run();
 			}
@@ -116,6 +121,38 @@ public class HTTPTestUtil {
 				_baseURL = defaultBaseURL;
 				_credentials = defaultCredentials;
 				_modulePath = defaultModulePath;
+				_timeout = defaultTimeout;
+			}
+		}
+
+		public <T, E extends Throwable> T apply(
+			UnsafeSupplier<T, E> unsafeSupplier)
+			throws E {
+
+			String defaultBaseURL = _baseURL;
+
+			_baseURL = _newBaseURL;
+
+			String defaultCredentials = _credentials;
+
+			_credentials = _newCredentials;
+
+			boolean defaultModulePath = _modulePath;
+
+			_modulePath = _newModulePath;
+
+			int defaultTimeout = _timeout;
+
+			_timeout = _newTimeout;
+
+			try {
+				return unsafeSupplier.get();
+			}
+			finally {
+				_baseURL = defaultBaseURL;
+				_credentials = defaultCredentials;
+				_modulePath = defaultModulePath;
+				_timeout = defaultTimeout;
 			}
 		}
 
@@ -145,10 +182,16 @@ public class HTTPTestUtil {
 			return this;
 		}
 
+		public HTTPTestUtilCustomizer withTimeout(int timeout) {
+			_newTimeout = timeout;
+
+			return this;
+		}
+
 		private String _newBaseURL = _baseURL;
 		private String _newCredentials = _credentials;
 		private boolean _newModulePath = _modulePath;
-
+		private int _newTimeout = _timeout;
 	}
 
 	private static Http.Options _getHttpOptions(
@@ -181,6 +224,8 @@ public class HTTPTestUtil {
 
 		options.setMethod(httpMethod);
 
+		options.setTimeout(_timeout);
+
 		if (body != null) {
 			options.setBody(
 				body, ContentTypes.APPLICATION_JSON,
@@ -194,5 +239,5 @@ public class HTTPTestUtil {
 	private static String _credentials =
 		"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
 	private static boolean _modulePath = true;
-
+	private static int _timeout = 10000;
 }

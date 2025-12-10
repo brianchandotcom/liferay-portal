@@ -17,6 +17,7 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
+import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.internal.action.FDSBulkActionsRegistryImpl;
 import com.liferay.frontend.data.set.internal.filter.ClientExtensionFDSFilterContextContributor;
@@ -52,10 +53,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -66,6 +69,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -791,6 +796,130 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		serviceTrackerMap1.close();
 		serviceTrackerMap2.close();
+	}
+
+	@Test
+	public void testSerializeFiltersGroups() throws Exception {
+
+		// Different filters groups
+
+		mockLanguage();
+
+		FDSFiltersGroups fdsFiltersGroups = new FDSFiltersGroups() {
+
+			@Override
+			public LinkedHashMap<String, List<FDSFilter>> getFiltersGroups(
+				HttpServletRequest httpServletRequest) {
+
+				return LinkedHashMapBuilder.<String, List<FDSFilter>>put(
+					TITLES[0],
+					Arrays.asList(
+						_createFDSFilter(IDS[0], LABELS[0]),
+						_createFDSFilter(IDS[1], LABELS[1]))
+				).put(
+					TITLES[1],
+					Arrays.asList(
+						_createFDSFilter(IDS[2], LABELS[2]),
+						_createFDSFilter(IDS[3], LABELS[3]))
+				).build();
+			}
+
+		};
+
+		JSONArray serializedFdsFiltersGroupsJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"filters", JSONUtil.putAll(IDS[0], IDS[1])
+			).put(
+				"label", TITLES[0]
+			),
+			JSONUtil.put(
+				"filters", JSONUtil.putAll(IDS[2], IDS[3])
+			).put(
+				"label", TITLES[1]
+			));
+
+		_registerServices(
+			_registerFDSFiltersGroups(fdsFiltersGroups, FDS_NAMES[0]),
+			_registerFDSFiltersGroups(
+				new FDSFiltersGroups() {
+
+					@Override
+					public LinkedHashMap<String, List<FDSFilter>>
+						getFiltersGroups(
+							HttpServletRequest httpServletRequest) {
+
+						return LinkedHashMapBuilder.
+							<String, List<FDSFilter>>put(
+								TITLES[2],
+								Arrays.asList(
+									_createFDSFilter(IDS[4], LABELS[4]),
+									_createFDSFilter(IDS[5], LABELS[5]))
+							).build();
+					}
+
+				},
+				FDS_NAMES[1]),
+			_registerSystemFDSEntry(FDS_NAMES[0]),
+			_registerSystemFDSEntry(FDS_NAMES[1]));
+
+		JSONAssert.assertEquals(
+			serializedFdsFiltersGroupsJSONArray.toString(),
+			systemFDSSerializer.serializeFiltersGroups(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"filters", JSONUtil.putAll(IDS[4], IDS[5])
+				).put(
+					"label", TITLES[2]
+				)
+			).toString(),
+			systemFDSSerializer.serializeFiltersGroups(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+
+		// No filters groups
+
+		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+			).toString(),
+			systemFDSSerializer.serializeFiltersGroups(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+
+		// Shared filters groups
+
+		_registerServices(
+			_registerFDSFiltersGroups(fdsFiltersGroups, FDS_NAMES[0]),
+			_registerFDSFiltersGroups(fdsFiltersGroups, FDS_NAMES[1]),
+			_registerSystemFDSEntry(FDS_NAMES[0]),
+			_registerSystemFDSEntry(FDS_NAMES[1]));
+
+		JSONAssert.assertEquals(
+			serializedFdsFiltersGroupsJSONArray.toString(),
+			systemFDSSerializer.serializeFiltersGroups(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+		JSONAssert.assertEquals(
+			serializedFdsFiltersGroupsJSONArray.toString(),
+			systemFDSSerializer.serializeFiltersGroups(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
 	}
 
 	@Test
@@ -1620,6 +1749,22 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 	}
 
+	private FDSFilter _createFDSFilter(String id, String label) {
+		return new BaseSelectionFDSFilter() {
+
+			@Override
+			public String getId() {
+				return id;
+			}
+
+			@Override
+			public String getLabel() {
+				return label;
+			}
+
+		};
+	}
+
 	private FDSFilter _createFDSFilterDate(
 		String id, String label, DateFDSFilterItem maxDateFDSFilterItem,
 		DateFDSFilterItem minDateFDSFilterItem,
@@ -1701,6 +1846,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		return bundleContext.registerService(
 			FDSFilter.class, fdsFilter,
+			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
+	}
+
+	private ServiceRegistration<FDSFiltersGroups> _registerFDSFiltersGroups(
+		FDSFiltersGroups fdsFiltersGroups, String fdsName) {
+
+		return bundleContext.registerService(
+			FDSFiltersGroups.class, fdsFiltersGroups,
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 

@@ -121,7 +121,7 @@ public class ExportImportMixedEnginesTest {
 		).build();
 
 		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_createExportLayoutConfiguration(
+			_addExportLayoutConfiguration(
 				_group.getGroupId(), parameterMap));
 
 		_journalArticleLocalService.deleteArticle(journalArticle);
@@ -131,7 +131,7 @@ public class ExportImportMixedEnginesTest {
 		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
 
 		_exportImportLocalService.importLayouts(
-			_createImportLayoutConfiguration(_group.getGroupId(), parameterMap),
+			_addImportLayoutConfiguration(_group.getGroupId(), parameterMap),
 			larFile);
 
 		Assert.assertNotNull(
@@ -180,7 +180,7 @@ public class ExportImportMixedEnginesTest {
 		).build();
 
 		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_createExportLayoutConfiguration(
+			_addExportLayoutConfiguration(
 				_group.getGroupId(), parameterMap));
 
 		_journalArticleLocalService.deleteArticle(journalArticle);
@@ -188,7 +188,7 @@ public class ExportImportMixedEnginesTest {
 		_assetTagLocalService.deleteAssetTag(assetTag.getTagId());
 
 		_exportImportLocalService.importLayouts(
-			_createImportLayoutConfiguration(_group.getGroupId(), parameterMap),
+			_addImportLayoutConfiguration(_group.getGroupId(), parameterMap),
 			larFile);
 
 		Assert.assertNotNull(
@@ -201,7 +201,7 @@ public class ExportImportMixedEnginesTest {
 					journalArticle.getExternalReferenceCode()));
 	}
 
-	private ExportImportConfiguration _createExportLayoutConfiguration(
+	private ExportImportConfiguration _addExportLayoutConfiguration(
 			long groupId, Map<String, String[]> parameterMap)
 		throws Exception {
 
@@ -215,7 +215,7 @@ public class ExportImportMixedEnginesTest {
 						parameterMap));
 	}
 
-	private ExportImportConfiguration _createImportLayoutConfiguration(
+	private ExportImportConfiguration _addImportLayoutConfiguration(
 			long groupId, Map<String, String[]> parameterMap)
 		throws Exception {
 

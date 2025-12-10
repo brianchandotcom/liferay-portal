@@ -2218,6 +2218,29 @@ public class DLFileEntryLocalServiceTest {
 		}
 	}
 
+	@Test
+	public void testUpdateScheduledVersion() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt",
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			null, null, null, serviceContext);
+
+		String version = dlFileEntry.getVersion();
+
+		dlFileEntry = updateDLFileEntryWithStatus(
+			dlFileEntry, new ByteArrayInputStream(new byte[0]), new HashMap<>(),
+			serviceContext, WorkflowConstants.STATUS_SCHEDULED);
+
+		Assert.assertEquals(version, dlFileEntry.getVersion());
+	}
+
 	@Test(expected = DuplicateFolderNameException.class)
 	public void testValidateFileFailsWithAnExistingFolder() throws Exception {
 		Folder folder = DLAppServiceUtil.addFolder(

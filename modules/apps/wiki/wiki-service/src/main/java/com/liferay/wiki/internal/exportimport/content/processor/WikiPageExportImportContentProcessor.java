@@ -6,6 +6,7 @@
 package com.liferay.wiki.internal.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -91,15 +92,21 @@ public class WikiPageExportImportContentProcessor
 			groupId, content);
 	}
 
-	@Reference(target = "(content.processor.type=DLReferences)")
+	@Reference(
+		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=" + ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES + ")"
+	)
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 
-	@Reference(target = "(content.processor.type=JournalFeedReferences)")
+	@Reference(
+		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=JournalFeedReferences)"
+	)
 	private ExportImportContentProcessor<String>
 		_journalFeedReferencesExportImportContentProcessor;
 
-	@Reference(target = "(content.processor.type=LayoutReferences)")
+	@Reference(
+		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=LayoutReferences)"
+	)
 	private ExportImportContentProcessor<String>
 		_layoutReferencesExportImportContentProcessor;
 

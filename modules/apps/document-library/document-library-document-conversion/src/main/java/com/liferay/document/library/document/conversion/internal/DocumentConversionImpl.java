@@ -275,21 +275,25 @@ public class DocumentConversionImpl implements DocumentConversion {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_documentConverter = null;
-
 		_executorService = _portalExecutorManager.getPortalExecutor(
 			DocumentConversionImpl.class.getName());
 
-		_openOfficeConfiguration = ConfigurableUtil.createConfigurable(
-			OpenOfficeConfiguration.class, properties);
+		OpenOfficeConnection openOfficeConnection;
 
-		if ((_openOfficeConnection != null) &&
-			_openOfficeConnection.isConnected()) {
-
-			_openOfficeConnection.disconnect();
+		synchronized (this) {
+			openOfficeConnection = _openOfficeConnection;
+			_openOfficeConnection = null;
+			_documentConverter = null;
 		}
 
-		_openOfficeConnection = null;
+		if ((openOfficeConnection != null) &&
+			openOfficeConnection.isConnected()) {
+
+			openOfficeConnection.disconnect();
+		}
+
+		_openOfficeConfiguration = ConfigurableUtil.createConfigurable(
+			OpenOfficeConfiguration.class, properties);
 	}
 
 	@Deactivate

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -211,16 +210,10 @@ public class CPDefinitionGroupedEntriesDisplayContext
 	private long[] _getCheckedCPDefinitionIds(long cpDefinitionId)
 		throws PortalException {
 
-		List<Long> cpDefinitionIdsList = TransformUtil.transform(
+		return TransformUtil.transformToLongArray(
 			_getCPDefinitionGroupedEntries(cpDefinitionId),
 			cpDefinitionGroupedEntry ->
 				cpDefinitionGroupedEntry.getEntryCPDefinitionId());
-
-		if (!cpDefinitionIdsList.isEmpty()) {
-			return ArrayUtil.toLongArray(cpDefinitionIdsList);
-		}
-
-		return new long[0];
 	}
 
 	private List<CPDefinitionGroupedEntry> _getCPDefinitionGroupedEntries(
@@ -238,16 +231,10 @@ public class CPDefinitionGroupedEntriesDisplayContext
 	private long[] _getDisabledCPDefinitionIds(long cpDefinitionId)
 		throws PortalException {
 
-		List<Long> cpDefinitionIdsList = TransformUtil.transform(
+		return TransformUtil.transformToLongArray(
 			_getCPDefinitionGroupedEntries(cpDefinitionId),
 			cpDefinitionGroupedEntry ->
 				cpDefinitionGroupedEntry.getCPDefinitionId());
-
-		if (!cpDefinitionIdsList.isEmpty()) {
-			return ArrayUtil.toLongArray(cpDefinitionIdsList);
-		}
-
-		return new long[0];
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

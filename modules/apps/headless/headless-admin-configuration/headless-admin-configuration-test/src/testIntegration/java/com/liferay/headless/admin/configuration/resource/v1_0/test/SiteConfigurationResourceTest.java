@@ -7,8 +7,8 @@ package com.liferay.headless.admin.configuration.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.configuration.client.dto.v1_0.SiteConfiguration;
-import com.liferay.headless.admin.configuration.sample.configuration.TestConfiguration;
-import com.liferay.headless.admin.configuration.sample.configuration.TestFactoryConfiguration;
+import com.liferay.headless.admin.configuration.test.configuration.TestConfiguration;
+import com.liferay.headless.admin.configuration.test.configuration.TestFactoryConfiguration;
 import com.liferay.headless.admin.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;

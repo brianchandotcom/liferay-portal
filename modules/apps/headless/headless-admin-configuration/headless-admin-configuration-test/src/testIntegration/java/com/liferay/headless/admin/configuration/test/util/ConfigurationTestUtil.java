@@ -16,11 +16,11 @@ import java.util.Map;
 public class ConfigurationTestUtil {
 
 	public static final String TEST_CONFIGURATION_PID =
-		"com.liferay.headless.admin.configuration.sample.configuration." +
+		"com.liferay.headless.admin.configuration.test.configuration." +
 			"TestConfiguration";
 
 	public static final String TEST_FACTORY_CONFIGURATION_PID =
-		"com.liferay.headless.admin.configuration.sample.configuration." +
+		"com.liferay.headless.admin.configuration.test.configuration." +
 			"TestFactoryConfiguration";
 
 	public static Map<String, Object> getRandomConfigurationScreenProperties(

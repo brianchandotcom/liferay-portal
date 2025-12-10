@@ -400,6 +400,28 @@ public class DigitalSalesRoom implements Cloneable, Serializable {
 
 	protected String secondaryColor;
 
+	public UserAccountBrief[] getUserAccountBriefs() {
+		return userAccountBriefs;
+	}
+
+	public void setUserAccountBriefs(UserAccountBrief[] userAccountBriefs) {
+		this.userAccountBriefs = userAccountBriefs;
+	}
+
+	public void setUserAccountBriefs(
+		UnsafeSupplier<UserAccountBrief[], Exception>
+			userAccountBriefsUnsafeSupplier) {
+
+		try {
+			userAccountBriefs = userAccountBriefsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected UserAccountBrief[] userAccountBriefs;
+
 	@Override
 	public DigitalSalesRoom clone() throws CloneNotSupportedException {
 		return (DigitalSalesRoom)super.clone();

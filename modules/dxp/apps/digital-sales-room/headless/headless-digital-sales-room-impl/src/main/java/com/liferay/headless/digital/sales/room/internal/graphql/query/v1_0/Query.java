@@ -49,7 +49,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {digitalSalesRoom(digitalSalesRoomId: ___){accountId, accountName, banner, channelId, channelName, clientLogo, clientName, createDate, description, externalReferenceCode, friendlyUrlPath, id, modifiedDate, name, ownerId, ownerName, primaryColor, secondaryColor}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {digitalSalesRoom(digitalSalesRoomId: ___){accountId, accountName, banner, channelId, channelName, clientLogo, clientName, createDate, description, externalReferenceCode, friendlyUrlPath, id, modifiedDate, name, ownerId, ownerName, primaryColor, secondaryColor, userAccountBriefs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DigitalSalesRoom digitalSalesRoom(

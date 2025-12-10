@@ -751,6 +751,40 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 	}
 
 	@Test
+	public void testPatchDigitalSalesRoom() throws Exception {
+		DigitalSalesRoom postDigitalSalesRoom =
+			testPatchDigitalSalesRoom_addDigitalSalesRoom();
+
+		DigitalSalesRoom randomPatchDigitalSalesRoom =
+			randomPatchDigitalSalesRoom();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DigitalSalesRoom patchDigitalSalesRoom =
+			digitalSalesRoomResource.patchDigitalSalesRoom(
+				postDigitalSalesRoom.getId(), randomPatchDigitalSalesRoom);
+
+		DigitalSalesRoom expectedPatchDigitalSalesRoom =
+			postDigitalSalesRoom.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchDigitalSalesRoom, expectedPatchDigitalSalesRoom);
+
+		DigitalSalesRoom getDigitalSalesRoom =
+			digitalSalesRoomResource.getDigitalSalesRoom(
+				patchDigitalSalesRoom.getId());
+
+		assertEquals(expectedPatchDigitalSalesRoom, getDigitalSalesRoom);
+		assertValid(getDigitalSalesRoom);
+	}
+
+	protected DigitalSalesRoom testPatchDigitalSalesRoom_addDigitalSalesRoom()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostDigitalSalesRoom() throws Exception {
 		DigitalSalesRoom randomDigitalSalesRoom = randomDigitalSalesRoom();
 
@@ -1122,6 +1156,16 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"userAccountBriefs", additionalAssertFieldName)) {
+
+				if (digitalSalesRoom.getUserAccountBriefs() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1439,6 +1483,19 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				if (!Objects.deepEquals(
 						digitalSalesRoom1.getSecondaryColor(),
 						digitalSalesRoom2.getSecondaryColor())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"userAccountBriefs", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getUserAccountBriefs(),
+						digitalSalesRoom2.getUserAccountBriefs())) {
 
 					return false;
 				}
@@ -2100,6 +2157,11 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("userAccountBriefs")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

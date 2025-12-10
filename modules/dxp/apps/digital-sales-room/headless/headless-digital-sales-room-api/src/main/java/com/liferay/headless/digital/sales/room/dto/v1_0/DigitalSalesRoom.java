@@ -788,6 +788,49 @@ public class DigitalSalesRoom implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _secondaryColorSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public UserAccountBrief[] getUserAccountBriefs() {
+		if (_userAccountBriefsSupplier != null) {
+			userAccountBriefs = _userAccountBriefsSupplier.get();
+
+			_userAccountBriefsSupplier = null;
+		}
+
+		return userAccountBriefs;
+	}
+
+	public void setUserAccountBriefs(UserAccountBrief[] userAccountBriefs) {
+		this.userAccountBriefs = userAccountBriefs;
+
+		_userAccountBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUserAccountBriefs(
+		UnsafeSupplier<UserAccountBrief[], Exception>
+			userAccountBriefsUnsafeSupplier) {
+
+		_userAccountBriefsSupplier = () -> {
+			try {
+				return userAccountBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected UserAccountBrief[] userAccountBriefs;
+
+	@JsonIgnore
+	private Supplier<UserAccountBrief[]> _userAccountBriefsSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -1080,6 +1123,28 @@ public class DigitalSalesRoom implements Serializable {
 			sb.append(_escape(secondaryColor));
 
 			sb.append("\"");
+		}
+
+		UserAccountBrief[] userAccountBriefs = getUserAccountBriefs();
+
+		if (userAccountBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userAccountBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userAccountBriefs.length; i++) {
+				sb.append(String.valueOf(userAccountBriefs[i]));
+
+				if ((i + 1) < userAccountBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

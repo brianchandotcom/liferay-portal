@@ -144,7 +144,7 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 
 		accessTokenContent = oAuth2Authorization.getAccessTokenContent();
 
-		if (OAuth2ProviderConstants.OAUTH2_PROVIDER_EXPIRED_TOKEN.equals(
+		if (OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN.equals(
 				accessTokenContent)) {
 
 			return null;

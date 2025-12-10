@@ -3,272 +3,571 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {
-						"backgroundColor": "colorNeutral0",
-						"paddingLeft": "5",
-						"paddingRight": "5",
-						"paddingTop": "5"
-					},
 					"indexed": true,
 					"layout": {
-						"align": "Center",
-						"contentDisplay": "FlexRow",
-						"justify": "Center",
-						"paddingLeft": 4,
-						"paddingRight": 4,
-						"paddingTop": 4
-					},
-					"name": "Callback Form Container"
+					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"formConfig": {
-								"formReference": {
-									"className": "[$OBJECT_DEFINITION_CLASS_NAME:CallbackRequest$]",
-									"classType": 0
-								}
+							"fragment": {
+								"key": "conditional-sla-container"
 							},
-							"fragmentStyle": {
-								"backgroundColor": "colorNeutral0",
-								"borderRadius": "borderRadiusLg",
-								"paddingBottom": "5",
-								"paddingLeft": "6",
-								"paddingRight": "6",
-								"paddingTop": "5",
-								"shadow": "boxShadowLg",
-								"width": "680px"
+							"fragmentConfig": {
 							},
-							"indexed": true,
-							"layout": {
-							}
+							"fragmentFields": [
+							],
+							"indexed": true
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {
-										"marginBottom": "5"
-									},
-									"indexed": true,
-									"layout": {
-										"marginBottom": 4
-									},
-									"name": "Header Container"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-heading"
-											},
-											"fragmentConfig": {
-												"headingLevel": "h3"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Callback Request",
-																"es_ES": "Petición de devolución de llamada",
-																"ja_JP": "コールバック・リクエスト",
-																"pt_BR": "Solicitação de Retorno de Chamada"
-															}
-														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-html"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-html",
-													"value": {
-														"fragmentLink": {
-														},
-														"html": {
-															"value_i18n": {
-																"en_US": "For the most efficient assistance, please create a <a href='https://liferay.atlassian.net/servicedesk/customer/portals'>support ticket</a>.",
-																"es_ES": "Para obtener una asistencia más efectiva, por favor crea un <a href='https://liferay.atlassian.net/servicedesk/customer/portals'>ticket de soporte</a>.",
-																"ja_JP": "最も効率的なサポートのために、<a href='https://liferay.atlassian.net/servicedesk/customer/portals'>サポートチケット</a>を作成してください。",
-																"pt_BR": "Para obter a assistência mais eficiente, por favor, crie um <a href='https://liferay.atlassian.net/servicedesk/customer/portals'>ticket de suporte</a>."
-															}
-														}
-													}
-												}
-											],
 											"fragmentStyle": {
-												"fontWeight": "fontWeightNormal",
-												"textColor": "colorNeutral7"
+												"backgroundColor": "colorNeutral0",
+												"paddingLeft": "5",
+												"paddingRight": "5",
+												"paddingTop": "5"
 											},
-											"indexed": true,
-											"name": "Header Paragraph"
-										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-paragraph"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "If you'd still like to request a callback, please fill out this form.",
-																"es_ES": "Si aún necesitas que te devolvamos la llamada, por favor rellena este formulario.",
-																"ja_JP": "コールバックをご希望の方は、こちらのフォームにご記入ください。",
-																"pt_BR": "Se você ainda gostaria de solicitar um retorno de chamada, por favor, preencha este formulário."
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"fontWeight": "fontWeightNormal",
-												"textColor": "colorNeutral7"
-											},
-											"indexed": true,
-											"name": "Header Paragraph"
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Section"
-							},
-							{
-								"definition": {
-									"fragment": {
-										"key": "callback-form-user-input"
-									},
-									"fragmentConfig": {
-										"inputFieldId": "ObjectField_name",
-										"inputLabel": {
-											"en_US": "Name",
-											"es_ES": "Nombre",
-											"ja_JP": "氏名",
-											"pt_BR": "Nome"
-										}
-									},
-									"fragmentFields": [
-									],
-									"fragmentStyle": {
-										"marginBottom": "4"
-									},
-									"indexed": true,
-									"name": "Callback Form Name Input"
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragment": {
-										"key": "callback-form-user-input"
-									},
-									"fragmentConfig": {
-										"fieldType": "email",
-										"inputFieldId": "ObjectField_emailAddress",
-										"inputLabel": {
-											"en_US": "Email Address",
-											"es_ES": "Correo electrónico",
-											"ja_JP": "メールアドレス",
-											"pt_BR": "Endereço de Email"
-										}
-									},
-									"fragmentFields": [
-									],
-									"fragmentStyle": {
-										"marginBottom": "4"
-									},
-									"indexed": true,
-									"name": "Callback Form Email Input"
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragment": {
-										"key": "callback-form-organization-select"
-									},
-									"fragmentConfig": {
-										"inputFieldId": "ObjectField_r_koroneikiAccountToCallbackRequest_c_koroneikiAccountId",
-										"inputLabel": {
-											"en_US": "Organization",
-											"es_ES": "Organización",
-											"ja_JP": "組織",
-											"pt_BR": "Organização"
-										},
-										"inputRequired": true
-									},
-									"fragmentFields": [
-									],
-									"fragmentStyle": {
-										"marginBottom": "4"
-									},
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {
-										"marginBottom": "4"
-									},
-									"indexed": true,
-									"layout": {
-										"marginBottom": 2
-									},
-									"name": "Phone Container"
-								},
-								"pageElements": [
-									{
-										"definition": {
 											"indexed": true,
 											"layout": {
-												"align": "Start",
-												"contentDisplay": "FlexRow"
+												"align": "Center",
+												"contentDisplay": "FlexRow",
+												"justify": "Center",
+												"paddingLeft": 4,
+												"paddingRight": 4,
+												"paddingTop": 4
 											},
-											"name": "Input Container"
+											"name": "Callback Form Container"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"formConfig": {
+														"formReference": {
+															"className": "[$OBJECT_DEFINITION_CLASS_NAME:CallbackRequest$]",
+															"classType": 0
+														}
+													},
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral0",
+														"borderRadius": "borderRadiusLg",
+														"paddingBottom": "5",
+														"paddingLeft": "6",
+														"paddingRight": "6",
+														"paddingTop": "5",
+														"shadow": "boxShadowLg",
+														"width": "680px"
+													},
+													"indexed": true,
+													"layout": {
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "5"
+															},
+															"indexed": true,
+															"layout": {
+																"marginBottom": 4
+															},
+															"name": "Header Container"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-heading"
+																	},
+																	"fragmentConfig": {
+																		"headingLevel": "h3"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Callback Request",
+																						"es_ES": "Petición de devolución de llamada",
+																						"ja_JP": "コールバック・リクエスト",
+																						"pt_BR": "Solicitação de Retorno de Chamada"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-html"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-html",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"html": {
+																					"value_i18n": {
+																						"en_US": "For the most efficient assistance, please create a <a href='https://liferay.atlassian.net/servicedesk/customer/portals'>support ticket</a>.",
+																						"es_ES": "Para obtener una asistencia más efectiva, por favor crea un <a href='https://liferay.atlassian.net/servicedesk/customer/portals'>ticket de soporte</a>.",
+																						"ja_JP": "最も効率的なサポートのために、<a href='https://liferay.atlassian.net/servicedesk/customer/portals'>サポートチケット</a>を作成してください。",
+																						"pt_BR": "Para obter a assistência mais eficiente, por favor, crie um <a href='https://liferay.atlassian.net/servicedesk/customer/portals'>ticket de suporte</a>."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightNormal",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true,
+																	"name": "Header Paragraph"
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-paragraph"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "If you'd still like to request a callback, please fill out this form.",
+																						"es_ES": "Si aún necesitas que te devolvamos la llamada, por favor rellena este formulario.",
+																						"ja_JP": "コールバックをご希望の方は、こちらのフォームにご記入ください。",
+																						"pt_BR": "Se você ainda gostaria de solicitar um retorno de chamada, por favor, preencha este formulário."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightNormal",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true,
+																	"name": "Header Paragraph"
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "callback-form-user-input"
+															},
+															"fragmentConfig": {
+																"inputFieldId": "ObjectField_name",
+																"inputLabel": {
+																	"en_US": "Name",
+																	"es_ES": "Nombre",
+																	"ja_JP": "氏名",
+																	"pt_BR": "Nome"
+																}
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"marginBottom": "4"
+															},
+															"indexed": true,
+															"name": "Callback Form Name Input"
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "callback-form-user-input"
+															},
+															"fragmentConfig": {
+																"fieldType": "email",
+																"inputFieldId": "ObjectField_emailAddress",
+																"inputLabel": {
+																	"en_US": "Email Address",
+																	"es_ES": "Correo electrónico",
+																	"ja_JP": "メールアドレス",
+																	"pt_BR": "Endereço de Email"
+																}
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"marginBottom": "4"
+															},
+															"indexed": true,
+															"name": "Callback Form Email Input"
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "callback-form-organization-select"
+															},
+															"fragmentConfig": {
+																"inputFieldId": "ObjectField_r_koroneikiAccountToCallbackRequest_c_koroneikiAccountId",
+																"inputLabel": {
+																	"en_US": "Organization",
+																	"es_ES": "Organización",
+																	"ja_JP": "組織",
+																	"pt_BR": "Organização"
+																},
+																"inputRequired": true
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"marginBottom": "4"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"marginBottom": 2
+															},
+															"name": "Phone Container"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"contentDisplay": "FlexRow"
+																	},
+																	"name": "Input Container"
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "INPUTS-text-input"
+																			},
+																			"fragmentConfig": {
+																				"inputFieldId": "ObjectField_countryCode",
+																				"inputLabel": {
+																					"en_US": "Country Code",
+																					"es_ES": "Prefijo de país",
+																					"ja_JP": "国コード",
+																					"pt_BR": "Código do País"
+																				},
+																				"placeholder": "+1",
+																				"showCharactersCount": false
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"width": "28%"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "INPUTS-text-input"
+																			},
+																			"fragmentConfig": {
+																				"inputFieldId": "ObjectField_phoneNumber",
+																				"inputLabel": {
+																					"en_US": "Phone Number",
+																					"es_ES": "Número de teléfono",
+																					"ja_JP": "電話番号",
+																					"pt_BR": "Número de Telefone"
+																				},
+																				"placeholder": "(210) 283-2299",
+																				"showCharactersCount": false
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"width": "72%"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-paragraph"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Please enter your phone number in international format, starting with a plus sign (+) followed by your country code, area code, and phone number.",
+																						"es_ES": "Introduce tu número de teléfono en formato internacional, empezando por el signo más (+) seguido del prefijo de tu país, el de la región y el número de teléfono.",
+																						"ja_JP": "プラス記号(+)で始まり、国番号、市外局番、電話番号を国際形式で入力してください。",
+																						"pt_BR": "Por favor, insira seu número de telefone no formato internacional, começando com um sinal de mais (+), seguido pelo código do seu país, código de área e número de telefone."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontSize": "fontSizeBase",
+																		"fontWeight": "fontWeightNormal",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true,
+																	"name": "Phone Help Text"
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "INPUTS-text-input"
+															},
+															"fragmentConfig": {
+																"inputFieldId": "ObjectField_relatedTicketIDs",
+																"inputHelpText": {
+																	"en_US": "If this issue is related to an existing ticket, please enter the ticket ID(s) here.",
+																	"es_ES": "Si este problema está relacionado con un ticket existente, introduce aquí su ID.",
+																	"ja_JP": "この問題が既存のチケットに関連している場合は、チケットIDをご入力ください。",
+																	"pt_BR": "Se este problema estiver relacionado a um ticket existente, por favor insira o(s) ID(s) do ticket aqui."
+																},
+																"inputLabel": {
+																	"en_US": "Related Ticket ID(s)",
+																	"es_ES": "ID de los tickets relacionados",
+																	"ja_JP": "関連チケットID（複数可） ",
+																	"pt_BR": "ID(s) do Ticket Relacionado(s)"
+																},
+																"inputShowHelpText": true,
+																"showCharactersCount": false
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"marginBottom": "4"
+															},
+															"indexed": true,
+															"name": "Related Ticket IDs Input"
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "INPUTS-textarea"
+															},
+															"fragmentConfig": {
+																"inputFieldId": "ObjectField_description",
+																"inputHelpText": {
+																	"en_US": "Please briefly describe the nature of this request.",
+																	"es_ES": "Describe brevemente la naturaleza de la petición.",
+																	"ja_JP": "このリクエストの内容を簡単にご説明ください。",
+																	"pt_BR": "Por favor, descreva brevemente a natureza desta solicitação"
+																},
+																"inputLabel": {
+																	"en_US": "Description",
+																	"es_ES": "Descripción",
+																	"ja_JP": "説明",
+																	"pt_BR": "Descrição"
+																},
+																"inputShowHelpText": true,
+																"numberOfCharacters": 2000,
+																"showCharactersCount": false
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"marginBottom": "4"
+															},
+															"indexed": true,
+															"name": "Description Textarea"
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow",
+																"justify": "End"
+															},
+															"name": "Button Container"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-button"
+																	},
+																	"fragmentConfig": {
+																		"buttonSize": "nm",
+																		"buttonType": "secondary",
+																		"type": "link"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "link",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Cancel",
+																						"es_ES": "Cancelar",
+																						"ja_JP": "キャンセル",
+																						"pt_BR": "Cancelar"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true,
+																	"name": "Cancel Button"
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "INPUTS-submit-button"
+																	},
+																	"fragmentConfig": {
+																		"buttonSize": "nm",
+																		"buttonType": "primary",
+																		"submittedEntryStatus": "approved"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "submit-button-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Submit",
+																						"es_ES": "Enviar",
+																						"ja_JP": "送信する",
+																						"pt_BR": "Enviar"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Form"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "4",
+												"marginTop": "5",
+												"paddingBottom": "5",
+												"paddingTop": "5"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 2,
+												"marginTop": 4,
+												"paddingBottom": 4,
+												"paddingTop": 4
+											}
 										},
 										"pageElements": [
 											{
 												"definition": {
 													"fragment": {
-														"key": "INPUTS-text-input"
+														"key": "BASIC_COMPONENT-heading"
 													},
 													"fragmentConfig": {
-														"inputFieldId": "ObjectField_countryCode",
-														"inputLabel": {
-															"en_US": "Country Code",
-															"es_ES": "Prefijo de país",
-															"ja_JP": "国コード",
-															"pt_BR": "Código do País"
-														},
-														"placeholder": "+1",
-														"showCharactersCount": false
+														"headingLevel": "h1"
 													},
 													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Page Not Found",
+																		"es_ES": "Página no encontrada",
+																		"ja_JP": "ページが見つかりません",
+																		"pt_BR": "Página não encontrada"
+																	}
+																}
+															}
+														}
 													],
 													"fragmentStyle": {
-														"width": "28%"
+														"fontSize": "16px",
+														"fontWeight": "fontWeightBolder",
+														"marginBottom": "3",
+														"textAlign": "center"
 													},
 													"indexed": true
 												},
@@ -277,23 +576,68 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "INPUTS-text-input"
+														"key": "BASIC_COMPONENT-paragraph"
 													},
 													"fragmentConfig": {
-														"inputFieldId": "ObjectField_phoneNumber",
-														"inputLabel": {
-															"en_US": "Phone Number",
-															"es_ES": "Número de teléfono",
-															"ja_JP": "電話番号",
-															"pt_BR": "Número de Telefone"
-														},
-														"placeholder": "(210) 283-2299",
-														"showCharactersCount": false
 													},
 													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Error Code: 404",
+																		"es_ES": "Código de error: 404",
+																		"ja_JP": "エラーコード: 404",
+																		"pt_BR": "Código de erro: 404"
+																	}
+																}
+															}
+														}
 													],
 													"fragmentStyle": {
-														"width": "72%"
+														"fontSize": "16px",
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "2",
+														"maxWidth": "200px",
+														"textAlign": "center",
+														"width": "520px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "The requested address was not found on the system.",
+																		"es_ES": "La dirección solicitada no se encontró en el sistema.",
+																		"ja_JP": "リクエストされたアドレスはシステム上に見つかりませんでした。",
+																		"pt_BR": "O endereço solicitado não foi encontrado no sistema."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontSize": "16px",
+														"marginBottom": "5",
+														"textAlign": "center",
+														"width": "520px"
 													},
 													"indexed": true
 												},
@@ -301,191 +645,12 @@
 											}
 										],
 										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-paragraph"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Please enter your phone number in international format, starting with a plus sign (+) followed by your country code, area code, and phone number.",
-																"es_ES": "Introduce tu número de teléfono en formato internacional, empezando por el signo más (+) seguido del prefijo de tu país, el de la región y el número de teléfono.",
-																"ja_JP": "プラス記号(+)で始まり、国番号、市外局番、電話番号を国際形式で入力してください。",
-																"pt_BR": "Por favor, insira seu número de telefone no formato internacional, começando com um sinal de mais (+), seguido pelo código do seu país, código de área e número de telefone."
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"fontSize": "fontSizeBase",
-												"fontWeight": "fontWeightNormal",
-												"textColor": "colorNeutral7"
-											},
-											"indexed": true,
-											"name": "Phone Help Text"
-										},
-										"type": "Fragment"
 									}
 								],
-								"type": "Section"
-							},
-							{
-								"definition": {
-									"fragment": {
-										"key": "INPUTS-text-input"
-									},
-									"fragmentConfig": {
-										"inputFieldId": "ObjectField_relatedTicketIDs",
-										"inputHelpText": {
-											"en_US": "If this issue is related to an existing ticket, please enter the ticket ID(s) here.",
-											"es_ES": "Si este problema está relacionado con un ticket existente, introduce aquí su ID.",
-											"ja_JP": "この問題が既存のチケットに関連している場合は、チケットIDをご入力ください。",
-											"pt_BR": "Se este problema estiver relacionado a um ticket existente, por favor insira o(s) ID(s) do ticket aqui."
-										},
-										"inputLabel": {
-											"en_US": "Related Ticket ID(s)",
-											"es_ES": "ID de los tickets relacionados",
-											"ja_JP": "関連チケットID（複数可） ",
-											"pt_BR": "ID(s) do Ticket Relacionado(s)"
-										},
-										"inputShowHelpText": true,
-										"showCharactersCount": false
-									},
-									"fragmentFields": [
-									],
-									"fragmentStyle": {
-										"marginBottom": "4"
-									},
-									"indexed": true,
-									"name": "Related Ticket IDs Input"
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragment": {
-										"key": "INPUTS-textarea"
-									},
-									"fragmentConfig": {
-										"inputFieldId": "ObjectField_description",
-										"inputHelpText": {
-											"en_US": "Please briefly describe the nature of this request.",
-											"es_ES": "Describe brevemente la naturaleza de la petición.",
-											"ja_JP": "このリクエストの内容を簡単にご説明ください。",
-											"pt_BR": "Por favor, descreva brevemente a natureza desta solicitação"
-										},
-										"inputLabel": {
-											"en_US": "Description",
-											"es_ES": "Descripción",
-											"ja_JP": "説明",
-											"pt_BR": "Descrição"
-										},
-										"inputShowHelpText": true,
-										"numberOfCharacters": 2000,
-										"showCharactersCount": false
-									},
-									"fragmentFields": [
-									],
-									"fragmentStyle": {
-										"marginBottom": "4"
-									},
-									"indexed": true,
-									"name": "Description Textarea"
-								},
-								"id": "ec177ef0-36ee-a3b1-9e01-7a9e8b7d5447",
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"indexed": true,
-									"layout": {
-										"contentDisplay": "FlexRow",
-										"justify": "End"
-									},
-									"name": "Button Container"
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-button"
-											},
-											"fragmentConfig": {
-												"buttonSize": "nm",
-												"buttonType": "secondary",
-												"type": "link"
-											},
-											"fragmentFields": [
-												{
-													"id": "link",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Cancel",
-																"es_ES": "Cancelar",
-																"ja_JP": "キャンセル",
-																"pt_BR": "Cancelar"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"marginRight": "3"
-											},
-											"indexed": true,
-											"name": "Cancel Button"
-										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "INPUTS-submit-button"
-											},
-											"fragmentConfig": {
-												"buttonSize": "nm",
-												"buttonType": "primary",
-												"submittedEntryStatus": "approved"
-											},
-											"fragmentFields": [
-												{
-													"id": "submit-button-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Submit",
-																"es_ES": "Enviar",
-																"ja_JP": "送信する",
-																"pt_BR": "Enviar"
-															}
-														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Section"
+								"type": "FragmentDropZone"
 							}
 						],
-						"type": "Form"
+						"type": "Fragment"
 					}
 				],
 				"type": "Section"

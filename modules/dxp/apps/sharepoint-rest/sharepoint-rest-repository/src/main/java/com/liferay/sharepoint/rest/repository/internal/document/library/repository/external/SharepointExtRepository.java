@@ -39,6 +39,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryAuthenticationResult;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryTokenBroker;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.util.SharepointRepositoryTokenBrokerFactoryUtil;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointFileEntry;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointModel;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointRootFolder;
@@ -56,8 +59,11 @@ import com.mashape.unirest.request.HttpRequestWithBody;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.MalformedURLException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Adolfo Pérez
@@ -697,7 +703,28 @@ public class SharepointExtRepository implements ExtRepository {
 			throw new PrincipalException();
 		}
 
-		return token.getAccessToken();
+		try {
+			SharepointRepositoryTokenBroker sharepointRepositoryTokenBroker =
+				SharepointRepositoryTokenBrokerFactoryUtil.create(
+					_sharepointRepositoryConfiguration);
+
+			SharepointRepositoryAuthenticationResult
+				sharepointRepositoryAuthenticationResult =
+					sharepointRepositoryTokenBroker.requestAccessTokenSilently(
+						token);
+
+			_tokenStore.save(
+				_sharepointRepositoryConfiguration.name(),
+				PrincipalThreadLocal.getUserId(),
+				sharepointRepositoryAuthenticationResult.getToken());
+
+			return sharepointRepositoryAuthenticationResult.getAccessToken();
+		}
+		catch (ExecutionException | InterruptedException | MalformedURLException
+					exception) {
+
+			throw new PortalException(exception);
+		}
 	}
 
 	private <T extends ExtRepositoryObject> List<T>

@@ -94,7 +94,7 @@ public class SharepointRepositoryTokenBroker {
 
 		confidentialClientApplication.tokenCache(
 		).deserialize(
-			token.getRefreshToken()
+			token.getAccessToken()
 		);
 
 		IAuthenticationResult iAuthenticationResult =

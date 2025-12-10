@@ -91,8 +91,9 @@ export function mergePages(
 				...sourceField,
 				...field,
 				defaultLanguageId,
-				displayErrors:
-					sourceField.displayErrors || field.fieldName === fieldName,
+				displayErrors: field.visible
+					? sourceField.displayErrors || field.fieldName === fieldName
+					: false,
 				editingLanguageId,
 				valid: field.valid !== false,
 				value: fieldValue,

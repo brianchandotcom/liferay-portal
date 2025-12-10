@@ -143,6 +143,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -267,7 +268,7 @@ public class ObjectDefinitionLocalServiceTest {
 					).name(
 						"Test"
 					).build()),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 			Assert.fail();
 		}
@@ -323,7 +324,7 @@ public class ObjectDefinitionLocalServiceTest {
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		Assert.assertTrue(objectDefinition.isEnableFormContainer());
 
@@ -344,7 +345,7 @@ public class ObjectDefinitionLocalServiceTest {
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList()));
+				Collections.emptyList(), new ServiceContext()));
 
 		// Label is null
 
@@ -420,7 +421,7 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
-				Collections.emptyList()));
+				Collections.emptyList(), new ServiceContext()));
 
 		// No object scope provider found with key
 
@@ -442,7 +443,7 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
-				Collections.emptyList()));
+				Collections.emptyList(), new ServiceContext()));
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionScopeException.class,
@@ -464,7 +465,7 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
-				Collections.emptyList()));
+				Collections.emptyList(), new ServiceContext()));
 
 		// Name, database table, resources, and status
 
@@ -487,7 +488,7 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, "Baker", "baker",
 						false)),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		ObjectFieldUtil.addCustomObjectField(
 			new AssigneeObjectFieldBuilder(
@@ -1119,7 +1120,8 @@ public class ObjectDefinitionLocalServiceTest {
 					).value(
 						String.valueOf(depotEntry2.getGroupId())
 					).build()),
-				Collections.emptyList(), Collections.emptyList());
+				Collections.emptyList(), Collections.emptyList(),
+				new ServiceContext());
 
 		_assertObjectDefinitionSettingsValues(
 			objectDefinition1.getObjectDefinitionSettings(),
@@ -1153,7 +1155,8 @@ public class ObjectDefinitionLocalServiceTest {
 					).value(
 						String.valueOf(depotEntry1.getGroupId())
 					).build()),
-				Collections.emptyList(), Collections.emptyList());
+				Collections.emptyList(), Collections.emptyList(),
+				new ServiceContext());
 
 		_assertObjectDefinitionSettingsValues(
 			objectDefinition1.getObjectDefinitionSettings(),
@@ -1195,7 +1198,8 @@ public class ObjectDefinitionLocalServiceTest {
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList(),
-				_createWorkflowDefinitionLinks(depotEntry1.getGroupId())));
+				_createWorkflowDefinitionLinks(depotEntry1.getGroupId()),
+				new ServiceContext()));
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -1212,7 +1216,8 @@ public class ObjectDefinitionLocalServiceTest {
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList(),
-				_createWorkflowDefinitionLinks(group.getGroupId())));
+				_createWorkflowDefinitionLinks(group.getGroupId()),
+				new ServiceContext()));
 
 		List<WorkflowDefinitionLink> workflowDefinitionLinks =
 			_createWorkflowDefinitionLinks(0);
@@ -1227,7 +1232,7 @@ public class ObjectDefinitionLocalServiceTest {
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList(),
-				workflowDefinitionLinks);
+				workflowDefinitionLinks, new ServiceContext());
 
 		_assertWorkflowDefinitionLink(
 			workflowDefinitionLinks.get(0), 0, objectDefinition);
@@ -1254,7 +1259,8 @@ public class ObjectDefinitionLocalServiceTest {
 						StringPool.TRUE
 					).build()),
 				Collections.emptyList(),
-				_createWorkflowDefinitionLinks(group.getGroupId())));
+				_createWorkflowDefinitionLinks(group.getGroupId()),
+				new ServiceContext()));
 
 		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -1283,7 +1289,8 @@ public class ObjectDefinitionLocalServiceTest {
 						String.valueOf(depotEntry1.getGroupId())
 					).build()),
 				Collections.emptyList(),
-				_createWorkflowDefinitionLinks(depotEntry2.getGroupId())));
+				_createWorkflowDefinitionLinks(depotEntry2.getGroupId()),
+				new ServiceContext()));
 
 		workflowDefinitionLinks = _createWorkflowDefinitionLinks(
 			depotEntry1.getGroupId());
@@ -1304,7 +1311,8 @@ public class ObjectDefinitionLocalServiceTest {
 					).value(
 						StringPool.TRUE
 					).build()),
-				Collections.emptyList(), workflowDefinitionLinks);
+				Collections.emptyList(), workflowDefinitionLinks,
+				new ServiceContext());
 
 		_assertWorkflowDefinitionLink(
 			workflowDefinitionLinks.get(0), depotEntry1.getGroupId(),
@@ -1326,7 +1334,8 @@ public class ObjectDefinitionLocalServiceTest {
 					).value(
 						String.valueOf(depotEntry1.getGroupId())
 					).build()),
-				Collections.emptyList(), workflowDefinitionLinks);
+				Collections.emptyList(), workflowDefinitionLinks,
+				new ServiceContext());
 
 		_assertWorkflowDefinitionLink(
 			workflowDefinitionLinks.get(0), depotEntry1.getGroupId(),
@@ -1347,7 +1356,8 @@ public class ObjectDefinitionLocalServiceTest {
 				true, ObjectDefinitionConstants.SCOPE_SITE,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList(),
-				_createWorkflowDefinitionLinks(depotEntry1.getGroupId())));
+				_createWorkflowDefinitionLinks(depotEntry1.getGroupId()),
+				new ServiceContext()));
 
 		workflowDefinitionLinks = _createWorkflowDefinitionLinks(
 			group.getGroupId());
@@ -1362,7 +1372,7 @@ public class ObjectDefinitionLocalServiceTest {
 				true, ObjectDefinitionConstants.SCOPE_SITE,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList(),
-				workflowDefinitionLinks);
+				workflowDefinitionLinks, new ServiceContext());
 
 		_assertWorkflowDefinitionLink(
 			workflowDefinitionLinks.get(0), group.getGroupId(),
@@ -2318,7 +2328,7 @@ public class ObjectDefinitionLocalServiceTest {
 							ObjectFieldConstants.DB_TYPE_STRING,
 							RandomTestUtil.randomString(),
 							StringUtil.randomId())),
-					Collections.emptyList());
+					Collections.emptyList(), new ServiceContext());
 
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				user.getUserId(),
@@ -2534,7 +2544,7 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), objectFieldName)),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -2590,7 +2600,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		objectDefinition =
 			_objectDefinitionLocalService.
@@ -2674,7 +2684,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		objectDefinition =
 			_objectDefinitionLocalService.
@@ -2819,7 +2829,7 @@ public class ObjectDefinitionLocalServiceTest {
 						).name(
 							StringUtil.randomId()
 						).build()),
-					Collections.emptyList());
+					Collections.emptyList(), new ServiceContext());
 
 			objectDefinition2 =
 				_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -4087,7 +4097,7 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
-				Collections.emptyList());
+				Collections.emptyList(), new ServiceContext());
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			objectDefinition.getUserId(),
@@ -4150,7 +4160,7 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getStorageType());
 		Assert.assertEquals(system, objectDefinition.isSystem());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, objectDefinition.getStatus());
+			WorkflowConstants.STATUS_EMPTY, objectDefinition.getStatus());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 

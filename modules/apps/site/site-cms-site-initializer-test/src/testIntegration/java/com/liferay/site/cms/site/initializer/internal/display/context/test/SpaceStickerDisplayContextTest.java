@@ -170,7 +170,7 @@ public class SpaceStickerDisplayContextTest extends BaseDisplayContextTestCase {
 			true, ObjectDefinitionConstants.SCOPE_DEPOT,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Collections.emptyList(), Arrays.asList(objectField),
-			Collections.emptyList());
+			Collections.emptyList(), new ServiceContext());
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest(long id)

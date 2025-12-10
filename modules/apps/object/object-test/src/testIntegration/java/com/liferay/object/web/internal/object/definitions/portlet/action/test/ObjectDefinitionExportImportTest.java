@@ -6,6 +6,8 @@
 package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
+import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -42,6 +44,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,6 +65,19 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ListTypeDefinitionResource.Builder builder =
+			_listTypeDefinitionResourceFactory.create();
+
+		_listTypeDefinitionResource = builder.user(
+			user
+		).build();
+	}
 
 	@Test
 	public void testExportImportLocalizedObjectDefinition() throws Exception {
@@ -150,6 +166,14 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 			objectDefinitionResource.deleteObjectDefinition(
 				getId("TestObjectDefinitionenUSRemoved"));
+
+			ListTypeDefinition listTypeDefinition =
+				_listTypeDefinitionResource.
+					getListTypeDefinitionByExternalReferenceCode(
+						"LIST_APPLICATION_STATES");
+
+			_listTypeDefinitionResource.deleteListTypeDefinition(
+				listTypeDefinition.getId());
 		}
 	}
 
@@ -419,6 +443,12 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 		return items.get(0);
 	}
+
+	private ListTypeDefinitionResource _listTypeDefinitionResource;
+
+	@Inject
+	private ListTypeDefinitionResource.Factory
+		_listTypeDefinitionResourceFactory;
 
 	@Inject(
 		filter = "mvc.command.name=/object_definitions/import_object_definition"

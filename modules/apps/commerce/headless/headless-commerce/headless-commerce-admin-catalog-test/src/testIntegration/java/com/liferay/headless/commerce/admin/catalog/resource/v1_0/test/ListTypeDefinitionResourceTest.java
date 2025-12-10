@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +104,9 @@ public class ListTypeDefinitionResourceTest
 	public void testPostSpecificationListTypeDefinition() throws Exception {
 		com.liferay.list.type.model.ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
-				RandomTestUtil.randomString(), _user.getUserId(), false);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, Collections.emptyList(), new ServiceContext());
 
 		assertHttpResponseStatusCode(
 			204,

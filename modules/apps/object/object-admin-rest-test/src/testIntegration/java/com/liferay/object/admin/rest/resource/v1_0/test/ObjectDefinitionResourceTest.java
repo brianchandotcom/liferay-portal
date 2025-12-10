@@ -105,6 +105,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1459,8 +1460,20 @@ public class ObjectDefinitionResourceTest
 
 		randomObjectDefinition.setExternalReferenceCode(
 			"TESTOBJECTDEFINITION2");
+
 		randomObjectDefinition.setObjectFields(
 			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.STRING;
+						externalReferenceCode = "TESTSYSTEMFIELD";
+						indexed = false;
+						label = Collections.singletonMap("en_US", "author");
+						name = "creator";
+						system = true;
+					}
+				},
 				new ObjectField() {
 					{
 						businessType = BusinessType.RELATIONSHIP;
@@ -1527,23 +1540,26 @@ public class ObjectDefinitionResourceTest
 				randomObjectDefinition.getExternalReferenceCode(),
 				randomObjectDefinition);
 
+		_assertObjectField(
+			ArrayUtil.filter(
+				putObjectDefinition.getObjectFields(),
+				objectField -> StringUtil.equals(
+					objectField.getName(), "creator")),
+			"TESTSYSTEMFIELD", ObjectField::getExternalReferenceCode);
+
 		ObjectField[] objectFields = ArrayUtil.filter(
 			putObjectDefinition.getObjectFields(),
 			objectField -> !objectField.getSystem());
 
-		Assert.assertEquals(
-			Arrays.toString(objectFields), 1, objectFields.length);
-
-		ObjectField objectField = objectFields[0];
-
-		Assert.assertEquals(
-			"r_relationshipName_c_objectDefinition1Id", objectField.getName());
-		Assert.assertEquals(
-			"TESTOBJECTDEFINITION1",
-			objectField.getObjectDefinitionExternalReferenceCode1());
-		Assert.assertEquals(
-			"TESTOBJECTRELATIONSHIP",
-			objectField.getObjectRelationshipExternalReferenceCode());
+		_assertObjectField(
+			objectFields, "r_relationshipName_c_objectDefinition1Id",
+			ObjectField::getName);
+		_assertObjectField(
+			objectFields, "TESTOBJECTDEFINITION1",
+			ObjectField::getObjectDefinitionExternalReferenceCode1);
+		_assertObjectField(
+			objectFields, "TESTOBJECTRELATIONSHIP",
+			ObjectField::getObjectRelationshipExternalReferenceCode);
 
 		ObjectLayout[] objectLayouts = putObjectDefinition.getObjectLayouts();
 
@@ -1879,6 +1895,18 @@ public class ObjectDefinitionResourceTest
 		JSONAssert.assertEquals(
 			expectedPermissionsJSONArray.toString(),
 			actualPermissionsJSONArray.toString(), JSONCompareMode.LENIENT);
+	}
+
+	private void _assertObjectField(
+		ObjectField[] objectFields, String expectedValue,
+		Function<ObjectField, String> valueExtractor) {
+
+		Assert.assertEquals(
+			Arrays.toString(objectFields), 1, objectFields.length);
+
+		ObjectField objectField = objectFields[0];
+
+		Assert.assertEquals(expectedValue, valueExtractor.apply(objectField));
 	}
 
 	private void _assertObjectValidationRule(

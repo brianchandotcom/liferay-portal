@@ -15,7 +15,7 @@ import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
-import {miniumSetUp} from '../../utils/commerce';
+import {configureBuyerUserForSite, miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -113,35 +113,11 @@ test('LPD-36797 Quantity selector starting quantity in catalog page and minicart
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product1 = (
@@ -420,35 +396,11 @@ test('COMMERCE-12399 Verify that the maximum order quantity is applied correctly
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product1 = (
@@ -574,7 +526,7 @@ test('COMMERCE-12399 Verify that the maximum order quantity is applied correctly
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
 
-	await page.goto(`/web/${site.name}/p/` + productName1);
+	await page.goto(`/web/${site.name}/p/` + productName1, {waitUntil: "networkidle"});
 
 	let minQuantityNotSatisfied;
 	let multipleQuantityNotSatisfied;
@@ -582,6 +534,10 @@ test('COMMERCE-12399 Verify that the maximum order quantity is applied correctly
 
 	try {
 		await productDetailsPage.addToCartButton.click();
+
+		await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+			'has-badge mini-cart-opener'
+		);
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -655,35 +611,11 @@ test('COMMERCE-12397 Verify that the minimum order quantity is applied correctly
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product1 = (
@@ -807,10 +739,14 @@ test('COMMERCE-12397 Verify that the minimum order quantity is applied correctly
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
 
-	await page.goto(`/web/${site.name}/p/` + productName1);
+	await page.goto(`/web/${site.name}/p/` + productName1, {waitUntil: "networkidle"});
 
 	try {
 		await productDetailsPage.addToCartButton.click();
+
+		await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+			'has-badge mini-cart-opener'
+		);
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -862,9 +798,13 @@ test('COMMERCE-12397 Verify that the minimum order quantity is applied correctly
 			);
 		}
 
-		await page.goto(`/web/${site.name}/p/` + productName2);
+		await page.goto(`/web/${site.name}/p/` + productName2, {waitUntil: "networkidle"});
 
 		await productDetailsPage.addToCartButton.click();
+
+		await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+			'has-badge mini-cart-opener'
+		);
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -934,35 +874,11 @@ test('COMMERCE-12398 Verify that the multiple order quantity is applied correctl
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product = (
@@ -1026,7 +942,7 @@ test('COMMERCE-12398 Verify that the multiple order quantity is applied correctl
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
 
-	await page.goto(`/web/${site.name}/p/` + productName);
+	await page.goto(`/web/${site.name}/p/` + productName, {waitUntil: "networkidle"});
 
 	await expect(
 		commerceThemeMiniumCatalogPage.quantitySelector(
@@ -1036,6 +952,10 @@ test('COMMERCE-12398 Verify that the multiple order quantity is applied correctl
 
 	try {
 		await productDetailsPage.addToCartButton.click();
+
+		await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+			'has-badge mini-cart-opener'
+		);
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -1109,35 +1029,11 @@ test('COMMERCE-12399 Verify that the maximum order quantity is applied correctly
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product1 = (
@@ -1369,35 +1265,11 @@ test('COMMERCE-12397 Verify that the minimum order quantity is applied correctly
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product1 = (
@@ -1636,35 +1508,11 @@ test('COMMERCE-12398 Verify that the multiple order quantity is applied correctl
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product = (
@@ -1809,35 +1657,11 @@ test('COMMERCE-12399 Verify that the maximum order quantity is applied correctly
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product1 = (
@@ -2074,35 +1898,11 @@ test('COMMERCE-12398 Verify that the multiple order quantity is applied correctl
 		type: 'business',
 	});
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
+	await configureBuyerUserForSite(
+		account,
+		apiHelpers,
+		site,
+		'demo.unprivileged@liferay.com'
 	);
 
 	const product = (
@@ -2243,8 +2043,6 @@ test(
 		page,
 		site,
 	}) => {
-		test.setTimeout(180000);
-
 		let account;
 		let catalog;
 		let channel;

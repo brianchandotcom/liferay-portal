@@ -22,12 +22,10 @@ import {
 	ALLOWED_ENDPOINTS_PARAMETERS,
 	FUZZY_OPTIONS,
 } from '../../../../../utils/constants';
-import getFields, {
-	ISchemas,
-	getValidFields,
-} from '../../../../../utils/getFields';
+import getFields, {getValidFields} from '../../../../../utils/getFields';
+import getOpenApiData from '../../../../../utils/getOpenApiData';
 import openDefaultFailureToast from '../../../../../utils/openDefaultFailureToast';
-import {IField, ISelectionFilter} from '../../../../../utils/types';
+import {IField, ISchemas, ISelectionFilter} from '../../../../../utils/types';
 
 import type {TItem} from '@clayui/form/src/SelectBox';
 
@@ -368,19 +366,30 @@ function ApiRestApplication({
 					});
 
 					if (selectedRESTApplication && item) {
-						getFields({
+						getOpenApiData({
 							restApplication: selectedRESTApplication,
 							restSchema: item,
-						}).then((fields: IField[]) => {
-							if (fields) {
-								setFields(
-									fields.filter(
-										(field) =>
-											field.type !== 'array' &&
-											field.type !== 'object'
-									)
-								);
+						}).then((oApiData) => {
+							if (!oApiData) {
+								return;
 							}
+
+							const {restSchema, schemas} = oApiData;
+
+							getFields({
+								restSchema,
+								schemas,
+							}).then((fields: IField[]) => {
+								if (fields) {
+									setFields(
+										fields.filter(
+											(field) =>
+												field.type !== 'array' &&
+												field.type !== 'object'
+										)
+									);
+								}
+							});
 						});
 					}
 				}}

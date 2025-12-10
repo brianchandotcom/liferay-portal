@@ -165,7 +165,6 @@ async function getFilterableFields({
 
 		const field: IField = {
 			entityFieldType,
-			entityFieldTypeCollection: false,
 			format: type,
 			label: item,
 			name: item,
@@ -173,7 +172,7 @@ async function getFilterableFields({
 		};
 
 		if (type === EFieldType.ARRAY) {
-			field.entityFieldTypeCollection = true;
+			field.entityFieldType = `collection-${field.entityFieldType}`;
 		}
 
 		if (field.type === EFieldFormat.F_DATE_TIME) {

@@ -563,7 +563,7 @@ function Filters({
 						<FilterFormComponent
 							dataSet={dataSet}
 							fieldNames={fieldNames}
-							fields={fields}
+							fields={availableFields}
 							filter={activeFilter}
 							filterClientExtensionRenderers={
 								filterClientExtensionRenderers

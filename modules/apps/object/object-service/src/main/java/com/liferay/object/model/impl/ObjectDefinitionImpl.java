@@ -8,7 +8,6 @@ package com.liferay.object.model.impl;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
@@ -127,8 +126,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return ObjectPortletKeys.OBJECT_DEFINITIONS + StringPool.UNDERLINE +
-			StringUtil.split(getClassName(), StringPool.POUND)[1];
+		return ObjectDefinitionUtil.getPortletId(getClassName());
 	}
 
 	@Override

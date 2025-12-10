@@ -6,7 +6,13 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
-export function LoadingMessage() {
+export function LoadingMessage({
+	description,
+	title,
+}: {
+	description: string;
+	title: string;
+}) {
 	return (
 		<div className="align-items-center bg-white d-flex justify-content-center loading-message position-absolute">
 			<div className="text-center text-secondary" role="alert">
@@ -16,17 +22,9 @@ export function LoadingMessage() {
 					size="sm"
 				/>
 
-				<p className="c-mb-0">
-					{Liferay.Language.get(
-						'the-upload-process-may-take-some-time'
-					)}
-				</p>
+				<p className="c-mb-0">{title}</p>
 
-				<p>
-					{Liferay.Language.get(
-						'closing-the-window-will-cancel-the-upload-process'
-					)}
-				</p>
+				<p>{description}</p>
 			</div>
 		</div>
 	);

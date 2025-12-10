@@ -1,0 +1,39 @@
+[#assign userAccount = (restClient.get("/headless-admin-user/v1.0/user-accounts/${themeDisplay.getUserId()}"))! /]
+
+[#if userAccount?is_hash && userAccount.accountBriefs?has_content]
+	[#assign accountBriefs = (userAccount.accountBriefs)![] /]
+[/#if]
+
+[#assign hasUserPermission = false /]
+
+[#if accountBriefs?has_content]
+	[#list accountBriefs as account]
+		[#assign erc = (account.externalReferenceCode)!"" /]
+		[#assign koroneikiAccount = (restClient.get("/c/koroneikiaccounts/by-external-reference-code/${erc}"))!{} /]
+		[#assign accountSLA = (koroneikiAccount.slaCurrent)!"" /]
+
+		[#assign hasSLAPermission =
+			accountSLA == "Elite" ||
+			accountSLA == "Enhanced" ||
+			accountSLA == "Mission Critical" ||
+			accountSLA == "Premium Subscription" ||
+			accountSLA == "Platinum Subscription"
+		/]
+
+		[#if hasSLAPermission]
+			[#assign hasUserPermission = true /]
+		[/#if]
+	[/#list]
+[/#if]
+
+[#assign editMode = layoutMode == 'edit' /]
+
+<div>
+	<div class="callback-form-container [#if !editMode && !hasUserPermission]d-none[/#if]">
+		<lfr-drop-zone></lfr-drop-zone>
+	</div>
+
+	<div class="error-container [#if !editMode && hasUserPermission]d-none[/#if]">
+		<lfr-drop-zone></lfr-drop-zone>
+	</div>
+</div>

@@ -259,6 +259,14 @@ function filterLocalOptions(query) {
 	return options;
 }
 
+const allowedSLAs = [
+	'Elite',
+	'Enhanced',
+	'Mission Critical',
+	'Premium Subscription',
+	'Platinum Subscription',
+];
+
 function filterRemoteOptions(query, abortController) {
 	if (
 		!input.attributes.relationshipLabelFieldName ||
@@ -283,7 +291,12 @@ function filterRemoteOptions(query, abortController) {
 	})
 		.then((response) => response.json())
 		.then((result) => {
-			return result.items.map((entry) => {
+			const filteredOptions = result.items.filter(
+				(item) =>
+					item.slaCurrent && allowedSLAs.includes(item.slaCurrent)
+			);
+
+			return filteredOptions.map((entry) => {
 				let label = entry[input.attributes.relationshipLabelFieldName];
 
 				if (Array.isArray(label)) {

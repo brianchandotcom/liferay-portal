@@ -8,9 +8,21 @@ import {openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import {AssetLibrary} from '../../common/types/AssetLibrary';
-import MultipleFileUploader from '../multiple_file_uploader/MultipleFileUploader';
+import MultipleFileUploader, {
+	UploadMessages,
+} from '../multiple_file_uploader/MultipleFileUploader';
 
 const VALID_EXTENSIONS = '.xliff,.xlf,.zip';
+
+const IMPORT_MESSAGES: UploadMessages = {
+	anotherFileButton: Liferay.Language.get('import-another-file'),
+	filesToUpload: Liferay.Language.get('files-to-import'),
+	loadingMessageDescription: Liferay.Language.get(
+		'closing-the-window-will-cancel-the-import-process'
+	),
+	loadingMessageTitle: Liferay.Language.get('importing-files'),
+	xFilesNotUploaded: Liferay.Language.get('x-files-could-not-be-imported'),
+};
 
 export default function ImportTranslationModalContent({
 	groupId,
@@ -62,6 +74,7 @@ export default function ImportTranslationModalContent({
 					'please-upload-your-translation-files'
 				)}
 				groupId={groupId}
+				messages={IMPORT_MESSAGES}
 				onModalClose={onModalClose}
 				onUploadComplete={onUploadComplete}
 				uploadRequest={uploadRequest}

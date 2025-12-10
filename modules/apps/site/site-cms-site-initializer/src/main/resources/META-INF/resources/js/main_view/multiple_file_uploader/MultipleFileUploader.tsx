@@ -34,13 +34,32 @@ export interface FileData {
 	name: string;
 	size: number;
 }
+export interface UploadMessages {
+	anotherFileButton: string;
+	filesToUpload: string;
+	loadingMessageDescription: string;
+	loadingMessageTitle: string;
+	xFilesNotUploaded: string;
+}
 
+const DEFAULT_MESSAGES: UploadMessages = {
+	anotherFileButton: Liferay.Language.get('upload-another-file'),
+	filesToUpload: Liferay.Language.get('files-to-upload'),
+	loadingMessageDescription: Liferay.Language.get(
+		'closing-the-window-will-cancel-the-upload-process'
+	),
+	loadingMessageTitle: Liferay.Language.get(
+		'the-upload-process-may-take-some-time'
+	),
+	xFilesNotUploaded: Liferay.Language.get('x-files-could-not-be-uploaded'),
+};
 export default function MultipleFileUploader({
 	assetLibraries,
 	buttonLabel,
 	description,
 	filesToUpload: initialFilesToUpload,
 	groupId: initialGroupId,
+	messages,
 	onModalClose,
 	onUploadComplete,
 	uploadRequest,
@@ -51,6 +70,7 @@ export default function MultipleFileUploader({
 	description?: string;
 	filesToUpload?: FileData[];
 	groupId?: number;
+	messages?: Partial<UploadMessages>;
 	onModalClose: () => void;
 	onUploadComplete: ({
 		assetLibrary,
@@ -107,6 +127,8 @@ export default function MultipleFileUploader({
 			});
 		},
 	});
+
+	const mergedMessages = {...DEFAULT_MESSAGES, ...messages};
 
 	const findAssetLibrary = (groupId: string) =>
 		assetLibraries?.find(
@@ -184,10 +206,20 @@ export default function MultipleFileUploader({
 		<form className="multiple-file-uploader" onSubmit={handleSubmit}>
 			<ClayModal.Body scrollable>
 				{failedFiles.length ? (
-					<FailedFiles failedFiles={failedFiles} />
+					<FailedFiles
+						errorMessage={mergedMessages.xFilesNotUploaded}
+						failedFiles={failedFiles}
+					/>
 				) : (
 					<>
-						{isLoading && <LoadingMessage />}
+						{isLoading && (
+							<LoadingMessage
+								description={
+									mergedMessages.loadingMessageDescription
+								}
+								title={mergedMessages.loadingMessageTitle}
+							/>
+						)}
 
 						{description && (
 							<div className="mb-1">
@@ -248,7 +280,7 @@ export default function MultipleFileUploader({
 								})}
 							>
 								<h2 className="font-weight-semi-bold mb-3 text-3 text-secondary text-uppercase">
-									{Liferay.Language.get('files-to-upload')}
+									{mergedMessages.filesToUpload}
 								</h2>
 
 								{filesToUpload.map((fileData, index) => (
@@ -356,7 +388,7 @@ export default function MultipleFileUploader({
 								displayType="secondary"
 								onClick={() => setFiledFiles([])}
 							>
-								{Liferay.Language.get('upload-another-file')}
+								{mergedMessages.anotherFileButton}
 							</ClayButton>
 
 							<ClayButton onClick={onModalClose}>

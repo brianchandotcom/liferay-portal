@@ -12,7 +12,7 @@ import ClayModal from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
 import SpaceService from '../../common/services/SpaceService';
@@ -49,7 +49,7 @@ export function permissionsBulkAction({
 }) {
 	return openModal({
 		containerProps: {
-			className: singleRoleMode ? 'modal-height-lg' : '',
+			className: '',
 		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			BulkPermissionModalContent({
@@ -84,6 +84,21 @@ export default function BulkPermissionModalContent({
 	const [loading, setLoading] = useState(false);
 	const [selectedRole, setSelectedRole] = useState<string>('');
 	const [tabs, setTabs] = useState<Array<AssetType> | undefined>(undefined);
+	const modalRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (modalRef.current) {
+			const modalContainer = modalRef.current.closest(
+				'.modal-dialog'
+			) as HTMLElement;
+
+			if (singleRoleMode) {
+				modalContainer.classList.add(
+					'permissions-by-role-modal-height-auto'
+				);
+			}
+		}
+	}, [singleRoleMode]);
 
 	const handleRoleChange = useCallback(
 		(event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -302,7 +317,10 @@ export default function BulkPermissionModalContent({
 					)
 				)}
 
-				<span className="pl-2 text-4 text-secondary text-weight-normal">
+				<span
+					className="pl-2 text-4 text-secondary text-weight-normal"
+					ref={modalRef}
+				>
 					{`(${sub(Liferay.Language.get('x-x-selected'), [
 						selectedData.items.length,
 						className === DEPOT_CLASS_NAME

@@ -400,6 +400,12 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public Boolean getSupportsBulkActions() {
+		if (_dlAdminDisplayContext.isSearch() ||
+			_dlAdminDisplayContext.hasFilterParameters()) {
+
+			return false;
+		}
+
 		return true;
 	}
 

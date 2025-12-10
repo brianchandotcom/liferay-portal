@@ -9,6 +9,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeWebKeys;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,19 +53,11 @@ public class CPDefinitionGroupedEntryInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest)
 		throws Exception {
 
-		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
-			new ArrayList<>();
-
-		long[] cpDefinitionGroupedEntryIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
-
-		for (long cpDefinitionGroupedEntryId : cpDefinitionGroupedEntryIds) {
-			cpDefinitionGroupedEntries.add(
+		return TransformUtil.transformToList(
+			ParamUtil.getLongValues(resourceRequest, "rowIds"),
+			cpDefinitionGroupedEntryId ->
 				_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntry(
 					cpDefinitionGroupedEntryId));
-		}
-
-		return cpDefinitionGroupedEntries;
 	}
 
 	@Reference

@@ -154,17 +154,22 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
 
-		try {
-			portalInstanceLifecycleListener.portalInstancePreunregistered(
-				company);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to preunregister portal instance " + company,
-					exception);
-			}
-		}
+		_runIfNeeded(
+			company.getCompanyId(), portalInstanceLifecycleListener, false,
+			() -> {
+				try {
+					portalInstanceLifecycleListener.
+						portalInstancePreunregistered(company);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to preunregister portal instance " +
+								company,
+							exception);
+					}
+				}
+			});
 	}
 
 	protected void registerCompany(

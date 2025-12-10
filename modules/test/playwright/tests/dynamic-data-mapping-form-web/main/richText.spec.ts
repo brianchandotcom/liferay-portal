@@ -14,13 +14,6 @@ import {deleteItems} from './utils/deleteItems';
 
 const baseTest = mergeTests(formsPagesTest, loginTest());
 
-const ckeditor5Test = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-11235': {enabled: true},
-	})
-);
-
 const xssBypassTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
@@ -35,7 +28,7 @@ const xssDisabledTest = mergeTests(
 	})
 );
 
-[ckeditor5Test, xssBypassTest, xssDisabledTest].forEach((testSuite) => {
+[xssBypassTest, xssDisabledTest].forEach((testSuite) => {
 	testSuite.afterEach(async ({formsPage}) => {
 		await formsPage.goTo();
 
@@ -65,167 +58,6 @@ baseTest(
 		await expect(
 			formFieldsPage.richTextFrame.locator('body')
 		).toHaveAttribute('contenteditable', 'false');
-	}
-);
-
-ckeditor5Test(
-	'Added "Rich Text" field includes preview of editor and is disabled',
-	{
-		tag: ['@LPD-11235'],
-	},
-	async ({formBuilderPage, formBuilderSidePanelPage, page}) => {
-		await formBuilderPage.goToNew();
-
-		await expect(formBuilderPage.newFormHeading).toBeVisible();
-
-		await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
-
-		const editable = formBuilderSidePanelPage.page.getByRole('textbox', {
-			name: 'Rich Text Editor',
-		});
-
-		await expect(editable).toBeVisible();
-		await expect(editable).toHaveAttribute('contenteditable', 'false');
-
-		const ckEditor5Toolbar = page.getByRole('toolbar', {
-			name: 'Editor toolbar',
-		});
-
-		await expect(ckEditor5Toolbar).toBeVisible();
-
-		const ckEditor5SourceButton = page.getByRole('button', {
-			name: 'Source',
-		});
-
-		await expect(ckEditor5SourceButton).toBeDisabled();
-	}
-);
-
-ckeditor5Test(
-	'"Rich Text" field does not replace focused field when changing language',
-	{
-		tag: ['@LPD-11235'],
-	},
-	async ({formBuilderPage, formBuilderSidePanelPage, page}) => {
-		await ckeditor5Test.step('Create new form', async () => {
-			await formBuilderPage.goToNew();
-
-			await expect(formBuilderPage.newFormHeading).toBeVisible();
-		});
-
-		await ckeditor5Test.step(
-			'Add a "Text" field and "Rich Text" field',
-			async () => {
-				await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
-
-				await formBuilderSidePanelPage.backButton.click();
-
-				await formBuilderSidePanelPage.addFieldByDoubleClick(
-					'Rich Text'
-				);
-			}
-		);
-
-		await ckeditor5Test.step('Focus on "Rich Text" field', async () => {
-			await formBuilderPage.openFieldSettings('Rich Text');
-		});
-
-		await ckeditor5Test.step('Go to settings advanced tab', async () => {
-			await formBuilderSidePanelPage.advancedTab.click();
-		});
-
-		await ckeditor5Test.step(
-			'Add a predefined value "english"',
-			async () => {
-				const richTextEditor = page
-					.locator('[data-qa-id="predefinedValue"]')
-					.locator('.ck-editor__editable');
-
-				await richTextEditor.fill('english');
-			}
-		);
-
-		await ckeditor5Test.step(
-			'Add new language "Spanish (Spain)"',
-			async () => {
-				await formBuilderPage.changeFormBuilderLanguage(
-					'Spanish (Spain)'
-				);
-			}
-		);
-
-		await ckeditor5Test.step(
-			'Add a predefined value "spanish" to the "Rich Text" field',
-			async () => {
-				const richTextEditor = page
-					.locator('[data-qa-id="predefinedValue"]')
-					.locator('.ck-editor__editable');
-
-				await richTextEditor.fill('spanish');
-			}
-		);
-
-		await ckeditor5Test.step('Change language to "English"', async () => {
-			await formBuilderPage.changeFormBuilderLanguage(
-				'English (United States)'
-			);
-		});
-
-		await ckeditor5Test.step('Change focus to "Text" field', async () => {
-			await formBuilderPage.openFieldSettings('Text');
-		});
-
-		await ckeditor5Test.step(
-			'Change language to "Spanish (Spain)"',
-			async () => {
-				await formBuilderPage.changeFormBuilderLanguage(
-					'Spanish (Spain)'
-				);
-			}
-		);
-
-		await ckeditor5Test.step(
-			'Check that "Text" field is still visible and "Rich Text" field appears once',
-			async () => {
-				await expect(
-					page.locator('.ddm-field-container', {
-						has: page.getByText('Text', {exact: true}),
-					})
-				).toBeVisible();
-
-				await expect(
-					page.locator('.ddm-field-container', {
-						hasText: 'Rich Text',
-					})
-				).toHaveCount(1);
-			}
-		);
-
-		await ckeditor5Test.step(
-			'Change language to "English (United States)"',
-			async () => {
-				await formBuilderPage.changeFormBuilderLanguage(
-					'English (United States)'
-				);
-			}
-		);
-
-		await ckeditor5Test.step(
-			'Check that "Text" field is still visible and "Rich Text" field appears once',
-			async () => {
-				await expect(
-					page.locator('.ddm-field-container', {
-						has: page.getByText('Text', {exact: true}),
-					})
-				).toBeVisible();
-
-				await expect(
-					page.locator('.ddm-field-container', {
-						hasText: 'Rich Text',
-					})
-				).toHaveCount(1);
-			}
-		);
 	}
 );
 

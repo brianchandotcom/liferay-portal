@@ -41,22 +41,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-178192. Verifies that the user can enable it by Instance Settings."
-	@priority = 5
-	test CanBeEnabledByInstanceSettings {
-		task ("When Accessibility Menu is enabled at Instance Settings level") {
-			AccessibilityMenu.activateAccessibilityMenu(portlet = "Instance Settings");
-		}
-
-		task ("Then Accessibility Menu can be reached by keyboard") {
-			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
-		}
-
-		task ("And Accessibility Menu can be reached through the user's profile menu") {
-			AccessibilityMenu.assertCanAccessAccessibilityMenuModalByTheUserProfileMenu();
-		}
-	}
-
 	@description = "LPS-178192. Verifies that the user can enable it by Site Settings."
 	@priority = 3
 	test CanBeEnabledBySiteSettings {

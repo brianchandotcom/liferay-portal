@@ -180,7 +180,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			GetterUtil.getString(
 				serviceContext.getAttribute(
 					"defaultSegmentsExperienceExternalReferenceCode"),
-				null),
+				layout.getExternalReferenceCode() + "-default"),
 			layout.getUserId(), layout.getPlid(), serviceContext);
 	}
 

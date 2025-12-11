@@ -106,12 +106,26 @@ export class ModelBuilderRightSidebarPage {
 		await selectOptionLocator.click();
 	}
 
-	async setDefaultValue(value: string) {
+	async setDefaultValue(objectFieldBusinessType: string, value: string) {
 		await this.advancedTab.click();
 
 		await this.useDefaultValueToggle.check({timeout: 1000});
 
-		await this.selectDefaultValue(value);
+		if (
+			objectFieldBusinessType === 'Boolean' ||
+			objectFieldBusinessType === 'Picklist'
+		) {
+			await this.selectDefaultValue(value);
+		}
+
+		if (
+			objectFieldBusinessType === 'LongText' ||
+			objectFieldBusinessType === 'Text'
+		) {
+			await this.page
+				.getByPlaceholder('Enter a default value.')
+				.pressSequentially(value);
+		}
 	}
 
 	getRightSidebarLocator(createNewObjectDefinitionButton: Locator) {

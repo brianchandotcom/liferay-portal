@@ -231,17 +231,13 @@ export class ObjectFieldsPage {
 			await this.selectDefaultValue(defaultValue);
 		}
 
-		if (
-			objectFieldBusinessType === 'Date'
-		) {
+		if (objectFieldBusinessType === 'Date') {
 			await this.iframeLocator
 				.getByPlaceholder('__/__/____')
 				.fill(defaultValue);
 		}
 
-		if (
-			objectFieldBusinessType === 'DateTime'
-		) {
+		if (objectFieldBusinessType === 'DateTime') {
 			await this.iframeLocator
 				.getByPlaceholder('__/__/____ __:__ _')
 				.fill(defaultValue);

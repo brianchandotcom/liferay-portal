@@ -376,17 +376,17 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	private Map<String, String> _addAction(
-		String actionName, String[] methodName, String permissionName,
+		String actionName, String[] methodNames, String permissionName,
 		String scopeKey, Long siteId) {
 
 		if (Validator.isNull(scopeKey)) {
 			return addAction(
-				actionName, siteId, methodName[0], null, permissionName,
+				actionName, siteId, methodNames[0], null, permissionName,
 				siteId);
 		}
 
 		return addAction(
-			actionName, siteId, methodName[1], null, permissionName, siteId);
+			actionName, siteId, methodNames[1], null, permissionName, siteId);
 	}
 
 	private Comment _addComment(

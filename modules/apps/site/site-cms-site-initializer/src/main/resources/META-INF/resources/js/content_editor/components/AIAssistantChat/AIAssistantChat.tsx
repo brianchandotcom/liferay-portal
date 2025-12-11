@@ -17,8 +17,6 @@ import AIAssistantMessageBalloon from './components/AIAssistantMessageBalloon';
 import UserMessageBalloon from './components/UserMessageBalloon';
 
 import './chat.scss';
-import QuickAction from './components/QuickAction';
-import RegenerateButton from './components/RegenerateButton';
 
 interface message {
 	sender: string;
@@ -27,20 +25,14 @@ interface message {
 
 const AIAssistantChat: React.FC = () => {
 	const [active, setActive] = useState<boolean>(false);
-	const [error, setError] = useState<boolean>(false);
 	const [isGenerating, setIsGenerating] = useState<boolean>(false);
 	const [messages, setMessages] = useState<message[]>([]);
 	const [message, setMessage] = useState<string>('');
-	const [quickActions, setQuickActions] = useState<string[]>([
-		'Generate Content',
-		'Generate Title',
-		'Translate',
-	]);
 	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
 	const messagesEndRef = useRef<HTMLDivElement | null>(null);
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
-	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+	const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
 	function onSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -52,7 +44,7 @@ const AIAssistantChat: React.FC = () => {
 				messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
 			}, 0);
 
-			return [...previousMessages, { sender: 'user', text: message }];
+			return [...previousMessages, {sender: 'user', text: message}];
 		});
 
 		setMessage('');
@@ -74,28 +66,61 @@ const AIAssistantChat: React.FC = () => {
 		}
 	}
 
-	function adjustTextareaHeight(element: HTMLTextAreaElement) {
-		const textarea = element ?? textareaRef.current;
+	function adjustTextAreaHeight(element: HTMLTextAreaElement) {
+		const textArea = element ?? textAreaRef.current;
 
-		if (!textarea) {
+		if (!textArea) {
 			return;
 		}
-		
-		const style = window.getComputedStyle(textarea);
-		const lineHeight = parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.2;
+
+		const style = window.getComputedStyle(textArea);
+		const lineHeight =
+			parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.2;
 		const maxHeight = lineHeight * 4;
 
-		textarea.style.height = 'auto';
-		const newHeight = Math.min(textarea.scrollHeight, maxHeight);
-		textarea.style.height = `${newHeight}px`;
-		textarea.style.overflowY = textarea.scrollHeight > maxHeight ? 'auto' : 'hidden';
+		textArea.style.height = 'auto';
+		const newHeight = Math.min(textArea.scrollHeight, maxHeight);
+		textArea.style.height = `${newHeight}px`;
+		textArea.style.overflowY =
+			textArea.scrollHeight > maxHeight ? 'auto' : 'hidden';
 	}
 
-	function handleSelectAction(action: string) {
-        setMessage(`${action}, `);
-        adjustTextareaHeight(textareaRef.current as HTMLTextAreaElement);
-        textareaRef.current?.focus();
-    }
+	function handleTextAreaKeyDown(
+		event: React.KeyboardEvent<HTMLTextAreaElement>
+	) {
+		if (event.key !== 'Enter') {
+			event.stopPropagation();
+
+			return;
+		}
+
+		if (event.shiftKey) {
+			setTimeout(
+				() => adjustTextAreaHeight(event.target as HTMLTextAreaElement),
+				0
+			);
+
+			return;
+		}
+
+		event.preventDefault();
+
+		const form = (event.target as HTMLElement).closest(
+			'form'
+		) as HTMLFormElement | null;
+
+		if (form?.requestSubmit) {
+			form.requestSubmit();
+		}
+		else {
+			form?.dispatchEvent(
+				new Event('submit', {
+					bubbles: true,
+					cancelable: true,
+				})
+			);
+		}
+	}
 
 	function getContextElements() {
 		let form = document.querySelector('.lfr-main-form-container');
@@ -243,7 +268,7 @@ const AIAssistantChat: React.FC = () => {
 							/>
 						) : (
 							<AIAssistantMessageBalloon
-								error={error}
+								error={false}
 								key={index}
 								message={item.text}
 							/>
@@ -262,12 +287,6 @@ const AIAssistantChat: React.FC = () => {
 						</div>
 					)}
 
-					{
-						error && (
-							<RegenerateButton onClick={() => {}} />
-						)
-					}
-
 					<div ref={messagesEndRef} />
 				</div>
 
@@ -275,40 +294,37 @@ const AIAssistantChat: React.FC = () => {
 					className="flex-shrink-0 p-3"
 					onSubmit={(event) => onSubmit(event)}
 				>
-					{!messages.length && (
-						<>
-							{Liferay.Language.get('quick-actions')}
-							<ClayLayout.ContentRow className="align-items-center mb-3 mt-2">	
-								{quickActions.map((action, index) => (
-									<QuickAction action={action} key={index} setSelectedAction={handleSelectAction} />
-								))}
-							</ClayLayout.ContentRow>
-						</>
-					)}
-
 					<div className="align-items-end border-top d-flex flex-row pt-4">
 						<textarea
 							className="ai-assistant-chat__input form-control mr-2"
 							disabled={isGenerating}
-							id='assistant-user-input'
+							id="assistant-user-input"
 							onChange={(event) => {
 								setMessage(event.target.value);
-								adjustTextareaHeight(event.target);
+								adjustTextAreaHeight(event.target);
 							}}
-							onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-								event.stopPropagation();
+							onKeyDown={(
+								event: React.KeyboardEvent<HTMLTextAreaElement>
+							) => {
+								handleTextAreaKeyDown(event);
 							}}
 							placeholder="Ask me anything..."
-							ref={textareaRef}
+							ref={textAreaRef}
 							rows={1}
 							value={message}
 						/>
 
-						<ClayButton displayType="primary" type="submit">
+						<ClayButton
+							disabled={!message.trim()}
+							displayType="primary"
+							type="submit"
+						>
 							<ClayIcon
 								height={12}
 								spritemap={Liferay.Icons.spritemap}
-								symbol={isGenerating ? "square" : "order-arrow-up"}
+								symbol={
+									isGenerating ? 'square' : 'order-arrow-up'
+								}
 								width={12}
 							/>
 						</ClayButton>

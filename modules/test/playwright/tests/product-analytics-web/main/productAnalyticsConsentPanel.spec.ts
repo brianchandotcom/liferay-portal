@@ -92,13 +92,7 @@ test(
 	}) => {
 		await productAnalyticsBannerPage.acceptAllButton.click();
 
-		await test.step('Go to Product Analytics Account Settings', async () => {
-			await accountSettingsPage.goToDataAndPrivacy();
-
-			await accountSettingsPage.productAnalyticsMenuItem.waitFor();
-
-			await accountSettingsPage.productAnalyticsMenuItem.click();
-		});
+		await accountSettingsPage.goToDataAndPrivacy();
 
 		await test.step('Verify Customize button displays Consent Panel', async () => {
 			await expectProductAnalyticsConsentPanelButtons(
@@ -241,10 +235,6 @@ test(
 		await test.step('AC3: Verify Product Analytics Account Settings', async () => {
 			await accountSettingsPage.goToDataAndPrivacy();
 
-			await accountSettingsPage.productAnalyticsMenuItem.waitFor();
-
-			await accountSettingsPage.productAnalyticsMenuItem.click();
-
 			await productAnalyticsConsentPanelPage.consentPanelFormLocator.waitFor();
 		});
 
@@ -353,19 +343,20 @@ async function expectProductAnalyticsAccountSettingsVisibility(
 
 	const accountSettingsPage = new AccountSettingsPage(newPage);
 
-	await accountSettingsPage.goToDataAndPrivacy();
+	await accountSettingsPage.goToAccountSettings();
 
-	await accountSettingsPage.page.waitForLoadState();
+	const dataAndPrivacyTab = await accountSettingsPage.page.locator(
+		'.nav-link',
+		{
+			hasText: 'Data And Privacy',
+		}
+	);
 
 	if (isVisible) {
-		await expect(
-			await accountSettingsPage.productAnalyticsMenuItem
-		).toBeVisible();
+		await expect(await dataAndPrivacyTab).toBeVisible();
 	}
 	else {
-		await expect(
-			await accountSettingsPage.productAnalyticsMenuItem
-		).not.toBeVisible();
+		await expect(await dataAndPrivacyTab).not.toBeVisible();
 	}
 }
 

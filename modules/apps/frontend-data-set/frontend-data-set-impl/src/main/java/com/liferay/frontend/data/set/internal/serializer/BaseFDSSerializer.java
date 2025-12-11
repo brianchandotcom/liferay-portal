@@ -59,8 +59,6 @@ public abstract class BaseFDSSerializer {
 
 		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
-		JSONArray jsonArray = JSONUtil.putAll();
-
 		try {
 			ObjectDefinition objectDefinition =
 				objectDefinitionLocalService.fetchObjectDefinition(
@@ -86,7 +84,7 @@ public abstract class BaseFDSSerializer {
 
 			Collection<ObjectEntry> objectEntries = page.getItems();
 
-			jsonArray = JSONUtil.toJSONArray(
+			return JSONUtil.toJSONArray(
 				objectEntries,
 				(ObjectEntry objectEntry) -> {
 					Map<String, Object> properties =
@@ -107,12 +105,12 @@ public abstract class BaseFDSSerializer {
 					"Unable to get snapshot FDS config object entries",
 					exception);
 			}
+
+			return JSONUtil.putAll();
 		}
 		finally {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
 		}
-
-		return jsonArray;
 	}
 
 	@Reference

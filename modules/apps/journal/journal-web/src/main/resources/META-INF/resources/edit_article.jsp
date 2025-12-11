@@ -336,7 +336,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 	<div class="contextual-sidebar-content">
 		<clay:container-fluid
 			cssClass="container-view"
-			size="lg"
+			size="xl"
 		>
 			<div class="article-content-content">
 				<%@ include file="/edit_article_exceptions.jspf" %>

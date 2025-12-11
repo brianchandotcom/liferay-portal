@@ -8,10 +8,15 @@ package com.liferay.portal.vulcan.custom.field;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,6 +28,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -39,6 +45,26 @@ public class CustomValue implements Serializable {
 
 	public static CustomValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(CustomValue.class, json);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof CustomValue customValue)) {
+			return false;
+		}
+
+		if (Objects.equals(getData(), customValue.getData()) &&
+			Objects.equals(getData_i18n(), customValue.getData_i18n()) &&
+			Objects.equals(getGeo(), customValue.getGeo())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Schema(description = "The field's content value for simple types.")
@@ -77,6 +103,11 @@ public class CustomValue implements Serializable {
 		}
 
 		return geo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getData(), getData_i18n(), getGeo());
 	}
 
 	public void setData(Object data) {
@@ -145,6 +176,20 @@ public class CustomValue implements Serializable {
 		};
 	}
 
+	@Override
+	public String toString() {
+		ObjectMapper objectMapper = ObjectMapperProviderUtil.getObjectMapper();
+
+		try {
+			return objectMapper.writeValueAsString(this);
+		}
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException);
+		}
+
+		return super.toString();
+	}
+
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.vulcan.custom.field.CustomValue",
@@ -165,6 +210,8 @@ public class CustomValue implements Serializable {
 	@GraphQLField(description = "A point determined by latitude and longitude.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
+
+	private static final Log _log = LogFactoryUtil.getLog(CustomValue.class);
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _data_i18nSupplier;

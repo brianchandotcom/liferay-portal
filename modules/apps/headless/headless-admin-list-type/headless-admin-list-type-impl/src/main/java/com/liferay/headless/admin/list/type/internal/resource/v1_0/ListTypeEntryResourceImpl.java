@@ -125,15 +125,18 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 			},
 			sorts,
 			document -> {
-				com.liferay.list.type.model.ListTypeEntry listTypeEntry =
-					_listTypeEntryService.getListTypeEntry(
-						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+				com.liferay.list.type.model.ListTypeEntry
+					serviceBuilderListTypeEntry =
+						_listTypeEntryService.getListTypeEntry(
+							GetterUtil.getLong(
+								document.get(Field.ENTRY_CLASS_PK)));
 
 				return ListTypeEntryUtil.toListTypeEntry(
-					_getActions(listTypeEntry),
+					_getActions(serviceBuilderListTypeEntry),
 					contextAcceptLanguage.getPreferredLocale(), _portal,
-					listTypeEntry, contextUriInfo,
-					_userLocalService.fetchUser(listTypeEntry.getUserId()));
+					serviceBuilderListTypeEntry, contextUriInfo,
+					_userLocalService.fetchUser(
+						serviceBuilderListTypeEntry.getUserId()));
 			});
 	}
 
@@ -141,13 +144,14 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 	public ListTypeEntry getListTypeEntry(Long listTypeEntryId)
 		throws Exception {
 
-		com.liferay.list.type.model.ListTypeEntry listTypeEntry =
+		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry =
 			_listTypeEntryService.getListTypeEntry(listTypeEntryId);
 
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(), _portal,
-			listTypeEntry, contextUriInfo,
-			_userLocalService.fetchUser(listTypeEntry.getUserId()));
+			serviceBuilderListTypeEntry, contextUriInfo,
+			_userLocalService.fetchUser(
+				serviceBuilderListTypeEntry.getUserId()));
 	}
 
 	@Override

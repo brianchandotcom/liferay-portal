@@ -92,6 +92,9 @@ public class AddStyleBookEntryMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.addParameter("name", name);
 
+		mockLiferayPortletActionRequest.addParameter(
+			"themeId", RandomTestUtil.randomString());
+
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);
 

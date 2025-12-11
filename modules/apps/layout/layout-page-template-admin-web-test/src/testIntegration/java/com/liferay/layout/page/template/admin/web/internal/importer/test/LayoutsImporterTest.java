@@ -1599,7 +1599,7 @@ public class LayoutsImporterTest {
 		return _styleBookEntryLocalService.addStyleBookEntry(
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			false, StringPool.BLANK, RandomTestUtil.randomString(),
-			styleBookEntryKey, StringPool.BLANK, serviceContext);
+			styleBookEntryKey, RandomTestUtil.randomString(), serviceContext);
 	}
 
 	private void _assertExportedFileItemSelector(

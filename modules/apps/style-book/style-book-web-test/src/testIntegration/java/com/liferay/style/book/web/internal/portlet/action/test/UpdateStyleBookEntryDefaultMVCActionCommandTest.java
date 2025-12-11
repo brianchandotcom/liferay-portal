@@ -73,12 +73,13 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 
 	@Test
 	public void testMarkAsDefaultStyleBookEntry() throws Exception {
+		String themeId = RandomTestUtil.randomString();
+
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				_serviceContext);
+				StringPool.BLANK, themeId, _serviceContext);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
@@ -88,6 +89,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
+		mockLiferayPortletActionRequest.addParameter("themeId", themeId);
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.PORTLET_ID, StyleBookPortletKeys.STYLE_BOOK);
 		mockLiferayPortletActionRequest.setAttribute(
@@ -99,17 +101,18 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		Assert.assertEquals(
 			styleBookEntry,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId(), RandomTestUtil.randomString()));
+				_group.getGroupId(), themeId));
 	}
 
 	@Test
 	public void testReplaceDefaultStyleBookEntry() throws Exception {
+		String themeId = RandomTestUtil.randomString();
+
 		StyleBookEntry styleBookEntry1 =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				_serviceContext);
+				StringPool.BLANK, themeId, _serviceContext);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
@@ -119,6 +122,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry1.getStyleBookEntryId()));
+		mockLiferayPortletActionRequest.addParameter("themeId", themeId);
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.PORTLET_ID, StyleBookPortletKeys.STYLE_BOOK);
 		mockLiferayPortletActionRequest.setAttribute(
@@ -130,14 +134,13 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		Assert.assertEquals(
 			styleBookEntry1,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId(), RandomTestUtil.randomString()));
+				_group.getGroupId(), themeId));
 
 		StyleBookEntry styleBookEntry2 =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				_serviceContext);
+				StringPool.BLANK, themeId, _serviceContext);
 
 		mockLiferayPortletActionRequest = new MockLiferayPortletActionRequest();
 
@@ -146,6 +149,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry2.getStyleBookEntryId()));
+		mockLiferayPortletActionRequest.addParameter("themeId", themeId);
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.PORTLET_ID, StyleBookPortletKeys.STYLE_BOOK);
 		mockLiferayPortletActionRequest.setAttribute(
@@ -157,21 +161,22 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		Assert.assertEquals(
 			styleBookEntry2,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId(), RandomTestUtil.randomString()));
+				_group.getGroupId(), themeId));
 		Assert.assertNotEquals(
 			styleBookEntry1,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId(), RandomTestUtil.randomString()));
+				_group.getGroupId(), themeId));
 	}
 
 	@Test
 	public void testUnmarkAsDefaultStyleBookEntry() throws Exception {
+		String themeId = RandomTestUtil.randomString();
+
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				_serviceContext);
+				StringPool.BLANK, themeId, _serviceContext);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
@@ -181,6 +186,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
+		mockLiferayPortletActionRequest.addParameter("themeId", themeId);
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.PORTLET_ID, StyleBookPortletKeys.STYLE_BOOK);
 		mockLiferayPortletActionRequest.setAttribute(
@@ -192,7 +198,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		Assert.assertEquals(
 			styleBookEntry,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId(), RandomTestUtil.randomString()));
+				_group.getGroupId(), themeId));
 
 		mockLiferayPortletActionRequest = new MockLiferayPortletActionRequest();
 
@@ -201,6 +207,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
+		mockLiferayPortletActionRequest.addParameter("themeId", themeId);
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.PORTLET_ID, StyleBookPortletKeys.STYLE_BOOK);
 		mockLiferayPortletActionRequest.setAttribute(
@@ -211,7 +218,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 
 		Assert.assertNull(
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId(), RandomTestUtil.randomString()));
+				_group.getGroupId(), themeId));
 	}
 
 	@Inject

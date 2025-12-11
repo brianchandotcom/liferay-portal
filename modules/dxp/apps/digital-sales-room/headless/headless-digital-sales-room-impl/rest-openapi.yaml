@@ -145,6 +145,21 @@ paths:
                                 $ref: "#/components/schemas/DigitalSalesRoom"
             tags: ["DigitalSalesRoom"]
     "/digital-sales-rooms/{digitalSalesRoomId}":
+        delete:
+            operationId: deleteDigitalSalesRoom
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["DigitalSalesRoom"]
         get:
             operationId: getDigitalSalesRoom
             parameters:

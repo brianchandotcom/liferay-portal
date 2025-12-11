@@ -104,6 +104,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		if (plid == 0) {
 			Layout layout = _addLayout(
+				layoutUtilityPageEntry.getExternalReferenceCode() + "-layout",
 				userId, groupId, name, masterLayoutPageTemplateEntryERC,
 				defaultLayoutUtilityPageEntry, serviceContext);
 
@@ -480,9 +481,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	}
 
 	private Layout _addLayout(
-			long userId, long groupId, String name,
-			String masterLayoutPageTemplateEntryERC, boolean published,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String name, String masterLayoutPageTemplateEntryERC,
+			boolean published, ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<Locale, String> titleMap = Collections.singletonMap(
@@ -515,9 +516,10 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = _layoutLocalService.addLayout(
-			null, userId, groupId, false, 0, 0, 0, titleMap, titleMap, null,
-			null, null, LayoutConstants.TYPE_UTILITY, typeSettings, true, true,
-			new HashMap<>(), masterLayoutPageTemplateEntryERC, serviceContext);
+			externalReferenceCode, userId, groupId, false, 0, 0, 0, titleMap,
+			titleMap, null, null, null, LayoutConstants.TYPE_UTILITY,
+			typeSettings, true, true, new HashMap<>(),
+			masterLayoutPageTemplateEntryERC, serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

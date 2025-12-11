@@ -98,7 +98,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 		if (matches) {
 			String javaeePackage = analyzer.getProperty(
-				"-antbnd.jspanalyzer.fallback-javaee-package");
+				"-antbnd.jspanalyzer.fallback-javaee-package", "jakarta");
 
 			if ((javaeePackage != null) &&
 				!(javaeePackage.equals("jakarta") ||
@@ -576,26 +576,12 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		return false;
 	}
 
-	private boolean _isJavaeePackageJavax(String javaeePackage) {
-		if (Objects.equals(javaeePackage, "jakarta")) {
-			return false;
-		}
-
-		if (Objects.equals(javaeePackage, "javax")) {
-			return true;
-		}
-
-		throw new IllegalArgumentException(
-			"Unable to infer required javaee package. No fallback value was " +
-				"provided.");
-	}
-
 	private boolean _isUseJavaxImports(
 			String javaeePackage, Set<String> taglibURIs)
 		throws Exception {
 
 		if (taglibURIs.isEmpty()) {
-			return _isJavaeePackageJavax(javaeePackage);
+			return Objects.equals(javaeePackage, "javax");
 		}
 
 		for (String jakartaURI : _JSTL_CORE_URIS_JAKARTA) {
@@ -620,7 +606,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			}
 		}
 
-		return _isJavaeePackageJavax(javaeePackage);
+		return Objects.equals(javaeePackage, "javax");
 	}
 
 	private String _removeComments(String content) {

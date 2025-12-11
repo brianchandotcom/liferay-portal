@@ -188,4 +188,27 @@ describe('TranslationManager', () => {
 			{fieldName: 'name', languages: ['ca_ES']},
 		]);
 	});
+
+	it('shows two specific fields when switching from EN to ar_SA', async () => {
+		const descriptionMsg = document.createElement('p');
+		descriptionMsg.id =
+			DEFAULT_PROPS.namespace + 'descriptionNotTranslatableMessage';
+		descriptionMsg.hidden = true;
+		document.body.appendChild(descriptionMsg);
+
+		const friendlyMsg = document.createElement('p');
+		friendlyMsg.id =
+			DEFAULT_PROPS.namespace + 'friendlyURLNotTranslatableMessage';
+		friendlyMsg.hidden = true;
+		document.body.appendChild(friendlyMsg);
+
+		renderComponent();
+
+		userEvent.click(screen.getByRole('combobox'));
+		const listbox = await screen.findByRole('listbox');
+		fireEvent.click(within(listbox).getByText('ar-SA'));
+
+		expect(descriptionMsg.hidden).toBe(false);
+		expect(friendlyMsg.hidden).toBe(false);
+	});
 });

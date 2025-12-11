@@ -55,7 +55,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Definition.class),
 			new StagedModelType(Source.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "definitions", true, false,
 				new PortletDataHandlerControl[] {

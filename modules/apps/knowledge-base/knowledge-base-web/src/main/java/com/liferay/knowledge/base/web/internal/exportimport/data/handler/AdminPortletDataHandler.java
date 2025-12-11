@@ -64,7 +64,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(KBArticle.class),
 			new StagedModelType(KBComment.class),
 			new StagedModelType(KBTemplate.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "kb-folders", true, false, null,
 				KBFolder.class.getName()),
@@ -79,7 +79,8 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "kb-templates", true, false, null,
 				KBTemplate.class.getName()));
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

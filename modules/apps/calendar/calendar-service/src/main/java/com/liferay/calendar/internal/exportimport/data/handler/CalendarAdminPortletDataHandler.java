@@ -80,7 +80,7 @@ public class CalendarAdminPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(CalendarBooking.class),
 			new StagedModelType(CalendarNotificationTemplate.class),
 			new StagedModelType(CalendarResource.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "calendars", true, false, null,
 				Calendar.class.getName()),
@@ -97,7 +97,8 @@ public class CalendarAdminPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "referenced-content")
 				},
 				CalendarNotificationTemplate.class.getName()));
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class DDMFormPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("formInstanceId");
-		setExportControls(new PortletDataHandlerControl[0]);
+		setExportPortletDataHandlerControls(new PortletDataHandlerControl[0]);
 	}
 
 	@Override

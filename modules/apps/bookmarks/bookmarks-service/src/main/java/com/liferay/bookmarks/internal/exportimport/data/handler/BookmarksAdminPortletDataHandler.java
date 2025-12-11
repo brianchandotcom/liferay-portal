@@ -91,14 +91,15 @@ public class BookmarksAdminPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(BookmarksEntry.class),
 			new StagedModelType(BookmarksFolder.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "folders", true, false, null,
 				BookmarksFolder.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false, null,
 				BookmarksEntry.class.getName()));
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

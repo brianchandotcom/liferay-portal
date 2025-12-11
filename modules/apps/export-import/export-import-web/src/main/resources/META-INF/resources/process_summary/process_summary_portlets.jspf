@@ -61,15 +61,13 @@
 				continue;
 			}
 
-			PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
-
-			PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();
+			PortletDataHandlerControl[] portletDataHandlerControls = portletDataHandler.getExportPortletDataHandlerControls();
 
 			if (!type.equals(Constants.EXPORT) && liveGroup.isStagedPortlet(portlet.getRootPortletId())) {
-				exportControls = portletDataHandler.getStagingControls();
+				portletDataHandlerControls = portletDataHandler.getStagingPortletDataHandlerControls();
 			}
 
-			if (ArrayUtil.isEmpty(exportControls) && ArrayUtil.isEmpty(metadataControls)) {
+			if (ArrayUtil.isEmpty(portletDataHandlerControls) && ArrayUtil.isEmpty(portletDataHandler.getExportMetadataPortletDataHandlerControls())) {
 				continue;
 			}
 
@@ -81,10 +79,10 @@
 
 			Long totalDeletions = Long.valueOf(0);
 
-			for (PortletDataHandlerControl control : exportControls) {
-				String controlLabel = LanguageUtil.get(request, resourceBundle, control.getControlLabel());
+			for (PortletDataHandlerControl portletDataHandlerControl : portletDataHandlerControls) {
+				String controlLabel = LanguageUtil.get(request, resourceBundle, portletDataHandlerControl.getControlLabel());
 
-				String controlClass = control.getClassName();
+				String controlClass = portletDataHandlerControl.getClassName();
 
 				if (modelAdditionCounters == null) {
 					continue;

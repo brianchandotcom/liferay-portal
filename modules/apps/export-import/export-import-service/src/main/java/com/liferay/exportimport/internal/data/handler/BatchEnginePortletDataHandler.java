@@ -213,7 +213,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		setPublishToLiveByDefault(true);
 		_updateDeletionSystemEventStagedModelTypes();
-		_updateExportControls();
+		_updateExportPortletDataHandlerControls();
 	}
 
 	public void unregisterExportImportVulcanBatchEngineTaskItemDelegate(
@@ -234,7 +234,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				iterator.remove();
 
 				_updateDeletionSystemEventStagedModelTypes();
-				_updateExportControls();
+				_updateExportPortletDataHandlerControls();
 
 				return;
 			}
@@ -598,9 +598,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				StagedModelType.class));
 	}
 
-	private void _updateExportControls() {
+	private void _updateExportPortletDataHandlerControls() {
 		if (_registrations.size() > 1) {
-			setExportControls(
+			setExportPortletDataHandlerControls(
 				TransformUtil.transformToArray(
 					_registrations, this::_getPortletDataHandlerControl,
 					PortletDataHandlerControl.class));
@@ -609,11 +609,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 		else {
 			if (_registrations.size() == 1) {
-				setExportControls(
+				setExportPortletDataHandlerControls(
 					_getPortletDataHandlerControl(_registrations.get(0)));
 			}
 			else {
-				setExportControls();
+				setExportPortletDataHandlerControls();
 			}
 
 			setEmptyControlsAllowed(true);

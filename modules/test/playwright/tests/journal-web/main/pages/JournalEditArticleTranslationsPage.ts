@@ -11,17 +11,41 @@ export class JournalEditArticleTranslationsPage {
 	readonly page: Page;
 
 	readonly concurrentUserErrorMessage: Locator;
+	readonly contentEditor: {
+		container: Locator;
+		editable: Locator;
+	};
+	readonly descriptionEditor: {
+		container: Locator;
+		editable: Locator;
+	};
 	readonly journalPage: JournalPage;
+	readonly previewContainers: Locator;
 	readonly publishButton: Locator;
 	readonly titleInput: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
+		const contentEditorContainer = page.locator('.lfr-ck').nth(1);
+
+		this.contentEditor = {
+			container: contentEditorContainer,
+			editable: contentEditorContainer.locator('.ck-content'),
+		};
+
+		const descriptionEditorContainer = page.locator('.lfr-ck').nth(0);
+
+		this.descriptionEditor = {
+			container: descriptionEditorContainer,
+			editable: descriptionEditorContainer.locator('.ck-content'),
+		};
+
 		this.concurrentUserErrorMessage = page.getByText(
 			'Another user has made changes since you started editing. Publish this version to save it and overwrite the recent changes.'
 		);
 		this.journalPage = new JournalPage(page);
+		this.previewContainers = page.locator('.translation-editor-preview');
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.titleInput = page.locator(
 			'#_com_liferay_translation_web_internal_portlet_TranslationPortlet_infoField--JournalArticle_title--0'
@@ -38,7 +62,7 @@ export class JournalEditArticleTranslationsPage {
 
 	async editBasicArticleTranslations(title: string, url: string) {
 		if (!url) {
-			await this.journalPage.goToJournalArticleAction('Translate', title);
+			this.goto({title});
 		}
 		else {
 			await this.page.goto(url);
@@ -51,5 +75,9 @@ export class JournalEditArticleTranslationsPage {
 		await this.publishButton.click();
 
 		return this.page.url();
+	}
+
+	async goto({title}: {title: string}) {
+		await this.journalPage.goToJournalArticleAction('Translate', title);
 	}
 }

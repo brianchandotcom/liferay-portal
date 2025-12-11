@@ -2083,18 +2083,28 @@ ckeditor5Test(
 	{
 		tag: '@LPD-11235',
 	},
-	async ({journalEditArticlePage, page, site}) => {
+	async ({
+		journalEditArticlePage,
+		journalEditArticleTranslationsPage,
+		page,
+		site,
+	}) => {
 		await ckeditor5Test.step('Open new Basic Web Content', async () => {
 			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 		});
 
 		const articleContentAR = getRandomString();
 		const articleContentEN = getRandomString();
+		const articleDescriptionAR = getRandomString();
+		const articleDescriptionEN = getRandomString();
 		const articleTitleAR = getRandomString();
 		const articleTitleEN = getRandomString();
 
-		const editable = journalEditArticlePage.page.locator(
-			'.edit-article-panel .ck-content'
+		const contentEditable = journalEditArticlePage.page.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_content .ck-content'
+		);
+		const descriptionEditable = journalEditArticlePage.page.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_metadata .ck-content'
 		);
 
 		await ckeditor5Test.step('Expand fields if collapsed', async () => {
@@ -2108,15 +2118,16 @@ ckeditor5Test(
 				fieldsToggle.click();
 			}
 
-			await expect(editable).toBeVisible();
+			await expect(contentEditable).toBeVisible();
 		});
 
 		await ckeditor5Test.step(
-			'Add sample English title and content',
+			'Add sample English title, description and content',
 			async () => {
 				await journalEditArticlePage.fillTitle(articleTitleEN);
 
-				await editable.fill(articleContentEN);
+				await contentEditable.fill(articleContentEN);
+				await descriptionEditable.fill(articleDescriptionEN);
 			}
 		);
 
@@ -2131,16 +2142,19 @@ ckeditor5Test(
 					)
 				).toBeVisible();
 
-				expect(await editable.getAttribute('dir')).toEqual('rtl');
+				expect(await contentEditable.getAttribute('dir')).toEqual(
+					'rtl'
+				);
 			}
 		);
 
 		await ckeditor5Test.step(
-			'Add sample Arabic title and content',
+			'Add sample Arabic title, description and content',
 			async () => {
 				await journalEditArticlePage.fillTitle(articleTitleAR);
 
-				await editable.fill(articleContentAR);
+				await contentEditable.fill(articleContentAR);
+				await descriptionEditable.fill(articleDescriptionAR);
 			}
 		);
 
@@ -2154,13 +2168,19 @@ ckeditor5Test(
 				await page.getByTitle(articleTitleEN).click();
 
 				await expect(
-					editable.getByText(articleContentEN)
+					contentEditable.getByText(articleContentEN)
+				).toBeVisible();
+				await expect(
+					descriptionEditable.getByText(articleDescriptionEN)
 				).toBeVisible();
 
 				await journalEditArticlePage.changeLanguage('ar_SA');
 
 				await expect(
-					editable.getByText(articleContentAR)
+					contentEditable.getByText(articleContentAR)
+				).toBeVisible();
+				await expect(
+					descriptionEditable.getByText(articleDescriptionAR)
 				).toBeVisible();
 			}
 		);
@@ -2205,6 +2225,80 @@ ckeditor5Test(
 				await expect(sourceTextarea).toHaveValue(
 					/<a href="#">foo<\/a>alert\(\)/
 				);
+			}
+		);
+
+		await ckeditor5Test.step('Revert to simple content', async () => {
+			await sourceButton.click();
+
+			await contentEditable.fill(articleContentEN);
+
+			await journalEditArticlePage.publishArticle(true);
+
+			await expect(page.locator('.alert-success')).toBeVisible();
+		});
+
+		await ckeditor5Test.step('Open aricle translation editor', async () => {
+			await journalEditArticleTranslationsPage.goto({
+				title: articleTitleEN,
+			});
+
+			await expect(
+				journalEditArticleTranslationsPage.previewContainers.getByText(
+					articleDescriptionEN
+				)
+			).toBeVisible();
+			await expect(
+				journalEditArticleTranslationsPage.previewContainers.getByText(
+					articleContentEN
+				)
+			).toBeVisible();
+
+			await expect(
+				journalEditArticleTranslationsPage.contentEditor.editable.getByText(
+					articleContentAR
+				)
+			).toBeVisible();
+			await expect(
+				journalEditArticleTranslationsPage.descriptionEditor.editable.getByText(
+					articleDescriptionAR
+				)
+			).toBeVisible();
+		});
+
+		const articleDescriptionAR2 = getRandomString();
+		const articleContentAR2 = getRandomString();
+
+		await ckeditor5Test.step('Change Arabic translation', async () => {
+			await journalEditArticleTranslationsPage.descriptionEditor.editable.fill(
+				articleDescriptionAR2
+			);
+			await journalEditArticleTranslationsPage.contentEditor.editable.fill(
+				articleContentAR2
+			);
+
+			await journalEditArticleTranslationsPage.publishButton.click();
+
+			await expect(page.locator('.alert-success')).toBeVisible();
+		});
+
+		await ckeditor5Test.step(
+			'Open aricle translation editor and assert changes were saved',
+			async () => {
+				await journalEditArticleTranslationsPage.goto({
+					title: articleTitleEN,
+				});
+
+				await expect(
+					journalEditArticleTranslationsPage.descriptionEditor.editable.getByText(
+						articleDescriptionAR2
+					)
+				).toBeVisible();
+				await expect(
+					journalEditArticleTranslationsPage.contentEditor.editable.getByText(
+						articleContentAR2
+					)
+				).toBeVisible();
 			}
 		);
 	}

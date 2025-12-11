@@ -5,19 +5,17 @@
 
 package com.liferay.ai.hub.site.initializer.internal.mcp.tool.provider;
 
-import com.liferay.ai.hub.site.initializer.mcp.tool.provider.MCPToolProviderFactory;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,18 +38,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author João Victor Alves
  */
-@Component(service = MCPToolProviderFactory.class)
-public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
+public class MCPToolProviderUtil {
 
-	public McpToolProvider create(
-		long companyId, long groupId, Locale locale,
-		List<String> mcpServerExternalReferenceCodes, long userId) {
+	public static McpToolProvider create(
+		long companyId, DTOConverterRegistry dtoConverterRegistry, long groupId,
+		Locale locale, List<String> mcpServerExternalReferenceCodes,
+		ObjectEntryManager objectEntryManager, long userId) {
 
 		if (ListUtil.isEmpty(mcpServerExternalReferenceCodes)) {
 			return null;
@@ -61,7 +56,8 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		).mcpClients(
 			TransformUtil.transform(
 				_getMCPServerObjectEntries(
-					companyId, groupId, locale, mcpServerExternalReferenceCodes,
+					companyId, dtoConverterRegistry, groupId, locale,
+					mcpServerExternalReferenceCodes, objectEntryManager,
 					userId),
 				objectEntry -> {
 					McpTransport mcpTransport = _createMcpTransport(
@@ -78,7 +74,9 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		).build();
 	}
 
-	private Map<String, String> _createCustomHeaders(String authArguments) {
+	private static Map<String, String> _createCustomHeaders(
+		String authArguments) {
+
 		if (authArguments.isBlank()) {
 			return Map.of();
 		}
@@ -86,7 +84,9 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		return Map.of("Authorization", _parseBasicAuthorization(authArguments));
 	}
 
-	private McpTransport _createMcpTransport(Map<String, Object> properties) {
+	private static McpTransport _createMcpTransport(
+		Map<String, Object> properties) {
+
 		String url = GetterUtil.getString(properties.get("url"));
 
 		Map<String, String> customHeaders = _createCustomHeaders(
@@ -109,7 +109,7 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		).build();
 	}
 
-	private boolean _filterToolSpecifications(
+	private static boolean _filterToolSpecifications(
 		ToolSpecification toolSpecification) {
 
 		JsonObjectSchema jsonObjectSchema = toolSpecification.parameters();
@@ -126,22 +126,23 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		return true;
 	}
 
-	private List<ObjectEntry> _getMCPServerObjectEntries(
-		long companyId, long groupId, Locale locale,
-		List<String> mcpServerExternalReferenceCodes, long userId) {
+	private static List<ObjectEntry> _getMCPServerObjectEntries(
+		long companyId, DTOConverterRegistry dtoConverterRegistry, long groupId,
+		Locale locale, List<String> mcpServerExternalReferenceCodes,
+		ObjectEntryManager objectEntryManager, long userId) {
 
 		try {
-			Group group = _groupLocalService.fetchGroup(groupId);
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-			Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
+			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
 				companyId,
-				_objectDefinitionLocalService.
+				ObjectDefinitionLocalServiceUtil.
 					fetchObjectDefinitionByExternalReferenceCode(
 						"L_MCP_SERVER", companyId),
 				group.getGroupKey(), null,
 				new DefaultDTOConverterContext(
-					false, Map.of(), _dtoConverterRegistry, null, locale, null,
-					_userService.getUserById(userId)),
+					false, Map.of(), dtoConverterRegistry, null, locale, null,
+					UserServiceUtil.getUserById(userId)),
 				StringBundler.concat(
 					"externalReferenceCode in (",
 					StringUtil.merge(
@@ -158,9 +159,9 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 		}
 	}
 
-	private String _parseBasicAuthorization(String authArguments) {
+	private static String _parseBasicAuthorization(String authArguments) {
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				authArguments);
 
 			Base64.Encoder encoder = Base64.getEncoder();
@@ -177,25 +178,5 @@ public class MCPToolProviderFactoryImpl implements MCPToolProviderFactory {
 			throw new RuntimeException(exception);
 		}
 	}
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference(
-		target = "(object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
-	)
-	private ObjectEntryManager _objectEntryManager;
-
-	@Reference
-	private UserService _userService;
 
 }

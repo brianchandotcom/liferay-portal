@@ -7,15 +7,18 @@ package com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node
 
 import com.liferay.ai.hub.site.initializer.internal.assistant.handler.AssistantHandlerContext;
 import com.liferay.ai.hub.site.initializer.internal.assistant.handler.AssistantHandlerUtil;
+import com.liferay.ai.hub.site.initializer.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.InputVariablesUtil;
 import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
-import com.liferay.ai.hub.site.initializer.mcp.tool.provider.MCPToolProviderFactory;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowNodeManager;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -146,12 +149,12 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			).tools(
 				new Tools()
 			).toolProvider(
-				_mcpToolProviderFactory.create(
-					kaleoInstanceToken.getCompanyId(),
+				MCPToolProviderUtil.create(
+					kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
 					kaleoInstanceToken.getGroupId(), serviceContext.getLocale(),
 					ToolsUtil.getMCPServerExternalReferenceCodes(
 						_jsonFactory, kaleoNodeSettingValues),
-					serviceContext.getUserId())
+					_objectEntryManager, serviceContext.getUserId())
 			).userMessage(
 				InputVariablesUtil.applyInputVariables(
 					executionContext, "userMessage", kaleoNodeSettingValues)
@@ -187,13 +190,18 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 	}
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
 
-	@Reference
-	private MCPToolProviderFactory _mcpToolProviderFactory;
+	@Reference(
+		target = "(object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private WorkflowNodeManager _workflowNodeManager;

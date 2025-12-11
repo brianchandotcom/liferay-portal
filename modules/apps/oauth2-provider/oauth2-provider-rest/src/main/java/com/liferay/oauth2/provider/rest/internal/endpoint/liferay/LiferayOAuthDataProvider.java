@@ -7,7 +7,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.liferay;
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.constants.GrantType;
-import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
+import com.liferay.oauth2.provider.constants.OAuth2AuthorizationConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
@@ -213,7 +213,7 @@ public class LiferayOAuthDataProvider
 		}
 
 		oAuth2Authorization.setAccessTokenContent(
-			OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN);
+			OAuth2AuthorizationConstants.ACCESS_TOKEN_CONTENT_EXPIRED_TOKEN);
 
 		_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
@@ -236,7 +236,7 @@ public class LiferayOAuthDataProvider
 		}
 
 		oAuth2Authorization.setRefreshTokenContent(
-			OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN);
+			OAuth2AuthorizationConstants.ACCESS_TOKEN_CONTENT_EXPIRED_TOKEN);
 
 		_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
@@ -312,8 +312,8 @@ public class LiferayOAuthDataProvider
 			return null;
 		}
 
-		if (OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN.equals(
-				oAuth2Authorization.getAccessTokenContent())) {
+		if (OAuth2AuthorizationConstants.ACCESS_TOKEN_CONTENT_EXPIRED_TOKEN.
+				equals(oAuth2Authorization.getAccessTokenContent())) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -471,8 +471,8 @@ public class LiferayOAuthDataProvider
 				return null;
 			}
 
-			if (OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN.equals(
-					oAuth2Authorization.getRefreshTokenContent())) {
+			if (OAuth2AuthorizationConstants.ACCESS_TOKEN_CONTENT_EXPIRED_TOKEN.
+					equals(oAuth2Authorization.getRefreshTokenContent())) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -985,7 +985,7 @@ public class LiferayOAuthDataProvider
 	}
 
 	@Override
-	protected void doRemoveClient(Client c) {
+	protected void doRemoveClient(Client client) {
 		throw new UnsupportedOperationException();
 	}
 

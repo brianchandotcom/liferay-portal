@@ -5,6 +5,7 @@
 
 package com.liferay.data.cleanup.internal.verify;
 
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -30,12 +31,17 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
 	@Override
 	public void verify() throws VerifyException {
-		try {
-			super.verify();
-		}
-		finally {
-			DBUpgrader.stopUpgradeLogAppender();
-		}
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				try {
+					super.verify();
+				}
+				finally {
+					DBUpgrader.stopUpgradeLogAppender();
+				}
+
+				return null;
+			});
 	}
 
 	@Override

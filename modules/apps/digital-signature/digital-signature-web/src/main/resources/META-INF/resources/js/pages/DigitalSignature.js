@@ -15,15 +15,14 @@ const DigitalSignature = (props) => (
 	<AppContextProvider {...props}>
 		<HashRouter>
 			<Switch>
-				<Route component={EnvelopeList} exact path="/" />
+				<Route element={<EnvelopeList />} path="/" />
 
 				<Route
-					component={EnvelopeView}
-					exact
+					element={<EnvelopeView />}
 					path="/envelope/:envelopeId"
 				/>
 
-				<Route component={EnvelopeForm} exact path="/new-envelope" />
+				<Route element={<EnvelopeForm />} path="/new-envelope" />
 			</Switch>
 		</HashRouter>
 	</AppContextProvider>

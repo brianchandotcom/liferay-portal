@@ -119,7 +119,7 @@ public class AccountsRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			_checkViewPermission(jwt, externalReferenceCode);
+			_checkPermissions(jwt, externalReferenceCode);
 
 			List<ProductPurchase> productPurchases =
 				_koroneikiService.searchProductPurchases(
@@ -223,7 +223,7 @@ public class AccountsRestController extends BaseRestController {
 		}
 	}
 
-	private void _checkViewPermission(Jwt jwt, String externalReferenceCode)
+	private void _checkPermissions(Jwt jwt, String externalReferenceCode)
 		throws Exception {
 
 		AccountResource accountResource = AccountResource.builder(

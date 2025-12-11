@@ -1471,10 +1471,6 @@ public class BatchEnginePortletDataHandlerTest {
 				"export.import.vulcan.batch.engine.task.item.delegate", "true"
 			).build());
 
-		// Wait for registration to complete
-
-		Thread.sleep(1000);
-
 		return () -> {
 			safeCloseable2.close();
 			safeCloseable1.close();

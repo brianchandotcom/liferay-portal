@@ -9,14 +9,12 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountRole;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,19 +62,13 @@ public class AccountMemberDTOConverter
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		List<AccountRole> accountRoles = new ArrayList<>();
-
-		for (UserGroupRole userGroupRole :
-				accountEntryUserRel.getUserGroupRoles()) {
-
-			accountRoles.add(
-				_accountRoleDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						userGroupRole.getPrimaryKey(),
-						dtoConverterContext.getLocale())));
-		}
-
-		return accountRoles.toArray(new AccountRole[0]);
+		return TransformUtil.transformToArray(
+			accountEntryUserRel.getUserGroupRoles(),
+			userGroupRole -> _accountRoleDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					userGroupRole.getPrimaryKey(),
+					dtoConverterContext.getLocale())),
+			AccountRole.class);
 	}
 
 	@Reference

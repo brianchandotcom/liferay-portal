@@ -6,13 +6,7 @@
 package com.liferay.style.book.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -21,11 +15,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -33,8 +23,6 @@ import com.liferay.style.book.exception.DuplicateStyleBookEntryExternalReference
 import com.liferay.style.book.exception.StyleBookEntryThemeIdException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
-
-import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -128,61 +116,6 @@ public class StyleBookEntryLocalServiceTest {
 			null, RandomTestUtil.randomString(), _serviceContext);
 	}
 
-	@FeatureFlag(enable = false, value = "LPD-13311")
-	@Test
-	public void testAddStyleBookEntryWithFrontendTokensFromClientExtensionEntry()
-		throws Exception {
-
-		_clientExtensionEntry =
-			_clientExtensionEntryLocalService.addClientExtensionEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				StringPool.BLANK,
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				StringPool.BLANK, StringPool.BLANK,
-				ClientExtensionEntryConstants.TYPE_THEME_CSS,
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"clayRTLURL",
-					"http://" + RandomTestUtil.randomString() +
-						".com/styles_rtl.css"
-				).put(
-					"clayURL",
-					"http://" + RandomTestUtil.randomString() +
-						".com/styles.css"
-				).put(
-					"frontendTokenDefinitionJSON", "{}"
-				).put(
-					"mainRTLURL",
-					"http://" + RandomTestUtil.randomString() +
-						".com/main_rtl.css"
-				).put(
-					"mainURL",
-					"http://" + RandomTestUtil.randomString() + ".com/main.css"
-				).buildString());
-
-		LayoutSet publicLayoutSet = _group.getPublicLayoutSet();
-
-		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(LayoutSet.class),
-			publicLayoutSet.getLayoutSetId(),
-			_clientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
-			_serviceContext);
-
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-				null, null, _serviceContext);
-
-		Assert.assertEquals(
-			_clientExtensionEntry.getExternalReferenceCode(),
-			styleBookEntry.getThemeId());
-	}
-
 	@Test
 	public void testDeleteGroup() throws Exception {
 		StyleBookEntry styleBookEntry =
@@ -223,23 +156,11 @@ public class StyleBookEntryLocalServiceTest {
 				styleBookEntry.getStyleBookEntryId()));
 	}
 
-	private ClientExtensionEntry _clientExtensionEntry;
-
-	@Inject
-	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
-
-	@Inject
-	private ClientExtensionEntryRelLocalService
-		_clientExtensionEntryRelLocalService;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

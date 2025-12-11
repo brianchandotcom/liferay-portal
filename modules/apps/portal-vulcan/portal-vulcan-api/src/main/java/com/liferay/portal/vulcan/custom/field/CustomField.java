@@ -10,10 +10,15 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -44,6 +49,28 @@ public class CustomField implements Serializable {
 
 	public static CustomField unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(CustomField.class, json);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof CustomField customField)) {
+			return false;
+		}
+
+		if (Objects.equals(
+				getAttributeType(), customField.getAttributeType()) &&
+			Objects.equals(getCustomValue(), customField.getCustomValue()) &&
+			Objects.equals(getDataType(), customField.getDataType()) &&
+			Objects.equals(getName(), customField.getName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Schema(description = "The field's attribute type.")
@@ -102,6 +129,12 @@ public class CustomField implements Serializable {
 		}
 
 		return name;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(
+			getAttributeType(), getCustomValue(), getDataType(), getName());
 	}
 
 	public void setAttributeType(AttributeType attributeType) {
@@ -194,6 +227,20 @@ public class CustomField implements Serializable {
 		};
 	}
 
+	@Override
+	public String toString() {
+		ObjectMapper objectMapper = ObjectMapperProviderUtil.getObjectMapper();
+
+		try {
+			return objectMapper.writeValueAsString(this);
+		}
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException);
+		}
+
+		return super.toString();
+	}
+
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.vulcan.custom.field.CustomField",
@@ -266,6 +313,8 @@ public class CustomField implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private static final Log _log = LogFactoryUtil.getLog(CustomField.class);
 
 	@JsonIgnore
 	private Supplier<AttributeType> _attributeTypeSupplier;

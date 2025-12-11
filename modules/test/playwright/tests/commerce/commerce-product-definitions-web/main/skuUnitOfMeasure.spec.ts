@@ -526,7 +526,9 @@ test('COMMERCE-12399 Verify that the maximum order quantity is applied correctly
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
 
-	await page.goto(`/web/${site.name}/p/` + productName1, {waitUntil: "networkidle"});
+	await page.goto(`/web/${site.name}/p/` + productName1, {
+		waitUntil: 'networkidle',
+	});
 
 	let minQuantityNotSatisfied;
 	let multipleQuantityNotSatisfied;
@@ -739,7 +741,9 @@ test('COMMERCE-12397 Verify that the minimum order quantity is applied correctly
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
 
-	await page.goto(`/web/${site.name}/p/` + productName1, {waitUntil: "networkidle"});
+	await page.goto(`/web/${site.name}/p/` + productName1, {
+		waitUntil: 'networkidle',
+	});
 
 	try {
 		await productDetailsPage.addToCartButton.click();
@@ -798,7 +802,9 @@ test('COMMERCE-12397 Verify that the minimum order quantity is applied correctly
 			);
 		}
 
-		await page.goto(`/web/${site.name}/p/` + productName2, {waitUntil: "networkidle"});
+		await page.goto(`/web/${site.name}/p/` + productName2, {
+			waitUntil: 'networkidle',
+		});
 
 		await productDetailsPage.addToCartButton.click();
 
@@ -942,7 +948,9 @@ test('COMMERCE-12398 Verify that the multiple order quantity is applied correctl
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
 
-	await page.goto(`/web/${site.name}/p/` + productName, {waitUntil: "networkidle"});
+	await page.goto(`/web/${site.name}/p/` + productName, {
+		waitUntil: 'networkidle',
+	});
 
 	await expect(
 		commerceThemeMiniumCatalogPage.quantitySelector(

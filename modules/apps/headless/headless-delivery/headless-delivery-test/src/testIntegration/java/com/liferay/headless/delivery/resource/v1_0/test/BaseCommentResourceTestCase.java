@@ -214,6 +214,7 @@ public abstract class BaseCommentResourceTestCase {
 		Comment comment = randomComment();
 
 		comment.setExternalReferenceCode(regex);
+		comment.setParentCommentExternalReferenceCode(regex);
 		comment.setText(regex);
 
 		String json = CommentSerDes.toJSON(comment);
@@ -223,6 +224,8 @@ public abstract class BaseCommentResourceTestCase {
 		comment = CommentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, comment.getExternalReferenceCode());
+		Assert.assertEquals(
+			regex, comment.getParentCommentExternalReferenceCode());
 		Assert.assertEquals(regex, comment.getText());
 	}
 
@@ -573,7 +576,7 @@ public abstract class BaseCommentResourceTestCase {
 			commentResource.
 				deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					comment.getParentCommentExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
@@ -581,15 +584,14 @@ public abstract class BaseCommentResourceTestCase {
 			commentResource.
 				getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					comment.getParentCommentExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.
 				getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
-					"-"));
+					comment.getParentCommentExternalReferenceCode(), "-"));
 	}
 
 	protected Comment
@@ -605,14 +607,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return testGroup.getGroupId();
-	}
-
-	protected String
-			testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -636,12 +630,12 @@ public abstract class BaseCommentResourceTestCase {
 									"\"" +
 										testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId() +
 											"\"");
-
 								put(
 									"parentCommentExternalReferenceCode",
 									"\"" +
-										testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode() +
-											"\"");
+										comment1.
+											getParentCommentExternalReferenceCode() +
+												"\"");
 								put(
 									"externalReferenceCode",
 									"\"" + comment1.getExternalReferenceCode() +
@@ -662,12 +656,12 @@ public abstract class BaseCommentResourceTestCase {
 								"\"" +
 									testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId() +
 										"\"");
-
 							put(
 								"parentCommentExternalReferenceCode",
 								"\"" +
-									testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode() +
-										"\"");
+									comment1.
+										getParentCommentExternalReferenceCode() +
+											"\"");
 							put(
 								"externalReferenceCode",
 								"\"" + comment1.getExternalReferenceCode() +
@@ -698,12 +692,12 @@ public abstract class BaseCommentResourceTestCase {
 										"\"" +
 											testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId() +
 												"\"");
-
 									put(
 										"parentCommentExternalReferenceCode",
 										"\"" +
-											testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode() +
-												"\"");
+											comment2.
+												getParentCommentExternalReferenceCode() +
+													"\"");
 									put(
 										"externalReferenceCode",
 										"\"" +
@@ -728,12 +722,12 @@ public abstract class BaseCommentResourceTestCase {
 									"\"" +
 										testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId() +
 											"\"");
-
 								put(
 									"parentCommentExternalReferenceCode",
 									"\"" +
-										testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode() +
-											"\"");
+										comment2.
+											getParentCommentExternalReferenceCode() +
+												"\"");
 								put(
 									"externalReferenceCode",
 									"\"" + comment2.getExternalReferenceCode() +
@@ -751,14 +745,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return testGroup.getGroupId();
-	}
-
-	protected String
-			testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Comment
@@ -3012,7 +2998,7 @@ public abstract class BaseCommentResourceTestCase {
 			commentResource.
 				getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
 					testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					postComment.getParentCommentExternalReferenceCode(),
 					postComment.getExternalReferenceCode());
 
 		assertEquals(postComment, getComment);
@@ -3032,14 +3018,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return testGroup.getGroupId();
-	}
-
-	protected String
-			testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -3066,12 +3044,12 @@ public abstract class BaseCommentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId() +
 													"\"");
-
 										put(
 											"parentCommentExternalReferenceCode",
 											"\"" +
-												testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode() +
-													"\"");
+												comment.
+													getParentCommentExternalReferenceCode() +
+														"\"");
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -3103,12 +3081,12 @@ public abstract class BaseCommentResourceTestCase {
 												"\"" +
 													testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId() +
 														"\"");
-
 											put(
 												"parentCommentExternalReferenceCode",
 												"\"" +
-													testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode() +
-														"\"");
+													comment.
+														getParentCommentExternalReferenceCode() +
+															"\"");
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -3127,14 +3105,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return testGroup.getGroupId();
-	}
-
-	protected String
-			testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -4370,7 +4340,7 @@ public abstract class BaseCommentResourceTestCase {
 			commentResource.
 				putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
 					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					postComment.getParentCommentExternalReferenceCode(),
 					postComment.getExternalReferenceCode(), randomComment);
 
 		assertEquals(randomComment, putComment);
@@ -4380,7 +4350,7 @@ public abstract class BaseCommentResourceTestCase {
 			commentResource.
 				getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
 					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					putComment.getParentCommentExternalReferenceCode(),
 					putComment.getExternalReferenceCode());
 
 		assertEquals(randomComment, getComment);
@@ -4393,7 +4363,7 @@ public abstract class BaseCommentResourceTestCase {
 			commentResource.
 				putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
 					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					newComment.getParentCommentExternalReferenceCode(),
 					newComment.getExternalReferenceCode(), newComment);
 
 		assertEquals(newComment, putComment);
@@ -4403,7 +4373,7 @@ public abstract class BaseCommentResourceTestCase {
 			commentResource.
 				getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
 					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					putComment.getParentCommentExternalReferenceCode(),
 					putComment.getExternalReferenceCode());
 
 		assertEquals(newComment, getComment);
@@ -4426,14 +4396,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return testGroup.getGroupId();
-	}
-
-	protected String
-			testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Comment
@@ -5023,6 +4985,17 @@ public abstract class BaseCommentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"parentCommentExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (comment.getParentCommentExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("parentCommentId", additionalAssertFieldName)) {
 				if (comment.getParentCommentId() == null) {
 					valid = false;
@@ -5225,6 +5198,20 @@ public abstract class BaseCommentResourceTestCase {
 				if (!Objects.deepEquals(
 						comment1.getNumberOfComments(),
 						comment2.getNumberOfComments())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parentCommentExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						comment1.getParentCommentExternalReferenceCode(),
+						comment2.getParentCommentExternalReferenceCode())) {
 
 					return false;
 				}
@@ -5485,6 +5472,52 @@ public abstract class BaseCommentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("parentCommentExternalReferenceCode")) {
+			Object object = comment.getParentCommentExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("parentCommentId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -5587,6 +5620,8 @@ public abstract class BaseCommentResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				numberOfComments = RandomTestUtil.randomInt();
+				parentCommentExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				parentCommentId = RandomTestUtil.randomLong();
 				text = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

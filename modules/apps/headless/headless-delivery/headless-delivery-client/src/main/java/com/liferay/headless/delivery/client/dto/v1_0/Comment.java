@@ -173,6 +173,32 @@ public class Comment implements Cloneable, Serializable {
 
 	protected Integer numberOfComments;
 
+	public String getParentCommentExternalReferenceCode() {
+		return parentCommentExternalReferenceCode;
+	}
+
+	public void setParentCommentExternalReferenceCode(
+		String parentCommentExternalReferenceCode) {
+
+		this.parentCommentExternalReferenceCode =
+			parentCommentExternalReferenceCode;
+	}
+
+	public void setParentCommentExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			parentCommentExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			parentCommentExternalReferenceCode =
+				parentCommentExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String parentCommentExternalReferenceCode;
+
 	public Long getParentCommentId() {
 		return parentCommentId;
 	}

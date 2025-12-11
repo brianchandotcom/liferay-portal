@@ -133,6 +133,20 @@ public class CommentSerDes {
 			sb.append(comment.getNumberOfComments());
 		}
 
+		if (comment.getParentCommentExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentCommentExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(comment.getParentCommentExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (comment.getParentCommentId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -235,6 +249,16 @@ public class CommentSerDes {
 				String.valueOf(comment.getNumberOfComments()));
 		}
 
+		if (comment.getParentCommentExternalReferenceCode() == null) {
+			map.put("parentCommentExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"parentCommentExternalReferenceCode",
+				String.valueOf(
+					comment.getParentCommentExternalReferenceCode()));
+		}
+
 		if (comment.getParentCommentId() == null) {
 			map.put("parentCommentId", null);
 		}
@@ -289,6 +313,12 @@ public class CommentSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfComments")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"parentCommentExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentCommentId")) {
@@ -347,6 +377,15 @@ public class CommentSerDes {
 				if (jsonParserFieldValue != null) {
 					comment.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"parentCommentExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					comment.setParentCommentExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentCommentId")) {

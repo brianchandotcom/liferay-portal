@@ -360,6 +360,54 @@ public class Comment implements Serializable {
 	private Supplier<Integer> _numberOfCommentsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The parent comment's external reference code."
+	)
+	public String getParentCommentExternalReferenceCode() {
+		if (_parentCommentExternalReferenceCodeSupplier != null) {
+			parentCommentExternalReferenceCode =
+				_parentCommentExternalReferenceCodeSupplier.get();
+
+			_parentCommentExternalReferenceCodeSupplier = null;
+		}
+
+		return parentCommentExternalReferenceCode;
+	}
+
+	public void setParentCommentExternalReferenceCode(
+		String parentCommentExternalReferenceCode) {
+
+		this.parentCommentExternalReferenceCode =
+			parentCommentExternalReferenceCode;
+
+		_parentCommentExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setParentCommentExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			parentCommentExternalReferenceCodeUnsafeSupplier) {
+
+		_parentCommentExternalReferenceCodeSupplier = () -> {
+			try {
+				return parentCommentExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The parent comment's external reference code.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parentCommentExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _parentCommentExternalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the comment's parent, if it exists."
 	)
 	public Long getParentCommentId() {
@@ -567,6 +615,23 @@ public class Comment implements Serializable {
 			sb.append("\"numberOfComments\": ");
 
 			sb.append(numberOfComments);
+		}
+
+		String parentCommentExternalReferenceCode =
+			getParentCommentExternalReferenceCode();
+
+		if (parentCommentExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentCommentExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parentCommentExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long parentCommentId = getParentCommentId();

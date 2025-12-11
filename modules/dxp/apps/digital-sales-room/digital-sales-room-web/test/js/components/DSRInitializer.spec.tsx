@@ -5,16 +5,20 @@
 
 import '@testing-library/jest-dom';
 import {cleanup, render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 // @ts-ignore
 
 import fetchMock from 'fetch-mock';
 import React from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 
 import DigitalSalesRoomService from '../../../src/main/resources/META-INF/resources/js/commons/DigitalSalesRoomService';
 import DSRInitializer from '../../../src/main/resources/META-INF/resources/js/components/DSRInitializer';
 import {TDSRInitializerProps} from '../../../src/main/resources/META-INF/resources/js/components/DSRTypes';
 import {setFieldValue} from '../utils';
+
+global.ResizeObserver = ResizeObserver;
 
 const renderComponent = ({
 	closeModal,
@@ -130,7 +134,7 @@ describe('DSRInitializer', () => {
 		expect(closeModal).toBeCalledTimes(1);
 	});
 
-	it('calls API on save button', async () => {
+	it('calls API on save button with single step', async () => {
 		const spyOnPostDigitalSalesRoom = jest.spyOn(
 			DigitalSalesRoomService,
 			'postDigitalSalesRoom'
@@ -182,6 +186,7 @@ describe('DSRInitializer', () => {
 			name: 'testRoomName',
 			primaryColor: '#0B5FFF',
 			secondaryColor: '#FFFFFF',
+			userAccountBriefs: [],
 		});
 
 		await setFieldValue(screen.getByTestId('primaryColorInput'), 'red');
@@ -213,6 +218,215 @@ describe('DSRInitializer', () => {
 			name: 'testRoomName',
 			primaryColor: 'red',
 			secondaryColor: '#FF0000',
+			userAccountBriefs: [],
+		});
+	});
+
+	it('calls API on save button with two steps', async () => {
+		fetchMock.get(/headless-admin-user\/.*\/accounts.*/i, () => {
+			return {
+				items: [
+					{
+						id: 100,
+						name: 'account1',
+					},
+					{
+						id: 101,
+						name: 'account2',
+					},
+				],
+			};
+		});
+		fetchMock.get(
+			/headless-commerce-delivery-catalog\/.*\/channels.*/i,
+			() => {
+				return {
+					items: [
+						{
+							id: 200,
+							name: 'channel1',
+						},
+						{
+							id: 201,
+							name: 'channel2',
+						},
+					],
+				};
+			}
+		);
+
+		const spyOnPostDigitalSalesRoom = jest.spyOn(
+			DigitalSalesRoomService,
+			'postDigitalSalesRoom'
+		);
+
+		renderComponent({
+			closeModal: jest.fn(),
+			numberOfSteps: 2,
+		});
+
+		await setFieldValue(
+			screen.getByTestId('clientNameInput'),
+			'testClientName'
+		);
+		await setFieldValue(
+			screen.getByTestId('roomNameInput'),
+			'testRoomName'
+		);
+		await setFieldValue(screen.getByTestId('primaryColorInput'), 'red');
+		await setFieldValue(
+			screen.getByTestId('secondaryColorInput'),
+			'FF0000'
+		);
+		await setFieldValue(
+			screen.getByTestId('friendlyURLInput'),
+			'testFriendlyURL'
+		);
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'next'}).click();
+		});
+
+		await setFieldValue(screen.getByTestId('selectAccountInput'), 'ac');
+		screen.getByRole('option', {name: 'account1'}).click();
+		await setFieldValue(screen.getByTestId('selectChannelInput'), 'ch');
+		screen.getByRole('option', {name: 'channel2'}).click();
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'save'}).click();
+		});
+
+		expect(spyOnPostDigitalSalesRoom).toBeCalledWith({
+			accountId: 100,
+			banner: {
+				fileBase64: '',
+			},
+			channelId: 201,
+			channelName: 'channel2',
+			clientLogo: {
+				fileBase64: '',
+			},
+			clientName: 'testClientName',
+			friendlyUrlPath: '/testFriendlyURL',
+			name: 'testRoomName',
+			primaryColor: 'red',
+			secondaryColor: '#FF0000',
+			userAccountBriefs: [],
+		});
+	});
+
+	it('calls API on save button with three steps', async () => {
+		fetchMock.get(/headless-admin-user\/.*\/accounts.*/i, () => {
+			return {
+				items: [
+					{
+						id: 100,
+						name: 'account1',
+					},
+					{
+						id: 101,
+						name: 'account2',
+					},
+				],
+			};
+		});
+		fetchMock.get(
+			/headless-commerce-delivery-catalog\/.*\/channels.*/i,
+			() => {
+				return {
+					items: [
+						{
+							id: 200,
+							name: 'channel1',
+						},
+						{
+							id: 201,
+							name: 'channel2',
+						},
+					],
+				};
+			}
+		);
+
+		const spyOnPostDigitalSalesRoom = jest.spyOn(
+			DigitalSalesRoomService,
+			'postDigitalSalesRoom'
+		);
+
+		renderComponent({
+			closeModal: jest.fn(),
+			numberOfSteps: 3,
+		});
+
+		await setFieldValue(
+			screen.getByTestId('clientNameInput'),
+			'testClientName'
+		);
+		await setFieldValue(
+			screen.getByTestId('roomNameInput'),
+			'testRoomName'
+		);
+		await setFieldValue(screen.getByTestId('primaryColorInput'), 'red');
+		await setFieldValue(
+			screen.getByTestId('secondaryColorInput'),
+			'FF0000'
+		);
+		await setFieldValue(
+			screen.getByTestId('friendlyURLInput'),
+			'testFriendlyURL'
+		);
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'next'}).click();
+		});
+
+		await setFieldValue(screen.getByTestId('selectAccountInput'), 'ac');
+		screen.getByRole('option', {name: 'account1'}).click();
+		await setFieldValue(screen.getByTestId('selectChannelInput'), 'ch');
+		screen.getByRole('option', {name: 'channel2'}).click();
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'next'}).click();
+		});
+
+		await waitFor(async () => {
+			await userEvent.type(
+				screen.getByTestId('emailAddressesInput'),
+				'test@liferay.com, test1@liferay.com,'
+			);
+			screen.getByTestId('roleKeyButton').click();
+			screen.getByTestId('roleKeyItem_edit').click();
+		});
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'save'}).click();
+		});
+
+		expect(spyOnPostDigitalSalesRoom).toBeCalledWith({
+			accountId: 100,
+			banner: {
+				fileBase64: '',
+			},
+			channelId: 201,
+			channelName: 'channel2',
+			clientLogo: {
+				fileBase64: '',
+			},
+			clientName: 'testClientName',
+			friendlyUrlPath: '/testFriendlyURL',
+			name: 'testRoomName',
+			primaryColor: 'red',
+			secondaryColor: '#FF0000',
+			userAccountBriefs: [
+				{
+					emailAddress: 'test@liferay.com',
+					roleKey: 'Site Administrator',
+				},
+				{
+					emailAddress: 'test1@liferay.com',
+					roleKey: 'Site Administrator',
+				},
+			],
 		});
 	});
 });

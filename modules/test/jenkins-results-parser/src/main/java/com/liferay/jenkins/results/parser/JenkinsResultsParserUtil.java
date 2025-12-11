@@ -2891,8 +2891,18 @@ public class JenkinsResultsParserUtil {
 			_remoteURLAuthorityPattern2.matcher(localURL);
 		Matcher remoteURLAuthorityMatcher3 =
 			_remoteURLAuthorityPattern3.matcher(localURL);
+		Matcher remoteURLAuthorityMatcherAWS =
+			_remoteURLAuthorityPatternAWS.matcher(localURL);
 
-		if (remoteURLAuthorityMatcher1.find()) {
+		if (remoteURLAuthorityMatcherAWS.find()) {
+			String localURLAuthority = combine(
+				"http://", remoteURLAuthorityMatcher2.group(1), "/");
+			String remoteURLAuthority = remoteURLAuthorityMatcher2.group(0);
+
+			localURL = localURL.replaceAll(
+				remoteURLAuthority, localURLAuthority);
+		}
+		else if (remoteURLAuthorityMatcher1.find()) {
 			String localURLAuthority = combine(
 				"http://", remoteURLAuthorityMatcher1.group(1), "-",
 				remoteURLAuthorityMatcher1.group(2), "/",
@@ -7334,6 +7344,8 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _remoteURLAuthorityPattern3 = Pattern.compile(
 		"https?://(mirrors/|mirrors.dlc.liferay.com/|mirrors.lax.liferay.com/" +
 			")?((files|releases).liferay.com)");
+	private static final Pattern _remoteURLAuthorityPatternAWS = Pattern.compile(
+		"https://(test-[0-9]+-[0])-aws.liferay.com/");
 	private static final Pattern _shaPattern = Pattern.compile(
 		"[0-9a-f]{7,40}");
 

@@ -60,7 +60,7 @@ public class SelectInputFragmentEntryMVCRenderCommand
 		fragmentEntryItemSelectorCriterion.setInputTypes(
 			new HashSet<>(
 				Arrays.asList(
-					ParamUtil.getStringValues(renderRequest, "inputType"))));
+					ParamUtil.getStringValues(renderRequest, "inputTypes"))));
 
 		fragmentEntryItemSelectorCriterion.setType(
 			FragmentConstants.TYPE_INPUT);

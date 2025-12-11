@@ -1289,7 +1289,12 @@ public class EditableFragmentEntryProcessorTest {
 			FragmentEntryLinkConstants.EDIT);
 
 		Assert.assertEquals(
-			_DEFAULT_SRC, GetterUtil.getString(element.attr("src")));
+			StringBundler.concat(
+				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA",
+				"7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1B",
+				"AACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUw",
+				"CIgAz0DHTyygaAAAAAASUVORK5CYII="),
+			GetterUtil.getString(element.attr("src")));
 
 		FileEntry fileEntry = _addImageFileEntry(externalReferenceCode);
 
@@ -2161,12 +2166,6 @@ public class EditableFragmentEntryProcessorTest {
 			"uuid", fileEntry.getUuid()
 		).toString();
 	}
-
-	private static final String _DEFAULT_SRC = StringBundler.concat(
-		"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJ",
-		"CAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs",
-		"4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8P",
-		"zw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=");
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;

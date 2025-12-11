@@ -188,6 +188,13 @@ $productMenuTransitionDuration: 0.5s;
 			}
 		}
 	}
+
+	.lfr-ck .ck {
+		> .ck-source-editing-area,
+		> .ck-content[role='textbox'] {
+			min-height: 230px;
+		}
+	}
 }
 
 .translation-languages-dropdown {

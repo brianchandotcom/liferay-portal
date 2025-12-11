@@ -44,13 +44,16 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
@@ -400,6 +403,35 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			listTypeDefinition);
+	}
+
+	@Test
+	public void testExportImportObjectDefinitions() throws Exception {
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		ObjectField[] objectFields = _addObjectFields(3, objectDefinition);
+
+		File larFile1 = _exportLayouts(false, group.getGroupId(), false, null);
+
+		_objectFieldLocalService.deleteObjectField(objectFields[0]);
+		_objectFieldLocalService.deleteObjectField(objectFields[1]);
+
+		File larFile2 = _exportLayouts(false, group.getGroupId(), false, null);
+
+		_importLayouts(false, false, larFile1, group.getGroupId());
+
+		_assertObjectDefinition(
+			objectDefinition, objectFields.length, objectFields);
+
+		_importLayouts(false, false, larFile2, group.getGroupId());
+
+		_assertObjectDefinition(objectDefinition, 1, objectFields[2]);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test
@@ -1130,6 +1162,31 @@ public class BatchEnginePortletDataHandlerTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	private ObjectField[] _addObjectFields(
+			int count, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectField[] objectFields = new ObjectField[count];
+
+		for (int i = 0; i < count; i++) {
+			objectFields[i] = ObjectFieldUtil.addCustomObjectField(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					StringUtil.randomId()
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).required(
+					false
+				).userId(
+					TestPropsValues.getUserId()
+				).build());
+		}
+
+		return objectFields;
+	}
+
 	private FileEntry _addTempFileEntry(
 			ObjectDefinition objectDefinition, String tempFileName)
 		throws Exception {
@@ -1182,6 +1239,41 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntryLocalService.fetchObjectEntry(
 					objectEntry.getExternalReferenceCode(),
 					objectEntry.getGroupId(), objectDefinitionId));
+		}
+	}
+
+	private void _assertObjectDefinition(
+			ObjectDefinition objectDefinition, int objectFieldsCount,
+			ObjectField... objectFields)
+		throws Exception {
+
+		ObjectDefinition importedObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinition.getExternalReferenceCode(),
+					objectDefinition.getCompanyId());
+
+		Assert.assertEquals(
+			objectDefinition.getLabel(LocaleUtil.getDefault()),
+			importedObjectDefinition.getLabel(LocaleUtil.getDefault()));
+		Assert.assertEquals(
+			objectDefinition.getName(), importedObjectDefinition.getName());
+		Assert.assertEquals(
+			objectFieldsCount,
+			_objectFieldLocalService.getObjectFieldsCount(
+				importedObjectDefinition.getObjectDefinitionId(), false));
+
+		for (ObjectField objectField : objectFields) {
+			ObjectField importedObjectField =
+				_objectFieldLocalService.getObjectField(
+					objectField.getExternalReferenceCode(),
+					objectDefinition.getObjectDefinitionId());
+
+			Assert.assertEquals(
+				objectField.getLabel(LocaleUtil.getDefault()),
+				importedObjectField.getLabel(LocaleUtil.getDefault()));
+			Assert.assertEquals(
+				objectField.getName(), importedObjectField.getName());
 		}
 	}
 
@@ -1354,6 +1446,10 @@ public class BatchEnginePortletDataHandlerTest {
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA + "_" +
+				ObjectPortletKeys.OBJECT_DEFINITIONS,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
@@ -1932,6 +2028,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

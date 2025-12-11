@@ -1560,7 +1560,10 @@ defaultValueTest.describe(
 						.getByText('Boolean', {exact: true})
 						.click();
 
-					await modelBuilderRightSidebarPage.setDefaultValue('False');
+					await modelBuilderRightSidebarPage.setDefaultValue(
+						'Boolean',
+						'False'
+					);
 
 					await viewObjectEntriesPage.goto(objectClassName);
 
@@ -1590,7 +1593,10 @@ defaultValueTest.describe(
 						.getByText('Boolean', {exact: true})
 						.click();
 
-					await modelBuilderRightSidebarPage.setDefaultValue('True');
+					await modelBuilderRightSidebarPage.setDefaultValue(
+						'Boolean',
+						'True'
+					);
 
 					await viewObjectEntriesPage.goto(objectClassName);
 
@@ -2156,6 +2162,59 @@ defaultValueTest.describe(
 				await expect(richTextEditor.getByRole('paragraph')).toHaveText(
 					''
 				);
+			}
+		);
+
+		defaultValueTest(
+			'can edit a default value input through Model Builder without throwing errors',
+			{tag: ['@LPD-70980']},
+			async ({
+				apiHelpers,
+				modelBuilderDiagramPage,
+				modelBuilderLeftSidebarPage,
+				modelBuilderObjectDefinitionNodePage,
+				modelBuilderRightSidebarPage,
+				page,
+			}) => {
+				const objectFields = generateObjectFields({
+					objectFieldBusinessTypes: ['Text'],
+				});
+
+				const objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: 'Default',
+				});
+
+				await modelBuilderLeftSidebarPage.sidebarItems
+					.filter({hasText: objectDefinition.name})
+					.click();
+
+				await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+					objectDefinition.name,
+					modelBuilderDiagramPage.objectDefinitionNodes
+				);
+
+				await modelBuilderDiagramPage.objectDefinitionNodes
+					.filter({hasText: objectDefinition.name})
+					.getByText(objectFields[0].label.en_US, {exact: true})
+					.click();
+
+				await modelBuilderRightSidebarPage.setDefaultValue(
+					'Text',
+					'this is a text default value on model builder'
+				);
+
+				await expect(page.getByText('Error')).toHaveCount(0);
 			}
 		);
 

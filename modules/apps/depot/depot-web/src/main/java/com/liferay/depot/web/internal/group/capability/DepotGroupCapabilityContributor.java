@@ -30,14 +30,14 @@ public class DepotGroupCapabilityContributor
 		return new GroupCapability() {
 
 			@Override
-			public boolean isSupportPortlet(Portlet portlet) {
-				return _depotApplicationController.isEnabled(
-					portlet.getPortletId(), group.getGroupId());
+			public boolean isSupportsPages() {
+				return false;
 			}
 
 			@Override
-			public boolean isSupportsPages() {
-				return false;
+			public boolean isSupportsPortlet(Portlet portlet) {
+				return _depotApplicationController.isEnabled(
+					portlet.getPortletId(), group.getGroupId());
 			}
 
 		};

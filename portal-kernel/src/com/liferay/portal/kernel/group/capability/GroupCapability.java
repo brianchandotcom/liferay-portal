@@ -12,12 +12,12 @@ import com.liferay.portal.kernel.model.Portlet;
  */
 public interface GroupCapability {
 
-	public boolean isSupportPortlet(Portlet portlet);
+	public boolean isSupportsPages();
 
-	public default boolean isSupportScope() {
+	public boolean isSupportsPortlet(Portlet portlet);
+
+	public default boolean isSupportsScopes() {
 		return true;
 	}
-
-	public boolean isSupportsPages();
 
 }

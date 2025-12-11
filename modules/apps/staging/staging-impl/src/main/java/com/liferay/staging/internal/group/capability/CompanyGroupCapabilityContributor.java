@@ -30,17 +30,17 @@ public class CompanyGroupCapabilityContributor
 		return new GroupCapability() {
 
 			@Override
-			public boolean isSupportPortlet(Portlet portlet) {
-				return true;
-			}
-
-			@Override
-			public boolean isSupportScope() {
+			public boolean isSupportsPages() {
 				return false;
 			}
 
 			@Override
-			public boolean isSupportsPages() {
+			public boolean isSupportsPortlet(Portlet portlet) {
+				return true;
+			}
+
+			@Override
+			public boolean isSupportsScopes() {
 				return false;
 			}
 

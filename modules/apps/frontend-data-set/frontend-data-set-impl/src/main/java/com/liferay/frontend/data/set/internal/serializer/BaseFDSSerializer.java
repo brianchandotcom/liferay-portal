@@ -53,10 +53,6 @@ public abstract class BaseFDSSerializer {
 			ObjectEntryManagerRegistry objectEntryManagerRegistry)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 		try {
@@ -79,7 +75,7 @@ public abstract class BaseFDSSerializer {
 					LocaleUtil.getMostRelevantLocale(), null, null),
 					StringBundler.concat(
 						"(fdsName eq '", fdsName, "' and creatorId eq ",
-						themeDisplay.getUserId(), ")"),
+						PortalUtil.getUserId(httpServletRequest), ")"),
 					null, null, null);
 
 			Collection<ObjectEntry> objectEntries = page.getItems();

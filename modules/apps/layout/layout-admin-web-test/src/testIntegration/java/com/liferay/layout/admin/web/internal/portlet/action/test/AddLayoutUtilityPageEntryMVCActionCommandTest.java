@@ -68,11 +68,6 @@ public class AddLayoutUtilityPageEntryMVCActionCommandTest {
 				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND);
 
 		Assert.assertNotNull(layoutUtilityPageEntry);
-	}
-
-	@Test
-	public void testAddLayoutUtilityPageEntryWithoutPermissions()
-		throws Exception {
 
 		User user = UserTestUtil.addGroupUser(
 			_groupLocalService.fetchGroup(TestPropsValues.getGroupId()),

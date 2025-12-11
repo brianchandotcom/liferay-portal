@@ -217,6 +217,7 @@ export interface Config {
 		name: string;
 		styleBookEntryERC: string;
 	}>;
+	swapFragmentEntryLinkURL: string;
 	themeColorsCssClasses: string[];
 	toolbarId: string;
 

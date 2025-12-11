@@ -240,12 +240,10 @@ public class JspAnalyzerPluginTest {
 		try {
 			runnable.run();
 
-			Assert.fail("Exception was not thrown");
+			Assert.fail();
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(
-				"Wrong exception type was thrown", exceptionClass,
-				exception.getClass());
+			Assert.assertEquals(exceptionClass, exception.getClass());
 
 			String message = exception.getMessage();
 

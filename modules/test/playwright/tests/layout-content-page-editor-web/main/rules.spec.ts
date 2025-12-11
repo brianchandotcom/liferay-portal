@@ -149,21 +149,10 @@ test(
 
 		const nextRuleName = getRandomString();
 
-		const name = page.locator('.page-editor__rule').getByText(ruleName);
-
-		const input = page.locator('.page-editor__rule input');
-
-		await expect(async () => {
-			await name.dblclick({timeout: 1000});
-
-			await expect(input).toBeVisible({timeout: 1000});
-
-			await input.fill(nextRuleName);
-
-			await input.press('Enter');
-
-			await pageEditorPage.waitForChangesSaved({timeout: 2000});
-		}).toPass();
+		await pageEditorPage.renameRuleInline({
+			currentName: ruleName,
+			newName: nextRuleName,
+		});
 
 		// Edit rule
 

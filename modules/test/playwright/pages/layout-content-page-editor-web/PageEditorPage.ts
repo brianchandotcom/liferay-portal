@@ -1341,6 +1341,35 @@ export class PageEditorPage {
 		await fragment.waitFor({state: 'hidden'});
 	}
 
+	async renameRuleInline({
+		currentName,
+		newName,
+		nth,
+	}: {
+		currentName: string;
+		newName: string;
+		nth?: number;
+	}) {
+		const name = this.page
+			.locator('.page-editor__rule')
+			.getByText(currentName)
+			.nth(nth || 0);
+
+		const input = this.page.locator('.page-editor__rule input');
+
+		await expect(async () => {
+			await name.dblclick({timeout: 1000});
+
+			await expect(input).toBeVisible({timeout: 1000});
+
+			await input.fill(newName, {timeout: 2000});
+
+			await input.press('Enter', {timeout: 2000});
+
+			await this.waitForChangesSaved({timeout: 2000});
+		}).toPass();
+	}
+
 	async resetSpacing(fragmentId: string, spacingType: SpacingType) {
 		await this.openSpacingSelector(fragmentId, spacingType);
 

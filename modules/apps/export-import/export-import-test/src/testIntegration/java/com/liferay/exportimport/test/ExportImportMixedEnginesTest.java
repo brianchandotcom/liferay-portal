@@ -121,8 +121,7 @@ public class ExportImportMixedEnginesTest {
 		).build();
 
 		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_addExportLayoutConfiguration(
-				_group.getGroupId(), parameterMap));
+			_addExportLayoutConfiguration(_group.getGroupId(), parameterMap));
 
 		_journalArticleLocalService.deleteArticle(journalArticle);
 
@@ -180,8 +179,7 @@ public class ExportImportMixedEnginesTest {
 		).build();
 
 		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_addExportLayoutConfiguration(
-				_group.getGroupId(), parameterMap));
+			_addExportLayoutConfiguration(_group.getGroupId(), parameterMap));
 
 		_journalArticleLocalService.deleteArticle(journalArticle);
 

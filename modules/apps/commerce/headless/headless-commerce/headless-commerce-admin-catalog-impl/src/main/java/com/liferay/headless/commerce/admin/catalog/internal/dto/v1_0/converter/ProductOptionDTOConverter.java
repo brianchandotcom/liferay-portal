@@ -15,15 +15,13 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -114,26 +112,17 @@ public class ProductOptionDTOConverter
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+		return TransformUtil.transformToArray(
 			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRels(
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		List<ProductOptionValue> productOptionValues = new ArrayList<>();
-
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			productOptionValues.add(
-				_productOptionValueDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionOptionValueRel.
-							getCPDefinitionOptionValueRelId(),
-						dtoConverterContext.getLocale()),
-					cpDefinitionOptionValueRel));
-		}
-
-		return productOptionValues.toArray(new ProductOptionValue[0]);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			cpDefinitionOptionValueRel -> _productOptionValueDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId(),
+					dtoConverterContext.getLocale()),
+				cpDefinitionOptionValueRel),
+			ProductOptionValue.class);
 	}
 
 	@Reference

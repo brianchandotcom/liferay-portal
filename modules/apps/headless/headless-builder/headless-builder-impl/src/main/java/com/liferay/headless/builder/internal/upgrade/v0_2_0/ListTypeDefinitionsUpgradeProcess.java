@@ -11,6 +11,7 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
@@ -92,8 +93,14 @@ public class ListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 			objectFieldExternalReferenceCode,
 			objectDefinition.getObjectDefinitionId());
 
-		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
-			objectField.getObjectFieldId());
+		ObjectStateFlow objectStateFlow =
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				objectField.getObjectFieldId());
+
+		if (objectStateFlow != null) {
+			_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
+				objectField.getObjectFieldId());
+		}
 
 		objectField.setState(false);
 
@@ -101,8 +108,12 @@ public class ListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.
-				getListTypeDefinitionByExternalReferenceCode(
+				fetchListTypeDefinitionByExternalReferenceCode(
 					listTypeDefinitionExternalReferenceCode, companyId);
+
+		if (listTypeDefinition == null) {
+			return;
+		}
 
 		listTypeDefinition.setExternalReferenceCode(
 			newListTypeDefinitionExternalReferenceCode);
@@ -122,8 +133,12 @@ public class ListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 
 		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry);
 
-		listTypeEntry = _listTypeEntryLocalService.getListTypeEntry(
+		listTypeEntry = _listTypeEntryLocalService.fetchListTypeEntry(
 			listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey2);
+
+		if (listTypeEntry == null) {
+			return;
+		}
 
 		listTypeEntry.setExternalReferenceCode(
 			listTypeEntryExternalReferenceCode2);

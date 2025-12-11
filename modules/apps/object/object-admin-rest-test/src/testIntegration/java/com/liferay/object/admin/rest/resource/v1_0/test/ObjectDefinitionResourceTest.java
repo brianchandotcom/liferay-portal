@@ -1465,11 +1465,7 @@ public class ObjectDefinitionResourceTest
 			new ObjectField[] {
 				new ObjectField() {
 					{
-						businessType = BusinessType.TEXT;
-						DBType = ObjectField.DBType.STRING;
-						externalReferenceCode = "TESTSYSTEMFIELD";
-						indexed = false;
-						label = Collections.singletonMap("en_US", "author");
+						externalReferenceCode = "TESTSYSTEMOBJECTFIELD";
 						name = "creator";
 						system = true;
 					}
@@ -1541,24 +1537,25 @@ public class ObjectDefinitionResourceTest
 				randomObjectDefinition);
 
 		_assertObjectField(
+			"TESTSYSTEMOBJECTFIELD",
 			ArrayUtil.filter(
 				putObjectDefinition.getObjectFields(),
 				objectField -> StringUtil.equals(
 					objectField.getName(), "creator")),
-			"TESTSYSTEMFIELD", ObjectField::getExternalReferenceCode);
+			ObjectField::getExternalReferenceCode);
 
 		ObjectField[] objectFields = ArrayUtil.filter(
 			putObjectDefinition.getObjectFields(),
 			objectField -> !objectField.getSystem());
 
 		_assertObjectField(
-			objectFields, "r_relationshipName_c_objectDefinition1Id",
+			"r_relationshipName_c_objectDefinition1Id", objectFields,
 			ObjectField::getName);
 		_assertObjectField(
-			objectFields, "TESTOBJECTDEFINITION1",
+			"TESTOBJECTDEFINITION1", objectFields,
 			ObjectField::getObjectDefinitionExternalReferenceCode1);
 		_assertObjectField(
-			objectFields, "TESTOBJECTRELATIONSHIP",
+			"TESTOBJECTRELATIONSHIP", objectFields,
 			ObjectField::getObjectRelationshipExternalReferenceCode);
 
 		ObjectLayout[] objectLayouts = putObjectDefinition.getObjectLayouts();
@@ -1898,15 +1895,15 @@ public class ObjectDefinitionResourceTest
 	}
 
 	private void _assertObjectField(
-		ObjectField[] objectFields, String expectedValue,
-		Function<ObjectField, String> valueExtractor) {
+		String expectedValue, ObjectField[] objectFields,
+		Function<ObjectField, String> valueFunction) {
 
 		Assert.assertEquals(
 			Arrays.toString(objectFields), 1, objectFields.length);
 
 		ObjectField objectField = objectFields[0];
 
-		Assert.assertEquals(expectedValue, valueExtractor.apply(objectField));
+		Assert.assertEquals(expectedValue, valueFunction.apply(objectField));
 	}
 
 	private void _assertObjectValidationRule(

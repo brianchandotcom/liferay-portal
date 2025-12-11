@@ -57,10 +57,6 @@ public abstract class BaseFDSSerializer {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String filterExpression = StringBundler.concat(
-			"(fdsName eq '", fdsName, "' and creatorId eq ",
-			themeDisplay.getUserId(), ")");
-
 		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 		JSONArray jsonArray = JSONUtil.putAll();
@@ -83,7 +79,10 @@ public abstract class BaseFDSSerializer {
 				new DefaultDTOConverterContext(
 					false, null, null, null, null,
 					LocaleUtil.getMostRelevantLocale(), null, null),
-				filterExpression, null, null, null);
+					StringBundler.concat(
+						"(fdsName eq '", fdsName, "' and creatorId eq ",
+						themeDisplay.getUserId(), ")"),
+					null, null, null);
 
 			Collection<ObjectEntry> objectEntries = page.getItems();
 

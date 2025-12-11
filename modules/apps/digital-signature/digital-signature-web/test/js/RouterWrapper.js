@@ -5,7 +5,7 @@
 
 import {createMemoryHistory} from 'history';
 import React, {cloneElement} from 'react';
-import {Route, Router} from 'react-router-dom';
+import {Route, Router} from 'react-router';
 
 export default function RouterWrapper({
 	children,

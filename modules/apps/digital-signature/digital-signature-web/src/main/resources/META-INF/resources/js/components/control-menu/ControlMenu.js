@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
-import {Link as InternalLink} from 'react-router-dom';
+import {Link as InternalLink} from 'react-router';
 
 const ExternalLink = ({children, to, ...props}) => {
 	return (

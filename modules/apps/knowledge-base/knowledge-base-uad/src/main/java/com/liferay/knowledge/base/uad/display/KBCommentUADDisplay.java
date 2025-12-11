@@ -10,7 +10,7 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Balázs Sáfrány-Kovalik
  */
 @Component(service = UADDisplay.class)
 public class KBCommentUADDisplay extends BaseKBCommentUADDisplay {

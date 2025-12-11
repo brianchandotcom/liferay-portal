@@ -5,14 +5,17 @@
 
 import {render} from '@testing-library/react';
 import React from 'react';
+import {MemoryRouter} from 'react-router';
 
 import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/AppContext';
 import EnvelopeForm from '../../../../src/main/resources/META-INF/resources/js/pages/envelope/EnvelopeForm';
 
 const EnvelopeViewWithProvider = (props) => (
-	<AppContext.Provider value={{}}>
-		<EnvelopeForm {...props} />
-	</AppContext.Provider>
+	<MemoryRouter>
+		<AppContext.Provider value={{}}>
+			<EnvelopeForm {...props} />
+		</AppContext.Provider>
+	</MemoryRouter>
 );
 
 describe('EnvelopeForm', () => {

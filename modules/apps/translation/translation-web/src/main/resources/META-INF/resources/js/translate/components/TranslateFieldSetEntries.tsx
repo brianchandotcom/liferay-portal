@@ -1,29 +1,58 @@
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-0 6
  */
 
+import {SourceEditing} from '@ckeditor/ckeditor5-source-editing';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {ClassicEditor} from 'frontend-editor-ckeditor-web';
+import {
+	CKEditor5ClassicEditor,
+	ClassicEditor,
+	TEditor,
+} from 'frontend-editor-ckeditor-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
+
+// @ts-ignore
 
 import {FETCH_STATUS} from '../constants';
 
 const noop = () => {};
 
+enum ELangDir {
+	LTR = 'ltr',
+	RTL = 'rtl',
+}
+
+const getISO639LanguageCode = (localeId: string): string => {
+	if (localeId?.match(/[a-z]{2}_[A-Z]{2}/)) {
+		return localeId.split('_')[0];
+	}
+
+	return localeId;
+};
+
 const TranslateAutoTranslateRow = ({
 	autoTranslateEnabled,
 	children,
+	fieldStatus,
 	handleAutoTranslateClick = noop,
 	label,
-	fieldStatus,
 	sourceContent,
+}: {
+	autoTranslateEnabled: boolean;
+	children: any;
+	fieldStatus: any;
+	handleAutoTranslateClick: (
+		event: React.MouseEvent<HTMLElement, MouseEvent>
+	) => void;
+	label: string;
+	sourceContent: string;
 }) => {
 	if (!autoTranslateEnabled) {
 		return children;
@@ -59,8 +88,14 @@ const TranslateAutoTranslateRow = ({
 	);
 };
 
-const TranslateFieldFeedback = ({message = '', status = ''}) =>
-	(status === FETCH_STATUS.ERROR || status === FETCH_STATUS.SUCCESS) && (
+const TranslateFieldFeedback = ({
+	message = '',
+	status = '',
+}: {
+	message: string;
+	status: string;
+}) =>
+	status === FETCH_STATUS.ERROR || status === FETCH_STATUS.SUCCESS ? (
 		<div
 			className={classNames({
 				'has-error': status === FETCH_STATUS.ERROR,
@@ -81,6 +116,8 @@ const TranslateFieldFeedback = ({message = '', status = ''}) =>
 				{message}
 			</div>
 		</div>
+	) : (
+		<></>
 	);
 
 const TranslateFieldEditor = ({
@@ -89,19 +126,73 @@ const TranslateFieldEditor = ({
 	id,
 	label,
 	name,
+	onChange = noop,
 	sourceContent,
 	sourceContentDir,
 	targetContent,
 	targetContentDir,
-	onChange = noop,
+	targetLanguageId,
+}: {
+	editorConfiguration: any;
+	fieldStatus: any;
+	id: string;
+	label: string;
+	name: string;
+	onChange: (data: string) => void;
+	sourceContent: string;
+	sourceContentDir: ELangDir;
+	targetContent: string;
+	targetContentDir: ELangDir;
+	targetLanguageId: string;
 }) => {
 	const [content, setContent] = useState(targetContent);
 
-	const editorRef = useRef();
+	const editorRef = useRef<any>();
 	const internalUpdateRef = useRef(true);
 
+	const onReady = (editor: TEditor) => {
+		const sourceEditingPlugin: SourceEditing =
+			editor.plugins.get('SourceEditing');
+
+		if (!sourceEditingPlugin) {
+			return;
+		}
+
+		sourceEditingPlugin.on('change:isSourceEditingMode', () => {
+			if (!sourceEditingPlugin.isSourceEditingMode) {
+				return;
+			}
+
+			for (const [rootName] of editor.editing.view.domRoots) {
+				const replacedRoot =
+
+					// @ts-ignore
+
+					sourceEditingPlugin._replacedRoots?.get(rootName);
+
+				if (!replacedRoot) {
+					continue;
+				}
+
+				const textarea = replacedRoot.querySelector('textarea');
+
+				if (!textarea) {
+					continue;
+				}
+
+				textarea.addEventListener('input', () => {
+					const data = editor.getData();
+
+					setContent(data);
+
+					onChange(data);
+				});
+			}
+		});
+	};
+
 	useEffect(() => {
-		if (editorRef.current.editor && !internalUpdateRef.current) {
+		if (editorRef.current?.editor && !internalUpdateRef.current) {
 			editorRef.current.editor.setData(targetContent);
 			setContent(targetContent);
 		}
@@ -128,28 +219,51 @@ const TranslateFieldEditor = ({
 				<ClayForm.Group>
 					<label className="control-label">{label}</label>
 
-					<ClassicEditor
-						editorConfig={{
-							...editorConfiguration.editorConfig,
-							contentsLangDirection: targetContentDir,
-						}}
-						name={id}
-						onChange={(data) => {
-							setContent(data);
-							onChange(data);
-							internalUpdateRef.current = true;
-						}}
-						onInstanceReady={({editor}) => {
+					{Liferay.FeatureFlags['LPD-11235'] ? (
+						<CKEditor5ClassicEditor
+							config={{
+								...editorConfiguration.editorConfig,
+								initialData: targetContent,
+								language: {
+									content:
+										getISO639LanguageCode(targetLanguageId),
+								},
+							}}
+							onChange={(event, editor) => {
+								const data = editor.getData();
 
-							// LPS-139363
+								setContent(data);
 
-							editor?.setData?.(content, {
-								interal: true,
-								noSnapshot: true,
-							});
-						}}
-						ref={editorRef}
-					/>
+								onChange(data);
+							}}
+							onReady={onReady}
+						/>
+					) : (
+						<ClassicEditor
+							editorConfig={{
+								...editorConfiguration.editorConfig,
+								contentsLangDirection: targetContentDir,
+							}}
+							name={id}
+							onChange={(data: string) => {
+								setContent(data);
+
+								onChange(data);
+
+								internalUpdateRef.current = true;
+							}}
+							onInstanceReady={({editor}: {editor: any}) => {
+
+								// LPS-139363
+
+								editor?.setData?.(content, {
+									interal: true,
+									noSnapshot: true,
+								});
+							}}
+							ref={editorRef}
+						/>
+					)}
 
 					<input defaultValue={content} name={name} type="hidden" />
 
@@ -174,6 +288,17 @@ const TranslateFieldInput = ({
 	sourceContentDir,
 	targetContent,
 	targetContentDir,
+}: {
+	fieldStatus: any;
+	id: string;
+	label: string;
+	multiline: boolean;
+	name: string;
+	onChange: (data: string) => void;
+	sourceContent: string;
+	sourceContentDir: string;
+	targetContent: string;
+	targetContentDir: string;
 }) => (
 	<ClayLayout.Row>
 		<ClayLayout.Col md={6}>
@@ -206,8 +331,7 @@ const TranslateFieldInput = ({
 					id={id}
 					name={name}
 					onChange={(event) => {
-						const data = event.target.value;
-						onChange(data);
+						onChange(event.target.value);
 					}}
 					type="text"
 					value={targetContent}
@@ -229,6 +353,13 @@ const TranslateFieldSetEntries = ({
 	onChange,
 	portletNamespace,
 	targetFieldsContent,
+}: {
+	autoTranslateEnabled: boolean;
+	fetchAutoTranslateField: Function;
+	infoFieldSetEntries: Array<any>;
+	onChange: ({content, id}: {content: string; id: string}) => void;
+	portletNamespace: string;
+	targetFieldsContent: any;
 }) =>
 	infoFieldSetEntries.map(({fields: fieldsSets, legend}) => (
 		<React.Fragment key={legend}>
@@ -246,43 +377,46 @@ const TranslateFieldSetEntries = ({
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 
-			{fieldsSets.map((fieldSet) =>
-				fieldSet.sourceContent.map((sourceContent, index) => {
-					const id = `${fieldSet.id}${index}`;
-					const fieldProps = {
-						...fieldSet,
-						fieldStatus: {
-							message: targetFieldsContent[id].message,
-							status: targetFieldsContent[id].status,
-						},
-						id: `${portletNamespace}${id}`,
-						name: `${portletNamespace}${fieldSet.id}`,
-						onChange: (content) => {
-							onChange({content, id});
-						},
-						sourceContent,
-						targetContent: targetFieldsContent[id].content,
-					};
+			{fieldsSets.map((fieldSet: any) =>
+				fieldSet.sourceContent.map(
+					(sourceContent: string, index: number) => {
+						const id: string = `${fieldSet.id}${index}`;
 
-					return (
-						<TranslateAutoTranslateRow
-							autoTranslateEnabled={autoTranslateEnabled}
-							fieldStatus={fieldProps.fieldStatus}
-							handleAutoTranslateClick={() =>
-								fetchAutoTranslateField(id)
-							}
-							key={id}
-							label={fieldProps.label}
-							sourceContent={fieldProps.sourceContent}
-						>
-							{fieldSet.html ? (
-								<TranslateFieldEditor {...fieldProps} />
-							) : (
-								<TranslateFieldInput {...fieldProps} />
-							)}
-						</TranslateAutoTranslateRow>
-					);
-				})
+						const fieldProps = {
+							...fieldSet,
+							fieldStatus: {
+								message: targetFieldsContent[id].message,
+								status: targetFieldsContent[id].status,
+							},
+							id: `${portletNamespace}${id}`,
+							name: `${portletNamespace}${fieldSet.id}`,
+							onChange: (content: string) => {
+								onChange({content, id});
+							},
+							sourceContent,
+							targetContent: targetFieldsContent[id].content,
+						};
+
+						return (
+							<TranslateAutoTranslateRow
+								autoTranslateEnabled={autoTranslateEnabled}
+								fieldStatus={fieldProps.fieldStatus}
+								handleAutoTranslateClick={() =>
+									fetchAutoTranslateField(id)
+								}
+								key={id}
+								label={fieldProps.label}
+								sourceContent={fieldProps.sourceContent}
+							>
+								{fieldSet.html ? (
+									<TranslateFieldEditor {...fieldProps} />
+								) : (
+									<TranslateFieldInput {...fieldProps} />
+								)}
+							</TranslateAutoTranslateRow>
+						);
+					}
+				)
 			)}
 		</React.Fragment>
 	));

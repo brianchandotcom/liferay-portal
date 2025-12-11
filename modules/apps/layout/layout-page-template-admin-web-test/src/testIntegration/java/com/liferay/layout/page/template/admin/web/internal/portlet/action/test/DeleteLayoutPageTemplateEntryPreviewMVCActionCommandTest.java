@@ -101,16 +101,14 @@ public class DeleteLayoutPageTemplateEntryPreviewMVCActionCommandTest {
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				_group.getGroupId());
 
-		long userId = TestPropsValues.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		Repository repository = _portletFileRepository.addPortletRepository(
-			groupId, LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-			ServiceContextTestUtil.getServiceContext(groupId));
+			_group.getGroupId(),
+			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
-			groupId, userId, LayoutPageTemplateEntry.class.getName(),
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			LayoutPageTemplateEntry.class.getName(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 			repository.getDlFolderId(), new byte[0], "test.png",

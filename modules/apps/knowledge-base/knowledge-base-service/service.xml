@@ -21,7 +21,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -33,10 +33,10 @@
 		<column name="parentResourcePrimKey" type="long" />
 		<column name="kbFolderId" type="long" />
 		<column name="version" type="int" />
-		<column name="title" type="String" />
-		<column name="urlTitle" type="String" />
-		<column name="content" type="String" />
-		<column name="description" type="String" />
+		<column name="title" type="String" uad-nonanonymizable="true" />
+		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
+		<column name="content" type="String" uad-nonanonymizable="true" />
+		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="priority" type="double" />
 		<column name="sections" type="String" />
 		<column name="latest" type="boolean" />
@@ -48,7 +48,7 @@
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
@@ -324,7 +324,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -332,7 +332,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="content" type="String" />
+		<column name="content" type="String" uad-nonanonymizable="true" />
 		<column name="userRating" type="int" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
@@ -385,20 +385,20 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="parentKBFolderId" parent-container-model="true" type="long" />
-		<column name="name" type="String" />
-		<column name="urlTitle" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" uad-nonanonymizable="true" />
+		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
+		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Finder methods -->
@@ -440,14 +440,14 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
-		<column name="title" type="String" />
-		<column name="content" type="String" />
+		<column name="title" type="String" uad-nonanonymizable="true" />
+		<column name="content" type="String" uad-nonanonymizable="true" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

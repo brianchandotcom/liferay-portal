@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Kb UAD
+Bundle-Name: Liferay Knowledge Base UAD
 Bundle-SymbolicName: com.liferay.knowledge.base.uad
 Bundle-Version: 1.0.0
 -dsannotations-options: inherit

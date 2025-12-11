@@ -508,16 +508,19 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 						"postScopeScopeKeyByExternalReferenceCodeComment" +
 							"ChildComment"
 					},
-					creator.getId(), _objectDefinition.getClassName(), scopeKey, groupId)
+					creator.getId(), _objectDefinition.getClassName(), scopeKey,
+					groupId)
 			).put(
-				"delete",
+				"get",
 				_addAction(
-					ActionKeys.DELETE, objectEntry.getId(),
+					ActionKeys.VIEW, objectEntry.getId(),
 					new String[] {
-						"deleteByExternalReferenceCodeComment",
-						"deleteScopeScopeKeyByExternalReferenceCodeComment"
+						"getByExternalReferenceCodeCommentChildCommentsPage",
+						"getScopeScopeKeyByExternalReferenceCodeCommentChild" +
+							"CommentsPage"
 					},
-					creator.getId(), _objectDefinition.getClassName(), scopeKey, groupId)
+					creator.getId(), _objectDefinition.getClassName(), scopeKey,
+					groupId)
 			).build(),
 			serviceBuilderComment.getCommentId(), contextCompany.getCompanyId(),
 			_commentManager, search, aggregation, filter, pagination,

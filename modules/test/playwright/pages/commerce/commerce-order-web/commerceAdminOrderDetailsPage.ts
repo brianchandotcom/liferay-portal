@@ -31,6 +31,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly orderItemFrame: FrameLocator;
 	readonly orderItemFrameCloseButton: Locator;
 	readonly orderItemDecimalQuantity: Locator;
+	readonly orderItemMeasurementUnits: Locator;
 	readonly orderItemQuantityColumn: (quantity: string) => Promise<Locator>;
 	readonly orderItemSaveButton: Locator;
 	readonly orderNote: (note: string) => Promise<Locator>;
@@ -109,6 +110,8 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 			.first();
 		this.orderItemDecimalQuantity =
 			this.orderItemFrame.getByLabel('Decimal Quantity');
+		this.orderItemMeasurementUnits =
+			this.orderItemFrame.getByLabel('Measurement Units');
 		this.orderItemSaveButton = this.orderItemFrame.getByRole('button', {
 			name: 'Save',
 		});

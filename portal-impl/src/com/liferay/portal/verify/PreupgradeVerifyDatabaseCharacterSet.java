@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -114,24 +115,12 @@ public class PreupgradeVerifyDatabaseCharacterSet
 		return false;
 	}
 
-	private void _addDBTableName(
-			DBInspector dbInspector, String dbTableName,
-			List<String> dbTableNames)
-		throws Exception {
-
-		if (dbInspector.hasTable(dbTableName)) {
-			dbTableNames.add(dbInspector.normalizeName(dbTableName));
-		}
-	}
-
 	private List<String> _getObjectDefinitionDBTableNames(
 			DBInspector dbInspector)
 		throws Exception {
 
-		List<String> objectDefinitionDBTableNames = new ArrayList<>();
-
 		if (!dbInspector.hasTable("ObjectDefinition")) {
-			return objectDefinitionDBTableNames;
+			return Collections.emptyList();
 		}
 
 		boolean hasModifiableColumn = dbInspector.hasColumn(
@@ -139,14 +128,14 @@ public class PreupgradeVerifyDatabaseCharacterSet
 		boolean hasSystemColumn = dbInspector.hasColumn(
 			"ObjectDefinition", "system_");
 
-		String sql = StringBundler.concat(
-			"select companyId, dbTableName",
-			hasModifiableColumn ? ", modifiable" : "",
-			hasSystemColumn ? ", system_" : "",
-			" from ObjectDefinition where status = ?");
+		List<String> objectDefinitionDBTableNames = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sql)) {
+				StringBundler.concat(
+					"select companyId, dbTableName",
+					hasModifiableColumn ? ", modifiable" : "",
+					hasSystemColumn ? ", system_" : "",
+					" from ObjectDefinition where status = ?"))) {
 
 			preparedStatement.setInt(1, WorkflowConstants.STATUS_APPROVED);
 
@@ -154,12 +143,11 @@ public class PreupgradeVerifyDatabaseCharacterSet
 				while (resultSet.next()) {
 					String dbTableName = resultSet.getString("dbTableName");
 
-					_addDBTableName(
-						dbInspector, dbTableName, objectDefinitionDBTableNames);
+					objectDefinitionDBTableNames.add(
+						dbInspector.normalizeName(dbTableName));
 
-					_addDBTableName(
-						dbInspector, dbTableName + "_l",
-						objectDefinitionDBTableNames);
+					objectDefinitionDBTableNames.add(
+						dbInspector.normalizeName(dbTableName + "_l"));
 
 					String extensionDBTableName = dbTableName + "_x";
 
@@ -177,9 +165,8 @@ public class PreupgradeVerifyDatabaseCharacterSet
 						extensionDBTableName += resultSet.getLong("companyId");
 					}
 
-					_addDBTableName(
-						dbInspector, extensionDBTableName,
-						objectDefinitionDBTableNames);
+					objectDefinitionDBTableNames.add(
+						dbInspector.normalizeName(extensionDBTableName));
 				}
 			}
 		}
@@ -191,11 +178,11 @@ public class PreupgradeVerifyDatabaseCharacterSet
 			DBInspector dbInspector)
 		throws Exception {
 
-		List<String> objectRelationshipDBTableNames = new ArrayList<>();
-
 		if (!dbInspector.hasTable("ObjectRelationship")) {
-			return objectRelationshipDBTableNames;
+			return Collections.emptyList();
 		}
+
+		List<String> objectRelationshipDBTableNames = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select dbTableName from ObjectRelationship where type_ = ?")) {
@@ -204,9 +191,9 @@ public class PreupgradeVerifyDatabaseCharacterSet
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					_addDBTableName(
-						dbInspector, resultSet.getString("dbTableName"),
-						objectRelationshipDBTableNames);
+					objectRelationshipDBTableNames.add(
+						dbInspector.normalizeName(
+							resultSet.getString("dbTableName")));
 				}
 			}
 		}

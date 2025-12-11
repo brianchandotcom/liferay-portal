@@ -278,9 +278,10 @@ public interface Build {
 			_buildURL = JenkinsResultsParserUtil.getBuildURL(
 				_build.getJobName(), getJenkinsMaster(), getQueueId());
 
-				String localBuildURL = JenkinsResultsParserUtil.getLocalURL(_buildURL);
+			String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
+				_buildURL);
 
-				_buildURL = JenkinsResultsParserUtil.getRemoteURL(localBuildURL);
+			_buildURL = JenkinsResultsParserUtil.getRemoteURL(localBuildURL);
 
 			return _buildURL;
 		}

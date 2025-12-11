@@ -21,8 +21,11 @@ export function toQueryString(query) {
 	return query ? `${qs.stringify(query, qsOptions)}` : '';
 }
 
-export default function useQuery(history, defaultQuery = {}, scope = false) {
-	const {location} = history;
+export default function useQuery(
+	{location, navigate},
+	defaultQuery = {},
+	scope = false
+) {
 	const {pathname, search} = location;
 	const currentQuery = toQuery(search, defaultQuery, scope);
 
@@ -31,7 +34,7 @@ export default function useQuery(history, defaultQuery = {}, scope = false) {
 		(query) => {
 			const scopedQuery = scope ? {[scope]: query} : query;
 
-			history.push(
+			navigate(
 				`${pathname}?${toQueryString({
 					...toQuery(search),
 					...scopedQuery,

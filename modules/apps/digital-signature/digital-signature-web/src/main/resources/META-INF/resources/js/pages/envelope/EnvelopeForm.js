@@ -4,15 +4,21 @@
  */
 
 import React from 'react';
+import {useNavigate} from 'react-router';
 
 import {BackButtonPortal} from '../../components/control-menu/ControlMenu';
 import DigitalSignatureForm from '../../components/digital-signature-form/DigitalSignatureForm';
 
-const EnvelopeForm = (props) => (
-	<>
-		<BackButtonPortal />
-		<DigitalSignatureForm {...props} />
-	</>
-);
+const EnvelopeForm = (props) => {
+	const navigate = useNavigate();
+
+	return (
+		<>
+			<BackButtonPortal />
+
+			<DigitalSignatureForm {...props} navigate={navigate} />
+		</>
+	);
+};
 
 export default EnvelopeForm;

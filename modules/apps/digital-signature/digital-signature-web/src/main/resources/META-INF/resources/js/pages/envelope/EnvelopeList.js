@@ -8,7 +8,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import {createResourceURL, dateUtils, fetch, sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router';
 
 import {AppContext} from '../../AppContext';
 import ListView from '../../components/list-view/ListView';
@@ -100,8 +100,11 @@ const FILTERS = [
 ];
 const getEnvelopeStatus = (status) =>
 	DOCUSIGN_STATUS[status] || {color: 'secondary', label: status};
-const EnvelopeList = ({history}) => {
+
+const EnvelopeList = () => {
 	const {baseResourceURL} = useContext(AppContext);
+
+	const navigate = useNavigate();
 
 	return (
 		<div className="envelope-list">
@@ -124,7 +127,7 @@ const EnvelopeList = ({history}) => {
 				addButton={() => (
 					<ClayButtonWithIcon
 						className="nav-btn nav-btn-monospaced"
-						onClick={() => history.push('/new-envelope')}
+						onClick={() => navigate('/new-envelope')}
 						symbol="plus"
 					/>
 				)}
@@ -142,7 +145,6 @@ const EnvelopeList = ({history}) => {
 				}}
 				defaultSort="desc"
 				filters={FILTERS}
-				history={history}
 			>
 				{({
 					envelopeId,

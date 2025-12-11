@@ -4,6 +4,7 @@
  */
 
 import React, {useCallback, useEffect} from 'react';
+import {useLocation, useNavigate} from 'react-router';
 
 import useQuery from '../../hooks/useQuery';
 import useResource from '../../hooks/useResource';
@@ -26,13 +27,15 @@ const ListView = ({
 	emptyState,
 	endpoint,
 	filters = [],
-	history,
 	noActionsMessage,
 	queryParams,
 	scope,
 }) => {
+	const location = useLocation();
+	const navigate = useNavigate();
+
 	const [query, setQuery] = useQuery(
-		history,
+		{location, navigate},
 		{
 			defaultSort,
 			filters: {},

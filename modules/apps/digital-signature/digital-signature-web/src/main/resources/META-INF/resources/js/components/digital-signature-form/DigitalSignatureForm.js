@@ -12,7 +12,7 @@ import {openToast} from 'frontend-js-components-web';
 import {
 	createResourceURL,
 	fetch,
-	navigate,
+	navigate as liferayNavigate,
 	objectToFormData,
 } from 'frontend-js-web';
 import React, {useContext} from 'react';
@@ -32,18 +32,18 @@ const defaultRecipient = {
 	fullName: '',
 };
 
-const DigitalSignatureForm = ({fileEntries = [], history}) => {
+const DigitalSignatureForm = ({fileEntries = [], navigate}) => {
 	const {allowedFileExtensions, baseResourceURL, portletNamespace} =
 		useContext(AppContext);
 	const urlParams = new URLSearchParams(window.location.href);
 	const backURL = urlParams.get(`${portletNamespace}backURL`);
 
 	const onGoBack = () => {
-		if (history) {
-			return history.goBack();
+		if (navigate) {
+			return navigate(-1);
 		}
 
-		return navigate(backURL);
+		return liferayNavigate(backURL);
 	};
 
 	const onSubmit = async (values) => {

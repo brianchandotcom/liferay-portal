@@ -447,6 +447,11 @@ components:
                         The number of child comments on this comment.
                     readOnly: true
                     type: integer
+                parentCommentExternalReferenceCode:
+                    # @review
+                    description:
+                        The parent comment's external reference code.
+                    type: string
                 parentCommentId:
                     # @review
                     description:

@@ -10,6 +10,7 @@ import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {userPersonalBarPagesTest} from '../../../../fixtures/userPersonalBarPagesTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {userData} from '../../../../utils/performLogin';
 
@@ -18,7 +19,8 @@ export const test = mergeTests(
 	commercePagesTest,
 	dataApiHelpersTest,
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	userPersonalBarPagesTest
 );
 
 test(
@@ -361,5 +363,31 @@ test(
 		await apiHelpers.headlessAdminUser.patchUserAccount(user, {
 			languageId: 'en_US',
 		});
+	}
+);
+
+test(
+	'Creating product with pending status in headless triggers workflow notification',
+	{tag: ['@LPD-73496']},
+	async ({apiHelpers, page, userPersonalBarPage}) => {
+		await userPersonalBarPage.goToProcessBuilderConfigurationTab();
+		await userPersonalBarPage.enableSingleApproverWorkflowProduct();
+
+		try {
+			const catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				productStatus: 1,
+			});
+
+			await page.goto('/');
+
+			await expect(userPersonalBarPage.notificationBadge).toBeVisible();
+		}
+		finally {
+			await userPersonalBarPage.disableSingleApproverWorkflowProduct();
+		}
 	}
 );

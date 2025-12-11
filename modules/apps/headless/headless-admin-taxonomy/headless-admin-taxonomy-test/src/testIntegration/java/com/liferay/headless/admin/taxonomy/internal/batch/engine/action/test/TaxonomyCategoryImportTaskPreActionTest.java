@@ -8,10 +8,12 @@ package com.liferay.headless.admin.taxonomy.internal.batch.engine.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.internal.batch.engine.action.test.util.ExportImportTaskResourceTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -23,9 +25,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,14 +58,61 @@ public class TaxonomyCategoryImportTaskPreActionTest {
 		_targetGroup = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
 
+		String assetVocabularyExternalReferenceCode =
+			RandomTestUtil.randomString();
+		String assetVocabularyTitle = RandomTestUtil.randomString();
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
 		_localAssetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			_user.getUserId(), _localGroup.getGroupId(),
-			RandomTestUtil.randomString(),
+			assetVocabularyExternalReferenceCode, _user.getUserId(),
+			_localGroup.getGroupId(), assetVocabularyTitle,
+			assetVocabularyTitle,
+			HashMapBuilder.put(
+				locale, assetVocabularyTitle
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
 			ServiceContextTestUtil.getServiceContext());
+
 		_targetAssetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			_user.getUserId(), _targetGroup.getGroupId(),
-			RandomTestUtil.randomString(),
+			assetVocabularyExternalReferenceCode, _user.getUserId(),
+			_targetGroup.getGroupId(), assetVocabularyTitle,
+			assetVocabularyTitle,
+			HashMapBuilder.put(
+				locale, assetVocabularyTitle
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test
+	public void testExportImportAcrossSites() throws Exception {
+		AssetCategory localAssetCategory = _getAssetCategory(_user.getUserId());
+
+		String json = ExportImportTaskResourceTestUtil.executeExportTask(
+			_ITEM_CLASS_NAME, _localGroup.getGroupId(), null);
+
+		ExportImportTaskResourceTestUtil.executeImportTask(
+			_ITEM_CLASS_NAME, "UPSERT", _targetGroup.getGroupId(),
+			"KEEP_CREATOR", json, null);
+
+		AssetCategory targetAssetCategory =
+			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				localAssetCategory.getExternalReferenceCode(),
+				_targetGroup.getGroupId());
+
+		Assert.assertEquals(
+			localAssetCategory.getTitle(), targetAssetCategory.getTitle());
+
+		Assert.assertEquals(
+			_targetAssetVocabulary.getVocabularyId(),
+			targetAssetCategory.getVocabularyId());
 	}
 
 	@Test

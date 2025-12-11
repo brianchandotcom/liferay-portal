@@ -985,7 +985,7 @@ public class LiferayOAuthDataProvider
 	}
 
 	@Override
-	protected void doRemoveClient(Client c) {
+	protected void doRemoveClient(Client client) {
 		throw new UnsupportedOperationException();
 	}
 

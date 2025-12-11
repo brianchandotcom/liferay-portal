@@ -92,7 +92,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			return;
 		}
 
-		User user;
+		User user = null;
 
 		try {
 			JwtToken jwtToken = _getJwtToken(httpServletRequest);
@@ -101,8 +101,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			long expirationTime = GetterUtil.getLong(jwtToken.getClaim("exp"));
 
 			if (currentTime > expirationTime) {
-				throw ExceptionUtils.toNotAuthorizedException(
-					(Throwable)null, (Response)null);
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}
 
 			user = _getUser(GetterUtil.getLong(jwtToken.getClaim("sub")));
@@ -119,8 +118,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				!_containsOAuth2RegisterApplicationPermission(
 					oAuth2Application, user)) {
 
-				throw ExceptionUtils.toNotAuthorizedException(
-					(Throwable)null, (Response)null);
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}
 		}
 		catch (JSONException jsonException) {
@@ -128,8 +126,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				_log.debug("exception processing token: ", jsonException);
 			}
 
-			throw ExceptionUtils.toNotAuthorizedException(
-				(Throwable)null, (Response)null);
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 		catch (WebApplicationException webApplicationException) {
 			if (_log.isDebugEnabled()) {
@@ -143,8 +140,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				_log.debug("Exception when retrieving permissions:", exception);
 			}
 
-			throw ExceptionUtils.toNotAuthorizedException(
-				(Throwable)null, (Response)null);
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
 		try {
@@ -197,8 +193,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			"Authorization");
 
 		if (!StringUtil.startsWith(authorizationHeader, "Bearer ")) {
-			throw ExceptionUtils.toNotAuthorizedException(
-				(Throwable)null, (Response)null);
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
 		return new JwsJwtCompactConsumer(

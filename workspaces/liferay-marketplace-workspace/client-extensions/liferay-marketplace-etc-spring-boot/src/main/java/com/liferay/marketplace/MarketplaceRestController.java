@@ -561,12 +561,12 @@ public class MarketplaceRestController extends BaseRestController {
 	private File _getPublisherAssetFile(String publisherAssetURL)
 		throws Exception {
 
-		InputStream inputStream =
-			_marketplaceService.getPublisherAssetInputStream(publisherAssetURL);
-
 		File tempFile = File.createTempFile("publisher_asset_", ".zip");
 
-		try (FileOutputStream fileOutputStream = new FileOutputStream(
+		try (InputStream inputStream =
+				_marketplaceService.getPublisherAssetInputStream(
+					publisherAssetURL);
+			FileOutputStream fileOutputStream = new FileOutputStream(
 				tempFile)) {
 
 			inputStream.transferTo(fileOutputStream);
@@ -619,8 +619,8 @@ public class MarketplaceRestController extends BaseRestController {
 			PublisherAssetLink publisherAssetLink)
 		throws Exception {
 
-		File publisherAssetFile = null;
 		File publisherAssetArtifactFile = null;
+		File publisherAssetFile = null;
 
 		try {
 			publisherAssetFile = _getPublisherAssetFile(

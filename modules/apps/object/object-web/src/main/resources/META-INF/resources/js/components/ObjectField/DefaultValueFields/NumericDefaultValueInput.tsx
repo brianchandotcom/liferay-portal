@@ -4,7 +4,8 @@
  */
 
 import {NumericEntryBaseField} from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import {debounce} from 'frontend-js-web';
+import React, {useMemo, useState} from 'react';
 import {createNumberMask} from 'text-mask-addons';
 import {conformToMask} from 'text-mask-core';
 
@@ -55,30 +56,52 @@ const NumericDefaultValueInput: React.FC<
 		raw: initialValue,
 	});
 
-	const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const masked = getConformedValue(event.target.value);
+	const debouncedSave = useMemo(
+		() =>
+			debounce((masked: string) => {
+				const newObjectFieldSettings =
+					getUpdatedDefaultValueFieldSettings(
+						values,
+						masked.replace(decimalSeparator || ',', '.'),
+						'inputAsValue'
+					);
 
-		const newObjectFieldSettings = getUpdatedDefaultValueFieldSettings(
+				setValues({
+					objectFieldSettings: newObjectFieldSettings,
+				});
+
+				onSubmit?.({
+					...values,
+					objectFieldSettings: newObjectFieldSettings,
+				});
+			}, 300),
+		[decimalSeparator, onSubmit, setValues, values]
+	);
+
+	const save = (masked: string) => {
+		const newSettings = getUpdatedDefaultValueFieldSettings(
 			values,
 			masked.replace(decimalSeparator || ',', '.'),
 			'inputAsValue'
 		);
 
-		setValues({
-			objectFieldSettings: newObjectFieldSettings,
-		});
+		setValues({objectFieldSettings: newSettings});
+	};
 
-		if (onSubmit) {
-			onSubmit({
-				...values,
-				objectFieldSettings: newObjectFieldSettings,
-			});
-		}
+	const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const masked = getConformedValue(event.target.value);
 
 		setValue({
 			masked,
 			raw: event.target.value,
 		});
+
+		if (onSubmit) {
+			debouncedSave(masked);
+		}
+		else {
+			save(masked);
+		}
 	};
 
 	return (

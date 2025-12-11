@@ -418,7 +418,10 @@ test('can create calendar event with invitation', async ({
 				.getByText('Pending (1)')
 		).toBeVisible();
 		await expect(
-			calendarWidgetPage.page.frameLocator('iframe').getByText(user1.name)
+			calendarWidgetPage.page
+				.frameLocator('iframe')
+				.locator('.calendar-portlet-calendar-list')
+				.getByText(user1.name)
 		).toBeVisible();
 	}
 	finally {

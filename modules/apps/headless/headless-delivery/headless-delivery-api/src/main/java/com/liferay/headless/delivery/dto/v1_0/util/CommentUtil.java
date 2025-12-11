@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.ws.rs.ClientErrorException;
@@ -66,11 +67,25 @@ public class CommentUtil {
 
 		return TransformUtil.transformToList(
 			comments,
-			comment -> commentManager.createComment(
-				0L, comment.getExternalReferenceCode(), userId, groupId,
-				className, classPK,
-				GetterUtil.getLong(comment.getParentCommentId()),
-				StringPool.BLANK, comment.getText()));
+			comment -> {
+				long parentCommentId = 0;
+
+				if (Validator.isNotNull(
+						comment.getParentCommentExternalReferenceCode())) {
+
+					com.liferay.portal.kernel.comment.Comment parentComment =
+						commentManager.fetchComment(
+							groupId,
+							comment.getParentCommentExternalReferenceCode());
+
+					parentCommentId = parentComment.getParentCommentId();
+				}
+
+				return commentManager.createComment(
+					0L, comment.getExternalReferenceCode(), userId, groupId,
+					className, classPK, GetterUtil.getLong(parentCommentId),
+					StringPool.BLANK, comment.getText());
+			});
 	}
 
 	private static Comment _toComment(
@@ -94,6 +109,18 @@ public class CommentUtil {
 					() -> commentManager.getChildCommentsCount(
 						comment.getCommentId(),
 						WorkflowConstants.STATUS_APPROVED));
+				setParentCommentExternalReferenceCode(
+					() -> {
+						com.liferay.portal.kernel.comment.Comment
+							parentComment = commentManager.fetchComment(
+								comment.getParentCommentId());
+
+						if (parentComment != null) {
+							return parentComment.getExternalReferenceCode();
+						}
+
+						return null;
+					});
 				setParentCommentId(comment::getParentCommentId);
 				setText(comment::getBody);
 			}

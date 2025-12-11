@@ -51,6 +51,7 @@ import com.liferay.osb.faro.web.internal.model.display.contacts.DXPOrganizationD
 import com.liferay.osb.faro.web.internal.model.display.contacts.DXPUserGroupDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.DataSourceDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.DataSourceMappingDisplay;
+import com.liferay.osb.faro.web.internal.model.display.contacts.DataSourceMetricsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FieldMappingValuesDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FieldValuesDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.LiferaySyncCountsDisplay;
@@ -77,6 +78,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -599,6 +601,84 @@ public class DataSourceController extends BaseFaroController {
 						item, fieldsMap.get(item.getFieldName())),
 					Collections.emptyList());
 			});
+	}
+
+	@GET
+	@Path("/{id}/metrics")
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public DataSourceMetricsDisplay getDataSourceMetricsDisplay(
+			@PathParam("groupId") long groupId, @PathParam("id") String id)
+		throws Exception {
+
+		long channelsCount = 0;
+		long groupsCount = 0;
+		long usersCount = 0;
+
+		FaroProject faroProject =
+			faroProjectLocalService.getFaroProjectByGroupId(groupId);
+
+		DataSource dataSource = contactsEngineClient.getDataSource(
+			faroProject, id);
+
+		Provider provider = dataSource.getProvider();
+
+		if (StringUtil.equals(provider.getType(), LiferayProvider.TYPE)) {
+			LiferayProvider liferayProvider = (LiferayProvider)provider;
+
+			LiferayProvider.ChannelsConfiguration channelsConfiguration =
+				liferayProvider.getChannelsConfiguration();
+
+			if (channelsConfiguration != null) {
+				List<LiferayProvider.Channel> channels =
+					channelsConfiguration.getChannels();
+
+				if (ListUtil.isNotEmpty(channels)) {
+					channelsCount = channels.size();
+				}
+
+				for (LiferayProvider.Channel channel : channels) {
+					Set<Long> groupIds = channel.getGroupIds();
+
+					if (SetUtil.isNotEmpty(groupIds)) {
+						groupsCount += groupIds.size();
+					}
+				}
+			}
+
+			usersCount = contactsEngineClient.getDXPUsersCount(faroProject, id);
+		}
+		else if (StringUtil.equals(
+					provider.getType(), SalesforceProvider.TYPE)) {
+
+			SalesforceProvider salesforceProvider =
+				(SalesforceProvider)provider;
+
+			SalesforceProvider.ChannelsConfiguration channelsConfiguration =
+				salesforceProvider.getChannelsConfiguration();
+
+			if (channelsConfiguration != null) {
+				List<SalesforceProvider.Channel> channels =
+					channelsConfiguration.getChannels();
+
+				if (ListUtil.isNotEmpty(channels)) {
+					channelsCount = channels.size();
+				}
+
+				for (SalesforceProvider.Channel channel : channels) {
+					Set<Long> groupIds = channel.getGroupIds();
+
+					if (SetUtil.isNotEmpty(groupIds)) {
+						groupsCount += groupIds.size();
+					}
+				}
+			}
+
+			usersCount = contactsEngineClient.getSalesforceUsersCount(
+				id, faroProject);
+		}
+
+		return new DataSourceMetricsDisplay(
+			channelsCount, groupsCount, usersCount);
 	}
 
 	@GET

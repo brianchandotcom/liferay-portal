@@ -105,9 +105,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				  javaeePackage.equals("javax"))) {
 
 				throw new IllegalArgumentException(
-					"Invalid value was provided for -antbnd.jspanalyzer." +
-						"fallback-javaee-package property. Valid values are " +
-							"either javax or jakarta");
+					"Invalid value was provided for the property \"-antbnd." +
+						"jspanalyzer.fallback-javaee-package. Valid values " +
+							"are either \"javax\" or \"jakarta.\"");
 			}
 
 			String[] requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAKARTA;

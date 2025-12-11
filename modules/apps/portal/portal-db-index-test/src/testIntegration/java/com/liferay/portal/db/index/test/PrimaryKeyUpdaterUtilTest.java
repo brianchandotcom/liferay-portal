@@ -13,10 +13,12 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.portal.db.DBResourceProvider;
 import com.liferay.portal.db.index.PrimaryKeyUpdaterUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -112,6 +114,29 @@ public class PrimaryKeyUpdaterUtilTest {
 
 	@Test
 	public void testUpdateAllPrimaryKeys() throws Exception {
+		_testUpdateAllPrimaryKeys();
+	}
+
+	@Test
+	public void testUpdateAllPrimaryKeysSkippingServiceLayer()
+		throws Exception {
+
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					_dbResourceProvider, "_objectDefinitionLocalService", null);
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					_dbResourceProvider, "_objectFieldLocalService", null);
+			AutoCloseable autoCloseable3 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					_dbResourceProvider, "_objectRelationshipLocalService",
+					null)) {
+
+			_testUpdateAllPrimaryKeys();
+		}
+	}
+
+	private void _testUpdateAllPrimaryKeys() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
 		try (Connection connection = DataAccess.getConnection()) {
@@ -158,5 +183,10 @@ public class PrimaryKeyUpdaterUtilTest {
 	@Inject
 	private static ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.object.internal.db.ObjectDBResourceProvider))"
+	)
+	private DBResourceProvider _dbResourceProvider;
 
 }

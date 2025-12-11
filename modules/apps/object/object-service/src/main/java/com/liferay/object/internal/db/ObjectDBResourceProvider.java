@@ -8,17 +8,30 @@ package com.liferay.object.internal.db;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.impl.ObjectDefinitionImpl;
+import com.liferay.object.model.impl.ObjectRelationshipImpl;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.DBResourceProvider;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,52 +49,201 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 	public Map<String, String[]> getTablesPrimaryKeyColumnNames(long companyId)
 		throws PortalException {
 
-		Map<String, String[]> tablesPrimaryKeyColumnNames = new HashMap<>();
+		try {
+			return _getTablesPrimaryKeyColumnNames(companyId);
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
+	}
 
-		List<ObjectDefinition> objectDefinitions =
-			_objectDefinitionLocalService.getObjectDefinitions(
-				companyId, WorkflowConstants.STATUS_APPROVED);
+	private List<ObjectRelationship> _getAllObjectRelationships(
+			Connection connection, ObjectDefinition objectDefinition)
+		throws PortalException {
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
+		try {
+			return _objectRelationshipLocalService.getAllObjectRelationships(
+				objectDefinition.getObjectDefinitionId());
+		}
+		catch (Exception exception1) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception1);
+			}
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select dbTableName, objectDefinitionId1, ",
+							"objectDefinitionId2, objectRelationshipId, type_ ",
+							"from ObjectRelationship where companyId = ? and ",
+							"(objectDefinitionId1 = ? or objectDefinitionId2 ",
+							"= ?) and reverse = ?"))) {
+
+				preparedStatement.setLong(1, objectDefinition.getCompanyId());
+				preparedStatement.setLong(
+					2, objectDefinition.getObjectDefinitionId());
+				preparedStatement.setLong(
+					3, objectDefinition.getObjectDefinitionId());
+				preparedStatement.setBoolean(4, false);
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					List<ObjectRelationship> objectRelationships =
+						new ArrayList<>();
+
+					while (resultSet.next()) {
+						ObjectRelationship objectRelationship =
+							new ObjectRelationshipImpl() {
+								{
+									setDBTableName(
+										resultSet.getString("dbTableName"));
+									setObjectDefinitionId1(
+										resultSet.getLong(
+											"objectDefinitionId1"));
+									setObjectDefinitionId2(
+										resultSet.getLong(
+											"objectDefinitionId2"));
+									setObjectRelationshipId(
+										resultSet.getLong(
+											"objectRelationshipId"));
+									setReverse(false);
+									setType(resultSet.getString("type_"));
+								}
+							};
+
+						objectRelationships.add(objectRelationship);
+					}
+
+					return objectRelationships;
+				}
+			}
+			catch (Exception exception2) {
+				throw new PortalException(exception2);
+			}
+		}
+	}
+
+	private Map<Long, ObjectDefinition> _getObjectDefinitions(long companyId)
+		throws PortalException {
+
+		Map<Long, ObjectDefinition> objectDefinitions = new HashMap<>();
+
+		try {
+			for (ObjectDefinition objectDefinition :
+					_objectDefinitionLocalService.getObjectDefinitions(
+						companyId, WorkflowConstants.STATUS_APPROVED)) {
+
+				objectDefinitions.put(
+					objectDefinition.getObjectDefinitionId(), objectDefinition);
+			}
+
+			return objectDefinitions;
+		}
+		catch (Exception exception1) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception1);
+			}
+
+			try (Connection connection = DataAccess.getConnection()) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							StringBundler.concat(
+								"select dbTableName, modifiable,  ",
+								"objectDefinitionId, ",
+								"pkObjectFieldDBColumnName, system_ from ",
+								"ObjectDefinition where companyId = ? and ",
+								"status = ?"))) {
+
+					preparedStatement.setLong(1, companyId);
+					preparedStatement.setInt(
+						2, WorkflowConstants.STATUS_APPROVED);
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						while (resultSet.next()) {
+							ObjectDefinition objectDefinition =
+								new ObjectDefinitionImpl() {
+									{
+										setCompanyId(companyId);
+										setDBTableName(
+											resultSet.getString("dbTableName"));
+										setModifiable(
+											resultSet.getBoolean("modifiable"));
+										setObjectDefinitionId(
+											resultSet.getLong(
+												"objectDefinitionId"));
+										setPKObjectFieldDBColumnName(
+											resultSet.getString(
+												"pkObjectFieldDBColumnName"));
+										setSystem(
+											resultSet.getBoolean("system_"));
+									}
+								};
+
+							objectDefinitions.put(
+								objectDefinition.getObjectDefinitionId(),
+								objectDefinition);
+						}
+
+						return objectDefinitions;
+					}
+				}
+			}
+			catch (Exception exception2) {
+				throw new PortalException(exception2);
+			}
+		}
+	}
+
+	private Map<String, String[]>
+			_getObjectLocalizationTablePrimaryKeyColumnNames(
+				DBInspector dbInspector, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		try {
 			DynamicObjectDefinitionLocalizationTable
 				dynamicObjectDefinitionLocalizationTable =
 					DynamicObjectDefinitionLocalizationTableFactory.create(
 						objectDefinition, _objectFieldLocalService);
 
 			if (dynamicObjectDefinitionLocalizationTable != null) {
-				tablesPrimaryKeyColumnNames.put(
+				return Collections.singletonMap(
 					objectDefinition.getLocalizationDBTableName(),
 					dynamicObjectDefinitionLocalizationTable.
 						getPrimaryKeyColumnNames());
 			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 
-			tablesPrimaryKeyColumnNames.put(
-				objectDefinition.getDBTableName(),
-				new String[] {objectDefinition.getPKObjectFieldDBColumnName()});
+			if (dbInspector.hasTable(
+					objectDefinition.getLocalizationDBTableName())) {
 
-			tablesPrimaryKeyColumnNames.put(
-				objectDefinition.getExtensionDBTableName(),
-				new String[] {objectDefinition.getPKObjectFieldDBColumnName()});
-
-			tablesPrimaryKeyColumnNames.putAll(
-				_getObjectRelationshipTablesPrimaryKeyColumnNames(
-					objectDefinition));
+				return Collections.singletonMap(
+					objectDefinition.getLocalizationDBTableName(),
+					new String[] {
+						objectDefinition.getPKObjectFieldDBColumnName(),
+						"languageId"
+					});
+			}
 		}
 
-		return tablesPrimaryKeyColumnNames;
+		return Collections.emptyMap();
 	}
 
 	private Map<String, String[]>
 			_getObjectRelationshipTablesPrimaryKeyColumnNames(
-				ObjectDefinition objectDefinition)
+				Connection connection, ObjectDefinition objectDefinition,
+				Map<Long, ObjectDefinition> objectDefinitions)
 		throws PortalException {
 
 		Map<String, String[]> objectRelationshipTablesPrimaryKeyColumnNames =
 			new HashMap<>();
 
 		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.getAllObjectRelationships(
-				objectDefinition.getObjectDefinitionId());
+			_getAllObjectRelationships(connection, objectDefinition);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			if (!StringUtil.equalsIgnoreCase(
@@ -93,9 +255,9 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 
 			Map<String, String> pkObjectFieldDBColumnNames =
 				ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
-					_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitions.get(
 						objectRelationship.getObjectDefinitionId1()),
-					_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitions.get(
 						objectRelationship.getObjectDefinitionId2()),
 					false);
 
@@ -113,6 +275,49 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 
 		return objectRelationshipTablesPrimaryKeyColumnNames;
 	}
+
+	private Map<String, String[]> _getTablesPrimaryKeyColumnNames(
+			long companyId)
+		throws Exception {
+
+		Map<String, String[]> tablesPrimaryKeyColumnNames = new HashMap<>();
+
+		try (Connection connection = DataAccess.getConnection()) {
+			Map<Long, ObjectDefinition> objectDefinitions =
+				_getObjectDefinitions(companyId);
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			for (ObjectDefinition objectDefinition :
+					objectDefinitions.values()) {
+
+				tablesPrimaryKeyColumnNames.putAll(
+					_getObjectLocalizationTablePrimaryKeyColumnNames(
+						dbInspector, objectDefinition));
+
+				tablesPrimaryKeyColumnNames.put(
+					objectDefinition.getDBTableName(),
+					new String[] {
+						objectDefinition.getPKObjectFieldDBColumnName()
+					});
+
+				tablesPrimaryKeyColumnNames.put(
+					objectDefinition.getExtensionDBTableName(),
+					new String[] {
+						objectDefinition.getPKObjectFieldDBColumnName()
+					});
+
+				tablesPrimaryKeyColumnNames.putAll(
+					_getObjectRelationshipTablesPrimaryKeyColumnNames(
+						connection, objectDefinition, objectDefinitions));
+			}
+		}
+
+		return tablesPrimaryKeyColumnNames;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDBResourceProvider.class);
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

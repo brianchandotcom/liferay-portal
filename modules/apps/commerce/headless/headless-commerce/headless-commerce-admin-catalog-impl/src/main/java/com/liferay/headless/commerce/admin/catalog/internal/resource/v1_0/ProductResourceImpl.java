@@ -697,7 +697,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		int productStatus = GetterUtil.getInteger(product.getProductStatus());
 
-		if (productStatus != WorkflowConstants.STATUS_APPROVED) {
+		if ((productStatus != WorkflowConstants.STATUS_APPROVED) &&
+			(productStatus != WorkflowConstants.STATUS_PENDING)) {
+
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}

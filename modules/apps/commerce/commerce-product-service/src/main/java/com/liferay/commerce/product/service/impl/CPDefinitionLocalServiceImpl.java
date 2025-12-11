@@ -367,7 +367,8 @@ public class CPDefinitionLocalServiceImpl
 
 		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-				CPDefinition.class.getName(), 0)) {
+				CPDefinition.class.getName(), 0) &&
+			(status != WorkflowConstants.STATUS_PENDING)) {
 
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);

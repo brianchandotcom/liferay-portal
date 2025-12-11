@@ -4,7 +4,8 @@
  */
 
 import {RichTextEntryBaseField} from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import {debounce} from 'frontend-js-web';
+import React, {useMemo, useState} from 'react';
 
 import {getUpdatedDefaultValueFieldSettings} from '../../../utils/defaultValues';
 import {InputAsValueFieldComponentProps} from '../Tabs/Advanced/DefaultValueContainer';
@@ -24,27 +25,46 @@ const RichTextDefaultValue: React.FC<
 	const initialValue = typeof defaultValue === 'string' ? defaultValue : '';
 	const [value, setValue] = useState(initialValue);
 
-	const handleChangeInput = (event: any, editor: any) => {
-		const newValue = editor.getData();
+	const debouncedSave = useMemo(
+		() =>
+			debounce((nextValue: string) => {
+				const newSettings = getUpdatedDefaultValueFieldSettings(
+					values,
+					nextValue,
+					'inputAsValue'
+				);
 
-		const newObjectFieldSettings = getUpdatedDefaultValueFieldSettings(
+				setValues({objectFieldSettings: newSettings});
+
+				onSubmit?.({
+					...values,
+					objectFieldSettings: newSettings,
+				});
+			}, 300),
+		[onSubmit, setValues, values]
+	);
+
+	const save = (nextValue: string) => {
+		const newSettings = getUpdatedDefaultValueFieldSettings(
 			values,
-			newValue,
+			nextValue,
 			'inputAsValue'
 		);
 
-		setValues({
-			objectFieldSettings: newObjectFieldSettings,
-		});
+		setValues({objectFieldSettings: newSettings});
+	};
 
-		if (onSubmit) {
-			onSubmit({
-				...values,
-				objectFieldSettings: newObjectFieldSettings,
-			});
-		}
+	const handleChangeInput = (event: any, editor: any) => {
+		const newValue = editor.getData();
 
 		setValue(newValue);
+
+		if (onSubmit) {
+			debouncedSave(newValue);
+		}
+		else {
+			save(newValue);
+		}
 	};
 
 	return (

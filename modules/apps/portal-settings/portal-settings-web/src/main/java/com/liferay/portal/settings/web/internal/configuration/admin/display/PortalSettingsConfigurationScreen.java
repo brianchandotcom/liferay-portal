@@ -41,7 +41,9 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 	}
 
 	@Override
-	public Dictionary<String, Object> exportProperties(Serializable scopePK) {
+	public Dictionary<String, Object> exportProperties(Serializable scopePK)
+		throws Exception {
+
 		return _portalSettingsConfigurationScreenContributor.exportProperties(
 			scopePK);
 	}

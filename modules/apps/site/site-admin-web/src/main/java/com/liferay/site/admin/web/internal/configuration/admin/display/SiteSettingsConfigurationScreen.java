@@ -42,7 +42,9 @@ public class SiteSettingsConfigurationScreen implements ConfigurationScreen {
 	}
 
 	@Override
-	public Dictionary<String, Object> exportProperties(Serializable scopePK) {
+	public Dictionary<String, Object> exportProperties(Serializable scopePK)
+		throws Exception {
+
 		return _siteSettingsConfigurationScreenContributor.exportProperties(
 			scopePK);
 	}

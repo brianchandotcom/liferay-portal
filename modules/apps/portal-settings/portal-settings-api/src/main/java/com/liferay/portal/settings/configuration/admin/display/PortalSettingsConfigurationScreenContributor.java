@@ -23,7 +23,8 @@ import java.util.Locale;
 public interface PortalSettingsConfigurationScreenContributor {
 
 	public default Dictionary<String, Object> exportProperties(
-		Serializable scopePK) {
+			Serializable scopePK)
+		throws Exception {
 
 		return null;
 	}

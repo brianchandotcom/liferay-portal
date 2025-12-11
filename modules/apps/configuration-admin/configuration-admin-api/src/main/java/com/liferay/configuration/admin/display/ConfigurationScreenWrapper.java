@@ -23,7 +23,9 @@ public abstract class ConfigurationScreenWrapper
 	implements ConfigurationScreen {
 
 	@Override
-	public Dictionary<String, Object> exportProperties(Serializable scopePK) {
+	public Dictionary<String, Object> exportProperties(Serializable scopePK)
+		throws Exception {
+
 		ConfigurationScreen configurationScreen =
 			_configurationScreenDCLSingleton.getSingleton(
 				this::getConfigurationScreen);

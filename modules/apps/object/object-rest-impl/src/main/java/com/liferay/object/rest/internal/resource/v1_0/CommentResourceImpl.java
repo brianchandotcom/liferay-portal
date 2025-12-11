@@ -375,20 +375,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			actionName, id, methodNames[1], ownerId, permissionName, siteId);
 	}
 
-	private Map<String, String> _addAction(
-		String actionName, String[] methodNames, String permissionName,
-		String scopeKey, Long siteId) {
-
-		if (Validator.isNull(scopeKey)) {
-			return addAction(
-				actionName, siteId, methodNames[0], null, permissionName,
-				siteId);
-		}
-
-		return addAction(
-			actionName, siteId, methodNames[1], null, permissionName, siteId);
-	}
-
 	private Comment _addComment(
 			String externalReferenceCode, long groupId, Long parentCommentId,
 			long objectEntryId, String text)
@@ -501,6 +487,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, scopeKey);
 
+		Creator creator = objectEntry.getCreator();
+
 		long groupId = objectEntry.getScopeId();
 
 		if (groupId == 0) {
@@ -514,22 +502,22 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			HashMapBuilder.put(
 				"add-discussion",
 				_addAction(
-					ActionKeys.ADD_DISCUSSION,
+					ActionKeys.ADD_DISCUSSION, objectEntry.getId(),
 					new String[] {
 						"postByExternalReferenceCodeCommentChildComment",
 						"postScopeScopeKeyByExternalReferenceCodeComment" +
 							"ChildComment"
 					},
-					_objectDefinition.getClassName(), scopeKey, null)
+					creator.getId(), _objectDefinition.getClassName(), scopeKey, groupId)
 			).put(
 				"delete",
 				_addAction(
-					ActionKeys.DELETE,
+					ActionKeys.DELETE, objectEntry.getId(),
 					new String[] {
 						"deleteByExternalReferenceCodeComment",
 						"deleteScopeScopeKeyByExternalReferenceCodeComment"
 					},
-					_objectDefinition.getClassName(), scopeKey, null)
+					creator.getId(), _objectDefinition.getClassName(), scopeKey, groupId)
 			).build(),
 			serviceBuilderComment.getCommentId(), contextCompany.getCompanyId(),
 			_commentManager, search, aggregation, filter, pagination,

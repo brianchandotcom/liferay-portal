@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -15,6 +16,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
+	accountSettingsPagesTest,
 	featureFlagsTest({
 		'LPD-51356': {enabled: true},
 	}),
@@ -300,5 +302,72 @@ test(
 				)
 			).toBeVisible();
 		});
+	}
+);
+
+test(
+	'Verify Data Privacy center is not present when both Cookie Manager and Product Analytics are disabled',
+	{tag: '@LPD-72749'},
+	async ({accountSettingsPage, page, systemSettingsPage}) => {
+		await test.step('Disable Product Analytics', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				'Privacy',
+				'Product Analytics'
+			);
+
+			await page
+				.getByRole('heading', {
+					name: 'Product Analytics',
+				})
+				.waitFor();
+
+			const enabledButton = await page.getByLabel('Enabled');
+
+			await enabledButton.setChecked(false);
+
+			await page
+				.getByRole('button', {name: 'Save'})
+				.dispatchEvent('click');
+
+			await waitForAlert(page);
+
+			await expect(enabledButton).not.toBeChecked();
+		});
+
+		await test.step('Disable Cookie Manager', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				'Privacy',
+				'Cookie Manager'
+			);
+
+			await page
+				.getByRole('heading', {
+					name: 'Cookie Manager',
+				})
+				.waitFor();
+
+			const enabledButton = await page.getByLabel('Enabled');
+
+			await enabledButton.setChecked(false);
+
+			await page
+				.getByRole('button', {name: 'Save'})
+				.dispatchEvent('click');
+
+			await waitForAlert(page);
+
+			await expect(enabledButton).not.toBeChecked();
+		});
+
+		await accountSettingsPage.goToAccountSettings();
+
+		const dataAndPrivacyTab = await accountSettingsPage.page.locator(
+			'.nav-link',
+			{
+				hasText: 'Data And Privacy',
+			}
+		);
+
+		await expect(await dataAndPrivacyTab).not.toBeVisible();
 	}
 );

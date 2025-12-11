@@ -477,8 +477,8 @@ public class MarketplaceRestController extends BaseRestController {
 			});
 	}
 
-	@PostMapping("/process-publisher-assets/{productId}")
-	public void processPublisherAssets(@PathVariable long productId) {
+	@PostMapping("/process-publisher-asset-link/{productId}")
+	public void processPublisherAssetLink(@PathVariable long productId) {
 		try {
 			Product product = _marketplaceService.getProduct(productId);
 
@@ -510,7 +510,7 @@ public class MarketplaceRestController extends BaseRestController {
 			}
 		}
 		catch (Exception exception) {
-			String errorMessage = String.format(
+			String errorMessage = StringBundler.concat(
 				"Failed to upload publisher asset for product ID %d: %s",
 				productId, exception.getMessage());
 
@@ -561,12 +561,12 @@ public class MarketplaceRestController extends BaseRestController {
 	private File _getPublisherAssetFile(String publisherAssetURL)
 		throws Exception {
 
-		InputStream inputStream =
-			_marketplaceService.getPublisherAssetInputStream(publisherAssetURL);
-
 		File tempFile = File.createTempFile("publisher_asset_", ".zip");
 
-		try (FileOutputStream fileOutputStream = new FileOutputStream(
+		try (InputStream inputStream =
+				_marketplaceService.getPublisherAssetInputStream(
+					publisherAssetURL);
+			FileOutputStream fileOutputStream = new FileOutputStream(
 				tempFile)) {
 
 			inputStream.transferTo(fileOutputStream);
@@ -619,8 +619,8 @@ public class MarketplaceRestController extends BaseRestController {
 			PublisherAssetLink publisherAssetLink)
 		throws Exception {
 
-		File publisherAssetFile = null;
 		File publisherAssetArtifactFile = null;
+		File publisherAssetFile = null;
 
 		try {
 			publisherAssetFile = _getPublisherAssetFile(

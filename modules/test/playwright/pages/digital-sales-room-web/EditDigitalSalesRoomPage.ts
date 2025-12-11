@@ -21,6 +21,8 @@ export class EditDigitalSalesRoomPage {
 	readonly selectAccountInput: Locator;
 	readonly selectChannelInput: Locator;
 	readonly selectOption: (value: string) => Locator;
+	readonly usersEmailAddressesGridCell: (email: string) => Locator;
+	readonly usersEmailAddressesInput: Locator;
 
 	constructor(page: Page) {
 		this.bannerImage = page.getByTestId('bannerImage');
@@ -40,6 +42,9 @@ export class EditDigitalSalesRoomPage {
 		});
 		this.selectOption = (value: string) =>
 			page.getByRole('option', {name: value});
+		this.usersEmailAddressesGridCell = (email: string) =>
+			page.getByRole('gridcell', {exact: true, name: email});
+		this.usersEmailAddressesInput = page.getByTestId('emailAddressesInput');
 	}
 
 	async addDigitalSalesRoom({
@@ -51,6 +56,7 @@ export class EditDigitalSalesRoomPage {
 		primaryColor = '#FF0000',
 		roomName = `A${getRandomInt()}`,
 		secondaryColor = '#00FF00',
+		usersEmailAddresses,
 	}: {
 		accountName?: string;
 		banner?: string;
@@ -60,6 +66,7 @@ export class EditDigitalSalesRoomPage {
 		primaryColor?: string;
 		roomName?: string;
 		secondaryColor?: string;
+		usersEmailAddresses?: Array<string>;
 	}) {
 		await expect(this.clientNameInput).toBeEnabled();
 
@@ -102,6 +109,19 @@ export class EditDigitalSalesRoomPage {
 			await this.selectOption(channelName).click();
 
 			await expect(this.selectChannelInput).toHaveValue(channelName);
+		}
+
+		await this.nextButton.click();
+
+		if (usersEmailAddresses) {
+			for (const email of usersEmailAddresses) {
+				await this.usersEmailAddressesInput.fill(email);
+				await this.usersEmailAddressesInput.press('Enter');
+
+				await expect(
+					this.usersEmailAddressesGridCell(email)
+				).toBeVisible();
+			}
 		}
 
 		await this.saveButton.click();

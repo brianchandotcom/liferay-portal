@@ -93,3 +93,39 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Create a digital sales room with users',
+	{tag: '@LPD-69528'},
+	async ({apiHelpers, digitalSalesRoomsPage, editDigitalSalesRoomPage}) => {
+		const roomName = `A${getRandomInt()}`;
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			roomName,
+			usersEmailAddresses: [user1.emailAddress, user2.emailAddress],
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName)
+		).toBeVisible();
+
+		const digitalSalesRoom = (
+			await apiHelpers.headlessDigitalSalesRoom.getDigitalSalesRooms()
+		).items.pop();
+
+		expect(digitalSalesRoom.userAccountBriefs.length).toEqual(3);
+	}
+);

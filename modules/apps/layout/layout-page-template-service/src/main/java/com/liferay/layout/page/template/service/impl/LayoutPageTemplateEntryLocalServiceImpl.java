@@ -219,6 +219,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			}
 
 			Layout layout = _addLayout(
+				layoutPageTemplateEntry.getExternalReferenceCode() + "-layout",
 				userId, groupId, name, type, masterLayoutPageTemplateEntryERC,
 				status, serviceContext);
 
@@ -956,9 +957,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	private Layout _addLayout(
-			long userId, long groupId, String name, int type,
-			String masterLayoutPageTemplateEntryERC, int status,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String name, int type, String masterLayoutPageTemplateEntryERC,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean privateLayout = false;
@@ -1004,9 +1005,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		serviceContext.setAttribute("layout.page.template.entry.type", type);
 
 		Layout layout = _layoutLocalService.addLayout(
-			null, userId, groupId, privateLayout, 0, 0, 0, titleMap, titleMap,
-			null, null, null, layoutType, typeSettings, true, true,
-			new HashMap<>(), masterLayoutPageTemplateEntryERC, serviceContext);
+			externalReferenceCode, userId, groupId, privateLayout, 0, 0, 0,
+			titleMap, titleMap, null, null, null, layoutType, typeSettings,
+			true, true, new HashMap<>(), masterLayoutPageTemplateEntryERC,
+			serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

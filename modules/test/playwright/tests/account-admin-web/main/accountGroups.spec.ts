@@ -205,6 +205,10 @@ test('Can add and edit an account group', async ({
 
 	await accountGroupsPage.goto();
 
+	await expect(
+		accountGroupsPage.accountGroupsTable.searchInput
+	).toBeEditable();
+
 	await accountGroupsPage.accountGroupsTable.newButton.click();
 	await editAccountGroupPage.addAccountGroup(apiHelpers, accountGroup);
 	await editAccountGroupPage.backButton.click();

@@ -2894,7 +2894,7 @@ public class JenkinsResultsParserUtil {
 		Matcher remoteURLAuthorityMatcher4 =
 			_remoteURLAuthorityPattern4.matcher(localURL);
 
-		if (remoteURLAuthorityMatcher4.find()) {
+		if (isCloudCINode() && remoteURLAuthorityMatcher4.find()) {
 			String localURLAuthority = combine(
 				"http://", remoteURLAuthorityMatcher2.group(1), "/");
 			String remoteURLAuthority = remoteURLAuthorityMatcher2.group(0);

@@ -9,6 +9,7 @@ import com.liferay.osb.faro.engine.client.model.Provider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Matthew Kong
@@ -72,6 +73,14 @@ public class SalesforceProvider implements Provider {
 			return _channelId;
 		}
 
+		public Set<Long> getCommerceChannelIds() {
+			return _commerceChannelIds;
+		}
+
+		public Set<Long> getGroupIds() {
+			return _groupIds;
+		}
+
 		public Boolean isEnabled() {
 			return _enabled;
 		}
@@ -80,12 +89,22 @@ public class SalesforceProvider implements Provider {
 			_channelId = channelId;
 		}
 
+		public void setCommerceChannelIds(Set<Long> commerceChannelIds) {
+			_commerceChannelIds = commerceChannelIds;
+		}
+
 		public void setEnabled(Boolean enabled) {
 			_enabled = enabled;
 		}
 
+		public void setGroupIds(Set<Long> groupIds) {
+			_groupIds = groupIds;
+		}
+
 		private String _channelId;
+		private Set<Long> _commerceChannelIds;
 		private Boolean _enabled;
+		private Set<Long> _groupIds;
 
 	}
 

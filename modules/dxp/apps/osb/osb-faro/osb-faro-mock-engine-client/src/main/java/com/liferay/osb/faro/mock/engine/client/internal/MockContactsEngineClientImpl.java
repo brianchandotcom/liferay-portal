@@ -70,6 +70,11 @@ public class MockContactsEngineClientImpl
 	}
 
 	@Override
+	public long getDXPUsersCount(FaroProject faroProject, String id) {
+		return contactsEngineClient.getDXPUsersCount(faroProject, id);
+	}
+
+	@Override
 	public List<String> getFieldNames(
 		FaroProject faroProject, String label, String ownerType,
 		Object values) {

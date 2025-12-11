@@ -1312,6 +1312,27 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public long getDXPUsersCount(FaroProject faroProject, String id) {
+		RestTemplate restTemplate = getRestTemplate(faroProject);
+
+		Map<String, Object> uriVariables = getUriVariables(faroProject);
+
+		if (!Validator.isBlank(id)) {
+			uriVariables.put("dataSourceId", id);
+		}
+
+		ResponseEntity<Long> responseEntity = restTemplate.exchange(
+			getTemplatedURL(faroProject, Rels.DXP_ENTITIES_USERS_COUNT),
+			HttpMethod.GET, HttpEntity.EMPTY, Long.class, uriVariables);
+
+		if (responseEntity.getBody() == null) {
+			return 0L;
+		}
+
+		return responseEntity.getBody();
+	}
+
+	@Override
 	public Long getEnrichedProfilesCount(
 		FaroProject faroProject, Long channelId) {
 

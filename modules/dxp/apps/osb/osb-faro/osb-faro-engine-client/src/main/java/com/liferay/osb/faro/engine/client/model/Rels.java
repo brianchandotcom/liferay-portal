@@ -97,6 +97,9 @@ public interface Rels {
 	public static final String DEFINITIONS_INDIVIDUAL_ATTRIBUTES =
 		"definitions-individual-attributes";
 
+	public static final String DXP_ENTITIES_USERS_COUNT =
+		"dxp-entities-users-count";
+
 	public static final String FIELD = "field";
 
 	public static final String FIELD_MAPPING = "field-mapping";

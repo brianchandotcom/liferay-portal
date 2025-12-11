@@ -320,6 +320,50 @@ export default {
 		);
 	},
 
+	swapFragment({
+		editableValues,
+		fragmentEntryKey,
+		fragmentEntryLinkId,
+		groupId,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}: {
+		editableValues: string;
+		fragmentEntryKey: FragmentEntry['fragmentEntryKey'];
+		fragmentEntryLinkId: FragmentEntryLink['fragmentEntryLinkId'];
+		groupId?: string;
+		onNetworkStatus: OnNetworkStatus;
+		segmentsExperienceId: string;
+	}) {
+		const body: {
+			editableValues: string;
+			fragmentEntryKey: FragmentEntry['fragmentEntryKey'];
+			fragmentEntryLinkId: FragmentEntryLink['fragmentEntryLinkId'];
+			groupId?: string;
+			segmentsExperienceId: string;
+		} = {
+			editableValues,
+			fragmentEntryKey,
+			fragmentEntryLinkId,
+			segmentsExperienceId,
+		};
+
+		if (groupId) {
+			body.groupId = groupId;
+		}
+
+		return draftServiceFetch<{
+			fragmentEntryLink: FragmentEntryLink;
+			layoutData: LayoutData;
+		}>(
+			config.swapFragmentEntryLinkURL,
+			{
+				body,
+			},
+			onNetworkStatus
+		);
+	},
+
 	toggleFragmentHighlighted({
 		fragmentEntryKey,
 		groupId = '0',

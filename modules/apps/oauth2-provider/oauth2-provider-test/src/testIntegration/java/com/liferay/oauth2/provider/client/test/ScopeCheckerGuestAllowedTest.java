@@ -129,8 +129,8 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 	}
 
 	private static final String[] _INVALID_TOKENS = {
-		OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN, StringPool.BLANK,
-		StringPool.NULL, "Invalid Token"
+		OAuth2ProviderConstants.ACCESS_TOKEN_CONTENT_EXPIRED_TOKEN,
+		StringPool.BLANK, StringPool.NULL, "Invalid Token"
 	};
 
 	private class ScopeCheckerGuestAllowedTestPreparatorBundleActivator

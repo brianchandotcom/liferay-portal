@@ -745,6 +745,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"styleBooks", _getStyleBooks()
 			).put(
+				"swapFragmentEntryLinkURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/swap_fragment_entry_link")
+			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
 				"themeName",

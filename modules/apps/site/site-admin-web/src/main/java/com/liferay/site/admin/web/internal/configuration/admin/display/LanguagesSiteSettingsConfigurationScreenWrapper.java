@@ -9,11 +9,20 @@ import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
 
 import jakarta.servlet.ServletContext;
 
+import java.io.Serializable;
+
+import java.util.Dictionary;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +42,9 @@ public class LanguagesSiteSettingsConfigurationScreenWrapper
 	}
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
@@ -44,6 +56,24 @@ public class LanguagesSiteSettingsConfigurationScreenWrapper
 
 	private class LanguagesSiteSettingsConfigurationScreenContributor
 		implements SiteSettingsConfigurationScreenContributor {
+
+		@Override
+		public Dictionary<String, Object> exportProperties(
+			Serializable scopePK) {
+
+			Group group = _groupLocalService.fetchGroup((long)scopePK);
+
+			return HashMapDictionaryBuilder.<String, Object>put(
+				GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES,
+				group.getTypeSettingsProperty(
+					GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES)
+			).put(
+				PropsKeys.LOCALES,
+				group.getTypeSettingsProperty(PropsKeys.LOCALES)
+			).put(
+				"languageId", group.getTypeSettingsProperty("languageId")
+			).build();
+		}
 
 		@Override
 		public String getCategoryKey() {
@@ -73,6 +103,42 @@ public class LanguagesSiteSettingsConfigurationScreenWrapper
 		@Override
 		public ServletContext getServletContext() {
 			return _servletContext;
+		}
+
+		@Override
+		public void importProperties(
+				Dictionary<String, Object> properties, Serializable scopePK)
+			throws Exception {
+
+			Group group = _groupLocalService.fetchGroup((long)scopePK);
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			String inheritLocales = String.valueOf(
+				properties.get(
+					GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES));
+
+			if (Validator.isNotNull(inheritLocales)) {
+				typeSettingsUnicodeProperties.put(
+					GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES,
+					inheritLocales);
+			}
+
+			String languageId = String.valueOf(properties.get("languageId"));
+
+			if (Validator.isNotNull(languageId)) {
+				typeSettingsUnicodeProperties.put("languageId", languageId);
+			}
+
+			String locales = String.valueOf(properties.get(PropsKeys.LOCALES));
+
+			if (Validator.isNotNull(locales)) {
+				typeSettingsUnicodeProperties.put(PropsKeys.LOCALES, locales);
+			}
+
+			_groupLocalService.updateGroup(
+				group.getGroupId(), typeSettingsUnicodeProperties.toString());
 		}
 
 		@Override

@@ -59,6 +59,10 @@ export type TDSRDTO = {
 	ownerName: string;
 	primaryColor?: string;
 	secondaryColor?: string;
+	userAccountBriefs: Array<{
+		emailAddress: string;
+		roleId?: number;
+	}>;
 };
 
 export type TDSRPayload = {
@@ -77,6 +81,10 @@ export type TDSRPayload = {
 	name: string;
 	primaryColor?: string;
 	secondaryColor?: string;
+	userAccountBriefs?: Array<{
+		emailAddress: string;
+		roleKey?: string;
+	}>;
 };
 
 async function getAccounts(accountName = ''): Promise<TAccountsDTO> {
@@ -115,6 +123,7 @@ async function postDigitalSalesRoom({
 	name,
 	primaryColor,
 	secondaryColor,
+	userAccountBriefs,
 }: TDSRPayload): Promise<TDSRDTO> {
 	const {data, error} = await ApiHelper.post(
 		`/o/headless-digital-sales-room/v1.0/digital-sales-rooms`,
@@ -130,6 +139,7 @@ async function postDigitalSalesRoom({
 			name,
 			primaryColor,
 			secondaryColor,
+			userAccountBriefs,
 		}
 	);
 

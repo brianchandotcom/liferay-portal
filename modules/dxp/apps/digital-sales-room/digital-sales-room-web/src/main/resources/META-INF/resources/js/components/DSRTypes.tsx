@@ -30,11 +30,16 @@ export type TDSRDataContext = {
 		primaryColor?: null | string;
 		roomName?: null | string;
 		secondaryColor?: null | string;
+		share?: null | string;
 	};
 	friendlyURL: string;
 	primaryColor: string;
 	roomName: string;
 	secondaryColor: string;
+	share?: {
+		emailAddresses: Array<string>;
+		roleKey?: string;
+	};
 };
 
 export type TDSRContext = {

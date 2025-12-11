@@ -11,6 +11,7 @@ import React, {SetStateAction, useCallback, useState} from 'react';
 import DigitalSalesRoomService from '../commons/DigitalSalesRoomService';
 import DSRRoomDetailsStep from './DSRRoomDetailsStep';
 import DSRRoomSettingsStep from './DSRRoomSettingsStep';
+import DSRShareRoomStep from './DSRShareRoomStep';
 import {TDSRContext, TDSRDataContext, TDSRInitializerProps} from './DSRTypes';
 
 const DEFAULT_DATA_CONTEXT: TDSRDataContext = {
@@ -22,6 +23,9 @@ const DEFAULT_DATA_CONTEXT: TDSRDataContext = {
 	primaryColor: '0B5FFF',
 	roomName: '',
 	secondaryColor: 'FFFFFF',
+	share: {
+		emailAddresses: [],
+	},
 };
 
 export const DSRContext = React.createContext<TDSRContext>({
@@ -82,6 +86,14 @@ function StepLoader({
 				numberOfSteps={numberOfSteps}
 				setHandleStepSubmit={setHandleStepSubmit}
 			></DSRRoomSettingsStep>
+		);
+	}
+	else if (step === 3) {
+		return (
+			<DSRShareRoomStep
+				numberOfSteps={numberOfSteps}
+				setHandleStepSubmit={setHandleStepSubmit}
+			></DSRShareRoomStep>
 		);
 	}
 
@@ -165,6 +177,14 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
 							secondaryColor: getColor(
 								dataContext.secondaryColor
 							),
+							userAccountBriefs: (
+								dataContext.share?.emailAddresses || []
+							).map((email) => {
+								return {
+									emailAddress: email,
+									roleKey: dataContext.share?.roleKey || '',
+								};
+							}),
 						});
 
 					window.location.href = `/web${digitalSalesRoom.friendlyUrlPath}?p_l_mode=edit`;

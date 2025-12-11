@@ -4,12 +4,22 @@
 # The first line/comment is the shebang line for AWS cloud-init
 #
 
+disable_root: true
 package_update: true
 package_upgrade: true
 runcmd:
+    -   [groupadd, systemd-journal]
+    -   [usermod, --append, --groups, systemd-journal, liferay]
+    -   [usermod, --append, --groups, wheel, liferay]
+    -   [mkdir, --parents, /opt/liferay/.ssh]
+    -   [cp, /home/ec2-user/.ssh/authorized_keys, /opt/liferay/.ssh/authorized_keys]
+    -   [chmod, 700, /opt/liferay/.ssh]
+    -   [chmod, 600, /opt/liferay/.ssh/authorized_keys]
     -   [chown, --recursive, "liferay:liferay", /opt/liferay]
     -   [chmod, +x, /opt/liferay/bin/run_on_boot.sh]
-    -   [su, "-", liferay, -c, /opt/liferay/bin/run_on_boot.sh]
+    -   [su, --login, liferay, --command, /opt/liferay/bin/run_on_boot.sh]
+    -   [gpasswd, --delete, ec2-user, wheel]
+    -   [usermod, --lock, ec2-user]
 users:
     -   default
     -   homedir: /opt/liferay

@@ -20,8 +20,6 @@ function main {
 
 	echo "Caller identity: $(aws sts get-caller-identity)"
 
-	tree -a /opt/liferay
-
 	local terraform_dir=/opt/liferay/terraform
 
 	pushd "${terraform_dir}/ecr"

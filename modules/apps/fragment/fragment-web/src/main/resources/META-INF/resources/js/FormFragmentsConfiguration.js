@@ -37,7 +37,7 @@ export default function FormFragmentsConfiguration({
 				Liferay.Language.get('fragment')
 			),
 			url: createPortletURL(selectFragmentEntryURL, {
-				inputType,
+				inputTypes: inputType,
 				p_p_id: getPortletId(portletNamespace),
 			}),
 		});

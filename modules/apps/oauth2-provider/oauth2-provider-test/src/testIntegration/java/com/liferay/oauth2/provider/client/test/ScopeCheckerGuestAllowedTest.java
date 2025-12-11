@@ -7,7 +7,7 @@ package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
-import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
+import com.liferay.oauth2.provider.constants.OAuth2AuthorizationConstants;
 import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.internal.test.TestApplication;
 import com.liferay.petra.string.StringPool;
@@ -129,8 +129,8 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 	}
 
 	private static final String[] _INVALID_TOKENS = {
-		OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN, StringPool.BLANK,
-		StringPool.NULL, "Invalid Token"
+		OAuth2AuthorizationConstants.ACCESS_TOKEN_CONTENT_EXPIRED_TOKEN,
+		StringPool.BLANK, StringPool.NULL, "Invalid Token"
 	};
 
 	private class ScopeCheckerGuestAllowedTestPreparatorBundleActivator

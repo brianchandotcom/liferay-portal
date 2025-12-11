@@ -171,12 +171,14 @@ public class MarketplaceUtil {
 		}
 	}
 
-	public static void deleteTempFile(File file, boolean parentFolderDeletion) {
+	public static void deleteTempFile(
+		File file, boolean deleteParentDirectory) {
+
 		try {
 			if (file != null) {
 				Files.deleteIfExists(file.toPath());
 
-				if (parentFolderDeletion) {
+				if (deleteParentDirectory) {
 					Files.deleteIfExists(
 						file.toPath(
 						).getParent());
@@ -316,8 +318,8 @@ public class MarketplaceUtil {
 		}
 	}
 
-	private static String _getDefaultLocale(Map<String, String> localizedMap) {
-		return localizedMap.get("en_US");
+	private static String _getDefaultLocale(Map<String, String> localeMap) {
+		return localeMap.get("en_US");
 	}
 
 	private static final Log _log = LogFactory.getLog(MarketplaceUtil.class);

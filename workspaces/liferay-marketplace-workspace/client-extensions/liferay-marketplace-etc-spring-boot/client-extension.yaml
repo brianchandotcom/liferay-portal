@@ -25,11 +25,11 @@ liferay-marketplace-etc-spring-boot-oahs:
         -   Liferay.Headless.Commerce.Admin.Catalog.everything
         -   Liferay.Headless.Commerce.Admin.Order.everything
         -   Liferay.Headless.Commerce.Delivery.Catalog.everything
-        -   Liferay.Notification.REST.everything
         -   Liferay.Headless.Delivery.everything
-        -   c_trialextensionrequest.everything
-        -   c_publisherassets.everything
+        -   Liferay.Notification.REST.everything
         -   c_publisherassetattachment.everything
+        -   c_publisherassets.everything
+        -   c_trialextensionrequest.everything
     type: oAuthApplicationHeadlessServer
 liferay-marketplace-etc-spring-boot-oaua:
     .serviceAddress: localhost:58081

@@ -17,6 +17,7 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.AttachmentBas
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
@@ -26,6 +27,7 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.Currency
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductVirtualSettingsFileEntryResource;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductVirtualSettingsResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
@@ -325,21 +327,14 @@ public class MarketplaceService extends BaseService {
 		return version;
 	}
 
-	public long getProductVirtualSettingsId(long productId) throws Exception {
-		UriComponentsBuilder uriComponentsBuilder =
-			UriComponentsBuilder.fromPath(
-				"/o/headless-commerce-admin-catalog/v1.0/products/" +
-					productId + "/product-virtual-settings");
+	public ProductVirtualSettings getProductVirtualSettings(long productId)
+		throws Exception {
 
-		String response = get(
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oahs"),
-			uriComponentsBuilder.build(
-			).toUri());
+		ProductVirtualSettingsResource productVirtualSettingsResource =
+			_getProductVirtualSettingsResource();
 
-		JSONObject jsonObject = new JSONObject(response);
-
-		return jsonObject.getLong("id");
+		return productVirtualSettingsResource.
+			getProductIdProductVirtualSettings(productId);
 	}
 
 	public InputStream getPublisherAssetInputStream(String publisherAssetURL)
@@ -584,9 +579,12 @@ public class MarketplaceService extends BaseService {
 			productVirtualSettingsFileEntryResource =
 				_getProductVirtualSettingsFileEntryResource();
 
+		ProductVirtualSettings productVirtualSettings =
+			getProductVirtualSettings(productId);
+
 		productVirtualSettingsFileEntryResource.
 			postProductVirtualSettingIdProductVirtualSettingsFileEntry(
-				getProductVirtualSettingsId(productId),
+				productVirtualSettings.getId(),
 				ProductVirtualSettingsFileEntry.toDTO(
 					new JSONObject(
 					).put(
@@ -663,6 +661,19 @@ public class MarketplaceService extends BaseService {
 		throws Exception {
 
 		return ProductVirtualSettingsFileEntryResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
+	}
+
+	private ProductVirtualSettingsResource _getProductVirtualSettingsResource()
+		throws Exception {
+
+		return ProductVirtualSettingsResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(

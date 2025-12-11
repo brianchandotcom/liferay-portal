@@ -157,6 +157,14 @@ public class DigitalSalesRoomResourceTest
 	}
 
 	@Override
+	protected DigitalSalesRoom testDeleteDigitalSalesRoom_addDigitalSalesRoom()
+		throws Exception {
+
+		return digitalSalesRoomResource.postDigitalSalesRoom(
+			randomDigitalSalesRoom());
+	}
+
+	@Override
 	protected DigitalSalesRoom testGetDigitalSalesRoom_addDigitalSalesRoom()
 		throws Exception {
 

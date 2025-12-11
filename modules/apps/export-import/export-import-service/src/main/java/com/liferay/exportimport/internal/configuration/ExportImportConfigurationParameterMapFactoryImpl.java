@@ -475,16 +475,17 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 		PortletDataHandler portletDataHandlerInstance =
 			dataSiteLevelPortlet.getPortletDataHandlerInstance();
 
-		PortletDataHandlerControl[] exportControls =
-			portletDataHandlerInstance.getExportControls();
+		for (PortletDataHandlerControl portletDataHandlerControl :
+				portletDataHandlerInstance.getExportControls()) {
 
-		for (PortletDataHandlerControl exportControl : exportControls) {
-			if (!(exportControl instanceof PortletDataHandlerBoolean)) {
+			if (!(portletDataHandlerControl instanceof
+					PortletDataHandlerBoolean)) {
+
 				continue;
 			}
 
 			PortletDataHandlerBoolean portletDataHandlerBoolean =
-				(PortletDataHandlerBoolean)exportControl;
+				(PortletDataHandlerBoolean)portletDataHandlerControl;
 
 			boolean controlValue = portletDataHandlerBoolean.getDefaultState();
 

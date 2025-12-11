@@ -97,9 +97,7 @@ public abstract class BaseFDSSerializer {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get snapshot FDS config object entries",
-					exception);
+				_log.warn("Unable to serialize snapshots", exception);
 			}
 
 			return JSONUtil.putAll();

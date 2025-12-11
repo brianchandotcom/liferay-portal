@@ -63,12 +63,14 @@ public class GroupModelListenerTest {
 		GroupLocalServiceUtil.deleteGroup(group1);
 
 		JSONObject generalConfiguration1JSONObject =
-			_getGeneralConfigurationJSONObject(sxpBlueprint1);
+			_getGeneralConfigurationJSONObject(
+				sxpBlueprint1.getSXPBlueprintId());
 
 		Assert.assertFalse(generalConfiguration1JSONObject.has("scope"));
 
 		JSONObject generalConfiguration2JSONObject =
-			_getGeneralConfigurationJSONObject(sxpBlueprint2);
+			_getGeneralConfigurationJSONObject(
+				sxpBlueprint2.getSXPBlueprintId());
 
 		JSONArray scopeJSONArray = generalConfiguration2JSONObject.getJSONArray(
 			"scope");
@@ -103,12 +105,11 @@ public class GroupModelListenerTest {
 		return sxpBlueprint;
 	}
 
-	private JSONObject _getGeneralConfigurationJSONObject(
-			SXPBlueprint sxpBlueprint)
+	private JSONObject _getGeneralConfigurationJSONObject(long sxpBlueprintId)
 		throws Exception {
 
-		sxpBlueprint = _sxpBlueprintLocalService.getSXPBlueprint(
-			sxpBlueprint.getSXPBlueprintId());
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.getSXPBlueprint(
+			sxpBlueprintId);
 
 		JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
 			sxpBlueprint.getConfigurationJSON());

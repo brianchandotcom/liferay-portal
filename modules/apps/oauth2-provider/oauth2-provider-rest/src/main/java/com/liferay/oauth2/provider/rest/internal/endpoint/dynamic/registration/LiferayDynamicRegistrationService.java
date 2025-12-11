@@ -71,7 +71,8 @@ public class LiferayDynamicRegistrationService
 	}
 
 	@Override
-	protected void checkRegistrationAccessToken(Client c, String accessToken) {
+	protected void checkRegistrationAccessToken(
+		Client client, String accessToken) {
 	}
 
 	@Override

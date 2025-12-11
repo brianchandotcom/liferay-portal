@@ -7,8 +7,8 @@ package com.liferay.oauth2.provider.shortcut.internal.instance.lifecycle;
 
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.oauth2.provider.constants.OAuth2ApplicationConstants;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
-import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
@@ -29,22 +29,18 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jorge García Jiménez
  */
-@Component(
-	service = PortalInstanceLifecycleListener.class
-)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class DynamicRegistrationPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
@@ -66,7 +62,7 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 
 		dynamicQuery.add(
 			nameProperty.eq(
-				OAuth2ProviderConstants.OAUTH2_APP_NAME_DYNAMIC_REGISTRATOR));
+				OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR));
 
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
@@ -93,8 +89,9 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			OAuth2SecureRandomGenerator.generateClientId(),
 			ClientProfile.HEADLESS_SERVER.id(),
 			OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
-			null, 0, null, OAuth2ProviderConstants.OAUTH2_APP_NAME_DYNAMIC_REGISTRATOR, null, Collections.emptyList(),
-			false, false, null, new ServiceContext());
+			null, 0, null, OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
+			null, Collections.emptyList(), false, false, null,
+			new ServiceContext());
 
 		_addResourcePermissions(oAuth2Application);
 	}

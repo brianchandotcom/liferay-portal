@@ -5,8 +5,8 @@
 
 package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.filter;
 
+import com.liferay.oauth2.provider.constants.OAuth2ApplicationConstants;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
-import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -92,7 +92,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			return;
 		}
 
-		User user;
+		User user = null;
 
 		try {
 			JwtToken jwtToken = _getJwtToken(httpServletRequest);
@@ -101,8 +101,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			long expirationTime = GetterUtil.getLong(jwtToken.getClaim("exp"));
 
 			if (currentTime > expirationTime) {
-				throw ExceptionUtils.toNotAuthorizedException(
-					(Throwable)null, (Response)null);
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}
 
 			user = _getUser(GetterUtil.getLong(jwtToken.getClaim("sub")));
@@ -114,13 +113,12 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 			if ((oAuth2Application == null) ||
 				!StringUtil.equals(
-					OAuth2ProviderConstants.OAUTH2_APP_NAME_DYNAMIC_REGISTRATOR,
+					OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
 					oAuth2Application.getName()) ||
 				!_containsOAuth2RegisterApplicationPermission(
 					oAuth2Application, user)) {
 
-				throw ExceptionUtils.toNotAuthorizedException(
-					(Throwable)null, (Response)null);
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}
 		}
 		catch (JSONException jsonException) {
@@ -128,8 +126,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				_log.debug("exception processing token: ", jsonException);
 			}
 
-			throw ExceptionUtils.toNotAuthorizedException(
-				(Throwable)null, (Response)null);
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 		catch (WebApplicationException webApplicationException) {
 			if (_log.isDebugEnabled()) {
@@ -143,8 +140,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				_log.debug("Exception when retrieving permissions:", exception);
 			}
 
-			throw ExceptionUtils.toNotAuthorizedException(
-				(Throwable)null, (Response)null);
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
 		try {
@@ -197,8 +193,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			"Authorization");
 
 		if (!StringUtil.startsWith(authorizationHeader, "Bearer ")) {
-			throw ExceptionUtils.toNotAuthorizedException(
-				(Throwable)null, (Response)null);
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
 		return new JwsJwtCompactConsumer(

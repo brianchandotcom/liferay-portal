@@ -970,7 +970,7 @@ test('COMMERCE-12370. As a buyer I can add to cart a SKU with single UOM', async
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
 
-	await page.goto(`/web/${site.name}`);
+	await page.goto(`/web/${site.name}`, {waitUntil: 'networkidle'});
 
 	await commerceThemeMiniumCatalogPage.selectSorting('Name Ascending');
 

@@ -5,7 +5,7 @@
 
 package com.liferay.oauth2.provider.rest.internal.security.auth.verifier;
 
-import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
+import com.liferay.oauth2.provider.constants.OAuth2AuthorizationConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
@@ -144,8 +144,8 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 
 		accessTokenContent = oAuth2Authorization.getAccessTokenContent();
 
-		if (OAuth2ProviderConstants.DEFAULT_VALUE_EXPIRED_TOKEN.equals(
-				accessTokenContent)) {
+		if (OAuth2AuthorizationConstants.ACCESS_TOKEN_CONTENT_EXPIRED_TOKEN.
+				equals(accessTokenContent)) {
 
 			return null;
 		}

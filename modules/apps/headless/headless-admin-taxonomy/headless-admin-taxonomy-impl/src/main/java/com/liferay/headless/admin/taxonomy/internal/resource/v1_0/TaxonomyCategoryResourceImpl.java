@@ -836,11 +836,15 @@ public class TaxonomyCategoryResourceImpl
 
 		Long taxonomyVocabularyId = taxonomyCategory.getTaxonomyVocabularyId();
 
-		if ((taxonomyVocabularyId != null) &&
-			(_assetVocabularyService.fetchVocabulary(taxonomyVocabularyId) !=
-				null)) {
+		if (taxonomyVocabularyId != null) {
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyService.fetchVocabulary(taxonomyVocabularyId);
 
-			return taxonomyVocabularyId;
+			if ((assetVocabulary != null) &&
+				(assetVocabulary.getGroupId() == groupId)) {
+
+				return taxonomyVocabularyId;
+			}
 		}
 
 		String taxonomyVocabularyExternalReferenceCode = StringPool.BLANK;

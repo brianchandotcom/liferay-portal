@@ -200,6 +200,10 @@ public class FragmentEntriesDisplayContext {
 		return _fragmentsSearchContainer;
 	}
 
+	public long getGroupId() {
+		return _group.getGroupId();
+	}
+
 	public String getGroupKey() {
 		return _group.getGroupKey();
 	}

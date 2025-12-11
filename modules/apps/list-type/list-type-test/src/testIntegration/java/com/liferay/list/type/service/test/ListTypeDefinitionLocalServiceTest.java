@@ -6,9 +6,14 @@
 package com.liferay.list.type.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.exception.ListTypeDefinitionNameException;
 import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
+import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -19,23 +24,29 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -56,20 +67,6 @@ public class ListTypeDefinitionLocalServiceTest {
 
 	@Test
 	public void testAddListTypeDefinition() throws Exception {
-		ListTypeDefinition listTypeDefinition = _addListTypeDefinition();
-
-		Assert.assertNotNull(listTypeDefinition);
-		Assert.assertTrue(
-			Validator.isNotNull(listTypeDefinition.getExternalReferenceCode()));
-		Assert.assertTrue(Validator.isNotNull(listTypeDefinition.getName()));
-		Assert.assertNotNull(
-			_listTypeDefinitionLocalService.fetchListTypeDefinition(
-				listTypeDefinition.getListTypeDefinitionId()));
-		Assert.assertEquals(
-			1,
-			_listTypeEntryLocalService.getListTypeEntriesCount(
-				listTypeDefinition.getListTypeDefinitionId()));
-
 		AssertUtils.assertFailure(
 			ListTypeDefinitionNameException.class,
 			"Name is null for locale " + LocaleUtil.US.getDisplayName(),
@@ -81,6 +78,22 @@ public class ListTypeDefinitionLocalServiceTest {
 			ListTypeDefinitionSystemException.class, false,
 			"Only allowed bundles can add system list type definitions",
 			this::_addSystemListTypeDefinition);
+
+		ListTypeDefinition listTypeDefinition = _addListTypeDefinition();
+
+		Assert.assertNotNull(listTypeDefinition);
+		Assert.assertTrue(
+			Validator.isNotNull(listTypeDefinition.getExternalReferenceCode()));
+		Assert.assertTrue(Validator.isNotNull(listTypeDefinition.getName()));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, listTypeDefinition.getStatus());
+		Assert.assertNotNull(
+			_listTypeDefinitionLocalService.fetchListTypeDefinition(
+				listTypeDefinition.getListTypeDefinitionId()));
+		Assert.assertEquals(
+			1,
+			_listTypeEntryLocalService.getListTypeEntriesCount(
+				listTypeDefinition.getListTypeDefinitionId()));
 	}
 
 	@Test
@@ -166,6 +179,80 @@ public class ListTypeDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrAddEmptyListTypeDefinition() throws Throwable {
+
+		// Lazy referencing disabled
+
+		long companyId = TestPropsValues.getCompanyId();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long userId = TestPropsValues.getUserId();
+
+		AssertUtils.assertFailure(
+			NoSuchListTypeDefinitionException.class,
+			String.format(
+				"No ListTypeDefinition exists with the key {externalReference" +
+					"Code=%s, companyId=%s}",
+				externalReferenceCode, companyId),
+			() ->
+				_listTypeDefinitionLocalService.getOrAddEmptyListTypeDefinition(
+					externalReferenceCode, companyId, userId,
+					RandomTestUtil.randomBoolean()));
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			long exportImportConfigurationId = RandomTestUtil.randomLong();
+
+			ExportImportThreadLocal.setExportImportConfigurationId(
+				exportImportConfigurationId);
+
+			ListTypeDefinition listTypeDefinition =
+				_listTypeDefinitionLocalService.getOrAddEmptyListTypeDefinition(
+					externalReferenceCode, companyId, userId,
+					RandomTestUtil.randomBoolean());
+
+			Assert.assertEquals(
+				externalReferenceCode,
+				listTypeDefinition.getExternalReferenceCode());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, listTypeDefinition.getStatus());
+
+			List<ExportImportReportEntry> exportImportReportEntries =
+				_exportImportReportEntryLocalService.
+					getExportImportReportEntries(
+						companyId, exportImportConfigurationId);
+
+			Assert.assertEquals(
+				exportImportReportEntries.toString(), 1,
+				exportImportReportEntries.size());
+			Assert.assertTrue(
+				ListUtil.exists(
+					exportImportReportEntries,
+					exportImportReportEntry ->
+						Objects.equals(
+							exportImportReportEntry.
+								getClassExternalReferenceCode(),
+							externalReferenceCode) &&
+						(exportImportReportEntry.getType() ==
+							ExportImportReportEntryConstants.TYPE_EMPTY)));
+
+			listTypeDefinition =
+				_listTypeDefinitionLocalService.updateListTypeDefinition(
+					listTypeDefinition.getExternalReferenceCode(),
+					listTypeDefinition.getListTypeDefinitionId(),
+					listTypeDefinition.getUserId(),
+					listTypeDefinition.getNameMap(), Collections.emptyList(),
+					new ServiceContext());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED,
+				listTypeDefinition.getStatus());
+		}
+	}
+
+	@Test
 	public void testUpdateListTypeDefinition() throws Exception {
 		ListTypeDefinition listTypeDefinition = _addListTypeDefinition();
 
@@ -189,11 +276,13 @@ public class ListTypeDefinitionLocalServiceTest {
 			externalReferenceCode,
 			listTypeDefinition.getExternalReferenceCode());
 		Assert.assertEquals(
+			name, listTypeDefinition.getName(LocaleUtil.getDefault()));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, listTypeDefinition.getStatus());
+		Assert.assertEquals(
 			2,
 			_listTypeEntryLocalService.getListTypeEntriesCount(
 				listTypeDefinition.getListTypeDefinitionId()));
-		Assert.assertEquals(
-			name, listTypeDefinition.getName(LocaleUtil.getDefault()));
 
 		listTypeDefinition =
 			_listTypeDefinitionLocalService.updateListTypeDefinition(
@@ -281,6 +370,10 @@ public class ListTypeDefinitionLocalServiceTest {
 			_listTypeEntryLocalService.getListTypeEntriesCount(
 				listTypeDefinitionId));
 	}
+
+	@Inject
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;

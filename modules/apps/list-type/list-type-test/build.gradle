@@ -1,4 +1,5 @@
 dependencies {
+	testIntegrationImplementation project(":apps:export-import:export-import-report-api")
 	testIntegrationImplementation project(":apps:list-type:list-type-api")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")

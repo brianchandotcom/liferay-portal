@@ -42,15 +42,18 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -87,11 +90,13 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
@@ -119,7 +124,11 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlag("LPD-34594")
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "LPD-34594"), @FeatureFlag(value = "LPD-35914")
+	}
+)
 @RunWith(Arquillian.class)
 public class ObjectDefinitionResourceTest
 	extends BaseObjectDefinitionResourceTestCase {
@@ -389,6 +398,175 @@ public class ObjectDefinitionResourceTest
 					objectDefinitionsJSONObject.getString("items"))));
 	}
 
+	@Test
+	public void testPatchPostPutObjectDefinitionWithPermissions()
+		throws Exception {
+
+		// Invalid permissions
+
+		JSONArray invalidPermissionsJSONArray = JSONUtil.putAll(
+			_getPermissionsJSONObject(
+				new String[] {ActionKeys.DELETE},
+				RandomTestUtil.randomString()));
+
+		_assertNotFound(
+			_patchPutObjectDefinitionWithPermissions(
+				Http.Method.PATCH, true,
+				_postObjectDefinitionWithPermissions(true, null),
+				invalidPermissionsJSONArray));
+		_assertNotFound(
+			_patchPutObjectDefinitionWithPermissions(
+				Http.Method.PUT, true,
+				_postObjectDefinitionWithPermissions(true, null),
+				invalidPermissionsJSONArray));
+		_assertNotFound(
+			_postObjectDefinitionWithPermissions(
+				true, invalidPermissionsJSONArray));
+
+		// No permissions in the body request
+
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			_patchPutObjectDefinitionWithPermissions(
+				Http.Method.PATCH, true,
+				_postObjectDefinitionWithPermissions(true, null), null));
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			_patchPutObjectDefinitionWithPermissions(
+				Http.Method.PUT, true,
+				_postObjectDefinitionWithPermissions(true, null), null));
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			_postObjectDefinitionWithPermissions(true, null));
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			_putByExternalReferenceCodeObjectDefinitionWithPermissions(
+				true, _postObjectDefinitionWithPermissions(true, null), null));
+
+		// Permissions with different roles
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(),
+			"com.liferay.object.model.ObjectDefinition",
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role1.getRoleId(),
+			ActionKeys.DELETE);
+
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		JSONObject objectDefinitionJSONObject =
+			_postObjectDefinitionWithPermissions(
+				true,
+				JSONUtil.putAll(
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.PERMISSIONS}, role1.getName()),
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+						role2.getName())));
+
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					role2.getName())),
+			objectDefinitionJSONObject);
+
+		Role role3 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE}, role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.VIEW}, role3.getName())),
+			_patchPutObjectDefinitionWithPermissions(
+				Http.Method.PATCH, true, objectDefinitionJSONObject,
+				JSONUtil.putAll(
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.VIEW}, role3.getName()))));
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE}, role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.UPDATE}, role3.getName())),
+			_patchPutObjectDefinitionWithPermissions(
+				Http.Method.PUT, true, objectDefinitionJSONObject,
+				JSONUtil.putAll(
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.UPDATE}, role3.getName()))));
+		_assertObjectDefinitionWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE, ActionKeys.UPDATE},
+					role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE, ActionKeys.VIEW},
+					role3.getName())),
+			_putByExternalReferenceCodeObjectDefinitionWithPermissions(
+				true, objectDefinitionJSONObject,
+				JSONUtil.putAll(
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.UPDATE}, role1.getName()),
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.DELETE, ActionKeys.VIEW},
+						role3.getName()))));
+
+		// Permissions with empty list
+
+		JSONArray companyPermissionsJSONArray = JSONUtil.putAll(
+			_getPermissionsJSONObject(
+				new String[] {ActionKeys.DELETE}, role1.getName()));
+
+		_assertObjectDefinitionWithPermissions(
+			companyPermissionsJSONArray,
+			_patchPutObjectDefinitionWithPermissions(
+				Http.Method.PATCH, true, objectDefinitionJSONObject,
+				_jsonFactory.createJSONArray()));
+		_assertObjectDefinitionWithPermissions(
+			companyPermissionsJSONArray,
+			_patchPutObjectDefinitionWithPermissions(
+				Http.Method.PUT, true, objectDefinitionJSONObject,
+				_jsonFactory.createJSONArray()));
+		_assertObjectDefinitionWithPermissions(
+			companyPermissionsJSONArray,
+			_postObjectDefinitionWithPermissions(
+				true, _jsonFactory.createJSONArray()));
+		_assertObjectDefinitionWithPermissions(
+			companyPermissionsJSONArray,
+			_putByExternalReferenceCodeObjectDefinitionWithPermissions(
+				true, objectDefinitionJSONObject,
+				_jsonFactory.createJSONArray()));
+
+		// Permissions without nested fields
+
+		objectDefinitionJSONObject = _patchPutObjectDefinitionWithPermissions(
+			Http.Method.PATCH, false, objectDefinitionJSONObject, null);
+
+		Assert.assertNull(objectDefinitionJSONObject.get("permissions"));
+
+		objectDefinitionJSONObject = _patchPutObjectDefinitionWithPermissions(
+			Http.Method.PUT, false, objectDefinitionJSONObject, null);
+
+		Assert.assertNull(objectDefinitionJSONObject.get("permissions"));
+
+		objectDefinitionJSONObject = _postObjectDefinitionWithPermissions(
+			false, null);
+
+		Assert.assertNull(objectDefinitionJSONObject.get("permissions"));
+
+		objectDefinitionJSONObject =
+			_putByExternalReferenceCodeObjectDefinitionWithPermissions(
+				false, objectDefinitionJSONObject, null);
+
+		Assert.assertNull(objectDefinitionJSONObject.get("permissions"));
+	}
+
 	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
@@ -396,9 +574,110 @@ public class ObjectDefinitionResourceTest
 	public void testPostObjectDefinition() throws Exception {
 		super.testPostObjectDefinition();
 
-		// Enable index search
+		// Empty object definition created by object action
 
 		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		ObjectAction objectAction = _createObjectAction(externalReferenceCode);
+
+		randomObjectDefinition.setObjectActions(
+			new ObjectAction[] {objectAction});
+
+		testPostObjectDefinition_addObjectDefinition(randomObjectDefinition);
+
+		ObjectDefinition emptyObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		Assert.assertEquals(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_EMPTY;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_EMPTY);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_EMPTY));
+				}
+			},
+			emptyObjectDefinition.getStatus());
+
+		// Empty object definition created by object relationship
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		ObjectRelationship objectRelationship = _createObjectRelationship(
+			randomObjectDefinition, externalReferenceCode, null,
+			ObjectRelationship.Type.ONE_TO_MANY);
+
+		randomObjectDefinition.setObjectRelationships(
+			new ObjectRelationship[] {objectRelationship});
+
+		testPostObjectDefinition_addObjectDefinition(randomObjectDefinition);
+
+		emptyObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		Assert.assertEquals(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_EMPTY;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_EMPTY);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_EMPTY));
+				}
+			},
+			emptyObjectDefinition.getStatus());
+
+		// Empty object definition created by relationship object field
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		ObjectField relationshipObjectField = _createRelationshipObjectField(
+			externalReferenceCode);
+
+		randomObjectDefinition.setObjectFields(
+			ArrayUtil.append(
+				randomObjectDefinition.getObjectFields(),
+				relationshipObjectField));
+
+		testPostObjectDefinition_addObjectDefinition(randomObjectDefinition);
+
+		emptyObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		Assert.assertEquals(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_EMPTY;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_EMPTY);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_EMPTY));
+				}
+			},
+			emptyObjectDefinition.getStatus());
+
+		// Enable index search
+
+		randomObjectDefinition = randomObjectDefinition();
 
 		randomObjectDefinition.setEnableIndexSearch((Boolean)null);
 		randomObjectDefinition.setObjectFields((ObjectField[])null);
@@ -484,37 +763,7 @@ public class ObjectDefinitionResourceTest
 
 		// Object action
 
-		ObjectAction objectAction = new ObjectAction();
-
-		objectAction.setExternalReferenceCode(RandomTestUtil.randomString());
-		objectAction.setActive(true);
-		objectAction.setConditionExpression(StringPool.BLANK);
-		objectAction.setDescription(RandomTestUtil.randomString());
-		objectAction.setErrorMessage(
-			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
-		objectAction.setLabel(
-			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
-		objectAction.setName("a" + RandomTestUtil.randomString());
-		objectAction.setObjectActionExecutorKey(
-			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY);
-		objectAction.setObjectActionTriggerKey(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD);
-		objectAction.setParameters(
-			HashMapBuilder.put(
-				"objectDefinitionExternalReferenceCode",
-				RandomTestUtil.randomString()
-			).put(
-				"predefinedValues",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"inputAsValue", true
-					).put(
-						"name", RandomTestUtil.randomString()
-					).put(
-						"value", RandomTestUtil.randomString()
-					)
-				).toString()
-			).build());
+		objectAction = _createObjectAction(RandomTestUtil.randomString());
 
 		randomObjectDefinition = randomObjectDefinition();
 
@@ -531,8 +780,10 @@ public class ObjectDefinitionResourceTest
 
 		randomObjectDefinition = randomObjectDefinition();
 
-		ObjectRelationship objectRelationship = _createObjectRelationship(
-			randomObjectDefinition, randomObjectDefinition,
+		objectRelationship = _createObjectRelationship(
+			randomObjectDefinition,
+			randomObjectDefinition.getExternalReferenceCode(),
+			randomObjectDefinition.getId(),
 			ObjectRelationship.Type.ONE_TO_MANY);
 
 		randomObjectDefinition.setObjectRelationships(
@@ -546,14 +797,8 @@ public class ObjectDefinitionResourceTest
 
 		randomObjectDefinition = randomObjectDefinition();
 
-		ObjectField relationshipObjectField = new ObjectField();
-
-		relationshipObjectField.setBusinessType(
-			ObjectField.BusinessType.RELATIONSHIP);
-		relationshipObjectField.setLabel(
-			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
-		relationshipObjectField.setLocalized(false);
-		relationshipObjectField.setName("r_" + RandomTestUtil.randomString());
+		relationshipObjectField = _createRelationshipObjectField(
+			RandomTestUtil.randomString());
 
 		randomObjectDefinition.setObjectFields(
 			ArrayUtil.append(
@@ -565,64 +810,6 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(postObjectDefinition, randomObjectDefinition);
 		assertValid(postObjectDefinition);
-
-		// Permissions
-
-		randomObjectDefinition = randomObjectDefinition();
-
-		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
-			randomObjectDefinition);
-
-		_assertObjectDefinition(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
-			postObjectDefinition);
-
-		String permissionName =
-			com.liferay.object.model.ObjectDefinition.class.getName();
-
-		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), permissionName,
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(postObjectDefinition.getId()), role1.getRoleId(),
-			new String[] {ActionKeys.DELETE});
-
-		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), permissionName,
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(postObjectDefinition.getId()), role2.getRoleId(),
-			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
-
-		_assertObjectDefinition(
-			JSONUtil.putAll(
-				_getOwnerPermissionsJSONObject(),
-				_getPermissionsJSONObject(
-					new String[] {ActionKeys.DELETE}, role1.getName()),
-				_getPermissionsJSONObject(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
-					role2.getName())),
-			postObjectDefinition);
-
-		_resourcePermissionLocalService.removeResourcePermission(
-			TestPropsValues.getCompanyId(), permissionName,
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(postObjectDefinition.getId()), role1.getRoleId(),
-			ActionKeys.DELETE);
-		_resourcePermissionLocalService.removeResourcePermission(
-			TestPropsValues.getCompanyId(), permissionName,
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(postObjectDefinition.getId()), role2.getRoleId(),
-			ActionKeys.VIEW);
-
-		_assertObjectDefinition(
-			JSONUtil.putAll(
-				_getOwnerPermissionsJSONObject(),
-				_getPermissionsJSONObject(
-					new String[] {ActionKeys.UPDATE}, role2.getName())),
-			postObjectDefinition);
 
 		// Status
 
@@ -823,6 +1010,119 @@ public class ObjectDefinitionResourceTest
 				}
 			});
 
+		// Empty object definition created by object action
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		ObjectAction objectAction1 = _createObjectAction(externalReferenceCode);
+
+		postObjectDefinition.setObjectActions(
+			new ObjectAction[] {objectAction1});
+
+		objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		ObjectDefinition emptyObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		Assert.assertEquals(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_EMPTY;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_EMPTY);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_EMPTY));
+				}
+			},
+			emptyObjectDefinition.getStatus());
+
+		// Empty object definition created by object relationship
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		objectRelationship = _createObjectRelationship(
+			randomObjectDefinition, externalReferenceCode, null,
+			ObjectRelationship.Type.ONE_TO_MANY);
+
+		postObjectDefinition.setObjectRelationships(
+			new ObjectRelationship[] {objectRelationship});
+
+		objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		emptyObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		Assert.assertEquals(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_EMPTY;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_EMPTY);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_EMPTY));
+				}
+			},
+			emptyObjectDefinition.getStatus());
+
+		// Empty object definition created by relationship object field
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		ObjectField relationshipObjectField = _createRelationshipObjectField(
+			externalReferenceCode);
+
+		postObjectDefinition.setObjectFields(
+			ArrayUtil.append(
+				postObjectDefinition.getObjectFields(),
+				relationshipObjectField));
+
+		objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		emptyObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		Assert.assertEquals(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_EMPTY;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_EMPTY);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_EMPTY));
+				}
+			},
+			emptyObjectDefinition.getStatus());
+
 		// Enable localization
 
 		randomObjectDefinition = randomObjectDefinition();
@@ -952,17 +1252,17 @@ public class ObjectDefinitionResourceTest
 
 		Assert.assertEquals(objectActions.toString(), 3, objectActions.length);
 
-		ObjectAction objectAction1 = objectActions[0];
-
-		Assert.assertTrue(objectAction1.getActive());
-
-		ObjectAction objectAction2 = objectActions[1];
+		ObjectAction objectAction2 = objectActions[0];
 
 		Assert.assertTrue(objectAction2.getActive());
 
-		ObjectAction objectAction3 = objectActions[2];
+		ObjectAction objectAction3 = objectActions[1];
 
 		Assert.assertTrue(objectAction3.getActive());
+
+		ObjectAction objectAction4 = objectActions[2];
+
+		Assert.assertTrue(objectAction4.getActive());
 
 		postObjectDefinition.setEnableObjectEntrySubscription(false);
 
@@ -971,17 +1271,17 @@ public class ObjectDefinitionResourceTest
 
 		objectActions = postObjectDefinition.getObjectActions();
 
-		objectAction1 = objectActions[0];
-
-		Assert.assertFalse(objectAction1.getActive());
-
-		objectAction2 = objectActions[1];
+		objectAction2 = objectActions[0];
 
 		Assert.assertFalse(objectAction2.getActive());
 
-		objectAction3 = objectActions[2];
+		objectAction3 = objectActions[1];
 
 		Assert.assertFalse(objectAction3.getActive());
+
+		objectAction4 = objectActions[2];
+
+		Assert.assertFalse(objectAction4.getActive());
 
 		// Modifiable system object definition
 
@@ -1872,26 +2172,26 @@ public class ObjectDefinitionResourceTest
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
 	}
 
-	private void _assertObjectDefinition(
-			JSONArray expectedPermissionsJSONArray,
-			ObjectDefinition objectDefinition)
-		throws Exception {
+	private void _assertNotFound(JSONObject jsonObject) {
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+		Assert.assertNull(jsonObject.get("title"));
+	}
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"object-admin/v1.0/object-definitions",
-				"/by-external-reference-code/",
-				objectDefinition.getExternalReferenceCode(),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+	private void _assertObjectDefinitionWithPermissions(
+			JSONArray expectedPermissionsJSONArray, JSONObject jsonObject)
+		throws Exception {
 
 		JSONArray actualPermissionsJSONArray = jsonObject.getJSONArray(
 			"permissions");
 
+		if (actualPermissionsJSONArray == null) {
+			actualPermissionsJSONArray = jsonObject.getJSONArray("items");
+		}
+
 		JSONAssert.assertEquals(
-			expectedPermissionsJSONArray.toString(),
-			actualPermissionsJSONArray.toString(), JSONCompareMode.LENIENT);
+			String.valueOf(expectedPermissionsJSONArray),
+			String.valueOf(actualPermissionsJSONArray),
+			JSONCompareMode.LENIENT);
 	}
 
 	private <T> void _assertObjectField(
@@ -1994,8 +2294,32 @@ public class ObjectDefinitionResourceTest
 				objectDefinition.getId(), expectedObjectDefinition.getId()));
 	}
 
+	private ObjectAction _createObjectAction(String externalReferenceCode) {
+		ObjectAction objectAction = new ObjectAction();
+
+		objectAction.setActive(RandomTestUtil.randomBoolean());
+		objectAction.setDescription(RandomTestUtil.randomString());
+		objectAction.setErrorMessage(
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
+		objectAction.setExternalReferenceCode(RandomTestUtil.randomString());
+		objectAction.setLabel(
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
+		objectAction.setName(StringUtil.randomId());
+		objectAction.setObjectActionExecutorKey(
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY);
+		objectAction.setObjectActionTriggerKey(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD);
+		objectAction.setParameters(
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionExternalReferenceCode", externalReferenceCode
+			).build());
+
+		return objectAction;
+	}
+
 	private ObjectRelationship _createObjectRelationship(
-		ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2,
+		ObjectDefinition objectDefinition1,
+		String objectDefinitionExternalReferenceCode2, Long objectDefinitionId2,
 		ObjectRelationship.Type type) {
 
 		ObjectRelationship objectRelationship = new ObjectRelationship();
@@ -2008,12 +2332,29 @@ public class ObjectDefinitionResourceTest
 		objectRelationship.setObjectDefinitionExternalReferenceCode1(
 			objectDefinition1.getExternalReferenceCode());
 		objectRelationship.setObjectDefinitionExternalReferenceCode2(
-			objectDefinition2.getExternalReferenceCode());
+			objectDefinitionExternalReferenceCode2);
 		objectRelationship.setObjectDefinitionId1(objectDefinition1.getId());
-		objectRelationship.setObjectDefinitionId2(objectDefinition2.getId());
+		objectRelationship.setObjectDefinitionId2(objectDefinitionId2);
 		objectRelationship.setType(type);
 
 		return objectRelationship;
+	}
+
+	private ObjectField _createRelationshipObjectField(
+		String externalReferenceCode) {
+
+		ObjectField relationshipObjectField = new ObjectField();
+
+		relationshipObjectField.setBusinessType(
+			ObjectField.BusinessType.RELATIONSHIP);
+		relationshipObjectField.setLabel(
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
+		relationshipObjectField.setLocalized(false);
+		relationshipObjectField.setName("r_" + RandomTestUtil.randomString());
+		relationshipObjectField.setObjectDefinitionExternalReferenceCode1(
+			externalReferenceCode);
+
+		return relationshipObjectField;
 	}
 
 	private JSONObject _getOwnerPermissionsJSONObject() {
@@ -2033,6 +2374,73 @@ public class ObjectDefinitionResourceTest
 		).put(
 			"roleName", roleName
 		);
+	}
+
+	private JSONObject _patchPutObjectDefinitionWithPermissions(
+			Http.Method httpMethod, boolean nestedFields,
+			JSONObject objectDefinitionJSONObject,
+			JSONArray permissionsJSONArray)
+		throws Exception {
+
+		String endpoint =
+			"object-admin/v1.0/object-definitions/" +
+				objectDefinitionJSONObject.getLong("id");
+
+		if (nestedFields) {
+			endpoint = endpoint + "?nestedFields=permissions";
+		}
+
+		return HTTPTestUtil.invokeToJSONObject(
+			objectDefinitionJSONObject.put(
+				"permissions", permissionsJSONArray
+			).toString(),
+			endpoint, httpMethod);
+	}
+
+	private JSONObject _postObjectDefinitionWithPermissions(
+			boolean nestedFields, JSONArray permissionsJSONArray)
+		throws Exception {
+
+		String endpoint = "object-admin/v1.0/object-definitions/";
+
+		if (nestedFields) {
+			endpoint = endpoint + "?nestedFields=permissions";
+		}
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"label", RandomTestUtil.randomLocaleStringMap()
+			).put(
+				"name", ObjectDefinitionTestUtil.getRandomName()
+			).put(
+				"permissions", permissionsJSONArray
+			).put(
+				"pluralLabel", RandomTestUtil.randomLocaleStringMap()
+			).put(
+				"scope", ObjectDefinitionConstants.SCOPE_COMPANY
+			).toString(),
+			endpoint, Http.Method.POST);
+	}
+
+	private JSONObject
+			_putByExternalReferenceCodeObjectDefinitionWithPermissions(
+				boolean nestedFields, JSONObject objectDefinitionJSONObject,
+				JSONArray permissionsJSONArray)
+		throws Exception {
+
+		String endpoint =
+			"object-admin/v1.0/object-definitions/by-external-reference-code/" +
+				objectDefinitionJSONObject.getString("externalReferenceCode");
+
+		if (nestedFields) {
+			endpoint = endpoint + "?nestedFields=permissions";
+		}
+
+		return HTTPTestUtil.invokeToJSONObject(
+			objectDefinitionJSONObject.put(
+				"permissions", permissionsJSONArray
+			).toString(),
+			endpoint, Http.Method.PUT);
 	}
 
 	private ObjectDefinition _randomModifiableSystemObjectDefinition(
@@ -2438,8 +2846,9 @@ public class ObjectDefinitionResourceTest
 		ObjectDefinition objectDefinition = randomObjectDefinition();
 
 		ObjectRelationship objectRelationship = _createObjectRelationship(
-			randomModifiableSystemObjectDefinition, objectDefinition,
-			ObjectRelationship.Type.MANY_TO_MANY);
+			randomModifiableSystemObjectDefinition,
+			objectDefinition.getExternalReferenceCode(),
+			objectDefinition.getId(), ObjectRelationship.Type.MANY_TO_MANY);
 
 		randomModifiableSystemObjectDefinition.setObjectRelationships(
 			new ObjectRelationship[] {objectRelationship});
@@ -2573,8 +2982,12 @@ public class ObjectDefinitionResourceTest
 		ObjectDefinition randomModifiableSystemObjectDefinition =
 			_randomModifiableSystemObjectDefinition();
 
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
 		ObjectRelationship objectRelationship = _createObjectRelationship(
-			randomModifiableSystemObjectDefinition, randomObjectDefinition(),
+			randomModifiableSystemObjectDefinition,
+			randomObjectDefinition.getExternalReferenceCode(),
+			randomObjectDefinition.getId(),
 			ObjectRelationship.Type.ONE_TO_MANY);
 
 		randomModifiableSystemObjectDefinition.setObjectRelationships(
@@ -2631,10 +3044,16 @@ public class ObjectDefinitionResourceTest
 	private GroupLocalService _groupLocalService;
 
 	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
 	private Language _language;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

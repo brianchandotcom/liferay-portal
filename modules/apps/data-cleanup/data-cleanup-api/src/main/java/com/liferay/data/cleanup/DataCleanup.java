@@ -24,6 +24,8 @@ public abstract class DataCleanup {
 
 	public abstract String getLabel();
 
+	public abstract String getServletContextName();
+
 	public abstract String getType();
 
 	protected abstract void doCleanup() throws Exception;

@@ -571,7 +571,8 @@ public class DisplayPageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, displayPageTemplate.getThumbnail()),
-				false, 0L, layout.getPlid(), 0L,
+				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
+				0L, layout.getPlid(), 0L,
 				PageSpecificationUtil.getPublishedStatus(
 					displayPageTemplate.getPageSpecifications()),
 				serviceContext));

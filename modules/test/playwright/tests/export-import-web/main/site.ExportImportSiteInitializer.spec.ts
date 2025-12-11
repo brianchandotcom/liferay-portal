@@ -121,119 +121,133 @@ async function getSiteHomePageScreenshot(
 	});
 });
 
-testWithExportImportAtInstanceLevelFF(
-	'Can export and import a site created with the Welcome site initializer',
-	async ({apiHelpers, exportImportPage, page}) => {
-		let exportFilePath: string;
-		let exportName: string;
-		let exportableItems1: Map<string, number>;
-		let exportableItems2: Map<string, number>;
-		let site1: Site;
-		let site2: Site;
+[
+	{name: 'com.liferay.site.initializer.masterclass'},
+	{
+		mask: (page) => page.locator('.user-personal-bar'),
+		name: 'com.liferay.site.initializer.welcome',
+	},
+].forEach(({mask, name}) => {
+	testWithExportImportAtInstanceLevelFF(
+		`Can export and import a site created with the ${name} site initializer`,
+		async ({apiHelpers, exportImportPage, page}) => {
+			let exportFilePath: string;
+			let exportName: string;
+			let exportableItems1: Map<string, number>;
+			let exportableItems2: Map<string, number>;
+			let site1: Site;
+			let site2: Site;
 
-		await testWithExportImportAtInstanceLevelFF.step(
-			'Create the site 1 from the template',
-			async () => {
-				site1 = await apiHelpers.headlessSite.createSite({
-					name: getRandomString(),
-					templateKey: 'com.liferay.site.initializer.welcome',
-					templateType: 'site-initializer',
-				});
+			await testWithExportImportAtInstanceLevelFF.step(
+				'Create the site 1 from the template',
+				async () => {
+					site1 = await apiHelpers.headlessSite.createSite({
+						name: getRandomString(),
+						templateKey: name,
+						templateType: 'site-initializer',
+					});
 
-				apiHelpers.data.push({id: site1.id, type: 'site'});
-			}
-		);
-
-		await testWithExportImportAtInstanceLevelFF.step(
-			'Export the site 1',
-			async () => {
-				await exportImportPage.goToExport(site1.friendlyUrlPath);
-
-				exportableItems1 = await exportImportPage.getExportableItems();
-
-				exportName = `MyExport-${getRandomString()}`;
-
-				await exportImportPage.exportAll(exportName);
-
-				await expect(
-					exportImportPage.taskSuccessLabel(exportName)
-				).toBeVisible({timeout: 60000});
-
-				exportFilePath =
-					await exportImportPage.downloadExportProcess(exportName);
-			}
-		);
-
-		await testWithExportImportAtInstanceLevelFF.step(
-			'Create the site 2',
-			async () => {
-				site2 = await apiHelpers.headlessSite.createSite({
-					name: getRandomString(),
-				});
-
-				apiHelpers.data.push({id: site2.id, type: 'site'});
-			}
-		);
-
-		await testWithExportImportAtInstanceLevelFF.step(
-			'Import the site 1 into site 2',
-			async () => {
-				await exportImportPage.goToImport(site2.friendlyUrlPath);
-
-				await exportImportPage.import(exportFilePath);
-
-				await expect(
-					exportImportPage.taskSuccessLabel(exportName)
-				).toBeVisible({timeout: 60000});
-			}
-		);
-
-		await testWithExportImportAtInstanceLevelFF.step(
-			'Assert the exportable items from site 1 and site 2 are equal',
-			async () => {
-				await exportImportPage.goToExport(site2.friendlyUrlPath);
-
-				exportableItems2 = await exportImportPage.getExportableItems();
-
-				expect(exportableItems2.size).toEqual(exportableItems1.size);
-
-				for (const [name, count] of exportableItems1.entries()) {
-					expect(exportableItems2.get(name)).toBe(count);
+					apiHelpers.data.push({id: site1.id, type: 'site'});
 				}
-			}
-		);
-
-		await test.step('Assert the home page screenshots from site 1 and site 2 are equal', async () => {
-			const comparator = getComparator('image/png');
-
-			const buffer = comparator(
-				await getSiteHomePageScreenshot(
-					page,
-					site1.name,
-					{staging: false},
-					page.locator('.user-personal-bar')
-				),
-				await getSiteHomePageScreenshot(
-					page,
-					site2.name,
-					{staging: false},
-					page.locator('.user-personal-bar')
-				)
 			);
 
-			if (buffer !== null && buffer.diff !== undefined) {
-				const diffPath = path.join(
-					getTempDir(),
-					`${site1.name}-diff.png`
+			await testWithExportImportAtInstanceLevelFF.step(
+				'Export the site 1',
+				async () => {
+					await exportImportPage.goToExport(site1.friendlyUrlPath);
+
+					exportableItems1 =
+						await exportImportPage.getExportableItems();
+
+					exportName = `MyExport-${getRandomString()}`;
+
+					await exportImportPage.exportAll(exportName);
+
+					await expect(
+						exportImportPage.taskSuccessLabel(exportName)
+					).toBeVisible({timeout: 60000});
+
+					exportFilePath =
+						await exportImportPage.downloadExportProcess(
+							exportName
+						);
+				}
+			);
+
+			await testWithExportImportAtInstanceLevelFF.step(
+				'Create the site 2',
+				async () => {
+					site2 = await apiHelpers.headlessSite.createSite({
+						name: getRandomString(),
+					});
+
+					apiHelpers.data.push({id: site2.id, type: 'site'});
+				}
+			);
+
+			await testWithExportImportAtInstanceLevelFF.step(
+				'Import the site 1 into site 2',
+				async () => {
+					await exportImportPage.goToImport(site2.friendlyUrlPath);
+
+					await exportImportPage.import(exportFilePath);
+
+					await expect(
+						exportImportPage.taskSuccessLabel(exportName)
+					).toBeVisible({timeout: 60000});
+				}
+			);
+
+			await testWithExportImportAtInstanceLevelFF.step(
+				'Assert the exportable items from site 1 and site 2 are equal',
+				async () => {
+					await exportImportPage.goToExport(site2.friendlyUrlPath);
+
+					exportableItems2 =
+						await exportImportPage.getExportableItems();
+
+					expect(exportableItems2.size).toEqual(
+						exportableItems1.size
+					);
+
+					for (const [name, count] of exportableItems1.entries()) {
+						expect(exportableItems2.get(name)).toBe(count);
+					}
+				}
+			);
+
+			await test.step('Assert the home page screenshots from site 1 and site 2 are equal', async () => {
+				const comparator = getComparator('image/png');
+
+				const buffer = comparator(
+					await getSiteHomePageScreenshot(
+						page,
+						site1.name,
+						{staging: false},
+						mask?.(page)
+					),
+					await getSiteHomePageScreenshot(
+						page,
+						site2.name,
+						{staging: false},
+						mask?.(page)
+					)
 				);
-				await fs.writeFile(diffPath, buffer.diff);
-				throw new Error(
-					`The site 1 and site 2 home pages differ. Check the screenshot diff at "${diffPath}".`
-				);
-			}
-		});
-	}
-);
+
+				if (buffer !== null && buffer.diff !== undefined) {
+					const diffPath = path.join(
+						getTempDir(),
+						`${site1.name}-diff.png`
+					);
+					await fs.writeFile(diffPath, buffer.diff);
+					throw new Error(
+						`The site 1 and site 2 home pages differ. Check the screenshot diff at "${diffPath}".`
+					);
+				}
+			});
+		}
+	);
+});
 
 testWithExportImportAtInstanceLevelFF(
 	'Can export and import a site created with the Clarity site initializer including all exportable items',

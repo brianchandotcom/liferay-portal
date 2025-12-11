@@ -52,7 +52,7 @@ public class LayoutSetPrototypePortletDataHandler
 		setDataLevel(DataLevel.PORTAL);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(LayoutSetPrototype.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "site-templates", true, true,
 				new PortletDataHandlerControl[] {

@@ -57,7 +57,7 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "tags", true, false, null, AssetTag.class.getName());
 
-		setExportControls(tagsPortletDataHandlerBoolean);
+		setExportPortletDataHandlerControls(tagsPortletDataHandlerBoolean);
 
 		PortletDataHandlerBoolean mergeTagsByNamePortletDataHandlerBoolean =
 			new PortletDataHandlerBoolean(
@@ -65,15 +65,15 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 				AssetTagsServiceConfigurationValues.STAGING_MERGE_TAGS_BY_NAME,
 				false, null);
 
-		setImportControls(
-			tagsPortletDataHandlerBoolean,
-			mergeTagsByNamePortletDataHandlerBoolean);
-
-		setStagingControls(
+		setImportPortletDataHandlerControls(
 			tagsPortletDataHandlerBoolean,
 			mergeTagsByNamePortletDataHandlerBoolean);
 
 		setPublishToLiveByDefault(true);
+
+		setStagingPortletDataHandlerControls(
+			tagsPortletDataHandlerBoolean,
+			mergeTagsByNamePortletDataHandlerBoolean);
 	}
 
 	@Override

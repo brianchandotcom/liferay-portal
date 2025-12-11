@@ -77,12 +77,13 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(FragmentCollection.class),
 			new StagedModelType(FragmentEntry.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false, null,
 				FragmentEntry.class.getName()));
 		setPublishToLiveByDefault(true);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

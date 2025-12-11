@@ -40,7 +40,7 @@ public class KBDisplayPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("resourceClassNameId", "resourcePrimKey");
-		setExportControls();
+		setExportPortletDataHandlerControls();
 	}
 
 	@Override

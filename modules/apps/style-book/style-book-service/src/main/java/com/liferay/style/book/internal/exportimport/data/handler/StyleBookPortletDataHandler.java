@@ -55,12 +55,13 @@ public class StyleBookPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(StyleBookEntry.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false, null,
 				StyleBookEntry.class.getName()));
 		setPublishToLiveByDefault(true);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

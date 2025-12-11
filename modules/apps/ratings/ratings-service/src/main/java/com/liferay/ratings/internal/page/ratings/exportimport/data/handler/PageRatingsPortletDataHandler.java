@@ -66,13 +66,14 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(RatingsEntry.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "ratings-entries", true, false, null,
 				RatingsEntry.class.getName(),
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
 		setPublishToLiveByDefault(true);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

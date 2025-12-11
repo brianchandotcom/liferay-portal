@@ -79,7 +79,7 @@ public class BlogsAdminPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(BlogsEntry.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false,
 				new PortletDataHandlerControl[] {
@@ -88,7 +88,8 @@ public class BlogsAdminPortletDataHandler extends BasePortletDataHandler {
 				},
 				BlogsEntry.class.getName()));
 		setPublishToLiveByDefault(PropsValues.BLOGS_PUBLISH_TO_LIVE_BY_DEFAULT);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

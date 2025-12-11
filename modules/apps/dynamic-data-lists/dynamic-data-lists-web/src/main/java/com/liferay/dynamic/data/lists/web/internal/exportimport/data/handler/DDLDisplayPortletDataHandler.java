@@ -76,14 +76,15 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DDLRecord.class),
 			new StagedModelType(DDLRecordSet.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "record-sets", true, false, null,
 				DDLRecordSet.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "records", true, false, null,
 				DDLRecord.class.getName()));
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

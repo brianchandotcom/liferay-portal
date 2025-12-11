@@ -54,7 +54,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(AssetCategory.class),
 			new StagedModelType(AssetVocabulary.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "categories", true, false, null,
 				AssetCategory.class.getName()),
@@ -63,7 +63,8 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 				AssetVocabulary.class.getName()));
 		setPublishToLiveByDefault(true);
 		setRank(110);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

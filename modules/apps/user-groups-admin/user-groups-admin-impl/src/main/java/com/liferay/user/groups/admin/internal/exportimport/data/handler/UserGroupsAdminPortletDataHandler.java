@@ -52,7 +52,7 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "user-groups", true, true, null,
 				UserGroup.class.getName()));

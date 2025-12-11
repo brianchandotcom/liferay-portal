@@ -72,13 +72,14 @@ public class JournalContentPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("articleId", "ddmTemplateKey", "groupId");
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				null, "selected-web-content", true, true, null,
 				JournalArticle.class.getName()));
 		setPublishToLiveByDefault(
 			JournalContentWebConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

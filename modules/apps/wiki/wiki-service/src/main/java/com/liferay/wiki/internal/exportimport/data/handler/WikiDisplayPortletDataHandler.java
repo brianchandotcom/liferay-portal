@@ -47,7 +47,7 @@ public class WikiDisplayPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("title", "nodeId");
-		setExportControls(new PortletDataHandlerControl[0]);
+		setExportPortletDataHandlerControls(new PortletDataHandlerControl[0]);
 	}
 
 	@Override

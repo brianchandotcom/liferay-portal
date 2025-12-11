@@ -277,7 +277,8 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetExportConfigurationControls() throws Exception {
+	public void testGetExportConfigurationPortletDataHandlerControls()
+		throws Exception {
 	}
 
 	@Test
@@ -539,7 +540,9 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Override
-	protected PortletDataHandlerControl[] getExportControls() {
+	protected PortletDataHandlerControl[]
+		getExportPortletDataHandlerControls() {
+
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "repositories", true, false, null,
@@ -565,8 +568,10 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Override
-	protected PortletDataHandlerControl[] getImportControls() {
-		return getExportControls();
+	protected PortletDataHandlerControl[]
+		getImportPortletDataHandlerControls() {
+
+		return getExportPortletDataHandlerControls();
 	}
 
 	@Override
@@ -620,8 +625,10 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Override
-	protected PortletDataHandlerControl[] getStagingControls() {
-		return getExportControls();
+	protected PortletDataHandlerControl[]
+		getStagingPortletDataHandlerControls() {
+
+		return getExportPortletDataHandlerControls();
 	}
 
 	@Override
@@ -655,7 +662,9 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isGetExportConfigurationControlsTested() {
+	protected boolean
+		isGetExportConfigurationPortletDataHandlerControlsTested() {
+
 		return true;
 	}
 

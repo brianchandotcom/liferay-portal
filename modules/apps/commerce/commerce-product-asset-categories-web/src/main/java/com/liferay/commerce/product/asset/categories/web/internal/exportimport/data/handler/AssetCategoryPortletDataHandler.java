@@ -61,11 +61,13 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		setDataAlwaysStaged(_portletDataHandler.isDataAlwaysStaged());
 		setDeletionSystemEventStagedModelTypes(
 			_portletDataHandler.getDeletionSystemEventStagedModelTypes());
-		setExportControls(_portletDataHandler.getExportControls());
+		setExportPortletDataHandlerControls(
+			_portletDataHandler.getExportPortletDataHandlerControls());
 		setPublishToLiveByDefault(
 			_portletDataHandler.isPublishToLiveByDefault());
 		setRank(_portletDataHandler.getRank());
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

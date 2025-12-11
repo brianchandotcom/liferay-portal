@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -515,10 +516,18 @@ public class TranslateDisplayContext {
 	}
 
 	private Map<String, Object> _getInfoFieldEditorConfig(String infoFieldId) {
+		String editorName = "ckeditor";
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-11235")) {
+
+			editorName = "ckeditor5_classic";
+		}
+
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				TranslationPortletKeys.TRANSLATION, _getEditorConfigKey(),
-				"ckeditor",
+				editorName,
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true
 				).put(

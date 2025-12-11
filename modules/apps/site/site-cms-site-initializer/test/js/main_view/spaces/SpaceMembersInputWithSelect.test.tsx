@@ -237,9 +237,7 @@ describe('SpaceMembersInputWithSelect', () => {
 
 		await userEvent.type(input, 'non-existent');
 
-		await waitFor(() => {
-			expect(screen.getByText('no-results-found')).toBeInTheDocument();
-		});
+		expect(await screen.findByText('no-results-found')).toBeInTheDocument();
 	});
 
 	it('calls "onAutocompleteItemSelected" callback when a user is selected', async () => {

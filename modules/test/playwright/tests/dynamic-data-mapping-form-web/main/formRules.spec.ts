@@ -54,96 +54,180 @@ test.beforeEach(({page}) => {
 	page.setViewportSize({height: 1080, width: 1920});
 });
 
-test('Assert that multiple selection field associated with a show rule mantains its predefined value on change', async ({
+test('Assert multiple selection field associated with rules', async ({
 	formBuilderFieldSettingsSidePanelPage,
 	formBuilderPage,
 	formBuilderSidePanelPage,
 	page,
 	rulesBuilderPage,
 }) => {
-	await formBuilderPage.goToNew();
+	await test.step('creating form and associated rule', async () => {
+		await formBuilderPage.goToNew();
 
-	await expect(formBuilderPage.newFormHeading).toBeVisible();
+		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
-	await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
 
-	await formBuilderSidePanelPage.addFieldByDoubleClick('Single Selection');
+		await formBuilderSidePanelPage.addFieldByDoubleClick(
+			'Single Selection'
+		);
 
-	await formBuilderFieldSettingsSidePanelPage.addOptions(2, 'single option ');
+		await formBuilderFieldSettingsSidePanelPage.addOptions(
+			2,
+			'single option '
+		);
 
-	await formBuilderSidePanelPage.clickBackButton();
+		await formBuilderSidePanelPage.clickBackButton();
 
-	await formBuilderSidePanelPage.addFieldByDoubleClick('Multiple Selection');
+		await formBuilderSidePanelPage.addFieldByDoubleClick(
+			'Multiple Selection'
+		);
 
-	await formBuilderFieldSettingsSidePanelPage.addOptions(
-		4,
-		'multiple option '
-	);
+		await formBuilderFieldSettingsSidePanelPage.addOptions(
+			4,
+			'multiple option '
+		);
 
-	await formBuilderSidePanelPage.advancedTab.click();
+		await rulesBuilderPage.rulesTab.click();
 
-	await formBuilderFieldSettingsSidePanelPage.fillMultiplePredefinedValues([
-		'multiple option 0',
-		'multiple option 3',
-	]);
+		await rulesBuilderPage.addElementsButton.click();
 
-	await page.waitForTimeout(1000);
+		await rulesBuilderPage.selectConditionLeftFormField('Single Selection');
 
-	await rulesBuilderPage.rulesTab.click();
+		await rulesBuilderPage.selectConditionOperator('Is Equal To');
 
-	await rulesBuilderPage.addElementsButton.click();
+		await rulesBuilderPage.selectConditionOperatorValueSource('Value');
 
-	await rulesBuilderPage.selectConditionLeftFormField('Single Selection');
+		await rulesBuilderPage.selectConditionRightFormField('single option 0');
 
-	await rulesBuilderPage.selectConditionOperator('Is Equal To');
+		await rulesBuilderPage.selectAction('Show');
 
-	await rulesBuilderPage.selectConditionOperatorValueSource('Value');
+		await page.getByTitle('Choose an Option').click();
 
-	await rulesBuilderPage.selectConditionRightFormField('single option 0');
+		await page.getByRole('option', {name: 'Multiple Selection'}).click();
 
-	await rulesBuilderPage.selectAction('Show');
+		await rulesBuilderPage.addFormRuleActionButton.click();
 
-	await page.getByRole('combobox').nth(5).click();
+		await page.getByTitle('Choose an Option').click();
 
-	await page.getByRole('option', {name: 'Multiple Selection'}).click();
+		await page.getByRole('option', {name: 'Require'}).click();
 
-	await rulesBuilderPage.saveButton.click();
+		await page.getByTitle('Choose an Option').click();
 
-	await formBuilderPage.formTab.click();
+		await page.getByRole('option', {name: 'Multiple Selection'}).click();
 
-	const formPreviewPagePromise = page.waitForEvent('popup');
+		await rulesBuilderPage.saveButton.click();
 
-	await formBuilderPage.previewButton.click();
+		await formBuilderPage.formTab.click();
+	});
 
-	const formPreviewPage = await formPreviewPagePromise;
+	await test.step('verify that association with show and require rules clears its values when hidden and displays no errors when shown again', async () => {
+		const formPreviewPagePromise = page.waitForEvent('popup');
 
-	await formPreviewPage
-		.locator('label')
-		.filter({hasText: 'single option 0'})
-		.click();
+		await formBuilderPage.previewButton.click();
 
-	const multpleOption = (optionNumber: number) =>
-		formPreviewPage.getByLabel(`multiple option ${optionNumber}`);
+		const formPreviewPage = await formPreviewPagePromise;
 
-	await expect(multpleOption(0)).toBeChecked();
+		await formPreviewPage
+			.locator('label')
+			.filter({hasText: 'single option 0'})
+			.click();
 
-	await expect(multpleOption(1)).not.toBeChecked();
+		await formPreviewPage.getByLabel('multiple option 1').click();
 
-	await expect(multpleOption(2)).not.toBeChecked();
+		await formPreviewPage
+			.locator('label')
+			.filter({hasText: 'single option 1'})
+			.click();
 
-	await expect(multpleOption(3)).toBeChecked();
+		await expect(
+			formPreviewPage.getByRole('group', {name: 'Multiple Selection'})
+		).toBeHidden();
 
-	await formPreviewPage.getByLabel('multiple option 1').click();
+		await formPreviewPage
+			.locator('label')
+			.filter({hasText: 'single option 0'})
+			.click();
 
-	await expect(multpleOption(0)).toBeChecked();
+		await expect(
+			formPreviewPage.getByText('This field is required.')
+		).toBeHidden();
 
-	await expect(multpleOption(1)).toBeChecked();
+		const multipleOption = (optionNumber: number) =>
+			formPreviewPage.getByLabel(`multiple option ${optionNumber}`);
 
-	await expect(multpleOption(2)).not.toBeChecked();
+		await expect(multipleOption(0)).not.toBeChecked();
 
-	await expect(multpleOption(3)).toBeChecked();
+		await expect(multipleOption(1)).not.toBeChecked();
 
-	await formPreviewPage.close();
+		await expect(multipleOption(2)).not.toBeChecked();
+
+		await expect(multipleOption(3)).not.toBeChecked();
+
+		await formPreviewPage.close();
+	});
+
+	await test.step('verify that association with a show rule mantains its predefined value on change', async () => {
+		await formBuilderSidePanelPage.advancedTab.click();
+
+		await formBuilderFieldSettingsSidePanelPage.fillMultiplePredefinedValues(
+			['multiple option 0', 'multiple option 3']
+		);
+
+		await page.waitForTimeout(1000);
+
+		const formPreviewPagePromise = page.waitForEvent('popup');
+
+		await formBuilderPage.previewButton.click();
+
+		const formPreviewPage = await formPreviewPagePromise;
+
+		await formPreviewPage
+			.locator('label')
+			.filter({hasText: 'single option 0'})
+			.click();
+
+		await formPreviewPage
+			.locator('label')
+			.filter({hasText: 'single option 1'})
+			.click();
+
+		await expect(
+			formPreviewPage.getByRole('group', {name: 'Multiple Selection'})
+		).toBeHidden();
+
+		await formPreviewPage
+			.locator('label')
+			.filter({hasText: 'single option 0'})
+			.click();
+
+		await expect(
+			formPreviewPage.getByText('This field is required.')
+		).toBeHidden();
+
+		const multipleOption = (optionNumber: number) =>
+			formPreviewPage.getByLabel(`multiple option ${optionNumber}`);
+
+		await expect(multipleOption(0)).toBeChecked();
+
+		await expect(multipleOption(1)).not.toBeChecked();
+
+		await expect(multipleOption(2)).not.toBeChecked();
+
+		await expect(multipleOption(3)).toBeChecked();
+
+		await formPreviewPage.getByLabel('multiple option 1').click();
+
+		await expect(multipleOption(0)).toBeChecked();
+
+		await expect(multipleOption(1)).toBeChecked();
+
+		await expect(multipleOption(2)).not.toBeChecked();
+
+		await expect(multipleOption(3)).toBeChecked();
+
+		await formPreviewPage.close();
+	});
 });
 
 test('Assert that Show action rule is not triggered when typing into an unrelated field', async ({

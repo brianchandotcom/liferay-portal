@@ -475,7 +475,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				GetterUtil.getString(
 					serviceContext.getAttribute(
 						"draftLayoutExternalReferenceCode"),
-					null),
+					layout.getExternalReferenceCode() + "-draft"),
 				userId, groupId, privateLayout, parentLayoutId,
 				_classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), nameMap, titleMap, descriptionMap,

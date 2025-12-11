@@ -10,7 +10,7 @@ import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Balázs Sáfrány-Kovalik
  */
 @Component(service = UADAnonymizer.class)
 public class KBCommentUADAnonymizer extends BaseKBCommentUADAnonymizer {

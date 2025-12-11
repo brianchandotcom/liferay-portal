@@ -5,13 +5,22 @@
 
 package com.liferay.knowledge.base.uad.anonymizer;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Balázs Sáfrány-Kovalik
  */
 @Component(service = UADAnonymizer.class)
 public class KBArticleUADAnonymizer extends BaseKBArticleUADAnonymizer {
+
+	@Override
+	protected AssetEntry fetchAssetEntry(KBArticle kbArticle) {
+		return assetEntryLocalService.fetchEntry(
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+	}
+
 }

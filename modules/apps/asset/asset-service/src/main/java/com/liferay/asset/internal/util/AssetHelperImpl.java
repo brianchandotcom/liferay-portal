@@ -690,7 +690,7 @@ public class AssetHelperImpl implements AssetHelper {
 			SearchContext searchContext, int start)
 		throws Exception {
 
-		BooleanQueryImpl segmentsBooleanQueryImpl = new BooleanQueryImpl();
+		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
 		for (AssetEntryQuery assetEntryQuery : assetEntryQueries) {
 			SearchContext assetEntryQuerySearchContext = new SearchContext();
@@ -714,24 +714,24 @@ public class AssetHelperImpl implements AssetHelper {
 			BooleanQuery booleanQuery = baseSearcher.getFullQuery(
 				assetEntryQuerySearchContext);
 
-			segmentsBooleanQueryImpl.add(
+			booleanQueryImpl.add(
 				booleanQuery, BooleanClauseOccur.SHOULD);
 		}
 
 		BooleanClause<Query>[] booleanClauses =
 			searchContext.getBooleanClauses();
 
-		BooleanClause<Query> segmentsBooleanClause =
+		BooleanClause<Query> assetEntryBooleanClauses =
 			BooleanClauseFactoryUtil.create(
-				segmentsBooleanQueryImpl, BooleanClauseOccur.MUST.getName());
+				booleanQueryImpl, BooleanClauseOccur.MUST.getName());
 
 		if (booleanClauses == null) {
 			searchContext.setBooleanClauses(
-				new BooleanClause[] {segmentsBooleanClause});
+				new BooleanClause[] {assetEntryBooleanClauses});
 		}
 		else {
 			searchContext.setBooleanClauses(
-				ArrayUtil.append(booleanClauses, segmentsBooleanClause));
+				ArrayUtil.append(booleanClauses, assetEntryBooleanClauses));
 		}
 
 		searchContext.setEnd(end);

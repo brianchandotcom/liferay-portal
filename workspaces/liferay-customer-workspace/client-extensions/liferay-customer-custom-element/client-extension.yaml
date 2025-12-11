@@ -23,7 +23,7 @@ liferay-customer-custom-element:
         jira-fls-portal-url: https://liferay.atlassian.net/servicedesk/customer/portal/204
         jira-fls-project: LRFLS
         jira-hc-portal-url: https://liferay.atlassian.net/servicedesk/customer/portal/105
-        provisioning-server-api: https://webserver-lrprovisioning.lfr.cloud/o/provisioning-rest/v1.0
+        provisioning-server-api: https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0
     type: customElement
     urls:
         -   "*.js"

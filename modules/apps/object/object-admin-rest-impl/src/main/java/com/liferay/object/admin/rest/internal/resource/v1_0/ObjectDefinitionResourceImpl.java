@@ -64,6 +64,7 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
@@ -1177,45 +1178,53 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectDefinition2)
 		throws Exception {
 
-		String objectDefinitionExternalReferenceCode1 =
-			objectField.getObjectDefinitionExternalReferenceCode1();
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-		if (Validator.isNull(objectDefinitionExternalReferenceCode1) ||
-			StringUtil.equals(
-				objectDefinitionExternalReferenceCode1,
-				serviceBuilderObjectDefinition2.getExternalReferenceCode())) {
+			String objectDefinitionExternalReferenceCode1 =
+				objectField.getObjectDefinitionExternalReferenceCode1();
 
-			return null;
-		}
-
-		com.liferay.object.model.ObjectDefinition
-			serviceBuilderObjectDefinition1 =
-				_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+			if (Validator.isNull(objectDefinitionExternalReferenceCode1) ||
+				StringUtil.equals(
 					objectDefinitionExternalReferenceCode1,
-					serviceBuilderObjectDefinition2.getCompanyId(),
-					contextUser.getUserId(),
-					serviceBuilderObjectDefinition2.getObjectFolderId(), true,
-					false);
+					serviceBuilderObjectDefinition2.
+						getExternalReferenceCode())) {
 
-		com.liferay.object.model.ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.
-				fetchObjectRelationshipByExternalReferenceCode(
-					objectField.getObjectRelationshipExternalReferenceCode(),
-					serviceBuilderObjectDefinition1.getObjectDefinitionId());
+				return null;
+			}
 
-		if (objectRelationship != null) {
-			return objectRelationship;
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition1 =
+					_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+						objectDefinitionExternalReferenceCode1,
+						serviceBuilderObjectDefinition2.getCompanyId(),
+						contextUser.getUserId(),
+						serviceBuilderObjectDefinition2.getObjectFolderId(),
+						true, ObjectDefinitionConstants.SCOPE_COMPANY, false);
+
+			com.liferay.object.model.ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByExternalReferenceCode(
+						objectField.
+							getObjectRelationshipExternalReferenceCode(),
+						serviceBuilderObjectDefinition1.
+							getObjectDefinitionId());
+
+			if (objectRelationship != null) {
+				return objectRelationship;
+			}
+
+			return _objectRelationshipLocalService.addObjectRelationship(
+				objectField.getObjectRelationshipExternalReferenceCode(),
+				contextUser.getUserId(),
+				serviceBuilderObjectDefinition1.getObjectDefinitionId(),
+				serviceBuilderObjectDefinition2.getObjectDefinitionId(),
+				ObjectFieldUtil.toObjectField(
+					defaultLanguageId, _listTypeDefinitionLocalService,
+					objectField, _objectFieldLocalService,
+					_objectFieldSettingLocalService,
+					_objectFilterLocalService));
 		}
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			objectField.getObjectRelationshipExternalReferenceCode(),
-			contextUser.getUserId(),
-			serviceBuilderObjectDefinition1.getObjectDefinitionId(),
-			serviceBuilderObjectDefinition2.getObjectDefinitionId(),
-			ObjectFieldUtil.toObjectField(
-				defaultLanguageId, _listTypeDefinitionLocalService, objectField,
-				_objectFieldLocalService, _objectFieldSettingLocalService,
-				_objectFilterLocalService));
 	}
 
 	private ServiceContext _createServiceContext(

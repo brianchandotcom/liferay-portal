@@ -43,6 +43,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DigitalSalesRoomResource {
 
+	public void deleteDigitalSalesRoom(Long digitalSalesRoomId)
+		throws Exception;
+
 	public DigitalSalesRoom getDigitalSalesRoom(Long digitalSalesRoomId)
 		throws Exception;
 

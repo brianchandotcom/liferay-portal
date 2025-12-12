@@ -223,6 +223,32 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDigitalSalesRoom() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DigitalSalesRoom digitalSalesRoom =
+			testDeleteDigitalSalesRoom_addDigitalSalesRoom();
+
+		assertHttpResponseStatusCode(
+			204,
+			digitalSalesRoomResource.deleteDigitalSalesRoomHttpResponse(
+				digitalSalesRoom.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			digitalSalesRoomResource.getDigitalSalesRoomHttpResponse(
+				digitalSalesRoom.getId()));
+		assertHttpResponseStatusCode(
+			404, digitalSalesRoomResource.getDigitalSalesRoomHttpResponse(0L));
+	}
+
+	protected DigitalSalesRoom testDeleteDigitalSalesRoom_addDigitalSalesRoom()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetDigitalSalesRoom() throws Exception {
 		DigitalSalesRoom postDigitalSalesRoom =
 			testGetDigitalSalesRoom_addDigitalSalesRoom();
@@ -460,6 +486,12 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 		assertContains(
 			digitalSalesRoom2, (List<DigitalSalesRoom>)page.getItems());
 		assertValid(page, testGetDigitalSalesRoomsPage_getExpectedActions());
+
+		digitalSalesRoomResource.deleteDigitalSalesRoom(
+			digitalSalesRoom1.getId());
+
+		digitalSalesRoomResource.deleteDigitalSalesRoom(
+			digitalSalesRoom2.getId());
 	}
 
 	protected Map<String, Map<String, String>>

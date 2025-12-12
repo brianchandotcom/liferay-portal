@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
-import i18n from '~/utils/I18n';
 import Skeleton from '~/components/Skeleton';
+import i18n from '~/utils/I18n';
+
 import AccountSubscriptionsList from './components/AccountSubscriptionsList/AccountSubscriptionsList';
 import SubscriptionsNavbar from './components/SubscriptionsNavbar/SubscriptionsNavbar';
 import useAccountSubscriptionGroups from './hooks/useAccountSubscriptionGroups';
@@ -27,6 +28,28 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 	const accountSubscriptionGroups =
 		accountSubscriptionGroupsData?.c.accountSubscriptionGroups;
 
+	const translatedSubscriptionGroups = useMemo(() => {
+		const items = accountSubscriptionGroups?.items;
+
+		if (!items || !items.length) {
+			return null;
+		}
+
+		return items.map((group) => {
+			if (
+				group.name === 'Liferay SaaS' ||
+				group.name === 'Liferay PaaS'
+			) {
+				return {
+					...group,
+					name: 'Liferay Cloud',
+				};
+			}
+
+			return group;
+		});
+	}, [accountSubscriptionGroups]);
+
 	const [
 		setLastSubscriptionStatus,
 		{data: accountSubscriptionsData, loading: accountSubscriptionsLoading},
@@ -43,12 +66,10 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 	}, [setHasSideMenu]);
 
 	const handleDropdownOnClick = (selectedStatus) =>
-		setLastSubscriptionStatus(
-			selectedStatus
-		);
+		setLastSubscriptionStatus(selectedStatus);
 
 	const subscriptionsGroupSelected =
-		accountSubscriptionGroups?.items[selectedItemIndex]?.name;
+		translatedSubscriptionGroups?.[selectedItemIndex]?.name;
 
 	const portalOrDXPSubscriptions = ['Portal', 'Liferay Self-Hosted'];
 
@@ -67,9 +88,7 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 			{!!lastAccountSubcriptionGroup && (
 				<>
 					<SubscriptionsNavbar
-						accountSubscriptionGroups={
-							accountSubscriptionGroups?.items
-						}
+						accountSubscriptionGroups={translatedSubscriptionGroups}
 						disabled={accountSubscriptionsLoading}
 						loading={accountSubscriptionGroupsLoading}
 						onClickDropdownItem={handleDropdownOnClick}

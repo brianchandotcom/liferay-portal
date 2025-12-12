@@ -27,7 +27,8 @@ export const disabledTest = mergeTests(
 	featureFlagsTest({
 		'LPD-51356': {enabled: false},
 	}),
-	loginTest()
+	loginTest(),
+	systemSettingsPageTest
 );
 
 export const test = mergeTests(
@@ -45,6 +46,40 @@ export const test = mergeTests(
 test.afterEach(async ({page}) => {
 	await test.step('Clear Product Analytics cookies if present', async () => {
 		await clearProductAnalyticsCookies(page);
+	});
+});
+
+test.beforeEach(async ({page, systemSettingsPage}) => {
+	const productAnalyticsHeading = await page.getByRole('heading', {
+		name: 'Product Analytics',
+	});
+
+	await test.step('Verify Product Analytics Instance Level Configuration', async () => {
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
+
+		if (!(await page.getByText('Product Analytics').isVisible())) {
+			return;
+		}
+
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Product Analytics'
+		);
+
+		await productAnalyticsHeading.waitFor();
+
+		const enabledButton = await page.getByLabel('Enabled');
+
+		await enabledButton.setChecked(true);
+
+		if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
+			await page.getByRole('button', {name: 'Save'}).click();
+		}
+		else {
+			await page.getByRole('button', {name: 'Update'}).click();
+		}
+
+		await page.waitForTimeout(1000);
 	});
 });
 

@@ -463,8 +463,8 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 							_permissionService, _portal,
 							_resourceActionLocalService,
 							serviceBuilderObjectDefinition,
-							_systemObjectDefinitionManagerRegistry,
-							contextUser.getUserId(), _userLocalService,
+							_systemObjectDefinitionManagerRegistry, contextUser,
+							_userLocalService,
 							_workflowDefinitionLinkLocalService);
 					});
 				setObjectDefinitionExternalReferenceCode(

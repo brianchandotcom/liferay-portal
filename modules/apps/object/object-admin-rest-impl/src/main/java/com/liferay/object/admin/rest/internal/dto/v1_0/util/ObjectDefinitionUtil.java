@@ -100,7 +100,7 @@ public class ObjectDefinitionUtil {
 			serviceBuilderObjectDefinition,
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry,
-		long userId, UserLocalService userLocalService,
+		User user, UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		if (serviceBuilderObjectDefinition == null) {
@@ -328,8 +328,6 @@ public class ObjectDefinitionUtil {
 								com.liferay.object.model.ObjectDefinition.class.
 									getName();
 
-							User user = userLocalService.getUser(userId);
-
 							permissionService.checkPermission(
 								user.getGroupId(), permissionName,
 								serviceBuilderObjectDefinition.
@@ -337,7 +335,8 @@ public class ObjectDefinitionUtil {
 
 							Collection<Permission> permissions =
 								PermissionUtil.getPermissions(
-									user.getCompanyId(),
+									serviceBuilderObjectDefinition.
+										getCompanyId(),
 									resourceActionLocalService.
 										getResourceActions(permissionName),
 									serviceBuilderObjectDefinition.

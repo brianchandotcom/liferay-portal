@@ -8,6 +8,7 @@ package com.liferay.configuration.admin.web.internal.util;
 import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
@@ -208,28 +208,19 @@ public class ConfigurationModelRetrieverImpl
 			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
 		throws IOException {
 
-		List<ConfigurationModel> factoryInstancesConfigurationModels =
-			new ArrayList<>();
-
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 			new ConfigurationScopeDisplayContext(scope, scopePK);
 
-		for (Configuration configuration :
-				_getConfigurations(
-					factoryConfigurationModel.getFactoryPid(), scope,
-					String.valueOf(scopePK))) {
-
-			ConfigurationModel curConfigurationModel = new ConfigurationModel(
+		return TransformUtil.transformToList(
+			_getConfigurations(
+				factoryConfigurationModel.getFactoryPid(), scope,
+				String.valueOf(scopePK)),
+			configuration -> new ConfigurationModel(
 				configuration.getBundleLocation(),
 				factoryConfigurationModel.getBundleSymbolicName(),
 				factoryConfigurationModel.getClassLoader(), configuration,
 				configurationScopeDisplayContext, factoryConfigurationModel,
-				false);
-
-			factoryInstancesConfigurationModels.add(curConfigurationModel);
-		}
-
-		return factoryInstancesConfigurationModels;
+				false));
 	}
 
 	@Activate
@@ -333,31 +324,32 @@ public class ConfigurationModelRetrieverImpl
 				return new Configuration[0];
 			}
 
-			Filter filter = null;
-
 			String propertyFilterString = _getPropertyFilterString(
 				scope.getPropertyKey(), value);
 
-			if (Validator.isNotNull(propertyFilterString)) {
-				filter = FrameworkUtil.createFilter(propertyFilterString);
+			if (Validator.isNull(propertyFilterString)) {
+				return configurations;
 			}
+
+			Filter filter = FrameworkUtil.createFilter(propertyFilterString);
 
 			if (filter == null) {
 				return configurations;
 			}
 
-			List<Configuration> configurationsList = new ArrayList<>();
+			return TransformUtil.transform(
+				configurations,
+				configuration -> {
+					Dictionary<String, Object> properties =
+						configuration.getProcessedProperties(null);
 
-			for (Configuration configuration : configurations) {
-				Dictionary<String, Object> properties =
-					configuration.getProcessedProperties(null);
+					if (filter.match(properties)) {
+						return configuration;
+					}
 
-				if (filter.match(properties)) {
-					configurationsList.add(configuration);
-				}
-			}
-
-			return configurationsList.toArray(new Configuration[0]);
+					return null;
+				},
+				Configuration.class);
 		}
 		catch (InvalidSyntaxException | IOException exception) {
 			throw new RuntimeException(exception);

@@ -6,7 +6,6 @@
 package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
@@ -18,6 +17,7 @@ import com.liferay.configuration.admin.web.internal.search.FieldNames;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -34,7 +34,6 @@ import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -96,58 +95,66 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext,
 		Document[] documents, Locale locale, SearchContext searchContext) {
 
-		List<ConfigurationEntry> configurationEntries = new ArrayList<>();
-
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
 				configurationScopeDisplayContext.getScope(),
 				configurationScopeDisplayContext.getScopePK());
 
-		for (Document document : documents) {
-			ConfigurationModel configurationModel = _getConfigurationModel(
-				configurationModels, document);
+		List<ConfigurationEntry> configurationEntries =
+			TransformUtil.transformToList(
+				documents,
+				document -> {
+					ConfigurationModel configurationModel =
+						_getConfigurationModel(configurationModels, document);
 
-			if ((configurationModel != null) &&
-				configurationModel.isGenerateUI()) {
+					if ((configurationModel != null) &&
+						configurationModel.isGenerateUI()) {
 
-				configurationEntries.add(
-					new ConfigurationModelConfigurationEntry(
-						configurationModel, locale));
-			}
-		}
+						return new ConfigurationModelConfigurationEntry(
+							configurationModel, locale);
+					}
 
-		for (ConfigurationScreen configurationScreen :
-				_configurationEntryRetriever.getAllConfigurationScreens()) {
+					return null;
+				});
 
-			if (!Objects.equals(
-					String.valueOf(configurationScopeDisplayContext.getScope()),
-					configurationScreen.getScope()) ||
-				!configurationScreen.isVisible()) {
+		configurationEntries.addAll(
+			TransformUtil.transform(
+				_configurationEntryRetriever.getAllConfigurationScreens(),
+				configurationScreen -> {
+					if (!Objects.equals(
+							String.valueOf(
+								configurationScopeDisplayContext.getScope()),
+							configurationScreen.getScope()) ||
+						!configurationScreen.isVisible()) {
 
-				continue;
-			}
+						return null;
+					}
 
-			String configurationScreenCategoryKey = StringUtil.toLowerCase(
-				_language.get(
-					locale, "category." + configurationScreen.getCategoryKey()),
-				locale);
-			String configurationScreenKey = StringUtil.toLowerCase(
-				configurationScreen.getKey(), locale);
-			String configurationScreenName = StringUtil.toLowerCase(
-				configurationScreen.getName(locale), locale);
-			String keywords = StringUtil.toLowerCase(
-				searchContext.getKeywords(), locale);
+					String configurationScreenCategoryKey =
+						StringUtil.toLowerCase(
+							_language.get(
+								locale,
+								"category." +
+									configurationScreen.getCategoryKey()),
+							locale);
+					String configurationScreenKey = StringUtil.toLowerCase(
+						configurationScreen.getKey(), locale);
+					String configurationScreenName = StringUtil.toLowerCase(
+						configurationScreen.getName(locale), locale);
+					String keywords = StringUtil.toLowerCase(
+						searchContext.getKeywords(), locale);
 
-			if (Validator.isNull(keywords) ||
-				configurationScreenCategoryKey.contains(keywords) ||
-				configurationScreenKey.contains(keywords) ||
-				configurationScreenName.contains(keywords)) {
+					if (Validator.isNull(keywords) ||
+						configurationScreenCategoryKey.contains(keywords) ||
+						configurationScreenKey.contains(keywords) ||
+						configurationScreenName.contains(keywords)) {
 
-				configurationEntries.add(
-					new ConfigurationScreenConfigurationEntry(
-						configurationScreen, locale));
-			}
-		}
+						return new ConfigurationScreenConfigurationEntry(
+							configurationScreen, locale);
+					}
+
+					return null;
+				}));
 
 		return configurationEntries;
 	}

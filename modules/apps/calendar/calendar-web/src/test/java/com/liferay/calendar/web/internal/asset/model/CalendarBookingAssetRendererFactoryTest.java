@@ -36,13 +36,6 @@ public class CalendarBookingAssetRendererFactoryTest {
 
 	@Before
 	public void setUp() {
-		_calendarResourceUtilMockedStatic.when(
-			() -> CalendarResourceUtil.getScopeGroupCalendarResource(
-				Mockito.anyLong(), Mockito.any(ServiceContext.class))
-		).thenReturn(
-			_calendarResource
-		);
-
 		ReflectionTestUtil.setFieldValue(
 			_calendarBookingAssetRendererFactory,
 			"_calendarModelResourcePermission", _modelResourcePermission);
@@ -55,23 +48,34 @@ public class CalendarBookingAssetRendererFactoryTest {
 
 	@Test
 	public void testHasAddPermission() throws Exception {
-		long groupId = RandomTestUtil.randomLong();
+		_calendarResourceUtilMockedStatic.when(
+			() -> CalendarResourceUtil.getScopeGroupCalendarResource(
+				Mockito.anyLong(), Mockito.any(ServiceContext.class))
+		).thenReturn(
+			null
+		);
 
 		Assert.assertFalse(
 			_calendarBookingAssetRendererFactory.hasAddPermission(
-				_permissionChecker, groupId, 0));
+				_permissionChecker, RandomTestUtil.randomLong(), 0));
+
+		_mockCalendarResource();
+
+		Assert.assertFalse(
+			_calendarBookingAssetRendererFactory.hasAddPermission(
+				_permissionChecker, RandomTestUtil.randomLong(), 0));
 
 		Calendar calendar = Mockito.mock(Calendar.class);
 
 		long calendarId = RandomTestUtil.randomLong();
 
-		_mockCalendarResource(calendar, calendarId);
+		_mockCalendar(calendar, calendarId);
 
 		_mockManageBookingsPermission(calendarId);
 
 		Assert.assertTrue(
 			_calendarBookingAssetRendererFactory.hasAddPermission(
-				_permissionChecker, groupId, 0));
+				_permissionChecker, RandomTestUtil.randomLong(), 0));
 
 		Mockito.verify(
 			_modelResourcePermission
@@ -80,7 +84,7 @@ public class CalendarBookingAssetRendererFactoryTest {
 		);
 	}
 
-	private void _mockCalendarResource(Calendar calendar, long calendarId) {
+	private void _mockCalendar(Calendar calendar, long calendarId) {
 		Mockito.when(
 			calendar.getCalendarId()
 		).thenReturn(
@@ -91,6 +95,21 @@ public class CalendarBookingAssetRendererFactoryTest {
 			_calendarResource.getDefaultCalendar()
 		).thenReturn(
 			calendar
+		);
+	}
+
+	private void _mockCalendarResource() {
+		_calendarResourceUtilMockedStatic.when(
+			() -> CalendarResourceUtil.getScopeGroupCalendarResource(
+				Mockito.anyLong(), Mockito.any(ServiceContext.class))
+		).thenReturn(
+			_calendarResource
+		);
+
+		Mockito.when(
+			_calendarResource.getDefaultCalendar()
+		).thenReturn(
+			null
 		);
 	}
 

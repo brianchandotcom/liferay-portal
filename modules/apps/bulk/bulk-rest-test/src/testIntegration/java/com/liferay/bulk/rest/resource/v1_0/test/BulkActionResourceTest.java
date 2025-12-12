@@ -786,7 +786,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				_toBulkActionItem(objectEntryFolder2),
 				_toBulkActionItem(objectEntryFolder3)
 			});
-
 		defaultPermissionBulkAction.setType(
 			BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION);
 

@@ -10,5 +10,6 @@ compatibilityVersion: 13
 forcePredictableOperationId: true
 forcePredictableSchemaPropertyName: true
 generateBatch: false
+generateGraphQL: false
 javaEEPackage: jakarta
 testDir: ../headless-digital-sales-room-test/src/testIntegration/java

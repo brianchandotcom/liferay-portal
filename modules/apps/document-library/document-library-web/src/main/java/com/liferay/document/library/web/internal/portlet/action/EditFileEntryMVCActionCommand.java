@@ -38,6 +38,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
+import com.liferay.document.library.web.internal.exception.FileEntryWorkflowInProgressException;
 import com.liferay.document.library.web.internal.exception.FileNameExtensionException;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
@@ -1503,6 +1504,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 				else {
 					_validateFileName(sourceFileName, fileEntry.getExtension());
+				}
+
+				FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+				if (fileVersion.getStatus() ==
+						WorkflowConstants.STATUS_PENDING) {
+
+					throw new FileEntryWorkflowInProgressException();
 				}
 
 				if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {

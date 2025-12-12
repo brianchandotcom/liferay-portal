@@ -236,13 +236,15 @@ renderResponse.setTitle(headerTitle);
 				<liferay-ui:message arguments="<%= dlAdminDisplayContext.getMimeTypes() %>" key="<%= dlAdminDisplayContext.getMimeTypeMessageKey() %>" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
+			<liferay-ui:error exception="<%= FileEntryWorkflowInProgressException.class %>" message="document-in-pending-state" />
 			<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 			<liferay-ui:error exception="<%= FileNameExtensionException.class %>" message="the-file-name-cannot-be-empty-or-without-extension" />
 			<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 			<liferay-ui:error exception="<%= RequiredFileException.class %>" message="please-select-the-file-again" />
-			<liferay-ui:error exception="<%= ValueDataException.MustInformDefaultLocale.class %>" message="please-enter-a-value-for-the-default-locale-of-custom-attributes" />
 
 			<liferay-ui:error exception="<%= SourceFileNameException.class %>">
+				<liferay-ui:error exception="<%= ValueDataException.MustInformDefaultLocale.class %>" message="please-enter-a-value-for-the-default-locale-of-custom-attributes" />
+
 				<liferay-ui:message key="the-source-file-does-not-have-the-same-extension-as-the-original-file" />
 			</liferay-ui:error>
 

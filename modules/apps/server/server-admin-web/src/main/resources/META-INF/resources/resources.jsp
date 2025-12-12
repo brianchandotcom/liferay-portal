@@ -203,19 +203,29 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="system-cleanup-actions">
 			<ul class="list-group system-action-group">
-				<c:forEach items="<%= DataCleanupUtil.getSystemDataCleanups() %>" var="systemDataCleanup">
+
+				<%
+				for (DataCleanup systemDataCleanup : DataCleanupUtil.getSystemDataCleanups()) {
+					if (ReleaseLocalServiceUtil.fetchRelease(systemDataCleanup.getServletContextName()) == null) {
+						continue;
+					}
+				%>
+
 					<li class="list-group-item list-group-item-flex">
 						<div class="autofit-col autofit-col-expand">
 							<p class="list-group-title text-truncate">
-								<liferay-ui:message key="${systemDataCleanup.label}" />
+								<liferay-ui:message key="<%= systemDataCleanup.getLabel() %>" />
 							</p>
 						</div>
 
 						<div class="autofit-col">
-							<aui:button cssClass="save-server-button" data-cmd="${systemDataCleanup.label}" value="execute" />
+							<aui:button cssClass="save-server-button" data-cmd="<%= systemDataCleanup.getLabel() %>" value="execute" />
 						</div>
 					</li>
-				</c:forEach>
+
+				<%
+				}
+				%>
 
 				<li class="list-group-item list-group-item-flex">
 					<div class="autofit-col autofit-col-expand">
@@ -295,19 +305,30 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		<c:if test="<%= ListUtil.isNotEmpty(moduleDataCleanups) %>">
 			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="module-cleanup-actions">
 				<ul class="list-group system-action-group">
-					<c:forEach items="<%= moduleDataCleanups %>" var="moduleDataCleanup">
+
+					<%
+					for (DataCleanup moduleDataCleanup : moduleDataCleanups) {
+						if (ReleaseLocalServiceUtil.fetchRelease(moduleDataCleanup.getServletContextName()) == null) {
+							continue;
+						}
+					%>
+
 						<li class="list-group-item list-group-item-flex">
 							<div class="autofit-col autofit-col-expand">
 								<p class="list-group-title text-truncate">
-									<liferay-ui:message key="${moduleDataCleanup.label}" />
+									<liferay-ui:message key="<%= moduleDataCleanup.getLabel() %>" />
 								</p>
 							</div>
 
 							<div class="autofit-col">
-								<aui:button cssClass="save-server-button" data-cmd="${moduleDataCleanup.label}" value="execute" />
+								<aui:button cssClass="save-server-button" data-cmd="<%= moduleDataCleanup.getLabel() %>" value="execute" />
 							</div>
 						</li>
-					</c:forEach>
+
+					<%
+					}
+					%>
+
 				</ul>
 			</aui:fieldset>
 		</c:if>

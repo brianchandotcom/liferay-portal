@@ -714,8 +714,7 @@ public class AssetHelperImpl implements AssetHelper {
 			BooleanQuery booleanQuery = baseSearcher.getFullQuery(
 				assetEntryQuerySearchContext);
 
-			booleanQueryImpl.add(
-				booleanQuery, BooleanClauseOccur.SHOULD);
+			booleanQueryImpl.add(booleanQuery, BooleanClauseOccur.SHOULD);
 		}
 
 		BooleanClause<Query> assetEntryBooleanClauses =

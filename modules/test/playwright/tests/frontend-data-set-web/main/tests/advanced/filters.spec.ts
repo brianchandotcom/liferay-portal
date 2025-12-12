@@ -106,7 +106,7 @@ test(
 					.click();
 			});
 
-			await test.step('Check filters show up grouped together', async () => {
+			await test.step('Check filters groups visibility', async () => {
 				await expect(
 					page.locator('li.dropdown-subheader', {hasText: 'Group 1'})
 				).toBeVisible();
@@ -114,8 +114,36 @@ test(
 					page.locator('li.dropdown-subheader', {hasText: 'Group 2'})
 				).toBeVisible();
 				await expect(
-					page.locator('li.dropdown-subheader', {hasText: 'Group 2'})
+					page.locator('li.dropdown-subheader', {hasText: 'Group 3'})
 				).toBeVisible();
+				await expect(
+					page.locator('li.dropdown-subheader', {hasText: 'Empty Group'})
+				).not.toBeVisible();
+				await expect(
+					page.locator('li.dropdown-subheader', {hasText: 'Group with not registered filter'})
+				).not.toBeVisible();
+			});
+
+			await test.step('Check filters groups order', async () => {
+				const filtersDropdownMenu = page.getByLabel('Filters');
+
+				const filtersGroups = filtersDropdownMenu.getByRole('menu');
+
+				await expect(filtersGroups.locator('li.dropdown-subheader')).toHaveText(['Group 1', 'Group 2', 'Group 3']);
+
+				const group1 = filtersGroups.getByRole('group', {name: 'Group 1'})
+
+				await expect(group1.getByRole('menuitem')).toHaveText(['Date Range', 'Color']);
+
+				const group2 = filtersGroups.getByRole('group', {name: 'Group 2'})
+
+				await expect(group2.getByRole('menuitem')).toHaveText(['Size']);
+
+				const group3 = filtersGroups.getByRole('group', {name: 'Group 3'})
+
+				await expect(group3.getByRole('menuitem')).toHaveText(['Status', 'Title']);
+
+
 			});
 
 			await test.step('Enter a search term "status"', async () => {

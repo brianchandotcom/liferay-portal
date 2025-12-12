@@ -5,6 +5,7 @@
 
 package com.liferay.layout.internal.model.listener;
 
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
@@ -32,7 +33,9 @@ public class LayoutFriendlyURLModelListener
 	public void onAfterCreate(LayoutFriendlyURL layoutFriendlyURL)
 		throws ModelListenerException {
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
+		if (BatchEngineThreadLocal.isBatchImportInProcess() ||
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			_addFriendlyURLEntry(layoutFriendlyURL);
 		}
 	}
@@ -43,14 +46,17 @@ public class LayoutFriendlyURLModelListener
 			LayoutFriendlyURL layoutFriendlyURL)
 		throws ModelListenerException {
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
+		if (BatchEngineThreadLocal.isBatchImportInProcess() ||
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			_addFriendlyURLEntry(layoutFriendlyURL);
 		}
 	}
 
 	private void _addFriendlyURLEntry(LayoutFriendlyURL layoutFriendlyURL) {
 		try {
-			if (!_stagingGroupHelper.isLiveGroup(
+			if (BatchEngineThreadLocal.isBatchImportInProcess() ||
+				!_stagingGroupHelper.isLiveGroup(
 					layoutFriendlyURL.getGroupId())) {
 
 				_friendlyURLEntryLocalService.addFriendlyURLEntry(

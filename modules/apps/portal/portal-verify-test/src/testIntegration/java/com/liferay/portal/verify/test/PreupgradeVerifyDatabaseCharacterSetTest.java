@@ -208,20 +208,20 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 		_db.runSQL("drop table " + objectRelationship.getDBTableName());
 
 		String createTableSQL =
-			" (testColumn VARCHAR(75) primary key) collate utf8_bin";
+			"create table %s (testColumn VARCHAR(75) primary key) collate " +
+				"utf8_bin";
 
 		_db.runSQL(
-			"create table " + objectDefinition1.getDBTableName() +
-				createTableSQL);
+			String.format(createTableSQL, objectDefinition1.getDBTableName()));
 		_db.runSQL(
-			"create table " + objectDefinition1.getExtensionDBTableName() +
-				createTableSQL);
+			String.format(
+				createTableSQL, objectDefinition1.getExtensionDBTableName()));
 		_db.runSQL(
-			"create table " + objectDefinition1.getLocalizationDBTableName() +
-				createTableSQL);
+			String.format(
+				createTableSQL,
+				objectDefinition1.getLocalizationDBTableName()));
 		_db.runSQL(
-			"create table " + objectRelationship.getDBTableName() +
-				createTableSQL);
+			String.format(createTableSQL, objectRelationship.getDBTableName()));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				PreupgradeVerifyDatabaseCharacterSet.class.getName(),

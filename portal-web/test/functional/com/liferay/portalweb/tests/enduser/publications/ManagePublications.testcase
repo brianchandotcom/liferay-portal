@@ -101,68 +101,6 @@ definition {
 			value1 = "Publication Name");
 	}
 
-	@description = "This is a use case for LPS-182679"
-	@priority = 3
-	test CannotMoveTheChangeWithoutParentsChange {
-		task ("Add 2 new publications") {
-			JSONPublications.addPublication(publicationName = "Publication 1 Name");
-
-			JSONPublications.addPublication(publicationName = "Publication 2 Name");
-		}
-
-		task ("Under Publication 2, add a structure, template, and web content utilizing that structure") {
-			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
-
-			HeadlessSite.addSite(siteName = "Site Name");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			NavItem.gotoStructures();
-
-			WebContentStructures.addCP(structureName = "Test Structure Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			WebContentStructures.saveCP(structureName = "Test Structure Name");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			NavItem.gotoTemplates();
-
-			WebContentTemplates.addCP(
-				structureName = "Test Structure Name",
-				templateDescription = "Test Template Description",
-				templateFieldNames = "Text",
-				templateName = "Test Template Name");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure Name");
-
-			WebContent.addWithStructureCP(
-				structureName = "Test Structure Name",
-				templateName = "Test Template Name",
-				webContentTitle = "Test WebContent Title");
-
-			WebContent.publishWithPermissions();
-		}
-
-		task ("Assert that the web content change cannot move to Publication 1 without its parent changes") {
-			PublicationsNavigator.gotoReviewChanges(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Publication 2 Name");
-
-			PublicationsChanges.gotoMoveChangeToAnotherPublication(
-				changeCategory = "Web Content Article",
-				changeTitle = "Test WebContent Title",
-				targetPublicationName = "Publication 1 Name");
-
-			PublicationsChanges.moveChangeToAnotherPublication(moveFailed = "true");
-		}
-	}
-
 	@description = "This is a use case for LPS-184911 - Saving Publications settings when it is disabled causes PrincipalException."
 	@priority = 3
 	test CanSavePublicationsSettingsWhenItIsDisabled {

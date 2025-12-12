@@ -42,7 +42,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
@@ -57,39 +56,6 @@ import reactor.util.retry.Retry;
 @RequestMapping("/analytics")
 @RestController
 public class AnalyticsRestController extends BaseRestController {
-
-	@GetMapping("pages")
-	public String getPages(
-			@RequestParam(defaultValue = "", required = false) String channelId,
-			@RequestParam(defaultValue = "", required = false) String keywords,
-			@RequestParam(defaultValue = "", required = false) String page,
-			@RequestParam(defaultValue = "", required = false) String rangeKey,
-			@RequestParam(defaultValue = "", required = false) String
-				sortMetric,
-			@RequestParam(defaultValue = "", required = false) String sortOrder)
-		throws Exception {
-
-		return get(
-			"Bearer " + _analyticsAuthToken,
-			UriComponentsBuilder.fromUriString(
-				_analyticsAuthUrl
-			).path(
-				"/api/reports/pages"
-			).queryParam(
-				"channelId", channelId
-			).queryParam(
-				"keywords", keywords
-			).queryParam(
-				"page", page
-			).queryParam(
-				"rangeKey", rangeKey
-			).queryParam(
-				"sortMetric", sortMetric
-			).queryParam(
-				"sortOrder", sortOrder
-			).build(
-			).toUri());
-	}
 
 	@GetMapping("plan/{accountKey}")
 	public ResponseEntity<?> getPlan(@PathVariable String accountKey)
@@ -197,20 +163,6 @@ public class AnalyticsRestController extends BaseRestController {
 				_analyticsAuthUrl
 			).path(
 				"/o/faro/main/project/" + projectId
-			).build(
-			).toUri());
-	}
-
-	@GetMapping("project/{projectId}/email-address-domains")
-	public String getProjectEmailAddressDomains(@PathVariable String projectId)
-		throws Exception {
-
-		return get(
-			"Basic " + _analyticsAuthBasic,
-			UriComponentsBuilder.fromUriString(
-				_analyticsAuthUrl
-			).path(
-				"/o/faro/main/project/" + projectId + "/email_address_domains"
 			).build(
 			).toUri());
 	}

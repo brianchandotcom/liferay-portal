@@ -54,3 +54,24 @@ test(
 		});
 	}
 );
+
+test(
+	'Verifies that the user can enable it by Site Settings',
+	{tag: '@LPS-178192'},
+	async ({accessibilityMenuPage, site, siteSettingsPage}) => {
+		await test.step('When navigate to Site Settings > Accessibility And turn on Enable Accessibility Menu', async () => {
+			await siteSettingsPage.goToSiteSetting(
+				'Accessibility',
+				'Accessibility Menu',
+				site.friendlyUrlPath
+			);
+
+			await accessibilityMenuPage.enableAccessibilityMenu();
+		});
+
+		await test.step('Then Accessibility Menu can be reached by keyboard', async () => {
+			await accessibilityMenuPage.openAccessibilityMenu();
+			await accessibilityMenuPage.closeButton.click();
+		});
+	}
+);

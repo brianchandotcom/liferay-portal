@@ -6,6 +6,8 @@
 package com.liferay.layout.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -14,6 +16,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.User;
@@ -56,6 +59,44 @@ public class LayoutPrototypeLocalServiceTest {
 	}
 
 	@Test
+	public void testAddLayoutPrototype() throws PortalException {
+		try {
+			BatchEngineThreadLocal.setBatchImportInProcess(false);
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+
+			LayoutPrototype layoutPrototype = _testAddLayoutPrototype();
+
+			Assert.assertNotNull(
+				_layoutPageTemplateEntryLocalService.
+					fetchFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId()));
+
+			BatchEngineThreadLocal.setBatchImportInProcess(true);
+
+			layoutPrototype = _testAddLayoutPrototype();
+
+			Assert.assertNotNull(
+				_layoutPageTemplateEntryLocalService.
+					fetchFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId()));
+
+			BatchEngineThreadLocal.setBatchImportInProcess(false);
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+			layoutPrototype = _testAddLayoutPrototype();
+
+			Assert.assertNull(
+				_layoutPageTemplateEntryLocalService.
+					fetchFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId()));
+		}
+		finally {
+			BatchEngineThreadLocal.setBatchImportInProcess(false);
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
+	}
+
+	@Test
 	public void testUpdateLayoutPrototype() throws Exception {
 		User user = UserTestUtil.addCompanyAdminUser(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
@@ -94,6 +135,20 @@ public class LayoutPrototypeLocalServiceTest {
 				layoutPrototype.getNameMap(), null, false,
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId())));
+	}
+
+	private LayoutPrototype _testAddLayoutPrototype() throws PortalException {
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.addLayoutPrototype(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+		Assert.assertNotNull(layoutPrototype);
+
+		return layoutPrototype;
 	}
 
 	@Inject

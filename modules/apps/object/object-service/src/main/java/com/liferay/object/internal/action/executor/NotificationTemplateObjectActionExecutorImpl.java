@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.Map;
@@ -116,26 +115,10 @@ public class NotificationTemplateObjectActionExecutorImpl
 				continue;
 			}
 
-			Object termValue = termValues.get(objectField.getName());
-
-			if (Validator.isNull(termValue) && objectField.isLocalized() &&
-				termValues.containsKey("entryDTO")) {
-
-				Map<String, Object> entryDTO =
-					(Map<String, Object>)termValues.get("entryDTO");
-
-				if (entryDTO.containsKey("properties")) {
-					Map<String, Object> properties =
-						(Map<String, Object>)entryDTO.get("properties");
-
-					termValue = properties.get(objectField.getName());
-				}
-			}
-
 			termValues.put(
 				objectField.getName(),
 				ObjectDefinitionNotificationTermEvaluatorUtil.getTermValue(
-					objectField, termValue));
+					objectField, termValues.get(objectField.getName())));
 		}
 
 		return termValues;

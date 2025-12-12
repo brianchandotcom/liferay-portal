@@ -233,15 +233,17 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			long dataRecordCollectionId = GetterUtil.getLong(
 				(String)multivaluedMap.getFirst("dataRecordCollectionId"));
 
-			if (dataRecordCollectionId > 0) {
-				DDLRecordSet ddlRecordSet =
-					_ddlRecordSetLocalService.getDDLRecordSet(
-						dataRecordCollectionId);
-
-				DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
-
-				dataDefinitionId = ddmStructure.getStructureId();
+			if (dataRecordCollectionId <= 0) {
+				return new DataRecordEntityModel(Collections.emptyList());
 			}
+
+			DDLRecordSet ddlRecordSet =
+				_ddlRecordSetLocalService.getDDLRecordSet(
+					dataRecordCollectionId);
+
+			DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+			dataDefinitionId = ddmStructure.getStructureId();
 		}
 
 		if (dataDefinitionId <= 0) {

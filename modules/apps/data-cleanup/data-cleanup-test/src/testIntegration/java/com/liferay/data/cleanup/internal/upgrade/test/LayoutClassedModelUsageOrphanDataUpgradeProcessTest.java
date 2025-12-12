@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.data.cleanup.DataCleanup;
+import com.liferay.data.cleanup.util.DataCleanupUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -31,7 +33,6 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -204,16 +206,20 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 	private void _runUpgrade(UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.data.cleanup.internal.configuration." +
-						"DataRemovalConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"removeLayoutClassedModelUsageOrphanData", true
-					).build())) {
+		for (DataCleanup dataCleanup :
+				DataCleanupUtil.getSystemDataCleanups()) {
 
-			unsafeRunnable.run();
+			if (StringUtil.equals(
+					dataCleanup.getLabel(),
+					"remove-layout-classed-model-usage-orphan-data")) {
+
+				dataCleanup.cleanup();
+
+				break;
+			}
 		}
+
+		unsafeRunnable.run();
 	}
 
 	private void _setUp() throws Exception {

@@ -6,9 +6,10 @@
 package com.liferay.data.cleanup.internal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.cleanup.DataCleanup;
+import com.liferay.data.cleanup.util.DataCleanupUtil;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -18,7 +19,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -68,31 +69,35 @@ public class WidgetLayoutTypeSettingsUpgradeProcessTest {
 			).build(
 			).toString());
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.data.cleanup.internal.configuration." +
-						"DataRemovalConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"removeWidgetLayoutTypeSettings", true
-					).build())) {
+		for (DataCleanup dataCleanup :
+				DataCleanupUtil.getSystemDataCleanups()) {
 
-			Layout curLayout = _layoutLocalService.getLayout(layout.getPlid());
+			if (StringUtil.equals(
+					dataCleanup.getLabel(),
+					"remove-widget-layout-type-settings")) {
 
-			UnicodeProperties typeSettingsUnicodeProperties =
-				curLayout.getTypeSettingsProperties();
+				dataCleanup.cleanup();
 
-			Assert.assertTrue(
-				GetterUtil.getBoolean(typeSettingsUnicodeProperties.get(key)));
-			Assert.assertNull(
-				typeSettingsUnicodeProperties.get(
-					LayoutConstants.CUSTOMIZABLE_LAYOUT));
-			Assert.assertNull(
-				typeSettingsUnicodeProperties.get(
-					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
-
-			for (String curKey : typeSettingsUnicodeProperties.keySet()) {
-				Assert.assertFalse(curKey.startsWith("column-"));
+				break;
 			}
+		}
+
+		Layout curLayout = _layoutLocalService.getLayout(layout.getPlid());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			curLayout.getTypeSettingsProperties();
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(typeSettingsUnicodeProperties.get(key)));
+		Assert.assertNull(
+			typeSettingsUnicodeProperties.get(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT));
+		Assert.assertNull(
+			typeSettingsUnicodeProperties.get(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+
+		for (String curKey : typeSettingsUnicodeProperties.keySet()) {
+			Assert.assertFalse(curKey.startsWith("column-"));
 		}
 	}
 

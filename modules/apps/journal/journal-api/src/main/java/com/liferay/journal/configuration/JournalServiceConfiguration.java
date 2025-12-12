@@ -87,6 +87,12 @@ public interface JournalServiceConfiguration {
 	public boolean expireAllArticleVersionsEnabled();
 
 	@Meta.AD(
+		deflt = "false", name = "update-structure-articles-asynchronously",
+		required = false
+	)
+	public boolean updateStructureArticlesAsynchronously();
+
+	@Meta.AD(
 		deflt = "true", description = "journal-article-index-all-versions",
 		name = "index-all-article-versions-enabled", required = false
 	)

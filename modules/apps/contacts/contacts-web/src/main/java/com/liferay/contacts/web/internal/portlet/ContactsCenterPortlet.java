@@ -238,12 +238,11 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<User> users = TransformUtil.transformToList(
-			StringUtil.split(
-				ParamUtil.getString(resourceRequest, "userIds"), 0L),
-			userId -> userService.getUserById(userId));
-
-		String vCards = ContactsUtil.getVCards(users);
+		String vCards = ContactsUtil.getVCards(
+			TransformUtil.transformToList(
+				StringUtil.split(
+					ParamUtil.getString(resourceRequest, "userIds"), 0L),
+				userId -> userService.getUserById(userId)));
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, "vcards.vcf",

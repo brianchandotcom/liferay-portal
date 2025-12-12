@@ -185,19 +185,13 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="SEERC_SESERC" return-type="Collection">
-			<finder-column name="segmentsEntryERC" />
-			<finder-column name="segmentsEntryScopeERC" />
-		</finder>
 		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="plid" />
 		</finder>
-		<finder name="G_SEERC_SESERC_P" return-type="Collection">
-			<finder-column name="groupId" />
+		<finder name="SEERC_SESERC" return-type="Collection">
 			<finder-column name="segmentsEntryERC" />
 			<finder-column name="segmentsEntryScopeERC" />
-			<finder-column name="plid" />
 		</finder>
 		<finder name="G_SEK_P" return-type="SegmentsExperience" unique="true">
 			<finder-column name="groupId" />
@@ -223,6 +217,12 @@
 			<finder-column name="groupId" />
 			<finder-column name="plid" />
 			<finder-column name="active" />
+		</finder>
+		<finder name="G_SEERC_SESERC_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="segmentsEntryERC" />
+			<finder-column name="segmentsEntryScopeERC" />
+			<finder-column name="plid" />
 		</finder>
 		<finder name="G_SEERC_SESERC_P_A" return-type="Collection">
 			<finder-column name="groupId" />

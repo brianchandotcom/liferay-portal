@@ -44,6 +44,11 @@ public class DataCleanupUtilTest {
 				}
 
 				@Override
+				public String getServletContextName() {
+					return null;
+				}
+
+				@Override
 				public String getType() {
 					return "wrong type";
 				}
@@ -73,6 +78,11 @@ public class DataCleanupUtilTest {
 				}
 
 				@Override
+				public String getServletContextName() {
+					return null;
+				}
+
+				@Override
 				public String getType() {
 					return "wrong type";
 				}
@@ -91,6 +101,11 @@ public class DataCleanupUtilTest {
 
 			@Override
 			public String getLabel() {
+				return null;
+			}
+
+			@Override
+			public String getServletContextName() {
 				return null;
 			}
 

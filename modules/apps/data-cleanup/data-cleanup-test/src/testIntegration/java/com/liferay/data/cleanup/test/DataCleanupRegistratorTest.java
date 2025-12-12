@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.module.util.BundleUtil;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
@@ -39,16 +36,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.service.component.runtime.ServiceComponentRuntime;
-import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
-import org.osgi.util.promise.Promise;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -60,16 +52,6 @@ public class DataCleanupRegistratorTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		if (_release != null) {
-			_releaseLocalService.deleteRelease(_release);
-			_release = null;
-		}
-
-		_refreshDataCleanupRegistrator();
-	}
 
 	@Test
 	public void testDataCleanupUpgradeAmazonRankings() throws Exception {
@@ -359,33 +341,10 @@ public class DataCleanupRegistratorTest {
 			"com_liferay_youtube_web_portlet_YouTubePortlet", null);
 	}
 
-	private void _refreshDataCleanupRegistrator() throws Exception {
-		ComponentDescriptionDTO componentDescriptionDTO =
-			_serviceComponentRuntime.getComponentDescriptionDTO(
-				BundleUtil.getBundle(
-					SystemBundleUtil.getBundleContext(),
-					"com.liferay.data.cleanup.impl"),
-				"com.liferay.data.cleanup.internal.DataCleanupRegistrator");
-
-		Promise<Void> promise = _serviceComponentRuntime.disableComponent(
-			componentDescriptionDTO);
-
-		promise.getValue();
-
-		promise = _serviceComponentRuntime.enableComponent(
-			componentDescriptionDTO);
-
-		promise.getValue();
-	}
-
 	private void _testModuleDataCleanup(
 			String servletContextName, String sqlFilePath,
 			String portletPreferencePortletId, String expandoTableName)
 		throws Exception {
-
-		_release = _releaseLocalService.addRelease(servletContextName, "0.0.0");
-
-		_refreshDataCleanupRegistrator();
 
 		if (Validator.isNotNull(sqlFilePath)) {
 			try (InputStream inputStream =
@@ -449,7 +408,11 @@ public class DataCleanupRegistratorTest {
 		for (DataCleanup dataCleanup :
 				DataCleanupUtil.getModuleDataCleanups()) {
 
-			dataCleanup.cleanup();
+			if (servletContextName.equals(
+					dataCleanup.getServletContextName())) {
+
+				dataCleanup.cleanup();
+			}
 		}
 
 		if (portletPreferencePortletId != null) {
@@ -504,10 +467,5 @@ public class DataCleanupRegistratorTest {
 
 	@DeleteAfterTestRun
 	private Layout _layout;
-
-	private Release _release;
-
-	@Inject
-	private ServiceComponentRuntime _serviceComponentRuntime;
 
 }

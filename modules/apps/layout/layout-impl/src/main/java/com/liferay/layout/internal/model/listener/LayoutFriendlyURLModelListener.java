@@ -33,11 +33,7 @@ public class LayoutFriendlyURLModelListener
 	public void onAfterCreate(LayoutFriendlyURL layoutFriendlyURL)
 		throws ModelListenerException {
 
-		if (BatchEngineThreadLocal.isBatchImportInProcess() ||
-			!ExportImportThreadLocal.isImportInProcess()) {
-
-			_addFriendlyURLEntry(layoutFriendlyURL);
-		}
+		_addFriendlyURLEntry(layoutFriendlyURL);
 	}
 
 	@Override
@@ -46,18 +42,15 @@ public class LayoutFriendlyURLModelListener
 			LayoutFriendlyURL layoutFriendlyURL)
 		throws ModelListenerException {
 
-		if (BatchEngineThreadLocal.isBatchImportInProcess() ||
-			!ExportImportThreadLocal.isImportInProcess()) {
-
-			_addFriendlyURLEntry(layoutFriendlyURL);
-		}
+		_addFriendlyURLEntry(layoutFriendlyURL);
 	}
 
 	private void _addFriendlyURLEntry(LayoutFriendlyURL layoutFriendlyURL) {
 		try {
 			if (BatchEngineThreadLocal.isBatchImportInProcess() ||
-				!_stagingGroupHelper.isLiveGroup(
-					layoutFriendlyURL.getGroupId())) {
+				(!ExportImportThreadLocal.isImportInProcess() &&
+				 !_stagingGroupHelper.isLiveGroup(
+					 layoutFriendlyURL.getGroupId()))) {
 
 				_friendlyURLEntryLocalService.addFriendlyURLEntry(
 					layoutFriendlyURL.getGroupId(),

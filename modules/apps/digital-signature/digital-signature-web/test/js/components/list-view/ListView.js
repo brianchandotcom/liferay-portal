@@ -36,16 +36,18 @@ const customFetch = async ({data, endpoint, method = 'GET'}) => {
 };
 
 const ListViewWrapper = (props) => (
-	<ListView
-		columns={COLUMNS}
-		customFetch={customFetch}
-		emptyState={EMPTY_STATE}
-		endpoint={ENDPOINT}
-		history={history}
-		{...props}
-	>
-		{BODY}
-	</ListView>
+	<RouteWrapper>
+		<ListView
+			columns={COLUMNS}
+			customFetch={customFetch}
+			emptyState={EMPTY_STATE}
+			endpoint={ENDPOINT}
+			history={history}
+			{...props}
+		>
+			{BODY}
+		</ListView>
+	</RouteWrapper>
 );
 
 describe('ListView', () => {
@@ -145,9 +147,7 @@ describe('ListView', () => {
 		];
 
 		const {container, findAllByRole, queryByPlaceholderText} = render(
-			<RouteWrapper>
-				<ListViewWrapper actions={actions} />
-			</RouteWrapper>
+			<ListViewWrapper actions={actions} />
 		);
 
 		await waitForElementToBeRemoved(() => {

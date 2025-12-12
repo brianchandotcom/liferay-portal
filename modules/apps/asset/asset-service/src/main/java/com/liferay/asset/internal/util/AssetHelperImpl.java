@@ -458,18 +458,18 @@ public class AssetHelperImpl implements AssetHelper {
 		char[] wordCharArray = word.toCharArray();
 
 		for (char c : wordCharArray) {
-			for (char invalidChar : AssetHelper.INVALID_CHARACTERS) {
-				if (c == invalidChar) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Word ", word, " is not valid because ", c,
-								" is not allowed"));
-					}
-
-					return false;
-				}
+			if (!ArrayUtil.contains(AssetHelper.INVALID_CHARACTERS, c)) {
+				continue;
 			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Word ", word, " is not valid because ", c,
+						" is not allowed"));
+			}
+
+			return false;
 		}
 
 		return true;

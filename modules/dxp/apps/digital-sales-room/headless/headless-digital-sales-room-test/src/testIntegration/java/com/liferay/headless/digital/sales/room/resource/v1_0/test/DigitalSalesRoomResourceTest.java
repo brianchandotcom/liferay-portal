@@ -48,7 +48,6 @@ import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -109,13 +108,6 @@ public class DigitalSalesRoomResourceTest
 
 			completableFuture.join();
 		}
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetDigitalSalesRoomsPageWithPagination() throws Exception {
-		super.testGetDigitalSalesRoomsPageWithPagination();
 	}
 
 	@Override

@@ -13,6 +13,36 @@ import useActiveAccountSubscriptionGroups from './hooks/useActiveAccountSubscrip
 
 import './ManageProductUsers.css';
 
+const getManagedContactURL = (URLField, groupName) => {
+	if (!URLField) {
+		return '';
+	}
+
+	try {
+		const jsonURLs = JSON.parse(URLField);
+		
+		if (groupName === 'DXP Cloud') {
+			return jsonURLs.liferayPaas || jsonURLs.dxpCloud || '';
+		}
+        
+        if (groupName === 'Liferay Cloud' || groupName === 'Liferay Experience Cloud') {
+			
+			return (
+                jsonURLs.liferaySaas ||
+                jsonURLs.liferayPaas || 
+                jsonURLs.liferayExperienceCloud ||
+                ''
+            );
+		}
+
+		return jsonURLs[groupName] || '';
+	}
+	catch (exception) {
+
+		return URLField;
+	}
+};
+
 const ManageProductUsers = ({koroneikiAccount, loading}) => {
 	const {
 		data,
@@ -44,7 +74,10 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 			return (
 				<ManageUsersButton
 					href={
-						accountSubscriptionGroupLiferayExperienceCloud.manageContactsURL
+						getManagedContactURL(
+							accountSubscriptionGroupLiferayExperienceCloud.manageContactsURL,
+							'Liferay Cloud'
+						)
 					}
 					title={i18n.translate(
 						'manage-liferay-saas-users'
@@ -57,10 +90,12 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 			<div className="d-flex">
 				{accountSubscriptionGroups?.map(
 					({manageContactsURL, name}, index) => {
+						const targetURL = getManagedContactURL(manageContactsURL, name);
+
 						if (name === PRODUCT_TYPES.dxpCloud) {
 							return (
 								<ManageUsersButton
-									href={manageContactsURL}
+									href={targetURL}
 									key={index}
 									title={i18n.translate(
 										'manage-liferay-paas-users'
@@ -71,7 +106,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 
 						return (
 							<ManageUsersButton
-								href={manageContactsURL}
+								href={targetURL}
 								key={index}
 								title={i18n.translate(
 									'manage-analytics-cloud-users'

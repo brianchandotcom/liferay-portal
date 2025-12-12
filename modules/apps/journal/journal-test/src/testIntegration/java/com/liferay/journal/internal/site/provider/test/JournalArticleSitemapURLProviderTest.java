@@ -103,13 +103,13 @@ public class JournalArticleSitemapURLProviderTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString());
 
-		Element rootElement = _getRootElement();
-
 		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 			_group.getGroupId(),
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			article.getDDMStructureId(), true,
 			WorkflowConstants.STATUS_APPROVED);
+
+		Element rootElement = _getRootElement();
 
 		_journalArticleSitemapURLProvider.visitLayoutSet(
 			rootElement, _layoutSet, _themeDisplay);

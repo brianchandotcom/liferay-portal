@@ -73,7 +73,7 @@ public class ObjectDefinitionDTOConverter
 				_objectViewLocalService, _permissionService, _portal,
 				_resourceActionLocalService, serviceBuilderObjectDefinition,
 				_systemObjectDefinitionManagerRegistry,
-				dtoConverterContext.getUserId(), _userLocalService,
+				dtoConverterContext.getUser(), _userLocalService,
 				_workflowDefinitionLinkLocalService);
 
 		objectDefinition.setActions(dtoConverterContext::getActions);

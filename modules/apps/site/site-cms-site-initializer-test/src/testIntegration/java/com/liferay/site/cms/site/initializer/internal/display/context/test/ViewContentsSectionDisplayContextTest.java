@@ -126,7 +126,7 @@ public class ViewContentsSectionDisplayContextTest
 		return LinkedHashMapBuilder.put(
 			"folder", StringPool.BLANK
 		).put(
-			"basic-content", getRedirect("L_CMS_BASIC_WEB_CONTENT")
+			"basic-web-content", getRedirect("L_CMS_BASIC_WEB_CONTENT")
 		).put(
 			"blog", getRedirect("L_CMS_BLOG")
 		).build();

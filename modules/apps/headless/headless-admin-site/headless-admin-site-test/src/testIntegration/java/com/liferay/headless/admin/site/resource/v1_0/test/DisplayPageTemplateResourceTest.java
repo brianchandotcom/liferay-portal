@@ -401,6 +401,7 @@ public class DisplayPageTemplateResourceTest
 		super.testPostSiteDisplayPageTemplate();
 
 		_testPostSiteDisplayPageTemplateWithKey();
+		_testPostSiteDisplayPageTemplateWithMarkedAsDefault();
 		_testPostSiteDisplayPageTemplateWithPageSpecifications();
 		_testPostSiteDisplayPageTemplateWithParentFolder();
 		_testPostSiteDisplayPageTemplateWithThumbnail();
@@ -1227,6 +1228,49 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertEquals(
 			displayPageTemplate.getKey(), postDisplayPageTemplate.getKey());
+	}
+
+	private void _testPostSiteDisplayPageTemplateWithMarkedAsDefault()
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		DisplayPageTemplate postDisplayPageTemplate =
+			displayPageTemplateResource.postSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(), displayPageTemplate);
+
+		Assert.assertFalse(postDisplayPageTemplate.getMarkedAsDefault());
+
+		displayPageTemplate = randomDisplayPageTemplate();
+
+		displayPageTemplate.setMarkedAsDefault(() -> null);
+
+		postDisplayPageTemplate =
+			displayPageTemplateResource.postSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(), displayPageTemplate);
+
+		Assert.assertFalse(postDisplayPageTemplate.getMarkedAsDefault());
+
+		postDisplayPageTemplate =
+			_postSiteDisplayPageTemplateWithPageSpecifications(
+				PageSpecification.Status.DRAFT, true,
+				PageSpecification.Status.APPROVED);
+
+		Assert.assertTrue(postDisplayPageTemplate.getMarkedAsDefault());
+
+		_assertProblemException(
+			"CONFLICT",
+			"The default display page template must be published first.",
+			() -> {
+				DisplayPageTemplate randomDisplayPageTemplate =
+					randomDisplayPageTemplate();
+
+				randomDisplayPageTemplate.setMarkedAsDefault(Boolean.TRUE);
+
+				displayPageTemplateResource.postSiteDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					randomDisplayPageTemplate);
+			});
 	}
 
 	private void _testPostSiteDisplayPageTemplateWithPageSpecifications()

@@ -122,9 +122,9 @@ function ItemConfigurationContent({
 			{!!activeItem &&
 				(activeItemType === ITEM_TYPES.editable ? (
 					<EditableSidebarHeader editable={activeItem} />
-				) : (
+				) : Liferay.FeatureFlags['LPD-52221'] ? (
 					<FragmentSidebarHeader item={activeItem} />
-				))}
+				) : null)}
 
 			{!panels.length ? (
 				<ClayAlert

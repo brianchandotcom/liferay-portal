@@ -65,7 +65,7 @@ definition {
 		IFrame.closeFrame();
 
 		Portlet.viewBody(
-			portletBody = "Blueprint: ${blueprintTitle}",
+			portletBody = "${blueprintTitle} is selected.",
 			portletName = "Blueprints Options");
 	}
 

@@ -13,14 +13,18 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.ws.rs.ClientErrorException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Javier Gamarra
@@ -62,28 +66,47 @@ public class CommentUtil {
 	}
 
 	public static List<com.liferay.portal.kernel.comment.Comment> toComments(
-		String className, long classPK, CommentManager commentManager,
-		Comment[] comments, long groupId, long userId) {
+			String className, long classPK, CommentManager commentManager,
+			Comment[] comments, long companyId, long groupId, long userId)
+		throws PortalException {
+
+		if (groupId == 0) {
+			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+			groupId = company.getGroupId();
+		}
+
+		long finalGroupId = groupId;
+
+		Map<String, Long> toIdMap = new HashMap<>();
 
 		return TransformUtil.transformToList(
 			comments,
 			comment -> {
 				long parentCommentId = 0;
 
-				if (Validator.isNotNull(
-						comment.getParentCommentExternalReferenceCode())) {
+				String parentCommentExternalReferenceCode =
+					comment.getParentCommentExternalReferenceCode();
 
-					com.liferay.portal.kernel.comment.Comment parentComment =
-						commentManager.fetchComment(
-							groupId,
-							comment.getParentCommentExternalReferenceCode());
+				if (Validator.isNotNull(parentCommentExternalReferenceCode)) {
+					parentCommentId = toIdMap.computeIfAbsent(
+						parentCommentExternalReferenceCode,
+						externalReferenceCode -> {
+							com.liferay.portal.kernel.comment.Comment
+								parentComment = commentManager.fetchComment(
+									finalGroupId, externalReferenceCode);
 
-					parentCommentId = parentComment.getParentCommentId();
+							if (parentComment == null) {
+								return 0L;
+							}
+
+							return parentComment.getCommentId();
+						});
 				}
 
 				return commentManager.createComment(
-					0L, comment.getExternalReferenceCode(), userId, groupId,
-					className, classPK, GetterUtil.getLong(parentCommentId),
+					0L, comment.getExternalReferenceCode(), userId,
+					finalGroupId, className, classPK, parentCommentId,
 					StringPool.BLANK, comment.getText());
 			});
 	}

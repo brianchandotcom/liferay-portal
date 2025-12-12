@@ -50,6 +50,11 @@ test(
 			title: layoutTitle,
 		});
 
+		const ctCollection2 =
+			await apiHelpers.headlessChangeTracking.createCTCollection(
+				getRandomString()
+			);
+
 		try {
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
@@ -73,15 +78,21 @@ test(
 
 			await pageEditorPage.publishPage();
 
-			// Delete fragment from production
+			// Delete fragment in second publication
 
-			await changeTrackingPage.workOnProduction();
+			await changeTrackingPage.workOnPublication(ctCollection2);
 
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 			await pageEditorPage.deleteFragment(headingId);
 
 			await pageEditorPage.publishPage();
+
+			// Publish publication to create deletion conflict
+
+			await apiHelpers.headlessChangeTracking.publishCTCollection(
+				ctCollection2.body.id
+			);
 
 			// Review and discard publication changes
 
@@ -114,6 +125,10 @@ test(
 		}
 		finally {
 			await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.plid);
+
+			await apiHelpers.headlessChangeTracking.deleteCTCollection(
+				ctCollection2.body.id
+			);
 		}
 	}
 );

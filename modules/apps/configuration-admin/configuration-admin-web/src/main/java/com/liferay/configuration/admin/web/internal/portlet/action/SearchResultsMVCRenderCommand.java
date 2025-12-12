@@ -169,15 +169,14 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		ConfigurationModel configurationModel = configurationModels.get(
 			configurationModelId);
 
-		if (configurationModel == null) {
-			String configurationModelFactoryId = document.get(
-				FieldNames.CONFIGURATION_MODEL_FACTORY_PID);
-
-			configurationModel = configurationModels.get(
-				configurationModelFactoryId);
+		if (configurationModel != null) {
+			return configurationModel;
 		}
 
-		return configurationModel;
+		String configurationModelFactoryId = document.get(
+			FieldNames.CONFIGURATION_MODEL_FACTORY_PID);
+
+		return configurationModels.get(configurationModelFactoryId);
 	}
 
 	private SearchContext _getSearchContext(String keywords, Locale locale) {

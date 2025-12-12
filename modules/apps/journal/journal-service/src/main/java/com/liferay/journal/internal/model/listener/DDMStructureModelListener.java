@@ -10,14 +10,22 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.internal.constants.JournalDestinationNames;
 import com.liferay.journal.internal.util.JournalDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Map;
@@ -37,28 +45,63 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			DDMStructure originalDDMStructure, DDMStructure ddmStructure)
 		throws ModelListenerException {
 
-		if ((ddmStructure.getClassNameId() != _portal.getClassNameId(
-				JournalArticle.class)) ||
-			(Objects.equals(
-				originalDDMStructure.getStructureKey(),
-				ddmStructure.getStructureKey()) &&
-			 Objects.equals(
-				 originalDDMStructure.getDefinition(),
-				 ddmStructure.getDefinition())) ||
-			_hasModifiedPredefinedValue(
-				originalDDMStructure.getDDMForm(), ddmStructure.getDDMForm())) {
+		try {
+			if ((ddmStructure.getClassNameId() != _portal.getClassNameId(
+					JournalArticle.class)) ||
+				(Objects.equals(
+					originalDDMStructure.getStructureKey(),
+					ddmStructure.getStructureKey()) &&
+				 Objects.equals(
+					 originalDDMStructure.getDefinition(),
+					 ddmStructure.getDefinition())) ||
+				_hasModifiedPredefinedValue(
+					originalDDMStructure.getDDMForm(),
+					ddmStructure.getDDMForm())) {
 
-			return;
+				return;
+			}
+
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					originalDDMStructure.getCompanyId());
+
+			if (journalServiceConfiguration.
+					updateStructureArticlesAsynchronously()) {
+
+				TransactionCommitCallbackUtil.registerCallback(
+					() -> {
+						Message message = new Message();
+
+						message.setValues(
+							HashMapBuilder.<String, Object>put(
+								"ddmStructure", ddmStructure
+							).put(
+								"originalDDMStructure", originalDDMStructure
+							).build());
+
+						_messageBus.sendMessage(
+							JournalDestinationNames.
+								UPDATE_DDM_STRUCTURE_JOURNAL_ARTICLES,
+							message);
+
+						return null;
+					});
+			}
+			else {
+				JournalDDMStructureHelper journalDDMStructureHelper =
+					new JournalDDMStructureHelper(
+						_ddmFieldLocalService, _fieldsToDDMFormValuesConverter,
+						_indexerRegistry, _journalArticleLocalService,
+						_journalConverter);
+
+				journalDDMStructureHelper.updateDDMStructureJournalArticles(
+					originalDDMStructure, ddmStructure);
+			}
 		}
-
-		JournalDDMStructureHelper journalDDMStructureHelper =
-			new JournalDDMStructureHelper(
-				_ddmFieldLocalService, _fieldsToDDMFormValuesConverter,
-				_indexerRegistry, _journalArticleLocalService,
-				_journalConverter);
-
-		journalDDMStructureHelper.updateDDMStructureJournalArticles(
-			originalDDMStructure, ddmStructure);
+		catch (ConfigurationException configurationException) {
+			throw new ModelListenerException(configurationException);
+		}
 	}
 
 	@Override
@@ -124,6 +167,9 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private MessageBus _messageBus;
 
 	@Reference
 	private Portal _portal;

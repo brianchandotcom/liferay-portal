@@ -16,6 +16,7 @@ import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.util.ContactsUtil;
 import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -237,16 +238,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long[] userIds = StringUtil.split(
-			ParamUtil.getString(resourceRequest, "userIds"), 0L);
-
-		List<User> users = new ArrayList<>(userIds.length);
-
-		for (long userId : userIds) {
-			User user = userService.getUserById(userId);
-
-			users.add(user);
-		}
+		List<User> users = TransformUtil.transformToList(
+			StringUtil.split(
+				ParamUtil.getString(resourceRequest, "userIds"), 0L),
+			userId -> userService.getUserById(userId));
 
 		String vCards = ContactsUtil.getVCards(users);
 

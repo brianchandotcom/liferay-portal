@@ -55,7 +55,9 @@ export class AccessibilityMenuPage {
 
 		await this.page.keyboard.press('Enter');
 
-		await expect(this.page.getByLabel('Accessibility Menu')).toBeVisible();
+		await expect(
+			this.page.locator('.modal').getByLabel('Accessibility Menu')
+		).toBeVisible();
 	}
 
 	async toggleUnderlinedLinks(check: boolean) {

@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0.util;
 
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -56,6 +57,28 @@ public class SseUtil {
 			).build());
 	}
 
+	public static void send(String data, String name, String sseEventSinkKey) {
+		SseEventSink sseEventSink = getSSEEventSink(sseEventSinkKey);
+
+		sseEventSink.send(
+			_sse.newEventBuilder(
+			).data(
+				String.class,
+				JSONUtil.put(
+					"data", data
+				).toString()
+			).name(
+				name
+			).build());
+
+		_sse = null;
+	}
+
+	public static void setSse(Sse sse) {
+		_sse = sse;
+	}
+
+	private static Sse _sse;
 	private static Map<String, SseEventSink> _sseEventSinks =
 		new ConcurrentHashMap<>();
 

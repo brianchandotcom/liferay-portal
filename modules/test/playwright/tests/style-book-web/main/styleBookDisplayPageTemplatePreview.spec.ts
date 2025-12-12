@@ -236,12 +236,6 @@ test('Use the view more button to select a display page template from the select
 			})
 			.click();
 
-		const loadingAnimation = page.locator('.loading-animation').first();
-
-		await loadingAnimation.waitFor();
-
-		await loadingAnimation.waitFor({state: 'hidden'});
-
 		expect(
 			page.getByRole('button', {name: displayPageTemplateNameWebContent1})
 		).toBeVisible();

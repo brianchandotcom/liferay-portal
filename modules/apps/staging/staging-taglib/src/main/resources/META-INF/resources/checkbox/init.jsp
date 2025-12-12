@@ -32,24 +32,7 @@ if (!ignoreRequestValue && Validator.isNotNull(ParamUtil.getString(request, "che
 }
 
 String checkedString = checked ? "checked" : "";
-
-String childLabels = StringPool.BLANK;
-
-if (ListUtil.isNotEmpty(childLabelKeys)) {
-	StringBundler sb = new StringBundler();
-
-	for (String childLabelKey : childLabelKeys) {
-		sb.append(LanguageUtil.get(request, childLabelKey));
-		sb.append(", ");
-	}
-
-	if (sb.index() > 1) {
-		sb.setIndex(sb.index() - 1);
-	}
-
-	childLabels = sb.toString();
-}
-
+String childLabels = StringUtil.merge(TransformUtil.transform(childLabelKeys, childLabelKey -> LanguageUtil.get(request, childLabelKey)), StringPool.COMMA_AND_SPACE);
 String description = LanguageUtil.get(request, descriptionKey);
 String disabledString = disabled ? "disabled" : "";
 String domId = liferayPortletResponse.getNamespace() + id;

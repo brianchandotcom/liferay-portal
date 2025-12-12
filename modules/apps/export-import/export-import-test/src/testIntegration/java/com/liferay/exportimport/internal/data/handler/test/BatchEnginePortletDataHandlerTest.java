@@ -778,73 +778,69 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testGetExportPortletDataHandlerControlsWithRootModelHierarchy()
 		throws Exception {
 
-		try {
-			Tree tree = TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService,
-				true,
-				LinkedHashMapBuilder.put(
-					"A", new String[] {"AA"}
-				).put(
-					"AA", new String[] {"AAA"}
-				).put(
-					"AAA", new String[0]
-				).build());
+		Tree tree = TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[] {"AAA"}
+			).put(
+				"AAA", new String[0]
+			).build());
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_A");
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
 
-			PortletDataHandler portletDataHandler =
-				_portletDataHandlerProvider.provide(
-					TestPropsValues.getCompanyId(),
-					objectDefinition.getPortletId());
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(
+				TestPropsValues.getCompanyId(),
+				objectDefinition.getPortletId());
 
-			PortletDataHandlerControl[] exportPortletDataHandlerControls =
-				portletDataHandler.getExportPortletDataHandlerControls();
+		PortletDataHandlerControl[] exportPortletDataHandlerControls =
+			portletDataHandler.getExportPortletDataHandlerControls();
 
-			Assert.assertEquals(
-				Arrays.toString(exportPortletDataHandlerControls), 1,
-				exportPortletDataHandlerControls.length);
+		Assert.assertEquals(
+			Arrays.toString(exportPortletDataHandlerControls), 1,
+			exportPortletDataHandlerControls.length);
 
-			PortletDataHandlerControl exportPortletDataHandlerControl =
-				exportPortletDataHandlerControls[0];
+		PortletDataHandlerControl exportPortletDataHandlerControl =
+			exportPortletDataHandlerControls[0];
 
-			List<String> controlChildLabels =
-				exportPortletDataHandlerControl.getControlChildLabels();
+		List<String> controlChildLabels =
+			exportPortletDataHandlerControl.getControlChildLabels();
 
-			Assert.assertEquals(
-				controlChildLabels.toString(), 2, controlChildLabels.size());
+		Assert.assertEquals(
+			controlChildLabels.toString(), 2, controlChildLabels.size());
 
-			TreeTestUtil.forEachNodeObjectDefinition(
-				tree.iterator(), _objectDefinitionLocalService,
-				nodeObjectDefinition -> {
-					if (nodeObjectDefinition.isRootNode()) {
-						return;
-					}
+		TreeTestUtil.forEachNodeObjectDefinition(
+			tree.iterator(), _objectDefinitionLocalService,
+			nodeObjectDefinition -> {
+				if (nodeObjectDefinition.isRootNode()) {
+					return;
+				}
 
-					String modelResourceNamePrefix =
-						ResourceActionsUtil.getModelResourceNamePrefix();
+				String modelResourceNamePrefix =
+					ResourceActionsUtil.getModelResourceNamePrefix();
 
-					String label = modelResourceNamePrefix.concat(
-						nodeObjectDefinition.getResourceName());
+				Assert.assertTrue(
+					ListUtil.exists(
+						controlChildLabels,
+						controlChildLabel -> StringUtil.equals(
+							controlChildLabel,
+							modelResourceNamePrefix +
+								nodeObjectDefinition.getResourceName())));
+			});
 
-					Assert.assertTrue(
-						ListUtil.exists(
-							controlChildLabels,
-							controlChildLabel -> StringUtil.equals(
-								controlChildLabel, label)));
-				});
+		Assert.assertEquals(
+			"root-object",
+			exportPortletDataHandlerControl.getControlTagLabel());
 
-			Assert.assertEquals(
-				"root-object",
-				exportPortletDataHandlerControl.getControlTagLabel());
-		}
-		finally {
-			TreeTestUtil.deleteObjectDefinitionHierarchy(
-				_objectDefinitionLocalService,
-				new String[] {"C_A", "C_AA", "C_AAA"}, _objectEntryLocalService,
-				_objectRelationshipLocalService);
-		}
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AAA"}, _objectEntryLocalService,
+			_objectRelationshipLocalService);
 	}
 
 	@Test

@@ -188,7 +188,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(JournalArticle.class, DDMStructure.class),
 			new StagedModelType(JournalFeed.class),
 			new StagedModelType(JournalFolder.class));
-
 		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "web-content", true, false,

@@ -80,16 +80,15 @@
 			Long totalDeletions = Long.valueOf(0);
 
 			for (PortletDataHandlerControl portletDataHandlerControl : portletDataHandlerControls) {
-				String controlLabel = LanguageUtil.get(request, resourceBundle, portletDataHandlerControl.getControlLabel());
-
-				String controlClass = portletDataHandlerControl.getClassName();
-
 				if (modelAdditionCounters == null) {
 					continue;
 				}
 
-				if (modelAdditionCounters.containsKey(controlClass)) {
-					LongWrapper modelAdditionCounter = modelAdditionCounters.get(controlClass);
+				String className = portletDataHandlerControl.getClassName();
+				String controlLabel = LanguageUtil.get(request, resourceBundle, portletDataHandlerControl.getControlLabel());
+
+				if (modelAdditionCounters.containsKey(className)) {
+					LongWrapper modelAdditionCounter = modelAdditionCounters.get(className);
 
 					Long value = modelAdditionCounter.getValue();
 
@@ -102,8 +101,8 @@
 					continue;
 				}
 
-				if (modelDeletionCounters.containsKey(controlClass)) {
-					LongWrapper modelDeletionCounter = modelDeletionCounters.get(controlClass);
+				if (modelDeletionCounters.containsKey(className)) {
+					LongWrapper modelDeletionCounter = modelDeletionCounters.get(className);
 
 					Long value = modelDeletionCounter.getValue();
 

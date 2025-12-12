@@ -608,14 +608,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	private void _updateExportPortletDataHandlerControls() {
 		if (_registrations.size() > 1) {
+			setEmptyControlsAllowed(false);
 			setExportPortletDataHandlerControls(
 				TransformUtil.transformToArray(
 					_registrations, this::_getPortletDataHandlerControl,
 					PortletDataHandlerControl.class));
-
-			setEmptyControlsAllowed(false);
 		}
 		else {
+			setEmptyControlsAllowed(true);
+
 			if (_registrations.size() == 1) {
 				setExportPortletDataHandlerControls(
 					_getPortletDataHandlerControl(_registrations.get(0)));
@@ -623,8 +624,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			else {
 				setExportPortletDataHandlerControls();
 			}
-
-			setEmptyControlsAllowed(true);
 		}
 	}
 

@@ -27,6 +27,7 @@ interface IAttributeFilterConjunctionInputProps {
 	attributes: Attribute[];
 	conjunctionCriterion: Criterion;
 	onChange: (params: {
+		attribute: Attribute;
 		criterion: Criterion;
 		touched: {
 			attribute: boolean;
@@ -116,6 +117,7 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 		);
 
 		onChange({
+			attribute,
 			criterion: {
 				operatorName: defaultAttributeOperator as Criterion['operatorName'],
 				propertyName: `attribute/${attribute.id}`,

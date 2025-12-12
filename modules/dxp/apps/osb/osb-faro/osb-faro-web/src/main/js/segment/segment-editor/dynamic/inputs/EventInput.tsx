@@ -7,11 +7,12 @@ import EventPropertiesQuery, {
 } from '../queries/EventPropertiesQuery';
 import Form from 'shared/components/form';
 import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import RealTimePeriodInput, {
 	DEFAULT_OPTIONS
 } from './components/RealTimePeriodInput';
 import {CustomValue} from 'shared/util/records';
+import {Attribute, DataTypes} from 'event-analysis/utils/types';
 import {fromJS, Map} from 'immutable';
 import {FunctionalOperators, RelationalOperators} from '../utils/constants';
 import {
@@ -55,6 +56,10 @@ const EventInput: React.FC<IEventInputProps> = ({
 	valid,
 	value: valueIMap
 }) => {
+	const [
+		selectedCustomAttribute,
+		setSelectedCustomAttribute
+	] = useState<Attribute | null>(null);
 	const {id: eventId, options} = property;
 
 	const getRealTimePeriodFromCriterion = useCallback((): {
@@ -165,7 +170,12 @@ const EventInput: React.FC<IEventInputProps> = ({
 	};
 
 	const handleAttributeConjunctionChange = useCallback(
-		({criterion, touched: conjunctionTouched, valid: conjunctionValid}) => {
+		({
+			attribute,
+			criterion,
+			touched: conjunctionTouched,
+			valid: conjunctionValid
+		}) => {
 			onChange({
 				touched: {...touched, ...conjunctionTouched},
 				valid: {...valid, ...conjunctionValid},
@@ -174,6 +184,10 @@ const EventInput: React.FC<IEventInputProps> = ({
 					fromJS(criterion)
 				)
 			});
+
+			if (attribute) {
+				setSelectedCustomAttribute(attribute);
+			}
 		},
 		[onChange, valueIMap, touched, valid]
 	);
@@ -297,6 +311,8 @@ const EventInput: React.FC<IEventInputProps> = ({
 	);
 
 	const isRealTime = segmentType === SegmentTypes.RealTime;
+	const isSelectedAttributeDateType =
+		selectedCustomAttribute?.dataType === DataTypes.Date;
 
 	const initialPeriod = getRealTimePeriodFromCriterion();
 
@@ -404,7 +420,8 @@ const EventInput: React.FC<IEventInputProps> = ({
 									/>
 								</Form.Group>
 							)}
-							{isRealTime && (
+
+							{isRealTime && isSelectedAttributeDateType && (
 								<Alert
 									className='mt-2'
 									displayType='info'

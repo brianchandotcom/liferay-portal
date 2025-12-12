@@ -8,6 +8,8 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -57,55 +59,63 @@ jest.mock(
 
 const renderComponent = ({rules = []}: {rules?: Rule[]} = {}) =>
 	render(
-		<StoreAPIContextProvider
-			dispatch={() => Promise.resolve()}
-			getState={() =>
-				({
-					fragmentEntryLinks: {
-						fragmentEntryLink1: {
-							name: 'Fragment 1',
-						},
-						fragmentEntryLink2: {
-							fragmentEntryType: 'input',
-							name: 'Fragment 2',
-						},
-						fragmentEntryLink3: {
-							fragmentEntryType: 'input',
-							name: 'Fragment 3',
-						},
-					},
-					layoutData: {
-						deletedItems: [],
-						items: {
-							formItem1: {
-								config: {
-									fragmentEntryLinkId: 'fragmentEntryLink2',
-								},
-								itemId: 'formItem1',
-								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+
+		// @ts-ignore
+
+		<DndProvider backend={HTML5Backend}>
+			<StoreAPIContextProvider
+				dispatch={() => Promise.resolve()}
+				getState={() =>
+					({
+						fragmentEntryLinks: {
+							fragmentEntryLink1: {
+								name: 'Fragment 1',
 							},
-							formItem2: {
-								config: {
-									fragmentEntryLinkId: 'fragmentEntryLink3',
-								},
-								itemId: 'formItem2',
-								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+							fragmentEntryLink2: {
+								fragmentEntryType: 'input',
+								name: 'Fragment 2',
 							},
-							item1: {
-								config: {
-									fragmentEntryLinkId: 'fragmentEntryLink1',
-								},
-								itemId: 'item1',
-								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+							fragmentEntryLink3: {
+								fragmentEntryType: 'input',
+								name: 'Fragment 3',
 							},
 						},
-						pageRules: rules || [],
-					},
-				}) as unknown as State
-			}
-		>
-			<RulesSidebar />
-		</StoreAPIContextProvider>
+						layoutData: {
+							deletedItems: [],
+							items: {
+								formItem1: {
+									config: {
+										fragmentEntryLinkId:
+											'fragmentEntryLink2',
+									},
+									itemId: 'formItem1',
+									type: LAYOUT_DATA_ITEM_TYPES.fragment,
+								},
+								formItem2: {
+									config: {
+										fragmentEntryLinkId:
+											'fragmentEntryLink3',
+									},
+									itemId: 'formItem2',
+									type: LAYOUT_DATA_ITEM_TYPES.fragment,
+								},
+								item1: {
+									config: {
+										fragmentEntryLinkId:
+											'fragmentEntryLink1',
+									},
+									itemId: 'item1',
+									type: LAYOUT_DATA_ITEM_TYPES.fragment,
+								},
+							},
+							pageRules: rules || [],
+						},
+					}) as unknown as State
+				}
+			>
+				<RulesSidebar />
+			</StoreAPIContextProvider>
+		</DndProvider>
 	);
 
 describe('RulesSidebar', () => {

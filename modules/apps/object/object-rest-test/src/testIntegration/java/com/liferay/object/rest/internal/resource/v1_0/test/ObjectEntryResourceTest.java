@@ -28,6 +28,10 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
@@ -174,6 +178,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -8159,6 +8164,89 @@ public class ObjectEntryResourceTest {
 				new String[] {"C_A", "C_AA", "C_AB", "C_AAAA", "C_AAB"},
 				_objectEntryLocalService, _objectRelationshipLocalService);
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-66174")
+	public void testGetObjectEntryWithSystemObjectCustomFieldsInOneToManyRelationship()
+		throws Exception {
+
+		String expandoFieldName = RandomTestUtil.randomString();
+		String expandoFieldValue = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setExpandoBridgeAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				() -> {
+					ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+						ExpandoTestUtil.addTable(
+							PortalUtil.getClassNameId(User.class),
+							ExpandoTableConstants.DEFAULT_TABLE_NAME),
+						expandoFieldName, ExpandoColumnConstants.STRING);
+
+					return expandoColumn.getName();
+				},
+				expandoFieldValue
+			).build());
+
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new long[0], serviceContext);
+
+		_systemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager("User");
+
+		_userSystemObjectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				TestPropsValues.getCompanyId(),
+				_systemObjectDefinitionManager.getName());
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_userSystemObjectDefinition, _objectDefinition1,
+			TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
+			).put(
+				StringBundler.concat(
+					"r_", _objectRelationship1.getName(), "_userERC"),
+				user.getExternalReferenceCode()
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				jsonObject1.getString("id"), "?nestedFields=",
+				_objectRelationship1.getName()),
+			Http.Method.GET);
+
+		JSONObject relationshipJSONObject = jsonObject2.getJSONObject(
+			_objectRelationship1.getName());
+
+		JSONArray customFieldsJSONArray = relationshipJSONObject.getJSONArray(
+			"customFields");
+
+		Assert.assertEquals(1, customFieldsJSONArray.length());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"customValue", JSONUtil.put("data", expandoFieldValue)
+			).put(
+				"dataType", "Text"
+			).put(
+				"name", expandoFieldName
+			).toString(),
+			String.valueOf(customFieldsJSONArray.getJSONObject(0)),
+			JSONCompareMode.STRICT);
 	}
 
 	@FeatureFlag("LPD-17564")

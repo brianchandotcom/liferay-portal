@@ -714,19 +714,17 @@ public class BatchEnginePortletDataHandlerTest {
 			_portletDataHandlerProvider.provide(
 				TestPropsValues.getCompanyId(), portletId));
 
-		try (SafeCloseable safeCloseable =
-				_registerPortletAndDelegateWithSafeCloseable(
-					filter -> {
-						if (filter != null) {
-							return Page.of(Arrays.asList(new TestItem(1)));
-						}
+		try (SafeCloseable safeCloseable = _register(
+				filter -> {
+					if (filter != null) {
+						return Page.of(Arrays.asList(new TestItem(1)));
+					}
 
-						return Page.of(
-							Arrays.asList(
-								new TestItem(1), new TestItem(2),
-								new TestItem(3)));
-					},
-					portletId)) {
+					return Page.of(
+						Arrays.asList(
+							new TestItem(1), new TestItem(2), new TestItem(3)));
+				},
+				portletId)) {
 
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(
@@ -824,9 +822,7 @@ public class BatchEnginePortletDataHandlerTest {
 			_portletDataHandlerProvider.provide(
 				TestPropsValues.getCompanyId(), portletId));
 
-		try (SafeCloseable safeCloseable =
-				_registerPortletAndDelegateWithSafeCloseable(null, portletId)) {
-
+		try (SafeCloseable safeCloseable = _register(null, portletId)) {
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(
 					TestPropsValues.getCompanyId(), portletId);
@@ -1443,7 +1439,7 @@ public class BatchEnginePortletDataHandlerTest {
 			deletions, expectError, file, groupId, false, false, objects);
 	}
 
-	private SafeCloseable _registerPortletAndDelegateWithSafeCloseable(
+	private SafeCloseable _register(
 			Function<Filter, Page<TestItem>> function, String portletId)
 		throws Exception {
 

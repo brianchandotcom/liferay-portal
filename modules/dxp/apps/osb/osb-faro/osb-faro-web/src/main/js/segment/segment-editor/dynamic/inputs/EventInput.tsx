@@ -11,8 +11,8 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import RealTimePeriodInput, {
 	DEFAULT_OPTIONS
 } from './components/RealTimePeriodInput';
-import {CustomValue} from 'shared/util/records';
 import {Attribute, DataTypes} from 'event-analysis/utils/types';
+import {CustomValue} from 'shared/util/records';
 import {fromJS, Map} from 'immutable';
 import {FunctionalOperators, RelationalOperators} from '../utils/constants';
 import {

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -108,7 +109,12 @@ public class DigitalSalesRoomResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		long[] classNameIds = {_portal.getClassNameId(Group.class.getName())};
+		ObjectDefinition objectDefinition = _getObjectDefinition();
+
+		long[] classNameIds = {
+			_portal.getClassNameId(objectDefinition.getClassName())
+		};
+
 		LinkedHashMap<String, Object> params =
 			LinkedHashMapBuilder.<String, Object>put(
 				"active", true
@@ -154,10 +160,7 @@ public class DigitalSalesRoomResourceImpl
 				digitalSalesRoom.getFriendlyUrlPath(), group.getFriendlyURL()),
 			group.isInheritContent(), group.isActive(), serviceContext);
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_DSR_ROOM", group.getCompanyId());
+		ObjectDefinition objectDefinition = _getObjectDefinition();
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			group.getExternalReferenceCode(), group.getGroupId(),
@@ -199,10 +202,7 @@ public class DigitalSalesRoomResourceImpl
 			"com.liferay.digital.sales.room.site.initializer",
 			digitalSalesRoom.getName());
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_DSR_ROOM", contextCompany.getCompanyId());
+		ObjectDefinition objectDefinition = _getObjectDefinition();
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
@@ -218,9 +218,15 @@ public class DigitalSalesRoomResourceImpl
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
-		objectEntryManager.addObjectEntry(
-			defaultDTOConverterContext, objectDefinition,
-			_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			objectEntryManager.addObjectEntry(
+				defaultDTOConverterContext, objectDefinition,
+				_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
+
+		group.setClassName(objectDefinition.getClassName());
+		group.setClassPK(objectEntry.getId());
+
+		group = _groupLocalService.updateGroup(group);
 
 		_updateFrontendTokensValues(digitalSalesRoom, group);
 		_updateNestedResources(digitalSalesRoom, group);
@@ -409,6 +415,12 @@ public class DigitalSalesRoomResourceImpl
 		return HashMapBuilder.put(
 			LocaleUtil.getDefault(), digitalSalesRoom.getName()
 		).build();
+	}
+
+	private ObjectDefinition _getObjectDefinition() throws Exception {
+		return _objectDefinitionLocalService.
+			getObjectDefinitionByExternalReferenceCode(
+				"L_DSR_ROOM", contextCompany.getCompanyId());
 	}
 
 	private Map<String, Serializable> _getProperties(
@@ -638,6 +650,9 @@ public class DigitalSalesRoomResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private GroupService _groupService;

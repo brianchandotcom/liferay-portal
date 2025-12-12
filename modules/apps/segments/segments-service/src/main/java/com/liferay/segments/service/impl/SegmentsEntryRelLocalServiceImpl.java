@@ -6,14 +6,19 @@
 package com.liferay.segments.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.model.SegmentsEntryRel;
+import com.liferay.segments.model.SegmentsEntryRelTable;
 import com.liferay.segments.service.base.SegmentsEntryRelLocalServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,10 +69,33 @@ public class SegmentsEntryRelLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		Date date = new Date();
+
+		List<SegmentsEntryRel> segmentsEntryRels = new ArrayList<>();
+
 		for (long classPK : classPKs) {
-			addSegmentsEntryRel(
-				segmentsEntryId, classNameId, classPK, serviceContext);
+			long segmentsEntryRelId = counterLocalService.increment();
+
+			SegmentsEntryRel segmentsEntryRel =
+				segmentsEntryRelPersistence.create(segmentsEntryRelId);
+
+			segmentsEntryRel.setGroupId(serviceContext.getScopeGroupId());
+			segmentsEntryRel.setCompanyId(user.getCompanyId());
+			segmentsEntryRel.setUserId(user.getUserId());
+			segmentsEntryRel.setUserName(user.getFullName());
+			segmentsEntryRel.setCreateDate(serviceContext.getCreateDate(date));
+			segmentsEntryRel.setModifiedDate(
+				serviceContext.getModifiedDate(date));
+			segmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
+			segmentsEntryRel.setClassNameId(classNameId);
+			segmentsEntryRel.setClassPK(classPK);
+
+			segmentsEntryRels.add(segmentsEntryRel);
 		}
+
+		_bulkSaveOrUpdate(segmentsEntryRels);
 	}
 
 	@Override
@@ -162,6 +190,33 @@ public class SegmentsEntryRelLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _bulkSaveOrUpdate(List<SegmentsEntryRel> segmentsEntryRels) {
+		Session session = null;
+
+		try {
+			session = segmentsEntryRelPersistence.openSession();
+
+			for (int i = 0; i < segmentsEntryRels.size(); i++) {
+				session.saveOrUpdate(segmentsEntryRels.get(i));
+
+				if (((i % 50) == 0) || (i == (segmentsEntryRels.size() - 1))) {
+					session.flush();
+
+					session.clear();
+				}
+			}
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			segmentsEntryRelPersistence.closeSession(session);
+
+			FinderCacheUtil.clearDSLQueryCache(
+				SegmentsEntryRelTable.INSTANCE.getTableName());
+		}
 	}
 
 	@Reference

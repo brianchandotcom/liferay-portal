@@ -89,26 +89,17 @@ public interface PortletDataHandler {
 
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes();
 
-	public PortletDataHandlerControl[] getExportConfigurationControls(
-			long companyId, long groupId, Portlet portlet,
-			boolean privateLayout)
+	public PortletDataHandlerControl[]
+			getExportConfigurationPortletDataHandlerControls(
+				long companyId, long groupId, Portlet portlet,
+				boolean privateLayout)
 		throws Exception;
 
-	public PortletDataHandlerControl[] getExportConfigurationControls(
-			long companyId, long groupId, Portlet portlet, long plid,
-			boolean privateLayout)
+	public PortletDataHandlerControl[]
+			getExportConfigurationPortletDataHandlerControls(
+				long companyId, long groupId, Portlet portlet, long plid,
+				boolean privateLayout)
 		throws Exception;
-
-	/**
-	 * Returns an array of the controls defined for this data handler. These
-	 * controls enable the developer to create fine grained controls over export
-	 * behavior. The controls are rendered in the export UI.
-	 *
-	 * @return an array of the controls defined for this data handler
-	 * @throws PortletDataException if a portlet data exception occurred
-	 */
-	public PortletDataHandlerControl[] getExportControls()
-		throws PortletDataException;
 
 	/**
 	 * Returns an array of the metadata controls defined for this data handler.
@@ -119,7 +110,8 @@ public interface PortletDataHandler {
 	 * @return an array of the metadata controls defined for this data handler
 	 * @throws PortletDataException if a portlet data exception occurred
 	 */
-	public PortletDataHandlerControl[] getExportMetadataControls()
+	public PortletDataHandlerControl[]
+			getExportMetadataPortletDataHandlerControls()
 		throws PortletDataException;
 
 	/**
@@ -135,22 +127,24 @@ public interface PortletDataHandler {
 	 */
 	public long getExportModelCount(ManifestSummary manifestSummary);
 
-	public PortletDataHandlerControl[] getImportConfigurationControls(
-		Portlet portlet, ManifestSummary manifestSummary);
-
-	public PortletDataHandlerControl[] getImportConfigurationControls(
-		String[] configurationPortletOptions);
-
 	/**
 	 * Returns an array of the controls defined for this data handler. These
-	 * controls enable the developer to create fine grained controls over import
-	 * behavior. The controls are rendered in the import UI.
+	 * controls enable the developer to create fine grained controls over export
+	 * behavior. The controls are rendered in the export UI.
 	 *
 	 * @return an array of the controls defined for this data handler
 	 * @throws PortletDataException if a portlet data exception occurred
 	 */
-	public PortletDataHandlerControl[] getImportControls()
+	public PortletDataHandlerControl[] getExportPortletDataHandlerControls()
 		throws PortletDataException;
+
+	public PortletDataHandlerControl[]
+		getImportConfigurationPortletDataHandlerControls(
+			Portlet portlet, ManifestSummary manifestSummary);
+
+	public PortletDataHandlerControl[]
+		getImportConfigurationPortletDataHandlerControls(
+			String[] configurationPortletOptions);
 
 	/**
 	 * Returns an array of the metadata controls defined for this data handler.
@@ -161,7 +155,19 @@ public interface PortletDataHandler {
 	 * @return an array of the metadata controls defined for this data handler
 	 * @throws PortletDataException if a portlet data exception occurred
 	 */
-	public PortletDataHandlerControl[] getImportMetadataControls()
+	public PortletDataHandlerControl[]
+			getImportMetadataPortletDataHandlerControls()
+		throws PortletDataException;
+
+	/**
+	 * Returns an array of the controls defined for this data handler. These
+	 * controls enable the developer to create fine grained controls over import
+	 * behavior. The controls are rendered in the import UI.
+	 *
+	 * @return an array of the controls defined for this data handler
+	 * @throws PortletDataException if a portlet data exception occurred
+	 */
+	public PortletDataHandlerControl[] getImportPortletDataHandlerControls()
 		throws PortletDataException;
 
 	public default String getName() {
@@ -242,7 +248,9 @@ public interface PortletDataHandler {
 	 *
 	 * @return an array of the controls defined for this data handler
 	 */
-	public default PortletDataHandlerControl[] getStagingControls() {
+	public default PortletDataHandlerControl[]
+		getStagingPortletDataHandlerControls() {
+
 		return new PortletDataHandlerControl[0];
 	}
 

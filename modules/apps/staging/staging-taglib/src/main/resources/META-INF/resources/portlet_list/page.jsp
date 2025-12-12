@@ -43,11 +43,12 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 		String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
-		PortletDataHandlerControl[] exportPortletDataHandlerControls = portletDataHandler.getExportControls();
-		PortletDataHandlerControl[] metadataPortletDataHandlerControls = portletDataHandler.getExportMetadataControls();
+		PortletDataHandlerControl[] exportMetadataPortletDataHandlerControls = portletDataHandler.getExportMetadataPortletDataHandlerControls();
+
+		PortletDataHandlerControl[] exportPortletDataHandlerControls = portletDataHandler.getExportPortletDataHandlerControls();
 
 		if (!type.equals(Constants.EXPORT) && liveGroup.isStagedPortlet(portlet.getRootPortletId())) {
-			exportPortletDataHandlerControls = portletDataHandler.getStagingControls();
+			exportPortletDataHandlerControls = portletDataHandler.getStagingPortletDataHandlerControls();
 		}
 
 		if (useRequestValues) {
@@ -159,7 +160,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 										request.setAttribute("render_controls.jsp-portletId", portlet.getPortletId());
 										%>
 
-										<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataPortletDataHandlerControls) ? "content" : StringPool.BLANK %>'>
+										<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(exportMetadataPortletDataHandlerControls) ? "content" : StringPool.BLANK %>'>
 											<ul class="lfr-tree list-unstyled">
 												<liferay-util:include page="/portlet_list/render_controls.jsp" servletContext="<%= application %>" />
 											</ul>
@@ -178,7 +179,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 										request.setAttribute("render_controls.jsp-portletId", portlet.getPortletId());
 										%>
 
-										<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataPortletDataHandlerControls) ? "content" : StringPool.BLANK %>'>
+										<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(exportMetadataPortletDataHandlerControls) ? "content" : StringPool.BLANK %>'>
 											<ul class="lfr-tree list-unstyled">
 												<liferay-util:include page="/portlet_list/render_controls.jsp" servletContext="<%= application %>" />
 											</ul>
@@ -187,10 +188,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 								</c:choose>
 							</c:if>
 
-							<c:if test="<%= metadataPortletDataHandlerControls != null %>">
+							<c:if test="<%= exportMetadataPortletDataHandlerControls != null %>">
 
 								<%
-								for (PortletDataHandlerControl portletDataHandlerControl : metadataPortletDataHandlerControls) {
+								for (PortletDataHandlerControl portletDataHandlerControl : exportMetadataPortletDataHandlerControls) {
 									if (displayedControls.contains(portletDataHandlerControl.getControlName())) {
 										continue;
 									}
@@ -200,10 +201,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									PortletDataHandlerBoolean portletDataHandlerBoolean = (PortletDataHandlerBoolean)portletDataHandlerControl;
 								%>
 
-									<c:if test="<%= ArrayUtil.isNotEmpty(portletDataHandlerBoolean.getChildren()) %>">
+									<c:if test="<%= ArrayUtil.isNotEmpty(portletDataHandlerBoolean.getChildrenPortletDataHandlerControls()) %>">
 
 										<%
-										request.setAttribute("render_controls.jsp-controls", portletDataHandlerBoolean.getChildren());
+										request.setAttribute("render_controls.jsp-controls", portletDataHandlerBoolean.getChildrenPortletDataHandlerControls());
 										request.setAttribute("render_controls.jsp-portletId", portlet.getPortletId());
 										%>
 

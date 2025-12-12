@@ -107,7 +107,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(WikiNode.class),
 			new StagedModelType(WikiPage.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				getNamespace(), "wiki-nodes", false, true, null,
 				WikiNode.class.getName()),
@@ -118,7 +118,8 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 						getNamespace(), "referenced-content")
 				},
 				WikiPage.class.getName()));
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)

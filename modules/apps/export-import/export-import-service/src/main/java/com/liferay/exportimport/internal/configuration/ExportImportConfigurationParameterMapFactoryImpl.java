@@ -476,7 +476,8 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 			dataSiteLevelPortlet.getPortletDataHandlerInstance();
 
 		for (PortletDataHandlerControl portletDataHandlerControl :
-				portletDataHandlerInstance.getExportControls()) {
+				portletDataHandlerInstance.
+					getExportPortletDataHandlerControls()) {
 
 			if (!(portletDataHandlerControl instanceof
 					PortletDataHandlerBoolean)) {

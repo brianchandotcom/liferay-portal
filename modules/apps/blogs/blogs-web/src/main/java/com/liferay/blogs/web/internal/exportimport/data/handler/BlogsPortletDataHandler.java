@@ -96,7 +96,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(BlogsEntry.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				getNamespace(), "entries", true, false,
 				new PortletDataHandlerControl[] {
@@ -105,7 +105,8 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 				},
 				BlogsEntry.class.getName()));
 		setPublishToLiveByDefault(PropsValues.BLOGS_PUBLISH_TO_LIVE_BY_DEFAULT);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Reference(

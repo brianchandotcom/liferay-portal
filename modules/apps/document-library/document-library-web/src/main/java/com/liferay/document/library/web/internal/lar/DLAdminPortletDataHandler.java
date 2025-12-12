@@ -120,7 +120,7 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(
 				Repository.class.getName(),
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "repositories", true, false, null,
 				Repository.class.getName(),
@@ -157,7 +157,8 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 				DLFileShortcutConstants.getClassName()));
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
 		setRank(90);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public PortletDataHandlerControl[] getExportControls() {
+	public PortletDataHandlerControl[] getExportPortletDataHandlerControls() {
 		DiscussionStagingHandler discussionStagingHandler =
 			_commentManager.getDiscussionStagingHandler();
 
@@ -72,18 +72,17 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 			return new PortletDataHandlerControl[0];
 		}
 
-		PortletDataHandlerBoolean portletDataHandlerBoolean =
+		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "comment", true, false, null,
 				discussionStagingHandler.getClassName(),
-				StagedModelType.REFERRER_CLASS_NAME_ANY);
-
-		return new PortletDataHandlerControl[] {portletDataHandlerBoolean};
+				StagedModelType.REFERRER_CLASS_NAME_ANY)
+		};
 	}
 
 	@Override
-	public PortletDataHandlerControl[] getImportControls() {
-		return getExportControls();
+	public PortletDataHandlerControl[] getImportPortletDataHandlerControls() {
+		return getExportPortletDataHandlerControls();
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 		setDataLevel(DataLevel.PORTAL);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(LayoutPrototype.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "page-templates", true, true, null,
 				LayoutPrototype.class.getName()));

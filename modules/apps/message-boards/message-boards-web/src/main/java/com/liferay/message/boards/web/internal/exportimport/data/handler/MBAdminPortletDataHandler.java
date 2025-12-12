@@ -94,7 +94,7 @@ public class MBAdminPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(MBMessage.class),
 			new StagedModelType(MBThread.class),
 			new StagedModelType(MBThreadFlag.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "categories", true, false, null,
 				MBCategory.class.getName()),
@@ -110,7 +110,8 @@ public class MBAdminPortletDataHandler extends BasePortletDataHandler {
 				MBBan.class.getName()));
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

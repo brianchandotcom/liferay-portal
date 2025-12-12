@@ -65,12 +65,6 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public PortletDataHandlerControl[] getExportControls() {
-		return _portletDataHandlerControlsDCLSingleton.getSingleton(
-			this::_getPortletDataHandlerControls);
-	}
-
-	@Override
 	public long getExportModelCount(ManifestSummary manifestSummary) {
 		long totalModelCount = -1;
 
@@ -97,7 +91,13 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public PortletDataHandlerControl[] getImportControls() {
+	public PortletDataHandlerControl[] getExportPortletDataHandlerControls() {
+		return _portletDataHandlerControlsDCLSingleton.getSingleton(
+			this::_getPortletDataHandlerControls);
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportPortletDataHandlerControls() {
 		return _portletDataHandlerControlsDCLSingleton.getSingleton(
 			this::_getPortletDataHandlerControls);
 	}
@@ -108,7 +108,7 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public PortletDataHandlerControl[] getStagingControls() {
+	public PortletDataHandlerControl[] getStagingPortletDataHandlerControls() {
 		return _portletDataHandlerControlsDCLSingleton.getSingleton(
 			this::_getPortletDataHandlerControls);
 	}

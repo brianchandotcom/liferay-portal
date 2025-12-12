@@ -48,12 +48,13 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataAlwaysStaged(true);
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "teams", true, true, null, Team.class.getName()));
 		setPublishToLiveByDefault(true);
 		setRank(80);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

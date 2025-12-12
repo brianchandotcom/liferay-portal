@@ -91,10 +91,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 					<%
 					PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
 
-					PortletDataHandlerControl[] configurationPortletDataHandlerControls = portletDataHandler.getImportConfigurationControls(selPortlet, manifestSummary);
+					PortletDataHandlerControl[] importConfigurationPortletDataHandlerControls = portletDataHandler.getImportConfigurationPortletDataHandlerControls(selPortlet, manifestSummary);
 					%>
 
-					<c:if test="<%= ArrayUtil.isNotEmpty(configurationPortletDataHandlerControls) %>">
+					<c:if test="<%= ArrayUtil.isNotEmpty(importConfigurationPortletDataHandlerControls) %>">
 						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="application">
 							<ul class="lfr-tree list-unstyled select-options">
 								<li class="options">
@@ -141,7 +141,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 																<%
 																request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
 																request.setAttribute("render_controls.jsp-childControl", false);
-																request.setAttribute("render_controls.jsp-controls", configurationPortletDataHandlerControls);
+																request.setAttribute("render_controls.jsp-controls", importConfigurationPortletDataHandlerControls);
 																request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 																request.setAttribute("render_controls.jsp-rootControlId", rootControlId);
 																%>
@@ -196,11 +196,11 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 											<aui:input label='<%= LanguageUtil.get(request, "content") + badgeHTML %>' name="<%= rootControlId %>" type="checkbox" value="<%= true %>" />
 
 											<%
-											PortletDataHandlerControl[] importPortletDataHandlerControls = portletDataHandler.getImportControls();
-											PortletDataHandlerControl[] metadataPortletDataHandlerControls = portletDataHandler.getImportMetadataControls();
+											PortletDataHandlerControl[] importMetadataPortletDataHandlerControls = portletDataHandler.getImportMetadataPortletDataHandlerControls();
+											PortletDataHandlerControl[] importPortletDataHandlerControls = portletDataHandler.getImportPortletDataHandlerControls();
 											%>
 
-											<c:if test="<%= ArrayUtil.isNotEmpty(importPortletDataHandlerControls) || ArrayUtil.isNotEmpty(metadataPortletDataHandlerControls) %>">
+											<c:if test="<%= ArrayUtil.isNotEmpty(importMetadataPortletDataHandlerControls) || ArrayUtil.isNotEmpty(importPortletDataHandlerControls) %>">
 												<ul id="<portlet:namespace />showChangeContent_<%= selPortlet.getRootPortletId() %>">
 													<li class="tree-item">
 														<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
@@ -230,7 +230,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 													<ul class="lfr-tree list-unstyled">
 														<li class="tree-item">
 															<aui:fieldset cssClass="portlet-type-data-section" label="content">
-																<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataPortletDataHandlerControls) ? "content" : StringPool.BLANK %>'>
+																<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(importMetadataPortletDataHandlerControls) ? "content" : StringPool.BLANK %>'>
 																	<c:if test="<%= importPortletDataHandlerControls != null %>">
 
 																		<%
@@ -248,17 +248,17 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 																	</c:if>
 																</aui:field-wrapper>
 
-																<c:if test="<%= metadataPortletDataHandlerControls != null %>">
+																<c:if test="<%= importMetadataPortletDataHandlerControls != null %>">
 
 																	<%
-																	for (PortletDataHandlerControl portletDataHandlerControl : metadataPortletDataHandlerControls) {
+																	for (PortletDataHandlerControl portletDataHandlerControl : importMetadataPortletDataHandlerControls) {
 																		PortletDataHandlerBoolean portletDataHandlerBoolean = (PortletDataHandlerBoolean)portletDataHandlerControl;
 																	%>
 
-																		<c:if test="<%= ArrayUtil.isNotEmpty(portletDataHandlerBoolean.getChildren()) %>">
+																		<c:if test="<%= ArrayUtil.isNotEmpty(portletDataHandlerBoolean.getChildrenPortletDataHandlerControls()) %>">
 
 																			<%
-																			request.setAttribute("render_controls.jsp-controls", portletDataHandlerBoolean.getChildren());
+																			request.setAttribute("render_controls.jsp-controls", portletDataHandlerBoolean.getChildrenPortletDataHandlerControls());
 																			%>
 
 																			<aui:field-wrapper label="content-metadata">

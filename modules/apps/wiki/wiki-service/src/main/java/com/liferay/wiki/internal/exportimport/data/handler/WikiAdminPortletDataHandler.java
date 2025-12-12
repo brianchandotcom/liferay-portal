@@ -117,7 +117,7 @@ public class WikiAdminPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(WikiNode.class),
 			new StagedModelType(WikiPage.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "wiki-nodes", false, true, null,
 				WikiNode.class.getName()),
@@ -128,7 +128,8 @@ public class WikiAdminPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "referenced-content")
 				},
 				WikiPage.class.getName()));
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 
 		_portalCache = _multiVMPool.getPortalCache(
 			WikiPageDisplay.class.getName());

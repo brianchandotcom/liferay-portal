@@ -61,13 +61,13 @@
 				continue;
 			}
 
-			PortletDataHandlerControl[] portletDataHandlerControls = portletDataHandler.getExportControls();
+			PortletDataHandlerControl[] portletDataHandlerControls = portletDataHandler.getExportPortletDataHandlerControls();
 
 			if (!type.equals(Constants.EXPORT) && liveGroup.isStagedPortlet(portlet.getRootPortletId())) {
-				portletDataHandlerControls = portletDataHandler.getStagingControls();
+				portletDataHandlerControls = portletDataHandler.getStagingPortletDataHandlerControls();
 			}
 
-			if (ArrayUtil.isEmpty(portletDataHandlerControls) && ArrayUtil.isEmpty(portletDataHandler.getExportMetadataControls())) {
+			if (ArrayUtil.isEmpty(portletDataHandlerControls) && ArrayUtil.isEmpty(portletDataHandler.getExportMetadataPortletDataHandlerControls())) {
 				continue;
 			}
 

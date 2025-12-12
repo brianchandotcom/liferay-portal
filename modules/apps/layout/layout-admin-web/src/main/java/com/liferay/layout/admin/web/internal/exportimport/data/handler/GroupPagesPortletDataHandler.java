@@ -75,7 +75,7 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(_getStagedModelTypes());
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "page-template-sets", true, true, null,
 				LayoutPageTemplateCollection.class.getName()),
@@ -87,7 +87,8 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "utility-pages", true, false, null,
 				LayoutUtilityPageEntry.class.getName()));
 		setPublishToLiveByDefault(true);
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

@@ -77,14 +77,15 @@ public class SiteNavigationMenuPortletDataHandler
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(SiteNavigationMenu.class),
 			new StagedModelType(SiteNavigationMenuItem.class));
-		setExportControls(
+		setExportPortletDataHandlerControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "navigation-menus", true, false, null,
 				SiteNavigationMenu.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "navigation-menu-items", true, false, null,
 				SiteNavigationMenuItem.class.getName()));
-		setStagingControls(getExportControls());
+		setStagingPortletDataHandlerControls(
+			getExportPortletDataHandlerControls());
 	}
 
 	@Override

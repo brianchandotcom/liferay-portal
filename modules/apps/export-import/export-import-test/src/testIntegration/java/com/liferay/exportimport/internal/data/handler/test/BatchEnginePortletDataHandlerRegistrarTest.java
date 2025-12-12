@@ -151,7 +151,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 									portletId, className2, className2, true,
 									false, null, className2, null)
 							},
-							portletDataHandler.getExportControls()));
+							portletDataHandler.
+								getExportPortletDataHandlerControls()));
 
 				Assert.assertEquals(
 					1, _getRegisteredPortletDataHandlersCount(portletId));
@@ -196,7 +197,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 									portletId, className2, className2, true,
 									false, null, className2, null)
 							},
-							portletDataHandler.getExportControls()));
+							portletDataHandler.
+								getExportPortletDataHandlerControls()));
 
 				safeCloseable3.close();
 

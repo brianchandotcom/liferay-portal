@@ -1,6 +1,37 @@
 [
 	{
 		"ddmFormFieldTypeName": "radio",
+		"description": "Used for Analytics Provisioning",
+		"externalReferenceCode": "MKT-OPTION-ANALYTICS-LICENSE-USAGE",
+		"facetable": false,
+		"fieldType": "radio",
+		"key": "analytics-license-usage-type",
+		"name": "Analytics License Usage Type",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "BASIC",
+				"key": "basic",
+				"name": "Basic",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "BUSINESS",
+				"key": "business",
+				"name": "Business",
+				"priority": 1
+			},
+			{
+				"externalReferenceCode": "ENTERPRISE",
+				"key": "enterprise",
+				"name": "Enterprise",
+				"priority": 2
+			}
+		]
+	},
+	{
+		"ddmFormFieldTypeName": "radio",
 		"description": "Apps that are not DXP or Cloud can be licensed using this base type.",
 		"externalReferenceCode": "MKT-OPTION-BASE-LICENSE-USAGE",
 		"facetable": false,

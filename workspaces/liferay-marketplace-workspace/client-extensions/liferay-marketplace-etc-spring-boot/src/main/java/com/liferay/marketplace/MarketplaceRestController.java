@@ -690,7 +690,7 @@ public class MarketplaceRestController extends BaseRestController {
 			_koroneikiService.postAccountAccountKeyProductPurchase(
 				order.getAccountExternalReferenceCode(), jwt, "Subscription",
 				MarketplaceUtil.getSkuOptionValue(
-					"base-license-usage-type", orderItem.getOptions()),
+					"analytics-license-usage-type", orderItem.getOptions()),
 				orderItem);
 		}
 	}

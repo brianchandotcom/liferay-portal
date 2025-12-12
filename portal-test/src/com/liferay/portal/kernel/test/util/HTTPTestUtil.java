@@ -126,7 +126,7 @@ public class HTTPTestUtil {
 		}
 
 		public <T, E extends Throwable> T apply(
-			UnsafeSupplier<T, E> unsafeSupplier)
+				UnsafeSupplier<T, E> unsafeSupplier)
 			throws E {
 
 			String defaultBaseURL = _baseURL;
@@ -192,6 +192,7 @@ public class HTTPTestUtil {
 		private String _newCredentials = _credentials;
 		private boolean _newModulePath = _modulePath;
 		private int _newTimeout = _timeout;
+
 	}
 
 	private static Http.Options _getHttpOptions(
@@ -240,4 +241,5 @@ public class HTTPTestUtil {
 		"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
 	private static boolean _modulePath = true;
 	private static int _timeout = 10000;
+
 }

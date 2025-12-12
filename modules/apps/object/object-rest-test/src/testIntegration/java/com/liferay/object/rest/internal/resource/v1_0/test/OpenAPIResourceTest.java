@@ -318,7 +318,6 @@ public class OpenAPIResourceTest {
 
 	@Test
 	public void testGetOpenAPIInDifferentCompany() throws Exception {
-
 		long companyId = HTTPTestUtil.customize(
 		).withTimeout(
 			120000
@@ -332,7 +331,10 @@ public class OpenAPIResourceTest {
 					"virtualHost", "www.able.com"
 				).toString(),
 				"headless-portal-instances/v1.0/portal-instances",
-				Http.Method.POST)).getLong("companyId");
+				Http.Method.POST)
+		).getLong(
+			"companyId"
+		);
 
 		try {
 			HTTPTestUtil.customize(

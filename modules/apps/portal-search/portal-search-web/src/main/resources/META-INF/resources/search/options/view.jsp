@@ -5,18 +5,29 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <liferay-theme:defineObjects />
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+<portlet:defineObjects />
 
-<div class="alert alert-info text-center">
-	<clay:link
-		data-qa-id="searchOptionsHref"
-		href="javascript:void(0);"
-		label='<%= LanguageUtil.get(request, "search-options-help") %>'
+<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%
+renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+%>
+
+<clay:alert
+	displayType="info"
+>
+	<clay:button
+		cssClass="align-baseline border-0 p-0"
+		displayType="link"
+		label="search-options-help"
 		onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+		small="<%= true %>"
 	/>
-</div>
+</clay:alert>

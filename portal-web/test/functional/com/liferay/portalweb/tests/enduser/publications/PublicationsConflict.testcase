@@ -32,6 +32,8 @@ definition {
 	@description = "This is a use case for LPS-172496. Deleting a portlet with a modified configuration from a Publication incorrectly leads to a Deletion Modification Conflict"
 	@priority = 3
 	test CanDeletePortletModifiedConfigurationWithoutDeletionModificationConflict {
+		property custom.properties = "change.tracking.deletion.protection.enabled=false";
+
 		task ("Add a Widget Page with Asset Publisher") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",

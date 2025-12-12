@@ -107,14 +107,14 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 					ConfigurationModel configurationModel =
 						_getConfigurationModel(configurationModels, document);
 
-					if ((configurationModel != null) &&
-						configurationModel.isGenerateUI()) {
+					if ((configurationModel == null) ||
+						!configurationModel.isGenerateUI()) {
 
-						return new ConfigurationModelConfigurationEntry(
-							configurationModel, locale);
+						return null;
 					}
 
-					return null;
+					return new ConfigurationModelConfigurationEntry(
+						configurationModel, locale);
 				});
 
 		configurationEntries.addAll(

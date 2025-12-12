@@ -63,18 +63,23 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 
 			_testPostExportTask("COMPLETED", null, objectDefinition);
 
-			JSONObject companyJSONObject = HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"domain", "able.com"
-				).put(
-					"portalInstanceId", "able.com"
-				).put(
-					"virtualHost", "www.able.com"
-				).toString(),
-				"headless-portal-instances/v1.0/portal-instances",
-				Http.Method.POST);
-
-			companyId = companyJSONObject.getLong("companyId");
+			companyId = HTTPTestUtil.customize(
+			).withTimeout(
+				120000
+			).apply(
+				() -> HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"domain", "able.com"
+					).put(
+						"portalInstanceId", "able.com"
+					).put(
+						"virtualHost", "www.able.com"
+					).toString(),
+					"headless-portal-instances/v1.0/portal-instances",
+					Http.Method.POST)
+			).getLong(
+				"companyId"
+			);
 
 			User user = UserTestUtil.getAdminUser(companyId);
 

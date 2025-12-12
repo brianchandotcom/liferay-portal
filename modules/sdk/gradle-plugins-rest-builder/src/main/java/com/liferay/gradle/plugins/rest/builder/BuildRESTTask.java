@@ -73,7 +73,6 @@ public class BuildRESTTask extends JavaExec {
 	}
 
 	@Input
-	@Optional
 	public boolean isJakartaEnabled() {
 		return _jakartaEnabled;
 	}

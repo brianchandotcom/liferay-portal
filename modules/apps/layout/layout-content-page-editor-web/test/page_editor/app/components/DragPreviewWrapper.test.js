@@ -14,8 +14,8 @@ const fragments = [
 			{
 				fragmentEntryKey: 'fragment01',
 				icon: 'icon01',
+				itemType: 'type01',
 				name: 'name01',
-				type: 'type01',
 			},
 			{
 				fragmentEntryKey: 'fragment02',

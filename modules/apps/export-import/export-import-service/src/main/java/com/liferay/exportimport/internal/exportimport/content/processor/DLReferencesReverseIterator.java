@@ -444,19 +444,27 @@ public class DLReferencesReverseIterator
 	}
 
 	private FileEntry _getFileEntry(String content, int beginPos) {
-		int jsonBeginPos = StringUtil.lastIndexOfAny(
+		int cdataBeginPos = StringUtil.lastIndexOfAny(
 			content, new String[] {"<![CDATA["}, beginPos);
 
-		jsonBeginPos = StringUtil.indexOfAny(
-			content, new char[] {'{'}, jsonBeginPos);
+		if (cdataBeginPos == QueryUtil.ALL_POS) {
+			return null;
+		}
 
-		int jsonEndPos = StringUtil.indexOfAny(
-			content, new String[] {"]]>"}, jsonBeginPos);
+		int cdataEndPos = StringUtil.indexOfAny(
+			content, new String[] {"]]>"}, cdataBeginPos);
 
-		jsonEndPos = StringUtil.lastIndexOfAny(
-			content, new char[] {'}'}, jsonEndPos);
+		if (cdataEndPos == QueryUtil.ALL_POS) {
+			return null;
+		}
 
-		if ((jsonBeginPos == QueryUtil.ALL_POS) &&
+		int jsonBeginPos = StringUtil.indexOfAny(
+			content, new char[] {'{'}, cdataBeginPos, cdataEndPos);
+
+		int jsonEndPos = StringUtil.lastIndexOfAny(
+			content, new char[] {'}'}, cdataBeginPos, cdataEndPos);
+
+		if ((jsonBeginPos == QueryUtil.ALL_POS) ||
 			(jsonEndPos == QueryUtil.ALL_POS)) {
 
 			return null;

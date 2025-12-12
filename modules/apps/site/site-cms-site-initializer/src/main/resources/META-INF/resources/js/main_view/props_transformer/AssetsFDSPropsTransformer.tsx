@@ -312,12 +312,15 @@ export default function AssetsFDSPropsTransformer({
 							availableExportFileFormats:
 								additionalProps.availableExportFileFormats,
 							availableSourceLocales: Object.keys(
-								itemData.embedded?.title_i18n
-							).map((languageId) =>
-								additionalProps.availableTargetLocales.find(
-									(locale) => locale.languageId === languageId
+								itemData.embedded?.title_i18n || {}
+							)
+								.map((languageId) =>
+									additionalProps.availableTargetLocales.find(
+										(locale) =>
+											locale.languageId === languageId
+									)
 								)
-							),
+								.filter(Boolean),
 							availableTargetLocales:
 								additionalProps.availableTargetLocales,
 							closeModal,

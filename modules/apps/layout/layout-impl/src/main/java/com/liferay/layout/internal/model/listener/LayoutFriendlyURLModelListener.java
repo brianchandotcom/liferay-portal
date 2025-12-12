@@ -46,22 +46,23 @@ public class LayoutFriendlyURLModelListener
 	}
 
 	private void _addFriendlyURLEntry(LayoutFriendlyURL layoutFriendlyURL) {
-		try {
-			if (BatchEngineThreadLocal.isBatchImportInProcess() ||
-				(!ExportImportThreadLocal.isImportInProcess() &&
-				 !_stagingGroupHelper.isLiveGroup(
-					 layoutFriendlyURL.getGroupId()))) {
+		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
+			(ExportImportThreadLocal.isImportInProcess() ||
+			 _stagingGroupHelper.isLiveGroup(layoutFriendlyURL.getGroupId()))) {
 
-				_friendlyURLEntryLocalService.addFriendlyURLEntry(
-					layoutFriendlyURL.getGroupId(),
-					_layoutFriendlyURLEntryHelper.getClassNameId(
-						layoutFriendlyURL.isPrivateLayout()),
-					layoutFriendlyURL.getPlid(),
-					Collections.singletonMap(
-						layoutFriendlyURL.getLanguageId(),
-						layoutFriendlyURL.getFriendlyURL()),
-					ServiceContextThreadLocal.getServiceContext());
-			}
+			return;
+		}
+
+		try {
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				layoutFriendlyURL.getGroupId(),
+				_layoutFriendlyURLEntryHelper.getClassNameId(
+					layoutFriendlyURL.isPrivateLayout()),
+				layoutFriendlyURL.getPlid(),
+				Collections.singletonMap(
+					layoutFriendlyURL.getLanguageId(),
+					layoutFriendlyURL.getFriendlyURL()),
+				ServiceContextThreadLocal.getServiceContext());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

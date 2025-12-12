@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -67,9 +66,7 @@ import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -247,19 +244,18 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			}
 		}
 
-		List<EntityField> entityFields = new ArrayList<>();
-
-		if (dataDefinitionId > 0) {
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
-
-			for (String fieldName : ddmStructure.getFieldNames()) {
-				entityFields.add(
-					new StringEntityField(fieldName, locale -> fieldName));
-			}
+		if (dataDefinitionId <= 0) {
+			return new DataRecordEntityModel(Collections.emptyList());
 		}
 
-		return new DataRecordEntityModel(entityFields);
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		return new DataRecordEntityModel(
+			transform(
+				ddmStructure.getFieldNames(),
+				fieldName -> new StringEntityField(
+					fieldName, locale -> fieldName)));
 	}
 
 	@Override
@@ -476,25 +472,20 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			DDMStructure ddmStructure, Sort[] sorts)
 		throws PortalException {
 
-		List<com.liferay.portal.search.sort.Sort> searchSorts =
-			new ArrayList<>();
+		return transform(
+			sorts,
+			sort -> {
+				SortOrder sortOrder = SortOrder.ASC;
 
-		for (Sort sort : sorts) {
-			SortOrder sortOrder = SortOrder.ASC;
+				if (sort.isReverse()) {
+					sortOrder = SortOrder.DESC;
+				}
 
-			if (sort.isReverse()) {
-				sortOrder = SortOrder.DESC;
-			}
-
-			com.liferay.portal.search.sort.Sort searchSort =
-				_ddmIndexer.createDDMStructureFieldSort(
+				return _ddmIndexer.createDDMStructureFieldSort(
 					ddmStructure, sort.getFieldName(),
 					contextAcceptLanguage.getPreferredLocale(), sortOrder);
-
-			searchSorts.add(searchSort);
-		}
-
-		return searchSorts.toArray(new FieldSort[0]);
+			},
+			FieldSort.class);
 	}
 
 	private DataRecord _toDataRecord(DDLRecord ddlRecord) throws Exception {

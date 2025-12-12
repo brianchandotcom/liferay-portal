@@ -300,12 +300,16 @@ public class MBCommentManagerImpl implements CommentManager {
 	public List<Comment> getComments(
 		String className, long classPK, int status, int start, int end) {
 
-		MBDiscussion discussion = _mbDiscussionLocalService.fetchDiscussion(
+		MBDiscussion mbDiscussion = _mbDiscussionLocalService.fetchDiscussion(
 			className, classPK);
+
+		if (mbDiscussion == null) {
+			return Collections.emptyList();
+		}
 
 		return TransformUtil.transform(
 			_mbMessageLocalService.getThreadMessages(
-				discussion.getThreadId(), status, start, end),
+				mbDiscussion.getThreadId(), status, start, end),
 			MBCommentImpl::new);
 	}
 

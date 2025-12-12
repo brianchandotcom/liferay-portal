@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -53,6 +54,19 @@ public class LayoutFriendlyURLModelListener
 			return;
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+		String uuid = null;
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+		else {
+			uuid = serviceContext.getUuid();
+
+			serviceContext.setUuid(null);
+		}
+
 		try {
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
 				layoutFriendlyURL.getGroupId(),
@@ -62,10 +76,15 @@ public class LayoutFriendlyURLModelListener
 				Collections.singletonMap(
 					layoutFriendlyURL.getLanguageId(),
 					layoutFriendlyURL.getFriendlyURL()),
-				ServiceContextThreadLocal.getServiceContext());
+				serviceContext);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
+		}
+		finally {
+			if (serviceContext != null) {
+				serviceContext.setUuid(uuid);
+			}
 		}
 	}
 

@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -290,7 +291,8 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isModifiableAndSystem() &&
+		if (!LazyReferencingThreadLocal.isEnabled() &&
+			objectDefinition.isModifiableAndSystem() &&
 			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
 			throw new ObjectFieldSystemException(

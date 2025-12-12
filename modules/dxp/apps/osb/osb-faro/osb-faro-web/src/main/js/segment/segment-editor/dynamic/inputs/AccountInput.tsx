@@ -17,6 +17,7 @@ export default class AccountInput extends React.Component<IAccountInputProps> {
 	@autobind
 	fieldValuesDataSourceFn(): Promise<string[]> {
 		const {
+			channelId,
 			groupId,
 			property: {id},
 			value: valueIMap
@@ -24,6 +25,7 @@ export default class AccountInput extends React.Component<IAccountInputProps> {
 
 		return API.accounts
 			.fetchFieldValues({
+				channelId,
 				fieldMappingFieldName: id,
 				groupId,
 				query: getPropertyValue(valueIMap, 'value', 0)

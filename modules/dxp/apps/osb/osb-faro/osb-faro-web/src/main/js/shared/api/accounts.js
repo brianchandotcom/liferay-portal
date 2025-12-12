@@ -22,9 +22,15 @@ export function fetchDetails({accountId, groupId}) {
 	});
 }
 
-export function fetchFieldValues({fieldMappingFieldName, groupId, query}) {
+export function fetchFieldValues({
+	channelId,
+	fieldMappingFieldName,
+	groupId,
+	query
+}) {
 	return sendRequest({
 		data: {
+			channelId,
 			delta: DEFAULT_DELTA,
 			fieldMappingFieldName,
 			query: escapeSingleQuotes(query)

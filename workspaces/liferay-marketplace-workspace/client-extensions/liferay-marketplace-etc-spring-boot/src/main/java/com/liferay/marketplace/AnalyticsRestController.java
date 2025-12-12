@@ -230,11 +230,9 @@ public class AnalyticsRestController extends BaseRestController {
 			String.class
 		).block();
 
-        if (response == null) {
-            return;
-        }
-
-		JSONObject analyticsProjectJSONObject = new JSONObject(response);
+		if (response == null) {
+			return;
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Analytics project created for order " + order.getId());
@@ -244,7 +242,7 @@ public class AnalyticsRestController extends BaseRestController {
 			HashMapBuilder.put(
 				"order-metadata",
 				orderMetadataJSONObject.put(
-					"analyticsProject", analyticsProjectJSONObject
+					"analyticsProject", new JSONObject(response)
 				).toString()
 			).build(),
 			order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);

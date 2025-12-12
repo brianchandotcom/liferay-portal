@@ -69,7 +69,7 @@ public class SegmentsExperienceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -93,8 +93,10 @@ public class SegmentsExperienceCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", segmentsEntryId=");
-		sb.append(segmentsEntryId);
+		sb.append(", segmentsEntryERC=");
+		sb.append(segmentsEntryERC);
+		sb.append(", segmentsEntryScopeERC=");
+		sb.append(segmentsEntryScopeERC);
 		sb.append(", segmentsExperienceKey=");
 		sb.append(segmentsExperienceKey);
 		sb.append(", plid=");
@@ -163,7 +165,20 @@ public class SegmentsExperienceCacheModel
 			segmentsExperienceImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		segmentsExperienceImpl.setSegmentsEntryId(segmentsEntryId);
+		if (segmentsEntryERC == null) {
+			segmentsExperienceImpl.setSegmentsEntryERC("");
+		}
+		else {
+			segmentsExperienceImpl.setSegmentsEntryERC(segmentsEntryERC);
+		}
+
+		if (segmentsEntryScopeERC == null) {
+			segmentsExperienceImpl.setSegmentsEntryScopeERC("");
+		}
+		else {
+			segmentsExperienceImpl.setSegmentsEntryScopeERC(
+				segmentsEntryScopeERC);
+		}
 
 		if (segmentsExperienceKey == null) {
 			segmentsExperienceImpl.setSegmentsExperienceKey("");
@@ -223,8 +238,8 @@ public class SegmentsExperienceCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		segmentsEntryId = objectInput.readLong();
+		segmentsEntryERC = objectInput.readUTF();
+		segmentsEntryScopeERC = objectInput.readUTF();
 		segmentsExperienceKey = objectInput.readUTF();
 
 		plid = objectInput.readLong();
@@ -275,7 +290,19 @@ public class SegmentsExperienceCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(segmentsEntryId);
+		if (segmentsEntryERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(segmentsEntryERC);
+		}
+
+		if (segmentsEntryScopeERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(segmentsEntryScopeERC);
+		}
 
 		if (segmentsExperienceKey == null) {
 			objectOutput.writeUTF("");
@@ -318,7 +345,8 @@ public class SegmentsExperienceCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long segmentsEntryId;
+	public String segmentsEntryERC;
+	public String segmentsEntryScopeERC;
 	public String segmentsExperienceKey;
 	public long plid;
 	public String name;

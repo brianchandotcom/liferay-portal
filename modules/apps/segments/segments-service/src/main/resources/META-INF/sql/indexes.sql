@@ -21,8 +21,9 @@ create index IX_EBCFE1C4 on SegmentsExperience (groupId, plid, active_);
 create unique index IX_6E29AF1B on SegmentsExperience (groupId, plid, ctCollectionId, priority);
 create unique index IX_1877BBA2 on SegmentsExperience (groupId, plid, ctCollectionId, segmentsExperienceKey[$COLUMN_LENGTH:75$]);
 create index IX_4EA4A03D on SegmentsExperience (groupId, plid, priority);
-create index IX_3A0FEF1 on SegmentsExperience (groupId, plid, segmentsEntryId, active_);
-create index IX_E90B4ACD on SegmentsExperience (segmentsEntryId);
+create index IX_F35DC382 on SegmentsExperience (groupId, plid, segmentsEntryERC[$COLUMN_LENGTH:75$], segmentsEntryScopeERC[$COLUMN_LENGTH:75$], active_);
+create index IX_2C43E1D2 on SegmentsExperience (groupId, segmentsEntryERC[$COLUMN_LENGTH:75$], segmentsEntryScopeERC[$COLUMN_LENGTH:75$]);
+create index IX_544A601C on SegmentsExperience (segmentsEntryERC[$COLUMN_LENGTH:75$], segmentsEntryScopeERC[$COLUMN_LENGTH:75$]);
 create index IX_42071D24 on SegmentsExperience (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_4516B4A9 on SegmentsExperiment (groupId, ctCollectionId, segmentsExperienceId, plid);

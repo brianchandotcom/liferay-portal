@@ -56,9 +56,14 @@ public class SegmentsExperienceTable
 	public final Column<SegmentsExperienceTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<SegmentsExperienceTable, Long> segmentsEntryId =
+	public final Column<SegmentsExperienceTable, String> segmentsEntryERC =
 		createColumn(
-			"segmentsEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+			"segmentsEntryERC", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<SegmentsExperienceTable, String> segmentsEntryScopeERC =
+		createColumn(
+			"segmentsEntryScopeERC", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<SegmentsExperienceTable, String> segmentsExperienceKey =
 		createColumn(
 			"segmentsExperienceKey", String.class, Types.VARCHAR,

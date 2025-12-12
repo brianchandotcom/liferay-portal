@@ -77,7 +77,8 @@ public class SegmentsExperienceModelImpl
 		{"segmentsExperienceId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"segmentsEntryId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"segmentsEntryERC", Types.VARCHAR},
+		{"segmentsEntryScopeERC", Types.VARCHAR},
 		{"segmentsExperienceKey", Types.VARCHAR}, {"plid", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"priority", Types.INTEGER},
 		{"active_", Types.BOOLEAN}, {"typeSettings", Types.VARCHAR},
@@ -99,7 +100,8 @@ public class SegmentsExperienceModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("segmentsEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("segmentsEntryERC", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("segmentsEntryScopeERC", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("segmentsExperienceKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -110,7 +112,7 @@ public class SegmentsExperienceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsExperience (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,segmentsExperienceId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceKey VARCHAR(75) null,plid LONG,name STRING null,priority INTEGER,active_ BOOLEAN,typeSettings VARCHAR(75) null,lastPublishDate DATE null,primary key (segmentsExperienceId, ctCollectionId))";
+		"create table SegmentsExperience (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,segmentsExperienceId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryERC VARCHAR(75) null,segmentsEntryScopeERC VARCHAR(75) null,segmentsExperienceKey VARCHAR(75) null,plid LONG,name STRING null,priority INTEGER,active_ BOOLEAN,typeSettings VARCHAR(75) null,lastPublishDate DATE null,primary key (segmentsExperienceId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsExperience";
 
@@ -169,19 +171,25 @@ public class SegmentsExperienceModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SEGMENTSENTRYID_COLUMN_BITMASK = 64L;
+	public static final long SEGMENTSENTRYERC_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SEGMENTSEXPERIENCEKEY_COLUMN_BITMASK = 128L;
+	public static final long SEGMENTSENTRYSCOPEERC_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long SEGMENTSEXPERIENCEKEY_COLUMN_BITMASK = 256L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -317,7 +325,10 @@ public class SegmentsExperienceModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", SegmentsExperience::getModifiedDate);
 			attributeGetterFunctions.put(
-				"segmentsEntryId", SegmentsExperience::getSegmentsEntryId);
+				"segmentsEntryERC", SegmentsExperience::getSegmentsEntryERC);
+			attributeGetterFunctions.put(
+				"segmentsEntryScopeERC",
+				SegmentsExperience::getSegmentsEntryScopeERC);
 			attributeGetterFunctions.put(
 				"segmentsExperienceKey",
 				SegmentsExperience::getSegmentsExperienceKey);
@@ -394,9 +405,13 @@ public class SegmentsExperienceModelImpl
 				(BiConsumer<SegmentsExperience, Date>)
 					SegmentsExperience::setModifiedDate);
 			attributeSetterBiConsumers.put(
-				"segmentsEntryId",
-				(BiConsumer<SegmentsExperience, Long>)
-					SegmentsExperience::setSegmentsEntryId);
+				"segmentsEntryERC",
+				(BiConsumer<SegmentsExperience, String>)
+					SegmentsExperience::setSegmentsEntryERC);
+			attributeSetterBiConsumers.put(
+				"segmentsEntryScopeERC",
+				(BiConsumer<SegmentsExperience, String>)
+					SegmentsExperience::setSegmentsEntryScopeERC);
 			attributeSetterBiConsumers.put(
 				"segmentsExperienceKey",
 				(BiConsumer<SegmentsExperience, String>)
@@ -673,17 +688,22 @@ public class SegmentsExperienceModelImpl
 
 	@JSON
 	@Override
-	public long getSegmentsEntryId() {
-		return _segmentsEntryId;
+	public String getSegmentsEntryERC() {
+		if (_segmentsEntryERC == null) {
+			return "";
+		}
+		else {
+			return _segmentsEntryERC;
+		}
 	}
 
 	@Override
-	public void setSegmentsEntryId(long segmentsEntryId) {
+	public void setSegmentsEntryERC(String segmentsEntryERC) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_segmentsEntryId = segmentsEntryId;
+		_segmentsEntryERC = segmentsEntryERC;
 	}
 
 	/**
@@ -691,9 +711,37 @@ public class SegmentsExperienceModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalSegmentsEntryId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("segmentsEntryId"));
+	public String getOriginalSegmentsEntryERC() {
+		return getColumnOriginalValue("segmentsEntryERC");
+	}
+
+	@JSON
+	@Override
+	public String getSegmentsEntryScopeERC() {
+		if (_segmentsEntryScopeERC == null) {
+			return "";
+		}
+		else {
+			return _segmentsEntryScopeERC;
+		}
+	}
+
+	@Override
+	public void setSegmentsEntryScopeERC(String segmentsEntryScopeERC) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_segmentsEntryScopeERC = segmentsEntryScopeERC;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalSegmentsEntryScopeERC() {
+		return getColumnOriginalValue("segmentsEntryScopeERC");
 	}
 
 	@JSON
@@ -1090,7 +1138,9 @@ public class SegmentsExperienceModelImpl
 		segmentsExperienceImpl.setUserName(getUserName());
 		segmentsExperienceImpl.setCreateDate(getCreateDate());
 		segmentsExperienceImpl.setModifiedDate(getModifiedDate());
-		segmentsExperienceImpl.setSegmentsEntryId(getSegmentsEntryId());
+		segmentsExperienceImpl.setSegmentsEntryERC(getSegmentsEntryERC());
+		segmentsExperienceImpl.setSegmentsEntryScopeERC(
+			getSegmentsEntryScopeERC());
 		segmentsExperienceImpl.setSegmentsExperienceKey(
 			getSegmentsExperienceKey());
 		segmentsExperienceImpl.setPlid(getPlid());
@@ -1132,8 +1182,10 @@ public class SegmentsExperienceModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		segmentsExperienceImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		segmentsExperienceImpl.setSegmentsEntryId(
-			this.<Long>getColumnOriginalValue("segmentsEntryId"));
+		segmentsExperienceImpl.setSegmentsEntryERC(
+			this.<String>getColumnOriginalValue("segmentsEntryERC"));
+		segmentsExperienceImpl.setSegmentsEntryScopeERC(
+			this.<String>getColumnOriginalValue("segmentsEntryScopeERC"));
 		segmentsExperienceImpl.setSegmentsExperienceKey(
 			this.<String>getColumnOriginalValue("segmentsExperienceKey"));
 		segmentsExperienceImpl.setPlid(
@@ -1293,7 +1345,25 @@ public class SegmentsExperienceModelImpl
 			segmentsExperienceCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		segmentsExperienceCacheModel.segmentsEntryId = getSegmentsEntryId();
+		segmentsExperienceCacheModel.segmentsEntryERC = getSegmentsEntryERC();
+
+		String segmentsEntryERC = segmentsExperienceCacheModel.segmentsEntryERC;
+
+		if ((segmentsEntryERC != null) && (segmentsEntryERC.length() == 0)) {
+			segmentsExperienceCacheModel.segmentsEntryERC = null;
+		}
+
+		segmentsExperienceCacheModel.segmentsEntryScopeERC =
+			getSegmentsEntryScopeERC();
+
+		String segmentsEntryScopeERC =
+			segmentsExperienceCacheModel.segmentsEntryScopeERC;
+
+		if ((segmentsEntryScopeERC != null) &&
+			(segmentsEntryScopeERC.length() == 0)) {
+
+			segmentsExperienceCacheModel.segmentsEntryScopeERC = null;
+		}
 
 		segmentsExperienceCacheModel.segmentsExperienceKey =
 			getSegmentsExperienceKey();
@@ -1413,7 +1483,8 @@ public class SegmentsExperienceModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _segmentsEntryId;
+	private String _segmentsEntryERC;
+	private String _segmentsEntryScopeERC;
 	private String _segmentsExperienceKey;
 	private long _plid;
 	private String _name;
@@ -1466,7 +1537,9 @@ public class SegmentsExperienceModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("segmentsEntryId", _segmentsEntryId);
+		_columnOriginalValues.put("segmentsEntryERC", _segmentsEntryERC);
+		_columnOriginalValues.put(
+			"segmentsEntryScopeERC", _segmentsEntryScopeERC);
 		_columnOriginalValues.put(
 			"segmentsExperienceKey", _segmentsExperienceKey);
 		_columnOriginalValues.put("plid", _plid);
@@ -1521,21 +1594,23 @@ public class SegmentsExperienceModelImpl
 
 		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("segmentsEntryId", 2048L);
+		columnBitmasks.put("segmentsEntryERC", 2048L);
 
-		columnBitmasks.put("segmentsExperienceKey", 4096L);
+		columnBitmasks.put("segmentsEntryScopeERC", 4096L);
 
-		columnBitmasks.put("plid", 8192L);
+		columnBitmasks.put("segmentsExperienceKey", 8192L);
 
-		columnBitmasks.put("name", 16384L);
+		columnBitmasks.put("plid", 16384L);
 
-		columnBitmasks.put("priority", 32768L);
+		columnBitmasks.put("name", 32768L);
 
-		columnBitmasks.put("active_", 65536L);
+		columnBitmasks.put("priority", 65536L);
 
-		columnBitmasks.put("typeSettings", 131072L);
+		columnBitmasks.put("active_", 131072L);
 
-		columnBitmasks.put("lastPublishDate", 262144L);
+		columnBitmasks.put("typeSettings", 262144L);
+
+		columnBitmasks.put("lastPublishDate", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

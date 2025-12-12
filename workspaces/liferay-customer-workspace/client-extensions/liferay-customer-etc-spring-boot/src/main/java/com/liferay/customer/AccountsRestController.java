@@ -204,10 +204,7 @@ public class AccountsRestController extends BaseRestController {
 				if (!syncedAccountExternalReferenceCodes.contains(
 						externalReferenceCode)) {
 
-					_updateAccountHeatTags(
-						businessEventJSONObject.getLong(
-							"r_accountEntryToBusinessEvents_accountEntryId"),
-						externalReferenceCode);
+					_updateAccountHeatTags(externalReferenceCode);
 
 					syncedAccountExternalReferenceCodes.add(
 						externalReferenceCode);
@@ -423,8 +420,7 @@ public class AccountsRestController extends BaseRestController {
 		);
 	}
 
-	private void _updateAccountHeatTags(
-			Long accountId, String externalReferenceCode)
+	private void _updateAccountHeatTags(String externalReferenceCode)
 		throws Exception {
 
 		int page = 1;
@@ -433,8 +429,8 @@ public class AccountsRestController extends BaseRestController {
 			JSONObject jsonObject = _getBusinessEventsJSONObject(
 				StringBundler.concat(
 					"eventStatus ne 'canceled' and eventStatus ne 'completed' ",
-					"and r_accountEntryToBusinessEvents_accountEntryId eq '",
-					accountId, "'"),
+					"and r_accountEntryToBusinessEvents_accountEntryERC eq '",
+					externalReferenceCode, "'"),
 				page, 500, "targetGoLiveDateTime:asc");
 
 			_updateJSMTickets(

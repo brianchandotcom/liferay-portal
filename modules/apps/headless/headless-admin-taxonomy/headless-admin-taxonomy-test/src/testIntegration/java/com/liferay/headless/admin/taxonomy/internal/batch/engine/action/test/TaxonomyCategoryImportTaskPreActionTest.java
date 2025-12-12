@@ -58,37 +58,14 @@ public class TaxonomyCategoryImportTaskPreActionTest {
 		_targetGroup = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
 
-		String assetVocabularyExternalReferenceCode =
-			RandomTestUtil.randomString();
-		String assetVocabularyTitle = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
 
-		Locale locale = LocaleUtil.getSiteDefault();
+		_localAssetVocabulary = _getAssetVocabulary(
+			externalReferenceCode, _localGroup.getGroupId(), title);
 
-		_localAssetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			assetVocabularyExternalReferenceCode, _user.getUserId(),
-			_localGroup.getGroupId(), assetVocabularyTitle,
-			assetVocabularyTitle,
-			HashMapBuilder.put(
-				locale, assetVocabularyTitle
-			).build(),
-			HashMapBuilder.put(
-				locale, StringPool.BLANK
-			).build(),
-			null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-			ServiceContextTestUtil.getServiceContext());
-
-		_targetAssetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			assetVocabularyExternalReferenceCode, _user.getUserId(),
-			_targetGroup.getGroupId(), assetVocabularyTitle,
-			assetVocabularyTitle,
-			HashMapBuilder.put(
-				locale, assetVocabularyTitle
-			).build(),
-			HashMapBuilder.put(
-				locale, StringPool.BLANK
-			).build(),
-			null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-			ServiceContextTestUtil.getServiceContext());
+		_targetAssetVocabulary = _getAssetVocabulary(
+			externalReferenceCode, _targetGroup.getGroupId(), title);
 	}
 
 	@Test
@@ -265,6 +242,24 @@ public class TaxonomyCategoryImportTaskPreActionTest {
 			userId, _localGroup.getGroupId(), RandomTestUtil.randomString(),
 			_localAssetVocabulary.getVocabularyId(),
 			ServiceContextTestUtil.getServiceContext(_localGroup.getGroupId()));
+	}
+
+	private AssetVocabulary _getAssetVocabulary(
+			String externalReferenceCode, long groupId, String title)
+		throws Exception {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		return _assetVocabularyLocalService.addVocabulary(
+			externalReferenceCode, _user.getUserId(), groupId, title, title,
+			HashMapBuilder.put(
+				locale, title
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private static final String _ITEM_CLASS_NAME =

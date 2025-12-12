@@ -1710,6 +1710,53 @@ export class PageEditorPage {
 		await this.setMappedItem(mappingConfiguration.mapping);
 	}
 
+	async swapFragment({
+		folder,
+		fragmentId,
+		fragmentName,
+	}: {
+		folder: string;
+		fragmentId: string;
+		fragmentName: string;
+	}) {
+		await this.selectFragment(fragmentId);
+
+		await clickAndExpectToBeVisible({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Swap Fragment',
+			}),
+			trigger: this.page.getByLabel('Swap Fragment'),
+		});
+
+		const iframe = this.page.frameLocator('iframe[title="Swap Fragment"]');
+
+		await clickAndExpectToBeVisible({
+			target: iframe.locator('.card', {
+				hasText: fragmentName,
+			}),
+			trigger: iframe.locator('.card', {
+				hasText: folder,
+			}),
+		});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Swap Fragment',
+			}),
+			trigger: iframe.locator('.card', {
+				hasText: fragmentName,
+			}),
+		});
+
+		await this.waitForChangesSaved();
+
+		await expect(
+			this.page
+				.getByLabel('Configuration Panel')
+				.locator('header', {hasText: fragmentName})
+		).toBeVisible();
+	}
+
 	async switchExperience(experience: string) {
 		await this.openExperienceSelector();
 

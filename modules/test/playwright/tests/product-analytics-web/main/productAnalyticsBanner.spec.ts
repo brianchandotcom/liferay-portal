@@ -84,8 +84,35 @@ test.afterEach(async ({systemSettingsPage}) => {
 	});
 });
 
+test.beforeEach(async ({page, systemSettingsPage}) => {
+	const productAnalyticsHeading = await page.getByRole('heading', {
+		name: 'Product Analytics',
+	});
+	await test.step('Verify Product Analytics Instance Level Configuration', async () => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Product Analytics'
+		);
+
+		await productAnalyticsHeading.waitFor();
+
+		const enabledButton = await page.getByLabel('Enabled');
+
+		await enabledButton.setChecked(true);
+
+		if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
+			await page.getByRole('button', {name: 'Save'}).click();
+		}
+		else {
+			await page.getByRole('button', {name: 'Update'}).click();
+		}
+
+		await page.waitForTimeout(1000);
+	});
+});
+
 test(
-	'AC1: Verify "Product Analytics" Configuration is present and enabled by default',
+	'Verify "Product Analytics" Configuration is disabled by default',
 	{tag: '@LPD-60003'},
 	async ({
 		instanceSettingsPage,
@@ -93,6 +120,35 @@ test(
 		siteSettingsPage,
 		systemSettingsPage,
 	}) => {
+		await test.step('Reset Product Analytics System Settings if needed', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				'Privacy',
+				'Product Analytics'
+			);
+
+			await systemSettingsPage.page
+				.getByRole('heading', {
+					name: 'Product Analytics',
+				})
+				.waitFor();
+
+			if (
+				await systemSettingsPage.page
+					.getByRole('button', {name: 'Actions'})
+					.isVisible()
+			) {
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: systemSettingsPage.page.getByRole('menuitem', {
+						name: 'Reset Default Values',
+					}),
+					trigger: systemSettingsPage.page.getByRole('button', {
+						name: 'Actions',
+					}),
+				});
+			}
+		});
+
 		const enabledButton = await page.getByLabel('Enabled');
 		const productAnalyticsHeading = await page.getByRole('heading', {
 			name: 'Product Analytics',
@@ -106,7 +162,7 @@ test(
 
 			await productAnalyticsHeading.waitFor();
 
-			await expect(enabledButton).toBeChecked();
+			await expect(enabledButton).not.toBeChecked();
 		});
 
 		await test.step('Verify Product Analytics Instance Level Configuration', async () => {
@@ -118,7 +174,7 @@ test(
 
 			await productAnalyticsHeading.waitFor();
 
-			await expect(enabledButton).toBeChecked();
+			await expect(enabledButton).not.toBeChecked();
 		});
 
 		await test.step('Verify Product Analytics Site Level Configuration', async () => {
@@ -129,7 +185,7 @@ test(
 
 			await productAnalyticsHeading.waitFor();
 
-			await expect(enabledButton).toBeChecked();
+			await expect(enabledButton).not.toBeChecked();
 		});
 	}
 );
@@ -160,9 +216,12 @@ test(
 
 			await enabledButton.setChecked(false);
 
-			await page
-				.getByRole('button', {name: 'Save'})
-				.dispatchEvent('click');
+			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
+				await page.getByRole('button', {name: 'Save'}).click();
+			}
+			else {
+				await page.getByRole('button', {name: 'Update'}).click();
+			}
 
 			await waitForAlert(page);
 
@@ -196,9 +255,12 @@ test(
 				await enabledButton.click();
 			}
 
-			await page
-				.getByRole('button', {name: 'Save'})
-				.dispatchEvent('click');
+			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
+				await page.getByRole('button', {name: 'Save'}).click();
+			}
+			else {
+				await page.getByRole('button', {name: 'Update'}).click();
+			}
 
 			await page.waitForTimeout(1000);
 			await page.reload();
@@ -325,9 +387,12 @@ test(
 
 			await enabledButton.setChecked(false);
 
-			await page
-				.getByRole('button', {name: 'Save'})
-				.dispatchEvent('click');
+			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
+				await page.getByRole('button', {name: 'Save'}).click();
+			}
+			else {
+				await page.getByRole('button', {name: 'Update'}).click();
+			}
 
 			await waitForAlert(page);
 
@@ -350,9 +415,12 @@ test(
 
 			await enabledButton.setChecked(false);
 
-			await page
-				.getByRole('button', {name: 'Save'})
-				.dispatchEvent('click');
+			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
+				await page.getByRole('button', {name: 'Save'}).click();
+			}
+			else {
+				await page.getByRole('button', {name: 'Update'}).click();
+			}
 
 			await waitForAlert(page);
 

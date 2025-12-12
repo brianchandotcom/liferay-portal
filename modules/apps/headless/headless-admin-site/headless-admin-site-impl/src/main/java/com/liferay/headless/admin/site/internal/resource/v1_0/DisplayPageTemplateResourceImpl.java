@@ -407,17 +407,6 @@ public class DisplayPageTemplateResourceImpl
 				className.getClassNameId(), classTypeId);
 		}
 
-		if (!Objects.equals(
-				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
-				layoutPageTemplateEntry.isDefaultTemplate())) {
-
-			layoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					GetterUtil.getBoolean(
-						displayPageTemplate.getMarkedAsDefault()));
-		}
-
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, displayPageTemplate.getThumbnail());
 
@@ -455,6 +444,17 @@ public class DisplayPageTemplateResourceImpl
 				_layoutPageTemplateEntryService.updateStatus(
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 					WorkflowConstants.STATUS_APPROVED);
+		}
+
+		if (!Objects.equals(
+				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
+				layoutPageTemplateEntry.isDefaultTemplate())) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					GetterUtil.getBoolean(
+						displayPageTemplate.getMarkedAsDefault()));
 		}
 
 		return _displayPageTemplateDTOConverter.toDTO(

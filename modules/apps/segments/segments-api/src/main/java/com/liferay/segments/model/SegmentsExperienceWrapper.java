@@ -408,6 +408,11 @@ public class SegmentsExperienceWrapper
 		return model.getSegmentsEntryERC();
 	}
 
+	@Override
+	public long getSegmentsEntryGroupId() {
+		return model.getSegmentsEntryGroupId();
+	}
+
 	/**
 	 * Returns the segments entry scope erc of this segments experience.
 	 *

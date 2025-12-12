@@ -51,6 +51,8 @@ public interface SegmentsExperience
 
 			};
 
+	public long getSegmentsEntryGroupId();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTypeSettingsUnicodeProperties();
 

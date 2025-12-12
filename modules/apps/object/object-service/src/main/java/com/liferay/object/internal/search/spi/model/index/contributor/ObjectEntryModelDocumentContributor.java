@@ -329,7 +329,7 @@ public class ObjectEntryModelDocumentContributor
 		document.addKeyword(
 			"objectDefinitionName", objectDefinition.getShortName());
 
-		Map<String, Serializable> values = objectEntry.getIndexedValues();
+		Map<String, Serializable> values = null;
 
 		List<ObjectField> objectFields = null;
 
@@ -351,6 +351,8 @@ public class ObjectEntryModelDocumentContributor
 		ObjectContentHelper objectContentHelper = null;
 
 		if (!objectFields.isEmpty()) {
+			values = objectEntry.getIndexedValues();
+
 			objectContentHelper = new ObjectContentHelper(
 				objectEntry, objectFields, _textEmbeddingDocumentContributor);
 
@@ -406,6 +408,10 @@ public class ObjectEntryModelDocumentContributor
 
 			_contributeObjectEntryFolder(
 				document, objectEntry.getObjectEntryFolderId());
+
+			if (values == null) {
+				values = objectEntry.getIndexedValues();
+			}
 
 			long fileEntryId = GetterUtil.getLong(values.get("file"));
 

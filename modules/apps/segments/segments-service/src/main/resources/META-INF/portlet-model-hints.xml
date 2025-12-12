@@ -63,7 +63,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="segmentsEntryId" type="long" />
+		<field name="segmentsEntryERC" type="String" />
+		<field name="segmentsEntryScopeERC" type="String" />
 		<field name="segmentsExperienceKey" type="String" />
 		<field name="plid" type="long" />
 		<field localized="true" name="name" type="String" />

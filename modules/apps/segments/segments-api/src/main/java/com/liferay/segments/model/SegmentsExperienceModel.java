@@ -254,18 +254,34 @@ public interface SegmentsExperienceModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the segments entry ID of this segments experience.
+	 * Returns the segments entry erc of this segments experience.
 	 *
-	 * @return the segments entry ID of this segments experience
+	 * @return the segments entry erc of this segments experience
 	 */
-	public long getSegmentsEntryId();
+	@AutoEscape
+	public String getSegmentsEntryERC();
 
 	/**
-	 * Sets the segments entry ID of this segments experience.
+	 * Sets the segments entry erc of this segments experience.
 	 *
-	 * @param segmentsEntryId the segments entry ID of this segments experience
+	 * @param segmentsEntryERC the segments entry erc of this segments experience
 	 */
-	public void setSegmentsEntryId(long segmentsEntryId);
+	public void setSegmentsEntryERC(String segmentsEntryERC);
+
+	/**
+	 * Returns the segments entry scope erc of this segments experience.
+	 *
+	 * @return the segments entry scope erc of this segments experience
+	 */
+	@AutoEscape
+	public String getSegmentsEntryScopeERC();
+
+	/**
+	 * Sets the segments entry scope erc of this segments experience.
+	 *
+	 * @param segmentsEntryScopeERC the segments entry scope erc of this segments experience
+	 */
+	public void setSegmentsEntryScopeERC(String segmentsEntryScopeERC);
 
 	/**
 	 * Returns the segments experience key of this segments experience.

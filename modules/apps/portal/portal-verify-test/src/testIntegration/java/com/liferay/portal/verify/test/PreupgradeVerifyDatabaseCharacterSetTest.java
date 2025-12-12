@@ -229,26 +229,24 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 
 			testVerify();
 
+			DBInspector dbInspector = new DBInspector(_connection);
+
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
 
 			String messages = logEntries.toString();
 
-			List<String> objectDBTableNames = Arrays.asList(
-				objectDefinition1.getDBTableName(),
-				objectDefinition1.getExtensionDBTableName(),
-				objectDefinition1.getLocalizationDBTableName(),
-				objectRelationship.getDBTableName());
-
-			DBInspector dbInspector = new DBInspector(_connection);
-
-			for (String objectDBTableName : objectDBTableNames) {
-				Assert.assertTrue(
-					messages.contains(
-						"Mixed character set and collation: " +
-							dbInspector.normalizeName(objectDBTableName)));
-			}
+			_assertNormalizeName(
+				dbInspector, messages, objectDefinition1.getDBTableName());
+			_assertNormalizeName(
+				dbInspector, messages,
+				objectDefinition1.getExtensionDBTableName());
+			_assertNormalizeName(
+				dbInspector, messages,
+				objectDefinition1.getLocalizationDBTableName());
+			_assertNormalizeName(
+				dbInspector, messages, objectRelationship.getDBTableName());
 		}
 	}
 
@@ -284,6 +282,16 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 		return StringUtil.replace(
 			PropsValues.JDBC_DEFAULT_URL, _connection.getCatalog(),
 			"unsupported_character_set_db");
+	}
+
+	private void _assertNormalizeName(
+			DBInspector dbInspector, String messages, String tableName)
+		throws Exception {
+
+		Assert.assertTrue(
+			messages.contains(
+				"Mixed character set and collation: " +
+					dbInspector.normalizeName(tableName)));
 	}
 
 	private void _verifyException(Exception exception, String expectedMessage) {

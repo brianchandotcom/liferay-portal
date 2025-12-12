@@ -1472,8 +1472,12 @@ public class BatchEnginePortletDataHandlerTest {
 			).build());
 
 		return () -> {
-			safeCloseable2.close();
-			safeCloseable1.close();
+			try {
+				safeCloseable2.close();
+			}
+			finally {
+				safeCloseable1.close();
+			}
 		};
 	}
 

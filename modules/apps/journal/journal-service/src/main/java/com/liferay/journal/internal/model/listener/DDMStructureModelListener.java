@@ -10,19 +10,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.journal.internal.util.JournalDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -57,66 +51,14 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			return;
 		}
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			_journalArticleLocalService.getActionableDynamicQuery();
+		JournalDDMStructureHelper journalDDMStructureHelper =
+			new JournalDDMStructureHelper(
+				_ddmFieldLocalService, _fieldsToDDMFormValuesConverter,
+				_indexerRegistry, _journalArticleLocalService,
+				_journalConverter);
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property ddmStructureIdProperty = PropertyFactoryUtil.forName(
-					"DDMStructureId");
-
-				dynamicQuery.add(
-					ddmStructureIdProperty.eq(
-						originalDDMStructure.getStructureId()));
-			});
-		actionableDynamicQuery.setCompanyId(
-			originalDDMStructure.getCompanyId());
-
-		ActionableDynamicQuery.PerformActionMethod<?> performActionMethod =
-			null;
-
-		if (Objects.equals(
-				originalDDMStructure.getDefinition(),
-				ddmStructure.getDefinition())) {
-
-			Indexer<JournalArticle> indexer =
-				_indexerRegistry.nullSafeGetIndexer(JournalArticle.class);
-
-			performActionMethod = (JournalArticle journalArticle) -> {
-				try {
-					indexer.reindex(journalArticle);
-				}
-				catch (Exception exception) {
-					throw new PortalException(exception);
-				}
-			};
-		}
-		else {
-			performActionMethod = (JournalArticle journalArticle) -> {
-				try (SafeCloseable safeCloseable =
-						CTCollectionThreadLocal.
-							setCTCollectionIdWithSafeCloseable(
-								ddmStructure.getCtCollectionId())) {
-
-					_ddmFieldLocalService.updateDDMFormValues(
-						ddmStructure.getStructureId(), journalArticle.getId(),
-						_fieldsToDDMFormValuesConverter.convert(
-							ddmStructure,
-							_journalConverter.getDDMFields(
-								ddmStructure, journalArticle.getContent())));
-				}
-			};
-		}
-
-		actionableDynamicQuery.setParallel(true);
-		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
-
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+		journalDDMStructureHelper.updateDDMStructureJournalArticles(
+			originalDDMStructure, ddmStructure);
 	}
 
 	@Override

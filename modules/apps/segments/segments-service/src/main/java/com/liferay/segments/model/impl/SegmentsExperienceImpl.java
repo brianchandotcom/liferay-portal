@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperience;
@@ -23,6 +24,18 @@ import java.io.IOException;
  * @author Eduardo García
  */
 public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
+
+	@Override
+	public long getSegmentsEntryGroupId() {
+		Long groupId = ScopeUtil.getItemGroupId(
+			getCompanyId(), getSegmentsEntryScopeERC(), getGroupId());
+
+		if (groupId == null) {
+			return 0;
+		}
+
+		return groupId;
+	}
 
 	@Override
 	public UnicodeProperties getTypeSettingsUnicodeProperties() {

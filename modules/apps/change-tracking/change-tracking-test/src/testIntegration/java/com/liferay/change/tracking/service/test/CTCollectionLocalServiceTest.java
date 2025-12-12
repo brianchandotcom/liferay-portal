@@ -598,9 +598,9 @@ public class CTCollectionLocalServiceTest {
 	public void testUndoCTCollection() throws Exception {
 		Layout addedLayout = null;
 
-		Layout deletedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout deletedLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		Layout modifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout modifiedLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		String tagName1 = "layoutcttesttag1";
 		String tagName2 = "layoutcttesttag2";

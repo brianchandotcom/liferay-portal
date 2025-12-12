@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProce
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.data.cleanup.PortletPreferencesDataCleanupPreupgradeProcess;
 
 import java.sql.Connection;
@@ -59,45 +60,54 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 			return;
 		}
 
-		Set<String> portletIds = new HashSet<>();
+		if (!DBUpgrader.isUpgradeClient()) {
+			Set<String> portletIds = new HashSet<>();
 
-		for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
-			portletIds.add(portlet.getPortletId());
-		}
-
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select id_, portletId from Portlet");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				String portletId = resultSet.getString(2);
-
-				if ((!portletId.startsWith("com.liferay.") &&
-					 !portletId.startsWith("com_liferay_")) ||
-					portletIds.contains(portletId)) {
-
-					continue;
-				}
-
-				long id_ = resultSet.getLong(1);
-
-				_portletLocalService.deletePortlet(id_);
-
-				DataCleanupLoggingUtil.logDelete(
-					_log, 1, _dbInspector.normalizeName("Portlet"),
-					StringBundler.concat(
-						"\"", portletId, "\" is not installed"));
+			for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
+				portletIds.add(portlet.getPortletId());
 			}
 
-			UpgradeProcess upgradeProcess = new PortletUpgradeProcess(
-				portletIds);
+			try (PreparedStatement preparedStatement =
+					_connection.prepareStatement(
+						"select id_, portletId from Portlet");
+				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			upgradeProcess.upgrade();
+				while (resultSet.next()) {
+					String portletId = resultSet.getString(2);
 
-			upgradeProcess =
-				new PortletPreferencesDataCleanupPreupgradeProcess();
+					if ((!portletId.startsWith("com.liferay.") &&
+						 !portletId.startsWith("com_liferay_")) ||
+						portletIds.contains(portletId)) {
 
-			upgradeProcess.upgrade();
+						continue;
+					}
+
+					long id_ = resultSet.getLong(1);
+
+					_portletLocalService.deletePortlet(id_);
+
+					DataCleanupLoggingUtil.logDelete(
+						_log, 1, _dbInspector.normalizeName("Portlet"),
+						StringBundler.concat(
+							"\"", portletId, "\" is not installed"));
+				}
+
+				UpgradeProcess upgradeProcess = new PortletUpgradeProcess(
+					portletIds);
+
+				upgradeProcess.upgrade();
+			}
+		}
+
+		UpgradeProcess upgradeProcess =
+			new PortletPreferencesDataCleanupPreupgradeProcess();
+
+		upgradeProcess.upgrade();
+
+		if (DBUpgrader.isUpgradeClient() && _log.isInfoEnabled()) {
+			_log.info(
+				"PortletPreferencesPostUpgradeDataCleanupProcess has not " +
+					"been fully executed");
 		}
 	}
 

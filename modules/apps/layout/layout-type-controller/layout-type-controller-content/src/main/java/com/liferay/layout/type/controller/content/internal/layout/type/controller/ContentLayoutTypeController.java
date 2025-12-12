@@ -97,10 +97,15 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				curLayout = layout;
 			}
 
+			hasUpdatePermissions = _hasUpdatePermissions(
+				themeDisplay.getPermissionChecker(), curLayout);
+
 			if (layoutMode.equals(Constants.PREVIEW) ||
 				layoutMode.equals(Constants.VIEW)) {
 
-				if (!_hasPreviewPermission(curLayout, themeDisplay)) {
+				if (!hasUpdatePermissions &&
+					!_hasPreviewPermission(curLayout, themeDisplay)) {
+
 					throw new PrincipalException.MustHavePermission(
 						themeDisplay.getPermissionChecker(),
 						Layout.class.getName(), layout.getLayoutId(),
@@ -108,9 +113,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				}
 			}
 			else {
-				hasUpdatePermissions = _hasUpdatePermissions(
-					themeDisplay.getPermissionChecker(), curLayout);
-
 				if (!hasUpdatePermissions) {
 					throw new PrincipalException.MustHavePermission(
 						themeDisplay.getPermissionChecker(),

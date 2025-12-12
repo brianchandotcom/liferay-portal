@@ -166,12 +166,7 @@ function RuleItem({
 			setName(rule.name);
 
 			openToast({
-				message: sub(
-					Liferay.Language.get(
-						'rule-name-cannot-be-empty'
-					),
-					rule.name
-				),
+				message: Liferay.Language.get('rule-name-cannot-be-empty'),
 				type: 'info',
 			});
 

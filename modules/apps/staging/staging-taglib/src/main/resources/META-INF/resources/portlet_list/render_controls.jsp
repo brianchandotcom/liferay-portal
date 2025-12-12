@@ -36,12 +36,11 @@ for (int i = 0; i < portletDataHandlerControls.length; i++) {
 				<%
 				PortletDataHandlerBoolean portletDataHandlerBoolean = (PortletDataHandlerBoolean)portletDataHandlerControls[i];
 
+				String className = portletDataHandlerBoolean.getClassName();
 				String controlLabel = LanguageUtil.get(request, resourceBundle, portletDataHandlerBoolean.getControlLabel());
 
-				String className = portletDataHandlerControls[i].getClassName();
-
 				if (Validator.isNotNull(className) && (manifestSummary != null)) {
-					StagedModelType stagedModelType = new StagedModelType(className, portletDataHandlerControls[i].getReferrerClassName());
+					StagedModelType stagedModelType = new StagedModelType(className, portletDataHandlerBoolean.getReferrerClassName());
 
 					long modelAdditionCount = manifestSummary.getModelAdditionCount(stagedModelType);
 
@@ -61,13 +60,11 @@ for (int i = 0; i < portletDataHandlerControls.length; i++) {
 					data.put("root-control-id", liferayPortletResponse.getNamespace() + PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portletId);
 				}
 
-				PortletDataHandlerControl[] childrenPortletDataHandlerControls = portletDataHandlerBoolean.getChildrenPortletDataHandlerControls();
-
 				String controlName = Validator.isNotNull(portletDataHandlerBoolean.getNamespace()) ? portletDataHandlerBoolean.getNamespacedControlName() : (portletDataHandlerBoolean.getControlName() + StringPool.UNDERLINE + portletId);
 
 				String controlInputName = controlName;
 
-				boolean disabled = portletDataHandlerControls[i].isDisabled() || disableInputs;
+				boolean disabled = portletDataHandlerBoolean.isDisabled() || disableInputs;
 				%>
 
 				<c:if test="<%= disabled %>">
@@ -85,12 +82,12 @@ for (int i = 0; i < portletDataHandlerControls.length; i++) {
 
 				<aui:input checked="<%= renderControlsDisplayContext.isControlCheckboxEnabled(portletDataHandlerBoolean, parameterMap) %>" data="<%= data %>" disabled="<%= disabled %>" helpMessage="<%= portletDataHandlerBoolean.getHelpMessage(locale, action) %>" ignoreRequestValue="<%= disabled %>" label="<%= controlLabel %>" name="<%= controlInputName %>" type="checkbox" />
 
-				<c:if test="<%= childrenPortletDataHandlerControls != null %>">
+				<c:if test="<%= portletDataHandlerBoolean.getChildrenPortletDataHandlerControls() != null %>">
 					<ul class="list-unstyled" id="<portlet:namespace /><%= controlName %>Controls">
 
 						<%
 						request.setAttribute("render_controls.jsp-childControl", true);
-						request.setAttribute("render_controls.jsp-controls", childrenPortletDataHandlerControls);
+						request.setAttribute("render_controls.jsp-controls", portletDataHandlerBoolean.getChildrenPortletDataHandlerControls());
 						%>
 
 						<liferay-util:include page="/portlet_list/render_controls.jsp" servletContext="<%= application %>" />
@@ -115,18 +112,13 @@ for (int i = 0; i < portletDataHandlerControls.length; i++) {
 
 					String[] choices = portletDataHandlerChoice.getChoices();
 
-					for (int j = 0; j < choices.length; j++) {
-						String choice = choices[j];
-
-						String defaultChoice = (choices != null) ? choices[portletDataHandlerChoice.getDefaultChoiceIndex()] : "";
-
-						String controlValue = MapUtil.getString(parameterMap, portletDataHandlerChoice.getNamespacedControlName(), defaultChoice);
-
+					for (String choice : choices) {
 						String controlName = LanguageUtil.get(request, resourceBundle, choice);
+						String controlValue = MapUtil.getString(parameterMap, portletDataHandlerChoice.getNamespacedControlName(), choices[portletDataHandlerChoice.getDefaultChoiceIndex()]);
 					%>
 
 						<aui:input
-							checked="<%= controlValue.equals(choices[j]) %>"
+							checked="<%= controlValue.equals(choice) %>"
 							data='<%=
 								HashMapBuilder.<String, Object>put(
 									"name", controlName
@@ -137,7 +129,7 @@ for (int i = 0; i < portletDataHandlerControls.length; i++) {
 							label="<%= choice %>"
 							name="<%= portletDataHandlerChoice.getNamespacedControlName() %>"
 							type="radio"
-							value="<%= choices[j] %>"
+							value="<%= choice %>"
 						/>
 
 					<%

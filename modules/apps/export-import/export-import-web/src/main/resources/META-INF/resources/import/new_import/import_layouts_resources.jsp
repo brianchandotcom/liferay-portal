@@ -250,23 +250,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 														if (importPortletDataHandlerControls.length == 1) {
 															PortletDataHandlerControl portletDataHandlerControl = importPortletDataHandlerControls[0];
 
-															List<String> controlChildLabelKeys = portletDataHandlerControl.getControlChildLabels();
-
-															if (ListUtil.isNotEmpty(controlChildLabelKeys)) {
-																StringBundler sb = new StringBundler();
-
-																for (String controlChildLabelKey : controlChildLabelKeys) {
-																	sb.append(LanguageUtil.get(request, controlChildLabelKey));
-																	sb.append(", ");
-																}
-
-																if (sb.index() > 1) {
-																	sb.setIndex(sb.index() - 1);
-																}
-
-																controlChildLabels = sb.toString();
-															}
-
+															controlChildLabels = StringUtil.merge(TransformUtil.transform(portletDataHandlerControl.getControlChildLabels(), controlChildLabel -> LanguageUtil.get(request, controlChildLabel)), StringPool.COMMA_AND_SPACE);
 															controlTagLabel = portletDataHandlerControl.getControlTagLabel();
 														}
 

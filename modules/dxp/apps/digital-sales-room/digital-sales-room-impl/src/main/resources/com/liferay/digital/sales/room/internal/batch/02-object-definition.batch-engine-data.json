@@ -34,12 +34,6 @@
 			"name": "DSRRoom",
 			"objectActions": [
 			],
-			"objectDefinitionSettings": [
-				{
-					"name": "visible",
-					"value": "true"
-				}
-			],
 			"objectFields": [
 				{
 					"DBType": "Long",

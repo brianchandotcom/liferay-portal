@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import reactor.util.retry.Retry;
@@ -187,54 +188,53 @@ public class AnalyticsRestController extends BaseRestController {
 		JSONObject analyticsFormJSONObject =
 			orderMetadataJSONObject.optJSONObject("analyticsForm");
 
-		JSONObject analyticsProjectJSONObject = new JSONObject(
-			post(
-				BodyInserters.fromFormData(
-					"corpProjectName",
-					analyticsFormJSONObject.getString("corpProjectName")
-				).with(
-					"corpProjectUuid",
-					analyticsFormJSONObject.getString("corpProjectUuid")
-				).with(
-					"emailAddressDomains",
-					analyticsFormJSONObject.getJSONArray(
-						"emailAddressDomains"
-					).toString()
-				).with(
-					"friendlyURL",
-					analyticsFormJSONObject.getString("friendlyURL")
-				).with(
-					"incidentReportEmailAddresses",
-					analyticsFormJSONObject.getJSONArray(
-						"incidentReportEmailAddresses"
-					).toString()
-				).with(
-					"name", analyticsFormJSONObject.getString("name")
-				).with(
-					"serverLocation", "us-west1-ac-uat-c1"
-				).with(
-					"sharedCluster", "false"
-				).with(
-					"timeZoneId",
-					analyticsFormJSONObject.optString("timeZoneId")
-				).with(
-					"trial", "true"
-				).with(
-					"ownerEmailAddress",
-					analyticsFormJSONObject.getString("ownerEmailAddress")
-				).toString(),
-				HashMapBuilder.put(
-					HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic
-				).put(
-					HttpHeaders.CONTENT_TYPE,
-					MediaType.APPLICATION_FORM_URLENCODED_VALUE
-				).build(),
-				UriComponentsBuilder.fromUriString(
-					_analyticsAuthUrl
-				).path(
-					"/o/faro/main/project/unprovisioned"
-				).build(
-				).toUri()));
+		String response = WebClient.builder(
+		).baseUrl(
+			_analyticsAuthUrl
+		).defaultHeader(
+			HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic
+		).build(
+		).post(
+		).uri(
+			"/o/faro/main/project/unprovisioned"
+		).contentType(
+			MediaType.APPLICATION_FORM_URLENCODED
+		).body(
+			BodyInserters.fromFormData(
+				"corpProjectName",
+				analyticsFormJSONObject.getString("corpProjectName")
+			).with(
+				"corpProjectUuid",
+				analyticsFormJSONObject.getString("corpProjectUuid")
+			).with(
+				"incidentReportEmailAddresses",
+				analyticsFormJSONObject.getJSONArray(
+					"incidentReportEmailAddresses"
+				).toString()
+			).with(
+				"name", analyticsFormJSONObject.getString("name")
+			).with(
+				"serverLocation",
+				analyticsFormJSONObject.optString(
+					"serverLocation", "us-west1-ac-uat-c1")
+			).with(
+				"sharedCluster", "false"
+			).with(
+				"trial", "true"
+			).with(
+				"ownerEmailAddress",
+				analyticsFormJSONObject.getString("ownerEmailAddress")
+			)
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+
+        if (response == null) {
+            return;
+        }
+
+		JSONObject analyticsProjectJSONObject = new JSONObject(response);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Analytics project created for order " + order.getId());

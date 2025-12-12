@@ -168,7 +168,7 @@ function RuleItem({
 			openToast({
 				message: sub(
 					Liferay.Language.get(
-						'rule-name-cannot-be-empty.-the-last-saved-name-x-has-been-restored-automatically'
+						'rule-name-cannot-be-empty'
 					),
 					rule.name
 				),

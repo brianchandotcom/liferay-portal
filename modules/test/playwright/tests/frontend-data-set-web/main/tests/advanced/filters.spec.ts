@@ -117,10 +117,14 @@ test(
 					page.locator('li.dropdown-subheader', {hasText: 'Group 3'})
 				).toBeVisible();
 				await expect(
-					page.locator('li.dropdown-subheader', {hasText: 'Empty Group'})
+					page.locator('li.dropdown-subheader', {
+						hasText: 'Empty Group',
+					})
 				).not.toBeVisible();
 				await expect(
-					page.locator('li.dropdown-subheader', {hasText: 'Group with not registered filter'})
+					page.locator('li.dropdown-subheader', {
+						hasText: 'Group with not registered filter',
+					})
 				).not.toBeVisible();
 			});
 
@@ -129,21 +133,33 @@ test(
 
 				const filtersGroups = filtersDropdownMenu.getByRole('menu');
 
-				await expect(filtersGroups.locator('li.dropdown-subheader')).toHaveText(['Group 1', 'Group 2', 'Group 3']);
+				await expect(
+					filtersGroups.locator('li.dropdown-subheader')
+				).toHaveText(['Group 1', 'Group 2', 'Group 3']);
 
-				const group1 = filtersGroups.getByRole('group', {name: 'Group 1'})
+				const group1 = filtersGroups.getByRole('group', {
+					name: 'Group 1',
+				});
 
-				await expect(group1.getByRole('menuitem')).toHaveText(['Date Range', 'Color']);
+				await expect(group1.getByRole('menuitem')).toHaveText([
+					'Date Range',
+					'Color',
+				]);
 
-				const group2 = filtersGroups.getByRole('group', {name: 'Group 2'})
+				const group2 = filtersGroups.getByRole('group', {
+					name: 'Group 2',
+				});
 
 				await expect(group2.getByRole('menuitem')).toHaveText(['Size']);
 
-				const group3 = filtersGroups.getByRole('group', {name: 'Group 3'})
+				const group3 = filtersGroups.getByRole('group', {
+					name: 'Group 3',
+				});
 
-				await expect(group3.getByRole('menuitem')).toHaveText(['Status', 'Title']);
-
-
+				await expect(group3.getByRole('menuitem')).toHaveText([
+					'Status',
+					'Title',
+				]);
 			});
 
 			await test.step('Enter a search term "status"', async () => {
@@ -194,12 +210,13 @@ test(
 		});
 
 		await test.step('Check selecting a filter', async () => {
-			await test.step('Refresh the page', async () => {
-				await page.reload();
+			await test.step('Reset FDS', async () => {
+				await fdsSamplePage.selectTab('Advanced');
 
-				await page
-					.getByText('This is a description for sample 1.')
-					.waitFor();
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Select "Red" color in the filters dropdown', async () => {
@@ -238,12 +255,13 @@ test(
 		});
 
 		await test.step('Check excluding a filter', async () => {
-			await test.step('Refresh the page', async () => {
-				await page.reload();
+			await test.step('Reset FDS', async () => {
+				await fdsSamplePage.selectTab('Advanced');
 
-				await page
-					.getByText('This is a description for sample 1.')
-					.waitFor();
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Check exclude switch for "Blue", "Green", "Yellow" colors', async () => {
@@ -273,12 +291,13 @@ test(
 		});
 
 		await test.step('Check editing a filter summary box', async () => {
-			await test.step('Refresh the page', async () => {
-				await page.reload();
+			await test.step('Reset FDS', async () => {
+				await fdsSamplePage.selectTab('Advanced');
 
-				await page
-					.getByText('This is a description for sample 1.')
-					.waitFor();
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {
@@ -324,12 +343,13 @@ test(
 		});
 
 		await test.step('Check filter can be removed using delete button', async () => {
-			await test.step('Refresh the page', async () => {
-				await page.reload();
+			await test.step('Reset FDS', async () => {
+				await fdsSamplePage.selectTab('Advanced');
 
-				await page
-					.getByText('This is a description for sample 1.')
-					.waitFor();
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {
@@ -359,12 +379,13 @@ test(
 		});
 
 		await test.step('Assert the synchronization of the filters', async () => {
-			await test.step('Refresh the page', async () => {
-				await page.reload();
+			await test.step('Reset FDS', async () => {
+				await fdsSamplePage.selectTab('Advanced');
 
-				await page
-					.getByText('This is a description for sample 1.')
-					.waitFor();
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {

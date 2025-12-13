@@ -7,20 +7,31 @@ package com.liferay.asset.tags.internal.exportimport.data.handler;
 
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetTagGroupRel;
+import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.tags.internal.configuration.AssetTagsServiceConfigurationValues;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UniqueUtil;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -102,6 +113,16 @@ public class AssetTagStagedModelDataHandler
 
 		Element assetTagElement = portletDataContext.getExportDataElement(
 			assetTag);
+
+		Group group = _groupLocalService.getGroup(
+			portletDataContext.getScopeGroupId());
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564") &&
+			group.isCMS()) {
+
+			_exportAssetTagGroupRel(portletDataContext, assetTag);
+		}
 
 		portletDataContext.addClassedModel(
 			assetTagElement, ExportImportPathUtil.getModelPath(assetTag),
@@ -195,6 +216,17 @@ public class AssetTagStagedModelDataHandler
 			}
 		}
 
+		Group group = _groupLocalService.fetchGroup(
+			portletDataContext.getScopeGroupId());
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564") &&
+			group.isCMS()) {
+
+			_importAssetTagGroupRel(
+				portletDataContext, assetTag, importedAssetTag.getTagId());
+		}
+
 		portletDataContext.importClassedModel(assetTag, importedAssetTag);
 	}
 
@@ -208,6 +240,42 @@ public class AssetTagStagedModelDataHandler
 		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
 
 		return serviceContext;
+	}
+
+	private void _exportAssetTagGroupRel(
+			PortletDataContext portletDataContext, AssetTag assetTag)
+		throws Exception {
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("asset-tag-groups");
+
+		List<AssetTagGroupRel> assetTagGroupRels =
+			_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+				assetTag.getTagId());
+
+		for (AssetTagGroupRel assetTagGroupRel : assetTagGroupRels) {
+			if (assetTagGroupRel.getGroupId() == _GROUP_ID_ALL) {
+				continue;
+			}
+
+			Group group = _groupLocalService.fetchGroup(
+				assetTagGroupRel.getGroupId());
+
+			if (group == null) {
+				continue;
+			}
+
+			Element groupElement = rootElement.addElement("group");
+
+			groupElement.addAttribute(
+				"external-reference-code", group.getExternalReferenceCode());
+		}
+
+		portletDataContext.addZipEntry(
+			ExportImportPathUtil.getModelPath(
+				assetTag, AssetTagGroupRel.class.getSimpleName()),
+			document.formattedString());
 	}
 
 	private String _getUniqueName(long groupId, String name)
@@ -233,10 +301,61 @@ public class AssetTagStagedModelDataHandler
 			name);
 	}
 
+	private void _importAssetTagGroupRel(
+			PortletDataContext portletDataContext, AssetTag assetTag,
+			long importedTagId)
+		throws Exception {
+
+		String xml = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getModelPath(
+				assetTag, AssetTagGroupRel.class.getSimpleName()));
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		List<Long> groupIds = new ArrayList<>();
+
+		for (Element groupElement : rootElement.elements("group")) {
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				groupElement.attributeValue("external-reference-code"),
+				portletDataContext.getCompanyId());
+
+			if (group == null) {
+				continue;
+			}
+
+			DepotEntry depotEntry = _depotEntryService.fetchGroupDepotEntry(
+				group.getGroupId());
+
+			if (depotEntry != null) {
+				groupIds.add(group.getGroupId());
+			}
+		}
+
+		if (groupIds.isEmpty()) {
+			groupIds.add(_GROUP_ID_ALL);
+		}
+
+		_assetTagGroupRelLocalService.setAssetTagGroupRels(
+			importedTagId, ListUtil.toLongArray(groupIds, Long::longValue));
+	}
+
+	private static final long _GROUP_ID_ALL = -1L;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetTagStagedModelDataHandler.class);
 
 	@Reference
+	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;
+
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

@@ -2789,10 +2789,10 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	private String _format(Date date) {
-		DateFormat simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
 
-		return simpleDateFormat.format(date);
+		return dateFormat.format(date);
 	}
 
 	private ObjectField _getAutoIncrementObjectField(

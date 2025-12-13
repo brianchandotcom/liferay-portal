@@ -4,14 +4,18 @@
  */
 
 import {openModal} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 
 import {DSRInitializer} from '../index';
+import deleteDSRAction from './actions/deleteDSRAction';
 
 export default function propsTransformer({
 	creationMenu,
+	itemsActions = [],
 	...otherProps
 }: {
 	creationMenu: any;
+	itemsActions?: any[];
 }) {
 	return {
 		...otherProps,
@@ -45,6 +49,41 @@ export default function propsTransformer({
 					};
 				}
 			),
+		},
+		itemsActions,
+		onActionDropdownItemClick: ({
+			action,
+			event,
+			itemData,
+			loadData,
+		}: {
+			action: {
+				data: {
+					id: string;
+					permissionKey: string | null;
+				};
+			};
+			event: Event;
+			itemData: {
+				id: number;
+				name: string;
+			};
+			loadData: () => {};
+		}) => {
+			if (action?.data?.id === 'delete') {
+				event?.preventDefault();
+
+				deleteDSRAction({
+					groupId: itemData.id,
+					loadData,
+					title: sub(
+						Liferay.Language.get(
+							'delete-digital-sales-room-confirmation-title'
+						),
+						itemData.name
+					),
+				});
+			}
 		},
 	};
 }

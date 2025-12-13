@@ -5,6 +5,8 @@
 
 import ApiHelper from './ApiHelper';
 
+const PATH = '/o/headless-digital-sales-room/v1.0/digital-sales-rooms';
+
 export type TAccountDTO = {
 	externalReferenceCode: string;
 	id: number;
@@ -125,23 +127,20 @@ async function postDigitalSalesRoom({
 	secondaryColor,
 	userAccountBriefs,
 }: TDSRPayload): Promise<TDSRDTO> {
-	const {data, error} = await ApiHelper.post(
-		`/o/headless-digital-sales-room/v1.0/digital-sales-rooms`,
-		{
-			accountId,
-			banner,
-			channelId,
-			channelName,
-			clientLogo,
-			clientName,
-			description,
-			friendlyUrlPath,
-			name,
-			primaryColor,
-			secondaryColor,
-			userAccountBriefs,
-		}
-	);
+	const {data, error} = await ApiHelper.post(PATH, {
+		accountId,
+		banner,
+		channelId,
+		channelName,
+		clientLogo,
+		clientName,
+		description,
+		friendlyUrlPath,
+		name,
+		primaryColor,
+		secondaryColor,
+		userAccountBriefs,
+	});
 
 	if (data) {
 		return data as TDSRDTO;
@@ -150,7 +149,12 @@ async function postDigitalSalesRoom({
 	throw new Error(error);
 }
 
+async function deleteDigitalSalesRoom(groupId: number) {
+	return await ApiHelper.delete(`${PATH}/${groupId}`);
+}
+
 export default {
+	deleteDigitalSalesRoom,
 	getAccounts,
 	getChannels,
 	postDigitalSalesRoom,

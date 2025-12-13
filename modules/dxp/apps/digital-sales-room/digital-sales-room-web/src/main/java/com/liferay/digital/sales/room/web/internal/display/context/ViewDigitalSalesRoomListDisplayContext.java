@@ -6,13 +6,14 @@
 package com.liferay.digital.sales.room.web.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,7 +45,16 @@ public class ViewDigitalSalesRoomListDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		return Collections.emptyList();
+		return FDSActionDropdownItemList.of(
+			FDSActionDropdownItemBuilder.setIcon(
+				"trash"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete")
+			).setMethod(
+				"delete"
+			).build(
+				"delete"
+			));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

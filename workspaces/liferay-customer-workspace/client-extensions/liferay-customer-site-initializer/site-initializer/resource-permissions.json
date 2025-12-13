@@ -225,16 +225,6 @@
 			"UPDATE",
 			"VIEW"
 		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:HighPriorityContact$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:IncidentReportContactAnalyticsCloud$]",
 		"roleName": "Provisioning Member",
 		"scope": "1"
@@ -1124,15 +1114,6 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:DXPCloudEnvironment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:HighPriorityContact$]",
 		"roleName": "Provisioning Member",
 		"scope": "1"
 	},

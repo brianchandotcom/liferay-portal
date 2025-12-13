@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
@@ -67,9 +68,10 @@ public class DepotClassTypeReader implements ClassTypeReader {
 						_depotEntryLocalService.getGroupConnectedDepotEntries(
 							siteGroupId, DepotConstants.TYPE_ANY, start, end);
 
-					for (DepotEntry depotEntry : depotEntries) {
-						groupIds.add(depotEntry.getGroupId());
-					}
+					groupIds.addAll(
+						TransformUtil.transform(
+							depotEntries,
+							depotEntry -> depotEntry.getGroupId()));
 
 					return null;
 				});

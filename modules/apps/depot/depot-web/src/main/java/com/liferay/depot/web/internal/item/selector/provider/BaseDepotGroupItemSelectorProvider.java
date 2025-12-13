@@ -5,11 +5,11 @@
 
 package com.liferay.depot.web.internal.item.selector.provider;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -55,17 +54,10 @@ public abstract class BaseDepotGroupItemSelectorProvider
 		long companyId, long groupId, String keywords, int start, int end) {
 
 		try {
-			List<Group> groups = new ArrayList<>();
-
-			for (DepotEntry depotEntry :
-					depotEntryService.getCurrentAndGroupConnectedDepotEntries(
-						_getGroupId(groupId), getDepotEntryType(), start,
-						end)) {
-
-				groups.add(depotEntry.getGroup());
-			}
-
-			return groups;
+			return TransformUtil.transform(
+				depotEntryService.getCurrentAndGroupConnectedDepotEntries(
+					_getGroupId(groupId), getDepotEntryType(), start, end),
+				depotEntry -> depotEntry.getGroup());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

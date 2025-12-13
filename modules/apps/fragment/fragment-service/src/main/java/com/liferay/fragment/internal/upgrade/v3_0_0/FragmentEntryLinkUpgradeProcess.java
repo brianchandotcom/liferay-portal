@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
+import java.util.Objects;
+
 /**
  * @author Georgel Pop
  */
@@ -55,13 +57,14 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 				long ctCollectionId = (long)values[0];
 				long fragmentEntryLinkId = (long)values[1];
 				long fragmentEntryLinkGroupId = (long)values[2];
-				long fragmentEntryGroupId = (long)values[3];
+				Long fragmentEntryGroupId = (Long)values[3];
 				String fragmentEntryERC = (String)values[4];
 				String fragmentEntryLinkERC = (String)values[5];
 				String fragmentEntryScopeERC = (String)values[6];
 
 				if ((fragmentEntryERC == null) ||
-					(fragmentEntryGroupId == fragmentEntryLinkGroupId)) {
+					Objects.equals(
+						fragmentEntryGroupId, fragmentEntryLinkGroupId)) {
 
 					fragmentEntryScopeERC = null;
 				}

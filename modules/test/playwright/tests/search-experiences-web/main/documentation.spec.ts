@@ -167,7 +167,9 @@ test.describe('Documentation Links', () => {
 
 		await test.step('Open blueprint options configuration modal', async () => {
 			await page
-				.getByRole('link', {name: 'Configure blueprints options'})
+				.getByRole('button', {
+					name: 'Select a blueprint to make it visible.',
+				})
 				.click();
 		});
 

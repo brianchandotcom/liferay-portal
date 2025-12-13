@@ -26,6 +26,7 @@ import com.liferay.document.library.repository.cmis.internal.model.CMISFileEntry
 import com.liferay.document.library.repository.cmis.internal.model.CMISFileVersion;
 import com.liferay.document.library.repository.cmis.internal.model.CMISFolder;
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -1816,13 +1817,9 @@ public class CMISRepository extends BaseCmisRepository {
 			return;
 		}
 
-		List<Document> documents = document.getAllVersions();
-
-		List<String> mappedIds = new ArrayList<>(documents.size() + 1);
-
-		for (Document currentDocument : documents) {
-			mappedIds.add(currentDocument.getId());
-		}
+		List<String> mappedIds = TransformUtil.transform(
+			document.getAllVersions(),
+			currentDocument -> currentDocument.getId());
 
 		mappedIds.add(document.getId());
 
@@ -1921,23 +1918,17 @@ public class CMISRepository extends BaseCmisRepository {
 			_log.debug("Calling query " + query);
 		}
 
-		ItemIterable<QueryResult> queryResults = session.query(
-			query, _isAllVersionsSearchableSupported(session));
+		return TransformUtil.transform(
+			(List<QueryResult>)session.query(
+				query, _isAllVersionsSearchableSupported(session)),
+			queryResult -> {
+				PropertyData<String> propertyData = queryResult.getPropertyById(
+					PropertyIds.OBJECT_ID);
 
-		List<String> cmsFolderIds = new ArrayList<>();
+				List<String> values = propertyData.getValues();
 
-		for (QueryResult queryResult : queryResults) {
-			PropertyData<String> propertyData = queryResult.getPropertyById(
-				PropertyIds.OBJECT_ID);
-
-			List<String> values = propertyData.getValues();
-
-			String value = values.get(0);
-
-			cmsFolderIds.add(value);
-		}
-
-		return cmsFolderIds;
+				return values.get(0);
+			});
 	}
 
 	private Document _getDocument(Session session, long fileEntryId)
@@ -2008,18 +1999,10 @@ public class CMISRepository extends BaseCmisRepository {
 			_log.debug("Calling query " + query);
 		}
 
-		ItemIterable<QueryResult> queryResults = session.query(query, false);
-
-		List<String> cmisDocumentIds = new ArrayList<>();
-
-		for (QueryResult queryResult : queryResults) {
-			String objectId = queryResult.getPropertyValueByQueryName(
-				PropertyIds.OBJECT_ID);
-
-			cmisDocumentIds.add(objectId);
-		}
-
-		return cmisDocumentIds;
+		return TransformUtil.transform(
+			(List<QueryResult>)session.query(query, false),
+			queryResult -> queryResult.getPropertyValueByQueryName(
+				PropertyIds.OBJECT_ID));
 	}
 
 	private String _getObjectId(

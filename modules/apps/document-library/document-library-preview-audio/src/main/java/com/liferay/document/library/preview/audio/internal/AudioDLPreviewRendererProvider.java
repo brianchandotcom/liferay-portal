@@ -18,6 +18,7 @@ import com.liferay.document.library.preview.exception.DLPreviewGenerationInProce
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,7 +31,6 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -113,43 +113,36 @@ public class AudioDLPreviewRendererProvider
 			FileVersion fileVersion, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		List<String> previewFileURLs = new ArrayList<>();
-
-		int status = ParamUtil.getInteger(
-			httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
-
-		String previewQueryString = "&audioPreview=1";
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			previewQueryString += "&status=" + status;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		try {
-			AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;
-
-			for (String dlFileEntryPreviewAudioContainer :
-					PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS) {
+		List<String> previewFileURLs = TransformUtil.transformToList(
+			PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS,
+			dlFileEntryPreviewAudioContainer -> {
+				AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;
 
 				long previewFileSize = audioProcessor.getPreviewFileSize(
 					fileVersion, dlFileEntryPreviewAudioContainer);
 
-				if (previewFileSize > 0) {
-					previewFileURLs.add(
-						_dlURLHelper.getPreviewURL(
-							fileVersion.getFileEntry(), fileVersion,
-							themeDisplay,
-							previewQueryString + "&type=" +
-								dlFileEntryPreviewAudioContainer));
+				if (previewFileSize <= 0) {
+					return null;
 				}
-			}
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
+
+				int status = ParamUtil.getInteger(
+					httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
+
+				String previewQueryString = "&audioPreview=1";
+
+				if (status != WorkflowConstants.STATUS_ANY) {
+					previewQueryString += "&status=" + status;
+				}
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return _dlURLHelper.getPreviewURL(
+					fileVersion.getFileEntry(), fileVersion, themeDisplay,
+					previewQueryString + "&type=" +
+						dlFileEntryPreviewAudioContainer);
+			});
 
 		if (previewFileURLs.isEmpty()) {
 			throw new PortalException(

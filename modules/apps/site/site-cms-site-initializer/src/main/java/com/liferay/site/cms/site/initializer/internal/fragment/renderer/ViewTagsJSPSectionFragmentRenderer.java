@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewTagsDisplayContext;
@@ -13,6 +14,7 @@ import com.liferay.site.cms.site.initializer.internal.display.context.ViewTagsDi
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noor Najjar
@@ -31,6 +33,7 @@ public class ViewTagsJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewTagsDisplayContext(
+			_groupService, httpServletRequest,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -39,5 +42,8 @@ public class ViewTagsJSPSectionFragmentRenderer
 	protected String getJSPPath() {
 		return "/view_tags.jsp";
 	}
+
+	@Reference
+	private GroupService _groupService;
 
 }

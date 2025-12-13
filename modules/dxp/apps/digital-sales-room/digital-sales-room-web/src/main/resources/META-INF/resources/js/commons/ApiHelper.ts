@@ -27,6 +27,15 @@ export type RequestResult<T> =
 			status?: number;
 	  };
 
+async function deleteRequest(url: string) {
+	return handleRequest<null>(() =>
+		fetch(url, {
+			headers: HEADERS,
+			method: 'DELETE',
+		})
+	);
+}
+
 async function get<T>(url: string) {
 	return handleRequest<T>(() =>
 		fetch(url, {
@@ -50,6 +59,14 @@ async function handleRequest<T>(
 			return {
 				data: null,
 				error,
+				status: response.status,
+			};
+		}
+
+		if (response.status === 204) {
+			return {
+				data: {} as T,
+				error: undefined,
 				status: response.status,
 			};
 		}
@@ -80,6 +97,7 @@ async function post<T>(url: string, data?: Record<string, any>) {
 }
 
 export default {
+	delete: deleteRequest,
 	get,
 	post,
 };

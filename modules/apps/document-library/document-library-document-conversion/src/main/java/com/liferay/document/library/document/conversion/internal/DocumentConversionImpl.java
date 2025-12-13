@@ -17,6 +17,7 @@ import com.liferay.document.library.document.conversion.internal.background.task
 import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -48,7 +49,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,29 +179,28 @@ public class DocumentConversionImpl implements DocumentConversion {
 
 	@Override
 	public String[] getConversions(String extension) {
-		extension = _fixExtension(extension);
+		String fixedExtension = _fixExtension(extension);
 
-		String[] conversions1 = ConversionsHolder.getConversions(extension);
+		String[] conversions = ConversionsHolder.getConversions(fixedExtension);
 
-		if (conversions1 == null) {
+		if (conversions == null) {
 			return _DEFAULT_CONVERSIONS;
 		}
 
-		if (!ArrayUtil.contains(conversions1, extension)) {
-			return conversions1;
+		if (!ArrayUtil.contains(conversions, fixedExtension)) {
+			return conversions;
 		}
 
-		List<String> conversions2 = new ArrayList<>();
+		return TransformUtil.transform(
+			conversions,
+			conversion -> {
+				if (conversion.equals(fixedExtension)) {
+					return null;
+				}
 
-		for (String conversion : conversions1) {
-			if (conversion.equals(extension)) {
-				continue;
-			}
-
-			conversions2.add(conversion);
-		}
-
-		return conversions2.toArray(new String[0]);
+				return conversion;
+			},
+			String.class);
 	}
 
 	@Override
@@ -471,27 +470,32 @@ public class DocumentConversionImpl implements DocumentConversion {
 
 				List<String> conversions = new SortedArrayList<>();
 
-				for (String targetExtension : targetExtensions) {
-					DocumentFormat targetDocumentFormat =
-						documentFormatRegistry.getFormatByFileExtension(
-							targetExtension);
+				conversions.addAll(
+					TransformUtil.transformToList(
+						targetExtensions,
+						targetExtension -> {
+							DocumentFormat targetDocumentFormat =
+								documentFormatRegistry.getFormatByFileExtension(
+									targetExtension);
 
-					if (targetDocumentFormat == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Invalid target extension " +
-									targetDocumentFormat);
-						}
+							if (targetDocumentFormat == null) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(
+										"Invalid target extension " +
+											targetDocumentFormat);
+								}
 
-						continue;
-					}
+								return null;
+							}
 
-					if (sourceDocumentFormat.isExportableTo(
-							targetDocumentFormat)) {
+							if (sourceDocumentFormat.isExportableTo(
+									targetDocumentFormat)) {
 
-						conversions.add(targetExtension);
-					}
-				}
+								return targetExtension;
+							}
+
+							return null;
+						}));
 
 				if (conversions.isEmpty()) {
 					if (_log.isInfoEnabled()) {

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.Properties;
 
 import org.osgi.framework.Bundle;
@@ -55,18 +57,24 @@ public class UpgradeServiceComponent extends UpgradeProcess {
 					return;
 				}
 
-				Properties properties = PropertiesUtil.load(
-					bundle.getResource("service.properties"));
-
-				String buildNumberServiceProperties = properties.getProperty(
-					"build.number");
-
 				Long buildNumber = (Long)values[1];
 
-				if (!StringUtil.equals(
-						buildNumberServiceProperties, buildNumber.toString())) {
+				URL servicePropertiesURL = bundle.getResource(
+					"service.properties");
 
-					return;
+				if (servicePropertiesURL != null) {
+					Properties properties = PropertiesUtil.load(
+						servicePropertiesURL);
+
+					String buildNumberServiceProperties =
+						properties.getProperty("build.number");
+
+					if (!StringUtil.equals(
+							buildNumberServiceProperties,
+							buildNumber.toString())) {
+
+						return;
+					}
 				}
 
 				String bundleData = _generateXML(bundle);

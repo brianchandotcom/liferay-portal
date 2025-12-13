@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.net.URL;
+
 import java.sql.Connection;
 
 import java.util.HashSet;
@@ -95,15 +97,23 @@ public class ServiceComponentPostUpgradeDataCleanupProcess
 					continue;
 				}
 
-				Properties properties = PropertiesUtil.load(
-					bundle.getResource("service.properties"));
+				String buildNumberServiceProperties = null;
 
-				String buildNumberServiceProperties = properties.getProperty(
-					"build.number");
+				URL servicePropertiesURL = bundle.getResource(
+					"service.properties");
 
-				if (!StringUtil.equals(
-						buildNumberServiceProperties,
-						String.valueOf(serviceComponent.getBuildNumber())) ||
+				if (servicePropertiesURL != null) {
+					Properties properties = PropertiesUtil.load(
+						servicePropertiesURL);
+
+					buildNumberServiceProperties = properties.getProperty(
+						"build.number");
+				}
+
+				if (((buildNumberServiceProperties != null) &&
+					 !StringUtil.equals(
+						 buildNumberServiceProperties,
+						 String.valueOf(serviceComponent.getBuildNumber()))) ||
 					!Objects.equals(
 						serviceComponent.getData(), _generateXML(bundle))) {
 

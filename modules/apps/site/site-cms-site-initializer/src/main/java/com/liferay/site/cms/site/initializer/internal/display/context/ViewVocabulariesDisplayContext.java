@@ -5,14 +5,19 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -122,15 +127,31 @@ public class ViewVocabulariesDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			JSONUtil.put(
-				JSONUtil.put(
-					"href",
-					_getControlPanelPortletURL(
-						AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN)
-				).put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, "export-import-tags")
-				))
+			_putAll(
+				unsafeConsumer -> {
+					unsafeConsumer.accept(
+						JSONUtil.put(
+							"href",
+							_getControlPanelPortletURL(
+								AssetCategoriesAdminPortletKeys.
+									ASSET_CATEGORIES_ADMIN)
+						).put(
+							"label",
+							LanguageUtil.get(
+								_httpServletRequest,
+								"export-import-vocabularies")
+						));
+					unsafeConsumer.accept(
+						JSONUtil.put(
+							"href",
+							_getControlPanelPortletURL(
+								AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN)
+						).put(
+							"label",
+							LanguageUtil.get(
+								_httpServletRequest, "export-import-tags")
+						));
+				})
 		).put(
 			"activeTab", "vocabularies"
 		).put(
@@ -189,6 +210,22 @@ public class ViewVocabulariesDisplayContext {
 		}
 
 		return url;
+	}
+
+	private JSONArray _putAll(
+			UnsafeConsumer<UnsafeConsumer<JSONObject, Exception>, Exception>
+				unsafeConsumer)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		unsafeConsumer.accept(jsonArray::put);
+
+		if (jsonArray.length() == 0) {
+			return null;
+		}
+
+		return jsonArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

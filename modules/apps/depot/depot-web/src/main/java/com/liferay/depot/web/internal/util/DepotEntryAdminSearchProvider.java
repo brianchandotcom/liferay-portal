@@ -157,12 +157,8 @@ public class DepotEntryAdminSearchProvider {
 
 		return TransformUtil.transformToList(
 			hits.getDocs(),
-			document -> {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				return _depotEntryService.getDepotEntry(classPK);
-			});
+			document -> _depotEntryService.getDepotEntry(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	private SearchContext _getSearchContext(

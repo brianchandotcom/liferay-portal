@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -64,6 +65,19 @@ public class CTCollectionTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 
 		return ctCollection;
+	}
+
+	public static CTCollection createCTCollectionWithIncompleteStatus(User user)
+		throws Exception {
+
+		CTCollection ctCollection =
+			CTCollectionLocalServiceUtil.addCTCollection(
+				null, TestPropsValues.getCompanyId(), user.getUserId(), 0,
+				RandomTestUtil.randomString(), null);
+
+		ctCollection.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+
+		return CTCollectionLocalServiceUtil.updateCTCollection(ctCollection);
 	}
 
 	public static void publishCTCollectionWithError(long ctCollectionId)

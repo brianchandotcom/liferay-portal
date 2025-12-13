@@ -8,6 +8,7 @@ package com.liferay.change.tracking.internal.model.listener.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.constants.CTActionKeys;
+import com.liferay.change.tracking.internal.test.util.CTCollectionTestUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -72,9 +73,8 @@ public class CTSettingsConfigurationModelListenerTest {
 					RandomTestUtil.randomString(), null);
 
 			CTCollection ctCollection2 =
-				_ctCollectionLocalService.addCTCollection(
-					null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
-					RandomTestUtil.randomString(), null);
+				CTCollectionTestUtil.createCTCollectionWithIncompleteStatus(
+					_user);
 
 			ctCollection2.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
 

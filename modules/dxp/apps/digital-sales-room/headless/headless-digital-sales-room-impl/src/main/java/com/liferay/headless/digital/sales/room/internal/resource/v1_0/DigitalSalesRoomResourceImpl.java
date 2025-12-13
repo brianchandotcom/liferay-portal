@@ -226,6 +226,8 @@ public class DigitalSalesRoomResourceImpl
 
 		ObjectDefinition objectDefinition = _getObjectDefinition();
 
+		group.setClassName(objectDefinition.getClassName());
+
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				objectDefinition.getCompanyId(),
@@ -245,7 +247,6 @@ public class DigitalSalesRoomResourceImpl
 				defaultDTOConverterContext, objectDefinition,
 				_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
 
-		group.setClassName(objectDefinition.getClassName());
 		group.setClassPK(objectEntry.getId());
 
 		group = _groupLocalService.updateGroup(group);

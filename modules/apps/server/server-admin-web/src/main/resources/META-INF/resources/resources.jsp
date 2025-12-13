@@ -206,9 +206,10 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 				<%
 				for (DataCleanup systemDataCleanup : DataCleanupUtil.getSystemDataCleanups()) {
-					if (ReleaseLocalServiceUtil.fetchRelease(systemDataCleanup.getServletContextName()) == null) {
-						continue;
-					}
+
+				if (ReleaseLocalServiceUtil.fetchRelease(systemDataCleanup.getServletContextName()) == null) {
+					continue;
+				}
 				%>
 
 					<li class="list-group-item list-group-item-flex">
@@ -308,9 +309,10 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 					<%
 					for (DataCleanup moduleDataCleanup : moduleDataCleanups) {
-						if (ReleaseLocalServiceUtil.fetchRelease(moduleDataCleanup.getServletContextName()) == null) {
-							continue;
-						}
+
+					if (ReleaseLocalServiceUtil.fetchRelease(moduleDataCleanup.getServletContextName()) == null) {
+						continue;
+					}
 					%>
 
 						<li class="list-group-item list-group-item-flex">

@@ -552,33 +552,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _assertNestedFields(SitePage sitePage) throws Exception {
-		FriendlyUrlHistory friendlyUrlHistory =
-			sitePage.getFriendlyUrlHistory();
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			GetterUtil.getString(friendlyUrlHistory.getFriendlyUrlPath_i18n()));
-
 		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			sitePage.getExternalReferenceCode(), testGroup.getGroupId());
 
-		Map<Locale, String> friendlyURLMap = new HashMap<>();
-
-		if (layout.isPublished()) {
-			friendlyURLMap = layout.getFriendlyURLMap();
-		}
-
-		Assert.assertEquals(
-			jsonObject.toString(), friendlyURLMap.size(), jsonObject.length());
-
-		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
-			String key = LocaleUtil.toBCP47LanguageId(entry.getKey());
-
-			JSONArray jsonArray = jsonObject.getJSONArray(key);
-
-			Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
-			Assert.assertEquals(
-				jsonArray.toString(), entry.getValue(), jsonArray.getString(0));
-		}
+		_assertFriendlyURLHistory(
+			layout.getFriendlyURLMap(), Collections.emptyMap(),
+			layout.isPublished(), sitePage);
 
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			layout, sitePage.getPageSpecifications());

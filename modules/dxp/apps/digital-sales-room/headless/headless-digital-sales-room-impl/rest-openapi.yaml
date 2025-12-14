@@ -8,6 +8,13 @@ components:
                 accountName:
                     readOnly: true
                     type: string
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 banner:
                     $ref: "#/components/schemas/FileEntry"
                 channelId:

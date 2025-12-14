@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -172,14 +173,14 @@ public class ResourceActionPostUpgradeDataCleanupProcessTest
 					_resourceActionLocalService.addResourceAction(
 						resourceActionName, resourceActionActionId, 1));
 
+				Role role = _roleLocalService.getRole(
+					TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
 				_resourcePermissionLocalService.addResourcePermission(
 					CompanyThreadLocal.getCompanyId(), resourceActionName,
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(CompanyThreadLocal.getCompanyId()),
-					_roleLocalService.getRole(
-						TestPropsValues.getCompanyId(), RoleConstants.GUEST
-					).getRoleId(),
-					resourceActionActionId);
+					role.getRoleId(), resourceActionActionId);
 			});
 	}
 

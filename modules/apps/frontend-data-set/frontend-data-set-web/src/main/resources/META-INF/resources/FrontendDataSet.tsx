@@ -358,9 +358,9 @@ const FrontendDataSetContent = ({
 		id,
 	});
 
-	const [cellClientExtensionsLoading, setCellClientExtensionsLoading] =
-		useState(false);
 	const [cellClientExtensionsLoaded, setCellClientExtensionsLoaded] =
+		useState(false);
+	const [cellClientExtensionsLoading, setCellClientExtensionsLoading] =
 		useState(false);
 	const [filterClientExtensionsLoaded, setFilterClientExtensionsLoaded] =
 		useState(false);

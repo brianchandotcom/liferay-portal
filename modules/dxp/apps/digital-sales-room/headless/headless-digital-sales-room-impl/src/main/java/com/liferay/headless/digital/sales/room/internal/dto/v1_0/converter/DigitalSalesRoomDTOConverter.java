@@ -66,14 +66,27 @@ public class DigitalSalesRoomDTOConverter
 			DTOConverterContext dtoConverterContext, Group group)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_DSR_ROOM", group.getCompanyId());
+		ObjectEntry objectEntry;
 
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			group.getExternalReferenceCode(), group.getGroupId(),
-			objectDefinition.getObjectDefinitionId());
+		if (dtoConverterContext instanceof
+				DigitalSalesRoomDTOConverterContext) {
+
+			DigitalSalesRoomDTOConverterContext
+				digitalSalesRoomDTOConverterContext =
+					(DigitalSalesRoomDTOConverterContext)dtoConverterContext;
+
+			objectEntry = digitalSalesRoomDTOConverterContext.getObjectEntry();
+		}
+		else {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					getObjectDefinitionByExternalReferenceCode(
+						"L_DSR_ROOM", group.getCompanyId());
+
+			objectEntry = _objectEntryLocalService.fetchObjectEntry(
+				group.getExternalReferenceCode(), group.getGroupId(),
+				objectDefinition.getObjectDefinitionId());
+		}
 
 		if (objectEntry == null) {
 			return null;
@@ -103,6 +116,7 @@ public class DigitalSalesRoomDTOConverter
 
 						return accountEntry.getName();
 					});
+				setActions(dtoConverterContext::getActions);
 				setBanner(() -> _getFileEntry("banner", values));
 				setChannelId(() -> GetterUtil.getLong(values.get("channelId")));
 				setChannelName(

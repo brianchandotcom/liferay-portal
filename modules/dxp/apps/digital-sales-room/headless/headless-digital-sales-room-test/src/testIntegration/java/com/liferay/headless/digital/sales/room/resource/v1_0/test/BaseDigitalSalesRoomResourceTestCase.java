@@ -762,6 +762,14 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("banner", additionalAssertFieldName)) {
 				if (digitalSalesRoom.getBanner() == null) {
 					valid = false;
@@ -1034,6 +1042,17 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				if (!Objects.deepEquals(
 						digitalSalesRoom1.getAccountName(),
 						digitalSalesRoom2.getAccountName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)digitalSalesRoom1.getActions(),
+						(Map)digitalSalesRoom2.getActions())) {
 
 					return false;
 				}
@@ -1388,6 +1407,11 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("banner")) {

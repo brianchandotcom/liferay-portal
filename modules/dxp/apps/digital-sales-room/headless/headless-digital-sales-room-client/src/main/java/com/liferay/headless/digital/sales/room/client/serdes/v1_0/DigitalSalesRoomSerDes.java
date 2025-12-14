@@ -77,6 +77,16 @@ public class DigitalSalesRoomSerDes {
 			sb.append("\"");
 		}
 
+		if (digitalSalesRoom.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(digitalSalesRoom.getActions()));
+		}
+
 		if (digitalSalesRoom.getBanner() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -347,6 +357,13 @@ public class DigitalSalesRoomSerDes {
 				String.valueOf(digitalSalesRoom.getAccountName()));
 		}
 
+		if (digitalSalesRoom.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(digitalSalesRoom.getActions()));
+		}
+
 		if (digitalSalesRoom.getBanner() == null) {
 			map.put("banner", null);
 		}
@@ -514,6 +531,9 @@ public class DigitalSalesRoomSerDes {
 			else if (Objects.equals(jsonParserFieldName, "accountName")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
 			else if (Objects.equals(jsonParserFieldName, "banner")) {
 				return false;
 			}
@@ -586,6 +606,12 @@ public class DigitalSalesRoomSerDes {
 				if (jsonParserFieldValue != null) {
 					digitalSalesRoom.setAccountName(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setActions(
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "banner")) {

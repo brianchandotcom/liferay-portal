@@ -19,10 +19,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -73,10 +71,10 @@ public abstract class BaseFDSSerializer {
 				new DefaultDTOConverterContext(
 					false, null, null, null, null,
 					LocaleUtil.getMostRelevantLocale(), null, null),
-					StringBundler.concat(
-						"(fdsName eq '", fdsName, "' and creatorId eq ",
-						PortalUtil.getUserId(httpServletRequest), ")"),
-					null, null, null);
+				StringBundler.concat(
+					"(fdsName eq '", fdsName, "' and creatorId eq ",
+					PortalUtil.getUserId(httpServletRequest), ")"),
+				null, null, null);
 
 			Collection<ObjectEntry> objectEntries = page.getItems();
 

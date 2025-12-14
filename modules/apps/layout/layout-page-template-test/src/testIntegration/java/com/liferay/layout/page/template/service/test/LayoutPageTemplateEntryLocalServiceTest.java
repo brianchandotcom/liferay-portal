@@ -12,7 +12,6 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryExternalReferenceCodeException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryDefaultTemplateException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryGroupIdException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException;
@@ -24,6 +23,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -149,12 +149,11 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (DuplicateLayoutPageTemplateEntryExternalReferenceCodeException
-					duplicateLayoutPageTemplateEntryExternalReferenceCodeException) {
+		catch (DuplicateExternalReferenceCodeException
+					duplicateExternalReferenceCodeException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					duplicateLayoutPageTemplateEntryExternalReferenceCodeException);
+				_log.debug(duplicateExternalReferenceCodeException);
 			}
 		}
 

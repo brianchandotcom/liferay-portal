@@ -74,6 +74,8 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 		db.alterTableAddColumn(
 			_connection, "Layout", "masterLayoutPlid", "LONG");
+
+		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
 	}
 
 	@After
@@ -90,12 +92,9 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED);
 
-		Group group = _groupLocalService.fetchGroup(
-			TestPropsValues.getGroupId());
-
-		Layout masterLayout1 = LayoutTestUtil.addTypeContentLayout(group);
-		Layout masterLayout2 = LayoutTestUtil.addTypeContentLayout(group);
-		Layout masterLayout3 = LayoutTestUtil.addTypeContentLayout(group);
+		Layout masterLayout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout masterLayout2 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout masterLayout3 = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_updateLayout(
 			masterLayout1.getCtCollectionId(),
@@ -136,10 +135,7 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED);
 
-		Group group = _groupLocalService.fetchGroup(
-			TestPropsValues.getGroupId());
-
-		Layout masterLayout = LayoutTestUtil.addTypeContentLayout(group);
+		Layout masterLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		masterLayout.setMasterLayoutPageTemplateEntryERC(
 			masterLayoutPageTemplateEntry.getExternalReferenceCode());
@@ -223,6 +219,8 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@Inject
 	private EntityCache _entityCache;
+
+	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

@@ -80,6 +80,8 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 		db.alterTableAddColumn(
 			_connection, "Layout", "faviconFileEntryId", "LONG");
+
+		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
 	}
 
 	@After
@@ -90,16 +92,14 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 	@Test
 	@TestInfo("LPD-68134")
 	public void testUpgrade() throws Exception {
-		Group group = _groupLocalService.fetchGroup(
-			TestPropsValues.getGroupId());
 		Group globalGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		DLFileEntry dlFileEntry = _addFileEntry(group.getGroupId());
+		DLFileEntry dlFileEntry = _addFileEntry(_group.getGroupId());
 		DLFileEntry globalDLFileEntry = _addFileEntry(globalGroup.getGroupId());
 
-		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
-		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_updateFaviconFileEntryId(
 			layout1.getCtCollectionId(), dlFileEntry.getFileEntryId(),
@@ -136,12 +136,9 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		Group group = _groupLocalService.fetchGroup(
-			TestPropsValues.getGroupId());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
-
-		DLFileEntry dlFileEntry = _addFileEntry(group.getGroupId());
+		DLFileEntry dlFileEntry = _addFileEntry(_group.getGroupId());
 
 		layout.setFaviconFileEntryERC(dlFileEntry.getExternalReferenceCode());
 
@@ -243,6 +240,8 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@Inject
 	private EntityCache _entityCache;
+
+	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

@@ -1213,28 +1213,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
 			sitePage);
 
-		sitePage.setFriendlyUrlPath_i18n(
-			() -> HashMapBuilder.put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).build());
-
-		_testPatchSiteSitePage(
-			sitePage,
-			new SitePage() {
-				{
-					setExternalReferenceCode(
-						sitePage::getExternalReferenceCode);
-					setFriendlyUrlPath_i18n(sitePage::getFriendlyUrlPath_i18n);
-					setType(sitePage::getType);
-					setUuid(sitePage::getUuid);
-				}
-			});
+		_testPatchSiteSitePageWithFriendlyUrlPath(sitePage);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -1337,6 +1316,33 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					ListUtil.filter(
 						_types, curType -> !Objects.equals(curType, type))),
 				sitePage.getUuid()));
+	}
+
+	private void _testPatchSiteSitePageWithFriendlyUrlPath(SitePage sitePage)
+		throws Exception {
+
+		sitePage.setFriendlyUrlPath_i18n(
+			() -> HashMapBuilder.put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).build());
+
+		_testPatchSiteSitePage(
+			sitePage,
+			new SitePage() {
+				{
+					setExternalReferenceCode(
+						sitePage::getExternalReferenceCode);
+					setFriendlyUrlPath_i18n(sitePage::getFriendlyUrlPath_i18n);
+					setType(sitePage::getType);
+					setUuid(sitePage::getUuid);
+				}
+			});
 	}
 
 	private void _testPatchSiteSitePageWithPageSpecifications()

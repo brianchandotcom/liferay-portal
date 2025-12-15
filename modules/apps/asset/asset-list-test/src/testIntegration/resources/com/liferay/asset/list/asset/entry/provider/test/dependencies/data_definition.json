@@ -1,0 +1,88 @@
+{
+	"availableLanguageIds": [
+		"en_US, es_ES"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"dataType": "boolean",
+				"fieldNamespace": "",
+				"fieldReference": "visible",
+				"labelAtStructureLevel": true,
+				"options": {
+				},
+				"showAsSwitcher": false,
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": [
+					"false"
+				],
+				"es_ES": [
+					"false"
+				]
+			},
+			"fieldType": "checkbox",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "visible",
+				"es_ES": "visible"
+			},
+			"localizable": true,
+			"name": "Checkbox21871963",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"showLabel": true,
+			"tip": {
+				"en_US": "",
+				"es_ES": ""
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Checkbox21871963"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Test Structure"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "Test Structure"
+	},
+	"storageType": "default"
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US, es_ES" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="visible" index-type="" instance-id="bf4sdx6Q" name="Checkbox21871963" type="boolean">
+		<dynamic-content language-id="en_US"><![CDATA[true]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

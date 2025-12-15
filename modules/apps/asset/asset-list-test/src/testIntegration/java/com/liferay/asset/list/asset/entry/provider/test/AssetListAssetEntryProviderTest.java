@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -23,11 +24,15 @@ import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.pagination.InfoPage;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -49,9 +54,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -67,7 +74,9 @@ import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -472,6 +481,94 @@ public class AssetListAssetEntryProviderTest {
 					null, null, StringPool.BLANK, StringPool.BLANK,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				4);
+		}
+	}
+
+	@Test
+	public void testGetAssetQueryWithMostRelevantLocale() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		GroupTestUtil.updateDisplaySettings(
+			group.getGroupId(), Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
+			LocaleUtil.US);
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, group.getGroupId(),
+				_read("data_definition.json"), TestPropsValues.getUser());
+
+		JournalTestUtil.addArticleWithXMLContent(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			_readFileToString("journal_article_content.xml"),
+			dataDefinition.getDataDefinitionKey(), null, LocaleUtil.US);
+
+		Locale originalThemeDisplayLocale =
+			LocaleThreadLocal.getThemeDisplayLocale();
+
+		try {
+			long userId = TestPropsValues.getUserId();
+
+			UnicodeProperties unicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"anyAssetType",
+					String.valueOf(_portal.getClassNameId(JournalArticle.class))
+				).put(
+					"anyClassTypeJournalArticleAssetRendererFactory",
+					dataDefinition.getId()
+				).put(
+					"classNameIds", JournalArticle.class.getName()
+				).put(
+					"classTypeIdsJournalArticleAssetRendererFactory",
+					dataDefinition.getId()
+				).put(
+					"ddmStructureDisplayFieldValue", true
+				).put(
+					"ddmStructureFieldName", "Checkbox21871963"
+				).put(
+					"ddmStructureFieldValue", true
+				).put(
+					"groupIds", String.valueOf(group.getGroupId())
+				).build();
+
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.addAssetListEntry(
+					RandomTestUtil.randomString(), userId, group.getGroupId(),
+					RandomTestUtil.randomString(),
+					AssetListEntryTypeConstants.TYPE_DYNAMIC,
+					unicodeProperties.toString(), _serviceContext);
+
+			LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+
+			AssetEntryQuery assetEntryQuery =
+				_assetListAssetEntryProvider.getAssetEntryQuery(
+					assetListEntry,
+					new long[] {SegmentsEntryConstants.ID_DEFAULT},
+					StringUtil.toHexString(userId));
+
+			String ddmStructureFieldName = (String)assetEntryQuery.getAttribute(
+				"ddmStructureFieldName");
+
+			Assert.assertTrue(
+				StringUtil.endsWith(ddmStructureFieldName, "en_US"));
+
+			LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.SPAIN);
+
+			assetEntryQuery = _assetListAssetEntryProvider.getAssetEntryQuery(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				StringUtil.toHexString(userId));
+
+			ddmStructureFieldName = (String)assetEntryQuery.getAttribute(
+				"ddmStructureFieldName");
+
+			Assert.assertTrue(
+				StringUtil.endsWith(ddmStructureFieldName, "es_ES"));
+		}
+		finally {
+			LocaleThreadLocal.setThemeDisplayLocale(originalThemeDisplayLocale);
+			GroupTestUtil.deleteGroup(group);
 		}
 	}
 
@@ -2017,6 +2114,16 @@ public class AssetListAssetEntryProviderTest {
 		).buildString();
 	}
 
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private String _readFileToString(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
@@ -2038,6 +2145,9 @@ public class AssetListAssetEntryProviderTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

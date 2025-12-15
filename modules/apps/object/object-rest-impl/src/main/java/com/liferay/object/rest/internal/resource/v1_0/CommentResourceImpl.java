@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -134,25 +133,24 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	@Override
 	public Page<Comment> getByExternalReferenceCodeCommentChildCommentsPage(
 			String externalReferenceCode, String commentExternalReferenceCode,
-			String search, Aggregation aggregation, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			String search, Aggregation aggregation, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return _getByExternalReferenceCodeCommentChildCommentsPage(
 			null, externalReferenceCode, commentExternalReferenceCode, search,
-			aggregation, filter, pagination, sorts);
+			aggregation, pagination, sorts);
 	}
 
 	@Override
 	public Page<Comment> getByExternalReferenceCodeCommentsPage(
 			String externalReferenceCode, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Aggregation aggregation, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getByExternalReferenceCodeCommentsPage(
-			null, externalReferenceCode, search, aggregation, filter,
-			pagination, sorts);
+			null, externalReferenceCode, search, aggregation, pagination,
+			sorts);
 	}
 
 	@Override
@@ -175,25 +173,23 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			getScopeScopeKeyByExternalReferenceCodeCommentChildCommentsPage(
 				String scopeKey, String externalReferenceCode,
 				String commentExternalReferenceCode, String search,
-				Aggregation aggregation, Filter filter, Pagination pagination,
-				Sort[] sorts)
+				Aggregation aggregation, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getByExternalReferenceCodeCommentChildCommentsPage(
 			scopeKey, externalReferenceCode, commentExternalReferenceCode,
-			search, aggregation, filter, pagination, sorts);
+			search, aggregation, pagination, sorts);
 	}
 
 	@Override
 	public Page<Comment> getScopeScopeKeyByExternalReferenceCodeCommentsPage(
 			String scopeKey, String externalReferenceCode, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Aggregation aggregation, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getByExternalReferenceCodeCommentsPage(
-			scopeKey, externalReferenceCode, search, aggregation, filter,
-			pagination, sorts);
+			scopeKey, externalReferenceCode, search, aggregation, pagination,
+			sorts);
 	}
 
 	@Override
@@ -473,8 +469,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	private Page<Comment> _getByExternalReferenceCodeCommentChildCommentsPage(
 			String scopeKey, String externalReferenceCode,
 			String commentExternalReferenceCode, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Aggregation aggregation, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableComments() ||
@@ -523,14 +518,13 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					groupId)
 			).build(),
 			serviceBuilderComment.getCommentId(), contextCompany.getCompanyId(),
-			_commentManager, search, aggregation, filter, pagination,
+			_commentManager, search, aggregation, null, pagination,
 			PortalUtil.getPortal(), sorts);
 	}
 
 	private Page<Comment> _getByExternalReferenceCodeCommentsPage(
 			String scopeKey, String externalReferenceCode, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Aggregation aggregation, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableComments() ||
@@ -582,7 +576,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					groupId)
 			).build(),
 			rootDiscussionComment.getCommentId(), contextCompany.getCompanyId(),
-			_commentManager, search, aggregation, filter, pagination,
+			_commentManager, search, aggregation, null, pagination,
 			PortalUtil.getPortal(), sorts);
 	}
 

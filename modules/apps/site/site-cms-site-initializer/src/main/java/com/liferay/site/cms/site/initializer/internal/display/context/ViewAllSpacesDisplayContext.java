@@ -11,6 +11,8 @@ import com.liferay.depot.model.DepotEntryPin;
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -38,7 +40,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.site.cms.site.initializer.internal.util.PermissionUtil;
@@ -194,42 +195,7 @@ public class ViewAllSpacesDisplayContext {
 				null, "globe", "view-connected-sites",
 				LanguageUtil.get(_httpServletRequest, "view-connected-sites"),
 				"get", "view-connected-sites", null),
-			new FDSActionDropdownItem(
-				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(
-						_httpServletRequest,
-						"com_liferay_portlet_configuration_web_portlet_" +
-							"PortletConfigurationPortlet",
-						ActionRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/edit_permissions.jsp"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"modelResource", DepotEntry.class.getName()
-				).setParameter(
-					"modelResourceDescription", "{name}"
-				).setParameter(
-					"resourceGroupId", "{siteId}"
-				).setParameter(
-					"resourcePrimKey", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"password-policies", "permissions",
-				_language.get(_httpServletRequest, "permissions"), "get",
-				"permissions", "modal-permissions"),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies", "default-permissions",
-				LanguageUtil.get(_httpServletRequest, "default-permissions"),
-				null, "permissions", null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-and-propagate-default-permissions",
-				LanguageUtil.get(
-					_httpServletRequest,
-					"edit-and-propagate-default-permissions"),
-				null, "permissions", null),
+			_getPermissionsFDSActionDropdownItem(_httpServletRequest),
 			new FDSActionDropdownItem(
 				"{actions.delete.href}", "trash", "delete",
 				_language.get(_httpServletRequest, "delete"), "delete",
@@ -264,6 +230,83 @@ public class ViewAllSpacesDisplayContext {
 			_themeDisplay.getPathFriendlyURLPublic(),
 			GroupConstants.CMS_FRIENDLY_URL, "/new-space?backURL=",
 			_themeDisplay.getURLCurrent());
+	}
+
+	private FDSActionDropdownItem _getPermissionsFDSActionDropdownItem(
+		HttpServletRequest httpServletRequest) {
+
+		return FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+			FDSActionDropdownItemList.of(
+				FDSActionDropdownItemBuilder.setHref(
+					PortletURLBuilder.create(
+						_portal.getControlPanelPortletURL(
+							httpServletRequest,
+							"com_liferay_portlet_configuration_web_portlet_" +
+								"PortletConfigurationPortlet",
+							ActionRequest.RENDER_PHASE)
+					).setMVCPath(
+						"/edit_permissions.jsp"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"modelResource", DepotEntry.class.getName()
+					).setParameter(
+						"modelResourceDescription", "{name}"
+					).setParameter(
+						"resourceGroupId", "{siteId}"
+					).setParameter(
+						"resourcePrimKey", "{id}"
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString()
+				).setIcon(
+					"password-policies"
+				).setLabel(
+					_language.get(httpServletRequest, "permissions")
+				).setMethod(
+					"get"
+				).setPermissionKey(
+					"permissions"
+				).setTarget(
+					"modal-permissions"
+				).build(
+					"permissions"
+				),
+				FDSActionDropdownItemBuilder.setHref(
+					StringPool.BLANK
+				).setIcon(
+					"password-policies"
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "default-permissions")
+				).setPermissionKey(
+					"permissions"
+				).build(
+					"default-permissions"
+				),
+				FDSActionDropdownItemBuilder.setHref(
+					StringPool.BLANK
+				).setIcon(
+					"password-policies"
+				).setLabel(
+					LanguageUtil.get(
+						httpServletRequest,
+						"edit-and-propagate-default-permissions")
+				).setPermissionKey(
+					"permissions"
+				).build(
+					"edit-and-propagate-default-permissions"
+				))
+		).setIcon(
+			"password-policies"
+		).setLabel(
+			_language.get(httpServletRequest, "permissions")
+		).setPermissionKey(
+			"permissions"
+		).setType(
+			"contextual"
+		).build(
+			"permissions-menu"
+		);
 	}
 
 	private Map<String, Object> _getSpacePermissionAdditionalProps() {

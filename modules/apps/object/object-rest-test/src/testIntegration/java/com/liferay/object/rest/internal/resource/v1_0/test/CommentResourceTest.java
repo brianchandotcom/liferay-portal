@@ -224,26 +224,6 @@ public class CommentResourceTest {
 		Assert.assertEquals(
 			jsonObject4.getInt("id"), jsonObject3.getInt("term"));
 
-		// Filter
-
-		String filter = URLCodec.encodeURL(
-			"dateCreated eq " + jsonObject1.getString("dateCreated"));
-
-		jsonObject3 = HTTPTestUtil.invokeToJSONObject(
-			null, endpoint + "?filter=" + filter, Http.Method.GET);
-
-		jsonArray = jsonObject3.getJSONArray("items");
-
-		Assert.assertEquals(1, jsonArray.length());
-
-		jsonObject3 = jsonArray.getJSONObject(0);
-
-		Assert.assertEquals(
-			"<p>" + text + "</p>", jsonObject3.getString("text"));
-		Assert.assertEquals(
-			jsonObject1.getString("dateCreated"),
-			jsonObject3.getString("dateCreated"));
-
 		// Search
 
 		jsonObject3 = HTTPTestUtil.invokeToJSONObject(

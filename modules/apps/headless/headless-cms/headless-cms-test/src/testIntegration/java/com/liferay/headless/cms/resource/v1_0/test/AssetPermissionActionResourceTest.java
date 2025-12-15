@@ -246,14 +246,27 @@ public class AssetPermissionActionResourceTest
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
 					group.getGroupId(), depotEntry.getCompanyId());
 
-		_objectEntryFolderLocalService.updateObjectEntryFolder(
-			objectEntryFolder2.getUserId(),
-			objectEntryFolder2.getObjectEntryFolderId(),
-			objectEntryFolder1.getObjectEntryFolderId(), "",
-			HashMapBuilder.put(
-				LocaleUtil.ENGLISH, RandomTestUtil.randomString()
-			).build(),
-			RandomTestUtil.randomString(), serviceContext);
+		objectEntryFolder2 =
+			_objectEntryFolderLocalService.updateObjectEntryFolder(
+				objectEntryFolder2.getUserId(),
+				objectEntryFolder2.getObjectEntryFolderId(),
+				objectEntryFolder1.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		objectEntry1 = CMSDefaultPermissionUtil.fetchObjectEntry(
+			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
+			objectEntryFolder2.getExternalReferenceCode(),
+			objectEntryFolder2.getModelClassName(), _filterFactory);
+
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			objectEntry1.getExternalReferenceCode(),
+			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
+			objectEntryFolder2.getExternalReferenceCode(),
+			objectEntryFolder2.getModelClassName(), jsonObject,
+			objectEntryFolder2.getGroupId(), objectEntryFolder2.getTreePath());
 
 		ObjectEntry objectEntry3 = _objectEntryLocalService.addObjectEntry(
 			depotEntry.getGroupId(), depotEntry.getUserId(),

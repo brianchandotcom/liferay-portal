@@ -1283,6 +1283,22 @@ test.describe('Select From List input field', () => {
 			await expect(option.filter({hasText: 'Spain'})).toBeVisible();
 			await expect(option.filter({hasText: 'Italy'})).toBeVisible();
 			await expect(option.filter({hasText: 'Germany'})).toBeVisible();
+
+			// Select the origin using the keyboard from the Open Menu Options button
+
+			const dropdownButton = page.getByLabel('Open Options Menu');
+
+			await dropdownButton.click();
+
+			await expect(option.filter({hasText: 'Spain'})).not.toBeVisible();
+			await expect(option.filter({hasText: 'Italy'})).not.toBeVisible();
+			await expect(option.filter({hasText: 'Germany'})).not.toBeVisible();
+
+			await page.keyboard.press('Enter');
+			await page.keyboard.press('ArrowDown');
+			await page.keyboard.press('Enter');
+
+			await expect(selectField).toHaveValue('Germany');
 		}
 	);
 });

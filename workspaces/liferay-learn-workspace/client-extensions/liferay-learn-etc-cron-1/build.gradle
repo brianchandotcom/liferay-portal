@@ -34,6 +34,7 @@ dependencies {
 	implementation group: "org.apache.logging.log4j", name: "log4j-slf4j-impl", version: "2.22.1"
 	implementation group: "org.eclipse.jgit", name: "org.eclipse.jgit", version: "7.3.0.202506031305-r"
 	implementation group: "org.json", name: "json", version: "20231013"
+	implementation group: "org.jsoup", name: "jsoup", version: "1.17.2"
 	implementation group: "org.yaml", name: "snakeyaml", version: "2.0"
 }
 

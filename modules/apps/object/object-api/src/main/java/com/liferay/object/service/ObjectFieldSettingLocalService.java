@@ -234,6 +234,10 @@ public interface ObjectFieldSettingLocalService
 	public List<ObjectFieldSetting> getObjectFieldObjectFieldSettings(
 		long objectFieldId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectFieldSetting> getObjectFieldObjectFieldSettings(
+		ObjectField objectField);
+
 	/**
 	 * Returns the object field setting with the primary key.
 	 *

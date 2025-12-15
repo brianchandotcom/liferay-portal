@@ -5,7 +5,7 @@
 
 package com.liferay.layout.utility.page.internal.upgrade.registry;
 
-import com.liferay.layout.utility.page.internal.upgrade.registry.v1_4_4.LayoutUtilityPageEntryUpgradeProcess;
+import com.liferay.layout.utility.page.internal.upgrade.v1_4_0.LayoutUtilityPageEntryUpgradeProcess;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;

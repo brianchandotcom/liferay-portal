@@ -73,6 +73,9 @@ public class CommentResourceTest {
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
+
 		_siteScopedObjectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				ObjectDefinitionTestUtil.getRandomName(),
@@ -83,6 +86,10 @@ public class CommentResourceTest {
 						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
 						false)),
 				ObjectDefinitionConstants.SCOPE_SITE);
+
+		_siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_siteScopedObjectDefinition, _OBJECT_FIELD_NAME,
+			_OBJECT_FIELD_VALUE);
 	}
 
 	@After
@@ -98,12 +105,13 @@ public class CommentResourceTest {
 
 		// Company scope
 
-		_testDeleteByExternalReferenceCodeComment(0L, _objectDefinition);
+		_testDeleteByExternalReferenceCodeComment(
+			0L, _objectDefinition, _objectEntry);
 
 		// Site scope
 
 		_testDeleteByExternalReferenceCodeComment(
-			_testGroupId, _siteScopedObjectDefinition);
+			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
 	@FeatureFlag("LPD-69419")
@@ -112,12 +120,13 @@ public class CommentResourceTest {
 
 		// Company scope
 
-		_testGetByExternalReferenceCodeComment(0L, _objectDefinition);
+		_testGetByExternalReferenceCodeComment(
+			0L, _objectDefinition, _objectEntry);
 
 		// Site scope
 
 		_testGetByExternalReferenceCodeComment(
-			_testGroupId, _siteScopedObjectDefinition);
+			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
 	@FeatureFlag("LPD-69419")
@@ -128,12 +137,12 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testGetByExternalReferenceCodeCommentChildCommentsPage(
-			0L, _objectDefinition);
+			0L, _objectDefinition, _objectEntry);
 
 		// Site scope
 
 		_testGetByExternalReferenceCodeCommentChildCommentsPage(
-			_testGroupId, _siteScopedObjectDefinition);
+			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
 	@FeatureFlag("LPD-69419")
@@ -142,12 +151,13 @@ public class CommentResourceTest {
 
 		// Company scope
 
-		_testGetByExternalReferenceCodeCommentsPage(0L, _objectDefinition);
+		_testGetByExternalReferenceCodeCommentsPage(
+			0L, _objectDefinition, _objectEntry);
 
 		// Site scope
 
 		_testGetByExternalReferenceCodeCommentsPage(
-			_testGroupId, _siteScopedObjectDefinition);
+			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
 	@FeatureFlag("LPD-69419")
@@ -156,12 +166,13 @@ public class CommentResourceTest {
 
 		// Company scope
 
-		_testPostByExternalReferenceCodeComment(0L, _objectDefinition);
+		_testPostByExternalReferenceCodeComment(
+			0L, _objectDefinition, _objectEntry);
 
 		// Site scope
 
 		_testPostByExternalReferenceCodeComment(
-			_testGroupId, _siteScopedObjectDefinition);
+			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
 	@FeatureFlag("LPD-69419")
@@ -172,12 +183,12 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testPostByExternalReferenceCodeCommentReplyComment(
-			0L, _objectDefinition);
+			0L, _objectDefinition, _objectEntry);
 
 		// Site scope
 
 		_testPostByExternalReferenceCodeCommentReplyComment(
-			_testGroupId, _siteScopedObjectDefinition);
+			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
 	@FeatureFlag("LPD-69419")
@@ -186,12 +197,13 @@ public class CommentResourceTest {
 
 		// Company scope
 
-		_testPutByExternalReferenceCodeComment(0L, _objectDefinition);
+		_testPutByExternalReferenceCodeComment(
+			0L, _objectDefinition, _objectEntry);
 
 		// Site scope
 
 		_testPutByExternalReferenceCodeComment(
-			_testGroupId, _siteScopedObjectDefinition);
+			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
 	private void _assertComment(
@@ -262,13 +274,10 @@ public class CommentResourceTest {
 			jsonObject4.getString("externalReferenceCode"));
 	}
 
-	private ObjectDefinition _enableComments(ObjectDefinition objectDefinition)
-		throws Exception {
+	private void _enableComments(ObjectDefinition objectDefinition) {
 
 		objectDefinition.setEnableComments(true);
-
-		return _objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
+		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 	}
 
 	private String _getEndpoint(
@@ -286,6 +295,17 @@ public class CommentResourceTest {
 		return objectDefinition.getRESTContextPath();
 	}
 
+	private String _getEndpoint(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			long scopeKey)
+		throws Exception {
+
+		return StringBundler.concat(
+			_getEndpoint(objectDefinition, scopeKey),
+			"/by-external-reference-code/",
+			objectEntry.getExternalReferenceCode(), "/comments");
+	}
+
 	private JSONObject _postComment(
 			String endpoint, String externalReferenceCode, String text)
 		throws Exception {
@@ -299,29 +319,12 @@ public class CommentResourceTest {
 			endpoint, Http.Method.POST);
 	}
 
-	private String _getEndpoint(
-			long scopeKey, ObjectDefinition objectDefinition)
-		throws Exception {
-
-		_enableComments(objectDefinition);
-
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
-
-		return StringBundler.concat(
-			_getEndpoint(objectDefinition, scopeKey),
-			"/by-external-reference-code/",
-			objectEntry.getExternalReferenceCode(), "/comments");
-	}
-
 	private void _testDeleteByExternalReferenceCodeComment(
-			long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		_enableComments(objectDefinition);
-
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -348,10 +351,13 @@ public class CommentResourceTest {
 	}
 
 	private void _testGetByExternalReferenceCodeComment(
-			long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
 
-		String endpoint = _getEndpoint(groupId, objectDefinition);
+		_enableComments(objectDefinition);
+
+		String endpoint = _getEndpoint(objectDefinition, objectEntry, groupId);
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		JSONObject jsonObject1 = _postComment(
@@ -372,10 +378,13 @@ public class CommentResourceTest {
 	}
 
 	private void _testGetByExternalReferenceCodeCommentChildCommentsPage(
-			long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
 
-		String endpoint = _getEndpoint(groupId, objectDefinition);
+		_enableComments(objectDefinition);
+
+		String endpoint = _getEndpoint(objectDefinition, objectEntry, groupId);
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_postComment(
@@ -400,10 +409,13 @@ public class CommentResourceTest {
 	}
 
 	private void _testGetByExternalReferenceCodeCommentsPage(
-			long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
 
-		String endpoint = _getEndpoint(groupId, objectDefinition);
+		_enableComments(objectDefinition);
+
+		String endpoint = _getEndpoint(objectDefinition, objectEntry, groupId);
 
 		JSONObject jsonObject1 = _postComment(
 			endpoint, RandomTestUtil.randomString(),
@@ -420,11 +432,9 @@ public class CommentResourceTest {
 	}
 
 	private void _testPostByExternalReferenceCodeComment(
-			long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
-
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 		String text = RandomTestUtil.randomString();
@@ -456,13 +466,11 @@ public class CommentResourceTest {
 	}
 
 	private void _testPostByExternalReferenceCodeCommentReplyComment(
-			long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		_enableComments(objectDefinition);
-
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -503,13 +511,11 @@ public class CommentResourceTest {
 	}
 
 	private void _testPutByExternalReferenceCodeComment(
-			long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		_enableComments(objectDefinition);
-
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -551,9 +557,12 @@ public class CommentResourceTest {
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
+	private ObjectEntry _objectEntry;
+
 	@Inject
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
+	private ObjectEntry _siteObjectEntry;
 	private ObjectDefinition _siteScopedObjectDefinition;
 
 }

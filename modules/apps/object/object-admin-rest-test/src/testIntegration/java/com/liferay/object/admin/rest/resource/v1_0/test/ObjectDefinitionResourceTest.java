@@ -108,6 +108,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -287,6 +288,30 @@ public class ObjectDefinitionResourceTest
 
 		assertContains(
 			objectDefinition, (List<ObjectDefinition>)page.getItems());
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		String objectDefinitionLabel1 = RandomTestUtil.randomString();
+		String objectDefinitionLabel2 = RandomTestUtil.randomString();
+
+		randomObjectDefinition.setLabel(
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL.toLanguageTag(), objectDefinitionLabel1
+			).put(
+				LocaleUtil.US.toLanguageTag(), objectDefinitionLabel2
+			).build());
+
+		objectDefinition = testGetObjectDefinitionsPage_addObjectDefinition(
+			randomObjectDefinition);
+
+		_assertGetObjectDefinitionsPageWithSearch(
+			objectDefinition, LocaleUtil.BRAZIL, objectDefinitionLabel1);
+		_assertGetObjectDefinitionsPageWithSearch(
+			objectDefinition, LocaleUtil.BRAZIL, objectDefinition.getName());
+		_assertGetObjectDefinitionsPageWithSearch(
+			objectDefinition, LocaleUtil.US, objectDefinitionLabel2);
+		_assertGetObjectDefinitionsPageWithSearch(
+			objectDefinition, LocaleUtil.US, objectDefinition.getName());
 	}
 
 	@Override
@@ -2170,6 +2195,33 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
+	}
+
+	private void _assertGetObjectDefinitionsPageWithSearch(
+			ObjectDefinition expectedObjectDefinition, Locale locale,
+			String search)
+		throws Exception {
+
+		User user = testVulcanCRUDItemDelegate_getUser();
+
+		ObjectDefinitionResource objectDefinitionResource =
+			ObjectDefinitionResource.builder(
+			).authentication(
+				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				locale
+			).build();
+
+		Page<ObjectDefinition> page =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				search, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertTrue(
+			_contains(
+				expectedObjectDefinition,
+				(List<ObjectDefinition>)page.getItems()));
 	}
 
 	private void _assertNotFound(JSONObject jsonObject) {

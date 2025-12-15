@@ -7,17 +7,27 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.problem.Problem;
+import com.liferay.object.admin.rest.client.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.admin.rest.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -66,6 +76,42 @@ public class ObjectRelationshipResourceTest
 	@Override
 	@Test
 	public void testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageWithFilterDateTimeEquals() {
+	}
+
+	@Override
+	@Test
+	public void testGetObjectDefinitionObjectRelationshipsPage()
+		throws Exception {
+
+		super.testGetObjectDefinitionObjectRelationshipsPage();
+
+		ObjectRelationship randomObjectRelationship =
+			randomObjectRelationship();
+
+		String objectRelationshipLabel1 = RandomTestUtil.randomString();
+		String objectRelationshipLabel2 = RandomTestUtil.randomString();
+
+		randomObjectRelationship.setLabel(
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL.toLanguageTag(), objectRelationshipLabel1
+			).put(
+				LocaleUtil.US.toLanguageTag(), objectRelationshipLabel2
+			).build());
+
+		ObjectRelationship objectRelationship =
+			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
+				testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId(),
+				randomObjectRelationship);
+
+		_assertGetObjectDefinitionObjectRelationshipsPage(
+			objectRelationship, LocaleUtil.BRAZIL, objectRelationshipLabel1);
+		_assertGetObjectDefinitionObjectRelationshipsPage(
+			objectRelationship, LocaleUtil.BRAZIL,
+			objectRelationship.getName());
+		_assertGetObjectDefinitionObjectRelationshipsPage(
+			objectRelationship, LocaleUtil.US, objectRelationshipLabel2);
+		_assertGetObjectDefinitionObjectRelationshipsPage(
+			objectRelationship, LocaleUtil.US, objectRelationship.getName());
 	}
 
 	@Ignore
@@ -342,6 +388,34 @@ public class ObjectRelationshipResourceTest
 
 		return testPostObjectDefinitionObjectRelationship_addObjectRelationship(
 			randomObjectRelationship());
+	}
+
+	private void _assertGetObjectDefinitionObjectRelationshipsPage(
+			ObjectRelationship expectedObjectRelationship, Locale locale,
+			String search)
+		throws Exception {
+
+		User user = testVulcanCRUDItemDelegate_getUser();
+
+		ObjectRelationshipResource objectRelationshipResource =
+			ObjectRelationshipResource.builder(
+			).authentication(
+				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				locale
+			).build();
+
+		Page<ObjectRelationship> page =
+			objectRelationshipResource.
+				getObjectDefinitionObjectRelationshipsPage(
+					testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId(),
+					search, null, null, null);
+
+		assertEquals(
+			Collections.singletonList(expectedObjectRelationship),
+			(List<ObjectRelationship>)page.getItems());
 	}
 
 	private ObjectDefinition _objectDefinition1;

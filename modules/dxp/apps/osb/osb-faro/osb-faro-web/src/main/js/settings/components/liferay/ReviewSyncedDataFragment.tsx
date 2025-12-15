@@ -3,7 +3,9 @@ import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
+import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
+import {toLocale} from 'shared/util/numbers';
 
 const DATA_SOURCE_STATUSES = {
 	CONFIGURED: {
@@ -16,7 +18,21 @@ const DATA_SOURCE_STATUSES = {
 	}
 };
 
-const ReviewSyncedDataFragment = ({contactsSelected, sitesSelected}) => {
+interface IReviewSyncedDataFragmentProps {
+	channelsMetric?: {
+		channelsCount: 0;
+		groupsCount: 0;
+		individualsCount: 0;
+	};
+	contactsSelected: boolean;
+	sitesSelected: boolean;
+}
+
+const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
+	channelsMetric,
+	contactsSelected,
+	sitesSelected
+}) => {
 	const getLabelProps = (selected: boolean) =>
 		selected
 			? DATA_SOURCE_STATUSES.CONFIGURED
@@ -29,6 +45,18 @@ const ReviewSyncedDataFragment = ({contactsSelected, sitesSelected}) => {
 	const {display: sitesDisplay, label: sitesLabel} = getLabelProps(
 		sitesSelected
 	);
+
+	const renderMetricValue = (message, count) => {
+		if (!channelsMetric) {
+			return null;
+		}
+
+		return (
+			<ClayList.ItemText>
+				{sub(message, [toLocale(count)])}
+			</ClayList.ItemText>
+		);
+	};
 
 	return (
 		<>
@@ -58,6 +86,13 @@ const ReviewSyncedDataFragment = ({contactsSelected, sitesSelected}) => {
 								'used-to-aggregate-data-on-your-users,-sites-and-dxp-commerce-channels'
 							)}
 						</ClayList.ItemText>
+
+						{renderMetricValue(
+							Liferay.Language.get(
+								'x-properties-are-connected-to-this-data-source'
+							),
+							channelsMetric?.channelsCount
+						)}
 					</ClayList.ItemField>
 
 					<ClayList.ItemField className='justify-content-center'>
@@ -86,6 +121,11 @@ const ReviewSyncedDataFragment = ({contactsSelected, sitesSelected}) => {
 								'represents-the-sites-synced-from-liferay-portal,-under-dxp-instance-settings-analytics-cloud'
 							)}
 						</ClayList.ItemText>
+
+						{renderMetricValue(
+							Liferay.Language.get('x-items-synced'),
+							channelsMetric?.groupsCount
+						)}
 					</ClayList.ItemField>
 
 					<ClayList.ItemField className='justify-content-center'>
@@ -114,6 +154,11 @@ const ReviewSyncedDataFragment = ({contactsSelected, sitesSelected}) => {
 								'represents-the-fields-synced-from-the-contact-object-within-liferay-portal,-under-dxp-instance-settings-analytics-cloud'
 							)}
 						</ClayList.ItemText>
+
+						{renderMetricValue(
+							Liferay.Language.get('x-items-synced'),
+							channelsMetric?.individualsCount
+						)}
 					</ClayList.ItemField>
 
 					<ClayList.ItemField className='justify-content-center'>

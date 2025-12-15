@@ -442,4 +442,11 @@ function delete$({groupId, id}) {
 	});
 }
 
+export function fetchChannelsMetric({groupId, id}) {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/data_source/${id}/metrics`
+	});
+}
+
 export {delete$ as delete};

@@ -18,13 +18,19 @@ import {ConnectLiferayDXPTokenFragment} from './ConnectLiferayDXPTokenFragment';
 import {DataSource} from 'shared/util/records';
 import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
 import {DataSourceStatuses} from 'shared/util/constants';
-import {fetch, fetchToken, updateLiferay} from 'shared/api/data-source';
+import {
+	fetch,
+	fetchChannelsMetric,
+	fetchToken,
+	updateLiferay
+} from 'shared/api/data-source';
 import {getDataSourceDisplayObject} from 'shared/util/data-sources';
 import {ReviewSyncedDataFragment} from './ReviewSyncedDataFragment';
 import {Text} from '@clayui/core';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDisconnectDataSource} from '../data-source/utils';
 import {useParams} from 'react-router-dom';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const TIMEOUT_INTERVAL = 5000;
 
@@ -148,6 +154,11 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 			clearTimeout(_tokenRequest);
 		};
 	}, [dataSourceActive]);
+
+	const {data: channelsMetric} = useRequest({
+		dataSourceFn: fetchChannelsMetric,
+		variables: {groupId, id}
+	});
 
 	return (
 		<BasePage
@@ -282,6 +293,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 
 			<Card title={Liferay.Language.get('synced-data')}>
 				<ReviewSyncedDataFragment
+					channelsMetric={channelsMetric}
 					contactsSelected={dataSource.contactsSelected}
 					sitesSelected={dataSource.sitesSelected}
 				/>

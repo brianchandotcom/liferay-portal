@@ -8,6 +8,8 @@ import {Locator, Page} from '@playwright/test';
 export class RulesBuilderPage {
 	readonly actionSelect: Locator;
 	readonly addElementsButton: Locator;
+	readonly addFormRuleActionButton: Locator;
+	readonly addFormRuleConditionButton: Locator;
 	readonly autofillDataProviderSelect: Locator;
 	readonly conditionLeftFormFieldSelect: Locator;
 	readonly conditionOperatorSelect: Locator;
@@ -25,6 +27,14 @@ export class RulesBuilderPage {
 			.filter({hasText: 'Do'})
 			.getByRole('combobox');
 		this.addElementsButton = page.getByTitle('Add Elements');
+		this.addFormRuleActionButton = page
+			.locator('.rounded-circle')
+			.locator('.lexicon-icon-plus')
+			.last();
+		this.addFormRuleConditionButton = page
+			.locator('.rounded-circle')
+			.locator('.lexicon-icon-plus')
+			.first();
 		this.autofillDataProviderSelect = page
 			.locator('ul')
 			.filter({hasText: 'ActionsDoAutofillFrom Data'})

@@ -92,8 +92,16 @@ public class ObjectFieldSettingLocalServiceImpl
 			return Collections.emptyList();
 		}
 
+		return getObjectFieldObjectFieldSettings(objectField);
+	}
+
+	@Override
+	public List<ObjectFieldSetting> getObjectFieldObjectFieldSettings(
+		ObjectField objectField) {
+
 		List<ObjectFieldSetting> objectFieldSettings =
-			objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
+			objectFieldSettingPersistence.findByObjectFieldId(
+				objectField.getObjectFieldId());
 
 		if (!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
@@ -105,7 +113,8 @@ public class ObjectFieldSettingLocalServiceImpl
 
 		objectFieldSetting.setName(ObjectFieldSettingConstants.NAME_FILTERS);
 		objectFieldSetting.setObjectFilters(
-			_objectFilterPersistence.findByObjectFieldId(objectFieldId));
+			_objectFilterPersistence.findByObjectFieldId(
+				objectField.getObjectFieldId()));
 
 		objectFieldSettings = new ArrayList<>(objectFieldSettings);
 

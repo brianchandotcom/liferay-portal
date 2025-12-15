@@ -15,6 +15,48 @@ import RatingsThumbs from './RatingsThumbs';
 
 const RATE_ENTRY_URL = '/c/portal/rate_entry';
 
+export function sendVoteRequest({
+	className,
+	classPK,
+	contentTitle,
+	externalReferenceCode,
+	score,
+	type,
+	url,
+}) {
+	if (Liferay.Session.sessionState === 'expired') {
+		errorToast(`${Liferay.Language.get('you-must-be-signed-in-to-rate')}`);
+
+		return Promise.resolve();
+	}
+
+	Liferay.fire('ratings:vote', {
+		className,
+		classPK,
+		contentTitle: contentTitle || '',
+		externalReferenceCode,
+		ratingType: type,
+		score,
+	});
+
+	const body = objectToFormData({
+		className,
+		classPK,
+		p_auth: Liferay.authToken,
+		p_l_id: themeDisplay.getPlid(),
+		score,
+	});
+
+	return fetch(url, {
+		body,
+		method: 'POST',
+	})
+		.then((response) => response.json())
+		.catch(() => {
+			errorToast();
+		});
+}
+
 const BaseRatings = ({
 	className,
 	classPK,
@@ -42,41 +84,17 @@ const BaseRatings = ({
 		}
 	};
 
-	const sendVoteRequest = useCallback(
+	const handleSendVoteRequest = useCallback(
 		(score) => {
-			if (Liferay.Session.sessionState === 'expired') {
-				errorToast(
-					`${Liferay.Language.get('you-must-be-signed-in-to-rate')}`
-				);
-
-				return Promise.resolve();
-			}
-
-			Liferay.fire('ratings:vote', {
+			return sendVoteRequest({
 				className,
 				classPK,
-				contentTitle: contentTitle || '',
+				contentTitle,
 				externalReferenceCode,
-				ratingType: type,
 				score,
+				type,
+				url,
 			});
-
-			const body = objectToFormData({
-				className,
-				classPK,
-				p_auth: Liferay.authToken,
-				p_l_id: themeDisplay.getPlid(),
-				score,
-			});
-
-			return fetch(url, {
-				body,
-				method: 'POST',
-			})
-				.then((response) => response.json())
-				.catch(() => {
-					errorToast();
-				});
 		},
 		[className, classPK, contentTitle, externalReferenceCode, type, url]
 	);
@@ -95,7 +113,7 @@ const BaseRatings = ({
 			{...restProps}
 			disabled={!signedIn || !enabled}
 			inititalTitle={getDefaultTitle()}
-			sendVoteRequest={sendVoteRequest}
+			sendVoteRequest={handleSendVoteRequest}
 			type={type}
 		/>
 	);

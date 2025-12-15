@@ -1596,20 +1596,59 @@ public class DisplayPageTemplateResourceTest
 	private void _testPutSiteDisplayPageTemplateMarkAsDefault()
 		throws Exception {
 
-		DisplayPageTemplate displayPageTemplate =
+		DisplayPageTemplateResource displayPageTemplateResource =
+			_getDisplayPageTemplateResource();
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		DisplayPageTemplate putDisplayPageTemplate =
+			displayPageTemplateResource.putSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				displayPageTemplate.getExternalReferenceCode(),
+				displayPageTemplate);
+
+		Assert.assertFalse(putDisplayPageTemplate.getMarkedAsDefault());
+
+		putDisplayPageTemplate.setMarkedAsDefault(() -> null);
+
+		putDisplayPageTemplate =
+			displayPageTemplateResource.putSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				putDisplayPageTemplate.getExternalReferenceCode(),
+				putDisplayPageTemplate);
+
+		Assert.assertFalse(putDisplayPageTemplate.getMarkedAsDefault());
+
+		putDisplayPageTemplate.setMarkedAsDefault(true);
+
+		PageSpecification[] pageSpecifications =
+			putDisplayPageTemplate.getPageSpecifications();
+
+		pageSpecifications[0].setStatus(PageSpecification.Status.APPROVED);
+		pageSpecifications[1].setStatus(PageSpecification.Status.DRAFT);
+
+		putDisplayPageTemplate =
+			displayPageTemplateResource.putSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				displayPageTemplate.getExternalReferenceCode(),
+				putDisplayPageTemplate);
+
+		Assert.assertTrue(putDisplayPageTemplate.getMarkedAsDefault());
+
+		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
 				randomDisplayPageTemplate());
 
-		displayPageTemplate.setMarkedAsDefault(true);
+		postDisplayPageTemplate.setMarkedAsDefault(true);
 
 		_assertProblemException(
 			"CONFLICT",
 			"The default display page template must be published first.",
 			() -> displayPageTemplateResource.putSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
-				displayPageTemplate.getExternalReferenceCode(),
-				displayPageTemplate));
+				postDisplayPageTemplate.getExternalReferenceCode(),
+				postDisplayPageTemplate));
 	}
 
 	private void _testPutSiteDisplayPageTemplateSettings() throws Exception {

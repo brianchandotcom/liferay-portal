@@ -216,35 +216,13 @@ public class ObjectActionExamResultsSynchronizationRestController
 		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
-			JSONObject jsonObject2 = new JSONObject(
-				put(
-					_getAuthorization(), _getPayload(jsonObject1),
-					UriComponentsBuilder.fromPath(
-						"/o/c/p2s3examresults/by-external-reference-code/" +
-							jsonObject1.getLong("id")
-					).build(
-					).toUri()));
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			put(
-				_getAuthorization(),
-				new JSONArray(
-				).put(
-					new JSONObject(
-					).put(
-						"actionIds",
-						new JSONArray(
-						).put(
-							"VIEW"
-						)
-					).put(
-						"roleName", "Guest"
-					)
-				).toString(),
+				_getAuthorization(), _getPayload(jsonObject),
 				UriComponentsBuilder.fromPath(
-					"/o/c/p2s3examresults/" + jsonObject2.getLong("id") +
-						"/permissions"
+					"/o/c/p2s3examresults/by-external-reference-code/" +
+						jsonObject.getLong("id")
 				).build(
 				).toUri());
 		}

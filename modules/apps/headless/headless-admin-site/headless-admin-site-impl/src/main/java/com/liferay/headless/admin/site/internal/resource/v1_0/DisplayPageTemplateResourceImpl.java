@@ -397,9 +397,16 @@ public class DisplayPageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		String contentTypeReferenceClassName = className.getClassName();
+
+		if (contentTypeReferenceClassName == null) {
+			throw new UnsupportedOperationException();
+		}
+
 		long classTypeId = _getClassTypeId(contentTypeReference, groupId);
 
-		if (!className.equals(layoutPageTemplateEntry.getClassName()) ||
+		if (!contentTypeReferenceClassName.equals(
+				layoutPageTemplateEntry.getClassName()) ||
 			(classTypeId != layoutPageTemplateEntry.getClassTypeId())) {
 
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(

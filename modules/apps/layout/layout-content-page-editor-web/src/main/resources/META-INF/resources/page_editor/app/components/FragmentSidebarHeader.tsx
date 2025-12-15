@@ -63,6 +63,7 @@ export function FragmentSidebarHeader({item}: {item: LayoutDataItem}) {
 			fragmententrykey: FragmentEntry['fragmentEntryKey'];
 			groupid: string;
 		}>({
+			height: '70vh',
 			onSelect: (response) => {
 				dispatch(
 					swapFragment({
@@ -77,6 +78,7 @@ export function FragmentSidebarHeader({item}: {item: LayoutDataItem}) {
 				);
 			},
 			selectEventName: 'selectFragment',
+			size: 'lg',
 			title: Liferay.Language.get('swap-fragment'),
 			url: url.toString(),
 		});

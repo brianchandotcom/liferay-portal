@@ -2,7 +2,7 @@
 	"cacheable": false,
 	"fragmentEntryKey": "multiselect-list",
 	"icon": "select-from-list",
-	"name": "multiselect",
+	"name": "multiselector-checkbox",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

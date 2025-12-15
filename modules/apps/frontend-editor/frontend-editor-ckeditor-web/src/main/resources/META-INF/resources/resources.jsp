@@ -23,6 +23,14 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 		}
 	</aui:style>
 
+	<aui:script type="module">
+		await import(
+			'@liferay/language/' +
+				Liferay.ThemeDisplay.getLanguageId() +
+				'/frontend-editor-ckeditor-web/all.js'
+		);
+	</aui:script>
+
 	<aui:script hashedFile="<%= true %>" senna="temporary" src='<%= ckEditorServletContextName + "/ckeditor/ckeditor.js" %>' type="text/javascript"></aui:script>
 
 	<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">

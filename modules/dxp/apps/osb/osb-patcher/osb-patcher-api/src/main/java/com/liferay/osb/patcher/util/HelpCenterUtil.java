@@ -207,11 +207,7 @@ public class HelpCenterUtil {
 				ticketAttachmentId));
 		options.setPost(true);
 
-		String responseString = _sendRequest(options);
-
-		if (Validator.isNull(responseString)) {
-			throw new PortalException("failed-to-upload-file");
-		}
+		_sendRequest(options);
 	}
 
 	protected static String getAuthenticationToken(

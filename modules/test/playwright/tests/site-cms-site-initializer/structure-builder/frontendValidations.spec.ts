@@ -397,7 +397,7 @@ test(
 
 			await waitForAlert(
 				page,
-				'Remember to review the customized experience if needed'
+				'Remember to review the customized editor if needed'
 			);
 		}).toPass();
 	}

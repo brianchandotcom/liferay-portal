@@ -39,7 +39,7 @@ export class StructureBuilderPage {
 	readonly dataApiHelpers: DataApiHelpers;
 
 	private readonly clearAllSpacesButton: Locator;
-	private readonly customizeExperienceButton: Locator;
+	private readonly customizeEditorButton: Locator;
 	private readonly labelInput: Locator;
 	private readonly nameInput: Locator;
 
@@ -54,8 +54,8 @@ export class StructureBuilderPage {
 		this.dataApiHelpers = dataApiHelpers;
 
 		this.clearAllSpacesButton = this.page.getByLabel('Clear All');
-		this.customizeExperienceButton = this.page.getByRole('button', {
-			name: 'Customize Experience',
+		this.customizeEditorButton = this.page.getByRole('button', {
+			name: 'Customize Editor',
 		});
 		this.labelInput = this.page.getByLabel('Content Structure Label');
 		this.nameInput = this.page.getByLabel('Content Structure Name');
@@ -364,10 +364,10 @@ export class StructureBuilderPage {
 		return id;
 	}
 
-	async customizeExperience() {
+	async customizeEditor() {
 		await expect(async () => {
-			if (await this.customizeExperienceButton.isVisible()) {
-				await this.customizeExperienceButton.click({timeout: 2000});
+			if (await this.customizeEditorButton.isVisible()) {
+				await this.customizeEditorButton.click({timeout: 2000});
 			}
 
 			await expect(
@@ -376,7 +376,7 @@ export class StructureBuilderPage {
 				timeout: 3500,
 			});
 
-			await this.waitForExperienceCustomizerModal();
+			await this.waitForEditorCustomizerModal();
 		}).toPass();
 	}
 
@@ -609,7 +609,7 @@ export class StructureBuilderPage {
 		});
 	}
 
-	async waitForExperienceCustomizerModal() {
+	async waitForEditorCustomizerModal() {
 		await this.page.waitForTimeout(4000);
 
 		const gotItButton = this.page.getByText('Got It');

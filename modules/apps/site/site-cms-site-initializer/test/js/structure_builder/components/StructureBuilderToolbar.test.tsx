@@ -179,7 +179,7 @@ describe('StructureBuilderToolbar', () => {
 		expect(StructureService.updateStructure).not.toBeCalled();
 	});
 
-	it('Shows modal to publish when trying to customize experience and the structure is not published', async () => {
+	it('Shows modal to publish when trying to customize editor and the structure is not published', async () => {
 		renderComponent({
 			structure: {status: 'new'},
 		});
@@ -187,24 +187,23 @@ describe('StructureBuilderToolbar', () => {
 		const managementBar: HTMLElement | null =
 			document.querySelector('.component-tbar')!;
 
-		const customizeExperienceButton = within(managementBar).getByText(
-			'customize-experience'
-		);
+		const customizeEditorButton =
+			within(managementBar).getByText('customize-editor');
 
-		await userEvent.click(customizeExperienceButton);
+		await userEvent.click(customizeEditorButton);
 
 		await waitFor(() => {
 			expect(
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'to-customize-the-experience-you-need-to-publish-the-content-structure-first',
+					text: 'to-customize-the-editor-you-need-to-publish-the-content-structure-first',
 				})
 			);
 		});
 	});
 
-	it('Shows modal to publish when trying to customize experience and the structure is published and there are changes', async () => {
+	it('Shows modal to publish when trying to customize editor and the structure is published and there are changes', async () => {
 		renderComponent({
 			structure: {status: 'published'},
 			unsavedChanges: true,
@@ -213,24 +212,23 @@ describe('StructureBuilderToolbar', () => {
 		const managementBar: HTMLElement | null =
 			document.querySelector('.component-tbar')!;
 
-		const customizeExperienceButton = within(managementBar).getByText(
-			'customize-experience'
-		);
+		const customizeEditorButton =
+			within(managementBar).getByText('customize-editor');
 
-		await userEvent.click(customizeExperienceButton);
+		await userEvent.click(customizeEditorButton);
 
 		await waitFor(() => {
 			expect(
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'to-customize-the-experience-you-need-to-publish-the-content-structure-first',
+					text: 'to-customize-the-editor-you-need-to-publish-the-content-structure-first',
 				})
 			);
 		});
 	});
 
-	it('Shows modal to publish when trying to customize experience and the structure is published and some fields have been deleted', async () => {
+	it('Shows modal to publish when trying to customize editor and the structure is published and some fields have been deleted', async () => {
 		renderComponent({
 			history: {
 				deletedChildren: true,
@@ -243,24 +241,23 @@ describe('StructureBuilderToolbar', () => {
 		const managementBar: HTMLElement | null =
 			document.querySelector('.component-tbar')!;
 
-		const customizeExperienceButton = within(managementBar).getByText(
-			'customize-experience'
-		);
+		const customizeEditorButton =
+			within(managementBar).getByText('customize-editor');
 
-		await userEvent.click(customizeExperienceButton);
+		await userEvent.click(customizeEditorButton);
 
 		await waitFor(() => {
 			expect(
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'to-customize-the-experience-you-need-to-publish-the-content-structure-first.-you-removed-one-or-more-fields-from-the-content-structure',
+					text: 'to-customize-the-editor-you-need-to-publish-the-content-structure-first.-you-removed-one-or-more-fields-from-the-content-structure',
 				})
 			);
 		});
 	});
 
-	it('Navigates to customize experience if the structure is published', async () => {
+	it('Navigates to customize editor if the structure is published', async () => {
 		const expectedUrl =
 			'http://localhost:8080/edit?backURL=http%3A%2F%2Flocalhost%3A8080%2Fstructure-builder%3FobjectDefinitionExternalReferenceCode%3Dstructure-erc&objectDefinitionExternalReferenceCode=structure-erc';
 
@@ -273,11 +270,10 @@ describe('StructureBuilderToolbar', () => {
 		const managementBar: HTMLElement | null =
 			document.querySelector('.component-tbar')!;
 
-		const customizeExperienceButton = within(managementBar).getByText(
-			'customize-experience'
-		);
+		const customizeEditorButton =
+			within(managementBar).getByText('customize-editor');
 
-		await userEvent.click(customizeExperienceButton);
+		await userEvent.click(customizeEditorButton);
 
 		await waitFor(() => {
 			expect(mockNavigate).toBeCalledWith(

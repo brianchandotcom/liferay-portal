@@ -45,7 +45,7 @@ import MultiSelectManager from './MultiSelectManager';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
-import ExperienceCustomizerModal from './cms/ExperienceCustomizerModal';
+import EditorCustomizerModal from './cms/EditorCustomizerModal';
 import KeyboardMovementManager from './keyboard_movement/KeyboardMovementManager';
 import KeyboardMovementPreview from './keyboard_movement/KeyboardMovementPreview';
 
@@ -57,7 +57,7 @@ export default function App({state}) {
 			<StoreContextProvider initialState={initialState} reducer={reducer}>
 				<ConvertToPageTemplateModal />
 
-				<ExperienceCustomizerModal />
+				<EditorCustomizerModal />
 
 				<ControlsProvider>
 					<CollectionActiveItemContextProvider>

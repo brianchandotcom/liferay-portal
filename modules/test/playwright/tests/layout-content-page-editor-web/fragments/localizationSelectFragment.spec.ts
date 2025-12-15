@@ -99,7 +99,7 @@ test(
 
 		await structureBuilderPage.editStructure(structureId);
 
-		await structureBuilderPage.customizeExperience();
+		await structureBuilderPage.customizeEditor();
 
 		await pageEditorPage.deleteFragment(
 			await pageEditorPage.getFragmentId('Friendly URL')
@@ -213,7 +213,7 @@ test(
 
 		await structureBuilderPage.editStructure(structureId);
 
-		await structureBuilderPage.customizeExperience();
+		await structureBuilderPage.customizeEditor();
 
 		await pageEditorPage.changeFragmentConfiguration({
 			fieldLabel: 'Allow Localization Management',
@@ -374,7 +374,7 @@ test(
 
 		await structureBuilderPage.editStructure(structureId);
 
-		await structureBuilderPage.customizeExperience();
+		await structureBuilderPage.customizeEditor();
 
 		await pageEditorPage.changeFragmentConfiguration({
 			fieldLabel: 'Allow Localization Management',

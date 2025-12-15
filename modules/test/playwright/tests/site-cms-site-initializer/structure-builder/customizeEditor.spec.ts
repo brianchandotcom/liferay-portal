@@ -25,7 +25,7 @@ const test = mergeTests(
 );
 
 test(
-	'Alerts are displayed when trying to customize the experience without publishing the structure',
+	'Alerts are displayed when trying to customize the editor without publishing the structure',
 	{
 		tag: '@LPD-50370',
 	},
@@ -52,15 +52,15 @@ test(
 			label: 'Field 2',
 		});
 
-		// Try to customize the experience without publishing the structure
+		// Try to customize the editor without publishing the structure
 
-		await page.getByRole('button', {name: 'Customize Experience'}).click();
+		await page.getByRole('button', {name: 'Customize Editor'}).click();
 
 		// Check the warning is shown
 
 		await expect(
 			page.getByText(
-				'To customize the experience you need to publish the content structure first.'
+				'To customize the editor you need to publish the content structure first.'
 			)
 		).toBeAttached();
 
@@ -68,25 +68,25 @@ test(
 
 		await page
 			.getByRole('dialog', {
-				name: 'Publish to Customize Experience',
+				name: 'Publish to Customize Editor',
 			})
 			.getByRole('button', {name: 'Publish'})
 			.click();
 
 		await waitForAlert(
 			page,
-			'Remember to review the customized experience if needed.',
+			'Remember to review the customized editor if needed.',
 			{autoClose: false}
 		);
 
-		// Check the customized experience
+		// Check the customized editor
 
 		await page
 			.getByRole('alert')
-			.getByRole('button', {name: 'Customize Experience'})
+			.getByRole('button', {name: 'Customize Editor'})
 			.click();
 
-		await structureBuilderPage.waitForExperienceCustomizerModal();
+		await structureBuilderPage.waitForEditorCustomizerModal();
 
 		await expect(page.getByLabel('Field 1 (Read Only)')).toBeVisible();
 
@@ -97,35 +97,35 @@ test(
 			.getByRole('link', {name: 'Back'})
 			.click();
 
-		// Delete the field and try to customize the experience again
+		// Delete the field and try to customize the editor again
 
 		await structureBuilderPage.deleteFields([{label: 'Field 1'}]);
 
-		await page.getByRole('button', {name: 'Customize Experience'}).click();
+		await page.getByRole('button', {name: 'Customize Editor'}).click();
 
 		// Check the warning is shown
 
 		await expect(
 			page.getByText(
-				'To customize the experience you need to publish the content structure first. You removed one or more fields from the content structure.'
+				'To customize the editor you need to publish the content structure first. You removed one or more fields from the content structure.'
 			)
 		).toBeAttached();
 
 		await page
 			.getByRole('dialog', {
-				name: 'Publish to Customize Experience',
+				name: 'Publish to Customize Editor',
 			})
 			.getByRole('button', {name: 'Publish'})
 			.click();
 
 		await page
 			.getByRole('alert')
-			.getByRole('button', {name: 'Customize Experience'})
+			.getByRole('button', {name: 'Customize Editor'})
 			.click();
 
-		await structureBuilderPage.waitForExperienceCustomizerModal();
+		await structureBuilderPage.waitForEditorCustomizerModal();
 
-		// Check the experience is regenerated removing the deleted field
+		// Check the editor is regenerated removing the deleted field
 
 		await expect(page.getByLabel('Field 1 (Read Only)')).not.toBeVisible();
 		await expect(page.getByLabel('Field 2 (Read Only)')).toBeVisible();
@@ -133,7 +133,7 @@ test(
 );
 
 test(
-	'Edit experience link is shown every time we publish if it is customized',
+	'Edit editor link is shown every time we publish if it is customized',
 	{
 		tag: '@LPD-50370',
 	},
@@ -174,9 +174,9 @@ test(
 			);
 		}).toPass();
 
-		// Customize the experience
+		// Customize the editor
 
-		await structureBuilderPage.customizeExperience();
+		await structureBuilderPage.customizeEditor();
 
 		const fragmentId = await pageEditorPage.getFragmentId('Text', 0);
 
@@ -191,21 +191,21 @@ test(
 				.getByRole('link', {name: 'Back'}),
 		});
 
-		// Publish again and check edit experience link is show in toast
+		// Publish again and check edit editor link is show in toast
 
 		await expect(async () => {
 			await structureBuilderPage.publishButton.click({timeout: 1000});
 
 			await waitForAlert(
 				page,
-				'Remember to review the customized experience if needed'
+				'Remember to review the customized editor if needed'
 			);
 		}).toPass();
 	}
 );
 
 test(
-	'Can autogenerate default experience after customizing it',
+	'Can autogenerate default editor after customizing it',
 	{
 		tag: '@LPD-50376',
 	},
@@ -218,9 +218,9 @@ test(
 			page: structureBuilderPage,
 		});
 
-		// Customize the experience and add a fragment
+		// Customize the editor and add a fragment
 
-		await structureBuilderPage.customizeExperience();
+		await structureBuilderPage.customizeEditor();
 
 		await pageEditorPage.addFragment('Basic Components', 'Heading');
 
@@ -237,7 +237,7 @@ test(
 );
 
 test(
-	'Control menu is not shown in the page editor when customizing the experience',
+	'Control menu is not shown in the page editor when customizing the editor',
 	{
 		tag: '@LPD-69912',
 	},
@@ -250,9 +250,9 @@ test(
 			page: structureBuilderPage,
 		});
 
-		// Customize the experience
+		// Customize the editor
 
-		await structureBuilderPage.customizeExperience();
+		await structureBuilderPage.customizeEditor();
 
 		// Check the control menu is not shown
 

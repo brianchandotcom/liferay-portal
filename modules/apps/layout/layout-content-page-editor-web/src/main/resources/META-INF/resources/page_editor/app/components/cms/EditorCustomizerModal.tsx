@@ -21,7 +21,7 @@ function markAsShown() {
 	);
 }
 
-export default function ExperienceCustomizerModal() {
+export default function EditorCustomizerModal() {
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {
@@ -46,10 +46,10 @@ export default function ExperienceCustomizerModal() {
 	return (
 		<CardStyleModal
 			body={Liferay.Language.get(
-				'you-can-now-tailor-the-content-editor-experence-to-fit-your-unique-requirements'
+				'you-can-now-tailor-the-content-editor-to-fit-your-unique-requirements'
 			)}
-			heading={Liferay.Language.get('introducing-experience-customizer')}
-			imageSrc={`${config.imagesPath}/experience_customizer.svg`}
+			heading={Liferay.Language.get('introducing-editor-customizer')}
+			imageSrc={`${config.imagesPath}/editor_customizer.svg`}
 			onCloseModal={handleClose}
 			onPrimaryButtonClick={handleClose}
 			primaryButtonLabel={Liferay.Language.get('got-it')}

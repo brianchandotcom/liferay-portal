@@ -48,7 +48,7 @@ public class StructureBuilderComponentSectionFragmentRenderer
 			SuccessTag successTag = new SuccessTag();
 
 			successTag.setKey("displayPagePublished");
-			successTag.setMessage("the-experience-was-updated-successfully");
+			successTag.setMessage("the-editor-was-updated-successfully");
 
 			successTag.doTagAsString(httpServletRequest, httpServletResponse);
 

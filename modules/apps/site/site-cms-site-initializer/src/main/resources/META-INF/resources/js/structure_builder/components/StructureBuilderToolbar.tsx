@@ -69,7 +69,7 @@ export default function StructureBuilderToolbar() {
 			}
 		>
 			<Toolbar.Item className="nav-divider-end">
-				<CustomizeExperienceButton />
+				<CustomizeEditorButton />
 			</Toolbar.Item>
 
 			<Toolbar.Item>
@@ -94,7 +94,7 @@ export default function StructureBuilderToolbar() {
 	);
 }
 
-function CustomizeExperienceButton() {
+function CustomizeEditorButton() {
 	const dispatch = useStateDispatch();
 	const validate = useValidate();
 
@@ -131,10 +131,10 @@ function CustomizeExperienceButton() {
 						},
 						status: 'danger',
 						text: Liferay.Language.get(
-							'to-customize-the-experience-you-need-to-publish-the-content-structure-first.-you-removed-one-or-more-fields-from-the-content-structure'
+							'to-customize-the-editor-you-need-to-publish-the-content-structure-first.-you-removed-one-or-more-fields-from-the-content-structure'
 						),
 						title: Liferay.Language.get(
-							'publish-to-customize-experience'
+							'publish-to-customize-editor'
 						),
 					});
 				}
@@ -154,10 +154,10 @@ function CustomizeExperienceButton() {
 						},
 						status: 'warning',
 						text: Liferay.Language.get(
-							'to-customize-the-experience-you-need-to-publish-the-content-structure-first'
+							'to-customize-the-editor-you-need-to-publish-the-content-structure-first'
 						),
 						title: Liferay.Language.get(
-							'publish-to-customize-experience'
+							'publish-to-customize-editor'
 						),
 					});
 				}
@@ -180,7 +180,7 @@ function CustomizeExperienceButton() {
 			}}
 			size="sm"
 		>
-			{Liferay.Language.get('customize-experience')}
+			{Liferay.Language.get('customize-editor')}
 
 			<ClayIcon className="ml-2" symbol="shortcut" />
 		</ClayButton>
@@ -423,7 +423,7 @@ async function publishStructure({
 		openToast({
 			message: Liferay.Util.sub(
 				Liferay.Language.get(
-					'x-was-published-successfully.-remember-to-review-the-customized-experience-if-needed'
+					'x-was-published-successfully.-remember-to-review-the-customized-editor-if-needed'
 				),
 				localizedLabel
 			),
@@ -449,7 +449,7 @@ async function publishStructure({
 						}}
 						size="sm"
 					>
-						{Liferay.Language.get('customize-experience')}
+						{Liferay.Language.get('customize-editor')}
 
 						<ClayIcon className="ml-2" symbol="shortcut" />
 					</ClayButton>

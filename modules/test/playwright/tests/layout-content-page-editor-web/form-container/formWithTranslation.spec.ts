@@ -1061,7 +1061,7 @@ test(
 
 		// Customize experience and delete Friendly URL fragment
 
-		await structureBuilderPage.customizeExperience();
+		await structureBuilderPage.customizeEditor();
 
 		await pageEditorPage.deleteFragment(
 			await pageEditorPage.getFragmentId('Friendly URL')

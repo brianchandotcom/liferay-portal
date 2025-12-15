@@ -199,7 +199,7 @@ public class AccountsRestController extends BaseRestController {
 
 				String externalReferenceCode =
 					businessEventJSONObject.getString(
-						"accountEntryToBusinessEventERC");
+						"accountEntryToBusinessEventsERC");
 
 				if (!syncedAccountExternalReferenceCodes.contains(
 						externalReferenceCode)) {

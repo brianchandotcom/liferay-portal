@@ -89,7 +89,7 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcessTest {
 
 		String name2 = String.valueOf(RandomTestUtil.randomInt());
 
-		Layout layout1 = _updateFriendlyURL(
+		Layout layout = _updateFriendlyURL(
 			LayoutTestUtil.addTypePortletLayout(_group),
 			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 1));
 
@@ -114,34 +114,31 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcessTest {
 
 		_runUpgrade();
 
-		layout1 = _layoutLocalService.fetchLayout(layout1.getPlid());
-
-		Assert.assertEquals(
+		_assertFriendlyURL(
 			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 1),
-			layout1.getFriendlyURL());
+			layout.getPlid());
 
-		Layout layout2 = _layoutLocalService.fetchLayout(
+		_assertFriendlyURL(
+			StringBundler.concat(StringPool.SLASH, name1, StringPool.DASH, 1),
 			layoutUtilityPageEntry1.getPlid());
 
-		Assert.assertEquals(
-			StringBundler.concat(StringPool.SLASH, name1, StringPool.DASH, 1),
-			layout2.getFriendlyURL());
-
-		Layout layout3 = _layoutLocalService.fetchLayout(
+		_assertFriendlyURL(
+			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 2),
 			layoutUtilityPageEntry2.getPlid());
 
-		Assert.assertEquals(
-			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 2),
-			layout3.getFriendlyURL());
-
 		for (Layout curLayout : layouts) {
-			Layout updatedLayout = _layoutLocalService.getLayout(
-				curLayout.getPlid());
-
-			Assert.assertEquals(
+			_assertFriendlyURL(
 				StringPool.SLASH + curLayout.getLayoutId(),
-				updatedLayout.getFriendlyURL());
+				curLayout.getPlid());
 		}
+	}
+
+	private void _assertFriendlyURL(String expectedFriendlyURL, long plid)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		Assert.assertEquals(expectedFriendlyURL, layout.getFriendlyURL());
 	}
 
 	private Layout[] _getLayouts() throws Exception {

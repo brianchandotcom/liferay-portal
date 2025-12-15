@@ -9,6 +9,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
+import com.liferay.object.internal.security.permission.util.ObjectEntryPermissionUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 
@@ -46,7 +48,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		implements ObjectRelatedModelsProvider<T> {
 
 	public SystemObjectMtoMObjectRelatedModelsProviderImpl(
-		ObjectDefinition objectDefinition,
+		InlineSQLHelper inlineSQLHelper, ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -54,6 +56,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry) {
 
+		_inlineSQLHelper = inlineSQLHelper;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -319,6 +322,9 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 						objectRelationship.getCompanyId());
 				}
 			).and(
+				ObjectEntryPermissionUtil.getPermissionWherePredicate(
+					dynamicObjectDefinitionTable, groupId, _inlineSQLHelper)
+			).and(
 				() -> {
 					ObjectField titleObjectField =
 						_objectFieldLocalService.getObjectField(
@@ -411,6 +417,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		);
 	}
 
+	private final InlineSQLHelper _inlineSQLHelper;
 	private final Table _localizationTable;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

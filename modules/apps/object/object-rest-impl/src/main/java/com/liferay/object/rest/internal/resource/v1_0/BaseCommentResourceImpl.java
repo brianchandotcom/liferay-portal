@@ -194,10 +194,6 @@ public abstract class BaseCommentResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -247,8 +243,6 @@ public abstract class BaseCommentResourceImpl
 				@jakarta.ws.rs.core.Context
 					com.liferay.portal.vulcan.aggregation.Aggregation
 						aggregation,
-				@jakarta.ws.rs.core.Context
-					com.liferay.portal.kernel.search.filter.Filter filter,
 				@jakarta.ws.rs.core.Context Pagination pagination,
 				@jakarta.ws.rs.core.Context
 					com.liferay.portal.kernel.search.Sort[] sorts)
@@ -270,10 +264,6 @@ public abstract class BaseCommentResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -322,8 +312,6 @@ public abstract class BaseCommentResourceImpl
 				@jakarta.ws.rs.core.Context
 					com.liferay.portal.vulcan.aggregation.Aggregation
 						aggregation,
-				@jakarta.ws.rs.core.Context
-					com.liferay.portal.kernel.search.filter.Filter filter,
 				@jakarta.ws.rs.core.Context Pagination pagination,
 				@jakarta.ws.rs.core.Context
 					com.liferay.portal.kernel.search.Sort[] sorts)
@@ -400,10 +388,6 @@ public abstract class BaseCommentResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -457,8 +441,6 @@ public abstract class BaseCommentResourceImpl
 				@jakarta.ws.rs.core.Context
 					com.liferay.portal.vulcan.aggregation.Aggregation
 						aggregation,
-				@jakarta.ws.rs.core.Context
-					com.liferay.portal.kernel.search.filter.Filter filter,
 				@jakarta.ws.rs.core.Context Pagination pagination,
 				@jakarta.ws.rs.core.Context
 					com.liferay.portal.kernel.search.Sort[] sorts)
@@ -484,10 +466,6 @@ public abstract class BaseCommentResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -540,8 +518,6 @@ public abstract class BaseCommentResourceImpl
 				@jakarta.ws.rs.core.Context
 					com.liferay.portal.vulcan.aggregation.Aggregation
 						aggregation,
-				@jakarta.ws.rs.core.Context
-					com.liferay.portal.kernel.search.filter.Filter filter,
 				@jakarta.ws.rs.core.Context Pagination pagination,
 				@jakarta.ws.rs.core.Context
 					com.liferay.portal.kernel.search.Sort[] sorts)

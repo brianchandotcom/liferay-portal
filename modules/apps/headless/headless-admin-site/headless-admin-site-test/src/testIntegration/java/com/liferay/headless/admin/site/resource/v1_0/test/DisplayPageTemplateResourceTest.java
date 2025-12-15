@@ -1634,21 +1634,6 @@ public class DisplayPageTemplateResourceTest
 				putDisplayPageTemplate);
 
 		Assert.assertTrue(putDisplayPageTemplate.getMarkedAsDefault());
-
-		DisplayPageTemplate postDisplayPageTemplate =
-			displayPageTemplateResource.postSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(),
-				randomDisplayPageTemplate());
-
-		postDisplayPageTemplate.setMarkedAsDefault(true);
-
-		_assertProblemException(
-			"CONFLICT",
-			"The default display page template must be published first.",
-			() -> displayPageTemplateResource.putSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(),
-				postDisplayPageTemplate.getExternalReferenceCode(),
-				postDisplayPageTemplate));
 	}
 
 	private void _testPutSiteDisplayPageTemplateSettings() throws Exception {

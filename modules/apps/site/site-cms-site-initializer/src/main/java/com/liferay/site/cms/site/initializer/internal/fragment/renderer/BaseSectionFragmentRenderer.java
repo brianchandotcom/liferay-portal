@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -24,5 +25,9 @@ public abstract class BaseSectionFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected TranslationInfoItemFieldValuesExporterRegistry
+		translationInfoItemFieldValuesExporterRegistry;
 
 }

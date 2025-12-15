@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewFolderSectionDisplayContext;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -60,7 +59,7 @@ public class ViewFolderJSPSectionFragmentRenderer
 			_objectDefinitionSettingLocalService,
 			_objectEntryFolderLocalService,
 			_objectEntryFolderModelResourcePermission, _portal,
-			_translationInfoItemFieldValuesExporterRegistry);
+			translationInfoItemFieldValuesExporterRegistry);
 	}
 
 	@Override
@@ -94,9 +93,5 @@ public class ViewFolderJSPSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TranslationInfoItemFieldValuesExporterRegistry
-		_translationInfoItemFieldValuesExporterRegistry;
 
 }

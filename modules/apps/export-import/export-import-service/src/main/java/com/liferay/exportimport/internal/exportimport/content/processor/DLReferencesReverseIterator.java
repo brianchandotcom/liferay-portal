@@ -123,7 +123,7 @@ public class DLReferencesReverseIterator
 					_groupId, _content, beginPos + _pathContext.length(),
 					dlReferenceEndPosObjectValuePair.getValue(), dlReference);
 
-			if (dlReferenceParameters == null) {
+			if (MapUtil.isEmpty(dlReferenceParameters)) {
 				_endPos = beginPos - 1;
 
 				continue;
@@ -171,7 +171,7 @@ public class DLReferencesReverseIterator
 			_parameters = parameters;
 			_reference = reference;
 
-			_group = _getGroup(parameters);
+			_group = _getGroup(fileEntry, parameters);
 		}
 
 		public boolean containsParameter(String name) {
@@ -489,15 +489,19 @@ public class DLReferencesReverseIterator
 		return null;
 	}
 
-	private Group _getGroup(Map<String, String[]> dlReferenceParameters) {
+	private Group _getGroup(
+		FileEntry fileEntry, Map<String, String[]> parameteres) {
+
 		try {
-			if (dlReferenceParameters.containsKey("groupId")) {
-				return GroupLocalServiceUtil.getGroup(
-					MapUtil.getLong(dlReferenceParameters, "groupId"));
+			if (fileEntry != null) {
+				return GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
 			}
-			else if (dlReferenceParameters.containsKey("groupName")) {
-				return _getGroup(
-					MapUtil.getString(dlReferenceParameters, "groupName"));
+			else if (parameteres.containsKey("groupId")) {
+				return GroupLocalServiceUtil.getGroup(
+					MapUtil.getLong(parameteres, "groupId"));
+			}
+			else if (parameteres.containsKey("groupName")) {
+				return _getGroup(MapUtil.getString(parameteres, "groupName"));
 			}
 		}
 		catch (Exception exception) {

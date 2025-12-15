@@ -1,10 +1,14 @@
+import Card from 'shared/components/Card';
 import CriteriaCard from 'segment/components/criteria-card';
-import Membership from './Membership';
 
+import Loading from 'shared/components/Loading';
 import React from 'react';
+import {fetchMembershipChangesAggregations} from 'shared/api/individual-segment';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {Segment} from 'shared/util/records';
+import {SegmentGrowthChart} from 'segment/components/Growth';
 import {SegmentTypes} from 'shared/util/constants';
+import {useRequest} from 'shared/hooks/useRequest';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 interface IOverviewProps {
@@ -18,8 +22,13 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	groupId,
 	segment
 }) => {
-	const {criteriaString, includeAnonymousUsers} = segment;
+	const {criteriaString, id, includeAnonymousUsers} = segment;
 	const {timeZoneId} = useTimeZone();
+
+	const {data, loading} = useRequest({
+		dataSourceFn: fetchMembershipChangesAggregations,
+		variables: {channelId, groupId, id, interval: 'day', max: 30}
+	});
 
 	return (
 		<div>
@@ -31,12 +40,42 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 					timeZoneId={timeZoneId}
 				/>
 			</ReferencedObjectsProvider>
-			<Membership
-				channelId={channelId}
-				groupId={groupId}
-				segment={segment}
-				timeZoneId={timeZoneId}
-			/>
+
+			<Card>
+				<Card.Header>
+					<Card.Title>
+						{Liferay.Language.get('segment-membership-trend')}
+					</Card.Title>
+				</Card.Header>
+
+				<Card.Body className='segment-growth-root' noPadding>
+					{loading ? (
+						<Loading />
+					) : (
+						<div className='segment-growth-chart-container'>
+							<SegmentGrowthChart
+								alwaysShowSelectedTooltip
+								data={data.map(item => ({
+									added: item.addedIndividualsCount,
+									anonymousCount:
+										item.anonymousIndividualsCount,
+									knownCount: item.knownIndividualsCount,
+									modifiedDate: item.intervalInitDate,
+									removed: item.removedIndividualsCount,
+									value: item.individualsCount
+								}))}
+								hasSelectedPoint
+								height={360}
+								individualCounts={{
+									anonymousCount: 0,
+									knownCount: 0
+								}}
+								selectedPoint={0}
+							/>
+						</div>
+					)}
+				</Card.Body>
+			</Card>
 		</div>
 	);
 };

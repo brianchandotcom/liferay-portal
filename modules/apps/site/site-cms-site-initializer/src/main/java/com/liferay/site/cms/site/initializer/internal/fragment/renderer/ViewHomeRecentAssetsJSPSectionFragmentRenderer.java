@@ -15,7 +15,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeRecentAssetsSectionDisplayContext;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -58,7 +57,7 @@ public class ViewHomeRecentAssetsJSPSectionFragmentRenderer
 			httpServletRequest, language, _objectDefinitionService,
 			_objectDefinitionSettingLocalService,
 			_objectEntryFolderModelResourcePermission, _portal,
-			_translationInfoItemFieldValuesExporterRegistry);
+			translationInfoItemFieldValuesExporterRegistry);
 	}
 
 	@Override
@@ -86,9 +85,5 @@ public class ViewHomeRecentAssetsJSPSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TranslationInfoItemFieldValuesExporterRegistry
-		_translationInfoItemFieldValuesExporterRegistry;
 
 }

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceContentsSummarySectionDisplayContext;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -52,7 +51,7 @@ public class ViewSpaceContentsSummaryJSPSectionFragmentRenderer
 			_objectDefinitionSettingLocalService,
 			_objectEntryFolderLocalService,
 			_objectEntryFolderModelResourcePermission, _portal,
-			_translationInfoItemFieldValuesExporterRegistry);
+			translationInfoItemFieldValuesExporterRegistry);
 	}
 
 	@Override
@@ -87,9 +86,5 @@ public class ViewSpaceContentsSummaryJSPSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TranslationInfoItemFieldValuesExporterRegistry
-		_translationInfoItemFieldValuesExporterRegistry;
 
 }

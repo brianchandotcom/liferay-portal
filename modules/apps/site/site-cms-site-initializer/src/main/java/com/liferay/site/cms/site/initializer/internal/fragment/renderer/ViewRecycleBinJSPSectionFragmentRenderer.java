@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewRecycleBinSectionDisplayContext;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 import com.liferay.trash.TrashHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,7 +54,7 @@ public class ViewRecycleBinJSPSectionFragmentRenderer
 			_objectDefinitionSettingLocalService,
 			_objectEntryFolderLocalService,
 			_objectEntryFolderModelResourcePermission, _portal,
-			_translationInfoItemFieldValuesExporterRegistry, _trashHelper);
+			translationInfoItemFieldValuesExporterRegistry, _trashHelper);
 	}
 
 	@Override
@@ -87,10 +86,6 @@ public class ViewRecycleBinJSPSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TranslationInfoItemFieldValuesExporterRegistry
-		_translationInfoItemFieldValuesExporterRegistry;
 
 	@Reference
 	private TrashHelper _trashHelper;

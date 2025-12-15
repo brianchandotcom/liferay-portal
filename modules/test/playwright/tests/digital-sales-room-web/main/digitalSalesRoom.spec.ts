@@ -11,6 +11,7 @@ import {digitalSalesRoomPagesTest} from '../../../fixtures/digitalSalesRoomPages
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -127,5 +128,44 @@ test(
 		).items.pop();
 
 		expect(digitalSalesRoom.userAccountBriefs.length).toEqual(3);
+	}
+);
+
+test(
+	'Delete a digital sales room',
+	{tag: '@LPD-73577'},
+	async ({digitalSalesRoomsPage, editDigitalSalesRoomPage, page}) => {
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			banner: path.join(__dirname, '/dependencies/liferay.png'),
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName)
+		).toBeVisible();
+
+		await (
+			await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+				roomName,
+				0
+			)
+		).click();
+
+		const modal = page.getByRole('alert');
+
+		await expect(modal).toBeVisible();
+
+		await modal.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(page);
+
+		await expect(digitalSalesRoomsPage.noResultsFoundMessage).toBeVisible();
 	}
 );

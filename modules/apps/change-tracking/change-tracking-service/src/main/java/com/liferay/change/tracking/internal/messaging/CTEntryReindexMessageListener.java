@@ -48,7 +48,7 @@ public class CTEntryReindexMessageListener extends BaseMessageListener {
 	protected void activate(BundleContext bundleContext) {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 				CTDestinationNames.CT_ENTRY_REINDEX);
 
 		RejectedExecutionHandler rejectedExecutionHandler =

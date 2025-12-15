@@ -275,8 +275,8 @@ public class CommentResourceTest {
 	}
 
 	private void _enableComments(ObjectDefinition objectDefinition) {
-
 		objectDefinition.setEnableComments(true);
+
 		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 	}
 
@@ -332,10 +332,7 @@ public class CommentResourceTest {
 			).put(
 				"text", RandomTestUtil.randomString()
 			).toString(),
-			StringBundler.concat(
-				_getEndpoint(objectDefinition, groupId),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(), "/comments"),
+			_getEndpoint(objectDefinition, objectEntry, groupId),
 			Http.Method.POST);
 
 		Assert.assertEquals(
@@ -343,9 +340,8 @@ public class CommentResourceTest {
 			HTTPTestUtil.invokeToHttpCode(
 				null,
 				StringBundler.concat(
-					_getEndpoint(objectDefinition, groupId),
-					"/by-external-reference-code/",
-					objectEntry.getExternalReferenceCode(), "/comments/",
+					_getEndpoint(objectDefinition, objectEntry, groupId),
+					StringPool.SLASH,
 					jsonObject.getString("externalReferenceCode")),
 				Http.Method.DELETE));
 	}
@@ -445,10 +441,7 @@ public class CommentResourceTest {
 			"text", text
 		);
 
-		String endpoint = StringBundler.concat(
-			_getEndpoint(objectDefinition, groupId),
-			"/by-external-reference-code/",
-			objectEntry.getExternalReferenceCode(), "/comments");
+		String endpoint = _getEndpoint(objectDefinition, objectEntry, groupId);
 
 		Assert.assertEquals(
 			400,
@@ -478,10 +471,7 @@ public class CommentResourceTest {
 			).put(
 				"text", RandomTestUtil.randomString()
 			).toString(),
-			StringBundler.concat(
-				_getEndpoint(objectDefinition, groupId),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(), "/comments"),
+			_getEndpoint(objectDefinition, objectEntry, groupId),
 			Http.Method.POST);
 
 		long parentCommentId = jsonObject.getLong("id");
@@ -496,10 +486,8 @@ public class CommentResourceTest {
 				"text", text
 			).toString(),
 			StringBundler.concat(
-				_getEndpoint(objectDefinition, groupId),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(), "/comments/",
-				jsonObject.getString("externalReferenceCode"),
+				_getEndpoint(objectDefinition, objectEntry, groupId),
+				StringPool.SLASH, jsonObject.getString("externalReferenceCode"),
 				"/child-comments"),
 			Http.Method.POST);
 
@@ -523,10 +511,7 @@ public class CommentResourceTest {
 			).put(
 				"text", RandomTestUtil.randomString()
 			).toString(),
-			StringBundler.concat(
-				_getEndpoint(objectDefinition, groupId),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(), "/comments"),
+			_getEndpoint(objectDefinition, objectEntry, groupId),
 			Http.Method.POST);
 
 		String text = RandomTestUtil.randomString();
@@ -536,9 +521,8 @@ public class CommentResourceTest {
 				"text", text
 			).toString(),
 			StringBundler.concat(
-				_getEndpoint(objectDefinition, groupId),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(), "/comments/",
+				_getEndpoint(objectDefinition, objectEntry, groupId),
+				StringPool.SLASH,
 				jsonObject.getString("externalReferenceCode")),
 			Http.Method.PUT);
 

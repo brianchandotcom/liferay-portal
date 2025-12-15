@@ -161,7 +161,10 @@ public class SegmentsExperienceUtilTest {
 			).put(
 				"priority", segmentsExperience.getPriority()
 			).put(
-				"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
+				"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
+			).put(
+				"segmentsEntryScopeERC",
+				segmentsExperience.getSegmentsEntryScopeERC()
 			).put(
 				"segmentsExperienceId",
 				segmentsExperience.getSegmentsExperienceId()
@@ -262,9 +265,15 @@ public class SegmentsExperienceUtilTest {
 		);
 
 		Mockito.when(
-			segmentsExperience.getSegmentsEntryId()
+			segmentsExperience.getSegmentsEntryERC()
 		).thenReturn(
-			RandomTestUtil.randomLong()
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			segmentsExperience.getSegmentsEntryScopeERC()
+		).thenReturn(
+			null
 		);
 
 		Mockito.when(

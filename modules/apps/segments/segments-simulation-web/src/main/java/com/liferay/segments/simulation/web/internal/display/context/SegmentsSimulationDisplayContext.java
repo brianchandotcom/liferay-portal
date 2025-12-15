@@ -32,6 +32,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Eduardo García
@@ -138,18 +139,8 @@ public class SegmentsSimulationDisplayContext {
 				"active", _isActive(segmentsExperience, segmentsExperiences)
 			).put(
 				"segmentsEntryName",
-				() -> {
-					SegmentsEntry segmentsEntry =
-						_segmentsEntryLocalService.fetchSegmentsEntry(
-							segmentsExperience.getSegmentsEntryId());
-
-					if (segmentsEntry != null) {
-						return segmentsEntry.getName(_themeDisplay.getLocale());
-					}
-
-					return SegmentsEntryConstants.getDefaultSegmentsEntryName(
-						_themeDisplay.getLocale());
-				}
+				segmentsExperience.getSegmentsEntryName(
+					_themeDisplay.getLocale())
 			).put(
 				"segmentsExperienceId",
 				segmentsExperience.getSegmentsExperienceId()
@@ -191,10 +182,12 @@ public class SegmentsSimulationDisplayContext {
 		List<SegmentsExperience> segmentsExperiences) {
 
 		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
-			if ((curSegmentsExperience.getSegmentsEntryId() ==
-					segmentsExperience.getSegmentsEntryId()) ||
-				(curSegmentsExperience.getSegmentsEntryId() ==
-					SegmentsEntryConstants.ID_DEFAULT)) {
+			if ((Objects.equals(
+					curSegmentsExperience.getSegmentsEntryERC(),
+					segmentsExperience.getSegmentsEntryERC()) &&
+				 (curSegmentsExperience.getSegmentsEntryGroupId() ==
+					 segmentsExperience.getSegmentsEntryGroupId())) ||
+				curSegmentsExperience.hasDefaultSegmentsEntry()) {
 
 				if (curSegmentsExperience.getSegmentsExperienceId() ==
 						segmentsExperience.getSegmentsExperienceId()) {

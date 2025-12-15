@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -52,7 +53,9 @@ public class SegmentsExperimentRelTableReferenceDefinitionTest
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				layout.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				layout.getGroupId(), segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), layout.getGroupId()),
 				layout.getPlid());
 
 		_segmentsExperiment = SegmentsTestUtil.addSegmentsExperiment(

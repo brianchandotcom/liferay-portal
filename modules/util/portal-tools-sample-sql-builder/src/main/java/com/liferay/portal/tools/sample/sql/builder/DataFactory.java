@@ -316,6 +316,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
@@ -4305,7 +4306,8 @@ public class DataFactory {
 	}
 
 	public FragmentEntryLinkModel newFragmentEntryLinkModel(
-		LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel) {
+			LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel)
+		throws PortalException {
 
 		FragmentEntryLinkModel fragmentEntryLinkModel =
 			new FragmentEntryLinkModelImpl();
@@ -4330,7 +4332,9 @@ public class DataFactory {
 
 		fragmentEntryLinkModel.setFragmentEntryERC(
 			fragmentEntryModel.getExternalReferenceCode());
-		fragmentEntryLinkModel.setFragmentEntryScopeERC(null);
+		fragmentEntryLinkModel.setFragmentEntryScopeERC(
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntryModel.getGroupId(), layoutModel.getGroupId()));
 		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
 		fragmentEntryLinkModel.setCss(fragmentEntryModel.getCss());
@@ -6862,13 +6866,17 @@ public class DataFactory {
 	}
 
 	public SegmentsExperienceModel newSegmentsExperienceModel(
-		long groupId, long segmentsEntryId, long plid) {
+			long groupId, SegmentsEntryModel segmentsEntryModel, long plid)
+		throws PortalException {
 
 		Long index = _segmentsExperienceCounter.get();
 
 		return newSegmentsExperienceModel(
-			groupId, segmentsEntryId, _counter.getString(), plid,
-			"SampleExperience" + index, index.intValue());
+			groupId, segmentsEntryModel.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntryModel.getGroupId(), groupId),
+			_counter.getString(), plid, "SampleExperience" + index,
+			index.intValue());
 	}
 
 	public List<SegmentsExperienceModel> newSegmentsExperienceModels(
@@ -6880,7 +6888,7 @@ public class DataFactory {
 		for (LayoutModel layoutModel : layoutModels) {
 			segmentsExperienceModels.add(
 				newSegmentsExperienceModel(
-					layoutModel.getGroupId(), 0, "DEFAULT",
+					layoutModel.getGroupId(), "DEFAULT", null, "DEFAULT",
 					layoutModel.getPlid(), "Default", 0));
 		}
 
@@ -8641,8 +8649,8 @@ public class DataFactory {
 	}
 
 	protected SegmentsExperienceModel newSegmentsExperienceModel(
-		long groupId, long segmentsEntryId, String segmentsExperienceKey,
-		long plid, String name, int priority) {
+		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
+		String segmentsExperienceKey, long plid, String name, int priority) {
 
 		SegmentsExperienceModel segmentsExperienceModel =
 			new SegmentsExperienceModelImpl();
@@ -8665,7 +8673,8 @@ public class DataFactory {
 
 		// Other fields
 
-		segmentsExperienceModel.setSegmentsEntryId(segmentsEntryId);
+		segmentsExperienceModel.setSegmentsEntryERC(segmentsEntryERC);
+		segmentsExperienceModel.setSegmentsEntryScopeERC(segmentsEntryScopeERC);
 		segmentsExperienceModel.setSegmentsExperienceKey(segmentsExperienceKey);
 		segmentsExperienceModel.setPlid(plid);
 		segmentsExperienceModel.setName(

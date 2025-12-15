@@ -82,7 +82,7 @@ public class SegmentsExperienceModelListenerTest {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomLong(), _layout.getPlid(),
+				RandomTestUtil.randomString(), null, _layout.getPlid(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true), _serviceContext);
 

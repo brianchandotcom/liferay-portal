@@ -7,11 +7,21 @@ package com.liferay.segments.internal.processor;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ScopeUtil;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessor;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,9 +62,56 @@ public class DefaultSegmentsExperienceRequestProcessor
 			long[] segmentsEntryIds, long[] segmentsExperienceIds)
 		throws PortalException {
 
+		Map<String, List<String>> segmentsEntryScopeERCToEntriesMap =
+			new HashMap<>();
+
+		for (long segmentsEntryId : segmentsEntryIds) {
+			if (segmentsEntryId == SegmentsEntryConstants.ID_DEFAULT) {
+				segmentsEntryScopeERCToEntriesMap.computeIfAbsent(
+					null, k -> new ArrayList<>()
+				).add(
+					null
+				);
+
+				continue;
+			}
+
+			SegmentsEntry segmentsEntry =
+				_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
+
+			if (segmentsEntry == null) {
+				continue;
+			}
+
+			segmentsEntryScopeERCToEntriesMap.computeIfAbsent(
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), groupId),
+				k -> new ArrayList<>()
+			).add(
+				segmentsEntry.getExternalReferenceCode()
+			);
+		}
+
+		List<SegmentsExperience> segmentsExperiences = new ArrayList<>();
+
+		for (Map.Entry<String, List<String>> mapEntry :
+				segmentsEntryScopeERCToEntriesMap.entrySet()) {
+
+			String segmentsEntryScopeERC = mapEntry.getKey();
+
+			List<String> segmentsEntryERCs = mapEntry.getValue();
+
+			String[] segmentsEntryERCsArray = segmentsEntryERCs.toArray(
+				new String[0]);
+
+			segmentsExperiences.addAll(
+				_segmentsExperienceLocalService.getSegmentsExperiences(
+					groupId, segmentsEntryERCsArray, segmentsEntryScopeERC,
+					plid, true));
+		}
+
 		return TransformUtil.transformToLongArray(
-			_segmentsExperienceLocalService.getSegmentsExperiences(
-				groupId, segmentsEntryIds, plid, true),
+			segmentsExperiences,
 			segmentsExperience -> {
 				if (segmentsExperience.getPriority() < 0) {
 					return null;
@@ -63,6 +120,9 @@ public class DefaultSegmentsExperienceRequestProcessor
 				return segmentsExperience.getSegmentsExperienceId();
 			});
 	}
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -43,12 +44,27 @@ public class SegmentsExperienceUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+			throw new UnsupportedOperationException();
+		}
+
+		String segmentsEntryERC = null;
+		String segmentsEntryScopeERC = null;
+
+		SegmentsEntry segmentsEntry = _getSegmentsEntry(
+			layout.getCompanyId(), layout.getGroupId(),
+			pageExperience.getSegmentItemExternalReference());
+
+		if (segmentsEntry != null) {
+			segmentsEntryERC = segmentsEntry.getExternalReferenceCode();
+			segmentsEntryScopeERC = ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), layout.getGroupId());
+		}
+
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceServiceUtil.addSegmentsExperience(
 				pageExperience.getExternalReferenceCode(), layout.getGroupId(),
-				_getSegmentsEntryId(
-					layout.getCompanyId(), layout.getGroupId(),
-					pageExperience.getSegmentItemExternalReference()),
+				segmentsEntryERC, segmentsEntryScopeERC,
 				pageExperience.getKey(), layout.getPlid(),
 				LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
 				getPriority(pageExperience.getKey(), layout, priority), true,
@@ -111,11 +127,22 @@ public class SegmentsExperienceUtil {
 					segmentsExperiencePriority);
 		}
 
+		String segmentsEntryERC = null;
+		String segmentsEntryScopeERC = null;
+
+		SegmentsEntry segmentsEntry = _getSegmentsEntry(
+			segmentsExperience.getCompanyId(), segmentsExperience.getGroupId(),
+			pageExperience.getSegmentItemExternalReference());
+
+		if (segmentsEntry != null) {
+			segmentsEntryERC = segmentsEntry.getExternalReferenceCode();
+			segmentsEntryScopeERC = ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), layout.getGroupId());
+		}
+
 		return SegmentsExperienceServiceUtil.updateSegmentsExperience(
-			segmentsExperience.getSegmentsExperienceId(),
-			_getSegmentsEntryId(
-				layout.getCompanyId(), layout.getGroupId(),
-				pageExperience.getSegmentItemExternalReference()),
+			segmentsExperience.getSegmentsExperienceId(), segmentsEntryERC,
+			segmentsEntryScopeERC,
 			LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
 			true,
 			UnicodePropertiesBuilder.create(
@@ -173,12 +200,12 @@ public class SegmentsExperienceUtil {
 		return layoutStructure.toString();
 	}
 
-	private static long _getSegmentsEntryId(
+	private static SegmentsEntry _getSegmentsEntry(
 		long companyId, long scopeGroupId,
 		ItemExternalReference segmentItemExternalReference) {
 
 		if (segmentItemExternalReference == null) {
-			return 0;
+			return null;
 		}
 
 		Long itemGroupId = ItemScopeUtil.getItemGroupId(
@@ -198,7 +225,7 @@ public class SegmentsExperienceUtil {
 			throw new UnsupportedOperationException();
 		}
 
-		return segmentsEntry.getSegmentsEntryId();
+		return segmentsEntry;
 	}
 
 }

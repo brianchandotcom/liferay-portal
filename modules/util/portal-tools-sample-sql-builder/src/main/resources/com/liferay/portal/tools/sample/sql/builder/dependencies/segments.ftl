@@ -14,6 +14,6 @@
 	${dataFactory.toInsertSQL(layoutModel)}
 
 	<#list segmentsEntryModels as segmentsEntryModel>
-		${dataFactory.toInsertSQL(dataFactory.newSegmentsExperienceModel(guestGroupModel.groupId, segmentsEntryModel.segmentsEntryId, layoutModel.plid))}
+		${dataFactory.toInsertSQL(dataFactory.newSegmentsExperienceModel(guestGroupModel.groupId, segmentsEntryModel, layoutModel.plid))}
 	</#list>
 </#list>

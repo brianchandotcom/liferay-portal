@@ -4,5 +4,6 @@
 	"name_i18n": {
 		"en-US": "Segmentation by User Group"
 	},
-	"segmentsEntryId": "[$SEGMENTS_ENTRY_ID:SEGMENTATION-BY-USER-GROUP$]"
+	"segmentsEntryERC": "[$SEGMENTS_ENTRY_ERC:SEGMENTATION-BY-USER-GROUP$]",
+	"segmentsEntryScopeERC": "[$SEGMENTS_ENTRY_SCOPE_ERC:SEGMENTATION-BY-USER-GROUP$]"
 }

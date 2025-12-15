@@ -58,7 +58,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -375,10 +377,17 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				(SegmentsEntryLayoutListRetriever<ListObjectReference>)
 					layoutListRetriever;
 
-		if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
-				listObjectReference, segmentsExperience.getSegmentsEntryId())) {
+		SegmentsEntry segmentsEntry =
+			SegmentsEntryLocalServiceUtil.
+				fetchSegmentsEntryByExternalReferenceCode(
+					segmentsExperience.getSegmentsEntryERC(),
+					segmentsExperience.getSegmentsEntryGroupId());
 
-			return new long[] {segmentsExperience.getSegmentsEntryId()};
+		if ((segmentsEntry != null) &&
+			segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
+				listObjectReference, segmentsEntry.getSegmentsEntryId())) {
+
+			return new long[] {segmentsEntry.getSegmentsEntryId()};
 		}
 
 		return new long[] {

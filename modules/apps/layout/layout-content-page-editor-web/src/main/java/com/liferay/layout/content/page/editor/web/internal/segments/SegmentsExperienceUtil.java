@@ -116,8 +116,15 @@ public class SegmentsExperienceUtil {
 				).put(
 					"priority", segmentsExperience.getPriority()
 				).put(
-					"segmentsEntryId",
-					String.valueOf(segmentsExperience.getSegmentsEntryId())
+					"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
+				).put(
+					"segmentsEntryGroupId",
+					segmentsExperience.getSegmentsEntryGroupId()
+				).put(
+					"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
+				).put(
+					"segmentsEntryScopeERC",
+					segmentsExperience.getSegmentsEntryScopeERC()
 				).put(
 					"segmentsExperienceId",
 					String.valueOf(segmentsExperience.getSegmentsExperienceId())
@@ -151,7 +158,14 @@ public class SegmentsExperienceUtil {
 		).put(
 			"priority", segmentsExperience.getPriority()
 		).put(
+			"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
+		).put(
+			"segmentsEntryGroupId", segmentsExperience.getSegmentsEntryGroupId()
+		).put(
 			"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
+		).put(
+			"segmentsEntryScopeERC",
+			segmentsExperience.getSegmentsEntryScopeERC()
 		).put(
 			"segmentsExperienceId", segmentsExperience.getSegmentsExperienceId()
 		);

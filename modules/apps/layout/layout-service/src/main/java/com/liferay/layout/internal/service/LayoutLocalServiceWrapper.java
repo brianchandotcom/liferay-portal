@@ -796,8 +796,10 @@ public class LayoutLocalServiceWrapper
 						SegmentsExperienceConstants.KEY_DEFAULT,
 						targetSegmentsExperience.getSegmentsExperienceKey())) {
 
-					targetSegmentsExperience.setSegmentsEntryId(
-						sourceSegmentsExperience.getSegmentsEntryId());
+					targetSegmentsExperience.setSegmentsEntryERC(
+						sourceSegmentsExperience.getSegmentsEntryERC());
+					targetSegmentsExperience.setSegmentsEntryScopeERC(
+						sourceSegmentsExperience.getSegmentsEntryScopeERC());
 					targetSegmentsExperience.setPriority(minPriority++);
 
 					_segmentsExperienceLocalService.updateSegmentsExperience(

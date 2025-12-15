@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -200,8 +201,19 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments entry
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			int count = _segmentsExperiencePersistence.countBySegmentsEntryId(
-				segmentsEntry.getSegmentsEntryId());
+			int count = _segmentsExperiencePersistence.countBySEERC_SESERC(
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), 0));
+
+			if (count == 0) {
+				count = _segmentsExperiencePersistence.countByG_SEERC_SESERC(
+					segmentsEntry.getGroupId(),
+					segmentsEntry.getExternalReferenceCode(),
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						segmentsEntry.getGroupId(),
+						segmentsEntry.getGroupId()));
+			}
 
 			if (count > 0) {
 				throw new RequiredSegmentsEntryException.
@@ -220,7 +232,15 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments experiences
 
 		_segmentsExperienceLocalService.deleteSegmentsEntrySegmentsExperiences(
-			segmentsEntry.getSegmentsEntryId());
+			segmentsEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), 0));
+
+		_segmentsExperienceLocalService.deleteSegmentsEntrySegmentsExperiences(
+			segmentsEntry.getGroupId(),
+			segmentsEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), segmentsEntry.getGroupId()));
 
 		// Segments rels
 

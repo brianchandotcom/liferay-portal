@@ -70,13 +70,16 @@ public class PageExperienceDTOConverter
 				setPriority(segmentsExperience::getPriority);
 				setSegmentItemExternalReference(
 					() -> {
-						if (segmentsExperience.getSegmentsEntryId() == 0) {
+						if (segmentsExperience.hasDefaultSegmentsEntry()) {
 							return null;
 						}
 
 						SegmentsEntry segmentsEntry =
-							_segmentsEntryLocalService.fetchSegmentsEntry(
-								segmentsExperience.getSegmentsEntryId());
+							_segmentsEntryLocalService.
+								fetchSegmentsEntryByExternalReferenceCode(
+									segmentsExperience.getSegmentsEntryERC(),
+									segmentsExperience.
+										getSegmentsEntryGroupId());
 
 						if (segmentsEntry == null) {
 							throw new UnsupportedOperationException();

@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -76,12 +77,13 @@ import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -460,7 +462,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		SegmentsExperience segmentsExperience1 =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), layout.getGroupId(),
-				segmentsEntry1.getSegmentsEntryId(), layout.getPlid(),
+				segmentsEntry1.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry1.getGroupId(), layout.getGroupId()),
+				layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
@@ -472,7 +477,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		SegmentsExperience segmentsExperience2 =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), layout.getGroupId(),
-				segmentsEntry2.getSegmentsEntryId(), layout.getPlid(),
+				segmentsEntry2.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry2.getGroupId(), layout.getGroupId()),
+				layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
@@ -499,15 +507,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
-		SegmentsExperience defaultSegmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				_group.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				layout.getPlid());
-
 		_assetListEntryLocalService.addAssetEntrySelections(
 			assetListEntry.getAssetListEntryId(),
 			new long[] {assetEntry1.getEntryId()},
-			defaultSegmentsExperience.getSegmentsEntryId(), _serviceContext);
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
 		_assetListEntryLocalService.addAssetEntrySelections(
 			assetListEntry.getAssetListEntryId(),
@@ -758,6 +761,9 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

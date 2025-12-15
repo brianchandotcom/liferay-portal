@@ -11,6 +11,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.model.SegmentsEntry;
@@ -47,7 +48,9 @@ public class SegmentsExperimentTableReferenceDefinitionTest
 			layout.getGroupId());
 
 		_segmentsExperience = SegmentsTestUtil.addSegmentsExperience(
-			layout.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+			layout.getGroupId(), segmentsEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), layout.getGroupId()),
 			layout.getPlid());
 	}
 

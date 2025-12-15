@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -89,7 +90,10 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(),
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
 				_layout.getPlid(),
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(), "Experience"),
@@ -126,8 +130,11 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 			segmentsExperience.getPriority() - 1,
 			segmentsExperienceJSONObject.getInt("priority"));
 		Assert.assertEquals(
-			segmentsExperience.getSegmentsEntryId(),
-			segmentsExperienceJSONObject.getLong("segmentsEntryId"));
+			segmentsExperience.getSegmentsEntryERC(),
+			segmentsExperienceJSONObject.getString("segmentsEntryERC"));
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperienceJSONObject.getString("segmentsEntryScopeERC"));
 		Assert.assertTrue(
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId") > 0);
 

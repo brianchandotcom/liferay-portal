@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -83,8 +82,10 @@ public class SegmentsExperienceStagedModelDataHandler
 			group.isStagedPortlet(SegmentsPortletKeys.SEGMENTS)) {
 
 			SegmentsEntry segmentsEntry =
-				_segmentsEntryLocalService.fetchSegmentsEntry(
-					segmentsExperience.getSegmentsEntryId());
+				_segmentsEntryLocalService.
+					fetchSegmentsEntryByExternalReferenceCode(
+						segmentsExperience.getSegmentsEntryERC(),
+						segmentsExperience.getSegmentsEntryGroupId());
 
 			if (segmentsEntry != null) {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -130,14 +131,6 @@ public class SegmentsExperienceStagedModelDataHandler
 			SegmentsExperience segmentsExperience)
 		throws Exception {
 
-		Map<Long, Long> segmentsEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				SegmentsEntry.class);
-
-		long segmentsEntryId = MapUtil.getLong(
-			segmentsEntryIds, segmentsExperience.getSegmentsEntryId(),
-			SegmentsEntryConstants.ID_DEFAULT);
-
 		Map<Long, Long> referenceClassPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class.getName());
@@ -153,7 +146,10 @@ public class SegmentsExperienceStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 		importedSegmentsExperience.setCompanyId(
 			portletDataContext.getCompanyId());
-		importedSegmentsExperience.setSegmentsEntryId(segmentsEntryId);
+		importedSegmentsExperience.setSegmentsEntryERC(
+			segmentsExperience.getSegmentsEntryERC());
+		importedSegmentsExperience.setSegmentsEntryScopeERC(
+			segmentsExperience.getSegmentsEntryScopeERC());
 		importedSegmentsExperience.setPlid(referenceClassPK);
 
 		SegmentsExperience existingSegmentsExperience =

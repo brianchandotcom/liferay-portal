@@ -8,6 +8,7 @@ package com.liferay.segments.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryTable;
@@ -29,9 +30,40 @@ public class SegmentsEntryTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<SegmentsEntryTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.singleColumnReference(
-			SegmentsEntryTable.INSTANCE.segmentsEntryId,
-			SegmentsExperienceTable.INSTANCE.segmentsEntryId
+		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				SegmentsExperienceTable.INSTANCE
+			).innerJoinON(
+				SegmentsEntryTable.INSTANCE,
+				SegmentsExperienceTable.INSTANCE.segmentsEntryERC.eq(
+					SegmentsEntryTable.INSTANCE.externalReferenceCode
+				).and(
+					SegmentsExperienceTable.INSTANCE.segmentsEntryScopeERC.eq(
+						(String)null)
+				).and(
+					SegmentsExperienceTable.INSTANCE.groupId.eq(
+						SegmentsEntryTable.INSTANCE.groupId)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				SegmentsExperienceTable.INSTANCE
+			).innerJoinON(
+				SegmentsEntryTable.INSTANCE,
+				SegmentsExperienceTable.INSTANCE.segmentsEntryERC.eq(
+					SegmentsEntryTable.INSTANCE.externalReferenceCode)
+			).innerJoinON(
+				GroupTable.INSTANCE,
+				SegmentsExperienceTable.INSTANCE.segmentsEntryScopeERC.eq(
+					GroupTable.INSTANCE.externalReferenceCode
+				).and(
+					SegmentsExperienceTable.INSTANCE.companyId.eq(
+						GroupTable.INSTANCE.companyId)
+				).and(
+					GroupTable.INSTANCE.groupId.eq(
+						SegmentsEntryTable.INSTANCE.groupId)
+				)
+			)
 		).resourcePermissionReference(
 			SegmentsEntryTable.INSTANCE.segmentsEntryId, SegmentsEntry.class
 		);

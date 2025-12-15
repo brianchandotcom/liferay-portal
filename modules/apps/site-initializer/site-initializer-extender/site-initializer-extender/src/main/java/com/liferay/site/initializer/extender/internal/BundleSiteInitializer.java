@@ -194,6 +194,7 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -3853,6 +3854,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			stringUtilReplaceValues.put(
 				"SEGMENTS_ENTRY_ID:" + segmentsEntry.getSegmentsEntryKey(),
 				String.valueOf(segmentsEntry.getSegmentsEntryId()));
+			stringUtilReplaceValues.put(
+				"SEGMENTS_ENTRY_ERC:" + segmentsEntry.getSegmentsEntryKey(),
+				segmentsEntry.getExternalReferenceCode());
+			stringUtilReplaceValues.put(
+				"SEGMENTS_ENTRY_SCOPE_ERC:" +
+					segmentsEntry.getSegmentsEntryKey(),
+				GetterUtil.getString(
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						segmentsEntry.getGroupId(),
+						serviceContext.getScopeGroupId())));
 		}
 	}
 
@@ -4507,7 +4518,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_segmentsExperienceLocalService.appendSegmentsExperience(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
-					jsonObject.getLong("segmentsEntryId"),
+					jsonObject.getString("segmentsEntryERC"),
+					jsonObject.getString("segmentsEntryScopeERC"),
 					draftLayout.getPlid(),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),

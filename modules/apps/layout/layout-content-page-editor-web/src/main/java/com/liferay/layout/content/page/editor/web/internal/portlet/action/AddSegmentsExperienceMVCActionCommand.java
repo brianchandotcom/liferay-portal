@@ -146,7 +146,8 @@ public class AddSegmentsExperienceMVCActionCommand
 
 			return _segmentsExperienceService.appendSegmentsExperience(
 				serviceContext.getScopeGroupId(),
-				segmentsExperience.getSegmentsEntryId(), plid,
+				segmentsExperience.getSegmentsEntryERC(),
+				segmentsExperience.getSegmentsEntryScopeERC(), plid,
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(),
 					ParamUtil.getString(actionRequest, "name")),
@@ -155,7 +156,8 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		return _segmentsExperienceService.addSegmentsExperience(
 			null, serviceContext.getScopeGroupId(),
-			ParamUtil.getLong(actionRequest, "segmentsEntryId"), plid,
+			ParamUtil.getString(actionRequest, "segmentsEntryERC"),
+			ParamUtil.getString(actionRequest, "segmentsEntryScopeERC"), plid,
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
 				ParamUtil.getString(actionRequest, "name")),
@@ -281,8 +283,10 @@ public class AddSegmentsExperienceMVCActionCommand
 		SegmentsExperience newSegmentsExperience =
 			_segmentsExperienceService.appendSegmentsExperience(
 				serviceContext.getScopeGroupId(),
-				segmentsExperience.getSegmentsEntryId(), draftLayout.getPlid(),
-				segmentsExperience.getNameMap(), false, serviceContext);
+				segmentsExperience.getSegmentsEntryERC(),
+				segmentsExperience.getSegmentsEntryScopeERC(),
+				draftLayout.getPlid(), segmentsExperience.getNameMap(), false,
+				serviceContext);
 
 		newSegmentsExperience.setSegmentsExperienceKey(
 			segmentsExperience.getSegmentsExperienceKey());

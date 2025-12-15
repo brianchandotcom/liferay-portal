@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.RequiredSegmentsExperienceException;
@@ -67,8 +66,7 @@ public class SegmentsExperienceLocalServiceImpl
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		return addSegmentsExperience(
-			externalReferenceCode, userId, layout.getGroupId(),
-			SegmentsEntryConstants.ID_DEFAULT,
+			externalReferenceCode, userId, layout.getGroupId(), null, null,
 			SegmentsExperienceConstants.KEY_DEFAULT, layout.getPlid(),
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
@@ -200,7 +198,7 @@ public class SegmentsExperienceLocalServiceImpl
 		throws PortalException {
 
 		List<SegmentsExperience> segmentsExperiences =
-			segmentsExperiencePersistence.findByG_SERC_SSERC(
+			segmentsExperiencePersistence.findByG_SEERC_SESERC(
 				groupId, segmentsEntryERC, segmentsEntryScopeERC);
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {

@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -331,7 +332,9 @@ public class GetPageContentMVCResourceCommandTest {
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
+				_group.getGroupId(), SegmentsEntryConstants.KEY_DEFAULT,
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					_layout.getGroupId(), _group.getGroupId()),
 				_layout.getPlid());
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(

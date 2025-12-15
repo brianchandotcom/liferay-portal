@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.manager.SegmentsExperienceManager;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -34,6 +32,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -148,21 +147,17 @@ public class SegmentsExperienceSelectorDisplayContext {
 		return JSONUtil.put(
 			"active", segmentsExperienceIsActive
 		).put(
+			"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
+		).put(
+			"segmentsEntryGroupId", segmentsExperience.getSegmentsEntryGroupId()
+		).put(
 			"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
 		).put(
 			"segmentsEntryName",
-			() -> {
-				SegmentsEntry segmentsEntry =
-					_segmentsEntryLocalService.fetchSegmentsEntry(
-						segmentsExperience.getSegmentsEntryId());
-
-				if (segmentsEntry != null) {
-					return segmentsEntry.getName(_themeDisplay.getLocale());
-				}
-
-				return SegmentsEntryConstants.getDefaultSegmentsEntryName(
-					_themeDisplay.getLocale());
-			}
+			segmentsExperience.getSegmentsEntryName(_themeDisplay.getLocale())
+		).put(
+			"segmentsEntryScopeERC",
+			segmentsExperience.getSegmentsEntryScopeERC()
 		).put(
 			"segmentsExperienceId", segmentsExperience.getSegmentsExperienceId()
 		).put(
@@ -257,10 +252,12 @@ public class SegmentsExperienceSelectorDisplayContext {
 		List<SegmentsExperience> segmentsExperiences) {
 
 		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
-			if ((curSegmentsExperience.getSegmentsEntryId() ==
-					segmentsExperience.getSegmentsEntryId()) ||
-				(curSegmentsExperience.getSegmentsEntryId() ==
-					SegmentsEntryConstants.ID_DEFAULT)) {
+			if ((Objects.equals(
+					curSegmentsExperience.getSegmentsEntryERC(),
+					segmentsExperience.getSegmentsEntryERC()) &&
+				 (curSegmentsExperience.getSegmentsEntryGroupId() ==
+					 segmentsExperience.getSegmentsEntryGroupId())) ||
+				curSegmentsExperience.hasDefaultSegmentsEntry()) {
 
 				if (curSegmentsExperience.getSegmentsExperienceId() ==
 						segmentsExperience.getSegmentsExperienceId()) {

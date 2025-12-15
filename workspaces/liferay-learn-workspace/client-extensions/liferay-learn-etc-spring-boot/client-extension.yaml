@@ -1,4 +1,5 @@
 assemble:
+    -   from: assets
     -   fromTask: bootJar
 liferay-learn-etc-spring-boot-oahs:
     .serviceAddress: localhost:58081

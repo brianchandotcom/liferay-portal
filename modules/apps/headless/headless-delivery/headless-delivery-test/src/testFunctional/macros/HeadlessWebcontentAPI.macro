@@ -72,7 +72,8 @@ definition {
 								"data": "${content}"
 							},
 							"contentFieldValue_i18n": ${contentMap},
-							"name": "content"
+							"name": "content",
+							"fieldReference": "content"
 						}
 					],
 					"contentStructureId": ${structureId},

@@ -169,8 +169,8 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 
 		updateScopes(oAuth2Application, scopeAliasesList);
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
+		if (_log.isDebugEnabled()) {
+			_log.debug(
 				StringBundler.concat(
 					"OAuth 2 application with external reference code ",
 					oAuth2Application.getExternalReferenceCode(),

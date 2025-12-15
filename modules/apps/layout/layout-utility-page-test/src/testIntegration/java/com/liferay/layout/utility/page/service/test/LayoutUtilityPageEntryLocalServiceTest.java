@@ -13,6 +13,8 @@ import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryCo
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -82,11 +84,13 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 	@Test
 	@TestInfo("LPD-71983")
 	public void testAddLayoutUtilityPageEntry() throws Exception {
+		String name = String.valueOf(RandomTestUtil.nextInt());
+
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
-				true, String.valueOf(RandomTestUtil.nextInt()),
-				RandomTestUtil.randomString(), null, _serviceContext);
+				true, name, RandomTestUtil.randomString(), null,
+				_serviceContext);
 
 		Assert.assertTrue(
 			Validator.isNotNull(
@@ -95,6 +99,9 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		Layout layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
 
+		Assert.assertEquals(
+			StringBundler.concat(StringPool.SLASH, name, StringPool.DASH, 1),
+			layout.getFriendlyURL());
 		Assert.assertTrue(layout.isPublished());
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, layout.getStatus());

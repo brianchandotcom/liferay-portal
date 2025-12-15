@@ -20,6 +20,7 @@ import {
 	sortCSVHeaderAndSingleRow,
 } from '../../../utils/fileReader';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 import {
 	OBJECT_DEFINITION_TYPE,
@@ -501,6 +502,73 @@ const siteObjectDefinition: ObjectDefinition = {
 	scope: 'site',
 	status: {code: 0},
 };
+
+test('Admin users can see all site scopes regardless of site membership', async ({
+	apiHelpers,
+	dataMigrationCenterPage,
+	page,
+}) => {
+	let site: Site;
+
+	await test.step('Setup Site, site scoped object and admin user', async () => {
+		site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				siteObjectDefinition
+			);
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const adminUser = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[adminUser.alternateName] = {
+			name: adminUser.givenName,
+			password: 'test',
+			surname: adminUser.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			adminUser.id
+		);
+
+		await performUserSwitch(page, adminUser.alternateName);
+	});
+
+	await test.step('Navigate to import and check site scope object definition', async () => {
+		await dataMigrationCenterPage.goto();
+		await dataMigrationCenterPage.goToImportFile();
+		await dataMigrationCenterPage.selectEntityType(
+			OBJECT_ENTRY_ENTITY_TYPE
+		);
+	});
+
+	await test.step('Assert all scopes are visible', async () => {
+		const scopeInnerText = await dataMigrationCenterPage.page
+			.getByLabel('Scope')
+			.innerText();
+
+		const scopesArray = scopeInnerText.split('\n');
+
+		expect(scopesArray).toEqual(
+			expect.arrayContaining([site.name, 'Global', 'Liferay DXP'])
+		);
+	});
+});
 
 test('can download custom object sample file', async ({
 	apiHelpers,

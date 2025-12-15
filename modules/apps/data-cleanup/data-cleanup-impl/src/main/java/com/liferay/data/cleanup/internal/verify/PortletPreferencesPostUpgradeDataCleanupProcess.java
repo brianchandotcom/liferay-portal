@@ -98,12 +98,10 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 				}
 			}
 
-			if (_deletePortlets) {
-				UpgradeProcess upgradeProcess = new PortletUpgradeProcess(
-					portletIds);
+			UpgradeProcess upgradeProcess = new PortletUpgradeProcess(
+				portletIds, !_deletePortlets);
 
-				upgradeProcess.upgrade();
-			}
+			upgradeProcess.upgrade();
 		}
 
 		if (_deletePortlets) {
@@ -131,8 +129,9 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 	private static class PortletUpgradeProcess
 		extends DataCleanupPreupgradeProcess {
 
-		public PortletUpgradeProcess(Set<String> portletIds) {
+		public PortletUpgradeProcess(Set<String> portletIds, boolean readOnly) {
 			_portletIds = portletIds;
+			_readOnly = readOnly;
 		}
 
 		@Override
@@ -169,6 +168,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 							"portletId, 1, INSTR([$SOURCE_TABLE_ALIAS$].",
 							"portletId, '_USER_') - 1) ELSE ",
 							"[$SOURCE_TABLE_ALIAS$].portletId END")),
+					_readOnly,
 					"[$SOURCE_TABLE_ALIAS$].ownerType = " +
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 					"portletId", "PortletPreferences", "portletId",
@@ -178,6 +178,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 		}
 
 		private final Set<String> _portletIds;
+		private final boolean _readOnly;
 
 	}
 

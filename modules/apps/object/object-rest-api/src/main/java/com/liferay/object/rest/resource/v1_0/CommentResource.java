@@ -60,7 +60,6 @@ public interface CommentResource {
 				String externalReferenceCode,
 				String commentExternalReferenceCode, String search,
 				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
@@ -69,7 +68,6 @@ public interface CommentResource {
 			getByExternalReferenceCodeCommentsPage(
 				String externalReferenceCode, String search,
 				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
@@ -85,7 +83,6 @@ public interface CommentResource {
 				String scopeKey, String externalReferenceCode,
 				String commentExternalReferenceCode, String search,
 				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
@@ -94,7 +91,6 @@ public interface CommentResource {
 			getScopeScopeKeyByExternalReferenceCodeCommentsPage(
 				String scopeKey, String externalReferenceCode, String search,
 				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;

@@ -63,7 +63,6 @@ public class TaxonomyCategoryImportTaskPreActionTest {
 
 		_localAssetVocabulary = _getAssetVocabulary(
 			externalReferenceCode, _localGroup.getGroupId(), title);
-
 		_targetAssetVocabulary = _getAssetVocabulary(
 			externalReferenceCode, _targetGroup.getGroupId(), title);
 	}

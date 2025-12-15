@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v7_1_0.test;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -38,7 +37,7 @@ import org.junit.runner.RunWith;
  * @author Yuri Monteiro
  */
 @RunWith(Arquillian.class)
-public class DDMFacetTemplateVersionUpgradeProcessTest {
+public class DDMFacetTemplateUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -49,29 +48,6 @@ public class DDMFacetTemplateVersionUpgradeProcessTest {
 	public void testUpgrade() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		String newClassName =
-			"com.liferay.portal.search.web.internal.custom.facet.portlet." +
-				"CustomFacetPortlet";
-
-		long newClassNameId = _classNameLocalService.getClassNameId(
-			newClassName);
-
-		long resourceClassNameId = _classNameLocalService.getClassNameId(
-			"com.liferay.portlet.display.template.PortletDisplayTemplate");
-
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
-			null, TestPropsValues.getUserId(), group.getGroupId(),
-			newClassNameId, 0, resourceClassNameId,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
-			DDMTemplateConstants.TEMPLATE_MODE_EDIT, "freemarker",
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
-		DDMTemplateVersion ddmTemplateVersion =
-			ddmTemplate.getTemplateVersion();
-
 		String oldClassName =
 			"com.liferay.portal.search.web.internal.custom.facet.display." +
 				"context.CustomFacetTermDisplayContext";
@@ -79,11 +55,23 @@ public class DDMFacetTemplateVersionUpgradeProcessTest {
 		long oldClassNameId = _classNameLocalService.getClassNameId(
 			oldClassName);
 
-		ddmTemplateVersion.setClassNameId(oldClassNameId);
+		long resourceClassNameId = _classNameLocalService.getClassNameId(
+			"com.liferay.portlet.display.template.PortletDisplayTemplate");
 
-		ddmTemplateVersion =
-			_ddmTemplateVersionLocalService.updateDDMTemplateVersion(
-				ddmTemplateVersion);
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			oldClassNameId, 0, resourceClassNameId,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateConstants.TEMPLATE_MODE_EDIT, "freemarker",
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertEquals(oldClassNameId, ddmTemplate.getClassNameId());
+
+		DDMTemplateVersion ddmTemplateVersion =
+			ddmTemplate.getTemplateVersion();
 
 		Assert.assertEquals(
 			oldClassNameId, ddmTemplateVersion.getClassNameId());
@@ -99,6 +87,18 @@ public class DDMFacetTemplateVersionUpgradeProcessTest {
 			_entityCache.clearCache();
 		}
 
+		String newClassName =
+			"com.liferay.portal.search.web.internal.custom.facet.portlet." +
+				"CustomFacetPortlet";
+
+		long newClassNameId = _classNameLocalService.getClassNameId(
+			newClassName);
+
+		ddmTemplate = _ddmTemplateLocalService.getDDMTemplate(
+			ddmTemplate.getTemplateId());
+
+		Assert.assertEquals(newClassNameId, ddmTemplate.getClassNameId());
+
 		ddmTemplateVersion = ddmTemplate.getTemplateVersion();
 
 		Assert.assertEquals(
@@ -106,8 +106,8 @@ public class DDMFacetTemplateVersionUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.mapping.internal.upgrade.v7_1_0." +
-			"DDMFacetTemplateVersionUpgradeProcess";
+		"com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_0." +
+			"DDMFacetTemplateUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
@@ -119,9 +119,6 @@ public class DDMFacetTemplateVersionUpgradeProcessTest {
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Inject
-	private DDMTemplateVersionLocalService _ddmTemplateVersionLocalService;
 
 	@Inject
 	private EntityCache _entityCache;

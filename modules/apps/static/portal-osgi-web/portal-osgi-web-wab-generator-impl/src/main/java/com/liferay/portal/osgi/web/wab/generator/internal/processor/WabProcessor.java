@@ -376,6 +376,13 @@ public class WabProcessor {
 
 					siteInitializerDetected = true;
 				}
+				else if (Objects.equals(
+							name, "META-INF/marketplace.properties")) {
+
+					Files.copy(
+						zipFile.getInputStream(zipEntry),
+						clientExtensionBundlePath.resolve(name));
+				}
 			}
 
 			if (batchDetected) {

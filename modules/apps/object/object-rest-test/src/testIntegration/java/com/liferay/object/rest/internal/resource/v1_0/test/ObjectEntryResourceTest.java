@@ -8197,15 +8197,6 @@ public class ObjectEntryResourceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[0], serviceContext);
 
-		_systemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager("User");
-
-		_userSystemObjectDefinition =
-			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				TestPropsValues.getCompanyId(),
-				_systemObjectDefinitionManager.getName());
-
 		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_userSystemObjectDefinition, _objectDefinition1,
 			TestPropsValues.getUserId(),
@@ -8229,11 +8220,9 @@ public class ObjectEntryResourceTest {
 				_objectRelationship1.getName()),
 			Http.Method.GET);
 
-		JSONObject relationshipJSONObject = jsonObject2.getJSONObject(
-			_objectRelationship1.getName());
-
-		JSONArray customFieldsJSONArray = relationshipJSONObject.getJSONArray(
-			"customFields");
+		JSONArray customFieldsJSONArray = JSONUtil.getValueAsJSONArray(
+			jsonObject2, "JSONObject/" + _objectRelationship1.getName(),
+			"JSONArray/customFields");
 
 		Assert.assertEquals(1, customFieldsJSONArray.length());
 

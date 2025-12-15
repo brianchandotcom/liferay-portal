@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.Serializable;
@@ -45,7 +46,9 @@ import org.junit.runner.RunWith;
 /**
  * @author Petteri Karttunen
  */
-@FeatureFlag("LPD-35914")
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
+)
 @RunWith(Arquillian.class)
 public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 

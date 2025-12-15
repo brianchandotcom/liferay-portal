@@ -93,6 +93,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
@@ -491,7 +492,11 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				_accountEntry.getAccountEntryId(), "-"));
 	}
 
-	@FeatureFlag("LPD-35914")
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-35443"), @FeatureFlag(value = "LPD-35914")
+		}
+	)
 	@LazyReferencing
 	@Override
 	@Test

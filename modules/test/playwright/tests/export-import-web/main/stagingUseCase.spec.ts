@@ -36,6 +36,7 @@ import {unzipAndCheckFolder} from './utils/stagingUtil';
 const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-35443': {enabled: true},
 		'LPD-35914': {enabled: true},
 	}),
 	loginTest(),
@@ -58,6 +59,7 @@ const test = mergeTests(
 const testWithBatchStagingFF = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-35443': {enabled: true},
 		'LPD-35914': {enabled: true},
 		'LPD-41367': {enabled: true},
 	}),

@@ -67,7 +67,8 @@ public class AssetTagsPortletDataHandlerTest
 
 	@FeatureFlags(
 		featureFlags = {
-			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-35914")
+			@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443"),
+			@FeatureFlag("LPD-35914")
 		}
 	)
 	@Test
@@ -115,7 +116,8 @@ public class AssetTagsPortletDataHandlerTest
 
 	@FeatureFlags(
 		featureFlags = {
-			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-35914")
+			@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443"),
+			@FeatureFlag("LPD-35914")
 		}
 	)
 	@Test

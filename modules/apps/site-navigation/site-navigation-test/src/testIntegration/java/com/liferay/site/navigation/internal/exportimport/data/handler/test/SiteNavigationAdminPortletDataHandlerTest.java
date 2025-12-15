@@ -49,7 +49,10 @@ import org.junit.runner.RunWith;
  * @author Jonathan McCann
  */
 @FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-35914"), @FeatureFlag("LPD-66179")}
+	featureFlags = {
+		@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914"),
+		@FeatureFlag("LPD-66179")
+	}
 )
 @RunWith(Arquillian.class)
 public class SiteNavigationAdminPortletDataHandlerTest {

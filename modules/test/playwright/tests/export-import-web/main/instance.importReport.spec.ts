@@ -21,6 +21,7 @@ export const test = mergeTests(
 	exportImportPagesTest,
 	companyExportImportPageTest,
 	featureFlagsTest({
+		'LPD-35443': {enabled: true},
 		'LPD-35914': {enabled: true},
 	}),
 	loginTest()

@@ -29,6 +29,7 @@ export const baseTest = mergeTests(
 export const test = mergeTests(
 	baseTest,
 	featureFlagsTest({
+		'LPD-35443': {enabled: false},
 		'LPD-35914': {enabled: false},
 	})
 );
@@ -36,6 +37,7 @@ export const test = mergeTests(
 export const testWithExportImportAtInstanceLevelFF = mergeTests(
 	baseTest,
 	featureFlagsTest({
+		'LPD-35443': {enabled: true},
 		'LPD-35914': {enabled: true},
 	})
 );

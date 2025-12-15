@@ -80,11 +80,12 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-71983")
 	public void testAddLayoutUtilityPageEntry() throws Exception {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
-				true, RandomTestUtil.randomString(),
+				true, String.valueOf(RandomTestUtil.nextInt()),
 				RandomTestUtil.randomString(), null, _serviceContext);
 
 		Assert.assertTrue(

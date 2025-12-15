@@ -1,0 +1,30 @@
+{
+	"keys": [
+		"action.HELP",
+		"ai-creator",
+		"an-unexpected-error-occurred-while-uploading-your-file",
+		"audio",
+		"audio-properties",
+		"authentication-is-needed-to-use-this-feature.-contact-your-administrator-to-add-an-api-key-in-instance-or-site-settings",
+		"cited-work",
+		"computer-code",
+		"configure-openai",
+		"create-ai-content",
+		"edit-audio",
+		"edit-video",
+		"enter-a-valid-url",
+		"heading-x",
+		"height-field-cannot-be-empty",
+		"line-height",
+		"normal",
+		"preformatted-text",
+		"restore-the-original-content",
+		"select-item",
+		"sorry,-this-platform-is-not-supported",
+		"video",
+		"video-field-cannot-be-empty",
+		"video-playback-is-disabled-during-edit-mode",
+		"video-properties",
+		"width-field-cannot-be-empty"
+	]
+}

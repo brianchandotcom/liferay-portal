@@ -12,6 +12,7 @@ import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadata
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientASLocalMetadataLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import com.nimbusds.oauth2.sdk.GrantType;
 import com.nimbusds.oauth2.sdk.Scope;
@@ -124,47 +126,28 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			long userId, String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
-		AuthorizationServerMetadata authorizationServerMetadata =
-			_parseAuthorizationServerMetadata(metadataJSON, wellKnownURISuffix);
+		OIDCProviderMetadata authorizationServerMetadata =
+			(OIDCProviderMetadata)_parseAuthorizationServerMetadata(
+				metadataJSON, wellKnownURISuffix);
 
-		String localWellKnownURI = _generateLocalWellKnownURI(
-			String.valueOf(authorizationServerMetadata.getIssuer()),
+		return addOAuthClientASLocalMetadata(
+			userId,
+			String.valueOf(
+				authorizationServerMetadata.getAuthorizationEndpointURI()),
+			false, String.valueOf(authorizationServerMetadata.getIssuer()),
+			String.valueOf(authorizationServerMetadata.getJWKSetURI()),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getGrantTypes()),
+				StringPool.COMMA),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getScopes()),
+				StringPool.COMMA),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getSubjectTypes()),
+				StringPool.COMMA),
 			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
-			wellKnownURISuffix);
-
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.fetchByLocalWellKnownURI(
-				localWellKnownURI);
-
-		if (oAuthClientASLocalMetadata != null) {
-			throw new DuplicateOAuthClientASLocalMetadataException();
-		}
-
-		User user = _userLocalService.getUser(userId);
-
-		oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.create(
-				counterLocalService.increment());
-
-		oAuthClientASLocalMetadata.setCompanyId(user.getCompanyId());
-		oAuthClientASLocalMetadata.setUserId(user.getUserId());
-		oAuthClientASLocalMetadata.setUserName(user.getFullName());
-		oAuthClientASLocalMetadata.setLocalWellKnownURI(localWellKnownURI);
-		oAuthClientASLocalMetadata.setMetadataJSON(metadataJSON);
-
-		oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.update(
-				oAuthClientASLocalMetadata);
-
-		_resourceLocalService.addResources(
-			oAuthClientASLocalMetadata.getCompanyId(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			oAuthClientASLocalMetadata.getUserId(),
-			OAuthClientASLocalMetadata.class.getName(),
-			oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(), false,
-			false, false);
-
-		return oAuthClientASLocalMetadata;
+			String.valueOf(
+				authorizationServerMetadata.getUserInfoEndpointURI()));
 	}
 
 	@Override
@@ -343,39 +326,28 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String wellKnownURISuffix)
 		throws PortalException {
 
-		AuthorizationServerMetadata authorizationServerMetadata =
-			_parseAuthorizationServerMetadata(metadataJSON, wellKnownURISuffix);
+		OIDCProviderMetadata authorizationServerMetadata =
+			(OIDCProviderMetadata)_parseAuthorizationServerMetadata(
+				metadataJSON, wellKnownURISuffix);
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
-
-		AuthorizationServerMetadata currentAuthorizationServerMetadata =
-			_parseAuthorizationServerMetadata(
-				oAuthClientASLocalMetadata.getMetadataJSON(),
-				wellKnownURISuffix);
-
-		oAuthClientASLocalMetadata.setMetadataJSON(metadataJSON);
-
-		String currentIssuer = String.valueOf(
-			currentAuthorizationServerMetadata.getIssuer());
-		String currentLocalWellKnownURI =
-			oAuthClientASLocalMetadata.getLocalWellKnownURI();
-
-		if (!currentIssuer.equals(
-				String.valueOf(authorizationServerMetadata.getIssuer())) ||
-			!currentLocalWellKnownURI.contains(wellKnownURISuffix)) {
-
-			oAuthClientASLocalMetadata.setLocalWellKnownURI(
-				_generateLocalWellKnownURI(
-					String.valueOf(authorizationServerMetadata.getIssuer()),
-					String.valueOf(
-						authorizationServerMetadata.getTokenEndpointURI()),
-					wellKnownURISuffix));
-		}
-
-		return oAuthClientASLocalMetadataPersistence.update(
-			oAuthClientASLocalMetadata);
+		return updateOAuthClientASLocalMetadata(
+			oAuthClientASLocalMetadataId,
+			String.valueOf(
+				authorizationServerMetadata.getAuthorizationEndpointURI()),
+			false, String.valueOf(authorizationServerMetadata.getIssuer()),
+			String.valueOf(authorizationServerMetadata.getJWKSetURI()),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getGrantTypes()),
+				StringPool.COMMA),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getScopes()),
+				StringPool.COMMA),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getSubjectTypes()),
+				StringPool.COMMA),
+			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
+			String.valueOf(
+				authorizationServerMetadata.getUserInfoEndpointURI()));
 	}
 
 	private String _buildAuthorizationServerJSON(

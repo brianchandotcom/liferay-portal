@@ -8,14 +8,43 @@ package com.liferay.object.internal.security.permission.util;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Carolina Barbosa
  */
 public class ObjectEntryPermissionUtil {
+
+	public static Predicate getPermissionWherePredicate(
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			long groupId, InlineSQLHelper inlineSQLHelper)
+		throws PrincipalException {
+
+		ObjectDefinition objectDefinition =
+			dynamicObjectDefinitionTable.getObjectDefinition();
+
+		PermissionChecker permissionChecker =
+			GuestOrUserUtil.getPermissionChecker();
+
+		if ((permissionChecker == null) ||
+			!inlineSQLHelper.isEnabled(
+				objectDefinition.getCompanyId(), groupId)) {
+
+			return null;
+		}
+
+		return inlineSQLHelper.getPermissionWherePredicate(
+			objectDefinition.getClassName(),
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn(), groupId);
+	}
 
 	public static boolean hasAccountEntryPermission(
 			AccountEntry accountEntry, String actionId, String name,

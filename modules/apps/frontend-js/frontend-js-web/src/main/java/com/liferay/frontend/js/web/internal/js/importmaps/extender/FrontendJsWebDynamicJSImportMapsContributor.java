@@ -51,7 +51,6 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 					writer.write(unhashedFileURI);
 					writer.write("\": \"");
 					writer.write(cdnHost);
-					writer.write(_portal.getPathContext(httpServletRequest));
 					writer.write(hashedFileURI);
 					writer.write(StringPool.QUOTE);
 				}

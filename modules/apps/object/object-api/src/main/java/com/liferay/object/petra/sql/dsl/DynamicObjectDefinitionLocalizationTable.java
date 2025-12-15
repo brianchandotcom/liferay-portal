@@ -34,6 +34,17 @@ public class DynamicObjectDefinitionLocalizationTable
 		_objectDefinition = objectDefinition;
 		_objectFields = objectFields;
 
+		_objectFieldColumns = ListUtil.filter(
+			new ArrayList<>(getColumns()),
+			column -> {
+				if (column.equals(getForeignKeyColumn()) ||
+					column.equals(getLanguageIdColumn())) {
+
+					return false;
+				}
+
+				return true;
+			});
 		_primaryKeyColumnNames = new String[] {
 			objectDefinition.getPKObjectFieldDBColumnName(), "languageId"
 		};
@@ -53,18 +64,6 @@ public class DynamicObjectDefinitionLocalizationTable
 					objectField.getDBType()),
 				Column.FLAG_DEFAULT);
 		}
-
-		_objectFieldColumns = ListUtil.filter(
-			new ArrayList<>(getColumns()),
-			column -> {
-				if (column.equals(getForeignKeyColumn()) ||
-					column.equals(getLanguageIdColumn())) {
-
-					return false;
-				}
-
-				return true;
-			});
 	}
 
 	public String getCreateTableSQL() {

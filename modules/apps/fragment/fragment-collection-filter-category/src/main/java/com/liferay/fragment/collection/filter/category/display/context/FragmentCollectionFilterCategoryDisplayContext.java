@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -256,7 +256,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			return _fragmentEntryLink.getGroupId();
 		}
 
-		Group group = GroupServiceUtil.fetchGroupByExternalReferenceCode(
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 			scopeExternalReferenceCode, _fragmentEntryLink.getCompanyId());
 
 		if (group != null) {

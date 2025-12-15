@@ -439,6 +439,18 @@ function ItemSelector<T extends Record<string, any>>({
 				loadingState={networkStatus}
 				menuTrigger="focus"
 				messages={{
+					infiniteScrollInitialLoad: Liferay.Language.get(
+						'x-item-loaded-reach-the-last-item-to-load-more'
+					),
+					infiniteScrollInitialLoadPlural: Liferay.Language.get(
+						'x-items-loaded-reach-the-last-item-to-load-more'
+					),
+					infiniteScrollOnLoad:
+						Liferay.Language.get('loading-more-items'),
+					infiniteScrollOnLoaded:
+						Liferay.Language.get('x-item-loaded'),
+					infiniteScrollOnLoadedPlural:
+						Liferay.Language.get('x-items-loaded'),
 					listCount: Liferay.Language.get('x-list-option'),
 					listCountPlural: Liferay.Language.get('x-list-options'),
 					loading: Liferay.Language.get('loading...'),

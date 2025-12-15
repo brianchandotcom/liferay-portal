@@ -110,7 +110,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		</label>
 	</c:if>
 
-	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
+	<textarea class="hide" id="<%= textareaName %>" name="<%= textareaName %>"></textarea>
 </liferay-util:buffer>
 
 <div class="<%= HtmlUtil.escapeAttribute(cssClass) %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">

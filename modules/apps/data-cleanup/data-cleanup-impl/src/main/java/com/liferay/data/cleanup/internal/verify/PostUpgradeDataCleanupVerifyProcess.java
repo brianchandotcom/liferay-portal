@@ -47,14 +47,14 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		for (PostUpgradeDataCleanupProcess postUpgradeDataCleanupProcess :
-				_getPostUpgradedataCleanupProcesses()) {
+				_getPostUpgradeDataCleanupProcesses()) {
 
 			postUpgradeDataCleanupProcess.cleanUp();
 		}
 	}
 
 	private List<PostUpgradeDataCleanupProcess>
-		_getPostUpgradedataCleanupProcesses() {
+		_getPostUpgradeDataCleanupProcesses() {
 
 		return ListUtil.fromArray(
 			new ClassNamePostUpgradeDataCleanupProcess(

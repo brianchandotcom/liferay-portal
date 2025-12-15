@@ -48,6 +48,8 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 			Group finalGroup = group;
 
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"groupdepotentrytype", group.getTypeSettingsProperty("depotEntryType")
+			).put(
 				"groupdescriptivename", group.getDescriptiveName(locale)
 			).put(
 				"groupexternalreferencecode", group.getExternalReferenceCode()

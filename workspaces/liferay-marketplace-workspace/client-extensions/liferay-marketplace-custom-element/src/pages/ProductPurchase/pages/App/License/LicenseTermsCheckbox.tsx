@@ -8,7 +8,7 @@ import {useSelector} from '@xstate/store/react';
 
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {ProductSpecificationKey} from '../../../../../enums/Product';
-import {Liferay} from '../../../../../liferay/liferay';
+import {getSiteURL} from '../../../../../utils/site';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';
 
@@ -30,9 +30,11 @@ const LicenseTermsCheckbox = () => {
 			ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL
 	);
 
-	const formattedProtocolUrl = appUsageTerms?.value?.startsWith('https://')
-		? appUsageTerms?.value
-		: 'https://' + appUsageTerms?.value;
+	const formattedProtocolUrl = appUsageTerms
+		? appUsageTerms?.value?.startsWith('https://')
+			? appUsageTerms?.value
+			: 'https://' + appUsageTerms?.value
+		: appUsageTerms;
 
 	return (
 		<div className="align-items-start d-flex eula-container mt-4">
@@ -49,10 +51,7 @@ const LicenseTermsCheckbox = () => {
 					href={
 						appUsageTerms?.value
 							? formattedProtocolUrl
-							: Liferay.ThemeDisplay.getLayoutURL().replace(
-									'/get-app',
-									`/license-agreement`
-								)
+							: `${getSiteURL()}/license-agreement`
 					}
 					rel="noopener noreferrer"
 					target="_blank"

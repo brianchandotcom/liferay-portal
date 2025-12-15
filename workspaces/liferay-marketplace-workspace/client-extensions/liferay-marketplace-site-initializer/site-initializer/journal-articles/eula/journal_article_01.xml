@@ -2,140 +2,269 @@
 
 <root available-locales="en_US" default-locale="en_US">
 	<dynamic-element index-type="text" instance-id="iesijpqx" name="description" type="text_area">
-		<dynamic-content language-id="en_US"><![CDATA[
-<p data-renderer-start-pos="1393">ENGLISH<br />
-Acceptance of this End User License Agreement is required prior to download. If you do not understand or cannot read the terms and conditions of this End User License Agreement, do not click the checkbox stating you agree, download or use the Software. Please scroll and read through the entire agreement before clicking the checkbox that states you agree.</p>
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				<style>
+					* {
+						font-family: "Source Sans 3", Arial, Helvetica, sans-serif;
+					}
 
-<p data-renderer-start-pos="1759">SPANISH<br />
-La aceptación de este Acuerdo de Licencia de Usuario Final es obligatoria antes de la descarga. Si usted no entiende o no puede leer los términos y condiciones de este Acuerdo de Licencia de Usuario Final, no marque la casilla de verificación confirmando que está de acuerdo, ni descargue ni utilice el Software. Por favor, lea la totalidad del acuerdo antes de marcar la casilla de verificación de que confirma que está de acuerdo.</p>
+					ol {
+						list-style-position: outside;
+					}
 
-<p data-renderer-start-pos="2201">GERMAN<br />
-Vor dem Download müssen Sie Ihr Einverständnis mit der End User License Vereinbarung erklären. Falls Sie den Inhalt oder die Bedingungen der End User License Vereinbarung nicht lesen bzw. verstehen können, so klicken Sie bitte nicht die Checkbox mit der Sie Ihr Einverständnis erklären und downloaden und benutzen Sie nicht unsere Software. Bitte lesen Sie die End User License Vereinbarung sorgfältig und vollständig durch bevor Sie am Ende die Checkbox mit der Sie Ihr Einverständnis erklären klicken.</p>
+					ol li::marker {
+						font-weight: bold; font-size: 1rem;
+					}
 
-<p data-renderer-start-pos="2713">FRENCH<br />
-Votre accord avec le End User License Agreement est nécessaire avant le téléchargement. Si vous n'êtes pas capable de lire ou comprendre le contenu ou les conditions du End User License Agreement, ne cochez pas la case correspondante selon laquelle vous exprimez votre consentement, ne téléchargez et n'utilisez pas notre logiciel. S´il vous plait, utilisez la barre de défilement pour lire en intégralité le End User License Agreement avant de valider la case a cocher selon laquelle vous exprimez votre accord avec celui-ci.</p>
-
-<p data-renderer-start-pos="3248">PORTUGUESE<br />
-A aceitação deste Contrato de Licença de Usuário Final é necessária antes de realizar o download. Se você não entende ou não consegue ler os termos e condições deste Contrato de Licença de Usuário Final, não marque a caixa informando que você concorda, não baixe ou utilize o Software. Por favor, percorrer todo o contrato antes de clicar no checkbox que indica que você concorda.</p>
-
-<p data-renderer-start-pos="3641">END USER LICENSE AGREEMENT</p>
-<p data-renderer-start-pos="3669">PLEASE READ THIS END USER LICENSE AGREEMENT CAREFULLY BEFORE DOWNLOADING, INSTALLING AND/OR USING THE SOFTWARE (AS DEFINED BELOW). THE LICENSE TO USE THE SOFTWARE IS SUBJECT TO YOUR PRIOR ACCEPTANCE OF THIS AGREEMENT, AND YOU AGREE THAT THE TERMS OF THIS AGREEMENT WILL APPLY TO THE SOFTWARE. THE LICENSE TO THE SOFTWARE GRANTED UNDER THE TERMS OF THIS AGREEMENT IS GRANTED BY LICENSOR. LICENSOR RESERVES ALL RIGHTS NOT EXPRESSLY GRANTED TO YOU UNDER THIS AGREEMENT IN AND TO THE SOFTWARE. BY CLICKING "AGREE," PROVIDING YOUR ELECTRONIC SIGNATURE AND/OR USING THE SOFTWARE, YOU ARE AGREEING TO BE BOUND BY THE TERMS OF THIS AGREEMENT. IF YOU ARE ENTERING INTO THIS AGREEMENT ON BEHALF OF A COMPANY OR OTHER LEGAL ENTITY, YOU REPRESENT THAT YOU HAVE THE AUTHORITY TO BIND SUCH ENTITY TO THIS AGREEMENT, IN WHICH CASE THE TERMS "YOU" OR "YOUR" SHALL REFER TO SUCH ENTITY. IF YOU DO NOT HAVE SUCH AUTHORITY, OR IF YOU DO NOT UNCONDITIONALLY AGREE TO ALL OF THE TERMS OF THIS AGREEMENT, DO NOT USE THE SOFTWARE.</p>
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="4680">Definitions.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="4696">"Agreement" means this End User License Agreement between you and the Licensor.</p>
-<p data-renderer-start-pos="4777">"Licensor" means the individual or entity offering the Software for sale, download, and/or use via the Marketplace.</p>
-<p data-renderer-start-pos="4894">"Liferay" means Liferay, Inc. with its principal place of business located at 1400 Montefino Avenue, Diamond Bar, CA 91765, U.S.A. and its affiliates.</p>
-
-<p data-renderer-start-pos="5046">"Marketplace" means the Liferay Marketplace and all associated software and web pages on <a data-renderer-mark="true" data-testid="link-with-safety" href="http://liferay.com/" title="http://Liferay.com">http://Liferay.com</a>.</p>
-<p data-renderer-start-pos="5156">"Software" means the software application that is subject to the license granted under this Agreement, plus any Updates thereto provided by Licensor to you.</p>
-<p data-renderer-start-pos="5314">"Updates" means bug fixes, updates, upgrades, modifications, enhancements, supplements, and new releases or versions.</p>
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="5435">License Grant.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="5453">The Software is being licensed, not sold. Licensor hereby grants you, subject to the terms and conditions contained within this Agreement and subject to the additional terms and conditions described in this Section below, a non-exclusive, non-assignable, non-sublicensable and non-transferable, except as permitted by Licensor, license to install and use the Software. The Software may contain additional license terms and conditions as specified by the Licensor and disclosed to you on the Marketplace. Such additional terms and conditions may include, but are not limited to, the term of the license (e.g. perpetual or time limited), a fee for the license and the unit by which the Licensor charges the fees, if any. By accepting the terms and conditions of this Agreement and completing the purchase of the Software on the Marketplace, you agree that these additional terms and conditions will be deemed part of the license granted by Licensor to you.</p>
-<p data-renderer-start-pos="6409">The terms of this Agreement will govern any Updates to the Software provided by Licensor that replace and/or supplement the original Software, unless such Updates are accompanied by a separate Agreement, in which case the terms of that Agreement will govern.</p>
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="6671">Restrictions.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="6688">You may not and you may not attempt to and you may not assist others to:</p>
-<p data-renderer-start-pos="6762">(i) transfer rights or usage to, sublicense, rent, lease or otherwise copy, transfer, transmit or distribute the Software, or any portions thereof, to a third party;<br />
-(ii) decompile, reverse-engineer, disassemble, attempt to derive the source code of, modify, or create derivative works of the Software, any updates, or any part thereof (except as and only to the extent that any foregoing restriction is prohibited by applicable law or to the extent as may be permitted by the licensing terms governing use of any open-sourced components included with the Software);<br />
-(iii) use the Software in any manner that could damage, disable, overburden or impair the Software (or servers or networks connected to the Software);<br />
-(iv) use the Software in any manner that could interfere with any other party's use and enjoyment of the Software (or servers or networks connected to the Software); or<br />
-(v) remove, obscure or alter any intellectual property notices on the Software.</p>
-
-<p data-renderer-start-pos="7730">Any attempt to do any of the above shall be deemed a violation of Licensor's rights. If you breach any of the above restrictions, you may be subject to prosecution and damages.</p>
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="7910">Ownership.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="7924">Title, copyrights, intellectual property rights, international treaty and other rights as applicable, and all other legal rights in the Software and all modifications, enhancements, derivatives and other alterations of the Software regardless of who made any modifications, if any, are, and shall remain the sole and exclusive property of Licensor. The license for use granted herein is limited to the Software and does not transfer any ownership or any other intellectual property rights from Licensor to you.</p>
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="8438">Updates.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="8450">At Licensor's sole option, Licensor may create Updates for the Software at any time without notice. Licensor is not obligated to provide you with any Updates for the Software. You acknowledge that Licensor has no express or implied obligation to announce or make available any Updates for the Software in the future.</p>
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="8770">Support and Maintenance.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="8798">Unless otherwise specified in the documentation for the Software made available by Licensor via the Marketplace (including the app details page for the Software on the Marketplace), Licensor is not obligated, whether express or implied, to provide any maintenance, technical support or other support or updates for the Software.</p>
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="9130">Representation and Warranties.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="9164">You hereby represent and warrant that:<br />
-(i) you are not in any way restricted from entering into this Agreement;<br />
-(ii) your use of the Software will not violate, misappropriate or infringe any intellectual property rights or other proprietary or legal right of any third party or Licensor; and<br />
-(iii) you shall only use the Software in the manner expressly provided for under this Agreement and in accordance with all applicable laws and regulations.</p>
-
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="9615">Indemnity.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="9629">To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless Licensor, Liferay and their directors, officers, employees and agents from and against any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities, damages, costs and expenses (including reasonable attorneys' fees) arising out of or accruing from your violation of this Agreement.</p>
-<ol data-indent-level="1">
-	<li>
-	<p data-renderer-start-pos="10036">No Warranty.</p>
-	</li>
-</ol>
-<p data-renderer-start-pos="10052">YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT USE OF THE SOFTWARE IS AT YOUR SOLE RISK AND THAT THE ENTIRE RISK AS TO THE SATISFACTORY QUALITY, PERFORMANCE, ACCURACY AND EFFORTS IS WITH YOU. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE AS PROVIDED BY LICENSOR AND ANY SERVICES PERFORMED OR PROVIDED BY THE SOFTWARE ("SERVICES") ARE PROVIDED AND LICENSED "AS AVAILABLE" AND "AS IS" WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND, AND ALL WARRANTIES AND CONDITIONS WITH RESPECT TO THE SOFTWARE AND SERVICES, EITHER EXPRESSED, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTY OF MERCHANTABILITY, SATISFACTORY QUALITY, CONDITION OF TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE ARE HEREBY EXPRESSLY DISCLAIMED. YOU FURTHER ACKNOWLEDGE THERE IS NO GUARANTEE THAT USE OF THE SOFTWARE AND SERVICES WILL NOT BE INTERRUPTED OR ERROR FREE. NO ORAL OR WRITTEN INFORMATION OR ADVICE GIVEN BY LICENSOR SHALL CREATE A WARRANTY. SHOULD THE SOFTWARE OR SERVICES PROVE DEFECTIVE, YOU ASSUME ALL COSTS FOR ANY NECESSARY SERVICING, REPAIR OR CORRECTION. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES OR LIMITATIONS ON APPLICABLE STATUTORY RIGHTS OF A CONSUMER, SO THE ABOVE EXCLUSION AND LIMITATIONS MAY NOT APPLY TO YOU.</p>
-<p data-renderer-start-pos="11333">10. Limitation of Liability.<br />
-TO THE EXTENT NOT PROHIBITED BY LAW, IN NO EVENT WILL YOU HAVE ANY CLAIM OR RIGHT TO ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES ARISING OUT OF OR RELATING IN ANY WAY TO THIS AGREEMENT, OR THE SOFTWARE, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION, OR ANY OTHER COMMERCIAL DAMAGES OR LOSSES, ARISING OUT OF OR RELATED TO YOUR USE OR INABILITY TO USE THE SOFTWARE, HOWEVER CAUSED, REGARDLESS OF THE THEORY OF LIABILITY (CONTRACT, TORT, OR OTHERWISE) AND EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. IN NO EVENT WILL YOU HAVE ANY CLAIM OR RIGHT TO ANY DAMAGES ARISING OUT OF OR RELATING IN ANY WAY TO THIS AGREEMENT OR THE SOFTWARE OR AFFILIATED DOCUMENTATION UNDER ANY LEGAL THEORY, WHETHER CONTRACT, TORT, PRODUCT LIABILITY, RELIANCE, BREACH OF ANY IMPLIED DUTY, OR OTHERWISE. SOME JURISDICTIONS DO NOT ALLOW THE LIMITATION OF LIABILITY FOR PERSONAL INJURY, OR OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THIS LIMITATION MAY NOT APPLY TO YOU.</p>
-
-<p data-renderer-start-pos="12406">IN NO EVENT SHALL LICENSOR'S TOTAL LIABILITY TO YOU FOR ALL DAMAGES (OTHER THAN AS MAY BE REQUIRED BY APPLICABLE LAW IN CASES INVOLVING PERSONAL INJURY) EXCEED THE AMOUNT OF FIFTY DOLLARS ($50.00). THE FOREGOING LIMITATIONS WILL APPLY EVEN IF THE ABOVE STATED REMEDY FAILS OF ITS ESSENTIAL PURPOSE. THE PROVISIONS OF THIS ARTICLE ALLOCATE THE RISKS UNDER THIS AGREEMENT BETWEEN LICENSOR AND YOU AND ARE AN INTRINSIC PART OF THE BARGAIN BETWEEN THE PARTIES.</p>
-<p data-renderer-start-pos="12864">11. Termination.<br />
-This Agreement is effective until terminated by you or Licensor. Your rights under this Agreement will terminate automatically with no notice from Licensor upon any failure to comply with any term(s) of this Agreement. Upon the termination of this Agreement, you shall cease all use of the Software and destroy all copies, full or partial, of the Software.</p>
-
-<p data-renderer-start-pos="13239">12. General.</p>
-<p data-renderer-start-pos="13253">12.1. Consent to Use of Data<br />
-You agree that Licensor may collect and use technical data and related information—including, but not limited to, technical information about your system and application software—that is gathered periodically to facilitate the provision of updates, product support, and other services to you (if any) related to the Software. Licensor may use this information, as long as it is in a form that does not personally identify you, to improve its products or to provide services or technologies to you.</p>
-
-<p data-renderer-start-pos="13781">12.2. Third Party Software; Other Services and Materials.<br />
-The Software may contain or use third party software and other copyrighted material ("Third Party Software"). Licensor will have no responsibility and claims no right with respect to any Third Party Software. Your use of such Third Party Software and other copyrighted material is governed by the respective terms of such Third Party Software, if any. In the event the terms contained in this Agreement contradict or differ from the terms of any Third Party Software, you acknowledge that the terms contained within this Agreement are solely offered by Licensor.</p>
-
-<p data-renderer-start-pos="14403">The Software may enable access to Licensor's and third party services and web sites (collectively and individually, "Other Services"). Use of the Other Services may require Internet access and that you accept additional terms of service. Certain Other Services may display, include or make available content, data, information, applications or materials from third parties ("Third-Party Materials") or provide links to certain third party web sites. By using the Other Services, you acknowledge and agree that the Licensor is not responsible for examining or evaluating the content, accuracy, completeness, timeliness, validity, copyright compliance, legality, decency, quality or any other aspect of such Third-Party Materials or web sites. The Licensor does not warrant or endorse and does not assume and will not have any liability or responsibility to you or any other person for any Other Services, Third-Party Materials or web sites, or for any other materials or products of third parties. Third Party Materials and links to other web sites are provided solely as a convenience to you. You agree that any Other Services may contain proprietary content, information and material that is protected by applicable intellectual property and other laws, including but not limited to copyright, and that you will not use such proprietary content, information or materials in any way whatsoever except for permitted use of the Third-Party Services.</p>
-<p data-renderer-start-pos="15852">12.3. Assignment.<br />
-You may not assign, transfer or otherwise dispose of any of your rights or obligations under this Agreement without Licensor's prior written consent. Any assignment in violation of this article is void.</p>
-
-<p data-renderer-start-pos="16074">12.4. Relationship of the Parties.<br />
-This Agreement shall not be construed as creating any obligation, expressed or implied, on behalf of Licensor or you, or to represent the other party as agent, employee or in any other capacity. Nothing herein shall oblige either party to enter into any further agreement(s) with each other.</p>
-
-<p data-renderer-start-pos="16402">12.5. Severability.<br />
-If any provision or provisions of this Agreement shall be held to be invalid, illegal or unenforceable in whole or in part by any court of competent jurisdiction or other competent authority, this Agreement will continue to be valid and enforceable as to the other provision and or the remainder of the affected provision. The affected provision will be deemed amended to the minimum extent necessary to render it valid and enforceable in conformity with applicable law and the parties' intent as expressed in this Agreement.</p>
-
-<p data-renderer-start-pos="16949">12.6. Survival.<br />
-Any provision of this Agreement that may reasonably be expected to survive its termination will survive the termination of this Agreement, including without limitation Section 12.11 (Liferay) and those provisions relating to confidentiality, disclaimers of warranties, limitation of liability, and indemnification.</p>
-
-<p data-renderer-start-pos="17281">12.7. Waiver.<br />
-The failure of any party to enforce any of the provisions hereof shall not be construed to be a waiver of the right of such party thereafter to enforce such provisions. This Agreement may not be waived, except in writing by the party granting the waiver.</p>
-
-<p data-renderer-start-pos="17551">12.8. Export Control.<br />
-You may not use, export, re-export, import, sell or transfer the Software except as authorized by United States law and any other applicable laws and regulations. In particular, but without limitation, the Software may not be exported or re-exported (a) into any country that is subject to a U.S. Government embargo or that has been designated by the U.S. Government as a "terrorist supporting" country or (b) to anyone on any U.S. Government list of prohibited or restricted parties. By using the Software, you represent and warrant that you are not located in any such country or on any such list. You also agree that you will not use the Software for any purposes prohibited by United States law, including, without limitation, the development, design, manufacture, or production of nuclear, missile, chemical or biological weapons.</p>
-
-<p data-renderer-start-pos="18410">12.9. Dispute Resolution.<br />
-This Agreement, and your relationship with Licensor under this Agreement, shall be governed by the laws of the State of California without regard to its conflict of laws provisions. You and Licensor agree to submit to the exclusive jurisdiction of the courts located within the county of Los Angeles, California to resolve any legal matter arising from this Agreement.</p>
-
-<p data-renderer-start-pos="18806">12.10. Commercial Items.<br />
-The Software and related documentation are "Commercial Items", as that term is defined at 48 C.F.R. §2.101, consisting of "Commercial Computer Software" and "Commercial Computer Software Documentation", as such terms are used in 48 C.F.R. §12.212 or 48 C.F.R. §227.7202, as applicable. Consistent with 48 C.F.R. §12.212 or 48 C.F.R. §227.7202-1 through 227.7202-4, as applicable, the Commercial Computer Software and Commercial Computer Software Documentation are being licensed to U.S. Government end users (a) only as Commercial Items and (b) with only those rights as are granted to all other end users pursuant to the terms and conditions herein. Unpublished-rights reserved under the copyright laws of the United States.</p>
-
-<p data-renderer-start-pos="19558">12.11. Liferay.<br />
-You hereby acknowledge that this Agreement is concluded between Licensor and you only, and not with Liferay, and that as between Licensor and Liferay, Licensor, not Liferay, is solely responsible for the Software and the content thereof. Liferay has no obligation whatsoever to provide any maintenance or support services with respect to the Software. To the maximum extent permitted by applicable law, Liferay will have no warranty obligation whatsoever with respect to the Software, or any other claims, losses, liabilities, damages, costs or expenses attributable to any failure to conform to any warranty, which will be Licensor's sole responsibility, to the extent it cannot be disclaimed under applicable law. Licensor and you acknowledge that Licensor, not Liferay, is responsible for addressing any claims of you or any third party relating to the Software or your possession and/or use of that Software, including, but not limited to: (i) product liability claims; (ii) any claim that the Software fails to conform to any applicable legal or regulatory requirement; and (iii) claims arising under consumer protection or similar legislation. In the event of any third party claim that the Software or your possession and use of that Software infringes a third party's intellectual property rights, as between Licensor and Liferay, Licensor, not Liferay, will be solely responsible for the investigation, defense, settlement and discharge of any such intellectual property infringement claim. Licensor and you acknowledge and agree that Liferay is a third party beneficiary of this Agreement with respect to the Software, and that, upon your acceptance of the terms and conditions of this Agreement, Liferay will have the right (and will be deemed to have accepted the right) to enforce this Agreement against you with respect to the Software as a third party beneficiary thereof.</p>
-
-<p data-renderer-start-pos="21463">12.12. Miscellaneous.<br />
-This Agreement constitutes the entire agreement between the parties with respect to the use of the Software licensed hereunder and supersedes all prior understandings regarding such subject matter. This Agreement may be modified only by a written amendment signed by both parties. Any translation of this Agreement is done for local requirements and in the event of a dispute between the English and any non-English version, the English version of this Agreement shall govern.</p>
-]]></dynamic-content>
+					li > strong {
+						font-weight: bold;
+					}
+				</style>
+				<p>
+					<strong>ENGLISH</strong>
+				</p>
+				<p>Acceptance of this End User License Agreement is required prior to download. If You do not understand or cannot read the terms and conditions of this End User License Agreement, do not click the checkbox stating You agree, download or use the Software. Please scroll and read through the entire Agreement before clicking the checkbox that states You agree.</p>
+				<p>
+					<strong>SPANISH</strong>
+				</p>
+				<p>La aceptación de este Acuerdo de Licencia de Usuario Final es obligatoria antes de la descarga. Si usted no entiende o no puede leer los términos y condiciones de este Acuerdo de Licencia de Usuario Final, no marque la casilla de verificación confirmando que está de acuerdo, ni descargue ni utilice el Software. Por favor, lea la totalidad del acuerdo antes de marcar la casilla de verificación de que confirma que está de acuerdo.</p>
+				<p>
+					<strong>GERMAN</strong>
+				</p>
+				<p>Vor dem Download müssen Sie Ihr Einverständnis mit der End User License Vereinbarung erklären. Falls Sie den Inhalt oder die Bedingungen der End User License Vereinbarung nicht lesen bzw. verstehen können, so klicken Sie bitte nicht die Checkbox mit der Sie Ihr Einverständnis erklären und downloaden und benutzen Sie nicht unsere Software. Bitte lesen Sie die End User License Vereinbarung sorgfältig und vollständig durch bevor Sie am Ende die Checkbox mit der Sie Ihr Einverständnis erklären klicken.</p>
+				<p>
+					<strong>FRENCH</strong>
+				</p>
+				<p>Votre accord avec le End User License Agreement est nécessaire avant le téléchargement. Si vous ne comprenez pas ou ne pouvez pas lire les termes et conditions du présent End User License Agreement, ne cochez pas la case correspondante selon laquelle vous exprimez votre consentement, ne téléchargez et n'utilisez pas notre logiciel. S´il vous plait, utilisez la barre de défilement pour lire en intégralité le End User License Agreement avant de valider la case a cocher selon laquelle vous exprimez votre accord avec celui-ci.</p>
+				<p>
+					<strong>PORTUGUESE</strong>
+				</p>
+				<p>A aceitação deste Contrato de Licença de Usuário Final é necessária antes de realizar o download. Se você não entende ou não consegue ler os termos e condições deste Contrato de Licença de Usuário Final, não marque a caixa informando que você concorda, não baixe ou utilize o Software. Por favor, percorrer todo o contrato antes de clicar no checkbox que indica que você concorda.</p>
+				<br />
+				<div style="display: flex; justify-content: center">
+					<p>
+						<strong>END USER LICENSE AGREEMENT</strong>
+					</p>
+				</div>
+				<p>
+					<i>Last modified: 1<sup>st</sup> of September 2025.</i>
+				</p>
+				<p>
+					<u>
+						<i>Please read this End User License Agreement carefully before downloading, installing and/or using the Software (as defined below). The license to use the Software is subject to Your prior acceptance of this Agreement, and You agree that the terms of this Agreement will apply to the Software. The license to the Software granted under the terms of this Agreement is granted by licensor. Licensor reserves all rights not expressly granted to You under this Agreement in and to the Software. By clicking "agree," providing Your electronic signature and/or using the Software, You are agreeing to be bound by the terms of this Agreement. If You are entering into this Agreement on behalf of a company or other legal entity, You represent that You have the authority to bind such entity to this Agreement, in which case the terms "You" or "Your" shall refer to such entity. If You do not have such authority, or if You do not unconditionally agree to all of the terms of this Agreement, do not use the Software.</i>
+					</u>
+				</p>
+				<ol>
+					<li>
+						<strong>Definitions.</strong>
+						<p>
+							<strong>"Agreement"</strong> means this End User License Agreement between You and the Licensor.</p>
+						<p>
+							<strong>"Licensor"</strong> means the individual or entity offering the Software for sale, download, and/or use via the Marketplace.</p>
+						<p>
+							<strong>"Liferay"</strong> means Liferay International Limited with its principal place of business located at 100 Mount Street Lower, Dublin, Ireland.</p>
+						<p>
+							<strong>"Marketplace"</strong> means the Liferay Marketplace and all associated software and web pages on Liferay.com.</p>
+						<p>
+							<strong>"Software"</strong> means the software application that is subject to the license granted under this Agreement, plus any Updates thereto provided by Licensor to You.</p>
+						<p>
+							<strong>"Updates"</strong> means bug fixes, updates, upgrades, modifications, enhancements, supplements, and new releases or versions</p>
+					</li>
+					<li>
+						<strong>License Grant.</strong>
+						<p>The Software is being licensed, not sold. Licensor hereby grants You, subject to the terms and conditions contained within this Agreement and subject to the additional terms and conditions described in this Section below, a non-exclusive, non-assignable, non-sublicensable and non-transferable, except as permitted by Licensor, license to install and use the Software. The Software may contain additional license terms and conditions as specified by the Licensor and disclosed to You on the Marketplace. Such additional terms and conditions may include, but are not limited to, the term of the license (e.g. perpetual or time limited), a fee for the license and the unit by which the Licensor charges the fees, if any. By accepting the terms and conditions of this Agreement and completing the purchase of the Software on the Marketplace, You agree that these additional terms and conditions will be deemed part of the license granted by Licensor to You.</p>
+						<p>The terms of this Agreement will govern any Updates to the Software provided by Licensor that replace and/or supplement the original Software, unless such Updates are accompanied by a separate Agreement, in which case the terms of that Agreement will govern.</p>
+					</li>
+					<li>
+						<strong>Restrictions.</strong>
+						<p>You may not, You may not attempt to, and You may not assist others to:</p>
+						<ol type="I">
+							<li>
+								<p>transfer rights or usage to, sublicense, rent, lease or otherwise copy, transfer, transmit or distribute the Software, or any portions thereof, to a third party.</p>
+							</li>
+							<li>
+								<p>decompile, reverse-engineer, disassemble, attempt to derive the source code of, modify, or create derivative works of the Software, any updates, or any part thereof (except as and only to the extent that any foregoing restriction is prohibited by applicable law or to the extent as may be permitted by the licensing terms governing use of any open-sourced components included with the Software. For the purposes of this Agreement, "Open Source License" shall also include any license that is both Free Software, as defined by the Free Software Foundation (<a href="https://www.gnu.org/philosophy/free-sw.html">https://www.gnu.org/philosophy/free-sw.html</a>), and Open Source, as defined by the Open Source Initiative (<a href="https://opensource.org/osd">https://opensource.org/osd</a>).</p>
+							</li>
+							<li>
+								<p>use the Software in any manner that could damage, disable, overburden or impair the Software (or servers or networks connected to the Software).</p>
+							</li>
+							<li>
+								<p>use the Software in any manner that could interfere with any other party's use and enjoyment of the Software (or servers or networks connected to the Software); or</p>
+							</li>
+							<li>
+								<p>remove, obscure or alter any intellectual property notices on the Software.</p>
+							</li>
+						</ol>
+						<p>Any attempt to do any of the above shall be deemed a violation of Licensor's rights. If You breach any of the above restrictions, You may be subject to prosecution and damages.</p>
+					</li>
+					<li>
+						<p>
+							<strong>Ownership.</strong>
+						</p>
+						<p>Title, copyrights, intellectual property rights, international treaty and other rights as applicable, and all other legal rights in the Software and all modifications, enhancements, derivatives and other alterations of the Software regardless of who made any modifications, if any, are, and shall remain the sole and exclusive property of Licensor. The license for use granted herein is limited to the Software and does not transfer any ownership or any other intellectual property rights from Licensor to You.</p>
+					</li>
+					<li>
+						<p>
+							<strong>Updates.</strong>
+						</p>
+						<p>At Licensor's sole option, Licensor may create Updates for the Software at any time without notice. Licensor is not obligated to provide You with any Updates for the Software. You acknowledge that Licensor has no express or implied obligation to announce or make available any Updates for the Software in the future.</p>
+					</li>
+					<li>
+						<p>
+							<strong>Support and Maintenance.</strong>
+						</p>
+						<p>Unless otherwise specified in the documentation for the Software made available by Licensor via the Marketplace (including the app details page for the Software on the Marketplace), Licensor is not obligated, whether express or implied, to provide any maintenance, technical support or other support or updates for the Software.</p>
+					</li>
+					<li>
+						<p>
+							<strong>Representation and Warranties.</strong>
+						</p>
+						<p>You hereby represent and warrant that:</p>
+						<ol type="I">
+							<li>
+								<p>You are not in any way restricted from entering into this Agreement.</p>
+							</li>
+							<li>
+								<p>Your use of the Software will not violate, misappropriate or infringe any intellectual property rights or other proprietary or legal right of any third party or Licensor; and</p>
+							</li>
+							<li>
+								<p>You shall only use the Software in the manner expressly provided for under this Agreement and in accordance with all applicable laws and regulations.</p>
+							</li>
+						</ol>
+					</li>
+					<li>
+						<p>
+							<strong>Indemnity.</strong>
+						</p>
+						<p>To the maximum extent permitted by law, You agree to defend, indemnify and hold harmless Licensor, Liferay and their directors, officers, employees and agents from and against any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities, damages, costs and expenses (including reasonable attorneys' fees) arising out of or accruing from Your violation of this Agreement.</p>
+					</li>
+					<li>
+						<p>
+							<strong>No Warranty.</strong>
+						</p>
+						<p>
+							<u>
+								<i>You expressly acknowledge and agree that use of the Software is at Your sole risk and that the entire risk as to the satisfactory quality, performance, accuracy and efforts is with You. To the maximum extent permitted by applicable law, the Software as provided by Licensor and any services performed or provided by the Software ("Services") are provided and licensed "as available" and "as is" with all faults and without warranty of any kind, and all warranties and conditions with respect to the Software and Services, either expressed, implied or statutory, including, but not limited to the implied warranty of merchantability, satisfactory quality, condition of title, non-infringement and fitness for a particular purpose are hereby expressly disclaimed. You further acknowledge there is no guarantee that use of the Software and Services will not be interrupted or error free. No oral or written information or advice given by Licensor shall create a warranty. Should the Software or Services prove defective, You assume all costs for any necessary servicing, repair or correction. Some jurisdictions do not allow the exclusion of implied warranties or limitations on applicable statutory rights of a consumer, so the above exclusion and limitations may not apply to You.</i>
+							</u>
+						</p>
+					</li>
+					<li>
+						<p>
+							<strong>Limitation of Liability.</strong>
+						</p>
+						<p>
+							<u>
+								<i>To the extent not prohibited by law, in no event will You have any claim or right to any indirect, incidental, special, consequential or punitive damages arising out of or relating in any way to this Agreement, or the Software, including, without limitation, damages for loss of profits, loss of data, business interruption, or any other commercial damages or losses, arising out of or related to Your use or inability to use the Software, however caused, regardless of the theory of liability (contract, tort, or otherwise) and even if Licensor has been advised of the possibility of such damages. In no event will You have any claim or right to any damages arising out of or relating in any way to this Agreement or the Software or affiliated documentation under any legal theory, whether contract, tort, product liability, reliance, breach of any implied duty, or otherwise. Some jurisdictions do not allow the limitation of liability for personal injury, or of incidental or consequential damages, so this limitation may not apply to You.</i>
+							</u>
+						</p>
+						<p>
+							<u>
+								<i>In no event shall Licensor's total liability to You for all damages (other than as may be required by applicable law in cases involving personal injury) exceed the amount of fifty euros (EUR50.00). The foregoing limitations will apply even if the above stated remedy fails of its essential purpose. The provisions of this article allocate the risks under this Agreement between Licensor and You and are an intrinsic part of the bargain between the parties.</i>
+							</u>
+						</p>
+					</li>
+					<li>
+						<p>
+							<strong>Termination.</strong>
+						</p>
+						<p>This Agreement is effective until terminated by You or Licensor. Your rights under this Agreement will terminate automatically with no notice from Licensor upon any failure to comply with any term(s) of this Agreement. Upon the termination of this Agreement, You shall cease all use of the Software and destroy all copies, full or partial, of the Software.</p>
+					</li>
+					<li>
+						<p>
+							<strong>General.</strong>
+						</p>
+						<ol>
+							<li>
+								<p>
+									<strong>Consent to Use of Data.</strong>
+									<br />
+								</p>
+								<p>You agree that Licensor may collect and use technical data and related information—including, but not limited to, technical information about Your system and application software—that is gathered periodically to facilitate the provision of updates, product support, and other services to You (if any) related to the Software. Licensor may use this information, as long as it is in a form that does not personally identify You, to improve its products or to provide services or technologies to You.</p>
+							</li>
+							<li>
+								<p>
+									<strong> Third Party Software; Other Services and Materials. </strong>
+								</p>
+								<p>The Software may contain or use third party software and other copyrighted material ("<strong>Third Party Software</strong>"). Licensor will have no responsibility and claims no right with respect to any Third Party Software. Your use of such Third Party Software and other copyrighted material is governed by the respective terms of such Third Party Software, if any. In the event the terms contained in this Agreement contradict or differ from the terms of any Third Party Software, You acknowledge that the terms contained within this Agreement are solely offered by Licensor.<br />
+									<br />
+								</p>
+								<p>The Software may enable access to Licensor's and third party services and web sites (collectively and individually, "<strong>Other Services</strong>"). Use of the Other Services may require Internet access and that You accept additional terms of service. Certain Other Services may display, include or make available content, data, information, applications or materials from third parties ("<strong>Third-Party Materials</strong>") or provide links to certain third party web sites. By using the Other Services, You acknowledge and agree that the Licensor is not responsible for examining or evaluating the content, accuracy, completeness, timeliness, validity, copyright compliance, legality, decency, quality or any other aspect of such Third-Party Materials or web sites. The Licensor does not warrant or endorse and does not assume and will not have any liability or responsibility to You or any other person for any Other Services, Third-Party Materials or web sites, or for any other materials or products of third parties, Third Party Materials and links to other web sites are provided solely as a convenience to You. You agree that any Other Services may contain proprietary content, information and material that is protected by applicable intellectual property and other laws, including but not limited to copyright, and that You will not use such proprietary content, information or materials in any way whatsoever except for permitted use of the Third-Party Services.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Assignment.</strong>
+									<br />
+								</p>
+								<p>You may not assign, transfer or otherwise dispose of any of Your rights or obligations under this Agreement without Licensor's prior written consent. Any assignment in violation of this article is void.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Relationship of the Parties.</strong>
+									<br />
+								</p>
+								<p>This Agreement shall not be construed as creating any obligation, expressed or implied, on behalf of Licensor or You, or to represent the other party as agent, employee or in any other capacity. Nothing herein shall oblige either party to enter into any further agreement(s) with each other.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Severability.</strong>
+									<br />
+								</p>
+								<p>If any provision or provisions of this Agreement shall be held to be invalid, illegal or unenforceable in whole or in part by any court of competent jurisdiction or other competent authority, this Agreement will continue to be valid and enforceable as to the other provision and or the remainder of the affected provision. The affected provision will be deemed amended to the minimum extent necessary to render it valid and enforceable in conformity with applicable law and the parties' intent as expressed in this Agreement.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Survival.</strong>
+									<br />
+								</p>
+								<p>Any provision of this Agreement that may reasonably be expected to survive its termination will survive the termination of this Agreement, including without limitation Section 12.11 (Liferay) and those provisions relating to confidentiality, disclaimers of warranties, limitation of liability, and indemnification.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Waiver.</strong>
+									<br />
+								</p>
+								<p>The failure of any party to enforce any of the provisions hereof shall not be construed to be a waiver of the right of such party thereafter to enforce such provisions. This Agreement may not be waived, except in writing by the party granting the waiver.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Export Control.</strong>
+									<br />
+								</p>
+								<p>You may not use, export, re-export, import, sell or transfer the Software except as authorized by United States law and any other applicable laws and regulations. In particular, but without limitation, the Software may not be exported or re-exported (i) into any country that is subject to a U.S. Government embargo or that has been designated by the U.S. Government as a "terrorist supporting" country or (ii) to anyone on any U.S. Government list of prohibited or restricted parties. By using the Software, You represent and warrant that You are not located in any such country or on any such list. You also agree that You will not use the Software for any purposes prohibited by United States law, including, without limitation, the development, design, manufacture, or production of nuclear, missile, chemical or biological weapons.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Dispute Resolution</strong>
+									<br />
+								</p>
+								<p>This Agreement, and Your relationship with Licensor under this Agreement, shall be governed by and construed in accordance with the laws of Ireland without regard to its conflict of laws provisions thereof or the United Nations Convention on Contracts for the International Sale of Goods. You and Licensor agree to submit to the exclusive jurisdiction of the Irish courts to resolve any legal matter arising from this Agreement and each party irrevocably consents to such personal jurisdiction and waives all objections to this venue. Notwithstanding the immediately preceding sentence, You agree that Licensor shall still be permitted to apply for injunctive remedies (or an equivalent type of urgent legal relief) in any jurisdiction.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Commercial Items.</strong>
+									<br />
+								</p>
+								<p>The Software and related documentation are "Commercial Items", as that term is defined at 48 C.F.R. §2.101, consisting of "Commercial Computer Software" and "Commercial Computer Software Documentation", as such terms are used in 48 C.F.R. §12.212 or 48 C.F.R. §227.7202, as applicable. Consistent with 48 C.F.R. §12.212 or 48 C.F.R. §227.7202-1 through 227.7202-4, as applicable, the Commercial Computer Software and Commercial Computer Software Documentation are being licensed to U.S. Government end users (i) only as Commercial Items and (ii) with only those rights as are granted to all other end users pursuant to the terms and conditions herein. Unpublished-rights reserved under the copyright laws of the United States.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Liferay.</strong>
+									<br />
+								</p>
+								<p>You hereby acknowledge that this Agreement is concluded between Licensor and You only, and not with Liferay, and that as between Licensor and Liferay, Licensor, not Liferay, is solely responsible for the Software and the content thereof. Liferay has no obligation whatsoever to provide any maintenance or support services with respect to the Software. To the maximum extent permitted by applicable law, Liferay will have no warranty obligation whatsoever with respect to the Software, or any other claims, losses, liabilities, damages, costs or expenses attributable to any failure to conform to any warranty, which will be Licensor's sole responsibility, to the extent it cannot be disclaimed under applicable law. Licensor and You acknowledge that Licensor, not Liferay, is responsible for addressing any claims of You or any third party relating to the Software or Your possession and/or use of that Software, including, but not limited to: (i) product liability claims; (ii) any claim that the Software fails to conform to any applicable legal or regulatory requirement; and (iii) claims arising under consumer protection or similar legislation. In the event of any third party claim that the Software or Your possession and use of that Software infringes a third party's intellectual property rights, as between Licensor and Liferay, Licensor, not Liferay, will be solely responsible for the investigation, defense, settlement and discharge of any such intellectual property infringement claim. Licensor and You acknowledge and agree that Liferay is a third party beneficiary of this Agreement with respect to the Software, and that, upon Your acceptance of the terms and conditions of this Agreement, Liferay will have the right (and will be deemed to have accepted the right) to enforce this Agreement against You with respect to the Software as a third party beneficiary thereof.</p>
+							</li>
+							<li>
+								<p>
+									<strong>Miscellaneous.</strong>
+									<br />
+								</p>
+								<p>This Agreement constitutes the entire agreement between the parties with respect to the use of the Software licensed hereunder and supersedes all prior understandings regarding such subject matter. This Agreement may be modified only by a written amendment signed by both parties. Any translation of this Agreement is done for local requirements and in the event of a dispute between the English and any non-English version, the English version of this Agreement shall govern.</p>
+							</li>
+						</ol>
+					</li>
+				</ol>
+			]]>
+		</dynamic-content>
 	</dynamic-element>
 </root>

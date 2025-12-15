@@ -14,8 +14,10 @@ liferay-marketplace-custom-element:
         analyticsCloudURL: https://analytics-internal.liferay.com
         cloudConsoleURL: https://console.liferay.cloud
         contactSupportURL: https://www.liferay.com/contact-us
+        endUserLicenseAgreement: end_user_license_agreement
         eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
         marketoFormId: 3738
+        publisherLicenseAgreement: liferay_publisher_license_argeement
         useSiteTaxonomyVocabularyQuery: false
     type: customElement
     urls:

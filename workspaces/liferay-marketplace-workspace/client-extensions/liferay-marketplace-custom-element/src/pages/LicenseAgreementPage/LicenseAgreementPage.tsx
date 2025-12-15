@@ -16,7 +16,7 @@ export function LicenseAgreementPage() {
 	return (
 		<body>
 			<header className="d-flex justify-content-center">
-				<h2>{i18n.translate('end-user-license-agreement')}</h2>
+				<h2>{i18n.translate('marketplace-licensor-eula')}</h2>
 			</header>
 
 			<hr />

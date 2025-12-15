@@ -442,7 +442,7 @@ public class Main {
 							"Deleting structured content " +
 								structuredContent.getFriendlyUrlPath());
 
-						_deleteDocument(structuredContent.getId());
+						_deleteRAGDocument(structuredContent.getId());
 						_structuredContentResource.deleteStructuredContent(
 							siteStructuredContent.getId());
 					}
@@ -485,7 +485,7 @@ public class Main {
 						importedStructuredContent.getFriendlyUrlPath(),
 						structuredContent.getFriendlyUrlPath())) {
 
-					_deleteDocument(importedStructuredContent.getId());
+					_deleteRAGDocument(importedStructuredContent.getId());
 					_structuredContentResource.deleteStructuredContent(
 						importedStructuredContent.getId());
 
@@ -510,7 +510,7 @@ public class Main {
 					"Deleting orphaned structured content " +
 						structuredContent.getFriendlyUrlPath());
 
-				_deleteDocument(existingStructuredContentId);
+				_deleteRAGDocument(existingStructuredContentId);
 				_structuredContentResource.deleteStructuredContent(
 					existingStructuredContentId);
 			}
@@ -566,10 +566,10 @@ public class Main {
 		_fileNames.add(fileName);
 	}
 
-	private void _deleteDocument(long structuredContentId) throws Exception {
+	private void _deleteRAGDocument(long id) throws Exception {
 		HttpDelete httpDelete = new HttpDelete(
 			System.getenv("LIFERAY_LEARN_ETC_SPRING_BOOT_SERVER_URL") +
-				"/rag/document/" + structuredContentId);
+				"/rag/document/" + id);
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
@@ -582,8 +582,7 @@ public class Main {
 
 			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
 				System.out.println(
-					"Unable to delete existing structured content " +
-						structuredContentId);
+					"Unable to delete existing RAG document " + id);
 			}
 		}
 		catch (Exception exception) {
@@ -1515,7 +1514,7 @@ public class Main {
 		).text();
 
 		if (content.length() <= 250) {
-			_deleteDocument(structuredContent.getId());
+			_deleteRAGDocument(structuredContent.getId());
 
 			return;
 		}

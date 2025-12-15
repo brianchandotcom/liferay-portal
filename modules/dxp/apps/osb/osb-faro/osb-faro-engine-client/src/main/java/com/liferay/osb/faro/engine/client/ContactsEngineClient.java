@@ -157,6 +157,10 @@ public interface ContactsEngineClient {
 	public Account getAccount(FaroProject faroProject, String id)
 		throws FaroEngineClientException;
 
+	public Results<Object> getAccountFieldValues(
+		FaroProject faroProject, Long channelId, String fieldMappingFieldName,
+		String query, int cur, int delta);
+
 	public Results<IndividualSegment> getAccountIndividualSegments(
 		FaroProject faroProject, String accountId, String channelId,
 		String query, String status, int cur, int delta,

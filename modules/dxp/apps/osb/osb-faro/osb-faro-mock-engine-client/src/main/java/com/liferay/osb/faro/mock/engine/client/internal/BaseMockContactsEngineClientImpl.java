@@ -7,6 +7,7 @@ package com.liferay.osb.faro.mock.engine.client.internal;
 
 import com.liferay.osb.faro.engine.client.BaseEngineClient;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
+import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.Activity;
@@ -686,6 +687,15 @@ public abstract class BaseMockContactsEngineClientImpl
 		return contactsEngineClient.getFieldValues(
 			faroProject, channelId, query, fieldMappingFieldName, cur, delta);
 	}
+
+	@Override
+	public Results<Object> getAccountFieldValues(
+		FaroProject faroProject, Long channelId,
+		 String fieldMappingFieldName, String query, int cur, int delta) {
+		return contactsEngineClient.getAccountFieldValues(
+			faroProject, channelId, fieldMappingFieldName, query, cur, delta);
+	}
+
 
 	@Override
 	public Individual getIndividual(

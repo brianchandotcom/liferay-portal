@@ -2501,6 +2501,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 					status: {code: 0},
 				});
 
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
 			await accountSettingsPage.goToDisplaySettings();
 
 			await accountSettingsPage.setTimeZone('America/Sao_Paulo');
@@ -2528,7 +2533,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			await viewObjectEntriesPage.backButton.click();
 
 			let formattedDate = date.toLocaleString('en-US', {
-				day: '2-digit',
+				day: 'numeric',
 				hour: 'numeric',
 				hour12: true,
 				minute: '2-digit',

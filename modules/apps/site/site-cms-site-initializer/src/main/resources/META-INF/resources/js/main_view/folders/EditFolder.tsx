@@ -32,7 +32,7 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 	>({
 		description: '',
 		space: {
-			name: '',
+			name: 'Default',
 			settings: {
 				logoColor: 'outline-0',
 			},

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -126,7 +127,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"createDate",
 					_toString(contentDashboardItem.getCreateDate())
 				).put(
-					"description", contentDashboardItem.getDescription(locale)
+					"description",
+					HtmlUtil.escape(contentDashboardItem.getDescription(locale))
 				).put(
 					"downloadURL",
 					_getDownloadURL(contentDashboardItem, httpServletRequest)

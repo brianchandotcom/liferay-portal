@@ -308,6 +308,15 @@ public class ObjectFieldSettingLocalServiceWrapper
 			getObjectFieldObjectFieldSettings(objectFieldId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectFieldSetting>
+		getObjectFieldObjectFieldSettings(
+			com.liferay.object.model.ObjectField objectField) {
+
+		return _objectFieldSettingLocalService.
+			getObjectFieldObjectFieldSettings(objectField);
+	}
+
 	/**
 	 * Returns the object field setting with the primary key.
 	 *

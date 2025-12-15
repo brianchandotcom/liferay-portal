@@ -525,11 +525,12 @@ function UQBEditSXPBlueprintForm({
 							status: item.active
 								? STATUS.ACTIVE
 								: STATUS.INACTIVE,
-							type: item.typeSettings?.depotEntryType
-								? item.typeSettings?.depotEntryType === '0'
-									? Liferay.Language.get('asset-library')
-									: Liferay.Language.get('space')
-								: Liferay.Language.get('site'),
+							type:
+								item.typeSettings?.depotEntryType === '1'
+									? Liferay.Language.get('space')
+									: item.typeSettings?.depotEntryType === '0'
+										? Liferay.Language.get('asset-library')
+										: Liferay.Language.get('site'),
 						};
 					})
 				);

@@ -14,7 +14,6 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -38,7 +37,6 @@ export const test = mergeTests(
 		'LPD-35914': {enabled: true},
 	}),
 	loginTest(),
-	objectPagesTest,
 	productMenuPageTest,
 	uiElementsPageTest
 );
@@ -64,6 +62,8 @@ rootModelTest.describe(
 				page,
 			}) => {
 				const objectRelationships: ObjectRelationship[] = [];
+				const objectRelationshipAPIClient =
+					await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
 				try {
 					const objectDefinitionA =
@@ -99,9 +99,6 @@ rootModelTest.describe(
 						id: objectDefinitionC.id,
 						type: 'objectDefinition',
 					});
-
-					const objectRelationshipAPIClient =
-						await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
 					const {body: objectRelationshipAB} =
 						await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
@@ -188,22 +185,17 @@ rootModelTest.describe(
 						'c/' + objectDefinitionC.name.toLowerCase() + 's'
 					);
 
+					const objectDefinitionRootCheckbox = page.getByLabel(
+						new RegExp(
+							`${objectDefinitionA.label.en_US}\\s*Root Object`
+						)
+					);
+
 					await applicationsMenuPage.goToExport();
 
-					await page
-						.getByTestId('creationMenuNewButton')
-						.nth(1)
-						.click();
+					await exportImportPage.newExportButton.click();
 
-					await expect(
-						page
-							.locator('strong')
-							.filter({hasText: objectDefinitionA.label.en_US})
-					).toBeVisible();
-
-					await expect(
-						page.getByText('Root Object').first()
-					).toBeVisible();
+					await expect(objectDefinitionRootCheckbox).toBeVisible();
 
 					await expect(
 						page.getByText(
@@ -214,6 +206,9 @@ rootModelTest.describe(
 					const filePath = await companyExportImportPage.export([
 						`${objectDefinitionA.name} Root Object 1 Items`,
 					]);
+					const exportName = filePath.slice(
+						filePath.lastIndexOf('/') + 1
+					);
 
 					await applicationsMenuPage.goToImport();
 
@@ -225,11 +220,7 @@ rootModelTest.describe(
 
 					await exportImportPage.continueButton.click();
 
-					await expect(
-						page.getByText(objectDefinitionA.label.en_US)
-					).toBeVisible();
-
-					await expect(page.getByText('Root Object')).toBeVisible();
+					await expect(objectDefinitionRootCheckbox).toBeChecked();
 
 					await expect(
 						page.getByText(
@@ -239,12 +230,11 @@ rootModelTest.describe(
 
 					await exportImportPage.importButton.click();
 
-					await expect(page.getByText('Successful')).toBeVisible();
+					await expect(
+						exportImportPage.taskStatusLabel(exportName)
+					).toBeVisible();
 				}
 				finally {
-					const objectRelationshipAPIClient =
-						await apiHelpers.buildRestClient(ObjectRelationshipAPI);
-
 					for (const objectRelationship of objectRelationships) {
 						await objectRelationshipAPIClient.putObjectRelationship(
 							objectRelationship.id,

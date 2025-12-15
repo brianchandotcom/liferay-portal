@@ -78,13 +78,26 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcessTest {
 	@Test
 	@TestInfo("LPD-71983")
 	public void testUpgradeProcess() throws Exception {
-		String name = String.valueOf(RandomTestUtil.randomInt());
+		String name1 = String.valueOf(RandomTestUtil.randomInt());
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
+		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				"LFR-" + RandomTestUtil.randomString(),
 				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, false,
-				name, LayoutUtilityPageEntryConstants.TYPE_STATUS, null,
+				name1, LayoutUtilityPageEntryConstants.TYPE_STATUS, null,
+				_serviceContext);
+
+		String name2 = String.valueOf(RandomTestUtil.randomInt());
+
+		Layout layout1 = _updateFriendlyURL(
+			LayoutTestUtil.addTypePortletLayout(_group),
+			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 1));
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				"LFR-" + RandomTestUtil.randomString(),
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, false,
+				name2, LayoutUtilityPageEntryConstants.TYPE_STATUS, null,
 				_serviceContext);
 
 		Layout[] layouts = _getLayouts();
@@ -92,17 +105,34 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcessTest {
 		_updateFriendlyURL(
 			ArrayUtil.append(
 				layouts,
-				_layoutLocalService.fetchLayout(
-					layoutUtilityPageEntry.getPlid())));
+				new Layout[] {
+					_layoutLocalService.fetchLayout(
+						layoutUtilityPageEntry1.getPlid()),
+					_layoutLocalService.fetchLayout(
+						layoutUtilityPageEntry2.getPlid())
+				}));
 
 		_runUpgrade();
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutUtilityPageEntry.getPlid());
+		layout1 = _layoutLocalService.fetchLayout(layout1.getPlid());
 
 		Assert.assertEquals(
-			StringBundler.concat(StringPool.SLASH, name, StringPool.DASH, 1),
-			layout.getFriendlyURL());
+			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 1),
+			layout1.getFriendlyURL());
+
+		Layout layout2 = _layoutLocalService.fetchLayout(
+			layoutUtilityPageEntry1.getPlid());
+
+		Assert.assertEquals(
+			StringBundler.concat(StringPool.SLASH, name1, StringPool.DASH, 1),
+			layout2.getFriendlyURL());
+
+		Layout layout3 = _layoutLocalService.fetchLayout(
+			layoutUtilityPageEntry2.getPlid());
+
+		Assert.assertEquals(
+			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 2),
+			layout3.getFriendlyURL());
 
 		for (Layout curLayout : layouts) {
 			Layout updatedLayout = _layoutLocalService.getLayout(
@@ -162,12 +192,20 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcessTest {
 		for (Layout layout : layouts) {
 			String friendlyURL = StringPool.SLASH + layout.getLayoutId();
 
-			Layout updatedLayout = _layoutLocalService.updateFriendlyURL(
-				layout.getUserId(), layout.getPlid(), friendlyURL,
-				layout.getDefaultLanguageId());
-
-			Assert.assertEquals(friendlyURL, updatedLayout.getFriendlyURL());
+			_updateFriendlyURL(layout, friendlyURL);
 		}
+	}
+
+	private Layout _updateFriendlyURL(Layout layout, String friendlyURL)
+		throws Exception {
+
+		Layout updatedLayout = _layoutLocalService.updateFriendlyURL(
+			layout.getUserId(), layout.getPlid(), friendlyURL,
+			layout.getDefaultLanguageId());
+
+		Assert.assertEquals(friendlyURL, updatedLayout.getFriendlyURL());
+
+		return updatedLayout;
 	}
 
 	@Inject(

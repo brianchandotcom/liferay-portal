@@ -63,6 +63,7 @@ export default function ScopeSelector({
 		openSelectionModal({
 			id: `${namespace}selectScope`,
 			onSelect: (selectedItem: {
+				groupdepotentrytype: string;
 				groupdescriptivename: string;
 				groupexternalreferencecode: string;
 				groupid: string;
@@ -89,7 +90,12 @@ export default function ScopeSelector({
 							selectedItem.groupexternalreferencecode,
 						name: selectedItem.groupdescriptivename,
 						status: STATUS.ACTIVE,
-						type: selectedItem.groupscopelabel,
+						type:
+							selectedItem.groupdepotentrytype === '1'
+								? Liferay.Language.get('space')
+								: selectedItem.groupdepotentrytype === '0'
+									? Liferay.Language.get('asset-library')
+									: Liferay.Language.get('site'),
 					},
 				]);
 			},

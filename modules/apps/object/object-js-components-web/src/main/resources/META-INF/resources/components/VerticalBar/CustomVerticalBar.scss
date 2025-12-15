@@ -3,6 +3,9 @@
 		.c-slideout-show.sidebar {
 			overflow: auto;
 		}
+		> .sidebar:has(.lfr-objects__object-field-default-value-enabled) {
+			width: 500px !important;
+		}
 	}
 
 	&--left-closed {

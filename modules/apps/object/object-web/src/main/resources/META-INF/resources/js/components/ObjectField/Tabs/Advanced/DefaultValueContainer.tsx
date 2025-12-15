@@ -179,7 +179,14 @@ export function DefaultValueContainer({
 			)}
 
 			{!values.state && (
-				<ClayForm.Group>
+				<ClayForm.Group
+					className={classNames({
+						'lfr-objects__object-field-default-value-disabled':
+							!defaultValueToggleEnabled,
+						'lfr-objects__object-field-default-value-enabled':
+							defaultValueToggleEnabled,
+					})}
+				>
 					<Toggle
 						label={Liferay.Language.get('use-default-value')}
 						onToggle={(toggled) => {

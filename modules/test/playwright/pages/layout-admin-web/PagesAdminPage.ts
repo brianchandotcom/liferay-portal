@@ -269,7 +269,13 @@ export class PagesAdminPage {
 	async clickOnJavaScriptClientExtensionsTab() {
 		await this.javaScriptClientExtensionsTab.waitFor();
 
-		await this.javaScriptClientExtensionsTab.click();
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('button', {
+				exact: true,
+				name: 'JavaScript Client Extensions',
+			}),
+			trigger: this.javaScriptClientExtensionsTab,
+		});
 	}
 
 	async clickOnAction(action: string, title: string) {

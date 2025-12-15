@@ -93,6 +93,32 @@ public class PreupgradeVerifyDatabaseStateTest
 	}
 
 	@Test
+	public void testVerifyPreupgradeFalsePositive74MissingTable()
+		throws Exception {
+
+		ServiceComponent serviceComponent =
+			_serviceComponentLocalService.createServiceComponent(
+				RandomTestUtil.nextLong());
+
+		String tableName = _getNormalizedName("Account_");
+
+		serviceComponent.setMvccVersion(0);
+		serviceComponent.setBuildNamespace("com.liferay.test.service.impl");
+		serviceComponent.setData(
+			StringBundler.concat("<![CDATA[create table ", tableName, " ("));
+
+		_serviceComponentLocalService.addServiceComponent(serviceComponent);
+
+		try {
+			testVerify();
+		}
+		finally {
+			_serviceComponentLocalService.deleteServiceComponent(
+				serviceComponent);
+		}
+	}
+
+	@Test
 	public void testVerifyPreupgradeIsCaseInsensitive() throws Exception {
 		ServiceComponent serviceComponent =
 			_serviceComponentLocalService.createServiceComponent(

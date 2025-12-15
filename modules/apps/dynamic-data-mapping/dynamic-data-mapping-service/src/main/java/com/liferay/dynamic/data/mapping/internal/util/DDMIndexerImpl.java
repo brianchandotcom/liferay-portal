@@ -579,8 +579,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 	private void _addFields(
 			DDMForm ddmForm, DDMFormFieldValue ddmFormFieldValue,
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValueListMap,
-			long ddmStructureId, Locale defaultLocale,
-			StringBundler fieldDisplayNamesSB, Fields fields)
+			long ddmStructureId, Locale defaultLocale, Fields fields)
 		throws PortalException {
 
 		_addField(
@@ -588,17 +587,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 			ddmFormFieldValue, ddmFormFieldValueListMap, ddmStructureId,
 			defaultLocale, fields);
 
-		fieldDisplayNamesSB.append(ddmFormFieldValue.getName());
-		fieldDisplayNamesSB.append(DDMImpl.INSTANCE_SEPARATOR);
-		fieldDisplayNamesSB.append(ddmFormFieldValue.getInstanceId());
-		fieldDisplayNamesSB.append(StringPool.COMMA);
-
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 			_addFields(
 				ddmForm, nestedDDMFormFieldValue, ddmFormFieldValueListMap,
-				ddmStructureId, defaultLocale, fieldDisplayNamesSB, fields);
+				ddmStructureId, defaultLocale, fields);
 		}
 	}
 
@@ -1182,9 +1176,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		try {
-			if ((values.size() > 1) ||
-				(!field.isPrivate() && ddmFormField.isRepeatable())) {
-
+			if ((values.size() > 1) || ddmFormField.isRepeatable()) {
 				return FieldConstants.getSerializable(
 					ddmFormField.getDataType(), values);
 			}
@@ -1225,25 +1217,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 			Fields fields = new Fields();
 
-			StringBundler fieldDisplayNamesSB = new StringBundler(
-				ddmFormFieldValues.size() * 4);
-
 			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 				_addFields(
 					ddmForm, ddmFormFieldValue, ddmFormFieldValueListMap,
 					ddmStructure.getStructureId(),
-					ddmFormValues.getDefaultLocale(), fieldDisplayNamesSB,
-					fields);
+					ddmFormValues.getDefaultLocale(), fields);
 			}
-
-			if (!ddmFormFieldValues.isEmpty()) {
-				fieldDisplayNamesSB.setIndex(fieldDisplayNamesSB.index() - 1);
-			}
-
-			fields.put(
-				new Field(
-					ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
-					fieldDisplayNamesSB.toString()));
 
 			return fields;
 		}

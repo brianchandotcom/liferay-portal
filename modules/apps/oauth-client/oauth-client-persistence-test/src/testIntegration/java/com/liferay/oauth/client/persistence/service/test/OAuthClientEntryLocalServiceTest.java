@@ -123,7 +123,16 @@ public class OAuthClientEntryLocalServiceTest {
 				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 				_tokenRequestParametersJSON));
-
+		Assert.assertThrows(
+			OAuthClientEntryAuthServerWellKnownURIException.class,
+			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
+				TestPropsValues.getUserId(), _authRequestParametersJSON,
+				"http://172.17.0.3:18080/auth/realms/master/." +
+					"well-known/openid-configuration",
+				_CUSTOM_CLAIMS_JSON, _infoJSON,
+				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+				_tokenRequestParametersJSON));
 		AssertUtils.assertFailure(
 			OAuthClientEntryOIDCUserInfoMapperJSONException.class,
 			"emailAddress is required for user",
@@ -134,17 +143,6 @@ public class OAuthClientEntryLocalServiceTest {
 				JSONUtil.put(
 					"user", JSONUtil.put("emailAddress", "")
 				).toString(),
-				_tokenRequestParametersJSON));
-
-		Assert.assertThrows(
-			OAuthClientEntryAuthServerWellKnownURIException.class,
-			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				TestPropsValues.getUserId(), _authRequestParametersJSON,
-				"http://172.17.0.3:18080/auth/realms/master/." +
-					"well-known/openid-configuration",
-				_CUSTOM_CLAIMS_JSON, _infoJSON,
-				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
-				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 				_tokenRequestParametersJSON));
 	}
 

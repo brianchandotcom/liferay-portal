@@ -850,6 +850,38 @@ public class DisplayPageTemplateResourceTest
 			draftLayout.getTypeSettingsProperty("published"));
 	}
 
+	private DisplayPageTemplate
+			_postSiteDisplayPageTemplateWithPageSpecifications(
+				PageSpecification.Status draftLayoutStatus,
+				Boolean markedAsDefault,
+				PageSpecification.Status publishedLayoutStatus)
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		displayPageTemplate.setMarkedAsDefault(markedAsDefault);
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, testGroup.getGroupId(), draftLayoutStatus);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				testGroup.getGroupId(), publishedLayoutStatus);
+
+		displayPageTemplate.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
+
+		DisplayPageTemplateResource displayPageTemplateResource =
+			_getDisplayPageTemplateResource();
+
+		return displayPageTemplateResource.postSiteDisplayPageTemplate(
+			testGroup.getExternalReferenceCode(), displayPageTemplate);
+	}
+
 	private DisplayPageTemplateSettings _randomDisplayPageTemplateSettings() {
 		DisplayPageTemplateSettings displayPageTemplateSettings =
 			new DisplayPageTemplateSettings();

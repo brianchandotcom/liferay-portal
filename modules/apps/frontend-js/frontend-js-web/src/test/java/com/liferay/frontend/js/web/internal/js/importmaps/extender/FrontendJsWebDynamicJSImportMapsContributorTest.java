@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -50,8 +50,6 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 		_setUpMocks(
 			frontendJsWebDynamicJSImportMapsContributor, StringPool.BLANK);
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
-
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
@@ -59,7 +57,7 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 			byteArrayOutputStream, StandardCharsets.UTF_8);
 
 		frontendJsWebDynamicJSImportMapsContributor.writeGlobalImports(
-			request, outputStreamWriter);
+			new MockHttpServletRequest(), outputStreamWriter);
 
 		outputStreamWriter.close();
 
@@ -80,8 +78,6 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 
 		_setUpMocks(frontendJsWebDynamicJSImportMapsContributor, "/dxp");
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
-
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
@@ -89,7 +85,7 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 			byteArrayOutputStream, StandardCharsets.UTF_8);
 
 		frontendJsWebDynamicJSImportMapsContributor.writeGlobalImports(
-			request, outputStreamWriter);
+			new MockHttpServletRequest(), outputStreamWriter);
 
 		outputStreamWriter.close();
 
@@ -115,7 +111,7 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 			FrontendJsWebDynamicJSImportMapsContributor
 				frontendJsWebDynamicJSImportMapsContributor,
 			String pathContext)
-		throws PortalException {
+		throws Exception {
 
 		// HashedFilesRegistry
 
@@ -129,8 +125,9 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 
 				biConsumer.accept(
 					pathContext + "/o/frontend-js-web/__liferay__/index.js",
-					pathContext + "/o/frontend-js-web/__liferay__/index.(" +
-						_HASH + ").js");
+					StringBundler.concat(
+						pathContext, "/o/frontend-js-web/__liferay__/index.(",
+						_HASH, ").js"));
 
 				return null;
 			}

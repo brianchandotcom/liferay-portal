@@ -34,7 +34,8 @@ type VerifyPermissionsOptions = {
 async function checkModalHeader(heading: string, menuitem: string, page) {
 	await expect(async () => {
 		await page.getByRole('button', {exact: true, name: 'Actions'}).click();
-		await page.getByRole('menuitem', {exact: true, name: menuitem}).click();
+
+		await handleClickMenuItem(menuitem, page);
 
 		await expect(page.getByRole('heading', {name: heading})).toBeVisible();
 	}).toPass({timeout: 5000});
@@ -52,18 +53,21 @@ async function clickMenuItem(menuitem: string, page, objectName?: string) {
 	await expect(async () => {
 		if (!objectName) {
 			await page.getByLabel('Actions').click();
+
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: menuitem,
+				})
+				.click({timeout: 1000});
 		}
 		else {
 			await (await getTableRowByText(page, objectName))
 				.getByRole('button', {name: 'Actions'})
 				.click();
+
+			await handleClickMenuItem(menuitem, page);
 		}
-		await page
-			.getByRole('menuitem', {
-				exact: true,
-				name: menuitem,
-			})
-			.click({timeout: 1000});
 	}).toPass();
 }
 
@@ -103,6 +107,34 @@ async function goToAllSpaces(page) {
 			page.getByRole('heading', {exact: true, name: 'All Spaces'})
 		).toBeVisible();
 	}).toPass({timeout: 10000});
+}
+
+async function handleClickMenuItem(menuitem: string, page) {
+	await expect(async () => {
+		if (menuitem.includes('Permissions')) {
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: 'Permissions',
+				})
+				.click({timeout: 1000});
+
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: menuitem,
+				})
+				.click({timeout: 1000});
+		}
+		else {
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: menuitem,
+				})
+				.click({timeout: 1000});
+		}
+	}).toPass({timeout: 5000});
 }
 
 async function resetPermissions(page, folderName?: string) {
@@ -915,7 +947,7 @@ test(
 test(
 	'Edit default permissions in bulk by role',
 	{tag: '@LPD-67434'},
-	async ({defaultPermissionsPage, folderPage, page, spaceSummaryPage}) => {
+	async ({defaultPermissionsPage, page, spaceSummaryPage}) => {
 		await goToAllSpaces(page);
 
 		const spaceName = 'Space' + getRandomInt();
@@ -946,15 +978,15 @@ test(
 
 			await spaceSummaryPage.goto(spaceName);
 
-			await spaceSummaryPage.viewAllContentLink.click();
-
 			const folderName1 = 'Folder' + getRandomInt();
 
-			await folderPage.createFolder(folderName1);
+			await spaceSummaryPage.createContentFolder(folderName1);
 
 			const folderName2 = 'Folder' + getRandomInt();
 
-			await folderPage.createFolder(folderName2);
+			await spaceSummaryPage.createContentFolder(folderName2);
+
+			await spaceSummaryPage.viewAllContentLink.click();
 
 			await verifyPermissions({
 				menuitem: 'Default Permissions',
@@ -1034,13 +1066,7 @@ test(
 test(
 	'Edit permissions in bulk by role',
 	{tag: '@LPD-67434'},
-	async ({
-		contentsPage,
-		defaultPermissionsPage,
-		folderPage,
-		page,
-		spaceSummaryPage,
-	}) => {
+	async ({contentsPage, defaultPermissionsPage, page, spaceSummaryPage}) => {
 		await goToAllSpaces(page);
 
 		const spaceName = 'Space' + getRandomInt();
@@ -1071,11 +1097,11 @@ test(
 
 			await spaceSummaryPage.goto(spaceName);
 
-			await spaceSummaryPage.viewAllContentLink.click();
-
 			const folderName = 'Folder' + getRandomInt();
 
-			await folderPage.createFolder(folderName);
+			await spaceSummaryPage.createContentFolder(folderName);
+
+			await spaceSummaryPage.viewAllContentLink.click();
 
 			await verifyPermissions({
 				menuitem: 'Permissions',

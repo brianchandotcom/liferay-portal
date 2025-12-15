@@ -1,8 +1,11 @@
+import AccountName from 'shared/components/table/cell-components/AccountName';
 import Checkbox from 'shared/components/Checkbox';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import InfoPopover from 'shared/components/InfoPopover';
 import Label from 'shared/components/Label';
+import MemberCell from 'shared/components/table/cell-components/MemberCell';
+import MembershipChanges from 'shared/components/table/cell-components/MembershipChanges';
 import moment from 'moment';
 import React from 'react';
 import SegmentSticker from 'segment/components/SegmentSticker';
@@ -18,7 +21,7 @@ import {
 	SourceCell,
 	WillBeRemovedCell
 } from 'shared/components/table/cell-components';
-import {applyTimeZone, formatDateToTimeZone} from './date';
+import {applyTimeZone, formatDateToTimeZone, formatUTCDate} from './date';
 import {Colors} from './colors-size';
 import {formatTime} from './time';
 import {get, isNil, noop, pickBy} from 'lodash';
@@ -184,6 +187,56 @@ export const attributeListColumns = {
 		className: 'table-cell-expand-smaller text-truncate',
 		label: Liferay.Language.get('sample-raw-data'),
 		sortable: false
+	}
+};
+
+export const membershipChangesColumns = {
+	accountNames: {
+		cellRenderer: AccountName,
+		label: Liferay.Language.get('account-name'),
+		sortable: true
+	},
+	firstSeen: {
+		cellRenderer: ({className, data: {firstSeenDate}}) => (
+			<td className={getCN('name-cell-root', className)}>
+				<div className='text-truncate'>
+					{formatUTCDate(firstSeenDate) || '-'}
+				</div>
+			</td>
+		),
+		label: Liferay.Language.get('first-seen'),
+		sortable: true
+	},
+	individualName: {
+		cellRenderer: MemberCell,
+		label: Liferay.Language.get('name'),
+		title: true
+	},
+	lastActive: {
+		cellRenderer: ({className, data: {lastActive}}) => (
+			<td className={getCN('name-cell-root', className)}>
+				<div className='text-truncate'>
+					{formatUTCDate(lastActive) || '-'}
+				</div>
+			</td>
+		),
+		label: Liferay.Language.get('last-active'),
+		sortable: true
+	},
+	membershipChanges: {
+		accessor: 'membershipChange',
+		cellRenderer: MembershipChanges,
+		label: Liferay.Language.get('membership-change'),
+		sortable: true
+	},
+	profileType: {
+		cellRenderer: ({className, data: {profileType}}) => (
+			<td className={getCN('text-capitalize', className)}>
+				{profileType}
+			</td>
+		),
+		label: Liferay.Language.get('profile-type'),
+		sortable: true
 	}
 };
 

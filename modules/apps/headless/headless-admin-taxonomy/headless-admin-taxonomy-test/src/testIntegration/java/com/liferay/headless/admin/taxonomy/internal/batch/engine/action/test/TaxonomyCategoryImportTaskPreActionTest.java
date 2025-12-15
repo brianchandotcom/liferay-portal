@@ -258,7 +258,7 @@ public class TaxonomyCategoryImportTaskPreActionTest {
 				locale, StringPool.BLANK
 			).build(),
 			null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-			ServiceContextTestUtil.getServiceContext());
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	private static final String _ITEM_CLASS_NAME =

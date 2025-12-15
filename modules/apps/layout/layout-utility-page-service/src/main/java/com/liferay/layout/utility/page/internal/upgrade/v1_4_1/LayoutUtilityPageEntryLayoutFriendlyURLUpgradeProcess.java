@@ -51,16 +51,46 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcess
 		}
 	}
 
+	private boolean _existLayoutFriendlyURL(
+			long groupId, long plid, boolean privateLayout, String friendlyURL)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select 1 from LayoutFriendlyURL where groupId = ? and plid " +
+					"<> ? and privateLayout = ? and friendlyURL = ?")) {
+
+			preparedStatement.setLong(1, groupId);
+			preparedStatement.setLong(2, plid);
+			preparedStatement.setBoolean(3, privateLayout);
+			preparedStatement.setString(4, friendlyURL);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				return resultSet.next();
+			}
+		}
+	}
+
 	private void _updateLayoutFriendlyURL(String name, long plid) {
 		try {
+			String baseFriendlyURL =
+				StringPool.SLASH +
+					FriendlyURLNormalizerUtil.normalizeWithEncoding(name);
+			String friendlyURL = null;
+			int i = 1;
 			Layout layout = _layoutLocalService.getLayout(plid);
 
+			do {
+				friendlyURL = StringBundler.concat(
+					baseFriendlyURL, StringPool.DASH, i);
+
+				i++;
+			}
+			while (_existLayoutFriendlyURL(
+						layout.getGroupId(), layout.getPlid(),
+						layout.isPrivateLayout(), friendlyURL));
+
 			_layoutLocalService.updateFriendlyURL(
-				layout.getUserId(), layout.getPlid(),
-				StringBundler.concat(
-					StringPool.SLASH,
-					FriendlyURLNormalizerUtil.normalizeWithEncoding(name),
-					StringPool.DASH, layout.getLayoutId()),
+				layout.getUserId(), layout.getPlid(), friendlyURL,
 				layout.getDefaultLanguageId());
 		}
 		catch (Exception exception) {

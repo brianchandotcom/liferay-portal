@@ -15,13 +15,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -76,18 +79,35 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 	private List<SiteScope> _getSiteScopes(List<String> entityScopes)
 		throws Exception {
 
-		if (!entityScopes.contains("site")) {
-			return Collections.emptyList();
+		List<SiteScope> siteScopes = new ArrayList<>();
+
+		if (entityScopes.contains("site")) {
+			List<Group> groups;
+
+			long userId = contextUser.getUserId();
+
+			if (_portal.isOmniadmin(userId)) {
+				groups = _groupService.getGroups(
+					contextCompany.getCompanyId(),
+					GroupConstants.ANY_PARENT_GROUP_ID, true);
+			}
+			else {
+				groups = _groupService.getUserSitesGroups(
+					userId, _CLASS_NAMES, QueryUtil.ALL_POS);
+			}
+
+			for (Group group : groups) {
+				siteScopes.add(
+					new SiteScope() {
+						{
+							setLabel(group::getDescriptiveName);
+							setValue(group::getGroupId);
+						}
+					});
+			}
 		}
 
-		return transform(
-			_groupService.getUserSitesGroups(_CLASS_NAMES, QueryUtil.ALL_POS),
-			group -> new SiteScope() {
-				{
-					setLabel(group::getDescriptiveName);
-					setValue(group::getGroupId);
-				}
-			});
+		return siteScopes;
 	}
 
 	private static final String[] _CLASS_NAMES = {
@@ -103,5 +123,8 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 
 	@Reference
 	private OpenAPIYAMLProvider _openAPIYAMLProvider;
+
+	@Reference
+	private Portal _portal;
 
 }
